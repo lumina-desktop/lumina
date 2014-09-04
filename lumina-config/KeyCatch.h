@@ -13,6 +13,7 @@
 #include <QDialog>
 #include <QKeyEvent>
 #include <QString>
+#include <QDebug>
 
 #include "ui_KeyCatch.h"
 
@@ -73,7 +74,7 @@ protected:
 	    }
 	    //Now get the main key
 	    qkeys.replace("+"," ");
-	    if(QKeySequence(event->key()).toString().isEmpty()){
+	    if(event->key()==0){
 	      qkeys.append( QString::number(event->nativeVirtualKey()) );
 	    }else{
 	      qkeys.append( QKeySequence(event->key()).toString() ); //also save the text version (for display)
@@ -86,6 +87,11 @@ protected:
 		qkeys.remove("Shift ");
 	      }
 	    }
+	    qDebug() << "Found Key Press:";
+	    qDebug() << " - Native Virtual Key:" << event->nativeVirtualKey();
+	    qDebug() << " - Qt Key Sequence:" << QKeySequence(event->key()).toString();
+	    qDebug() << " - Full Detected Sequence (Display):" << qkeys;
+	    qDebug() << " - Full Detected Sequence (backend):" << xkeys;
 	    //Now close the dialog
 	    cancelled=false;
 	    this->close();
