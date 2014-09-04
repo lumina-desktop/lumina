@@ -339,3 +339,4 @@ share/Lumina-DE/i18n/lumina-screenshot_zu.qm
 @dirrm share/Lumina-DE/i18n
 @dirrmtry share/Lumina-DE
 @dirrmtry share/wallpapers/Lumina-DE
+@dirrmtry share/xsession

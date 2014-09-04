@@ -4,6 +4,10 @@ QT       += core gui network phonon
 TARGET = Lumina-DE
 target.path = /usr/local/bin
 
+LIBS     += -L../libLumina -lLuminaUtils -lXdamage -lX11
+LIBPATH	= ../libLumina
+DEPENDPATH	+= ../libLumina
+
 TEMPLATE = app
 
 
@@ -101,8 +105,6 @@ defaults.files = defaults/desktop-background.jpg \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
 defaults.path = /usr/local/share/Lumina-DE/
-
-LIBS     = -L../libLumina -L/usr/local/lib -L/usr/lib -lLuminaUtils -lXdamage -lX11
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
