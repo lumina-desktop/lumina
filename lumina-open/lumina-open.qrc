@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>icons/application.png</file>
+    <file>icons/apply.png</file>
+    <file>icons/bad.png</file>
+    <file>icons/cancel.png</file>
+    <file>icons/find.png</file>
+    <file>icons/good.png</file>
+  </qresource>
+</RCC>

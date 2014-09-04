@@ -1,0 +1,33 @@
+#List of known dependencies for the Lumina Desktop (and associated utilities)
+#  FreeBSD port is listed in parentheses after the dependency whenever possible
+
+=== RUNTIME ONLY ===
+fluxbox (x11-wm/fluxbox)
+fluxbox styles pack? (x11-themes/fluxbox-tenr-styles-pack)
+oxygen icon theme (x11-themes/kde4-icons-oxygen)
+xscreensaver & xscreensaver-demo  (x11/xscreensaver)
+numlockx (x11/numlockx)
+
+  == FreeBSD (libLumina/LuminaOS-FreeBSD.cpp) ==
+  shutdown (/sbin/shutdown - built in) (System restart/poweroff)
+  mount (/sbin/mount - built in) (Device Availability)
+  apm (/usr/sbin/apm - built in) (Advanced Power Management utility)
+  mixer (/usr/sbin/mixer - built in) (Audio System Mixer)
+  xbrightness (x11/xbrightness) (Screen Brightness Control)
+  
+  == Linux ==
+  (Debian/Ubuntu/Mint packages required)
+  qt4-qmake
+  libqt4-core
+  libqt4-gui
+  libqt4-network
+  libqt4-svg
+  libxcomposite-dev
+
+=== BUILD & RUN ===
+Qt 4.8+ (modules: core, gui, network, linguist, svg)
+  also includes: (qt4-qmake, qt4-uic, qt4-moc, qt4-rcc)
+  + devel/qt4-qtsolutions-singleapplication
+  
+X.org and XLib
+  With extensions: Xrender, Xcomposite, Xdamage

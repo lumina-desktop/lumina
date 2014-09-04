@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>50</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(241, 233, 156, 240), stop:0.505682 rgba(255, 243, 127, 180), stop:1 rgba(221, 246, 255, 55)); border: 1px solid grey; border-radius: 5px;}</string>
+   </property>
+   <property name="text">
+    <string>Active</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>90</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 255, 255, 240), stop:0.505682 rgba(240, 240, 240, 180), stop:1 rgba(210, 210, 210, 55)); border: 1px solid grey; border-radius: 5px;}</string>
+   </property>
+   <property name="text">
+    <string>Visible</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>130</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{ background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(215, 215, 215, 210), stop:0.505682 rgba(184, 185, 186, 150), stop:1 rgba(221, 246, 255, 55)); border: 1px solid grey; border-radius: 5px;}</string>
+   </property>
+   <property name="text">
+    <string>Invisible</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>170</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{ background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(252, 187, 127, 210), stop:0.505682 rgba(255, 222, 197, 150), stop:1 rgba(221, 246, 255, 55)); border: 1px solid grey; border-radius: 5px; }
+
+</string>
+   </property>
+   <property name="text">
+    <string>Notification</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>221</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{ background: qlineargradient(spread:pad, x1:0.291182, y1:0, x2:0.693, y2:1, stop:0 rgb(255, 253, 250), stop:1 rgb(230, 230, 230));}</string>
+   </property>
+   <property name="text">
+    <string>Taskbar</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>381</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{ background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(178, 45, 39, 255), stop:0.471591 rgba(221, 173, 68, 255), stop:0.528409 rgba(215, 202, 124, 255), stop:1 rgba(189, 17, 17, 255)); border-radius: 5px; border: 1px solid rgb(233, 218, 5);}</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

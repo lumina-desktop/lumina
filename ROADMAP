@@ -1,0 +1,63 @@
+General roadmap for the Lumina Project to reach version 1.0
+----------------------------------------
+
+TO-DO
+---------
+Lumina-desktop
+ - Create a few desktop plugins 
+   -- Plugins: directory viewer, image viewer, note taker
+   -- Default Plugins: 1 directory viewer (home dir)
+ - Create a couple more panel plugins
+   -- Clean up clock plugin (add calender widget to a menu, and ability to customize time display)
+ - Add ability for customized user icon for the user button (~/.lumina/user.png?)
+ - Finish up the system tray
+   -- Retroactive app detection/embedding
+
+Lumina-config
+ - Check/clean up the key press detector (particularly special keys)
+ 
+Lumina-fm (Insight?)
+ - Network protocol support (samba, ftp, others?)
+   -- This is optional usage (only shown as available if the utilities are installed)
+
+Lumina-open
+ - Still not happy with the available apps widget. Perhaps go to something that can be scrolled?
+
+Write a screenshot-taking program to tie into the "print-screen" button
+ - lumina-screenshot?
+ - Uses pre-set QPixmap options for capturing an X11 window (quite simple)
+ - Save the image as either a *.png or *.jpg
+ - Add this utility to the "core" Lumina desktop (since it is tiny and does not require more dependencies)
+ 
+Write a quicklaunch application (Fluxbox Alt-F2 replacement)
+ - lumina-quicklaunch?
+ - allows the user to either run a specific command or start an application
+ 
+Write a filesystem search application
+ - lumina-search, or combine with lumina-quicklaunch?
+ - Simple utility to search the home directory for particular files or find an application
+ 
+-----------------------
+ROADMAP to 1.0
+-----------------------
+0.7 - Create lumina-screenshot and lumina-search and integrate with keyboard shortcuts (printscreen/ALT-F2)
+0.8 - Create new desktop plugins / other
+
+
+------------------------------------------
+Optional Extensions after 1.0-RELEASE
+------------------------------------------
+Write a screen-locking system (needs PAM/security class)
+  - Don't actually lock/open the PAM session (that could break the login session)
+  - Just for verification of credentials for the desired user (current or admin)
+  
+Parental Control System (needs screen locker, OS-specific network protocols)
+  - Daily Time Limits (simple to do)
+  - Network Accessibility Whitelist (using capsicum?)
+
+Replace xscreensaver with a custom-written screensaver framework in Qt (needs screen locker)
+  - xscreensaver has some (possibe) security concerns due to 
+     network-accessable perl modules that are required
+  - Since the Lumina session already has to keep an eye on system events,
+     if it probably better just to maintainer our own internal timer systems instead
+     of running an additional background daemon (also reduces dependencies).
