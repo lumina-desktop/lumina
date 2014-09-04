@@ -68,7 +68,7 @@ void LSysMenuQuick::UpdateMenu(){
       else if(val < 70){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-060","").pixmap(ui->label_bat_icon->maximumSize()) ); }
       else if(val < 90){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-080","").pixmap(ui->label_bat_icon->maximumSize()) ); }
       else{ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      ui->label_bat_text->setText( QString("%1%\n(%2)").arg(QString::number(val), tr("charging")) );
+      ui->label_bat_text->setText( QString("%1%\n(%2)").arg(QString::number(val), tr("connected")) );
     }else{
       if(val < 1){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-missing","").pixmap(ui->label_bat_icon->maximumSize()) ); }
       else if(val < 15){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-low","").pixmap(ui->label_bat_icon->maximumSize()) ); }
