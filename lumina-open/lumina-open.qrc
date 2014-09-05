@@ -6,5 +6,6 @@
     <file>icons/cancel.png</file>
     <file>icons/find.png</file>
     <file>icons/good.png</file>
+    <file>icons/OSD.png</file>
   </qresource>
 </RCC>

@@ -17,6 +17,11 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QMessageBox>
+#include <QSplashScreen>
+#include <QDateTime>
+#include <QPixmap>
+#include <QColor>
+#include <QFont>
 
 #include "LFileDialog.h"
 
@@ -26,6 +31,8 @@
 #ifndef PREFIX
 #define PREFIX QString("/usr/local")
 #endif
+
+static QApplication *App = 0;
 
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
@@ -37,6 +44,41 @@ void printUsageInfo(){
   qDebug() << " \"-volume[up/down]\" Flag to increase/decrease audio volume by 5%";
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
   exit(1);	
+}
+
+void setupApplication(int argc, char **argv){
+  App = new QApplication(argc, argv);
+    QTranslator translator;
+    QLocale mylocale;
+    QString langCode = mylocale.name();
+    
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
+      langCode.truncate( langCode.indexOf("_") ); 
+    }
+    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    App->installTranslator( &translator );
+    qDebug() << "Locale:" << langCode;
+}
+
+void showOSD(int argc, char **argv, QString message){
+  setupApplication(argc, argv);
+  //qDebug() << "Display OSD";
+  
+  QPixmap pix(":/icons/OSD.png");
+  QSplashScreen splash(pix, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+     splash.setWindowTitle("");
+     QFont myfont;
+	myfont.setBold(true);
+	myfont.setPixelSize(13);
+	splash.setFont(myfont);
+  qDebug() << "Display OSD";
+  splash.show();
+  //qDebug() << " - show message";
+  splash.showMessage(message, Qt::AlignCenter, Qt::white);
+  //qDebug() << " - loop";
+  QDateTime end = QDateTime::currentDateTime().addMSecs(800);
+  while(QDateTime::currentDateTime() < end){ App->processEvents(); }
+  splash.hide();
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
@@ -59,19 +101,9 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       //invalid default - reset it and continue on
       LFileDialog::setDefaultApp(extension, "");
     }
-    //No default set -- Start up the application selection dialog
-    QApplication a(argc, argv);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-    
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
-      langCode.truncate( langCode.indexOf("_") ); 
-    }
-    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
-    a.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
 
+    //No default set -- Start up the application selection dialog
+    setupApplication(argc,argv);
     LFileDialog w;
     if(inFile.startsWith(extension)){
       //URL
@@ -84,7 +116,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     
     w.show();
 
-    a.exec();
+    App->exec();
     if(!w.appSelected){ exit(1); }
     //Return the run path if appropriate
     if(!w.appPath.isEmpty()){ path = w.appPath; }
@@ -105,10 +137,16 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       if(QString(argv[i]).simplified() == "-select"){
       	showDLG = true;
       }else if(QString(argv[i]).simplified() == "-volumeup"){
-	LOS::changeAudioVolume(5); //increase 5%
+	int vol = LOS::audioVolume()+5; //increase 5%
+	if(vol>100){ vol=100; }
+	LOS::setAudioVolume(vol);
+	showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
 	return;
       }else if(QString(argv[i]).simplified() == "-volumedown"){
-	LOS::changeAudioVolume(-5); //decrease 5%
+	int vol = LOS::audioVolume()-5; //decrease 5%
+	if(vol<0){ vol=0; }
+	LOS::setAudioVolume(vol);
+	showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
 	return;
       }else if(QString(argv[i]).simplified() == "-brightnessup"){
 	int bright = LOS::ScreenBrightness();
@@ -116,6 +154,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 	  bright = bright+5; //increase 5%
 	  if(bright>100){ bright = 100; }
 	  LOS::setScreenBrightness(bright);
+	  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
 	}
 	return;
       }else if(QString(argv[i]).simplified() == "-brightnessdown"){
@@ -124,6 +163,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 	  bright = bright-5; //decrease 5%
 	  if(bright<0){ bright = 0; }
 	  LOS::setScreenBrightness(bright);
+	  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
 	}
 	return;
       }else{
@@ -150,7 +190,9 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;
-  if(extension=="desktop" && !showDLG){ 
+  if(extension=="directory" && !showDLG){
+    cmd = "lumina-fm";
+  }else if(extension=="desktop" && !showDLG){ 
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
     if(!ok){

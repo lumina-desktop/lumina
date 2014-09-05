@@ -26,7 +26,11 @@ QList<WId> LX11::WindowList(){
     QString name = LX11::WindowClass(output[i]);
     if(output[i] == 0){ remove=true; }
     else if( desk >= 0 && LX11::WindowDesktop(output[i]) != desk){ remove = true; }
-    else if( name.startsWith("Lumina-DE") ){ remove=true; }
+    else if( name=="Lumina-DE" ){ remove = true; }
+    else if(name.startsWith("Lumina-")){
+      //qDebug() << "Lumina Window:" << name << LX11::WindowName(output[i]);
+      if(LX11::WindowName(output[i]).toLower()==name.toLower() ){ remove=true; }
+    }
     /*else if( name.isEmpty() ){ 
       qDebug() << "Abnormal Window:" << output[i];
 	qDebug() << " - Class:" << name;
