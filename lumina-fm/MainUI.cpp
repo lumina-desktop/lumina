@@ -252,6 +252,9 @@ void MainUI::RebuildDeviceMenu(){
 	
   //Now add them to the menu appropriately
   for(int i=0; i<devs.length(); i++){
+    //Skip hidden mount points (usually only for system usage - not user browsing)
+    if(devs[i].section("::::",2,2).section("/",-1).startsWith(".")){ continue; } 
+    //Create entry for this device
     QAction *act = new QAction(devs[i].section("::::",2,2).section("/",-1),this);
         act->setWhatsThis(devs[i].section("::::",2,2)); //full path to mountpoint
 	act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
