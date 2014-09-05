@@ -5,7 +5,7 @@ TARGET = Lumina-DE
 target.path = /usr/local/bin
 
 LIBS     += -L../libLumina -lLuminaUtils -lXdamage -lX11
-LIBPATH	= ../libLumina
+QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app

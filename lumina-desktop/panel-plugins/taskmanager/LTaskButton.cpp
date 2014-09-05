@@ -100,7 +100,8 @@ void LTaskButton::UpdateButton(){
 	noicon = false;
       }
     }
-    winMenu->addAction( WINLIST[i].icon(), WINLIST[i].text() );
+    QAction *tmp = winMenu->addAction( WINLIST[i].icon(), WINLIST[i].text() );
+      tmp->setData(i); //save which number in the WINLIST this entry is for
     Lumina::STATES stat = WINLIST[i].status();
     if(stat==Lumina::NOTIFICATION){ showstate = stat; } //highest priority
     else if( stat==Lumina::ACTIVE && showstate != Lumina::NOTIFICATION){ showstate = stat; } //next priority
@@ -171,10 +172,9 @@ void LTaskButton::triggerWindow(){
 
 void LTaskButton::winClicked(QAction* act){
   //Get the window from the action
-  QString txt = act->text();
-  for(int i=0; i<WINLIST.length(); i++){
-    if(WINLIST[i].text() == txt){ cWin = WINLIST[i]; }
-  }
+  if(act->data().toInt() < WINLIST.length()){
+    cWin = WINLIST[act->data().toInt()];
+  }else{ cWin = LWinInfo(); } //clear it
   //Now trigger the window
   triggerWindow();
 }
@@ -183,11 +183,10 @@ void LTaskButton::openActionMenu(){
   //Get the Window the mouse is currently over
   QAction *act = winMenu->actionAt(QCursor::pos());
   if( act != 0 && winMenu->isVisible() ){
-    //get the window from the action
-    QString txt = act->text();
-    for(int i=0; i<WINLIST.length(); i++){
-      if(WINLIST[i].text() == txt){ cWin = WINLIST[i]; }
-    }
+    //Get the window from the action
+    if(act->data().toInt() < WINLIST.length()){
+      cWin = WINLIST[act->data().toInt()];
+    }else{ cWin = LWinInfo(); } //clear it
   }
   //Now show the action menu
   actMenu->popup(QCursor::pos());

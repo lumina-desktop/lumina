@@ -17,6 +17,8 @@ RESOURCES+= lumina-open.qrc
 
 INCLUDEPATH += ../libLumina /usr/local/include
 LIBS     += -L../libLumina -lLuminaUtils
+QMAKE_LIBDIR	= ../libLumina
+DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_ar.ts \

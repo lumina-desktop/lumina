@@ -27,6 +27,8 @@ linux-g++-64 {
 } else {
   LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
 }
+QMAKE_LIBDIR	= ../libLumina
+DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_ar.ts \
