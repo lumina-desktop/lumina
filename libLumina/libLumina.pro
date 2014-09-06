@@ -20,6 +20,7 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaX11.cpp \ 
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-Linux.cpp
+#       new OS support can be added here
 
 INCLUDEPATH += /usr/local/include
 

@@ -24,6 +24,9 @@ numlockx (x11/numlockx)
   libqt4-svg
   libxcomposite-dev
 
+  Optional Debian/Ubuntu/Mint packages
+  xbacklight (required for changing screen brightness)
+
 === BUILD & RUN ===
 Qt 4.8+ (modules: core, gui, network, linguist, svg)
   also includes: (qt4-qmake, qt4-uic, qt4-moc, qt4-rcc)
