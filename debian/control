@@ -1,0 +1,54 @@
+Source: lumina-desktop
+Section: x11
+Priority: optional
+Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
+Build-Depends: debhelper (>= 9), qt4-qmake, libqt4-dev, make, g++
+Standards-Version: 3.9.5
+Homepage: https://github.com/pcbsd/lumina
+
+Package: lumina-desktop
+Architecture: all
+Depends: libluminautils1, lumina-core, lumina-config, lumina-fm,
+         lumina-open, lumina-screenshot
+Description: Lightweight Qt4-based desktop environment
+ Metapackage depending on all other lumina packages.
+
+Package: libluminautils1
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Libraries for the lumina desktop environment
+
+Package: libluminautils-dev
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Development files for lumina desktop environment
+
+Package: libluminautils-dbg
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils-dev (= ${binary:Version})
+Description: Debugging symbols for lumina desktop environment
+
+Package: lumina-core
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Core package for the lumina desktop environment
+
+Package: lumina-config
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Configuration utility for the lumina desktop environment
+
+Package: lumina-fm
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Filemanager for the lumina desktop environment
+
+Package: lumina-open
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Utility to open given files with associated application
+
+Package: lumina-screenshot
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Screenshot utility for the lumina desktop environment
