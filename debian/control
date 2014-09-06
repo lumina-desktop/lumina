@@ -2,7 +2,8 @@ Source: lumina-desktop
 Section: x11
 Priority: optional
 Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
-Build-Depends: debhelper (>= 9), qt4-qmake, libqt4-dev, make, g++, libphonon-dev, libx11-dev
+Build-Depends: debhelper (>= 9), qt4-qmake, libqt4-dev, make, g++, libphonon-dev, libx11-dev,
+               libxrender-dev, libxcomposite-dev, libxdamage-dev
 Standards-Version: 3.9.5
 Homepage: https://github.com/pcbsd/lumina
 
@@ -16,39 +17,59 @@ Description: Lightweight Qt4-based desktop environment
 Package: libluminautils1
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Libraries for the lumina desktop environment
+Description: Library for the lumina desktop environment
+ Utility library for the lumina desktop environment
 
 Package: libluminautils-dev
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Description: Development files for lumina desktop environment
+ Files needed to develop plugins or extensions for the lumina desktop environment,
+ or using libluminautils1 in projects.
 
 Package: libluminautils-dbg
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils-dev (= ${binary:Version})
 Description: Debugging symbols for lumina desktop environment
+ Debugging symbols for libluminautils1
 
 Package: lumina-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Description: Core package for the lumina desktop environment
+ This package provides the basic components of lumina
+ - session manager
+ - panel with plugins
+ - wallpaper setter
+ - fluxbox configurator
+ - desktop icon manager and menu
+ - wallpapers
 
 Package: lumina-config
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Description: Configuration utility for the lumina desktop environment
+ lumina-config allows to change various aspects of lumina and fluxbox, like the
+ wallpaper beeing used, startup-applications, desktop-menu and more.
 
 Package: lumina-fm
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Description: Filemanager for the lumina desktop environment
+ Simple filemanager for lumina with support for multiple view modes and
+ integrated slideshow-based picture viewer.
 
 Package: lumina-open
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Description: Utility to open given files with associated application
+Description: xdg-open like utilityfor the lumina desktop environment
+ lumina-open handles opening of files and urls according to the system wide
+ mime type association. It also provides an optional selector if more than one
+ application is assigned with the given url or file type.
 
 Package: lumina-screenshot
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Description: Screenshot utility for the lumina desktop environment
+ Simple screenshot utility that allows to snapshot the whole desktop or a single
+ window after a configurable delay.
