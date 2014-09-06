@@ -13,7 +13,7 @@ Author: Christopher Roy Bratusek <nano@jpberlin.de>
  INCLUDEPATH += ../libLumina /usr/include
  
 -linux-g++-64 {
-+linux-g++ {
++linux-g++* {
    LIBS     += -L../libLumina -lLuminaUtils 
  } else {
    LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
@@ -24,7 +24,7 @@ Author: Christopher Roy Bratusek <nano@jpberlin.de>
  
  desktop.files = Lumina-DE.desktop
 -linux-g++-64 {
-+linux-g++ {
++linux-g++* {
  desktop.path = /usr/share/xsessions
  } else {
  desktop.path = /usr/share/xsessions
@@ -35,7 +35,7 @@ Author: Christopher Roy Bratusek <nano@jpberlin.de>
  INCLUDEPATH += ../libLumina /usr/include
  
 -linux-g++-64 {
-+linux-g++ {
++linux-g++* {
    LIBS     += -L../libLumina -lLuminaUtils 
  } else {
    LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
@@ -46,7 +46,7 @@ Author: Christopher Roy Bratusek <nano@jpberlin.de>
  INCLUDEPATH += ../libLumina /usr/include
  
 -linux-g++-64 {
-+linux-g++ {
++linux-g++* {
    LIBS     += -L../libLumina -lLuminaUtils 
  } else {
    LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
