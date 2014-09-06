@@ -35,7 +35,8 @@ Description: Debugging symbols for lumina desktop environment
 
 Package: lumina-core
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
+        fluxbox, numlockx, xbacklight, xscreensaver, oxygen-icon-theme
 Description: Core package for the lumina desktop environment
  This package provides the basic components of lumina
  - session manager
