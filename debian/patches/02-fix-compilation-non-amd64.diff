@@ -1,0 +1,52 @@
+Description: Fix compilation on architectures other than amd64
+ don't link against libQtSolutions_SingleApplication-head on amd64/i386 and others.
+ .
+ lumina-desktop (0.6.2.14-1nano) unstable; urgency=low
+ .
+   * Initial release
+Author: Christopher Roy Bratusek <nano@jpberlin.de>
+
+--- lumina-desktop-0.6.2.14.orig/lumina-config/lumina-config.pro
++++ lumina-desktop-0.6.2.14/lumina-config/lumina-config.pro
+@@ -22,7 +22,7 @@ FORMS    += mainUI.ui \
+ 
+ INCLUDEPATH += ../libLumina /usr/include
+ 
+-linux-g++-64 {
++linux-g++ {
+   LIBS     += -L../libLumina -lLuminaUtils 
+ } else {
+   LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
+--- lumina-desktop-0.6.2.14.orig/lumina-desktop/lumina-desktop.pro
++++ lumina-desktop-0.6.2.14/lumina-desktop/lumina-desktop.pro
+@@ -81,7 +81,7 @@ RESOURCES+= Lumina-DE.qrc
+ INCLUDEPATH += ../libLumina /usr/include
+ 
+ desktop.files = Lumina-DE.desktop
+-linux-g++-64 {
++linux-g++ {
+ desktop.path = /usr/share/xsessions
+ } else {
+ desktop.path = /usr/share/xsessions
+--- lumina-desktop-0.6.2.14.orig/lumina-fm/lumina-fm.pro
++++ lumina-desktop-0.6.2.14/lumina-fm/lumina-fm.pro
+@@ -24,7 +24,7 @@ FORMS    += MainUI.ui \
+ 
+ INCLUDEPATH += ../libLumina /usr/include
+ 
+-linux-g++-64 {
++linux-g++ {
+   LIBS     += -L../libLumina -lLuminaUtils 
+ } else {
+   LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
+--- lumina-desktop-0.6.2.14.orig/lumina-screenshot/lumina-screenshot.pro
++++ lumina-desktop-0.6.2.14/lumina-screenshot/lumina-screenshot.pro
+@@ -15,7 +15,7 @@ FORMS    += MainUI.ui
+ 
+ INCLUDEPATH += ../libLumina /usr/include
+ 
+-linux-g++-64 {
++linux-g++ {
+   LIBS     += -L../libLumina -lLuminaUtils 
+ } else {
+   LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
