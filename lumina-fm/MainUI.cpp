@@ -762,7 +762,7 @@ void MainUI::ItemRun(const QModelIndex &index){
     setCurrentDir( itemPath );
   }else{
     //Must be a file, try to run it
-    QProcess::startDetached("lumina-open "+itemPath);
+    QProcess::startDetached("lumina-open \""+itemPath+"\"");
   }
 }
 
@@ -776,7 +776,7 @@ void MainUI::ItemRun(QTreeWidgetItem *item){
     setCurrentDir( itemPath );
   }else{
     //Must be a file, try to run it
-    QProcess::startDetached("lumina-open "+itemPath);
+    QProcess::startDetached("lumina-open \""+itemPath+"\"");
   }
 }
 
@@ -790,7 +790,7 @@ void MainUI::ItemRun(QListWidgetItem *item){
     setCurrentDir( itemPath );
   }else{
     //Must be a file, try to run it
-    QProcess::startDetached("lumina-open "+itemPath);
+    QProcess::startDetached("lumina-open \""+itemPath+"\"");
   }
 }
 
