@@ -1,36 +1,67 @@
-#List of known dependencies for the Lumina Desktop (and associated utilities)
-#  FreeBSD port is listed in parentheses after the dependency whenever possible
+# List of known dependencies for the Lumina Desktop (and associated utilities)
+# FreeBSD port is listed in parentheses after the dependency whenever possible
+# Linux packages are listed by name as they appear in Debian, Ubuntu and Mint
 
-=== RUNTIME ONLY ===
+=== FreeBSD Requirements ===
+
+Runtime dependencies:
+
 fluxbox (x11-wm/fluxbox)
 fluxbox styles pack? (x11-themes/fluxbox-tenr-styles-pack)
 oxygen icon theme (x11-themes/kde4-icons-oxygen)
 xscreensaver & xscreensaver-demo  (x11/xscreensaver)
 numlockx (x11/numlockx)
 
-  == FreeBSD (libLumina/LuminaOS-FreeBSD.cpp) ==
-  shutdown (/sbin/shutdown - built in) (System restart/poweroff)
-  mount (/sbin/mount - built in) (Device Availability)
-  apm (/usr/sbin/apm - built in) (Advanced Power Management utility)
-  mixer (/usr/sbin/mixer - built in) (Audio System Mixer)
-  xbrightness (x11/xbrightness) (Screen Brightness Control)
+shutdown (/sbin/shutdown - built in) (System restart/poweroff)
+mount (/sbin/mount - built in) (Device Availability)
+apm (/usr/sbin/apm - built in) (Advanced Power Management utility)
+mixer (/usr/sbin/mixer - built in) (Audio System Mixer)
+xbrightness (x11/xbrightness) (Screen Brightness Control)
+
+
+Build time dependencies:
+Qt 4.8+ 
+  qt4-core (devel/qt4-corelib))
+  qt4-gui (x11-toolkits/qt4-gui)
+  qmake-qt4 (devel/qmake4)
+  qt4-network (net/qt4-network)
+  qt4-linguist (devel/qt4-linguist)
+  qt4-svg (graphics/qt4-svg)
+  qt4-uiv (devel/qt4-uic)
+  qt4-moc (devel/qt4-moc)
+  qt4-rcc (devel/qt4-rcc)
+  devel/qt4-qtsolutions-singleapplication
   
-  == Linux ==
-  (Debian/Ubuntu/Mint packages required)
+X.org and XLib with extensions: 
+  Xrender (x11/libXrender)
+  Xcomposite (x11/libXcomposite)
+  Xdamage (x11/libXdamage)
+
+
+  
+=== Linux Requirements ===
+  These packages are required for building Lumina on Linux
+  g++ (or clang, either compiler should work)
   qt4-qmake
   libqt4-core
+  libqt4-dev
+  libqt4-dev-bin
   libqt4-gui
   libqt4-network
   libqt4-svg
+  libphonon-dev
   libxcomposite-dev
+  libxdamage-dev
+  libxrender-dev
+ 
+  These packages are required for running Lumina on Linux
+  fluxbox
+  kde-style-oxygen
+  xscreensaver
 
-  Optional Debian/Ubuntu/Mint packages
-  xbacklight (required for changing screen brightness)
-
-=== BUILD & RUN ===
-Qt 4.8+ (modules: core, gui, network, linguist, svg)
-  also includes: (qt4-qmake, qt4-uic, qt4-moc, qt4-rcc)
-  + devel/qt4-qtsolutions-singleapplication
-  
-X.org and XLib
-  With extensions: Xrender, Xcomposite, Xdamage
+  Optional packages
+  xbacklight  (required for changing screen brightness)
+  alsa-utils  (required for adjusting audio volume)
+  acpi        (required for monitoring battery life)
+  numlockx    (required for changign state of numlock at login)
+  pavucontrol (required for detatched audio mixer)
