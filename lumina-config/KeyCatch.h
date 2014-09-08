@@ -49,7 +49,8 @@ private slots:
 protected:
 	void keyPressEvent(QKeyEvent *event){
 	  //Don't catch if the main key is a modifier (shift,ctrl,alt,other..)
-	  if( !mods.contains(event->key()) ){
+	  if(event->key()==0 && event->nativeVirtualKey()==0){ return; } //invalid "special" key
+	  else if( !mods.contains(event->key()) ){
 	    //Get the modifiers first (if any)
 	    if(!QKeySequence(event->modifiers()).toString().isEmpty()){// && event->nativeModifiers()!=16){
 	      if(event->modifiers()!=Qt::KeypadModifier){
