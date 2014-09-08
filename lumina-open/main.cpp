@@ -196,6 +196,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   bool useInputFile = false;
   if(extension=="directory" && !showDLG){
     cmd = "lumina-fm";
+    useInputFile=true;
   }else if(extension=="desktop" && !showDLG){ 
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
