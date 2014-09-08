@@ -7,6 +7,7 @@
 #include <QtGui/QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QTextCodec>
 
 #include "MainUI.h"
 
@@ -30,6 +31,7 @@ int main(int argc, char ** argv)
     }
     #endif
     a.setApplicationName("Insight File Manager");
+    //Load current Locale
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
@@ -38,6 +40,10 @@ int main(int argc, char ** argv)
     translator.load( QString("lumina-fm_") + langCode, PREFIX + "/share/i18n/Lumina-DE/" );
     a.installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
+    
+    //Load current encoding for this locale
+    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
+    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
     
     MainUI w;
     QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(slotSingleInstance(const QString&)) );
