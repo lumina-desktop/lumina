@@ -22,6 +22,7 @@
 #include <QPixmap>
 #include <QColor>
 #include <QFont>
+#include <QTextCodec>
 
 #include "LFileDialog.h"
 
@@ -58,6 +59,9 @@ void setupApplication(int argc, char **argv){
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
     App->installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
+    //Load current encoding for this locale
+    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
+    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
 }
 
 void showOSD(int argc, char **argv, QString message){
