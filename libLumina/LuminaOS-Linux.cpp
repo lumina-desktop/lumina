@@ -26,8 +26,8 @@ QStringList LOS::ExternalDevicePaths(){
 int LOS::ScreenBrightness(){
    //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
   if(screenbrightness==-1){
-    if(QFile::exists("/tmp/.lumina-currentxbrightness")){
-      int val = LUtils::readFile("/tmp/.lumina-currentxbrightness").join("").simplified().toInt();
+    if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){
+      int val = LUtils::readFile(QDir::homePath()+"/.lumina/.currentxbrightness").join("").simplified().toInt();
       screenbrightness = val;
     }
   }
@@ -49,7 +49,7 @@ void LOS::setScreenBrightness(int percent){
   //Save the result for later
   if(ret!=0){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
-  LUtils::writeFile("/tmp/.lumina-currentxbrightness", QStringList() << QString::number(screenbrightness), true);
+  LUtils::writeFile(QDir::homePath()+"/.lumina/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 
 }
 

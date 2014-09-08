@@ -15,6 +15,7 @@
 #include <QString>
 #include <QStringList>
 #include <QProcess>
+#include <QDir>
 
 #include "LuminaUtils.h"
 
