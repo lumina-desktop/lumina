@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+DH_VERBOSE = 1
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+%:
+	dh $@ 
+
+override_dh_auto_clean:
+	-$(MAKE) distclean
+	-find $(CURDIR) -name *.qm | xargs rm
+
+override_dh_strip:
+	dh_strip -a --dbg-package=libluminautils-dbg
+
+override_dh_auto_install:
+	INSTALL_ROOT=$(CURDIR)/debian/tmp/ $(MAKE) install
