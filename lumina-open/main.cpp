@@ -230,7 +230,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           //This is a directory link - adjust inputs
           inFile = DF.path;
           cmd.clear();
-          extension = "directorypath";
+          extension = "directory";
         }else{
           qDebug() << "[ERROR] Input *.desktop directory file is missing the Path line:" << inFile;
           exit(1);        	
@@ -251,7 +251,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   }
   //qDebug() << "Found Command:" << cmd << "Extension:" << extension;
   //Clean up the command appropriately for output
-  if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").simplified(); }
+  if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
   binary = cmd;
   if(useInputFile){ args = inFile; }
 }
