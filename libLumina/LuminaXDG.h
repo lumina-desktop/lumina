@@ -9,6 +9,7 @@
 // -- Current Implementation (OCT 2013) --
 // Desktop File Version Compliance: 1.0 (except "DBusActivatable")
 // Icon Theme Compliance: Built in to Qt (QIcon::fromTheme()) with "oxygen" theme default
+// *.desktop Exec Compliance Updated: 9/9/2014
 //===========================================
 
   

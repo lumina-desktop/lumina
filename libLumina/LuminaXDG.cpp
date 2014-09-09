@@ -235,8 +235,12 @@ QString LXDG::getDesktopExec(XDGDesktop app){
   else if(app.useTerminal){
     out = "xterm -lc -e "+app.exec;  
   }else{
-    out = app.exec;	  
+    out = app.exec;
   }
+  //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
+  if(out.contains(" %i ")){ out.replace(" %i ", " --icon "+app.icon+" "); }
+  if(out.contains(" %c ")){ out.replace(" %c ", " "+app.name+" "); }
+  if(out.contains(" %k ")){ out.replace(" %k ", " "+app.filePath+" "); }
   return out;
 }
 
