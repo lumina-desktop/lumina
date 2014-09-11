@@ -19,6 +19,7 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaUtils.cpp \
 	LuminaX11.cpp \ 
 	LuminaOS-FreeBSD.cpp \
+	LuminaOS-DragonFly.cpp \
 	LuminaOS-Linux.cpp
 #       new OS support can be added here
 
