@@ -18,7 +18,7 @@ SettingsMenu::SettingsMenu() : QMenu(){
   act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("Desktop"), this);
 	act->setWhatsThis("lumina-config");
 	this->addAction(act);
-  #ifdef __FreeBSD__
+  #if defined(__FreeBSD__) || defined(__DragonFly__)
   if(QFile::exists("/usr/local/bin/qtconfig-qt4")){
   #endif
   #ifdef __linux__
