@@ -224,7 +224,7 @@ void MainUI::setupMenus(){
   ui->combo_session_wloc->addItem( tr("Cascade"), "CascadePlacement");
   ui->combo_session_wloc->addItem( tr("Underneath Mouse"), "UnderMousePlacement");
   ui->combo_session_wtheme->clear();
-  #ifdef __FreeBSD__
+  #if defined(__FreeBSD__) || defined(__DragonFly__)
   QDir fbdir("/usr/local/share/fluxbox/styles");
   #endif
   #ifdef __linux__
