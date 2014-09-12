@@ -40,7 +40,8 @@ UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget
   connect(ui->tool_fav_dirs, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->combo_app_cats, SIGNAL(currentIndexChanged(int)), this, SLOT(updateApps()) );
   //Setup the special buttons
-  if(QFile::exists(APPSTORE)){
+  QString APPSTORE = LOS::AppStoreShortcut();
+  if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){
     //Now load the info
     bool ok = false;
     XDGDesktop store = LXDG::loadDesktopFile(APPSTORE, ok);
@@ -53,7 +54,8 @@ UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget
   }else{
     ui->tool_app_store->setVisible(false); //not available
   }
-  if(QFile::exists(CONTROLPANEL)){
+  QString CONTROLPANEL = LOS::ControlPanelShortcut();
+  if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
     //Now load the info
     bool ok = false;
     XDGDesktop cpan = LXDG::loadDesktopFile(CONTROLPANEL, ok);
@@ -65,7 +67,8 @@ UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget
   }else{
     ui->tool_controlpanel->setVisible(false); //not available
   }
-  if(QFile::exists(QTCONFIG)){
+  QString QTCONFIG = LOS::QtConfigShortcut();
+  if(QFile::exists(QTCONFIG) && !QTCONFIG.isEmpty()){
     ui->tool_qtconfig->setVisible(true);
     ui->tool_qtconfig->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
     connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );

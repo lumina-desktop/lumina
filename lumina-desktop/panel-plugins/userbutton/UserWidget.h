@@ -17,12 +17,12 @@
 #include <QScrollArea>
 
 #include <LuminaXDG.h>
-
+#include <LuminaOS.h>
 #include "UserItemWidget.h"
 
-#define APPSTORE QString("/usr/local/share/applications/softmanager.desktop")
-#define CONTROLPANEL QString("/usr/local/share/applications/pccontrol.desktop")
-#define QTCONFIG QString("/usr/local/bin/qtconfig-qt4")
+//#define APPSTORE QString("/usr/local/share/applications/softmanager.desktop")
+//#define CONTROLPANEL QString("/usr/local/share/applications/pccontrol.desktop")
+//#define QTCONFIG QString("/usr/local/bin/qtconfig-qt4")
 #define SSAVER QString("xscreensaver-demo")
 
 namespace Ui{
@@ -59,16 +59,16 @@ private slots:
 
 	//Slots for the special buttons
 	void openStore(){
-	  LaunchItem("lumina-open \""+APPSTORE+"\"");
+	  LaunchItem("lumina-open \""+LOS::AppStoreShortcut()+"\"");
 	}
 	void openControlPanel(){
-	  LaunchItem("lumina-open \""+CONTROLPANEL+"\"");
+	  LaunchItem("lumina-open \""+LOS::ControlPanelShortcut()+"\"");
 	}
 	void openDeskSettings(){
 	  LaunchItem("lumina-config");
 	}
 	void openQtConfig(){
-	  LaunchItem(QTCONFIG);
+	  LaunchItem( LOS::QtConfigShortcut() );
 	}
 	void openScreenSaverConfig(){
 	  LaunchItem(SSAVER);
