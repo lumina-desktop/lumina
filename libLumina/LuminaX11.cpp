@@ -550,18 +550,18 @@ int LX11::WindowDesktop(WId win){
 // ===== GetWindowState() =====
 LX11::WINDOWSTATE LX11::GetWindowState(WId win){
 
-  Display *disp = QX11Info::display(); /*
+  Display *disp = QX11Info::display(); 
   Atom SA = XInternAtom(disp, "_NET_WM_STATE", false);
   Atom ATTENTION = XInternAtom(disp, "_NET_WM_STATE_DEMANDS_ATTENTION", false);
   Atom SKIPP = XInternAtom(disp, "_NET_WM_STATE_SKIP_PAGER", false);
   Atom HIDDEN = XInternAtom(disp, "_NET_WM_STATE_HIDDEN", false);
   Atom SKIPT = XInternAtom(disp, "_NET_WM_STATE_SKIP_TASKBAR", false);
-  Atom MODAL = XInternAtom(disp, "_NET_WM_STATE_MODAL", false); */
-  //Atom type;
-  //int format;
-  //unsigned long num, bytes;
-  //unsigned char *data = 0;
-  /*
+  Atom MODAL = XInternAtom(disp, "_NET_WM_STATE_MODAL", false); 
+  Atom type;
+  int format;
+  unsigned long num, bytes;
+  unsigned char *data = 0;
+  
   int status = XGetWindowProperty( disp, win, SA, 0, ~(0L), false, AnyPropertyType,
   	  			&type, &format, &num, &bytes, &data);
 	
@@ -569,7 +569,7 @@ LX11::WINDOWSTATE LX11::GetWindowState(WId win){
   if(status >= Success && data){
     Atom *array = (Atom*) data;
     for(unsigned int i=0; i<num; i++){
-      if(forDisplay && (array[i] == SKIPP || array[i]==SKIPT || array[i]==MODAL) ){
+      if(array[i] == SKIPP || array[i]==SKIPT || array[i]==MODAL ){
       	state = LX11::IGNORE;
       	break;
       }else if(array[i]==HIDDEN){
@@ -582,8 +582,8 @@ LX11::WINDOWSTATE LX11::GetWindowState(WId win){
     }
     XFree(data);
   }
-  */
-  LX11::WINDOWSTATE state = LX11::VISIBLE;
+  
+  //LX11::WINDOWSTATE state = LX11::VISIBLE;
   if(state==LX11::VISIBLE){
     XWindowAttributes attr;
     if( 0 != XGetWindowAttributes(disp, win, &attr) ){
@@ -598,6 +598,18 @@ LX11::WINDOWSTATE LX11::GetWindowState(WId win){
       state = LX11::ACTIVE;
     }	    
   }
+  //(ALTERNATE) Also check whether the window has the URGENT flag set (override all other states)
+  if(state!= LX11::ATTENTION){
+    XWMHints *hints = XGetWMHints(disp, win);
+    if(hints!=0){
+      if(hints->flags & URGENCYHINT){
+        qDebug() <<  "Found Urgent Flag:";
+        state = LX11::ATTENTION;
+      }
+      XFree(hints);
+    }
+  }
+  
   return state;  	
 }
 

@@ -21,6 +21,10 @@
 
 class LOS{
 public:
+	//OS-specific prefix(s)
+	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
+	static QString SysPrefix(); //Prefix for system (/usr/ on FreeBSD)
+
 	//Scan for mounted external devices
 	static QStringList ExternalDevicePaths(); //Returns: QStringList[<type>::::<filesystem>::::<path>]
 	  //Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]

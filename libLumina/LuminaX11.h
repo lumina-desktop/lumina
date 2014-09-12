@@ -40,6 +40,8 @@
 #define SYSTEM_TRAY_BEGIN_MESSAGE 1
 #define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
+#define URGENCYHINT (1L << 8) //For window urgency detection
+
 class LX11{
 public:
 	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};

@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LuminaXDG.h"
+#include "LuminaOS.h"
 
 static QStringList mimeglobs;
 static qint64 mimechecktime;
@@ -273,12 +274,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     for(int i=0; i<xdd.length(); i++){
       paths << xdd[i]+"/icons";	    
     }
-    #ifdef __FreeBSD__
-    paths << "/usr/local/share/pixmaps";
-    #endif
-    #ifdef __linux__
-    paths << "/usr/share/pixmaps";
-    #endif
+    paths << LOS::AppPrefix()+"share/pixmaps";
     QIcon::setThemeSearchPaths(paths);
   }
   if(DEBUG){ qDebug() << "[LXDG] Icon search paths:" << paths; }
@@ -291,31 +287,16 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   //Try to load the icon from /usr/local/share/pixmaps
   if( ico.isNull() ){
     //qDebug() << "Could not find icon:" << iconName;
-    #ifdef __FreeBSD__
-    QDir base("/usr/local/share/pixmaps");
-    #endif
-    #ifdef __linux__
-    QDir base("/usr/share/pixmaps");
-    #endif
+    QDir base(LOS::AppPrefix()+"share/pixmaps");
     QStringList matches = base.entryList(QStringList() << "*"+iconName+"*", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     if( !matches.isEmpty() ){
-      #ifdef __FreeBSD__
-      ico = QIcon("/usr/local/share/pixmaps/"+matches[0]); //just use the first match
-      #endif
-      #ifdef __linux__
-      ico = QIcon("/usr/share/pixmaps/"+matches[0]); //just use the first match
-      #endif
+      ico = QIcon(base.absoluteFilePath(matches[0])); //just use the first match
     }else{
       //Fallback on a manual search over the default theme directories (hicolor, then oxygen)
       if( QDir::searchPaths("fallbackicons").isEmpty() ){
         //Set the fallback search paths
-        #ifdef __FreeBSD__
-        QString base = "/usr/local/share/icons/";
-        #endif
-        #ifdef __linux__
-        QString base = "/usr/share/icons/";
-        #endif
-        QDir::setSearchPaths("fallbackicons", QStringList() << getChildIconDirs(base+"hicolor") << getChildIconDirs(base+"oxygen") ); 
+	QString localbase = LOS::AppPrefix()+"share/icons/";
+        QDir::setSearchPaths("fallbackicons", QStringList() << getChildIconDirs(localbase+"hicolor") << getChildIconDirs(localbase+"oxygen") ); 
       }
       if(QFile::exists("fallbackicons:"+iconName+".png")){
         ico = QIcon("fallbackicons:"+iconName+".png");
