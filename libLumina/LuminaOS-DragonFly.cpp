@@ -11,6 +11,10 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
+//OS-specific prefix(s)
+QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
+QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
+
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
     //Returns: QStringList[<type>::::<filesystem>::::<path>]
