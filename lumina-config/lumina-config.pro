@@ -27,6 +27,13 @@ linux-g++-64 {
 } else {
   LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
 }
+
+openbsd-g++4 {
+  LRELEASE = lrelease4
+} else {
+  LRELEASE = lrelease-qt4
+}
+
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
@@ -94,6 +101,6 @@ TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_zu.ts
 
 dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && lrelease-qt4 -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
 
 INSTALLS += target dotrans

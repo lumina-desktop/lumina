@@ -10,6 +10,11 @@ DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
 
+openbsd-g++4 {
+  LRELEASE = lrelease4
+} else {
+  LRELEASE = lrelease-qt4
+}
 
 SOURCES += main.cpp \
 	WMProcess.cpp \
@@ -170,6 +175,6 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zu.ts
 
 dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && lrelease-qt4 -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
 
 INSTALLS += target desktop icons wallpapers defaults dotrans
