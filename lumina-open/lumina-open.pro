@@ -20,6 +20,12 @@ LIBS     += -L../libLumina -lLuminaUtils
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
+openbsd-g++4 {
+  LRELEASE = lrelease4
+} else {
+  LRELEASE = lrelease-qt4
+}
+
 TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_ar.ts \
                 i18n/lumina-open_az.ts \
@@ -84,6 +90,6 @@ TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_zu.ts
 
 dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && lrelease-qt4 -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
 
 INSTALLS += target dotrans
