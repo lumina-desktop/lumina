@@ -35,6 +35,8 @@
 #include <QImageReader>
 #include <QScrollBar>
 #include <QFileDialog>
+#include <QResizeEvent>
+#include <QDesktopWidget>
 
 //Phonon widgets
 #include <Phonon/BackendCapabilities>
@@ -192,6 +194,9 @@ private slots:
 	void CutItems();
 	void CopyItems();
 	void PasteItems();
+
+protected:
+	void resizeEvent(QResizeEvent*);
 
 };
 
