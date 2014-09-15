@@ -20,6 +20,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.startupNotify=false;
     DF.type = XDGDesktop::BAD;
     DF.filePath = filePath;
+    DF.exec = DF.tryexec = "";   // just to make sure this is initialized
   //Check input file path validity
   QFile file(filePath);
   if(!file.exists()){ return DF; } //invalid file
@@ -53,8 +54,8 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       if(DF.icon.isEmpty() && loc.isEmpty()){ DF.icon = val; }
       else if(loc == lang){ DF.icon = val; }
     }
-    else if(var=="TryExec"){ DF.tryexec = val; }
-    else if(var=="Exec"){ DF.exec = val; }
+    else if( (var=="TryExec") && (DF.tryexec != "") ) { DF.tryexec = val; }
+    else if( (var=="Exec") && (DF.exec != "") ){ DF.exec = val; }   // only take the first Exec command in the file
     else if(var=="NoDisplay" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Hidden" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Categories"){ DF.catList = val.split(";",QString::SkipEmptyParts); }
