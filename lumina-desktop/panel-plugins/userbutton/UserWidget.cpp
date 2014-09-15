@@ -75,7 +75,8 @@ UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget
   }else{
     ui->tool_qtconfig->setVisible(false);
   }
-  
+  lastUpdate = QDateTime::currentDateTime().addSecs(-30); //make sure it refreshes 
+  QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
 }
 
 UserWidget::~UserWidget(){
@@ -100,15 +101,19 @@ void UserWidget::ClearScrollArea(QScrollArea *area){
 //  PRIVATE SLOTS
 //============
 void UserWidget::UpdateMenu(){
-  ui->tabWidget->setCurrentWidget(ui->tab_fav);
-  ui->tool_fav_apps->setChecked(true);
-  ui->tool_fav_dirs->setChecked(false);
-  ui->tool_fav_files->setChecked(false);
-  cfav = 0; //favorite apps
-  updateFavItems();
-  updateHome();
-  updateAppCategories();
-  updateApps();
+  if(QDateTime::currentDateTime() > lastUpdate.addSecs(30)){
+    //Only re-arrange/reload things if not rapidly re-run
+    ui->tabWidget->setCurrentWidget(ui->tab_fav);
+    ui->tool_fav_apps->setChecked(true);
+    ui->tool_fav_dirs->setChecked(false);
+    ui->tool_fav_files->setChecked(false);
+    cfav = 0; //favorite apps
+    updateFavItems();
+    updateHome();
+    updateAppCategories();
+    updateApps();
+  }
+  lastUpdate = QDateTime::currentDateTime();
 }
 
 void UserWidget::LaunchItem(QString cmd){
@@ -170,7 +175,8 @@ void UserWidget::updateAppCategories(){
   cats.sort();
   for(int i=0; i<cats.length(); i++){
     QString name, icon;
-    if(cats[i] == "Multimedia"){ name = tr("Multimedia"); icon = "applications-multimedia"; }
+    if(cats[i] == "All"){ name = tr("All"); icon = "application-x-executable"; }
+    else if(cats[i] == "Multimedia"){ name = tr("Multimedia"); icon = "applications-multimedia"; }
     else if(cats[i] == "Development"){ name = tr("Development"); icon = "applications-development"; }
     else if(cats[i] == "Education"){ name = tr("Education"); icon = "applications-education"; }
     else if(cats[i] == "Game"){ name = tr("Games"); icon = "applications-games"; }
@@ -180,7 +186,7 @@ void UserWidget::updateAppCategories(){
     else if(cats[i] == "Science"){ name = tr("Science"); icon = "applications-science"; }
     else if(cats[i] == "Settings"){ name = tr("Settings"); icon = "preferences-system"; }
     else if(cats[i] == "System"){ name = tr("System"); icon = "applications-system"; }
-    else if(cats[i] == "Utility"){ name = tr("Utility"); icon = "applications-utilities"; }
+    else if(cats[i] == "Utility"){ name = tr("Utilities"); icon = "applications-utilities"; }
     else{ name = tr("Unsorted"); icon = "applications-other"; }
     ui->combo_app_cats->addItem( LXDG::findIcon(icon,""), name, cats[i] );
   }
