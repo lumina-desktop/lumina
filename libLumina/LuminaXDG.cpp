@@ -59,8 +59,8 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       if(DF.icon.isEmpty() && loc.isEmpty()){ DF.icon = val; }
       else if(loc == lang){ DF.icon = val; }
     }
-    else if( (var=="TryExec") && (DF.tryexec != "") ) { DF.tryexec = val; }
-    else if( (var=="Exec") && (DF.exec != "") ){ DF.exec = val; }   // only take the first Exec command in the file
+    else if( (var=="TryExec") && (DF.tryexec.isEmpty()) ) { DF.tryexec = val; }
+    else if( (var=="Exec") && (DF.exec.isEmpty() ) ) { DF.exec = val; }   // only take the first Exec command in the file
     else if(var=="NoDisplay" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Hidden" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Categories"){ DF.catList = val.split(";",QString::SkipEmptyParts); }
