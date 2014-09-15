@@ -31,8 +31,13 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   }
   QTextStream os(&file);
   //Read in the File
+  bool insection=false;
   while(!os.atEnd()){
     QString line = os.readLine();
+    //Check that this is the entry portion of the file (not the action/other sections)
+    if(line=="[Desktop Entry]"){ insection=true; continue; }
+    else if(line.startsWith("[")){ insection=false; }
+    if(!insection || line.startsWith("#")){ continue; }
     //Now parse out the file
     line = line.simplified();
     QString var = line.section("=",0,0).simplified();
