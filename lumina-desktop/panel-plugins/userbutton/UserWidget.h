@@ -15,6 +15,7 @@
 #include <QHash>
 #include <QVBoxLayout>
 #include <QScrollArea>
+#include <QDateTime>
 
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
@@ -40,6 +41,7 @@ public:
 private:
 	Ui::UserWidget *ui;
 	QHash<QString, QList<XDGDesktop> > *sysapps;
+	QDateTime lastUpdate;
 	int cfav; //current favorite category
 	void ClearScrollArea(QScrollArea *area);
 

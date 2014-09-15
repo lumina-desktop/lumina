@@ -551,33 +551,34 @@ int LX11::WindowDesktop(WId win){
 LX11::WINDOWSTATE LX11::GetWindowState(WId win){
 
   Display *disp = QX11Info::display(); 
-  Atom SA = XInternAtom(disp, "_NET_WM_STATE", false);
+  Atom SA = XInternAtom(disp, "_NET_WM_STATE", true);
   Atom ATTENTION = XInternAtom(disp, "_NET_WM_STATE_DEMANDS_ATTENTION", false);
   Atom SKIPP = XInternAtom(disp, "_NET_WM_STATE_SKIP_PAGER", false);
   Atom HIDDEN = XInternAtom(disp, "_NET_WM_STATE_HIDDEN", false);
   Atom SKIPT = XInternAtom(disp, "_NET_WM_STATE_SKIP_TASKBAR", false);
-  Atom MODAL = XInternAtom(disp, "_NET_WM_STATE_MODAL", false); 
+  //Atom MODAL = XInternAtom(disp, "_NET_WM_STATE_MODAL", false); 
   Atom type;
   int format;
   unsigned long num, bytes;
-  unsigned char *data = 0;
+  unsigned long *data = 0;
   
   int status = XGetWindowProperty( disp, win, SA, 0, ~(0L), false, AnyPropertyType,
-  	  			&type, &format, &num, &bytes, &data);
+  	  			&type, &format, &num, &bytes, (unsigned char**) &data);
 	
   LX11::WINDOWSTATE state = LX11::VISIBLE;
   if(status >= Success && data){
-    Atom *array = (Atom*) data;
     for(unsigned int i=0; i<num; i++){
-      if(array[i] == SKIPP || array[i]==SKIPT || array[i]==MODAL ){
+      if(data[i] == SKIPP || data[i]==SKIPT){
       	state = LX11::IGNORE;
+	//qDebug() << "Ignore Window:" << win;
       	break;
-      }else if(array[i]==HIDDEN){
-	qDebug() << "Hidden Window:" << win;
+      }else if(data[i]==HIDDEN){
+	//qDebug() << "Hidden Window:" << win;
 	state = LX11::INVISIBLE;
-      }else if(array[i]==ATTENTION){
-	qDebug() << "Attention Window: " << win;
+      }else if(data[i]==ATTENTION){
+	//qDebug() << "Attention Window: " << win;
 	state = LX11::ATTENTION;
+	break; //This state has priority over others
       }
     }
     XFree(data);

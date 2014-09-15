@@ -32,7 +32,9 @@ QHash<QString, QList<XDGDesktop> >* AppMenu::currentAppHash(){
 void AppMenu::updateAppList(){
   this->clear();
   APPS.clear();
-  APPS = LXDG::sortDesktopCats( LXDG::systemDesktopFiles() );
+  QList<XDGDesktop> allfiles = LXDG::systemDesktopFiles();
+  APPS = LXDG::sortDesktopCats(allfiles);
+  APPS.insert("All", LXDG::sortDesktopNames(allfiles));
   //Now fill the menu
   bool ok; //for checking inputs
     //Add link to the file manager
@@ -54,7 +56,8 @@ void AppMenu::updateAppList(){
     for(int i=0; i<cats.length(); i++){
       //Make sure they are translated and have the right icons
       QString name, icon;
-      if(cats[i] == "Multimedia"){ name = tr("Multimedia"); icon = "applications-multimedia"; }
+      if(cats[i]=="All"){continue; } //skip this listing for the menu
+      else if(cats[i] == "Multimedia"){ name = tr("Multimedia"); icon = "applications-multimedia"; }
       else if(cats[i] == "Development"){ name = tr("Development"); icon = "applications-development"; }
       else if(cats[i] == "Education"){ name = tr("Education"); icon = "applications-education"; }
       else if(cats[i] == "Game"){ name = tr("Games"); icon = "applications-games"; }

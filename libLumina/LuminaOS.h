@@ -25,6 +25,11 @@ public:
 	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
 	static QString SysPrefix(); //Prefix for system (/usr/ on FreeBSD)
 
+	//OS-specific application shortcuts (*.desktop files)
+	static QString ControlPanelShortcut();
+	static QString AppStoreShortcut();
+	static QString QtConfigShortcut();
+
 	//Scan for mounted external devices
 	static QStringList ExternalDevicePaths(); //Returns: QStringList[<type>::::<filesystem>::::<path>]
 	  //Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]

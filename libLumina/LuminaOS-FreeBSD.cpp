@@ -15,7 +15,12 @@ static int screenbrightness = -1;
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
-	
+
+//OS-specific application shortcuts (*.desktop files)
+QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
+QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/softmanager.desktop"; } //graphical app/pkg manager
+QString LOS::QtConfigShortcut(){ return "/usr/local/bin/qtconfig-qt4"; } //qtconfig binary (NOT *.desktop file)
+
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
     //Returns: QStringList[<type>::::<filesystem>::::<path>]

@@ -12,6 +12,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings( QSettings::UserScope, "LuminaDE", "lumina-fm", this);
+  //Reset the UI to the previously used size (if possible)
+  int height = settings->value("geometry/height",-1).toInt();
+  if(height>100 && height <= QApplication::desktop()->availableGeometry(this).height()){ this->resize(this->width(), height); }
+  int width = settings->value("geometry/width",-1).toInt();
+  if(width>100 && width <= QApplication::desktop()->availableGeometry(this).width()){ this->resize(width, this->height() ); }
   //initialize the non-ui widgets
   tabBar = new QTabBar(this);
     tabBar->setTabsClosable(true);
@@ -1221,4 +1226,10 @@ void MainUI::PasteItems(){
     }
   }
 	
+}
+
+void MainUI::resizeEvent(QResizeEvent *event){
+  //Save the new size internally
+  settings->setValue("geometry/height", event->size().height());
+  settings->setValue("geometry/width", event->size().width());
 }
