@@ -222,7 +222,7 @@ QList<XDGDesktop> LXDG::sortDesktopNames(QList<XDGDesktop> apps){
   //Sort the list by name of the application
   QHash<QString, XDGDesktop> sorter;
   for(int i=0; i<apps.length(); i++){
-    sorter.insert(apps[i].name, apps[i]);	  
+    sorter.insert(apps[i].name.toLower(), apps[i]);	  
   }
   QStringList keys = sorter.keys();
   keys.sort();
