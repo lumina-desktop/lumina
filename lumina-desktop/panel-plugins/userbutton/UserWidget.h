@@ -16,6 +16,9 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QDateTime>
+#include <QTransform>
+#include <QMouseEvent>
+#include <QTabWidget>
 
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
@@ -30,7 +33,7 @@ namespace Ui{
 	class UserWidget;
 };
 
-class UserWidget : public QWidget{
+class UserWidget : public QTabWidget{
 	Q_OBJECT
 public:
 	UserWidget(QWidget *parent=0);
@@ -45,6 +48,7 @@ private:
 	QDateTime lastUpdate;
 	int cfav; //current favorite category
 	void ClearScrollArea(QScrollArea *area);
+	QIcon rotateIcon(QIcon);
 
 private slots:
 	void LaunchItem(QString cmd);
@@ -76,6 +80,9 @@ private slots:
 	void openScreenSaverConfig(){
 	  LaunchItem(SSAVER);
 	}
+
+protected:
+	void mouseMoveEvent( QMouseEvent *event);
 
 signals:
 	void CloseMenu();

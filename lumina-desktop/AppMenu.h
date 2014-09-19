@@ -16,6 +16,7 @@
 #include <QString>
 #include <QList>
 #include <QTimer>
+#include <QDateTime>
 #include <QHash>
 #include <QAction>
 //#include <QProcess>
@@ -30,6 +31,7 @@ public:
 	~AppMenu();
 	
 	QHash<QString, QList<XDGDesktop> > *currentAppHash();
+	QDateTime lastHashUpdate;
 
 private:
 	QFileSystemWatcher *watcher;

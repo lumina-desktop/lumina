@@ -35,6 +35,7 @@ void AppMenu::updateAppList(){
   QList<XDGDesktop> allfiles = LXDG::systemDesktopFiles();
   APPS = LXDG::sortDesktopCats(allfiles);
   APPS.insert("All", LXDG::sortDesktopNames(allfiles));
+  lastHashUpdate = QDateTime::currentDateTime();
   //Now fill the menu
   bool ok; //for checking inputs
     //Add link to the file manager

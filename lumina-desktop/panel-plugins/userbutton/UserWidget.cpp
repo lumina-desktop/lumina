@@ -9,23 +9,24 @@
 #include "../../LSession.h"
 #include "../../AppMenu.h"
 
-UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget){
+UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWidget){
   ui->setupUi(this);
-  this->setContentsMargins(0,0,0,0);
+  if(parent!=0){ parent->setMouseTracking(true); }
+  this->setMouseTracking(true);
   sysapps = LSession::applicationMenu()->currentAppHash(); //get the raw info
   //Setup the Icons
     // - favorites tab
-    ui->tabWidget->setTabIcon(0, LXDG::findIcon("favorites","") );
-    ui->tabWidget->setTabText(0,"");
+    this->setTabIcon(0, rotateIcon(LXDG::findIcon("favorites","")) );
+    this->setTabText(0,"");
     // - apps tab
-    ui->tabWidget->setTabIcon(1, LXDG::findIcon("system-run","") );
-    ui->tabWidget->setTabText(1,"");
+    this->setTabIcon(1, rotateIcon(LXDG::findIcon("system-run","")) );
+    this->setTabText(1,"");
     // - home tab
-    ui->tabWidget->setTabIcon(2, LXDG::findIcon("user-home","") );
-    ui->tabWidget->setTabText(2,"");
+    this->setTabIcon(2, rotateIcon(LXDG::findIcon("user-home","")) );
+    this->setTabText(2,"");
     // - config tab
-    ui->tabWidget->setTabIcon(3, LXDG::findIcon("preferences-system","") );
-    ui->tabWidget->setTabText(3,"");
+    this->setTabIcon(3, rotateIcon(LXDG::findIcon("preferences-system","")) );
+    this->setTabText(3,"");
   ui->tool_fav_apps->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_fav_dirs->setIcon( LXDG::findIcon("folder","") );
   ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
@@ -75,7 +76,7 @@ UserWidget::UserWidget(QWidget* parent) : QWidget(parent), ui(new Ui::UserWidget
   }else{
     ui->tool_qtconfig->setVisible(false);
   }
-  lastUpdate = QDateTime::currentDateTime().addSecs(-30); //make sure it refreshes 
+  lastUpdate = QDateTime(); //make sure it refreshes 
   QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
 }
 
@@ -97,19 +98,28 @@ void UserWidget::ClearScrollArea(QScrollArea *area){
     area->widget()->setLayout(layout);
 }
 
+QIcon UserWidget::rotateIcon(QIcon ico){
+  //Rotate the given icon to appear vertical in the tab widget
+  QPixmap pix = ico.pixmap(32,32);
+  QTransform tran;
+    tran.rotate(+90); //For tabs on the left/West
+  pix = pix.transformed(tran);
+  ico = QIcon(pix);
+  return ico;
+}
+
 //============
 //  PRIVATE SLOTS
 //============
 void UserWidget::UpdateMenu(){
-  if(QDateTime::currentDateTime() > lastUpdate.addSecs(30)){
-    //Only re-arrange/reload things if not rapidly re-run
-    ui->tabWidget->setCurrentWidget(ui->tab_fav);
+    this->setCurrentWidget(ui->tab_fav);
     ui->tool_fav_apps->setChecked(true);
     ui->tool_fav_dirs->setChecked(false);
     ui->tool_fav_files->setChecked(false);
     cfav = 0; //favorite apps
     updateFavItems();
     updateHome();
+  if(lastUpdate < LSession::applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
     updateAppCategories();
     updateApps();
   }
@@ -221,4 +231,13 @@ void UserWidget::updateHome(){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
   }
   static_cast<QBoxLayout*>(ui->scroll_home->widget()->layout())->addStretch();
+}
+
+void UserWidget::mouseMoveEvent( QMouseEvent *event){
+  QTabBar *wid = tabBar();
+  qDebug() << "Mouse Move Event:";
+  if(wid && wid->tabAt(event->pos()) != -1){
+    qDebug() << " - Mouse over tab";
+    this->setCurrentIndex( wid->tabAt(event->pos()) );
+  }
 }
