@@ -131,6 +131,11 @@ void LOS::startMixerUtility(){
   QProcess::startDetached("pc-mixer -notray");
 }
 
+//Check for user system permission (shutdown/restart)
+bool LOS::userHasShutdownAccess(){
+  return true; //not implemented yet
+}
+
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("shutdown -p now");

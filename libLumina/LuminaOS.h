@@ -51,6 +51,8 @@ public:
 	//Launch the graphical audio mixer utility
 	static void startMixerUtility();
 
+	//Check for user system permission (shutdown/restart)
+	static bool userHasShutdownAccess();
 	//System Shutdown
 	static void systemShutdown(); //start poweroff sequence
 	//System Restart

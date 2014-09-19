@@ -64,6 +64,11 @@ void LOS::startMixerUtility(){
   //not implemented yet
 }
 
+//Check for user system permission (shutdown/restart)
+bool LOS::userHasShutdownAccess(){
+  return false; //not implemented yet
+}
+	
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("shutdown -p now");

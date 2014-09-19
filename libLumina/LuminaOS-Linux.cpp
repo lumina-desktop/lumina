@@ -114,6 +114,11 @@ void LOS::startMixerUtility(){
   QProcess::startDetached("/usr/bin/pavucontrol");
 }
 
+//Check for user system permission (shutdown/restart)
+bool LOS::userHasShutdownAccess(){
+  return true; //not implemented yet
+}
+
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("shutdown -h now");

@@ -20,6 +20,11 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   connect(ui->tool_shutdown, SIGNAL(clicked()), this, SLOT(sysShutdown()) );
   connect(ui->push_cancel, SIGNAL(clicked()), this, SLOT(sysCancel()) );
   connect(ui->push_lock, SIGNAL(clicked()), this, SLOT(sysLock()) );
+  //Disable the shutdown/restart buttons if necessary
+  if( !LOS::userHasShutdownAccess() ){
+    ui->tool_restart->setEnabled(false);
+    ui->tool_shutdown->setEnabled(false);
+  }
   //Center this window on the screen
   QDesktopWidget desktop;
   this->move(desktop.screenGeometry().width()/2 - this->width()/2, desktop.screenGeometry().height()/2 - this->height()/2);

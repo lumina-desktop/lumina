@@ -142,6 +142,11 @@ void LOS::startMixerUtility(){
   //Not implemented yet for OpenBSD
 }
 
+//Check for user system permission (shutdown/restart)
+bool LOS::userHasShutdownAccess(){
+  return true; //not implemented yet
+}
+
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("shutdown -hp now");
