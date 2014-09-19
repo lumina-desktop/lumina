@@ -36,6 +36,7 @@ public:
 	UserWidget(QWidget *parent=0);
 	~UserWidget();
 
+public slots:
 	void UpdateMenu();
 
 private:

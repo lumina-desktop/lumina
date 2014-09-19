@@ -135,6 +135,13 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="push_lock">
+          <property name="text">
+           <string>Lock Screen</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

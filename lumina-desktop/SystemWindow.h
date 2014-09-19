@@ -5,6 +5,7 @@
 #include <QCoreApplication>
 #include <QDesktopWidget>
 #include <QList>
+#include <QProcess>
 
 #include "ui_SystemWindow.h"
 #include "Globals.h"
@@ -49,6 +50,12 @@ private slots:
 	}
 	
 	void sysCancel(){
+	  this->close();
+	}
+	
+	void sysLock(){
+	  qDebug() << "Locking the desktop...";
+	  QProcess::startDetached("xscreensaver-command -lock");
 	  this->close();
 	}
 };
