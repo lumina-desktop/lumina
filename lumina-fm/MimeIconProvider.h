@@ -27,7 +27,7 @@ public:
 	  if(info.isDir()){
 	    return LXDG::findIcon("folder","");
 	  }else if(info.isFile()){
-	    if(info.suffix()=="png" || info.suffix()=="jpg"){
+	    if(info.suffix().toLower()=="png" || info.suffix().toLower()=="jpg"){
 	      return QIcon(info.absoluteFilePath());
 	    }else{
 	      return LXDG::findMimeIcon(info.suffix());
