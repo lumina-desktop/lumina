@@ -33,8 +33,6 @@
 #define PREFIX QString("/usr/local")
 #endif
 
-static QApplication *App = 0;
-
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
   qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags."; 	
@@ -47,8 +45,8 @@ void printUsageInfo(){
   exit(1);	
 }
 
-void setupApplication(int argc, char **argv){
-  App = new QApplication(argc, argv);
+/*QApplication setupApplication(int argc, char **argv){
+  QApplication App(argc, argv);
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
@@ -57,17 +55,28 @@ void setupApplication(int argc, char **argv){
       langCode.truncate( langCode.indexOf("_") ); 
     }
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
-    App->installTranslator( &translator );
+    App.installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
     //Load current encoding for this locale
     QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
     qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
-}
+    return App;
+}*/
 
 void showOSD(int argc, char **argv, QString message){
-  setupApplication(argc, argv);
-  //qDebug() << "Display OSD";
-  
+  //Setup the application
+  QApplication App(argc, argv);
+    QTranslator translator;
+    QLocale mylocale;
+    QString langCode = mylocale.name();
+    
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
+      langCode.truncate( langCode.indexOf("_") ); 
+    }
+    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    App.installTranslator( &translator );
+
+  //Display the OSD
   QPixmap pix(":/icons/OSD.png");
   QSplashScreen splash(pix, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
      splash.setWindowTitle("");
@@ -81,7 +90,7 @@ void showOSD(int argc, char **argv, QString message){
   splash.showMessage(message, Qt::AlignCenter, Qt::white);
   //qDebug() << " - loop";
   QDateTime end = QDateTime::currentDateTime().addMSecs(800);
-  while(QDateTime::currentDateTime() < end){ App->processEvents(); }
+  while(QDateTime::currentDateTime() < end){ App.processEvents(); }
   splash.hide();
 }
 
@@ -107,7 +116,22 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     }
 
     //No default set -- Start up the application selection dialog
-    setupApplication(argc,argv);
+    QApplication App(argc, argv);
+    QTranslator translator;
+    QLocale mylocale;
+    QString langCode = mylocale.name();
+    
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
+      langCode.truncate( langCode.indexOf("_") ); 
+    }
+    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    App.installTranslator( &translator );
+    qDebug() << "Locale:" << langCode;
+    
+    //Load current encoding for this locale
+    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
+    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
+    
     LFileDialog w;
     if(inFile.startsWith(extension)){
       //URL
@@ -120,7 +144,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     
     w.show();
 
-    App->exec();
+    App.exec();
     if(!w.appSelected){ exit(1); }
     //Return the run path if appropriate
     if(!w.appPath.isEmpty()){ path = w.appPath; }
