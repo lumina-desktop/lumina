@@ -24,7 +24,8 @@ RUN_DEPENDS=	fluxbox:${PORTSDIR}/x11-wm/fluxbox \
 		numlockx:${PORTSDIR}/x11/numlockx \
 		phonon-gstreamer>=0:${PORTSDIR}/multimedia/phonon-gstreamer \
 		gstreamer-plugins-ogg>=0:${PORTSDIR}/audio/gstreamer-plugins-ogg
-LIB_DEPENDS=	libQtSolutions_SingleApplication-head.so:${PORTSDIR}/devel/qt4-qtsolutions-singleapplication
+LIB_DEPENDS=	libQtSolutions_SingleApplication-head.so:${PORTSDIR}/devel/qt4-qtsolutions-singleapplication \
+		libjpeg.so:${PORTSDIR}/graphics/jpeg
 
 MAKE_JOBS_UNSAFE=yes
 ONLY_FOR_ARCHS=	amd64
