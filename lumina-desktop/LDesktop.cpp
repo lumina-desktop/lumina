@@ -303,12 +303,12 @@ void LDesktop::DesktopPluginRemoved(QString ID){
       //qDebug() << "- found ID";
       //Delete the plugin container first
       QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-      for(int i=0; i<wins.length(); i++){
-	if(wins[i]->whatsThis()==ID || wins[i]->whatsThis().isEmpty()){
+      for(int j=0; j<wins.length(); j++){
+	if(wins[j]->whatsThis()==ID || wins[j]->whatsThis().isEmpty()){
           //wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
-          bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
-          bgDesktop->removeSubWindow(wins[i]); //remove container from screen
-          delete wins[i]; //delete old container
+          bgDesktop->removeSubWindow(wins[j]->widget()); //unhook plugin from container
+          bgDesktop->removeSubWindow(wins[j]); //remove container from screen
+          delete wins[j]; //delete old container
 	}
       }
       //Now delete the plugin itself

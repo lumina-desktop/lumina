@@ -86,7 +86,7 @@ RESOURCES+= Lumina-DE.qrc
 INCLUDEPATH += ../libLumina /usr/local/include
 
 desktop.files = Lumina-DE.desktop
-linux-g++-64 {
+linux-* {
 desktop.path = /usr/share/xsessions
 } else {
 desktop.path = /usr/local/share/xsessions
