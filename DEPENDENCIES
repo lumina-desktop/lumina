@@ -41,7 +41,7 @@ X.org and XLib with extensions:
   
 === Linux Requirements ===
   These packages are required for building Lumina on Linux
-  g++ (or clang, either compiler should work)
+  build-essential (this supplies g++, though clang should work too)
   qt4-qmake
   libqt4-core
   libqt4-dev
