@@ -9,7 +9,16 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 %:
-	dh $@ 
+	dh $@
+
+build:
+	qmake-qt4
+	(cd libLumina && qmake-qt4)
+	(cd lumina-config && qmake-qt4)
+	(cd lumina-desktop && qmake-qt4)
+	(cd lumina-fm && qmake-qt4)
+	(cd lumina-open && qmake-qt4)
+	(cd lumina-screenshot && qmake-qt4)
 
 override_dh_auto_clean:
 	-$(MAKE) distclean
