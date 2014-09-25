@@ -1,9 +1,7 @@
 #include <QTranslator>
-#ifdef __linux
-   // #include <QtSolutions/qtsingleapplication.h>
-#else
+#ifdef __FreeBSD__
   #include <qtsingleapplication.h>
-#endif // #ifdef __linux
+#endif
 #include <QtGui/QApplication>
 #include <QDebug>
 #include <QFile>
@@ -22,13 +20,13 @@ int main(int argc, char ** argv)
       in << QString(argv[i]);
     }
     if(in.isEmpty()){ in << QDir::homePath(); }
-    #ifdef __linux
-    QApplication a(argc, argv);
-    #else
+    #ifdef __FreeBSD__
     QtSingleApplication a(argc, argv);
     if( a.isRunning() ){
       return !(a.sendMessage(in.join("\n")));
     }
+    #else
+    QApplication a(argc, argv);
     #endif
     a.setApplicationName("Insight File Manager");
     //Load current Locale
