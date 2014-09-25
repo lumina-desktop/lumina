@@ -1,9 +1,8 @@
 #include <QTranslator>
-#ifdef __linux
-   // #include <QtSolutions/qtsingleapplication.h>
-#else
+
+#ifdef __FreeBSD__
   #include <qtsingleapplication.h>
-#endif // #ifdef __linux
+#endif
 #include <QtGui/QApplication>
 #include <QDebug>
 #include <QFile>
@@ -16,7 +15,7 @@
 
 int main(int argc, char ** argv)
 {
-    #ifdef __linux
+    #ifndef __FreeBSD__
     QApplication a(argc, argv);
     #else
     QtSingleApplication a(argc, argv);
