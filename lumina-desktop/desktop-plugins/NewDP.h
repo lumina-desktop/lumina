@@ -25,7 +25,8 @@ public:
 	    plug = new SamplePlugin(parent, plugin);
 	  }else if(plugin.section("---",0,0)=="calendar"){
 	    plug = new CalendarPlugin(parent, plugin);
-	  }else if(plugin.section("---",0,0)=="applauncher"){
+	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
+	    //This plugin can be pre-initialized to a file path after the "::" delimiter
 	    plug = new AppLauncherPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";

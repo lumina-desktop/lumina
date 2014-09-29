@@ -15,25 +15,24 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir) : 
     if(ok){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(30,30) );
       name->setText( item.name );
-      icon->setWhatsThis(item.filePath);
     }else{
       icon->setPixmap( LXDG::findIcon("unknown","").pixmap(30,30) );
       name->setText( itemPath.section("/",-1) );
-      icon->setWhatsThis(itemPath);
     }
   }else if(isDir){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     icon->setPixmap( LXDG::findIcon("folder","").pixmap(30,30) );
-    name->setText( itemPath.section("/",-1) );
-    icon->setWhatsThis(itemPath);	  
+    name->setText( itemPath.section("/",-1) );	  
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(30,30) );
     name->setText( itemPath.section("/",-1) );
-    icon->setWhatsThis(itemPath);	
   }
-  if(isDir && !QFile::symLinkTarget(itemPath).isEmpty()){ isDir = false; } //not a real directory - just a sym link
+  linkPath = QFile::symLinkTarget(itemPath);
+  icon->setWhatsThis(itemPath);
+  if(isDir && !linkPath.isEmpty()){ isDir = false; } //not a real directory - just a sym link
   isDirectory = isDir; //save this for later
+  isShortcut = itemPath.contains("/home/") && (itemPath.contains("/Desktop/") || itemPath.contains("/.lumina/favorites/") );
   //Now setup the button appropriately
   setupButton();
 }
@@ -41,6 +40,8 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir) : 
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   createWidget();
   isDirectory = false;
+  linkPath = QFile::symLinkTarget(item.filePath);
+  isShortcut = item.filePath.contains("/home/") && (item.filePath.contains("/Desktop/") || item.filePath.contains("/.lumina/favorites/") );
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(30,30) );
   name->setText( item.name );
@@ -77,13 +78,18 @@ void UserItemWidget::createWidget(){
 }
 
 void UserItemWidget::setupButton(){
-  if( !isDirectory && icon->whatsThis().contains("/home/") && icon->whatsThis().contains("/Desktop/")){
+  if( !isDirectory && isShortcut ){
     //This is a current desktop shortcut -- allow the user to remove it
     button->setWhatsThis("remove");
-    button->setIcon( LXDG::findIcon("list-remove","") );
-    button->setToolTip(tr("Remove Shortcut"));
+    if(!linkPath.isEmpty()){
+      button->setIcon( LXDG::findIcon("list-remove","") );
+      button->setToolTip(tr("Remove Shortcut"));
+    }else{
+      button->setIcon( LXDG::findIcon("user-trash","") );
+      button->setToolTip(tr("Delete File"));
+    }
     connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  }else if( !isDirectory && !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) ){
+  }else if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !QFile::exists( QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) ) ){
     //This file does not have a desktop shortcut yet -- allow the user to add it
     button->setWhatsThis("add");
     button->setIcon( LXDG::findIcon("favorites","") );    
@@ -98,14 +104,16 @@ void UserItemWidget::setupButton(){
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
   if(button->whatsThis()=="add"){ 
-    QFile::link(icon->whatsThis(), QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) );
+    QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
     emit NewShortcut(); 
   }else if(button->whatsThis()=="remove"){ 
-    QFile::remove(icon->whatsThis());
+    QFile::remove(icon->whatsThis()); //never remove the linkPath - since that is the actual file/dir
     emit RemovedShortcut(); 
   }
 }
 
 void UserItemWidget::ItemClicked(){
-  emit RunItem("lumina-open \""+icon->whatsThis()+"\"" );
+  if(!linkPath.isEmpty()){ emit RunItem("lumina-open \""+linkPath+"\"" ); }
+  else{ emit RunItem("lumina-open \""+icon->whatsThis()+"\"" ); }
+  
 }

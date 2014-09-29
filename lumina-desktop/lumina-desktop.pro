@@ -36,7 +36,8 @@ SOURCES += main.cpp \
 	panel-plugins/battery/LBattery.cpp \
 	panel-plugins/desktopswitcher/LDesktopSwitcher.cpp \
 	panel-plugins/systemdashboard/LSysDashboard.cpp \
-	panel-plugins/systemdashboard/SysMenuQuick.cpp 
+	panel-plugins/systemdashboard/SysMenuQuick.cpp \
+	desktop-plugins/applauncher/AppLauncherPlugin.cpp
 #	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
 #	desktop-plugins/desktopview/DeskItem.cpp
 

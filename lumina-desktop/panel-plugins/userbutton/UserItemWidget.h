@@ -32,7 +32,8 @@ public:
 private:
 	QToolButton *button;
 	QLabel *icon, *name;
-	bool isDirectory;
+	bool isDirectory, isShortcut;
+	QString linkPath;
 	
 	void createWidget();
 	void setupButton();

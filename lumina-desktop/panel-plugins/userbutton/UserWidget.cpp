@@ -157,19 +157,26 @@ void UserWidget::FavChanged(){
 
 void UserWidget::updateFavItems(){
   ClearScrollArea(ui->scroll_fav);
-  QStringList items;
+  QFileInfoList items;
   QDir homedir = QDir( QDir::homePath()+"/Desktop");
-  if(ui->tool_fav_apps->isChecked()){ items = homedir.entryList(QStringList()<<"*.desktop", QDir::Files | QDir::NoDotAndDotDot, QDir::Name); }
-  else if(ui->tool_fav_dirs->isChecked()){ items = homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); }
-  else{ 
+  QDir favdir = QDir( QDir::homePath()+"/.lumina/favorites");
+  if(!favdir.exists()){ favdir.mkpath( QDir::homePath()+"/.lumina/favorites"); }
+  if(ui->tool_fav_apps->isChecked()){ 
+    items = homedir.entryInfoList(QStringList()<<"*.desktop", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    items << favdir.entryInfoList(QStringList()<<"*.desktop", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+  }else if(ui->tool_fav_dirs->isChecked()){ 
+    items = homedir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    items << favdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+  }else{ 
     //Files
-    items = homedir.entryList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);  
+    items = homedir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    items << favdir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     for(int i=0; i<items.length(); i++){
-      if(items[i].endsWith(".desktop")){ items.removeAt(i); i--; }
+      if(items[i].suffix()=="desktop"){ items.removeAt(i); i--; }
     }
   }
   for(int i=0; i<items.length(); i++){
-    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), homedir.absoluteFilePath(items[i]), ui->tool_fav_dirs->isChecked());
+    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), items[i].absoluteFilePath(), ui->tool_fav_dirs->isChecked());
     ui->scroll_fav->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
