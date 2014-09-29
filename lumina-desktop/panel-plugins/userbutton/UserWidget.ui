@@ -17,7 +17,7 @@
    <enum>QTabWidget::West</enum>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>2</number>
   </property>
   <widget class="QWidget" name="tab_fav">
    <attribute name="title">
@@ -161,8 +161,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>262</width>
-         <height>245</height>
+         <width>96</width>
+         <height>26</height>
         </rect>
        </property>
       </widget>
@@ -178,6 +178,12 @@
     <string>System Applications</string>
    </attribute>
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <property name="margin">
+     <number>1</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -252,8 +258,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>252</width>
-         <height>231</height>
+         <width>96</width>
+         <height>26</height>
         </rect>
        </property>
       </widget>
@@ -269,6 +275,119 @@
     <string>Home Directory</string>
    </attribute>
    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <property name="margin">
+     <number>1</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="tool_home_goup">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Go back</string>
+        </property>
+        <property name="text">
+         <string notr="true">up</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_home_gohome">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Go back to home directory</string>
+        </property>
+        <property name="text">
+         <string notr="true">home</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_home_dir">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">&lt;current dir&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="margin">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_home_browse">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Open Directory</string>
+        </property>
+        <property name="text">
+         <string notr="true">Browse</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item>
      <widget class="QScrollArea" name="scroll_home">
       <property name="widgetResizable">
@@ -279,8 +398,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>252</width>
-         <height>269</height>
+         <width>262</width>
+         <height>245</height>
         </rect>
        </property>
       </widget>

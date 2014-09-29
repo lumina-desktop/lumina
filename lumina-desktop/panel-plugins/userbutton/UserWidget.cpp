@@ -32,6 +32,9 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
   ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
   ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
+  ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
+  ui->tool_home_goup->setIcon( LXDG::findIcon("go-previous","") );
+  ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
 
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
@@ -40,6 +43,10 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->tool_fav_files, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->tool_fav_dirs, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->combo_app_cats, SIGNAL(currentIndexChanged(int)), this, SLOT(updateApps()) );
+  connect(ui->tool_home_gohome, SIGNAL(clicked()), this, SLOT(slotGoHome()) );
+  connect(ui->tool_home_goup, SIGNAL(clicked()), this, SLOT(slotGoUp()) );
+  connect(ui->tool_home_browse, SIGNAL(clicked()), this, SLOT(slotOpenDir()) );
+  
   //Setup the special buttons
   QString APPSTORE = LOS::AppStoreShortcut();
   if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){
@@ -118,6 +125,7 @@ void UserWidget::UpdateMenu(){
     ui->tool_fav_files->setChecked(false);
     cfav = 0; //favorite apps
     updateFavItems();
+    ui->label_home_dir->setWhatsThis(QDir::homePath());
     updateHome();
   if(lastUpdate < LSession::applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
     updateAppCategories();
@@ -126,10 +134,11 @@ void UserWidget::UpdateMenu(){
   lastUpdate = QDateTime::currentDateTime();
 }
 
-void UserWidget::LaunchItem(QString cmd){
-  if(!cmd.isEmpty()){
-    qDebug() << "Launch Application:" << cmd;
-    LSession::LaunchApplication(cmd);
+void UserWidget::LaunchItem(QString path, bool fix){
+  if(!path.isEmpty()){
+    qDebug() << "Launch Application:" << path;
+    if(fix){ LSession::LaunchApplication("lumina-open \""+path+"\""); }
+    else{ LSession::LaunchApplication(path); }
     emit CloseMenu(); //so the menu container will close
   }
 }
@@ -227,19 +236,48 @@ void UserWidget::updateApps(){
 //Home Tab
 void UserWidget::updateHome(){
   ClearScrollArea(ui->scroll_home);
-  QDir homedir = QDir::home();
+  QDir homedir(ui->label_home_dir->whatsThis());
+  if(QDir::homePath() == homedir.absolutePath()){
+    ui->label_home_dir->setText(tr("Home"));
+    ui->tool_home_gohome->setVisible(false);
+    ui->tool_home_goup->setVisible(false);
+  }else{
+    ui->label_home_dir->setText(homedir.dirName());
+    ui->tool_home_gohome->setVisible(true);
+    ui->tool_home_goup->setVisible(true);
+  }
+  ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
   QStringList items = homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); 
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), true);
     ui->scroll_home->widget()->layout()->addWidget(it);
-    connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+    connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
   }
   static_cast<QBoxLayout*>(ui->scroll_home->widget()->layout())->addStretch();
 }
 
+void UserWidget::slotGoToDir(QString dir){
+  ui->label_home_dir->setWhatsThis(dir);
+  updateHome();
+}
+	
+void UserWidget::slotGoHome(){
+  slotGoToDir(QDir::homePath());
+}
+	
+void UserWidget::slotGoUp(){
+  QString dir = ui->label_home_dir->whatsThis();
+    dir.chop( dir.section("/",-1).length() );
+  slotGoToDir(dir);		
+}
+	
+void UserWidget::slotOpenDir(){
+  LaunchItem(ui->label_home_dir->whatsThis());
+}
+	
 void UserWidget::mouseMoveEvent( QMouseEvent *event){
   QTabBar *wid = tabBar();
   qDebug() << "Mouse Move Event:";

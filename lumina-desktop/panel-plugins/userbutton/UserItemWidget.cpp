@@ -113,7 +113,7 @@ void UserItemWidget::buttonClicked(){
 }
 
 void UserItemWidget::ItemClicked(){
-  if(!linkPath.isEmpty()){ emit RunItem("lumina-open \""+linkPath+"\"" ); }
-  else{ emit RunItem("lumina-open \""+icon->whatsThis()+"\"" ); }
+  if(!linkPath.isEmpty()){ emit RunItem(linkPath); }
+  else{ emit RunItem(icon->whatsThis()); }
   
 }

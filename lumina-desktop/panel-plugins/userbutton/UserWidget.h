@@ -51,7 +51,7 @@ private:
 	QIcon rotateIcon(QIcon);
 
 private slots:
-	void LaunchItem(QString cmd);
+	void LaunchItem(QString path, bool fix = true);
 
 	//Favorites Tab
 	void FavChanged(); //for ensuring radio-button-like behaviour
@@ -63,22 +63,26 @@ private slots:
 	
 	//Home Tab
 	void updateHome();
+	void slotGoToDir(QString dir);
+	void slotGoHome();
+	void slotGoUp();
+	void slotOpenDir();
 
 	//Slots for the special buttons
 	void openStore(){
-	  LaunchItem("lumina-open \""+LOS::AppStoreShortcut()+"\"");
+	  LaunchItem(LOS::AppStoreShortcut());
 	}
 	void openControlPanel(){
-	  LaunchItem("lumina-open \""+LOS::ControlPanelShortcut()+"\"");
+	  LaunchItem(LOS::ControlPanelShortcut());
 	}
 	void openDeskSettings(){
-	  LaunchItem("lumina-config");
+	  LaunchItem("lumina-config", false);
 	}
 	void openQtConfig(){
-	  LaunchItem( LOS::QtConfigShortcut() );
+	  LaunchItem( LOS::QtConfigShortcut(), false);
 	}
 	void openScreenSaverConfig(){
-	  LaunchItem(SSAVER);
+	  LaunchItem(SSAVER, false);
 	}
 
 protected:
