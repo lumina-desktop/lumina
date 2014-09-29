@@ -24,10 +24,9 @@ FORMS    += MainUI.ui \
 
 INCLUDEPATH += ../libLumina /usr/local/include
 
-linux-* {
   LIBS     += -L../libLumina -lLuminaUtils 
-} else {
-  LIBS     += -L../libLumina -lLuminaUtils -lQtSolutions_SingleApplication-head
+freebsd-* {
+  LIBS     += -lQtSolutions_SingleApplication-head
 }
 
 openbsd-g++4 {

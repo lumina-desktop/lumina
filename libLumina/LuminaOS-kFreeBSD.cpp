@@ -4,7 +4,11 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifdef __linux__
+#ifdef __FreeBSD_kernel__
+#ifndef __FreeBSD__
+// The above two checks should make sure that we are on a
+// operating system using the FreeBSD kernel without actually being
+// on FreeBSD. That probably means Debian's kFreeBSD port.
 #include <QDebug>
 #include "LuminaOS.h"
 #include <unistd.h>
@@ -26,15 +30,17 @@ QString LOS::QtConfigShortcut(){ return "/usr/bin/qtconfig-qt4"; } //qtconfig bi
 QStringList LOS::ExternalDevicePaths(){
     //Returns: QStringList[<type>::::<filesystem>::::<path>]
       //Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]
-  QStringList devs = LUtils::getCmdOutput("mount");
+   QStringList devs = LUtils::getCmdOutput("mount");
   //Now check the output
   for(int i=0; i<devs.length(); i++){
     if(devs[i].startsWith("/dev/")){
       QString type = devs[i].section(" on ",0,0);
         type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
-      if(type.startsWith("sd")){ type = "HDRIVE"; }
-      else if(type.startsWith("sr")){ type="DVD"; }
+      if(type.startsWith("da")){ type = "USB"; }
+      else if(type.startsWith("ada")){ type = "HDRIVE"; }
+      else if(type.startsWith("mmsd")){ type = "SDCARD"; }
+      else if(type.startsWith("cd")||type.startsWith("acd")){ type="DVD"; }
       else{ type = "UNKNOWN"; }
       //Now put the device in the proper output format
       devs[i] = type+"::::"+devs[i].section("(",1,1).section(",",0,0)+"::::"+devs[i].section(" on ",1,50).section("(",0,0).simplified();
@@ -80,32 +86,12 @@ void LOS::setScreenBrightness(int percent){
 
 //Read the current volume
 int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 for errors)
-QString info = LUtils::getCmdOutput("amixer get Master").join("").simplified();;
-  int out = -1;
-  int start_position, end_position;
-  QString current_volume;
-  if(!info.isEmpty()){
-     start_position = info.indexOf("[");
-     start_position++;
-     end_position = info.indexOf("%");
-     current_volume = info.mid(start_position, end_position - start_position);
-     out = current_volume.toInt();
-  }
-  return out;
-
-
+   return -1;    // not available on kFreeBSD yet
 }
 
 //Set the current volume
 void LOS::setAudioVolume(int percent){
-  if(percent<0){percent=0;}
-  else if(percent>100){percent=100;}
-  QString info = "amixer -c 0 sset Master,0 " + QString::number(percent) + "%";
-  if(!info.isEmpty()){
-    //Run Command
-    LUtils::runCmd(info);
-  }
-
+   return;
 }
 
 //Change the current volume a set amount (+ or -)
@@ -147,38 +133,17 @@ void LOS::systemRestart(){ //start reboot sequence
 
 //Battery Availability
 bool LOS::hasBattery(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool no_battery = my_status.contains("No support");
-  if (no_battery) return false;
-  return true; 
+  return false;
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  int my_start = my_status.indexOf("%");
-  // get the number right before the % sign
-  int my_end = my_start;
-  my_start--;
-  while ( (my_status[my_start] != ' ') && (my_start > 0) )
-      my_start--;
-  my_start++;
-  int my_charge = my_status.mid(my_start, my_end - my_start).toInt();
-  if ( (my_charge < 0) || (my_charge > 100) ) return -1;
-  return my_charge;
+  return -1;
 }
 
 //Battery Charging State
-// Many possible values are returned if the laptop is plugged in
-// these include "Unknown, Full and No support.
-// However, it seems just one status is returned when running
-// on battery and that is "Discharging". So if the value we get
-// is NOT Discharging then we assume the batter yis charging.
 bool LOS::batteryIsCharging(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool discharging = my_status.contains("Discharging");
-  if (discharging) return false;
-  return true;
+  return false;
 }
 
 //Battery Time Remaining
@@ -187,3 +152,5 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
 }
 
 #endif
+#endif
+
