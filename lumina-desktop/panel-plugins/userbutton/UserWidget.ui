@@ -161,8 +161,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>96</width>
-         <height>26</height>
+         <width>262</width>
+         <height>245</height>
         </rect>
        </property>
       </widget>
@@ -258,8 +258,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>96</width>
-         <height>26</height>
+         <width>262</width>
+         <height>245</height>
         </rect>
        </property>
       </widget>
@@ -286,31 +286,6 @@
       <property name="spacing">
        <number>1</number>
       </property>
-      <item>
-       <widget class="QToolButton" name="tool_home_goup">
-        <property name="minimumSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Go back</string>
-        </property>
-        <property name="text">
-         <string notr="true">up</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QToolButton" name="tool_home_gohome">
         <property name="minimumSize">
@@ -346,26 +321,45 @@
         </property>
         <property name="font">
          <font>
+          <pointsize>10</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
         <property name="text">
          <string notr="true">&lt;current dir&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
         </property>
         <property name="margin">
-         <number>5</number>
+         <number>0</number>
+        </property>
+        <property name="indent">
+         <number>0</number>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::NoTextInteraction</set>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QToolButton" name="tool_home_browse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>30</width>
+          <width>90</width>
           <height>30</height>
          </size>
         </property>

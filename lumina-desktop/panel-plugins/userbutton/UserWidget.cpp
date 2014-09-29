@@ -33,7 +33,6 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
   ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
   ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
-  ui->tool_home_goup->setIcon( LXDG::findIcon("go-previous","") );
   ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
 
   //Connect the signals/slots
@@ -44,7 +43,6 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->tool_fav_dirs, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->combo_app_cats, SIGNAL(currentIndexChanged(int)), this, SLOT(updateApps()) );
   connect(ui->tool_home_gohome, SIGNAL(clicked()), this, SLOT(slotGoHome()) );
-  connect(ui->tool_home_goup, SIGNAL(clicked()), this, SLOT(slotGoUp()) );
   connect(ui->tool_home_browse, SIGNAL(clicked()), this, SLOT(slotOpenDir()) );
   
   //Setup the special buttons
@@ -237,20 +235,26 @@ void UserWidget::updateApps(){
 void UserWidget::updateHome(){
   ClearScrollArea(ui->scroll_home);
   QDir homedir(ui->label_home_dir->whatsThis());
+  QStringList items;
   if(QDir::homePath() == homedir.absolutePath()){
     ui->label_home_dir->setText(tr("Home"));
     ui->tool_home_gohome->setVisible(false);
-    ui->tool_home_goup->setVisible(false);
   }else{
-    ui->label_home_dir->setText(homedir.dirName());
     ui->tool_home_gohome->setVisible(true);
-    ui->tool_home_goup->setVisible(true);
+    ui->label_home_dir->setText( this->fontMetrics().elidedText(homedir.dirName(), Qt::ElideRight, ui->label_home_dir->width()));
+    //Now make sure to put a "go back" button at the top of the list
+    QString dir = ui->label_home_dir->whatsThis();
+    if(dir.endsWith("/")){ dir.chop(1); }
+    dir.chop( dir.section("/",-1).length() );
+    items << dir;
   }
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
-  QStringList items = homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); 
+  items << homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); 
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
-    UserItemWidget *it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), true);
+    UserItemWidget *it;
+    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], true, true); }
+    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), true, false); }
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
@@ -266,12 +270,6 @@ void UserWidget::slotGoToDir(QString dir){
 	
 void UserWidget::slotGoHome(){
   slotGoToDir(QDir::homePath());
-}
-	
-void UserWidget::slotGoUp(){
-  QString dir = ui->label_home_dir->whatsThis();
-    dir.chop( dir.section("/",-1).length() );
-  slotGoToDir(dir);		
 }
 	
 void UserWidget::slotOpenDir(){

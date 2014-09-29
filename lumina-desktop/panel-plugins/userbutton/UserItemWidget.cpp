@@ -6,7 +6,7 @@
 //===========================================
 #include "UserItemWidget.h"
 
-UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir) : QFrame(parent){
+UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bool goback) : QFrame(parent){
   createWidget();
   //Now fill it appropriately
   if(itemPath.endsWith(".desktop")){
@@ -21,8 +21,13 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir) : 
     }
   }else if(isDir){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    icon->setPixmap( LXDG::findIcon("folder","").pixmap(30,30) );
-    name->setText( itemPath.section("/",-1) );	  
+    if(goback){
+      icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(30,30) );
+      name->setText( tr("Go Back") );
+    }else{
+      icon->setPixmap( LXDG::findIcon("folder","").pixmap(30,30) );
+      name->setText( itemPath.section("/",-1) );	  
+    }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(30,30) );
@@ -34,7 +39,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir) : 
   isDirectory = isDir; //save this for later
   isShortcut = itemPath.contains("/home/") && (itemPath.contains("/Desktop/") || itemPath.contains("/.lumina/favorites/") );
   //Now setup the button appropriately
-  setupButton();
+  setupButton(goback);
 }
 
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
@@ -77,8 +82,10 @@ void UserItemWidget::createWidget(){
   this->setStyleSheet("UserItemWidget{ background: transparent; border-radius: 5px;} UserItemWidget::hover{ background: rgba(255,255,255,200); border-radius: 5px; }");
 }
 
-void UserItemWidget::setupButton(){
-  if( !isDirectory && isShortcut ){
+void UserItemWidget::setupButton(bool disable){
+  if(disable){
+    button->setVisible(false);
+  }else if( !isDirectory && isShortcut ){
     //This is a current desktop shortcut -- allow the user to remove it
     button->setWhatsThis("remove");
     if(!linkPath.isEmpty()){

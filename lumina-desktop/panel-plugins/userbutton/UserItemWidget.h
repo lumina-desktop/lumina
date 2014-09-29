@@ -25,7 +25,7 @@
 class UserItemWidget : public QFrame{
 	Q_OBJECT
 public:
-	UserItemWidget(QWidget *parent=0, QString itemPath="", bool isDir=false);
+	UserItemWidget(QWidget *parent=0, QString itemPath="", bool isDir=false, bool goback=false);
 	UserItemWidget(QWidget *parent=0, XDGDesktop item= XDGDesktop());
 	~UserItemWidget();
 
@@ -36,7 +36,7 @@ private:
 	QString linkPath;
 	
 	void createWidget();
-	void setupButton();
+	void setupButton(bool disable = false);
 
 private slots:
 	void buttonClicked();
