@@ -721,11 +721,18 @@ void MainUI::deskbgadded(){
 }
 
 void MainUI::deskplugadded(){
+  QString newplug = ui->combo_desk_plugs->itemData( ui->combo_desk_plugs->currentIndex() ).toString();
+  if(newplug=="applauncher"){
+    //Prompt for the application to add
+    XDGDesktop app = getSysApp();
+    if(app.filePath.isEmpty()){ return; } //cancelled
+    newplug.append("::"+app.filePath);
+  }
   settings->sync(); //make sure we have the newly-modified list from the desktop (unique IDs for new plugins)
   QString DPrefix = "desktop-"+QString::number(currentDesktop())+"/";
   QStringList plugins = settings->value(DPrefix+"pluginlist").toStringList();
   //qDebug() << "Current Plugins:" << plugins;
-  plugins << ui->combo_desk_plugs->itemData( ui->combo_desk_plugs->currentIndex() ).toString();
+  plugins << newplug;
   //qDebug() << "New Plugins:" << plugins;
   settings->setValue(DPrefix+"pluginlist", plugins);
   settings->sync();
