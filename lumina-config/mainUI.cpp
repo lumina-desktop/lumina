@@ -271,7 +271,7 @@ QString MainUI::getNewPanelPlugin(){
 
 XDGDesktop MainUI::getSysApp(){
   //Prompt the user to select an application on the system
-  QStringList apps;
+  /*QStringList apps;
     for(int i=0; i<sysApps.length(); i++){
       apps << sysApps[i].name;
     }
@@ -279,7 +279,11 @@ XDGDesktop MainUI::getSysApp(){
     QString app = QInputDialog::getItem(this, tr("Select Application"), tr("App Name:"), apps, 0, false, &ok);
     int index = apps.indexOf(app);
     if(app.isEmpty() || index < 0 || !ok){ return XDGDesktop(); } //nothing selected
-    else{ return sysApps[index]; }
+    else{ return sysApps[index]; }*/
+  AppDialog dlg(this, sysApps);
+    dlg.exec();
+  return dlg.appselected;
+  
 }
 
 //Convert to/from fluxbox key codes

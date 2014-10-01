@@ -25,6 +25,7 @@
 // local includes
 #include "LPlugins.h"
 #include "KeyCatch.h"
+#include "AppDialog.h"
 
 #define DEFAULTBG QString("/usr/local/share/Lumina-DE/desktop-background.jpg")
 

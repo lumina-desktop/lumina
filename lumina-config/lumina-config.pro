@@ -12,10 +12,12 @@ SOURCES += main.cpp \
 
 HEADERS  += mainUI.h \
 		LPlugins.h \
-		KeyCatch.h
+		KeyCatch.h \
+		AppDialog.h
 
 FORMS    += mainUI.ui \
-		KeyCatch.ui
+		KeyCatch.ui \
+		AppDialog.ui
 
 
 # RESOURCES+= lumina-config.qrc
