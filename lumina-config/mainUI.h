@@ -146,6 +146,7 @@ private slots:
 	void addsessionstartbin();
 	void addsessionstartfile();
 	void sessionoptchanged();
+	void sessionthemechanged();
 	void sessionstartchanged();
 };
 

@@ -189,7 +189,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_session_rmapp, SIGNAL(clicked()), this, SLOT(rmsessionstartitem()) );
   connect(ui->combo_session_wfocus, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_wloc, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
-  connect(ui->combo_session_wtheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_wtheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionthemechanged()) );
   connect(ui->check_session_numlock, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playloginaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
@@ -1426,6 +1426,18 @@ void MainUI::sessionoptchanged(){
     ui->push_save->setEnabled(true);
     modses = true;
   }
+}
+
+void MainUI::sessionthemechanged(){
+  //Update the Fluxbox Theme preview
+  QString previewfile = ui->combo_session_wtheme->itemData( ui->combo_session_wtheme->currentIndex() ).toString();
+  previewfile.append( (previewfile.endsWith("/") ? "preview.jpg": "/preview.jpg") );
+  if(QFile::exists(previewfile)){
+    ui->label_session_wpreview->setPixmap(QPixmap(previewfile));
+  }else{
+    ui->label_session_wpreview->setText(tr("No Preview Available"));
+  }
+  sessionoptchanged();	
 }
 
 void MainUI::sessionstartchanged(){
