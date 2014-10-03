@@ -6,12 +6,80 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>543</width>
-    <height>395</height>
+    <width>567</width>
+    <height>415</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Insight</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{ color: black; }
+QWidget#page_browser,#page_audioPlayer,#page_zfs,#page_image_view{background: 
+qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 #9abbbe,
+stop: 1 #7292bf); 
+}
+QMainWindow, QMenu{ background: #f4f0e8; }
+QMenuBar, QMenuBar::item, QToolBar{ background: transparent; }
+QMenuBar::item:selected, QMenuBar::item:pressed, QMenu::item:selected{ background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 #f9fafc,
+stop: 1 #7292bf);
+color: black;
+}
+QMenu::item{ background: transparent; border: none; color: black; padding: 2px 25px 2px 20px;}
+QMenu::indicator{ width: 14px; height: 14px; }
+
+ QMenu::indicator:non-exclusive:unchecked {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-no-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:unchecked:selected {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-no-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-yes-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked:selected {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-yes-16.png);
+ }
+
+ QTabBar::tab {
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 #f5f0e7,
+stop: 1 #efeeed);
+     border-bottom: 2px solid white;
+     border-bottom-color: white; /* same as the pane color */
+     border-top-left-radius: 4px;
+     border-top-right-radius: 4px;
+     min-width: 8ex;
+     padding: 2px;
+ }
+
+ QTabBar::tab:selected{
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 #f5f0e7,
+stop: 1 #fbf2e1);
+ }
+QTabBar::tab:hover {
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 #f5f0e7,
+stop: 1 #d0dbea);
+ }
+
+ QTabBar::tab:!selected {
+     margin-top: 2px; /* make non-selected tabs look smaller */
+ }
+
+QToolTip{
+  background: #f4f0e8;
+  border: 1px solid #d0dbea;
+  border-radius: 2px;
+  padding: 1px;
+  color: black;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -25,12 +93,33 @@
       </property>
       <widget class="QWidget" name="page_browser">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <item row="0" column="1">
          <layout class="QVBoxLayout" name="verticalLayout_browser">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QListView" name="list_dir_view">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -69,6 +158,12 @@
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
             </property>
@@ -101,128 +196,356 @@
             </attribute>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="group_actions">
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="tool_act_run">
+             <property name="toolTip">
+              <string>Open item</string>
+             </property>
+             <property name="statusTip">
+              <string>Open item</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonIconOnly</enum>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_runwith">
+             <property name="toolTip">
+              <string>Open item (select application)</string>
+             </property>
+             <property name="statusTip">
+              <string>Open item (select application)</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_fav">
+             <property name="toolTip">
+              <string>Add item to personal favorites</string>
+             </property>
+             <property name="statusTip">
+              <string>Add item to personal favorites</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_rename">
+             <property name="toolTip">
+              <string>Rename item</string>
+             </property>
+             <property name="statusTip">
+              <string>Rename item</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_cut">
+             <property name="toolTip">
+              <string>Cut items</string>
+             </property>
+             <property name="statusTip">
+              <string>Cut items (add to the clipboard)</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_copy">
+             <property name="toolTip">
+              <string>Copy items</string>
+             </property>
+             <property name="statusTip">
+              <string>Copy items to the clipboard</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_paste">
+             <property name="toolTip">
+              <string>Paste items from clipboard</string>
+             </property>
+             <property name="statusTip">
+              <string>Paste items from clipboard</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tool_act_rm">
+             <property name="toolTip">
+              <string>Delete Items</string>
+             </property>
+             <property name="statusTip">
+              <string>Delete Items</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QLabel" name="label_dir_stats">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QLabel" name="label_dir_stats">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tool_addToDir">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="statusTip">
-               <string>Create a new subdirectory</string>
-              </property>
-              <property name="text">
-               <string notr="true">&amp;New Dir</string>
-              </property>
-              <property name="shortcut">
-               <string>Ctrl+N</string>
-              </property>
-              <property name="popupMode">
-               <enum>QToolButton::InstantPopup</enum>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tool_goToPlayer">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="toolTip">
-               <string>Open Multimedia Player</string>
-              </property>
-              <property name="statusTip">
-               <string>Play any multimedia files in this directory</string>
-              </property>
-              <property name="text">
-               <string>Play</string>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tool_goToImages">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="toolTip">
-               <string>View Slideshow</string>
-              </property>
-              <property name="statusTip">
-               <string>View all the images in this directory as a slideshow</string>
-              </property>
-              <property name="text">
-               <string>&amp;Slideshow</string>
-              </property>
-              <property name="shortcut">
-               <string>Ctrl+S</string>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tool_goToRestore">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="toolTip">
-               <string>Restore File(s)</string>
-              </property>
-              <property name="statusTip">
-               <string>Restore old versions of files or directories</string>
-              </property>
-              <property name="text">
-               <string>&amp;Backups</string>
-              </property>
-              <property name="shortcut">
-               <string>Ctrl+B</string>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextBesideIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_addToDir">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="statusTip">
+             <string>Create a new subdirectory</string>
+            </property>
+            <property name="text">
+             <string notr="true">&amp;New Dir</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+N</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_goToPlayer">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Open Multimedia Player</string>
+            </property>
+            <property name="statusTip">
+             <string>Play any multimedia files in this directory</string>
+            </property>
+            <property name="text">
+             <string>&amp;Play</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+P, Ctrl+S</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_goToImages">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>View Slideshow</string>
+            </property>
+            <property name="statusTip">
+             <string>View all the images in this directory as a slideshow</string>
+            </property>
+            <property name="text">
+             <string>&amp;Slideshow</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+S</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_goToRestore">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Restore File(s)</string>
+            </property>
+            <property name="statusTip">
+             <string>Restore old versions of files or directories</string>
+            </property>
+            <property name="text">
+             <string>&amp;Backups</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+B</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -644,6 +967,9 @@
           <property name="focusPolicy">
            <enum>Qt::StrongFocus</enum>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
           <property name="selectionMode">
            <enum>QAbstractItemView::ExtendedSelection</enum>
           </property>
@@ -718,7 +1044,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>543</width>
+     <width>567</width>
      <height>20</height>
     </rect>
    </property>
@@ -735,6 +1061,7 @@
      <string>View</string>
     </property>
     <addaction name="actionView_Hidden_Files"/>
+    <addaction name="actionShow_Action_Buttons"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
@@ -885,6 +1212,17 @@
    </property>
    <property name="whatsThis">
     <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionShow_Action_Buttons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Action Buttons</string>
    </property>
   </action>
  </widget>

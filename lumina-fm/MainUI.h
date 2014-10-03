@@ -78,6 +78,7 @@ private:
 	QMenu *contextMenu;
 	QRadioButton *radio_view_details, *radio_view_list, *radio_view_icons;
 	QWidgetAction *detWA, *listWA, *icoWA;
+	QString favdir;
 
 	//Phonon Widgets for the multimedia player
 	Phonon::MediaObject *mediaObj;
@@ -133,6 +134,7 @@ private slots:
 	void on_actionNew_Tab_triggered();
 	void on_actionClose_triggered();
 	void on_actionView_Hidden_Files_triggered();
+	void on_actionShow_Action_Buttons_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);
@@ -153,9 +155,10 @@ private slots:
 	void prevTab();
 	void nextTab();
 	void ItemRun( const QModelIndex&);
-	void ItemRun(QTreeWidgetItem *item);
-	void ItemRun(QListWidgetItem *item);
+	//void ItemRun(QTreeWidgetItem *item);
+	//void ItemRun(QListWidgetItem *item);
 	void OpenContextMenu(const QPoint&);
+	void ItemSelectionChanged();
 
 	//Slideshow Functions
 	void showNewPicture();
@@ -190,6 +193,7 @@ private slots:
 	void OpenDir(); //open the dir in a new tab
 	void RemoveItem(); //Remove the item permanently
 	void RenameItem();
+	void FavoriteItem();
 	 // - full selection actions
 	void CutItems();
 	void CopyItems();

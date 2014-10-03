@@ -12,6 +12,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings( QSettings::UserScope, "LuminaDE", "lumina-fm", this);
+  favdir = QDir::homePath()+"/.lumina/favorites/"; //save this for later
   //Reset the UI to the previously used size (if possible)
   int height = settings->value("geometry/height",-1).toInt();
   if(height>100 && height <= QApplication::desktop()->availableGeometry(this).height()){ this->resize(this->width(), height); }
@@ -127,6 +128,14 @@ void MainUI::setupIcons(){
   ui->tool_goToImages->setIcon( LXDG::findIcon("fileview-preview","") );
   ui->tool_goToPlayer->setIcon( LXDG::findIcon("applications-multimedia","") );
   ui->tool_goToRestore->setIcon( LXDG::findIcon("document-revert","") );
+  ui->tool_act_run->setIcon( LXDG::findIcon("run-build-file","") );
+  ui->tool_act_runwith->setIcon( LXDG::findIcon("run-build-configure","") );
+  ui->tool_act_cut->setIcon( LXDG::findIcon("edit-cut","") );
+  ui->tool_act_copy->setIcon( LXDG::findIcon("edit-copy","") );
+  ui->tool_act_paste->setIcon( LXDG::findIcon("edit-paste","") );
+  ui->tool_act_rename->setIcon( LXDG::findIcon("edit-rename","") );
+  ui->tool_act_rm->setIcon( LXDG::findIcon("edit-delete","") );
+  ui->tool_act_fav->setIcon( LXDG::findIcon("quickopen","") );
 	
   //Multimedia Player page
   ui->tool_player_next->setIcon( LXDG::findIcon("media-skip-forward","") );
@@ -157,13 +166,25 @@ void MainUI::setupConnections(){
   connect(radio_view_details, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_list, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_icons, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
+
+  //Action buttons on browser page
+  connect(ui->tool_act_run, SIGNAL(clicked()), this, SLOT(OpenItem()) );
+  connect(ui->tool_act_runwith, SIGNAL(clicked()), this, SLOT(OpenItemWith()) );
+  connect(ui->tool_act_rm, SIGNAL(clicked()), this, SLOT(RemoveItem()) );
+  connect(ui->tool_act_rename, SIGNAL(clicked()), this, SLOT(RenameItem()) );
+  connect(ui->tool_act_paste, SIGNAL(clicked()), this, SLOT(PasteItems()) );
+  connect(ui->tool_act_cut, SIGNAL(clicked()), this, SLOT(CutItems()) );
+  connect(ui->tool_act_copy, SIGNAL(clicked()), this, SLOT(CopyItems()) );
+  connect(ui->tool_act_fav, SIGNAL(clicked()), this, SLOT(FavoriteItem()) );
 	
   //Tree Widget interaction
   connect(ui->tree_dir_view, SIGNAL(activated(const QModelIndex&)), this, SLOT(ItemRun(const QModelIndex&)) );	
   connect(ui->list_dir_view, SIGNAL(activated(const QModelIndex&)), this, SLOT(ItemRun(const QModelIndex&)) );
   connect(ui->tree_dir_view, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu(const QPoint&)) );
   connect(ui->list_dir_view, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu(const QPoint&)) );
-  
+  connect(ui->tree_dir_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection, const QItemSelection)), this, SLOT(ItemSelectionChanged()) );
+  connect(ui->list_dir_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection, const QItemSelection)), this, SLOT(ItemSelectionChanged()) );
+	
   //Page Switching
   connect(ui->tool_goToPlayer, SIGNAL(clicked()), this, SLOT(goToMultimediaPage()) );
   connect(ui->tool_goToRestore, SIGNAL(clicked()), this, SLOT(goToRestorePage()) );
@@ -208,6 +229,8 @@ void MainUI::loadSettings(){
   // but before the first directory gets loaded
   ui->actionView_Hidden_Files->setChecked( settings->value("showhidden", false).toBool() );
   on_actionView_Hidden_Files_triggered(); //make sure to update the models too
+  ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
+  on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
   QString view = settings->value("viewmode","details").toString();
   if(view=="icons"){ radio_view_icons->setChecked(true); }
   else if(view=="list"){ radio_view_list->setChecked(true); }
@@ -329,12 +352,11 @@ void MainUI::setCurrentDir(QString dir){
     currentDir->setWhatsThis(dir); //save the full path internally
     if(radio_view_details->isChecked()){
       ui->tree_dir_view->setRootIndex(fsmod->index(dir));
+      ui->tree_dir_view->selectionModel()->clearSelection();
     }else{
       ui->list_dir_view->setRootIndex(fsmod->index(dir));
+      ui->list_dir_view->selectionModel()->clearSelection();
     }
-  //Setup the directory watcher here
-  //if( !fswatcher->directories().isEmpty() ){ fswatcher->removePaths(fswatcher->directories()); }
-  //fswatcher->addPath(dir);
   //Adjust the tab data
   tabBar->setTabWhatsThis( tabBar->currentIndex(), rawdir );
   if(dir!="/"){ tabBar->setTabText( tabBar->currentIndex(), dir.section("/",-1) ); }
@@ -353,6 +375,7 @@ void MainUI::setCurrentDir(QString dir){
   ui->actionUpDir->setEnabled(dir!="/");
   ui->actionBack->setEnabled(history.length() > 1);
   ui->actionBookMark->setEnabled( rawdir!=QDir::homePath() && settings->value("bookmarks", QStringList()).toStringList().filter("::::"+rawdir).length()<1 );
+  ItemSelectionChanged();
   RebuildDeviceMenu(); //keep this refreshed
 }
 
@@ -601,6 +624,10 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
   setCurrentDir(getCurrentDir());
 }
 
+void MainUI::on_actionShow_Action_Buttons_triggered(){
+  ui->group_actions->setVisible(ui->actionShow_Action_Buttons->isChecked());
+  settings->setValue("showactions", ui->actionShow_Action_Buttons->isChecked());
+}
 void MainUI::goToBookmark(QAction *act){
   if(act==ui->actionManage_Bookmarks){
     BMMDialog dlg(this);
@@ -776,34 +803,6 @@ void MainUI::ItemRun(const QModelIndex &index){
   }
 }
 
-void MainUI::ItemRun(QTreeWidgetItem *item){
-  //This is called when the user double clicks a file/directory
-  QString val = item->text(0);
-  QString itemPath = getCurrentDir();
-  if( !itemPath.endsWith("/")){ itemPath.append("/"); }
-  itemPath.append(val);
-  if(QFileInfo(itemPath).isDir()){
-    setCurrentDir( itemPath );
-  }else{
-    //Must be a file, try to run it
-    QProcess::startDetached("lumina-open \""+itemPath+"\"");
-  }
-}
-
-void MainUI::ItemRun(QListWidgetItem *item){
-  //This is called when the user double clicks a file/directory
-  QString val = item->text();
-  QString itemPath = getCurrentDir();
-  if( !itemPath.endsWith("/")){ itemPath.append("/"); }
-  itemPath.append(val);
-  if(QFileInfo(itemPath).isDir()){
-    setCurrentDir( itemPath );
-  }else{
-    //Must be a file, try to run it
-    QProcess::startDetached("lumina-open \""+itemPath+"\"");
-  }
-}
-
 void MainUI::OpenContextMenu(const QPoint &pt){
   QFileInfo info; 
   if(radio_view_details->isChecked()){ 
@@ -827,8 +826,8 @@ void MainUI::OpenContextMenu(const QPoint &pt){
     if(info.isDir()){
       contextMenu->addAction(LXDG::findIcon("tab-new-background",""), tr("Open in new tab"), this, SLOT(OpenDir()) );
     }else{
-      contextMenu->addAction(LXDG::findIcon("quickopen-file",""), tr("Open"), this, SLOT(OpenItem()) );
-      contextMenu->addAction(tr("Open With..."), this, SLOT(OpenItemWith()) );
+      contextMenu->addAction(LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(OpenItem()) );
+      contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(OpenItemWith()) );
     }
     contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename"), this, SLOT(RenameItem()) )->setEnabled(info.isWritable());
     contextMenu->addSeparator();
@@ -846,6 +845,26 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   }else{
     contextMenu->popup(ui->list_dir_view->mapToGlobal(pt));
   }
+}
+
+void MainUI::ItemSelectionChanged(){
+  //Enable/disable the action buttons
+  QFileInfoList sel = getSelectedItems();
+  ui->tool_act_run->setEnabled(sel.length()==1);
+  ui->tool_act_runwith->setEnabled(sel.length()==1);
+  ui->tool_act_rm->setEnabled(!sel.isEmpty() && isUserWritable);
+  ui->tool_act_rename->setEnabled(sel.length()==1 && isUserWritable);
+  ui->tool_act_cut->setEnabled(!sel.isEmpty() && isUserWritable);
+  ui->tool_act_copy->setEnabled(!sel.isEmpty());
+  ui->tool_act_paste->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && isUserWritable);
+  if(ui->tool_act_paste->isEnabled()){
+    ui->tool_act_paste->setToolTip( QString(tr("Currently on clipboard:\n%1")).arg( QString(QApplication::clipboard()->mimeData()->data("x-special/lumina-copied-files")).replace("::::",": ") ) );
+  }else{
+    ui->tool_act_paste->setToolTip("");
+  }
+  QString itname;
+  if(sel.length()==1){ itname = sel[0].fileName(); }
+  ui->tool_act_fav->setEnabled(!itname.isEmpty() && !QFile::exists(favdir+itname) );
 }
 
 //-------------------------------
@@ -1055,20 +1074,37 @@ void MainUI::playerFileChanged(){
 // Context Menu Actions
 //----------------------------------
 void MainUI::OpenItem(){
-  if(CItem.isEmpty()){ return; }
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+    if(sel[0].isDir()){ OpenDir(); return; } //just in case - open it in a new tab
+  }
   qDebug() << "Opening File:" << CItem;
   QProcess::startDetached("lumina-open \""+CItem+"\"");
+  CItem.clear();
 }
 
 void MainUI::OpenItemWith(){
-  if(CItem.isEmpty()){ return; }
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+    if(sel[0].isDir()){ OpenDir(); return; } //just in case - open it in a new tab
+  }
   qDebug() << "Opening File:" << CItem;
   QProcess::startDetached("lumina-open -select \""+CItem+"\"");	
+  CItem.clear();
 }
 
 void MainUI::OpenDir(){
-  if(CItem.isEmpty()){ return; }
-  OpenDirs(QStringList() << CItem);		
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+  }
+  OpenDirs(QStringList() << CItem);	
+  CItem.clear();  
 }
 
 void MainUI::RemoveItem(){
@@ -1097,8 +1133,12 @@ void MainUI::RemoveItem(){
 void MainUI::RenameItem(){
   //Only let this run if viewing the browser page
   if(ui->stackedWidget->currentWidget()!=ui->page_browser){ return; }
-  if(CItem.isEmpty()){ return; }
   if(!checkUserPerms()){ return; }
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+  }
   QString fname = CItem;
   QString path = fname;
     fname = fname.section("/",-1); //turn this into just the file name
@@ -1106,7 +1146,7 @@ void MainUI::RenameItem(){
   //Now prompt for the new filename
   bool ok = false;
   QString nname = QInputDialog::getText(this, tr("Rename File"),tr("New Name:"), QLineEdit::Normal, fname, &ok);
-  if(!ok || nname.isEmpty()){ return; } //cancelled
+  if(!ok || nname.isEmpty()){ CItem.clear(); return; } //cancelled
   //Now check for a file extension and add it if necessary
   QString oext = fname.section(".",-1);
     if(oext==fname){ oext.clear(); } //no extension
@@ -1119,7 +1159,7 @@ void MainUI::RenameItem(){
   bool overwrite = QFile::exists(path+nname);
   if(overwrite){
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Overwrite File?"), tr("An existing file with the same name will be replaced. Are you sure you want to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-      return; //cancelled
+      CItem.clear(); return; //cancelled
     }
   }
   //Now perform the move
@@ -1128,6 +1168,21 @@ void MainUI::RenameItem(){
     dlg.setOverwrite(overwrite);
     dlg.MoveFiles(QStringList() << path+fname, QStringList() << path+nname);
     dlg.exec();
+  CItem.clear();
+}
+
+void MainUI::FavoriteItem(){
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+  }
+  QString fname = CItem;
+  QString fullpath = fname;
+    fname = fname.section("/",-1); //turn this into just the file name
+  QFile::link(fullpath, favdir+fname);
+  CItem.clear();
+  ItemSelectionChanged();
 }
 
 void MainUI::CutItems(){
@@ -1138,10 +1193,6 @@ void MainUI::CutItems(){
   QFileInfoList sel = getSelectedItems();
   QStringList items;
   if(sel.isEmpty()){ return; } //nothing selected
-  /*for(int i=0; i<sel.length(); i++){
-    sel[i].prepend(base);
-  }
-  qDebug() << "Cut Items:" << sel;*/
   //Format the data string
   for(int i=0; i<sel.length(); i++){
     items << "cut::::"+sel[i].absoluteFilePath();
@@ -1154,6 +1205,7 @@ void MainUI::CutItems(){
 	dat->setData("x-special/lumina-copied-files", items.join("\n").toLocal8Bit());
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);
+  ItemSelectionChanged();
 }
 
 void MainUI::CopyItems(){
@@ -1163,12 +1215,6 @@ void MainUI::CopyItems(){
   QFileInfoList sel = getSelectedItems();
   QStringList items;
   if(sel.isEmpty()){ return; } //nothing selected
-  /*QString base = getCurrentDir();
-  if(!base.endsWith("/")){ base.append("/"); }
-  for(int i=0; i<sel.length(); i++){
-    sel[i].prepend(base);
-  }
-  qDebug() << "Copy Items:" << sel;*/
   //Format the data string
   for(int i=0; i<sel.length(); i++){
     items << "copy::::"+sel[i].absoluteFilePath();
@@ -1180,6 +1226,7 @@ void MainUI::CopyItems(){
 	dat->setData("x-special/lumina-copied-files", items.join("\n").toLocal8Bit());
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);	
+  ItemSelectionChanged();
 }
 
 void MainUI::PasteItems(){
@@ -1230,6 +1277,7 @@ void MainUI::PasteItems(){
 	QApplication::clipboard()->setMimeData(dat);
     }
   }
+  ItemSelectionChanged();
 	
 }
 
