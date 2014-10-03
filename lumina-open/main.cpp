@@ -317,6 +317,17 @@ int main(int argc, char **argv){
   int retcode = p->exitCode();*/
   if(retcode!=0){ 
     qDebug() << "[lumina-open] Application Error:" << retcode;
+    //Setup the application
+    QApplication App(argc, argv);
+    QTranslator translator;
+    QLocale mylocale;
+    QString langCode = mylocale.name();
+    
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
+      langCode.truncate( langCode.indexOf("_") ); 
+    }
+    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    App.installTranslator( &translator );
     QMessageBox::critical(0,QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd);
   }
   return retcode;
