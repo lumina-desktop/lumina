@@ -54,7 +54,7 @@
              <bool>true</bool>
             </property>
             <property name="batchSize">
-             <number>100</number>
+             <number>30</number>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -79,7 +79,7 @@
              <bool>false</bool>
             </property>
             <property name="uniformRowHeights">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="itemsExpandable">
              <bool>false</bool>

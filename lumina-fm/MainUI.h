@@ -31,12 +31,12 @@
 #include <QListWidgetItem>
 #include <QRadioButton>
 #include <QWidgetAction>
-#include <QFileSystemWatcher>
 #include <QImageReader>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QResizeEvent>
 #include <QDesktopWidget>
+#include <QThread>
 
 //Phonon widgets
 #include <Phonon/BackendCapabilities>
@@ -73,7 +73,7 @@ private:
 	QTabBar *tabBar;
 	QLineEdit *currentDir;
 	QFileSystemModel *fsmod, *snapmod;
-	QFileSystemWatcher *fswatcher;
+	//QFileSystemWatcher *fswatcher;
 	MimeIconProvider *iconProv;
 	QMenu *contextMenu;
 	QRadioButton *radio_view_details, *radio_view_list, *radio_view_icons;

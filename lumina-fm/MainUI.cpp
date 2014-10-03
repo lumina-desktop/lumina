@@ -44,8 +44,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   iconProv = new MimeIconProvider();
     fsmod->setIconProvider(iconProv);
     snapmod->setIconProvider(iconProv);
-  fswatcher = new QFileSystemWatcher(this);
-    connect(fswatcher, SIGNAL(directoryChanged(QString)), this, SLOT(reloadDirectory()) );
   contextMenu = new QMenu(this);
   radio_view_details = new QRadioButton(tr("Detailed List"), this);
   radio_view_list = new QRadioButton(tr("Basic List"), this);
@@ -74,7 +72,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->videoControlLayout->insertWidget(4, playerSlider);
     ui->tool_player_stop->setEnabled(false); //nothing to stop yet
     ui->tool_player_pause->setVisible(false); //nothing to pause yet
-    
   //Setup any specialty keyboard shortcuts
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
@@ -93,7 +90,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
-	
 }
 
 void MainUI::OpenDirs(QStringList dirs){
@@ -337,8 +333,8 @@ void MainUI::setCurrentDir(QString dir){
       ui->list_dir_view->setRootIndex(fsmod->index(dir));
     }
   //Setup the directory watcher here
-  if( !fswatcher->directories().isEmpty() ){ fswatcher->removePaths(fswatcher->directories()); }
-  fswatcher->addPath(dir);
+  //if( !fswatcher->directories().isEmpty() ){ fswatcher->removePaths(fswatcher->directories()); }
+  //fswatcher->addPath(dir);
   //Adjust the tab data
   tabBar->setTabWhatsThis( tabBar->currentIndex(), rawdir );
   if(dir!="/"){ tabBar->setTabText( tabBar->currentIndex(), dir.section("/",-1) ); }
@@ -410,9 +406,13 @@ void MainUI::checkForMultimediaFiles(){
 
 void MainUI::checkForBackups(){
   ui->tool_goToRestore->setVisible(false);
-  //Check for ZFS snapshots not implemented yet!
   snapDirs.clear(); //clear the internal variable
-  if(!isUserWritable){ return; } //cannot restore files into a non-writable directory
+  if(!isUserWritable){ 
+    //cannot restore files into a non-writable directory
+    //No dir found: put the snapmod on the lumina directory (someplace out of the way)
+    snapmod->setRootPath(QDir::homePath()+"/.lumina");
+    return; 
+  }
   //Now recursively try to find snapshots of this directory
   QString cdir = getCurrentDir();
   QDir dir(cdir);
@@ -446,6 +446,9 @@ void MainUI::checkForBackups(){
       QApplication::processEvents(); //keep the UI snappy
     }
     //qDebug() << "Found snapshots:" << snapDirs;
+  }else{
+    //No dir found: put the snapmod on the lumina directory (someplace out of the way)
+    snapmod->setRootPath(QDir::homePath()+"/.lumina");
   }
   //Now enable the button if any snapshots available
   ui->tool_goToRestore->setVisible(!snapDirs.isEmpty());
@@ -628,12 +631,14 @@ void MainUI::viewModeChanged(bool active){
     ui->list_dir_view->setVisible(true);
     ui->list_dir_view->setViewMode( QListView::ListMode );
 	ui->list_dir_view->setUniformItemSizes(false);
+	ui->list_dir_view->setIconSize( QSize(20,20) );
 	settings->setValue("viewmode","list");
   }else{  //icons
     ui->tree_dir_view->setVisible(false);
     ui->list_dir_view->setVisible(true);
     ui->list_dir_view->setViewMode( QListView::IconMode );
 	ui->list_dir_view->setUniformItemSizes(true);
+	ui->list_dir_view->setIconSize( QSize(90,64) );
 	settings->setValue("viewmode","icons");
   }
   //Re-load the view widget
