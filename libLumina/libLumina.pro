@@ -2,7 +2,15 @@
 QT       += core
 
 TARGET=LuminaUtils
-target.path = /usr/local/lib
+
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+
+isEmtpy(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
+target.path = $$LIBPREFIX
 
 DESTDIR= $$_PRO_FILE_PWD_/
 
@@ -17,7 +25,7 @@ HEADERS	+= LuminaXDG.h \
 
 SOURCES	+= LuminaXDG.cpp \
 	LuminaUtils.cpp \
-	LuminaX11.cpp \ 
+	LuminaX11.cpp \
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-DragonFly.cpp \
 	LuminaOS-OpenBSD.cpp \
@@ -25,16 +33,16 @@ SOURCES	+= LuminaXDG.cpp \
         LuminaOS-kFreeBSD.cpp
 #       new OS support can be added here
 
-INCLUDEPATH += /usr/local/include
+INCLUDEPATH += $$PREFIX/include
 
 LIBS	+= -lX11 -lXrender -lXcomposite
 
-include.path=/usr/local/include/
+include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
 	LuminaOS.h
 
-INSTALLS += target include 
+INSTALLS += target include
 
-QMAKE_LIBDIR = /usr/local/lib/qt4 /usr/local/lib
+QMAKE_LIBDIR = $$LIBPREFIX/qt4 $$LIBPREFIX

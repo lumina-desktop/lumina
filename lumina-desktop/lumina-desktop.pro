@@ -2,7 +2,10 @@
 QT       += core gui network phonon
 
 TARGET = Lumina-DE
-target.path = /usr/local/bin
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+target.path = $$PREFIX/bin
 
 LIBS     += -L../libLumina -lLuminaUtils -lXdamage -lX11
 QMAKE_LIBDIR	= ../libLumina
@@ -84,25 +87,25 @@ FORMS    += SystemWindow.ui \
 
 RESOURCES+= Lumina-DE.qrc
 
-INCLUDEPATH += ../libLumina /usr/local/include
+INCLUDEPATH += ../libLumina $$PREFIX/include
 
 desktop.files = Lumina-DE.desktop
 linux-* {
 desktop.path = /usr/share/xsessions
 } else {
-desktop.path = /usr/local/share/xsessions
+desktop.path = $$PREFIX/share/xsessions
 }
 
 icons.files = Lumina-DE.png \
 		Insight-FileManager.png
 
-icons.path = /usr/local/share/pixmaps
+icons.path = $$PREFIX/share/pixmaps
 
 wallpapers.files = wallpapers/Lumina_Wispy_gold_1920x1080.jpg \
 			wallpapers/Lumina_Wispy_green_1920x1080.jpg \
 			wallpapers/Lumina_Wispy_purple_1920x1080.jpg \
 			wallpapers/Lumina_Wispy_red_1920x1080.jpg
-wallpapers.path = /usr/local/share/wallpapers/Lumina-DE
+wallpapers.path = $$PREFIX/share/wallpapers/Lumina-DE
 
 defaults.files = defaults/desktop-background.jpg \
 		defaults/defaultapps.conf \
@@ -110,7 +113,7 @@ defaults.files = defaults/desktop-background.jpg \
 		defaults/stylesheet.qss \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
-defaults.path = /usr/local/share/Lumina-DE/
+defaults.path = $$PREFIX/share/Lumina-DE/
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
@@ -175,7 +178,7 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zh_TW.ts \
                 i18n/lumina-desktop_zu.ts
 
-dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
 INSTALLS += target desktop icons wallpapers defaults dotrans

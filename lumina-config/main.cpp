@@ -8,10 +8,7 @@
 #include <QFile>
 
 #include "mainUI.h"
-
-#ifndef PREFIX
-#define PREFIX QString("/usr/local")
-#endif
+#include "../global.h"
 
 int main(int argc, char ** argv)
 {
@@ -25,12 +22,12 @@ int main(int argc, char ** argv)
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    
+
     if ( ! QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-config_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
     translator.load( QString("lumina-config_") + langCode, PREFIX + "/share/i18n/Lumina-DE/" );
     a.installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
-    
+
 
     MainUI w;
     QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(slotSingleInstance()) );

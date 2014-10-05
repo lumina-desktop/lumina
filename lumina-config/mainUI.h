@@ -26,8 +26,9 @@
 #include "LPlugins.h"
 #include "KeyCatch.h"
 #include "AppDialog.h"
+#include "../global.h"
 
-#define DEFAULTBG QString("/usr/local/share/Lumina-DE/desktop-background.jpg")
+#define DEFAULTBG QString(PREFIX + "/share/Lumina-DE/desktop-background.jpg")
 
 //namespace for using the *.ui file
 namespace Ui{
@@ -65,15 +66,15 @@ private:
 
 	//Get an application on the system
 	XDGDesktop getSysApp();
-	
+
 	//Convert to/from fluxbox keyboard shortcuts
 	QString dispToFluxKeys(QString);
 	QString fluxToDispKeys(QString);
-	
+
 	//Read/overwrite a text file
 	QStringList readFile(QString path);
 	bool overwriteFile(QString path, QStringList contents);
-	
+
 private slots:
 	void slotSingleInstance();
 
@@ -100,11 +101,11 @@ private slots:
 	void addpanel2();
 	void rmpanel1();
 	void rmpanel2();
-	
+
 	void checkpanels();
 	void adjustpanel1();
 	void adjustpanel2();
-	
+
 	void getpanel1color();
 	void getpanel2color();
 	void addpanel1plugin();
@@ -115,7 +116,7 @@ private slots:
 	void uppanel2plugin();
 	void dnpanel1plugin();
 	void dnpanel2plugin();
-	
+
 	//Menu Page
 	void addmenuplugin();
 	void rmmenuplugin();
@@ -123,13 +124,13 @@ private slots:
 	void downmenuplugin();
 	void findmenuterminal();
 	void checkmenuicons();
-	
+
 	//Shortcuts Page
 	void loadKeyboardShortcuts();
 	void saveKeyboardShortcuts();
 	void clearKeyBinding();
 	void getKeyPress();
-	
+
 	//Defaults Page
 	void loadDefaultSettings();
 	void saveDefaultSettings();
@@ -138,7 +139,7 @@ private slots:
 	void cleardefaultitem();
 	void setdefaultitem();
 	void checkdefaulticons();
-	
+
 	//Session Page
 	void loadSessionSettings();
 	void saveSessionSettings();

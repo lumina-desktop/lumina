@@ -20,7 +20,7 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
 QString LOS::AppStoreShortcut(){ return ""; } //graphical app/pkg manager
-QString LOS::QtConfigShortcut(){ return "/usr/bin/qtconfig-qt4"; } //qtconfig binary (NOT *.desktop file)
+QString LOS::QtConfigShortcut(){ return LOS::AppPrefix() + "/bin/qtconfig-qt4"; } //qtconfig binary (NOT *.desktop file)
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
@@ -122,12 +122,12 @@ void LOS::changeAudioVolume(int percentdiff){
 
 //Check if a graphical audio mixer is installed
 bool LOS::hasMixerUtility(){
-  return QFile::exists("/usr/bin/pavucontrol");
+  return QFile::exists(LOS::AppPrefix() + "bin/pavucontrol");
 }
 
 //Launch the graphical audio mixer utility
 void LOS::startMixerUtility(){
-  QProcess::startDetached("/usr/bin/pavucontrol");
+  QProcess::startDetached(LOS::AppPrefix() + "bin/pavucontrol");
 }
 
 //Check for user system permission (shutdown/restart)
@@ -150,7 +150,7 @@ bool LOS::hasBattery(){
   QString my_status = LUtils::getCmdOutput("acpi -b").join("");
   bool no_battery = my_status.contains("No support");
   if (no_battery) return false;
-  return true; 
+  return true;
 }
 
 //Battery Charge Level
@@ -173,7 +173,7 @@ int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside th
 // these include "Unknown, Full and No support.
 // However, it seems just one status is returned when running
 // on battery and that is "Discharging". So if the value we get
-// is NOT Discharging then we assume the batter yis charging.
+// is NOT Discharging then we assume the battery is charging.
 bool LOS::batteryIsCharging(){
   QString my_status = LUtils::getCmdOutput("acpi -b").join("");
   bool discharging = my_status.contains("Discharging");

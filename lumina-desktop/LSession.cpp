@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LSession.h"
+#include "../global.h"
 
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
@@ -64,15 +65,15 @@ void LSession::setupSession(){
 
   //Initialize the internal variables
   DESKTOPS.clear();
-	
+
   //Launch Fluxbox
   qDebug() << " - Launching Fluxbox";
   WM = new WMProcess();
     WM->startWM();
-	
+
   //Initialize the desktops
   updateDesktops();
-	
+
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
   appmenu = new AppMenu();
@@ -91,7 +92,7 @@ void LSession::setupSession(){
     mediaObj->moveToThread(audioThread);
     audioOut->moveToThread(audioThread);
   }*/
-    
+
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
   watcher = new QFileSystemWatcher(this);
@@ -99,7 +100,7 @@ void LSession::setupSession(){
     //watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
-    
+
   //connect internal signals/slots
   connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(updateDesktops()) );
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
@@ -130,10 +131,10 @@ void LSession::launchStartupApps(){
   qDebug() << "Launching startup applications";
   for(int i=0; i<2; i++){
     QString startfile;
-    if(i==0){startfile = "/usr/local/share/Lumina-DE/startapps"; }
+    if(i==0){startfile = PREFIX + "/share/Lumina-DE/startapps"; }
     else{ startfile = QDir::homePath()+"/.lumina/startapps"; }
     if(!QFile::exists(startfile)){ continue; } //go to the next
-  
+
     QFile file(startfile);
     if( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
       QTextStream in(&file);
@@ -149,7 +150,7 @@ void LSession::launchStartupApps(){
   }
   //Now play the login music
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    LSession::playAudioFile("/usr/local/share/Lumina-DE/Login.ogg");
+    LSession::playAudioFile(PREFIX + "/share/Lumina-DE/Login.ogg");
   }
   if(sessionsettings->value("EnableNumlock",true).toBool()){
     QProcess::startDetached("numlockx on");
@@ -189,7 +190,7 @@ void LSession::checkUserFiles(){
         QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
       }
     }
-    
+
   }
   //Check the fluxbox configuration files
   dset = QDir::homePath()+"/.lumina/";
@@ -204,14 +205,14 @@ void LSession::checkUserFiles(){
     QFile::copy(":/fluxboxconf/fluxbox-keys", dset+"fluxbox-keys");
     QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-  }	  
-  
+  }
+
   if(firstrun){ qDebug() << "First time using Lumina!!"; }
   else if(newversion){
     qDebug() << "Updating session file to current version";
   }
-	  
-  
+
+
   //Save the current version of the session to the settings file (for next time)
   sessionsettings->setValue("DesktopVersion", this->applicationVersion());
 }
@@ -229,7 +230,7 @@ void LSession::loadStyleSheet(){
     //Now fix/apply the sheet
       sheet.replace("\n"," "); //make sure there are no newlines
     this->setStyleSheet(sheet);
-  }  
+  }
 }
 
 void LSession::refreshWindowManager(){
@@ -282,7 +283,7 @@ bool LSession::x11EventFilter(XEvent *event){
 	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_VISIBLE_ICON_NAME",false) ){
 		LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
 		emit WindowListEvent();
-	  }  
+	  }
 	break;
   }
   // -----------------------
