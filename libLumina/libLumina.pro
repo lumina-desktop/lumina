@@ -7,7 +7,7 @@ isEmpty(PREFIX) {
  PREFIX = /usr/local
 }
 
-isEmtpy(LIBPREFIX) {
+isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
 target.path = $$LIBPREFIX
