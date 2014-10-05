@@ -19,6 +19,7 @@ build:
 
 override_dh_auto_clean:
 	-$(MAKE) distclean
+	-find $(CURDIR) -name *.qm | xargs rm
 
 override_dh_strip:
 	dh_strip -a --dbg-package=libluminautils-dbg
