@@ -1,3 +1,9 @@
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+
+system(make-global-h.sh $$PREFIX)
+
 TEMPLATE = subdirs
 
 SUBDIRS+= libLumina \
