@@ -1,0 +1,11 @@
+diff --git a/global.h b/global.h
+index 6a5fded..7e015f0 100644
+--- a/global.h
++++ b/global.h
+@@ -6,5 +6,5 @@
+ //===========================================
+ 
+ #ifndef PREFIX
+-  #define PREFIX QString("/usr/local")
++  #define PREFIX QString("/usr")
+ #endif
