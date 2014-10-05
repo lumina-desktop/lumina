@@ -8,6 +8,7 @@
 #include "ui_mainUI.h" //the designer *.ui file
 
 #include <LuminaOS.h>
+#include "../global.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
