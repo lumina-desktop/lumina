@@ -1,0 +1,64 @@
+QWidget{ color: %%TEXTCOLOR%%; }
+QWidget#page_browser,#page_audioPlayer,#page_zfs,#page_image_view{background: 
+qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 %%ACCENTCOLOR%%,
+stop: 1 %%PRIMARYCOLOR%%); 
+}
+QMainWindow, QMenu{ background: %%BASECOLOR%%; }
+QMenuBar, QMenuBar::item, QToolBar{ background: transparent; }
+QMenuBar::item:selected, QMenuBar::item:pressed, QMenu::item:selected{ background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 %%ACCENTCOLOR%%,
+stop: 1 %%HIGHLIGHTCOLOR%%);
+color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+QMenu::item{ background: transparent; border: none; color: %%TEXTCOLOR%%; padding: 2px 25px 2px 20px;}
+QMenu::indicator{ width: 14px; height: 14px; }
+
+ QMenu::indicator:non-exclusive:unchecked {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-no-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:unchecked:selected {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-no-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-yes-16.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked:selected {
+     image: url(:/trolltech/styles/commonstyle/images/standardbutton-yes-16.png);
+ }
+
+ QTabBar::tab {
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 %%SECONDARYDISABLECOLOR%%,
+stop: 1 %%SECONDARYCOLOR%%);
+     border-top-left-radius: 4px;
+     border-top-right-radius: 4px;
+     min-width: 8ex;
+     padding: 2px;
+ }
+
+ QTabBar::tab:selected{
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 %%ACCENTDISABLECOLOR%%,
+stop: 1 %%HIGHLIGHTCOLOR%%);
+ }
+QTabBar::tab:hover {
+     background: qradialgradient(cx: 0.5, cy: -1.8, fx: 0.5, fy: 0, radius: 2, 
+stop: 0 %%ACCENTDISABLECOLOR%%,
+stop: 1 %%HIGHLIGHTDISABLECOLOR%%);
+ }
+
+ QTabBar::tab:!selected {
+     margin-top: 2px; /* make non-selected tabs look smaller */
+ }
+
+QToolTip{
+  background: %%BASECOLOR%%;
+  border: 1px solid %%PRIMARYDISABLECOLOR%%;
+  border-radius: 2px;
+  padding: 1px;
+  color: %%TEXTCOLOR%%;
+}

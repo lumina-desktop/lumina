@@ -58,7 +58,7 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   bool ok = false;
   if(file.open( mode ) ){
     QTextStream out(&file);
-    for(int i=0; i<contents.length(); i++){ out << contents[i]; }
+    out << contents.join("\n");
     file.close();
     ok = true;
   }

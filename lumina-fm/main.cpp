@@ -9,6 +9,7 @@
 
 #include "MainUI.h"
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 int main(int argc, char ** argv)
 {
@@ -26,6 +27,8 @@ int main(int argc, char ** argv)
     QApplication a(argc, argv);
     #endif
     a.setApplicationName("Insight File Manager");
+    LuminaThemeEngine themes(&a);
+    //qDebug() << "StyleSheet:\n" << a.styleSheet();
     //Load current Locale
     QTranslator translator;
     QLocale mylocale;

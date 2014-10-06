@@ -18,6 +18,7 @@
 #include <QDir>
 
 class LTHEME{
+public:
   //Read the Themes/Colors/Icons that are available on the system
   static QStringList availableSystemThemes();//returns: [name::::path] for each item
   static QStringList availableLocalThemes();	//returns: [name::::path] for each item

@@ -23,11 +23,13 @@ VERSION		= 1
 HEADERS	+= LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
+	LuminaThemes.h \
 	LuminaOS.h
 
 SOURCES	+= LuminaXDG.cpp \
 	LuminaUtils.cpp \
 	LuminaX11.cpp \
+	LuminaThemes.cpp \
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-DragonFly.cpp \
 	LuminaOS-OpenBSD.cpp \
@@ -43,8 +45,15 @@ include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
+	LuminaThemes.h \
 	LuminaOS.h
 
-INSTALLS += target include
+colors.path=$$PREFIX/share/Lumina-DE/colors/
+colors.files=colors/SampleColors.qss.colors
+
+themes.path=$$PREFIX/share/Lumina-DE/themes/
+themes.files=themes/SampleTheme.qss.template
+
+INSTALLS += target include colors themes
 
 QMAKE_LIBDIR = $$LIBPREFIX/qt4 $$LIBPREFIX
