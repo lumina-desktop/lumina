@@ -1362,7 +1362,7 @@ void MainUI::findsessionwindowmanager(){
   }
   ui->line_session_windowmanager->setText(bin);
   ui->push_save->setEnabled(true);
-  modmenu = true;
+  modses = true;
 }
 
 void MainUI::saveSessionSettings(){
