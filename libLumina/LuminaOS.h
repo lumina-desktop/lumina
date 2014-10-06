@@ -19,9 +19,19 @@
 
 #include "LuminaUtils.h"
 
+//First try to load the globals.h to set PREFIX
+#ifndef PREFIX
+#include "global.h"
+#endif
+//Now use the default value for PREFIX if not set
+#ifndef PREFIX
+#define PREFIX QString("/usr/local")
+#endif
+
 class LOS{
 public:
 	//OS-specific prefix(s)
+	static QString LuminaShare(){ return (PREFIX+"/share/Lumina-DE/"); } //Install dir for Lumina share files
 	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
 	static QString SysPrefix(); //Prefix for system (/usr/ on FreeBSD)
 

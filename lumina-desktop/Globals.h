@@ -8,7 +8,7 @@
 #define _LUMINA_DESKTOP_GLOBALS_H
 
 #include <LuminaUtils.h>
-#include "../global.h"
+//#include "../global.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -27,7 +27,7 @@ public:
 class SYSTEM{
 public:
 	//Installation location for finding default files
-	static QString installDir(){ return PREFIX + "/share/Lumina-DE/"; }
+	//static QString installDir(){ return PREFIX + "/share/Lumina-DE/"; }
 	//Current Username
 	static QString user(){ return QString::fromLocal8Bit(getlogin()); }
 	//Current Hostname

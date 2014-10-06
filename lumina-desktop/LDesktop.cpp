@@ -6,7 +6,9 @@
 //===========================================
 #include "LDesktop.h"
 #include "LSession.h"
-#include "../global.h"
+
+#include <LuminaOS.h>
+//#include "../global.h"
 
 LDesktop::LDesktop(int deskNum) : QObject(){
 
@@ -401,7 +403,7 @@ void LDesktop::UpdateBackground(){
   //Save this file as the current background
   CBG = bgFile;
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
-  if( (bgFile.toLower()=="default")){ bgFile = PREFIX + "/share/Lumina-DE/desktop-background.jpg"; }
+  if( (bgFile.toLower()=="default")){ bgFile = LOS::LuminaShare()+"desktop-background.jpg"; }
   //Now set this file as the current background
   QString style = "QWidget#bgWindow{ border-image:url(%1) stretch;}";
   style = style.arg(bgFile);

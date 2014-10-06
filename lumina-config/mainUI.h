@@ -26,9 +26,6 @@
 #include "LPlugins.h"
 #include "KeyCatch.h"
 #include "AppDialog.h"
-#include "../global.h"
-
-#define DEFAULTBG QString(PREFIX + "/share/Lumina-DE/desktop-background.jpg")
 
 //namespace for using the *.ui file
 namespace Ui{
@@ -48,6 +45,7 @@ private:
 	LPlugins *PINFO;
 	QMenu *ppmenu, *mpmenu;
 	QString panelcolor;
+	QString DEFAULTBG;
 	QList<XDGDesktop> sysApps;
 	bool loading;
 	bool moddesk, modpan, modmenu, modshort, moddef, modses; //page modified flags

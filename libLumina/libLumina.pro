@@ -7,6 +7,8 @@ isEmpty(PREFIX) {
  PREFIX = /usr/local
 }
 
+system(./make-global-h.sh $$PREFIX)
+
 isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }

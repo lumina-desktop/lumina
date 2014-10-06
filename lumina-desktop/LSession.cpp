@@ -5,7 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LSession.h"
-#include "../global.h"
+#include <LuminaOS.h>
 
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
@@ -110,8 +110,8 @@ void LSession::setupSession(){
 
 bool LSession::LoadLocale(QString langCode){
     QTranslator translator;
-    if ( ! QFile::exists(SYSTEM::installDir()+"i18n/lumina-desktop_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
-    bool ok = translator.load( QString("lumina-desktop_") + langCode, SYSTEM::installDir()+"i18n/" );
+    if ( ! QFile::exists(LOS::LuminaShare()+"i18n/lumina-desktop_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
+    bool ok = translator.load( QString("lumina-desktop_") + langCode, LOS::LuminaShare()+"i18n/" );
     if(ok){
       //Remove any old translator
       if(currTranslator != 0){ this->removeTranslator(currTranslator); }
@@ -131,7 +131,7 @@ void LSession::launchStartupApps(){
   qDebug() << "Launching startup applications";
   for(int i=0; i<2; i++){
     QString startfile;
-    if(i==0){startfile = PREFIX + "/share/Lumina-DE/startapps"; }
+    if(i==0){startfile = LOS::LuminaShare()+"startapps"; }
     else{ startfile = QDir::homePath()+"/.lumina/startapps"; }
     if(!QFile::exists(startfile)){ continue; } //go to the next
 
@@ -150,7 +150,7 @@ void LSession::launchStartupApps(){
   }
   //Now play the login music
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    LSession::playAudioFile(PREFIX + "/share/Lumina-DE/Login.ogg");
+    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
   if(sessionsettings->value("EnableNumlock",true).toBool()){
     QProcess::startDetached("numlockx on");
@@ -175,8 +175,8 @@ void LSession::checkUserFiles(){
   if(!QFile::exists(dset) || oldversion < 50){
     if( oldversion < 50 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
-    if(QFile::exists(SYSTEM::installDir()+"desktopsettings.conf")){
-      if( QFile::copy(SYSTEM::installDir()+"desktopsettings.conf", dset) ){
+    if(QFile::exists(LOS::LuminaShare()+"desktopsettings.conf")){
+      if( QFile::copy(LOS::LuminaShare()+"desktopsettings.conf", dset) ){
         QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
       }
     }
@@ -185,8 +185,8 @@ void LSession::checkUserFiles(){
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
   if(!QFile::exists(dset)){
     firstrun = true;
-    if(QFile::exists(SYSTEM::installDir()+"defaultapps.conf")){
-      if( QFile::copy(SYSTEM::installDir()+"defaultapps.conf", dset) ){
+    if(QFile::exists(LOS::LuminaShare()+"defaultapps.conf")){
+      if( QFile::copy(LOS::LuminaShare()+"defaultapps.conf", dset) ){
         QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
       }
     }
@@ -219,7 +219,7 @@ void LSession::checkUserFiles(){
 
 void LSession::loadStyleSheet(){
   QString ss = QDir::homePath()+"/.lumina/stylesheet.qss";
-  if(!QFile::exists(ss)){ ss = SYSTEM::installDir()+"stylesheet.qss"; }
+  if(!QFile::exists(ss)){ ss = LOS::LuminaShare()+"stylesheet.qss"; }
   if(!QFile::exists(ss)){ return; } //no default stylesheet on the system
   //Now read/apply the custom stylesheet
   QFile file(ss);

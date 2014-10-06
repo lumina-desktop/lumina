@@ -25,7 +25,6 @@
 #include <QTextCodec>
 
 #include "LFileDialog.h"
-#include "../global.h"
 
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
@@ -42,24 +41,6 @@ void printUsageInfo(){
   exit(1);
 }
 
-/*QApplication setupApplication(int argc, char **argv){
-  QApplication App(argc, argv);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
-    App.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
-    //Load current encoding for this locale
-    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
-    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
-    return App;
-}*/
-
 void showOSD(int argc, char **argv, QString message){
   //Setup the application
   QApplication App(argc, argv);
@@ -67,10 +48,10 @@ void showOSD(int argc, char **argv, QString message){
     QLocale mylocale;
     QString langCode = mylocale.name();
 
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
       langCode.truncate( langCode.indexOf("_") );
     }
-    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
     App.installTranslator( &translator );
 
   //Display the OSD
@@ -118,10 +99,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     QLocale mylocale;
     QString langCode = mylocale.name();
 
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
       langCode.truncate( langCode.indexOf("_") );
     }
-    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
     App.installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
 
@@ -320,10 +301,10 @@ int main(int argc, char **argv){
     QLocale mylocale;
     QString langCode = mylocale.name();
 
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
       langCode.truncate( langCode.indexOf("_") );
     }
-    translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
+    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
     App.installTranslator( &translator );
     QMessageBox::critical(0,QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd);
   }

@@ -23,11 +23,7 @@
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
 #include "UserItemWidget.h"
-#include "../../../global.h"
 
-//#define APPSTORE QString(PREFIX + "/share/applications/softmanager.desktop")
-//#define CONTROLPANEL QString(PREFIX + "/share/applications/pccontrol.desktop")
-//#define QTCONFIG QString(PREFIX + "/bin/qtconfig-qt4")
 #define SSAVER QString("xscreensaver-demo")
 
 namespace Ui{

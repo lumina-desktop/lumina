@@ -8,13 +8,12 @@
 #include "ui_mainUI.h" //the designer *.ui file
 
 #include <LuminaOS.h>
-#include "../global.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
   this->setWindowIcon( LXDG::findIcon("preferences-desktop-display","") );
   PINFO = new LPlugins(); //load the info class
-
+  DEFAULTBG = LOS::LuminaShare()+"desktop-background.jpg";
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings( QSettings::UserScope, "LuminaDE", "desktopsettings", this);
@@ -712,7 +711,7 @@ void MainUI::deskbgremoved(){
 
 void MainUI::deskbgadded(){
   //Prompt the user to find an image file to use for a background
-  QString dir = PREFIX + "/share/wallpapers/Lumina-DE";
+  QString dir = LOS::LuminaShare()+"wallpapers/Lumina-DE";
   if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
   QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images (*.png *.xpm *.jpg)");
   if(bgs.isEmpty()){ return; }
@@ -993,7 +992,7 @@ void MainUI::downmenuplugin(){
 }
 
 void MainUI::findmenuterminal(){
-  QString chkpath = PREFIX + "/bin";
+  QString chkpath = LOS::AppPrefix() + "bin";
   if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
   QString bin = QFileDialog::getOpenFileName(this, tr("Set Default Terminal Application"), chkpath, tr("Application Binaries (*)") );
   if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
@@ -1407,7 +1406,7 @@ void MainUI::addsessionstartapp(){
 }
 
 void MainUI::addsessionstartbin(){
-  QString chkpath = PREFIX + "/bin";
+  QString chkpath = LOS::AppPrefix() + "bin";
   if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
   QString bin = QFileDialog::getOpenFileName(this, tr("Select Binary"), chkpath, tr("Application Binaries (*)") );
   if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled

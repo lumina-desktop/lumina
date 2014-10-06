@@ -2,7 +2,7 @@
 #include "ui_SystemWindow.h"
 
 #include "LSession.h"
-#include "../global.h"
+#include <LuminaOS.h>
 #include <unistd.h> //for usleep() usage
 
 SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
@@ -38,7 +38,7 @@ SystemWindow::~SystemWindow(){
 
 void SystemWindow::closeAllWindows(){
   if( LSession::sessionSettings()->value("PlayLogoutAudio",true).toBool() ){
-    LSession::playAudioFile(PREFIX + "/share/Lumina-DE/Logout.ogg");
+    LSession::playAudioFile(LOS::LuminaShare()+"Logout.ogg");
   }
   QList<WId> WL = LX11::WindowList();
   for(int i=0; i<WL.length(); i++){

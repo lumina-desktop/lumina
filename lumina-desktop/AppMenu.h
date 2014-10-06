@@ -35,7 +35,7 @@ public:
 
 private:
 	QFileSystemWatcher *watcher;
-	QString appstorelink, controlpanellink; //default *.desktop file to use as the "store" 
+	QString appstorelink, controlpanellink;
 	QList<QMenu> MLIST;
 	QHash<QString, QList<XDGDesktop> > APPS;
 	

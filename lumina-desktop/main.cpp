@@ -16,11 +16,8 @@
 #include <QUrl>
 
 
-//#include "WMProcess.h"
-//#include "LDesktop.h"
 #include "LSession.h"
 #include "Globals.h"
-#include "../global.h"
 
 #include <LuminaXDG.h> //from libLuminaUtils
 
@@ -68,29 +65,13 @@ int main(int argc, char ** argv)
     //Setup Log File
     qInstallMsgHandler(MessageOutput);
     a.setupSession();
-    //Start up the Window Manager
-    //qDebug() << " - Start Window Manager";
-    //WMProcess WM;
-    //WM.startWM();
-    //QObject::connect(&WM, SIGNAL(WMShutdown()), &a, SLOT(exit()) );
-    //Load the initial translations
-    //QTranslator translator;
     a.LoadLocale(QLocale().name());
-    //Now start the desktop
-    /*QDesktopWidget DW;
-    QList<LDesktop*> screens;
-    for(int i=0; i<DW.screenCount(); i++){
-      qDebug() << " - Start Desktop " << i;
-      screens << new LDesktop(i);
-      a.processEvents();
-    }*/
     //Start launching external applications
     QTimer::singleShot(1000, &a, SLOT(launchStartupApps()) ); //wait a second first
     //QTimer::singleShot(1000, &a, SLOT(playStartupAudio()) );
     int retCode = a.exec();
     //a.playLogoutAudio();
     //qDebug() << "Stopping the window manager";
-    //WM.stopWM();
     qDebug() << "Finished Closing Down Lumina";
     logfile.close();
     return retCode;

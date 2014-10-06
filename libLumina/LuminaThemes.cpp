@@ -11,23 +11,48 @@
 
 QStringList LTHEME::availableSystemThemes(){ 
   //returns: [name::::path] for each item
-	
+  QDir dir(LOS::LuminaShare()+"themes");
+  QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name());
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;	
 }
 
 QStringList LTHEME::availableLocalThemes(){	//returns: [name::::path] for each item
-	
+  QDir dir(QDir::homePath()+"/.lumina/themes");
+  QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name());
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;
 }
 
 QStringList LTHEME::availableSystemColors(){ 	//returns: [name::::path] for each item
-	
+  //returns: [name::::path] for each item
+  QDir dir(LOS::LuminaShare()+"colors");
+  QStringList list = dir.entryList(QStringList() <<"*.qss.colortemplate", QDir::Files, QDir::Name());
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;	
 }
 
 QStringList LTHEME::availableLocalColors(){ 	//returns: [name::::path] for each item
-	
+  QDir dir(QDir::homePath()+"/.lumina/colors");
+  QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name());
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;	
 }
 
 QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
-	
+  return QStringList(); //not implemented yet
 }
 	
   //Return the currently selected Theme/Colors/Icons

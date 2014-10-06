@@ -6,11 +6,11 @@
 //===========================================
 #include "AppMenu.h"
 #include "LSession.h"
-#include "../global.h"
+#include <LuminaOS.h>
 
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
-  appstorelink = PREFIX + "/share/applications/softmanager.desktop"; //Default application "store" to display (AppCafe in PC-BSD)
-  controlpanellink = PREFIX + "/share/applications/pccontrol.desktop"; //Default control panel
+  appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in PC-BSD)
+  controlpanellink = LOS::ControlPanelShortcut(); //Default control panel
   APPS.clear();
   watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
