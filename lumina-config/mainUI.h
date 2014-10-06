@@ -145,6 +145,7 @@ private slots:
 	void addsessionstartapp();
 	void addsessionstartbin();
 	void addsessionstartfile();
+	void findsessionwindowmanager();
 	void sessionoptchanged();
 	void sessionthemechanged();
 	void sessionstartchanged();

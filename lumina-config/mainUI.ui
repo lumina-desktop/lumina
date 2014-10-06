@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>385</height>
+    <width>579</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -372,8 +372,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>166</width>
+             <height>92</height>
             </rect>
            </property>
            <attribute name="label">
@@ -454,8 +454,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>194</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -592,8 +592,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>166</width>
+             <height>92</height>
             </rect>
            </property>
            <attribute name="label">
@@ -674,8 +674,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>194</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1083,7 +1083,7 @@
            <string/>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -1110,6 +1110,30 @@
                <string>Play chimes on exit</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Window Manager</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_session_windowmanager"/>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_session_findwm">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <spacer name="verticalSpacer_2">
@@ -1266,8 +1290,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>509</width>
-                    <height>71</height>
+                    <width>491</width>
+                    <height>59</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1373,8 +1397,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>573</width>
-     <height>20</height>
+     <width>579</width>
+     <height>19</height>
     </rect>
    </property>
   </widget>
