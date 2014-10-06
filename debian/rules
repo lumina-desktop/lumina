@@ -8,17 +8,14 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+DEB_PREF = $(shell gcc -print-multiarch)
+USER_QMAKE_FLAGS = PREFIX=/usr LIBPREFIX=/usr/lib/$(DEB_PEF)
+
 %:
 	dh $@
 
 build:
-	qmake-qt4
-	(cd libLumina && qmake-qt4)
-	(cd lumina-config && qmake-qt4)
-	(cd lumina-desktop && qmake-qt4)
-	(cd lumina-fm && qmake-qt4)
-	(cd lumina-open && qmake-qt4)
-	(cd lumina-screenshot && qmake-qt4)
+	qmake-qt4 $(USER_QMAKE_FLAGS)
 
 override_dh_auto_clean:
 	-$(MAKE) distclean

@@ -2,7 +2,10 @@
 QT       += core gui
 
 TARGET = lumina-screenshot
-target.path = /usr/local/bin
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+target.path = $$PREFIX/bin
 
 TEMPLATE = app
 
@@ -13,9 +16,9 @@ HEADERS  += MainUI.h
 
 FORMS    += MainUI.ui
 
-INCLUDEPATH += ../libLumina /usr/local/include
+INCLUDEPATH += ../libLumina $$PREFIX/include
 
-  LIBS     += -L../libLumina -lLuminaUtils 
+  LIBS     += -L../libLumina -lLuminaUtils
 freebsd-* {
   LIBS     += -lQtSolutions_SingleApplication-head
 }
@@ -92,10 +95,10 @@ TRANSLATIONS =  i18n/lumina-screenshot_af.ts \
                 i18n/lumina-screenshot_zh_TW.ts \
                 i18n/lumina-screenshot_zu.ts
 
-dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
 desktop.files=lumina-screenshot.desktop
-desktop.path=/usr/local/share/applications/
+desktop.path=$$PREFIX/share/applications/
 
 INSTALLS += target dotrans desktop

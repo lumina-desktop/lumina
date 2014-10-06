@@ -20,12 +20,9 @@
 //#include "LDesktop.h"
 #include "LSession.h"
 #include "Globals.h"
+#include "../global.h"
 
 #include <LuminaXDG.h> //from libLuminaUtils
-
-#ifndef PREFIX
-#define PREFIX QString("/usr/local")
-#endif
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
 void MessageOutput(QtMsgType type, const char *msg){

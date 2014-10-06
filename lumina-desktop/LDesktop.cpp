@@ -6,9 +6,10 @@
 //===========================================
 #include "LDesktop.h"
 #include "LSession.h"
+#include "../global.h"
 
 LDesktop::LDesktop(int deskNum) : QObject(){
-	
+
   DPREFIX = "desktop-"+QString::number(deskNum)+"/";
   desktopnumber = deskNum;
   desktop = QApplication::desktop();
@@ -35,7 +36,7 @@ LDesktop::LDesktop(int deskNum) : QObject(){
     //connect(LSession::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
     watcher->addPath(settings->fileName());
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
- 
+
   bgWindow = new QWidget(0);
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -45,7 +46,7 @@ LDesktop::LDesktop(int deskNum) : QObject(){
   bgDesktop = new QMdiArea(bgWindow);
 	//Make sure the desktop area is transparent to show the background
         bgDesktop->setBackground( QBrush(Qt::NoBrush) );
-  
+
   //Start the update processes
   QTimer::singleShot(1,this, SLOT(UpdateMenu()) );
   QTimer::singleShot(1,this, SLOT(UpdateBackground()) );
@@ -63,7 +64,7 @@ LDesktop::~LDesktop(){
 }
 
 int LDesktop::Screen(){
-  return desktopnumber;	
+  return desktopnumber;
 }
 
 void LDesktop::show(){
@@ -75,20 +76,20 @@ void LDesktop::show(){
 void LDesktop::hide(){
   bgWindow->hide();
   bgDesktop->hide();
-  for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }	
+  for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }
 }
 
-void LDesktop::SystemLogout(){ 
-  LSession::systemWindow(); 
+void LDesktop::SystemLogout(){
+  LSession::systemWindow();
 }
 
-void LDesktop::SystemTerminal(){ 
+void LDesktop::SystemTerminal(){
   QString term = settings->value("default-terminal","xterm").toString();
   LSession::LaunchApplication(term);
 }
 
 void LDesktop::SystemFileManager(){
-  LSession::LaunchApplication("lumina-fm");	
+  LSession::LaunchApplication("lumina-fm");
 }
 
 void LDesktop::SystemApplication(QAction* act){
@@ -114,7 +115,7 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
 }
 
 // =====================
-//     PRIVATE SLOTS 
+//     PRIVATE SLOTS
 // =====================
 void LDesktop::SettingsChanged(){
   if(changingsettings || issyncing){ return; } //don't refresh for internal modifications to the fil
@@ -130,7 +131,7 @@ void LDesktop::SettingsChanged(){
 
 void LDesktop::UpdateMenu(bool fast){
   //qDebug() << " - Update Menu:" << desktopnumber;
-  //Put a label at the top 
+  //Put a label at the top
   int num = LX11::GetCurrentDesktop();
   //qDebug() << "Found desktop number:" << num;
   if(num < 0){ workspacelabel->setText( "<b>"+tr("Lumina Desktop")+"</b>"); }
@@ -161,7 +162,7 @@ void LDesktop::UpdateMenu(bool fast){
   }
   //Now add the system quit options
   deskMenu->addSeparator();
-  if(!desktoplocked){ 
+  if(!desktoplocked){
     deskMenu->addAction(LXDG::findIcon("document-encrypt",""),tr("Lock Desktop"), this, SLOT(ToggleDesktopLock()) );
     deskMenu->addAction(LXDG::findIcon("snap-orthogonal",""),tr("Snap Plugins to Grid"), this, SLOT(AlignDesktopPlugins()) );
   }else{ deskMenu->addAction(LXDG::findIcon("document-decrypt",""),tr("Unlock Desktop"), this, SLOT(ToggleDesktopLock()) ); }
@@ -213,13 +214,13 @@ void LDesktop::UpdateDesktop(){
       //Now create the plugin (will load existing settings if possible)
       qDebug() << " -- New Plugin:" << plugins[i];
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
-      if(plug != 0){ 
+      if(plug != 0){
 	//qDebug() << " -- Show Plugin";
 	PLUGINS << plug;
 	CreateDesktopPluginContainer(plug);
       }
     }
- 
+
   }
   if(changed){
     //save the modified plugin list to file (so per-plugin settings are preserved)
@@ -246,7 +247,7 @@ void LDesktop::ToggleDesktopLock(){
     CreateDesktopPluginContainer(PLUGINS[i]);
   }
   bgDesktop->update(); //refresh visuals
-  UpdateMenu(false); 
+  UpdateMenu(false);
 }
 
 void LDesktop::AlignDesktopPlugins(){
@@ -282,7 +283,7 @@ void LDesktop::AlignDesktopPlugins(){
     //Now adjust the size to also be the appropriate grid multiple
 	geom.setWidth( qRound(geom.width()/float(xgrid))*xgrid );
 	geom.setHeight( qRound(geom.height()/float(ygrid))*ygrid );
-	
+
     //Now check for edge spillover and adjust accordingly
 	int diff = (geom.x()+geom.width()) - bgDesktop->size().width();
 	if( diff > 0 ){ geom.moveTo( geom.x() - diff, geom.y() ); }
@@ -318,7 +319,7 @@ void LDesktop::DesktopPluginRemoved(QString ID){
   }
   //Now remove that plugin from the internal list
   QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
-  
+
   plugins.removeAll(ID);
   changingsettings=true; //don't let the change cause a refresh
     settings->setValue(DPREFIX+"pluginlist", plugins);
@@ -374,7 +375,7 @@ void LDesktop::UpdateDesktopPluginArea(){
   //Re-paint the panels (just in case a plugin was underneath it and the panel is transparent)
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
 }
- 
+
 void LDesktop::UpdateBackground(){
   //Get the current Background
   static bool bgupdating = false;
@@ -385,8 +386,8 @@ void LDesktop::UpdateBackground(){
   QStringList bgL = settings->value(DPREFIX+"background/filelist", QStringList()).toStringList();
   //qDebug() << " - List:" << bgL << CBG;
     //Remove any invalid files
-    for(int i=0; i<bgL.length(); i++){ 
-      if( (!QFile::exists(bgL[i]) && bgL[i]!="default") || bgL[i].isEmpty()){ bgL.removeAt(i); i--; } 
+    for(int i=0; i<bgL.length(); i++){
+      if( (!QFile::exists(bgL[i]) && bgL[i]!="default") || bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
     }
   //Determine which background to use next
   int index = bgL.indexOf(CBG);
@@ -400,7 +401,7 @@ void LDesktop::UpdateBackground(){
   //Save this file as the current background
   CBG = bgFile;
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
-  if( (bgFile.toLower()=="default")){ bgFile = "/usr/local/share/Lumina-DE/desktop-background.jpg"; }
+  if( (bgFile.toLower()=="default")){ bgFile = PREFIX + "/share/Lumina-DE/desktop-background.jpg"; }
   //Now set this file as the current background
   QString style = "QWidget#bgWindow{ border-image:url(%1) stretch;}";
   style = style.arg(bgFile);

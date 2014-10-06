@@ -25,24 +25,21 @@
 #include <QTextCodec>
 
 #include "LFileDialog.h"
+#include "../global.h"
 
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
 
-#ifndef PREFIX
-#define PREFIX QString("/usr/local")
-#endif
-
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
-  qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags."; 	
+  qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags.";
   qDebug() << "Usage: lumina-open [-select] <absolute file path or URL>";
   qDebug() << "           lumina-open [-volumeup, -volumedown, -brightnessup, -brightnessdown]";
   qDebug() << "  [-select] (optional) flag to bypass any default application settings and show the application selector window";
   qDebug() << "Special Flags:";
   qDebug() << " \"-volume[up/down]\" Flag to increase/decrease audio volume by 5%";
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
-  exit(1);	
+  exit(1);
 }
 
 /*QApplication setupApplication(int argc, char **argv){
@@ -50,9 +47,9 @@ void printUsageInfo(){
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
-      langCode.truncate( langCode.indexOf("_") ); 
+
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+      langCode.truncate( langCode.indexOf("_") );
     }
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
     App.installTranslator( &translator );
@@ -69,9 +66,9 @@ void showOSD(int argc, char **argv, QString message){
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
-      langCode.truncate( langCode.indexOf("_") ); 
+
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+      langCode.truncate( langCode.indexOf("_") );
     }
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
     App.installTranslator( &translator );
@@ -106,7 +103,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       if(ok){
       	QString exec = LXDG::getDesktopExec(DF);
       	if(!exec.isEmpty()){
-      	  qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile; 
+      	  qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
           if(!DF.path.isEmpty()){ path = DF.path; }
           return exec;
         }
@@ -120,18 +117,18 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
-      langCode.truncate( langCode.indexOf("_") ); 
+
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+      langCode.truncate( langCode.indexOf("_") );
     }
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
     App.installTranslator( &translator );
     qDebug() << "Locale:" << langCode;
-    
+
     //Load current encoding for this locale
     QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
     qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
-    
+
     LFileDialog w;
     if(inFile.startsWith(extension)){
       //URL
@@ -141,7 +138,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       if(inFile.endsWith("/")){ inFile.chop(1); }
       w.setFileInfo(inFile.section("/",-1), extension, true);
     }
-    
+
     w.show();
 
     App.exec();
@@ -160,7 +157,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Get the input file
   QString inFile;
   bool showDLG = false; //flag to bypass any default application setting
-  if(argc > 1){ 
+  if(argc > 1){
     for(int i=1; i<argc; i++){
       if(QString(argv[i]).simplified() == "-select"){
       	showDLG = true;
@@ -209,7 +206,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if( !isFile && !isUrl ){ qDebug() << "Error: Invalid file or URL"; return;}
   //Determing the type of file (extension)
   QString extension;
-  if(isFile){ 
+  if(isFile){
     QFileInfo info(inFile);
     extension=info.completeSuffix();
     if(info.isDir()){ extension="directory"; }
@@ -221,7 +218,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if(extension=="directory" && !showDLG){
     cmd = "lumina-fm";
     useInputFile=true;
-  }else if(extension=="desktop" && !showDLG){ 
+  }else if(extension=="desktop" && !showDLG){
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
     if(!ok){
@@ -230,10 +227,10 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }
     switch(DF.type){
       case XDGDesktop::APP:
-        if(!DF.exec.isEmpty()){ 
+        if(!DF.exec.isEmpty()){
           cmd = LXDG::getDesktopExec(DF);
           if(!DF.path.isEmpty()){ path = DF.path; }
-        }else{ 
+        }else{
           qDebug() << "[ERROR] Input *.desktop application file is missing the Exec line:" << inFile;
           exit(1);
         }
@@ -246,7 +243,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           extension = inFile.section(":",0,0);
         }else{
           qDebug() << "[ERROR] Input *.desktop link file is missing the URL line:" << inFile;
-          exit(1);	
+          exit(1);
         }
         break;
       case XDGDesktop::DIR:
@@ -257,7 +254,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           extension = "directory";
         }else{
           qDebug() << "[ERROR] Input *.desktop directory file is missing the Path line:" << inFile;
-          exit(1);        	
+          exit(1);
         }
         break;
       default:
@@ -283,7 +280,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 int main(int argc, char **argv){
   //Run all the actual code in a separate function to have as little memory usage
   //  as possible aside from the main application when running
-  
+
   //Make sure the XDG environment variables exist first
   LXDG::setEnvironmentVars();
   //now get the command
@@ -306,7 +303,7 @@ int main(int argc, char **argv){
      qDebug() << "[lumina-open] Application did not startup properly:"<<cmd+" "+args;
      return p->exitCode();
     }else if(p->state() == QProcess::Running){
-     //This just missed the "started" signal - continue	 
+     //This just missed the "started" signal - continue
      break;
     }
   }
@@ -315,16 +312,16 @@ int main(int argc, char **argv){
     if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
   }
   int retcode = p->exitCode();*/
-  if(retcode!=0){ 
+  if(retcode!=0){
     qDebug() << "[lumina-open] Application Error:" << retcode;
     //Setup the application
     QApplication App(argc, argv);
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    
-    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){ 
-      langCode.truncate( langCode.indexOf("_") ); 
+
+    if(!QFile::exists(PREFIX + "/share/Lumina-DE/i18n/lumina-open_" + langCode + ".qm") ){
+      langCode.truncate( langCode.indexOf("_") );
     }
     translator.load( QString("lumina-open_") + langCode, PREFIX + "/share/Lumina-DE/i18n/" );
     App.installTranslator( &translator );

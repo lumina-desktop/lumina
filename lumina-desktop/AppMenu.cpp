@@ -6,10 +6,11 @@
 //===========================================
 #include "AppMenu.h"
 #include "LSession.h"
+#include "../global.h"
 
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
-  appstorelink = "/usr/local/share/applications/softmanager.desktop"; //Default application "store" to display (AppCafe in PC-BSD)
-  controlpanellink = "/usr/local/share/applications/pccontrol.desktop"; //Default control panel
+  appstorelink = PREFIX + "/share/applications/softmanager.desktop"; //Default application "store" to display (AppCafe in PC-BSD)
+  controlpanellink = PREFIX + "/share/applications/pccontrol.desktop"; //Default control panel
   APPS.clear();
   watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
@@ -42,12 +43,12 @@ void AppMenu::updateAppList(){
     this->addAction( LXDG::findIcon("user-home", ""), tr("Open Home"), this, SLOT(launchFileManager()) );
     //--Look for the app store
     XDGDesktop store = LXDG::loadDesktopFile(appstorelink, ok);
-    if(ok){ 
+    if(ok){
       this->addAction( LXDG::findIcon(store.icon, ""), tr("Install Applications"), this, SLOT(launchStore()) );
     }
     //--Look for the control panel
     store = LXDG::loadDesktopFile(controlpanellink, ok);
-    if(ok){ 
+    if(ok){
       this->addAction( LXDG::findIcon(store.icon, ""), tr("Control Panel"), this, SLOT(launchControlPanel()) );
     }
     this->addSeparator();
@@ -70,7 +71,7 @@ void AppMenu::updateAppList(){
       else if(cats[i] == "System"){ name = tr("System"); icon = "applications-system"; }
       else if(cats[i] == "Utility"){ name = tr("Utility"); icon = "applications-utilities"; }
       else{ name = tr("Unsorted"); icon = "applications-other"; }
-      
+
       QMenu *menu = new QMenu(name, this);
       menu->setIcon(LXDG::findIcon(icon,""));
       connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(launchApp(QAction*)) );

@@ -2,7 +2,10 @@
 QT       += core gui
 
 TARGET = lumina-open
-target.path = /usr/local/bin
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+target.path = $$PREFIX/bin
 
 TEMPLATE = app
 
@@ -15,7 +18,7 @@ FORMS    += LFileDialog.ui
 
 RESOURCES+= lumina-open.qrc
 
-INCLUDEPATH += ../libLumina /usr/local/include
+INCLUDEPATH += ../libLumina $$PREFIX/include
 LIBS     += -L../libLumina -lLuminaUtils
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
@@ -89,7 +92,7 @@ TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_zh_TW.ts \
                 i18n/lumina-open_zu.ts
 
-dotrans.path=/usr/local/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/local/share/Lumina-DE/i18n/
+dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
 INSTALLS += target dotrans

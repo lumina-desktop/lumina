@@ -1,3 +1,9 @@
+lumina-desktop (0.6.3.99-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+ 
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 05 Oct 2014 20:18:23 +0200
+
 lumina-desktop (0.6.2.14-1nano) unstable; urgency=low
 
   * Initial release
