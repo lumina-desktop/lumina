@@ -117,7 +117,6 @@ void MainUI::setupIcons(){
   ui->tool_session_addapp->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_session_addbin->setIcon( LXDG::findIcon("system-search","") );
   ui->tool_session_addfile->setIcon( LXDG::findIcon("run-build-file","") );
-  ui->tool_session_findwm->setIcon( LXDG::findIcon("system-search","") );
 
 }
 
@@ -194,8 +193,6 @@ void MainUI::setupConnections(){
   connect(ui->check_session_numlock, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playloginaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
-  connect(ui->tool_session_findwm, SIGNAL(clicked()), this, SLOT(findsessionwindowmanager()) );
-  connect(ui->line_session_windowmanager, SIGNAL(textChanged(QString)), this, SLOT(sessionoptchanged()) );
   connect(ui->spin_session_wkspaces, SIGNAL(valueChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->list_session_start, SIGNAL(currentRowChanged(int)), this, SLOT(sessionstartchanged()) );
 }
@@ -1346,23 +1343,8 @@ void MainUI::loadSessionSettings(){
   ui->check_session_numlock->setChecked( sessionsettings->value("EnableNumlock", true).toBool() );
   ui->check_session_playloginaudio->setChecked( sessionsettings->value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings->value("PlayLogoutAudio",true).toBool() );
-  ui->line_session_windowmanager->setText( sessionsettings->value("WindowManager","fluxbox").toString() );
 
   sessionstartchanged(); //make sure to update buttons
-}
-
-void MainUI::findsessionwindowmanager(){
-  QString chkpath = LOS::AppPrefix() + "bin";
-  if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
-  QString bin = QFileDialog::getOpenFileName(this, tr("Set Default Window Manager"), chkpath, tr("Application Binaries (*)") );
-  if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
-  if( !QFileInfo(bin).isExecutable() ){
-    QMessageBox::warning(this, tr("Invalid Binary"), tr("The selected file is not executable!"));
-    return;
-  }
-  ui->line_session_windowmanager->setText(bin);
-  ui->push_save->setEnabled(true);
-  modses = true;
 }
 
 void MainUI::saveSessionSettings(){
@@ -1404,7 +1386,6 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("EnableNumlock", ui->check_session_numlock->isChecked());
   sessionsettings->setValue("PlayStartupAudio", ui->check_session_playloginaudio->isChecked());
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
-  sessionsettings->setValue("WindowManager", ui->line_session_windowmanager->text() );
 }
 
 void MainUI::rmsessionstartitem(){
