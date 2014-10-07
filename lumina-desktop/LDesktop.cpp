@@ -91,7 +91,8 @@ void LDesktop::SystemTerminal(){
 }
 
 void LDesktop::SystemFileManager(){
-  LSession::LaunchApplication("lumina-fm");
+  QString fm = settings->value("default-filemanager","lumina-fm").toString();
+  LSession::LaunchApplication(fm);
 }
 
 void LDesktop::SystemApplication(QAction* act){
