@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "WMProcess.h"
+#include "LSession.h"
 
 WMProcess::WMProcess() : QProcess(){
   connect(this,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(processFinished(int, QProcess::ExitStatus)) );
@@ -17,7 +18,7 @@ WMProcess::WMProcess() : QProcess(){
 }
 
 WMProcess::~WMProcess(){
-	
+
 }
 
 // =======================
@@ -55,7 +56,7 @@ bool WMProcess::isRunning(){
 }
 
 QString WMProcess::setupWM(){
-  QString WM = "fluxbox";
+  QString WM = LSession::sessionSettings()->value("WindowManager", "fluxbox").toString();
   QString cmd="echo WM Disabled";
   //leave the option to add other window managers here (for testing purposes)
   if(WM=="openbox"){
@@ -85,6 +86,8 @@ QString WMProcess::setupWM(){
       QFile::setPermissions(confDir+"/lumina-menu.xml", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     }*/
     cmd = "fluxbox -rc "+confDir+"/fluxbox-init";
+  }else {
+    cmd = WM;
   }
   return cmd;
 }
@@ -103,13 +106,13 @@ void WMProcess::processFinished(int exitcode, QProcess::ExitStatus status){
   if(!inShutdown){
     if(exitcode == 0 && status == QProcess::NormalExit){
       cleanupConfig();
-      emit WMShutdown();	  
+      emit WMShutdown();
     }else{
       //restart the Window manager
       this->startWM();
     }
   }else{
-    cleanupConfig();	  
+    cleanupConfig();
   }
 }
-	
+
