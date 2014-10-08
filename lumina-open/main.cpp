@@ -76,10 +76,7 @@ void showOSD(int argc, char **argv, QString message){
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
     //First check to see if there is a default for this extension
     QString defApp = LFileDialog::getDefaultApp(extension);
-    if(extension=="directory" && defApp.isEmpty() && !showDLG){
-      //Just use the Lumina File Manager
-      return "lumina-fm";
-    }else if( !defApp.isEmpty() && !showDLG ){
+    if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
       if(defApp.endsWith(".desktop")){
         XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
@@ -101,7 +98,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       //invalid default - reset it and continue on
       LFileDialog::setDefaultApp(extension, "");
     }
-
+    //Final catch: directory given - no valid default found - use lumina-fm
+    if(extension=="directory" && !showDLG){ return "lumina-fm"; }
     //No default set -- Start up the application selection dialog
     QApplication App(argc, argv);
     QTranslator translator;
