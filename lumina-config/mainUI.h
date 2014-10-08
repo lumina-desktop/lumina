@@ -121,6 +121,7 @@ private slots:
 	void upmenuplugin();
 	void downmenuplugin();
 	void findmenuterminal();
+	void findmenufilemanager();
 	void checkmenuicons();
 
 	//Shortcuts Page

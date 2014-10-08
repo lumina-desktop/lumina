@@ -6,6 +6,7 @@
 //===========================================
 #include "AppMenu.h"
 #include "LSession.h"
+#include "LDesktop.h"
 #include <LuminaOS.h>
 
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
@@ -111,8 +112,9 @@ void AppMenu::launchControlPanel(){
 }
 
 void AppMenu::launchFileManager(){
-  LSession::LaunchApplication("lumina-fm");
-  //QProcess::startDetached("lumina-fm");
+  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  QString fm = QSettings("LuminaDE", "desktopsettings").value("default-filemanager","lumina-fm").toString();
+  LSession::LaunchApplication(fm);
 }
 
 void AppMenu::launchApp(QAction *act){

@@ -23,6 +23,7 @@
 #include <QColor>
 #include <QFont>
 #include <QTextCodec>
+#include <QSettings>
 
 #include "LFileDialog.h"
 
@@ -73,11 +74,12 @@ void showOSD(int argc, char **argv, QString message){
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
+    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
     //First check to see if there is a default for this extension
     QString defApp = LFileDialog::getDefaultApp(extension);
     if(extension=="directory" && defApp.isEmpty() && !showDLG){
       //Just use the Lumina File Manager
-      return "lumina-fm";
+      return QSettings("LuminaDE", "desktopsettings").value("default-filemanager","lumina-fm").toString();
     }else if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
       XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
@@ -137,6 +139,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path){
   //Get the input file
   QString inFile;
+  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   bool showDLG = false; //flag to bypass any default application setting
   if(argc > 1){
     for(int i=1; i<argc; i++){
@@ -197,7 +200,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   QString cmd;
   bool useInputFile = false;
   if(extension=="directory" && !showDLG){
-    cmd = "lumina-fm";
+    cmd = QSettings("LuminaDE", "desktopsettings").value("default-filemanager","lumina-fm").toString();
     useInputFile=true;
   }else if(extension=="desktop" && !showDLG){
     bool ok = false;

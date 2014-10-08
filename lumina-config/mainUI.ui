@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>385</height>
+    <width>579</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,7 +94,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -372,8 +372,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>166</width>
+             <height>92</height>
             </rect>
            </property>
            <attribute name="label">
@@ -454,8 +454,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>194</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -592,8 +592,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>166</width>
+             <height>92</height>
             </rect>
            </property>
            <attribute name="label">
@@ -674,8 +674,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>194</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -782,7 +782,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -795,10 +795,10 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QListWidget" name="list_menu"/>
         </item>
-        <item row="1" column="2">
+        <item row="2" column="2">
          <spacer name="horizontalSpacer_8">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -811,7 +811,7 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="1">
+        <item row="3" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_13">
           <item>
            <widget class="QToolButton" name="tool_menu_add">
@@ -851,6 +851,30 @@
            <widget class="QToolButton" name="tool_menu_dn">
             <property name="text">
              <string notr="true">dn</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_18">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>File Manager:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="line_menu_fm"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_menu_findfm">
+            <property name="text">
+             <string>find</string>
             </property>
            </widget>
           </item>
@@ -1266,8 +1290,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>509</width>
-                    <height>71</height>
+                    <width>491</width>
+                    <height>59</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1373,8 +1397,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>573</width>
-     <height>20</height>
+     <width>579</width>
+     <height>19</height>
     </rect>
    </property>
   </widget>

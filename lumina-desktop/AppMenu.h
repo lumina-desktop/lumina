@@ -19,6 +19,7 @@
 #include <QDateTime>
 #include <QHash>
 #include <QAction>
+#include <QSettings>
 //#include <QProcess>
 
 // libLumina includes
@@ -29,18 +30,19 @@ class AppMenu : public QMenu{
 public:
 	AppMenu(QWidget *parent = 0);
 	~AppMenu();
-	
+
 	QHash<QString, QList<XDGDesktop> > *currentAppHash();
 	QDateTime lastHashUpdate;
 
 private:
+	QSettings *settings;
 	QFileSystemWatcher *watcher;
 	QString appstorelink, controlpanellink;
 	QList<QMenu> MLIST;
 	QHash<QString, QList<XDGDesktop> > APPS;
-	
+
 	void updateAppList(); //completely update the menu lists
-	
+
 private slots:
 	void start(); //This is called in a new thread after initialization
 	void watcherUpdate();
