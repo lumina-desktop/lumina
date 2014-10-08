@@ -74,7 +74,6 @@ void showOSD(int argc, char **argv, QString message){
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
     //First check to see if there is a default for this extension
     QString defApp = LFileDialog::getDefaultApp(extension);
     if(extension=="directory" && defApp.isEmpty() && !showDLG){
@@ -208,10 +207,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;
-  if(extension=="directory" && !showDLG){
-    cmd = QSettings("LuminaDE", "desktopsettings").value("default-filemanager","lumina-fm").toString();
-    useInputFile=true;
-  }else if(extension=="desktop" && !showDLG){
+  if(extension=="desktop" && !showDLG){
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
     if(!ok){
