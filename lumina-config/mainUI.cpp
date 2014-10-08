@@ -619,8 +619,9 @@ void MainUI::saveCurrentSettings(bool screenonly){
 
     // Menu Page
     if(modmenu && !screenonly){
-    settings->setValue("default-terminal", ui->line_menu_term->text() );
-    settings->setValue("default-filemanager", ui->line_menu_fm->text() );
+    sessionsettings->setValue("default-terminal", ui->line_menu_term->text() );
+    sessionsettings->setValue("default-filemanager", ui->line_menu_fm->text() );
+    appsettings->setValue("default/directory", ui->line_menu_fm->text() );
     QStringList items;
     for(int i=0; i<ui->list_menu->count(); i++){
       items << ui->list_menu->item(i)->whatsThis();
@@ -1013,7 +1014,7 @@ void MainUI::findmenuterminal(){
 void MainUI::findmenufilemanager(){
   QString chkpath = LOS::AppPrefix() + "bin";
   if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
-  QString bin = QFileDialog::getOpenFileName(this, tr("Set Default File MAnager"), chkpath, tr("Application Binaries (*)") );
+  QString bin = QFileDialog::getOpenFileName(this, tr("Set Default File Manager"), chkpath, tr("Application Binaries (*)") );
   if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
   if( !QFileInfo(bin).isExecutable() ){
     QMessageBox::warning(this, tr("Invalid Binary"), tr("The selected file is not executable!"));
@@ -1028,8 +1029,8 @@ void MainUI::checkmenuicons(){
   ui->tool_menu_up->setEnabled( ui->list_menu->currentRow() > 0 );
   ui->tool_menu_dn->setEnabled( ui->list_menu->currentRow() < (ui->list_menu->count()-1) );
   ui->tool_menu_rm->setEnabled( ui->list_menu->currentRow() >=0 );
-  if( settings->value("default-terminal","").toString() != ui->line_menu_term->text() ||
-      settings->value("default-filemanager","").toString() != ui->line_menu_fm->text()){
+  if( sessionsettings->value("default-terminal","xterm").toString() != ui->line_menu_term->text() ||
+      sessionsettings->value("default-filemanager","lumina-fm").toString() != ui->line_menu_fm->text()){
     ui->push_save->setEnabled(true);
     modmenu = true;
   }

@@ -23,7 +23,6 @@
 #include <QColor>
 #include <QFont>
 #include <QTextCodec>
-#include <QSettings>
 
 #include "LFileDialog.h"
 
@@ -79,17 +78,25 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     QString defApp = LFileDialog::getDefaultApp(extension);
     if(extension=="directory" && defApp.isEmpty() && !showDLG){
       //Just use the Lumina File Manager
-      return QSettings("LuminaDE", "desktopsettings").value("default-filemanager","lumina-fm").toString();
+      return "lumina-fm";
     }else if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
-      XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
-      if(ok){
-      	QString exec = LXDG::getDesktopExec(DF);
-      	if(!exec.isEmpty()){
-      	  qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
-          if(!DF.path.isEmpty()){ path = DF.path; }
-          return exec;
+      if(defApp.endsWith(".desktop")){
+        XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
+        if(ok){
+      	  QString exec = LXDG::getDesktopExec(DF);
+      	  if(!exec.isEmpty()){
+      	    qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
+            if(!DF.path.isEmpty()){ path = DF.path; }
+            return exec;
+          }
         }
+      }else{
+	//Only binary given
+	if(QFile::exists(defApp)){
+	  qDebug() << "[lumina-open] Using default application:" << defApp << "File:" << inFile;
+	  return defApp; //just use the binary
+	}
       }
       //invalid default - reset it and continue on
       LFileDialog::setDefaultApp(extension, "");
@@ -139,7 +146,6 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path){
   //Get the input file
   QString inFile;
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   bool showDLG = false; //flag to bypass any default application setting
   if(argc > 1){
     for(int i=1; i<argc; i++){

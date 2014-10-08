@@ -86,12 +86,12 @@ void LDesktop::SystemLogout(){
 }
 
 void LDesktop::SystemTerminal(){
-  QString term = settings->value("default-terminal","xterm").toString();
+  QString term = LSession::sessionSettings()->value("default-terminal","xterm").toString();
   LSession::LaunchApplication(term);
 }
 
 void LDesktop::SystemFileManager(){
-  QString fm = settings->value("default-filemanager","lumina-fm").toString();
+  QString fm = LSession::sessionSettings()->value("default-filemanager","lumina-fm").toString();
   LSession::LaunchApplication(fm);
 }
 

@@ -35,7 +35,6 @@ public:
 	QDateTime lastHashUpdate;
 
 private:
-	QSettings *settings;
 	QFileSystemWatcher *watcher;
 	QString appstorelink, controlpanellink;
 	QList<QMenu> MLIST;
