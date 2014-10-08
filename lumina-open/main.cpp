@@ -27,6 +27,7 @@
 #include "LFileDialog.h"
 
 #include <LuminaXDG.h>
+#include <LuminaUtils.h>
 #include <LuminaOS.h>
 
 void printUsageInfo(){
@@ -93,7 +94,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
         }
       }else{
 	//Only binary given
-	if(QFile::exists(defApp)){
+	if(LUtils::isValidBinary(defApp)){
 	  qDebug() << "[lumina-open] Using default application:" << defApp << "File:" << inFile;
 	  return defApp; //just use the binary
 	}
@@ -137,8 +138,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     if(!w.appPath.isEmpty()){ path = w.appPath; }
     //Just do the default application registration here for now
     //  might move it to the runtime phase later after seeing that the app has successfully started
-    if(w.setDefault){ LFileDialog::setDefaultApp(extension, w.appFile); }
-    else{ LFileDialog::setDefaultApp(extension, ""); }
+    if(w.setDefault){ 
+      if(!w.appFile.isEmpty()){ LFileDialog::setDefaultApp(extension, w.appFile); }
+      else{ LFileDialog::setDefaultApp(extension, w.appExec); }
+    }else{ LFileDialog::setDefaultApp(extension, ""); }
     //Now return the resulting application command
     return w.appExec;
 }
@@ -192,7 +195,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Make sure that it is a valid file/URL
   bool isFile=false; bool isUrl=false;
   if(QFile::exists(inFile)){ isFile=true; }
-  else if(QUrl(inFile).isValid()){ isUrl=true; }
+  else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
   if( !isFile && !isUrl ){ qDebug() << "Error: Invalid file or URL"; return;}
   //Determing the type of file (extension)
   QString extension;

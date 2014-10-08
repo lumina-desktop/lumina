@@ -20,7 +20,8 @@
 #include <QTextStream>
 #include <QTreeWidgetItem>
 
-#include "LuminaXDG.h" //From libLuminaUtils
+#include <LuminaXDG.h> //From libLuminaUtils
+#include <LuminaUtils.h>
 
 namespace Ui{
 	class LFileDialog;

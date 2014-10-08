@@ -13,6 +13,8 @@
 #include <QFile>
 #include <QString>
 #include <QStringList>
+#include <QFile>
+#include <QFileInfo>
 
 class LUtils{
 public:
@@ -25,6 +27,9 @@ public:
 	static QStringList readFile(QString filepath);
 	//Write a text file
 	static bool writeFile(QString filepath, QStringList contents, bool overwrite=false);
+
+	//Check whether a file/path is a valid binary
+	static bool isValidBinary(QString bin); //full path or name only
 };
 
 #endif

@@ -127,10 +127,9 @@ void LFileDialog::updateUI(){
   bool good = false;
   if(ui->radio_custom->isChecked()){
     if(!ui->line_bin->text().isEmpty()){
-      good = true; 
+      good = LUtils::isValidBinary(ui->line_bin->text()); 
       //Now verify that the file exists and is executable
-      QFileInfo FI(ui->line_bin->text());
-      if( FI.exists() && FI.isExecutable() && FI.isFile() ){
+      if( good ){
         ui->label_goodbin->setPixmap(QPixmap(":/icons/good.png"));
       }else{
         ui->label_goodbin->setPixmap(QPixmap(":/icons/bad.png"));
@@ -206,7 +205,7 @@ void LFileDialog::radioChanged(){
   }else{
     ui->stackedWidget->setCurrentWidget(ui->page_custom);
   }
-  ui->check_default->setEnabled( !ui->radio_custom->isChecked() );
+  //ui->check_default->setEnabled( !ui->radio_custom->isChecked() );
   updateUI();
 }
 
@@ -219,6 +218,7 @@ void LFileDialog::radioChanged(){
 
 void LFileDialog::on_tool_ok_clicked(){
   appSelected = true;
+  setDefault = ui->check_default->isChecked();
   if(ui->radio_custom->isChecked()){
     appExec = ui->line_bin->text();  
   }else if(ui->radio_rec->isChecked()){
@@ -226,7 +226,6 @@ void LFileDialog::on_tool_ok_clicked(){
     bool ok = false;
     XDGDesktop app = LXDG::loadDesktopFile(PREFAPPS[ui->combo_rec->currentIndex()], ok);
     //Set the output variables
-    setDefault = ui->check_default->isChecked();
     appExec = app.exec;
     appPath = app.path;
     appFile = app.filePath;
@@ -236,7 +235,6 @@ void LFileDialog::on_tool_ok_clicked(){
     bool ok = false;
     XDGDesktop app = LXDG::loadDesktopFile(ui->tree_apps->currentItem()->whatsThis(0), ok);
     //Set the output variables
-    setDefault = ui->check_default->isChecked();
     appExec = app.exec;
     appPath = app.path;
     appFile = app.filePath;

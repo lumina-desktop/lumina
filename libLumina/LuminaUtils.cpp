@@ -64,3 +64,17 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   }
   return ok;
 }
+
+bool LUtils::isValidBinary(QString bin){
+  if(!bin.startsWith("/")){
+    //Relative path: search for it on the current "PATH" settings
+    QStringList paths = QString(qgetenv("PATH")).split(":");
+    for(int i=0; i<paths.length(); i++){
+      if(QFile::exists(paths[i]+"/"+bin)){ bin = paths[i]+"/"+bin; break;}	    
+    }
+  }
+  //bin should be the full path by now
+  if(!bin.startsWith("/")){ return false; }
+  QFileInfo info(bin);
+  return (info.exists() && info.isExecutable());
+}
