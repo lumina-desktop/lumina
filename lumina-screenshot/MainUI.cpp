@@ -25,14 +25,24 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
   connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
   connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
-  ui->radio_window->setChecked(true);
+
+  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  settings = new QSettings("LuminaDE", "lumina-screenshot",this);
+
+  if(settings->value("screenshot-target", "window").toString() == "window") {
+	ui->radio_window->setChecked(true);
+  } else {
+	ui->radio_all->setChecked(true);
+  }
+
+  ui->spin_delay->setValue(settings->value("screenshot-delay", 0).toInt());
 
   this->show();
   ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
 MainUI::~MainUI(){}
-	
+
 //==============
 //  PRIVATE SLOTS
 //==============
@@ -54,6 +64,7 @@ bool MainUI::getWindow(){
   //Use this function to set cwin
   cwin = 0;
   if(ui->radio_window->isChecked()){
+    settings->setValue("screenshot-target", "window");
     //Use xprop to get the desired window from the user
     QList<WId> wins = LX11::WindowList();
     wins.removeAll(this->winId()); //don't show this window
@@ -65,7 +76,10 @@ bool MainUI::getWindow(){
     QString info = QInputDialog::getItem(this, tr("Select Window"), tr("Window:"), names, 0, false, &ok);
     if(!ok || names.indexOf(info)<0){ return false; } //cancelled
     cwin = wins[ names.indexOf(info) ];
+  } else {
+    settings->setValue("screenshot-target", "desktop");
   }
+  settings->setValue("screenshot-delay", ui->spin_delay->value());
   return true;
 }
 
