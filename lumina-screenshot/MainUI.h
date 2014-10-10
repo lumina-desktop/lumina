@@ -29,6 +29,9 @@ public:
 	MainUI();
 	~MainUI();
 
+public slots:
+	void setupIcons();
+
 private:
 	Ui::MainUI *ui;
 	QPixmap cpic; //current picture

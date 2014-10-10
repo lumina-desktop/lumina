@@ -87,14 +87,11 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget#page_desktop,#page_panels,#page_menu,#page_shortcuts,#page_defaults,#page_session{background-color: rgba(255,255,255,150); }</string>
-      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -372,8 +369,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>166</width>
-             <height>92</height>
+             <width>157</width>
+             <height>90</height>
             </rect>
            </property>
            <attribute name="label">
@@ -454,8 +451,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>194</width>
-             <height>107</height>
+             <width>177</width>
+             <height>106</height>
             </rect>
            </property>
            <attribute name="label">
@@ -592,8 +589,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>166</width>
-             <height>92</height>
+             <width>157</width>
+             <height>90</height>
             </rect>
            </property>
            <attribute name="label">
@@ -674,8 +671,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>194</width>
-             <height>107</height>
+             <width>177</width>
+             <height>106</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1107,8 +1104,115 @@
            <string/>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
+          <widget class="QWidget" name="tab_theme">
+           <attribute name="title">
+            <string>Theme</string>
+           </attribute>
+           <layout class="QFormLayout" name="formLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>Font:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QFontComboBox" name="font_session_theme">
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>Font Size:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spin_session_fontsize">
+              <property name="suffix">
+               <string> point</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Theme Template:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QComboBox" name="combo_session_themefile">
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToContents</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_session_newtheme">
+                <property name="toolTip">
+                 <string>Create/Edit a theme template (Advanced)</string>
+                </property>
+                <property name="statusTip">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Color Scheme:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <item>
+               <widget class="QComboBox" name="combo_session_colorfile">
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToContents</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_session_newcolor">
+                <property name="toolTip">
+                 <string>Create/Edit a color scheme</string>
+                </property>
+                <property name="statusTip">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="combo_session_icontheme"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Icon Pack:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="tab">
            <attribute name="title">
             <string>General Options</string>
@@ -1279,9 +1383,6 @@
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
                 <widget class="QScrollArea" name="scrollArea">
-                 <property name="styleSheet">
-                  <string notr="true">background: grey;</string>
-                 </property>
                  <property name="widgetResizable">
                   <bool>true</bool>
                  </property>
@@ -1290,8 +1391,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>491</width>
-                    <height>59</height>
+                    <width>515</width>
+                    <height>78</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1398,7 +1499,7 @@
      <x>0</x>
      <y>0</y>
      <width>579</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

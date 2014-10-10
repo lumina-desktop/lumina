@@ -278,9 +278,11 @@ void UserWidget::slotOpenDir(){
 	
 void UserWidget::mouseMoveEvent( QMouseEvent *event){
   QTabBar *wid = tabBar();
-  qDebug() << "Mouse Move Event:";
-  if(wid && wid->tabAt(event->pos()) != -1){
+  if(wid==0){ return; } //invalid widget found
+  QPoint relpos = wid->mapFromGlobal( this->mapToGlobal(event->pos()) );
+  //qDebug() << "Mouse Move Event: " << event->pos().x() << event->pos().y() << relpos.x() << relpos.y() << wid->width() << wid->height();
+  if(wid && wid->tabAt(relpos) != -1){
     qDebug() << " - Mouse over tab";
-    this->setCurrentIndex( wid->tabAt(event->pos()) );
+    this->setCurrentIndex( wid->tabAt(relpos) );
   }
 }

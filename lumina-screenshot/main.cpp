@@ -5,10 +5,12 @@
 
 #include "MainUI.h"
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 int main(int argc, char ** argv)
 {
     QApplication a(argc, argv);
+    LuminaThemeEngine theme(&a);
     a.setApplicationName("Take Screenshot");
     QTranslator translator;
     QLocale mylocale;
@@ -20,6 +22,7 @@ int main(int argc, char ** argv)
     qDebug() << "Locale:" << langCode;
 
     MainUI w;
+    QObject::connect(&theme,SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.show();
 
     return a.exec();

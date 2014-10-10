@@ -20,6 +20,7 @@
 #include "Globals.h"
 
 #include <LuminaXDG.h> //from libLuminaUtils
+#include <LuminaThemes.h>
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
 void MessageOutput(QtMsgType type, const char *msg){
@@ -62,6 +63,7 @@ int main(int argc, char ** argv)
     logfile.open(QIODevice::WriteOnly | QIODevice::Append);
     //Startup the Application
     LSession a(argc, argv);
+    LuminaThemeEngine theme(&a);
     //Setup Log File
     qInstallMsgHandler(MessageOutput);
     a.setupSession();

@@ -16,11 +16,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   QWidget *spacer = new QWidget();
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui->toolBar->insertWidget(ui->actionNew, spacer);
-  //Setup the icons
-  this->setWindowIcon( LXDG::findIcon("camera-web","") );
-  ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
-  ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
-  ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );
+	
+  setupIcons();
+	
   //Setup the connections
   connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
   connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
@@ -33,6 +31,14 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 
 MainUI::~MainUI(){}
 	
+void MainUI::setupIcons(){
+  //Setup the icons
+  this->setWindowIcon( LXDG::findIcon("camera-web","") );
+  ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
+  ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
+  ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
+}
+
 //==============
 //  PRIVATE SLOTS
 //==============

@@ -67,6 +67,9 @@ public:
 
 	void OpenDirs(QStringList); //called from the main.cpp after initialization
 
+public slots:
+	void setupIcons(); 			//used during initialization
+
 private:
 	Ui::MainUI *ui;
 	//Internal non-ui widgets
@@ -97,7 +100,6 @@ private:
 	bool isUserWritable, keepFocus;
 
 	//Simplification Functions
-	void setupIcons(); 			//used during initialization
 	void setupConnections(); 	//used during initialization
 	void loadSettings(); 		//used during initialization
 	

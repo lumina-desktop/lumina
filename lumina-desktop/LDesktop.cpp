@@ -48,6 +48,7 @@ LDesktop::LDesktop(int deskNum) : QObject(){
   bgDesktop = new QMdiArea(bgWindow);
 	//Make sure the desktop area is transparent to show the background
         bgDesktop->setBackground( QBrush(Qt::NoBrush) );
+	bgDesktop->setStyleSheet( "QMdiArea{ border: none; }" );
 
   //Start the update processes
   QTimer::singleShot(1,this, SLOT(UpdateMenu()) );

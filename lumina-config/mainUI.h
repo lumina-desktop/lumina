@@ -21,6 +21,7 @@
 
 // libLumina includes
 #include <LuminaXDG.h>
+#include <LuminaThemes.h>
 
 // local includes
 #include "LPlugins.h"
@@ -52,7 +53,6 @@ private:
 	int panelnumber;
 
 	//General purpose functions (not connected to buttons)
-	void setupIcons(); //called during initialization
 	void setupMenus(); //called during initialization
 	void setupConnections(); //called during intialization
 
@@ -72,6 +72,9 @@ private:
 	//Read/overwrite a text file
 	QStringList readFile(QString path);
 	bool overwriteFile(QString path, QStringList contents);
+
+public slots:
+	void setupIcons(); //called during initialization
 
 private slots:
 	void slotSingleInstance();

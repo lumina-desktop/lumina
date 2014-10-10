@@ -26,14 +26,18 @@ public:
   static QStringList availableLocalColors(); 	//returns: [name::::path] for each item
   static QStringList availableSystemIcons(); 	//returns: [name] for each item
 	
+  //Save a new theme/color file
+  static bool saveLocalTheme(QString name, QStringList contents);
+  static bool saveLocalColors(QString name, QStringList contents);
+
   //Return the currently selected Theme/Colors/Icons
-  static QStringList currentSettings(); //returns [theme path, colorspath, iconsname]
+  static QStringList currentSettings(); //returns [theme path, colorspath, iconsname, font, fontsize]
 
   //Change the current Theme/Colors/Icons
-  static bool setCurrentSettings(QString themepath, QString colorpath, QString iconname);
+  static bool setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize);
 	
   //Return the complete stylesheet for a given theme/colors
-  static QString assembleStyleSheet(QString themepath, QString colorpath);
+  static QString assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize);
   
 };
 
@@ -58,7 +62,7 @@ public:
 private:
 	QApplication *application;
 	QFileSystemWatcher *watcher;
-	QString theme,colors,icons; //current settings
+	QString theme,colors,icons, font, fontsize; //current settings
 
 private slots:
 	void watcherChange();

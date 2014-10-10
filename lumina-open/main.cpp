@@ -29,6 +29,7 @@
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
@@ -102,6 +103,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     if(extension=="directory" && !showDLG){ return "lumina-fm"; }
     //No default set -- Start up the application selection dialog
     QApplication App(argc, argv);
+    LuminaThemeEngine theme(&App);
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
@@ -303,6 +305,7 @@ int main(int argc, char **argv){
     qDebug() << "[lumina-open] Application Error:" << retcode;
     //Setup the application
     QApplication App(argc, argv);
+    LuminaThemeEngine theme(&App);
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();

@@ -9,6 +9,7 @@
 
 #include "mainUI.h"
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 int main(int argc, char ** argv)
 {
@@ -19,6 +20,7 @@ int main(int argc, char ** argv)
     if( a.isRunning() )
       return !(a.sendMessage("show"));
     #endif
+    LuminaThemeEngine theme(&a);
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
@@ -31,6 +33,7 @@ int main(int argc, char ** argv)
 
     MainUI w;
     QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(slotSingleInstance()) );
+    QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.show();
 
     int retCode = a.exec();

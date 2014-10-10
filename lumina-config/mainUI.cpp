@@ -118,6 +118,8 @@ void MainUI::setupIcons(){
   ui->tool_session_addapp->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_session_addbin->setIcon( LXDG::findIcon("system-search","") );
   ui->tool_session_addfile->setIcon( LXDG::findIcon("run-build-file","") );
+  ui->tool_session_newtheme->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
+  ui->tool_session_newcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
 
 }
 
@@ -198,6 +200,12 @@ void MainUI::setupConnections(){
   connect(ui->check_session_playlogoutaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->spin_session_wkspaces, SIGNAL(valueChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->list_session_start, SIGNAL(currentRowChanged(int)), this, SLOT(sessionstartchanged()) );
+  connect(ui->spin_session_fontsize, SIGNAL(valueChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_themefile, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_colorfile, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_icontheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->font_session_theme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  
 }
 
 void MainUI::setupMenus(){
@@ -1365,6 +1373,51 @@ void MainUI::loadSessionSettings(){
   ui->check_session_playloginaudio->setChecked( sessionsettings->value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings->value("PlayLogoutAudio",true).toBool() );
 
+  //Now do the session theme options
+  ui->combo_session_themefile->clear();
+  ui->combo_session_colorfile->clear();
+  ui->combo_session_icontheme->clear();
+  QStringList current = LTHEME::currentSettings();
+  // - local theme templates
+  QStringList tmp = LTHEME::availableLocalThemes();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(i); }
+  }
+  // - system theme templates
+  tmp = LTHEME::availableSystemThemes();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(i); }
+  }
+  // - local color schemes
+  tmp = LTHEME::availableLocalColors();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(i); }
+  }
+  // - system color schemes
+  tmp = LTHEME::availableSystemColors();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(i); }
+  }
+  // - icon themes
+  tmp = LTHEME::availableSystemIcons();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_icontheme->addItem(tmp[i]);
+    if(tmp[i]==current[2]){ ui->combo_session_icontheme->setCurrentIndex(i); }
+  }
+  // - Font
+  ui->font_session_theme->setCurrentFont( QFont(current[3]) );
+  // - Font Size
+  ui->spin_session_fontsize->setValue( current[4].section("p",0,0).toInt() );
+  
   sessionstartchanged(); //make sure to update buttons
 }
 
@@ -1407,6 +1460,14 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("EnableNumlock", ui->check_session_numlock->isChecked());
   sessionsettings->setValue("PlayStartupAudio", ui->check_session_playloginaudio->isChecked());
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
+  
+  //Now do the theme options
+  QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
+  QString colorfile = ui->combo_session_colorfile->itemData( ui->combo_session_colorfile->currentIndex() ).toString();
+  QString iconset = ui->combo_session_icontheme->currentText();
+  QString font = ui->font_session_theme->currentFont().family();
+  QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
+  LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
 }
 
 void MainUI::rmsessionstartitem(){

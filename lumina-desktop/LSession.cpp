@@ -36,7 +36,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
-  this->setStyle( new MenuProxyStyle); //QMenu icon size override
+  //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   //LuminaSessionTrayID = 0;
 }
 
@@ -55,8 +55,6 @@ LSession::~LSession(){
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
-  //Load the stylesheet
-  loadStyleSheet();
   //Setup the QSettings default paths
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");
@@ -159,8 +157,7 @@ void LSession::launchStartupApps(){
 
 void LSession::watcherChange(QString changed){
   qDebug() << "Session Watcher Change:" << changed;
-  if(changed.endsWith("stylesheet.qss")){ loadStyleSheet(); }
-  else if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
+  if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else{ emit DesktopConfigChanged(); }
 }
 
@@ -199,6 +196,7 @@ void LSession::checkUserFiles(){
   else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
   else if(oldversion < 60){ fluxcopy=true; qDebug() << "Current fluxbox settings obsolete: Re-implementing defaults"; }
   if(fluxcopy){
+    qDebug() << "Copying default fluxbox configuration files";
     if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
     if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
     QFile::copy(":/fluxboxconf/fluxbox-init-rc", dset+"fluxbox-init");
@@ -215,22 +213,6 @@ void LSession::checkUserFiles(){
 
   //Save the current version of the session to the settings file (for next time)
   sessionsettings->setValue("DesktopVersion", this->applicationVersion());
-}
-
-void LSession::loadStyleSheet(){
-  QString ss = QDir::homePath()+"/.lumina/stylesheet.qss";
-  if(!QFile::exists(ss)){ ss = LOS::LuminaShare()+"stylesheet.qss"; }
-  if(!QFile::exists(ss)){ return; } //no default stylesheet on the system
-  //Now read/apply the custom stylesheet
-  QFile file(ss);
-  if( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
-    QTextStream in(&file);
-    QString sheet = in.readAll();
-    file.close();
-    //Now fix/apply the sheet
-      sheet.replace("\n"," "); //make sure there are no newlines
-    this->setStyleSheet(sheet);
-  }
 }
 
 void LSession::refreshWindowManager(){

@@ -9,7 +9,7 @@
 
 #include "MainUI.h"
 #include <LuminaOS.h>
-//#include <LuminaThemes.h>
+#include <LuminaThemes.h>
 
 int main(int argc, char ** argv)
 {
@@ -27,8 +27,7 @@ int main(int argc, char ** argv)
     QApplication a(argc, argv);
     #endif
     a.setApplicationName("Insight File Manager");
-    //LuminaThemeEngine themes(&a);
-    //qDebug() << "StyleSheet:\n" << a.styleSheet();
+    LuminaThemeEngine themes(&a);
     //Load current Locale
     QTranslator translator;
     QLocale mylocale;
@@ -45,6 +44,7 @@ int main(int argc, char ** argv)
 
     MainUI w;
     QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(slotSingleInstance(const QString&)) );
+    QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.OpenDirs(in);
     w.show();
 
