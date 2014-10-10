@@ -27,6 +27,7 @@
 #include "LFileDialog.h"
 
 #include <LuminaXDG.h>
+#include <LuminaUtils.h>
 #include <LuminaOS.h>
 
 void printUsageInfo(){
@@ -75,10 +76,7 @@ void showOSD(int argc, char **argv, QString message){
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
     //First check to see if there is a default for this extension
     QString defApp = LFileDialog::getDefaultApp(extension);
-    if(extension=="directory" && defApp.isEmpty() && !showDLG){
-      //Just use the Lumina File Manager
-      return "lumina-fm";
-    }else if( !defApp.isEmpty() && !showDLG ){
+    if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
       if(defApp.endsWith(".desktop")){
         XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
@@ -92,7 +90,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
         }
       }else{
 	//Only binary given
-	if(QFile::exists(defApp)){
+	if(LUtils::isValidBinary(defApp)){
 	  qDebug() << "[lumina-open] Using default application:" << defApp << "File:" << inFile;
 	  return defApp; //just use the binary
 	}
@@ -100,7 +98,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       //invalid default - reset it and continue on
       LFileDialog::setDefaultApp(extension, "");
     }
-
+    //Final catch: directory given - no valid default found - use lumina-fm
+    if(extension=="directory" && !showDLG){ return "lumina-fm"; }
     //No default set -- Start up the application selection dialog
     QApplication App(argc, argv);
     QTranslator translator;
@@ -136,8 +135,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     if(!w.appPath.isEmpty()){ path = w.appPath; }
     //Just do the default application registration here for now
     //  might move it to the runtime phase later after seeing that the app has successfully started
-    if(w.setDefault){ LFileDialog::setDefaultApp(extension, w.appFile); }
-    else{ LFileDialog::setDefaultApp(extension, ""); }
+    if(w.setDefault){ 
+      if(!w.appFile.isEmpty()){ LFileDialog::setDefaultApp(extension, w.appFile); }
+      else{ LFileDialog::setDefaultApp(extension, w.appExec); }
+    }else{ LFileDialog::setDefaultApp(extension, ""); }
     //Now return the resulting application command
     return w.appExec;
 }
@@ -191,7 +192,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Make sure that it is a valid file/URL
   bool isFile=false; bool isUrl=false;
   if(QFile::exists(inFile)){ isFile=true; }
-  else if(QUrl(inFile).isValid()){ isUrl=true; }
+  else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
   if( !isFile && !isUrl ){ qDebug() << "Error: Invalid file or URL"; return;}
   //Determing the type of file (extension)
   QString extension;
@@ -204,11 +205,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;
-  if(extension=="directory" && !showDLG){
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-    cmd = QSettings("LuminaDE", "sessionsettings").value("default-filemanager","lumina-fm").toString();
-    useInputFile=true;
-  }else if(extension=="desktop" && !showDLG){
+  if(extension=="desktop" && !showDLG){
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
     if(!ok){
