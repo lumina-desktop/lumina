@@ -15,6 +15,7 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QInputDialog>
+#include <QSettings>
 
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
@@ -37,6 +38,7 @@ private:
 	QPixmap cpic; //current picture
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot
+	QSettings *settings;
 
 private slots:
 	//Button Slots
