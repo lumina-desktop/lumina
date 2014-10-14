@@ -27,6 +27,8 @@
 #include "LPlugins.h"
 #include "KeyCatch.h"
 #include "AppDialog.h"
+#include "ColorDialog.h"
+#include "ThemeDialog.h"
 
 //namespace for using the *.ui file
 namespace Ui{
@@ -152,6 +154,8 @@ private slots:
 	void sessionoptchanged();
 	void sessionthemechanged();
 	void sessionstartchanged();
+	void sessionEditColor();
+	void sessionEditTheme();
 };
 
 #endif

@@ -15,10 +15,7 @@
 class LPI{
   public:
     QString name, ID, description, icon;
-    int width, height; //only used for desktop plugins
-    LPI(){
-      width=0; height=0;
-    }
+    LPI(){}
     ~LPI(){}
 };
 
@@ -31,15 +28,18 @@ public:
 	QStringList panelPlugins();
 	QStringList desktopPlugins();
 	QStringList menuPlugins();
+	QStringList colorItems();
 	//Information on individual plugins
 	LPI panelPluginInfo(QString);
 	LPI desktopPluginInfo(QString);
 	LPI menuPluginInfo(QString);
+	LPI colorInfo(QString);
 
 private:
-	QHash<QString, LPI> PANEL, DESKTOP, MENU;
+	QHash<QString, LPI> PANEL, DESKTOP, MENU, COLORS;
 	void LoadPanelPlugins();
 	void LoadDesktopPlugins();
 	void LoadMenuPlugins();
+	void LoadColorItems();
 };
 #endif

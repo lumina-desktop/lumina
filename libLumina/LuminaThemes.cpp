@@ -85,13 +85,13 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
 //Save a new theme/color file
 bool LTHEME::saveLocalTheme(QString name, QStringList contents){
   QString localdir = QDir::homePath()+"/.lumina/themes/";
-  if(!QFile::exists(localdir)){  QDir dir(); dir.mkpath(localdir); }
+  if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
   return LUtils::writeFile(localdir+name+".qss.template", contents, true);
 }
 
 bool LTHEME::saveLocalColors(QString name, QStringList contents){
   QString localdir = QDir::homePath()+"/.lumina/colors/";
-  if(!QFile::exists(localdir)){  QDir dir(); dir.mkpath(localdir); }
+  if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
   return LUtils::writeFile(localdir+name+".qss.colors", contents, true);	
 }
 
@@ -154,6 +154,7 @@ QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString
     else if(colors[i].startsWith("BASECOLOR=")){ stylesheet = stylesheet.replace("%%BASECOLOR%%", colors[i].section("=",1,1).simplified()); }
     else if(colors[i].startsWith("ALTBASECOLOR=")){ stylesheet = stylesheet.replace("%%ALTBASECOLOR%%", colors[i].section("=",1,1).simplified()); }
     else if(colors[i].startsWith("TEXTCOLOR=")){ stylesheet = stylesheet.replace("%%TEXTCOLOR%%", colors[i].section("=",1,1).simplified()); }
+    else if(colors[i].startsWith("TEXTDISABLECOLOR=")){ stylesheet = stylesheet.replace("%%TEXTDISABLECOLOR%%", colors[i].section("=",1,1).simplified()); }
     else if(colors[i].startsWith("TEXTHIGHLIGHTCOLOR=")){ stylesheet = stylesheet.replace("%%TEXTHIGHLIGHTCOLOR%%", colors[i].section("=",1,1).simplified()); }
   }
   stylesheet = stylesheet.replace("%%FONT%%", font);

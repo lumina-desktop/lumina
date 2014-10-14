@@ -11,16 +11,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
 	   mainUI.cpp \
-	   LPlugins.cpp
+	   LPlugins.cpp \
+	   ColorDialog.cpp \
+	   ThemeDialog.cpp
 
 HEADERS  += mainUI.h \
 		LPlugins.h \
 		KeyCatch.h \
-		AppDialog.h
+		AppDialog.h \
+		ColorDialog.h \
+		ThemeDialog.h
 
 FORMS    += mainUI.ui \
 		KeyCatch.ui \
-		AppDialog.ui
+		AppDialog.ui \
+		ColorDialog.ui \
+		ThemeDialog.ui
 
 
 # RESOURCES+= lumina-config.qrc

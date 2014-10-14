@@ -10,6 +10,7 @@ LPlugins::LPlugins(){
   LoadPanelPlugins();
   LoadDesktopPlugins();
   LoadMenuPlugins();
+  LoadColorItems();
 }
 
 LPlugins::~LPlugins(){
@@ -25,7 +26,9 @@ QStringList LPlugins::desktopPlugins(){
 QStringList LPlugins::menuPlugins(){
   return MENU.keys();
 }
-
+QStringList LPlugins::colorItems(){
+  return COLORS.keys();
+}
 //Information on individual plugins
 LPI LPlugins::panelPluginInfo(QString plug){
   if(PANEL.contains(plug)){ return PANEL[plug]; }
@@ -38,6 +41,10 @@ LPI LPlugins::desktopPluginInfo(QString plug){
 LPI LPlugins::menuPluginInfo(QString plug){
   if(MENU.contains(plug)){ return MENU[plug]; }
   else{ return LPI(); }
+}
+LPI LPlugins::colorInfo(QString item){
+  if(COLORS.contains(item)){ return COLORS[item]; }
+  else{ return LPI(); }  
 }
 
 //===================
@@ -172,4 +179,86 @@ void LPlugins::LoadMenuPlugins(){
     info.ID = "app";
     info.icon = "application-x-desktop";
   MENU.insert(info.ID, info);
+}
+
+void LPlugins::LoadColorItems(){
+  COLORS.clear();
+  //Text Color
+  LPI info;
+    info.name = QObject::tr("Text");
+    info.description = QObject::tr("Color to use for all visible text.");
+    info.ID = "TEXTCOLOR";
+  COLORS.insert(info.ID, info);
+  //Text Color (Disabled)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Text (Disabled)");
+    info.description = QObject::tr("Text color for disabled or inactive items.");
+    info.ID = "TEXTDISABLECOLOR";
+  COLORS.insert(info.ID, info);
+  //Text Color (Highlighted)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Text (Highlighted)");
+    info.description = QObject::tr("Text color when selection is highlighted.");
+    info.ID = "TEXTHIGHLIGHTCOLOR";
+  COLORS.insert(info.ID, info);
+  //Base Color (Normal)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Base Window Color");
+    info.description = QObject::tr("Main background color for the window/dialog.");
+    info.ID = "BASECOLOR";
+  COLORS.insert(info.ID, info);
+  //Base Color (Alternate)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Base Window Color (Alternate)");
+    info.description = QObject::tr("Main background color for widgets that list or display collections of items.");
+    info.ID = "ALTBASECOLOR";
+  COLORS.insert(info.ID, info);
+  //Primary Color (Normal)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Primary Color");
+    info.description = QObject::tr("Dominant color for the theme.");
+    info.ID = "PRIMARYCOLOR";
+  COLORS.insert(info.ID, info);
+  //Primary Color (Disabled)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Primary Color (Disabled)");
+    info.description = QObject::tr("Dominant color for the theme (more subdued).");
+    info.ID = "PRIMARYDISABLECOLOR";
+  COLORS.insert(info.ID, info);
+  //Secondary Color (Normal)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Secondary Color");
+    info.description = QObject::tr("Alternate color for the theme.");
+    info.ID = "SECONDARYCOLOR";
+  COLORS.insert(info.ID, info);
+  //Secondary Color (Disabled)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Secondary Color (Disabled)");
+    info.description = QObject::tr("Alternate color for the theme (more subdued).");
+    info.ID = "SECONDARYDISABLECOLOR";
+  COLORS.insert(info.ID, info);
+  //Accent Color (Normal)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Accent Color");
+    info.description = QObject::tr("Color used for borders or other accents.");
+    info.ID = "ACCENTCOLOR";
+  COLORS.insert(info.ID, info);
+  //Accent Color (Disabled)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Accent Color (Disabled)");
+    info.description = QObject::tr("Color used for borders or other accents (more subdued).");
+    info.ID = "ACCENTDISABLECOLOR";
+  COLORS.insert(info.ID, info);
+  //Highlight Color (Normal)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Highlight Color");
+    info.description = QObject::tr("Color used for highlighting an item.");
+    info.ID = "HIGHLIGHTCOLOR";
+  COLORS.insert(info.ID, info);
+  //Highlight Color (Disabled)
+  info = LPI(); //clear it
+    info.name = QObject::tr("Highlight Color (Disabled)");
+    info.description = QObject::tr("Color used for highlighting an item (more subdued).");
+    info.ID = "HIGHLIGHTDISABLECOLOR";
+  COLORS.insert(info.ID, info);
 }

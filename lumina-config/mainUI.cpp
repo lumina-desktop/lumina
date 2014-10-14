@@ -205,7 +205,8 @@ void MainUI::setupConnections(){
   connect(ui->combo_session_colorfile, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_icontheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->font_session_theme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
-  
+  connect(ui->tool_session_newcolor, SIGNAL(clicked()), this, SLOT(sessionEditColor()) );
+  connect(ui->tool_session_newtheme, SIGNAL(clicked()), this, SLOT(sessionEditTheme()) );
 }
 
 void MainUI::setupMenus(){
@@ -1383,28 +1384,28 @@ void MainUI::loadSessionSettings(){
   tmp.sort();
   for(int i=0; i<tmp.length(); i++){ 
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
-    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(i); }
+    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   // - system theme templates
   tmp = LTHEME::availableSystemThemes();
   tmp.sort();
   for(int i=0; i<tmp.length(); i++){ 
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
-    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(i); }
+    if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   // - local color schemes
   tmp = LTHEME::availableLocalColors();
   tmp.sort();
   for(int i=0; i<tmp.length(); i++){ 
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
-    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(i); }
+    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
   // - system color schemes
   tmp = LTHEME::availableSystemColors();
   tmp.sort();
   for(int i=0; i<tmp.length(); i++){ 
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
-    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(i); }
+    if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
   // - icon themes
   tmp = LTHEME::availableSystemIcons();
@@ -1535,4 +1536,56 @@ void MainUI::sessionthemechanged(){
 
 void MainUI::sessionstartchanged(){
   ui->tool_session_rmapp->setEnabled( ui->list_session_start->currentRow()>=0 );
+}
+
+void MainUI::sessionEditColor(){
+  //Get the current color file
+  QString file = ui->combo_session_colorfile->itemData( ui->combo_session_colorfile->currentIndex() ).toString();
+  //Open the color edit dialog
+  ColorDialog dlg(this, PINFO, file);
+  dlg.exec();
+  //Check whether the file got saved/changed
+  if(dlg.colorname.isEmpty() || dlg.colorpath.isEmpty() ){ return; } //cancelled
+  //Reload the color list and activate the new color
+  // - local color schemes
+  ui->combo_session_colorfile->clear();
+  QStringList tmp = LTHEME::availableLocalColors();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==dlg.colorpath){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
+  }
+  // - system color schemes
+  tmp = LTHEME::availableSystemColors();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==dlg.colorpath){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
+  }
+  
+}
+
+void MainUI::sessionEditTheme(){
+  QString file = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
+  //Open the theme editor dialog
+  ThemeDialog dlg(this, PINFO, file);
+  dlg.exec();
+  //Check for file change/save
+  if(dlg.themename.isEmpty() || dlg.themepath.isEmpty()){ return; } //cancelled
+  //Reload the theme list and activate the new theme
+  ui->combo_session_themefile->clear();
+  // - local theme templates
+  QStringList tmp = LTHEME::availableLocalThemes();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
+  }
+  // - system theme templates
+  tmp = LTHEME::availableSystemThemes();
+  tmp.sort();
+  for(int i=0; i<tmp.length(); i++){ 
+    ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
+    if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
+  }
 }

@@ -54,9 +54,9 @@ QStringList LUtils::readFile(QString filepath){
 
 bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   QFile file(filepath);
-  QFile::OpenMode mode = overwrite ? (QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate) : (QIODevice::WriteOnly | QIODevice::Text);
+  if(file.exists() && !overwrite){ return false; }
   bool ok = false;
-  if(file.open( mode ) ){
+  if( file.open(QIODevice::WriteOnly | QIODevice::Truncate) ){
     QTextStream out(&file);
     out << contents.join("\n");
     file.close();
