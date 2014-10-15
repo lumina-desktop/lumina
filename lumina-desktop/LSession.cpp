@@ -80,8 +80,8 @@ void LSession::setupSession(){
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
   watcher = new QFileSystemWatcher(this);
-    watcher->addPath( QDir::homePath()+"/.lumina/stylesheet.qss" );
-    //watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
+    //watcher->addPath( QDir::homePath()+"/.lumina/stylesheet.qss" );
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
 
@@ -185,8 +185,8 @@ void LSession::checkUserFiles(){
     qDebug() << "Copying default fluxbox configuration files";
     if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
     if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
-    QFile::copy(":/fluxboxconf/fluxbox-init-rc", dset+"fluxbox-init");
-    QFile::copy(":/fluxboxconf/fluxbox-keys", dset+"fluxbox-keys");
+    QFile::copy(LOS::LuminaShare()+"fluxbox-init-rc", dset+"fluxbox-init");
+    QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
     QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
   }

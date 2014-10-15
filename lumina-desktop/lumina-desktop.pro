@@ -107,6 +107,10 @@ wallpapers.files = wallpapers/Lumina_Wispy_gold_1920x1080.jpg \
 			wallpapers/Lumina_Wispy_red_1920x1080.jpg
 wallpapers.path = $$PREFIX/share/wallpapers/Lumina-DE
 
+fluxconf.files = fluxboxconf/fluxbox-init-rc \
+			fluxboxconf/fluxbox-keys
+fluxconf.path = $$PREFIX/share/Lumina-DE/
+
 defaults.files = defaults/desktop-background.jpg \
 		defaults/defaultapps.conf \
 		defaults/desktopsettings.conf \
@@ -181,4 +185,4 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
-INSTALLS += target desktop icons wallpapers defaults dotrans
+INSTALLS += target desktop icons wallpapers defaults fluxconf dotrans
