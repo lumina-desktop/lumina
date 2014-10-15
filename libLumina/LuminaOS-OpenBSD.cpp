@@ -65,7 +65,7 @@ void LOS::setScreenBrightness(int percent){
   if(percent<0){percent=0;}
   else if(percent>100){ percent=100; }
   //Run the command
-  QString cmd = "xbacklight -set %1";
+  QString cmd = "xbacklight -time 0 -steps 1 -set %1";
   cmd = cmd.arg( QString::number(percent) );
   int ret = LUtils::runCmd(cmd);
   //Save the result for later
