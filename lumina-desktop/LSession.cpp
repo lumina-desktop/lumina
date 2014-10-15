@@ -77,20 +77,6 @@ void LSession::setupSession(){
   appmenu = new AppMenu();
   settingsmenu = new SettingsMenu();
 
-  /*//Setup the audio output systems for the desktop
-  qDebug() << " - Initialize audio systems";
-  mediaObj = new Phonon::MediaObject(0);
-  audioOut = new Phonon::AudioOutput(Phonon::MusicCategory,0);
-  qDebug() << " -- Initialize new audio thread";
-  audioThread = new QThread(this);
-  if(mediaObj && audioOut){  //in case Phonon errors for some reason
-    qDebug() << " -- Create path between audio objects";
-    Phonon::createPath(mediaObj, audioOut);
-    qDebug() << " -- Move audio objects to separate thread";
-    mediaObj->moveToThread(audioThread);
-    audioOut->moveToThread(audioThread);
-  }*/
-
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
   watcher = new QFileSystemWatcher(this);
@@ -302,6 +288,7 @@ void LSession::systemWindow(){
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
+  return; //Disable this for now: too many issues with Phonon at the moment (hangs the session)
   bool init = false;
   if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
   if(mediaObj==0){   qDebug() << " - Initialize Phonon media Object"; mediaObj = new Phonon::MediaObject(); init = true;}
