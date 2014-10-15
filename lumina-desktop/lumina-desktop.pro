@@ -114,7 +114,6 @@ fluxconf.path = $$PREFIX/share/Lumina-DE/
 defaults.files = defaults/desktop-background.jpg \
 		defaults/defaultapps.conf \
 		defaults/desktopsettings.conf \
-		defaults/stylesheet.qss \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
 defaults.path = $$PREFIX/share/Lumina-DE/
