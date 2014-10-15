@@ -21,6 +21,7 @@
 
 #include <LuminaXDG.h> //from libLuminaUtils
 #include <LuminaThemes.h>
+#include <LuminaOS.h>
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
 void MessageOutput(QtMsgType type, const char *msg){
@@ -47,6 +48,10 @@ void MessageOutput(QtMsgType type, const char *msg){
 
 int main(int argc, char ** argv)
 {
+    if(!QFile::exists(LOS::LuminaShare())){
+      qDebug() << "Lumina does not appear to be installed correctly. Cannot find: " << LOS::LuminaShare();
+      return 1;
+    }
     //Setup any pre-QApplication initialization values
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","LUMINA",1);
