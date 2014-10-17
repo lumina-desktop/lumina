@@ -30,9 +30,9 @@
 #include <LuminaX11.h>
 
 //SYSTEM TRAY STANDARD DEFINITIONS
-//#define SYSTEM_TRAY_REQUEST_DOCK 0
-//#define SYSTEM_TRAY_BEGIN_MESSAGE 1
-//#define SYSTEM_TRAY_CANCEL_MESSAGE 2
+#define SYSTEM_TRAY_REQUEST_DOCK 0
+#define SYSTEM_TRAY_BEGIN_MESSAGE 1
+#define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
 /*class MenuProxyStyle : public QProxyStyle{
 public: 
@@ -54,7 +54,17 @@ public:
 	
 	bool LoadLocale(QString);
 
+	//Public System Tray Functions
+	QList<WId> currentTrayApps(WId visualTray);
+	bool registerVisualTray(WId);
+	void unregisterVisualTray(WId);
+
 	//System Access
+	//Return a pointer to the current session
+	static LSession* handle(){
+	  return static_cast<LSession*>(LSession::instance());
+	}
+	
 	static void LaunchApplication(QString cmd);
 	static AppMenu* applicationMenu();
 	static void systemWindow();
@@ -69,6 +79,11 @@ private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
+	//System Tray Variables
+	WId SystemTrayID, VisualTrayID;
+	int TrayDmgEvent, TrayDmgError;
+	QList<WId> RunningTrayApps;
+	bool TrayStopping;
 
 public slots:
 	void launchStartupApps();
@@ -76,6 +91,12 @@ public slots:
 
 private slots:
 	void watcherChange(QString);
+
+	//System Tray Functions
+	void startSystemTray();
+	void stopSystemTray(bool detachall = false);
+	void attachTrayWindow(WId);
+	void removeTrayWindow(WId);
 
 	//Internal simplification functions
 	void checkUserFiles();
@@ -85,10 +106,14 @@ private slots:
 	void SessionEnding();
 
 signals:
-	void NewSystemTrayApp(WId); //WinID
-	void TrayEvent(XEvent*);
+	//System Tray Signals
+	void VisualTrayAvailable(); //new Visual Tray Plugin can be registered
+	void TrayListChanged(); //Item added/removed from the list
+	void TrayIconChanged(WId); //WinID of Tray App
+	//Task Manager Signals
 	void WindowListEvent(WId);
 	void WindowListEvent();
+	//General Signals
 	void LocaleChanged();
 	void DesktopConfigChanged();
 	

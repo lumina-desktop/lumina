@@ -30,30 +30,31 @@ public:
 	LSysTray(QWidget *parent = 0, QString id="systemtray", bool horizontal=true);
 	~LSysTray();
 
-	void start();
-	void stop();
-
 private:
-	bool isRunning;
+	bool isRunning, stopping;
 	QList<TrayIcon*> trayIcons;
 	QFrame *frame;
 	QBoxLayout *LI; //layout items
-	WId TrayID;
+	//WId TrayID;
 	QTimer *upTimer; //manual timer to force refresh of all items
 	
 private slots:
-	void checkXEvent(XEvent *event);
-	void closeAll();
+	//void checkXEvent(XEvent *event);
+	//void closeAll();
 	void checkAll();
+	void UpdateTrayWindow(WId win);
 
-	void initialTrayIconDetect(); //initial scan for previously running tray apps
-	void addTrayIcon(WId win);
-	void removeTrayIcon(WId win);
+	//void initialTrayIconDetect(); //initial scan for previously running tray apps
+	//void addTrayIcon(WId win);
+	//void removeTrayIcon(WId win);
 
-	void updateStatus();
-	void trayAppClosed();
+	/*void updateStatus();
+	void trayAppClosed();*/
 
 public slots:
+	void start();
+	void stop();
+
 	virtual void OrientationChange(){
 	   //make sure the internal layout has the same orientation as the main widget
 	   LI->setDirection( this->layout()->direction() );

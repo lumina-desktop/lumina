@@ -43,8 +43,8 @@ public slots:
 private:
 	WId IID, AID; //icon ID and app ID
 
-private slots:
-	void slotAttach(); //so that the attachment can be done in a new thread
+//private slots:
+	//void slotAttach(); //so that the attachment can be done in a new thread
 	
 
 protected:
@@ -53,8 +53,8 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	//bool x11Event(XEvent *event);
 
-signals:
-	void AppClosed();
-	void AppAttached();
+//signals:
+	//void AppClosed();
+	//void AppAttached();
 };
 #endif

@@ -518,7 +518,7 @@ QPixmap LX11::WindowImage(WId win, bool useleader){
   if(leader!=0 && useleader){ win = leader; } //use the leader window instead
   //First get the size of the window image (embedded in the window attributes)
   XWindowAttributes att; 
-  if( !XGetWindowAttributes(disp, win, &att) ){ return pix; } //invalid window attributes
+  if( 0 == XGetWindowAttributes(disp, win, &att) ){ return pix; } //invalid window attributes
   //Now extract the image
   XImage *xim = XGetImage(disp, win, 0,0, att.width, att.height, AllPlanes, ZPixmap);
   if(xim!=0){
@@ -677,7 +677,7 @@ WId LX11::startSystemTray(int screen){
     qWarning() << "An alternate system tray is currently in use";
     return 0;
   }
-  //Create a simple window to register as the tray (not visible)
+  //Create a simple window to register as the tray (not visible - just off the screen)
   Window LuminaSessionTrayID = XCreateSimpleWindow(disp, root,-1,-1,1,1,0,0,0);
   //register this widget as the system tray
   XSetSelectionOwner(disp, _NET_SYSTEM_TRAY_S, LuminaSessionTrayID, CurrentTime);

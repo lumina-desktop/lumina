@@ -823,17 +823,23 @@ void MainUI::adjustpanel1(){
   if(loading){ return; }
   qDebug() << "Adjust Panel 1:";
   ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
+  bool changed = false;
+  int newindex=0;
   switch(ui->combo_panel2_loc->currentIndex()){
     case 0:
-	ui->combo_panel1_loc->setCurrentIndex(1); break;
+	newindex = 1; break;
     case 1:
-	ui->combo_panel1_loc->setCurrentIndex(0); break;
+	newindex = 0; break;
     case 2:
-	ui->combo_panel1_loc->setCurrentIndex(3); break;
+	newindex = 3; break;
     case 3:
-	ui->combo_panel1_loc->setCurrentIndex(2); break;
+	newindex = 2; break;
   }
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  if(newindex != ui->combo_panel1_loc->currentIndex()){ 
+    changed = true;
+    ui->combo_panel1_loc->setCurrentIndex(newindex);
+  }
+  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
@@ -841,17 +847,23 @@ void MainUI::adjustpanel2(){
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
   ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
+  bool changed = false;
+  int newindex=0;
   switch(ui->combo_panel1_loc->currentIndex()){
     case 0:
-	ui->combo_panel2_loc->setCurrentIndex(1); break;
+	newindex = 1; break;
     case 1:
-	ui->combo_panel2_loc->setCurrentIndex(0); break;
+	newindex = 0; break;
     case 2:
-	ui->combo_panel2_loc->setCurrentIndex(3); break;
+	newindex = 3; break;
     case 3:
-	ui->combo_panel2_loc->setCurrentIndex(2); break;
+	newindex = 2; break;
   }
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  if(newindex != ui->combo_panel2_loc->currentIndex()){ 
+    changed = true;
+    ui->combo_panel2_loc->setCurrentIndex(newindex);
+  }
+  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 

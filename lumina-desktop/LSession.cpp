@@ -16,9 +16,9 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/Xrender.h>
+#include <X11/extensions/Xdamage.h>
 
 //Private/global variables (for static function access)
-//static WId LuminaSessionTrayID;
 static AppMenu *appmenu;
 static SettingsMenu *settingsmenu;
 static QTranslator *currTranslator;
@@ -37,7 +37,9 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
-  //LuminaSessionTrayID = 0;
+  SystemTrayID = 0; VisualTrayID = 0;
+  TrayDmgEvent = 0;
+  TrayDmgError = 0;
 }
 
 LSession::~LSession(){
@@ -68,7 +70,10 @@ void LSession::setupSession(){
   qDebug() << " - Launching Fluxbox";
   WM = new WMProcess();
     WM->startWM();
-
+	
+  //Start the background system tray
+  startSystemTray();
+	
   //Initialize the desktops
   updateDesktops();
 
@@ -233,11 +238,11 @@ void LSession::updateDesktops(){
 
 void LSession::SessionEnding(){
   audioThread->wait(3000); //wait a max of 3 seconds for the audio thread to finish
+  stopSystemTray();
 }
 
 bool LSession::x11EventFilter(XEvent *event){
   //Detect X Event types and send the appropriate signal(s)
-  emit TrayEvent(event); //Make sure the tray also can check this event
    switch(event->type){
   // -------------------------
     case PropertyNotify:
@@ -253,7 +258,61 @@ bool LSession::x11EventFilter(XEvent *event){
 		emit WindowListEvent();
 	  }
 	break;
-  }
+    //------------------------------
+    // System Tray Events
+    //------------------------------
+    case ClientMessage:
+    	//Only check if the client is the system tray, otherwise ignore
+    	if(event->xany.window == SystemTrayID){
+    	  //qDebug() << "SysTray: ClientMessage";
+	    switch(event->xclient.data.l[1]){
+		case SYSTEM_TRAY_REQUEST_DOCK:
+		  attachTrayWindow(event->xclient.data.l[2]); //Window ID
+		  break;
+		//case SYSTEM_TRAY_BEGIN_MESSAGE:
+		  //Let the window manager handle the pop-up messages for now
+		  //break;    	    
+		//case SYSTEM_TRAY_CANCEL_MESSAGE:
+		  //Let the window manager handle the pop-up messages for now
+		  //break;
+	    }
+    	}
+    	break;
+    case SelectionClear:
+    	if(event->xany.window == SystemTrayID){
+    	  //qDebug() << "SysTray: Selection Clear";
+    	  stopSystemTray(); //de-activate this system tray (release all embeds)
+    	}
+    	break;
+    case DestroyNotify:
+	//qDebug() << "SysTray: DestroyNotify";
+       removeTrayWindow(event->xany.window); //Check for removing an icon
+        break;
+    
+    case ConfigureNotify:
+	for(int i=0; i<RunningTrayApps.length(); i++){
+	  if(event->xany.window==RunningTrayApps[i]){
+	    //qDebug() << "SysTray: Configure Event" << trayIcons[i]->appID();
+	    emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
+	    break;
+	  }
+	}
+    default:
+	if(SystemTrayID!=0){ //Only do this if the system tray is available
+	  if(event->type == TrayDmgEvent+XDamageNotify){
+	    WId ID = reinterpret_cast<XDamageNotifyEvent*>(event)->drawable;	
+	    //qDebug() << "SysTray: Damage Event";
+	    for(int i=0; i<RunningTrayApps.length(); i++){
+	      if(ID==RunningTrayApps[i]){ 
+	        //qDebug() << "SysTray: Damage Event" << ID;
+	        emit TrayIconChanged(ID); //trigger a repaint event
+	        break;
+	      }
+	    }
+          }
+	}
+
+  } //end event type switch
   // -----------------------
   //Now continue on with the event handling (don't change it)
   return false;
@@ -305,4 +364,95 @@ void LSession::playAudioFile(QString filepath){
     mediaObj->play();
     audioThread->start();
   }
+}
+
+//======================
+//   SYSTEM TRAY FUNCTIONS
+//======================
+bool LSession::registerVisualTray(WId visualTray){
+  //Only one visual tray can be registered at a time
+  //  (limitation of how tray apps are embedded)
+  if(VisualTrayID==0){ VisualTrayID = visualTray; return true; }
+  else if(VisualTrayID==visualTray){ return true; }
+  else{ return false; }
+}
+
+void LSession::unregisterVisualTray(WId visualTray){
+  if(VisualTrayID==visualTray){ 
+    qDebug() << "Unregistered Visual Tray";
+    VisualTrayID=0; 
+    emit VisualTrayAvailable();
+  }
+}
+
+QList<WId> LSession::currentTrayApps(WId visualTray){
+  if(visualTray==VisualTrayID){
+    return RunningTrayApps;
+  }else if( registerVisualTray(visualTray) ){
+    return RunningTrayApps;
+  }else{
+    return QList<WId>();
+  }
+}
+
+void LSession::startSystemTray(){
+  if(SystemTrayID!=0){ return; }
+  RunningTrayApps.clear(); //nothing running yet
+  SystemTrayID = LX11::startSystemTray(0);
+  TrayStopping = false;
+  if(SystemTrayID!=0){
+    XSelectInput(QX11Info::display(), SystemTrayID, InputOutput); //make sure TrayID events get forwarded here
+    XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
+    qDebug() << "System Tray Started Successfully";
+  }
+}
+
+void LSession::stopSystemTray(bool detachall){
+  TrayStopping = true; //make sure the internal list does not modified during this
+  //Close all the running Tray Apps
+  for(int i=0; i<RunningTrayApps.length(); i++){
+    if(!detachall){ LX11::CloseWindow(RunningTrayApps[i]); }
+  }
+  LX11::closeSystemTray(SystemTrayID);
+  SystemTrayID = 0;
+  TrayDmgEvent = 0; 
+  TrayDmgError = 0;
+  RunningTrayApps.clear();
+  emit TrayListChanged();
+}
+
+void LSession::attachTrayWindow(WId win){
+  //static int appnum = 0;
+  if(TrayStopping){ return; }
+  if(RunningTrayApps.contains(win)){ return; } //already managed
+  RunningTrayApps << win;
+  emit TrayListChanged();
+  /*//Now try to embed the window into the tray
+  qDebug() << "Attach Tray App:" << appnum;
+  WId cont = LX11::CreateWindow( SystemTrayID, QRect(appnum*64, 0, 64, 64) );
+  if( LX11::EmbedWindow(win, cont) ){
+    appnum++;
+    //Successful embed, now set it up for damage report notifications
+    XDamageCreate( QX11Info::display(), win, XDamageReportRawRectangles );
+    //LX11::ResizeWindow(win, 64, 64); //Always use 64x64 if possible (can shrink, not expand later)
+    LX11::RestoreWindow(win);
+    //Add it to the tray list
+    RunningTrayApps << win;
+    TrayAppContainers << cont;
+    //Emit that the list has changed
+    emit TrayListChanged();
+  }else{
+    LX11::DestroyWindow(cont); //clean up
+  }*/
+}
+
+void LSession::removeTrayWindow(WId win){
+  if(TrayStopping || SystemTrayID==0){ return; }
+  for(int i=0; i<RunningTrayApps.length(); i++){
+    if(win==RunningTrayApps[i]){ 
+      RunningTrayApps.removeAt(i); 
+      emit TrayListChanged();
+      break;	    
+    }
+  }	
 }

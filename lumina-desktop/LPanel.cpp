@@ -14,7 +14,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
   panelArea = new QWidget(this);
-  QBoxLayout *tmp = new QBoxLayout(QBoxLayout::LeftToRight,this);
+  QBoxLayout *tmp = new QBoxLayout(QBoxLayout::LeftToRight);
 	tmp->setContentsMargins(0,0,0,0);
 	this->setLayout(tmp);
 	tmp->addWidget(panelArea);
@@ -33,13 +33,13 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint );
   this->setFocusPolicy(Qt::NoFocus);
   this->setWindowTitle("");
-  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
+  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); //Reserve as panel/dock
   this->setAttribute(Qt::WA_AlwaysShowToolTips);
   this->setObjectName("LuminaPanelWidget");
   panelArea->setObjectName("LuminaPanelPluginWidget");
   //LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
   LX11::SetAsSticky(this->winId());
-  layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+  layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
     //layout->setSizeConstraint(QLayout::SetFixedSize);
@@ -118,10 +118,10 @@ void LPanel::UpdatePanel(){
     //Ensure this plugin has a unique ID (NOTE: this numbering does not persist between sessions)
     if(!plugins[i].contains("---")){
       int num=1;
-      while( plugins.contains(plugins[i]+"---"+QString::number(this->number())+"."+QString::number(num)) ){
+      while( plugins.contains(plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num)) ){
         num++;
       }
-      plugins[i] = plugins[i]+"---"+QString::number(this->number())+"."+QString::number(num);
+      plugins[i] = plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num);
     }
     //See if this plugin is already there or in a different spot
     bool found = false;
