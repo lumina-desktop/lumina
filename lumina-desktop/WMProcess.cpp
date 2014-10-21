@@ -81,10 +81,10 @@ QString WMProcess::setupWM(){
       QFile::copy(":/fluxboxconf/fluxbox-init-rc",confDir+"/fluxbox-init");
       QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     }
-    /*if(!QFile::exists(confDir+"lumina-menu.xml")){
-      QFile::copy(":/openboxconf/lumina-menu.xml",confDir+"/lumina-menu.xml");
-      QFile::setPermissions(confDir+"/lumina-menu.xml", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    }*/
+    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
+    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
+      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
+    }
     cmd = "fluxbox -rc "+confDir+"/fluxbox-init";
   }else {
     cmd = WM;
