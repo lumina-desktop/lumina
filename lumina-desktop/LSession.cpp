@@ -10,6 +10,7 @@
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
 #include <QThread>
+#include <QTime>
 
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
@@ -57,6 +58,8 @@ LSession::~LSession(){
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
+  //Seed random number generator (if needed)
+  qsrand( QTime::currentTime().msec() );
   //Setup the QSettings default paths
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");

@@ -395,7 +395,7 @@ void LDesktop::UpdateBackground(){
     }
   //Determine which background to use next
   int index = bgL.indexOf(CBG);
-  if( (index < 0) || (index >= bgL.length()-1) ){ index = 0; } //use the first file
+  if( (index < 0) || (index >= bgL.length()-1) ){ index = ( qrand() % bgL.length() ); } //pick a random file
   else{ index++; } //use the next file in the list
   QString bgFile;
   if( bgL.isEmpty() && CBG.isEmpty()){ bgFile = "default"; }
