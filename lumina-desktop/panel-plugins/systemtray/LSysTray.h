@@ -31,7 +31,7 @@ public:
 	~LSysTray();
 
 private:
-	bool isRunning, stopping;
+	bool isRunning, stopping, checking;
 	QList<TrayIcon*> trayIcons;
 	QFrame *frame;
 	QBoxLayout *LI; //layout items

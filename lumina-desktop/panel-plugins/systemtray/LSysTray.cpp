@@ -34,7 +34,7 @@ LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
   upTimer = new QTimer(this);
     upTimer->setInterval(300000); //maximum time between refreshes is 5 minutes
     connect(upTimer, SIGNAL(timeout()), this, SLOT(checkAll()) );
-  isRunning = false; stopping = false;
+  isRunning = false; stopping = false; checking = false;
   QTimer::singleShot(100, this, SLOT(start()) );
 	
   connect(LSession::handle(), SIGNAL(TrayListChanged()), this, SLOT(checkAll()) );
@@ -166,12 +166,15 @@ void LSysTray::closeAll(){
 }
 */
 void LSysTray::checkAll(){
-  if(!isRunning || stopping){ return; } //Don't check if not running at the moment
+  if(!isRunning || stopping || checking){ return; } //Don't check if not running at the moment
+  checking = true;
+  //qDebug() << "System Tray: Check tray apps";
   QList<WId> wins = LSession::handle()->currentTrayApps(this->winId());
   for(int i=0; i<trayIcons.length(); i++){
     int index = wins.indexOf(trayIcons[i]->appID());
     if(index < 0){
       //Tray Icon no longer exists: remove it
+      //qDebug() << " - SysTray: Remove Icon";
       TrayIcon *cont = trayIcons.takeAt(i);
       LI->removeWidget(cont);
       delete cont;
@@ -184,12 +187,14 @@ void LSysTray::checkAll(){
       }
     }else{
       //Tray Icon already exists: just update it
+      //qDebug() << " - SysTray: Update Icon";
       trayIcons[i]->update();
       wins.removeAt(index); //Already found - remove from the list
     }
   }
   //Now go through any remaining windows and add them
   for(int i=0; i<wins.length(); i++){
+    //qDebug() << " - SysTray: Add Icon";
     TrayIcon *cont = new TrayIcon(this);
       LSession::processEvents();
       trayIcons << cont;
@@ -205,15 +210,18 @@ void LSysTray::checkAll(){
       LSession::processEvents();
       //qDebug() << " - Attach tray app";
       cont->attachApp(wins[i]);
-      if(cont->appID()==0){ qDebug() << "Invalid Container:"; delete cont; continue; } //could not attach window
+      if(cont->appID()==0){ qDebug() << "Invalid Tray Container:"; delete cont; continue; } //could not attach window
     LI->update(); //make sure there is no blank space in the layout
   }
+  //qDebug() << " - System Tray: check done";
+  checking = false;
 }
 
 void LSysTray::UpdateTrayWindow(WId win){
-  if(!isRunning || stopping){ return; }
+  if(!isRunning || stopping || checking){ return; }
   for(int i=0; i<trayIcons.length(); i++){
-    if(trayIcons[i]->appID()==win){ 
+    if(trayIcons[i]->appID()==win){
+      //qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
       break;
     }
