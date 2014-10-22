@@ -210,7 +210,14 @@ void LSysTray::checkAll(){
       LSession::processEvents();
       //qDebug() << " - Attach tray app";
       cont->attachApp(wins[i]);
-      if(cont->appID()==0){ qDebug() << "Invalid Tray Container:"; delete cont; continue; } //could not attach window
+      if(cont->appID()==0){ 
+	//could not attach window - remove the widget
+	qDebug() << "Invalid Tray Container:"; 
+	trayIcons.takeAt(trayIcons.length()-1); //Always at the end
+	LI->removeWidget(cont);
+	delete cont;
+	continue;
+      } 
     LI->update(); //make sure there is no blank space in the layout
   }
   //qDebug() << " - System Tray: check done";
