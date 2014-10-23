@@ -26,6 +26,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //if(settings->value("defaultpanel",QString::number(screen->primaryScreen())+".0").toString()==QString::number(screennum)+"."+QString::number(num) ){ defaultpanel=true;}
   //else{defaultpanel=false; }
   horizontal=true; //use this by default initially
+  hidden = false; //use this by default
   //Setup the panel
   qDebug() << " -- Setup Panel";
   this->setContentsMargins(0,0,0,0);
@@ -60,6 +61,7 @@ void LPanel::UpdatePanel(){
   settings->sync(); //make sure to catch external settings changes
   //First set the geometry of the panel and send the EWMH message to reserve that space
   qDebug() << "Update Panel";
+  hidden = settings->value(PPREFIX+"hidepanel",false).toBool(); //default to true for the moment
   QString loc = settings->value(PPREFIX+"location","").toString();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
   if(loc=="top" || loc=="bottom"){ 
@@ -82,29 +84,53 @@ void LPanel::UpdatePanel(){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,0,xwid, ht );
-    LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top");
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
+    else{ 
+      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), 2, "top"); 
+      hidepoint = QPoint(xloc, 2-ht);
+      showpoint = QPoint(xloc, 0);
+      this->move(hidepoint); //Could bleed over onto the screen above
+    }
   }else if(loc=="bottom"){ //bottom of screen
     QSize sz = QSize(xwid, ht);
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,xhi-ht,xwid, ht );
-    LX11::ReservePanelLocation(this->winId(), xloc, xhi-ht, this->width(), ht, "bottom");
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, xhi-ht, this->width(), ht, "bottom"); }
+    else{ 
+      LX11::ReservePanelLocation(this->winId(), xloc, xhi-2, this->width(), 2, "bottom"); 
+      hidepoint = QPoint(xloc, xhi-2);
+      showpoint = QPoint(xloc, xhi-ht);
+      this->move(hidepoint); //Could bleed over onto the screen below
+    }
   }else if(loc=="left"){ //left side of screen
     QSize sz = QSize(ht, xhi);
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,0, ht, xhi);
-    LX11::ReservePanelLocation(this->winId(), xloc, 0, ht, xhi, "left");
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, ht, xhi, "left"); }
+    else{ 
+      LX11::ReservePanelLocation(this->winId(), xloc, 0, 2, xhi, "left"); 
+      hidepoint = QPoint(xloc-ht+2, 0);
+      showpoint = QPoint(xloc, 0);
+      this->move(hidepoint); //Could bleed over onto the screen left
+    }
   }else{ //right side of screen
     QSize sz = QSize(ht, xhi);
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc+xwid-ht,0,ht, xhi);
-    LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, 0, ht, xhi, "right");	  
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, 0, ht, xhi, "right"); }  
+    else{ 
+      LX11::ReservePanelLocation(this->winId(), xloc+xwid-2, 0, 2, xhi, "right"); 
+      hidepoint = QPoint(xloc+xwid-2, 0);
+      showpoint = QPoint(xloc+xwid-ht, 0);
+      this->move(hidepoint); //Could bleed over onto the screen right
+    }
   }
   //Now update the appearance of the toolbar
   QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
-  QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 5px; border: 1px solid transparent; }";
+  QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";
   style = style.arg(color);
   panelArea->setStyleSheet(style);
   
@@ -154,6 +180,7 @@ void LPanel::UpdatePanel(){
 	i--; //make sure we don't miss the next item with the re-order
       }
     }
+    LSession::processEvents();
   }
   //Now remove any extra plugins from the end
   for(int i=plugins.length(); i<PLUGINS.length(); i++){
@@ -164,6 +191,7 @@ void LPanel::UpdatePanel(){
     }
     layout->takeAt(i); //remove from the layout
     delete PLUGINS.takeAt(i); //delete the actual widget
+    LSession::processEvents();
   }
   this->update();
   this->show(); //make sure the panel is visible now
@@ -171,6 +199,7 @@ void LPanel::UpdatePanel(){
   for(int i=0; i<PLUGINS.length(); i++){
     QTimer::singleShot(0,PLUGINS[i], SLOT(OrientationChange()));
   }
+  LSession::processEvents();
 }
 
 void LPanel::UpdateLocale(){
@@ -197,11 +226,31 @@ void LPanel::paintEvent(QPaintEvent *event){
   QRect rec(event->rect().x(), event->rect().y(), event->rect().width(), event->rect().height()); //already in global coords? (translating to bgWindow coords crashes Lumina)
   //Need to translate that rectangle to the background image coordinates
   //qDebug() << "Rec:" << rec.x() << rec.y();
-  rec.moveTo( this->mapToGlobal(rec.topLeft()) ); //Need to change to global coords for the main window
+  //Need to change to global coords for the main window
+  if(hidden && (this->pos()==hidepoint) ){ rec.moveTo( this->mapToGlobal(rec.topLeft()-hidepoint+showpoint) ); }
+  else{ rec.moveTo( this->mapToGlobal(rec.topLeft()) ); }
   //qDebug() << "Global Rec:" << rec.x() << rec.y() << screennum;
   rec.moveTo( rec.x()-screen->screenGeometry(screennum).x(), rec.y() );
   //qDebug() << "Adjusted Global Rec:" << rec.x() << rec.y();
   painter->drawPixmap(event->rect(), QPixmap::grabWidget(bgWindow, rec) );
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
+}
+
+void LPanel::enterEvent(QEvent *event){
+  qDebug() << "Panel Enter Event:";
+  if(hidden){
+    //Move the panel out so it is fully available
+    this->move(showpoint);
+  }
+  event->accept(); //just to quiet the compile warning
+}
+
+void LPanel::leaveEvent(QEvent *event){
+  qDebug() << "Panel Leave Event:";
+  if(hidden){
+    //Move the panel back to it's "hiding" spot
+    this->move(hidepoint);
+  }
+  event->accept(); //just to quiet the compile warning
 }
 

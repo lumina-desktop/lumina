@@ -91,7 +91,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -369,8 +369,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>265</width>
+             <height>168</height>
             </rect>
            </property>
            <attribute name="label">
@@ -444,6 +444,13 @@
               </item>
              </layout>
             </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="check_panel2_hidepanel">
+              <property name="text">
+               <string>Auto-hide Panel </string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="page_panel2_plugins">
@@ -451,8 +458,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>191</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -589,8 +596,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>157</width>
-             <height>90</height>
+             <width>266</width>
+             <height>168</height>
             </rect>
            </property>
            <attribute name="label">
@@ -664,6 +671,13 @@
               </item>
              </layout>
             </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="check_panel1_hidepanel">
+              <property name="text">
+               <string>Auto-hide Panel </string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="page_panel1_plugins">
@@ -671,8 +685,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>191</width>
+             <height>107</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1391,8 +1405,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>515</width>
-                    <height>78</height>
+                    <width>129</width>
+                    <height>16</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1499,7 +1513,7 @@
      <x>0</x>
      <y>0</y>
      <width>579</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

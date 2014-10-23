@@ -154,8 +154,10 @@ void MainUI::setupConnections(){
   connect(ui->toolBox_panel2, SIGNAL(currentChanged(int)), this, SLOT(adjustpanel1()) );
   connect(ui->combo_panel1_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel2()) );
   connect(ui->combo_panel2_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel1()) );
-  connect(ui->spin_panel1_size, SIGNAL(valueChanged(int)), this, SLOT(adjustpanel2()) );
-  connect(ui->spin_panel2_size, SIGNAL(valueChanged(int)), this, SLOT(adjustpanel1()) );
+  connect(ui->spin_panel1_size, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->spin_panel2_size, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->check_panel1_hidepanel, SIGNAL(clicked()), this, SLOT(panelValChanged()) );
+  connect(ui->check_panel2_hidepanel, SIGNAL(clicked()), this, SLOT(panelValChanged()) );
   connect(ui->tool_panel1_addplugin, SIGNAL(clicked()), this, SLOT(addpanel1plugin()) );
   connect(ui->tool_panel1_rmplugin, SIGNAL(clicked()), this, SLOT(rmpanel1plugin()) );
   connect(ui->tool_panel1_upplug, SIGNAL(clicked()), this, SLOT(uppanel1plugin()) );
@@ -446,6 +448,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     QString PPrefix = "panel"+QString::number(cdesk)+".0/";
     ui->toolBox_panel1->setVisible(true);
     ui->spin_panel1_size->setValue( settings->value( PPrefix+"height",30).toInt() );
+    ui->check_panel1_hidepanel->setChecked( settings->value(PPrefix+"hidepanel", false).toBool() );
     QString loc = settings->value(PPrefix+"location","top").toString().toLower();
     if(loc=="top"){ ui->combo_panel1_loc->setCurrentIndex(0); }
     else if(loc=="bottom"){ ui->combo_panel1_loc->setCurrentIndex(1); }
@@ -471,6 +474,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     //Panel 1 defaults
     ui->toolBox_panel1->setVisible(false); //not initially visible
     ui->spin_panel1_size->setValue(30);
+    ui->check_panel1_hidepanel->setChecked( false );
     ui->combo_panel1_loc->setCurrentIndex(0); //Top
     ui->list_panel1_plugins->clear();
     ui->label_panel1_sample->setWhatsThis("rgba(255,255,255,160)");
@@ -481,6 +485,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->toolBox_panel2->setVisible(true);
     QString PPrefix = "panel"+QString::number(cdesk)+".1/";
     ui->spin_panel2_size->setValue( settings->value( PPrefix+"height",30).toInt() );
+    ui->check_panel2_hidepanel->setChecked( settings->value(PPrefix+"hidepanel", false).toBool() );
     QString loc = settings->value(PPrefix+"location","top").toString().toLower();
     if(loc=="top"){ ui->combo_panel2_loc->setCurrentIndex(0); }
     else if(loc=="bottom"){ ui->combo_panel2_loc->setCurrentIndex(1); }
@@ -505,6 +510,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     //Panel 2 defaults
     ui->toolBox_panel2->setVisible(false); //not initially visible
     ui->spin_panel2_size->setValue(30);
+    ui->check_panel2_hidepanel->setChecked( false );
     ui->combo_panel2_loc->setCurrentIndex(1); //Bottom
     ui->list_panel2_plugins->clear();
     ui->label_panel2_sample->setWhatsThis("rgba(255,255,255,160)");
@@ -589,6 +595,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       QString PPrefix = "panel"+QString::number(currentDesktop())+".0/";
       settings->setValue(PPrefix+"color", ui->label_panel1_sample->whatsThis());
       settings->setValue(PPrefix+"height", ui->spin_panel1_size->value());
+      settings->setValue(PPrefix+"hidepanel", ui->check_panel1_hidepanel->isChecked());
       int loc = ui->combo_panel1_loc->currentIndex();
       if(loc==0){ settings->setValue(PPrefix+"location", "top"); }
       else if(loc==1){ settings->setValue(PPrefix+"location", "bottom"); }
@@ -609,6 +616,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       QString PPrefix = "panel"+QString::number(currentDesktop())+".1/";
       settings->setValue(PPrefix+"color", ui->label_panel2_sample->whatsThis());
       settings->setValue(PPrefix+"height", ui->spin_panel2_size->value());
+      settings->setValue(PPrefix+"hidepanel", ui->check_panel2_hidepanel->isChecked());
       int loc = ui->combo_panel2_loc->currentIndex();
       if(loc==0){ settings->setValue(PPrefix+"location", "top"); }
       else if(loc==1){ settings->setValue(PPrefix+"location", "bottom"); }
@@ -762,6 +770,10 @@ void MainUI::deskplugadded(){
 //=============
 //  PANELS PAGE
 //=============
+void MainUI::panelValChanged(){
+  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+}
+
 void MainUI::addpanel1(){
   ui->toolBox_panel1->setVisible(true);
   checkpanels();

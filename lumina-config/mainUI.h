@@ -100,6 +100,7 @@ private slots:
 
 
 	//Panels Page
+	void panelValChanged();
 	void addpanel1();
 	void addpanel2();
 	void rmpanel1();
