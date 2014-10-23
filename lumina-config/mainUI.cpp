@@ -726,7 +726,8 @@ void MainUI::deskbgremoved(){
 
 void MainUI::deskbgadded(){
   //Prompt the user to find an image file to use for a background
-  QString dir = LOS::LuminaShare()+"wallpapers/Lumina-DE";
+  QString dir = LOS::LuminaShare().section("/Lumina-DE",0,0)+"/wallpapers/Lumina-DE";
+  qDebug() << "Looking for wallpaper dir:" << dir;
   if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
   QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images (*.png *.xpm *.jpg)");
   if(bgs.isEmpty()){ return; }
