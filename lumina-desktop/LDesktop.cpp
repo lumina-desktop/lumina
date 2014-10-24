@@ -8,7 +8,8 @@
 #include "LSession.h"
 
 #include <LuminaOS.h>
-//#include "../global.h"
+#include <LuminaX11.h>
+#include "LWinInfo.h"
 
 LDesktop::LDesktop(int deskNum) : QObject(){
 
@@ -22,7 +23,12 @@ LDesktop::LDesktop(int deskNum) : QObject(){
   qDebug() << "Desktop #"<<deskNum<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height();
   deskMenu = new QMenu(0);
     connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
-  appmenu = new AppMenu(0);
+  winMenu = new QMenu(0);
+    winMenu->setTitle(tr("Window List"));
+    winMenu->setIcon( LXDG::findIcon("preferences-system-windows","") );
+  usewinmenu=false;
+  connect(winMenu, SIGNAL(triggered(QAction*)), this, SLOT(winClicked(QAction*)) );
+  //appmenu = new AppMenu(0);
   workspacelabel = new QLabel(0);
     workspacelabel->setAlignment(Qt::AlignCenter);
   wkspaceact = new QWidgetAction(0);
@@ -60,7 +66,8 @@ LDesktop::LDesktop(int deskNum) : QObject(){
 
 LDesktop::~LDesktop(){
   delete deskMenu;
-  delete appmenu;
+  //delete appmenu;
+  delete winMenu;
   delete bgWindow;
   delete workspacelabel;
   delete wkspaceact;
@@ -140,18 +147,21 @@ void LDesktop::UpdateMenu(bool fast){
   //qDebug() << "Found desktop number:" << num;
   if(num < 0){ workspacelabel->setText( "<b>"+tr("Lumina Desktop")+"</b>"); }
   else{ workspacelabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>"); }
+  if(fast && usewinmenu){ UpdateWinMenu(); }
   if(fast){ return; } //already done
   deskMenu->clear(); //clear it for refresh
   deskMenu->addAction(wkspaceact);
   deskMenu->addSeparator();
   //Now load the user's menu setup and fill the menu
   QStringList items = settings->value("menu/itemlist", QStringList()<< "terminal" << "filemanager" <<"applications" << "line" << "settings" ).toStringList();
+  usewinmenu=false;
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ deskMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(SystemTerminal()) ); }
     else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("Insight-FileManager",""), tr("Browse System"), this, SLOT(SystemFileManager()) ); }
     else if(items[i]=="applications"){ deskMenu->addMenu( LSession::applicationMenu() ); }
     else if(items[i]=="line"){ deskMenu->addSeparator(); }
     else if(items[i]=="settings"){ deskMenu->addMenu( LSession::settingsMenu() ); }
+    else if(items[i]=="windowlist"){ deskMenu->addMenu( winMenu); usewinmenu=true;}
     else if(items[i].startsWith("app::::") && items[i].endsWith(".desktop")){
       //Custom *.desktop application
       QString file = items[i].section("::::",1,1).simplified();
@@ -172,6 +182,23 @@ void LDesktop::UpdateMenu(bool fast){
   }else{ deskMenu->addAction(LXDG::findIcon("document-decrypt",""),tr("Unlock Desktop"), this, SLOT(ToggleDesktopLock()) ); }
   deskMenu->addSeparator();
   deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Log Out"), this, SLOT(SystemLogout()) );
+}
+
+void LDesktop::UpdateWinMenu(){
+  winMenu->clear();
+  //Get the current list of windows
+  QList<WId> wins = LX11::WindowList();	
+  //Now add them to the menu
+  for(int i=0; i<wins.length(); i++){
+    LWinInfo info(wins[i]);
+    bool junk;
+    QAction *act = winMenu->addAction( info.icon(junk), info.text() );
+      act->setData( QString::number(wins[i]) );
+  }
+}
+
+void LDesktop::winClicked(QAction* act){
+  LX11::ActivateWindow( act->data().toString().toULong() );	
 }
 
 void LDesktop::UpdateDesktop(){

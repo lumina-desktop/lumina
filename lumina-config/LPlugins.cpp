@@ -172,7 +172,14 @@ void LPlugins::LoadMenuPlugins(){
     info.ID = "settings";
     info.icon = "configure";
   MENU.insert(info.ID, info);
-  //Settings
+  //Window List
+  info = LPI(); //clear it
+    info.name = QObject::tr("Window List");
+    info.description = QObject::tr("List the open application windows");
+    info.ID = "windowlist";
+    info.icon = "preferences-system-windows";
+  MENU.insert(info.ID, info);  
+  //Custom Apps
   info = LPI(); //clear it
     info.name = QObject::tr("Custom App");
     info.description = QObject::tr("Start a custom application");

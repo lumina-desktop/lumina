@@ -25,7 +25,7 @@
 #include <LuminaXDG.h>
 
 #include "LPanel.h"
-#include "Globals.h"
+//#include "Globals.h"
 #include "AppMenu.h"
 #include "desktop-plugins/LDPlugin.h"
 #include "desktop-plugins/LDPluginContainer.h"
@@ -54,12 +54,12 @@ private:
 	QString DPREFIX;
 	int desktopnumber;
 	//int xoffset;
-	bool defaultdesktop, desktoplocked, changingsettings, issyncing;
+	bool defaultdesktop, desktoplocked, changingsettings, issyncing, usewinmenu;
 	QList<LPanel*> PANELS;
 	QMdiArea *bgDesktop; //desktop widget area
 	QWidget *bgWindow; //full screen background
-	QMenu *deskMenu;
-	AppMenu *appmenu;
+	QMenu *deskMenu, *winMenu;
+	//AppMenu *appmenu;
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;
 	QList<LDPlugin*> PLUGINS;
@@ -71,11 +71,14 @@ private:
 private slots:
 	void SettingsChanged();
 	void UnlockSettings(){ issyncing=false; }
+	//Menu functions
 	void UpdateMenu(bool fast = false);
 	void ShowMenu(){
 	  UpdateMenu(true); //run the fast version
 	  deskMenu->popup(QCursor::pos());
 	}
+	void UpdateWinMenu();
+	void winClicked(QAction*);
 	
 	//Desktop plugin system functions
 	void UpdateDesktop();

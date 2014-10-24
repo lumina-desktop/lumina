@@ -18,7 +18,7 @@
 #include <LuminaXDG.h>
 
 // Local includes
-#include "../../Globals.h" //For the STATES enumeration definition
+#include "Globals.h" //For the STATES enumeration definition
 
 
 class LWinInfo{
@@ -47,12 +47,14 @@ public:
 	  return nm;
 	}
 
-	QIcon icon(){
-	  if(window==0){ return QIcon(); }
+	QIcon icon(bool &noicon){
+	  if(window==0){ noicon = true; return QIcon();}
 	  //qDebug() << "Check for Window Icon:" << window;
+	  noicon = false;
 	  QIcon ico = LX11::WindowIcon(window);
 	  //Check for a null icon, and supply one if necessary
-	  //if(ico.isNull()){ ico = LXDG::findIcon("preferences-system-windows",""); }
+	  if(ico.isNull()){ ico = LXDG::findIcon( this->Class().toLower(),""); }
+	  if(ico.isNull()){ ico = LXDG::findIcon("preferences-system-windows",""); noicon=true;}
 	  return ico;
 	}
 	

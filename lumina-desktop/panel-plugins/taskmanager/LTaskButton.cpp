@@ -80,7 +80,7 @@ void LTaskButton::UpdateButton(){
     }
     if(i==0 && !statusOnly){
       //Update the button visuals from the first window
-      this->setIcon(WINLIST[i].icon());
+      this->setIcon(WINLIST[i].icon(noicon));
       cname = WINLIST[i].Class();
       if(cname.isEmpty()){ 
 	//Special case (chrome/chromium does not register *any* information with X except window title)
@@ -88,6 +88,7 @@ void LTaskButton::UpdateButton(){
 	if(cname.contains(" - ")){ cname = cname.section(" - ",-1); }
       }
       this->setToolTip(cname);
+      /*
       if(this->icon().isNull()){
 	this->setIcon( LXDG::findIcon(cname.toLower(),"") );
 	if(this->icon().isNull()){
@@ -98,9 +99,10 @@ void LTaskButton::UpdateButton(){
 	}
       }else{
 	noicon = false;
-      }
+      }*/
     }
-    QAction *tmp = winMenu->addAction( WINLIST[i].icon(), WINLIST[i].text() );
+    bool junk;
+    QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
       tmp->setData(i); //save which number in the WINLIST this entry is for
     Lumina::STATES stat = WINLIST[i].status();
     if(stat==Lumina::NOTIFICATION){ showstate = stat; } //highest priority

@@ -51,6 +51,7 @@ HEADERS  += Globals.h \
 	LSession.h \
 	LDesktop.h \
 	LPanel.h \
+	LWinInfo.h \
 	AppMenu.h \
 	SettingsMenu.h \
 	SystemWindow.h \
@@ -70,7 +71,6 @@ HEADERS  += Globals.h \
 	panel-plugins/clock/LClock.h \
 	panel-plugins/battery/LBattery.h \
 	panel-plugins/desktopswitcher/LDesktopSwitcher.h \
-	panel-plugins/taskmanager/LWinInfo.h \
 	panel-plugins/taskmanager/LTaskManagerPlugin.h \
 	panel-plugins/taskmanager/LTaskButton.h \
 	panel-plugins/systemdashboard/LSysDashboard.h \

@@ -21,7 +21,7 @@
 #include <LuminaX11.h>
 
 // Local includes
-#include "LWinInfo.h"
+#include "../../LWinInfo.h"
 #include "../LTBWidget.h"
 
 class LTaskButton : public LTBWidget{
