@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>System Options</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QDialog{border-radius: 5px; background-color: rgba(240,240,240,200); border: 1px solid grey;}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="margin">
     <number>0</number>

@@ -14,10 +14,10 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
     if(ok){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(30,30) );
-      name->setText( item.name );
+      name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) );
     }else{
       icon->setPixmap( LXDG::findIcon("unknown","").pixmap(30,30) );
-      name->setText( itemPath.section("/",-1) );
+      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) );
     }
   }else if(isDir){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
@@ -26,12 +26,12 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
       name->setText( tr("Go Back") );
     }else{
       icon->setPixmap( LXDG::findIcon("folder","").pixmap(30,30) );
-      name->setText( itemPath.section("/",-1) );	  
+      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(30,30) );
-    name->setText( itemPath.section("/",-1) );
+    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
   }
   linkPath = QFile::symLinkTarget(itemPath);
   icon->setWhatsThis(itemPath);
@@ -49,7 +49,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent
   isShortcut = item.filePath.contains("/home/") && (item.filePath.contains("/Desktop/") || item.filePath.contains("/.lumina/favorites/") );
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(30,30) );
-  name->setText( item.name );
+  name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) ); 
   icon->setWhatsThis(item.filePath);
   //Now setup the button appropriately
   setupButton();
