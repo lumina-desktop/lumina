@@ -383,7 +383,9 @@ void LDesktop::UpdatePanels(){
     if(!found){
       qDebug() << " -- Create panel "<< i;
       //New panel
-      PANELS << new LPanel(settings, desktopnumber, i, bgWindow);
+      LPanel *pan = new LPanel(settings, desktopnumber, i, bgWindow);
+      PANELS << pan;
+      pan->show();
     }
   }
   //Give it a 1/2 second before ensuring that the visible desktop area is correct
@@ -451,6 +453,7 @@ void LDesktop::UpdateBackground(){
   //Now update the panel backgrounds
   for(int i=0; i<PANELS.length(); i++){
     PANELS[i]->update();
+    PANELS[i]->show();
   }
   bgupdating=false;
 }
