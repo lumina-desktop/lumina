@@ -186,9 +186,9 @@ void LSysTray::checkAll(){
         this->setMaximumSize(10000, trayIcons.length()*this->width());
       }
     }else{
-      //Tray Icon already exists: just update it
+      //Tray Icon already exists
       //qDebug() << " - SysTray: Update Icon";
-      trayIcons[i]->update();
+      //trayIcons[i]->update();
       wins.removeAt(index); //Already found - remove from the list
     }
   }
