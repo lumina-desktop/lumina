@@ -584,6 +584,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
 	bgs << ui->combo_desk_bg->itemData( ui->combo_desk_bg->currentIndex() ).toString();
 	bgs.removeAll("default");
     }
+    if(bgs.isEmpty()){ bgs << "default"; } //Make sure to always fall back on the default
     settings->setValue(DPrefix+"background/filelist", bgs);
     settings->setValue(DPrefix+"background/minutesToChange", ui->spin_desk_min->value());
     }
