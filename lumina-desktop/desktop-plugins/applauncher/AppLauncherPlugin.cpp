@@ -2,14 +2,22 @@
 #include "../../LSession.h"
 
 AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
-  this->setLayout( new QVBoxLayout());
-    this->layout()->setContentsMargins(0,0,0,0);
+  QVBoxLayout *lay = new QVBoxLayout();
+  this->setLayout(lay);
+    lay->setContentsMargins(0,0,0,0);
   button = new QToolButton(this);
     button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     button->setIconSize(QSize(64,64));
     button->setAutoRaise(true);
-  this->layout()->addWidget(button);
+    button->setText("..."); //Need to set something here so that initial sizing works properly
+  lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
+  if(this->settings->allKeys().isEmpty()){
+    //Brand new plugin: set initial size
+    this->settings->setValue("location/width",64);
+    this->settings->setValue("location/height",66+this->fontMetrics().height());
+    this->settings->sync();
+  }
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
   QTimer::singleShot(1,this, SLOT(loadButton()) );
@@ -33,6 +41,8 @@ void AppLauncherPlugin::loadButton(){
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
     watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
   }
+  this->adjustSize(); //make sure to adjust the button on first show.
+  QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	
 void AppLauncherPlugin::buttonClicked(){

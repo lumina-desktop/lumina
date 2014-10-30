@@ -56,7 +56,7 @@ bool WMProcess::isRunning(){
 }
 
 QString WMProcess::setupWM(){
-  QString WM = LSession::sessionSettings()->value("WindowManager", "fluxbox").toString();
+  QString WM = LSession::handle()->sessionSettings()->value("WindowManager", "fluxbox").toString();
   QString cmd="echo WM Disabled";
   //leave the option to add other window managers here (for testing purposes)
   if(WM=="openbox"){

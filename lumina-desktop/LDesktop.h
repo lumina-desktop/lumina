@@ -54,7 +54,8 @@ private:
 	QString DPREFIX;
 	int desktopnumber;
 	//int xoffset;
-	bool defaultdesktop, desktoplocked, changingsettings, issyncing, usewinmenu;
+	bool defaultdesktop, desktoplocked, deskupdating, changingsettings, issyncing, usewinmenu, bgupdating;
+	QStringList oldBGL;
 	QList<LPanel*> PANELS;
 	QMdiArea *bgDesktop; //desktop widget area
 	QWidget *bgWindow; //full screen background
@@ -69,6 +70,7 @@ private:
 	void CreateDesktopPluginContainer(LDPlugin*);
 
 private slots:
+	void InitDesktop();
 	void SettingsChanged();
 	void UnlockSettings(){ issyncing=false; }
 	//Menu functions

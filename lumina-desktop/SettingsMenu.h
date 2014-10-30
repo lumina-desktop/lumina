@@ -20,6 +20,7 @@ public:
 	~SettingsMenu();
 		
 private slots:
+	void InitMenu();
 	void runApp(QAction* act);
 
 };

@@ -15,8 +15,6 @@ AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
   QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
-  this->setTitle(tr("Applications"));
-  this->setIcon( LXDG::findIcon("system-run","") );
 }
 
 AppMenu::~AppMenu(){
@@ -90,6 +88,8 @@ void AppMenu::updateAppList(){
 //  PRIVATE SLOTS
 //=================
 void AppMenu::start(){
+  this->setTitle(tr("Applications"));
+  this->setIcon( LXDG::findIcon("system-run","") );
   //Setup the watcher
   watcher->addPaths(LXDG::systemApplicationDirs());
   //Now fill the menu the first time
@@ -109,12 +109,11 @@ void AppMenu::launchControlPanel(){
 }
 
 void AppMenu::launchFileManager(){
-  QString fm = LSession::sessionSettings()->value("default-filemanager","lumina-fm").toString();
+  QString fm = LSession::handle()->sessionSettings()->value("default-filemanager","lumina-fm").toString();
   LSession::LaunchApplication(fm);
 }
 
 void AppMenu::launchApp(QAction *act){
   QString appFile = act->whatsThis();
   LSession::LaunchApplication("lumina-open \""+appFile+"\"");
-  //QProcess::startDetached("lumina-open \""+appFile+"\"");
 }

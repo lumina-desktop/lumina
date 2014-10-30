@@ -13,7 +13,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->setupUi(this);
   if(parent!=0){ parent->setMouseTracking(true); }
   this->setMouseTracking(true);
-  sysapps = LSession::applicationMenu()->currentAppHash(); //get the raw info
+  sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
   //Setup the Icons
     // - favorites tab
     this->setTabIcon(0, rotateIcon(LXDG::findIcon("favorites","")) );
@@ -125,7 +125,7 @@ void UserWidget::UpdateMenu(){
     updateFavItems();
     ui->label_home_dir->setWhatsThis(QDir::homePath());
     updateHome();
-  if(lastUpdate < LSession::applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
+  if(lastUpdate < LSession::handle()->applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
     updateAppCategories();
     updateApps();
   }

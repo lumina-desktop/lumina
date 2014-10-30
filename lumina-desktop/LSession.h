@@ -18,6 +18,9 @@
 #include <QDesktopWidget>
 #include <QList>
 #include <QThread>
+#include <Phonon/MediaObject>
+#include <Phonon/AudioOutput>
+#include <QThread>
 
 #include "Globals.h"
 #include "AppMenu.h"
@@ -66,19 +69,30 @@ public:
 	}
 	
 	static void LaunchApplication(QString cmd);
-	static AppMenu* applicationMenu();
-	static void systemWindow();
-	static SettingsMenu* settingsMenu();
+	
+	AppMenu* applicationMenu();
+	void systemWindow();
+	SettingsMenu* settingsMenu();
 
-	static QSettings* sessionSettings();
+	QSettings* sessionSettings();
 
 	//Play System Audio
-	static void playAudioFile(QString filepath);
+	void playAudioFile(QString filepath);
 
 private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
+
+	//Internal variable for global usage
+	AppMenu *appmenu;
+	SettingsMenu *settingsmenu;
+	QTranslator *currTranslator;
+	Phonon::MediaObject *mediaObj;
+	Phonon::AudioOutput *audioOut;
+	QThread *audioThread;
+	QSettings *sessionsettings;
+
 	//System Tray Variables
 	WId SystemTrayID, VisualTrayID;
 	int TrayDmgEvent, TrayDmgError;

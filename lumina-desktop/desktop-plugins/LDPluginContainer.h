@@ -39,8 +39,10 @@ public:
 	  if(settings->allKeys().isEmpty()){
 	    //Brand new plugin - no location/size info saved yet
 	    //save the initial size of the plugin - the initial location will be set automatically
-	      settings->setValue("location/width", plugin->sizeHint().width());
-	      settings->setValue("location/height", plugin->sizeHint().height());
+	      QSize sz = plugin->sizeHint();
+	      if(!sz.isValid()){ sz = QSize(64,64); }
+	      settings->setValue("location/width", sz.width());
+	      settings->setValue("location/height", sz.height());
 	      settings->sync();
 	  }
 	  this->setContentsMargins(0,0,0,0);

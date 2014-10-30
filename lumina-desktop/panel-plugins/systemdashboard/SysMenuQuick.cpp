@@ -158,5 +158,5 @@ QString LSysMenuQuick::getRemainingTime(){
 
 void LSysMenuQuick::startLogout(){
   emit CloseMenu();
-  LSession::systemWindow();
+  LSession::handle()->systemWindow();
 }

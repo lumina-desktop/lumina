@@ -7,9 +7,6 @@
 #include "LSession.h"
 #include <LuminaOS.h>
 
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
-#include <QThread>
 #include <QTime>
 
 //X includes (these need to be last due to Qt compile issues)
@@ -19,14 +16,9 @@
 #include <X11/extensions/Xrender.h>
 #include <X11/extensions/Xdamage.h>
 
-//Private/global variables (for static function access)
-static AppMenu *appmenu;
-static SettingsMenu *settingsmenu;
-static QTranslator *currTranslator;
-static Phonon::MediaObject *mediaObj;
-static Phonon::AudioOutput *audioOut;
-static QThread *audioThread;
-static QSettings *sessionsettings;
+#ifndef DEBUG
+#define DEBUG 0
+#endif
 
 LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setApplicationName("Lumina Desktop Environment");
@@ -41,6 +33,14 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   SystemTrayID = 0; VisualTrayID = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
+  //initialize the empty internal pointers to 0
+  appmenu = 0;
+  settingsmenu = 0;
+  currTranslator=0;
+  mediaObj=0;
+  audioOut=0;
+  audioThread=0;
+  sessionsettings=0;
 }
 
 LSession::~LSession(){
@@ -52,41 +52,51 @@ LSession::~LSession(){
   delete settingsmenu;
   delete appmenu;
   delete currTranslator;
-  delete mediaObj;
-  delete audioOut;
+  if(mediaObj!=0){delete mediaObj;}
+  if(audioOut!=0){delete audioOut; }
 }
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
+  QTime* timer = 0;
+  if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
   //Setup the QSettings default paths
+  if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");
   //Setup the user's lumina settings directory as necessary
+  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
   checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
   DESKTOPS.clear();
-
+	
+  //Start the background system tray
+  if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
+  startSystemTray();
+	
   //Launch Fluxbox
   qDebug() << " - Launching Fluxbox";
+  if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
   WM = new WMProcess();
     WM->startWM();
 	
-  //Start the background system tray
-  startSystemTray();
-	
   //Initialize the desktops
+  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
   updateDesktops();
 
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
+  if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
   appmenu = new AppMenu();
+  if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
 
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
+  if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
     //watcher->addPath( QDir::homePath()+"/.lumina/stylesheet.qss" );
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
@@ -98,6 +108,7 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
+  if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
 }
 
 bool LSession::LoadLocale(QString langCode){
@@ -214,8 +225,9 @@ void LSession::refreshWindowManager(){
 }
 
 void LSession::updateDesktops(){
-  qDebug() << " - Update Desktops";
+  //qDebug() << " - Update Desktops";
   QDesktopWidget *DW = this->desktop();
+  bool firstrun = (DESKTOPS.length()==0);
     for(int i=0; i<DW->screenCount(); i++){
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
@@ -227,15 +239,19 @@ void LSession::updateDesktops(){
         DESKTOPS << new LDesktop(i);
       }
     }
+    //qDebug() << " - Done Starting Desktops";
+    if(firstrun){ return; } //Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
     for(int i=0; i<DESKTOPS.length(); i++){
       if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	qDebug() << " - Hide desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->hide();
       }else{
+	qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->show();
       }
     }
+    //qDebug() << " - Done Checking Desktops";
 }
 
 
@@ -350,11 +366,11 @@ void LSession::systemWindow(){
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
-  return; //Disable this for now: too many issues with Phonon at the moment (hangs the session)
+  //return; //Disable this for now: too many issues with Phonon at the moment (hangs the session)
   bool init = false;
   if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
   if(mediaObj==0){   qDebug() << " - Initialize Phonon media Object"; mediaObj = new Phonon::MediaObject(); init = true;}
-  //if(audioOut==0){   qDebug() << " - Initialize Phonon audio output"; audioOut = new Phonon::AudioOutput(); init=true;}
+  if(audioOut==0){   qDebug() << " - Initialize Phonon audio output"; audioOut = new Phonon::AudioOutput(); init=true;}
   if(mediaObj && audioOut && init){  //in case Phonon errors for some reason
     qDebug() << " -- Create path between audio objects";
     Phonon::createPath(mediaObj, audioOut);
@@ -430,7 +446,9 @@ void LSession::attachTrayWindow(WId win){
   if(RunningTrayApps.contains(win)){ return; } //already managed
   RunningTrayApps << win;
   emit TrayListChanged();
-  /*//Now try to embed the window into the tray
+  /*//Now try to embed the window into the tray 
+  //(NOT USED - Breaks visuals due to X11 graphics constraints - need to do embed in a single visual tray instead)
+  
   qDebug() << "Attach Tray App:" << appnum;
   WId cont = LX11::CreateWindow( SystemTrayID, QRect(appnum*64, 0, 64, 64) );
   if( LX11::EmbedWindow(win, cont) ){

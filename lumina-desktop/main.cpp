@@ -23,6 +23,8 @@
 #include <LuminaThemes.h>
 #include <LuminaOS.h>
 
+#define DEBUG 0
+
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
 void MessageOutput(QtMsgType type, const char *msg){
   QString txt;
@@ -66,18 +68,23 @@ int main(int argc, char ** argv)
         dir.mkpath(QDir::homePath()+"/.lumina/logs");
       }
     logfile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTime *timer=0;
+    if(DEBUG){ timer = new QTime(); timer->start(); }
     //Startup the Application
+    if(DEBUG){ qDebug() << "Session Init:" << timer->elapsed(); }
     LSession a(argc, argv);
+    if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
     LuminaThemeEngine theme(&a);
     //Setup Log File
     qInstallMsgHandler(MessageOutput);
+    if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
+    if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
     a.LoadLocale(QLocale().name());
     //Start launching external applications
-    QTimer::singleShot(1000, &a, SLOT(launchStartupApps()) ); //wait a second first
-    //QTimer::singleShot(1000, &a, SLOT(playStartupAudio()) );
+    QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a second first
+    if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
-    //a.playLogoutAudio();
     //qDebug() << "Stopping the window manager";
     qDebug() << "Finished Closing Down Lumina";
     logfile.close();

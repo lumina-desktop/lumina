@@ -10,6 +10,14 @@
 #include <LuminaOS.h>
 
 SettingsMenu::SettingsMenu() : QMenu(){
+  QTimer::singleShot(10, this, SLOT(InitMenu()) );
+}
+
+SettingsMenu::~SettingsMenu(){
+	
+}
+
+void SettingsMenu::InitMenu(){
   this->setTitle( tr("Desktop Settings") );
   this->setIcon( LXDG::findIcon("configure","") );
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
@@ -36,11 +44,7 @@ SettingsMenu::SettingsMenu() : QMenu(){
 	act->setWhatsThis("lumina-open \""+CONTROLPANEL+"\"");
 	this->addAction(act);
     }
-  }
-}
-
-SettingsMenu::~SettingsMenu(){
-	
+  }	
 }
 
 void SettingsMenu::runApp(QAction* act){

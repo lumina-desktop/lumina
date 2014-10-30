@@ -37,8 +37,8 @@ SystemWindow::~SystemWindow(){
 }
 
 void SystemWindow::closeAllWindows(){
-  if( LSession::sessionSettings()->value("PlayLogoutAudio",true).toBool() ){
-    LSession::playAudioFile(LOS::LuminaShare()+"Logout.ogg");
+  if( LSession::handle()->sessionSettings()->value("PlayLogoutAudio",true).toBool() ){
+    LSession::handle()->playAudioFile(LOS::LuminaShare()+"Logout.ogg");
   }
   QList<WId> WL = LX11::WindowList();
   for(int i=0; i<WL.length(); i++){

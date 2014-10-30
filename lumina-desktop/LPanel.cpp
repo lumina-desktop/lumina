@@ -195,6 +195,7 @@ void LPanel::UpdatePanel(){
   }
   this->update();
   this->show(); //make sure the panel is visible now
+  if(hidden){ this->move(hidepoint); }
   //Now go through and send the orientation update signal to each plugin
   for(int i=0; i<PLUGINS.length(); i++){
     QTimer::singleShot(0,PLUGINS[i], SLOT(OrientationChange()));
@@ -237,7 +238,7 @@ void LPanel::paintEvent(QPaintEvent *event){
 }
 
 void LPanel::enterEvent(QEvent *event){
-  qDebug() << "Panel Enter Event:";
+  //qDebug() << "Panel Enter Event:";
   if(hidden){
     //Move the panel out so it is fully available
     this->move(showpoint);
@@ -246,7 +247,7 @@ void LPanel::enterEvent(QEvent *event){
 }
 
 void LPanel::leaveEvent(QEvent *event){
-  qDebug() << "Panel Leave Event:";
+  //qDebug() << "Panel Leave Event:";
   if(hidden){
     //Move the panel back to it's "hiding" spot
     this->move(hidepoint);
