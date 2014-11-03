@@ -16,6 +16,7 @@
 #include "SamplePlugin.h"
 #include "calendar/CalendarPlugin.h"
 #include "applauncher/AppLauncherPlugin.h"
+#include "desktopview/DesktopViewPlugin.h"
 
 class NewDP{
 public:
@@ -28,6 +29,8 @@ public:
 	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
 	    //This plugin can be pre-initialized to a file path after the "::" delimiter
 	    plug = new AppLauncherPlugin(parent, plugin);
+	  }else if(plugin.section("---",0,0)=="desktopview"){
+	    plug = new DesktopViewPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
 	  }

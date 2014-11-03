@@ -40,10 +40,8 @@ SOURCES += main.cpp \
 	panel-plugins/desktopswitcher/LDesktopSwitcher.cpp \
 	panel-plugins/systemdashboard/LSysDashboard.cpp \
 	panel-plugins/systemdashboard/SysMenuQuick.cpp \
-	desktop-plugins/applauncher/AppLauncherPlugin.cpp
-#	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
-#	desktop-plugins/desktopview/DeskItem.cpp
-
+	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
+	desktop-plugins/desktopview/DesktopViewPlugin.cpp
 
 
 HEADERS  += Globals.h \
@@ -77,9 +75,8 @@ HEADERS  += Globals.h \
 	panel-plugins/systemdashboard/SysMenuQuick.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
-	desktop-plugins/applauncher/AppLauncherPlugin.h
-#	desktop-plugins/desktopview/DesktopViewPlugin.h \
-#	desktop-plugins/desktopview/DeskItem.h
+	desktop-plugins/applauncher/AppLauncherPlugin.h \
+	desktop-plugins/desktopview/DesktopViewPlugin.h
 
 FORMS    += SystemWindow.ui \
 	panel-plugins/userbutton/UserWidget.ui \
