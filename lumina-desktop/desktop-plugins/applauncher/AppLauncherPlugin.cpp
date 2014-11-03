@@ -12,12 +12,13 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
     button->setText("..."); //Need to set something here so that initial sizing works properly
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  if(this->settings->allKeys().isEmpty()){
+  this->setInitialSize(64,66+this->fontMetrics().height());
+  /*if(this->settings->allKeys().isEmpty()){
     //Brand new plugin: set initial size
     this->settings->setValue("location/width",64);
     this->settings->setValue("location/height",66+this->fontMetrics().height());
     this->settings->sync();
-  }
+  }*/
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
   QTimer::singleShot(1,this, SLOT(loadButton()) );

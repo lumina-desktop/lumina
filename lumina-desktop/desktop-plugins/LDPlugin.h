@@ -45,6 +45,17 @@ public:
 	  return PLUGID;
 	}
 	
+	void setInitialSize(int width, int height){
+	    //Note: Only run this in the plugin initization routine:
+	    //  if the plugin is completely new (first time used), it will be this size
+	    if(settings->allKeys().isEmpty()){
+		//Brand new plugin: set initial size
+		settings->setValue("location/width",width);
+		settings->setValue("location/height",height);
+		settings->sync();
+	    }
+	}
+	
 public slots:
 	virtual void LocaleChange(){
 	  //This needs to be re-implemented in the subclassed plugin

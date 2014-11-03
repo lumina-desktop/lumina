@@ -133,6 +133,13 @@ void LPlugins::LoadDesktopPlugins(){
     info.ID = "applauncher";
     info.icon = "quickopen";
   DESKTOP.insert(info.ID, info);
+  //Desktop View Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("Desktop Icons View");
+    info.description = QObject::tr("Area for automatically showing desktop icons");
+    info.ID = "desktopview";
+    info.icon = "preferences-desktop-icons";
+  DESKTOP.insert(info.ID, info);
 }
 
 void LPlugins::LoadMenuPlugins(){

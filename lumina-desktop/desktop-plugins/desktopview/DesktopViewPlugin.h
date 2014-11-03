@@ -4,28 +4,39 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-//  This class is a quick sample desktop plugin
+//  This plugin is a listing/launcher for things in the ~/Desktop folder
 //===========================================
-#ifndef _LUMINA_DESKTOP_DESKTOP_VIEW_PLUGIN_CALENDAR_H
-#define _LUMINA_DESKTOP_DESKTOP_VIEW_PLUGIN_CALENDAR_H
+#ifndef _LUMINA_DESKTOP_DESKTOP_VIEW_PLUGIN_H
+#define _LUMINA_DESKTOP_DESKTOP_VIEW_PLUGIN_H
 
 #include <QListWidget>
 #include <QVBoxLayout>
+#include <QTimer>
+#include <QFileSystemWatcher>
 #include "../LDPlugin.h"
 
-class CalendarPlugin : public LDPlugin{
+class DesktopViewPlugin : public LDPlugin{
 	Q_OBJECT
 public:
-	DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
-	  this->setLayout( new QVBoxLayout());
-	    this->layout()->setContentsMargins(0,0,0,0);
-	  list = new QListWidget(this);
-	  this->layout()->addWidget(list);
-	}
-	
-	~DesktopViewPlugin(){}
+	DesktopViewPlugin(QWidget* parent, QString ID);
+	~DesktopViewPlugin();
 	
 private:
 	QListWidget *list;
+	QFileSystemWatcher *watcher;
+
+private slots:
+	void runItem(QListWidgetItem*);
+	void updateContents();
+
+
+public slots:
+	void LocaleChange(){
+	  QTimer::singleShot(0,this, SLOT(updateContents()));
+	}
+	void ThemeChange(){
+	  QTimer::singleShot(0,this, SLOT(updateContents()));
+	}
+
 };
 #endif
