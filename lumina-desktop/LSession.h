@@ -21,6 +21,7 @@
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
 #include <QThread>
+#include <QUrl>
 
 #include "Globals.h"
 #include "AppMenu.h"

@@ -37,6 +37,7 @@
 #include <QResizeEvent>
 #include <QDesktopWidget>
 #include <QThread>
+#include <QUrl>
 
 //Phonon widgets
 #include <Phonon/BackendCapabilities>
