@@ -4,6 +4,6 @@ Icon=camera-web
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=Utility
+Categories=Utility;
 Name=Lumina Screenshot
 Comment=Take Screenshot
