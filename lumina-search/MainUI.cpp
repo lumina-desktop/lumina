@@ -103,15 +103,21 @@ void MainUI::foundSearchItem(QString path){
     it->setWhatsThis(path);
     it->setToolTip(path);
   //Now setup the visuals
-  if(path.endsWith(".desktop")){
+  if(path.simplified().endsWith(".desktop")){
     bool ok = false;
     XDGDesktop desk = LXDG::loadDesktopFile(path,ok);
-    if(!ok){delete it; return; } //invalid file
+    if( !ok  || !LXDG::checkValidity(desk) ){delete it; return; } //invalid file
     it->setText(desk.name);
     it->setIcon( LXDG::findIcon(desk.icon, "application-x-desktop") );
   }else{
-    it->setText( path.section("/",-1) );
-    it->setIcon( LXDG::findMimeIcon(path.section(".",-1)) );
+    if(QFileInfo(path).isDir()){ 
+      it->setIcon( LXDG::findIcon("inode-directory","") );
+      it->setText( path.replace(QDir::homePath(), "~") );
+    }else{ 
+      it->setIcon( LXDG::findMimeIcon(path.section("/",-1).section(".",-1)) ); 
+      it->setText( path.section("/",-1) );
+    }
+    
   }
   //Now add it to the widget
   ui->listWidget->addItem(it);
