@@ -82,7 +82,7 @@ int main(int argc, char ** argv)
     if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
     a.LoadLocale(QLocale().name());
     //Start launching external applications
-    QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a second first
+    QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";

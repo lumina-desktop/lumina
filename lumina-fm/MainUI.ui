@@ -66,7 +66,7 @@
              <enum>QListView::Adjust</enum>
             </property>
             <property name="layoutMode">
-             <enum>QListView::Batched</enum>
+             <enum>QListView::SinglePass</enum>
             </property>
             <property name="spacing">
              <number>1</number>
@@ -75,7 +75,7 @@
              <bool>true</bool>
             </property>
             <property name="batchSize">
-             <number>30</number>
+             <number>10</number>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

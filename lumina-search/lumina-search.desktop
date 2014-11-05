@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=lumina-search
+Icon=edit-find
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+Name=Lumina Search
+Comment=Search for files or applications

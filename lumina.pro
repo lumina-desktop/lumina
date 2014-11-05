@@ -5,5 +5,6 @@ SUBDIRS+= libLumina \
 	 lumina-open \
 	 lumina-config \
 	 lumina-fm \
-	 lumina-screenshot
+	 lumina-screenshot \
+	 lumina-search
 

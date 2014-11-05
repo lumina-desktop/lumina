@@ -10,7 +10,7 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     this->layout()->setContentsMargins(0,0,0,0);
     vlay->setContentsMargins(3,3,3,3);
     frame = new QFrame(this);
-      frame->setStyleSheet("QFrame{border-size: 1px; background: rgba(255,255,255,100);}");
+      frame->setStyleSheet("QFrame{border-size: 1px; background: rgba(255,255,255,100); color: black;}");
     this->layout()->addWidget(frame);
     frame->setLayout(vlay);
    
