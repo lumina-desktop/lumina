@@ -28,6 +28,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   currentDir = new QLineEdit(this);
     ui->toolBar->insertWidget(ui->actionBookMark, currentDir);
     currentDir->setFocusPolicy(Qt::StrongFocus);
+  
+  workThread = new QThread;
+    workThread->setObjectName("Lumina-fm filesystem worker");
+  worker = new BackgroundWorker;
+    worker->moveToThread(workThread);
+  
   fsmod = new QFileSystemModel(this);
     fsmod->setRootPath("/");
     ui->tree_dir_view->setModel(fsmod);
@@ -81,6 +87,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
   deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
   //Finish loading the interface
+  workThread->start();
   setupIcons();
   setupConnections();
   loadSettings();
@@ -91,6 +98,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
+  workThread->quit();
+  workThread->wait();
 }
 
 void MainUI::OpenDirs(QStringList dirs){
@@ -166,7 +175,13 @@ void MainUI::setupConnections(){
   connect(radio_view_details, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_list, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_icons, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
-
+  
+  //Background worker class
+  connect(this, SIGNAL(DirChanged(QString)), worker, SLOT(startDirChecks(QString)) );
+  connect(worker, SIGNAL(ImagesAvailable(QStringList)), this, SLOT(AvailablePictures(QStringList)) );
+  connect(worker, SIGNAL(MultimediaAvailable(QStringList)), this, SLOT(AvailableMultimediaFiles(QStringList)) );
+  connect(worker, SIGNAL(SnapshotsAvailable(QString, QStringList)), this, SLOT(AvailableBackups(QString, QStringList)) );
+	
   //Action buttons on browser page
   connect(ui->tool_act_run, SIGNAL(clicked()), this, SLOT(OpenItem()) );
   connect(ui->tool_act_runwith, SIGNAL(clicked()), this, SLOT(OpenItemWith()) );
@@ -366,9 +381,13 @@ void MainUI::setCurrentDir(QString dir){
   //qDebug() << "History:" << history;
   tabBar->setTabData(tabBar->currentIndex(), history);
   //Now adjust the items as necessary
-  QTimer::singleShot(0, this, SLOT(checkForMultimediaFiles()));
-  QTimer::singleShot(0, this, SLOT(checkForBackups()));
-  QTimer::singleShot(0, this, SLOT(checkForPictures()));
+  ui->tool_goToPlayer->setVisible(false);
+  ui->tool_goToRestore->setVisible(false);
+  ui->tool_goToImages->setVisible(false);
+  emit DirChanged(rawdir);
+  //QTimer::singleShot(0, this, SLOT(checkForMultimediaFiles()));
+  //QTimer::singleShot(0, this, SLOT(checkForBackups()));
+  //QTimer::singleShot(0, this, SLOT(checkForPictures()));
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
@@ -403,9 +422,9 @@ QFileInfoList MainUI::getSelectedItems(){
 //    PRIVATE SLOTS
 //==============
 //General button check functions
-void MainUI::checkForMultimediaFiles(){
-  ui->tool_goToPlayer->setVisible(false);
-  //Check for multimedia files not implemented yet!
+void MainUI::AvailableMultimediaFiles(QStringList files){
+  /*ui->tool_goToPlayer->setVisible(false);
+
   QDir dir(getCurrentDir());
   if(multiFilter.isEmpty()){
     QStringList mimes = Phonon::BackendCapabilities::availableMimeTypes();
@@ -417,7 +436,8 @@ void MainUI::checkForMultimediaFiles(){
     qDebug() << "Supported Multimedia Formats:" << multiFilter;
   }
   QStringList files = dir.entryList(multiFilter, QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-  if(!files.isEmpty() && !multiFilter.isEmpty()){
+  */
+  if(!files.isEmpty()){
     ui->combo_player_list->clear();
     ui->combo_player_list->addItems(files);
     ui->tool_goToPlayer->setVisible(true);
@@ -427,8 +447,8 @@ void MainUI::checkForMultimediaFiles(){
   
 }
 
-void MainUI::checkForBackups(){
-  ui->tool_goToRestore->setVisible(false);
+void MainUI::AvailableBackups(QString basedir, QStringList snapdirs){
+  /*ui->tool_goToRestore->setVisible(false);
   snapDirs.clear(); //clear the internal variable
   if(!isUserWritable){ 
     //cannot restore files into a non-writable directory
@@ -472,13 +492,16 @@ void MainUI::checkForBackups(){
   }else{
     //No dir found: put the snapmod on the lumina directory (someplace out of the way)
     snapmod->setRootPath(QDir::homePath()+"/.lumina");
-  }
+  }*/
+  snapmod->setRootPath(basedir); //set the base snapshot dir as the new root
+  snapDirs = snapdirs;
+  
   //Now enable the button if any snapshots available
   ui->tool_goToRestore->setVisible(!snapDirs.isEmpty());
 }
 
-void MainUI::checkForPictures(){
-  ui->tool_goToImages->setVisible(false);
+void MainUI::AvailablePictures(QStringList pics){
+  /*ui->tool_goToImages->setVisible(false);
   QDir dir(getCurrentDir());
   if(imgFilter.isEmpty()){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
@@ -486,6 +509,7 @@ void MainUI::checkForPictures(){
     qDebug() << "Supported Image Formats:" << imgFilter;
   }
   QStringList pics = dir.entryList(imgFilter, QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
+  */
   if(!pics.isEmpty()){
     ui->combo_image_name->clear();
     ui->combo_image_name->addItems(pics);
