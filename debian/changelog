@@ -1,13 +1,14 @@
-lumina-desktop (0.6.3.143-1nano) unstable; urgency=low
+lumina-desktop (0.6.3.158-1nano) unstable; urgency=low
 
   * new GIT snapshot
- 
- -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 02 Nov 2014 19:27:11 +0100
+    - added lumina-search package
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 07 Nov 2014 18:31:07 +0100
 
 lumina-desktop (0.6.3.99-1nano) unstable; urgency=low
 
   * new GIT snapshot
- 
+
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 05 Oct 2014 20:18:23 +0200
 
 lumina-desktop (0.6.2.14-1nano) unstable; urgency=low
