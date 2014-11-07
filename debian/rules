@@ -22,7 +22,7 @@ QMAKE_EXTRA_DIRS = libLumina \
 	dh $@
 
 override_dh_auto_configure:
-	qmake-qt4 $(QMAKE_USER_FLAGS)
+	qmake-qt4 $(USER_QMAKE_FLAGS)
 	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && qmake-qt4 $(USER_QMAKE_FLAGS)); done
 
 override_dh_auto_clean:
