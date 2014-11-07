@@ -140,6 +140,13 @@ void LPlugins::LoadDesktopPlugins(){
     info.ID = "desktopview";
     info.icon = "preferences-desktop-icons";
   DESKTOP.insert(info.ID, info);
+  //Notepad Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("Note Pad");
+    info.description = QObject::tr("Keep simple text notes on your desktop");
+    info.ID = "notepad";
+    info.icon = "text-enriched";
+  DESKTOP.insert(info.ID, info);
 }
 
 void LPlugins::LoadMenuPlugins(){

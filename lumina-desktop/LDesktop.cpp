@@ -16,54 +16,17 @@ LDesktop::LDesktop(int deskNum) : QObject(){
   DPREFIX = "desktop-"+QString::number(deskNum)+"/";
   desktopnumber = deskNum;
   desktop = QApplication::desktop();
-    //connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
   defaultdesktop = (desktop->screenGeometry(desktopnumber).x()==0);
   desktoplocked = true;
   issyncing = bgupdating = deskupdating = false;
-  /*qDebug() << "Desktop #"<<deskNum<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height();
-  deskMenu = new QMenu(0);
-    connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
-  winMenu = new QMenu(0);
-    winMenu->setTitle(tr("Window List"));
-    winMenu->setIcon( LXDG::findIcon("preferences-system-windows","") );*/
   usewinmenu=false;
-  //connect(winMenu, SIGNAL(triggered(QAction*)), this, SLOT(winClicked(QAction*)) );
-  //appmenu = new AppMenu(0);
-  /*workspacelabel = new QLabel(0);
-    workspacelabel->setAlignment(Qt::AlignCenter);
-  wkspaceact = new QWidgetAction(0);
-    wkspaceact->setDefaultWidget(workspacelabel);*/
+
   //Setup the internal variables
   settings = new QSettings(QSettings::UserScope, "LuminaDE","desktopsettings", this);
   //qDebug() << " - Desktop Settings File:" << settings->fileName();
   if(!QFile::exists(settings->fileName())){ settings->setValue(DPREFIX+"background/filelist",QStringList()<<"default"); settings->sync(); }
   bgWindow = 0;
   bgDesktop = 0;
-  
-  /*bgtimer = new QTimer(this);
-    bgtimer->setSingleShot(true);
-    connect(bgtimer, SIGNAL(timeout()), this, SLOT(UpdateBackground()) );
-  watcher = new QFileSystemWatcher(this);
-    //connect(LSession::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
-    watcher->addPath(settings->fileName());
-    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
-  
-  bgWindow = new QWidget(0);
-	bgWindow->setObjectName("bgWindow");
-	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
-	LX11::SetAsDesktop(bgWindow->winId());
-	bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
-	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
-  bgDesktop = new QMdiArea(bgWindow);
-	//Make sure the desktop area is transparent to show the background
-        bgDesktop->setBackground( QBrush(Qt::NoBrush) );
-	bgDesktop->setStyleSheet( "QMdiArea{ border: none; background: transparent;}" );
-  
-  //Start the update processes
-  QTimer::singleShot(1,this, SLOT(UpdateMenu()) );
-  QTimer::singleShot(1,this, SLOT(UpdateBackground()) );
-  QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
-  QTimer::singleShot(10,this, SLOT(UpdatePanels()) );*/
   QTimer::singleShot(1,this, SLOT(InitDesktop()) );
 
 }
@@ -168,10 +131,10 @@ void LDesktop::InitDesktop(){
 	bgDesktop->setStyleSheet( "QMdiArea{ border: none; background: transparent;}" );
   qDebug() << " - Desktop Init Done:" << desktopnumber;
   //Start the update processes
-  QTimer::singleShot(1,this, SLOT(UpdateMenu()) );
-  QTimer::singleShot(1,this, SLOT(UpdateBackground()) );
+  QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
+  QTimer::singleShot(0,this, SLOT(UpdateBackground()) );
   QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
-  QTimer::singleShot(10,this, SLOT(UpdatePanels()) );
+  QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
 }
 
 void LDesktop::SettingsChanged(){

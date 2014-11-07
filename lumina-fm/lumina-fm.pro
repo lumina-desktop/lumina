@@ -12,12 +12,14 @@ TEMPLATE = app
 SOURCES += main.cpp \
 		MainUI.cpp \
 		FODialog.cpp \
-		BMMDialog.cpp
+		BMMDialog.cpp \
+		BackgroundWorker.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
 		BMMDialog.h \
-		MimeIconProvider.h
+		MimeIconProvider.h \
+		BackgroundWorker.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \

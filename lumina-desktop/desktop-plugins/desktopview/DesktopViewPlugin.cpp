@@ -18,9 +18,8 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::NoSelection);
-    list->setStyleSheet( "QListWidget{ background: transparent; }" );
+    list->setStyleSheet( "QListWidget{ background: rgba(255,255,255,100); border: none; border-radius: 3px;}" );
     list->setIconSize(QSize(64,64));
-    list->setGridSize(QSize(80,80));
   this->layout()->addWidget(list);
   this->setInitialSize(200,300);
   watcher = new QFileSystemWatcher(this);
@@ -41,6 +40,7 @@ void DesktopViewPlugin::runItem(QListWidgetItem *item){
 
 void DesktopViewPlugin::updateContents(){
   list->clear();
+  list->setGridSize(QSize(80,70+this->fontMetrics().height()));
   QDir dir(QDir::homePath()+"/Desktop");
   QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::Type | QDir::DirsFirst);
   for(int i=0; i<files.length(); i++){

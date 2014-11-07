@@ -38,9 +38,10 @@
 #include <QDesktopWidget>
 #include <QThread>
 #include <QUrl>
+#include <QThread>
 
 //Phonon widgets
-#include <Phonon/BackendCapabilities>
+//#include <Phonon/BackendCapabilities>
 #include <Phonon/MediaObject>
 #include <Phonon/VideoWidget>
 #include <Phonon/AudioOutput>
@@ -55,6 +56,7 @@
 #include "FODialog.h" //file operation dialog
 #include "BMMDialog.h" //bookmark manager dialog
 #include "MimeIconProvider.h" //icon provider for the view widgets
+#include "BackgroundWorker.h"
 
 namespace Ui{
 	class MainUI;
@@ -73,6 +75,8 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+	QThread *workThread;
+	BackgroundWorker *worker;
 	//Internal non-ui widgets
 	QTabBar *tabBar;
 	QLineEdit *currentDir;
@@ -94,7 +98,7 @@ private:
 	//Internal variables
 	QStringList snapDirs; //internal saved variable for the discovered zfs snapshot dirs
 	QString CItem; //the item that was right-clicked (for the context menu)
-	QStringList imgFilter, multiFilter; //image/multimedia filters
+	//QStringList imgFilter, multiFilter; //image/multimedia filters
 	QSettings *settings;
 	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *copyFilesShort, *pasteFilesShort, *deleteFilesShort;
 	QCompleter *dirCompleter;
@@ -122,10 +126,10 @@ private slots:
 	  this->OpenDirs(in.split("\n"));
 	}
 	
-	//General button check functions (start in a new thread!)
-	void checkForMultimediaFiles();
-	void checkForBackups();
-	void checkForPictures();
+	//General button check functions (started in a seperate thread!)
+	void AvailableMultimediaFiles(QStringList files);
+	void AvailableBackups(QString basedir, QStringList snapdirs);
+	void AvailablePictures(QStringList files);
 	
 	//General page switching
 	void goToMultimediaPage();
@@ -201,6 +205,9 @@ private slots:
 	void CutItems();
 	void CopyItems();
 	void PasteItems();
+
+signals:
+	void DirChanged(QString path);
 
 protected:
 	void resizeEvent(QResizeEvent*);

@@ -17,6 +17,7 @@
 #include "calendar/CalendarPlugin.h"
 #include "applauncher/AppLauncherPlugin.h"
 #include "desktopview/DesktopViewPlugin.h"
+#include "notepad/NotepadPlugin.h"
 
 class NewDP{
 public:
@@ -31,6 +32,8 @@ public:
 	    plug = new AppLauncherPlugin(parent, plugin);
 	  }else if(plugin.section("---",0,0)=="desktopview"){
 	    plug = new DesktopViewPlugin(parent, plugin);
+	  }else if(plugin.section("---",0,0)=="notepad"){
+	    plug = new NotePadPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
 	  }

@@ -41,7 +41,8 @@ SOURCES += main.cpp \
 	panel-plugins/systemdashboard/LSysDashboard.cpp \
 	panel-plugins/systemdashboard/SysMenuQuick.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
-	desktop-plugins/desktopview/DesktopViewPlugin.cpp
+	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
+	desktop-plugins/notepad/NotepadPlugin.cpp
 
 
 HEADERS  += Globals.h \
@@ -76,7 +77,8 @@ HEADERS  += Globals.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
-	desktop-plugins/desktopview/DesktopViewPlugin.h
+	desktop-plugins/desktopview/DesktopViewPlugin.h \
+	desktop-plugins/notepad/NotepadPlugin.h
 
 FORMS    += SystemWindow.ui \
 	panel-plugins/userbutton/UserWidget.ui \
