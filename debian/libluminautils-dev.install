@@ -1,2 +1,2 @@
-usr/lib/libLuminaUtils.so
+usr/lib/*/libLuminaUtils.so
 usr/include/*.h
