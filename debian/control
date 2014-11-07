@@ -10,7 +10,7 @@ Homepage: https://github.com/pcbsd/lumina
 Package: lumina-desktop
 Architecture: all
 Depends: libluminautils1, lumina-core, lumina-config, lumina-fm,
-         lumina-open, lumina-screenshot
+         lumina-open, lumina-screenshot, lumina-search
 Description: Lightweight Qt4-based desktop environment
  Metapackage depending on all other lumina packages.
 
@@ -74,3 +74,10 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version
 Description: Screenshot utility for the lumina desktop environment
  Simple screenshot utility that allows to snapshot the whole desktop or a single
  window after a configurable delay.
+
+Package: lumina-search
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Description: Search utility for the lumina desktop environment
+ Simple search utility that allows to search for applications or files and
+ directories in the user's HOME directory.
