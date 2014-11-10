@@ -1,20 +1,22 @@
 /* ALL THE TEMPLATE WIDGETS */
 
+/* Set all the fonts (unless manually changed below) */
+QWidget{
+  font-family: %%FONT%%;
+  font-size: %%FONTSIZE%%;
+}
+
 QAbstractItemView, QAbstractSpinBox, QAbstractScrollArea{
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 5px;
   color: %%TEXTCOLOR%%;
   background-color: %%ALTBASECOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 /* ALL THE WIDGETS WITH THE BASE COLOR */
 QMainWindow, QMenu, QDialog, QMessageBox{ 
   background: %%BASECOLOR%%; 
   color: %%TEXTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 /* ALL THE WIDGETS WITH AN ALTERNATE BASE COLOR */
@@ -22,8 +24,6 @@ QLineEdit, QTextEdit, QTextBrowser, QPlainTextEdit, QSpinBox, QDateEdit, QDateTi
   background: %%ALTBASECOLOR%%;
   color: %%TEXTCOLOR%%;
   border-color: %%ACCENTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 /* PAGES OF CONTAINER WIDGETS */
@@ -38,8 +38,6 @@ QMenuBar, QMenuBar::item, QToolBar, QStatusBar{
   background: transparent;
   border-color: none;
   color: %%TEXTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 QMenuBar::item{
@@ -61,8 +59,6 @@ QMenu::item{
   border: 1px solid transparent; 
   color: %%TEXTCOLOR%%; 
   padding: 2px 30px 2px 20px;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 QMenu::indicator{ width: 20px; height: 20px; }
@@ -76,12 +72,10 @@ QMenu::indicator{ width: 20px; height: 20px; }
  }
 
 /* TAB WIDGETS */
-QTabBar{
-  /* Font settings need to be here and NOT in the ::tab fields, 
-      otherwise it will break auto-scaling of the tab sizes to fit the text */
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
-}
+/*QTabBar{
+  Custom Font settings need to be here and NOT in the ::tab fields, 
+      otherwise it will break auto-scaling of the tab sizes to fit the text
+}*/
 QTabBar::tab {
   background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%SECONDARYDISABLECOLOR%%, stop: 1 %%SECONDARYCOLOR%%);
   border: 1px solid %%ACCENTDISABLECOLOR%%;
@@ -139,8 +133,6 @@ QToolTip{
   border: 1px solid %%ACCENTCOLOR%%;
   padding: 1px;
   color: %%TEXTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 QFrame{
@@ -152,8 +144,6 @@ QFrame{
 QLabel{
   background: transparent;
   border: none;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
   color: %%TEXTCOLOR%%;
 }
 QAbstractButton::disabled{
@@ -166,8 +156,6 @@ QGroupBox{
   border-color: %%ACCENTCOLOR%%;
   border-radius: 5px;
   margin-top: 2ex;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
   font-weight: bold;
 }
 QGroupBox::title{
@@ -193,8 +181,6 @@ QComboBox{
   padding: 1px 18px 1px 3px;
   min-width: 6em;
   color: %%TEXTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
   background: %%ALTBASECOLOR%%;
   selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
  }
@@ -203,8 +189,6 @@ QComboBox::drop-down {
      subcontrol-origin: padding;
      subcontrol-position: right;
      width: 16px;
-     font-family: %%FONT%%;
-     font-size: %%FONTSIZE%%;
      border-left-width: 1px;
      border-left-color: transparent;
      border-left-style: solid; /* just a single line */
@@ -232,8 +216,6 @@ QComboBox QAbstractItemView{
   background-color: %%ALTBASECOLOR%%;
   color: %%TEXTCOLOR%%;
   selection-color: %%TEXTHIGHLIGHTCOLOR%%;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 /* VIEW WIDGETS */
@@ -244,8 +226,6 @@ QTreeView, QListView{
   show-decoration-selected: 1;
   color: %%TEXTCOLOR%%;
   margin: 1px;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 
 /*
@@ -271,8 +251,6 @@ QHeaderView{
   color: %%TEXTCOLOR%%;
   border: 1px solid transparent;
   border-radius: 3px;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
 }
 QHeaderView::section{
   background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%PRIMARYDISABLECOLOR%%, stop: 1 %%PRIMARYCOLOR%%);
@@ -390,28 +368,24 @@ QPushButton{
      background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%SECONDARYDISABLECOLOR%%, stop: 1 %%SECONDARYCOLOR%%);
      padding: 2px;
      padding-right: 4px;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
   color: %%TEXTCOLOR%%;
  }
 
 QToolButton{ /* Assume a flat button for every toolbutton by default*/
-     border: 1px solid transparent;
-     border-radius: 3px;
-     background-color: transparent;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
   color: %%TEXTCOLOR%%;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: transparent;
 }
 
- QPushButton:pressed, QPushButton::open, QToolButton:pressed, QToolButton::open  {
-     background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%ACCENTDISABLECOLOR%%, stop: 1 %%SECONDARYDISABLECOLOR%%);
+ QPushButton:pressed, QPushButton:open, QPushButton:selected, QPushButton:checked, QPushButton:on, QToolButton:pressed, QToolButton:open, QToolButton:selected, QToolButton:checked, QToolButton:on{
+     background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
  }
 
- QPushButton:flat, QToolButton:flat{
+QPushButton:flat, QToolButton:flat{
    background-color: transparent;
    border: 2px solid transparent; /* no border for a flat button */
- }
+}
  
  QPushButton::hover, QToolButton::hover{
    border-color: %%ACCENTCOLOR%%;
@@ -423,8 +397,6 @@ QToolButton{ /* Assume a flat button for every toolbutton by default*/
    color: %%TEXTCOLOR%%;
    padding: 2px;
    border-radius: 3px;
-  font-family: %%FONT%%;
-  font-size: %%FONTSIZE%%;
  }
  QRadioButton::hover, QCheckBox:hover{
    background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
@@ -446,8 +418,6 @@ QProgressBar{
      color: %%TEXTCOLOR%%;
      text-align: center;
      padding: 1px;
-	 font-family: %%FONT%%;
-     font-size: %%FONTSIZE%%;
 }
  QProgressBar::chunk {
      background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%SECONDARYDISABLECOLOR%%, stop: 1 %%SECONDARYCOLOR%%);
@@ -500,8 +470,6 @@ QCalendarWidget QWidget{
    background-color: %%BASECOLOR%%; 
    alternate-background-color: %%ALTBASECOLOR%%;
    color: %%TEXTCOLOR%%;
-   font-family: %%FONT%%;
-   font-size: %%FONTSIZE%%;
 }
 QCalendarWidget QAbstractButton{
   background-color: transparent;
