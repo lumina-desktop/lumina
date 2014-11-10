@@ -10,16 +10,21 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     this->layout()->setContentsMargins(0,0,0,0);
     vlay->setContentsMargins(3,3,3,3);
     frame = new QFrame(this);
-      frame->setStyleSheet("QFrame{border-size: 1px; background: rgba(255,255,255,100); color: black;}");
+      frame->setObjectName("notepadbase");
+      frame->setStyleSheet("QFrame#notepadbase{border-size: 1px; background: rgba(255,255,255,100); color: black;}");
     this->layout()->addWidget(frame);
     frame->setLayout(vlay);
    
   //Setup the title bar header buttons
   QHBoxLayout *hlay = new QHBoxLayout();
   next = new QToolButton(this);
+    next->setAutoRaise(true);
   prev = new QToolButton(this);
+    prev->setAutoRaise(true);
   add = new QToolButton(this);
+    add->setAutoRaise(true);
   rem = new QToolButton(this);
+    rem->setAutoRaise(true);
   label = new QLabel(this);
     label->setAlignment(Qt::AlignCenter);
     hlay->addWidget(prev);
