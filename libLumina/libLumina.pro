@@ -52,7 +52,8 @@ colors.path=$$PREFIX/share/Lumina-DE/colors/
 colors.files=colors/SampleColors.qss.colors
 
 themes.path=$$PREFIX/share/Lumina-DE/themes/
-themes.files=themes/Lumina-default.qss.template
+themes.files=themes/Lumina-default.qss.template \
+		themes/None.qss.template
 
 INSTALLS += target include colors themes
 

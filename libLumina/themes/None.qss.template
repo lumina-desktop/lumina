@@ -1,0 +1,5 @@
+/* This is a blank stylesheet to disable the Lumina Themes entirely (except for font settings)*/
+QWidget{
+  font-family: %%FONT%%;
+  font-size: %%FONTSIZE%%;
+}
