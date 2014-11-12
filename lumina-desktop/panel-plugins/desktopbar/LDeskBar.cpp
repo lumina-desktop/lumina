@@ -110,10 +110,17 @@ QAction* LDeskBarPlugin::newAction(QString filepath, QString name, QIcon icon){
 void LDeskBarPlugin::updateMenu(QMenu* menu, QFileInfoList files, bool trim){
   menu->clear();
   //re-create the menu (since it is hidden from view)
+  QStringList filevals;
   for(int i=0; i<files.length(); i++){
     qDebug() << "New Menu Item:" << files[i].fileName();
     if(trim){ totals.removeAll(files[i]); }
-    menu->addAction( newAction( files[i].canonicalFilePath(), files[i].fileName(), "") );
+    filevals << files[i].fileName()+"::::"+files[i].canonicalFilePath();
+    //menu->addAction( newAction( files[i].canonicalFilePath(), files[i].fileName(), "") );
+  }
+  //Now sort the list by file name
+  filevals.sort();
+  for(int i=0; i<filevals.length(); i++){
+    menu->addAction( newAction( filevals[i].section("::::",1,1), filevals[i].section("::::",0,0), "") );
   }
 }
 
@@ -130,15 +137,18 @@ void LDeskBarPlugin::ActionTriggered(QAction* act){
 void LDeskBarPlugin::desktopChanged(){
   if(!desktopPath.isEmpty()){
     QDir dir(desktopPath);
+    QDir favdir(QDir::homePath()+"/.lumina/favorites");
     totals = dir.entryInfoList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    totals << favdir.entryInfoList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     //Update all the special menus (trimming the totals list as we go)
-    updateMenu(dirM, dir.entryInfoList( QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name) );
-    updateMenu(audioM, dir.entryInfoList( audioFilter, QDir::Files, QDir::Name) );
-    updateMenu(videoM, dir.entryInfoList( videoFilter, QDir::Files, QDir::Name) );
-    updateMenu(pictureM, dir.entryInfoList( pictureFilter, QDir::Files, QDir::Name) );
-    updateMenu(docM, dir.entryInfoList( docsFilter, QDir::Files, QDir::Name) );
+    updateMenu(dirM, QFileInfoList() << dir.entryInfoList( QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name) << favdir.entryInfoList( QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name));
+    updateMenu(audioM, QFileInfoList() << dir.entryInfoList( audioFilter, QDir::Files, QDir::Name) << favdir.entryInfoList( audioFilter, QDir::Files, QDir::Name));
+    updateMenu(videoM, QFileInfoList() << dir.entryInfoList( videoFilter, QDir::Files, QDir::Name) << favdir.entryInfoList( videoFilter, QDir::Files, QDir::Name) );
+    updateMenu(pictureM, QFileInfoList() << dir.entryInfoList( pictureFilter, QDir::Files, QDir::Name) << favdir.entryInfoList( pictureFilter, QDir::Files, QDir::Name) );
+    updateMenu(docM, QFileInfoList() << dir.entryInfoList( docsFilter, QDir::Files, QDir::Name) << favdir.entryInfoList( docsFilter, QDir::Files, QDir::Name) );
     //Now update the launchers
     QFileInfoList exe = dir.entryInfoList( QStringList() << "*.desktop", QDir::Files, QDir::Name );
+      exe << favdir.entryInfoList( QStringList() << "*.desktop", QDir::Files, QDir::Name );
       // - Get a complete list of apps (in alphabetical order)
       QList<XDGDesktop> exeList;
       for(int i=0; i<exe.length(); i++){
