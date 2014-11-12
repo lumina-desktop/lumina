@@ -49,7 +49,11 @@ include.files=LuminaXDG.h \
 	LuminaOS.h
 
 colors.path=$$PREFIX/share/Lumina-DE/colors/
-colors.files=colors/SampleColors.qss.colors
+colors.files=colors/Lumina-Red.qss.colors \
+		colors/Lumina-Green.qss.colors \
+		colors/Lumina-Purple.qss.colors \
+		colors/Lumina-Gold.qss.colors \
+		colors/Lumina-Glass.qss.colors
 
 themes.path=$$PREFIX/share/Lumina-DE/themes/
 themes.files=themes/Lumina-default.qss.template \

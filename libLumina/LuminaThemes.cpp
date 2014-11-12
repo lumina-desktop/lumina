@@ -107,8 +107,8 @@ QStringList LTHEME::currentSettings(){ //returns [theme path, colorspath, iconsn
     else if(settings[i].startsWith("FONTSIZE=")){ out[4] = settings[i].section("=",1,1).simplified(); }
   }
   bool nofile = settings.isEmpty();
-  if(out[0].isEmpty()){ out[0] = LOS::LuminaShare()+"themes/Lumina-default.qss.template"; }
-  if(out[1].isEmpty()){ out[1] = LOS::LuminaShare()+"colors/SampleColors.qss.colors"; }
+  if(out[0].isEmpty() || !QFile::exists(out[0]) ){ out[0] = LOS::LuminaShare()+"themes/Lumina-default.qss.template"; }
+  if(out[1].isEmpty() || !QFile::exists(out[1]) ){ out[1] = LOS::LuminaShare()+"colors/Lumina-Glass.qss.colors"; }
   if(out[3].isEmpty()){ out[3] = QFont().defaultFamily(); }
   if(out[4].isEmpty()){ 
     int num = QFont().pointSize(); out[4] = QString::number(num)+"pt"; //Check point size first
@@ -179,6 +179,7 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   QIcon::setThemeName(icons); //make sure this sets set within this environment
   watcher = new QFileSystemWatcher(this);
 	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
+	watcher->addPaths( QStringList() << theme << colors ); //also watch these files for changes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange()) );
 }
 
@@ -188,13 +189,14 @@ LuminaThemeEngine::~LuminaThemeEngine(){
 
 void LuminaThemeEngine::watcherChange(){
   QStringList current = LTHEME::currentSettings();
-  if(theme!=current[0] || colors!=current[1] || font!=current[3] || fontsize!=current[4]){
-    application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );
-  }
+  application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );
+	
   if(icons!=current[2]){
     QIcon::setThemeName(current[2]); //make sure this sets set within this environment
     emit updateIcons();
   }
   //Now save this for later checking
+  watcher->removePaths( QStringList() << theme << colors );
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
+  watcher->addPaths( QStringList() << theme << colors );
 }
