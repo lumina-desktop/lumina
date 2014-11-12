@@ -156,6 +156,7 @@ private slots:
 	void startEditDir(QWidget *old, QWidget *now);
 	void goToDirectory(); //go to a manually typed in directory
 	void reloadDirectory(); //Update the widget with the dir contents
+	void currentDirectoryLoaded(); //The file system model re-loaded the directory
 	void on_tool_addToDir_clicked();
 	void tabChanged(int tab);
 	void tabClosed(int tab = -1);

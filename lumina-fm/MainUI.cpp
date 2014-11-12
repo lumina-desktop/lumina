@@ -175,7 +175,8 @@ void MainUI::setupConnections(){
   connect(radio_view_details, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_list, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_icons, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
-  
+  connect(fsmod, SIGNAL(directoryLoaded(QString)), this, SLOT(currentDirectoryLoaded()) );
+	
   //Background worker class
   connect(this, SIGNAL(DirChanged(QString)), worker, SLOT(startDirChecks(QString)) );
   connect(worker, SIGNAL(ImagesAvailable(QStringList)), this, SLOT(AvailablePictures(QStringList)) );
@@ -344,6 +345,7 @@ QString MainUI::getCurrentDir(){
 void MainUI::setCurrentDir(QString dir){
   if(dir.isEmpty()){ return; }
   QFileInfo info(dir);
+  QString olddir = currentDir->whatsThis();
   if(!info.isDir() || !info.exists() ){ 
     qDebug() << "Invalid Directory:" << dir;
     //Try to just go up the dir tree one level
@@ -384,10 +386,9 @@ void MainUI::setCurrentDir(QString dir){
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
-  emit DirChanged(rawdir);
-  //QTimer::singleShot(0, this, SLOT(checkForMultimediaFiles()));
-  //QTimer::singleShot(0, this, SLOT(checkForBackups()));
-  //QTimer::singleShot(0, this, SLOT(checkForPictures()));
+  if(olddir==rawdir){
+    emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
+  }
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
@@ -763,6 +764,14 @@ void MainUI::goToDirectory(){
 
 void MainUI::reloadDirectory(){
   setCurrentDir( getCurrentDir() );
+}
+
+void MainUI::currentDirectoryLoaded(){
+  //The directory was just loaded: refresh the action buttons as neccesary
+  ui->tool_goToPlayer->setVisible(false);
+  ui->tool_goToRestore->setVisible(false);
+  ui->tool_goToImages->setVisible(false);
+  emit DirChanged(getCurrentDir());
 }
 
 void MainUI::on_tool_addToDir_clicked(){
@@ -1173,7 +1182,8 @@ void MainUI::RenameItem(){
   if(!ok || nname.isEmpty()){ CItem.clear(); return; } //cancelled
   //Now check for a file extension and add it if necessary
   QString oext = fname.section(".",-1);
-    if(oext==fname){ oext.clear(); } //no extension
+    if("."+oext == fname){ oext.clear(); } //hidden file without an extension
+    else if(oext==fname){ oext.clear(); } //no extension
   QString next = nname.section(".",-1);
     if(next==nname){ next.clear(); } //no extension
   if(next.isEmpty() && !oext.isEmpty()){
