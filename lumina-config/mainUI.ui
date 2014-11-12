@@ -27,6 +27,12 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QGroupBox" name="group_screen">
       <property name="title">
@@ -370,7 +376,7 @@
              <x>0</x>
              <y>0</y>
              <width>265</width>
-             <height>168</height>
+             <height>193</height>
             </rect>
            </property>
            <attribute name="label">
@@ -458,8 +464,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>191</width>
-             <height>107</height>
+             <width>177</width>
+             <height>106</height>
             </rect>
            </property>
            <attribute name="label">
@@ -597,7 +603,7 @@
              <x>0</x>
              <y>0</y>
              <width>266</width>
-             <height>168</height>
+             <height>193</height>
             </rect>
            </property>
            <attribute name="label">
@@ -685,8 +691,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>191</width>
-             <height>107</height>
+             <width>177</width>
+             <height>106</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1405,8 +1411,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>129</width>
-                    <height>16</height>
+                    <width>118</width>
+                    <height>26</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1513,7 +1519,7 @@
      <x>0</x>
      <y>0</y>
      <width>579</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
