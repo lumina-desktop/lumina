@@ -103,15 +103,20 @@ MainUI::~MainUI(){
 }
 
 void MainUI::OpenDirs(QStringList dirs){
+  QStringList invalid;
   for(int i=0; i<dirs.length(); i++){
     //Add this directory in a new tab
     if(dirs[i].endsWith("/")){ dirs[i].chop(1); }
+    if(!QFile::exists(dirs[i])){ invalid << dirs[i]; continue; }
     qDebug() << "Open Directory:" << dirs[i];
     int index = tabBar->addTab( dirs[i].section("/",-1) );
     tabBar->setTabWhatsThis( index, dirs[i] );
     if(index==0){ setCurrentDir(dirs[i]); }//display this as the current dir
   }
   tabBar->setVisible( tabBar->count() > 1 );
+  if(!invalid.isEmpty()){
+    QMessageBox::warning(this, tr("Invalid Directories"), tr("The following directories are invalid and could not be opened:")+"\n"+invalid.join(", ") );
+  }
 }
 
 //==========
@@ -424,20 +429,6 @@ QFileInfoList MainUI::getSelectedItems(){
 //==============
 //General button check functions
 void MainUI::AvailableMultimediaFiles(QStringList files){
-  /*ui->tool_goToPlayer->setVisible(false);
-
-  QDir dir(getCurrentDir());
-  if(multiFilter.isEmpty()){
-    QStringList mimes = Phonon::BackendCapabilities::availableMimeTypes();
-    mimes = mimes.filter("audio/") + mimes.filter("video/");
-    for(int i=0; i<mimes.length(); i++){
-      multiFilter << LXDG::findFilesForMime(mimes[i]);
-    }
-    multiFilter.removeDuplicates();
-    qDebug() << "Supported Multimedia Formats:" << multiFilter;
-  }
-  QStringList files = dir.entryList(multiFilter, QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-  */
   if(!files.isEmpty()){
     ui->combo_player_list->clear();
     ui->combo_player_list->addItems(files);
@@ -449,51 +440,6 @@ void MainUI::AvailableMultimediaFiles(QStringList files){
 }
 
 void MainUI::AvailableBackups(QString basedir, QStringList snapdirs){
-  /*ui->tool_goToRestore->setVisible(false);
-  snapDirs.clear(); //clear the internal variable
-  if(!isUserWritable){ 
-    //cannot restore files into a non-writable directory
-    //No dir found: put the snapmod on the lumina directory (someplace out of the way)
-    snapmod->setRootPath(QDir::homePath()+"/.lumina");
-    return; 
-  }
-  //Now recursively try to find snapshots of this directory
-  QString cdir = getCurrentDir();
-  QDir dir(cdir);
-  bool found = false;
-  while(dir.absolutePath()!="/" && !found){
-    if(dir.exists(".zfs/snapshot")){ found = true;}
-    else{ dir.cdUp(); }
-    QApplication::processEvents(); //keep the UI snappy
-  }
-  //Now find the snapshots that contain this directory and save them
-  if(found){
-    QString reldir = getCurrentDir();
-	  reldir.remove(dir.absolutePath());
-    dir.cd(".zfs/snapshot");
-    snapmod->setRootPath(dir.canonicalPath()); //set the base snapshot dir as the new root
-    snapDirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
-    //Check that the current directory exists in each snapshot
-    for(int i=0; i<snapDirs.length(); i++){
-      if( !dir.exists(snapDirs[i]+"/"+reldir) ){
-        snapDirs.removeAt(i);
-	i--;
-      }else{
-	snapDirs[i] = QFileInfo(dir, snapDirs[i]+"/"+reldir).created().toString("yyyyMMddhhmmsszzz")+"::::"+snapDirs[i];
-      }
-      QApplication::processEvents(); //keep the UI snappy
-    }
-    snapDirs.sort();
-    //Sort the snapshots by time (newest last) and format them
-    for(int i=0; i<snapDirs.length(); i++){
-      snapDirs[i] = dir.absolutePath()+"/"+snapDirs[i].section("::::",1,50)+"/"+reldir;
-      QApplication::processEvents(); //keep the UI snappy
-    }
-    //qDebug() << "Found snapshots:" << snapDirs;
-  }else{
-    //No dir found: put the snapmod on the lumina directory (someplace out of the way)
-    snapmod->setRootPath(QDir::homePath()+"/.lumina");
-  }*/
   snapmod->setRootPath(basedir); //set the base snapshot dir as the new root
   snapDirs = snapdirs;
   
@@ -502,15 +448,6 @@ void MainUI::AvailableBackups(QString basedir, QStringList snapdirs){
 }
 
 void MainUI::AvailablePictures(QStringList pics){
-  /*ui->tool_goToImages->setVisible(false);
-  QDir dir(getCurrentDir());
-  if(imgFilter.isEmpty()){
-    QList<QByteArray> fmt = QImageReader::supportedImageFormats();
-    for(int i=0; i<fmt.length(); i++){ imgFilter << "*."+QString(fmt[i]).toLower(); }
-    qDebug() << "Supported Image Formats:" << imgFilter;
-  }
-  QStringList pics = dir.entryList(imgFilter, QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-  */
   if(!pics.isEmpty()){
     ui->combo_image_name->clear();
     ui->combo_image_name->addItems(pics);

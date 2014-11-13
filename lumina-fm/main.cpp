@@ -15,7 +15,14 @@ int main(int argc, char ** argv)
 {
     QStringList in;
     for(int i=1; i<argc; i++){ //skip the first arg (app binary)
-      in << QString(argv[i]);
+      QString path = argv[i];
+      if(path=="."){
+	//Insert the current working directory
+	in << QDir::currentPath();
+      }else{
+	if(!path.startsWith("/")){ path.prepend(QDir::currentPath()+"/"); }
+        in << path;
+      }
     }
     if(in.isEmpty()){ in << QDir::homePath(); }
     #ifdef __FreeBSD__
