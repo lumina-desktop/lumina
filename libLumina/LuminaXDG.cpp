@@ -88,6 +88,10 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   if(!DF.showInList.isEmpty()){
     DF.name.append(" ("+DF.showInList.join(", ")+")");
   }
+  //Quick fix for showing "wine" applications (which quite often don't list a category)
+  if(DF.catList.isEmpty() && filePath.contains("/wine/")){
+    DF.catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
+  }
   //Return the structure
   ok=true;
   return DF;
@@ -150,10 +154,11 @@ QStringList LXDG::systemApplicationDirs(){
       out << appDirs[i]+"/applications";
       //Also check any subdirs within this directory 
       // (looking at you KDE - stick to the standards!!)
-      QDir dir(appDirs[i]+"/applications");
-      QStringList subs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+      out << LUtils::listSubDirectories(appDirs[i]+"/applications");
+      //QDir dir(appDirs[i]+"/applications");
+      //QStringList subs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
       //qDebug() << "Adding subdirectories:" << appDirs[i]+"/applications/["+subs.join(", ")+"]";
-      for(int s=0; s<subs.length(); s++){ out << dir.absoluteFilePath(subs[s]); }
+      //for(int s=0; s<subs.length(); s++){ out << dir.absoluteFilePath(subs[s]); }
     }
   }
   return out;
@@ -185,7 +190,7 @@ QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
 QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
   //Sort the list of applications into their different categories (main categories only)
   //Create the category lists
-  QList<XDGDesktop> multimedia, dev, ed, game, graphics, network, office, science, settings, sys, utility, other;
+  QList<XDGDesktop> multimedia, dev, ed, game, graphics, network, office, science, settings, sys, utility, other, wine;
   //Sort the apps into the lists
   for(int i=0; i<apps.length(); i++){
     if(apps[i].catList.contains("AudioVideo")){ multimedia << apps[i]; }
@@ -199,6 +204,7 @@ QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
     else if(apps[i].catList.contains("Settings")){ settings << apps[i]; }
     else if(apps[i].catList.contains("System")){ sys << apps[i]; }
     else if(apps[i].catList.contains("Utility")){ utility << apps[i]; }
+    else if(apps[i].catList.contains("Wine")){ wine << apps[i]; }
     else{ other << apps[i]; }
   }
   //Now create the output hash
@@ -214,6 +220,7 @@ QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
   if(!settings.isEmpty()){ out.insert("Settings", LXDG::sortDesktopNames(settings)); }
   if(!sys.isEmpty()){ out.insert("System", LXDG::sortDesktopNames(sys)); }
   if(!utility.isEmpty()){ out.insert("Utility", LXDG::sortDesktopNames(utility)); }
+  if(!wine.isEmpty()){ out.insert("Wine", LXDG::sortDesktopNames(wine)); }
   if(!other.isEmpty()){ out.insert("Unsorted", LXDG::sortDesktopNames(other)); }
   //return the resulting hash
   return out;

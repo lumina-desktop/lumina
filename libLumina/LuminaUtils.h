@@ -11,6 +11,7 @@
 #include <QProcess>
 #include <QTextStream>
 #include <QFile>
+#include <QDir>
 #include <QString>
 #include <QStringList>
 #include <QFile>
@@ -30,6 +31,9 @@ public:
 
 	//Check whether a file/path is a valid binary
 	static bool isValidBinary(QString bin); //full path or name only
+
+	//List all the sub-directories of a parent dir (recursive)
+	static QStringList listSubDirectories(QString dir, bool recursive = true);
 };
 
 #endif

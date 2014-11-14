@@ -78,3 +78,17 @@ bool LUtils::isValidBinary(QString bin){
   QFileInfo info(bin);
   return (info.exists() && info.isExecutable());
 }
+
+QStringList LUtils::listSubDirectories(QString dir, bool recursive){
+  //This is a recursive method for returning the full paths of all subdirectories (if recursive flag is enabled)
+  QDir maindir(dir);
+  QStringList out;
+  QStringList subs = maindir.entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+  for(int i=0; i<subs.length(); i++){
+    out << maindir.absoluteFilePath(subs[i]);
+    if(recursive){
+      out << LUtils::listSubDirectories(maindir.absoluteFilePath(subs[i]), recursive);
+    }
+  }
+  return out;
+}
