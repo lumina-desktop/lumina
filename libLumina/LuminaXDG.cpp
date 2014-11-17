@@ -387,6 +387,167 @@ QStringList LXDG::findFilesForMime(QString mime){
   return out;
 }
 
+QStringList LXDG::listFileMimeDefaults(){
+  //This will spit out a itemized list of all the mimetypes and relevant info
+  // Output format: <mimetype>::::<extension>::::<default>::::<localized comment>
+  QStringList mimes = LXDG::loadMimeFileGlobs2();
+  //Remove all the application files from the list (only a single app defines/uses this type in general)
+  /*QStringList apps = mimes.filter(":application/");
+  //qDebug() << "List Mime Defaults";
+  for(int i=0; i<apps.length(); i++){ mimes.removeAll(apps[i]); }*/
+  //Now start filling the output list
+  QStringList out;
+  for(int i=0; i<mimes.length(); i++){
+    QString mimetype = mimes[i].section(":",1,1);
+    QStringList tmp = mimes.filter(mimetype);
+    //Collect all the different extensions with this mimetype
+    QStringList extlist;
+    for(int j=0; j<tmp.length(); j++){
+      mimes.removeAll(tmp[j]);
+      extlist << tmp[j].section(":",2,2);
+    }
+    extlist.removeDuplicates(); //just in case
+    //Now look for a current default for this mimetype
+    QString dapp = LXDG::findDefaultAppForMime(mimetype); //default app;
+    
+    //Create the output entry
+    //qDebug() << "Mime entry:" << i << mimetype << dapp;
+    out << mimetype+"::::"+extlist.join(", ")+"::::"+dapp+"::::"+LXDG::findMimeComment(mimetype);
+    
+    i--; //go back one (continue until the list is empty)
+  }
+  return out;
+}
+
+QString LXDG::findMimeComment(QString mime){
+  QString comment;
+  QStringList dirs = LXDG::systemMimeDirs();
+  QString lang = QString(getenv("LANG")).section(".",0,0);
+  QString shortlang = lang.section("_",0,0);
+  for(int i=0; i<dirs.length(); i++){
+    if(QFile::exists(dirs[i]+"/"+mime+".xml")){
+      QStringList info = LUtils::readFile(dirs[i]+"/"+mime+".xml");
+      QStringList filter = info.filter("<comment xml:lang=\""+lang+"\">");
+      //First look for a full language match, then short language, then general comment
+      if(filter.isEmpty()){ filter = info.filter("<comment xml:lang=\""+shortlang+"\">"); }
+      if(filter.isEmpty()){ filter = info.filter("<comment>"); }
+      if(!filter.isEmpty()){
+        comment = filter.first().section(">",1,1).section("</",0,0);
+        break;
+      }
+    }
+  }
+  return comment;
+}
+
+QString LXDG::findDefaultAppForMime(QString mime){
+  //First get the priority-ordered list of default file locations
+  QStringList dirs;
+  dirs << QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list" \
+	 << QString(getenv("XDG_CONFIG_HOME"))+"/mimeapps.list";
+  QStringList tmp = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/lumina-mimeapps.list"; }
+	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/mimeapps.list"; }
+  dirs << QString(getenv("XDG_DATA_HOME"))+"/applications/lumina-mimeapps.list" \
+	 << QString(getenv("XDG_DATA_HOME"))+"/applications/mimeapps.list";  
+  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
+	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/lumina-mimeapps.list"; }
+	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/mimeapps.list"; }
+	
+  //Now go through all the files in order of priority until a default is found
+  QString cdefault;
+  QStringList white; //lists to keep track of during the search (black unused at the moment)
+  for(int i=0; i<dirs.length() && cdefault.isEmpty(); i++){
+    if(!QFile::exists(dirs[i])){ continue; }
+    QStringList info = LUtils::readFile(dirs[i]);
+    if(info.isEmpty()){ continue; }
+    QString workdir = dirs[i].section("/",0,-1); //just the directory
+    int def = info.indexOf("[Default Applications]"); //find this line to start on
+    if(def>=0){
+      for(int d=def+1; d<info.length(); d++){
+        if(info[d].startsWith("[")){ break; } //starting a new section now - finished with defaults
+	if(info[d].contains(mime+"=")){
+	  white << info[d].section("=",1,50).split(";");
+	  break;
+	}
+      }
+    }
+    // Now check for any white-listed files in this work dir 
+    // find the full path to the file (should run even if nothing in this file)
+    for(int w=0; w<white.length(); w++){
+      //First check for absolute paths to *.desktop file
+      if( white[w].startsWith("/") ){
+	 if( QFile::exists(white[w]) ){ cdefault=white[w]; break; }
+	 else{ white.removeAt(w); w--; } //invalid file path - remove it from the list
+      }
+      //Now check for relative paths to  file (in current priority-ordered work dir)
+      else if( QFile::exists(workdir+"/"+white[w]) ){ cdefault=workdir+"/"+white[w]; break; }
+    }   
+    /* WRITTEN BUT UNUSED CODE FOR MIMETYPE ASSOCIATIONS
+    //Skip using this because it is simply an alternate/unsupported standard that conflicts with
+      the current mimetype database standards. It is better/faster to parse 1 or 2 database glob files
+      rather than have to iterate through hundreds of *.desktop files *every* time you need to
+      find an application
+    
+    if(addI<0 && remI<0){
+      //Simple Format: <mimetype>=<*.desktop file>;<*.desktop file>;.....
+        // (usually only one desktop file listed)
+      info = info.filter(mimetype+"=");
+      //Load the listed default(s)
+      for(int w=0; w<info.length(); w++){
+        white << info[w].section("=",1,50).split(";");
+      }
+    }else{
+      //Non-desktop specific mimetypes file: has a *very* convoluted/inefficient algorithm (required by spec)
+      if(addI<0){ addI = info.length(); } //no add section
+      if(remI<0){ remI = info.length(); } // no remove section:
+      //Whitelist items
+      for(int a=addI+1; a!=remI && a<info.length(); a++){
+        if(info[a].contains(mimetype+"=")){ 
+	  QStringList tmp = info[a].section("=",1,50).split(";"); 
+	  for(int t=0; t<tmp.length(); t++){ 
+	    if(!black.contains(tmp[t])){ white << tmp[t]; } //make sure this item is not on the black list
+	  }
+	  break;
+	}
+      }
+      //Blacklist items
+      for(int a=remI+1; a!=addI && a<info.length(); a++){
+        if(info[a].contains(mimetype+"=")){ black << info[a].section("=",1,50).split(";"); break;}
+      }
+      
+      //STEPS 3/4 not written yet
+      
+    } //End of non-DE mimetypes file */
+    
+  } //End loop over files
+	
+  return cdefault;
+}
+
+void LXDG::setDefaultAppForMime(QString mime, QString app){
+  QString filepath = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list";
+  QStringList cinfo = LUtils::readFile(filepath);
+  //If this is a new file, make sure to add the header appropriately
+  if(cinfo.isEmpty()){ cinfo << "#Automatically generated with lumina-config" << "# DO NOT CHANGE MANUALLY" << "[Default Applications]"; }
+  //Check for any current entry for this mime type
+  QStringList tmp = cinfo.filter(mime+"=");
+  int index = -1;
+  if(!tmp.isEmpty()){ index = cinfo.indexOf(tmp.first()); }
+  //Now add the new default entry (if necessary)
+  if(app.isEmpty()){
+    if(index>=0){ cinfo.removeAt(index); } //Remove entry
+  }else{
+    if(index<0){
+      cinfo << mime+"="+app+";"; //new entry
+    }else{
+      cinfo[index] = mime+"="+app+";"; //overwrite existing entry
+    }
+  }
+  LUtils::writeFile(filepath, cinfo, true);
+  return;
+}
+
 QStringList LXDG::loadMimeFileGlobs2(){
   //output format: <weight>:<mime type>:<file extension (*.something)>
   if(mimeglobs.isEmpty() || (mimechecktime < (QDateTime::currentMSecsSinceEpoch()-30000)) ){

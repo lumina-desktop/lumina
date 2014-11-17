@@ -108,10 +108,11 @@ void MainUI::setupIcons(){
   ui->tool_shortcut_clear->setIcon( LXDG::findIcon("edit-clear","") );
 
   //Defaults Page
-  ui->tool_defaults_addextension->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_defaults_addgroup->setIcon( LXDG::findIcon("list-add","") );
+  //ui->tool_defaults_addextension->setIcon( LXDG::findIcon("list-add","") );
+  //ui->tool_defaults_addgroup->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_defaults_clear->setIcon( LXDG::findIcon("edit-clear","") );
   ui->tool_defaults_set->setIcon( LXDG::findIcon("system-run","") );
+  ui->tool_defaults_setbin->setIcon( LXDG::findIcon("application-x-executable","") );
 
   //Session Page
   ui->tool_session_rmapp->setIcon( LXDG::findIcon("list-remove","") );
@@ -183,10 +184,11 @@ void MainUI::setupConnections(){
   connect(ui->tool_shortcut_set, SIGNAL(clicked()), this, SLOT(getKeyPress()) );
 
   //Defaults Page
-  connect(ui->tool_defaults_addextension, SIGNAL(clicked()), this, SLOT(adddefaultextension()) );
-  connect(ui->tool_defaults_addgroup, SIGNAL(clicked()), this, SLOT(adddefaultgroup()) );
+  //connect(ui->tool_defaults_addextension, SIGNAL(clicked()), this, SLOT(adddefaultextension()) );
+  //connect(ui->tool_defaults_addgroup, SIGNAL(clicked()), this, SLOT(adddefaultgroup()) );
   connect(ui->tool_defaults_clear, SIGNAL(clicked()), this, SLOT(cleardefaultitem()) );
   connect(ui->tool_defaults_set, SIGNAL(clicked()), this, SLOT(setdefaultitem()) );
+  connect(ui->tool_defaults_setbin, SIGNAL(clicked()), this, SLOT(setdefaultbinary()) );
   connect(ui->tree_defaults, SIGNAL(itemSelectionChanged()), this, SLOT(checkdefaulticons()) );
 
   //Session Page
@@ -284,16 +286,6 @@ QString MainUI::getNewPanelPlugin(){
 }
 
 XDGDesktop MainUI::getSysApp(){
-  //Prompt the user to select an application on the system
-  /*QStringList apps;
-    for(int i=0; i<sysApps.length(); i++){
-      apps << sysApps[i].name;
-    }
-    bool ok = false;
-    QString app = QInputDialog::getItem(this, tr("Select Application"), tr("App Name:"), apps, 0, false, &ok);
-    int index = apps.indexOf(app);
-    if(app.isEmpty() || index < 0 || !ok){ return XDGDesktop(); } //nothing selected
-    else{ return sysApps[index]; }*/
   AppDialog dlg(this, sysApps);
     dlg.exec();
   return dlg.appselected;
@@ -393,6 +385,9 @@ void MainUI::slotChangePage(bool enabled){
     else if(ui->actionSession->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_session); }
   }
   ui->group_screen->setVisible(showScreen && (ui->spin_screen->maximum()>1) );
+  //Hide the save button for particular pages
+  ui->push_save->setVisible(!ui->actionDefaults->isChecked()); //hide on the default page
+  //Special functions for particular pages
   if(ui->page_panels->isVisible()){ checkpanels(); }
 
 }
@@ -654,7 +649,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
 
     //Defaults page
     if(moddef && !screenonly){
-      saveDefaultSettings();
+      //saveDefaultSettings();
     }
 
     //Session Page
@@ -1162,14 +1157,86 @@ void MainUI::getKeyPress(){
 //===========
 // Defaults Page
 //===========
+void MainUI::changeDefaultBrowser(){
+	
+}
+
+void MainUI::changeDefaultEmail(){
+	
+}
+
+void MainUI::changeDefaultFileManager(){
+	
+}
+
+void MainUI::changeDefaultTerminal(){
+	
+}
+
 void MainUI::loadDefaultSettings(){
+  //First load the lumina-open specific defaults
+  QString tmp = appsettings->value("default/directory", "lumina-fm").toString();
+  
+	
+  //Now load the XDG mime defaults
   ui->tree_defaults->clear();
+  QStringList defMimeList = LXDG::listFileMimeDefaults();
+  //qDebug() << "Mime List:\n" << defMimeList.join("\n");
+  defMimeList.sort(); //sort by group/mime
+  //Now fill the tree by group/mime
+  QTreeWidgetItem *group = new QTreeWidgetItem(0); //nothing at the moment
+  QString ccat;
+  for(int i=0; i<defMimeList.length(); i++){
+    //Get the info from this entry
+    QString mime = defMimeList[i].section("::::",0,0);
+    QString cat = mime.section("/",0,0);
+    QString extlist = defMimeList[i].section("::::",1,1);
+    QString def = defMimeList[i].section("::::",2,2);
+    QString comment = defMimeList[i].section("::::",3,50);
+    //Now check if this is a new category
+    if(ccat!=cat){
+	//New group
+	group = new QTreeWidgetItem(0);
+	    group->setText(0, cat); //add translations for known/common groups later
+	ui->tree_defaults->addTopLevelItem(group);
+	ccat = cat;
+    }
+    //Now create the entry
+    QTreeWidgetItem *it = new QTreeWidgetItem();
+      it->setWhatsThis(0,mime); // full mimetype
+      it->setText(0, QString(tr("%1 (%2)")).arg(mime.section("/",-1), extlist) );
+      it->setText(2,comment);
+      it->setToolTip(0, comment); it->setToolTip(1,comment);
+      //Now load the default (if there is one)
+      it->setWhatsThis(1,def); //save for later
+      if(def.endsWith(".desktop")){
+	bool ok = false;
+	XDGDesktop file = LXDG::loadDesktopFile(def, ok);
+	if(!ok || file.filePath.isEmpty()){
+	  //Might be a binary - just print out the raw "path"
+	  it->setText(1,def.section("/",-1));
+	  it->setIcon(1, LXDG::findIcon("application-x-executable","") );
+	}else{
+	  it->setText(1, file.name);
+	  it->setIcon(1, LXDG::findIcon(file.icon,"") );
+	}     
+      }else if(!def.isEmpty()){
+	//Binary/Other default
+	it->setText(1, def.section("/",-1));
+	it->setIcon(1, LXDG::findIcon("application-x-executable","") );
+      }
+      group->addChild(it);
+  }
+  
+  ui->tree_defaults->sortItems(0,Qt::AscendingOrder);
+  
+  /*
   QStringList keys = appsettings->allKeys();
   QStringList groups = keys.filter("Groups/");
   if(groups.isEmpty()){
     //setup default groups
     appsettings->setValue("Groups/Web", QStringList() << "http" << "https" << "ftp");
-    appsettings->setValue("Groups/Email", QStringList() << "eml" << "msg");
+    appsettings->setValue("Groups/Email", QStringList() << "eml" << "msg" << "mailto");
     appsettings->setValue("Groups/Development-C",QStringList() << "c" << "cpp" << "h" << "hpp");
     appsettings->setValue("Groups/Development-Ruby",QStringList() << "rb" << "rbw");
     appsettings->setValue("Groups/Development-Python",QStringList() << "py" << "pyw");
@@ -1198,7 +1265,8 @@ void MainUI::loadDefaultSettings(){
 	it->setWhatsThis(1,path);
 	if(!ok || file.filePath.isEmpty()){
 	  //Might be a binary - just print out the raw "path"
-	  it->setText(1,path);
+	  it->setText(1,path.section("/",-1));
+	  it->setIcon(1, LXDG::findIcon("application-x-executable","") );
 	}else{
 	  it->setText(1, file.name);
 	  it->setIcon(1, LXDG::findIcon(file.icon,"") );
@@ -1219,7 +1287,8 @@ void MainUI::loadDefaultSettings(){
 	  it->setWhatsThis(1,path);
 	  if(!ok || file.filePath.isEmpty()){
 	    //Might be a binary - just print out the raw "path"
-	    it->setText(1,path);
+	    it->setText(1,path.section("/",-1));
+	    it->setIcon(1, LXDG::findIcon("application-x-executable","") );
 	  }else{
 	    it->setText(1, file.name);
 	    it->setIcon(1, LXDG::findIcon(file.icon,"") );
@@ -1229,10 +1298,11 @@ void MainUI::loadDefaultSettings(){
       }
     }
   }
+  */
   checkdefaulticons();
 }
 
-void MainUI::saveDefaultSettings(){
+/*void MainUI::saveDefaultSettings(){
   for(int i=0; i<ui->tree_defaults->topLevelItemCount(); i++){
     //Groups
     QTreeWidgetItem *group = ui->tree_defaults->topLevelItem(i);
@@ -1250,9 +1320,9 @@ void MainUI::saveDefaultSettings(){
       appsettings->setValue("Groups/"+group->text(0), items);
     }
   }
-}
+}*/
 
-void MainUI::adddefaultgroup(){
+/*void MainUI::adddefaultgroup(){
   //Prompt for the group name
   bool ok = false;
   QString name = QInputDialog::getText(this, tr("New Application Group"), tr("Name:"), QLineEdit::Normal, "", &ok);
@@ -1280,7 +1350,7 @@ void MainUI::adddefaultextension(){
   it->addChild( new QTreeWidgetItem( QStringList() << name << "" ) );
   ui->push_save->setEnabled(true);
   moddef = true;
-}
+}*/
 
 void MainUI::cleardefaultitem(){
   QTreeWidgetItem *it = ui->tree_defaults->currentItem();
@@ -1292,12 +1362,15 @@ void MainUI::cleardefaultitem(){
   if(list.isEmpty()){ list << it; } //just do the current item
   //Now clear the items
   for(int i=0; i<list.length(); i++){
+    //Clear it in the back end
+    LXDG::setDefaultAppForMime(list[i]->whatsThis(0), "");
+    //Now clear it in the UI
     list[i]->setWhatsThis(1,""); //clear the app path
     list[i]->setIcon(1,QIcon()); //clear the icon
     list[i]->setText(1,""); //clear the name
   }
-  ui->push_save->setEnabled(true);
-  moddef = true;
+  //ui->push_save->setEnabled(true);
+  //moddef = true;
 }
 
 void MainUI::setdefaultitem(){
@@ -1313,25 +1386,66 @@ void MainUI::setdefaultitem(){
     if(desk.filePath.isEmpty()){ return; }//nothing selected
   //Now set the items
   for(int i=0; i<list.length(); i++){
+    //Set it in the back end
+    LXDG::setDefaultAppForMime(list[i]->whatsThis(0), desk.filePath);
+    //Set it in the UI
     list[i]->setWhatsThis(1,desk.filePath); //app path
-    list[i]->setIcon(1,LXDG::findIcon(desk.icon,"")); //clear the icon
-    list[i]->setText(1,desk.name); //clear the name
+    list[i]->setIcon(1,LXDG::findIcon(desk.icon,"")); //reset the icon
+    list[i]->setText(1,desk.name); //reset the name
   }
-  ui->push_save->setEnabled(true);
-  moddef = true;
+  //ui->push_save->setEnabled(true);
+  //moddef = true;
+}
+
+void MainUI::setdefaultbinary(){
+  QTreeWidgetItem *it = ui->tree_defaults->currentItem();
+  if(it==0){ return; } //no item selected
+  QList<QTreeWidgetItem*> list;
+  for(int i=0; i<it->childCount(); i++){
+    list << it->child(i);
+  }
+  if(list.isEmpty()){ list << it; } //just do the current item
+  //Prompt for which binary to use
+  QFileDialog dlg(this);
+    //dlg.setFilter(QDir::Executable | QDir::Files); //Does not work! Filters executable files as well as breaks browsing capabilities
+    dlg.setFileMode(QFileDialog::ExistingFile);
+    dlg.setDirectory( LOS::AppPrefix()+"bin" );
+    dlg.setWindowTitle(tr("Select Binary"));
+  if( !dlg.exec() || dlg.selectedFiles().isEmpty() ){
+    return; //cancelled
+  }
+  QString path = dlg.selectedFiles().first();
+  //Make sure it is executable
+  if( !QFileInfo(path).isExecutable()){
+    QMessageBox::warning(this, tr("Invalid Binary"), tr("The selected binary is not executable!"));
+    return;
+  }
+  //Now set the items
+  for(int i=0; i<list.length(); i++){
+    //Set it in the back end
+    LXDG::setDefaultAppForMime(list[i]->whatsThis(0), path);
+    //Set it in the UI
+    list[i]->setWhatsThis(1,path); //app path
+    list[i]->setIcon(1,LXDG::findIcon("application-x-executable","")); //clear the icon
+    list[i]->setText(1,path.section("/",-1)); //clear the name
+  }
+  //ui->push_save->setEnabled(true);
+  //moddef = true;
 }
 
 void MainUI::checkdefaulticons(){
   QTreeWidgetItem *it = ui->tree_defaults->currentItem();
   ui->tool_defaults_set->setEnabled(it!=0);
   ui->tool_defaults_clear->setEnabled(it!=0);
-  ui->tool_defaults_addextension->setEnabled( it!=0);
-  if(it!=0){
+  //ui->tool_defaults_addextension->setEnabled( it!=0);
+  ui->tool_defaults_setbin->setEnabled(it!=0);
+  /*if(it!=0){
     if(it->text(0)=="Uncategorized"){
      ui->tool_defaults_set->setEnabled(false);
+     ui->tool_defaults_setbin->setEnabled(false);
      ui->tool_defaults_clear->setEnabled(false);
     }
-  }
+  }*/
 }
 
 //===========

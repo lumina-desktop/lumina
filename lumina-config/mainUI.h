@@ -137,12 +137,17 @@ private slots:
 	void getKeyPress();
 
 	//Defaults Page
+	void changeDefaultBrowser();
+	void changeDefaultEmail();
+	void changeDefaultFileManager();
+	void changeDefaultTerminal();
 	void loadDefaultSettings();
-	void saveDefaultSettings();
-	void adddefaultgroup();
-	void adddefaultextension();
+	//void saveDefaultSettings();
+	//void adddefaultgroup();
+	//void adddefaultextension();
 	void cleardefaultitem();
 	void setdefaultitem();
+	void setdefaultbinary();
 	void checkdefaulticons();
 
 	//Session Page

@@ -10,6 +10,7 @@
 // Desktop File Version Compliance: 1.0 (except "DBusActivatable")
 // Icon Theme Compliance: Built in to Qt (QIcon::fromTheme()) with "oxygen" theme default
 // *.desktop Exec Compliance Updated: 9/9/2014
+// Mime Application Version Compliance: 1.0.1 (11/14/14) (Skips random *.desktop parsing: ~80% compliant)
 //===========================================
 
   
@@ -84,6 +85,14 @@ public:
 	static QString findAppMimeForFile(QString extension);
 	//Find the file extension for a particular mime-type
 	static QStringList findFilesForMime(QString mime);
+	// Simplification function for finding all info regarding current mime defaults
+	static QStringList listFileMimeDefaults();
+	//Find the localized comment string for a particular mime-type
+	static QString findMimeComment(QString mime);
+	//Find the default application for a mime-type
+	static QString findDefaultAppForMime(QString mime);
+	//Set the default application for a mime-type
+	static void setDefaultAppForMime(QString mime, QString app);
 	//Load all the "globs2" mime database files
 	static QStringList loadMimeFileGlobs2();
 };
