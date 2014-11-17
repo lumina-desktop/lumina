@@ -76,7 +76,16 @@ void showOSD(int argc, char **argv, QString message){
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
     //First check to see if there is a default for this extension
-    QString defApp = LFileDialog::getDefaultApp(extension);
+    QString defApp;
+    if(extension=="mimetype"){
+	QStringList matches = LXDG::findAppMimeForFile(inFile, true).split("::::"); //allow multiple matches
+	for(int i=0; i<matches.length(); i++){
+	  defApp = LXDG::findDefaultAppForMime(matches[i]);
+	  if(!defApp.isEmpty()){ extension = matches[i]; break; }
+	  else if(i+1==matches.length()){ extension = matches[0]; }
+	}
+    }else{ defApp = LFileDialog::getDefaultApp(extension); }
+    
     if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
       if(defApp.endsWith(".desktop")){
@@ -204,7 +213,10 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     extension=info.completeSuffix();
     if(info.isDir()){ extension="directory"; }
     else if(info.isExecutable() && extension.isEmpty()){ extension="binary"; }
-  }else if(isUrl){ extension = inFile.section(":",0,0); }
+    else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
+  }
+  else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
+  else if(isUrl){ extension = "webbrowser"; }
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;

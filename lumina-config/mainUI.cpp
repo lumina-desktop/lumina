@@ -186,6 +186,10 @@ void MainUI::setupConnections(){
   //Defaults Page
   //connect(ui->tool_defaults_addextension, SIGNAL(clicked()), this, SLOT(adddefaultextension()) );
   //connect(ui->tool_defaults_addgroup, SIGNAL(clicked()), this, SLOT(adddefaultgroup()) );
+  connect(ui->tool_default_filemanager, SIGNAL(clicked()), this, SLOT(changeDefaultFileManager()) );
+  connect(ui->tool_default_terminal, SIGNAL(clicked()), this, SLOT(changeDefaultTerminal()) );
+  connect(ui->tool_default_webbrowser, SIGNAL(clicked()), this, SLOT(changeDefaultBrowser()) );
+  connect(ui->tool_default_email, SIGNAL(clicked()), this, SLOT(changeDefaultEmail()) );
   connect(ui->tool_defaults_clear, SIGNAL(clicked()), this, SLOT(cleardefaultitem()) );
   connect(ui->tool_defaults_set, SIGNAL(clicked()), this, SLOT(setdefaultitem()) );
   connect(ui->tool_defaults_setbin, SIGNAL(clicked()), this, SLOT(setdefaultbinary()) );
@@ -1158,26 +1162,208 @@ void MainUI::getKeyPress(){
 // Defaults Page
 //===========
 void MainUI::changeDefaultBrowser(){
-	
+  //Prompt for the new app
+  XDGDesktop desk = getSysApp();
+    if(desk.filePath.isEmpty()){ return; }//nothing selected
+  //save the new app setting and adjust the button appearance
+  appsettings->setValue("default/webbrowser", desk.filePath);
+  QString tmp = desk.filePath;
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
+      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_webbrowser->setText(desk.name);
+      ui->tool_default_webbrowser->setIcon(LXDG::findIcon(desk.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_webbrowser->setText(tr("Click to Set"));
+    ui->tool_default_webbrowser->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
+      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
 }
 
 void MainUI::changeDefaultEmail(){
-	
+  //Prompt for the new app
+  XDGDesktop desk = getSysApp();
+    if(desk.filePath.isEmpty()){ return; }//nothing selected
+  //save the new app setting and adjust the button appearance
+  appsettings->setValue("default/email", desk.filePath);
+  QString tmp = desk.filePath;
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_email->setText(tmp.section("/",-1));
+      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_email->setText(file.name);
+      ui->tool_default_email->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_email->setText(tr("Click to Set"));
+    ui->tool_default_email->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_email->setText(tmp.section("/",-1));
+      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
+  }	
 }
 
 void MainUI::changeDefaultFileManager(){
-	
+  //Prompt for the new app
+  XDGDesktop desk = getSysApp();
+    if(desk.filePath.isEmpty()){ return; }//nothing selected
+  //save the new app setting and adjust the button appearance
+  appsettings->setValue("default/directory", desk.filePath);
+  QString tmp = desk.filePath;
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_filemanager->setText(tmp.section("/",-1));
+      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_filemanager->setText(file.name);
+      ui->tool_default_filemanager->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_filemanager->setText(tr("Click to Set"));
+    ui->tool_default_filemanager->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_filemanager->setText(tmp.section("/",-1));
+      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
+  }	
 }
 
 void MainUI::changeDefaultTerminal(){
-	
+  //Prompt for the new app
+  XDGDesktop desk = getSysApp();
+    if(desk.filePath.isEmpty()){ return; }//nothing selected
+  //save the new app setting and adjust the button appearance
+  appsettings->setValue("default/terminal", desk.filePath);
+  QString tmp = desk.filePath;
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_terminal->setText(tmp.section("/",-1));
+      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_terminal->setText(file.name);
+      ui->tool_default_terminal->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_terminal->setText(tr("Click to Set"));
+    ui->tool_default_terminal->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_terminal->setText(tmp.section("/",-1));
+      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
 }
 
 void MainUI::loadDefaultSettings(){
   //First load the lumina-open specific defaults
+    //  - Default File Manager
   QString tmp = appsettings->value("default/directory", "lumina-fm").toString();
+  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_filemanager->setText(tmp.section("/",-1));
+      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_filemanager->setText(file.name);
+      ui->tool_default_filemanager->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_filemanager->setText(tr("Click to Set"));
+    ui->tool_default_filemanager->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_filemanager->setText(tmp.section("/",-1));
+      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
+  // - Default Terminal
+  tmp = appsettings->value("default/terminal", "xterm").toString();
+  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_terminal->setText(tmp.section("/",-1));
+      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_terminal->setText(file.name);
+      ui->tool_default_terminal->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_terminal->setText(tr("Click to Set"));
+    ui->tool_default_terminal->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_terminal->setText(tmp.section("/",-1));
+      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
+  // - Default Web Browser
+  tmp = appsettings->value("default/webbrowser", "").toString();
+  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
+  if(tmp.endsWith(".desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
+      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_webbrowser->setText(file.name);
+      ui->tool_default_webbrowser->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_webbrowser->setText(tr("Click to Set"));
+    ui->tool_default_webbrowser->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
+      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
+  // - Default Email Client
+  tmp = appsettings->value("default/email", "").toString();
+  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
+  if(tmp.endsWith("*.desktop")){
+    bool ok = false;
+    XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
+    if(!ok || file.filePath.isEmpty()){
+      //Might be a binary - just print out the raw "path"
+      ui->tool_default_email->setText(tmp.section("/",-1));
+      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
+    }else{
+      ui->tool_default_email->setText(file.name);
+      ui->tool_default_email->setIcon(LXDG::findIcon(file.icon,"") );
+    }
+  }else if(tmp.isEmpty()){
+    ui->tool_default_email->setText(tr("Click to Set"));
+    ui->tool_default_email->setIcon( LXDG::findIcon("system-help","") );
+  }else{
+    //Might be a binary - just print out the raw "path"
+      ui->tool_default_email->setText(tmp.section("/",-1));
+      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
+  }
   
-	
   //Now load the XDG mime defaults
   ui->tree_defaults->clear();
   QStringList defMimeList = LXDG::listFileMimeDefaults();

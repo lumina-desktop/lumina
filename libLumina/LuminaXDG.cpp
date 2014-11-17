@@ -364,16 +364,26 @@ QIcon LXDG::findMimeIcon(QString extension){
   return ico;
 }
 
-QString LXDG::findAppMimeForFile(QString extension){
+QString LXDG::findAppMimeForFile(QString filename, bool multiple){
   QString out;
+  QString extension = filename.section(".",-1);
+  if("."+extension == filename){ extension.clear(); } //hidden file without extension
   int weight = 0;
-  QStringList mimes = LXDG::loadMimeFileGlobs2().filter(":*."+extension);
+  QStringList mimefull = LXDG::loadMimeFileGlobs2();
+  QStringList mimes;
+  if(!extension.isEmpty()){ mimes = mimefull.filter(":*."+extension); }
+  if(mimes.isEmpty()){ mimes = mimefull.filter(":"+filename.left(3)); } //look for the first 3 characters only (FIX WILDCARD DETECTION LATER)
+  mimes.sort();
+  QStringList matches;
   for(int m=0; m<mimes.length(); m++){
     QString mime = mimes[m].section(":",1,1,QString::SectionSkipEmpty);
+    if(mime.endsWith("/"+extension)){ matches.prepend(mime); } //exact match
+    else{ matches << mime; }
     if(mimes[m].section(":",0,0,QString::SectionSkipEmpty).toInt() > weight ){
       out = mime;
     }
   }
+  if(multiple){ out = matches.join("::::"); }
   return out;
 }
 

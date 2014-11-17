@@ -82,7 +82,7 @@ public:
 	//Find the mime-type icon for a particular file extension
 	static QIcon findMimeIcon(QString extension);
 	//Find the mime-type of a particular file extension
-	static QString findAppMimeForFile(QString extension);
+	static QString findAppMimeForFile(QString filename, bool multiple = false);
 	//Find the file extension for a particular mime-type
 	static QStringList findFilesForMime(QString mime);
 	// Simplification function for finding all info regarding current mime defaults
