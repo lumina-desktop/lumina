@@ -61,12 +61,17 @@ void LDesktop::SystemLogout(){
 }
 
 void LDesktop::SystemTerminal(){
+  LSession::handle()->sessionSettings()->sync(); //make sure it is up to date
   QString term = LSession::handle()->sessionSettings()->value("default-terminal","xterm").toString();
+  if(term.endsWith(".desktop")){ term = "lumina-open \""+term+"\""; }
   LSession::LaunchApplication(term);
 }
 
 void LDesktop::SystemFileManager(){
-  QString fm = LSession::handle()->sessionSettings()->value("default-filemanager","lumina-fm").toString();
+  //Just open the home directory
+  QString fm =  "lumina-open \""+QDir::homePath()+"\"";
+  //QString fm = LSession::handle()->sessionSettings()->value("default-filemanager","lumina-fm").toString();
+  //if(fm.endsWith(".desktop")){ fm = "lumina-open \""+fm+"\""; }
   LSession::LaunchApplication(fm);
 }
 
