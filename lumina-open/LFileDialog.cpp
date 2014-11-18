@@ -47,12 +47,17 @@ QString LFileDialog::getDefaultApp(QString extension){
 }
 
 void LFileDialog::setDefaultApp(QString extension, QString appFile){
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  if(appFile.isEmpty()){
-    QSettings("LuminaDE", "lumina-open").remove("default/"+extension);
+  if(extension.contains("/")){
+    //mime type default: set on the system itself
+    LXDG::setDefaultAppForMime(extension, appFile);
   }else{
-    QSettings("LuminaDE", "lumina-open").setValue("default/"+extension,appFile);
-  }
+    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+    if(appFile.isEmpty()){
+      QSettings("LuminaDE", "lumina-open").remove("default/"+extension);
+    }else{
+      QSettings("LuminaDE", "lumina-open").setValue("default/"+extension,appFile);
+    }
+    }
 }
 
 // -----------

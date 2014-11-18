@@ -100,8 +100,6 @@ void MainUI::setupIcons(){
   ui->tool_menu_rm->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_menu_up->setIcon( LXDG::findIcon("go-up","") );
   ui->tool_menu_dn->setIcon( LXDG::findIcon("go-down","") );
-  ui->tool_menu_findterm->setIcon( LXDG::findIcon("system-search","") );
-  ui->tool_menu_findfm->setIcon( LXDG::findIcon("system-search","") );
 
   //Shortcuts Page
   ui->tool_shortcut_set->setIcon( LXDG::findIcon("input-keyboard","") );
@@ -173,11 +171,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_menu_rm, SIGNAL(clicked()), this, SLOT(rmmenuplugin()) );
   connect(ui->tool_menu_up, SIGNAL(clicked()), this, SLOT(upmenuplugin()) );
   connect(ui->tool_menu_dn, SIGNAL(clicked()), this, SLOT(downmenuplugin()) );
-  connect(ui->tool_menu_findterm, SIGNAL(clicked()), this, SLOT(findmenuterminal()) );
-  connect(ui->tool_menu_findfm, SIGNAL(clicked()), this, SLOT(findmenufilemanager()) );
   connect(ui->list_menu, SIGNAL(currentRowChanged(int)), this, SLOT(checkmenuicons()) );
-  connect(ui->line_menu_term, SIGNAL(textChanged(QString)), this, SLOT(checkmenuicons()) );
-  connect(ui->line_menu_fm, SIGNAL(textChanged(QString)), this, SLOT(checkmenuicons()) );
 
   //Shortcuts Page
   connect(ui->tool_shortcut_clear, SIGNAL(clicked()), this, SLOT(clearKeyBinding()) );
@@ -521,8 +515,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
   if(!screenonly){
   // Menu Page
   //Default terminal and filemanager binary
-  ui->line_menu_term->setText( settings->value("default-terminal","xterm").toString() );
-  ui->line_menu_fm->setText( settings->value("default-filemanager","lumina-fm").toString() );
+  //ui->line_menu_term->setText( settings->value("default-terminal","xterm").toString() );
+  //ui->line_menu_fm->setText( settings->value("default-filemanager","lumina-fm").toString() );
   //Menu Items
   QStringList items = settings->value("menu/itemlist", QStringList() ).toStringList();
   if(items.isEmpty()){ items << "terminal" << "filemanager" << "applications" << "line" << "settings"; }
@@ -636,14 +630,11 @@ void MainUI::saveCurrentSettings(bool screenonly){
 
     // Menu Page
     if(modmenu && !screenonly){
-    sessionsettings->setValue("default-terminal", ui->line_menu_term->text() );
-    sessionsettings->setValue("default-filemanager", ui->line_menu_fm->text() );
-    appsettings->setValue("default/directory", ui->line_menu_fm->text() );
-    QStringList items;
-    for(int i=0; i<ui->list_menu->count(); i++){
-      items << ui->list_menu->item(i)->whatsThis();
-    }
-    settings->setValue("menu/itemlist", items);
+      QStringList items;
+      for(int i=0; i<ui->list_menu->count(); i++){
+        items << ui->list_menu->item(i)->whatsThis();
+      }
+      settings->setValue("menu/itemlist", items);
     }
 
     //Shortcuts page
@@ -1031,43 +1022,10 @@ void MainUI::downmenuplugin(){
   modmenu = true;
 }
 
-void MainUI::findmenuterminal(){
-  QString chkpath = LOS::AppPrefix() + "bin";
-  if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
-  QString bin = QFileDialog::getOpenFileName(this, tr("Set Default Terminal Application"), chkpath, tr("Application Binaries (*)") );
-  if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
-  if( !QFileInfo(bin).isExecutable() ){
-    QMessageBox::warning(this, tr("Invalid Binary"), tr("The selected file is not executable!"));
-    return;
-  }
-  ui->line_menu_term->setText(bin);
-  ui->push_save->setEnabled(true);
-  modmenu = true;
-}
-
-void MainUI::findmenufilemanager(){
-  QString chkpath = LOS::AppPrefix() + "bin";
-  if(!QFile::exists(chkpath)){ chkpath = QDir::homePath(); }
-  QString bin = QFileDialog::getOpenFileName(this, tr("Set Default File Manager"), chkpath, tr("Application Binaries (*)") );
-  if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
-  if( !QFileInfo(bin).isExecutable() ){
-    QMessageBox::warning(this, tr("Invalid Binary"), tr("The selected file is not executable!"));
-    return;
-  }
-  ui->line_menu_fm->setText(bin);
-  ui->push_save->setEnabled(true);
-  modmenu = true;
-}
-
 void MainUI::checkmenuicons(){
   ui->tool_menu_up->setEnabled( ui->list_menu->currentRow() > 0 );
   ui->tool_menu_dn->setEnabled( ui->list_menu->currentRow() < (ui->list_menu->count()-1) );
   ui->tool_menu_rm->setEnabled( ui->list_menu->currentRow() >=0 );
-  if( sessionsettings->value("default-terminal","xterm").toString() != ui->line_menu_term->text() ||
-      sessionsettings->value("default-filemanager","lumina-fm").toString() != ui->line_menu_fm->text()){
-    ui->push_save->setEnabled(true);
-    modmenu = true;
-  }
 }
 
 //===========
@@ -1223,6 +1181,7 @@ void MainUI::changeDefaultFileManager(){
     if(desk.filePath.isEmpty()){ return; }//nothing selected
   //save the new app setting and adjust the button appearance
   appsettings->setValue("default/directory", desk.filePath);
+  sessionsettings->setValue("default-filemanager", desk.filePath);
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1250,7 +1209,7 @@ void MainUI::changeDefaultTerminal(){
   XDGDesktop desk = getSysApp();
     if(desk.filePath.isEmpty()){ return; }//nothing selected
   //save the new app setting and adjust the button appearance
-  appsettings->setValue("default/terminal", desk.filePath);
+  sessionsettings->setValue("default-terminal", desk.filePath);
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1276,7 +1235,10 @@ void MainUI::changeDefaultTerminal(){
 void MainUI::loadDefaultSettings(){
   //First load the lumina-open specific defaults
     //  - Default File Manager
-  QString tmp = appsettings->value("default/directory", "lumina-fm").toString();
+  QString tmp = sessionsettings->value("default-filemanager", "lumina-fm").toString();
+  if( tmp!=appsettings->value("default/directory", "").toString() ){
+    appsettings->setValue("default/directory", tmp); //make sure they are consistent
+  }
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1298,7 +1260,7 @@ void MainUI::loadDefaultSettings(){
       ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
   }
   // - Default Terminal
-  tmp = appsettings->value("default/terminal", "xterm").toString();
+  tmp = sessionsettings->value("default-terminal", "xterm").toString();
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1344,7 +1306,7 @@ void MainUI::loadDefaultSettings(){
   // - Default Email Client
   tmp = appsettings->value("default/email", "").toString();
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
-  if(tmp.endsWith("*.desktop")){
+  if(tmp.endsWith(".desktop")){
     bool ok = false;
     XDGDesktop file = LXDG::loadDesktopFile(tmp, ok);
     if(!ok || file.filePath.isEmpty()){
