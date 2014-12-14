@@ -35,7 +35,7 @@ Current keyboard bindings will also be ignored.</source>
     </message>
     <message>
         <source>Panels</source>
-        <translation type="unfinished">Panelek</translation>
+        <translation>Panelek</translation>
     </message>
     <message>
         <source>Top</source>
