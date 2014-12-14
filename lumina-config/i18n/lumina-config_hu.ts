@@ -35,7 +35,7 @@ Current keyboard bindings will also be ignored.</source>
     </message>
     <message>
         <source>Panels</source>
-        <translation type="unfinished">Panelek            </translation>
+        <translation type="unfinished">Panelek</translation>
     </message>
     <message>
         <source>Top</source>
@@ -64,15 +64,15 @@ Current keyboard bindings will also be ignored.</source>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Hely:            </translation>
+        <translation>Hely:</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation>Menü            </translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <source>Set Default Terminal Application</source>
-        <translation>Alapértelmezett terminál alkalmazás beállítása            </translation>
+        <translation>Alapértelmezett terminál alkalmazás beállítása</translation>
     </message>
     <message>
         <source>Application Binaries (*)</source>

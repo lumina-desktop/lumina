@@ -72,13 +72,11 @@
     </message>
     <message>
         <source>Open Home</source>
-        <translation>Saját könyvtár megnyitása
-</translation>
+        <translation>Saját könyvtár megnyitása</translation>
     </message>
     <message>
         <source>Install Applications</source>
-        <translation>Alkalmazások telepítése
-</translation>
+        <translation>Alkalmazások telepítése</translation>
     </message>
     <message>
         <source>Control Panel</source>
