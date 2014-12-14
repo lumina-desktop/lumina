@@ -6,12 +6,12 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
-        <translation type="unfinished"></translation>
+        <translation>Insight</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="51"/>
         <source>Open Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimédia lejátszó megnyitása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="54"/>
@@ -26,7 +26,7 @@
         <location filename="../MainUI.ui" line="309"/>
         <location filename="../MainUI.ui" line="337"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="64"/>
@@ -36,18 +36,18 @@
     <message>
         <location filename="../MainUI.ui" line="77"/>
         <source>Restore File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl(ok) megnyitása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Lejátszási lista</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="116"/>
         <location filename="../MainUI.ui" line="268"/>
         <source>Go to Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás a következőre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="127"/>
@@ -57,102 +57,102 @@
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Go to Beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás az elejére</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="222"/>
         <source>Go to Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás az előzőre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
         <source>Go to End</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás a végére</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="356"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="361"/>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Módosítás dátuma</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="366"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="371"/>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulajdonos</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="381"/>
         <source>Restore entire directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljes könyvtár visszaállítása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="384"/>
         <source>Restore All</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes visszaállítása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="394"/>
         <source>Restore Selected Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijelölt elem visszaállítása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="397"/>
         <source>Restore Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijelölés visszaállítása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="420"/>
         <source>Overwrite Existing Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Meglévő fájlok felülírása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="443"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="451"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="457"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Nézet</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="465"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvjelzők</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="476"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköztár</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="497"/>
         <source>New &amp;Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Új &amp;fül</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="502"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Fül bezárása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="507"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ki&amp;lépés</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="512"/>
@@ -162,17 +162,17 @@
     <message>
         <location filename="../MainUI.ui" line="523"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyorsindítók</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="534"/>
         <source>Music Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeneljátszó</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="545"/>
         <source>Image Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Képnéző</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="550"/>
@@ -197,42 +197,42 @@
     <message>
         <location filename="../MainUI.ui" line="572"/>
         <source>View Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejtett fájlok megjelenítése</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="577"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="580"/>
         <source>Back to directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vissza a könyvtárba</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="585"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="588"/>
         <source>Refresh Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvtár frissítése</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="591"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="596"/>
         <source>Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvjelző</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="599"/>
         <source>Bookmark this directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvtár könyvjelzőzése</translation>
     </message>
 </context>
 </TS>

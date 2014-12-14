@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="hu_HU">
 <context>
     <name>KeyCatch</name>
     <message>
@@ -35,8 +35,7 @@ Current keyboard bindings will also be ignored.</source>
     </message>
     <message>
         <source>Panels</source>
-        <translation type="unfinished">
-            </translation>
+        <translation type="unfinished">Panelek            </translation>
     </message>
     <message>
         <source>Top</source>
@@ -65,18 +64,15 @@ Current keyboard bindings will also be ignored.</source>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Hely:            </translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Menü            </translation>
     </message>
     <message>
         <source>Set Default Terminal Application</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Alapértelmezett terminál alkalmazás beállítása            </translation>
     </message>
     <message>
         <source>Application Binaries (*)</source>
