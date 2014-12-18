@@ -65,20 +65,20 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->menuView->addAction(listWA);
     ui->menuView->addAction(icoWA);
   //Setup the special Phonon widgets
-  mediaObj = new Phonon::MediaObject(this);
-    mediaObj->setTickInterval(200); //1/5 second ticks for updates
-  videoDisplay = new Phonon::VideoWidget(this);
+  mediaObj = new QMediaPlayer(this);
+    mediaObj->setVolume(100);
+    mediaObj->setNotifyInterval(500); //only every 1/2 second update
+  videoDisplay = new QVideoWidget(this);
     videoDisplay->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->videoLayout->addWidget(videoDisplay);
-    Phonon::createPath(mediaObj, videoDisplay);
+    mediaObj->setVideoOutput(videoDisplay);
     videoDisplay->setVisible(false);
-  audioOut = new Phonon::AudioOutput(Phonon::VideoCategory, this);
-    Phonon::createPath(mediaObj, audioOut);
-  playerSlider = new Phonon::SeekSlider(this);
-    playerSlider->setMediaObject(mediaObj);
+  playerSlider = new QSlider(this);
+    playerSlider->setOrientation(Qt::Horizontal);
     ui->videoControlLayout->insertWidget(4, playerSlider);
     ui->tool_player_stop->setEnabled(false); //nothing to stop yet
     ui->tool_player_pause->setVisible(false); //nothing to pause yet
+    playerSlider->setEnabled(false); //nothing to seek yet
   //Setup any specialty keyboard shortcuts
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
@@ -232,10 +232,16 @@ void MainUI::setupConnections(){
   connect(ui->tool_player_play, SIGNAL(clicked()), this, SLOT(playerStart()));
   connect(ui->tool_player_stop, SIGNAL(clicked()), this, SLOT(playerStop()));
   connect(ui->combo_player_list, SIGNAL(currentIndexChanged(int)), this, SLOT(playerFileChanged()) );
-  connect(mediaObj, SIGNAL(finished()), this, SLOT(playerFinished()) );
-  connect(mediaObj, SIGNAL(tick(qint64)), this, SLOT(playerTimeChanged(qint64)) );
-  connect(mediaObj, SIGNAL(stateChanged(Phonon::State, Phonon::State)), this, SLOT(playerStateChanged(Phonon::State, Phonon::State)) );
-  connect(mediaObj, SIGNAL(hasVideoChanged(bool)), this, SLOT(playerVideoAvailable(bool)) );
+  connect(playerSlider, SIGNAL(sliderPressed()), this, SLOT(playerSliderHeld()) );
+  connect(playerSlider, SIGNAL(sliderReleased()), this, SLOT(playerSliderChanged()) );
+  connect(playerSlider, SIGNAL(valueChanged(int)), this, SLOT(playerSliderMoved(int)) );
+  connect(mediaObj, SIGNAL(durationChanged(qint64)), this, SLOT(playerDurationChanged(qint64)) );
+  connect(mediaObj, SIGNAL(seekableChanged(bool)), playerSlider, SLOT(setEnabled(bool)) );
+  connect(mediaObj, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(playerStatusChanged(QMediaPlayer::MediaStatus)) );
+  connect(mediaObj, SIGNAL(positionChanged(qint64)), this, SLOT(playerTimeChanged(qint64)) );
+  connect(mediaObj, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged(QMediaPlayer::State)) );
+  connect(mediaObj, SIGNAL(videoAvailableChanged(bool)), this, SLOT(playerVideoAvailable(bool)) );
+  connect(mediaObj, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(playerError()) );
   //Special Keyboard Shortcuts
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
@@ -391,7 +397,7 @@ void MainUI::setCurrentDir(QString dir){
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
-  if(olddir==rawdir){
+  if(olddir!=rawdir){
     emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
   }
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
@@ -937,22 +943,27 @@ void MainUI::restoreItems(){
 void MainUI::playerStart(){
   if(ui->stackedWidget->currentWidget()!=ui->page_audioPlayer){ return; } //don't play if not in the player
   
-  if(mediaObj->state()==Phonon::PausedState){
+  if(mediaObj->state()==QMediaPlayer::PausedState \
+      && mediaObj->currentMedia().canonicalUrl().fileName()==ui->combo_player_list->currentText() ){
     mediaObj->play();
-  }else{ // if(mediaObj->state()==Phonon::StoppedState || mediaObj->state()==Phonon::ErrorState || (playerFile->fileName().section("/",-1) != ui->combo_player_list->currentText()) || playerFile->isOpen() ){
+  }else{
     mediaObj->stop();
     //Get the selected file path
     QString filePath = getCurrentDir();
     if(!filePath.endsWith("/")){ filePath.append("/"); }
     filePath.append( ui->combo_player_list->currentText() );
-    //if(playerFile->isOpen()){ playerFile->close(); }
-    //playerFile->setFileName(filePath);
-    //if(playerFile->open(QIODevice::ReadOnly)){
-      mediaObj->setCurrentSource( QUrl(filePath) );
-      playerSlider->setMediaObject(mediaObj);
+      mediaObj->setMedia( QUrl::fromLocalFile(filePath) );
+      playerTTime.clear();
+      playerSlider->setEnabled(mediaObj->isSeekable());
       mediaObj->play();
-    //}
   }
+}
+
+void MainUI::playerError(){
+  QString msg = QString(tr("Error Playing File: %1"));
+  msg = msg.arg( mediaObj->currentMedia().canonicalUrl().fileName() );
+  msg.append("\n"+mediaObj->errorString());
+  ui->label_player_novideo->setText(msg);
 }
 
 void MainUI::playerStop(){
@@ -965,51 +976,48 @@ void MainUI::playerPause(){
 
 void MainUI::playerNext(){
   ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()+1);
+  if(mediaObj->state()!=QMediaPlayer::StoppedState){ playerStart(); }
 }
 
 void MainUI::playerPrevious(){
   ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()-1);	
+  if(mediaObj->state()!=QMediaPlayer::StoppedState){ playerStart(); }
 }
 
 void MainUI::playerFinished(){
-  //playerFile->close();
   if(ui->combo_player_list->currentIndex()<(ui->combo_player_list->count()-1) && ui->check_player_gotonext->isChecked()){
     ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()+1 );
+    QTimer::singleShot(0,this,SLOT(playerStart()));
   }else{
     ui->label_player_novideo->setText(tr("Finished"));
   }
 }
 
-void MainUI::playerStateChanged(Phonon::State newstate, Phonon::State oldstate){
+void MainUI::playerStatusChanged(QMediaPlayer::MediaStatus stat){
+  //Only use this for end-of-file detection - use the state detection otherwise
+  if(stat == QMediaPlayer::EndOfMedia){
+    if(!mediaObj->isMuted()){ playerFinished(); } //make sure it is not being seeked right now
+  }	  
+}
+
+void MainUI::playerStateChanged(QMediaPlayer::State newstate){
   //This function keeps track of updating the visuals of the player
   bool running = false;
   bool showVideo = false;
   QString msg;
   switch(newstate){
-    case Phonon::LoadingState:
+    case QMediaPlayer::PlayingState:
 	running=true;
-	ui->label_player_novideo->setText(tr("Loading File..."));
-        break;
-    case Phonon::PlayingState:
-	running=true;
-	showVideo = mediaObj->hasVideo();
-	msg = mediaObj->metaData(Phonon::TitleMetaData).join(" ");
+	showVideo = mediaObj->isVideoAvailable();
+	msg = "";//mediaObj->metaData(Phonon::TitleMetaData).join(" ");
 	if(msg.simplified().isEmpty()){ msg = ui->combo_player_list->currentText(); }
 	ui->label_player_novideo->setText(tr("Playing:")+"\n"+msg);
 	break;
-    case Phonon::BufferingState:
-	running=true;
-	showVideo=true; //don't blank the screen
-	break;
-    case Phonon::PausedState:
+    case QMediaPlayer::PausedState:
 	showVideo=videoDisplay->isVisible(); //don't change the screen
 	break;
-    case Phonon::StoppedState:
-	if(oldstate==Phonon::LoadingState){ mediaObj->play(); }
-	else{ ui->label_player_novideo->setText(tr("Stopped")); }
-        break;
-    case Phonon::ErrorState:
-	ui->label_player_novideo->setText(tr("Error Playing File")+"\n("+mediaObj->errorString()+")");
+    case QMediaPlayer::StoppedState:
+	ui->label_player_novideo->setText(tr("Stopped"));
         break;
   }
   ui->tool_player_play->setVisible(!running);
@@ -1024,20 +1032,34 @@ void MainUI::playerVideoAvailable(bool showVideo){
   videoDisplay->setVisible(showVideo);	
 }
 
+void MainUI::playerDurationChanged(qint64 dur){
+    if(dur < 0){ return; } //not ready yet
+    playerSlider->setMaximum(mediaObj->duration());
+    playerTTime = msToText(dur);   	
+}
+
 void MainUI::playerTimeChanged(qint64 ctime){
-  if(playerTTime=="0:00" || playerTTime.isEmpty()){ playerTTime = msToText(mediaObj->totalTime()); } //only calculate as necessary
-  //qDebug() << "Time:" << msToText(ctime) << playerTTime << mediaObj->isSeekable() << mediaObj->hasVideo();
-  ui->label_player_runstats->setText( msToText(ctime)+"/"+playerTTime );
+  if(mediaObj->isMuted() || playerTTime.isEmpty() ){ return; } //currently being moved
+  playerSlider->setSliderPosition(ctime);
+}
+
+void MainUI::playerSliderMoved(int val){
+  ui->label_player_runstats->setText( msToText(val)+"/"+playerTTime );
+  if(mediaObj->isMuted()){ mediaObj->setPosition(playerSlider->value()); } //currently seeking
+}
+
+void MainUI::playerSliderHeld(){
+  mediaObj->setMuted(true);
+  mediaObj->pause();
+}
+void MainUI::playerSliderChanged(){
+  if(mediaObj->state()==QMediaPlayer::PausedState){ mediaObj->play(); }
+  mediaObj->setMuted(false);
 }
 
 void MainUI::playerFileChanged(){
   ui->tool_player_next->setEnabled( ui->combo_player_list->count() > (ui->combo_player_list->currentIndex()+1) );	
   ui->tool_player_prev->setEnabled( (ui->combo_player_list->currentIndex()-1) >= 0 );
-  if(ui->stackedWidget->currentWidget()!=ui->page_audioPlayer){ return; } //don't play if not in the player
-  //If one is playing, so ahead and start playing the new selection
-  if(ui->check_player_gotonext->isChecked() ){
-    QTimer::singleShot(0,this,SLOT(playerStart()));
-  }
 }
 
 //----------------------------------

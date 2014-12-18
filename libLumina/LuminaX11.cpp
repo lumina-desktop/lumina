@@ -6,12 +6,39 @@
 //===========================================
 #include "LuminaX11.h"
 
+#include <QString>
+#include <QByteArray>
+#include <QFile>
+#include <QObject>
+#include <QImage>
+
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/Xrender.h>
 #include <X11/extensions/Xcomposite.h>
+
+//XCB Library includes
+#include <xcb/xcb.h>
+#include <xcb/xcb_atom.h>
+#include <xcb/xproto.h>
+#include <xcb/xcb_ewmh.h>
+#include <xcb/xcb_icccm.h>
+
+//xcb_ewmh_connection_t ewmh_handle;
+
+//=====  Get EWMH connection handle =====
+/*xcb_ewmh_connection_t* LX11::EWMH_C(){
+  static bool firstrun = true;
+  if(firstrun){
+    qDebug() << "Init EWMH structure";
+    xcb_ewmh_init_atoms(QX11Info::connection(), &ewmh_handle);
+    firstrun = false;
+  }
+  qDebug() << "Return EWMH structure pointer:" << &ewmh_handle;
+  return &ewmh_handle;
+}*/
 
 //=====   WindowList() ========
 QList<WId> LX11::WindowList(){
@@ -26,7 +53,7 @@ QList<WId> LX11::WindowList(){
     QString name = LX11::WindowClass(output[i]);
     if(output[i] == 0){ remove=true; }
     else if( desk >= 0 && LX11::WindowDesktop(output[i]) != desk){ remove = true; }
-    else if( name=="Lumina-DE" ){ remove = true; }
+    else if( name=="Lumina Desktop Environment" ){ remove = true; }
     else if(name.startsWith("Lumina-")){
       //qDebug() << "Lumina Window:" << name << LX11::WindowName(output[i]);
       if(LX11::WindowName(output[i]).toLower()==name.toLower() ){ remove=true; }
@@ -52,6 +79,17 @@ QList<WId> LX11::WindowList(){
 // ===== GetClientList() =====
 QList<WId> LX11::GetClientList(){
   QList<WId> output;
+  //XCB Library
+  /*qDebug() << "Get Client list cookie";
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_unchecked( LX11::EWMH_C(), 0);
+  xcb_ewmh_get_windows_reply_t winlist;
+  qDebug() << "Get client list";
+  if( xcb_ewmh_get_client_list_reply( LX11::EWMH_C(), cookie, &winlist, NULL) ){
+    qDebug() << " - Loop over items";
+    for(unsigned int i=0; i<winlist.windows_len; i++){ output << winlist.windows[i]; }
+  }*/
+	
+  //XLib
   Atom a = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST", true);
   Atom realType;
   int format;
@@ -90,7 +128,7 @@ QList<WId> LX11::GetClientStackingList(){
 }
 
 // ===== findChildren() =====
-QList<WId> LX11::findChildren(Window parent, int levels){
+QList<WId> LX11::findChildren(WId parent, int levels){
   Window rootR, parentR;
   Window *childrenR;
   unsigned int num;
@@ -129,6 +167,9 @@ WId LX11::ActiveWindow(){
 
 // ===== SetNumberOfDesktops() =====
 void LX11::SetNumberOfDesktops(int number){
+  //XCB Library
+	
+  //XLib
   Display *display = QX11Info::display();
   Window rootWindow = QX11Info::appRootWindow();
 
@@ -253,8 +294,13 @@ void LX11::IconifyWindow(WId win){
 
 // ===== RestoreWindow() =====
 void LX11::RestoreWindow(WId win){
-  Display *disp = QX11Info::display();
-    XMapRaised(disp, win); //make it visible again and raise it to the top
+  //XCB Library
+    uint32_t val = XCB_STACK_MODE_ABOVE;
+    xcb_configure_window(QX11Info::connection(),  win, XCB_CONFIG_WINDOW_STACK_MODE, &val); //raise it
+    xcb_map_window(QX11Info::connection(), win); //map it
+  //XLib
+  //Display *disp = QX11Info::display();
+    //XMapRaised(disp, win); //make it visible again and raise it to the top
 }
 
 // ===== ActivateWindow() =====
@@ -315,12 +361,16 @@ void LX11::ReservePanelLocation(WId win, int xstart, int ystart, int width, int 
 // ===== SetAsSticky() =====
 void LX11::SetAsSticky(WId win){
   //make this window "stick" to all virtual desktops
+	
+  //XCB Library
+ // xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_APPEND, win, _NET_WM_STATE, XCB_ATOM, 32, 1, _NET_WM_STATE_STICKY);
+	
+  //XLib
   Display *disp = QX11Info::display();
   Atom stick = XInternAtom(disp, "_NET_WM_STATE_STICKY",false);
   Atom state = XInternAtom(disp, "_NET_WM_STATE", false);
   
-  XChangeProperty(disp, win, state, XA_ATOM, 32, PropModeAppend, (unsigned char*) &stick, 1);
-  
+  XChangeProperty(disp, win, state, XA_ATOM, 32, PropModeAppend, (unsigned char*) &stick, 1L);
 }
 
 // ===== SetAsPanel() =====
@@ -549,7 +599,12 @@ int LX11::WindowDesktop(WId win){
 
 // ===== GetWindowState() =====
 LX11::WINDOWSTATE LX11::GetWindowState(WId win){
+  LX11::WINDOWSTATE state = LX11::VISIBLE;
+	
+  //XCB Library (TO DO)
 
+  
+  //XLib
   Display *disp = QX11Info::display(); 
   Atom SA = XInternAtom(disp, "_NET_WM_STATE", true);
   Atom ATTENTION = XInternAtom(disp, "_NET_WM_STATE_DEMANDS_ATTENTION", false);
@@ -564,8 +619,7 @@ LX11::WINDOWSTATE LX11::GetWindowState(WId win){
   
   int status = XGetWindowProperty( disp, win, SA, 0, ~(0L), false, AnyPropertyType,
   	  			&type, &format, &num, &bytes, (unsigned char**) &data);
-	
-  LX11::WINDOWSTATE state = LX11::VISIBLE;
+
   if(status >= Success && data){
     for(unsigned int i=0; i<num; i++){
       if(data[i] == SKIPP || data[i]==SKIPT){
@@ -671,7 +725,7 @@ WId LX11::startSystemTray(int screen){
   //Get the appropriate atom for this screen
   QString str = QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(screen));
   qDebug() << "Default Screen Atom Name:" << str;
-  Atom _NET_SYSTEM_TRAY_S = XInternAtom(disp,str.toAscii(),false);
+  Atom _NET_SYSTEM_TRAY_S = XInternAtom(disp,str.toLatin1(),false);
   //Make sure that there is no other system tray running
   if(XGetSelectionOwner(disp, _NET_SYSTEM_TRAY_S) != None){
     qWarning() << "An alternate system tray is currently in use";
@@ -783,3 +837,139 @@ QString LX11::getNetWMProp(WId win, QString prop){
   }
   return property;
 }
+
+//===============================
+//===============================
+// XCB LIBRARY FUNCTIONS
+//===============================
+//===============================
+LXCB::LXCB(){
+   xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &EWMH);
+   if(!xcb_ewmh_init_atoms_replies(&EWMH, cookie, NULL) ){
+     qDebug() << "Error with XCB atom initializations";
+   }else{
+     qDebug() << "Number of XCB screens:" << EWMH.nb_screens;
+   }
+}
+LXCB::~LXCB(){
+  xcb_ewmh_connection_wipe(&EWMH);
+}
+
+// === WindowList() ===
+QList<WId> LXCB::WindowList(bool rawlist){
+  QList<WId> output;
+  qDebug() << "Get Client list cookie";
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_unchecked( &EWMH, 0);
+  xcb_ewmh_get_windows_reply_t winlist;
+  qDebug() << "Get client list";
+  if( 1 == xcb_ewmh_get_client_list_reply( &EWMH, cookie, &winlist, NULL) ){
+    qDebug() << " - Loop over items";
+    unsigned int wkspace = CurrentWorkspace();
+    for(unsigned int i=0; i<winlist.windows_len; i++){ 
+      //Filter out the Lumina Desktop windows
+      if(WindowClass(winlist.windows[i]) == "Lumina Desktop Environment"){ continue; }
+      //Also filter out windows not on the active workspace
+      else if( (WindowWorkspace(winlist.windows[i])!=wkspace) && !rawlist ){ continue; }
+      else{
+        output << winlist.windows[i]; 
+      }
+    }
+  }
+  return output;
+}
+
+// === CurrentWorkspace() ===
+unsigned int LXCB::CurrentWorkspace(){
+  qDebug() << "Get Current Workspace";
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_current_desktop_unchecked(&EWMH, 0);
+  uint32_t wkspace = 0;
+  xcb_ewmh_get_current_desktop_reply(&EWMH, cookie, &wkspace, NULL);
+  qDebug() << " - done:" << wkspace;
+  return wkspace;
+}
+
+// === WindowClass() ===
+QString LXCB::WindowClass(WId win){
+  QString out;
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_wm_class_reply_t value;
+  if( 1== xcb_icccm_get_wm_class_reply( QX11Info::connection(), cookie, &value, NULL) ){
+    out = QString(value.class_name);
+  }
+  xcb_icccm_get_wm_class_reply_wipe(&value);
+  return out;
+}
+
+// === WindowWorkspace() ===
+unsigned int LXCB::WindowWorkspace(WId win){
+  qDebug() << "Get Window Workspace";
+  uint32_t wkspace = 0;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
+  xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
+  qDebug() << " - done: " << wkspace;
+  return wkspace;	
+}
+
+// === WindowState() ===
+LXCB::WINDOWSTATE LXCB::WindowState(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
+  xcb_ewmh_get_atoms_reply_t states;
+  WINDOWSTATE cstate = IGNORE;
+  //First Check for special states (ATTENTION in particular);
+  if( 1 == xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &states, NULL) ){
+    for(unsigned int i=0; i<states.atoms_len; i++){
+      if(states.atoms[i] == EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ cstate = ATTENTION; break; } //nothing more urgent - stop here
+      else if(states.atoms[i] == EWMH._NET_WM_STATE_HIDDEN){ cstate = INVISIBLE; }
+    }
+  }
+  //Now check for ICCCM Urgency hint (not sure if this is still valid with EWMH instead)
+  /*if(cstate == IGNORE){
+    xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_hints_unchecked(QX11Info::connection(), win);
+    xcb_icccm_wm_hints_t hints;
+    if( 1== xcb_icccm_get_wm_hints_reply(QX11Info::connection(), cookie, &hints, NULL) ){
+      if(xcb_icccm_wm_hints_get_urgency(hints) ){ cstate = ATTENTION; };
+    }
+  }*/
+  //Now check for standard visible/invisible attribute (current mapping state)
+  if(cstate == IGNORE){
+    xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), win);
+    xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
+    if(attr!=0){
+      if(attr->map_state==XCB_MAP_STATE_VIEWABLE){ cstate = VISIBLE; }
+      else{ cstate = INVISIBLE; }
+      free(attr);	    
+    }
+  }
+  return cstate;
+}
+
+// === SetAsSticky() ===
+void LXCB::SetAsSticky(WId win){
+  xcb_change_property( QX11Info::connection(), XCB_PROP_MODE_APPEND, win, EWMH._NET_WM_STATE, XCB_ATOM_ATOM, 32, 1, &(EWMH._NET_WM_STATE_STICKY) );
+  xcb_flush(QX11Info::connection()); //apply it right away
+}
+
+// === SetScreenWorkArea() ===
+/*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){
+  //This is only useful because Fluxbox does not set the _NET_WORKAREA root atom
+  // 	This needs to be better incorporated into the new window manager later
+
+  //First get the current workarea array (for all monitors/screens)
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_workarea_unchecked(&EWMH, 0);
+  xcb_ewmh_get_workarea_reply_t work;
+  if(0==xcb_ewmh_get_workarea_reply(&EWMH, cookie, &work, NULL)){ return; } //Error: Could not retrieve current work areas
+  //Save what we need only from the reply
+  unsigned int desks = work.workarea_len;
+  if(desks <= screen){ return; } //invalid screen to modify
+  qDebug() << "Number of desktops/screens:" << desks;
+  xcb_ewmh_geometry_t *dareas = work.workarea;
+  //Adjust the work area for the input monitor/screen
+  dareas[screen].x = rect.x();
+  dareas[screen].y = rect.y();
+  dareas[screen].width = rect.width();
+  dareas[screen].height = rect.height();
+  //Now save the array again
+  xcb_ewmh_set_workarea(&EWMH, 0, desks, dareas); //_NET_WORKAREA
+  //Make sure to clear that reply
+  xcb_ewmh_get_workarea_reply_wipe(&work);
+}*/

@@ -1,5 +1,5 @@
 #include <QTranslator>
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QDebug>
 #include <QFile>
 
@@ -9,8 +9,11 @@
 
 int main(int argc, char ** argv)
 {
+    //qDebug() << "Init App...";
     QApplication a(argc, argv);
+    //qDebug() << "Init Theme Engine...";
     LuminaThemeEngine theme(&a);
+    //qDebug() << "Load Translations...";
     a.setApplicationName("Search for...");
     QTranslator translator;
     QLocale mylocale;

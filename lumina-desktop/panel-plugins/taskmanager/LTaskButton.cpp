@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LTaskButton.h"
+#include "LSession.h"
 
 LTaskButton::LTaskButton(QWidget *parent) : LTBWidget(parent){
   actMenu = new QMenu(this);
@@ -71,7 +72,7 @@ void LTaskButton::UpdateButton(){
   LWINLIST = WINLIST;
   
   winMenu->clear();
-  Lumina::STATES showstate = Lumina::NOSHOW;
+  LXCB::WINDOWSTATE showstate = LXCB::IGNORE;
   for(int i=0; i<WINLIST.length(); i++){
     if(WINLIST[i].windowID() == 0){
       WINLIST.removeAt(i);
@@ -88,31 +89,19 @@ void LTaskButton::UpdateButton(){
 	if(cname.contains(" - ")){ cname = cname.section(" - ",-1); }
       }
       this->setToolTip(cname);
-      /*
-      if(this->icon().isNull()){
-	this->setIcon( LXDG::findIcon(cname.toLower(),"") );
-	if(this->icon().isNull()){
-	  this->setIcon( LXDG::findIcon("preferences-system-windows","") );
-	  noicon=true;
-	}else{
-	  noicon = false;
-	}
-      }else{
-	noicon = false;
-      }*/
     }
     bool junk;
     QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
       tmp->setData(i); //save which number in the WINLIST this entry is for
-    Lumina::STATES stat = WINLIST[i].status();
-    if(stat==Lumina::NOTIFICATION){ showstate = stat; } //highest priority
-    else if( stat==Lumina::ACTIVE && showstate != Lumina::NOTIFICATION){ showstate = stat; } //next priority
-    else if( stat==Lumina::Lumina::VISIBLE && showstate != Lumina::NOTIFICATION && showstate != Lumina::ACTIVE){ showstate = stat; }
-    else if(showstate == Lumina::INVISIBLE || showstate == Lumina::NOSHOW){ showstate = stat; } //anything is the same/better
+    LXCB::WINDOWSTATE stat = LSession::handle()->XCB->WindowState(WINLIST[i].windowID());
+    if(stat==LXCB::ATTENTION){ showstate = stat; } //highest priority
+    else if( stat==LXCB::ACTIVE && showstate != LXCB::ATTENTION){ showstate = stat; } //next priority
+    else if( stat==LXCB::VISIBLE && showstate != LXCB::ATTENTION && showstate != LXCB::ACTIVE){ showstate = stat; }
+    else if(showstate == LXCB::INVISIBLE || showstate == LXCB::IGNORE){ showstate = stat; } //anything is the same/better
   }
   //Now setup the button appropriately
   // - visibility
-  if(showstate == Lumina::NOSHOW || WINLIST.length() < 1){ this->setVisible(false); }
+  if(showstate == LXCB::IGNORE || WINLIST.length() < 1){ this->setVisible(false); }
   else{ this->setVisible(true); }
   // - functionality
   if(WINLIST.length() == 1){

@@ -1,5 +1,6 @@
 
-QT       += core
+QT       += core network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
 
 TARGET=LuminaUtils
 
@@ -24,12 +25,14 @@ HEADERS	+= LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
 	LuminaThemes.h \
-	LuminaOS.h
+	LuminaOS.h \
+	LuminaSingleApplication.h
 
 SOURCES	+= LuminaXDG.cpp \
 	LuminaUtils.cpp \
 	LuminaX11.cpp \
 	LuminaThemes.cpp \
+	LuminaSingleApplication.cpp \
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-DragonFly.cpp \
 	LuminaOS-OpenBSD.cpp \
@@ -39,14 +42,15 @@ SOURCES	+= LuminaXDG.cpp \
 
 INCLUDEPATH += $$PREFIX/include
 
-LIBS	+= -lX11 -lXrender -lXcomposite
+LIBS	+= -lX11 -lXrender -lXcomposite -lxcb -lxcb-ewmh -lxcb-icccm
 
 include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
 	LuminaThemes.h \
-	LuminaOS.h
+	LuminaOS.h \
+	LuminaSingleApplication.h
 
 colors.path=$$PREFIX/share/Lumina-DE/colors/
 colors.files=colors/Lumina-Red.qss.colors \

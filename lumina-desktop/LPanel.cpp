@@ -34,12 +34,13 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint );
   this->setFocusPolicy(Qt::NoFocus);
   this->setWindowTitle("");
-  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); //Reserve as panel/dock
+  //this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); //Reserve as panel/dock
   this->setAttribute(Qt::WA_AlwaysShowToolTips);
   this->setObjectName("LuminaPanelWidget");
   panelArea->setObjectName("LuminaPanelPluginWidget");
-  //LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
-  LX11::SetAsSticky(this->winId());
+  LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
+  LSession::handle()->XCB->SetAsSticky(this->winId()); 
+  //LX11::SetAsSticky(this->winId());
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
@@ -86,7 +87,7 @@ void LPanel::UpdatePanel(){
     this->setGeometry(xloc,0,xwid, ht );
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), 2, "top"); 
+      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), 2, "top");
       hidepoint = QPoint(xloc, 2-ht);
       showpoint = QPoint(xloc, 0);
       this->move(hidepoint); //Could bleed over onto the screen above
@@ -128,6 +129,9 @@ void LPanel::UpdatePanel(){
       this->move(hidepoint); //Could bleed over onto the screen right
     }
   }
+  //With QT5, we need to make sure to reset window properties on occasion
+  LSession::handle()->XCB->SetAsSticky(this->winId()); 
+  LX11::SetAsPanel(this->winId());
   //Now update the appearance of the toolbar
   QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
   QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";
@@ -233,7 +237,7 @@ void LPanel::paintEvent(QPaintEvent *event){
   //qDebug() << "Global Rec:" << rec.x() << rec.y() << screennum;
   rec.moveTo( rec.x()-screen->screenGeometry(screennum).x(), rec.y() );
   //qDebug() << "Adjusted Global Rec:" << rec.x() << rec.y();
-  painter->drawPixmap(event->rect(), QPixmap::grabWidget(bgWindow, rec) );
+  painter->drawPixmap(event->rect(), bgWindow->grab(rec) );
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }
 

@@ -11,7 +11,7 @@
 #include <QIcon>
 #include <QFont>
 #include <QDebug>
-
+#include <QObject>
 
 QStringList LTHEME::availableSystemThemes(){ 
   //returns: [name::::path] for each item

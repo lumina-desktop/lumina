@@ -6,6 +6,8 @@
 //===========================================
 #include "LuminaXDG.h"
 #include "LuminaOS.h"
+#include <QObject>
+#include <QMediaPlayer>
 
 static QStringList mimeglobs;
 static qint64 mimechecktime;
@@ -44,7 +46,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     QString var = line.section("=",0,0).simplified();
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
-    QString val = line.section("=",1,1).simplified();
+    QString val = line.section("=",1,50).simplified();
     //-------------------
     if(var=="Name"){ 
       if(DF.name.isEmpty() && loc.isEmpty()){ DF.name = val; }
@@ -556,6 +558,21 @@ void LXDG::setDefaultAppForMime(QString mime, QString app){
   }
   LUtils::writeFile(filepath, cinfo, true);
   return;
+}
+
+QStringList LXDG::findAVFileExtensions(){
+  //output format: QDir name filter for valid A/V file extensions
+  QStringList globs = LXDG::loadMimeFileGlobs2();
+  QStringList av = globs.filter(":audio/");
+  av << globs.filter(":video/");
+  for(int i=0; i<av.length(); i++){
+    //Just use all audio/video mimetypes (for now)
+    av[i] = av[i].section(":",2,2);
+    //Qt5 Auto detection (broken - QMediaPlayer seg faults with Qt 5.3 - 11/24/14)
+    /*if( QMultimedia::NotSupported != QMediaPlayer::hasSupport(av[i].section(":",1,1)) ){ av[i] = av[i].section(":",2,2); }
+    else{ av.removeAt(i); i--; }*/
+  }
+  return av;
 }
 
 QStringList LXDG::loadMimeFileGlobs2(){

@@ -5,6 +5,10 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LuminaUtils.h"
+#include <QString>
+#include <QFile>
+#include <QStringList>
+#include <QObject>
 
 int LUtils::runCmd(QString cmd, QStringList args){
   QProcess *proc = new QProcess;

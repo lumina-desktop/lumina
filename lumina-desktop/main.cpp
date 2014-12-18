@@ -23,10 +23,10 @@
 #include <LuminaThemes.h>
 #include <LuminaOS.h>
 
-#define DEBUG 0
+#define DEBUG 1
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
-void MessageOutput(QtMsgType type, const char *msg){
+void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
   QString txt;
   switch(type){
   case QtDebugMsg:
@@ -76,7 +76,7 @@ int main(int argc, char ** argv)
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
     LuminaThemeEngine theme(&a);
     //Setup Log File
-    qInstallMsgHandler(MessageOutput);
+    qInstallMessageHandler(MessageOutput);
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
     if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }

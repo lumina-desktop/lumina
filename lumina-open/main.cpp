@@ -125,8 +125,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     qDebug() << "Locale:" << langCode;
 
     //Load current encoding for this locale
-    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
-    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
+    //QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
+    //qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
 
     LFileDialog w;
     if(inFile.startsWith(extension)){

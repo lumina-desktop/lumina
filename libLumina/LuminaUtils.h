@@ -16,6 +16,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QFileInfo>
+#include <QObject>
 
 class LUtils{
 public:

@@ -3,7 +3,7 @@
 
 PORTNAME=	lumina
 GITVERSION=	CHGVERSION
-PORTVERSION=	0.7.2.${GITVERSION}
+PORTVERSION=	0.8.0.${GITVERSION}
 PORTEPOCH=	1
 CATEGORIES=	x11
 DISTNAME=	${PORTNAME}-${GITVERSION}
@@ -23,16 +23,14 @@ RUN_DEPENDS=	xorg>=0:${PORTSDIR}/x11/xorg \
 		xscreensaver-demo:${PORTSDIR}/x11/xscreensaver \
 		xbrightness:${PORTSDIR}/x11/xbrightness \
 		numlockx:${PORTSDIR}/x11/numlockx \
-		phonon-gstreamer>=0:${PORTSDIR}/multimedia/phonon-gstreamer \
-		gstreamer-plugins-ogg>=0:${PORTSDIR}/audio/gstreamer-plugins-ogg
-LIB_DEPENDS=	libQtSolutions_SingleApplication-head.so:${PORTSDIR}/devel/qt4-qtsolutions-singleapplication \
-		libjpeg.so:${PORTSDIR}/graphics/jpeg
+#LIB_DEPENDS=	
 
 MAKE_JOBS_UNSAFE=yes
 USE_XORG=	x11 xcomposite xdamage xrender
+USE_XCB=		x11extras wm
 USE_LDCONFIG=	yes
-USE_QT4=	corelib gui network svg linguist phonon imageformats \
-		moc_build rcc_build uic_build 
+USE_QT5=	corelib gui network svg linguist multimedia imageformats \
+		buildtools x11extras
 USES=		qmake tar:bzip2
 
 WRKSRC=		${WRKDIR}/lumina

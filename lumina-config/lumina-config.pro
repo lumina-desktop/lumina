@@ -1,5 +1,6 @@
 
 QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras network
 
 TARGET = lumina-config
 isEmpty(PREFIX) {
@@ -34,17 +35,17 @@ FORMS    += mainUI.ui \
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
   LIBS += -L../libLumina -lLuminaUtils
-freebsd-* {
-  LIBS     += -lQtSolutions_SingleApplication-head
-}
-openbsd-g++4 {
-  LIBS     += -lQtSolutions_SingleApplication-head
-}
+#freebsd-* {
+#  LIBS     += -lQtSolutions_SingleApplication-head
+#}
+#openbsd-g++4 {
+#  LIBS     += -lQtSolutions_SingleApplication-head
+#}
 
 openbsd-g++4 {
   LRELEASE = lrelease4
 } else {
-  LRELEASE = lrelease-qt4
+  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 }
 
 QMAKE_LIBDIR	= ../libLumina

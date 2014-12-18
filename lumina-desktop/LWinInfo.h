@@ -19,6 +19,7 @@
 
 // Local includes
 #include "Globals.h" //For the STATES enumeration definition
+//#include "LSession.h"
 
 
 class LWinInfo{

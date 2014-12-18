@@ -1,5 +1,5 @@
 #include <QTranslator>
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QDebug>
 #include <QFile>
 

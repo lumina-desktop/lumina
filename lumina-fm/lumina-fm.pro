@@ -1,5 +1,6 @@
 
-QT       += core gui phonon
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets
 
 TARGET = lumina-fm
 isEmpty(PREFIX) {
@@ -30,14 +31,14 @@ FORMS    += MainUI.ui \
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
   LIBS     += -L../libLumina -lLuminaUtils
-freebsd-* {
+/*freebsd-* {
   LIBS     += -lQtSolutions_SingleApplication-head
-}
+}*/
 
 openbsd-g++4 {
   LRELEASE = lrelease4
 } else {
-  LRELEASE = lrelease-qt4
+  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 }
 
 QMAKE_LIBDIR	= ../libLumina

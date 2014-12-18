@@ -8,6 +8,10 @@
 #include <LuminaOS.h>
 
 #include <QTime>
+#include "LXcbEventFilter.h"
+
+//LibLumina X11 class
+#include <LuminaX11.h>
 
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
@@ -17,8 +21,10 @@
 #include <X11/extensions/Xdamage.h>
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
+
+XCBEventFilter *evFilter = 0;
 
 LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setApplicationName("Lumina Desktop Environment");
@@ -33,14 +39,18 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   SystemTrayID = 0; VisualTrayID = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
+  XCB = 0;
   //initialize the empty internal pointers to 0
   appmenu = 0;
   settingsmenu = 0;
   currTranslator=0;
   mediaObj=0;
-  audioOut=0;
+  //audioOut=0;
   audioThread=0;
   sessionsettings=0;
+  //Setup the event filter for Qt5
+  evFilter =  new XCBEventFilter(this);
+  this->installNativeEventFilter( evFilter );
 }
 
 LSession::~LSession(){
@@ -53,13 +63,15 @@ LSession::~LSession(){
   delete appmenu;
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
-  if(audioOut!=0){delete audioOut; }
+  //if(audioOut!=0){delete audioOut; }
 }
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
+  //Initialize the XCB interface backend
+  XCB = new LXCB();
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
   //Setup the QSettings default paths
@@ -260,7 +272,7 @@ void LSession::SessionEnding(){
   stopSystemTray();
 }
 
-bool LSession::x11EventFilter(XEvent *event){
+/*bool LSession::x11EventFilter(XEvent *event){
   //Detect X Event types and send the appropriate signal(s)
    switch(event->type){
   // -------------------------
@@ -335,7 +347,7 @@ bool LSession::x11EventFilter(XEvent *event){
   // -----------------------
   //Now continue on with the event handling (don't change it)
   return false;
-}
+}*/
 
 //===============
 //  SYSTEM ACCESS
@@ -368,22 +380,72 @@ void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
   //return; //Disable this for now: too many issues with Phonon at the moment (hangs the session)
   bool init = false;
+  if(DEBUG){ qDebug() << "Play Audio File"; }
   if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
-  if(mediaObj==0){   qDebug() << " - Initialize Phonon media Object"; mediaObj = new Phonon::MediaObject(); init = true;}
-  if(audioOut==0){   qDebug() << " - Initialize Phonon audio output"; audioOut = new Phonon::AudioOutput(); init=true;}
-  if(mediaObj && audioOut && init){  //in case Phonon errors for some reason
-    qDebug() << " -- Create path between audio objects";
-    Phonon::createPath(mediaObj, audioOut);
+  //if(mediaObj==0){   qDebug() << " - Initialize Phonon media Object"; mediaObj = new Phonon::MediaObject(); init = true;}
+  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); init = true;}
+  //if(audioOut==0){   qDebug() << " - Initialize Phonon audio output"; audioOut = new Phonon::AudioOutput(); init=true;}
+  if(mediaObj && init){  //in case it errors for some reason
+    //qDebug() << " -- Create path between audio objects";
+    //Phonon::createPath(mediaObj, audioOut);
     qDebug() << " -- Move audio objects to separate thread";
     mediaObj->moveToThread(audioThread);
-    audioOut->moveToThread(audioThread);
-  }
-  if(mediaObj !=0 && audioOut!=0){
-    mediaObj->setCurrentSource(QUrl(filepath));
-    mediaObj->play();
+    //audioOut->moveToThread(audioThread);
     audioThread->start();
   }
+  if(mediaObj !=0 ){//&& audioOut!=0){
+    //mediaObj->setCurrentSource(QUrl(filepath));
+    mediaObj->setMedia(QUrl::fromLocalFile(filepath));
+    mediaObj->setVolume(100);
+    mediaObj->play();
+    //audioThread->start();
+  }
+  if(DEBUG){ qDebug() << " - Done with Audio File"; }
 }
+// =======================
+//  XCB EVENT FILTER FUNCTIONS
+// =======================
+void LSession::WindowPropertyEvent(){
+  if(DEBUG){ qDebug() << "Window Property Event"; }
+  LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
+  emit WindowListEvent();
+}
+
+void LSession::SysTrayDockRequest(WId win){
+  attachTrayWindow(win); //Check to see if the window is already registered
+}
+
+void LSession::WindowClosedEvent(WId win){
+  removeTrayWindow(win); //Check to see if the window is a tray app
+}
+
+void LSession::WindowConfigureEvent(WId win){
+  for(int i=0; i<RunningTrayApps.length(); i++){
+    if(win==RunningTrayApps[i]){
+      if(DEBUG){ qDebug() << "SysTray: Configure Event"; }
+      emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
+      break;
+    }
+  }
+}
+
+void LSession::WindowDamageEvent(WId win){
+  for(int i=0; i<RunningTrayApps.length(); i++){
+    if(win==RunningTrayApps[i]){
+      if(DEBUG){ qDebug() << "SysTray: Damage Event"; }
+      emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
+      break;
+    }
+  }	
+}
+
+void LSession::WindowSelectionClearEvent(WId win){
+  if(win==SystemTrayID){
+    qDebug() << "Stopping system tray";
+    stopSystemTray(true); //make sure to detach all windows
+  }
+}
+
 
 //======================
 //   SYSTEM TRAY FUNCTIONS
@@ -422,7 +484,9 @@ void LSession::startSystemTray(){
   if(SystemTrayID!=0){
     XSelectInput(QX11Info::display(), SystemTrayID, InputOutput); //make sure TrayID events get forwarded here
     XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
+    evFilter->setTrayDamageFlag(TrayDmgEvent);
     qDebug() << "System Tray Started Successfully";
+    if(DEBUG){ qDebug() << " - System Tray Flags:" << TrayDmgEvent << TrayDmgError; }
   }
 }
 
@@ -445,6 +509,7 @@ void LSession::attachTrayWindow(WId win){
   if(TrayStopping){ return; }
   if(RunningTrayApps.contains(win)){ return; } //already managed
   RunningTrayApps << win;
+  if(DEBUG){ qDebug() << "Tray List Changed"; }
   emit TrayListChanged();
   /*//Now try to embed the window into the tray 
   //(NOT USED - Breaks visuals due to X11 graphics constraints - need to do embed in a single visual tray instead)

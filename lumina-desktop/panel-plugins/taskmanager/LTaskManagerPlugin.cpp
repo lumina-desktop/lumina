@@ -31,7 +31,7 @@ void LTaskManagerPlugin::UpdateButtons(){
   //Make sure this only runs one at a time
   updating=true;
   //Get the current window list
-  QList<WId> winlist = LX11::WindowList();
+  QList<WId> winlist = LSession::handle()->XCB->WindowList();
   //qDebug() << "Update Buttons:" << winlist;
   //Now go through all the current buttons first
   for(int i=0; i<BUTTONS.length(); i++){

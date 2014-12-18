@@ -18,8 +18,7 @@
 #include <QDesktopWidget>
 #include <QList>
 #include <QThread>
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
+#include <QMediaPlayer>
 #include <QThread>
 #include <QUrl>
 
@@ -29,8 +28,8 @@
 #include "SystemWindow.h"
 #include "LDesktop.h"
 #include "WMProcess.h"
+//#include "LXcbEventFilter.h"
 
-//LibLumina X11 class
 #include <LuminaX11.h>
 
 //SYSTEM TRAY STANDARD DEFINITIONS
@@ -54,7 +53,7 @@ public:
 	//Functions to be called during startup
 	void setupSession();
 
-	virtual bool x11EventFilter(XEvent *event);
+	//virtual bool x11EventFilter(XEvent *event);
 	
 	bool LoadLocale(QString);
 
@@ -63,6 +62,15 @@ public:
 	bool registerVisualTray(WId);
 	void unregisterVisualTray(WId);
 
+	//Special functions for XCB event filter parsing only 
+	//  (DO NOT USE MANUALLY)
+	void WindowPropertyEvent();
+	void SysTrayDockRequest(WId);
+	void WindowClosedEvent(WId);
+	void WindowConfigureEvent(WId);
+	void WindowDamageEvent(WId);
+	void WindowSelectionClearEvent(WId);
+	
 	//System Access
 	//Return a pointer to the current session
 	static LSession* handle(){
@@ -74,7 +82,8 @@ public:
 	AppMenu* applicationMenu();
 	void systemWindow();
 	SettingsMenu* settingsMenu();
-
+	LXCB *XCB; //class for XCB usage
+	
 	QSettings* sessionSettings();
 
 	//Play System Audio
@@ -84,13 +93,12 @@ private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
-
+	//XCBEventFilter *evFilter;
 	//Internal variable for global usage
 	AppMenu *appmenu;
 	SettingsMenu *settingsmenu;
 	QTranslator *currTranslator;
-	Phonon::MediaObject *mediaObj;
-	Phonon::AudioOutput *audioOut;
+	QMediaPlayer *mediaObj;
 	QThread *audioThread;
 	QSettings *sessionsettings;
 

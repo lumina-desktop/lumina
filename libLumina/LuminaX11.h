@@ -20,6 +20,7 @@
 #include <QX11Info>
 #include <QDebug>
 #include <QPainter>
+#include <QObject>
 // Addition includes for compilations (cause issues with X11 libs later)
 #include <QDir>
 #include <QEvent>
@@ -33,6 +34,8 @@
 //#include <X11/Xatom.h>
 //#include <X11/extensions/Xrender.h>
 
+#include <xcb/xcb_ewmh.h>
+
 //SYSTEM TRAY STANDARD DEFINITIONS
 #define _NET_SYSTEM_TRAY_ORIENTATION_HORZ 0
 #define _NET_SYSTEM_TRAY_ORIENTATION_VERT 1
@@ -45,6 +48,9 @@
 class LX11{
 public:
 	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	
+	//Internal Use Functions
+	//static xcb_ewmh_connection_t* EWMH_C(); //Get the XCB_ewmh handle;
 	
 	//General Info Functions
 	static QList<WId> WindowList(); //List all current windows
@@ -100,6 +106,35 @@ public:
 	
 	//EWMH Convenience functions
 	static QString getNetWMProp(WId win, QString prop); //Returns a _NET_WM_* string value
+};
+
+//XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
+class LXCB{
+
+private:
+	xcb_ewmh_connection_t EWMH;
+
+public:
+	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	
+	LXCB();
+	~LXCB();
+	
+	//== Main Interface functions ==
+	// General Information
+	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
+	unsigned int CurrentWorkspace();
+	
+	//Session Modification
+
+
+	//Window Information
+	QString WindowClass(WId);
+	unsigned int WindowWorkspace(WId);
+	WINDOWSTATE WindowState(WId win); //Visible state of window
+	
+	//Window Modification
+	void SetAsSticky(WId);
 };
 
 #endif
