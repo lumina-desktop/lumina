@@ -922,6 +922,14 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
       else if(states.atoms[i] == EWMH._NET_WM_STATE_HIDDEN){ cstate = INVISIBLE; }
     }
   }
+  //Now check to see if the window is the active one
+  if(cstate == IGNORE){
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, 0);
+    xcb_window_t actwin;
+    if(1 == xcb_ewmh_get_active_window_reply(&EWMH, cookie, &actwin, NULL) ){
+      if(actwin == win){ cstate = ACTIVE; }
+    }
+  }
   //Now check for ICCCM Urgency hint (not sure if this is still valid with EWMH instead)
   /*if(cstate == IGNORE){
     xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_hints_unchecked(QX11Info::connection(), win);
@@ -958,8 +966,7 @@ void LXCB::SetAsSticky(WId win){
     event.data.data32[4] = 0;
 
   xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-  //xcb_ewmh_set_wm_state(&EWMH, win, 1, &EWMH._NET_WM_STATE_STICKY);
-
+	
   //This method changes the property on the window directly - the WM is not aware of it	
   /*xcb_change_property( QX11Info::connection(), XCB_PROP_MODE_APPEND, win, EWMH._NET_WM_STATE, XCB_ATOM_ATOM, 32, 1, &(EWMH._NET_WM_STATE_STICKY) );
   xcb_flush(QX11Info::connection()); //apply it right away*/
