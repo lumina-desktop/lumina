@@ -38,7 +38,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setAttribute(Qt::WA_AlwaysShowToolTips);
   this->setObjectName("LuminaPanelWidget");
   panelArea->setObjectName("LuminaPanelPluginWidget");
-  LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
+  //LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
   LSession::handle()->XCB->SetAsSticky(this->winId()); 
   //LX11::SetAsSticky(this->winId());
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
@@ -131,7 +131,8 @@ void LPanel::UpdatePanel(){
   }
   //With QT5, we need to make sure to reset window properties on occasion
   LSession::handle()->XCB->SetAsSticky(this->winId()); 
-  LX11::SetAsPanel(this->winId());
+  //LX11::SetAsPanel(this->winId());
+  //LX11::SetAsSticky(this->winId());
   //Now update the appearance of the toolbar
   QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
   QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";

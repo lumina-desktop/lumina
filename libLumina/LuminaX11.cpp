@@ -945,8 +945,24 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
 
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
-  xcb_change_property( QX11Info::connection(), XCB_PROP_MODE_APPEND, win, EWMH._NET_WM_STATE, XCB_ATOM_ATOM, 32, 1, &(EWMH._NET_WM_STATE_STICKY) );
-  xcb_flush(QX11Info::connection()); //apply it right away
+  //Need to send a client message event for the window so the WM picks it up
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = EWMH._NET_WM_STATE;
+    event.data.data32[0] = 1; //set to enabled
+    event.data.data32[1] = EWMH._NET_WM_STATE_STICKY;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+  //xcb_ewmh_set_wm_state(&EWMH, win, 1, &EWMH._NET_WM_STATE_STICKY);
+
+  //This method changes the property on the window directly - the WM is not aware of it	
+  /*xcb_change_property( QX11Info::connection(), XCB_PROP_MODE_APPEND, win, EWMH._NET_WM_STATE, XCB_ATOM_ATOM, 32, 1, &(EWMH._NET_WM_STATE_STICKY) );
+  xcb_flush(QX11Info::connection()); //apply it right away*/
 }
 
 // === SetScreenWorkArea() ===
