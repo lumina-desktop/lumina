@@ -27,7 +27,7 @@ DEPENDPATH	+= ../libLumina
 openbsd-g++4 {
   LRELEASE = lrelease4
 } else {
-  LRELEASE = lrelease-qt4
+  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 }
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \
