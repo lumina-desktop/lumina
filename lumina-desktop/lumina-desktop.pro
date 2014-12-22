@@ -17,7 +17,7 @@ TEMPLATE = app
 openbsd-g++4 {
   LRELEASE = lrelease4
 } else {
-  LRELEASE = /usr/local/lib/qt5/bin/lrelease
+  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 }
 
 SOURCES += main.cpp \
