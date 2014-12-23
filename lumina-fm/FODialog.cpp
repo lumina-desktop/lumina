@@ -7,14 +7,17 @@
 #include "FODialog.h"
 #include "ui_FODialog.h"
 
+#include <QApplication>
+
 FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
   ui->setupUi(this); //load the designer file
-  ui->label->setText("");
+  ui->label->setText(tr("Calculating"));
   ui->progressBar->setVisible(false);
   ui->push_stop->setIcon( LXDG::findIcon("edit-delete","") );
   //Now set the internal defaults
   isRM = isCP = isRESTORE = isMV = stopped = noerrors = false;
   overwrite = -1; //set to automatic by default
+  this->show();
 }
 
 FODialog::~FODialog(){
@@ -61,25 +64,36 @@ void FODialog::MoveFiles(QStringList oldPaths, QStringList newPaths){
 }
 
 // ==== PRIVATE ====
-QStringList FODialog::subfiles(QString dirpath){
+QStringList FODialog::subfiles(QString dirpath, bool dirsfirst){
+  //NOTE: dirpath (input) is always the first/last item in the output as well!
   QStringList out;
+  if(dirsfirst){ out << dirpath; }
   if( QFileInfo(dirpath).isDir() ){
     QDir dir(dirpath);
-    //First list the files
+    if(dirsfirst){
+      //Now recursively add any subdirectories and their contents
+      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::NoSort);
+      for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i]), dirsfirst); }
+    }
+    //List the files
     QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort);
     for(int i=0; i<files.length(); i++){ out << dir.absoluteFilePath(files[i]); }
-    //Now recursively add any subdirectories and their contents
-    QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::NoSort);
-    for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i])); }
+    
+    if(!dirsfirst){
+      //Now recursively add any subdirectories and their contents
+      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::NoSort);
+      for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i]), dirsfirst); }
+    }
   }
-  out << dirpath; //always put the parent directory after all the contents
+  if(!dirsfirst){ out << dirpath; }
   return out;
 }
 
 QString FODialog::newFileName(QString path){
   int num=1;
-  QString extension = path.section(".",-1);
-  if(!extension.isEmpty()){ 
+  QString extension = path.section("/",-1).section(".",-1);
+  if( path.section("/",-1) == "."+extension || extension ==path.section("/",-1) ){ extension.clear(); } //just a hidden file without extension or directory
+  if(!extension.isEmpty() ){ 
     extension.prepend("."); 
     path.chop(extension.length());
   }
@@ -87,8 +101,12 @@ QString FODialog::newFileName(QString path){
   return QString(path+"-"+QString::number(num)+extension);
 }
 
-QStringList FODialog::removeItem(QString path){
-  QStringList items = subfiles(path);
+QStringList FODialog::removeItem(QString path, bool recursive){
+  //qDebug() << "Remove Path:" << path;
+  QStringList items;
+  if(recursive){ items = subfiles(path,false); }
+  else{ items << path; } //only the given path
+  //qDebug() << " - Subfiles:" << items;
   QStringList err;	
   for(int i=0; i<items.length(); i++){
     if(QFileInfo(items[i]).isDir()){
@@ -98,7 +116,7 @@ QStringList FODialog::removeItem(QString path){
         if( !dir.rmdir(items[i]) ){ err << items[i]; }		      
       }else{
         //Recursive Directory Removal
-        err << removeItem(items[i]);	      
+        err << removeItem(items[i], recursive);	      
       }
     }else{
       //Simple File Removal
@@ -111,14 +129,11 @@ QStringList FODialog::removeItem(QString path){
 QStringList FODialog::copyItem(QString oldpath, QString newpath){
   QStringList err;
   if(QFileInfo(oldpath).isDir()){
+    //Create a new directory with the same name (no way to copy dir+contents)
     QDir dir;
     if( !dir.mkpath(newpath) ){ err << oldpath; }
-    else{
-      dir.cd(oldpath);
-      QStringList subs = dir.entryList(QDir::Files | QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst);
-      for(int i=0; i<subs.length(); i++){ err << copyItem(oldpath+"/"+subs[i], newpath+"/"+subs[i]); }
-    }
   }else{
+    //Copy the file and reset permissions as necessary
     if( !QFile::copy(oldpath, newpath) ){ err << oldpath; }
     else{
       if(isCP){
@@ -136,10 +151,12 @@ QStringList FODialog::copyItem(QString oldpath, QString newpath){
 // ==== PRIVATE SLOTS ====
 void FODialog::slotStartOperations(){
   ui->label->setText(tr("Calculating..."));
+  //qDebug() << "Start File operations" << isRM << isCP << isMV << ofiles << nfiles;
   //Now setup the UI
   ui->progressBar->setRange(0,ofiles.length());
   ui->progressBar->setValue(0);
   ui->progressBar->setVisible(true);
+  QApplication::processEvents();
   if(!isRM && overwrite==-1){
     //Check if the new files already exist, and prompt for action
     QStringList existing;
@@ -154,22 +171,63 @@ void FODialog::slotStartOperations(){
       else{ this->close(); return; } //cancel operations
     }
   }
-  //Now start iterating over the operations
-  QStringList errlist;
-  for(int i=0; i<ofiles.length() && !stopped; i++){
-    if(isRM){
-      ui->label->setText( QString(tr("Removing: %1")).arg(ofiles[i].section("/",-1)) );
-      errlist << removeItem(ofiles[i]);
+  //Get the complete number of items to be operated on (better tracking)
+  QStringList olist, nlist; //old/new list
+  for(int i=0; i<ofiles.length(); i++){
+    if(isRM){ //only old files
+      olist << subfiles(ofiles[i], false); //dirs need to be last for removals
     }else if(isCP || isRESTORE){
-      ui->label->setText( QString(tr("Copying: %1 to %2")).arg(ofiles[i].section("/",-1), nfiles[i].section("/",-1)) );
       if(QFile::exists(nfiles[i])){
-	if(overwrite){
-	  errlist << removeItem(nfiles[i]);
-	}else{
-	  nfiles[i] = newFileName(nfiles[i]);
+	if(!overwrite){
+	  nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
 	}
       }
-      errlist << copyItem(ofiles[i], nfiles[i]);
+      QStringList subs = subfiles(ofiles[i], true); //dirs need to be first for additions
+      for(int s=0; s<subs.length(); s++){
+        olist << subs[s];
+	QString newsub = subs[s].section(ofiles[i],0,100, QString::SectionSkipEmpty); 
+	    newsub.prepend(nfiles[i]);
+	nlist << newsub;
+      }
+    }else{ //Move/rename
+      if( nfiles[i].startsWith(ofiles[i]+"/") ){
+	//This is trying to move a directory into itself  (not possible)
+	// Example: move "~/mydir" -> "~/mydir/mydir2"
+	QMessageBox::warning(this, tr("Invalid Move"), QString(tr("It is not possible to move a directory into itself. Please make a copy of the directory instead.\n\nOld Location: %1\nNew Location: %2")).arg(ofiles[i], nfiles[i]) );
+      }else{
+	//no changes necessary
+        olist << ofiles[i];
+        nlist << nfiles[i];
+      }
+    }
+  }
+  //Now start iterating over the operations
+  QStringList errlist;
+  for(int i=0; i<olist.length() && !stopped; i++){
+    if(isRM){
+      ui->label->setText( QString(tr("Removing: %1")).arg(olist[i].section("/",-1)) );
+      errlist << removeItem(olist[i]);
+    }else if(isCP || isRESTORE){
+      ui->label->setText( QString(tr("Copying: %1 to %2")).arg(olist[i].section("/",-1), nlist[i].section("/",-1)) );
+      if(QFile::exists(nlist[i])){
+	if(overwrite){
+	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
+	}
+      }
+      //If a parent directory fails to copy, skip all the children as well (they will also fail)
+      if( !errlist.contains(olist[i].section("/",0,-1)) ){ 
+        errlist << copyItem(olist[i], nlist[i]);
+      }
+      /*if(err.isEmpty() && !subs.isEmpty() ){ //make sure the initial parent dir did not error out
+        //For copies of directories, also need to copy over all the sub files/dirs
+        for(int s=0; s<subs.length(); s++){
+	  //Replace the old parent directory path with the new parent directory path;
+	  QString newsub = subs[s].section(ofiles[i],0,100, QString::SectionSkipEmpty); 
+	    newsub.prepend(nfiles[i]);
+	  //qDebug() << "Copy Sub:" << subs[s] << newsub;
+          errlist << copyItem(subs[s], newsub);
+        }
+      }*/
     }else if(isMV){
       ui->label->setText( QString(tr("Moving: %1 to %2")).arg(ofiles[i].section("/",-1), nfiles[i].section("/",-1)) );
       if( !QFile::rename(ofiles[i], nfiles[i]) ){
@@ -177,6 +235,7 @@ void FODialog::slotStartOperations(){
       }	
     }
     ui->progressBar->setValue(i+1);
+    QApplication::processEvents();
   }
   //All finished, so close the dialog if successful
   errlist.removeAll(""); //make sure to clear any empty items

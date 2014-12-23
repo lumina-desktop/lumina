@@ -1105,12 +1105,17 @@ void MainUI::RemoveItem(){
    if(!checkUserPerms()){ return; }
    //Get the selected items
    QStringList paths, names;
-   QFileInfoList sel = getSelectedItems();
-   for(int i=0; i<sel.length(); i++){
-     paths << sel[i].absoluteFilePath();
-     names << sel[i].fileName();
-   }
-   if(sel.isEmpty()){ return; } //nothing selected
+   if(CItem.isEmpty()){
+     QFileInfoList sel = getSelectedItems();
+     for(int i=0; i<sel.length(); i++){
+       paths << sel[i].absoluteFilePath();
+       names << sel[i].fileName();
+     }
+     if(sel.isEmpty()){ return; } //nothing selected
+  }else{
+    paths << CItem;
+    names << CItem.section("/",-1);
+  }
   //Verify permanent removal of file/dir
   if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+names.join("\n"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
     return; //cancelled
@@ -1119,7 +1124,9 @@ void MainUI::RemoveItem(){
   qDebug() << "Delete: "<<paths;
   FODialog dlg(this);
     dlg.RemoveFiles(paths);
+    dlg.show();
     dlg.exec();
+  CItem.clear();
 }
 
 void MainUI::RenameItem(){
@@ -1160,6 +1167,7 @@ void MainUI::RenameItem(){
   FODialog dlg(this);
     dlg.setOverwrite(overwrite);
     dlg.MoveFiles(QStringList() << path+fname, QStringList() << path+nname);
+    dlg.show();
     dlg.exec();
   CItem.clear();
 }
@@ -1248,6 +1256,7 @@ void MainUI::PasteItems(){
     qDebug() << "Paste Copy:" << copy << "->" << newcopy;
     FODialog dlg(this);
       dlg.CopyFiles(copy, newcopy);
+      dlg.show();
       dlg.exec();
       errs = errs || !dlg.noerrors;
   }
@@ -1255,6 +1264,7 @@ void MainUI::PasteItems(){
     qDebug() << "Paste Cut:" << cut << "->" << newcut;
     FODialog dlg(this);
       dlg.MoveFiles(cut, newcut);
+      dlg.show();
       dlg.exec();
       errs = errs || !dlg.noerrors;
   }

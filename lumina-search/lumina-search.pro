@@ -21,7 +21,7 @@ FORMS    += MainUI.ui
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
-LIBS     += -L../libLumina -lLuminaUtils
+LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils
 
 LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 

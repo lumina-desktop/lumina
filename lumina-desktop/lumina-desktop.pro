@@ -8,17 +8,13 @@ isEmpty(PREFIX) {
 }
 target.path = $$PREFIX/bin
 
-LIBS     += -L../libLumina -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
+LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
 
-openbsd-g++4 {
-  LRELEASE = lrelease4
-} else {
-  LRELEASE = /usr/local/lib/qt5/bin/lrelease
-}
+LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
 
 SOURCES += main.cpp \
 	WMProcess.cpp \

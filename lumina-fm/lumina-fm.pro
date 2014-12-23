@@ -30,10 +30,7 @@ FORMS    += MainUI.ui \
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
-  LIBS     += -L../libLumina -lLuminaUtils
-/*freebsd-* {
-  LIBS     += -lQtSolutions_SingleApplication-head
-}*/
+LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils
 
 openbsd-g++4 {
   LRELEASE = lrelease4
