@@ -72,16 +72,16 @@ QStringList FODialog::subfiles(QString dirpath, bool dirsfirst){
     QDir dir(dirpath);
     if(dirsfirst){
       //Now recursively add any subdirectories and their contents
-      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::NoSort);
+      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden, QDir::NoSort);
       for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i]), dirsfirst); }
     }
     //List the files
-    QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort);
+    QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::NoSort);
     for(int i=0; i<files.length(); i++){ out << dir.absoluteFilePath(files[i]); }
     
     if(!dirsfirst){
       //Now recursively add any subdirectories and their contents
-      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::NoSort);
+      QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden, QDir::NoSort);
       for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i]), dirsfirst); }
     }
   }
