@@ -51,8 +51,12 @@ QStringList LOS::ExternalDevicePaths(){
 //Read screen brightness information
 int LOS::ScreenBrightness(){
   //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
-  if(screenbrightness==-1){
-    if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){
+  //Make sure we are not running in VirtualBox (does not work in a VM)
+  QStringList info = LUtils::getCmdOutput("pciconf -lv");
+  if( !info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ return -1; }
+  //Now perform the standard brightness checks
+  if(screenbrightness==-1){ //memory value
+    if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){ //saved file value
       int val = LUtils::readFile(QDir::homePath()+"/.lumina/.currentxbrightness").join("").simplified().toInt();
       screenbrightness = val;
     }
