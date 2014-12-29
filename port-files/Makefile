@@ -29,7 +29,7 @@ MAKE_JOBS_UNSAFE=yes
 USE_XORG=	x11 xcomposite xdamage xrender
 USE_XCB=		x11extras wm
 USE_LDCONFIG=	yes
-USE_QT5=	corelib gui network svg linguist multimedia imageformats \
+USE_QT5=	core gui network svg linguist multimedia imageformats \
 		buildtools x11extras
 USES=		qmake tar:bzip2
 
