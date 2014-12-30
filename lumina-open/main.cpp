@@ -292,29 +292,33 @@ int main(int argc, char **argv){
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
   if(!args.isEmpty()){ cmd.append(" \""+args+"\""); }
-  int retcode = system( cmd.toUtf8() );
-  /*
+  //int retcode = system( cmd.toUtf8() );
+  qDebug() << "[lumina-open] Running Cmd:" << cmd;
   QProcess *p = new QProcess();
   p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
   if(!path.isEmpty() && QFile::exists(path)){ p->setWorkingDirectory(path); }
-  p->start(cmd+" \""+args+"\"");
+  p->start(cmd);
   //Check the startup procedure
-  while(!p->waitForStarted(5000)){
+  /*while(!p->waitForStarted(5000)){
     if(p->state() == QProcess::NotRunning){
      //bad/invalid start
-     qDebug() << "[lumina-open] Application did not startup properly:"<<cmd+" "+args;
+     qDebug() << "[lumina-open] Application did not start properly:"<<cmd;
      return p->exitCode();
     }else if(p->state() == QProcess::Running){
      //This just missed the "started" signal - continue
      break;
     }
-  }
+  }*/
   //Now check up on it once every minute until it is finished
   while(!p->waitForFinished(60000)){
+    qDebug() << "[lumina-open] process check:" << p->state();
     if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
   }
-  int retcode = p->exitCode();*/
-  if(retcode!=0){
+  int retcode = p->exitCode();
+  qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
+  
+  //if(retcode!=0 ){
+  if(p->exitStatus() == QProcess::CrashExit){
     qDebug() << "[lumina-open] Application Error:" << retcode;
     //Setup the application
     QApplication App(argc, argv);

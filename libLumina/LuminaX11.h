@@ -132,9 +132,15 @@ public:
 	QString WindowClass(WId);
 	unsigned int WindowWorkspace(WId);
 	WINDOWSTATE WindowState(WId win); //Visible state of window
+	QString WindowVisibleIconName(WId win); //_WM_VISIBLE_ICON_NAME
+	QString WindowIconName(WId win); //_WM_ICON_NAME
+	QString WindowVisibleName(WId win); //_WM_VISIBLE_NAME
+	QString WindowName(WId win); //_WM_NAME
 	
 	//Window Modification
-	void SetAsSticky(WId);
+	void SetAsSticky(WId); //Stick to all workspaces
+	void CloseWindow(WId); //request that the window be closed
+	
 };
 
 #endif

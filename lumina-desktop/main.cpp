@@ -61,7 +61,8 @@ int main(int argc, char ** argv)
     //LSession::setGraphicsSystem("native"); //make sure to use X11 graphics system
     //Setup the log file
     qDebug() << "Lumina Log File:" << logfile.fileName();
-    if(logfile.exists()){ logfile.remove(); } //remove any old one
+    if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
+    if(logfile.exists()){ QFile::rename(logfile.fileName(), logfile.fileName()+".old"); }
       //Make sure the parent directory exists
       if(!QFile::exists(QDir::homePath()+"/.lumina/logs")){
         QDir dir;

@@ -858,12 +858,12 @@ LXCB::~LXCB(){
 // === WindowList() ===
 QList<WId> LXCB::WindowList(bool rawlist){
   QList<WId> output;
-  qDebug() << "Get Client list cookie";
+  //qDebug() << "Get Client list cookie";
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_unchecked( &EWMH, 0);
   xcb_ewmh_get_windows_reply_t winlist;
-  qDebug() << "Get client list";
+  //qDebug() << "Get client list";
   if( 1 == xcb_ewmh_get_client_list_reply( &EWMH, cookie, &winlist, NULL) ){
-    qDebug() << " - Loop over items";
+    //qDebug() << " - Loop over items";
     unsigned int wkspace = CurrentWorkspace();
     for(unsigned int i=0; i<winlist.windows_len; i++){ 
       //Filter out the Lumina Desktop windows
@@ -880,11 +880,11 @@ QList<WId> LXCB::WindowList(bool rawlist){
 
 // === CurrentWorkspace() ===
 unsigned int LXCB::CurrentWorkspace(){
-  qDebug() << "Get Current Workspace";
+  //qDebug() << "Get Current Workspace";
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_current_desktop_unchecked(&EWMH, 0);
   uint32_t wkspace = 0;
   xcb_ewmh_get_current_desktop_reply(&EWMH, cookie, &wkspace, NULL);
-  qDebug() << " - done:" << wkspace;
+  //qDebug() << " - done:" << wkspace;
   return wkspace;
 }
 
@@ -892,27 +892,30 @@ unsigned int LXCB::CurrentWorkspace(){
 QString LXCB::WindowClass(WId win){
   QString out;
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
+  if(cookie.sequence == 0){ return out; } 
   xcb_icccm_get_wm_class_reply_t value;
   if( 1== xcb_icccm_get_wm_class_reply( QX11Info::connection(), cookie, &value, NULL) ){
-    out = QString(value.class_name);
+    out = QString::fromUtf8(value.class_name);
+    xcb_icccm_get_wm_class_reply_wipe(&value);
   }
-  xcb_icccm_get_wm_class_reply_wipe(&value);
   return out;
 }
 
 // === WindowWorkspace() ===
 unsigned int LXCB::WindowWorkspace(WId win){
-  qDebug() << "Get Window Workspace";
+  //qDebug() << "Get Window Workspace";
   uint32_t wkspace = 0;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return wkspace; } 
   xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
-  qDebug() << " - done: " << wkspace;
+  //qDebug() << " - done: " << wkspace;
   return wkspace;	
 }
 
 // === WindowState() ===
 LXCB::WINDOWSTATE LXCB::WindowState(WId win){
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return IGNORE; } 
   xcb_ewmh_get_atoms_reply_t states;
   WINDOWSTATE cstate = IGNORE;
   //First Check for special states (ATTENTION in particular);
@@ -951,6 +954,54 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
   return cstate;
 }
 
+// === WindowVisibleIconName() ===
+QString LXCB::WindowVisibleIconName(WId win){ //_WM_VISIBLE_ICON_NAME
+  QString out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return out; } 
+  xcb_ewmh_get_utf8_strings_reply_t data;
+  if( 1 == xcb_ewmh_get_wm_visible_icon_name_reply(&EWMH, cookie, &data, NULL) ){
+      out = QString::fromUtf8(data.strings, data.strings_len);
+  }
+  return out;
+}
+
+// === WindowIconName() ===
+QString LXCB::WindowIconName(WId win){ //_WM_ICON_NAME
+  QString out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return out; } 
+  xcb_ewmh_get_utf8_strings_reply_t data;
+  if( 1 == xcb_ewmh_get_wm_icon_name_reply(&EWMH, cookie, &data, NULL) ){
+      out = QString::fromUtf8(data.strings, data.strings_len);
+  }
+  return out;
+}
+
+// === WindowVisibleName() ===
+QString LXCB::WindowVisibleName(WId win){ //_WM_VISIBLE_NAME
+  QString out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return out; } 
+  xcb_ewmh_get_utf8_strings_reply_t data;
+  if( 1 == xcb_ewmh_get_wm_visible_name_reply(&EWMH, cookie, &data, NULL) ){
+      out = QString::fromUtf8(data.strings, data.strings_len);
+  }
+  return out;
+}
+
+// === WindowName() ===
+QString LXCB::WindowName(WId win){ //_WM_NAME
+  QString out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return out; } 
+  xcb_ewmh_get_utf8_strings_reply_t data;
+  if( 1 == xcb_ewmh_get_wm_name_reply(&EWMH, cookie, &data, NULL) ){
+      out = QString::fromUtf8(data.strings, data.strings_len);
+  }
+  return out;
+}
+
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
   //Need to send a client message event for the window so the WM picks it up
@@ -972,6 +1023,10 @@ void LXCB::SetAsSticky(WId win){
   xcb_flush(QX11Info::connection()); //apply it right away*/
 }
 
+// === CloseWindow() ===
+void LXCB::CloseWindow(WId win){
+  xcb_ewmh_request_close_window(&EWMH, 0, win, QX11Info::getTimestamp(), XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER);
+}
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){
   //This is only useful because Fluxbox does not set the _NET_WORKAREA root atom

@@ -39,49 +39,10 @@ public:
 	
 	//Information Retrieval
 	 // Don't cache these results because they can change regularly
-	QString  text(){
-	  if(window==0){ return ""; }
-	  QString nm = LX11::WindowVisibleIconName(window);
-	  if(nm.isEmpty()){ nm = LX11::WindowIconName(window); }
-	  if(nm.isEmpty()){ nm = LX11::WindowVisibleName(window); }
-	  if(nm.isEmpty()){ nm = LX11::WindowName(window); }
-	  return nm;
-	}
-
-	QIcon icon(bool &noicon){
-	  if(window==0){ noicon = true; return QIcon();}
-	  //qDebug() << "Check for Window Icon:" << window;
-	  noicon = false;
-	  QIcon ico = LX11::WindowIcon(window);
-	  //Check for a null icon, and supply one if necessary
-	  if(ico.isNull()){ ico = LXDG::findIcon( this->Class().toLower(),""); }
-	  if(ico.isNull()){ ico = LXDG::findIcon("preferences-system-windows",""); noicon=true;}
-	  return ico;
-	}
-	
-	QString Class(){
-	  return LX11::WindowClass(window);
-	}
-	
-	Lumina::STATES status(){
-	  if(window==0){ return Lumina::NOSHOW; }
-	  LX11::WINDOWSTATE ws = LX11::GetWindowState(window);
-	  Lumina::STATES state;
-	  switch(ws){
-	    case LX11::VISIBLE:
-		    state = Lumina::VISIBLE; break;
-	    case LX11::INVISIBLE:
-		    state = Lumina::INVISIBLE; break;
-	    case LX11::ACTIVE:
-		    state = Lumina::ACTIVE; break;
-	    case LX11::ATTENTION:
-		    state = Lumina::NOTIFICATION; break;
-	    default:
-		    state = Lumina::NOSHOW;
-	  }
-	  //qDebug() << "Window State:" << ws << state;
-	  return state;
-	}
+	QString  text();
+	QIcon icon(bool &noicon);
+	QString Class();
+	Lumina::STATES status();
 };
 
 #endif

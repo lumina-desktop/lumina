@@ -272,13 +272,17 @@ void LXDG::setEnvironmentVars(){
 
 QIcon LXDG::findIcon(QString iconName, QString fallback){
   //Check if the icon is an absolute path and exists
+  bool DEBUG =false;
+  if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
   if(QFile::exists(iconName) && iconName.startsWith("/")){ return QIcon(iconName); }
   else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just looks for the icon
   //Check if the icon is actually given
-  if(iconName.isEmpty()){ return QIcon(fallback); }
+  if(iconName.isEmpty()){ 
+    if(fallback.isEmpty()){  return QIcon(); }
+    else{ return LXDG::findIcon(fallback, ""); }
+  }
   //Now try to find the icon from the theme
-  bool DEBUG = false;
-  if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
+  if(DEBUG){ qDebug() << "[LXDG] Start search for icon"; }
   //Check the default theme search paths
   QStringList paths = QIcon::themeSearchPaths();
   if(paths.isEmpty()){

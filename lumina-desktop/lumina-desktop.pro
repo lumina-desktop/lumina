@@ -21,6 +21,7 @@ SOURCES += main.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
 	LPanel.cpp \
+	LWinInfo.cpp \
 	AppMenu.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \

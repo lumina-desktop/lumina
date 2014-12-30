@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QEvent>
+#include <QDateTime>
 
 // libLumina includes
 #include <LuminaX11.h>
@@ -32,7 +33,7 @@ public:
 private:
 	QList<LTaskButton*> BUTTONS; //to keep track of the current buttons
 	QTimer *timer;
-	bool updating; //quick flag for if it is currently working
+	QDateTime updating; //quick flag for if it is currently working
 
 private slots:
 	void UpdateButtons();

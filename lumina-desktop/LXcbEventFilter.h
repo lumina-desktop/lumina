@@ -119,28 +119,28 @@ public:
 		    case XCB_PROPERTY_NOTIFY:
 			//qDebug() << "Property Notify Event:";
 			if( atoms.contains( ((xcb_property_notify_event_t*)ev)->atom) ){
-			  //qDebug() << " - launch session property event";
+			  qDebug() << " - launch session property event";
 			  session->WindowPropertyEvent();		
 			}
 			break;
 		    
 		    case XCB_CLIENT_MESSAGE:
-			//qDebug() << "Client Message Event";
+			qDebug() << "Client Message Event";
 		        checkClientMessage( (xcb_client_message_event_t*)ev );
 		        break;
 		    
 		    case XCB_DESTROY_NOTIFY:
-			//qDebug() << "Window Closed Event";
+			qDebug() << "Window Closed Event";
 			session->WindowClosedEvent( ( (xcb_destroy_notify_event_t*)ev )->window );
 		        break;
 		    
 		    case XCB_CONFIGURE_NOTIFY:
-			//qDebug() << "Configure Notify Event";
+			qDebug() << "Configure Notify Event";
 			session->WindowConfigureEvent( ((xcb_configure_notify_event_t*)ev)->window );
 		        break;
 		    
 		    case XCB_SELECTION_CLEAR:
-			//qDebug() << "Selection Clear Event";
+			qDebug() << "Selection Clear Event";
 			session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );  
 		        break;
 		    
