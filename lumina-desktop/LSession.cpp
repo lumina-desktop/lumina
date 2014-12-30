@@ -123,7 +123,7 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
 }
 
-bool LSession::LoadLocale(QString langCode){
+/*bool LSession::LoadLocale(QString langCode){
     QTranslator translator;
     if ( ! QFile::exists(LOS::LuminaShare()+"i18n/lumina-desktop_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
     bool ok = translator.load( QString("lumina-desktop_") + langCode, LOS::LuminaShare()+"i18n/" );
@@ -139,7 +139,7 @@ bool LSession::LoadLocale(QString langCode){
     }
     emit LocaleChanged();
     return ok;
-}
+}*/
 
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined

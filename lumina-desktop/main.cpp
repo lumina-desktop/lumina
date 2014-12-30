@@ -22,6 +22,7 @@
 #include <LuminaXDG.h> //from libLuminaUtils
 #include <LuminaThemes.h>
 #include <LuminaOS.h>
+#include <LuminaUtils.h>
 
 #define DEBUG 1
 
@@ -81,7 +82,8 @@ int main(int argc, char ** argv)
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
     if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
-    a.LoadLocale(QLocale().name());
+    LUtils::LoadTranslation(&a, "lumina-desktop");
+    //a.LoadLocale(QLocale().name());
     //Start launching external applications
     QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}

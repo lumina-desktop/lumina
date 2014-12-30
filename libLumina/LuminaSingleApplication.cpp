@@ -24,7 +24,18 @@ LSingleApplication::LSingleApplication(int &argc, char **argv) : QApplication(ar
   cfile = cfile.arg( username, appname );
   lockfile = new QLockFile(cfile+"-lock");
     lockfile->setStaleLockTime(0); //long-lived processes
-  for(int i=1; i<argc; i++){ inputlist << QString(argv[i]); }
+  for(int i=1; i<argc; i++){ 
+    QString path = argv[i];
+    //do few quick conversions for relative paths and such as necessary
+    // (Remember: this is only used for secondary processes, not the primary)
+      if(path=="."){
+	//Insert the current working directory instead
+	path = QDir::currentPath();
+      }else{
+	if(!path.startsWith("/") && !path.startsWith("-") ){ path.prepend(QDir::currentPath()+"/"); }
+      }
+    inputlist << path; 
+  }
   isActive = false;
   lserver = 0;
   PerformLockChecks();

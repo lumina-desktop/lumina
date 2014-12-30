@@ -6,6 +6,7 @@
 
 #include "mainUI.h"
 #include <LuminaOS.h>
+#include <LuminaUtils.h>
 #include <LuminaThemes.h>
 #include <LuminaSingleApplication.h>
 
@@ -15,14 +16,15 @@ int main(int argc, char ** argv)
     if(!a.isPrimaryProcess()){ return 0; }
     
     LuminaThemeEngine theme(&a);
-    QTranslator translator;
+    LUtils::LoadTranslation(&a, "lumina-config");
+    /*QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
 
     if ( ! QFile::exists(LOS::LuminaShare()+"i18n/lumina-config_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
     translator.load( QString("lumina-config_") + langCode, LOS::LuminaShare()+"i18n/" );
     a.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
+    qDebug() << "Locale:" << langCode;*/
 
 
     MainUI w;

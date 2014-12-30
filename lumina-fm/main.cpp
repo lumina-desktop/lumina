@@ -1,20 +1,17 @@
-#include <QTranslator>
-/*#ifdef __FreeBSD__
-  #include <qtsingleapplication.h>
-#endif*/
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
 #include <QStringList>
-//#include <QTextCodec>
 
 #include "MainUI.h"
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
+#include <LuminaUtils.h>
+#include <LuminaSingleApplication.h>
 
 int main(int argc, char ** argv)
 {
-    QStringList in;
+    /*QStringList in;
     for(int i=1; i<argc; i++){ //skip the first arg (app binary)
       QString path = argv[i];
       if(path=="."){
@@ -25,33 +22,21 @@ int main(int argc, char ** argv)
         in << path;
       }
     }
-    if(in.isEmpty()){ in << QDir::homePath(); }
-    /*#ifdef __FreeBSD__
-    QtSingleApplication a(argc, argv);
-    if( a.isRunning() ){
-      return !(a.sendMessage(in.join("\n")));
-    }
-    #else*/
-    QApplication a(argc, argv);
+    if(in.isEmpty()){ in << QDir::homePath(); }*/
+
+    LSingleApplication a(argc, argv);
+      if( !a.isPrimaryProcess()){ return 0; }
     qDebug() << "Loaded QApplication";
-    //#endif
     a.setApplicationName("Insight File Manager");
     LuminaThemeEngine themes(&a);
-    //Load current Locale
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-    if ( ! QFile::exists(LOS::LuminaShare()+"i18n/lumina-fm_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
-    translator.load( QString("lumina-fm_") + langCode, LOS::LuminaShare()+"i18n/" );
-    a.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
+    LUtils::LoadTranslation(&a, "lumina-fm");
 
-    //Load current encoding for this locale
-    //QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
-    //qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
-
+    //Get the list of inputs for the initial load
+    QStringList in = a.inputlist; //has fixes for relative paths and such
+    if(in.isEmpty()){ in << QDir::homePath(); }
+    //Start the UI
     MainUI w;
-    //QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(slotSingleInstance(const QString&)) );
+    QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance(QStringList)) );
     QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.OpenDirs(in);
     w.show();

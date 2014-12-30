@@ -116,10 +116,10 @@ private:
 	QFileInfoList getSelectedItems();
 
 private slots:
-	void slotSingleInstance(const QString &in){
+	void slotSingleInstance(QStringList in){
 	  this->show();
 	  this->raise();
-	  this->OpenDirs(in.split("\n"));
+	  this->OpenDirs(in);
 	}
 	
 	//General button check functions (started in a seperate thread!)

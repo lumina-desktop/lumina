@@ -5,11 +5,19 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LuminaUtils.h"
+
 #include <QString>
 #include <QFile>
 #include <QStringList>
 #include <QObject>
+#include <QTextCodec>
+#include <QDebug>
 
+#include <LuminaOS.h>
+
+//=============
+//  LUtils Functions
+//=============
 int LUtils::runCmd(QString cmd, QStringList args){
   QProcess *proc = new QProcess;
   proc->setProcessChannelMode(QProcess::MergedChannels);
@@ -95,4 +103,37 @@ QStringList LUtils::listSubDirectories(QString dir, bool recursive){
     }
   }
   return out;
+}
+
+void LUtils::LoadTranslation(QApplication *app, QString appname){
+   //Get the current localization
+    QString langEnc = "UTF-8"; //default value
+    QString langCode = getenv("LANG");
+    if(langCode.isEmpty()){ langCode = getenv("LC_ALL"); }
+    if(langCode.isEmpty()){ langCode = "en_US.UTF-8"; } //default to US english
+    //See if the encoding is included and strip it out as necessary
+    if(langCode.contains(".")){
+      langEnc = langCode.section(".",-1);
+      langCode = langCode.section(".",0,0);
+    }
+    //Now verify the encoding for the locale
+    if(langCode =="C" || langCode=="POSIX" || langCode.isEmpty()){
+      langEnc = "System"; //use the Qt system encoding
+    }
+    qDebug() << "Loading Locale:" << appname << langCode << langEnc;
+    
+    //Setup the translator
+    /*if(CurTranslator != 0){
+      //A Translator already loaded: unload it  before loading the new one
+     app->removeTranslator(CurTranslator);
+    }*/
+    QTranslator *CurTranslator = new QTranslator();
+    //Use the shortened locale code if specific code does not have a corresponding file
+    if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") ){
+      langCode.truncate( langCode.indexOf("_") );
+    }
+    CurTranslator->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" );
+    app->installTranslator( CurTranslator );
+    //Load current encoding for this locale
+    QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
 }

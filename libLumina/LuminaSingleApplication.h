@@ -19,12 +19,12 @@
 #ifndef _LUMINA_LIBRARY_SINGLE_APPLICATION_H
 #define _LUMINA_LIBRARY_SINGLE_APPLICATION_H
 
-#include <QApplication>
 #include <QString>
 #include <QStringList>
 #include <QLocalServer>
 #include <QLockFile>
 
+#include <LuminaUtils.h>
 
 class LSingleApplication : public QApplication{
   Q_OBJECT
@@ -34,12 +34,14 @@ public:
 
 	bool isPrimaryProcess();
 
+	QStringList inputlist; //in case the app wants access to modified inputs (relative path fixes and such)
+
 private:
 	bool isActive;
 	QLockFile *lockfile;
 	QLocalServer *lserver;
 	QString cfile;
-	QStringList inputlist;
+
 
 	void PerformLockChecks();
 

@@ -15,14 +15,14 @@
 #include <QUrl>
 #include <QDebug>
 #include <QTranslator>
-#include <QLocale>
+//#include <QLocale>
 #include <QMessageBox>
 #include <QSplashScreen>
 #include <QDateTime>
 #include <QPixmap>
 #include <QColor>
 #include <QFont>
-#include <QTextCodec>
+//#include <QTextCodec>
 
 #include "LFileDialog.h"
 
@@ -46,15 +46,7 @@ void printUsageInfo(){
 void showOSD(int argc, char **argv, QString message){
   //Setup the application
   QApplication App(argc, argv);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
+    LUtils::LoadTranslation(&App,"lumina-open");
 
   //Display the OSD
   QPixmap pix(":/icons/OSD.png");
@@ -113,20 +105,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     //No default set -- Start up the application selection dialog
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
-
-    //Load current encoding for this locale
-    //QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
-    //qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
+      LUtils::LoadTranslation(&App,"lumina-open");
 
     LFileDialog w;
     if(inFile.startsWith(extension)){
@@ -139,7 +118,6 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     }
 
     w.show();
-
     App.exec();
     if(!w.appSelected){ exit(1); }
     //Return the run path if appropriate
@@ -311,11 +289,11 @@ int main(int argc, char **argv){
   }*/
   //Now check up on it once every minute until it is finished
   while(!p->waitForFinished(60000)){
-    qDebug() << "[lumina-open] process check:" << p->state();
+    //qDebug() << "[lumina-open] process check:" << p->state();
     if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
   }
   int retcode = p->exitCode();
-  qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
+  //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
   
   //if(retcode!=0 ){
   if(p->exitStatus() == QProcess::CrashExit){
@@ -323,15 +301,7 @@ int main(int argc, char **argv){
     //Setup the application
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
+	LUtils::LoadTranslation(&App,"lumina-open");
     QMessageBox::critical(0,QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd);
   }
   return retcode;

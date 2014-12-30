@@ -55,7 +55,7 @@ public:
 
 	//virtual bool x11EventFilter(XEvent *event);
 	
-	bool LoadLocale(QString);
+	//bool LoadLocale(QString);
 
 	//Public System Tray Functions
 	QList<WId> currentTrayApps(WId visualTray);
