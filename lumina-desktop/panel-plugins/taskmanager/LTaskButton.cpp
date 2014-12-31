@@ -7,11 +7,11 @@
 #include "LTaskButton.h"
 #include "LSession.h"
 
-LTaskButton::LTaskButton(QWidget *parent) : LTBWidget(parent){
+LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent){
   actMenu = new QMenu(this);
   winMenu = new QMenu(this);
   UpdateMenus();
-  
+  showText = !smallDisplay;
   this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   this->setAutoRaise(false); //make sure these always look like buttons
   this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -108,13 +108,14 @@ void LTaskButton::UpdateButton(){
     //single window
     this->setPopupMode(QToolButton::DelayedPopup);
     this->setMenu(actMenu);
-    if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
+    if(showText){ this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
+    else if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
     else{ this->setText(""); }
   }else if(WINLIST.length() > 1){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
-    if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
+    if(noicon || showText){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }
   this->setState(showstate); //Make sure this is after the button setup so that it properly sets the margins/etc
@@ -140,7 +141,8 @@ void LTaskButton::buttonClicked(){
 void LTaskButton::closeWindow(){
   if(winMenu->isVisible()){ winMenu->hide(); }
   LWinInfo win = currentWindow();
-  LX11::CloseWindow(win.windowID());
+  LSession::handle()->XCB->CloseWindow(win.windowID());
+  //LX11::CloseWindow(win.windowID());
   cWin = LWinInfo(); //clear the current
 }
 

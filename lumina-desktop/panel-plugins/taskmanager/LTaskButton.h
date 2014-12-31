@@ -27,7 +27,7 @@
 class LTaskButton : public LTBWidget{
 	Q_OBJECT
 public:
-	LTaskButton(QWidget *parent=0);
+	LTaskButton(QWidget *parent=0, bool smallDisplay = true);
 	~LTaskButton();
 	
 	//Window Information
@@ -45,7 +45,7 @@ private:
 	QMenu *winMenu; // window menu (if more than 1)
 	LWinInfo cWin;
 	QString cname; //class name for the entire button
-	bool noicon;
+	bool noicon, showText;
 
 	LWinInfo currentWindow(); //For getting the currently-active window
 

@@ -34,6 +34,7 @@ private:
 	QList<LTaskButton*> BUTTONS; //to keep track of the current buttons
 	QTimer *timer;
 	QDateTime updating; //quick flag for if it is currently working
+	bool usegroups;
 
 private slots:
 	void UpdateButtons();

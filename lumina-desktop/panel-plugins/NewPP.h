@@ -33,7 +33,8 @@ public:
 	    plug = new LDeskBarPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("spacer---")){
 	    plug = new LSpacerPlugin(parent, plugin, horizontal);
-	  }else if(plugin.startsWith("taskmanager---")){
+	  }else if(plugin.startsWith("taskmanager")){
+	    //This one can be "taskmanager[-nogroups]---"
 	    plug = new LTaskManagerPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("systemtray---")){
 	    plug = new LSysTray(parent, plugin, horizontal);

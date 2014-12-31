@@ -104,8 +104,15 @@ void LPlugins::LoadPanelPlugins(){
   //Task Manager
   info = LPI(); //clear it
     info.name = QObject::tr("Task Manager");
-    info.description = QObject::tr("View and control any running application windows");
+    info.description = QObject::tr("View and control any running application windows (every application has a button)");
     info.ID = "taskmanager";
+    info.icon = "preferences-system-windows";
+  PANEL.insert(info.ID, info); 
+  //Task Manager
+  info = LPI(); //clear it
+    info.name = QObject::tr("Task Manager (No Groups)");
+    info.description = QObject::tr("View and control any running application windows (every window has a button)");
+    info.ID = "taskmanager-nogroups";
     info.icon = "preferences-system-windows";
   PANEL.insert(info.ID, info); 
   //System Tray
