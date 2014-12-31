@@ -250,11 +250,29 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     cmd = cmdFromUser(argc, argv, inFile, extension, path, showDLG);
     }
   }
+  //Now assemble the exec string (replace file/url field codes as necessary)
+  if(useInputFile){ 
+    args = inFile; //just to keep them distinct internally
+    // NOTE: lumina-open is only designed for a single input file,
+    //    so no need to distinguish between the list codes (uppercase) 
+    //    and the single-file codes (lowercase)
+    if(isFile && (cmd.contains("%f") || cmd.contains("%F") ) ){
+      cmd.replace("%f","\""+inFile+"\"");
+      cmd.replace("%F","\""+inFile+"\"");
+    }else if(isUrl && (cmd.contains("%U") || cmd.contains("%u")) ){
+      cmd.replace("%u","\""+inFile+"\"");
+      cmd.replace("%U","\""+inFile+"\"");
+    }else{
+      //No field codes (or improper field codes given - which is quite common)
+      // - Just tack the input file on the end and let the app handle it as necessary
+      cmd.append(" \""+inFile+"\"");
+    }
+  }
   //qDebug() << "Found Command:" << cmd << "Extension:" << extension;
-  //Clean up the command appropriately for output
+  //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
   if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
-  binary = cmd;
-  if(useInputFile){ args = inFile; }
+  binary = cmd; //pass this string to the calling function
+
 }
 
 int main(int argc, char **argv){
@@ -269,7 +287,7 @@ int main(int argc, char **argv){
   //qDebug() << "Run CMD:" << cmd << args;
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
-  if(!args.isEmpty()){ cmd.append(" \""+args+"\""); }
+  //if(!args.isEmpty()){ cmd.append(" "+args+""); }
   //int retcode = system( cmd.toUtf8() );
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
   QProcess *p = new QProcess();

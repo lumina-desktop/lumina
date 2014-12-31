@@ -254,9 +254,12 @@ QString LXDG::getDesktopExec(XDGDesktop app){
     out = app.exec;
   }
   //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
-  if(out.contains(" %i ")){ out.replace(" %i ", " --icon "+app.icon+" "); }
-  if(out.contains(" %c ")){ out.replace(" %c ", " "+app.name+" "); }
-  if(out.contains(" %k ")){ out.replace(" %k ", " "+app.filePath+" "); }
+  if(out.contains("%i")){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
+  if(out.contains("%c")){ 
+    if(!app.name.isEmpty()){ out.replace("%c", ""+app.name+""); }
+    else if(!app.genericName.isEmpty()){ out.replace(" %c ", ""+app.genericName+""); }
+  }
+  if(out.contains("%k")){ out.replace("%k", "\'"+app.filePath+"\'"); }
   return out;
 }
 
