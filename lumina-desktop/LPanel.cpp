@@ -31,7 +31,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   qDebug() << " -- Setup Panel";
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint );
+  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint );
   this->setFocusPolicy(Qt::NoFocus);
   this->setWindowTitle("");
   //this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); //Reserve as panel/dock
@@ -130,9 +130,8 @@ void LPanel::UpdatePanel(){
     }
   }
   //With QT5, we need to make sure to reset window properties on occasion
-  LSession::handle()->XCB->SetAsSticky(this->winId()); 
-  //LX11::SetAsPanel(this->winId());
-  //LX11::SetAsSticky(this->winId());
+  //LSession::handle()->XCB->SetAsSticky(this->winId()); 
+
   //Now update the appearance of the toolbar
   QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
   QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";

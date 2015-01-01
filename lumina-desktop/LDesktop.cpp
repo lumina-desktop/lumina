@@ -58,6 +58,20 @@ void LDesktop::hide(){
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }
 }
 
+WId LDesktop::backgroundID(){
+  if(bgWindow!=0){ return bgWindow->winId(); }
+  else{ return QX11Info::appRootWindow(); }
+}
+
+QRect LDesktop::availableScreenGeom(){
+  //Return a QRect containing the (global) screen area that is available (not under any panels)
+  if(bgDesktop!=0){
+    return globalWorkRect; //saved from previous calculations
+  }else{
+    return desktop->screenGeometry(desktopnumber);
+  }	  
+}
+
 void LDesktop::SystemLogout(){
   LSession::handle()->systemWindow();
 }
@@ -419,6 +433,7 @@ void LDesktop::UpdateDesktopPluginArea(){
   QRect rec = visReg.boundingRect();
   //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) desktopnumber, rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
+  globalWorkRect = rec; //save this for later
   rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y() ) );
   //qDebug() << "DPlug Area:" << rec.x() << rec.y() << rec.width() << rec.height();
   bgDesktop->setGeometry( rec );

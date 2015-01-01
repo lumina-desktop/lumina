@@ -48,7 +48,7 @@ private:
 	bool noicon, showText;
 
 	LWinInfo currentWindow(); //For getting the currently-active window
-
+	LXCB::WINDOWSTATE cstate; //current state of the button
 public slots:
 	void UpdateButton(); //re-sync the current window infomation
 	void UpdateMenus(); //re-create the menus (text + icons)
@@ -56,6 +56,8 @@ public slots:
 private slots:
 	void buttonClicked();
 	void closeWindow(); //send the signal to close a window
+	void maximizeWindow(); //send the signal to maximize/restore a window
+	void minimizeWindow(); //send the signal to minimize a window (iconify)
 	void triggerWindow(); //change b/w visible and invisible
 	void winClicked(QAction*);
 	void openActionMenu();

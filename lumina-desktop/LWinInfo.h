@@ -18,7 +18,7 @@
 #include <LuminaXDG.h>
 
 // Local includes
-#include "Globals.h" //For the STATES enumeration definition
+//#include "Globals.h" //For the STATES enumeration definition
 //#include "LSession.h"
 
 
@@ -42,7 +42,7 @@ public:
 	QString  text();
 	QIcon icon(bool &noicon);
 	QString Class();
-	Lumina::STATES status();
+	LXCB::WINDOWSTATE status();
 };
 
 #endif

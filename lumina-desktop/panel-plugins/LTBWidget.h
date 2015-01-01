@@ -16,6 +16,7 @@
 
 class LTBWidget : public QToolButton{
 	Q_OBJECT
+
 private:
 	LXCB::WINDOWSTATE cstate;
 	QString rawstyle;

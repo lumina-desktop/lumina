@@ -51,14 +51,14 @@ void LTaskManagerPlugin::UpdateButtons(){
 	//Window was closed - remove it
 	if(WI.length()==1){
 	  //Remove the entire button
-	  qDebug() << "Window Closed: Remove Button" ;
+	  //qDebug() << "Window Closed: Remove Button" ;
 	  this->layout()->takeAt(i); //remove from the layout
 	  delete BUTTONS.takeAt(i);
 	  i--;
 	  updated = true; //prevent updating a removed button
 	  break; //break out of the button->window loop
 	}else{
-	  qDebug() << "Window Closed: Remove from button:" << WI[w].windowID() << "Button:" << w;
+	  //qDebug() << "Window Closed: Remove from button:" << WI[w].windowID() << "Button:" << w;
 	  BUTTONS[i]->rmWindow(WI[w]); // one of the multiple windows for the button
 	  WI.removeAt(w); //remove this window from the list
 	  w--;
@@ -68,7 +68,7 @@ void LTaskManagerPlugin::UpdateButtons(){
       if(updating > ctime){ return; } //another thread kicked off already - stop this one
     }
     if(!updated){
-      qDebug() << "Update Button:" << i;
+      //qDebug() << "Update Button:" << i;
       if(updating > ctime){ return; } //another thread kicked off already - stop this one
       QTimer::singleShot(1,BUTTONS[i], SLOT(UpdateButton()) ); //keep moving on
     }
@@ -85,7 +85,7 @@ void LTaskManagerPlugin::UpdateButtons(){
       if(BUTTONS[b]->classname()== ctxt && usegroups){
 	//This adds a window to an existing group
         found = true;
-	qDebug() << "Add Window to Button:" << b;
+	//qDebug() << "Add Window to Button:" << b;
 	BUTTONS[b]->addWindow(winlist[i]);
 	break;
       }
@@ -93,7 +93,7 @@ void LTaskManagerPlugin::UpdateButtons(){
     if(!found){
       if(updating > ctime){ return; } //another thread kicked off already - stop this one
       //No group, create a new button
-      qDebug() << "New Button";
+      //qDebug() << "New Button";
       LTaskButton *but = new LTaskButton(this, usegroups);
         but->addWindow( LWinInfo(winlist[i]) );
 	if(this->layout()->direction()==QBoxLayout::LeftToRight){

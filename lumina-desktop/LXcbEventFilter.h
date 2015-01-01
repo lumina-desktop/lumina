@@ -47,7 +47,6 @@ XCB_SELECTION_[CLEAR | REQUEST | NOTIFY]
 XCB_COLORMAP_NOTIFY
 XCB_CLIENT_MESSAGE
 
-Also: it appears that the Xlib "Window" is identical to an XCB "xcb_window_t"
 */
 
 //SYSTEM TRAY STANDARD DEFINITIONS

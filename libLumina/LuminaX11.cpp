@@ -26,19 +26,6 @@
 #include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_icccm.h>
 
-//xcb_ewmh_connection_t ewmh_handle;
-
-//=====  Get EWMH connection handle =====
-/*xcb_ewmh_connection_t* LX11::EWMH_C(){
-  static bool firstrun = true;
-  if(firstrun){
-    qDebug() << "Init EWMH structure";
-    xcb_ewmh_init_atoms(QX11Info::connection(), &ewmh_handle);
-    firstrun = false;
-  }
-  qDebug() << "Return EWMH structure pointer:" << &ewmh_handle;
-  return &ewmh_handle;
-}*/
 
 //=====   WindowList() ========
 QList<WId> LX11::WindowList(){
@@ -888,6 +875,19 @@ unsigned int LXCB::CurrentWorkspace(){
   return wkspace;
 }
 
+// === RegisterVirtualRoots() ===
+void LXCB::RegisterVirtualRoots(QList<WId> roots){
+  //First convert the QList into the proper format
+  xcb_window_t *list = new xcb_window_t[ roots.length() ];
+  for(int i=0; i<roots.length(); i++){
+    list[i] = roots[i]; //move from the QList to the array
+  }
+  //Now set the property
+  xcb_ewmh_set_virtual_roots(&EWMH, 0, roots.length(), list);
+  //Now delete the temporary array from memory
+  delete list;
+}
+
 // === WindowClass() ===
 QString LXCB::WindowClass(WId win){
   QString out;
@@ -910,6 +910,49 @@ unsigned int LXCB::WindowWorkspace(WId win){
   xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
   //qDebug() << " - done: " << wkspace;
   return wkspace;	
+}
+
+// === WindowGeometry() ===
+QRect LXCB::WindowGeometry(WId win, bool includeFrame){
+  QRect geom;
+  xcb_get_geometry_cookie_t cookie = xcb_get_geometry(QX11Info::connection(), win);
+  xcb_get_geometry_reply_t *reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
+  //qDebug() << "Get Window Geometry:" << reply;
+  if(reply != 0){
+    geom = QRect(0, 0, reply->width, reply->height); //make sure to use the origin point for the window
+    //qDebug() << " - "<<reply->x << reply->y << reply->width << reply->height;
+    free(reply);
+    if(includeFrame){
+      //Need to add/include the frame extents as well (assuming the frame info is available)
+      xcb_get_property_cookie_t cookie = xcb_ewmh_get_frame_extents_unchecked(&EWMH, win);
+      if(cookie.sequence != 0){
+	xcb_ewmh_get_extents_reply_t frame;
+        if(1== xcb_ewmh_get_frame_extents_reply(&EWMH, cookie, &frame, NULL) ){
+	    //adjust the origin point to account for the frame
+	    geom.translate(-frame.left, -frame.top); //move to the orign point for the frame
+	    //adjust the size (include the frame sizes)
+	    //geom.setWidth( geom.width() + frame.left + frame.right );
+	    //geom.setHeight( geom.height() + frame.top + frame.bottom );
+	}
+	//qDebug() << " - Frame:" << frame.left << frame.right << frame.top << frame.bottom;
+	//qDebug() << " - Modified with Frame:" << geom.x() << geom.y() << geom.width() << geom.height();
+      }
+    }
+    //Now need to convert this to absolute coordinates (not parent-relavitve)
+      xcb_translate_coordinates_cookie_t tcookie = xcb_translate_coordinates(QX11Info::connection(), win, QX11Info::appRootWindow(), geom.x(), geom.y());
+      xcb_translate_coordinates_reply_t *trans = xcb_translate_coordinates_reply(QX11Info::connection(), tcookie, NULL);
+      if(trans!=0){
+	//qDebug() << " - Got Translation:" << trans->dst_x << trans->dst_y;
+	//Replace the origin point with the global position (sizing remains the same)
+        geom.moveLeft(trans->dst_x); //adjust X coordinate (no size change)
+	geom.moveTop(trans->dst_y); //adjust Y coordinate (no size change)
+	free(trans);
+      }
+  }else{
+    //Need to do another catch for this situation (probably not mapped yet)
+  }
+  
+  return geom;
 }
 
 // === WindowState() ===
@@ -1027,6 +1070,90 @@ void LXCB::SetAsSticky(WId win){
 void LXCB::CloseWindow(WId win){
   xcb_ewmh_request_close_window(&EWMH, 0, win, QX11Info::getTimestamp(), XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER);
 }
+
+// === MinimizeWindow() ===
+void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimized
+  //Note: Fluxbox completely removes this window from the open list if unmapped manually
+ // xcb_unmap_window(QX11Info::connection(), win);
+  //xcb_flush(QX11Info::connection()); //make sure the command is sent out right away
+	
+  //Need to send a client message event for the window so the WM picks it up
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = EWMH._NET_WM_STATE;
+    event.data.data32[0] = 1; //set to toggle (switch back and forth)
+    event.data.data32[1] = EWMH._NET_WM_STATE_HIDDEN;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+}
+
+// === ActivateWindow() ===
+void LXCB::ActivateWindow(WId win){ //request that the window become active
+  //First need to get the currently active window
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, 0);
+  xcb_window_t actwin;
+  if(1 != xcb_ewmh_get_active_window_reply(&EWMH, cookie, &actwin, NULL) ){
+    actwin = 0;
+  }	
+  if(actwin == win){ return; } //requested window is already active
+  
+//Need to send a client message event for the window so the WM picks it up
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win; //window to activate
+    event.type = EWMH._NET_ACTIVE_WINDOW;
+    event.data.data32[0] = 2; //pager/direct user interaction
+    event.data.data32[1] = QX11Info::getTimestamp(); //current timestamp
+    event.data.data32[2] = actwin; //currently active window (0 if none)
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+	
+}
+
+// === MaximizeWindow() ===
+void LXCB::MaximizeWindow(WId win){ //request that the window become maximized
+  //Need to send a client message event for the window so the WM picks it up
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = EWMH._NET_WM_STATE;
+    event.data.data32[0] = 2; //set to toggle (switch back and forth)
+    event.data.data32[1] = EWMH._NET_WM_STATE_MAXIMIZED_VERT;
+    event.data.data32[2] = EWMH._NET_WM_STATE_MAXIMIZED_HORZ;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+		
+}
+
+// === MoveResizeWindow() ===
+void LXCB::MoveResizeWindow(WId win, QRect geom){
+  //NOTE: geom needs to be in root/absolute coordinates!
+  //qDebug() << "MoveResize Window:" << geom.x() << geom.y() << geom.width() << geom.height();
+ 
+  //Move the window
+  /*xcb_ewmh_request_moveresize_window(&EWMH, 0, win, XCB_GRAVITY_STATIC, XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER, \
+		XCB_EWMH_MOVERESIZE_WINDOW_X | XCB_EWMH_MOVERESIZE_WINDOW_Y | XCB_MOVERESIZE_WINDOW_WIDTH | XCB_MOVERESIZE_WINDOW_HEIGHT, \
+		geom.x(), geom.y(), geom.width(), geom.height());*/
+  
+  //Use the basic XCB functions instead of ewmh (Issues with combining the XCB_EWMH_MOVERESIZE _*flags)
+  uint32_t values[4];
+  values[0] = geom.x(); values[1] = geom.y();
+  values[2] = geom.width(); values[3] = geom.height();
+  xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
+	
+}
+
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){
   //This is only useful because Fluxbox does not set the _NET_WORKAREA root atom

@@ -28,7 +28,6 @@
 #include "SystemWindow.h"
 #include "LDesktop.h"
 #include "WMProcess.h"
-//#include "LXcbEventFilter.h"
 
 #include <LuminaX11.h>
 
@@ -52,10 +51,6 @@ public:
 	~LSession();
 	//Functions to be called during startup
 	void setupSession();
-
-	//virtual bool x11EventFilter(XEvent *event);
-	
-	//bool LoadLocale(QString);
 
 	//Public System Tray Functions
 	QList<WId> currentTrayApps(WId visualTray);
@@ -93,7 +88,7 @@ private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
-	//XCBEventFilter *evFilter;
+
 	//Internal variable for global usage
 	AppMenu *appmenu;
 	SettingsMenu *settingsmenu;
@@ -107,6 +102,9 @@ private:
 	int TrayDmgEvent, TrayDmgError;
 	QList<WId> RunningTrayApps;
 	bool TrayStopping;
+
+	//Task Manager Variables
+	QList<WId> RunningApps;
 
 public slots:
 	void launchStartupApps();
@@ -125,6 +123,8 @@ private slots:
 	void checkUserFiles();
 	void refreshWindowManager();
 	void updateDesktops();
+	void registerDesktopWindows();
+	void adjustWindowGeom(WId win);
 
 	void SessionEnding();
 

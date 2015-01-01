@@ -126,11 +126,12 @@ public:
 	unsigned int CurrentWorkspace();
 	
 	//Session Modification
-
+	void RegisterVirtualRoots(QList<WId> roots);
 
 	//Window Information
 	QString WindowClass(WId);
-	unsigned int WindowWorkspace(WId);
+	unsigned int WindowWorkspace(WId); //The workspace the window is on
+	QRect WindowGeometry(WId, bool includeFrame = true); //the geometry of the window (frame excluded)
 	WINDOWSTATE WindowState(WId win); //Visible state of window
 	QString WindowVisibleIconName(WId win); //_WM_VISIBLE_ICON_NAME
 	QString WindowIconName(WId win); //_WM_ICON_NAME
@@ -140,6 +141,10 @@ public:
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces
 	void CloseWindow(WId); //request that the window be closed
+	void MinimizeWindow(WId); //request that the window be unmapped/minimized
+	void ActivateWindow(WId); //request that the window become active
+	void MaximizeWindow(WId); //request that the window become maximized
+	void MoveResizeWindow(WId win, QRect geom);
 	
 };
 

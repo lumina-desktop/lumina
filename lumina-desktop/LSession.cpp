@@ -252,6 +252,8 @@ void LSession::updateDesktops(){
       }
     }
     //qDebug() << " - Done Starting Desktops";
+    //Make sure all the background windows are registered on the system as virtual roots
+    QTimer::singleShot(200,this, SLOT(registerDesktopWindows()));
     if(firstrun){ return; } //Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
     for(int i=0; i<DESKTOPS.length(); i++){
@@ -266,88 +268,53 @@ void LSession::updateDesktops(){
     //qDebug() << " - Done Checking Desktops";
 }
 
+void LSession::registerDesktopWindows(){
+  QList<WId> wins;
+  for(int i=0; i<DESKTOPS.length(); i++){
+    wins << DESKTOPS[i]->backgroundID();
+  }
+  XCB->RegisterVirtualRoots(wins);
+}
+
+void LSession::adjustWindowGeom(WId win){
+  //Quick hack for making sure that new windows are not located underneath any panels
+  // Get the window location
+  QRect geom = XCB->WindowGeometry(win, true); //always include the frame if possible
+  if(DEBUG){ qDebug() << "Adjust Window Geometry:" << XCB->WindowClass(win) << !geom.isNull(); }
+  if(geom.isNull()){ return; } //Could not get geometry
+  //Get the available geometry for the screen the window is on
+  QRect desk;
+  for(int i=0; i<DESKTOPS.length(); i++){
+    if( this->desktop()->screenGeometry(DESKTOPS[i]->Screen()).contains(geom.topLeft()) ){
+      //Window is on this screen
+      if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
+      desk = DESKTOPS[i]->availableScreenGeom();
+      break;
+    }
+  }
+  //Adjust the window location if necessary
+  if(!desk.contains(geom) ){
+    if(DEBUG){
+      qDebug() << "Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
+      qDebug() << "Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
+    }
+    //Adjust origin point for left/top margins
+    if(geom.y() < desk.y()){ geom.moveTop(desk.y()); } //move down to the edge (top panel)
+    if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
+    //Adjust size for right/bottom margins (within reason, since window titles are on top normally)
+    if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
+    if(geom.bottom() > desk.bottom() && geom.height() > 100){ geom.setBottom(desk.bottom()); }
+    //Now move/resize the window
+    if(DEBUG){ qDebug() << "New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }
+    XCB->MoveResizeWindow(win, geom);
+  }
+  
+}
 
 void LSession::SessionEnding(){
   audioThread->wait(3000); //wait a max of 3 seconds for the audio thread to finish
   stopSystemTray();
 }
-
-/*bool LSession::x11EventFilter(XEvent *event){
-  //Detect X Event types and send the appropriate signal(s)
-   switch(event->type){
-  // -------------------------
-    case PropertyNotify:
-	//qDebug() << "Property Event:";
- 	  if(event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_CLIENT_LIST",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_ACTIVE_WINDOW",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_NAME",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_VISIBLE_NAME",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_ICON_NAME",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_STATE",false) \
-	  || event->xproperty.atom == XInternAtom(QX11Info::display(),"_NET_WM_VISIBLE_ICON_NAME",false) ){
-		LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
-		emit WindowListEvent();
-	  }
-	break;
-    //------------------------------
-    // System Tray Events
-    //------------------------------
-    case ClientMessage:
-    	//Only check if the client is the system tray, otherwise ignore
-    	if(event->xany.window == SystemTrayID){
-    	  //qDebug() << "SysTray: ClientMessage";
-	    switch(event->xclient.data.l[1]){
-		case SYSTEM_TRAY_REQUEST_DOCK:
-		  attachTrayWindow(event->xclient.data.l[2]); //Window ID
-		  break;
-		//case SYSTEM_TRAY_BEGIN_MESSAGE:
-		  //Let the window manager handle the pop-up messages for now
-		  //break;    	    
-		//case SYSTEM_TRAY_CANCEL_MESSAGE:
-		  //Let the window manager handle the pop-up messages for now
-		  //break;
-	    }
-    	}
-    	break;
-    case SelectionClear:
-    	if(event->xany.window == SystemTrayID){
-    	  //qDebug() << "SysTray: Selection Clear";
-    	  stopSystemTray(); //de-activate this system tray (release all embeds)
-    	}
-    	break;
-    case DestroyNotify:
-	//qDebug() << "SysTray: DestroyNotify";
-       removeTrayWindow(event->xany.window); //Check for removing an icon
-        break;
-    
-    case ConfigureNotify:
-	for(int i=0; i<RunningTrayApps.length(); i++){
-	  if(event->xany.window==RunningTrayApps[i]){
-	    //qDebug() << "SysTray: Configure Event" << trayIcons[i]->appID();
-	    emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
-	    break;
-	  }
-	}
-    default:
-	if(SystemTrayID!=0){ //Only do this if the system tray is available
-	  if(event->type == TrayDmgEvent+XDamageNotify){
-	    WId ID = reinterpret_cast<XDamageNotifyEvent*>(event)->drawable;	
-	    //qDebug() << "SysTray: Damage Event";
-	    for(int i=0; i<RunningTrayApps.length(); i++){
-	      if(ID==RunningTrayApps[i]){ 
-	        //qDebug() << "SysTray: Damage Event" << ID;
-	        emit TrayIconChanged(ID); //trigger a repaint event
-	        break;
-	      }
-	    }
-          }
-	}
-
-  } //end event type switch
-  // -----------------------
-  //Now continue on with the event handling (don't change it)
-  return false;
-}*/
 
 //===============
 //  SYSTEM ACCESS
@@ -407,7 +374,16 @@ void LSession::playAudioFile(QString filepath){
 // =======================
 void LSession::WindowPropertyEvent(){
   if(DEBUG){ qDebug() << "Window Property Event"; }
-  LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
+  QList<WId> newapps = XCB->WindowList();
+  if(RunningApps.length() < newapps.length()){
+    //New Window found
+    LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
+    //Perform sanity checks on any new window geometries
+    for(int i=0; i<newapps.length(); i++){
+      if(!RunningApps.contains(newapps[i])){ adjustWindowGeom(newapps[i]); }
+    }
+  }
+  RunningApps = newapps;
   emit WindowListEvent();
 }
 
