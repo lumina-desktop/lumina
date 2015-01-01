@@ -171,7 +171,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 	}
 	return;
       }else{
-        inFile = argv[i];
+        inFile = QString::fromLocal8Bit(argv[i]);
         break;
       }
     }

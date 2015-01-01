@@ -25,7 +25,7 @@ LSingleApplication::LSingleApplication(int &argc, char **argv) : QApplication(ar
   lockfile = new QLockFile(cfile+"-lock");
     lockfile->setStaleLockTime(0); //long-lived processes
   for(int i=1; i<argc; i++){ 
-    QString path = argv[i];
+    QString path = QString::fromLocal8Bit(argv[i]);
     //do few quick conversions for relative paths and such as necessary
     // (Remember: this is only used for secondary processes, not the primary)
       if(path=="."){
