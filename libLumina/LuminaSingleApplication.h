@@ -26,10 +26,12 @@
 
 #include <LuminaUtils.h>
 
+//NOTE: This application type will automatically load the proper translation file(s)
+//  if the application name is set properly
 class LSingleApplication : public QApplication{
   Q_OBJECT
 public:
-	LSingleApplication(int &argc, char **argv);
+	LSingleApplication(int &argc, char **argv, QString appname);
 	~LSingleApplication();
 
 	bool isPrimaryProcess();

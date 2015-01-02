@@ -134,6 +134,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 
 void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path){
   //Get the input file
+    //Make sure to load the proper system encoding first
+    LUtils::LoadTranslation(0,""); //bypass application modification
   QString inFile;
   bool showDLG = false; //flag to bypass any default application setting
   if(argc > 1){

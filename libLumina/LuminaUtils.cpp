@@ -120,20 +120,20 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
     if(langCode =="C" || langCode=="POSIX" || langCode.isEmpty()){
       langEnc = "System"; //use the Qt system encoding
     }
-    qDebug() << "Loading Locale:" << appname << langCode << langEnc;
-    
-    //Setup the translator
-    /*if(CurTranslator != 0){
-      //A Translator already loaded: unload it  before loading the new one
-     app->removeTranslator(CurTranslator);
-    }*/
-    QTranslator *CurTranslator = new QTranslator();
-    //Use the shortened locale code if specific code does not have a corresponding file
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
+    if(app !=0){
+      qDebug() << "Loading Locale:" << appname << langCode << langEnc;
+      //Setup the translator
+      QTranslator *CurTranslator = new QTranslator();
+      //Use the shortened locale code if specific code does not have a corresponding file
+      if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") ){
+        langCode.truncate( langCode.indexOf("_") );
+      }
+      CurTranslator->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" );
+      app->installTranslator( CurTranslator );
+    }else{
+      //Only going to set the encoding since no application given
+      qDebug() << "Loading System Encoding:" << langEnc;
     }
-    CurTranslator->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" );
-    app->installTranslator( CurTranslator );
     //Load current encoding for this locale
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
 }

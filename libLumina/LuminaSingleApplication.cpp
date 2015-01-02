@@ -12,11 +12,14 @@
 
 #include <unistd.h> //for getlogin()
 
-LSingleApplication::LSingleApplication(int &argc, char **argv) : QApplication(argc, argv){
+LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) : QApplication(argc, argv){
+  //Load the proper translation systems
+  LUtils::LoadTranslation(this, appname);
   //Initialize a couple convenience internal variables
   cfile = QDir::tempPath()+"/.LSingleApp-%1-%2";
   QString username = QString(getlogin());
-  QString appname = this->applicationName();
+  //For locking the process use the official process name - not the user input (no masking)
+  appname = this->applicationName();
   //Obscure the user/app in the filename (TO DO)
   //qDebug() << username << appname;
   //bool junk;
