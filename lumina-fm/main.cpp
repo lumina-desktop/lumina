@@ -24,12 +24,11 @@ int main(int argc, char ** argv)
     }
     if(in.isEmpty()){ in << QDir::homePath(); }*/
 
-    LSingleApplication a(argc, argv);
+    LSingleApplication a(argc, argv, "lumina-fm"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     qDebug() << "Loaded QApplication";
     a.setApplicationName("Insight File Manager");
     LuminaThemeEngine themes(&a);
-    LUtils::LoadTranslation(&a, "lumina-fm");
 
     //Get the list of inputs for the initial load
     QStringList in = a.inputlist; //has fixes for relative paths and such
