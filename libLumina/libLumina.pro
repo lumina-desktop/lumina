@@ -65,4 +65,4 @@ themes.files=themes/Lumina-default.qss.template \
 
 INSTALLS += target include colors themes
 
-QMAKE_LIBDIR = $$LIBPREFIX/qt4 $$LIBPREFIX
+QMAKE_LIBDIR = $$LIBPREFIX/qt5 $$LIBPREFIX

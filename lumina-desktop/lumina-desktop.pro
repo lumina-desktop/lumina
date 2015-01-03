@@ -8,16 +8,21 @@ isEmpty(PREFIX) {
 }
 target.path = $$PREFIX/bin
 
-LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
+isEmpty(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
+
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
 
-LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
+LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
 
 SOURCES += main.cpp \
 	WMProcess.cpp \
+	LXcbEventFilter.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
 	LPanel.cpp \

@@ -8,6 +8,10 @@ isEmpty(PREFIX) {
 }
 target.path = $$PREFIX/bin
 
+isEmpty(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
+
 TEMPLATE = app
 
 SOURCES += main.cpp \
@@ -30,7 +34,7 @@ FORMS    += MainUI.ui \
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
-LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 
 openbsd-g++4 {
   LRELEASE = lrelease4

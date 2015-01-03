@@ -8,6 +8,10 @@ isEmpty(PREFIX) {
 }
 target.path = $$PREFIX/bin
 
+isEmpty(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
+
 TEMPLATE = app
 
 SOURCES += main.cpp \
@@ -20,15 +24,11 @@ FORMS    += LFileDialog.ui
 RESOURCES+= lumina-open.qrc
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
-LIBS     += -L../libLumina -L$$PREFIX/lib -lLuminaUtils
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
-openbsd-g++4 {
-  LRELEASE = lrelease4
-} else {
-  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
-}
+LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_ar.ts \
