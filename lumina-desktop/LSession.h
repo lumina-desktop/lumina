@@ -60,6 +60,7 @@ public:
 	//Special functions for XCB event filter parsing only 
 	//  (DO NOT USE MANUALLY)
 	void WindowPropertyEvent();
+        void WindowPropertyEvent(WId);
 	void SysTrayDockRequest(WId);
 	void WindowClosedEvent(WId);
 	void WindowConfigureEvent(WId);
@@ -83,7 +84,9 @@ public:
 
 	//Play System Audio
 	void playAudioFile(QString filepath);
-
+	//Window Adjustment Routine (due to Fluxbox not respecting _NET_WM_STRUT)
+	void adjustWindowGeom(WId win, bool maximize = false);
+	
 private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
@@ -124,7 +127,7 @@ private slots:
 	void refreshWindowManager();
 	void updateDesktops();
 	void registerDesktopWindows();
-	void adjustWindowGeom(WId win);
+
 
 	void SessionEnding();
 

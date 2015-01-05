@@ -28,7 +28,7 @@ XCBEventFilter *evFilter = 0;
 
 LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setApplicationName("Lumina Desktop Environment");
-  this->setApplicationVersion("0.7.2");
+  this->setApplicationVersion("0.8.0");
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enabled a few of the simple effects by default
@@ -39,7 +39,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   SystemTrayID = 0; VisualTrayID = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
-  XCB = 0;
+  XCB = new LXCB(); //need access to XCB data/functions right away
   //initialize the empty internal pointers to 0
   appmenu = 0;
   settingsmenu = 0;
@@ -70,8 +70,6 @@ void LSession::setupSession(){
   qDebug() << "Initializing Session";
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
-  //Initialize the XCB interface backend
-  XCB = new LXCB();
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
   //Setup the QSettings default paths
@@ -276,7 +274,7 @@ void LSession::registerDesktopWindows(){
   XCB->RegisterVirtualRoots(wins);
 }
 
-void LSession::adjustWindowGeom(WId win){
+void LSession::adjustWindowGeom(WId win, bool maximize){
   //Quick hack for making sure that new windows are not located underneath any panels
   // Get the window location
   QRect geom = XCB->WindowGeometry(win, true); //always include the frame if possible
@@ -293,7 +291,12 @@ void LSession::adjustWindowGeom(WId win){
     }
   }
   //Adjust the window location if necessary
-  if(!desk.contains(geom) ){
+  if(maximize){
+    geom = desk; //Use the full screen
+    XCB->MoveResizeWindow(win, geom);
+    XCB->MaximizeWindow(win, true); //directly set the appropriate "maximized" flags (bypassing WM)
+	  
+  }else if(!desk.contains(geom) ){
     if(DEBUG){
       qDebug() << "Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
       qDebug() << "Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
@@ -385,6 +388,14 @@ void LSession::WindowPropertyEvent(){
   }
   RunningApps = newapps;
   emit WindowListEvent();
+}
+
+void LSession::WindowPropertyEvent(WId win){
+  //Emit the single-app signal if the window in question is one used by the task manager
+  if(RunningApps.contains(win)){
+    if(DEBUG){ qDebug() << "Single-window property event"; }
+    emit WindowListEvent(win);
+  }
 }
 
 void LSession::SysTrayDockRequest(WId win){

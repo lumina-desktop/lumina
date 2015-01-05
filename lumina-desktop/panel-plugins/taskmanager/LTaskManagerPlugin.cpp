@@ -14,7 +14,8 @@ LTaskManagerPlugin::LTaskManagerPlugin(QWidget *parent, QString id, bool horizon
 	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateButtons()) ); 
   usegroups = true; //backwards-compatible default value
   if(id.contains("-nogroups")){ usegroups = false; }
-  connect(LSession::instance(), SIGNAL(WindowListEvent()), this, SLOT(checkWindows()) );
+  connect(LSession::handle(), SIGNAL(WindowListEvent()), this, SLOT(checkWindows()) );
+  connect(LSession::handle(), SIGNAL(WindowListEvent(WId)), this, SLOT(UpdateButton(WId)) );
   this->layout()->setContentsMargins(0,0,0,0);
   QTimer::singleShot(0,this, SLOT(UpdateButtons()) ); //perform an initial sync
   //QTimer::singleShot(100,this, SLOT(OrientationChange()) ); //perform an initial sync
@@ -38,15 +39,15 @@ void LTaskManagerPlugin::UpdateButtons(){
   //Now go through all the current buttons first
   for(int i=0; i<BUTTONS.length(); i++){
     //Get the windows managed in this button
-    QList<LWinInfo> WI = BUTTONS[i]->windows();
+    QList<WId> WI = BUTTONS[i]->windows();
     bool updated=false;
     if(updating > ctime){ return; } //another thread kicked off already - stop this one
     //Loop over all the windows for this button
     for(int w=0; w<WI.length(); w++){
       if(updating > ctime){ return; } //another thread kicked off already - stop this one
-      if( winlist.contains( WI[w].windowID() ) ){
+      if( winlist.contains( WI[w] ) ){
         //Still current window - update it later
-	winlist.removeAll(WI[w].windowID()); //remove this window from the list since it is done
+	winlist.removeAll(WI[w] ); //remove this window from the list since it is done
       }else{
 	//Window was closed - remove it
 	if(WI.length()==1){
@@ -95,7 +96,7 @@ void LTaskManagerPlugin::UpdateButtons(){
       //No group, create a new button
       //qDebug() << "New Button";
       LTaskButton *but = new LTaskButton(this, usegroups);
-        but->addWindow( LWinInfo(winlist[i]) );
+        but->addWindow( winlist[i] );
 	if(this->layout()->direction()==QBoxLayout::LeftToRight){
 	    but->setIconSize(QSize(this->height(), this->height()));
 	}else{
@@ -103,6 +104,16 @@ void LTaskManagerPlugin::UpdateButtons(){
 	}
       this->layout()->addWidget(but);
       BUTTONS << but;
+    }
+  }
+}
+
+void LTaskManagerPlugin::UpdateButton(WId win){
+  for(int i=0; i<BUTTONS.length(); i++){
+    if(BUTTONS[i]->windows().contains(win)){
+      qDebug() << "Update Task Manager Button (single window ping)";
+      QTimer::singleShot(0,BUTTONS[i], SLOT(UpdateButton()) );
+      break;
     }
   }
 }

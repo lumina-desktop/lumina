@@ -1045,6 +1045,24 @@ QString LXCB::WindowName(WId win){ //_WM_NAME
   return out;
 }
 
+// === WindowIsMaximized() ===
+bool LXCB::WindowIsMaximized(WId win){
+  //See if the _NET_WM_STATE_MAXIMIZED_[VERT/HORZ] flags are set on the window
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return false; } 
+  xcb_ewmh_get_atoms_reply_t states;
+  if( 1 == xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &states, NULL) ){
+    //Loop over the states
+    for(unsigned int i=0; i<states.atoms_len; i++){
+      if(states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_HORZ \
+	      || states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_VERT ){
+	return true;
+      }
+    }
+  }
+  return false;
+}
+
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
   //Need to send a client message event for the window so the WM picks it up
@@ -1119,9 +1137,18 @@ void LXCB::ActivateWindow(WId win){ //request that the window become active
 }
 
 // === MaximizeWindow() ===
-void LXCB::MaximizeWindow(WId win){ //request that the window become maximized
-  //Need to send a client message event for the window so the WM picks it up
-  xcb_client_message_event_t event;
+void LXCB::MaximizeWindow(WId win, bool flagsonly){ //request that the window become maximized
+	
+  if(flagsonly){
+    //Directly set the flags on the window (bypassing the WM)
+    xcb_atom_t list[2];
+      list[0] = EWMH._NET_WM_STATE_MAXIMIZED_VERT;
+      list[1] = EWMH._NET_WM_STATE_MAXIMIZED_HORZ;
+    xcb_ewmh_set_wm_state(&EWMH, win, 2, list);
+	  
+  }else{
+    //Need to send a client message event for the window so the WM picks it up
+    xcb_client_message_event_t event;
     event.response_type = XCB_CLIENT_MESSAGE;
     event.format = 32;
     event.window = win;
@@ -1132,8 +1159,8 @@ void LXCB::MaximizeWindow(WId win){ //request that the window become maximized
     event.data.data32[3] = 0;
     event.data.data32[4] = 0;
 
-  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-		
+    xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+  }
 }
 
 // === MoveResizeWindow() ===

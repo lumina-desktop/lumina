@@ -31,12 +31,12 @@ public:
 	~LTaskButton();
 	
 	//Window Information
-	QList<LWinInfo> windows();
+	QList<WId> windows();
 	QString classname();
 
 	//Window Management
-	void addWindow(LWinInfo win); //Add a window to this button
-	void rmWindow(LWinInfo win); //Remove a window from this button
+	void addWindow(WId win); //Add a window to this button
+	void rmWindow(WId win); //Remove a window from this button
 
 private:
 	QList<LWinInfo> WINLIST;

@@ -33,22 +33,26 @@ LTaskButton::~LTaskButton(){
 //===========
 //      PUBLIC
 //===========
-QList<LWinInfo> LTaskButton::windows(){
-  return WINLIST;
+QList<WId> LTaskButton::windows(){
+  QList<WId> list;
+  for(int i=0; i<WINLIST.length(); i++){
+    list << WINLIST[i].windowID();
+  }
+  return list;
 }
 
 QString LTaskButton::classname(){
   return cname;
 }
 
-void LTaskButton::addWindow(LWinInfo win){
-  WINLIST << win;
+void LTaskButton::addWindow(WId win){
+  WINLIST << LWinInfo(win);
   UpdateButton();
 }
 
-void LTaskButton::rmWindow(LWinInfo win){
+void LTaskButton::rmWindow(WId win){
   for(int i=0; i<WINLIST.length(); i++){
-    if(WINLIST[i].windowID() == win.windowID()){
+    if(WINLIST[i].windowID() == win){
       WINLIST.removeAt(i);
       break;
     }
@@ -158,6 +162,7 @@ void LTaskButton::maximizeWindow(){
   if(winMenu->isVisible()){ winMenu->hide(); }
   LWinInfo win = currentWindow();
   LSession::handle()->XCB->MaximizeWindow(win.windowID());
+  //LSession::handle()->adjustWindowGeom(win.windowID(), true); //run this for now until the WM works properly
   cWin = LWinInfo(); //clear the current 
 }
 

@@ -38,6 +38,7 @@ private:
 
 private slots:
 	void UpdateButtons();
+	void UpdateButton(WId win);
 	void checkWindows();
 
 public slots:

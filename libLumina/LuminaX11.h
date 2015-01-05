@@ -110,12 +110,11 @@ public:
 
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
-
-private:
-	xcb_ewmh_connection_t EWMH;
-
+	
 public:
 	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	
+	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 	
 	LXCB();
 	~LXCB();
@@ -137,13 +136,14 @@ public:
 	QString WindowIconName(WId win); //_WM_ICON_NAME
 	QString WindowVisibleName(WId win); //_WM_VISIBLE_NAME
 	QString WindowName(WId win); //_WM_NAME
+	bool WindowIsMaximized(WId win);
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces
 	void CloseWindow(WId); //request that the window be closed
 	void MinimizeWindow(WId); //request that the window be unmapped/minimized
 	void ActivateWindow(WId); //request that the window become active
-	void MaximizeWindow(WId); //request that the window become maximized
+	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
 	void MoveResizeWindow(WId win, QRect geom);
 	
 };
