@@ -304,8 +304,8 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     //Adjust origin point for left/top margins
     if(geom.y() < desk.y()){ geom.moveTop(desk.y()); } //move down to the edge (top panel)
     if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
-    //Adjust size for right/bottom margins (within reason, since window titles are on top normally)
-    if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
+    //Adjust size for bottom margins (within reason, since window titles are on top normally)
+   // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
     if(geom.bottom() > desk.bottom() && geom.height() > 100){ geom.setBottom(desk.bottom()); }
     //Now move/resize the window
     if(DEBUG){ qDebug() << "New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }

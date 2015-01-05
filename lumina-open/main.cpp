@@ -197,6 +197,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   }
   else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
   else if(isUrl){ extension = "webbrowser"; }
+  //qDebug() << "Input:" << inFile << isFile << isUrl << extension;
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;
@@ -318,11 +319,15 @@ int main(int argc, char **argv){
   //if(retcode!=0 ){
   if(p->exitStatus() == QProcess::CrashExit){
     qDebug() << "[lumina-open] Application Error:" << retcode;
+    QString err = QString(p->readAllStandardError());
+    if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
     //Setup the application
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
 	LUtils::LoadTranslation(&App,"lumina-open");
-    QMessageBox::critical(0,QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd);
+    QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
+    if(!err.isEmpty()){ dlg.setDetailedText(err); }
+    dlg.exec();
   }
   return retcode;
 }
