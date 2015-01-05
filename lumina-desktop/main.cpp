@@ -24,7 +24,7 @@
 #include <LuminaOS.h>
 #include <LuminaUtils.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
 void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
