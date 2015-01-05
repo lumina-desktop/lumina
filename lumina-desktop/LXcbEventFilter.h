@@ -77,8 +77,8 @@ private:
 	    SysNotifyAtoms << session->XCB->EWMH._NET_CLIENT_LIST \
 					<< session->XCB->EWMH._NET_CLIENT_LIST_STACKING \
 					<< session->XCB->EWMH._NET_CURRENT_DESKTOP \
-					<< session->XCB->EWMH._NET_ACTIVE_WINDOW \
 					<< session->XCB->EWMH._NET_WM_STATE \
+					<< session->XCB->EWMH._NET_ACTIVE_WINDOW \
 					<< session->XCB->EWMH._NET_WM_ICON \
 					<< session->XCB->EWMH._NET_WM_ICON_GEOMETRY;
 	  //_NET_SYSTEM_TRAY_OPCODE

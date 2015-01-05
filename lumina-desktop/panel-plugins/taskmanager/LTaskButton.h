@@ -33,6 +33,7 @@ public:
 	//Window Information
 	QList<WId> windows();
 	QString classname();
+	bool isActive();
 
 	//Window Management
 	void addWindow(WId win); //Add a window to this button
@@ -49,6 +50,7 @@ private:
 
 	LWinInfo currentWindow(); //For getting the currently-active window
 	LXCB::WINDOWSTATE cstate; //current state of the button
+
 public slots:
 	void UpdateButton(); //re-sync the current window infomation
 	void UpdateMenus(); //re-create the menus (text + icons)

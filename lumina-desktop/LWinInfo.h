@@ -25,10 +25,12 @@
 class LWinInfo{
 private:
 	WId window;
+	LXCB::WINDOWSTATE cstate; //current window state
 
 public:
 	LWinInfo(WId id = 0){
 	  window = id;
+	  cstate = LXCB::IGNORE; //make sure this gets updates with the first "status" call
 	}
 	~LWinInfo(){};
 	
@@ -42,7 +44,7 @@ public:
 	QString  text();
 	QIcon icon(bool &noicon);
 	QString Class();
-	LXCB::WINDOWSTATE status();
+	LXCB::WINDOWSTATE status(bool update = false);
 };
 
 #endif

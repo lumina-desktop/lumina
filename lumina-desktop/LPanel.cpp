@@ -31,21 +31,26 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   qDebug() << " -- Setup Panel";
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint );
-  this->setFocusPolicy(Qt::NoFocus);
+  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint );
+
   this->setWindowTitle("");
-  //this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); //Reserve as panel/dock
-  this->setAttribute(Qt::WA_AlwaysShowToolTips);
   this->setObjectName("LuminaPanelWidget");
   panelArea->setObjectName("LuminaPanelPluginWidget");
-  //LX11::SetAsPanel(this->winId()); //set proper type of window for a panel since Qt can't do it
-  LSession::handle()->XCB->SetAsSticky(this->winId()); 
-  //LX11::SetAsSticky(this->winId());
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
     //layout->setSizeConstraint(QLayout::SetFixedSize);
   panelArea->setLayout(layout);
+  //Set special window flags on the panel for proper usage
+  this->show();
+  this->setFocusPolicy(Qt::NoFocus);
+  //panels cannot get keyboard focus otherwise it upsets the task manager window detection
+  this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
+  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
+  this->setAttribute(Qt::WA_AlwaysShowToolTips); 
+  LSession::handle()->XCB->SetAsSticky(this->winId());
+  //LSession::handle()->XCB->SetAsPanel(this->winId());  //make sure this happens after Qt creates the window first
+  
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
   connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
 }
@@ -131,7 +136,11 @@ void LPanel::UpdatePanel(){
   }
   //With QT5, we need to make sure to reset window properties on occasion
   //LSession::handle()->XCB->SetAsSticky(this->winId()); 
-
+  //First test/update all the window attributes as necessary
+  //if(!this->testAttribute(Qt::WA_X11DoNotAcceptFocus)){ this->setAttribute(Qt::WA_X11DoNotAcceptFocus); }
+  //if(!this->testAttribute(Qt::WA_X11NetWmWindowTypeDock)){ this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); }
+  //if(!this->testAttribute(Qt::WA_AlwaysShowToolTips)){ this->setAttribute(Qt::WA_AlwaysShowToolTips); }
+  
   //Now update the appearance of the toolbar
   QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
   QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";

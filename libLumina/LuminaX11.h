@@ -123,6 +123,7 @@ public:
 	// General Information
 	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
 	unsigned int CurrentWorkspace();
+	WId ActiveWindow(); //fetch the ID for the currently active window
 	
 	//Session Modification
 	void RegisterVirtualRoots(QList<WId> roots);
@@ -140,6 +141,7 @@ public:
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces
+	void SetAsPanel(WId); //Adjust all the window flags for a proper panel (cannot be done through Qt)
 	void CloseWindow(WId); //request that the window be closed
 	void MinimizeWindow(WId); //request that the window be unmapped/minimized
 	void ActivateWindow(WId); //request that the window become active

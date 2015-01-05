@@ -35,9 +35,12 @@ QString LWinInfo::Class(){
   return LSession::handle()->XCB->WindowClass(window);
 }
 	
-LXCB::WINDOWSTATE LWinInfo::status(){
+LXCB::WINDOWSTATE LWinInfo::status(bool update){
   if(window==0){ return LXCB::IGNORE; }
-  LXCB::WINDOWSTATE ws = LSession::handle()->XCB->WindowState(window);
+  if(update || cstate == LXCB::IGNORE){
+    cstate = LSession::handle()->XCB->WindowState(window);
+  }
+  return cstate;
   //LX11::WINDOWSTATE ws = LX11::GetWindowState(window);
  /*Lumina::STATES state;
   switch(ws){
@@ -53,5 +56,5 @@ LXCB::WINDOWSTATE LWinInfo::status(){
 	    state = Lumina::NOSHOW;
   }*/
   //qDebug() << "Window State:" << ws << state;
-  return ws;
+  //return ws;
 }

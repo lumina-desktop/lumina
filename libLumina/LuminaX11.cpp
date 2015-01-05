@@ -875,6 +875,17 @@ unsigned int LXCB::CurrentWorkspace(){
   return wkspace;
 }
 
+// === ActiveWindow() ===
+WId LXCB::ActiveWindow(){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, 0);
+  xcb_window_t actwin;
+  if(1 == xcb_ewmh_get_active_window_reply(&EWMH, cookie, &actwin, NULL) ){
+    return actwin;
+  }else{
+    return 0; //invalid ID/failure
+  }
+}
+
 // === RegisterVirtualRoots() ===
 void LXCB::RegisterVirtualRoots(QList<WId> roots){
   //First convert the QList into the proper format
@@ -1082,6 +1093,86 @@ void LXCB::SetAsSticky(WId win){
   //This method changes the property on the window directly - the WM is not aware of it	
   /*xcb_change_property( QX11Info::connection(), XCB_PROP_MODE_APPEND, win, EWMH._NET_WM_STATE, XCB_ATOM_ATOM, 32, 1, &(EWMH._NET_WM_STATE_STICKY) );
   xcb_flush(QX11Info::connection()); //apply it right away*/
+}
+
+// === SetAsPanel() ===
+void LXCB::SetAsPanel(WId win){
+  //Disable Input focus (panel activation ruins task manager window detection routines)
+  //  - Disable Input flag in WM_HINTS
+  xcb_icccm_wm_hints_t hints;
+  qDebug() << " - Disable WM_HINTS input flag";
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_hints_unchecked(QX11Info::connection(), win);
+  qDebug() << " -- got cookie";
+  if(1 == xcb_icccm_get_wm_hints_reply(QX11Info::connection(), cookie, &hints, NULL) ){
+    qDebug() << " -- Set no inputs flag";
+     xcb_icccm_wm_hints_set_input(&hints, False); //set no input focus
+     xcb_icccm_set_wm_hints(QX11Info::connection(), win, &hints); //save hints back to window
+    qDebug() << " -- Free the hints structure";
+     free(&hints); //free up hints structure
+  }
+  //  - Remove WM_TAKE_FOCUS from the WM_PROTOCOLS for the window
+  //  - - Generate the necessary atoms
+  qDebug() << " - Generate WM_PROTOCOLS and WM_TAKE_FOCUS atoms";
+  xcb_atom_t WM_PROTOCOLS, WM_TAKE_FOCUS; //the two atoms needed
+  xcb_intern_atom_reply_t *preply = xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, 12, "WM_PROTOCOLS"), NULL);
+  xcb_intern_atom_reply_t *freply = xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, 13, "WM_TAKE_FOCUS"), NULL); 
+  bool gotatoms = false;
+  if(preply && freply){
+    WM_PROTOCOLS = preply->atom;
+    WM_TAKE_FOCUS = freply->atom;
+    free(preply);
+    free(freply);
+    gotatoms = true;
+    qDebug() << " -- success";
+  }
+  //  - - Now update the protocols for the window
+  if(gotatoms){ //requires the atoms
+    qDebug() << " - Get WM_PROTOCOLS";
+    xcb_icccm_get_wm_protocols_reply_t proto;
+    if( 1 == xcb_icccm_get_wm_protocols_reply(QX11Info::connection(), \
+			xcb_icccm_get_wm_protocols_unchecked(QX11Info::connection(), win, WM_PROTOCOLS), \
+			&proto, NULL) ){
+	
+      //Found the current protocols, see if it has the focus atom set
+			//remove the take focus atom and re-save them
+      bool needremove = false;
+      //Note: This first loop is required so that we can initialize the modified list with a valid size
+      qDebug() << " -- Check current protocols";
+      for(unsigned int i=0; i<proto.atoms_len; i++){
+        if(proto.atoms[i] == WM_TAKE_FOCUS){ needremove = true; break;}
+      }
+      if(needremove){
+	qDebug() << " -- Remove WM_TAKE_FOCUS protocol";
+	xcb_atom_t *protolist = new xcb_atom_t[proto.atoms_len-1];
+	int num = 0;
+	for(unsigned int i=0; i<proto.atoms_len; i++){
+	  if(proto.atoms[i] != WM_TAKE_FOCUS){
+	    protolist[num] = proto.atoms[i];
+	    num++;
+	  }
+	}
+	qDebug() << " -- Re-save modified protocols";
+	xcb_icccm_set_wm_protocols(QX11Info::connection(), win, WM_PROTOCOLS, num, protolist);
+      }
+      qDebug() << " -- Clear protocols reply";
+      xcb_icccm_get_wm_protocols_reply_wipe(&proto);
+    }//end of get protocols check
+  } //end of gotatoms check
+  //Make sure it has the "dock" window type
+  //  - get the current window types (Not necessary, only 1 type of window needed)
+  
+  //  - set the adjusted window type(s)
+  qDebug() << " - Adjust window type";
+  xcb_atom_t list[1]; 
+    list[0] = EWMH._NET_WM_WINDOW_TYPE_DOCK;
+  xcb_ewmh_set_wm_window_type(&EWMH, win, 1, list);
+  
+  //Make sure it is on all workspaces
+  qDebug() << " - Set window as sticky";
+  SetAsSticky(win);
+	
 }
 
 // === CloseWindow() ===
