@@ -108,7 +108,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       LUtils::LoadTranslation(&App,"lumina-open");
 
     LFileDialog w;
-    if(inFile.startsWith(extension)){
+    if(extension=="email" || extension=="webbrowser"){
       //URL
       w.setFileInfo(inFile, extension, false);
     }else{
@@ -119,7 +119,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 
     w.show();
     App.exec();
-    if(!w.appSelected){ exit(1); }
+    if(!w.appSelected){ return ""; }
     //Return the run path if appropriate
     if(!w.appPath.isEmpty()){ path = w.appPath; }
     //Just do the default application registration here for now
@@ -251,6 +251,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     //Find out the proper application to use this file/directory
     useInputFile=true;
     cmd = cmdFromUser(argc, argv, inFile, extension, path, showDLG);
+    if(cmd.isEmpty()){ return; }
     }
   }
   //Now assemble the exec string (replace file/url field codes as necessary)
