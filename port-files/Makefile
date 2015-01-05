@@ -2,13 +2,12 @@
 # $FreeBSD$
 
 PORTNAME=	lumina
-GITVERSION=	CHGVERSION
 PORTVERSION=	0.8.0.${GITVERSION}
 PORTEPOCH=	1
 CATEGORIES=	x11
-DISTNAME=	${PORTNAME}-${GITVERSION}
 MASTER_SITES=	http://www.pcbsd.org/~kris/software/ \
 		ftp://ftp.pcbsd.org/pub/software/
+DISTNAME=	${PORTNAME}-${GITVERSION}
 
 MAINTAINER=	kmoore@FreeBSD.org
 COMMENT=	Lumina Desktop Environment
@@ -22,10 +21,11 @@ RUN_DEPENDS=	xorg>=0:${PORTSDIR}/x11/xorg \
 		xscreensaver:${PORTSDIR}/x11/xscreensaver \
 		xscreensaver-demo:${PORTSDIR}/x11/xscreensaver \
 		xbrightness:${PORTSDIR}/x11/xbrightness \
-		numlockx:${PORTSDIR}/x11/numlockx \
-#LIB_DEPENDS=	
+		numlockx:${PORTSDIR}/x11/numlockx
 
 MAKE_JOBS_UNSAFE=yes
+
+GITVERSION=	CHGVERSION
 USE_XORG=	x11 xcomposite xdamage xrender
 USE_XCB=		x11extras wm
 USE_LDCONFIG=	yes
