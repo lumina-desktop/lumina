@@ -40,11 +40,7 @@ INCLUDEPATH += ../libLumina $$PREFIX/include
 
 LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 
-openbsd-g++4 {
-  LRELEASE = lrelease4
-} else {
-  LRELEASE = $$QT5LIBDIR/bin/lrelease
-}
+LRELEASE = $$QT5LIBDIR/bin/lrelease
 
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina

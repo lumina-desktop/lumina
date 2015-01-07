@@ -28,7 +28,12 @@ LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
-LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
+}
+
+LRELEASE = $$QT5LIBDIR/bin/lrelease
+
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_ar.ts \
