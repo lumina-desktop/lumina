@@ -12,6 +12,10 @@ isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
 
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
+}
+
 TEMPLATE = app
 
 SOURCES += main.cpp \
@@ -39,7 +43,7 @@ LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 openbsd-g++4 {
   LRELEASE = lrelease4
 } else {
-  LRELEASE = $$PREFIX/lib/qt5/bin/lrelease
+  LRELEASE = $$QT5LIBDIR/bin/lrelease
 }
 
 QMAKE_LIBDIR	= ../libLumina

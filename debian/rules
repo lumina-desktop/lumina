@@ -9,7 +9,7 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 DEB_PREF = $(shell gcc -print-multiarch)
-USER_QMAKE_FLAGS = PREFIX=/usr LIBPREFIX=/usr/lib/$(DEB_PREF)
+USER_QMAKE_FLAGS = PREFIX=/usr LIBPREFIX=/usr/lib/$(DEB_PREF) QT5LIBDIR=/usr/lib/$(DEB_PREF)/qt5
 QMAKE_EXTRA_DIRS = libLumina \
 	lumina-config \
 	lumina-desktop \
@@ -22,8 +22,8 @@ QMAKE_EXTRA_DIRS = libLumina \
 	dh $@
 
 override_dh_auto_configure:
-	qmake-qt4 $(USER_QMAKE_FLAGS)
-	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && qmake-qt4 $(USER_QMAKE_FLAGS)); done
+	/usr/lib/$(DEB_PREF)/qt5/bin/qmake $(USER_QMAKE_FLAGS)
+	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && /usr/lib/$(DEB_PREF)/qt5/bin/qmake $(USER_QMAKE_FLAGS)); done
 
 override_dh_auto_clean:
 	-$(MAKE) distclean
