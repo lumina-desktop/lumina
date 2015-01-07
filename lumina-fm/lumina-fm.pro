@@ -12,10 +12,6 @@ isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
 
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
 TEMPLATE = app
 
 SOURCES += main.cpp \
@@ -39,6 +35,10 @@ FORMS    += MainUI.ui \
 INCLUDEPATH += ../libLumina $$PREFIX/include
 
 LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
+
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
+}
 
 LRELEASE = $$QT5LIBDIR/bin/lrelease
 
