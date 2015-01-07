@@ -40,7 +40,12 @@ INCLUDEPATH += ../libLumina $$PREFIX/include
 
 LIBS += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 
-LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
+}
+
+LRELEASE = $$QT5LIBDIR/bin/lrelease
+
 
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
