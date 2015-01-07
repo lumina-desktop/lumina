@@ -6,6 +6,8 @@
 //===========================================
 #include "LuminaXDG.h"
 #include "LuminaOS.h"
+#include <QObject>
+#include <QMediaPlayer>
 
 static QStringList mimeglobs;
 static qint64 mimechecktime;
@@ -44,7 +46,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     QString var = line.section("=",0,0).simplified();
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
-    QString val = line.section("=",1,1).simplified();
+    QString val = line.section("=",1,50).simplified();
     //-------------------
     if(var=="Name"){ 
       if(DF.name.isEmpty() && loc.isEmpty()){ DF.name = val; }
@@ -252,9 +254,12 @@ QString LXDG::getDesktopExec(XDGDesktop app){
     out = app.exec;
   }
   //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
-  if(out.contains(" %i ")){ out.replace(" %i ", " --icon "+app.icon+" "); }
-  if(out.contains(" %c ")){ out.replace(" %c ", " "+app.name+" "); }
-  if(out.contains(" %k ")){ out.replace(" %k ", " "+app.filePath+" "); }
+  if(out.contains("%i")){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
+  if(out.contains("%c")){ 
+    if(!app.name.isEmpty()){ out.replace("%c", ""+app.name+""); }
+    else if(!app.genericName.isEmpty()){ out.replace(" %c ", ""+app.genericName+""); }
+  }
+  if(out.contains("%k")){ out.replace("%k", "\'"+app.filePath+"\'"); }
   return out;
 }
 
@@ -270,13 +275,17 @@ void LXDG::setEnvironmentVars(){
 
 QIcon LXDG::findIcon(QString iconName, QString fallback){
   //Check if the icon is an absolute path and exists
+  bool DEBUG =false;
+  if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
   if(QFile::exists(iconName) && iconName.startsWith("/")){ return QIcon(iconName); }
   else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just looks for the icon
   //Check if the icon is actually given
-  if(iconName.isEmpty()){ return QIcon(fallback); }
+  if(iconName.isEmpty()){ 
+    if(fallback.isEmpty()){  return QIcon(); }
+    else{ return LXDG::findIcon(fallback, ""); }
+  }
   //Now try to find the icon from the theme
-  bool DEBUG = false;
-  if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
+  if(DEBUG){ qDebug() << "[LXDG] Start search for icon"; }
   //Check the default theme search paths
   QStringList paths = QIcon::themeSearchPaths();
   if(paths.isEmpty()){
@@ -556,6 +565,21 @@ void LXDG::setDefaultAppForMime(QString mime, QString app){
   }
   LUtils::writeFile(filepath, cinfo, true);
   return;
+}
+
+QStringList LXDG::findAVFileExtensions(){
+  //output format: QDir name filter for valid A/V file extensions
+  QStringList globs = LXDG::loadMimeFileGlobs2();
+  QStringList av = globs.filter(":audio/");
+  av << globs.filter(":video/");
+  for(int i=0; i<av.length(); i++){
+    //Just use all audio/video mimetypes (for now)
+    av[i] = av[i].section(":",2,2);
+    //Qt5 Auto detection (broken - QMediaPlayer seg faults with Qt 5.3 - 11/24/14)
+    /*if( QMultimedia::NotSupported != QMediaPlayer::hasSupport(av[i].section(":",1,1)) ){ av[i] = av[i].section(":",2,2); }
+    else{ av.removeAt(i); i--; }*/
+  }
+  return av;
 }
 
 QStringList LXDG::loadMimeFileGlobs2(){

@@ -15,14 +15,14 @@
 #include <QUrl>
 #include <QDebug>
 #include <QTranslator>
-#include <QLocale>
+//#include <QLocale>
 #include <QMessageBox>
 #include <QSplashScreen>
 #include <QDateTime>
 #include <QPixmap>
 #include <QColor>
 #include <QFont>
-#include <QTextCodec>
+//#include <QTextCodec>
 
 #include "LFileDialog.h"
 
@@ -46,15 +46,7 @@ void printUsageInfo(){
 void showOSD(int argc, char **argv, QString message){
   //Setup the application
   QApplication App(argc, argv);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
+    LUtils::LoadTranslation(&App,"lumina-open");
 
   //Display the OSD
   QPixmap pix(":/icons/OSD.png");
@@ -113,23 +105,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     //No default set -- Start up the application selection dialog
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
-    qDebug() << "Locale:" << langCode;
-
-    //Load current encoding for this locale
-    QTextCodec::setCodecForTr( QTextCodec::codecForLocale() ); //make sure to use the same codec
-    qDebug() << "Locale Encoding:" << QTextCodec::codecForLocale()->name();
+      LUtils::LoadTranslation(&App,"lumina-open");
 
     LFileDialog w;
-    if(inFile.startsWith(extension)){
+    if(extension=="email" || extension=="webbrowser"){
       //URL
       w.setFileInfo(inFile, extension, false);
     }else{
@@ -139,9 +118,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     }
 
     w.show();
-
     App.exec();
-    if(!w.appSelected){ exit(1); }
+    if(!w.appSelected){ return ""; }
     //Return the run path if appropriate
     if(!w.appPath.isEmpty()){ path = w.appPath; }
     //Just do the default application registration here for now
@@ -156,6 +134,8 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 
 void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path){
   //Get the input file
+    //Make sure to load the proper system encoding first
+    LUtils::LoadTranslation(0,""); //bypass application modification
   QString inFile;
   bool showDLG = false; //flag to bypass any default application setting
   if(argc > 1){
@@ -193,7 +173,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 	}
 	return;
       }else{
-        inFile = argv[i];
+        inFile = QString::fromLocal8Bit(argv[i]);
         break;
       }
     }
@@ -217,6 +197,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   }
   else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
   else if(isUrl){ extension = "webbrowser"; }
+  //qDebug() << "Input:" << inFile << isFile << isUrl << extension;
   //if not an application  - find the right application to open the file
   QString cmd;
   bool useInputFile = false;
@@ -270,13 +251,32 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     //Find out the proper application to use this file/directory
     useInputFile=true;
     cmd = cmdFromUser(argc, argv, inFile, extension, path, showDLG);
+    if(cmd.isEmpty()){ return; }
+    }
+  }
+  //Now assemble the exec string (replace file/url field codes as necessary)
+  if(useInputFile){ 
+    args = inFile; //just to keep them distinct internally
+    // NOTE: lumina-open is only designed for a single input file,
+    //    so no need to distinguish between the list codes (uppercase) 
+    //    and the single-file codes (lowercase)
+    if(isFile && (cmd.contains("%f") || cmd.contains("%F") ) ){
+      cmd.replace("%f","\""+inFile+"\"");
+      cmd.replace("%F","\""+inFile+"\"");
+    }else if(isUrl && (cmd.contains("%U") || cmd.contains("%u")) ){
+      cmd.replace("%u","\""+inFile+"\"");
+      cmd.replace("%U","\""+inFile+"\"");
+    }else{
+      //No field codes (or improper field codes given - which is quite common)
+      // - Just tack the input file on the end and let the app handle it as necessary
+      cmd.append(" \""+inFile+"\"");
     }
   }
   //qDebug() << "Found Command:" << cmd << "Extension:" << extension;
-  //Clean up the command appropriately for output
+  //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
   if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
-  binary = cmd;
-  if(useInputFile){ args = inFile; }
+  binary = cmd; //pass this string to the calling function
+
 }
 
 int main(int argc, char **argv){
@@ -291,44 +291,44 @@ int main(int argc, char **argv){
   //qDebug() << "Run CMD:" << cmd << args;
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
-  if(!args.isEmpty()){ cmd.append(" \""+args+"\""); }
-  int retcode = system( cmd.toUtf8() );
-  /*
+  //if(!args.isEmpty()){ cmd.append(" "+args+""); }
+  //int retcode = system( cmd.toUtf8() );
+  qDebug() << "[lumina-open] Running Cmd:" << cmd;
   QProcess *p = new QProcess();
   p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
   if(!path.isEmpty() && QFile::exists(path)){ p->setWorkingDirectory(path); }
-  p->start(cmd+" \""+args+"\"");
+  p->start(cmd);
   //Check the startup procedure
-  while(!p->waitForStarted(5000)){
+  /*while(!p->waitForStarted(5000)){
     if(p->state() == QProcess::NotRunning){
      //bad/invalid start
-     qDebug() << "[lumina-open] Application did not startup properly:"<<cmd+" "+args;
+     qDebug() << "[lumina-open] Application did not start properly:"<<cmd;
      return p->exitCode();
     }else if(p->state() == QProcess::Running){
      //This just missed the "started" signal - continue
      break;
     }
-  }
+  }*/
   //Now check up on it once every minute until it is finished
   while(!p->waitForFinished(60000)){
+    //qDebug() << "[lumina-open] process check:" << p->state();
     if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
   }
-  int retcode = p->exitCode();*/
-  if(retcode!=0){
+  int retcode = p->exitCode();
+  //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
+  
+  //if(retcode!=0 ){
+  if(p->exitStatus() == QProcess::CrashExit){
     qDebug() << "[lumina-open] Application Error:" << retcode;
+    QString err = QString(p->readAllStandardError());
+    if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
     //Setup the application
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
-    QTranslator translator;
-    QLocale mylocale;
-    QString langCode = mylocale.name();
-
-    if(!QFile::exists(LOS::LuminaShare()+"i18n/lumina-open_" + langCode + ".qm") ){
-      langCode.truncate( langCode.indexOf("_") );
-    }
-    translator.load( QString("lumina-open_") + langCode, LOS::LuminaShare()+"i18n/" );
-    App.installTranslator( &translator );
-    QMessageBox::critical(0,QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd);
+	LUtils::LoadTranslation(&App,"lumina-open");
+    QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
+    if(!err.isEmpty()){ dlg.setDetailedText(err); }
+    dlg.exec();
   }
   return retcode;
 }

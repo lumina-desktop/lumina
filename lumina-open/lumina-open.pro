@@ -1,11 +1,16 @@
 
 QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 TARGET = lumina-open
 isEmpty(PREFIX) {
  PREFIX = /usr/local
 }
 target.path = $$PREFIX/bin
+
+isEmpty(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
 
 TEMPLATE = app
 
@@ -19,15 +24,11 @@ FORMS    += LFileDialog.ui
 RESOURCES+= lumina-open.qrc
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
-LIBS     += -L../libLumina -lLuminaUtils
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
-openbsd-g++4 {
-  LRELEASE = lrelease4
-} else {
-  LRELEASE = lrelease-qt4
-}
+LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_ar.ts \

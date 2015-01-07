@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QInputDialog>
 #include <QSettings>
+#include <QAction>
+#include <QScreen>
 
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>

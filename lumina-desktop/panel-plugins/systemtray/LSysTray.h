@@ -12,7 +12,7 @@
 #include <QHBoxLayout>
 #include <QDebug>
 #include <QX11Info>
-#include <QX11EmbedContainer>
+//#include <QX11EmbedContainer>
 #include <QCoreApplication>
 
 //Local includes

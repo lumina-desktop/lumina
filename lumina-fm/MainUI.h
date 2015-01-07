@@ -40,13 +40,9 @@
 #include <QUrl>
 #include <QThread>
 
-//Phonon widgets
-//#include <Phonon/BackendCapabilities>
-#include <Phonon/MediaObject>
-#include <Phonon/VideoWidget>
-#include <Phonon/AudioOutput>
-#include <Phonon/SeekSlider>
-#include <Phonon/MediaSource>
+//Multimedia Widgets
+#include <QVideoWidget>
+#include <QMediaPlayer>
 
 // libLumina includes
 #include <LuminaXDG.h>
@@ -89,10 +85,10 @@ private:
 	QString favdir;
 
 	//Phonon Widgets for the multimedia player
-	Phonon::MediaObject *mediaObj;
-	Phonon::VideoWidget *videoDisplay;
-	Phonon::AudioOutput *audioOut;
-	Phonon::SeekSlider *playerSlider;
+	QMediaPlayer *mediaObj;
+	QVideoWidget *videoDisplay;
+	//Phonon::AudioOutput *audioOut;
+	QSlider *playerSlider;
 	QString playerTTime; //total time - to prevent recalculation every tick
 
 	//Internal variables
@@ -120,10 +116,10 @@ private:
 	QFileInfoList getSelectedItems();
 
 private slots:
-	void slotSingleInstance(const QString &in){
+	void slotSingleInstance(QStringList in){
 	  this->show();
 	  this->raise();
-	  this->OpenDirs(in.split("\n"));
+	  this->OpenDirs(in);
 	}
 	
 	//General button check functions (started in a seperate thread!)
@@ -184,14 +180,20 @@ private slots:
 	
 	//Multimedia Player Functions
 	void playerStart();
+	void playerError();
 	void playerStop();
 	void playerPause();
 	void playerNext();
 	void playerPrevious();
 	void playerFinished(); //automatically called by the media object
-	void playerStateChanged(Phonon::State newstate, Phonon::State oldstate); //automatically called by the media object
+	void playerStatusChanged(QMediaPlayer::MediaStatus stat); //automatically called
+	void playerStateChanged(QMediaPlayer::State newstate); //automatically called by the media object
 	void playerVideoAvailable(bool showVideo); //automatically called by the media object
+	void playerDurationChanged(qint64);
 	void playerTimeChanged(qint64 ctime); //automatically called by the media object
+	void playerSliderMoved(int);
+	void playerSliderHeld();
+	void playerSliderChanged();
 	void playerFileChanged();
 	
 	//Context Menu Actions

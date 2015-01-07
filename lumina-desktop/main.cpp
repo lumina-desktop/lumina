@@ -22,11 +22,12 @@
 #include <LuminaXDG.h> //from libLuminaUtils
 #include <LuminaThemes.h>
 #include <LuminaOS.h>
+#include <LuminaUtils.h>
 
 #define DEBUG 0
 
 QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
-void MessageOutput(QtMsgType type, const char *msg){
+void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
   QString txt;
   switch(type){
   case QtDebugMsg:
@@ -61,7 +62,8 @@ int main(int argc, char ** argv)
     //LSession::setGraphicsSystem("native"); //make sure to use X11 graphics system
     //Setup the log file
     qDebug() << "Lumina Log File:" << logfile.fileName();
-    if(logfile.exists()){ logfile.remove(); } //remove any old one
+    if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
+    if(logfile.exists()){ QFile::rename(logfile.fileName(), logfile.fileName()+".old"); }
       //Make sure the parent directory exists
       if(!QFile::exists(QDir::homePath()+"/.lumina/logs")){
         QDir dir;
@@ -76,11 +78,12 @@ int main(int argc, char ** argv)
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
     LuminaThemeEngine theme(&a);
     //Setup Log File
-    qInstallMsgHandler(MessageOutput);
+    qInstallMessageHandler(MessageOutput);
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
     if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
-    a.LoadLocale(QLocale().name());
+    LUtils::LoadTranslation(&a, "lumina-desktop");
+    //a.LoadLocale(QLocale().name());
     //Start launching external applications
     QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}

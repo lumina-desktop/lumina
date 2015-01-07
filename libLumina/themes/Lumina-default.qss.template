@@ -6,12 +6,12 @@ QWidget{
   font-size: %%FONTSIZE%%;
 }
 
-QAbstractItemView, QAbstractSpinBox, QAbstractScrollArea{
+/*QAbstractItemView, QAbstractSpinBox, QAbstractScrollArea{
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 5px;
   color: %%TEXTCOLOR%%;
   background-color: %%ALTBASECOLOR%%;
-}
+}*/
 
 /* ALL THE WIDGETS WITH THE BASE COLOR */
 QMainWindow, QMenu, QDialog, QMessageBox{ 
@@ -61,7 +61,7 @@ QMenu::item{
   padding: 2px 30px 2px 20px;
 }
 
-QMenu::indicator{ width: 20px; height: 20px; }
+/*QMenu::indicator{ width: 20px; height: 20px; }
 
  QMenu::indicator:non-exclusive:unchecked {
      image: url(:/trolltech/styles/commonstyle/images/standardbutton-cancel-16.png);
@@ -69,7 +69,7 @@ QMenu::indicator{ width: 20px; height: 20px; }
 
  QMenu::indicator:non-exclusive:checked {
      image: url(:/trolltech/styles/commonstyle/images/standardbutton-apply-16.png);
- }
+ }*/
 
 /* TAB WIDGETS */
 /*QTabBar{
@@ -166,48 +166,27 @@ QGroupBox::title{
   border: none;
   color: %%TEXTCOLOR%%;
 }
-QGroupBox::indicator{ width: 13px; height 13px; }
+/*QGroupBox::indicator{ width: 13px; height 13px; }
 QGroupBox::indicator:checked{
   image: url(:/trolltech/styles/commonstyle/images/standardbutton-apply-16.png);
 }
 QGroupBox::indicator:unchecked{
   image: url(:/trolltech/styles/commonstyle/images/standardbutton-cancel-16.png);
-}
+}*/
 
 /* COMBO BOX */
 QComboBox{
-  border: 1px solid %%ACCENTCOLOR%%;
+  /*border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 3px;
-  padding: 1px 18px 1px 3px;
-  min-width: 6em;
+  padding: 1px 18px 1px 3px;*/
   color: %%TEXTCOLOR%%;
-  background: %%ALTBASECOLOR%%;
-  selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+  /*background: %%ALTBASECOLOR%%;
+  selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);*/
  }
 
-QComboBox::drop-down {
-     subcontrol-origin: padding;
-     subcontrol-position: right;
-     width: 16px;
-     border-left-width: 1px;
-     border-left-color: transparent;
-     border-left-style: solid; /* just a single line */
-     border-top-right-radius: 3px; /* same radius as the QComboBox */
-     border-bottom-right-radius: 3px;
-     border-bottom-left-radius: 0px;
-     selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
-     background-color: %%ALTBASECOLOR%%;
-}
-QComboBox::down-arrow {
-     image: url(:/trolltech/styles/commonstyle/images/viewdetailed-16.png);
-	 width: 14px;
-	 height: 14px;
-}
-QComboBox::down-arrow:on { /* shift the arrow when popup is open */
-     top: 1px;
-}
 /* menu for the combo box */
-QComboBox QAbstractItemView{
+/* BUG IN QT 5.2: Cannot seem to change the highlight colors in the menu */
+/*QComboBox QAbstractItemView{
   border: none;
   border-radius: 0px;
   border-bottom-left-radius: 3px;
@@ -216,7 +195,9 @@ QComboBox QAbstractItemView{
   background-color: %%ALTBASECOLOR%%;
   color: %%TEXTCOLOR%%;
   selection-color: %%TEXTHIGHLIGHTCOLOR%%;
-}
+  padding: 1px;
+}*/
+
 
 /* VIEW WIDGETS */
 QTreeView, QListView{
@@ -392,7 +373,7 @@ QPushButton:flat, QToolButton:flat{
    background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
    color: %%TEXTHIGHLIGHTCOLOR%%;
  }
- QRadioButton, QCheckBox{
+ /*QRadioButton, QCheckBox{
    background: transparent;
    color: %%TEXTCOLOR%%;
    padding: 2px;
@@ -402,13 +383,8 @@ QPushButton:flat, QToolButton:flat{
    background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
    border: 1px solid %%ACCENTCOLOR%%;
    color: %%TEXTHIGHLIGHTCOLOR%%;
- }
-QCheckBox:indicator:checked{
-   image: url(:/trolltech/styles/commonstyle/images/standardbutton-apply-16.png);
-}
-QCheckBox:indicator:unchecked{
-   image: url(:/trolltech/styles/commonstyle/images/standardbutton-cancel-16.png);
-}
+ }*/
+
 
 /* PROGRESSBAR */
 QProgressBar{
@@ -426,16 +402,15 @@ QProgressBar{
  }
  
  /* SPINBOX */
-QAbstractSpinBox{
-  padding-right: 15px;
+/*QAbstractSpinBox{
   background-color: %%ALTBASECOLOR%%;
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 3px;
 }
 QAbstractSpinBox:disabled{
   color: %%ACCENTDISABLECOLOR%%;
-}
-QAbstractSpinBox::down-button{
+}*/
+/*QAbstractSpinBox::down-button{
   subcontrol-origin: border;
   subcontrol-position: left;
   width: 16px;
@@ -446,8 +421,8 @@ QAbstractSpinBox::up-button{
   subcontrol-position: right;
   width: 16px;
   border-width: 1px;
-}
-
+}*/
+/*
 QAbstractSpinBox::down-arrow{
   border-image: url(":/trolltech/styles/commonstyle/images/left-16.png");
   width: 16px;
@@ -460,7 +435,7 @@ QAbstractSpinBox::up-arrow{
   border-image: url(":/trolltech/styles/commonstyle/images/right-16.png");	
   width: 16px;
   height: 16px;
-}
+}*/
  /* CALENDER WIDGET */
  /* (This is a special hack since there is no official support for stylesheets for this widget) */
  QCalendarWidget QWidget#qt_calendar_navigationbar{
@@ -468,10 +443,17 @@ QAbstractSpinBox::up-arrow{
  }
 QCalendarWidget QWidget{ 
    background-color: %%BASECOLOR%%; 
-   alternate-background-color: %%ALTBASECOLOR%%;
+   alternate-background-color: %%PRIMARYDISABLECOLOR%%;
    color: %%TEXTCOLOR%%;
 }
 QCalendarWidget QAbstractButton{
   background-color: transparent;
+}
+QCalendarWidget QAbstractButton::menu-indicator{
+  image: none;
+}
+QCalendarWidget QAbstractItemView{
+  selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);;
+  selection-color: %%TEXTHIGHLIGHTCOLOR%%;
 }
  

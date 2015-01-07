@@ -19,6 +19,7 @@
 #include <QSettings>
 #include <QTextStream>
 #include <QTreeWidgetItem>
+#include <QAction>
 
 #include <LuminaXDG.h> //From libLuminaUtils
 #include <LuminaUtils.h>

@@ -47,9 +47,9 @@ private:
 	int overwrite; // [-1= auto, 0= no overwrite, 1= overwrite]
 	QStringList ofiles, nfiles; //original/new files
 
-	QStringList subfiles(QString dirpath); //recursive function for fetching all "child" files/dirs (dirs last)
+	QStringList subfiles(QString dirpath, bool dirsfirst = false); //recursive function for fetching all "child" files/dirs (dirs last by default)
 	QString newFileName(QString path);
-	QStringList removeItem(QString path);
+	QStringList removeItem(QString path, bool recursive = false);
 	QStringList copyItem(QString oldpath, QString newpath);
 
 private slots:

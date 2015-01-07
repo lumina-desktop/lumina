@@ -35,7 +35,9 @@ void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
   //Set the labels for the file
   ui->label_file->setText( this->fontMetrics().elidedText( filename, Qt::ElideMiddle, 300 ) );
   if(isFile){ ui->label_extension->setText( "("+extension+")"); }
-  else{ ui->label_extension->setText("("+extension+" link)"); }
+  else if(extension=="email"){ ui->label_extension->setText( QString(tr("(Email Link)")) ); }
+  else if(extension=="webbrowser"){  ui->label_extension->setText( QString(tr("(Internet URL)")) ); }
+  else{ui->label_extension->setText("("+extension+" link)"); }
   fileEXT = extension;
   generateAppList();
 }
