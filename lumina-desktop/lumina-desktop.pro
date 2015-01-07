@@ -18,7 +18,12 @@ DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
 
-LRELEASE = $$LIBPREFIX/qt5/bin/lrelease
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
+}
+
+LRELEASE = $$QT5LIBDIR/bin/lrelease
+
 
 SOURCES += main.cpp \
 	WMProcess.cpp \
