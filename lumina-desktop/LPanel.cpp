@@ -31,7 +31,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   qDebug() << " -- Setup Panel";
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint );
+  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
 
   this->setWindowTitle("");
   this->setObjectName("LuminaPanelWidget");
@@ -43,7 +43,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   panelArea->setLayout(layout);
   //Set special window flags on the panel for proper usage
   this->show();
-  this->setFocusPolicy(Qt::NoFocus);
+  //this->setFocusPolicy(Qt::NoFocus);
   //panels cannot get keyboard focus otherwise it upsets the task manager window detection
   this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
   this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
