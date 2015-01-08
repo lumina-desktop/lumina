@@ -41,6 +41,9 @@ public:
 	void show();
 	void hide();
 
+	WId backgroundID();
+	QRect availableScreenGeom();
+
 public slots:
 	void SystemLogout();
 	void SystemTerminal();
@@ -66,7 +69,7 @@ private:
 	QList<LDPlugin*> PLUGINS;
 	QFileSystemWatcher *watcher;
 	QString CBG; //current background
-	
+	QRect globalWorkRect;
 	void CreateDesktopPluginContainer(LDPlugin*);
 
 private slots:

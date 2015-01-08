@@ -18,8 +18,7 @@
 #include <QDesktopWidget>
 #include <QList>
 #include <QThread>
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
+#include <QMediaPlayer>
 #include <QThread>
 #include <QUrl>
 
@@ -30,7 +29,6 @@
 #include "LDesktop.h"
 #include "WMProcess.h"
 
-//LibLumina X11 class
 #include <LuminaX11.h>
 
 //SYSTEM TRAY STANDARD DEFINITIONS
@@ -54,15 +52,21 @@ public:
 	//Functions to be called during startup
 	void setupSession();
 
-	virtual bool x11EventFilter(XEvent *event);
-	
-	bool LoadLocale(QString);
-
 	//Public System Tray Functions
 	QList<WId> currentTrayApps(WId visualTray);
 	bool registerVisualTray(WId);
 	void unregisterVisualTray(WId);
 
+	//Special functions for XCB event filter parsing only 
+	//  (DO NOT USE MANUALLY)
+	void WindowPropertyEvent();
+        void WindowPropertyEvent(WId);
+	void SysTrayDockRequest(WId);
+	void WindowClosedEvent(WId);
+	void WindowConfigureEvent(WId);
+	void WindowDamageEvent(WId);
+	void WindowSelectionClearEvent(WId);
+	
 	//System Access
 	//Return a pointer to the current session
 	static LSession* handle(){
@@ -74,12 +78,15 @@ public:
 	AppMenu* applicationMenu();
 	void systemWindow();
 	SettingsMenu* settingsMenu();
-
+	LXCB *XCB; //class for XCB usage
+	
 	QSettings* sessionSettings();
 
 	//Play System Audio
 	void playAudioFile(QString filepath);
-
+	//Window Adjustment Routine (due to Fluxbox not respecting _NET_WM_STRUT)
+	void adjustWindowGeom(WId win, bool maximize = false);
+	
 private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
@@ -89,8 +96,7 @@ private:
 	AppMenu *appmenu;
 	SettingsMenu *settingsmenu;
 	QTranslator *currTranslator;
-	Phonon::MediaObject *mediaObj;
-	Phonon::AudioOutput *audioOut;
+	QMediaPlayer *mediaObj;
 	QThread *audioThread;
 	QSettings *sessionsettings;
 
@@ -99,6 +105,9 @@ private:
 	int TrayDmgEvent, TrayDmgError;
 	QList<WId> RunningTrayApps;
 	bool TrayStopping;
+
+	//Task Manager Variables
+	QList<WId> RunningApps;
 
 public slots:
 	void launchStartupApps();
@@ -117,6 +126,8 @@ private slots:
 	void checkUserFiles();
 	void refreshWindowManager();
 	void updateDesktops();
+	void registerDesktopWindows();
+
 
 	void SessionEnding();
 

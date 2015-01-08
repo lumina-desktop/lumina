@@ -20,6 +20,7 @@ xbrightness (x11/xbrightness) (Screen Brightness Control)
 
 
 Build time dependencies:
+== (Version 0.7.2) ==
 Qt 4.8+ 
   qt4-core (devel/qt4-corelib))
   qt4-gui (x11-toolkits/qt4-gui)
@@ -31,11 +32,30 @@ Qt 4.8+
   qt4-moc (devel/qt4-moc)
   qt4-rcc (devel/qt4-rcc)
   devel/qt4-qtsolutions-singleapplication
-  
+ 
 X.org and XLib with extensions: 
   Xrender (x11/libXrender)
   Xcomposite (x11/libXcomposite)
   Xdamage (x11/libXdamage)
+  
+== (Version 0.8.0+) ==
+Qt 5.2+
+  qt5-core
+  qt5-buildtools
+  qt5-gui
+  qt5-widgets
+  qt5-multimedia
+  qt5-network
+  qt5-qmake
+  qt5-svg
+  qt5-x11extras
+
+X.org and XCB extensions (possibly the XLib libraries above during the transition phase):
+  libxcb
+  xcb-util-wm (window manager framework)
+  xcb-damage (included in base XCB lib?)
+  xcb-composite (included in base XCB lib?)
+  xcb-render (included in base XCB lib?)
 
 
   

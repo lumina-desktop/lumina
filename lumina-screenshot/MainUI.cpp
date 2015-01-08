@@ -11,7 +11,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
-  cpic = QPixmap::grabWindow(QApplication::desktop()->winId()); //initial screenshot
+  cpic = QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()); //initial screenshot
   ppath = QDir::homePath();
   QWidget *spacer = new QWidget();
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -90,12 +90,13 @@ bool MainUI::getWindow(){
 }
 
 void MainUI::getPixmap(){
+  QScreen *scrn = QApplication::screens().at(0);
   if(cwin==0){
     //Grab the whole screen
-    cpic = QPixmap::grabWindow(QApplication::desktop()->winId());
+    cpic = scrn->grabWindow(QApplication::desktop()->winId());
   }else{
     //Grab just the designated window
-    cpic = QPixmap::grabWindow(cwin);
+    cpic = scrn->grabWindow(cwin);
   }
   this->show();
   //Now display the pixmap on the label as well

@@ -1,5 +1,6 @@
 
-QT       += core gui network phonon
+QT       += core gui network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
 
 TARGET = Lumina-DE
 isEmpty(PREFIX) {
@@ -7,23 +8,30 @@ isEmpty(PREFIX) {
 }
 target.path = $$PREFIX/bin
 
-LIBS     += -L../libLumina -lLuminaUtils -lXdamage -lX11
+isEmpty(LIBPREFIX) {
+ LIBPREFIX = $$PREFIX/lib
+}
+
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
 
-openbsd-g++4 {
-  LRELEASE = lrelease4
-} else {
-  LRELEASE = lrelease-qt4
+isEmpty(QT5LIBDIR) {
+ QT5LIBDIR = $$PREFIX/lib/qt5
 }
+
+LRELEASE = $$QT5LIBDIR/bin/lrelease
+
 
 SOURCES += main.cpp \
 	WMProcess.cpp \
+	LXcbEventFilter.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
 	LPanel.cpp \
+	LWinInfo.cpp \
 	AppMenu.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \
@@ -47,6 +55,7 @@ SOURCES += main.cpp \
 
 HEADERS  += Globals.h \
 	WMProcess.h \
+	LXcbEventFilter.h \
 	LSession.h \
 	LDesktop.h \
 	LPanel.h \

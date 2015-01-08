@@ -11,6 +11,8 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
+#define DEBUG 1
+
 LDesktop::LDesktop(int deskNum) : QObject(){
 
   DPREFIX = "desktop-"+QString::number(deskNum)+"/";
@@ -54,6 +56,20 @@ void LDesktop::hide(){
   if(bgWindow!=0){ bgWindow->hide(); }
   if(bgDesktop!=0){ bgDesktop->hide(); }
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }
+}
+
+WId LDesktop::backgroundID(){
+  if(bgWindow!=0){ return bgWindow->winId(); }
+  else{ return QX11Info::appRootWindow(); }
+}
+
+QRect LDesktop::availableScreenGeom(){
+  //Return a QRect containing the (global) screen area that is available (not under any panels)
+  if(bgDesktop!=0){
+    return globalWorkRect; //saved from previous calculations
+  }else{
+    return desktop->screenGeometry(desktopnumber);
+  }	  
 }
 
 void LDesktop::SystemLogout(){
@@ -103,9 +119,9 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
 // =====================
 void LDesktop::InitDesktop(){
   //This is called *once* during the main initialization routines
-  qDebug() << "Init Desktop:" << desktopnumber;
+  if(DEBUG){ qDebug() << "Init Desktop:" << desktopnumber; }
     connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
-  qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height();
+  if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height(); }
   deskMenu = new QMenu(0);
     connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
   winMenu = new QMenu(0);
@@ -124,17 +140,20 @@ void LDesktop::InitDesktop(){
     watcher->addPath(settings->fileName());
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
 
+  if(DEBUG){ qDebug() << "Create bgWindow"; }
   bgWindow = new QWidget();
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
+  	bgWindow->setWindowFlags(Qt::FramelessWindowHint);
 	LX11::SetAsDesktop(bgWindow->winId());
 	bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
+  if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new QMdiArea(bgWindow);
 	//Make sure the desktop area is transparent to show the background
         bgDesktop->setBackground( QBrush(Qt::NoBrush) );
 	bgDesktop->setStyleSheet( "QMdiArea{ border: none; background: transparent;}" );
-  qDebug() << " - Desktop Init Done:" << desktopnumber;
+  if(DEBUG){ qDebug() << " - Desktop Init Done:" << desktopnumber; }
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
   QTimer::singleShot(0,this, SLOT(UpdateBackground()) );
@@ -155,10 +174,10 @@ void LDesktop::SettingsChanged(){
 }
 
 void LDesktop::UpdateMenu(bool fast){
-  //qDebug() << " - Update Menu:" << desktopnumber;
+  if(DEBUG){ qDebug() << " - Update Menu:" << desktopnumber; }
   //Put a label at the top
   int num = LX11::GetCurrentDesktop();
-  //qDebug() << "Found desktop number:" << num;
+  if(DEBUG){ qDebug() << "Found workspace number:" << num; }
   if(num < 0){ workspacelabel->setText( "<b>"+tr("Lumina Desktop")+"</b>"); }
   else{ workspacelabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>"); }
   if(fast && usewinmenu){ UpdateWinMenu(); }
@@ -216,7 +235,7 @@ void LDesktop::winClicked(QAction* act){
 }
 
 void LDesktop::UpdateDesktop(){
-  qDebug() << " - Update Desktop Plugins for screen:" << desktopnumber;
+  if(DEBUG){ qDebug() << " - Update Desktop Plugins for screen:" << desktopnumber; }
   if(deskupdating){ return; } //make sure to only run this once
   deskupdating = true;
   QStringList plugins = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
@@ -372,7 +391,7 @@ void LDesktop::DesktopPluginRemoved(QString ID){
 }
 
 void LDesktop::UpdatePanels(){
-  qDebug() << " - Update Panels For Screen:" << desktopnumber;
+  if(DEBUG){ qDebug() << " - Update Panels For Screen:" << desktopnumber; }
   int panels = settings->value(DPREFIX+"panels", -1).toInt();
   if(panels==-1 && defaultdesktop){ panels=1; } //need at least 1 panel on the primary desktop
   //Remove all extra panels
@@ -394,7 +413,7 @@ void LDesktop::UpdatePanels(){
       }
     }
     if(!found){
-      qDebug() << " -- Create panel "<< i;
+      if(DEBUG){ qDebug() << " -- Create panel "<< i; }
       //New panel
       LPanel *pan = new LPanel(settings, desktopnumber, i, bgWindow);
       PANELS << pan;
@@ -412,7 +431,9 @@ void LDesktop::UpdateDesktopPluginArea(){
   }
   //Now make sure the desktop plugin area is only the visible area
   QRect rec = visReg.boundingRect();
+  //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) desktopnumber, rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
+  globalWorkRect = rec; //save this for later
   rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y() ) );
   //qDebug() << "DPlug Area:" << rec.x() << rec.y() << rec.width() << rec.height();
   bgDesktop->setGeometry( rec );
@@ -426,7 +447,7 @@ void LDesktop::UpdateBackground(){
   //Get the current Background
   if(bgupdating || bgWindow==0){ return; } //prevent multiple calls to this at the same time
   bgupdating = true;
-  qDebug() << " - Update Desktop Background for screen:" << desktopnumber;
+  if(DEBUG){ qDebug() << " - Update Desktop Background for screen:" << desktopnumber; }
   //Get the list of background(s) to show
   QStringList bgL = settings->value(DPREFIX+"background/filelist", QStringList()).toStringList();
   //qDebug() << " - List:" << bgL << CBG;

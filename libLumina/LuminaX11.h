@@ -20,6 +20,7 @@
 #include <QX11Info>
 #include <QDebug>
 #include <QPainter>
+#include <QObject>
 // Addition includes for compilations (cause issues with X11 libs later)
 #include <QDir>
 #include <QEvent>
@@ -33,6 +34,8 @@
 //#include <X11/Xatom.h>
 //#include <X11/extensions/Xrender.h>
 
+#include <xcb/xcb_ewmh.h>
+
 //SYSTEM TRAY STANDARD DEFINITIONS
 #define _NET_SYSTEM_TRAY_ORIENTATION_HORZ 0
 #define _NET_SYSTEM_TRAY_ORIENTATION_VERT 1
@@ -45,6 +48,9 @@
 class LX11{
 public:
 	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	
+	//Internal Use Functions
+	//static xcb_ewmh_connection_t* EWMH_C(); //Get the XCB_ewmh handle;
 	
 	//General Info Functions
 	static QList<WId> WindowList(); //List all current windows
@@ -100,6 +106,48 @@ public:
 	
 	//EWMH Convenience functions
 	static QString getNetWMProp(WId win, QString prop); //Returns a _NET_WM_* string value
+};
+
+//XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
+class LXCB{
+	
+public:
+	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	
+	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
+	
+	LXCB();
+	~LXCB();
+	
+	//== Main Interface functions ==
+	// General Information
+	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
+	unsigned int CurrentWorkspace();
+	WId ActiveWindow(); //fetch the ID for the currently active window
+	
+	//Session Modification
+	void RegisterVirtualRoots(QList<WId> roots);
+
+	//Window Information
+	QString WindowClass(WId);
+	unsigned int WindowWorkspace(WId); //The workspace the window is on
+	QRect WindowGeometry(WId, bool includeFrame = true); //the geometry of the window (frame excluded)
+	WINDOWSTATE WindowState(WId win); //Visible state of window
+	QString WindowVisibleIconName(WId win); //_WM_VISIBLE_ICON_NAME
+	QString WindowIconName(WId win); //_WM_ICON_NAME
+	QString WindowVisibleName(WId win); //_WM_VISIBLE_NAME
+	QString WindowName(WId win); //_WM_NAME
+	bool WindowIsMaximized(WId win);
+	
+	//Window Modification
+	void SetAsSticky(WId); //Stick to all workspaces
+	void SetAsPanel(WId); //Adjust all the window flags for a proper panel (cannot be done through Qt)
+	void CloseWindow(WId); //request that the window be closed
+	void MinimizeWindow(WId); //request that the window be unmapped/minimized
+	void ActivateWindow(WId); //request that the window become active
+	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
+	void MoveResizeWindow(WId win, QRect geom);
+	
 };
 
 #endif

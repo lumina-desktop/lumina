@@ -16,6 +16,9 @@
 #include <QStringList>
 #include <QFile>
 #include <QFileInfo>
+#include <QObject>
+#include <QTranslator>
+#include <QApplication>
 
 class LUtils{
 public:
@@ -34,6 +37,9 @@ public:
 
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
+
+	//Load a translation file for a Lumina Project
+	static void LoadTranslation(QApplication *app, QString appname);
 };
 
 #endif

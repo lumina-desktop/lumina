@@ -53,7 +53,7 @@ void LSysTray::start(){
   isRunning = LSession::handle()->registerVisualTray(this->winId());
   qDebug() << "Visual Tray Started:" << this->type() << isRunning;
   if(isRunning){ 
-    upTimer->start();
+    //upTimer->start();
     QTimer::singleShot(0,this, SLOT(checkAll()) ); 
   }
   //Make sure we catch all events right away
@@ -169,6 +169,7 @@ void LSysTray::checkAll(){
   if(!isRunning || stopping || checking){ return; } //Don't check if not running at the moment
   checking = true;
   //qDebug() << "System Tray: Check tray apps";
+  bool listChanged = false;
   QList<WId> wins = LSession::handle()->currentTrayApps(this->winId());
   for(int i=0; i<trayIcons.length(); i++){
     int index = wins.indexOf(trayIcons[i]->appID());
@@ -179,6 +180,7 @@ void LSysTray::checkAll(){
       LI->removeWidget(cont);
       delete cont;
       i--; //List size changed
+      listChanged = true;
       //Re-adjust the maximum widget size to account for what is left
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
         this->setMaximumSize( trayIcons.length()*this->height(), 10000);
@@ -217,9 +219,17 @@ void LSysTray::checkAll(){
 	LI->removeWidget(cont);
 	delete cont;
 	continue;
-      } 
+      }else{
+	listChanged = true;
+      }
     LI->update(); //make sure there is no blank space in the layout
   }
+  /*if(listChanged){
+    //Icons got moved around: be sure to re-draw all of them to fix visuals
+    for(int i=0; i<trayIcons.length(); i++){
+      trayIcons[i]->update();
+    }
+  }*/
   //qDebug() << " - System Tray: check done";
   checking = false;
 }

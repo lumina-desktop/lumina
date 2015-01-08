@@ -1,7 +1,7 @@
 #include "BackgroundWorker.h"
 
 #include <LuminaXDG.h>
-#include <Phonon/BackendCapabilities>
+#include <QMediaServiceSupportedFormatsInterface>
 #include <QImageReader>
 
 BackgroundWorker::BackgroundWorker() : QObject(){
@@ -26,12 +26,9 @@ void BackgroundWorker::startDirChecks(QString path){
 	  
   //Now check for multimedia files
   if(multiFilter.isEmpty()){
-    //Initial Run - load supported multimedia extensions
-    QStringList mimes = Phonon::BackendCapabilities::availableMimeTypes();
-    mimes = mimes.filter("audio/") + mimes.filter("video/");
-    for(int i=0; i<mimes.length(); i++){
-      multiFilter << LXDG::findFilesForMime(mimes[i]);
-    }
+    //Initial Run - load supported multimedia extensions 
+    // (Auto-detection of supported types broken in Qt5 - just use everythings for now)
+    multiFilter = LXDG::findAVFileExtensions();
     multiFilter.removeDuplicates();
     qDebug() << "Supported Multimedia Formats:" << multiFilter;
   }

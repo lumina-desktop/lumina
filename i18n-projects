@@ -1,0 +1,12 @@
+# List of projects we want to make available as PO files in the
+# lumina-i18n git repo
+
+# XXXXXX_LANG.ts <Qt project dir>
+# ^^^^^^ File prefix for .ts file
+
+lumina-config lumina-config 
+lumina-desktop lumina-desktop
+lumina-fm lumina-fm
+lumina-open lumina-open
+lumina-screenshot lumina-screenshot
+lumina-search lumina-search

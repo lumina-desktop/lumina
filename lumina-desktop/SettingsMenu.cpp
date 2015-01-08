@@ -18,7 +18,7 @@ SettingsMenu::~SettingsMenu(){
 }
 
 void SettingsMenu::InitMenu(){
-  this->setTitle( tr("Desktop Settings") );
+  this->setTitle( tr("Settings") );
   this->setIcon( LXDG::findIcon("configure","") );
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
   //Now setup the possible configuration options

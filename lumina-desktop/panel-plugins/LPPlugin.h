@@ -28,6 +28,7 @@ public:
 	  plugintype=ptype;
 	  this->setContentsMargins(0,0,0,0);
 	  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	  this->setFocusPolicy(Qt::NoFocus); //no keyboard focus on the panel/plugins
 	  if(horizontal){LY = new QBoxLayout(QBoxLayout::LeftToRight, this); }
 	  else{ LY = new QBoxLayout(QBoxLayout::TopToBottom, this); }
 	  LY->setContentsMargins(0,0,0,0);

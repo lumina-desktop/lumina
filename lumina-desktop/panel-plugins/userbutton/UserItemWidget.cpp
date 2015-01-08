@@ -13,24 +13,24 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
     bool ok = false;
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
     if(ok){
-      icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(30,30) );
+      icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) );
     }else{
-      icon->setPixmap( LXDG::findIcon("unknown","").pixmap(30,30) );
+      icon->setPixmap( LXDG::findIcon("unknown","").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) );
     }
   }else if(isDir){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(goback){
-      icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(30,30) );
+      icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(32,32) );
       name->setText( tr("Go Back") );
     }else{
-      icon->setPixmap( LXDG::findIcon("folder","").pixmap(30,30) );
+      icon->setPixmap( LXDG::findIcon("folder","").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(30,30) );
+    icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(32,32) );
     name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
   }
   linkPath = QFile::symLinkTarget(itemPath);
@@ -48,7 +48,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent
   linkPath = QFile::symLinkTarget(item.filePath);
   isShortcut = item.filePath.contains("/home/") && (item.filePath.contains("/Desktop/") || item.filePath.contains("/.lumina/favorites/") );
   //Now fill it appropriately
-  icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(30,30) );
+  icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(32,32) );
   name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) ); 
   icon->setWhatsThis(item.filePath);
   //Now setup the button appropriately
@@ -70,7 +70,7 @@ void UserItemWidget::createWidget(){
     button->setIconSize( QSize(14,14) );
     button->setAutoRaise(true);
   icon = new QLabel(this);
-    icon->setFixedSize( QSize(30,30) );
+    icon->setFixedSize( QSize(34,34) );
   name = new QLabel(this);
   //Add them to the layout
   this->setLayout(new QHBoxLayout());

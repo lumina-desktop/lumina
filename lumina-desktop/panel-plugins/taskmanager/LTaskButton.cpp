@@ -5,15 +5,21 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LTaskButton.h"
+#include "LSession.h"
 
-LTaskButton::LTaskButton(QWidget *parent) : LTBWidget(parent){
+#ifndef DEBUG
+#define DEBUG 0
+#endif
+
+LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent){
   actMenu = new QMenu(this);
   winMenu = new QMenu(this);
   UpdateMenus();
-  
+  showText = !smallDisplay;
   this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   this->setAutoRaise(false); //make sure these always look like buttons
   this->setContextMenuPolicy(Qt::CustomContextMenu);
+  this->setFocusPolicy(Qt::NoFocus);
   winMenu->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openActionMenu()) );
   connect(this, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
@@ -28,22 +34,30 @@ LTaskButton::~LTaskButton(){
 //===========
 //      PUBLIC
 //===========
-QList<LWinInfo> LTaskButton::windows(){
-  return WINLIST;
+QList<WId> LTaskButton::windows(){
+  QList<WId> list;
+  for(int i=0; i<WINLIST.length(); i++){
+    list << WINLIST[i].windowID();
+  }
+  return list;
 }
 
 QString LTaskButton::classname(){
   return cname;
 }
 
-void LTaskButton::addWindow(LWinInfo win){
-  WINLIST << win;
+bool LTaskButton::isActive(){
+  return cstate == LXCB::ACTIVE;
+}
+
+void LTaskButton::addWindow(WId win){
+  WINLIST << LWinInfo(win);
   UpdateButton();
 }
 
-void LTaskButton::rmWindow(LWinInfo win){
+void LTaskButton::rmWindow(WId win){
   for(int i=0; i<WINLIST.length(); i++){
-    if(WINLIST[i].windowID() == win.windowID()){
+    if(WINLIST[i].windowID() == win){
       WINLIST.removeAt(i);
       break;
     }
@@ -67,11 +81,11 @@ LWinInfo LTaskButton::currentWindow(){
 //=============
 void LTaskButton::UpdateButton(){
   if(winMenu->isVisible()){ return; } //skip this if the window menu is currently visible for now
-  bool statusOnly = WINLIST.length() == LWINLIST.length();
+  bool statusOnly = (WINLIST.length() == LWINLIST.length());
   LWINLIST = WINLIST;
   
   winMenu->clear();
-  Lumina::STATES showstate = Lumina::NOSHOW;
+  LXCB::WINDOWSTATE showstate = LXCB::IGNORE;
   for(int i=0; i<WINLIST.length(); i++){
     if(WINLIST[i].windowID() == 0){
       WINLIST.removeAt(i);
@@ -88,52 +102,53 @@ void LTaskButton::UpdateButton(){
 	if(cname.contains(" - ")){ cname = cname.section(" - ",-1); }
       }
       this->setToolTip(cname);
-      /*
-      if(this->icon().isNull()){
-	this->setIcon( LXDG::findIcon(cname.toLower(),"") );
-	if(this->icon().isNull()){
-	  this->setIcon( LXDG::findIcon("preferences-system-windows","") );
-	  noicon=true;
-	}else{
-	  noicon = false;
-	}
-      }else{
-	noicon = false;
-      }*/
     }
     bool junk;
     QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
       tmp->setData(i); //save which number in the WINLIST this entry is for
-    Lumina::STATES stat = WINLIST[i].status();
-    if(stat==Lumina::NOTIFICATION){ showstate = stat; } //highest priority
-    else if( stat==Lumina::ACTIVE && showstate != Lumina::NOTIFICATION){ showstate = stat; } //next priority
-    else if( stat==Lumina::Lumina::VISIBLE && showstate != Lumina::NOTIFICATION && showstate != Lumina::ACTIVE){ showstate = stat; }
-    else if(showstate == Lumina::INVISIBLE || showstate == Lumina::NOSHOW){ showstate = stat; } //anything is the same/better
+    LXCB::WINDOWSTATE stat = WINLIST[i].status(true); //update the saved state for the window
+    if(stat==LXCB::ATTENTION){ showstate = stat; } //highest priority
+    else if( stat==LXCB::ACTIVE && showstate != LXCB::ATTENTION){ showstate = stat; } //next priority
+    else if( stat==LXCB::VISIBLE && showstate != LXCB::ATTENTION && showstate != LXCB::ACTIVE){ showstate = stat; }
+    else if(showstate == LXCB::INVISIBLE || showstate == LXCB::IGNORE){ showstate = stat; } //anything is the same/better
   }
   //Now setup the button appropriately
   // - visibility
-  if(showstate == Lumina::NOSHOW || WINLIST.length() < 1){ this->setVisible(false); }
+  if(showstate == LXCB::IGNORE || WINLIST.length() < 1){ this->setVisible(false); }
   else{ this->setVisible(true); }
   // - functionality
   if(WINLIST.length() == 1){
     //single window
     this->setPopupMode(QToolButton::DelayedPopup);
     this->setMenu(actMenu);
-    if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
+    if(showText){ this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
+    else if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
     else{ this->setText(""); }
   }else if(WINLIST.length() > 1){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
-    if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
+    if(noicon || showText){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }
   this->setState(showstate); //Make sure this is after the button setup so that it properly sets the margins/etc
+  cstate = showstate; //save this for later
 }
 
 void LTaskButton::UpdateMenus(){
-  //Action menu is very simple right now - can expand it later
+  //Action menu should be auto-created for the state of the current window (cWin/cstate)
   actMenu->clear();
+  if(cstate!=LXCB::ACTIVE){
+    actMenu->addAction( LXDG::findIcon("edit-select",""), tr("Activate Window"), this, SLOT(triggerWindow()) );
+  }
+  if(cstate!=LXCB::INVISIBLE){
+    actMenu->addAction( LXDG::findIcon("view-close",""), tr("Minimize Window"), this, SLOT(minimizeWindow()) );
+    if(LSession::handle()->XCB->WindowIsMaximized(cWin.windowID()) ){
+      actMenu->addAction( LXDG::findIcon("view-restore",""), tr("Restore Window"), this, SLOT(maximizeWindow()) );
+    }else{
+      actMenu->addAction( LXDG::findIcon("view-fullscreen",""), tr("Maximize Window"), this, SLOT(maximizeWindow()) );
+    }
+  }
   actMenu->addAction( LXDG::findIcon("window-close",""), tr("Close Window"), this, SLOT(closeWindow()) );
 }
 
@@ -149,25 +164,43 @@ void LTaskButton::buttonClicked(){
 }
 
 void LTaskButton::closeWindow(){
+  if(DEBUG){ qDebug() << "Close Window:" << this->text(); }
   if(winMenu->isVisible()){ winMenu->hide(); }
   LWinInfo win = currentWindow();
-  LX11::CloseWindow(win.windowID());
+  LSession::handle()->XCB->CloseWindow(win.windowID());
   cWin = LWinInfo(); //clear the current
+}
+
+void LTaskButton::maximizeWindow(){
+  if(DEBUG){ qDebug() << "Maximize Window:" << this->text(); }
+  if(winMenu->isVisible()){ winMenu->hide(); }
+  LWinInfo win = currentWindow();
+  LSession::handle()->XCB->MaximizeWindow(win.windowID());
+  //LSession::handle()->adjustWindowGeom(win.windowID(), true); //run this for now until the WM works properly
+  cWin = LWinInfo(); //clear the current 
+}
+
+void LTaskButton::minimizeWindow(){
+  if(DEBUG){ qDebug() << "Minimize Window:" << this->text(); }
+  if(winMenu->isVisible()){ winMenu->hide(); }
+  LWinInfo win = currentWindow();
+  LSession::handle()->XCB->MinimizeWindow(win.windowID());
+  cWin = LWinInfo(); //clear the current 
+  QTimer::singleShot(100, this, SLOT(UpdateButton()) ); //make sure to update this button if losing active status
 }
 
 void LTaskButton::triggerWindow(){
   LWinInfo win = currentWindow();
   //Check which state the window is currently in and flip it to the other
-  LX11::WINDOWSTATE state = LX11::GetWindowState(win.windowID());
-  if(state == LX11::ACTIVE){
-    qDebug() << "Minimize Window:" << this->text();
-    LX11::IconifyWindow(win.windowID());
-  }else if(state == LX11::VISIBLE){
-    qDebug() << "Activate Window:" << this->text();
-    LX11::ActivateWindow(win.windowID());
+  LXCB::WINDOWSTATE state = cstate;
+  if(DEBUG){ qDebug() << "Window State: " << state; }
+  if(state == LXCB::ACTIVE){
+    if(DEBUG){ qDebug() << "Minimize Window:" << this->text(); }
+    LSession::handle()->XCB->MinimizeWindow(win.windowID());
+    QTimer::singleShot(100, this, SLOT(UpdateButton()) ); //make sure to update this button if losing active status
   }else{
-    qDebug() << "Restore Window:" << this->text();
-    LX11::RestoreWindow(win.windowID());
+    if(DEBUG){ qDebug() << "Activate Window:" << this->text(); }
+    LSession::handle()->XCB->ActivateWindow(win.windowID());
   }
   cWin = LWinInfo(); //clear the current
 }
@@ -176,6 +209,7 @@ void LTaskButton::winClicked(QAction* act){
   //Get the window from the action
   if(act->data().toInt() < WINLIST.length()){
     cWin = WINLIST[act->data().toInt()];
+    cstate = cWin.status(); 
   }else{ cWin = LWinInfo(); } //clear it
   //Now trigger the window
   triggerWindow();
@@ -183,13 +217,19 @@ void LTaskButton::winClicked(QAction* act){
 
 void LTaskButton::openActionMenu(){
   //Get the Window the mouse is currently over
-  QAction *act = winMenu->actionAt(QCursor::pos());
+  QPoint curpos = QCursor::pos();
+  QAction *act = winMenu->actionAt(winMenu->mapFromGlobal(curpos));
+  //qDebug() << "Button Context Menu:" << curpos.x() << curpos.y() << winMenu->geometry().x() << winMenu->geometry().y() << winMenu->geometry().width() << winMenu->geometry().height();
+  cWin = WINLIST[0]; //default to the first window
   if( act != 0 && winMenu->isVisible() ){
     //Get the window from the action
+    //qDebug() << "Found Action:" << act->data().toInt();
     if(act->data().toInt() < WINLIST.length()){
       cWin = WINLIST[act->data().toInt()];
-    }else{ cWin = LWinInfo(); } //clear it
+    }
   }
+  cstate = cWin.status();
   //Now show the action menu
+  UpdateMenus();
   actMenu->popup(QCursor::pos());
 }

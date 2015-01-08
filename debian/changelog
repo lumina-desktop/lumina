@@ -1,8 +1,12 @@
-lumina-desktop (0.7.1.183-1nano) unstable; urgency=low
+lumina-desktop (0.8.0.244-nano) unstable; urgency=low
 
   * new GIT snapshot
-
- -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 18 Nov 2014 20:29:37 +0100
+  * switch to qt5
+  * add dependecy on libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev,
+    libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev
+  * drop dependency on libphonon-dev
+ 
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Wed, 07 Jan 2015 17:06:35 +0100
 
 lumina-desktop (0.7.1.158-1nano) unstable; urgency=low
 

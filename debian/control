@@ -2,8 +2,11 @@ Source: lumina-desktop
 Section: x11
 Priority: optional
 Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
-Build-Depends: debhelper (>= 9), qt4-qmake, libqt4-dev, make, g++, libphonon-dev, libx11-dev,
-               libxrender-dev, libxcomposite-dev, libxdamage-dev
+Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
+               libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev, make, g++,
+               libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
+               libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
+               libqt5x11extras5-dev, qttools5-dev-tools
 Standards-Version: 3.9.5
 Homepage: https://github.com/pcbsd/lumina
 

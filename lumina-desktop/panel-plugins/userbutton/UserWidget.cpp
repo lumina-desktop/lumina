@@ -211,6 +211,7 @@ void UserWidget::updateAppCategories(){
     else if(cats[i] == "Settings"){ name = tr("Settings"); icon = "preferences-system"; }
     else if(cats[i] == "System"){ name = tr("System"); icon = "applications-system"; }
     else if(cats[i] == "Utility"){ name = tr("Utilities"); icon = "applications-utilities"; }
+    else if(cats[i] == "Wine"){ name = tr("Wine"); icon = "wine"; }
     else{ name = tr("Unsorted"); icon = "applications-other"; }
     ui->combo_app_cats->addItem( LXDG::findIcon(icon,""), name, cats[i] );
   }
