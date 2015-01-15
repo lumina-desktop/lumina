@@ -360,31 +360,21 @@ void LDesktop::AlignDesktopPlugins(){
 }
 
 void LDesktop::DesktopPluginRemoved(QString ID){
-  //Close down that plugin instance
+  //Close down that plugin instance (NOTE: the container was already closed by the user)
+	
   //qDebug() << "PLUGINS:" << PLUGINS.length() << ID;
   for(int i=0; i<PLUGINS.length(); i++){
     if(PLUGINS[i]->ID() == ID){
       //qDebug() << "- found ID";
-      //Delete the plugin container first
-      QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-      for(int j=0; j<wins.length(); j++){
-	if(wins[j]->whatsThis()==ID || wins[j]->whatsThis().isEmpty()){
-          //wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
-          bgDesktop->removeSubWindow(wins[j]->widget()); //unhook plugin from container
-          bgDesktop->removeSubWindow(wins[j]); //remove container from screen
-          delete wins[j]; //delete old container
-	}
-      }
-      //Now delete the plugin itself
       delete PLUGINS.takeAt(i);
       break;
     }
   }
-  //Now remove that plugin from the internal list
+  
+  //Now remove that plugin from the internal list (then let the plugin system remove the actual plugin)
   QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
-
-  plugins.removeAll(ID);
   changingsettings=true; //don't let the change cause a refresh
+  plugins.removeAll(ID);
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
   changingsettings=false; //finished changing setting
