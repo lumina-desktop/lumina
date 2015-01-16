@@ -579,6 +579,7 @@ QStringList LXDG::findAVFileExtensions(){
     /*if( QMultimedia::NotSupported != QMediaPlayer::hasSupport(av[i].section(":",1,1)) ){ av[i] = av[i].section(":",2,2); }
     else{ av.removeAt(i); i--; }*/
   }
+  av.removeDuplicates();
   return av;
 }
 
