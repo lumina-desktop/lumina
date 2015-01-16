@@ -18,6 +18,7 @@
 #include "applauncher/AppLauncherPlugin.h"
 #include "desktopview/DesktopViewPlugin.h"
 #include "notepad/NotepadPlugin.h"
+#include "audioplayer/PlayerWidget.h"
 
 class NewDP{
 public:
@@ -34,6 +35,8 @@ public:
 	    plug = new DesktopViewPlugin(parent, plugin);
 	  }else if(plugin.section("---",0,0)=="notepad"){
 	    plug = new NotePadPlugin(parent, plugin);
+	  }else if(plugin.section("---",0,0)=="audioplayer"){
+	    plug = new AudioPlayerPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
 	  }

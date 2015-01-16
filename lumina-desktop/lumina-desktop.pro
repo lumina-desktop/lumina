@@ -50,7 +50,8 @@ SOURCES += main.cpp \
 	panel-plugins/systemdashboard/SysMenuQuick.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
-	desktop-plugins/notepad/NotepadPlugin.cpp
+	desktop-plugins/notepad/NotepadPlugin.cpp \
+	desktop-plugins/audioplayer/PlayerWidget.cpp
 
 
 HEADERS  += Globals.h \
@@ -87,11 +88,13 @@ HEADERS  += Globals.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
 	desktop-plugins/desktopview/DesktopViewPlugin.h \
-	desktop-plugins/notepad/NotepadPlugin.h
+	desktop-plugins/notepad/NotepadPlugin.h \
+	desktop-plugins/audioplayer/PlayerWidget.h
 
 FORMS    += SystemWindow.ui \
 	panel-plugins/userbutton/UserWidget.ui \
-	panel-plugins/systemdashboard/SysMenuQuick.ui
+	panel-plugins/systemdashboard/SysMenuQuick.ui \
+	desktop-plugins/audioplayer/PlayerWidget.ui
 
 RESOURCES+= Lumina-DE.qrc
 
