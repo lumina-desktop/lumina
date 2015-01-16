@@ -49,6 +49,9 @@ private slots:
 	void launchControlPanel();
 	void launchFileManager();
 	void launchApp(QAction *act);
+
+signals:
+	void AppMenuUpdated();
 };
 
 #endif

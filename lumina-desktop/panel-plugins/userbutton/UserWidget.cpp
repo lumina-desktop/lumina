@@ -82,6 +82,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
     ui->tool_qtconfig->setVisible(false);
   }
   lastUpdate = QDateTime(); //make sure it refreshes 
+  connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()) );
   QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
 }
 

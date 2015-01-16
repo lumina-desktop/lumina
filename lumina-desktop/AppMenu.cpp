@@ -83,6 +83,7 @@ void AppMenu::updateAppList(){
       }
       this->addMenu(menu);
     }
+    emit AppMenuUpdated();
 }
 
 //=================
