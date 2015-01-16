@@ -261,7 +261,7 @@ void LPanel::enterEvent(QEvent *event){
 
 void LPanel::leaveEvent(QEvent *event){
   //qDebug() << "Panel Leave Event:";
-  if(hidden){
+  if(hidden && !this->geometry().contains( this->mapFromGlobal(QCursor::pos()) ) ){
     //Move the panel back to it's "hiding" spot
     this->move(hidepoint);
   }
