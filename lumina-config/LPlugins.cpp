@@ -18,13 +18,19 @@ LPlugins::~LPlugins(){
 
 //Plugin lists
 QStringList LPlugins::panelPlugins(){
-  return PANEL.keys();
+  QStringList pan = PANEL.keys();
+    pan.sort();
+  return pan;
 }
 QStringList LPlugins::desktopPlugins(){
-  return DESKTOP.keys();
+  QStringList desk = DESKTOP.keys();
+	desk.sort();
+  return desk;
 }
 QStringList LPlugins::menuPlugins(){
-  return MENU.keys();
+    QStringList men = MENU.keys();
+	men.sort();
+  return men;
 }
 QStringList LPlugins::colorItems(){
   return COLORS.keys();
@@ -153,6 +159,13 @@ void LPlugins::LoadDesktopPlugins(){
     info.description = QObject::tr("Keep simple text notes on your desktop");
     info.ID = "notepad";
     info.icon = "text-enriched";
+  DESKTOP.insert(info.ID, info);
+  //Audio Player Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("Audio Player");
+    info.description = QObject::tr("Play through lists of audio files");
+    info.ID = "audioplayer";
+    info.icon = "media-playback-start";
   DESKTOP.insert(info.ID, info);
 }
 
