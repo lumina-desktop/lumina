@@ -17,6 +17,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
   ui->setupUi(this); //load the designer form
   PLAYER = new QMediaPlayer(this);
     PLAYER->setVolume(100);
+    PLAYER->setNotifyInterval(1000); //1 second interval (just needs to be a rough estimate)
   PLAYLIST = new QMediaPlaylist(this);
     PLAYLIST->setPlaybackMode(QMediaPlaylist::Sequential);
     PLAYER->setPlaylist(PLAYLIST);
@@ -26,9 +27,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
   addMenu = new QMenu(this);
     ui->tool_add->setMenu(addMenu);
 	
-  //infoTimer = new QTimer(this);
-    //infoTimer->setInterval(30000); //every 30 seconds
-	
   updatinglists = false; //start off as false
 	
   LoadIcons();
@@ -36,10 +34,12 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
   currentSongChanged();
   //Connect all the signals/slots
   //connect(infoTimer, SIGNAL(timeout()), this, SLOT(rotateTrackInfo()) );
+  connect(PLAYER, SIGNAL(positionChanged(qint64)),this, SLOT(updateProgress(qint64)) );
+  connect(PLAYER, SIGNAL(durationChanged(qint64)), this, SLOT(updateMaxProgress(qint64)) );
   connect(PLAYLIST, SIGNAL(mediaChanged(int, int)), this, SLOT(playlistChanged()) );
   connect(PLAYER, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged()) );
   connect(PLAYLIST, SIGNAL(currentMediaChanged(const QMediaContent&)), this, SLOT(currentSongChanged()) );
-  connect(ui->combo_playlist, SIGNAL(currentIndexChanged(int)), this, SLOT(userListSelectionChanged()) );
+  connect(ui->combo_playlist, SIGNAL(currentIndexChanged(int)), this, SLOT(userlistSelectionChanged()) );
   connect(ui->tool_play, SIGNAL(clicked()), this, SLOT(playClicked()) );
   connect(ui->tool_pause, SIGNAL(clicked()), this, SLOT(pauseClicked()) );
   connect(ui->tool_stop, SIGNAL(clicked()), this, SLOT(stopClicked()) );
@@ -148,19 +148,19 @@ void PlayerWidget::playerStateChanged(){
       ui->tool_stop->setVisible(false);
       ui->tool_play->setVisible(true);
       ui->tool_pause->setVisible(false);
-      //infoTimer->stop();
+      ui->progressBar->setVisible(false);
       break;
     case QMediaPlayer::PausedState:
       ui->tool_stop->setVisible(true);
       ui->tool_play->setVisible(true);
       ui->tool_pause->setVisible(false);
-      //infoTimer->stop();
+      ui->progressBar->setVisible(true);
       break;
     case QMediaPlayer::PlayingState:
       ui->tool_stop->setVisible(true);
       ui->tool_play->setVisible(false);
       ui->tool_pause->setVisible(true);
-      //infoTimer->start();
+      ui->progressBar->setVisible(true);
       break;    
   }
   
@@ -191,13 +191,19 @@ void PlayerWidget::currentSongChanged(){
   }
   ui->tool_next->setEnabled( PLAYLIST->nextIndex() >= 0 );
   ui->tool_prev->setEnabled( PLAYLIST->previousIndex() >= 0);
-  //rotateTrackInfo();
+  ui->label_num->setText( QString::number( PLAYLIST->currentIndex()+1)+"/"+QString::number(PLAYLIST->mediaCount()) );
+  ui->progressBar->setRange(0, PLAYER->duration() );
+  ui->progressBar->setValue(0);
 }
 
-/*void PlayerWidget::rotateTrackInfo(){ //on a timer to rotate the visible information about the track
-  //NOTE: QMediaPlayer is a type of QMediaObject - so just pull the current info straight out of the player
-  ui->label_info->clear();
-}*/
+void PlayerWidget::updateProgress(qint64 val){
+  //qDebug() << "Update Progress Bar:" << val;
+  ui->progressBar->setValue(val);
+}
+
+void PlayerWidget::updateMaxProgress(qint64 val){
+  ui->progressBar->setRange(0,val);	
+}
 
 
 AudioPlayerPlugin::AudioPlayerPlugin(QWidget *parent, QString ID) : LDPlugin(parent, ID){

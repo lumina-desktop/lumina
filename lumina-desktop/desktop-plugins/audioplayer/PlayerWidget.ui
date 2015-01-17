@@ -85,6 +85,13 @@ QToolButton::menu-indicator{ image: none; }</string>
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="label_num">
+          <property name="text">
+           <string notr="true">1/10</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QToolButton" name="tool_next">
           <property name="text">
            <string notr="true">next</string>
@@ -131,6 +138,16 @@ QToolButton::menu-indicator{ image: none; }</string>
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="value">
+           <number>24</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

@@ -34,7 +34,6 @@ private:
 	Ui::PlayerWidget *ui;
 	QMediaPlaylist *PLAYLIST;
 	QMediaPlayer *PLAYER;
-	//QTimer *infoTimer;
 	QMenu *configMenu, *addMenu;
 	bool updatinglists;
 
@@ -54,7 +53,8 @@ private slots:
 	void playerStateChanged();
 	void playlistChanged(); //list of items changed
 	void currentSongChanged();
-	//void rotateTrackInfo(); //on a timer to rotate the visible information about the track
+	void updateProgress(qint64 val);
+	void updateMaxProgress(qint64 val);
 };
 
 // Wrapper class to put this into a desktop plugin container
