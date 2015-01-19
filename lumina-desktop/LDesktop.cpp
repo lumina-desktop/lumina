@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LDesktop::LDesktop(int deskNum) : QObject(){
 
@@ -170,6 +170,7 @@ void LDesktop::SettingsChanged(){
   UpdateDesktop();
   UpdatePanels();
   UpdateMenu();
+  issyncing = false;
   QTimer::singleShot(200, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
 }
 
@@ -290,7 +291,8 @@ void LDesktop::UpdateDesktop(){
     changingsettings=true; //don't let the change cause a refresh
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
-    changingsettings=false; //finished changing setting
+    //QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+    changingsettings=false;
   }
   deskupdating = false;
 }
@@ -366,6 +368,7 @@ void LDesktop::DesktopPluginRemoved(QString ID){
   for(int i=0; i<PLUGINS.length(); i++){
     if(PLUGINS[i]->ID() == ID){
       //qDebug() << "- found ID";
+      if(DEBUG){ qDebug() << "Deleting Desktop Plugin:" << ID; }
       delete PLUGINS.takeAt(i);
       break;
     }
@@ -374,10 +377,11 @@ void LDesktop::DesktopPluginRemoved(QString ID){
   //Now remove that plugin from the internal list (then let the plugin system remove the actual plugin)
   QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
   changingsettings=true; //don't let the change cause a refresh
+  if(DEBUG){ qDebug() << " - Also removing plugin from future list"; }
   plugins.removeAll(ID);
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
-  changingsettings=false; //finished changing setting
+  QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
 }
 
 void LDesktop::UpdatePanels(){

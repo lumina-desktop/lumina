@@ -12,6 +12,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <LuminaXDG.h>
+#include <QDebug>
 
 PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerWidget()){
   ui->setupUi(this); //load the designer form
@@ -49,7 +50,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
 }
 
 PlayerWidget::~PlayerWidget(){
-	
+  //qDebug() << "Removing PlayerWidget";
 }
 
 void PlayerWidget::LoadIcons(){
@@ -216,4 +217,5 @@ AudioPlayerPlugin::AudioPlayerPlugin(QWidget *parent, QString ID) : LDPlugin(par
 }
 
 AudioPlayerPlugin::~AudioPlayerPlugin(){
+  //qDebug() << "Remove AudioPlayerPlugin";
 }
