@@ -392,11 +392,10 @@ void LSession::WindowPropertyEvent(){
 
 void LSession::WindowPropertyEvent(WId win){
   //Emit the single-app signal if the window in question is one used by the task manager
-  qDebug() << "Single-Property event";
-  if(RunningApps.contains(win)){
+  //if(RunningApps.contains(win)){
     if(DEBUG){ qDebug() << "Single-window property event"; }
     emit WindowListEvent();
-  }
+  //}
 }
 
 void LSession::SysTrayDockRequest(WId win){
