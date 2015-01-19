@@ -170,7 +170,6 @@ void LDesktop::SettingsChanged(){
   UpdateDesktop();
   UpdatePanels();
   UpdateMenu();
-  issyncing = false;
   QTimer::singleShot(200, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
 }
 
@@ -291,8 +290,7 @@ void LDesktop::UpdateDesktop(){
     changingsettings=true; //don't let the change cause a refresh
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
-    //QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
-    changingsettings=false;
+    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   }
   deskupdating = false;
 }

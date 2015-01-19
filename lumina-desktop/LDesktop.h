@@ -75,7 +75,7 @@ private:
 private slots:
 	void InitDesktop();
 	void SettingsChanged();
-	void UnlockSettings(){ issyncing=false; }
+	void UnlockSettings(){ issyncing=false; changingsettings=false;}
 	//Menu functions
 	void UpdateMenu(bool fast = false);
 	void ShowMenu(){
