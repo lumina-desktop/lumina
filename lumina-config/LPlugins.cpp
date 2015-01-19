@@ -128,6 +128,13 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "systemtray";
     info.icon = "preferences-system-windows-actions";
   PANEL.insert(info.ID, info);  
+  //Home Button
+  info = LPI(); //clear it
+    info.name = QObject::tr("Home Button");
+    info.description = QObject::tr("Hide all open windows and show the desktop");
+    info.ID = "homebutton";
+    info.icon = "go-home";
+  PANEL.insert(info.ID, info);  
 }
 
 void LPlugins::LoadDesktopPlugins(){
