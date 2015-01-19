@@ -264,8 +264,14 @@ void LPanel::enterEvent(QEvent *event){
 }
 
 void LPanel::leaveEvent(QEvent *event){
-  //qDebug() << "Panel Leave Event:";
-  if(hidden && !this->geometry().contains( this->mapFromGlobal(QCursor::pos()) ) ){
+  /*qDebug() << "Panel Leave Event:";
+  qDebug() << "Panel Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height() ;
+  QPoint pt = QCursor::pos();
+  qDebug() << "Mouse Point (global):" << pt.x() << pt.y();
+  //pt = this->mapFromGlobal(pt);
+  //qDebug() << "Mouse Point (local):" << pt.x() << pt.y();
+  qDebug() << "Contained:" << this->geometry().contains(pt);*/
+  if(hidden && !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
     this->move(hidepoint);
   }
