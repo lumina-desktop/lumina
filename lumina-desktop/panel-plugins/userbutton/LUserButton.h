@@ -41,8 +41,8 @@ private:
 	UserWidget *usermenu;
 	QToolButton *button;
 
+	void updateButtonVisuals();
 
-	
 private slots:
 	void openMenu();
 	void closeMenu();
@@ -56,8 +56,16 @@ public slots:
 	    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 	    button->setIconSize( QSize(this->width(), this->width()) );
 	  }
-	  button->setIcon( LXDG::findIcon("user-identity", ":/images/default-user.png") ); //force icon refresh
 	  this->layout()->update();
+	  updateButtonVisuals();
+	}
+	
+	void LocaleChange(){ 
+	  updateButtonVisuals();
+	}
+	
+	void ThemeChange(){
+	  updateButtonVisuals();
 	}
 };
 

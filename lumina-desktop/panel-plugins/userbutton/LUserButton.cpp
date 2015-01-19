@@ -11,8 +11,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
   button = new QToolButton(this);
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    button->setToolTip(QString("Quickly launch applications or open files"));
-    button->setText( SYSTEM::user() );
+
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);
@@ -29,6 +28,16 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
 
 LUserButtonPlugin::~LUserButtonPlugin(){
 
+}
+
+void LUserButtonPlugin::updateButtonVisuals(){
+    button->setToolTip(QString("Quickly launch applications or open files"));
+    button->setText( SYSTEM::user() );
+    if( QFile::exists(QDir::homePath()+"/.loginIcon.png") ){
+      button->setIcon( QIcon(QDir::homePath()+"/.loginIcon.png") );
+    }else{
+      button->setIcon( LXDG::findIcon("user-identity", ":/images/default-user.png") ); //force icon refresh
+    }
 }
 
 // ========================
