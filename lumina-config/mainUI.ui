@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>579</width>
-    <height>392</height>
+    <height>405</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,16 @@
        <string/>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -97,7 +106,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -376,7 +385,7 @@
              <x>0</x>
              <y>0</y>
              <width>265</width>
-             <height>193</height>
+             <height>184</height>
             </rect>
            </property>
            <attribute name="label">
@@ -413,14 +422,14 @@
             <item row="1" column="1">
              <widget class="QSpinBox" name="spin_panel2_size"/>
             </item>
-            <item row="2" column="0">
+            <item row="4" column="0">
              <widget class="QLabel" name="label_9">
               <property name="text">
-               <string>Color:</string>
+               <string>Custom Color:</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="4" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
                <widget class="QLabel" name="label_panel2_sample">
@@ -450,10 +459,20 @@
               </item>
              </layout>
             </item>
-            <item row="3" column="1">
+            <item row="2" column="1">
              <widget class="QCheckBox" name="check_panel2_hidepanel">
               <property name="text">
                <string>Auto-hide Panel </string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="check_panel2_usetheme">
+              <property name="text">
+               <string>Follow Theme</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -464,8 +483,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>272</width>
+             <height>184</height>
             </rect>
            </property>
            <attribute name="label">
@@ -603,7 +622,7 @@
              <x>0</x>
              <y>0</y>
              <width>266</width>
-             <height>193</height>
+             <height>184</height>
             </rect>
            </property>
            <attribute name="label">
@@ -640,14 +659,14 @@
             <item row="1" column="1">
              <widget class="QSpinBox" name="spin_panel1_size"/>
             </item>
-            <item row="2" column="0">
+            <item row="4" column="0">
              <widget class="QLabel" name="label_5">
               <property name="text">
-               <string>Color:</string>
+               <string>Custom Color:</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="4" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
                <widget class="QLabel" name="label_panel1_sample">
@@ -677,10 +696,20 @@
               </item>
              </layout>
             </item>
-            <item row="3" column="1">
+            <item row="2" column="1">
              <widget class="QCheckBox" name="check_panel1_hidepanel">
               <property name="text">
                <string>Auto-hide Panel </string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="check_panel1_usetheme">
+              <property name="text">
+               <string>Follow Theme</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -691,8 +720,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>177</width>
-             <height>106</height>
+             <width>272</width>
+             <height>184</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1490,8 +1519,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>118</width>
-                    <height>26</height>
+                    <width>117</width>
+                    <height>16</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1501,7 +1530,16 @@
                    </sizepolicy>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_13">
-                   <property name="margin">
+                   <property name="leftMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="bottomMargin">
                     <number>1</number>
                    </property>
                    <item>
@@ -1598,7 +1636,7 @@
      <x>0</x>
      <y>0</y>
      <width>579</width>
-     <height>20</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>
