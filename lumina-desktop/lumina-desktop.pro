@@ -48,6 +48,7 @@ SOURCES += main.cpp \
 	panel-plugins/desktopswitcher/LDesktopSwitcher.cpp \
 	panel-plugins/systemdashboard/LSysDashboard.cpp \
 	panel-plugins/systemdashboard/SysMenuQuick.cpp \
+	panel-plugins/showdesktop/LHomeButton.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
 	desktop-plugins/notepad/NotepadPlugin.cpp \
@@ -84,6 +85,7 @@ HEADERS  += Globals.h \
 	panel-plugins/taskmanager/LTaskButton.h \
 	panel-plugins/systemdashboard/LSysDashboard.h \
 	panel-plugins/systemdashboard/SysMenuQuick.h \
+	panel-plugins/showdesktop/LHomeButton.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \

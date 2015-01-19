@@ -21,6 +21,7 @@
 #include "desktopswitcher/LDesktopSwitcher.h"
 #include "taskmanager/LTaskManagerPlugin.h"
 #include "systemdashboard/LSysDashboard.h"
+#include "showdesktop/LHomeButton.h"
 #include "systemtray/LSysTray.h" //must be last due to X11 compile issues
 
 class NewPP{
@@ -29,6 +30,8 @@ public:
 	  LPPlugin *plug = 0;
 	  if(plugin.startsWith("userbutton---")){
 	    plug = new LUserButtonPlugin(parent, plugin, horizontal);
+	  }else if(plugin.startsWith("homebutton---")){
+	    plug = new LHomeButtonPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("desktopbar---")){
 	    plug = new LDeskBarPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("spacer---")){
