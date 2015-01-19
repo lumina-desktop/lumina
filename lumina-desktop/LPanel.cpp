@@ -34,8 +34,8 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
 
   this->setWindowTitle("");
-  this->setObjectName("LuminaPanelWidget");
-  panelArea->setObjectName("LuminaPanelPluginWidget");
+  this->setObjectName("LuminaPanelBackgroundWidget");
+  panelArea->setObjectName("LuminaPanelColor");
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
@@ -142,10 +142,14 @@ void LPanel::UpdatePanel(){
   //if(!this->testAttribute(Qt::WA_AlwaysShowToolTips)){ this->setAttribute(Qt::WA_AlwaysShowToolTips); }
   
   //Now update the appearance of the toolbar
-  QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
-  QString style = "QWidget#LuminaPanelPluginWidget{ background: %1; border-radius: 3px; border: 1px solid %1; }";
-  style = style.arg(color);
-  panelArea->setStyleSheet(style);
+  if(settings->value(PPREFIX+"customcolor", false).toBool()){
+    QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
+    QString style = "QWidget#LuminaPanelColor{ background: %1; border-radius: 3px; border: 1px solid %1; }";
+    style = style.arg(color);
+    panelArea->setStyleSheet(style);
+  }else{ 
+    panelArea->setStyleSheet(""); //clear it and use the one from the theme
+  }
   
   //Then go through the plugins and create them as necessary
   QStringList plugins = settings->value(PPREFIX+"pluginlist", QStringList()).toStringList();

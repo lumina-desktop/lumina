@@ -18,7 +18,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::NoSelection);
-    list->setStyleSheet( "QListWidget{ background: rgba(255,255,255,50); border: none; border-radius: 3px; color: black;}" );
+    list->setStyleSheet( "QListWidget{ background: transparent; border: none; }" );
     list->setIconSize(QSize(64,64));
   this->layout()->addWidget(list);
   this->setInitialSize(200,300);

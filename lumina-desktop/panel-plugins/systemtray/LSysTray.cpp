@@ -22,7 +22,7 @@
 LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   frame = new QFrame(this);
   frame->setContentsMargins(0,0,0,0);
-  //frame->setStyleSheet("QFrame{ background: transparent; border: 1px solid transparent; border-radius: 5px; }");
+  frame->setStyleSheet("QFrame{ background: transparent; border: 1px solid transparent; border-radius: 3px; }");
   LI = new QBoxLayout( this->layout()->direction());
     frame->setLayout(LI);
     LI->setAlignment(Qt::AlignCenter);

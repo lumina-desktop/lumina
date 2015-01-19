@@ -16,6 +16,7 @@
 #define _LUMINA_DESKTOP_DESKTOP_PLUGIN_H
 
 #include <QObject>
+#include <QFrame>
 #include <QWidget>
 #include <QString>
 #include <QDebug>
@@ -23,7 +24,7 @@
 #include <QMoveEvent>
 #include <QResizeEvent>
 
-class LDPlugin : public QWidget{
+class LDPlugin : public QFrame{
 	Q_OBJECT
 	
 private:
@@ -32,9 +33,10 @@ private:
 public:
 	QSettings *settings;
 
-	LDPlugin(QWidget *parent = 0, QString id="unknown") : QWidget(parent){
+	LDPlugin(QWidget *parent = 0, QString id="unknown") : QFrame(parent){
 	  PLUGID=id;
 	  settings = new QSettings("desktop-plugins",PLUGID);
+	  this->setObjectName("LuminaDesktopPlugin");
 	}
 	
 	~LDPlugin(){

@@ -18,6 +18,7 @@
 #include <QCloseEvent>
 #include <QString>
 #include <QFile>
+#include <QIcon>
 
 #include "LDPlugin.h"
 
@@ -47,9 +48,10 @@ public:
 	  }
 	  this->setContentsMargins(0,0,0,0);
 	  if(!locked){
-	    //this->setWindowTitle( plugin->ID().replace("---"," - ") );
-	    //this->setWidget( new QWidget() );
+	    this->setWindowTitle( plugin->ID().replace("---"," - ") );
+	    this->setWidget( new QWidget() );
 	    this->setWidget( plugin );
+	    this->setWindowIcon(QIcon()); //remove the Qt icon
 	  }else{
 	    this->setStyleSheet("LDPluginContainer{ background: transparent; border: none;}");
 	    this->setWidget(plugin);
