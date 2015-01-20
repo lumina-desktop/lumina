@@ -11,9 +11,10 @@
 
 #include <QPlainTextEdit>
 #include <QToolButton>
-#include <QLabel>
+#include <QComboBox>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QFileSystemWatcher>
 #include "../LDPlugin.h"
 
 class NotePadPlugin : public LDPlugin{
@@ -24,25 +25,28 @@ public:
 	
 private:
 	QPlainTextEdit *edit;
-	QToolButton *next, *prev, *add, *rem;
-	QLabel *label;
+	QToolButton *open, *add, *rem;
+	QComboBox *cnote;
 	QFrame *frame;
-	int cnote, maxnote; //current/max note
-	
+	QFileSystemWatcher *watcher;
+	bool updating;
+	QTimer *typeTimer;
+
 private slots:
-	void nextNote();
-	void prevNote();
+	void openNote();
 	void newNote();
 	void remNote();
+	void newTextAvailable();
 	void updateContents();
 
+	void notesDirChanged();
 	void noteChanged();
 
 	void loadIcons();
 
 public slots:
 	void LocaleChange(){
-	  QTimer::singleShot(0,this, SLOT(updateContents()));
+	  QTimer::singleShot(0,this, SLOT(noteChanged()));
 	}
 	void ThemeChange(){
 	  QTimer::singleShot(0,this, SLOT(loadIcons()));
