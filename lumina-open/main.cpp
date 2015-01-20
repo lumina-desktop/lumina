@@ -188,9 +188,11 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if( !isFile && !isUrl ){ qDebug() << "Error: Invalid file or URL"; return;}
   //Determing the type of file (extension)
   QString extension;
+  //qDebug() << "File Type:" << isFile << isUrl;
   if(isFile){
     QFileInfo info(inFile);
-    extension=info.completeSuffix();
+    extension=info.suffix();
+    //qDebug() << " - Extension:" << extension;
     if(info.isDir()){ extension="directory"; }
     else if(info.isExecutable() && extension.isEmpty()){ extension="binary"; }
     else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
