@@ -7,6 +7,8 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include <QImageWriter>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
@@ -163,6 +165,9 @@ void MainUI::setupIcons(){
   ui->tool_image_goEnd->setIcon( LXDG::findIcon("go-last-view","") );
   ui->tool_image_goPrev->setIcon( LXDG::findIcon("go-previous-view","") );
   ui->tool_image_goNext->setIcon( LXDG::findIcon("go-next-view","") );
+  ui->tool_image_remove->setIcon( LXDG::findIcon("edit-delete","") );
+  ui->tool_image_rotateleft->setIcon( LXDG::findIcon("object-rotate-left","") );
+  ui->tool_image_rotateright->setIcon( LXDG::findIcon("object-rotate-right","") );
   
   //ZFS Restore page
   ui->tool_zfs_nextSnap->setIcon( LXDG::findIcon("go-next-view","") );
@@ -218,6 +223,9 @@ void MainUI::setupConnections(){
   connect(ui->tool_image_goEnd, SIGNAL(clicked()), this, SLOT(lastPicture()) );
   connect(ui->tool_image_goNext, SIGNAL(clicked()), this, SLOT(nextPicture()) );
   connect(ui->tool_image_goPrev, SIGNAL(clicked()), this, SLOT(prevPicture()) );
+  connect(ui->tool_image_remove, SIGNAL(clicked()), this, SLOT(removePicture()) );
+  connect(ui->tool_image_rotateleft, SIGNAL(clicked()), this, SLOT(rotatePictureLeft()) );
+  connect(ui->tool_image_rotateright, SIGNAL(clicked()), this, SLOT(rotatePictureRight()) );
 	
   //ZFS Restore page
   connect(ui->slider_zfs_snapshot, SIGNAL(valueChanged(int)), this, SLOT(showSnapshot()) );
@@ -397,9 +405,9 @@ void MainUI::setCurrentDir(QString dir){
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
-  if(olddir!=rawdir){
+  //if(olddir!=rawdir){
     emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
-  }
+  //}
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
@@ -556,7 +564,8 @@ void MainUI::goToBrowserPage(){
   ui->menuExternal_Devices->setEnabled(true);
   //Now go to the browser
   if(ui->stackedWidget->currentWidget()==ui->page_audioPlayer){ mediaObj->stop(); }
-  ui->stackedWidget->setCurrentWidget(ui->page_browser);	
+  ui->stackedWidget->setCurrentWidget(ui->page_browser);
+  reloadDirectory();
 }
 	
 //---------------------
@@ -715,6 +724,7 @@ void MainUI::currentDirectoryLoaded(){
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
   emit DirChanged(getCurrentDir());
+  ItemSelectionChanged();
 }
 
 void MainUI::on_tool_addToDir_clicked(){
@@ -863,6 +873,15 @@ void MainUI::showNewPicture(){
   ui->tool_image_goEnd->setEnabled(ui->combo_image_name->currentIndex()<(ui->combo_image_name->count()-1));
   ui->tool_image_goNext->setEnabled(ui->combo_image_name->currentIndex()<(ui->combo_image_name->count()-1));
   ui->label_image_index->setText( QString::number(ui->combo_image_name->currentIndex()+1)+"/"+QString::number(ui->combo_image_name->count()) );
+  static QList<QByteArray> writeableformats;
+  if(writeableformats.isEmpty()){
+    writeableformats  = QImageWriter::supportedImageFormats();
+    qDebug() << "Writeable image formats:" << writeableformats;
+  }
+  bool canwrite = writeableformats.contains(file.section(".",-1).toLocal8Bit()); //compare the suffix with the list
+  ui->tool_image_remove->setEnabled(isUserWritable);
+  ui->tool_image_rotateleft->setEnabled(isUserWritable && canwrite);
+  ui->tool_image_rotateright->setEnabled(isUserWritable && canwrite);
 }
 
 void MainUI::firstPicture(){
@@ -879,6 +898,46 @@ void MainUI::nextPicture(){
 
 void MainUI::lastPicture(){
   ui->combo_image_name->setCurrentIndex( ui->combo_image_name->count()-1 );
+}
+
+void MainUI::removePicture(){
+  QString file = getCurrentDir();
+  if(!file.endsWith("/")){ file.append("/"); }
+  file.append(ui->combo_image_name->currentText());
+  if( QFile::remove(file) ){
+    ui->combo_image_name->removeItem( ui->combo_image_name->currentIndex() );
+    showNewPicture();
+  }
+}
+
+void MainUI::rotatePictureLeft(){
+  //First load the file fresh (not the scaled version in the UI)
+  QString file = getCurrentDir();
+  if(!file.endsWith("/")){ file.append("/"); }
+  file.append(ui->combo_image_name->currentText());
+  QPixmap pix(file);	
+  //Now rotate the image 90 degrees counter-clockwise
+  QTransform trans;
+  pix = pix.transformed( trans.rotate(-90) , Qt::SmoothTransformation);
+  //Now save the image back to the same file
+  pix.save(file);
+  //Now re-load the image in the UI
+  showNewPicture();
+}
+
+void MainUI::rotatePictureRight(){
+  //First load the file fresh (not the scaled version in the UI)
+  QString file = getCurrentDir();
+  if(!file.endsWith("/")){ file.append("/"); }
+  file.append(ui->combo_image_name->currentText());
+  QPixmap pix(file);	
+  //Now rotate the image 90 degrees counter-clockwise
+  QTransform trans;
+  pix = pix.transformed( trans.rotate(90) , Qt::SmoothTransformation);
+  //Now save the image back to the same file
+  pix.save(file);
+  //Now re-load the image in the UI
+  showNewPicture();	
 }
 
 //----------------------------------
@@ -1170,6 +1229,8 @@ void MainUI::RenameItem(){
     dlg.show();
     dlg.exec();
   CItem.clear();
+  
+  ItemSelectionChanged();
 }
 
 void MainUI::FavoriteItem(){

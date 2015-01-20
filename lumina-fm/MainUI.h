@@ -170,6 +170,9 @@ private slots:
 	void prevPicture();
 	void nextPicture();
 	void lastPicture();
+	void removePicture();
+	void rotatePictureLeft();
+	void rotatePictureRight();
 	
 	//ZFS Restore Functions
 	void snapshotLoaded();
