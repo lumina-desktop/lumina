@@ -20,6 +20,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setSelectionMode(QAbstractItemView::NoSelection);
     list->setStyleSheet( "QListWidget{ background: transparent; border: none; }" );
     list->setIconSize(QSize(64,64));
+    list->setUniformItemSizes(true);
   this->layout()->addWidget(list);
   this->setInitialSize(200,300);
   watcher = new QFileSystemWatcher(this);

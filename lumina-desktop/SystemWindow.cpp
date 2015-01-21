@@ -4,6 +4,8 @@
 #include "LSession.h"
 #include <LuminaOS.h>
 #include <unistd.h> //for usleep() usage
+#include <QPoint>
+#include <QCursor>
 
 SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   ui->setupUi(this); //load the designer file
@@ -27,8 +29,8 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
     ui->tool_shutdown->setEnabled(false);
   }
   //Center this window on the screen
-  QDesktopWidget desktop;
-  this->move(desktop.screenGeometry().width()/2 - this->width()/2, desktop.screenGeometry().height()/2 - this->height()/2);
+  QPoint center = QApplication::desktop()->screenGeometry(QCursor::pos()).center(); //get the center of the current screen
+  this->move(center.x() - this->width()/2, center.y() - this->height()/2);
   this->show();
 }
 
@@ -37,6 +39,8 @@ SystemWindow::~SystemWindow(){
 }
 
 void SystemWindow::closeAllWindows(){
+  this->hide();
+  LSession::processEvents();
   if( LSession::handle()->sessionSettings()->value("PlayLogoutAudio",true).toBool() ){
     LSession::handle()->playAudioFile(LOS::LuminaShare()+"Logout.ogg");
   }

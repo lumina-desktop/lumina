@@ -111,7 +111,7 @@ void AppMenu::launchControlPanel(){
 }
 
 void AppMenu::launchFileManager(){
-  QString fm = LSession::handle()->sessionSettings()->value("default-filemanager","lumina-fm").toString();
+  QString fm = "lumina-open \""+QDir::homePath()+"\"";
   LSession::LaunchApplication(fm);
 }
 
