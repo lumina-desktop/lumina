@@ -12,6 +12,9 @@
 #include <QDialog>
 #include <QString>
 #include <QList>
+#include <QPoint>
+#include <QDesktopWidget>
+#include <QCursor>
 #include <LuminaXDG.h>
 
 #include "ui_AppDialog.h"
@@ -35,6 +38,8 @@ public:
 	    ui->comboBox->addItem( LXDG::findIcon(APPS[i].icon,"application-x-executable"), APPS[i].name );
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
+	  QPoint center = QApplication::desktop()->screenGeometry(QCursor::pos()).center();
+	  this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
 	}
 	
 	~AppDialog(){}
