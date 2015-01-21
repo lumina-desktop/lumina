@@ -39,7 +39,7 @@ Example usage: "./make-linux-distro.sh MYDISTRO" (where there is a LuminaOS-MYDI
 3) Run "qmake" on your local system to turn all the Qt project files (*.pro) into Makefiles
  - NOTE: If any of the Qt project files is modified (either by you or from updating the Lumina source tree), you will need to be sure to repeat this step to place those changes into your local Makefiles (otherwise you may experience strange build failures).
  - NOTE 2: The Qt5 version of qmake is located in /usr/local/lib/qt5/bin/qmake on FreeBSD, other OS's may have slightly different locations or names for qmake (such as qmake-qt5 for example)
- - NOTE 3: You can set a customized install PREFIX and LIBPREFIX via the qmake command as well. PREFIX determines the base directory to install Lumina ("/usr/local" by default), and LIBPREFIX determines the location to install/use libraries ("PREFIX/lib" by default). The syntax to set these custom values when running qmake is usually: "qmake PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix"
+ - NOTE 3: You can set a customized install PREFIX, LIBPREFIX, and QT5LIBDIR variables via the qmake command. PREFIX determines the base directory to install Lumina ("/usr/local" by default), LIBPREFIX determines the location to install/use libraries ("PREFIX/lib" by default), and QT5LIBDIR determines the location of the Qt5 libraries ("LIBPREFIX/qt5" by default). The syntax to set these custom values when running qmake is usually: "qmake PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix QT5LIBDIR=/main/qt5/library/dir"
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
 
