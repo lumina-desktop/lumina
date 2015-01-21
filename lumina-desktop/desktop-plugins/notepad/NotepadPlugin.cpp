@@ -118,7 +118,7 @@ void NotePadPlugin::openNote(){
     QApplication::processEvents();
   }
   QStringList sel = dlg.selectedFiles();
-  if(sel.isEmpty()){ return; } //cancelled
+  if(sel.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   QString fullpath = sel.first();
   QString name = fullpath.section("/",-1);
   //qDebug() << " - Found Note:" << name << fullpath;
@@ -156,7 +156,7 @@ void NotePadPlugin::newNote(){
     QApplication::processEvents();
   }
   QString name = dlg.textValue();
-  if(name.isEmpty()){ return; } //cancelled
+  if(name.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   QString fullpath = QDir::homePath()+"/Notes/"+name;
   if(!fullpath.endsWith(".note")){ fullpath.append(".note"); }
   //qDebug() << " - New Note:" << name << fullpath;

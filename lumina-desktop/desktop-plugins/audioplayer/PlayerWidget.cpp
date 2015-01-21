@@ -13,6 +13,7 @@
 #include <QFileDialog>
 #include <LuminaXDG.h>
 #include <QDebug>
+#include <QDesktopWidget>
 
 PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerWidget()){
   ui->setupUi(this); //load the designer form
@@ -93,9 +94,24 @@ void PlayerWidget::prevClicked(){
 
 void PlayerWidget::AddFilesToPlaylist(){
   //Prompt the user to select multimedia files
+  QFileDialog dlg(0, Qt::Dialog | Qt::WindowStaysOnTopHint );
+      dlg.setFileMode(QFileDialog::ExistingFiles);
+      dlg.setAcceptMode(QFileDialog::AcceptOpen);
+      dlg.setNameFilter( tr("Multimedia Files")+" ("+LXDG::findAVFileExtensions().join(" ")+")");
+      dlg.setWindowTitle(tr("Select Multimedia Files"));
+      dlg.setWindowIcon( LXDG::findIcon("file-open","") );
+      dlg.setDirectory(QDir::homePath()); //start in the home directory
+      //ensure it is centered on the current screen
+      QPoint center = QApplication::desktop()->screenGeometry(this).center();
+      dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  dlg.show();
+  while( dlg.isVisible() ){
+    QApplication::processEvents();
+  }
+  QList<QUrl> files = dlg.selectedUrls();
+  if(files.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   //Make this use show/processEvents later
-  QList<QUrl> files = QFileDialog::getOpenFileUrls(0, tr("Select Multimedia Files"),  QDir::homePath(), "Multimedia Files ("+LXDG::findAVFileExtensions().join(" ")+")");
-  if(files.isEmpty()){ return; } //cancelled
+  //QList<QUrl> files = QFileDialog::getOpenFileUrls(0, tr("Select Multimedia Files"),  QDir::homePath(), "Multimedia Files ("+LXDG::findAVFileExtensions().join(" ")+")");
   QList<QMediaContent> urls;
   for(int i=0; i<files.length(); i++){
     urls << QMediaContent(files[i]);
@@ -105,7 +121,24 @@ void PlayerWidget::AddFilesToPlaylist(){
 }
 
 void PlayerWidget::AddDirToPlaylist(){
-  QString dirpath = QFileDialog::getExistingDirectory(0, tr("Select a Multimedia Directory"), QDir::homePath() );
+  QFileDialog dlg(0, Qt::Dialog | Qt::WindowStaysOnTopHint );
+      dlg.setFileMode(QFileDialog::Directory);
+      dlg.setOption(QFileDialog::ShowDirsOnly, true);
+      dlg.setAcceptMode(QFileDialog::AcceptOpen);
+      dlg.setWindowTitle(tr("Select Multimedia Directory"));
+      dlg.setWindowIcon( LXDG::findIcon("folder-open","") );
+      dlg.setDirectory(QDir::homePath()); //start in the home directory
+      //ensure it is centered on the current screen
+      QPoint center = QApplication::desktop()->screenGeometry(this).center();
+      dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  dlg.show();
+  while( dlg.isVisible() ){
+    QApplication::processEvents();
+  }
+  if(dlg.result() != QDialog::Accepted){ return; } //cancelled
+  QStringList sel = dlg.selectedFiles();
+  if(sel.isEmpty()){ return; } //cancelled
+  QString dirpath = sel.first(); //QFileDialog::getExistingDirectory(0, tr("Select a Multimedia Directory"), QDir::homePath() );
   if(dirpath.isEmpty()){ return; } //cancelled
   QDir dir(dirpath);
   QFileInfoList files = dir.entryInfoList(LXDG::findAVFileExtensions(), QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
@@ -119,8 +152,24 @@ void PlayerWidget::AddDirToPlaylist(){
 }
 
 void PlayerWidget::AddURLToPlaylist(){
-  QString url = QInputDialog::getText(0, tr("Multimedia URL"), tr("Enter a valid URL for a multimedia file or stream"), QLineEdit::Normal);
-  if(url.isEmpty()){ return; }
+  QInputDialog dlg(0, Qt::Dialog | Qt::WindowStaysOnTopHint );
+      dlg.setInputMode(QInputDialog::TextInput);
+      dlg.setLabelText(tr("Enter a valid URL for a multimedia file or stream:"));
+      dlg.setTextEchoMode(QLineEdit::Normal);
+      dlg.setWindowTitle(tr("Multimedia URL"));
+      dlg.setWindowIcon( LXDG::findIcon("download","") );
+      //ensure it is centered on the current screen
+      QPoint center = QApplication::desktop()->screenGeometry(this).center();
+      dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  dlg.show();
+  while( dlg.isVisible() ){
+    QApplication::processEvents();
+  }
+  QString url = dlg.textValue();
+  if(url.isEmpty() || dlg.result()!=QDialog::Accepted){ return; } //cancelled
+	
+  //QString url = QInputDialog::getText(0, tr("Multimedia URL"), tr("Enter a valid URL for a multimedia file or stream"), QLineEdit::Normal);
+  //if(url.isEmpty()){ return; }
   QUrl newurl(url);
   if(!newurl.isValid()){ return; } //invalid URL
   PLAYLIST->addMedia(newurl);
