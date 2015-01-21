@@ -243,10 +243,22 @@ void LDesktop::UpdateDesktop(){
     //plugins << "sample" << "sample" << "sample";
   }
   bool changed=false; //in case the plugin list needs to be changed
+  //First make sure all the plugin names are unique
+  for(int i=0; i<plugins.length(); i++){
+	if(!plugins[i].contains("---") ){
+	  int num=1;
+	  while( plugins.contains(plugins[i]+"---"+QString::number(desktopnumber)+"."+QString::number(num)) ){
+	    num++;
+	  }
+	  plugins[i] = plugins[i]+"---"+QString::number(desktopnumber)+"."+QString::number(num);
+	  changed=true;
+	}
+  }
   //Go through the plugins and remove any existing ones that do not show up on the current list
   for(int i=0; i<PLUGINS.length(); i++){
     if(!plugins.contains(PLUGINS[i]->ID())){
       //Remove this plugin (with settings) - is not currently listed
+      
       DesktopPluginRemoved(PLUGINS[i]->ID());
       i--;
     }
@@ -265,16 +277,6 @@ void LDesktop::UpdateDesktop(){
     }
     if(plug==0){
       //New Plugin
-        //Make sure the plugin ID is unique
-	if(!plugins[i].contains("---") ){
-	  int num=1;
-	  while( plugins.contains(plugins[i]+"---"+QString::number(desktopnumber)+"."+QString::number(num)) ){
-	    num++;
-	  }
-	  plugins[i] = plugins[i]+"---"+QString::number(desktopnumber)+"."+QString::number(num);
-	  changed=true;
-	}
-      //Now create the plugin (will load existing settings if possible)
       qDebug() << " -- New Plugin:" << plugins[i];
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
       if(plug != 0){

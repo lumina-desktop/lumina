@@ -130,10 +130,13 @@ fluxconf.path = $$PREFIX/share/Lumina-DE/
 
 defaults.files = defaults/desktop-background.jpg \
 		defaults/defaultapps.conf \
-		defaults/desktopsettings.conf \
+		defaults/luminaDesktop.conf \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
 defaults.path = $$PREFIX/share/Lumina-DE/
+
+conf.path = $$PREFIX/etc
+conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
@@ -201,4 +204,4 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
-INSTALLS += target desktop icons wallpapers defaults fluxconf dotrans
+INSTALLS += target desktop icons wallpapers defaults conf fluxconf dotrans

@@ -165,7 +165,9 @@ void LPanel::UpdatePanel(){
       while( plugins.contains(plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num)) ){
         num++;
       }
+      
       plugins[i] = plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num);
+      //qDebug() << "Adjust Plugin ID:" << plugins[i];
     }
     //See if this plugin is already there or in a different spot
     bool found = false;
@@ -187,7 +189,7 @@ void LPanel::UpdatePanel(){
     }
     if(!found){
       //New Plugin
-      qDebug() << " -- New Plugin:" << plugins[i];
+      qDebug() << " -- New Plugin:" << plugins[i] << i;
       LPPlugin *plug = NewPP::createPlugin(plugins[i], panelArea, horizontal);
       if(plug != 0){ 
         PLUGINS.insert(i, plug);
@@ -201,8 +203,11 @@ void LPanel::UpdatePanel(){
     LSession::processEvents();
   }
   //Now remove any extra plugins from the end
-  for(int i=plugins.length(); i<PLUGINS.length(); i++){
-    qDebug() << " -- Remove Plugin: " << i;
+  //qDebug() << "plugins:" << plugins;
+  //qDebug() << "PLUGINS length:" << PLUGINS.length();
+  for(int i=0; i<PLUGINS.length(); i++){
+    if(plugins.contains(PLUGINS[i]->type())){ continue; } //good plugin - skip it
+    qDebug() << " -- Remove Plugin: " << PLUGINS[i]->type();
     //If this is the system tray - stop it first
     if( PLUGINS[i]->type().startsWith("systemtray---") ){
       static_cast<LSysTray*>(PLUGINS[i])->stop();
@@ -210,6 +215,7 @@ void LPanel::UpdatePanel(){
     layout->takeAt(i); //remove from the layout
     delete PLUGINS.takeAt(i); //delete the actual widget
     LSession::processEvents();
+    i--; //need to back up one space to not miss another plugin
   }
   this->update();
   this->show(); //make sure the panel is visible now

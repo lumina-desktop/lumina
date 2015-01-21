@@ -22,7 +22,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setIconSize(QSize(64,64));
     list->setUniformItemSizes(true);
   this->layout()->addWidget(list);
-  this->setInitialSize(200,300);
+  this->setInitialSize(600,600);
   watcher = new QFileSystemWatcher(this);
     watcher->addPath(QDir::homePath()+"/Desktop");
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(updateContents()) );

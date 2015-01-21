@@ -46,7 +46,8 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		//window-specific property change
 		}else if( WinNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Ping only that window
-		  session->WindowPropertyEvent( ((xcb_property_notify_event_t*)ev)->window );
+		  //session->WindowPropertyEvent( ((xcb_property_notify_event_t*)ev)->window );
+		  session->WindowPropertyEvent();
 	        }
 		break;
 //==============================	    
@@ -70,7 +71,8 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->WindowPropertyEvent( ((xcb_client_message_event_t*)ev)->window );*/
 		}else if( WinNotifyAtoms.contains( ((xcb_client_message_event_t*)ev)->type ) ){
 		  //Ping only that window
-		  session->WindowPropertyEvent( ((xcb_client_message_event_t*)ev)->window );
+		  //session->WindowPropertyEvent( ((xcb_client_message_event_t*)ev)->window );
+		  session->WindowPropertyEvent();
 	        }
 	        break;
 //==============================	    

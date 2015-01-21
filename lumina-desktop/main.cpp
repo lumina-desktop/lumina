@@ -59,7 +59,6 @@ int main(int argc, char ** argv)
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","LUMINA",1);
     setenv("XDG_CURRENT_DESKTOP","LUMINA",1);
-    //LSession::setGraphicsSystem("native"); //make sure to use X11 graphics system
     //Setup the log file
     qDebug() << "Lumina Log File:" << logfile.fileName();
     if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }

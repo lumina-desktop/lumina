@@ -12,6 +12,7 @@
 
 //LibLumina X11 class
 #include <LuminaX11.h>
+#include <LuminaUtils.h>
 
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
@@ -28,14 +29,14 @@ XCBEventFilter *evFilter = 0;
 
 LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setApplicationName("Lumina Desktop Environment");
-  this->setApplicationVersion("0.8.0");
+  this->setApplicationVersion( LUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enabled a few of the simple effects by default
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
-  this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
+  //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   SystemTrayID = 0; VisualTrayID = 0;
   TrayDmgEvent = 0;
@@ -179,20 +180,21 @@ void LSession::watcherChange(QString changed){
 
 void LSession::checkUserFiles(){
   //version conversion examples: [1.0.0 -> 100], [1.2.0 -> 120], [0.6.0 -> 60]
-  int oldversion = sessionsettings->value("DesktopVersion",0).toString().remove(".").toInt();
+  int oldversion = sessionsettings->value("DesktopVersion","0").toString().remove(".").toInt();
   bool newversion =  ( oldversion < this->applicationVersion().remove(".").toInt() );
-
+  
   //Check for the desktop settings file
   QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
   bool firstrun = false;
   if(!QFile::exists(dset) || oldversion < 50){
     if( oldversion < 50 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
-    if(QFile::exists(LOS::LuminaShare()+"desktopsettings.conf")){
+    /*if(QFile::exists(LOS::LuminaShare()+"desktopsettings.conf")){
       if( QFile::copy(LOS::LuminaShare()+"desktopsettings.conf", dset) ){
         QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
       }
-    }
+    }*/
+    LUtils::LoadSystemDefaults();
   }
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
@@ -393,10 +395,10 @@ void LSession::WindowPropertyEvent(){
 
 void LSession::WindowPropertyEvent(WId win){
   //Emit the single-app signal if the window in question is one used by the task manager
-  //if(RunningApps.contains(win)){
+  if(RunningApps.contains(win)){
     if(DEBUG){ qDebug() << "Single-window property event"; }
     emit WindowListEvent();
-  //}
+  }
 }
 
 void LSession::SysTrayDockRequest(WId win){
