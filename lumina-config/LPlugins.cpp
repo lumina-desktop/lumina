@@ -134,6 +134,13 @@ void LPlugins::LoadPanelPlugins(){
     info.description = QObject::tr("Hide all open windows and show the desktop");
     info.ID = "homebutton";
     info.icon = "go-home";
+  PANEL.insert(info.ID, info);
+  //Desktop Bar
+  info = LPI(); //clear it
+    info.name = QObject::tr("Start Menu");
+    info.description = QObject::tr("This provides instant-access to application that are installed on the system.");
+    info.ID = "appmenu";
+    info.icon = "Lumina-DE";
   PANEL.insert(info.ID, info);  
 }
 
