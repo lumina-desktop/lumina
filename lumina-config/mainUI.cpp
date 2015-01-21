@@ -40,8 +40,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   QTimer::singleShot(10, this, SLOT(loadCurrentSettings()) );
 
   //Disable the incomplete pages/items at the moment
-  //ui->check_session_playloginaudio->setVisible(false);
-  //ui->check_session_playlogoutaudio->setVisible(false);
+
 }
 
 MainUI::~MainUI(){
@@ -120,6 +119,8 @@ void MainUI::setupIcons(){
   ui->tool_session_addfile->setIcon( LXDG::findIcon("run-build-file","") );
   ui->tool_session_newtheme->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
   ui->tool_session_newcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
+  ui->push_session_resetSysDefaults->setIcon( LXDG::findIcon("pcbsd","view-refresh") );
+  ui->push_session_resetLuminaDefaults->setIcon( LXDG::findIcon("Lumina-DE","") );
 
 }
 
@@ -213,6 +214,8 @@ void MainUI::setupConnections(){
   connect(ui->tool_session_newcolor, SIGNAL(clicked()), this, SLOT(sessionEditColor()) );
   connect(ui->tool_session_newtheme, SIGNAL(clicked()), this, SLOT(sessionEditTheme()) );
   connect(ui->push_session_setUserIcon, SIGNAL(clicked()), this, SLOT(sessionChangeUserIcon()) );
+  connect(ui->push_session_resetSysDefaults, SIGNAL(clicked()), this, SLOT(sessionResetSys()) );
+  connect(ui->push_session_resetLuminaDefaults, SIGNAL(clicked()), this, SLOT(sessionResetLumina()) );
 }
 
 void MainUI::setupMenus(){
@@ -529,8 +532,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
   QStringList items = settings->value("menu/itemlist", QStringList() ).toStringList();
   if(items.isEmpty()){ items << "terminal" << "filemanager" << "applications" << "line" << "settings"; }
   //qDebug() << "Menu Items:" << items;
-  ui->list_menu->clear();
-  for(int i=0; i<items.length(); i++){
+   ui->list_menu->clear();
+   for(int i=0; i<items.length(); i++){
     LPI info = PINFO->menuPluginInfo(items[i]);
     if(items[i].startsWith("app::::")){
       bool ok = false;
@@ -552,7 +555,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
       item->setText( info.name );
       item->setToolTip( info.description );
     ui->list_menu->addItem(item);
-  }
+   }
   checkmenuicons(); //update buttons
   }
   //Shortcuts Page
@@ -1918,4 +1921,13 @@ void MainUI::sessionChangeUserIcon(){
   //Now re-load the icon in the UI
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
 }
-	
+
+void MainUI::sessionResetSys(){
+  LUtils::LoadSystemDefaults();
+  QTimer::singleShot(500,this, SLOT(loadCurrentSettings()) );
+}
+
+void MainUI::sessionResetLumina(){
+  LUtils::LoadSystemDefaults(true); //skip OS customizations
+  QTimer::singleShot(500,this, SLOT(loadCurrentSettings()) );	
+}

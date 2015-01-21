@@ -22,6 +22,9 @@
 
 class LUtils{
 public:
+	//Get the current version of the Lumina desktop
+	static QString LuminaDesktopVersion();
+	
 	//Run an external command and return the exit code
 	static int runCmd(QString cmd, QStringList args = QStringList());
 	//Run an external command and return any text output (one line per entry)
@@ -40,6 +43,10 @@ public:
 
 	//Load a translation file for a Lumina Project
 	static void LoadTranslation(QApplication *app, QString appname);
+
+	//Load the default setup for the system
+	static void LoadSystemDefaults(bool skipOS = false);
+	
 };
 
 #endif

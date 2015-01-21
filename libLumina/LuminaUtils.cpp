@@ -12,12 +12,18 @@
 #include <QObject>
 #include <QTextCodec>
 #include <QDebug>
+#include <QDesktopWidget>
 
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 //=============
 //  LUtils Functions
 //=============
+QString LUtils::LuminaDesktopVersion(){ 
+  return "0.8.1"; 
+}
+
 int LUtils::runCmd(QString cmd, QStringList args){
   QProcess *proc = new QProcess;
   proc->setProcessChannelMode(QProcess::MergedChannels);
@@ -136,4 +142,118 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
     }
     //Load current encoding for this locale
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
+}
+
+void LUtils::LoadSystemDefaults(bool skipOS){
+  //Will create the Lumina configuration files based on the current system template (if any)
+  QStringList sysDefaults;
+  if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
+  if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
+  if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf"); }
+  if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf.dist"); }
+  if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
+  //Find the number of the left-most desktop screen
+  QString screen = "0";
+  QDesktopWidget *desk =QApplication::desktop();
+  for(int i=0; i<desk->screenCount(); i++){
+     if(desk->screenGeometry(i).x()==0){ screen = QString::number(i); break; }
+  }
+  //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
+  QStringList deskset, sesset;
+  //First start with any session settings
+  QStringList tmp = sysDefaults.filter("session.");
+  sesset << "[General]"; //everything is in this section
+  sesset << "DesktopVersion="+LUtils::LuminaDesktopVersion();
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString istrue = (val=="true") ? "true": "false";
+    //Now parse the variable and put the value in the proper file   
+
+    if(var=="session.enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
+    else if(var=="session.playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
+    else if(var=="session.playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
+  }
+  //Now do any desktop settings (only works for the primary desktop at the moment)
+  tmp = sysDefaults.filter("desktop.");
+  if(!tmp.isEmpty()){deskset << "[desktop-"+screen+"]"; }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Now parse the variable and put the value in the proper file   
+    if(var=="desktop.visiblepanels"){ deskset << "panels="+val; }
+    else if(var=="desktop.backgroundfiles"){ deskset << "background\\filelist="+val; }
+    else if(var=="desktop.backgroundrotateminutes"){ deskset << "background\\minutesToChange="+val; }
+    else if(var=="desktop.plugins"){ deskset << "pluginlist="+val; }
+  }
+  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+  //Now do any panel1 settings (only works for the primary desktop at the moment)
+  tmp = sysDefaults.filter("panel1.");
+  if(!tmp.isEmpty()){deskset << "[panel"+screen+".0]"; }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString istrue = (val=="true") ? "true": "false";
+    //Now parse the variable and put the value in the proper file   
+    if(var=="panel1.pixelsize"){ deskset << "height="+val; }
+    else if(var=="panel1.autohide"){ deskset << "hidepanel="+istrue; }
+    else if(var=="panel1.location"){ deskset << "location="+val; }
+    else if(var=="panel1.plugins"){ deskset << "pluginlist="+val; }
+  }
+  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+  //Now do any panel2 settings (only works for the primary desktop at the moment)
+  tmp = sysDefaults.filter("panel2.");
+  if(!tmp.isEmpty()){deskset << "[panel"+screen+".1]"; }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString istrue = (val=="true") ? "true": "false";
+    //Now parse the variable and put the value in the proper file   
+    if(var=="panel2.pixelsize"){ deskset << "height="+val; }
+    else if(var=="panel2.autohide"){ deskset << "hidepanel="+istrue; }
+    else if(var=="panel2.location"){ deskset << "location="+val; }
+    else if(var=="panel2.plugins"){ deskset << "pluginlist="+val; }
+  }
+  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+  //Now do any menu settings
+  tmp = sysDefaults.filter("menu.");
+  if(!tmp.isEmpty()){deskset << "[menu]"; }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Now parse the variable and put the value in the proper file   
+    if(var=="menu.plugins"){ deskset << "itemlist="+val; }
+  }
+  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+  //Now do any theme settings
+  QStringList themesettings = LTHEME::currentSettings(); 
+      //List: [theme path, colorspath, iconsname, font, fontsize]
+  tmp = sysDefaults.filter("theme.");
+  bool setTheme = !tmp.isEmpty();
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Now parse the variable and put the value in the proper file   
+    if(var=="theme.themefile"){ themesettings[0] = val; }
+    else if(var=="theme.colorfile"){ themesettings[1] = val; }
+    else if(var=="theme.iconset"){ themesettings[2] = val; }
+    else if(var=="theme.font"){ themesettings[3] = val; }
+    else if(var=="theme.fontsize"){ themesettings[4] = val; }
+  }
+  //Ensure that the settings directory exists
+  QString setdir = QDir::homePath()+"/.lumina/LuminaDE";
+  if(!QFile::exists(setdir)){ 
+    QDir dir; 
+    dir.mkpath(setdir); 
+  }
+  //Now save the settings files
+  if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
+  LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
+  LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
 }

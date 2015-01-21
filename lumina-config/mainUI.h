@@ -161,6 +161,8 @@ private slots:
 	void sessionEditColor();
 	void sessionEditTheme();
 	void sessionChangeUserIcon();
+	void sessionResetSys();
+	void sessionResetLumina();
 };
 
 #endif
