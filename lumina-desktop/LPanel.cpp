@@ -35,6 +35,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
 
   this->setWindowTitle("");
   this->setObjectName("LuminaPanelBackgroundWidget");
+  this->setStyleSheet("QToolButton::menu-indicator{ image: none; }");
   panelArea->setObjectName("LuminaPanelColor");
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);

@@ -22,6 +22,7 @@
 #include "taskmanager/LTaskManagerPlugin.h"
 #include "systemdashboard/LSysDashboard.h"
 #include "showdesktop/LHomeButton.h"
+#include "appmenu/LAppMenuPlugin.h"
 #include "systemtray/LSysTray.h" //must be last due to X11 compile issues
 
 class NewPP{
@@ -49,6 +50,8 @@ public:
 	    plug = new LClock(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("systemdashboard---")){
 	    plug = new LSysDashboard(parent, plugin, horizontal);
+	  }else if(plugin.startsWith("appmenu---")){
+	    plug = new LAppMenuPlugin(parent, plugin, horizontal);
 	  }else{
 	    qWarning() << "Invalid Panel Plugin:"<<plugin << " -- Ignored";
 	  }

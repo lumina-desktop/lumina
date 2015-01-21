@@ -13,7 +13,7 @@ LSysDashboard::LSysDashboard(QWidget *parent, QString id, bool horizontal) : LPP
   button = new QToolButton(this);
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    button->setToolTip(QString("System Dashboard"));
+    button->setPopupMode(QToolButton::DelayedPopup); //make sure it runs the update routine first
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);
@@ -24,6 +24,7 @@ LSysDashboard::LSysDashboard(QWidget *parent, QString id, bool horizontal) : LPP
     mact->setDefaultWidget(sysmenu);
     menu->addAction(mact);
 	
+  button->setMenu(menu);
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
@@ -38,6 +39,7 @@ void LSysDashboard::updateIcon(bool force){
   //For the visual, show battery state only if important
   static bool batcharging = false;
   QPixmap pix;
+  button->setToolTip(tr("System Dashboard"));
   if(LOS::hasBattery()){
     int bat = LOS::batteryCharge();
     bool charging = LOS::batteryIsCharging();
@@ -79,7 +81,7 @@ void LSysDashboard::resetIcon(){
 
 void LSysDashboard::openMenu(){
   sysmenu->UpdateMenu();
-  menu->popup(this->mapToGlobal(QPoint(0,0)));
+  button->showMenu();
 }
 
 void LSysDashboard::closeMenu(){

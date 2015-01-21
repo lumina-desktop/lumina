@@ -11,7 +11,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
   button = new QToolButton(this);
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
+    button->setPopupMode(QToolButton::DelayedPopup); //make sure it runs the update routine first
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);
@@ -23,6 +23,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
     mact->setDefaultWidget(usermenu);
     menu->addAction(mact);
 	
+  button->setMenu(menu);
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
@@ -31,7 +32,7 @@ LUserButtonPlugin::~LUserButtonPlugin(){
 }
 
 void LUserButtonPlugin::updateButtonVisuals(){
-    button->setToolTip(QString("Quickly launch applications or open files"));
+    button->setToolTip(tr("Quickly launch applications or open files"));
     button->setText( SYSTEM::user() );
     if( QFile::exists(QDir::homePath()+"/.loginIcon.png") ){
       button->setIcon( QIcon(QDir::homePath()+"/.loginIcon.png") );
@@ -45,7 +46,7 @@ void LUserButtonPlugin::updateButtonVisuals(){
 // ========================
 void LUserButtonPlugin::openMenu(){
   usermenu->UpdateMenu();
-  menu->popup(this->mapToGlobal(QPoint(0,0)));
+  button->showMenu();
 }
 
 void LUserButtonPlugin::closeMenu(){
