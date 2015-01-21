@@ -8,6 +8,7 @@
 #include "ui_mainUI.h" //the designer *.ui file
 
 #include <LuminaOS.h>
+#include <QImageReader>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
@@ -211,6 +212,7 @@ void MainUI::setupConnections(){
   connect(ui->font_session_theme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->tool_session_newcolor, SIGNAL(clicked()), this, SLOT(sessionEditColor()) );
   connect(ui->tool_session_newtheme, SIGNAL(clicked()), this, SLOT(sessionEditTheme()) );
+  connect(ui->push_session_setUserIcon, SIGNAL(clicked()), this, SLOT(sessionChangeUserIcon()) );
 }
 
 void MainUI::setupMenus(){
@@ -1669,7 +1671,7 @@ void MainUI::loadSessionSettings(){
   ui->check_session_numlock->setChecked( sessionsettings->value("EnableNumlock", true).toBool() );
   ui->check_session_playloginaudio->setChecked( sessionsettings->value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings->value("PlayLogoutAudio",true).toBool() );
-
+  ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   //Now do the session theme options
   ui->combo_session_themefile->clear();
   ui->combo_session_colorfile->clear();
@@ -1885,3 +1887,35 @@ void MainUI::sessionEditTheme(){
     if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
 }
+
+void MainUI::sessionChangeUserIcon(){
+  //Prompt for a new image file
+  QStringList imgformats;
+  QList<QByteArray> fmts = QImageReader::supportedImageFormats();
+  for(int i=0; i<fmts.length(); i++){
+    imgformats << "*."+QString(fmts[i]);
+  }
+  QString filepath = QFileDialog::getOpenFileName(this, tr("Select an image"), QDir::homePath(), \
+				tr("Images")+" ("+imgformats.join(" ")+")");
+  if(filepath.isEmpty()){
+    //User cancelled the operation
+    if(QFile::exists(QDir::homePath()+"/.loginIcon.png")){
+      if(QMessageBox::Yes == QMessageBox::question(this,tr("Reset User Image"), tr("Would you like to reset the user image to the system default?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+	QFile::remove(QDir::homePath()+"/.loginIcon.png");
+      }
+    }
+  }else{
+    QPixmap pix(filepath);
+    //Now scale it down if necessary
+    if(pix.width() > 64 || pix.height()>64){
+      pix = pix.scaled(64,64,Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
+    //Now save that to the icon file (will automatically convert it to a PNG file format)
+    pix.save(QDir::homePath()+"/.loginIcon.png");
+    //Now touch the settings file so that it re-loads the panel
+    QProcess::startDetached("touch \""+settings->fileName()+"\"");
+  }
+  //Now re-load the icon in the UI
+  ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
+}
+	

@@ -160,6 +160,7 @@ private slots:
 	void sessionstartchanged();
 	void sessionEditColor();
 	void sessionEditTheme();
+	void sessionChangeUserIcon();
 };
 
 #endif

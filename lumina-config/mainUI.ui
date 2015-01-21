@@ -106,7 +106,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -483,8 +483,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>272</width>
-             <height>184</height>
+             <width>175</width>
+             <height>113</height>
             </rect>
            </property>
            <attribute name="label">
@@ -720,8 +720,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>272</width>
-             <height>184</height>
+             <width>175</width>
+             <height>113</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1232,7 +1232,7 @@
            <string/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_theme">
            <attribute name="title">
@@ -1366,6 +1366,36 @@
                <string>Play chimes on exit</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <item>
+               <widget class="QPushButton" name="push_session_setUserIcon">
+                <property name="text">
+                 <string>Change User Icon</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_16">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
             <item>
              <spacer name="verticalSpacer_2">
@@ -1519,8 +1549,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>117</width>
-                    <height>16</height>
+                    <width>501</width>
+                    <height>70</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
