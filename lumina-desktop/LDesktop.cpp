@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 LDesktop::LDesktop(int deskNum) : QObject(){
 
@@ -20,7 +20,7 @@ LDesktop::LDesktop(int deskNum) : QObject(){
   desktop = QApplication::desktop();
   defaultdesktop = (desktop->screenGeometry(desktopnumber).x()==0);
   desktoplocked = true;
-  issyncing = bgupdating = deskupdating = false;
+  issyncing = bgupdating = false;
   usewinmenu=false;
 
   //Setup the internal variables
@@ -162,7 +162,7 @@ void LDesktop::InitDesktop(){
 }
 
 void LDesktop::SettingsChanged(){
-  if(changingsettings || issyncing){ return; } //don't refresh for internal modifications to the fil
+  if(issyncing){ return; } //don't refresh for internal modifications to the 
   issyncing = true;
   qDebug() << "Found Settings Change:" << desktopnumber;
   settings->sync(); //make sure to sync with external settings changes
@@ -170,7 +170,8 @@ void LDesktop::SettingsChanged(){
   UpdateDesktop();
   UpdatePanels();
   UpdateMenu();
-  QTimer::singleShot(200, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
+  issyncing = false;
+  QTimer::singleShot(100, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
 }
 
 void LDesktop::UpdateMenu(bool fast){
@@ -236,8 +237,6 @@ void LDesktop::winClicked(QAction* act){
 
 void LDesktop::UpdateDesktop(){
   if(DEBUG){ qDebug() << " - Update Desktop Plugins for screen:" << desktopnumber; }
-  if(deskupdating){ return; } //make sure to only run this once
-  deskupdating = true;
   QStringList plugins = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
   if(defaultdesktop && plugins.isEmpty()){
     //plugins << "sample" << "sample" << "sample";
@@ -289,12 +288,11 @@ void LDesktop::UpdateDesktop(){
   }
   if(changed){
     //save the modified plugin list to file (so per-plugin settings are preserved)
-    changingsettings=true; //don't let the change cause a refresh
+    issyncing=true; //don't let the change cause a refresh
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   }
-  deskupdating = false;
 }
 
 void LDesktop::ToggleDesktopLock(){
@@ -376,9 +374,9 @@ void LDesktop::DesktopPluginRemoved(QString ID){
   
   //Now remove that plugin from the internal list (then let the plugin system remove the actual plugin)
   QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
-  changingsettings=true; //don't let the change cause a refresh
   if(DEBUG){ qDebug() << " - Also removing plugin from future list"; }
   plugins.removeAll(ID);
+    issyncing = true;
     settings->setValue(DPREFIX+"pluginlist", plugins);
     settings->sync();
   QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
