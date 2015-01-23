@@ -1,0 +1,13 @@
+diff --git a/libLumina/libLumina.pro b/libLumina/libLumina.pro
+index 0302b82..f58581e 100644
+--- a/libLumina/libLumina.pro
++++ b/libLumina/libLumina.pro
+@@ -36,7 +36,7 @@ SOURCES	+= LuminaXDG.cpp \
+ 	LuminaOS-FreeBSD.cpp \
+ 	LuminaOS-DragonFly.cpp \
+ 	LuminaOS-OpenBSD.cpp \
+-	LuminaOS-Linux.cpp \
++	LuminaOS-Debian.cpp \
+         LuminaOS-kFreeBSD.cpp
+ #       new OS support can be added here
+ 
