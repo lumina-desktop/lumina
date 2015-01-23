@@ -14,7 +14,8 @@ Package: lumina-desktop
 Architecture: all
 Depends: libluminautils1, lumina-core, lumina-config, lumina-fm,
          lumina-open, lumina-screenshot, lumina-search
-Description: Lightweight Qt4-based desktop environment
+Recommends: lxpolkit, qt5-configuration-tool
+Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
 
 Package: libluminautils1

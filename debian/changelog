@@ -3,6 +3,7 @@ lumina-desktop (0.8.1.266-1nano) unstable; urgency=low
   * new GIT snapshot
     - add debian/patches/01-use-luminaos-debian.diff which uses
       LuminaOS-Debian instead of fallback LuminaOS-Linux
+    - add recommends on lxpolkit and qt5-configuration-tool
 
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 23 Jan 2015 18:00:15 +0100
 
