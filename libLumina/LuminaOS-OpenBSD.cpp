@@ -50,6 +50,10 @@ QStringList LOS::ExternalDevicePaths(){
 //Read screen brightness information
 int LOS::ScreenBrightness(){
   //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
+  //Make sure we are not running in a VM (does not work)
+  QStringList info = LUtils::getCmdOutput("sysctl -n hw.product");
+  if( !info.filter(QRegExp("VirtualBox|KVM")).isEmpty() ){ return -1; }
+  //Now perform the standard brightness checks
   if(screenbrightness==-1){
     if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){
       int val = LUtils::readFile(QDir::homePath()+"/.lumina/.currentxbrightness").join("").simplified().toInt();
@@ -144,12 +148,14 @@ void LOS::startMixerUtility(){
 
 //Check for user system permission (shutdown/restart)
 bool LOS::userHasShutdownAccess(){
-  return true; //not implemented yet
+  //User needs to be a part of the operator group to be able to run the shutdown command
+  QStringList groups = LUtils::getCmdOutput("id -Gn").join(" ").split(" ");
+  return groups.contains("operator");
 }
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -hp now");
+  QProcess::startDetached("shutdown -p now");
 }
 
 //System Restart
@@ -159,8 +165,8 @@ void LOS::systemRestart(){ //start reboot sequence
 
 //Battery Availability
 bool LOS::hasBattery(){
-  int val = LUtils::getCmdOutput("apm -l").join("").toInt();
-  return (val >= 0 && val <= 100);
+  int val = LUtils::getCmdOutput("apm -b").join("").toInt();
+  return (val < 4);
 }
 
 //Battery Charge Level
