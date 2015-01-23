@@ -151,6 +151,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
   if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf.dist"); }
+  if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile("/etc/luminaDesktop.conf"); }
+  if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile("/etc/luminaDesktop.conf.dist"); }
   if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
   //Find the number of the left-most desktop screen
   QString screen = "0";
