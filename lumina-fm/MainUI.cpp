@@ -306,6 +306,7 @@ void MainUI::RebuildDeviceMenu(){
     ui->menuExternal_Devices->addSeparator();
   //Scan for externally mounted devices
   QStringList devs = LOS::ExternalDevicePaths();
+  QString label;
     //Output Format: <type>::::<filesystem>::::<path>  (6/24/14 - version 0.4.0 )
         // <type> = [USB, HDRIVE, SDCARD, DVD, UNKNOWN]
 	
@@ -314,8 +315,13 @@ void MainUI::RebuildDeviceMenu(){
     //Skip hidden mount points (usually only for system usage - not user browsing)
     if(devs[i].section("::::",2,2).section("/",-1).startsWith(".")){ continue; } 
     //Create entry for this device
-    QAction *act = new QAction(devs[i].section("::::",2,2).section("/",-1),this);
-        act->setWhatsThis(devs[i].section("::::",2,2)); //full path to mountpoint
+    if(devs[i].section("::::",2,2).section("/",-1).isEmpty()) {
+      label = "root";
+    } else {
+      label = devs[i].section("::::",2,2).section("/",-1);
+    }
+    label = label + " (type: " + devs[i].section("::::",1,1) + ")";
+    QAction *act = new QAction(label,this);          act->setWhatsThis(devs[i].section("::::",2,2)); //full path to mountpoint
 	act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
 	//Now set the appropriate icon
 	QString type = devs[i].section("::::",0,0);
