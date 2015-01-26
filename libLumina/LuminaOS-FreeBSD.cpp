@@ -29,6 +29,7 @@ QStringList LOS::ExternalDevicePaths(){
   //Now check the output
   for(int i=0; i<devs.length(); i++){
     if(devs[i].startsWith("/dev/")){
+      devs[i].replace("\t"," ");
       QString type = devs[i].section(" on ",0,0);
 	type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
