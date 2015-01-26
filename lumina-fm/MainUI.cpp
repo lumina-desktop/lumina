@@ -306,27 +306,32 @@ void MainUI::RebuildDeviceMenu(){
     ui->menuExternal_Devices->addSeparator();
   //Scan for externally mounted devices
   QStringList devs = LOS::ExternalDevicePaths();
-  QString label;
     //Output Format: <type>::::<filesystem>::::<path>  (6/24/14 - version 0.4.0 )
-        // <type> = [USB, HDRIVE, SDCARD, DVD, UNKNOWN]
+        // <type> = [USB, HDRIVE, SDCARD, DVD, LVM, UNKNOWN]
 	
   //Now add them to the menu appropriately
   for(int i=0; i<devs.length(); i++){
     //Skip hidden mount points (usually only for system usage - not user browsing)
-    if(devs[i].section("::::",2,2).section("/",-1).startsWith(".")){ continue; } 
+    QString label, path, fs;
+      //Format inputs as necesary
+      path = devs[i].section("::::",2,2);
+      fs = devs[i].section("::::",1,1);
+      if(path.endsWith("/") && path.length()>1 ){ path.chop(1); }
+      if(path == "/"){ label = tr("Root"); }
+      else{ label = path.section("/",-1).simplified(); }
+    if(label.startsWith(".") ){ continue; }  //don't show hidden mountpoint (not usually user-browsable)
     //Create entry for this device
-    if(devs[i].section("::::",2,2).section("/",-1).isEmpty()) {
-      label = "root";
-    } else {
-      label = devs[i].section("::::",2,2).section("/",-1);
+    if( !fs.simplified().isEmpty()){
+      //Add filesystem type to the label
+      label = QString(tr("%1 (Type: %2)")).arg(label, fs);
     }
-    label = label + " (type: " + devs[i].section("::::",1,1) + ")";
-    QAction *act = new QAction(label,this);          act->setWhatsThis(devs[i].section("::::",2,2)); //full path to mountpoint
+    QAction *act = new QAction(label,this);          
+        act->setWhatsThis(path); //full path to mountpoint
 	act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
 	//Now set the appropriate icon
 	QString type = devs[i].section("::::",0,0);
 	if(type=="USB"){ type = "drive-removable-media-usb"; }
-	else if(type=="HDRIVE"){ type = "drive-harddisk"; }
+	else if(type=="HDRIVE" || type=="LVM"){ type = "drive-harddisk"; }
 	else if(type=="SDCARD"){ type = "media-flash-sd-mmc"; }
 	else if(type=="DVD"){ type = "media-optical"; }
 	else{ type = "drive-removable-media"; }
