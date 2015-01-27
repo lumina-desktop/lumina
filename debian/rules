@@ -36,10 +36,10 @@ override_dh_strip:
 
 override_dh_install:
 	dh_install --fail-missing
+	mkdir $(CURDIR)/debian/lumina-core/etc/
+	install -m644 $(CURDIR)/debian/luminaDesktop.conf \
+		$(CURDIR)/debian/lumina-core/etc/luminaDesktop.conf
 
 override_dh_auto_install:
 	INSTALL_ROOT=$(CURDIR)/debian/tmp/ $(MAKE) install
 	-rm -rf $(CURDIR)/debian/tmp/usr/etc/
-	mkdir $(CURDIR)/debian/lumina-core/etc/
-	install -m644 $(CURDIR)/debian/luminaDesktop.conf \
-		$(CURDIR)/debian/lumina-core/etc/luminaDesktop.conf
