@@ -11,6 +11,8 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
+QString LOS::OSName(){ return "DragonFly BSD"; }
+
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system

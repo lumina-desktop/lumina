@@ -12,6 +12,7 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
+QString LOS::OSName(){ return "OpenBSD"; }
 
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications

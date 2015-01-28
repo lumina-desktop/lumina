@@ -17,6 +17,8 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
+QString LOS::OSName(){ return "Debian GNU/kFreeBSD"; }
+
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system

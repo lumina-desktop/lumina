@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
 
+QString LOS::OSName(){ return "Sample"; }
+
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system

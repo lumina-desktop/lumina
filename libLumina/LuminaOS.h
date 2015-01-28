@@ -31,6 +31,9 @@
 
 class LOS{
 public:
+	//Return the name of the OS being used
+	static QString OSName(); 
+
 	//OS-specific prefix(s)
 	static QString LuminaShare(){ return (PREFIX+"/share/Lumina-DE/"); } //Install dir for Lumina share files
 	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
