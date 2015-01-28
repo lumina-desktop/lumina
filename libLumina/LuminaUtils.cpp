@@ -248,6 +248,30 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="theme.font"){ themesettings[3] = val; }
     else if(var=="theme.fontsize"){ themesettings[4] = val; }
   }
+  //Now double check that the custom theme/color files exist and reset it will the full path as necessary
+  if(setTheme){
+    QStringList systhemes = LTHEME::availableSystemThemes();
+    QStringList syscolors = LTHEME::availableSystemColors();
+    //theme file
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) ){
+      for(int i=0; i<systhemes.length(); i++){
+	 if(systhemes[i].startsWith(themesettings[0]+"::::")){
+	    themesettings[0] = systhemes[i].section("::::",1,1); //Replace with the full path
+	    break;
+	 }
+      }
+    }
+    //color file
+    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) ){
+      for(int i=0; i<syscolors.length(); i++){
+	 if(syscolors[i].startsWith(themesettings[1]+"::::")){
+	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
+	    break;
+	 }
+      }
+    }
+  }
+  
   //Ensure that the settings directory exists
   QString setdir = QDir::homePath()+"/.lumina/LuminaDE";
   if(!QFile::exists(setdir)){ 
