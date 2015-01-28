@@ -144,12 +144,16 @@ void LSession::setupSession(){
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
-  for(int i=0; i<2; i++){
-    QString startfile;
-    if(i==0){startfile = LOS::LuminaShare()+"startapps"; }
-    else{ startfile = QDir::homePath()+"/.lumina/startapps"; }
-    if(!QFile::exists(startfile)){ continue; } //go to the next
+  QString startfile;
+  if(QFile::exists("/etc/luminaStartapps")) {
+    startfile = "/etc/luminaStartapps";
+  } else if (QFile::exists(QDir::homePath()+"/.lumina/startapps")) {
+    startfile = QDir::homePath()+"/.lumina/startapps";
+  } else if (QFile::exists(LOS::LuminaShare()+"startapps")) {
+    startfile = LOS::LuminaShare()+"startapps";
+  }
 
+  if(!startfile.isEmpty()) {
     QFile file(startfile);
     if( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
       QTextStream in(&file);
@@ -163,6 +167,7 @@ void LSession::launchStartupApps(){
       file.close();
     }
   }
+
   //Now play the login music
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
