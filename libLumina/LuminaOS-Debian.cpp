@@ -13,7 +13,7 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
-QString LOS::OSName(){ return "Debian"; }
+QString LOS::OSName(){ return "Debian GNU/Linux"; }
 
 //OS-specific prefix(s)
 QString LOS::AppPrefix(){ return "/usr/"; } //Prefix for applications
@@ -22,7 +22,7 @@ QString LOS::SysPrefix(){ return "/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
 QString LOS::AppStoreShortcut(){ return LOS::AppPrefix() + "/share/applications/synaptic.desktop"; } //graphical app/pkg manager
-QString LOS::QtConfigShortcut(){ return LOS::AppPrefix() + "/bin/qtconfig"; } //qtconfig binary (NOT *.desktop file)
+QString LOS::QtConfigShortcut(){ return LOS::AppPrefix() + "/bin/qt5ct"; } //qtconfig binary (NOT *.desktop file)
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
