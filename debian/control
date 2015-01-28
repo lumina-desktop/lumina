@@ -13,8 +13,9 @@ Homepage: https://github.com/pcbsd/lumina
 Package: lumina-desktop
 Architecture: all
 Depends: libluminautils1, lumina-core, lumina-config, lumina-fm,
-         lumina-open, lumina-screenshot, lumina-search
-Recommends: lxpolkit, qt5-configuration-tool
+         lumina-open, lumina-screenshot, lumina-search, lumina-info,
+         lxpolkit
+Recommends: qt5-configuration-tool
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
 
@@ -53,6 +54,7 @@ Description: Core package for the lumina desktop environment
 Package: lumina-config
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
 Description: Configuration utility for the lumina desktop environment
  lumina-config allows to change various aspects of lumina and fluxbox, like the
  wallpaper beeing used, startup-applications, desktop-menu and more.
@@ -60,6 +62,7 @@ Description: Configuration utility for the lumina desktop environment
 Package: lumina-fm
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
 Description: Filemanager for the lumina desktop environment
  Simple filemanager for lumina with support for multiple view modes and
  integrated slideshow-based picture viewer.
@@ -67,6 +70,7 @@ Description: Filemanager for the lumina desktop environment
 Package: lumina-open
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
 Description: xdg-open like utilityfor the lumina desktop environment
  lumina-open handles opening of files and urls according to the system wide
  mime type association. It also provides an optional selector if more than one
@@ -75,6 +79,7 @@ Description: xdg-open like utilityfor the lumina desktop environment
 Package: lumina-screenshot
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
 Description: Screenshot utility for the lumina desktop environment
  Simple screenshot utility that allows to snapshot the whole desktop or a single
  window after a configurable delay.
@@ -82,6 +87,15 @@ Description: Screenshot utility for the lumina desktop environment
 Package: lumina-search
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
 Description: Search utility for the lumina desktop environment
  Simple search utility that allows to search for applications or files and
  directories in the user's HOME directory.
+
+Package: lumina-info
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
+Description: Basic information utility for Lumina
+ lumina-info display various information about the Lumina installation,
+ like paths or version.

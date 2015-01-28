@@ -1,3 +1,25 @@
+lumina-desktop (0.8.2.282-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+    - add lumina-info package
+    - install translations into specific packages
+    - move lxpolkit from Recommends to Depends
+    - add /etc/luminaStartapps (autostart applications)
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Wed, 28 Jan 2015 19:27:33 +0100
+
+lumina-desktop (0.8.1.275-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+    - remove patches/01-use-luminaos-debian.diff and replace it
+      by a sed-substition in debian/rules
+    - use dpkg-architecture instead of gcc for multiarch detection
+    - fail on missing files when building packages (if any)
+    - install /usr/share/applications/lumina-search.desktop
+    - provide /etc/luminaDesktop.conf fallback configuration
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Mon, 26 Jan 2015 18:49:14 +0100
+
 lumina-desktop (0.8.1.266-1nano) unstable; urgency=low
 
   * new GIT snapshot

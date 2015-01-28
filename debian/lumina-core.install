@@ -1,5 +1,14 @@
 usr/bin/Lumina-DE
 usr/share/pixmaps/Lumina-DE.png
-usr/share/Lumina-DE/
+usr/share/Lumina-DE/colors/
+usr/share/Lumina-DE/themes/
+usr/share/Lumina-DE/defaultapps.conf
+usr/share/Lumina-DE/desktop-background.jpg
+usr/share/Lumina-DE/fluxbox-init-rc
+usr/share/Lumina-DE/fluxbox-keys
+usr/share/Lumina-DE/Login.ogg
+usr/share/Lumina-DE/Logout.ogg
+usr/share/Lumina-DE/luminaDesktop.conf
+usr/share/Lumina-DE/i18n/lumina-desktop*.qm
 usr/share/wallpapers/Lumina-DE/
 usr/share/xsessions/Lumina-DE.desktop 
