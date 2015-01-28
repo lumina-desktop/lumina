@@ -1,3 +1,13 @@
+lumina-desktop (0.8.2.282-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+    - add lumina-info package
+    - install translations into specific packages
+    - move lxpolkit from Recommends to Depends
+    - add /etc/luminaStartapps (autostart applications)
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Wed, 28 Jan 2015 19:27:33 +0100
+
 lumina-desktop (0.8.1.275-1nano) unstable; urgency=low
 
   * new GIT snapshot
