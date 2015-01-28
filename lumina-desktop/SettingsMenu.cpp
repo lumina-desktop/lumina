@@ -44,7 +44,11 @@ void SettingsMenu::InitMenu(){
 	act->setWhatsThis("lumina-open \""+CONTROLPANEL+"\"");
 	this->addAction(act);
     }
-  }	
+  }
+  this->addSeparator();
+  act = new QAction( LXDG::findIcon("lumina",""), tr("About Lumina"), this);
+	act->setWhatsThis("lumina-info");
+	this->addAction(act);  
 }
 
 void SettingsMenu::runApp(QAction* act){

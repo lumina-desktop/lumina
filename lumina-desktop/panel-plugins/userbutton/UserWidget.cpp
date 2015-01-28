@@ -34,7 +34,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
   ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
   ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
-
+  ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
   connect(ui->tool_config_screensaver, SIGNAL(clicked()), this, SLOT(openScreenSaverConfig()) );
@@ -44,6 +44,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->combo_app_cats, SIGNAL(currentIndexChanged(int)), this, SLOT(updateApps()) );
   connect(ui->tool_home_gohome, SIGNAL(clicked()), this, SLOT(slotGoHome()) );
   connect(ui->tool_home_browse, SIGNAL(clicked()), this, SLOT(slotOpenDir()) );
+  connect(ui->tool_config_about, SIGNAL(clicked()), this, SLOT(openLuminaInfo()) );
   
   //Setup the special buttons
   QString APPSTORE = LOS::AppStoreShortcut();

@@ -80,7 +80,10 @@ private slots:
 	void openScreenSaverConfig(){
 	  LaunchItem(SSAVER, false);
 	}
-
+	void openLuminaInfo(){
+	  LaunchItem("lumina-info",false);
+	}
+	
 protected:
 	void mouseMoveEvent( QMouseEvent *event);
 

@@ -173,14 +173,14 @@ void LSession::launchStartupApps(){
 }
 
 void LSession::watcherChange(QString changed){
-  qDebug() << "Session Watcher Change:" << changed;
+  if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else{ emit DesktopConfigChanged(); }
 }
 
 void LSession::checkUserFiles(){
   //version conversion examples: [1.0.0 -> 100], [1.2.0 -> 120], [0.6.0 -> 60]
-  int oldversion = sessionsettings->value("DesktopVersion","0").toString().remove(".").toInt();
+  int oldversion = sessionsettings->value("DesktopVersion","0").toString().section("-",0,0).remove(".").toInt();
   bool newversion =  ( oldversion < this->applicationVersion().remove(".").toInt() );
   
   //Check for the desktop settings file
