@@ -31,9 +31,13 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   qDebug() << " -- Setup Panel";
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+  //panels cannot get keyboard focus otherwise it upsets the task manager window detection
+  this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
+  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
+  this->setAttribute(Qt::WA_AlwaysShowToolTips);
+  this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
-  this->setWindowTitle("");
+  this->setWindowTitle("LuminaPanel");
   this->setObjectName("LuminaPanelBackgroundWidget");
   this->setStyleSheet("QToolButton::menu-indicator{ image: none; }");
   panelArea->setObjectName("LuminaPanelColor");
@@ -45,13 +49,10 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Set special window flags on the panel for proper usage
   this->show();
   //this->setFocusPolicy(Qt::NoFocus);
-  //panels cannot get keyboard focus otherwise it upsets the task manager window detection
-  this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
-  this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
-  this->setAttribute(Qt::WA_AlwaysShowToolTips); 
-  LSession::handle()->XCB->SetAsSticky(this->winId());
+  //LSession::handle()->XCB->SetAsSticky(this->winId());
   //LSession::handle()->XCB->SetAsPanel(this->winId());  //make sure this happens after Qt creates the window first
-  
+  LX11::SetAsPanel(this->winId());
+
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
   connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
 }
@@ -137,6 +138,7 @@ void LPanel::UpdatePanel(){
   }
   //With QT5, we need to make sure to reset window properties on occasion
   //LSession::handle()->XCB->SetAsSticky(this->winId()); 
+  //LX11::SetAsPanel(this->winId());
   //First test/update all the window attributes as necessary
   //if(!this->testAttribute(Qt::WA_X11DoNotAcceptFocus)){ this->setAttribute(Qt::WA_X11DoNotAcceptFocus); }
   //if(!this->testAttribute(Qt::WA_X11NetWmWindowTypeDock)){ this->setAttribute(Qt::WA_X11NetWmWindowTypeDock); }
