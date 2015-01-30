@@ -53,10 +53,16 @@ void LSysMenuQuick::UpdateMenu(){
   if(ui->slider_volume->value()!= val){ ui->slider_volume->setValue(val); }
   //Screen Brightness
   val = LOS::ScreenBrightness();
-  txt = QString::number(val)+"%";
-  if(val<100){ txt.prepend(" "); } //make sure no widget resizing
-  ui->label_bright_text->setText(txt);
-  if(ui->slider_brightness->value()!=val){ ui->slider_brightness->setValue(val); }
+  if(val < 0){
+    //No brightness control - hide it
+    ui->group_brightness->setVisible(false);
+  }else{
+    ui->group_brightness->setVisible(true);
+    txt = QString::number(val)+"%";
+    if(val<100){ txt.prepend(" "); } //make sure no widget resizing
+    ui->label_bright_text->setText(txt);
+    if(ui->slider_brightness->value()!=val){ ui->slider_brightness->setValue(val); }
+  }
   //Battery Status
   if(LOS::hasBattery()){
     ui->group_battery->setVisible(true);
