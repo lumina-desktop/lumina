@@ -157,7 +157,7 @@ QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString
     else if(colors[i].startsWith("TEXTDISABLECOLOR=")){ stylesheet = stylesheet.replace("%%TEXTDISABLECOLOR%%", colors[i].section("=",1,1).simplified()); }
     else if(colors[i].startsWith("TEXTHIGHLIGHTCOLOR=")){ stylesheet = stylesheet.replace("%%TEXTHIGHLIGHTCOLOR%%", colors[i].section("=",1,1).simplified()); }
   }
-  stylesheet = stylesheet.replace("%%FONT%%", font);
+  stylesheet = stylesheet.replace("%%FONT%%", "\""+font+"\"");
   stylesheet = stylesheet.replace("%%FONTSIZE%%", fontsize);
   //qDebug() << "Assembled Style Sheet:\n" << stylesheet;
   return stylesheet;
