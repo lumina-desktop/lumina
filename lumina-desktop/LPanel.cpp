@@ -49,8 +49,8 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Set special window flags on the panel for proper usage
   this->show();
   //this->setFocusPolicy(Qt::NoFocus);
-  //LSession::handle()->XCB->SetAsSticky(this->winId());
-  //LSession::handle()->XCB->SetAsPanel(this->winId());  //make sure this happens after Qt creates the window first
+  LSession::handle()->XCB->SetAsSticky(this->winId());
+  //LSession::handle()->XCB->SetAsPanel(this->winId());
   LX11::SetAsPanel(this->winId());
 
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
