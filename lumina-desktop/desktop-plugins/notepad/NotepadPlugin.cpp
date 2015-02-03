@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 
-NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
+NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID, true){
   QVBoxLayout *vlay = new QVBoxLayout();
   this->setLayout( new QVBoxLayout() );
     this->layout()->setContentsMargins(0,0,0,0);

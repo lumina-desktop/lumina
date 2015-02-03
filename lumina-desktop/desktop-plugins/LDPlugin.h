@@ -33,10 +33,11 @@ private:
 public:
 	QSettings *settings;
 
-	LDPlugin(QWidget *parent = 0, QString id="unknown") : QFrame(parent){
+	LDPlugin(QWidget *parent = 0, QString id="unknown", bool opaque = false) : QFrame(parent){
 	  PLUGID=id;
 	  settings = new QSettings("desktop-plugins",PLUGID);
-	  this->setObjectName("LuminaDesktopPlugin");
+	  if(opaque){ this->setObjectName("LuminaDesktopPluginVisible"); }
+	  else{ this->setObjectName("LuminaDesktopPlugin"); }
 	}
 	
 	~LDPlugin(){

@@ -256,7 +256,7 @@ void PlayerWidget::updateMaxProgress(qint64 val){
 }
 
 
-AudioPlayerPlugin::AudioPlayerPlugin(QWidget *parent, QString ID) : LDPlugin(parent, ID){
+AudioPlayerPlugin::AudioPlayerPlugin(QWidget *parent, QString ID) : LDPlugin(parent, ID, true){
   player = new PlayerWidget(this);
   this->setLayout( new QVBoxLayout() );
     this->layout()->setContentsMargins(0,0,0,0);
