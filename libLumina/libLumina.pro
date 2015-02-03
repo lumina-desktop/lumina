@@ -57,7 +57,8 @@ colors.files=colors/Lumina-Red.qss.colors \
 		colors/Lumina-Green.qss.colors \
 		colors/Lumina-Purple.qss.colors \
 		colors/Lumina-Gold.qss.colors \
-		colors/Lumina-Glass.qss.colors
+		colors/Lumina-Glass.qss.colors \
+		colors/PCBSD10-Default.qss.colors
 
 themes.path=$$PREFIX/share/Lumina-DE/themes/
 themes.files=themes/Lumina-default.qss.template \
