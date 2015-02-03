@@ -49,8 +49,10 @@ public:
 	QString themename, themepath;
 	
 private slots:
+	void themeChanged();
 	void on_push_save_clicked();
 	void on_push_cancel_clicked();
+	void on_push_apply_clicked();
 	void menuTriggered(QAction*);
 
 };

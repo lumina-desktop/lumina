@@ -11,6 +11,7 @@ ThemeDialog::ThemeDialog(QWidget *parent, LPlugins *plugs, QString themeFilePath
   //Load the icons for the window
   ui->push_cancel->setIcon( LXDG::findIcon("dialog-cancel","") );
   ui->push_save->setIcon( LXDG::findIcon("document-save","") );
+  ui->push_apply->setIcon( LXDG::findIcon("dialog-ok","") );
   ui->tool_color->setIcon( LXDG::findIcon("color-picker","") );
   //Now create entries for the available colors in the database
   QStringList colors = plugs->colorItems();
@@ -27,26 +28,35 @@ ThemeDialog::ThemeDialog(QWidget *parent, LPlugins *plugs, QString themeFilePath
   //Now load the given file
   loadTheme();
   connect(colormenu, SIGNAL(triggered(QAction*)),this, SLOT(menuTriggered(QAction*)) );
+  connect(ui->text_file, SIGNAL(textChanged()), this, SLOT(themeChanged()) );
 }
 
 void ThemeDialog::loadTheme(){
   QStringList contents = LUtils::readFile(filepath);
   ui->text_file->setPlainText( contents.join("\n") );
+  ui->push_save->setEnabled(false);
+  ui->push_apply->setEnabled(false);
 }
 
 void ThemeDialog::saveTheme(){
   QString name = ui->line_name->text();
   QStringList contents = ui->text_file->toPlainText().split("\n");
   LTHEME::saveLocalTheme(name, contents);
+  ui->push_save->setEnabled(false);
+  ui->push_apply->setEnabled(false);
 }
 
+void ThemeDialog::themeChanged(){
+  ui->push_save->setEnabled(true);
+  ui->push_apply->setEnabled(true);
+}
 
 // BUTTONS
 void ThemeDialog::on_push_save_clicked(){
   //Now set the output values
   themename = ui->line_name->text();
   themepath = QDir::homePath()+"/.lumina/themes/"+themename+".qss.template";
-  //Check if that color already exists
+  //Check if that theme already exists
   if(QFile::exists(themepath)){
     if( QMessageBox::Yes != QMessageBox::question(this, tr("Theme Exists"), tr("This theme already exists.\n Overwrite it?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) ){
       themename.clear();
@@ -55,6 +65,22 @@ void ThemeDialog::on_push_save_clicked(){
     }
   }
   //save the colors and close
+  saveTheme();
+  //this->close();
+}
+
+void ThemeDialog::on_push_apply_clicked(){
+  //Now set the output values
+  themename = ui->line_name->text();
+  themepath = QDir::homePath()+"/.lumina/themes/"+themename+".qss.template";
+  //Check if that theme already exists
+  if(QFile::exists(themepath)){
+    if( QMessageBox::Yes != QMessageBox::question(this, tr("Theme Exists"), tr("This theme already exists.\n Overwrite it?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) ){
+      themename.clear();
+      themepath.clear();
+      return; //cancelled
+    }
+  }
   saveTheme();
   this->close();
 }
