@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>579</width>
-    <height>405</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -384,8 +384,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>214</width>
-             <height>140</height>
+             <width>233</width>
+             <height>149</height>
             </rect>
            </property>
            <attribute name="label">
@@ -483,8 +483,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>175</width>
-             <height>113</height>
+             <width>197</width>
+             <height>117</height>
             </rect>
            </property>
            <attribute name="label">
@@ -621,8 +621,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>214</width>
-             <height>140</height>
+             <width>233</width>
+             <height>149</height>
             </rect>
            </property>
            <attribute name="label">
@@ -720,8 +720,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>175</width>
-             <height>113</height>
+             <width>197</width>
+             <height>117</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1604,8 +1604,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>501</width>
-                    <height>70</height>
+                    <width>128</width>
+                    <height>28</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1672,6 +1672,9 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>4</number>
+      </property>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -1721,7 +1724,7 @@
      <x>0</x>
      <y>0</y>
      <width>579</width>
-     <height>18</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
