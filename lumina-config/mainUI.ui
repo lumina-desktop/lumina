@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>579</width>
-    <height>421</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,7 +106,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -361,9 +361,6 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QWidget#page_panel2_appearance,#page_panel2_plugins{background: rgba(255,255,255,150); }</string>
-          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -384,8 +381,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>233</width>
-             <height>149</height>
+             <width>262</width>
+             <height>187</height>
             </rect>
            </property>
            <attribute name="label">
@@ -601,9 +598,6 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QWidget#page_panel1_appearance,#page_panel1_plugins{background: rgba(255,255,255,150); }</string>
-          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -621,8 +615,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>233</width>
-             <height>149</height>
+             <width>263</width>
+             <height>187</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1604,8 +1598,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>128</width>
-                    <height>28</height>
+                    <width>493</width>
+                    <height>70</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
