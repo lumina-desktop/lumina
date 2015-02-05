@@ -78,8 +78,10 @@ void UserItemWidget::createWidget(){
     this->layout()->addWidget(icon);
     this->layout()->addWidget(name);
     this->layout()->addWidget(button);
+  //Set a custom object name so this can be tied into the Lumina Theme stylesheets
+  this->setObjectName("LuminaUserItemWidget");
   //Install the stylesheet
-  this->setStyleSheet("UserItemWidget{ background: transparent; border-radius: 5px;} UserItemWidget::hover{ background: rgba(255,255,255,200); border-radius: 5px; }");
+  //this->setStyleSheet("UserItemWidget{ background: transparent; border-radius: 5px;} UserItemWidget::hover{ background: rgba(255,255,255,200); border-radius: 5px; }");
 }
 
 void UserItemWidget::setupButton(bool disable){
