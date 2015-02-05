@@ -34,9 +34,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   setupMenus();
   setupConnections();
 
-  //Start on the Desktop page
+  //Start on the Desktop page (and first tab for all tab widgets)
   ui->stackedWidget->setCurrentWidget(ui->page_desktop);
   ui->tabWidget_desktop->setCurrentWidget(ui->tab_wallpaper);
+  ui->tabWidget_session->setCurrentIndex(0);
+  ui->tabWidget_apps->setCurrentIndex(0);
+  ui->tabWidget_panels->setCurrentIndex(0);
+  
   slotChangePage(false);
   QTimer::singleShot(10, this, SLOT(loadCurrentSettings()) );
 
@@ -66,7 +70,7 @@ void MainUI::setupIcons(){
   ui->actionPanels->setIcon( LXDG::findIcon("preferences-desktop-icons","") );
   //ui->actionMenu->setIcon( LXDG::findIcon("preferences-desktop-icons","") );
   ui->actionShortcuts->setIcon( LXDG::findIcon("configure-shortcuts","") );
-  ui->actionDefaults->setIcon( LXDG::findIcon("preferences-desktop-filetype-association","") );
+  ui->actionDefaults->setIcon( LXDG::findIcon("preferences-system-windows","") );
   ui->actionSession->setIcon( LXDG::findIcon("preferences-system-session-services","") );
   ui->push_save->setIcon( LXDG::findIcon("document-save","") );
 
@@ -116,6 +120,8 @@ void MainUI::setupIcons(){
   ui->tool_defaults_clear->setIcon( LXDG::findIcon("edit-clear","") );
   ui->tool_defaults_set->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_defaults_setbin->setIcon( LXDG::findIcon("application-x-executable","") );
+  ui->tabWidget_apps->setTabIcon( ui->tabWidget_apps->indexOf(ui->tab_auto), LXDG::findIcon("system-run", "") );
+  ui->tabWidget_apps->setTabIcon( ui->tabWidget_apps->indexOf(ui->tab_defaults), LXDG::findIcon("preferences-desktop-filetype-association", "") );
 
   //Session Page
   ui->tool_session_rmapp->setIcon( LXDG::findIcon("list-remove","") );
