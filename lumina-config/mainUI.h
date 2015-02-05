@@ -98,7 +98,7 @@ private slots:
 	void saveCurrentSettings(bool screenonly = false);
 
 	//Desktop Page
-	void deskplugchanged();
+	//void deskplugchanged();
 	void deskbgchanged();
 	void desktimechanged();
 	void deskbgremoved();
@@ -128,7 +128,7 @@ private slots:
 	void dnpanel1plugin();
 	void dnpanel2plugin();
 
-	//Menu Page
+	//Menu Page/Tab
 	void addmenuplugin();
 	void rmmenuplugin();
 	void upmenuplugin();

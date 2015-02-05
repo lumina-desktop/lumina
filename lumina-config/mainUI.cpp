@@ -36,6 +36,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 
   //Start on the Desktop page
   ui->stackedWidget->setCurrentWidget(ui->page_desktop);
+  ui->tabWidget_desktop->setCurrentWidget(ui->tab_wallpaper);
   slotChangePage(false);
   QTimer::singleShot(10, this, SLOT(loadCurrentSettings()) );
 
@@ -61,9 +62,9 @@ void MainUI::setupIcons(){
   //Pull all the icons from the current theme using libLumina (LXDG)
 
   //General UI
-  ui->actionDesktop->setIcon( LXDG::findIcon("preferences-desktop-wallpaper","") );
-  ui->actionPanels->setIcon( LXDG::findIcon("configure-toolbars","") );
-  ui->actionMenu->setIcon( LXDG::findIcon("preferences-desktop-icons","") );
+  ui->actionDesktop->setIcon( LXDG::findIcon("preferences-desktop-display","") );
+  ui->actionPanels->setIcon( LXDG::findIcon("preferences-desktop-icons","") );
+  //ui->actionMenu->setIcon( LXDG::findIcon("preferences-desktop-icons","") );
   ui->actionShortcuts->setIcon( LXDG::findIcon("configure-shortcuts","") );
   ui->actionDefaults->setIcon( LXDG::findIcon("preferences-desktop-filetype-association","") );
   ui->actionSession->setIcon( LXDG::findIcon("preferences-system-session-services","") );
@@ -73,7 +74,9 @@ void MainUI::setupIcons(){
   //Desktop Page
   ui->tool_desk_addbg->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_desk_rmbg->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_desk_addplug->setIcon( LXDG::findIcon("list-add","") );
+  ui->push_addDesktopPlugin->setIcon( LXDG::findIcon("list-add","") );
+  ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_wallpaper), LXDG::findIcon("preferences-desktop-wallpaper","") );
+  ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_themes), LXDG::findIcon("preferences-desktop-theme","") );
 
   //Panels Page
   ui->tool_panel1_add->setIcon( LXDG::findIcon("list-add","") );
@@ -94,7 +97,9 @@ void MainUI::setupIcons(){
   ui->tool_panel2_getcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
   ui->toolBox_panel2->setItemIcon(0,LXDG::findIcon("preferences-desktop-display",""));
   ui->toolBox_panel2->setItemIcon(1,LXDG::findIcon("preferences-plugin",""));
-
+  ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_panels), LXDG::findIcon("configure-toolbars","") );
+  ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_desktopInterface), LXDG::findIcon("preferences-plugin","") );
+  
   //Menu Page
   ui->tool_menu_add->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_menu_rm->setIcon( LXDG::findIcon("list-remove","") );
@@ -128,7 +133,7 @@ void MainUI::setupConnections(){
   //General UI
   connect(ui->actionDesktop, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
   connect(ui->actionPanels, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
-  connect(ui->actionMenu, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
+  //connect(ui->actionMenu, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
   connect(ui->actionShortcuts, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
   connect(ui->actionDefaults, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
   connect(ui->actionSession, SIGNAL(triggered(bool)), this, SLOT( slotChangePage(bool)) );
@@ -136,10 +141,10 @@ void MainUI::setupConnections(){
   connect(ui->spin_screen, SIGNAL(valueChanged(int)), this, SLOT(slotChangeScreen()) );
 
   //Desktop Page
-  connect(ui->combo_desk_plugs, SIGNAL(currentIndexChanged(int)), this, SLOT(deskplugchanged()) );
+  //connect(ui->combo_desk_plugs, SIGNAL(currentIndexChanged(int)), this, SLOT(deskplugchanged()) );
   connect(ui->combo_desk_bg, SIGNAL(currentIndexChanged(int)), this, SLOT(deskbgchanged()) );
   connect(ui->radio_desk_multi, SIGNAL(toggled(bool)), this, SLOT(desktimechanged()) );
-  connect(ui->tool_desk_addplug, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
+  connect(ui->push_addDesktopPlugin, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
   connect(ui->tool_desk_addbg, SIGNAL(clicked()), this, SLOT(deskbgadded()) );
   connect(ui->tool_desk_rmbg, SIGNAL(clicked()), this, SLOT(deskbgremoved()) );
   connect(ui->spin_desk_min, SIGNAL(valueChanged(int)), this, SLOT(desktimechanged()) );
@@ -220,7 +225,7 @@ void MainUI::setupConnections(){
 
 void MainUI::setupMenus(){
   //Desktop Plugin Menu
-  ui->combo_desk_plugs->clear();
+  /*ui->combo_desk_plugs->clear();
   QStringList plugs = PINFO->desktopPlugins();
   for(int i=0; i<plugs.length(); i++){
     LPI info = PINFO->desktopPluginInfo(plugs[i]);
@@ -228,6 +233,7 @@ void MainUI::setupMenus(){
   }
   ui->tool_desk_addplug->setEnabled(!plugs.isEmpty());
   deskplugchanged(); //make sure it loads the right info
+  */
 
   //Panel locations
   ui->combo_panel1_loc->clear();
@@ -365,7 +371,7 @@ void MainUI::slotChangePage(bool enabled){
     //Re-enable the current button
     ui->actionDesktop->setChecked(ui->stackedWidget->currentWidget()==ui->page_desktop);
     ui->actionPanels->setChecked(ui->stackedWidget->currentWidget()==ui->page_panels);
-    ui->actionMenu->setChecked(ui->stackedWidget->currentWidget()==ui->page_menu);
+    //ui->actionMenu->setChecked(ui->stackedWidget->currentWidget()==ui->page_menu);
     ui->actionShortcuts->setChecked(ui->stackedWidget->currentWidget()==ui->page_shortcuts);
     ui->actionDefaults->setChecked(ui->stackedWidget->currentWidget()==ui->page_defaults);
     ui->actionSession->setChecked(ui->stackedWidget->currentWidget()==ui->page_session);
@@ -376,14 +382,14 @@ void MainUI::slotChangePage(bool enabled){
     //uncheck the button associated with the currently open page
     if(ui->stackedWidget->currentWidget()==ui->page_desktop){ ui->actionDesktop->setChecked(false); }
     if(ui->stackedWidget->currentWidget()==ui->page_panels){ ui->actionPanels->setChecked(false); }
-    if(ui->stackedWidget->currentWidget()==ui->page_menu){ ui->actionMenu->setChecked(false); }
+    //if(ui->stackedWidget->currentWidget()==ui->page_menu){ ui->actionMenu->setChecked(false); }
     if(ui->stackedWidget->currentWidget()==ui->page_shortcuts){ ui->actionShortcuts->setChecked(false); }
     if(ui->stackedWidget->currentWidget()==ui->page_defaults){ ui->actionDefaults->setChecked(false); }
     if(ui->stackedWidget->currentWidget()==ui->page_session){ ui->actionSession->setChecked(false); }
     //switch to the new page
     if(ui->actionDesktop->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_desktop); showScreen=true;}
     else if(ui->actionPanels->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_panels); showScreen=true; }
-    else if(ui->actionMenu->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_menu); }
+    //else if(ui->actionMenu->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_menu); }
     else if(ui->actionShortcuts->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_shortcuts); }
     else if(ui->actionDefaults->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_defaults); }
     else if(ui->actionSession->isChecked()){ ui->stackedWidget->setCurrentWidget(ui->page_session); }
@@ -676,7 +682,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
 //===============
 //    DESKTOP PAGE
 //===============
-void MainUI::deskplugchanged(){
+/*void MainUI::deskplugchanged(){
   //NOTE: This is not a major change and will not enable the save button
   if(ui->combo_desk_plugs->count()==0){
     //No plugins available
@@ -687,7 +693,7 @@ void MainUI::deskplugchanged(){
   QString plug = ui->combo_desk_plugs->itemData( ui->combo_desk_plugs->currentIndex() ).toString();
   LPI info = PINFO->desktopPluginInfo(plug);
   ui->label_desk_pluginfo->setText( info.description );
-}
+}*/
 
 void MainUI::deskbgchanged(){
   //Load the new image preview
@@ -752,7 +758,12 @@ void MainUI::deskbgadded(){
 }
 
 void MainUI::deskplugadded(){
-  QString newplug = ui->combo_desk_plugs->itemData( ui->combo_desk_plugs->currentIndex() ).toString();
+  GetPluginDialog dlg(this);
+    dlg.LoadPlugins("desktop", PINFO);
+    dlg.exec();
+  if( !dlg.selected ){ return; } //cancelled
+  QString newplug = dlg.plugID;
+  //QString newplug = ui->combo_desk_plugs->itemData( ui->combo_desk_plugs->currentIndex() ).toString();
   if(newplug=="applauncher"){
     //Prompt for the application to add
     XDGDesktop app = getSysApp();

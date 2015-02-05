@@ -18,6 +18,7 @@ GetPluginDialog::GetPluginDialog(QWidget *parent) : QDialog(parent), ui(new Ui::
   //Load the icons
   ui->push_cancel->setIcon( LXDG::findIcon("dialog-cancel","") );
   ui->push_accept->setIcon( LXDG::findIcon("dialog-ok","") );
+  this->setWindowIcon( LXDG::findIcon("preferences-plugin") );
   //Connect the signals/slots
   connect(ui->combo_list, SIGNAL(currentIndexChanged(int)), this, SLOT(pluginchanged()) );
   connect(ui->push_cancel, SIGNAL(clicked()), this, SLOT(close()) );
