@@ -274,7 +274,7 @@ QString MainUI::getColorStyle(QString current){
   return out;
 }
 
-QString MainUI::getNewPanelPlugin(){
+/*QString MainUI::getNewPanelPlugin(){
   QString out;
   //Now let the user select a new panel plugin
   QStringList plugs = PINFO->panelPlugins();
@@ -288,13 +288,12 @@ QString MainUI::getNewPanelPlugin(){
     out = plugs[ names.indexOf(sel) ];
   }
   return out;
-}
+}*/
 
 XDGDesktop MainUI::getSysApp(){
   AppDialog dlg(this, sysApps);
     dlg.exec();
   return dlg.appselected;
-
 }
 
 //Convert to/from fluxbox key codes
@@ -903,7 +902,11 @@ void MainUI::getpanel2color(){
 }
 
 void MainUI::addpanel1plugin(){
-  QString pan = getNewPanelPlugin();
+  GetPluginDialog dlg(this);
+	dlg.LoadPlugins("panel", PINFO);
+	dlg.exec();
+  if(!dlg.selected){ return; } //cancelled
+  QString pan = dlg.plugID; //getNewPanelPlugin();
   if(pan.isEmpty()){ return; } //nothing selected
   //Add the new plugin to the list
   LPI info = PINFO->panelPluginInfo(pan);
@@ -917,7 +920,11 @@ void MainUI::addpanel1plugin(){
 }
 
 void MainUI::addpanel2plugin(){
-  QString pan = getNewPanelPlugin();
+  GetPluginDialog dlg(this);
+	dlg.LoadPlugins("panel", PINFO);
+	dlg.exec();
+  if(!dlg.selected){ return; } //cancelled
+  QString pan = dlg.plugID; //getNewPanelPlugin();
   if(pan.isEmpty()){ return; } //nothing selected
   //Add the new plugin to the list
   LPI info = PINFO->panelPluginInfo(pan);
@@ -979,14 +986,19 @@ void MainUI::dnpanel2plugin(){
 //    MENU PAGE
 //============
 void MainUI::addmenuplugin(){
-  QStringList names;
+  /*QStringList names;
   QStringList plugs = PINFO->menuPlugins();
   for(int i=0; i<plugs.length(); i++){ names << PINFO->menuPluginInfo(plugs[i]).name; }
   bool ok = false;
   QString sel = QInputDialog::getItem(this,tr("New Menu Plugin"),tr("Plugin:"), names,0,false,&ok);
-  if(sel.isEmpty() || names.indexOf(sel) < 0 || !ok){ return; }
+  if(sel.isEmpty() || names.indexOf(sel) < 0 || !ok){ return; }*/
+  GetPluginDialog dlg(this);
+	dlg.LoadPlugins("menu", PINFO);
+	dlg.exec();
+  if(!dlg.selected){ return; } //cancelled
+  QString plug = dlg.plugID;
   //Now add the item to the list
-  LPI info = PINFO->menuPluginInfo( plugs[ names.indexOf(sel) ] );
+  LPI info = PINFO->menuPluginInfo(plug);
   QListWidgetItem *it;
   if(info.ID=="app"){
     //Need to prompt for the exact application to add to the menu

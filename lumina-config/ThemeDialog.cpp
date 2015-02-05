@@ -29,6 +29,10 @@ ThemeDialog::ThemeDialog(QWidget *parent, LPlugins *plugs, QString themeFilePath
   loadTheme();
   connect(colormenu, SIGNAL(triggered(QAction*)),this, SLOT(menuTriggered(QAction*)) );
   connect(ui->text_file, SIGNAL(textChanged()), this, SLOT(themeChanged()) );
+  
+  //Now center the window on the parent
+  QPoint cen = parent->geometry().center();
+  this->move( cen.x() - (this->width()/2) , cen.y() - (this->height()/2) );
 }
 
 void ThemeDialog::loadTheme(){

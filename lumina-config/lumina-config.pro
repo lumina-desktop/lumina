@@ -18,20 +18,23 @@ SOURCES += main.cpp \
 	   mainUI.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
-	   ThemeDialog.cpp
+	   ThemeDialog.cpp \
+	   GetPluginDialog.cpp
 
 HEADERS  += mainUI.h \
 		LPlugins.h \
 		KeyCatch.h \
 		AppDialog.h \
 		ColorDialog.h \
-		ThemeDialog.h
+		ThemeDialog.h \
+		GetPluginDialog.h
 
 FORMS    += mainUI.ui \
 		KeyCatch.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
-		ThemeDialog.ui
+		ThemeDialog.ui \
+		GetPluginDialog.ui
 
 
 # RESOURCES+= lumina-config.qrc

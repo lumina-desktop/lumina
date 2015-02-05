@@ -26,6 +26,9 @@ ColorDialog::ColorDialog(QWidget *parent, LPlugins *plugs, QString colorFilePath
   }
   //Now load the given file
   loadColors();
+  //Now center the window on the parent
+  QPoint cen = parent->geometry().center();
+  this->move( cen.x() - (this->width()/2) , cen.y() - (this->height()/2) );
 }
 
 void ColorDialog::loadColors(){

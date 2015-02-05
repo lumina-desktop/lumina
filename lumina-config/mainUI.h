@@ -1,3 +1,9 @@
+//===========================================
+//  Lumina-DE source code
+//  Copyright (c) 2014, Ken Moore
+//  Available under the 3-clause BSD license
+//  See the LICENSE file for full details
+//===========================================
 #ifndef _LUMINA_CONFIG_MAIN_UI_H
 #define _LUMINA_CONFIG_MAIN_UI_H
 
@@ -29,6 +35,7 @@
 #include "AppDialog.h"
 #include "ColorDialog.h"
 #include "ThemeDialog.h"
+#include "GetPluginDialog.h"
 
 //namespace for using the *.ui file
 namespace Ui{
@@ -62,7 +69,7 @@ private:
 
 	//Panels Page simplifications
 	QString getColorStyle(QString current);
-	QString getNewPanelPlugin();
+	//QString getNewPanelPlugin();
 
 	//Get an application on the system
 	XDGDesktop getSysApp();
