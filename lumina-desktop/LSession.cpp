@@ -111,6 +111,7 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
     //watcher->addPath( QDir::homePath()+"/.lumina/stylesheet.qss" );
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
@@ -185,6 +186,7 @@ void LSession::launchStartupApps(){
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
+  else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else{ emit DesktopConfigChanged(); }
 }
 

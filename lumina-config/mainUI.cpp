@@ -9,6 +9,8 @@
 
 #include <LuminaOS.h>
 #include <QImageReader>
+#include <QTime>
+#include <QDate>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
@@ -132,7 +134,8 @@ void MainUI::setupIcons(){
   ui->tool_session_newcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
   ui->push_session_resetSysDefaults->setIcon( LXDG::findIcon("pcbsd","view-refresh") );
   ui->push_session_resetLuminaDefaults->setIcon( LXDG::findIcon("Lumina-DE","") );
-
+  ui->tool_help_time->setIcon( LXDG::findIcon("help-about","") );
+  ui->tool_help_date->setIcon( LXDG::findIcon("help-about","") );
 }
 
 void MainUI::setupConnections(){
@@ -227,6 +230,10 @@ void MainUI::setupConnections(){
   connect(ui->push_session_setUserIcon, SIGNAL(clicked()), this, SLOT(sessionChangeUserIcon()) );
   connect(ui->push_session_resetSysDefaults, SIGNAL(clicked()), this, SLOT(sessionResetSys()) );
   connect(ui->push_session_resetLuminaDefaults, SIGNAL(clicked()), this, SLOT(sessionResetLumina()) );
+  connect(ui->tool_help_time, SIGNAL(clicked()), this, SLOT(sessionShowTimeCodes()) );
+  connect(ui->tool_help_date, SIGNAL(clicked()), this, SLOT(sessionShowDateCodes()) );
+  connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
+  connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
 }
 
 void MainUI::setupMenus(){
@@ -1704,6 +1711,9 @@ void MainUI::loadSessionSettings(){
   ui->check_session_playloginaudio->setChecked( sessionsettings->value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings->value("PlayLogoutAudio",true).toBool() );
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
+  ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
+  ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
+  
   //Now do the session theme options
   ui->combo_session_themefile->clear();
   ui->combo_session_colorfile->clear();
@@ -1750,6 +1760,8 @@ void MainUI::loadSessionSettings(){
   ui->spin_session_fontsize->setValue( current[4].section("p",0,0).toInt() );
   
   sessionstartchanged(); //make sure to update buttons
+  sessionLoadTimeSample();
+  sessionLoadDateSample();
 }
 
 void MainUI::saveSessionSettings(){
@@ -1791,6 +1803,8 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("EnableNumlock", ui->check_session_numlock->isChecked());
   sessionsettings->setValue("PlayStartupAudio", ui->check_session_playloginaudio->isChecked());
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
+  sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
+  sessionsettings->setValue("DateFormat", ui->line_session_date->text());
   
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
@@ -1960,3 +1974,53 @@ void MainUI::sessionResetLumina(){
   LUtils::LoadSystemDefaults(true); //skip OS customizations
   QTimer::singleShot(500,this, SLOT(loadCurrentSettings()) );	
 }
+
+void MainUI::sessionLoadTimeSample(){
+  if(ui->line_session_time->text().simplified().isEmpty()){
+    ui->label_session_timesample->setText( QTime::currentTime().toString(Qt::SystemLocaleShortDate) );
+  }else{
+    ui->label_session_timesample->setText( QTime::currentTime().toString( ui->line_session_time->text() ) );
+  }
+  sessionoptchanged();
+}
+
+void MainUI::sessionShowTimeCodes(){
+  QStringList msg;
+    msg << tr("Valid Time Codes:") << "\n";
+    msg << QString(tr("%1: Hour without leading zero (1)")).arg("h");
+    msg << QString(tr("%1: Hour with leading zero (01)")).arg("hh");
+    msg << QString(tr("%1: Minutes without leading zero (2)")).arg("m");
+    msg << QString(tr("%1: Minutes with leading zero (02)")).arg("mm");
+    msg << QString(tr("%1: Seconds without leading zero (3)")).arg("s");
+    msg << QString(tr("%1: Seconds with leading zero (03)")).arg("ss");
+    msg << QString(tr("%1: AM/PM (12-hour) clock (upper or lower case)")).arg("A or a");
+    msg << QString(tr("%1: Timezone")).arg("t");
+  QMessageBox::information(this, tr("Time Codes"), msg.join("\n") );
+}
+
+void MainUI::sessionLoadDateSample(){
+  if(ui->line_session_date->text().simplified().isEmpty()){
+    ui->label_session_datesample->setText( QDate::currentDate().toString(Qt::SystemLocaleLongDate) );
+  }else{
+    ui->label_session_datesample->setText( QDate::currentDate().toString( ui->line_session_date->text() ) );
+  }
+  sessionoptchanged();
+}
+
+void MainUI::sessionShowDateCodes(){
+  QStringList msg;
+    msg << tr("Valid Date Codes:") << "\n";
+    msg << QString(tr("%1: Numeric day without a leading zero (1)")).arg("d");
+    msg << QString(tr("%1: Numeric day with leading zero (01)")).arg("dd");
+    msg << QString(tr("%1: Day as abbreviation (localized)")).arg("ddd");
+    msg << QString(tr("%1: Day as full name (localized)")).arg("dddd");
+    msg << QString(tr("%1: Numeric month without leading zero (2)")).arg("M");
+    msg << QString(tr("%1: Numeric month with leading zero (02)")).arg("MM");
+    msg << QString(tr("%1: Month as abbreviation (localized)")).arg("MMM");
+    msg << QString(tr("%1: Month as full name (localized)")).arg("MMMM");
+    msg << QString(tr("%1: Year as 2-digit number (15)")).arg("yy");
+    msg << QString(tr("%1: Year as 4-digit number (2015)")).arg("yyyy");
+    msg << tr("Text may be contained within single-quotes to ignore replacements");
+  QMessageBox::information(this, tr("Date Codes"), msg.join("\n") );
+}
+

@@ -25,9 +25,12 @@ public:
 private:
 	QTimer *timer;
 	QLabel *label;
-	
+	QString timefmt, datefmt;
+	bool deftime, defdate;
+
 private slots:
 	void updateTime();
+	void updateFormats();
 	
 };
 

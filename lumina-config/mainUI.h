@@ -170,6 +170,10 @@ private slots:
 	void sessionChangeUserIcon();
 	void sessionResetSys();
 	void sessionResetLumina();
+	void sessionLoadTimeSample();
+	void sessionShowTimeCodes();
+	void sessionLoadDateSample();
+	void sessionShowDateCodes();
 };
 
 #endif

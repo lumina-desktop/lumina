@@ -141,7 +141,9 @@ signals:
 	void WindowListEvent();
 	//General Signals
 	void LocaleChanged();
+	void IconThemeChanged();
 	void DesktopConfigChanged();
+	void SessionConfigChanged();
 	
 };
 
