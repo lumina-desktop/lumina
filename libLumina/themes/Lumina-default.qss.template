@@ -208,10 +208,13 @@ QComboBox{
 /* VIEW WIDGETS */
 QTreeView, QListView{
   background: %%ALTBASECOLOR%%;
+  alternate-background-color: %%BASECOLOR%%;
+  selection-background-color: %%ACCENTCOLOR%%;
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 3px;
   show-decoration-selected: 1;
   color: %%TEXTCOLOR%%;
+  selection-color: %%TEXTCOLOR%%;
 }
 
 /*
@@ -219,11 +222,11 @@ QTreeView::item and QListView::item unneccessary:
 Already set though parentage  and causes usage errors if set manually
 */
 
-QTreeView::item:selected, QListView::item:selected{
+/*QTreeView::item:selected, QListView::item:selected{
   background: %%SECONDARYDISABLECOLOR%%;
-  border: %%ACCENTCOLOR%%;
+  border-color: %%ACCENTCOLOR%%;
   color: %%TEXTCOLOR%%;
-}
+}*/
 QTreeView::item:hover, QListView::item:hover{
   background: %%HIGHLIGHTDISABLECOLOR%%;
 }
@@ -428,7 +431,7 @@ QRadioButton::indicator:checked{
   background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0 %%TEXTCOLOR%%, stop:0.25 %%TEXTCOLOR%%, stop:0.25001 transparent);
 }
 QCheckBox::indicator:checked, QGroupBox::indicator:checked{
-  padding: 3px;
+  padding: 2px;
   background-origin: content;
   background-clip: content;
   background: %%TEXTCOLOR%%;
