@@ -19,6 +19,7 @@
 #include <QString>
 #include <QFile>
 #include <QIcon>
+#include <QTimer>
 
 #include "LDPlugin.h"
 
@@ -27,12 +28,26 @@ class LDPluginContainer : public QMdiSubWindow{
 	
 private:
 	QSettings *settings;
+	QTimer *syncTimer;
 	bool locked, setup;
+	
+private slots:
+	void saveGeometry(){
+	    settings->setValue("location/x", this->pos().x());
+	    settings->setValue("location/y", this->pos().y());
+	    settings->setValue("location/width", this->size().width());
+	    settings->setValue("location/height", this->size().height());
+	    settings->sync();
+	}
 	
 public:
 	LDPluginContainer(LDPlugin *plugin = 0, bool islocked = true) : QMdiSubWindow(){
 	  locked = islocked;
 	  setup=true;
+	  syncTimer = new QTimer(this);
+	    syncTimer->setInterval(1000); //save settings 1 second after it is moved
+	    syncTimer->setSingleShot(true); //no repeats
+	    connect(syncTimer, SIGNAL(timeout()), this, SLOT(saveGeometry()) );
 	  this->setWhatsThis(plugin->ID());
 	  if(locked){ this->setWindowFlags(Qt::FramelessWindowHint); }
 	  else{ this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
@@ -82,20 +97,19 @@ protected:
 	void moveEvent(QMoveEvent *event){
 	  //Save this location to the settings
 	  if(!locked && !setup){
+	    if(syncTimer->isActive()){ syncTimer->stop(); }
+	    syncTimer->start();
 	    //qDebug() << "DP Move:" << event->pos().x() << event->pos().y();
-	    settings->setValue("location/x", event->pos().x());
-	    settings->setValue("location/y", event->pos().y());
-	    settings->sync();
 	  }
+	  QMdiSubWindow::moveEvent(event); //be sure to pass this event along to the container
 	}
 	
 	void resizeEvent(QResizeEvent *event){
 	  //Save this size info to the settings
 	  if(!locked && !setup){
 	    //qDebug() << "DP Resize:" << event->size().width() << event->size().height();
-	    settings->setValue("location/width", event->size().width());
-	    settings->setValue("location/height", event->size().height());
-	    settings->sync();
+	    if(syncTimer->isActive()){ syncTimer->stop(); }
+	    syncTimer->start();
 	  }
 	  QMdiSubWindow::resizeEvent(event); //be sure to pass this event along to the container
 	}
@@ -103,6 +117,7 @@ protected:
 	void closeEvent(QCloseEvent *event){
 	  if( !this->whatsThis().isEmpty() ){
 	    //Plugin removed by the user - delete the settings file
+	    locked = true; //ensure that the save settings routines don't do anything during the close
 	    QFile::remove( settings->fileName() );
 	    emit PluginRemoved( this->whatsThis() );
 	  }

@@ -61,6 +61,9 @@ public slots:
 	    //This is where any horizontal/vertical orientations can be changed appropriately		
 	}
 	
+	/*virtual void ResetMouseFocus(){
+	  //
+	}*/
 };
 
 #endif

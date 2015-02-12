@@ -24,6 +24,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
     menu->addAction(mact);
 	
   button->setMenu(menu);
+  connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
