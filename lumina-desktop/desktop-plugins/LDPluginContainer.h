@@ -118,6 +118,7 @@ protected:
 	  if( !this->whatsThis().isEmpty() ){
 	    //Plugin removed by the user - delete the settings file
 	    locked = true; //ensure that the save settings routines don't do anything during the close
+	    if(syncTimer->isActive()){ syncTimer->stop(); } //prevent save routine from running in a moment
 	    QFile::remove( settings->fileName() );
 	    emit PluginRemoved( this->whatsThis() );
 	  }
