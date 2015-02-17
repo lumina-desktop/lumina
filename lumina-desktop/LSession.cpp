@@ -135,12 +135,12 @@ void LSession::CleanupSession(){
   }
   //Close any Tray Apps
   for(int i=0; i<RunningTrayApps.length(); i++){
-    LX11::CloseWindow(RunningTrayApps[i]);
+    XCB->CloseWindow(RunningTrayApps[i]);
     LSession::processEvents();
   }  
   //Close any open windows
   for(int i=0; i<RunningApps.length(); i++){
-    LX11::CloseWindow(RunningApps[i]);
+    XCB->CloseWindow(RunningApps[i]);
     LSession::processEvents();
   }
   
