@@ -8,9 +8,11 @@
 #include "LSession.h"
 #include "panel-plugins/systemtray/LSysTray.h"
 
+#define DEBUG 1
+
 LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Take care of inputs
-  qDebug() << " - Creating Panel:" << scr << num;
+  if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
   panelArea = new QWidget(this);
@@ -29,7 +31,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   horizontal=true; //use this by default initially
   hidden = false; //use this by default
   //Setup the panel
-  qDebug() << " -- Setup Panel";
+  if(DEBUG){ qDebug() << " -- Setup Panel"; }
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   //panels cannot get keyboard focus otherwise it upsets the task manager window detection
@@ -69,7 +71,7 @@ void LPanel::UpdatePanel(){
   //Create/Update the panel as designated in the Settings file
   settings->sync(); //make sure to catch external settings changes
   //First set the geometry of the panel and send the EWMH message to reserve that space
-  qDebug() << "Update Panel";
+  if(DEBUG){ qDebug() << "Update Panel"; }
   hidden = settings->value(PPREFIX+"hidepanel",false).toBool(); //default to true for the moment
   QString loc = settings->value(PPREFIX+"location","").toString();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
@@ -160,7 +162,7 @@ void LPanel::UpdatePanel(){
   if(defaultpanel && plugins.isEmpty()){
     plugins << "userbutton" << "taskmanager" << "spacer" << "systemtray" << "clock" << "systemdashboard";
   }
-  qDebug() << " - Initialize Plugins: " << plugins;
+  if(DEBUG){ qDebug() << " - Initialize Plugins: " << plugins; }
   for(int i=0; i<plugins.length(); i++){
     //Ensure this plugin has a unique ID (NOTE: this numbering does not persist between sessions)
     if(!plugins[i].contains("---")){
@@ -192,7 +194,7 @@ void LPanel::UpdatePanel(){
     }
     if(!found){
       //New Plugin
-      qDebug() << " -- New Plugin:" << plugins[i] << i;
+      if(DEBUG){ qDebug() << " -- New Plugin:" << plugins[i] << i; }
       LPPlugin *plug = NewPP::createPlugin(plugins[i], panelArea, horizontal);
       if(plug != 0){ 
         PLUGINS.insert(i, plug);
@@ -210,7 +212,7 @@ void LPanel::UpdatePanel(){
   //qDebug() << "PLUGINS length:" << PLUGINS.length();
   for(int i=0; i<PLUGINS.length(); i++){
     if(plugins.contains(PLUGINS[i]->type())){ continue; } //good plugin - skip it
-    qDebug() << " -- Remove Plugin: " << PLUGINS[i]->type();
+    if(DEBUG){ qDebug() << " -- Remove Plugin: " << PLUGINS[i]->type(); }
     //If this is the system tray - stop it first
     if( PLUGINS[i]->type().startsWith("systemtray---") ){
       static_cast<LSysTray*>(PLUGINS[i])->stop();

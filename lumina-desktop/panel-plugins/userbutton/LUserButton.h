@@ -41,11 +41,11 @@ private:
 	UserWidget *usermenu;
 	QToolButton *button;
 
-	void updateButtonVisuals();
-
 private slots:
 	void openMenu();
 	void closeMenu();
+
+	void updateButtonVisuals();
 
 public slots:
 	void OrientationChange(){
