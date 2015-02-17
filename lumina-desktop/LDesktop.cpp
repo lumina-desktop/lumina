@@ -276,7 +276,7 @@ void LDesktop::UpdateDesktop(){
     }
     if(plug==0){
       //New Plugin
-      qDebug() << " -- New Plugin:" << plugins[i];
+      if(DEBUG){qDebug() << " -- New Plugin:" << plugins[i];}
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
       if(plug != 0){
 	//qDebug() << " -- Show Plugin";
@@ -388,7 +388,6 @@ void LDesktop::UpdatePanels(){
   if(panels==-1 && defaultdesktop){ panels=1; } //need at least 1 panel on the primary desktop
   //Remove all extra panels
   for(int i=0; i<PANELS.length(); i++){
-    qDebug() << " -- panel:" << i << PANELS[i]->number();
     if(panels <= PANELS[i]->number()){
       if(DEBUG){ qDebug() << " -- Remove Panel:" << PANELS[i]->number(); }
       delete PANELS.takeAt(i);
