@@ -20,6 +20,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
 	tmp->addWidget(panelArea);
   settings = file;
   screennum = scr;
+  panelnum = num; //save for later
   screen = LSession::desktop();
   PPREFIX = "panel"+QString::number(screennum)+"."+QString::number(num)+"/";
   defaultpanel = (screen->screenGeometry(screennum).x()==0 && num==0);

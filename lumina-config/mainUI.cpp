@@ -810,57 +810,54 @@ void MainUI::panelValChanged(){
 
 void MainUI::addpanel1(){
   ui->toolBox_panel1->setVisible(true);
+  panelnumber = 1;
   checkpanels();
   ui->push_save->setEnabled(true);
   modpan = true;
-  panelnumber = 1;
 }
 
 void MainUI::addpanel2(){
   ui->toolBox_panel2->setVisible(true);
+  panelnumber = 2;
   checkpanels();
   ui->push_save->setEnabled(true);
   modpan = true;
-  panelnumber = 2;
 }
 
 void MainUI::rmpanel1(){
   ui->toolBox_panel1->setVisible(false);
+  panelnumber = 0;	
   checkpanels();
   ui->push_save->setEnabled(true);
   modpan = true;
-  panelnumber = 0;
 }
 
 void MainUI::rmpanel2(){
   ui->toolBox_panel2->setVisible(false);
+  panelnumber = 1;
   checkpanels();
   ui->push_save->setEnabled(true);
   modpan = true;
-  panelnumber = 1;
 }
 
 void MainUI::checkpanels(){
   //This checks the primary panel buttons/visibility
-  ui->tool_panel1_add->setVisible(!ui->toolBox_panel1->isVisible());
-  ui->tool_panel1_rm->setVisible(ui->toolBox_panel1->isVisible());
-  if(ui->tool_panel1_add->isVisible()){
-    //No panels at all yet - disable the 2nd panel options
-    ui->tool_panel2_add->setVisible(false);
-    ui->tool_panel2_rm->setVisible(false);
-    ui->toolBox_panel2->setVisible(false);
-    ui->label_panel2->setVisible(false);
+  //panel 1
+  ui->tool_panel1_add->setVisible(panelnumber < 1);
+  ui->tool_panel1_rm->setVisible(panelnumber == 1);
+  ui->toolBox_panel1->setVisible(panelnumber>0);
+       //panel1 label is always visible
+  //panel 2
+  ui->tool_panel2_add->setVisible(panelnumber==1);
+  ui->tool_panel2_rm->setVisible(panelnumber>1);
+  ui->toolBox_panel2->setVisible(panelnumber>1);
+  ui->label_panel2->setVisible(panelnumber>0);
+	
+  //Sizing/layout fix for side-by-side vertical layouts
+  if(panelnumber<1){
     ui->gridLayout_panels->setColumnStretch(2,1);
-    panelnumber = 0; //no panels at the moment
   }else{
-    //Panel 1 is visible - also show options for panel 2 appropriately
-    ui->tool_panel2_add->setVisible(!ui->toolBox_panel2->isVisible());
-    ui->tool_panel2_rm->setVisible(ui->toolBox_panel2->isVisible());
-    ui->label_panel2->setVisible(true);
-    ui->tool_panel1_rm->setVisible(!ui->toolBox_panel2->isVisible());
     ui->gridLayout_panels->setColumnStretch(2,0);
-    if(ui->tool_panel2_add->isVisible()){ panelnumber = 1; }
-    else{panelnumber = 2; }
   }
 
 }

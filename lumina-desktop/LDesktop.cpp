@@ -388,7 +388,9 @@ void LDesktop::UpdatePanels(){
   if(panels==-1 && defaultdesktop){ panels=1; } //need at least 1 panel on the primary desktop
   //Remove all extra panels
   for(int i=0; i<PANELS.length(); i++){
+    qDebug() << " -- panel:" << i << PANELS[i]->number();
     if(panels <= PANELS[i]->number()){
+      if(DEBUG){ qDebug() << " -- Remove Panel:" << PANELS[i]->number(); }
       delete PANELS.takeAt(i);
       i--;
     }
@@ -396,12 +398,12 @@ void LDesktop::UpdatePanels(){
   for(int i=0; i<panels; i++){
     //Check for a panel with this number
     bool found = false;
-    for(int p=0; p<PANELS.length(); p++){
+    for(int p=0; p<PANELS.length() && !found; p++){
       if(PANELS[p]->number() == i){
         found = true;
-	//qDebug() << " -- Update panel "<< i;
+	if(DEBUG){ qDebug() << " -- Update panel "<< i; }
         //panel already exists - just update it
-        QTimer::singleShot(0, PANELS[i], SLOT(UpdatePanel()) );
+        QTimer::singleShot(0, PANELS[p], SLOT(UpdatePanel()) );
       }
     }
     if(!found){

@@ -38,6 +38,7 @@ private:
 	QPoint hidepoint, showpoint; //for hidden panels: locations when hidden/visible
 	bool defaultpanel, horizontal, hidden;
 	int screennum;
+	int panelnum;
 	QList<LPPlugin*> PLUGINS;
 
 public:
@@ -45,7 +46,7 @@ public:
 	~LPanel();
 
 	int number(){
-	  return PPREFIX.section(".",-1).toInt();
+	  return panelnum;
 	}
 
 public slots:

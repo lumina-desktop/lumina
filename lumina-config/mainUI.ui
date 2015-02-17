@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>424</height>
+    <width>596</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -374,7 +374,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_panels">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_desktopInterface">
            <attribute name="title">
@@ -536,7 +536,7 @@
            <attribute name="title">
             <string>Panels</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_panels">
+           <layout class="QGridLayout" name="gridLayout_panels" rowstretch="0,1" columnstretch="0,0">
             <item row="0" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
@@ -602,8 +602,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>233</width>
-                 <height>150</height>
+                 <width>263</width>
+                 <height>178</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -799,8 +799,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>233</width>
-                 <height>150</height>
+                 <width>263</width>
+                 <height>178</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1771,8 +1771,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>493</width>
-                    <height>89</height>
+                    <width>128</width>
+                    <height>28</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1890,7 +1890,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>579</width>
+     <width>596</width>
      <height>19</height>
     </rect>
    </property>
