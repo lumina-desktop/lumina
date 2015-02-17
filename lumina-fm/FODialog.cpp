@@ -206,15 +206,18 @@ void FODialog::slotStartOperations(){
   for(int i=0; i<olist.length() && !stopped; i++){
     if(isRM){
       ui->label->setText( QString(tr("Removing: %1")).arg(olist[i].section("/",-1)) );
+      QApplication::processEvents();
       errlist << removeItem(olist[i]);
     }else if(isCP || isRESTORE){
       ui->label->setText( QString(tr("Copying: %1 to %2")).arg(olist[i].section("/",-1), nlist[i].section("/",-1)) );
+      QApplication::processEvents();
       if(QFile::exists(nlist[i])){
 	if(overwrite){
 	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
 	}
       }
       //If a parent directory fails to copy, skip all the children as well (they will also fail)
+      QApplication::processEvents();
       if( !errlist.contains(olist[i].section("/",0,-1)) ){ 
         errlist << copyItem(olist[i], nlist[i]);
       }
@@ -230,6 +233,7 @@ void FODialog::slotStartOperations(){
       }*/
     }else if(isMV){
       ui->label->setText( QString(tr("Moving: %1 to %2")).arg(ofiles[i].section("/",-1), nfiles[i].section("/",-1)) );
+      QApplication::processEvents();
       if( !QFile::rename(ofiles[i], nfiles[i]) ){
         errlist << ofiles[i];
       }	

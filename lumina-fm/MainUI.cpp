@@ -889,7 +889,7 @@ void MainUI::showNewPicture(){
     writeableformats  = QImageWriter::supportedImageFormats();
     qDebug() << "Writeable image formats:" << writeableformats;
   }
-  bool canwrite = writeableformats.contains(file.section(".",-1).toLocal8Bit()); //compare the suffix with the list
+  bool canwrite = writeableformats.contains(file.section(".",-1).toLower().toLocal8Bit()); //compare the suffix with the list
   ui->tool_image_remove->setEnabled(isUserWritable);
   ui->tool_image_rotateleft->setEnabled(isUserWritable && canwrite);
   ui->tool_image_rotateright->setEnabled(isUserWritable && canwrite);
@@ -916,7 +916,14 @@ void MainUI::removePicture(){
   if(!file.endsWith("/")){ file.append("/"); }
   file.append(ui->combo_image_name->currentText());
   if( QFile::remove(file) ){
-    ui->combo_image_name->removeItem( ui->combo_image_name->currentIndex() );
+    int index = ui->combo_image_name->currentIndex();
+    ui->combo_image_name->removeItem( index );
+    if(ui->combo_image_name->count() > index){} //re-use the same index (go to the next picture)
+    else if(ui->combo_image_name->count() > 0 ){ index = ui->combo_image_name->count()-1; } // go to the previous picture (last one in the list)
+    else{ index = -1; }
+    if(index>=0){
+      ui->combo_image_name->setCurrentIndex(index);
+    }
     showNewPicture();
   }
 }

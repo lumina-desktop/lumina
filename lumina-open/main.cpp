@@ -70,7 +70,9 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     //First check to see if there is a default for this extension
     QString defApp;
     if(extension=="mimetype"){
+	//qDebug() << "inFile:" << inFile;
 	QStringList matches = LXDG::findAppMimeForFile(inFile, true).split("::::"); //allow multiple matches
+	//qDebug() << "Matches:" << matches;
 	for(int i=0; i<matches.length(); i++){
 	  defApp = LXDG::findDefaultAppForMime(matches[i]);
 	  if(!defApp.isEmpty()){ extension = matches[i]; break; }

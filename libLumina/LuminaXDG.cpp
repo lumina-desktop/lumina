@@ -380,7 +380,11 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
   int weight = 0;
   QStringList mimefull = LXDG::loadMimeFileGlobs2();
   QStringList mimes;
-  if(!extension.isEmpty()){ mimes = mimefull.filter(":*."+extension); }
+  if(!extension.isEmpty()){ 
+    mimes = mimefull.filter(":*."+extension); 
+    //If nothing found, try a case-insensitive search
+    if(mimes.isEmpty()){ mimes = mimefull.filter(":*."+extension, Qt::CaseInsensitive); }
+  }
   if(mimes.isEmpty()){ mimes = mimefull.filter(":"+filename.left(3)); } //look for the first 3 characters only (FIX WILDCARD DETECTION LATER)
   mimes.sort();
   QStringList matches;
