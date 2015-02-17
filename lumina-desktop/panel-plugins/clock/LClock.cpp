@@ -10,10 +10,12 @@
 
 LClock::LClock(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   //Setup the widget
-  label = new QLabel(this);
-    label->setAlignment(Qt::AlignCenter);
+  labelWidget = new QLabel(this);
+    labelWidget->setAlignment(Qt::AlignCenter);
+    labelWidget->setStyleSheet("font-weight: bold;");
+    labelWidget->setWordWrap(true);
   this->layout()->setContentsMargins(3,0,3,0); //reserve some space on left/right
-  this->layout()->addWidget(label);
+  this->layout()->addWidget(labelWidget);
 	
   //Setup the timer
   timer = new QTimer();
@@ -34,10 +36,16 @@ LClock::~LClock(){
 void LClock::updateTime(){
   QDateTime CT = QDateTime::currentDateTime();
   //Now update the display
-  if(deftime){ label->setText( "<b>"+CT.time().toString(Qt::SystemLocaleShortDate)+"</b>" ); }
-  else{ label->setText( "<b>"+CT.toString(timefmt)+"</b>" ); }
-  if(defdate){ label->setToolTip(CT.date().toString(Qt::SystemLocaleLongDate)); }
-  else{ label->setToolTip(CT.toString(datefmt)); }
+  QString label;
+  if(deftime){ label = CT.time().toString(Qt::SystemLocaleShortDate) ; }
+  else{ label=CT.toString(timefmt); }
+  if(defdate){ labelWidget->setToolTip(CT.date().toString(Qt::SystemLocaleLongDate)); }
+  else{ labelWidget->setToolTip(CT.toString(datefmt)); }
+  if( this->layout()->direction() == QBoxLayout::TopToBottom ){
+    //different routine for vertical text (need newlines instead of spaces)
+    label.replace(" ","\n");
+  }
+  labelWidget->setText(label);
 }
 
 void LClock::updateFormats(){
@@ -46,3 +54,4 @@ void LClock::updateFormats(){
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
 }
+

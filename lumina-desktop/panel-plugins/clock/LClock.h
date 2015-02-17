@@ -24,14 +24,15 @@ public:
 	
 private:
 	QTimer *timer;
-	QLabel *label;
+	QLabel *labelWidget;
 	QString timefmt, datefmt;
 	bool deftime, defdate;
-
+	
 private slots:
 	void updateTime();
 	void updateFormats();
-	
+
+
 };
 
 #endif
