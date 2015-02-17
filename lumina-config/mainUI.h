@@ -72,7 +72,7 @@ private:
 	//QString getNewPanelPlugin();
 
 	//Get an application on the system
-	XDGDesktop getSysApp();
+	XDGDesktop getSysApp(bool allowreset = false);
 
 	//Convert to/from fluxbox keyboard shortcuts
 	QString dispToFluxKeys(QString);

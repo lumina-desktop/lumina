@@ -33,6 +33,7 @@ public:
 	AppDialog(QWidget *parent = 0, QList<XDGDesktop> applist = QList<XDGDesktop>()) : QDialog(parent), ui(new Ui::AppDialog){
 	  ui->setupUi(this); //load the designer file
 	  APPS = applist; //save this for later
+	  appreset = false;
 	  ui->comboBox->clear();
 	  for(int i=0; i<APPS.length(); i++){
 	    ui->comboBox->addItem( LXDG::findIcon(APPS[i].icon,"application-x-executable"), APPS[i].name );
@@ -44,8 +45,17 @@ public:
 	
 	~AppDialog(){}
 
-	XDGDesktop appselected;
+	void allowReset(bool allow){
+	  if(allow){
+	    ui->buttonBox->setStandardButtons(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	  }else{
+	    ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	  }
+	}
+	XDGDesktop appselected; //selected application (empty template for cancelled/reset)
+	bool appreset; //Did the user select to reset to defaults?
 	
+		
 private slots:
 	void on_buttonBox_accepted(){
 	  appselected = APPS[ ui->comboBox->currentIndex() ];
@@ -54,7 +64,12 @@ private slots:
 	void on_buttonBox_rejected(){
 	  this->close();
 	}
-
+	void on_buttonBox_clicked(QAbstractButton *button){
+	  if(ui->buttonBox->standardButton(button) == QDialogButtonBox::RestoreDefaults){
+	    appreset = true;
+	    this->close();
+	  }
+	}
 };
 
 #endif

@@ -309,10 +309,17 @@ QString MainUI::getColorStyle(QString current){
   return out;
 }*/
 
-XDGDesktop MainUI::getSysApp(){
+XDGDesktop MainUI::getSysApp(bool allowreset){
   AppDialog dlg(this, sysApps);
+    dlg.allowReset(allowreset);
     dlg.exec();
-  return dlg.appselected;
+  XDGDesktop desk;
+  if(dlg.appreset && allowreset){
+    desk.filePath = "reset"; //special internal flag
+  }else{
+    desk = dlg.appselected;
+  }
+  return desk;
 }
 
 //Convert to/from fluxbox key codes
@@ -1170,8 +1177,11 @@ void MainUI::getKeyPress(){
 //===========
 void MainUI::changeDefaultBrowser(){
   //Prompt for the new app
-  XDGDesktop desk = getSysApp();
+  XDGDesktop desk = getSysApp(true);
     if(desk.filePath.isEmpty()){ return; }//nothing selected
+    if(desk.filePath=="reset"){
+      desk.filePath="";
+    }
   //save the new app setting and adjust the button appearance
   appsettings->setValue("default/webbrowser", desk.filePath);
   QString tmp = desk.filePath;
@@ -1198,8 +1208,11 @@ void MainUI::changeDefaultBrowser(){
 
 void MainUI::changeDefaultEmail(){
   //Prompt for the new app
-  XDGDesktop desk = getSysApp();
+  XDGDesktop desk = getSysApp(true); //allow reset to default
     if(desk.filePath.isEmpty()){ return; }//nothing selected
+    if(desk.filePath=="reset"){
+      desk.filePath="";
+    }
   //save the new app setting and adjust the button appearance
   appsettings->setValue("default/email", desk.filePath);
   QString tmp = desk.filePath;
@@ -1226,8 +1239,11 @@ void MainUI::changeDefaultEmail(){
 
 void MainUI::changeDefaultFileManager(){
   //Prompt for the new app
-  XDGDesktop desk = getSysApp();
+  XDGDesktop desk = getSysApp(true);
     if(desk.filePath.isEmpty()){ return; }//nothing selected
+    if(desk.filePath=="reset"){
+      desk.filePath="lumina-fm";
+    }
   //save the new app setting and adjust the button appearance
   appsettings->setValue("default/directory", desk.filePath);
   sessionsettings->setValue("default-filemanager", desk.filePath);
@@ -1255,8 +1271,11 @@ void MainUI::changeDefaultFileManager(){
 
 void MainUI::changeDefaultTerminal(){
   //Prompt for the new app
-  XDGDesktop desk = getSysApp();
+  XDGDesktop desk = getSysApp(true);
     if(desk.filePath.isEmpty()){ return; }//nothing selected
+    if(desk.filePath=="reset"){
+      desk.filePath="xterm";
+    }
   //save the new app setting and adjust the button appearance
   sessionsettings->setValue("default-terminal", desk.filePath);
   QString tmp = desk.filePath;
