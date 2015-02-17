@@ -467,7 +467,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
   //Panels Page
   int panels = settings->value(DPrefix+"panels",-1).toInt();
   if(panels==-1 && primary){ panels=1; }
-  panelnumber = 0;
+  panelnumber = panels;
   if(panels >= 1){
     //Load the panel 1 information
     QString PPrefix = "panel"+QString::number(cdesk)+".0/";
@@ -495,7 +495,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
     ui->label_panel1_sample->setWhatsThis(color);
     ui->label_panel1_sample->setStyleSheet("background: "+color);
-    panelnumber++;
+    //panelnumber++;
   }else{
     //Panel 1 defaults
     ui->toolBox_panel1->setVisible(false); //not initially visible
@@ -533,7 +533,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
     ui->label_panel2_sample->setWhatsThis(color);
     ui->label_panel2_sample->setStyleSheet("background: "+color);
-    panelnumber++;
+    //panelnumber++;
   }else{
     //Panel 2 defaults
     ui->toolBox_panel2->setVisible(false); //not initially visible
@@ -883,7 +883,7 @@ void MainUI::adjustpanel1(){
     changed = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
   }
-  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
@@ -907,7 +907,7 @@ void MainUI::adjustpanel2(){
     changed = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
   }
-  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 
