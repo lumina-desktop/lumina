@@ -14,6 +14,8 @@
 #include <LuminaX11.h>
 #include <LuminaUtils.h>
 
+#include <unistd.h> //for usleep() usage
+
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -124,23 +126,34 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
 }
 
-/*bool LSession::LoadLocale(QString langCode){
-    QTranslator translator;
-    if ( ! QFile::exists(LOS::LuminaShare()+"i18n/lumina-desktop_" + langCode + ".qm" ) )  langCode.truncate(langCode.indexOf("_"));
-    bool ok = translator.load( QString("lumina-desktop_") + langCode, LOS::LuminaShare()+"i18n/" );
-    if(ok){
-      //Remove any old translator
-      if(currTranslator != 0){ this->removeTranslator(currTranslator); }
-      //Insert the new translator
-      currTranslator = &translator;
-      this->installTranslator( currTranslator );
-      qDebug() << "Loaded Locale:" << langCode;
-    }else{
-      qDebug() << "Invalid Locale:" << langCode;
-    }
-    emit LocaleChanged();
-    return ok;
-}*/
+void LSession::CleanupSession(){
+  //Close any running applications and tray utilities (Make sure to keep the UI interactive)
+  LSession::processEvents();
+  //Start the logout chimes (if necessary)
+  if( sessionsettings->value("PlayLogoutAudio",true).toBool() ){
+    playAudioFile(LOS::LuminaShare()+"Logout.ogg");
+  }
+  //Close any Tray Apps
+  for(int i=0; i<RunningTrayApps.length(); i++){
+    LX11::CloseWindow(RunningTrayApps[i]);
+    LSession::processEvents();
+  }  
+  //Close any open windows
+  for(int i=0; i<RunningApps.length(); i++){
+    LX11::CloseWindow(RunningApps[i]);
+    LSession::processEvents();
+  }
+  
+  //Now wait a moment for things to close down before quitting
+  for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+  
+  /*WL = LX11::WindowList();
+  for(int i=0; i<WL.length(); i++){
+    LX11::KillWindow(WL[i]);
+    LSession::processEvents();
+  }*/
+  LSession::processEvents();
+}
 
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
@@ -183,11 +196,28 @@ void LSession::launchStartupApps(){
   }
 }
 
+void LSession::StartLogout(){
+  CleanupSession();
+  QCoreApplication::exit(0);
+}
+
+void LSession::StartShutdown(){
+  CleanupSession();
+  LOS::systemShutdown();
+  QCoreApplication::exit(0);		
+}
+
+void LSession::StartReboot(){
+  CleanupSession();
+  LOS::systemRestart();
+  QCoreApplication::exit(0);	
+}
+
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
-  else{ emit DesktopConfigChanged(); }
+  else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
 }
 
 void LSession::checkUserFiles(){
@@ -511,27 +541,9 @@ void LSession::attachTrayWindow(WId win){
   if(TrayStopping){ return; }
   if(RunningTrayApps.contains(win)){ return; } //already managed
   RunningTrayApps << win;
+  LSession::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Tray List Changed"; }
   emit TrayListChanged();
-  /*//Now try to embed the window into the tray 
-  //(NOT USED - Breaks visuals due to X11 graphics constraints - need to do embed in a single visual tray instead)
-  
-  qDebug() << "Attach Tray App:" << appnum;
-  WId cont = LX11::CreateWindow( SystemTrayID, QRect(appnum*64, 0, 64, 64) );
-  if( LX11::EmbedWindow(win, cont) ){
-    appnum++;
-    //Successful embed, now set it up for damage report notifications
-    XDamageCreate( QX11Info::display(), win, XDamageReportRawRectangles );
-    //LX11::ResizeWindow(win, 64, 64); //Always use 64x64 if possible (can shrink, not expand later)
-    LX11::RestoreWindow(win);
-    //Add it to the tray list
-    RunningTrayApps << win;
-    TrayAppContainers << cont;
-    //Emit that the list has changed
-    emit TrayListChanged();
-  }else{
-    LX11::DestroyWindow(cont); //clean up
-  }*/
 }
 
 void LSession::removeTrayWindow(WId win){

@@ -2,17 +2,17 @@
 #define _LUMINA_DESKTOP_SYSTEM_WINDOW_H
 
 #include <QDialog>
-#include <QCoreApplication>
-#include <QDesktopWidget>
-#include <QList>
-#include <QProcess>
+//#include <QCoreApplication>
+
+//#include <QList>
+//#include <QProcess>
 
 #include "ui_SystemWindow.h"
-#include "Globals.h"
+//#include "Globals.h"
 
-#include <LuminaXDG.h>
-#include <LuminaX11.h>
-#include <LuminaOS.h>
+//#include <LuminaXDG.h>
+//#include <LuminaX11.h>
+//#include <LuminaOS.h>
 
 
 
@@ -29,35 +29,20 @@ public:
 private:
 	Ui::SystemWindow *ui;
 
-	void closeAllWindows();
+	//void closeAllWindows();
 	
 private slots:
-	void sysLogout(){
-	  closeAllWindows();
-	  QCoreApplication::exit(0);
-	}
+	void sysLogout();
 	
-	void sysRestart(){
-	  closeAllWindows();
-	  LOS::systemRestart();
-	  QCoreApplication::exit(0);		
-	}
+	void sysRestart();
 	
-	void sysShutdown(){
-	  closeAllWindows();
-	  LOS::systemShutdown();
-	  QCoreApplication::exit(0);
-	}
+	void sysShutdown();
 	
 	void sysCancel(){
 	  this->close();
 	}
 	
-	void sysLock(){
-	  qDebug() << "Locking the desktop...";
-	  QProcess::startDetached("xscreensaver-command -lock");
-	  this->close();
-	}
+	void sysLock();
 };
 
 #endif

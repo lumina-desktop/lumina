@@ -135,10 +135,10 @@ void LDesktop::InitDesktop(){
   bgtimer = new QTimer(this);
     bgtimer->setSingleShot(true);
     connect(bgtimer, SIGNAL(timeout()), this, SLOT(UpdateBackground()) );
-  watcher = new QFileSystemWatcher(this);
-    //connect(LSession::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
-    watcher->addPath(settings->fileName());
-    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
+  //watcher = new QFileSystemWatcher(this);
+    connect(QApplication::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
+    //watcher->addPath(settings->fileName());
+    //connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
 
   if(DEBUG){ qDebug() << "Create bgWindow"; }
   bgWindow = new QWidget();

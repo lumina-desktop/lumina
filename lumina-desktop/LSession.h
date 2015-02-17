@@ -109,9 +109,13 @@ private:
 	//Task Manager Variables
 	QList<WId> RunningApps;
 
+	void CleanupSession();
+	
 public slots:
 	void launchStartupApps();
-
+	void StartLogout();
+	void StartShutdown();
+	void StartReboot();
 
 private slots:
 	void watcherChange(QString);

@@ -3,9 +3,11 @@
 
 #include "LSession.h"
 #include <LuminaOS.h>
-#include <unistd.h> //for usleep() usage
 #include <QPoint>
 #include <QCursor>
+#include <QDebug>
+#include <QProcess>
+#include <QDesktopWidget>
 
 SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   ui->setupUi(this); //load the designer file
@@ -38,23 +40,23 @@ SystemWindow::~SystemWindow(){
 
 }
 
-void SystemWindow::closeAllWindows(){
-  this->hide();
-  LSession::processEvents();
-  if( LSession::handle()->sessionSettings()->value("PlayLogoutAudio",true).toBool() ){
-    LSession::handle()->playAudioFile(LOS::LuminaShare()+"Logout.ogg");
-  }
-  QList<WId> WL = LX11::WindowList();
-  for(int i=0; i<WL.length(); i++){
-    LX11::CloseWindow(WL[i]);
-    LSession::processEvents();
-  }
-  //Now go through the list again and kill any remaining windows
-  usleep(60); //60 ms pause
-  WL = LX11::WindowList();
-  for(int i=0; i<WL.length(); i++){
-    LX11::KillWindow(WL[i]);
-    LSession::processEvents();
-  }
-  LSession::processEvents();
+void SystemWindow::sysLogout(){
+  QTimer::singleShot(0, LSession::handle(), SLOT(StartLogout()) );
+  this->close();
+}
+	
+void SystemWindow::sysRestart(){
+  QTimer::singleShot(0, LSession::handle(), SLOT(StartReboot()) );
+  this->close();	
+}
+	
+void SystemWindow::sysShutdown(){
+  QTimer::singleShot(0, LSession::handle(), SLOT(StartShutdown()) );
+  this->close();
+}
+
+void SystemWindow::sysLock(){
+  qDebug() << "Locking the desktop...";
+  QProcess::startDetached("xscreensaver-command -lock");
+  this->close();
 }
