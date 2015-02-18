@@ -209,7 +209,7 @@ QComboBox{
 QTreeView, QListView{
   background: %%ALTBASECOLOR%%;
   alternate-background-color: %%BASECOLOR%%;
-  selection-background-color: %%ACCENTCOLOR%%;
+  selection-background-color: %%SECONDARYCOLOR%%;
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 3px;
   show-decoration-selected: 1;
@@ -398,6 +398,7 @@ QToolButton{ /* Assume a flat button for every toolbutton by default*/
 
  QPushButton:pressed, QPushButton:open, QPushButton:selected, QPushButton:checked, QPushButton:on, QToolButton:pressed, QToolButton:open, QToolButton:selected, QToolButton:checked, QToolButton:on{
      background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+	 margin-top: 2px;
  }
 
 QPushButton:flat, QToolButton:flat{
