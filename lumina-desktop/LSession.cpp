@@ -139,20 +139,24 @@ void LSession::CleanupSession(){
     LSession::processEvents();
   }  
   //Close any open windows
-  for(int i=0; i<RunningApps.length(); i++){
-    XCB->CloseWindow(RunningApps[i]);
+  QList<WId> WL = XCB->WindowList(true);
+  for(int i=0; i<WL.length(); i++){
+    XCB->CloseWindow(WL[i]);
     LSession::processEvents();
   }
   
   //Now wait a moment for things to close down before quitting
   for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
   
-  /*WL = LX11::WindowList();
+  //Kill any remaining windows
+  WL = XCB->WindowList(true); //all workspaces
   for(int i=0; i<WL.length(); i++){
     LX11::KillWindow(WL[i]);
     LSession::processEvents();
-  }*/
-  LSession::processEvents();
+  }
+  
+  //Now wait a moment for things to close down before quitting
+  for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
 }
 
 void LSession::launchStartupApps(){
