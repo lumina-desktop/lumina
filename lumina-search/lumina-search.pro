@@ -16,12 +16,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
 		MainUI.cpp \
-		Worker.cpp
+		Worker.cpp \
+		ConfigUI.cpp
 
 HEADERS  += MainUI.h \
-		Worker.h
+		Worker.h \
+		ConfigUI.h
 
-FORMS    += MainUI.ui
+FORMS    += MainUI.ui \
+		ConfigUI.ui
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 

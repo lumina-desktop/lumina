@@ -25,6 +25,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="tool_configure">
+        <property name="toolTip">
+         <string>Configure search parameters</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="tool_stop">
         <property name="toolTip">
          <string>Stop Active Search</string>

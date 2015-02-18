@@ -7,14 +7,17 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include "ConfigUI.h"
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
   setupIcons();
   ui->radio_apps->setChecked(true); //always default to starting here
   ui->tool_stop->setVisible(false); //no search running initially
+  ui->tool_configure->setVisible(false); //app search initially set
 	
   livetime = new QTimer(this);
-    livetime->setInterval(300); //1/2 second for live searches
+    livetime->setInterval(300); //1/3 second for live searches
     livetime->setSingleShot(true);
     
   workthread = new QThread(this);
@@ -37,11 +40,14 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->radio_apps, SIGNAL(toggled(bool)), this, SLOT(searchTypeChanged()) );
   connect(ui->listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(LaunchItem(QListWidgetItem*)) );
   connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(LaunchItem(QListWidgetItem*)) );
+  connect(ui->tool_configure, SIGNAL(clicked()), this, SLOT(configureSearch()) );
   
-  //Setup the settings file (not used at the moment)
-  //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  //settings = new QSettings("LuminaDE", "lumina-search",this);
-
+  //Setup the settings file
+  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  settings = new QSettings("LuminaDE", "lumina-search",this);
+  searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
+  searcher->skipDirs = settings->value("SkipSearchDirs", QStringList()).toStringList();
+  
   this->show();
   workthread->start();
 }
@@ -57,6 +63,7 @@ void MainUI::setupIcons(){
   ui->push_launch->setIcon( LXDG::findIcon("quickopen","") );
   ui->push_done->setIcon( LXDG::findIcon("window-close","") );
   ui->tool_stop->setIcon( LXDG::findIcon("dialog-cancel","") );
+  ui->tool_configure->setIcon( LXDG::findIcon("configure","") );
 }
 
 //==============
@@ -80,6 +87,23 @@ void MainUI::searchTypeChanged(){
   startSearch();	
 }
 	
+void MainUI::configureSearch(){
+  ConfigUI dlg(this);
+    dlg.loadInitialValues( searcher->startDir, searcher->skipDirs);
+    dlg.exec();
+  if(dlg.newStartDir.isEmpty()){ return; }//cancelled
+  QString startdir = dlg.newStartDir;
+  QStringList skipdirs = dlg.newSkipDirs;
+	
+  //Save these values for later
+  settings->setValue("StartSearchDir", startdir);
+  settings->setValue("SkipSearchDirs", skipdirs);
+	
+  //Set these values in the searcher
+  searcher->startDir = startdir;
+  searcher->skipDirs = skipdirs;
+}
+
 void MainUI::searchChanged(){
   if(livetime->isActive()){ livetime->stop(); }
   livetime->start();
@@ -95,6 +119,7 @@ void MainUI::startSearch(){
   if(!workthread->isRunning()){ workthread->start(); } //make sure the thread is running
   emit SearchTerm(ui->line_search->text(), ui->radio_apps->isChecked());
   ui->tool_stop->setVisible(true);
+  ui->tool_configure->setVisible(false);
 }
 
 void MainUI::foundSearchItem(QString path){
@@ -126,6 +151,7 @@ void MainUI::foundSearchItem(QString path){
 void MainUI::stopSearch(){
   searcher->StopSearch();
   ui->tool_stop->setVisible(false);
+  ui->tool_configure->setVisible(ui->radio_files->isChecked());
 }
 
 void MainUI::searchMessage(QString msg){
@@ -134,4 +160,5 @@ void MainUI::searchMessage(QString msg){
 
 void MainUI::searchFinished(){
   ui->tool_stop->setVisible(false);
+  ui->tool_configure->setVisible(ui->radio_files->isChecked());
 }

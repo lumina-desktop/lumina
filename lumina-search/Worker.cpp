@@ -49,6 +49,7 @@ bool Worker::searchDir(QString dirpath){
   tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot , QDir::Name);
   for(int i=0; i<tmp.length(); i++){
     if(stopsearch){ return true; }
+    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) ){ continue; } //this dir is skipped
     if( searchDir(dir.absoluteFilePath(tmp[i])) ){ return true; }
   }
   return false;
@@ -89,12 +90,12 @@ void Worker::beginsearch(){
       }
     }
   }else{
-    emit SearchUpdate( "File Search not implemented yet" );
     //Search through the user's home directory and look for a file/dir starting with that term
     if(!sterm.contains("*")){
       sterm.prepend("*"); sterm.append("*"); //make sure it is a search glob pattern
     }
-    searchDir(QDir::homePath());
+    if(startDir.isEmpty()){ startDir = QDir::homePath(); }
+    searchDir(startDir);
     
   }
   emit SearchUpdate( tr("Search Finished") );

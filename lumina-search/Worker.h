@@ -18,6 +18,9 @@ public:
 	Worker(QObject *parent = 0);
 	~Worker();
 
+	QString startDir;
+	QStringList skipDirs;
+
 public slots:
 	void StartSearch(QString term, bool isApp);
 	void StopSearch();

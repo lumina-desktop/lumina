@@ -37,7 +37,7 @@ private:
 	QThread *workthread;
 	QTimer *livetime;
 	Worker *searcher;
-	//QSettings *settings; //not needed at the moment
+	QSettings *settings;
 
 private slots:
 	//Button Slots
@@ -47,6 +47,7 @@ private slots:
 	void LaunchItem();
 	void LaunchItem(QListWidgetItem*);
 	void searchTypeChanged();
+	void configureSearch();
 	
 	void searchChanged(); //for active searching while typing
 	
