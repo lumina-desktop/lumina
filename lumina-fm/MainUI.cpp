@@ -9,7 +9,7 @@
 
 #include <QImageWriter>
 
-#define DEBUG 1
+#define DEBUG 0
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);

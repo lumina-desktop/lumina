@@ -47,7 +47,6 @@ public slots:
 	void slotStartOperations();
 
 private:
-
 	QStringList subfiles(QString dirpath, bool dirsfirst = false); //recursive function for fetching all "child" files/dirs (dirs last by default)
 	QString newFileName(QString path);
 	QStringList removeItem(QString path, bool recursive = false);

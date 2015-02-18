@@ -112,6 +112,8 @@ bool FODialog::CheckOverwrite(){
       else{ ok = false; } //cancel operations
     }
   }
+  QApplication::processEvents();
+  QApplication::processEvents();
   return ok;
 }
 
@@ -131,8 +133,6 @@ void FODialog::UpdateItem(int cur, int tot, QString oitem, QString nitem){
   }
   msg = ui->label->fontMetrics().elidedText(msg, Qt::ElideRight, ui->label->width());
   ui->label->setText( msg );
-  //this->repaint();
-  QApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
 }
 
 void FODialog::WorkDone(QStringList errlist){
