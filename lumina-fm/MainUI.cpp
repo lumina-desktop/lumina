@@ -474,8 +474,12 @@ void MainUI::AvailableBackups(QString basedir, QStringList snapdirs){
 
 void MainUI::AvailablePictures(QStringList pics){
   if(!pics.isEmpty()){
+    QString citem = ui->combo_image_name->currentText();
     ui->combo_image_name->clear();
     ui->combo_image_name->addItems(pics);
+    if(pics.contains(citem)){ 
+      ui->combo_image_name->setCurrentText(citem); 
+    }
     ui->tool_goToImages->setVisible(true);	  
   }
 	
@@ -917,14 +921,14 @@ void MainUI::removePicture(){
   file.append(ui->combo_image_name->currentText());
   if( QFile::remove(file) ){
     int index = ui->combo_image_name->currentIndex();
+    int newindex = index;
+	  newindex--;
     ui->combo_image_name->removeItem( index );
-    if(ui->combo_image_name->count() > index){} //re-use the same index (go to the next picture)
-    else if(ui->combo_image_name->count() > 0 ){ index = ui->combo_image_name->count()-1; } // go to the previous picture (last one in the list)
-    else{ index = -1; }
-    if(index>=0){
-      ui->combo_image_name->setCurrentIndex(index);
-    }
-    showNewPicture();
+    //showNewPicture();
+    //Move to the new index before removing the old one
+    /*if(newindex>=0){
+      ui->combo_image_name->setCurrentIndex(newindex);
+    }*/
   }
 }
 
