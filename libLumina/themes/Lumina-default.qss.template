@@ -62,6 +62,9 @@ QLineEdit, QTextEdit, QTextBrowser, QPlainTextEdit, QSpinBox, QDateEdit, QDateTi
   background: %%ALTBASECOLOR%%;
   color: %%TEXTCOLOR%%;
   border-color: %%ACCENTDISABLECOLOR%%;
+  selection-background-color: %%HIGHLIGHTCOLOR%%;
+  selection-color: %%TEXTHIGHLIGHTCOLOR%%;
+  
 }
 
 /* PAGES OF CONTAINER WIDGETS */
