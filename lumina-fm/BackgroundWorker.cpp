@@ -37,19 +37,27 @@ void BackgroundWorker::startDirChecks(QString path){
   
   //Now check for ZFS snapshots of the directory
   if(!QFileInfo(path).isWritable() ){ return; } //skip ZFS checks if can't restore to this dir
+  cdir = path;
   QStringList snapDirs; 
   QString baseSnapDir;
   bool found = false;
-  while(dir.absolutePath()!="/" && !found){
-    if(dir.exists(".zfs/snapshot")){ found = true;}
-    else{ dir.cdUp(); }
+  if(cdir == path && QFile::exists(csnapdir) ){ 
+     //no need to re-search for it - just found it recently
+    baseSnapDir= csnapdir; found=true;
+  }else{
+    while(dir.absolutePath()!="/" && !found){
+      if(dir.exists(".zfs/snapshot")){ 
+        baseSnapDir = dir.canonicalPath()+"/.zfs/snapshot";
+	found = true;
+      }else{ dir.cdUp(); }
+    }
   }
+  cdir = path; csnapdir = baseSnapDir;
   //Now find the snapshots that contain this directory and save them
   if(found){
     QString reldir = path;
-	  reldir.remove(dir.absolutePath()); //convert to a relative path
-    dir.cd(".zfs/snapshot");
-    baseSnapDir = dir.canonicalPath(); //set the base snapshot dir as the new root
+	  reldir.remove(baseSnapDir.section("/.zfs/snapshot",0,0)); //convert to a relative path
+    dir.cd(baseSnapDir);
     snapDirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
     //Check that the current directory exists in each snapshot
     for(int i=0; i<snapDirs.length(); i++){

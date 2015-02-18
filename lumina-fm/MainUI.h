@@ -99,6 +99,7 @@ private:
 	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *copyFilesShort, *pasteFilesShort, *deleteFilesShort;
 	QCompleter *dirCompleter;
 	bool isUserWritable, keepFocus;
+	QTimer *syncTimer;
 
 	//Simplification Functions
 	void setupConnections(); 	//used during initialization
@@ -121,6 +122,8 @@ private slots:
 	  this->raise();
 	  this->OpenDirs(in);
 	}
+	
+	void slotStartSyncTimer();
 	
 	//General button check functions (started in a seperate thread!)
 	void AvailableMultimediaFiles(QStringList files);

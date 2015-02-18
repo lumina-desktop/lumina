@@ -17,6 +17,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
+#include <QThread>
 
 // libLumina includes
 #include <LuminaXDG.h>
@@ -24,6 +25,37 @@
 
 namespace Ui{
 	class FODialog;
+};
+
+class FOWorker : public QObject{
+	Q_OBJECT
+public:
+	//variables that need to be set before starting the operations
+	QStringList ofiles, nfiles; //original/new files
+	bool isRM, isCP, isRESTORE, isMV;
+	bool stopped;
+	int overwrite; // [-1= auto, 0= no overwrite, 1= overwrite]
+
+
+	FOWorker() : QObject(){
+	  isRM = isCP = isRESTORE = isMV = stopped = false;
+	  overwrite = -1; //auto
+	}
+	~FOWorker(){}
+		
+public slots:
+	void slotStartOperations();
+
+private:
+
+	QStringList subfiles(QString dirpath, bool dirsfirst = false); //recursive function for fetching all "child" files/dirs (dirs last by default)
+	QString newFileName(QString path);
+	QStringList removeItem(QString path, bool recursive = false);
+	QStringList copyItem(QString oldpath, QString newpath);
+
+signals:
+	void startingItem(int, int, QString, QString); //current number, total number, Old File, New File (if appropriate)
+	void finished(QStringList); //errors returned
 };
 
 class FODialog : public QDialog{
@@ -42,19 +74,15 @@ public:
 
 private:
 	Ui::FODialog *ui;
-	bool isRM, isCP, isRESTORE, isMV;
-	bool stopped;
-	int overwrite; // [-1= auto, 0= no overwrite, 1= overwrite]
-	QStringList ofiles, nfiles; //original/new files
+	QThread *WorkThread;
+	FOWorker *Worker;
 
-	QStringList subfiles(QString dirpath, bool dirsfirst = false); //recursive function for fetching all "child" files/dirs (dirs last by default)
-	QString newFileName(QString path);
-	QStringList removeItem(QString path, bool recursive = false);
-	QStringList copyItem(QString oldpath, QString newpath);
+	bool CheckOverwrite(); //Returns "true" if it is ok to start the procedure
 
 private slots:
-	void slotStartOperations();
 	void on_push_stop_clicked();
+	void UpdateItem(int, int, QString, QString);
+	void WorkDone(QStringList);
 };
 
 #endif

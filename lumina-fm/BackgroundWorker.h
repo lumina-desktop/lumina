@@ -25,6 +25,7 @@ public:
 		
 private:
 	QStringList multiFilter, imgFilter;
+	QString cdir, csnapdir; //last directory checked (and base snapshot dir found)
 
 public slots:
 	//Kickoff processes with these slots

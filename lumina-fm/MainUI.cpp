@@ -9,18 +9,26 @@
 
 #include <QImageWriter>
 
+#define DEBUG 1
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
+  if(DEBUG){ qDebug() << "Initilization:"; }
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings( QSettings::UserScope, "LuminaDE", "lumina-fm", this);
   favdir = QDir::homePath()+"/.lumina/favorites/"; //save this for later
+  syncTimer =  new QTimer(this);
+    syncTimer->setInterval(200); //1/5 second (collect as many signals/slots as necessary
+    syncTimer->setSingleShot(true);
   //Reset the UI to the previously used size (if possible)
+  if(DEBUG){ qDebug() << " - Reset window size"; }
   int height = settings->value("geometry/height",-1).toInt();
   if(height>100 && height <= QApplication::desktop()->availableGeometry(this).height()){ this->resize(this->width(), height); }
   int width = settings->value("geometry/width",-1).toInt();
   if(width>100 && width <= QApplication::desktop()->availableGeometry(this).width()){ this->resize(width, this->height() ); }
   //initialize the non-ui widgets
+  if(DEBUG){ qDebug() << " - Tab Bar Setup"; }
   tabBar = new QTabBar(this);
     tabBar->setTabsClosable(true);
     tabBar->setMovable(true); //tabs are independant - so allow the user to sort them
@@ -30,12 +38,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   currentDir = new QLineEdit(this);
     ui->toolBar->insertWidget(ui->actionBookMark, currentDir);
     currentDir->setFocusPolicy(Qt::StrongFocus);
-  
+  if(DEBUG){ qDebug() << " - Threading"; }
   workThread = new QThread;
     workThread->setObjectName("Lumina-fm filesystem worker");
   worker = new BackgroundWorker;
     worker->moveToThread(workThread);
-  
+  if(DEBUG){ qDebug() << " - File System Model"; }
   fsmod = new QFileSystemModel(this);
     fsmod->setRootPath("/");
     ui->tree_dir_view->setModel(fsmod);
@@ -50,9 +58,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   snapmod = new QFileSystemModel(this);
     ui->tree_zfs_dir->setModel(snapmod);
     ui->tree_zfs_dir->sortByColumn(0, Qt::AscendingOrder);
+  if(DEBUG){ qDebug() << " - Icon Provider"; }
   iconProv = new MimeIconProvider();
     fsmod->setIconProvider(iconProv);
     snapmod->setIconProvider(iconProv);
+  if(DEBUG){ qDebug() << " - Context Menu"; }
   contextMenu = new QMenu(this);
   radio_view_details = new QRadioButton(tr("Detailed List"), this);
   radio_view_list = new QRadioButton(tr("Basic List"), this);
@@ -67,6 +77,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->menuView->addAction(listWA);
     ui->menuView->addAction(icoWA);
   //Setup the special Phonon widgets
+  if(DEBUG){ qDebug() << " - Multimedia Widgets"; }
   mediaObj = new QMediaPlayer(this);
     mediaObj->setVolume(100);
     mediaObj->setNotifyInterval(500); //only every 1/2 second update
@@ -82,6 +93,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->tool_player_pause->setVisible(false); //nothing to pause yet
     playerSlider->setEnabled(false); //nothing to seek yet
   //Setup any specialty keyboard shortcuts
+  if(DEBUG){ qDebug() << " - Keyboard Shortcuts"; }
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   closeTabShort = new QShortcut( QKeySequence(tr("Ctrl+W")), this);
@@ -90,13 +102,20 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
   //Finish loading the interface
   workThread->start();
+  if(DEBUG){ qDebug() << " - Icons"; }
   setupIcons();
+  if(DEBUG){ qDebug() << " - Connections"; }
   setupConnections();
+  if(DEBUG){ qDebug() << " - Settings"; }
   loadSettings();
+  if(DEBUG){ qDebug() << " - Bookmarks"; }
   RebuildBookmarksMenu();
+  if(DEBUG){ qDebug() << " - Devices"; }
   RebuildDeviceMenu();
   //Make sure we start on the browser page
+  if(DEBUG){ qDebug() << " - Load Browser Page"; }
   goToBrowserPage();
+  if(DEBUG){ qDebug() << " - Done with init"; }
 }
 
 MainUI::~MainUI(){
@@ -110,7 +129,7 @@ void MainUI::OpenDirs(QStringList dirs){
     //Add this directory in a new tab
     if(dirs[i].endsWith("/")){ dirs[i].chop(1); }
     if(!QFile::exists(dirs[i])){ invalid << dirs[i]; continue; }
-    qDebug() << "Open Directory:" << dirs[i];
+    if(DEBUG){ qDebug() << "Open Directory:" << dirs[i]; }
     int index = tabBar->addTab( dirs[i].section("/",-1) );
     tabBar->setTabWhatsThis( index, dirs[i] );
     if(index==0){ setCurrentDir(dirs[i]); }//display this as the current dir
@@ -185,8 +204,8 @@ void MainUI::setupConnections(){
   connect(radio_view_details, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_list, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_icons, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
-  connect(fsmod, SIGNAL(directoryLoaded(QString)), this, SLOT(currentDirectoryLoaded()) );
-	
+  connect(fsmod, SIGNAL(directoryLoaded(QString)), this, SLOT(slotStartSyncTimer()) );
+  connect(syncTimer, SIGNAL(timeout()), this, SLOT(currentDirectoryLoaded()) );
   //Background worker class
   connect(this, SIGNAL(DirChanged(QString)), worker, SLOT(startDirChecks(QString)) );
   connect(worker, SIGNAL(ImagesAvailable(QStringList)), this, SLOT(AvailablePictures(QStringList)) );
@@ -374,6 +393,7 @@ QString MainUI::getCurrentDir(){
 
 void MainUI::setCurrentDir(QString dir){
   if(dir.isEmpty()){ return; }
+  if(syncTimer->isActive()){ syncTimer->stop(); } //already loading the info
   QFileInfo info(dir);
   QString olddir = currentDir->whatsThis();
   if(!info.isDir() || !info.exists() ){ 
@@ -452,6 +472,12 @@ QFileInfoList MainUI::getSelectedItems(){
 //==============
 //    PRIVATE SLOTS
 //==============
+void MainUI::slotStartSyncTimer(){
+  if(ui->stackedWidget->currentWidget()!=ui->page_browser){ return; }
+  if(syncTimer->isActive()){ syncTimer->stop(); }
+  syncTimer->start();
+}
+
 //General button check functions
 void MainUI::AvailableMultimediaFiles(QStringList files){
   if(!files.isEmpty()){
@@ -921,14 +947,7 @@ void MainUI::removePicture(){
   file.append(ui->combo_image_name->currentText());
   if( QFile::remove(file) ){
     int index = ui->combo_image_name->currentIndex();
-    int newindex = index;
-	  newindex--;
     ui->combo_image_name->removeItem( index );
-    //showNewPicture();
-    //Move to the new index before removing the old one
-    /*if(newindex>=0){
-      ui->combo_image_name->setCurrentIndex(newindex);
-    }*/
   }
 }
 
