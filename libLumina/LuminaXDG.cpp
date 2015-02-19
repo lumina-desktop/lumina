@@ -394,7 +394,7 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
     if(mimes.isEmpty()){ mimes = mimefull.filter(":*."+extension, Qt::CaseInsensitive); }
     //Now ensure that the filter was accurate (*.<extention>.<something> will still be caught)
     for(int i=0; i<mimes.length(); i++){
-      if(!filename.endsWith( mimes[i].section(":*",-1) )){ mimes.removeAt(i); i--; }
+      if(!filename.endsWith( mimes[i].section(":*",-1), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
     }
   }
   //Look for globs at the start of the filename
@@ -403,7 +403,7 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
 	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
     //Now ensure that the filter was accurate
     for(int i=0; i<mimes.length(); i++){
-      if(!filename.startsWith( mimes[i].section(":",3,50,QString::SectionSkipEmpty).section("*",0,0) )){ mimes.removeAt(i); i--; }
+      if(!filename.startsWith( mimes[i].section(":",3,50,QString::SectionSkipEmpty).section("*",0,0), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
     }
   } 
   mimes.sort(); //this automatically puts them in weight order (100 on down)
