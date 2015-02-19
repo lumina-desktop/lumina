@@ -14,10 +14,13 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QProcess>
+#include <QDebug>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
+  //qDebug() << "Update UI";
   updateUI();
+  //qDebug() << "Load Tab Widget";
   ui->tabWidget->setCurrentWidget(ui->tab); //start on the "General" tab
 }
 
