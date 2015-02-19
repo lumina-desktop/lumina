@@ -377,26 +377,47 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
   QString out;
   QString extension = filename.section(".",-1);
   if("."+extension == filename){ extension.clear(); } //hidden file without extension
-  int weight = 0;
+  //qDebug() << "MIME SEARCH:" << filename << extension;
   QStringList mimefull = LXDG::loadMimeFileGlobs2();
   QStringList mimes;
+  //Just in case the extension/filename is a mimetype itself
+  if( mimefull.filter(":"+filename+":").length() == 1){
+    return filename;
+  }
+  else if(mimefull.filter(":"+extension+":").length() == 1){
+    return extension;
+  }
+  //Look for globs at the end of the filename
   if(!extension.isEmpty()){ 
     mimes = mimefull.filter(":*."+extension); 
     //If nothing found, try a case-insensitive search
     if(mimes.isEmpty()){ mimes = mimefull.filter(":*."+extension, Qt::CaseInsensitive); }
-  }
-  if(mimes.isEmpty()){ mimes = mimefull.filter(":"+filename.left(3)); } //look for the first 3 characters only (FIX WILDCARD DETECTION LATER)
-  mimes.sort();
-  QStringList matches;
-  for(int m=0; m<mimes.length(); m++){
-    QString mime = mimes[m].section(":",1,1,QString::SectionSkipEmpty);
-    if(mime.endsWith("/"+extension)){ matches.prepend(mime); } //exact match
-    else{ matches << mime; }
-    if(mimes[m].section(":",0,0,QString::SectionSkipEmpty).toInt() > weight ){
-      out = mime;
+    //Now ensure that the filter was accurate (*.<extention>.<something> will still be caught)
+    for(int i=0; i<mimes.length(); i++){
+      if(!filename.endsWith( mimes[i].section(":*",-1) )){ mimes.removeAt(i); i--; }
     }
   }
+  //Look for globs at the start of the filename
+  if(mimes.isEmpty()){ 
+    mimes = mimefull.filter(":"+filename.left(2)); //look for the first 2 characters initially
+	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
+    //Now ensure that the filter was accurate
+    for(int i=0; i<mimes.length(); i++){
+      if(!filename.startsWith( mimes[i].section(":",3,50,QString::SectionSkipEmpty).section("*",0,0) )){ mimes.removeAt(i); i--; }
+    }
+  } 
+  mimes.sort(); //this automatically puts them in weight order (100 on down)
+  QStringList matches;
+  //qDebug() << "Mimes:" << mimes;
+  for(int m=0; m<mimes.length(); m++){
+    QString mime = mimes[m].section(":",1,1,QString::SectionSkipEmpty);
+    matches << mime;
+  }
+  //qDebug() << "Matches:" << matches;
   if(multiple){ out = matches.join("::::"); }
+  else if( !matches.isEmpty() ){ out = matches.first(); }
+  else{ out.clear(); }
+  //qDebug() << "Out:" << out;
   return out;
 }
 
