@@ -1,2 +1,16 @@
 global.h
 *.qm
+Makefile
+*.o
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+lumina-config/lumina-config
+lumina-desktop/Lumina-DE
+lumina-fm/lumina-fm
+lumina-info/lumina-info
+lumina-open/lumina-open
+lumina-screenshot/lumina-screenshot
+lumina-search/lumina-search
+libLumina/libLuminaUtils.so.1.0
+
