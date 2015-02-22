@@ -157,7 +157,8 @@ private slots:
 	void reloadDirectory(); //Update the widget with the dir contents
 	void currentDirectoryLoaded(); //The file system model re-loaded the directory
 	void on_tool_addToDir_clicked();
-	void tabChanged(int tab);
+        void on_tool_addNewFile_clicked();
+        void tabChanged(int tab);
 	void tabClosed(int tab = -1);
 	void prevTab();
 	void nextTab();

@@ -422,6 +422,25 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="tool_addNewFile">
+            <property name="statusTip">
+             <string>Create a new file</string>
+            </property>
+            <property name="text">
+             <string>New &amp;file</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="tool_addToDir">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
