@@ -115,7 +115,8 @@ private:
 	QString getCurrentDir();
 	void setCurrentDir(QString);
 	QFileInfoList getSelectedItems();
-
+	//QModelIndexList getVisibleItems();
+	
 private slots:
 	void slotSingleInstance(QStringList in){
 	  this->show();
@@ -141,6 +142,7 @@ private slots:
 	void on_actionClose_triggered();
 	void on_actionView_Hidden_Files_triggered();
 	void on_actionShow_Action_Buttons_triggered();
+	void on_actionShow_Thumbnails_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);

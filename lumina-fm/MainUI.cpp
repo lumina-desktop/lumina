@@ -282,9 +282,11 @@ void MainUI::loadSettings(){
   //Note: make sure this is run after all the UI elements are created and connected to slots
   // but before the first directory gets loaded
   ui->actionView_Hidden_Files->setChecked( settings->value("showhidden", false).toBool() );
-  on_actionView_Hidden_Files_triggered(); //make sure to update the models too
+    on_actionView_Hidden_Files_triggered(); //make sure to update the models too
   ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
-  on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
+    on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
+  ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
+    iconProv->showthumbnails = ui->actionShow_Thumbnails->isChecked();
   QString view = settings->value("viewmode","details").toString();
   if(view=="icons"){ radio_view_icons->setChecked(true); }
   else if(view=="list"){ radio_view_list->setChecked(true); }
@@ -417,6 +419,7 @@ void MainUI::setCurrentDir(QString dir){
   //Update the directory viewer and update the line edit
     keepFocus = !currentDir->hasFocus();
     currentDir->setWhatsThis(dir); //save the full path internally
+    fsmod->setRootPath(rawdir);
     if(radio_view_details->isChecked()){
       ui->tree_dir_view->setRootIndex(fsmod->index(dir));
       ui->tree_dir_view->selectionModel()->clearSelection();
@@ -468,6 +471,40 @@ QFileInfoList MainUI::getSelectedItems(){
   }	
   return out;
 }
+
+/*QModelIndexList MainUI::getVisibleItems(){
+  QModelIndexList out;
+  if(radio_view_details->isChecked()){
+    QModelIndex index = ui->tree_dir_view->indexAt(QPoint(0,0));
+    while( index.isValid()){
+      if(index.column()!=0){
+	//move on - multiple index's per row when we only need one
+      }else if(ui->tree_dir_view->viewport()->rect().contains( ui->tree_dir_view->visualRect(index) ) ){
+	//index within the viewport - add it to the list
+        out << index;
+      }else{
+        break; //index not in the viewport
+      }
+      index = ui->tree_dir_view->indexBelow(index); //go to the next
+      if(out.contains(index)){ break; } //end of the list
+    }
+
+  }else{
+    QModelIndex index = ui->list_dir_view->indexAt(QPoint(0,0));
+    while( index.isValid()){
+      if(ui->list_dir_view->viewport()->rect().contains( ui->list_dir_view->visualRect(index) ) ){
+	//index within the viewport - add it to the list
+        out << index;
+      }else{
+        break; //index not in the viewport
+      }
+      index = ui->list_dir_view->indexBelow(index); //go to the next
+      if(out.contains(index)){ break; } //end of the list
+    }
+    
+  }	
+  return out;
+}*/
 
 //==============
 //    PRIVATE SLOTS
@@ -646,6 +683,18 @@ void MainUI::on_actionShow_Action_Buttons_triggered(){
   ui->group_actions->setVisible(ui->actionShow_Action_Buttons->isChecked());
   settings->setValue("showactions", ui->actionShow_Action_Buttons->isChecked());
 }
+
+void MainUI::on_actionShow_Thumbnails_triggered(){
+  //Now save this setting for later
+  settings->setValue("showthumbnails", ui->actionShow_Thumbnails->isChecked());
+  //Set the value in the icon provider
+  iconProv->showthumbnails = ui->actionShow_Thumbnails->isChecked();
+  //Now make sure the filesystem model knows to re-load the image data
+  fsmod->revert();
+  //Re-load the view widget
+  setCurrentDir(getCurrentDir());
+}
+
 void MainUI::goToBookmark(QAction *act){
   if(act==ui->actionManage_Bookmarks){
     BMMDialog dlg(this);
@@ -758,6 +807,17 @@ void MainUI::goToDirectory(){
 void MainUI::reloadDirectory(){
   setCurrentDir( getCurrentDir() );
 }
+
+/*void MainUI::viewportChanged(){
+  if( !ui->actionsShow_Thumbnails->isChecked()){ return; }
+  QModelIndexList list = getVisibleItems();
+  for(int i=0; i<list.length(); i++){
+    if( !ui->actionsShow_Thumbnails->isChecked()){ return; } //break out as necessary
+    if( imgFilter.contains("*."+fsmod->filePath(list[i]).section("/",-1).section(".",-1).toLower()){
+      fmod->
+    }
+  }
+}*/
 
 void MainUI::currentDirectoryLoaded(){
   //The directory was just loaded: refresh the action buttons as neccesary
