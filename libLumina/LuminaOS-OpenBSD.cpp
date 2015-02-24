@@ -30,20 +30,22 @@ QStringList LOS::ExternalDevicePaths(){
   QStringList devs = LUtils::getCmdOutput("mount");
   //Now check the output
   for(int i=0; i<devs.length(); i++){
-    if(devs[i].startsWith("/dev/")){
-      QString type = devs[i].section(" on ",0,0);
-	type.remove("/dev/");
+      QString type = devs[i].section(" ",0,0);
+      type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
       if(type.startsWith("sd")||type.startsWith("wd")){ type = "HDRIVE"; }
       else if(type.startsWith("cd")){ type="DVD"; }
       else{ type = "UNKNOWN"; }
       //Now put the device in the proper output format
-      devs[i] = type+"::::"+devs[i].section("(",1,1).section(",",0,0)+"::::"+devs[i].section(" on ",1,50).section("(",0,0).simplified();
-    }else{
-      //invalid device - remove it from the list
-      devs.removeAt(i);
-      i--;
-    }
+      QString fs = devs[i].section(" ", 4, 4);
+      QString path = devs[i].section(" ",2, 2);
+      if (!fs.isEmpty() ) {   //we not found a filesystem, most probably this is an invalid row
+          devs[i] = type+"::::"+fs+"::::"+path;
+      }
+      else {
+          devs.removeAt(i);
+          i--; 
+      }
   }
   return devs;
 }
