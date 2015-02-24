@@ -1,3 +1,11 @@
+lumina-desktop (0.8.3.347-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+    - add lumina-xconfig package
+    - install ROADMAP doc file
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 24 Feb 2015 19:15:07 +0100
+
 lumina-desktop (0.8.2.282-1nano) unstable; urgency=low
 
   * new GIT snapshot

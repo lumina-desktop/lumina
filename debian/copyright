@@ -3,11 +3,11 @@ Upstream-Name: lumina-desktop
 Source: https://github.com/pcbsd/lumina
 
 Files: *
-Copyright: 2012-2014, Ken Moore (moorekou@gmail.com)
+Copyright: 2012-2015, Ken Moore (moorekou@gmail.com)
 License: BSD-3-Clause
 
 Files: debian/*
-Copyright: 2014 Christopher Roy Bratusek <nano@jpberlin.de>
+Copyright: 2014-2015 Christopher Roy Bratusek <nano@jpberlin.de>
 License: BSD-3-Clause
 
 License: BSD-3-Clause
