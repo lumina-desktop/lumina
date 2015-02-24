@@ -159,6 +159,7 @@ void MainUI::setupIcons(){
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
 	
   //Browser page
+  ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
   ui->tool_addToDir->setIcon( LXDG::findIcon("folder-new","") );
   ui->tool_goToImages->setIcon( LXDG::findIcon("fileview-preview","") );
   ui->tool_goToPlayer->setIcon( LXDG::findIcon("applications-multimedia","") );
@@ -445,6 +446,7 @@ void MainUI::setCurrentDir(QString dir){
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
+  ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
   ui->actionBack->setEnabled(history.length() > 1);
   ui->actionBookMark->setEnabled( rawdir!=QDir::homePath() && settings->value("bookmarks", QStringList()).toStringList().filter("::::"+rawdir).length()<1 );
@@ -845,6 +847,20 @@ void MainUI::on_tool_addToDir_clicked(){
     if(!dir.mkdir(newdir) ){
       QMessageBox::warning(this, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
     }
+  }
+}
+
+void MainUI::on_tool_addNewFile_clicked(){
+  bool ok = false;
+  QString newdocument = QInputDialog::getText(this, tr("New Document"), tr("Name:"), QLineEdit::Normal, "", \
+        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+  if(!ok || newdocument.isEmpty()){ return; }
+  QString full = getCurrentDir();
+  if(!full.endsWith("/")){ full.append("/"); }
+  QDir dir(full); //open the current dir
+  QFile file(dir.filePath(newdocument));
+  if (!file.open(QIODevice::ReadWrite)){
+       QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));
   }
 }
 
