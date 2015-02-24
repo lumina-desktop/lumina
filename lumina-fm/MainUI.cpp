@@ -857,11 +857,14 @@ void MainUI::on_tool_addNewFile_clicked(){
   if(!ok || newdocument.isEmpty()){ return; }
   QString full = getCurrentDir();
   if(!full.endsWith("/")){ full.append("/"); }
-  QDir dir(full); //open the current dir
-  QFile file(dir.filePath(newdocument));
-  if (!file.open(QIODevice::ReadWrite)){
-       QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));
+  QFile file(full+newdocument);
+  if(file.open(QIODevice::ReadWrite)){
+    //If successfully opened, it has created a blank file
+    file.close();
+  }else{
+    QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));	  
   }
+  
 }
 
 void MainUI::tabChanged(int tab){
