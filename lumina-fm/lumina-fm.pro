@@ -24,7 +24,8 @@ HEADERS  += MainUI.h \
 		FODialog.h \
 		BMMDialog.h \
 		MimeIconProvider.h \
-		BackgroundWorker.h
+		BackgroundWorker.h \
+		DDFileSystemModel.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \

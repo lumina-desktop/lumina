@@ -44,8 +44,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   worker = new BackgroundWorker;
     worker->moveToThread(workThread);
   if(DEBUG){ qDebug() << " - File System Model"; }
-  fsmod = new QFileSystemModel(this);
+  fsmod = new DDFileSystemModel(this);
     fsmod->setRootPath("/");
+    //fsmod->setReadOnly(false); //required for DnD, but also enables a lot of other stuff
+    //qDebug() << "DnD options:" << fsmod->supportedDropActions();
     ui->tree_dir_view->setModel(fsmod);
     ui->tree_dir_view->sortByColumn(0, Qt::AscendingOrder);
     ui->tree_dir_view->setColumnWidth(0,200);

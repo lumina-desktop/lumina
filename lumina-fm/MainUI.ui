@@ -30,7 +30,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_browser">
        <layout class="QGridLayout" name="gridLayout">
@@ -69,10 +69,10 @@
              <bool>true</bool>
             </property>
             <property name="dragDropMode">
-             <enum>QAbstractItemView::NoDragDrop</enum>
+             <enum>QAbstractItemView::InternalMove</enum>
             </property>
             <property name="defaultDropAction">
-             <enum>Qt::IgnoreAction</enum>
+             <enum>Qt::MoveAction</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -124,10 +124,10 @@
              <bool>true</bool>
             </property>
             <property name="dragDropMode">
-             <enum>QAbstractItemView::NoDragDrop</enum>
+             <enum>QAbstractItemView::InternalMove</enum>
             </property>
             <property name="defaultDropAction">
-             <enum>Qt::IgnoreAction</enum>
+             <enum>Qt::MoveAction</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>

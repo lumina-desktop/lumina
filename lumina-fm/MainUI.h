@@ -53,6 +53,7 @@
 #include "BMMDialog.h" //bookmark manager dialog
 #include "MimeIconProvider.h" //icon provider for the view widgets
 #include "BackgroundWorker.h"
+#include "DDFileSystemModel.h"
 
 namespace Ui{
 	class MainUI;
@@ -76,7 +77,8 @@ private:
 	//Internal non-ui widgets
 	QTabBar *tabBar;
 	QLineEdit *currentDir;
-	QFileSystemModel *fsmod, *snapmod;
+	DDFileSystemModel *fsmod;
+	QFileSystemModel *snapmod;
 	//QFileSystemWatcher *fswatcher;
 	MimeIconProvider *iconProv;
 	QMenu *contextMenu;
