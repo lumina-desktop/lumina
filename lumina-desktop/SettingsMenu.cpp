@@ -28,6 +28,9 @@ void SettingsMenu::InitMenu(){
   act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("Desktop"), this);
 	act->setWhatsThis("lumina-config");
 	this->addAction(act);
+   act = new QAction( LXDG::findIcon("preferences-other",""), tr("Screen Configuration"), this);
+	act->setWhatsThis("lumina-xconfig");
+	this->addAction(act);
   QString qtconfig = LOS::QtConfigShortcut();
   if(QFile::exists(qtconfig) && !qtconfig.isEmpty()){
     act = new QAction( LXDG::findIcon("preferences-desktop-theme",""), tr("Window Theme"), this);

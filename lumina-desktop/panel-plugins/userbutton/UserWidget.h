@@ -80,6 +80,9 @@ private slots:
 	void openScreenSaverConfig(){
 	  LaunchItem(SSAVER, false);
 	}
+	void openScreenConfig(){
+	  LaunchItem("lumina-xconfig",false);
+	}
 	void openLuminaInfo(){
 	  LaunchItem("lumina-info",false);
 	}

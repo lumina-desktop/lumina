@@ -24,7 +24,7 @@
 #include <X11/extensions/Xdamage.h>
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -43,6 +43,10 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   SystemTrayID = 0; VisualTrayID = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
+  cleansession = true;
+  for(int i=1; i<argc; i++){
+    if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
+  }
   XCB = new LXCB(); //need access to XCB data/functions right away
   //initialize the empty internal pointers to 0
   appmenu = 0;
@@ -133,28 +137,36 @@ void LSession::CleanupSession(){
   if( sessionsettings->value("PlayLogoutAudio",true).toBool() ){
     playAudioFile(LOS::LuminaShare()+"Logout.ogg");
   }
-  //Close any Tray Apps
-  for(int i=0; i<RunningTrayApps.length(); i++){
-    XCB->CloseWindow(RunningTrayApps[i]);
-    LSession::processEvents();
-  }  
-  //Close any open windows
-  QList<WId> WL = XCB->WindowList(true);
-  for(int i=0; i<WL.length(); i++){
-    XCB->CloseWindow(WL[i]);
-    LSession::processEvents();
+  
+  if(cleansession){
+    //Close any Tray Apps
+    for(int i=0; i<RunningTrayApps.length(); i++){
+      XCB->CloseWindow(RunningTrayApps[i]);
+      LSession::processEvents();
+    }  
+    //Close any open windows
+    QList<WId> WL = XCB->WindowList(true);
+    for(int i=0; i<WL.length(); i++){
+      XCB->CloseWindow(WL[i]);
+      LSession::processEvents();
+    }
+    //Now wait a moment for things to close down before quitting
+    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+    //Kill any remaining windows
+    WL = XCB->WindowList(true); //all workspaces
+    for(int i=0; i<WL.length(); i++){
+      LX11::KillWindow(WL[i]);
+      LSession::processEvents();
+    }
   }
-  
-  //Now wait a moment for things to close down before quitting
-  for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
-  
-  //Kill any remaining windows
-  WL = XCB->WindowList(true); //all workspaces
-  for(int i=0; i<WL.length(); i++){
-    LX11::KillWindow(WL[i]);
-    LSession::processEvents();
+  //Stop the window manager
+  WM->stopWM();
+  //Now close down the desktop
+  for(int i=0; i<DESKTOPS.length(); i++){
+    DESKTOPS[i]->prepareToClose(); 
+    //don't actually close them yet - that will happen when the session exits
+    // this will leave the wallpapers up for a few moments (preventing black screens)
   }
-  
   //Now wait a moment for things to close down before quitting
   for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
 }
@@ -295,7 +307,11 @@ void LSession::updateDesktops(){
       if(!found){
 	//Start the desktop on the new screen
         qDebug() << " - Start desktop on screen:" << i;
-        DESKTOPS << new LDesktop(i);
+	if(firstrun && DW->screenGeometry(i).x()==0){
+	  DESKTOPS << new LDesktop(i,true); //set this one as the default	
+	}else{
+          DESKTOPS << new LDesktop(i);
+	}
       }
     }
     //qDebug() << " - Done Starting Desktops";
@@ -305,8 +321,10 @@ void LSession::updateDesktops(){
     //Now go through and make sure to delete any desktops for detached screens
     for(int i=0; i<DESKTOPS.length(); i++){
       if(DESKTOPS[i]->Screen() >= DW->screenCount()){
-	qDebug() << " - Hide desktop on screen:" << DESKTOPS[i]->Screen();
-        DESKTOPS[i]->hide();
+	qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
+        DESKTOPS[i]->prepareToClose(); //hide();
+	delete DESKTOPS.takeAt(i);
+	i--;
       }else{
 	qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->show();
@@ -341,6 +359,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   }
   //Adjust the window location if necessary
   if(maximize){
+    if(DEBUG){ qDebug() << "Maximizing New Window:" << desk.width() << desk.height(); }
     geom = desk; //Use the full screen
     XCB->MoveResizeWindow(win, geom);
     XCB->MaximizeWindow(win, true); //directly set the appropriate "maximized" flags (bypassing WM)

@@ -32,12 +32,14 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
   ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
   ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
+  ui->tool_config_screensettings->setIcon( LXDG::findIcon("preferences-other","") );
   ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
   ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
   ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
   connect(ui->tool_config_screensaver, SIGNAL(clicked()), this, SLOT(openScreenSaverConfig()) );
+  connect(ui->tool_config_screensettings, SIGNAL(clicked()), this, SLOT(openScreenConfig()) );
   connect(ui->tool_fav_apps, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->tool_fav_files, SIGNAL(clicked()), this, SLOT(FavChanged()) );
   connect(ui->tool_fav_dirs, SIGNAL(clicked()), this, SLOT(FavChanged()) );

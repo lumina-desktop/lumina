@@ -13,12 +13,12 @@
 
 #define DEBUG 1
 
-LDesktop::LDesktop(int deskNum) : QObject(){
+LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
   DPREFIX = "desktop-"+QString::number(deskNum)+"/";
   desktopnumber = deskNum;
   desktop = QApplication::desktop();
-  defaultdesktop = (desktop->screenGeometry(desktopnumber).x()==0);
+  defaultdesktop = setdefault; //(desktop->screenGeometry(desktopnumber).x()==0);
   desktoplocked = true;
   issyncing = bgupdating = false;
   usewinmenu=false;
@@ -52,10 +52,18 @@ void LDesktop::show(){
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->show(); }
 }
 
-void LDesktop::hide(){
+/*void LDesktop::hide(){
   if(bgWindow!=0){ bgWindow->hide(); }
   if(bgDesktop!=0){ bgDesktop->hide(); }
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }
+}*/
+
+void LDesktop::prepareToClose(){
+  //Get any panels ready to close
+  for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); delete PANELS.takeAt(i); i--; }
+  //Now close down any desktop plugins
+  desktoplocked = true; //make sure that plugin settings are preserved during removal
+  for(int i=0; i<PLUGINS.length(); i++){delete PLUGINS.takeAt(i); i--; }
 }
 
 WId LDesktop::backgroundID(){
@@ -390,6 +398,7 @@ void LDesktop::UpdatePanels(){
   for(int i=0; i<PANELS.length(); i++){
     if(panels <= PANELS[i]->number()){
       if(DEBUG){ qDebug() << " -- Remove Panel:" << PANELS[i]->number(); }
+      PANELS[i]->prepareToClose();
       delete PANELS.takeAt(i);
       i--;
     }

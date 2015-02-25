@@ -64,6 +64,19 @@ LPanel::~LPanel(){
 	
 }
 
+void LPanel::prepareToClose(){
+  //Go through and remove all the plugins
+  for(int i=0; i<PLUGINS.length(); i++){
+    if( PLUGINS[i]->type().startsWith("systemtray---") ){
+      static_cast<LSysTray*>(PLUGINS[i])->stop();
+    }
+    layout->takeAt(i); //remove from the layout
+    delete PLUGINS.takeAt(i); //delete the actual widget
+    LSession::processEvents();
+    i--; //need to back up one space to not miss another plugin
+  }	 
+}
+
 //===========
 // PUBLIC SLOTS
 //===========
