@@ -11,7 +11,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
-  setupIcons();
+  //setupIcons();
   ui->radio_apps->setChecked(true); //always default to starting here
   ui->tool_stop->setVisible(false); //no search running initially
   ui->tool_configure->setVisible(false); //app search initially set
@@ -50,6 +50,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   
   this->show();
   workthread->start();
+  QTimer::singleShot(0,this, SLOT(setupIcons()) );
 }
 
 MainUI::~MainUI(){
