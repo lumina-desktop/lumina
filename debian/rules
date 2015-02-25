@@ -17,7 +17,8 @@ QMAKE_EXTRA_DIRS = libLumina \
 	lumina-open \
 	lumina-screenshot \
 	lumina-search \
-	lumina-info
+	lumina-info \
+	lumina-xconfig
 
 %:
 	dh $@
