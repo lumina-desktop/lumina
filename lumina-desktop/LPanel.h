@@ -49,6 +49,8 @@ public:
 	  return panelnum;
 	}
 
+	void prepareToClose();
+	
 public slots:
 	void UpdatePanel();  //Load the settings file and update the panel appropriately
 	void UpdateLocale(); //Locale Changed externally

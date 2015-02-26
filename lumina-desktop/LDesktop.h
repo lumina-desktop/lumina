@@ -34,12 +34,13 @@
 class LDesktop : public QObject{
 	Q_OBJECT
 public:
-	LDesktop(int deskNum=0);
+	LDesktop(int deskNum=0, bool setdefault = false);
 	~LDesktop();
 	
 	int Screen(); //return the screen number this object is managing
 	void show();
-	void hide();
+	//void hide();
+	void prepareToClose();
 
 	WId backgroundID();
 	QRect availableScreenGeom();

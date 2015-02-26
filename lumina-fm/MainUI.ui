@@ -30,7 +30,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_browser">
        <layout class="QGridLayout" name="gridLayout">
@@ -69,10 +69,10 @@
              <bool>true</bool>
             </property>
             <property name="dragDropMode">
-             <enum>QAbstractItemView::NoDragDrop</enum>
+             <enum>QAbstractItemView::InternalMove</enum>
             </property>
             <property name="defaultDropAction">
-             <enum>Qt::IgnoreAction</enum>
+             <enum>Qt::MoveAction</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -124,10 +124,10 @@
              <bool>true</bool>
             </property>
             <property name="dragDropMode">
-             <enum>QAbstractItemView::NoDragDrop</enum>
+             <enum>QAbstractItemView::InternalMove</enum>
             </property>
             <property name="defaultDropAction">
-             <enum>Qt::IgnoreAction</enum>
+             <enum>Qt::MoveAction</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -418,6 +418,25 @@
             </property>
             <property name="text">
              <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_addNewFile">
+            <property name="statusTip">
+             <string>Create a new file</string>
+            </property>
+            <property name="text">
+             <string>New &amp;file</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1086,7 +1105,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>18</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1101,6 +1120,7 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionShow_Thumbnails"/>
     <addaction name="actionView_Hidden_Files"/>
     <addaction name="actionShow_Action_Buttons"/>
     <addaction name="separator"/>
@@ -1264,6 +1284,17 @@
    </property>
    <property name="text">
     <string>Show Action Buttons</string>
+   </property>
+  </action>
+  <action name="actionShow_Thumbnails">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Load Thumbnails</string>
    </property>
   </action>
  </widget>

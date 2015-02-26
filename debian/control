@@ -99,3 +99,11 @@ Replaces: lumina-core (<< 0.8.2)
 Description: Basic information utility for Lumina
  lumina-info display various information about the Lumina installation,
  like paths or version.
+
+Package: lumina-xconfig
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.2)
+Description: Display configuration tool for the lumina desktop environment
+ lumina-info display various information about the Lumina installation,
+ like paths or version.

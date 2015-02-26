@@ -44,8 +44,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   worker = new BackgroundWorker;
     worker->moveToThread(workThread);
   if(DEBUG){ qDebug() << " - File System Model"; }
-  fsmod = new QFileSystemModel(this);
+  fsmod = new DDFileSystemModel(this);
     fsmod->setRootPath("/");
+    //fsmod->setReadOnly(false); //required for DnD, but also enables a lot of other stuff
+    //qDebug() << "DnD options:" << fsmod->supportedDropActions();
     ui->tree_dir_view->setModel(fsmod);
     ui->tree_dir_view->sortByColumn(0, Qt::AscendingOrder);
     ui->tree_dir_view->setColumnWidth(0,200);
@@ -159,6 +161,7 @@ void MainUI::setupIcons(){
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
 	
   //Browser page
+  ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
   ui->tool_addToDir->setIcon( LXDG::findIcon("folder-new","") );
   ui->tool_goToImages->setIcon( LXDG::findIcon("fileview-preview","") );
   ui->tool_goToPlayer->setIcon( LXDG::findIcon("applications-multimedia","") );
@@ -282,9 +285,11 @@ void MainUI::loadSettings(){
   //Note: make sure this is run after all the UI elements are created and connected to slots
   // but before the first directory gets loaded
   ui->actionView_Hidden_Files->setChecked( settings->value("showhidden", false).toBool() );
-  on_actionView_Hidden_Files_triggered(); //make sure to update the models too
+    on_actionView_Hidden_Files_triggered(); //make sure to update the models too
   ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
-  on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
+    on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
+  ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
+    iconProv->showthumbnails = ui->actionShow_Thumbnails->isChecked();
   QString view = settings->value("viewmode","details").toString();
   if(view=="icons"){ radio_view_icons->setChecked(true); }
   else if(view=="list"){ radio_view_list->setChecked(true); }
@@ -417,6 +422,7 @@ void MainUI::setCurrentDir(QString dir){
   //Update the directory viewer and update the line edit
     keepFocus = !currentDir->hasFocus();
     currentDir->setWhatsThis(dir); //save the full path internally
+    fsmod->setRootPath(rawdir);
     if(radio_view_details->isChecked()){
       ui->tree_dir_view->setRootIndex(fsmod->index(dir));
       ui->tree_dir_view->selectionModel()->clearSelection();
@@ -442,6 +448,7 @@ void MainUI::setCurrentDir(QString dir){
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
+  ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
   ui->actionBack->setEnabled(history.length() > 1);
   ui->actionBookMark->setEnabled( rawdir!=QDir::homePath() && settings->value("bookmarks", QStringList()).toStringList().filter("::::"+rawdir).length()<1 );
@@ -468,6 +475,40 @@ QFileInfoList MainUI::getSelectedItems(){
   }	
   return out;
 }
+
+/*QModelIndexList MainUI::getVisibleItems(){
+  QModelIndexList out;
+  if(radio_view_details->isChecked()){
+    QModelIndex index = ui->tree_dir_view->indexAt(QPoint(0,0));
+    while( index.isValid()){
+      if(index.column()!=0){
+	//move on - multiple index's per row when we only need one
+      }else if(ui->tree_dir_view->viewport()->rect().contains( ui->tree_dir_view->visualRect(index) ) ){
+	//index within the viewport - add it to the list
+        out << index;
+      }else{
+        break; //index not in the viewport
+      }
+      index = ui->tree_dir_view->indexBelow(index); //go to the next
+      if(out.contains(index)){ break; } //end of the list
+    }
+
+  }else{
+    QModelIndex index = ui->list_dir_view->indexAt(QPoint(0,0));
+    while( index.isValid()){
+      if(ui->list_dir_view->viewport()->rect().contains( ui->list_dir_view->visualRect(index) ) ){
+	//index within the viewport - add it to the list
+        out << index;
+      }else{
+        break; //index not in the viewport
+      }
+      index = ui->list_dir_view->indexBelow(index); //go to the next
+      if(out.contains(index)){ break; } //end of the list
+    }
+    
+  }	
+  return out;
+}*/
 
 //==============
 //    PRIVATE SLOTS
@@ -646,6 +687,18 @@ void MainUI::on_actionShow_Action_Buttons_triggered(){
   ui->group_actions->setVisible(ui->actionShow_Action_Buttons->isChecked());
   settings->setValue("showactions", ui->actionShow_Action_Buttons->isChecked());
 }
+
+void MainUI::on_actionShow_Thumbnails_triggered(){
+  //Now save this setting for later
+  settings->setValue("showthumbnails", ui->actionShow_Thumbnails->isChecked());
+  //Set the value in the icon provider
+  iconProv->showthumbnails = ui->actionShow_Thumbnails->isChecked();
+  //Now make sure the filesystem model knows to re-load the image data
+  fsmod->revert();
+  //Re-load the view widget
+  setCurrentDir(getCurrentDir());
+}
+
 void MainUI::goToBookmark(QAction *act){
   if(act==ui->actionManage_Bookmarks){
     BMMDialog dlg(this);
@@ -759,6 +812,17 @@ void MainUI::reloadDirectory(){
   setCurrentDir( getCurrentDir() );
 }
 
+/*void MainUI::viewportChanged(){
+  if( !ui->actionsShow_Thumbnails->isChecked()){ return; }
+  QModelIndexList list = getVisibleItems();
+  for(int i=0; i<list.length(); i++){
+    if( !ui->actionsShow_Thumbnails->isChecked()){ return; } //break out as necessary
+    if( imgFilter.contains("*."+fsmod->filePath(list[i]).section("/",-1).section(".",-1).toLower()){
+      fmod->
+    }
+  }
+}*/
+
 void MainUI::currentDirectoryLoaded(){
   //The directory was just loaded: refresh the action buttons as neccesary
   ui->tool_goToPlayer->setVisible(false);
@@ -786,6 +850,23 @@ void MainUI::on_tool_addToDir_clicked(){
       QMessageBox::warning(this, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
     }
   }
+}
+
+void MainUI::on_tool_addNewFile_clicked(){
+  bool ok = false;
+  QString newdocument = QInputDialog::getText(this, tr("New Document"), tr("Name:"), QLineEdit::Normal, "", \
+        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+  if(!ok || newdocument.isEmpty()){ return; }
+  QString full = getCurrentDir();
+  if(!full.endsWith("/")){ full.append("/"); }
+  QFile file(full+newdocument);
+  if(file.open(QIODevice::ReadWrite)){
+    //If successfully opened, it has created a blank file
+    file.close();
+  }else{
+    QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));	  
+  }
+  
 }
 
 void MainUI::tabChanged(int tab){

@@ -53,6 +53,7 @@
 #include "BMMDialog.h" //bookmark manager dialog
 #include "MimeIconProvider.h" //icon provider for the view widgets
 #include "BackgroundWorker.h"
+#include "DDFileSystemModel.h"
 
 namespace Ui{
 	class MainUI;
@@ -76,7 +77,8 @@ private:
 	//Internal non-ui widgets
 	QTabBar *tabBar;
 	QLineEdit *currentDir;
-	QFileSystemModel *fsmod, *snapmod;
+	DDFileSystemModel *fsmod;
+	QFileSystemModel *snapmod;
 	//QFileSystemWatcher *fswatcher;
 	MimeIconProvider *iconProv;
 	QMenu *contextMenu;
@@ -115,7 +117,8 @@ private:
 	QString getCurrentDir();
 	void setCurrentDir(QString);
 	QFileInfoList getSelectedItems();
-
+	//QModelIndexList getVisibleItems();
+	
 private slots:
 	void slotSingleInstance(QStringList in){
 	  this->show();
@@ -141,6 +144,7 @@ private slots:
 	void on_actionClose_triggered();
 	void on_actionView_Hidden_Files_triggered();
 	void on_actionShow_Action_Buttons_triggered();
+	void on_actionShow_Thumbnails_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);
@@ -157,7 +161,8 @@ private slots:
 	void reloadDirectory(); //Update the widget with the dir contents
 	void currentDirectoryLoaded(); //The file system model re-loaded the directory
 	void on_tool_addToDir_clicked();
-	void tabChanged(int tab);
+        void on_tool_addNewFile_clicked();
+        void tabChanged(int tab);
 	void tabClosed(int tab = -1);
 	void prevTab();
 	void nextTab();

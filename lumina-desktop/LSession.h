@@ -99,6 +99,7 @@ private:
 	QMediaPlayer *mediaObj;
 	QThread *audioThread;
 	QSettings *sessionsettings;
+	bool cleansession;
 
 	//System Tray Variables
 	WId SystemTrayID, VisualTrayID;

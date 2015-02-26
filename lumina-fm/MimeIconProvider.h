@@ -19,15 +19,19 @@
 class MimeIconProvider : public QFileIconProvider{
 
 public:
+	bool showthumbnails;
 	MimeIconProvider() : QFileIconProvider(){
+	  showthumbnails = false;
 	}
 	~MimeIconProvider(){}
+	
+
 		
 	QIcon icon(const QFileInfo &info) const{
 	  if(info.isDir()){
 	    return LXDG::findIcon("folder","");
 	  }else if(info.isFile()){
-	    if(info.suffix().toLower()=="png" || info.suffix().toLower()=="jpg"){
+	    if(showthumbnails && (info.suffix().toLower()=="png" || info.suffix().toLower()=="jpg") ){
 	      //make sure to only load small versions of the files into memory: could have hundreds of them...
 	      return QIcon( QPixmap(info.absoluteFilePath()).scaledToHeight(64) );
 	    }else{
