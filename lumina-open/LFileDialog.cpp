@@ -38,7 +38,7 @@ void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
   else if(extension=="email"){ ui->label_extension->setText( QString(tr("(Email Link)")) ); }
   else if(extension=="webbrowser"){  ui->label_extension->setText( QString(tr("(Internet URL)")) ); }
   else{ui->label_extension->setText("("+extension+" link)"); }
-  fileEXT = extension;
+  fileEXT = extension; //NOTE: this is the mime-type for the file now, not the extension
   generateAppList();
 }
 
@@ -66,9 +66,13 @@ void LFileDialog::setDefaultApp(QString extension, QString appFile){
 //   PRIVATE
 // -----------
 QStringList LFileDialog::getPreferredApplications(){
-  //Now search the settings for that extension
-  QStringList keys = settings->allKeys();
   QStringList out;
+  //First list all the applications registered for that same mimetype
+  QString mime = fileEXT;
+  out << LXDG::findAvailableAppsForMime(mime);
+	
+  //Now search the internal settings for that extension and find any applications last used
+  QStringList keys = settings->allKeys();
   for(int i=0; i<keys.length(); i++){
     if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
     if(keys[i].toLower() == fileEXT.toLower()){
@@ -83,6 +87,8 @@ QStringList LFileDialog::getPreferredApplications(){
       if(!out.isEmpty()){ break; } //already found files
     }
   }
+  //Make sure we don't have any duplicates before we return the list
+  out.removeDuplicates();
   return out;
 }
 
@@ -159,7 +165,7 @@ void LFileDialog::generateAppList(){
   PREFAPPS = getPreferredApplications();
   ui->combo_rec->clear();
   //Now get the application mimetype for the file extension (if available)
-  QString mimetype = LXDG::findAppMimeForFile(fileEXT);
+  QString mimetype = fileEXT;
   //Now add all the detected applications
   QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles() );
   QStringList cat = hash.keys();

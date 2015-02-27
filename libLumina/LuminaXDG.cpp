@@ -569,6 +569,35 @@ QString LXDG::findDefaultAppForMime(QString mime){
   return cdefault;
 }
 
+QStringList LXDG::findAvailableAppsForMime(QString mime){
+  QStringList dirs = LXDG::systemApplicationDirs();
+  QStringList out;
+  //Loop over all possible directories that contain *.destop files
+  //  and check for the mimeinfo.cache file
+  for(int i=0; i<dirs.length(); i++){
+    if(QFile::exists(dirs[i]+"/mimeinfo.cache")){
+      QStringList matches = LUtils::readFile(dirs[i]+"/mimeinfo.cache").filter(mime+"=");
+      //Find any matches for our mimetype in the cache
+      for(int j=0; j<matches.length(); j++){
+        QStringList files = matches[j].section("=",1,1).split(";",QString::SkipEmptyParts);
+	//Verify that each file exists before putting the full path to the file in the output
+	for(int m=0; m<files.length(); m++){
+	  if(QFile::exists(dirs[i]+"/"+files[m])){
+	    out << dirs[i]+"/"+files[m];
+	  }else if(files[m].contains("-")){ //kde4-<filename> -> kde4/<filename> (stupid KDE variations!!)
+	    files[m].replace("-","/");
+	    if(QFile::exists(dirs[i]+"/"+files[m])){
+	      out << dirs[i]+"/"+files[m];
+	    }
+	  }
+	}
+      }
+    }
+  }
+  //qDebug() << "Found Apps for Mime:" << mime << out << dirs;
+  return out;
+}
+
 void LXDG::setDefaultAppForMime(QString mime, QString app){
   QString filepath = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list";
   QStringList cinfo = LUtils::readFile(filepath);
