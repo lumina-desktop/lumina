@@ -16,6 +16,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
   this->setWindowIcon( LXDG::findIcon("preferences-desktop-display","") );
   PINFO = new LPlugins(); //load the info class
+  panadjust = false;
   DEFAULTBG = LOS::LuminaShare()+"desktop-background.jpg";
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
@@ -864,7 +865,8 @@ void MainUI::checkpanels(){
 
 void MainUI::adjustpanel1(){
   //Adjust panel 1 to complement a panel 2 change
-  if(loading){ return; }
+  if(loading || panadjust){ return; }
+  panadjust = true;
   qDebug() << "Adjust Panel 1:";
   ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
   bool changed = false;
@@ -883,11 +885,13 @@ void MainUI::adjustpanel1(){
     changed = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
   }
+  panadjust = false;
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
-  if(loading){ return; }
+  if(loading || panadjust){ return; }
+  panadjust = true;
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
   ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
@@ -907,7 +911,8 @@ void MainUI::adjustpanel2(){
     changed = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
   }
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  panadjust = false;
+  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 

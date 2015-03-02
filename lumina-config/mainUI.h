@@ -57,7 +57,7 @@ private:
 	QString panelcolor;
 	QString DEFAULTBG;
 	QList<XDGDesktop> sysApps;
-	bool loading;
+	bool loading, panadjust;
 	bool moddesk, modpan, modmenu, modshort, moddef, modses; //page modified flags
 	int panelnumber;
 
