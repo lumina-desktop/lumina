@@ -91,6 +91,8 @@ public:
 	static QString findMimeComment(QString mime);
 	//Find the default application for a mime-type
 	static QString findDefaultAppForMime(QString mime);
+	//Fine the available applications for a mime-type
+	static QStringList findAvailableAppsForMime(QString mime);
 	//Set the default application for a mime-type
 	static void setDefaultAppForMime(QString mime, QString app);
 	//List all the registered audio/video file extensions
