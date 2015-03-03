@@ -315,21 +315,24 @@ void LSession::updateDesktops(){
       }
     }
     //qDebug() << " - Done Starting Desktops";
-    //Make sure all the background windows are registered on the system as virtual roots
-    QTimer::singleShot(200,this, SLOT(registerDesktopWindows()));
-    if(firstrun){ return; } //Done right here on first run
+
+    if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
-    for(int i=0; i<DESKTOPS.length(); i++){
-      if(DESKTOPS[i]->Screen() >= DW->screenCount()){
-	qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
-        DESKTOPS[i]->prepareToClose(); //hide();
-	delete DESKTOPS.takeAt(i);
-	i--;
-      }else{
-	qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
-        DESKTOPS[i]->show();
+      for(int i=0; i<DESKTOPS.length(); i++){
+        if(DESKTOPS[i]->Screen() >= DW->screenCount()){
+	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
+          DESKTOPS[i]->prepareToClose(); //hide();
+	  delete DESKTOPS.takeAt(i);
+	  i--;
+        }else{
+	  qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
+          DESKTOPS[i]->show();
+        }
       }
+      WM->updateWM(); //Make sure fluxbox also gets prompted to re-load screen config
     }
+    //Make sure all the background windows are registered on the system as virtual roots
+    QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
     //qDebug() << " - Done Checking Desktops";
 }
 
