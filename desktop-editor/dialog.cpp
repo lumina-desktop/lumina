@@ -68,6 +68,10 @@ void Dialog::LoadDesktopFile(QString input)
     bool ok = false;
     DF = LXDG::loadDesktopFile(desktopFileName, ok);
     if( ok ) {
+        if ((DF.type == XDGDesktop::LINK) && (desktopType!="link" )) {
+            //we open a desktop type "link" but it was not mentionned by parameters
+            Dialog::Initialise("-link");
+        }
         ui->lName->setText(DF.name);
         ui->lComment->setText(DF.comment);
         ui->lCommand->setText(DF.exec);
