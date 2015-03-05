@@ -16,6 +16,8 @@ BackgroundWorker::~BackgroundWorker(){
 
 void BackgroundWorker::startDirChecks(QString path){
   QDir dir(path);
+  //Make sure to remove any symlinks or redundency in the path
+  if(dir.canonicalPath()!=path){ path = dir.canonicalPath(); dir.cd(path); }
   qDebug() << "Starting Dir Checks:" << path;
   //First check for image files
   if(imgFilter.isEmpty()){
@@ -49,7 +51,7 @@ void BackgroundWorker::startDirChecks(QString path){
      //no need to re-search for it - just found it recently
     baseSnapDir= csnapdir; found=true;
   }else{
-    while(dir.absolutePath()!="/" && !found){
+    while(dir.canonicalPath()!="/" && !found){
       if(dir.exists(".zfs/snapshot")){ 
         baseSnapDir = dir.canonicalPath()+"/.zfs/snapshot";
 	found = true;
