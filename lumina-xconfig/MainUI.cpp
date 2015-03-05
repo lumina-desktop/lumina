@@ -57,7 +57,9 @@ void MainUI::UpdateScreens(){
 	cscreen = ScreenInfo(); //Now create a new structure      
       } 
       QString dev = info[i].section(" ",0,0); //device ID
-      QString devres = info[i].section("(",0,0).split(" ",QString::SkipEmptyParts).last();
+      //The device resolution can be either the 3rd or 4th output - check both
+      QString devres = info[i].section(" ",2,2);
+      if(!devres.contains("x")){ devres = info[i].section(" ",3,3); }
       qDebug() << " - ID:" <<dev;
       //qDebug() << " - Res:" << devres;
       if( !devres.contains("x") || !devres.contains("+") ){ devres.clear(); }
