@@ -56,11 +56,13 @@ void MainUI::UpdateScreens(){
 	SCREENS << cscreen; //current screen finished - save it into the array
 	cscreen = ScreenInfo(); //Now create a new structure      
       } 
+      //qDebug() << "Line:" << info[i];
       QString dev = info[i].section(" ",0,0); //device ID
       //The device resolution can be either the 3rd or 4th output - check both
-      QString devres = info[i].section(" ",2,2);
-      if(!devres.contains("x")){ devres = info[i].section(" ",3,3); }
-      qDebug() << " - ID:" <<dev;
+      QString devres = info[i].section(" ",2,2, QString::SectionSkipEmpty);
+      if(!devres.contains("x")){ devres = info[i].section(" ",3,3,QString::SectionSkipEmpty); }
+      if(!devres.contains("x")){ devres.clear(); }
+      qDebug() << " - ID:" <<dev << "Current Geometry:" << devres;
       //qDebug() << " - Res:" << devres;
       if( !devres.contains("x") || !devres.contains("+") ){ devres.clear(); }
       //qDebug() << " - Res (modified):" << devres;
@@ -76,7 +78,7 @@ void MainUI::UpdateScreens(){
 	//Note: devres format: "<width>x<height>+<xoffset>+<yoffset>"
 	cscreen.geom.setRect( devres.section("+",-2,-2).toInt(), devres.section("+",-1,-1).toInt(), devres.section("x",0,0).toInt(), devres.section("+",0,0).section("x",1,1).toInt() ); 
 	
-      }else if(info[i].contains(" connected ")){
+      }else if(info[i].contains(" connected")){
         //Device that is connected, but not attached
 	qDebug() << "Create new Screen entry:" << dev << "none";
 	cscreen.ID = dev;
