@@ -868,8 +868,13 @@ void MainUI::adjustpanel1(){
   if(loading || panadjust){ return; }
   panadjust = true;
   qDebug() << "Adjust Panel 1:";
-  ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
-  bool changed = false;
+  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  if(!valchanged){
+    //Just a toolbox page change - switch to match and exit
+    ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
+    panadjust = false;
+    return;
+  }
   int newindex=0;
   switch(ui->combo_panel2_loc->currentIndex()){
     case 0:
@@ -882,11 +887,11 @@ void MainUI::adjustpanel1(){
 	newindex = 2; break;
   }
   if(newindex != ui->combo_panel1_loc->currentIndex()){ 
-    changed = true;
+    valchanged = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
   }
   panadjust = false;
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
@@ -894,8 +899,14 @@ void MainUI::adjustpanel2(){
   panadjust = true;
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
-  ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
-  bool changed = false;
+  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  if(!valchanged){
+    //Just a toolbox page change - switch to match and exit
+    ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
+    panadjust = false;
+    return;
+  }
+  
   int newindex=0;
   switch(ui->combo_panel1_loc->currentIndex()){
     case 0:
@@ -908,11 +919,11 @@ void MainUI::adjustpanel2(){
 	newindex = 2; break;
   }
   if(newindex != ui->combo_panel2_loc->currentIndex()){ 
-    changed = true;
+    valchanged = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
   }
   panadjust = false;
-  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 
