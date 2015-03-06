@@ -94,10 +94,13 @@ void Dialog::LoadDesktopFile(QString input)
 
 void Dialog::on_pbCommand_clicked()
 {
-    //TODO: detect Command directory
-    
+ 	QString commandFolder="~";
+    if (!ui->lCommand->text().isEmpty()) {
+		commandFolder = ui->lCommand->text().section('/', 0, -2); 
+	}
+   
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open command"), "~", tr("All Files (*)"));
+        tr("Open command"), commandFolder, tr("All Files (*)"));
     ui->lCommand->setText(fileName);
 }
 
