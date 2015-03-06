@@ -94,6 +94,8 @@ void Dialog::LoadDesktopFile(QString input)
 
 void Dialog::on_pbCommand_clicked()
 {
+    //TODO: detect Command directory
+    
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), "~", tr("All Files (*)"));
     ui->lCommand->setText(fileName);
@@ -177,17 +179,14 @@ void Dialog::on_pbApply_clicked()
             tempFile.setAutoRemove(false);
             tempFile.open();
             tempFile.close();
-            qDebug() << "temp file:" << tempFile.fileName();
 
             //TODO: capture errors
             QString cmd = "mv";
             cmd = cmd + " " + desktopFileName + " " + tempFile.fileName();
-            qDebug() << "cmd:" << cmd;
             int ret = LUtils::runCmd(cmd);
 
             cmd = "mv";
             cmd = cmd + " " + tempFile.fileName() + " " + desktopFileName;
-            qDebug() << "cmd:" << cmd;
             ret = LUtils::runCmd(cmd);
     }
 }
@@ -195,8 +194,16 @@ void Dialog::on_pbApply_clicked()
 
 void Dialog::on_pbIcon_clicked()
 {
+	QString iconFolder="~";
+    if (!iconFileName.isEmpty()) {
+		iconFolder = iconFileName.section('/', 0, -2); 
+	}
+	else if (!DF.icon.isEmpty()) {
+			iconFolder = DF.icon.section('/', 0, -2); 
+	}
+	
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open command"), "~", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Open command"), iconFolder, tr("Image Files (*.png *.jpg *.bmp)"));
     qDebug() << "icon:" << fileName;
     ui->pbIcon->setIcon(QPixmap(fileName));
     iconFileName=fileName;
