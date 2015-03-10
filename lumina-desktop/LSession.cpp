@@ -205,6 +205,9 @@ void LSession::launchStartupApps(){
   
   //Now play the login music
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+    //Make sure to re-set the system volume to the last-used value at outset
+    int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
   if(sessionsettings->value("EnableNumlock",true).toBool()){
