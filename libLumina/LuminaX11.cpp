@@ -425,6 +425,8 @@ bool LX11::EmbedWindow(WId win, WId container){
   //qDebug() << "Embed Window:" << win << container;
   XReparentWindow(disp, win, container,0,0);
   XSync(disp, false);
+  //Map the window
+  XMapRaised(disp, win); //make it visible again and raise it to the top
   //Check that the window has _XEMBED_INFO
   //qDebug() << " - check for _XEMBED_INFO";
   Atom embinfo = XInternAtom(disp, "_XEMBED_INFO",false);
@@ -436,7 +438,7 @@ bool LX11::EmbedWindow(WId win, WId container){
     return false; //Embedding error (no info?)
   }
   if(data){ XFree(data); } // clean up any data found
-	
+
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
   XEvent ev;
@@ -1072,6 +1074,36 @@ bool LXCB::WindowIsMaximized(WId win){
     }
   }
   return false;
+}
+
+// === WindowIcon() ===
+QIcon LXCB::WindowIcon(WId win){
+  //Fetch the _NET_WM_ICON for the window and return it as a QIcon
+  QIcon icon;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_unchecked(&EWMH, win);
+  xcb_ewmh_get_wm_icon_reply_t reply;
+  if(1 == xcb_ewmh_get_wm_icon_reply(&EWMH, cookie, &reply, NULL)){
+    xcb_ewmh_wm_icon_iterator_t iter = xcb_ewmh_get_wm_icon_iterator(&reply);
+    //Just use the first
+    bool done =false;
+    while(!done){
+      //Now convert the current data into a Qt image
+      // - first 2 elements are width and height
+      // - data in rows from left to right and top to bottom
+      QImage image(iter.width, iter.height, QImage::Format_ARGB32); //initial setup
+	uint* dat = iter.data;
+	dat+=2; //remember the first 2 element offset
+	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
+	  ((uint*)image.bits())[i] = *dat; 
+	}
+      icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
+      //Now see if there are any more icons available
+      done = (iter.rem<1); //number of icons remaining
+      if(!done){ xcb_ewmh_get_wm_icon_next(&iter); } //get the next icon data
+    }
+    xcb_ewmh_get_wm_icon_reply_wipe(&reply);
+  }
+  return icon;
 }
 
 // === SetAsSticky() ===
