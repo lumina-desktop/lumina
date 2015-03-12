@@ -173,7 +173,7 @@ void MainUI::setupIcons(){
   ui->tool_act_paste->setIcon( LXDG::findIcon("edit-paste","") );
   ui->tool_act_rename->setIcon( LXDG::findIcon("edit-rename","") );
   ui->tool_act_rm->setIcon( LXDG::findIcon("edit-delete","") );
-  ui->tool_act_fav->setIcon( LXDG::findIcon("quickopen","") );
+  ui->tool_act_fav->setIcon( LXDG::findIcon("bookmark-toolbar","") );
 	
   //Multimedia Player page
   ui->tool_player_next->setIcon( LXDG::findIcon("media-skip-forward","") );
