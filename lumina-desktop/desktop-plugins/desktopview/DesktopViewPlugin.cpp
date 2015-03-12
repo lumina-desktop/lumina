@@ -55,7 +55,11 @@ void DesktopViewPlugin::updateContents(){
 	XDGDesktop desk = LXDG::loadDesktopFile(files[i].absoluteFilePath(), ok);
 	if(ok){
 	  it->setIcon( LXDG::findIcon(desk.icon,"unknown") );
-          it->setText( desk.name );
+	  if(desk.name.isEmpty()){
+	    it->setText( files[i].fileName() );
+	  }else{
+            it->setText( desk.name );
+	  }
 	}else{
 	  //Revert back to a standard file handling
           it->setIcon( LXDG::findMimeIcon(files[i].fileName()) );
