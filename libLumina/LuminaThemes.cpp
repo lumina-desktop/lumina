@@ -177,10 +177,14 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
   application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
   QIcon::setThemeName(icons); //make sure this sets set within this environment
+  syncTimer = new QTimer(this);
+    syncTimer->setSingleShot(true);
+    syncTimer->setInterval(500); //wait 1/2 second before re-loading the files
   watcher = new QFileSystemWatcher(this);
 	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
 	watcher->addPaths( QStringList() << theme << colors ); //also watch these files for changes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange()) );
+  connect(syncTimer, SIGNAL(timeout()), this, SLOT(reloadFiles()) );
 }
 
 LuminaThemeEngine::~LuminaThemeEngine(){
@@ -188,6 +192,11 @@ LuminaThemeEngine::~LuminaThemeEngine(){
 }
 
 void LuminaThemeEngine::watcherChange(){
+  if(syncTimer->isActive()){ syncTimer->stop(); }
+  syncTimer->start();
+}
+
+void LuminaThemeEngine::reloadFiles(){
   QStringList current = LTHEME::currentSettings();
   application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );
 	

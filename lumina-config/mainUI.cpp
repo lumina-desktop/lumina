@@ -1833,6 +1833,7 @@ void MainUI::saveSessionSettings(){
   QString iconset = ui->combo_session_icontheme->currentText();
   QString font = ui->font_session_theme->currentFont().family();
   QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
+  //qDebug() << "Saving theme options:" << themefile << colorfile << iconset << font << fontsize;
   LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
 }
 
