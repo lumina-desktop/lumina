@@ -99,7 +99,7 @@ Description: Display configuration tool for the lumina desktop environment
 
 Package: lumina-data
 Architecture: all
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}), lumina-core (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}), lumina-desktop (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Data files for the lumina Desktop environment
  - Lumina Wallpapers
