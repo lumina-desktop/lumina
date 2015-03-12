@@ -34,8 +34,16 @@ public:
 	    if(showthumbnails && (info.suffix().toLower()=="png" || info.suffix().toLower()=="jpg") ){
 	      //make sure to only load small versions of the files into memory: could have hundreds of them...
 	      return QIcon( QPixmap(info.absoluteFilePath()).scaledToHeight(64) );
+	    }else if(info.fileName().endsWith(".desktop") ){
+	      bool ok = false;
+	      XDGDesktop desk = LXDG::loadDesktopFile(info.absoluteFilePath(), ok);
+	      if(ok){
+	        return LXDG::findIcon(desk.icon, "unknown");
+	      }else{
+		return LXDG::findMimeIcon(info.fileName());
+	      }
 	    }else{
-	      return LXDG::findMimeIcon(info.suffix());
+	      return LXDG::findMimeIcon(info.fileName());
 	    }
 	  }else{
 	    return LXDG::findIcon("unknown","");
