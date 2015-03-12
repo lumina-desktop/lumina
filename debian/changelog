@@ -1,3 +1,18 @@
+lumina-desktop (0.8.3.372-1nano) unstable; urgency=low
+
+  * new GIT snapshot
+    - add build dependency on libxcb-image0-dev
+    - add Lumina-DE startup wrapper. If qt5-configuration-tool exists
+      and LUMINA_USE_QT5CT is set to TRUE in /etc/default/lumina-qt5ct,
+      then export QT_QPA_PLATFORMTHEME=qt5ct, so that it works in Lumina
+    - add lumina-data arch-indep package containing data files
+    - drop lumina-core package
+    - change lumina-desktop from arch-any to arch-indep
+    - make lumina-desktop what lumina-core was before (keeping dependencies
+      on all lumina-* packages)
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Thu, 12 Mar 2015 18:11:17 +0100
+
 lumina-desktop (0.8.3.347-1nano) unstable; urgency=low
 
   * new GIT snapshot
