@@ -13,6 +13,8 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QFileSystemWatcher>
+#include <QMouseEvent>
+
 #include "../LDPlugin.h"
 
 class DesktopViewPlugin : public LDPlugin{
@@ -24,9 +26,16 @@ public:
 private:
 	QListWidget *list;
 	QFileSystemWatcher *watcher;
+	QMenu *menu;
 
 private slots:
-	void runItem(QListWidgetItem*);
+	void runItems();
+	void copyItems();
+	void cutItems();
+	void deleteItems();
+	void showMenu(const QPoint&);
+	void increaseIconSize();
+	void decreaseIconSize();
 	void updateContents();
 
 
@@ -37,6 +46,19 @@ public slots:
 	void ThemeChange(){
 	  QTimer::singleShot(0,this, SLOT(updateContents()));
 	}
+	
+/*protected:
+	void mousePressEvent(QMouseEvent *ev){
+	  if(ev->button()==Qt::RightButton){
+	    qDebug() << " - got mouse event";
+	    //Only show the context menu if an item is under the mouse (don't block the desktop menu)
+	    if(list->itemAt( ev->globalPos()) !=0){
+	      ev->accept();
+	      showMenu(ev->globalPos());
+	    }
+	  }
+	}
+	*/
 
 };
 #endif

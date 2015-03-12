@@ -16,7 +16,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
   //Setup the Icons
     // - favorites tab
-    this->setTabIcon(0, rotateIcon(LXDG::findIcon("favorites","")) );
+    this->setTabIcon(0, rotateIcon(LXDG::findIcon("folder-favorites","")) );
     this->setTabText(0,"");
     // - apps tab
     this->setTabIcon(1, rotateIcon(LXDG::findIcon("system-run","")) );

@@ -101,7 +101,7 @@ void UserItemWidget::setupButton(bool disable){
   }else if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !QFile::exists( QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) ) ){
     //This file does not have a desktop shortcut yet -- allow the user to add it
     button->setWhatsThis("add");
-    button->setIcon( LXDG::findIcon("favorites","") );    
+    button->setIcon( LXDG::findIcon("bookmark-toolbar","") );    
     button->setToolTip(tr("Create Shortcut"));
     connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   }else{

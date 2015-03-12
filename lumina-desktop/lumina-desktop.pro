@@ -1,6 +1,6 @@
 
 QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia dbus
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
 
 TARGET = Lumina-DE
 isEmpty(PREFIX) {
