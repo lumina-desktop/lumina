@@ -117,7 +117,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Draw tray:" << AID << IID << this->winId();
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
-	QPixmap pix = LSession::handle()->XCB->WindowImage(AID, false);
+	QPixmap pix = LSession::handle()->XCB->WindowImage(AID);
 	  //LX11::WindowImage(AID, false);
 	if(pix.isNull()){
 	  //Try to grab the window directly with Qt

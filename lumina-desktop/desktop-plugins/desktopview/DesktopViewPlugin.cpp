@@ -54,15 +54,15 @@ void DesktopViewPlugin::updateContents(){
 	bool ok = false;
 	XDGDesktop desk = LXDG::loadDesktopFile(files[i].absoluteFilePath(), ok);
 	if(ok){
-	  it->setIcon( LXDG::findIcon(desk.icon,"") );
+	  it->setIcon( LXDG::findIcon(desk.icon,"unknown") );
           it->setText( desk.name );
 	}else{
 	  //Revert back to a standard file handling
-          it->setIcon( LXDG::findMimeIcon(files[i].suffix()) );
+          it->setIcon( LXDG::findMimeIcon(files[i].fileName()) );
           it->setText( files[i].fileName() );		
 	}
     }else{
-      it->setIcon( LXDG::findMimeIcon(files[i].suffix()) );
+      it->setIcon( LXDG::findMimeIcon( files[i].fileName() ) );
       it->setText( files[i].fileName() );
     }
     list->addItem(it);

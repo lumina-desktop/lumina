@@ -518,7 +518,7 @@ QString LX11::WindowVisibleIconName(WId win){
 }
 
 // ===== WindowIcon() =====
-QIcon LX11::WindowIcon(WId win){
+/*QIcon LX11::WindowIcon(WId win){
   //Use the _NET_WM_ICON value instead of the WMHints pixmaps
 	// - the pixmaps are very unstable and erratic
   QIcon icon;
@@ -547,11 +547,11 @@ QIcon LX11::WindowIcon(WId win){
     XFree(data);
   }
   return icon;
-}
+}*/
 
 
 // ===== WindowImage() =====
-QPixmap LX11::WindowImage(WId win, bool useleader){
+/*QPixmap LX11::WindowImage(WId win, bool useleader){
   QPixmap pix;
   Display *disp = QX11Info::display();
   WId leader = LX11::leaderWindow(win); //check for an alternate window that contains the image
@@ -568,7 +568,7 @@ QPixmap LX11::WindowImage(WId win, bool useleader){
   }
   //Return the pixmap
   return pix;
-}
+}*/
 
 // ===== GetNumberOfDesktops() =====
 int LX11::WindowDesktop(WId win){
@@ -1108,24 +1108,10 @@ QIcon LXCB::WindowIcon(WId win){
 }
 
 // === WindowImage() ===
-QPixmap LXCB::WindowImage(WId win, bool useleader){
+QPixmap LXCB::WindowImage(WId win){
   QPixmap pix;
-  //Display *disp = QX11Info::display();
-  /*WId leader = LX11::leaderWindow(win); //check for an alternate window that contains the image
-  if(leader!=0 && useleader){ win = leader; } //use the leader window instead
-  //First get the size of the window image (embedded in the window attributes)
-  XWindowAttributes att; 
-  if( 0 == XGetWindowAttributes(disp, win, &att) ){ return pix; } //invalid window attributes
-  //Now extract the image
-  XImage *xim = XGetImage(disp, win, 0,0, att.width, att.height, AllPlanes, ZPixmap);
-  if(xim!=0){
-    //Convert the X image to a Qt Image
-    pix.convertFromImage( QImage( (const uchar*) xim->data, xim->width, xim->height, xim->bytes_per_line, QImage::Format_ARGB32_Premultiplied) );
-    XDestroyImage(xim); //clean up
-  }*/
+	
   //First get the size of the window
-  
-  //xcb_get_window_attributes_reply_t reply;
   xcb_get_geometry_cookie_t cookie = xcb_get_geometry_unchecked(QX11Info::connection(), win);
   xcb_get_geometry_reply_t *reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
   if(reply == 0){ return pix; } //could not determine window geometry

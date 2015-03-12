@@ -20,7 +20,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.isHidden=false;
     DF.useTerminal=false;
     DF.startupNotify=false;
-    DF.type = XDGDesktop::BAD;
+    DF.type = XDGDesktop::APP;
     DF.filePath = filePath;
     DF.exec = DF.tryexec = "";   // just to make sure this is initialized
   //Check input file path validity
@@ -83,7 +83,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       if(val.toLower()=="application"){ DF.type = XDGDesktop::APP; }
       else if(val.toLower()=="link"){ DF.type = XDGDesktop::LINK; }
       else if(val.toLower()=="dir"){ DF.type = XDGDesktop::DIR; }
-      else{ DF.type = XDGDesktop::BAD; }
+      else{ DF.type = XDGDesktop::BAD; } //Unknown type
     }
   } //end reading file
   file.close();
