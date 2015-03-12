@@ -1,0 +1,7 @@
+#
+# if LUMINA_USE_QT5CT is TRUE Lumina Desktop
+# will use qt5-configuration-tool for theming
+# Qt. Please note that this will override some
+# of the Lumina settings in 'lumina-config'
+
+LUMINA_USE_QT5CT=FALSE
