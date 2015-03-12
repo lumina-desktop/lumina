@@ -258,7 +258,7 @@ QString LXDG::getDesktopExec(XDGDesktop app){
   if(out.contains("%i")){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
   if(out.contains("%c")){ 
     if(!app.name.isEmpty()){ out.replace("%c", ""+app.name+""); }
-    else if(!app.genericName.isEmpty()){ out.replace(" %c ", ""+app.genericName+""); }
+    else if(!app.genericName.isEmpty()){ out.replace("%c", ""+app.genericName+""); }
   }
   if(out.contains("%k")){ out.replace("%k", "\'"+app.filePath+"\'"); }
   return out;
