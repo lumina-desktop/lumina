@@ -139,6 +139,7 @@ public:
 	QString WindowName(WId win); //_WM_NAME
 	bool WindowIsMaximized(WId win);
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
+	QPixmap WindowImage(WId win, bool useleader=true); //Pull the image directly from the window
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces

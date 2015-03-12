@@ -12,6 +12,8 @@
 
 //#include <xcb/damage.h>
 //static xcb_damage_damage_t dmgID;
+
+#include <LSession.h>
 static int dmgID = 0;
 
 TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
@@ -115,7 +117,8 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Draw tray:" << AID << IID << this->winId();
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
-	QPixmap pix = LX11::WindowImage(AID, false);
+	QPixmap pix = LSession::handle()->XCB->WindowImage(AID, false);
+	  //LX11::WindowImage(AID, false);
 	if(pix.isNull()){
 	  //Try to grab the window directly with Qt
 	  qDebug() << " - -  Grab window directly";

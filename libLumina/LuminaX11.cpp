@@ -25,6 +25,7 @@
 #include <xcb/xproto.h>
 #include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_icccm.h>
+#include <xcb/xcb_image.h>
 
 
 //=====   WindowList() ========
@@ -1088,11 +1089,11 @@ QIcon LXCB::WindowIcon(WId win){
     bool done =false;
     while(!done){
       //Now convert the current data into a Qt image
-      // - first 2 elements are width and height
+      // - first 2 elements are width and height (removed via XCB functions)
       // - data in rows from left to right and top to bottom
       QImage image(iter.width, iter.height, QImage::Format_ARGB32); //initial setup
 	uint* dat = iter.data;
-	dat+=2; //remember the first 2 element offset
+	//dat+=2; //remember the first 2 element offset
 	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
 	  ((uint*)image.bits())[i] = *dat; 
 	}
@@ -1104,6 +1105,40 @@ QIcon LXCB::WindowIcon(WId win){
     xcb_ewmh_get_wm_icon_reply_wipe(&reply);
   }
   return icon;
+}
+
+// === WindowImage() ===
+QPixmap LXCB::WindowImage(WId win, bool useleader){
+  QPixmap pix;
+  //Display *disp = QX11Info::display();
+  /*WId leader = LX11::leaderWindow(win); //check for an alternate window that contains the image
+  if(leader!=0 && useleader){ win = leader; } //use the leader window instead
+  //First get the size of the window image (embedded in the window attributes)
+  XWindowAttributes att; 
+  if( 0 == XGetWindowAttributes(disp, win, &att) ){ return pix; } //invalid window attributes
+  //Now extract the image
+  XImage *xim = XGetImage(disp, win, 0,0, att.width, att.height, AllPlanes, ZPixmap);
+  if(xim!=0){
+    //Convert the X image to a Qt Image
+    pix.convertFromImage( QImage( (const uchar*) xim->data, xim->width, xim->height, xim->bytes_per_line, QImage::Format_ARGB32_Premultiplied) );
+    XDestroyImage(xim); //clean up
+  }*/
+  //First get the size of the window
+  
+  //xcb_get_window_attributes_reply_t reply;
+  xcb_get_geometry_cookie_t cookie = xcb_get_geometry_unchecked(QX11Info::connection(), win);
+  xcb_get_geometry_reply_t *reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
+  if(reply == 0){ return pix; } //could not determine window geometry
+  //Now get the image 
+  xcb_image_t *img = xcb_image_get(QX11Info::connection(), win, 0, 0, reply->width, reply->height, (uint32_t) AllPlanes, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  if(img!=0){
+    //Now convert the image into a QPixmap
+    pix.convertFromImage( QImage( (const uchar*) img->data, img->width, img->height, img->stride, QImage::Format_ARGB32_Premultiplied) );
+    //Clean up the xcb_image structure
+    xcb_image_destroy(img);
+  }
+  //Return the pixmap
+  return pix;
 }
 
 // === SetAsSticky() ===
