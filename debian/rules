@@ -38,18 +38,18 @@ override_dh_strip:
 
 override_dh_install:
 	dh_install --fail-missing
-	mkdir $(CURDIR)/debian/lumina-core/etc/
+	mkdir $(CURDIR)/debian/lumina-desktop/etc/
 	install -m644 $(CURDIR)/debian/luminaDesktop.conf \
-		$(CURDIR)/debian/lumina-core/etc/luminaDesktop.conf
+		$(CURDIR)/debian/lumina-desktop/etc/luminaDesktop.conf
 	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/lxpolkit" > \
-		$(CURDIR)/debian/lumina-core/etc/luminaStartapps
-	mv $(CURDIR)/debian/lumina-core/usr/bin/Lumina-DE \
-		$(CURDIR)/debian/lumina-core/usr/bin/Lumina-DE.real
+		$(CURDIR)/debian/lumina-desktop/etc/luminaStartapps
+	mv $(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE \
+		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE.real
 	install -m755 $(CURDIR)/debian/Lumina-DE \
-		$(CURDIR)/debian/lumina-core/usr/bin/Lumina-DE
-	mkdir -p $(CURDIR)/debian/lumina-core/etc/default
+		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE
+	mkdir -p $(CURDIR)/debian/lumina-desktop/etc/default
 	install -m644 $(CURDIR)/debian/lumina-qt5ct \
-		$(CURDIR)/debian/lumina-core/etc/default/lumina-qt5ct
+		$(CURDIR)/debian/lumina-desktop/etc/default/lumina-qt5ct
 
 override_dh_auto_install:
 	INSTALL_ROOT=$(CURDIR)/debian/tmp/ $(MAKE) install
