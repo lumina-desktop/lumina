@@ -11,7 +11,7 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    desktopType="application"; //default value
+    desktopType="Application"; //default value
 }
 
 
