@@ -101,7 +101,9 @@ void Dialog::on_pbCommand_clicked()
    
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), commandFolder, tr("All Files (*)"));
-    ui->lCommand->setText(fileName);
+    if (!fileName.isEmpty()) {
+		ui->lCommand->setText(fileName);
+	}
 }
 
 
@@ -112,8 +114,10 @@ void Dialog::on_pbWorkingDir_clicked()
                                     tr("Working Directory"),
                                     ui->lWorkingDir->text(),
                                     options);
-    ui->lWorkingDir->setText(directory);
-    ui->lWorkingDir->setModified(true);
+    if (!directory.isEmpty()) {
+		ui->lWorkingDir->setText(directory);
+		ui->lWorkingDir->setModified(true);
+	}
 }
 
 //this function is just like a regexp.
@@ -208,7 +212,8 @@ void Dialog::on_pbIcon_clicked()
 	
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), iconFolder, tr("Image Files (*.png *.jpg *.bmp)"));
-    qDebug() << "icon:" << fileName;
-    ui->pbIcon->setIcon(QPixmap(fileName));
-    iconFileName=fileName;
+    if (!fileName.isEmpty()) {
+		ui->pbIcon->setIcon(QPixmap(fileName));
+		iconFileName=fileName;
+	}
 }
