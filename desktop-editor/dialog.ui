@@ -53,7 +53,7 @@
      <item row="5" column="1">
       <widget class="QCheckBox" name="cbStartupNotification">
        <property name="text">
-        <string>Use stratup notification</string>
+        <string>Use startup notification</string>
        </property>
       </widget>
      </item>
