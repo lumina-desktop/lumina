@@ -103,6 +103,7 @@ void Dialog::on_pbCommand_clicked()
         tr("Open command"), commandFolder, tr("All Files (*)"));
     if (!fileName.isEmpty()) {
 		ui->lCommand->setText(fileName);
+		ui->lCommand->setModified(true);
 	}
 }
 
