@@ -938,6 +938,7 @@ void MainUI::OpenContextMenu(const QPoint &pt){
       contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(OpenItemWith()) );
     }
     contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename"), this, SLOT(RenameItem()) )->setEnabled(info.isWritable());
+    contextMenu->addAction(LXDG::findIcon("document-encrypted",""), tr("View Checksums"), this, SLOT(ChecksumItems()) );
     contextMenu->addSeparator();
   }
   bool hasSelection = !getSelectedItems().isEmpty();
@@ -1463,8 +1464,25 @@ void MainUI::PasteItems(){
 	QApplication::clipboard()->setMimeData(dat);
     }
   }
-  ItemSelectionChanged();
-	
+  ItemSelectionChanged();	
+}
+
+void MainUI::ChecksumItems(){
+  if(ui->stackedWidget->currentWidget()!=ui->page_browser){ return; }
+  QFileInfoList sel = getSelectedItems();
+  if(sel.isEmpty()){ return; }
+  QStringList info, files;
+  for(int i=0; i<sel.length(); i++){
+    files << sel[i].absoluteFilePath();
+  }
+  qDebug() << "Run Checksums:" << files;
+  info = LOS::Checksums(files);
+  qDebug() << " - Info:" << info;
+  if(info.isEmpty() || (info.length() != files.length()) ){ return; }
+  for(int i=0; i<info.length(); i++){
+    info[i] = QString("%2\t(%1)").arg(files[i].section("/",-1), info[i]);
+  }
+  QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
 }
 
 void MainUI::resizeEvent(QResizeEvent *event){

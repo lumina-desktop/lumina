@@ -80,6 +80,9 @@ public:
 	static bool batteryIsCharging();
 	//Battery Time Remaining
 	static int batterySecondsLeft(); //Returns: estimated number of seconds remaining
+	
+	//Get the checksum for a file
+	static QStringList Checksums(QStringList filepaths); //Return: checksum of each input file (same order)
 };
 
 #endif

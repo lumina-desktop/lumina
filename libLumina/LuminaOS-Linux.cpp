@@ -190,4 +190,8 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
   return 0; //not implemented yet for Linux
 }
 
+//File Checksums
+QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
+ return QStringList();
+}
 #endif
