@@ -30,7 +30,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1).section(".",-1)).pixmap(32,32) );
+    icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(32,32) );
     name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
   }
   linkPath = QFile::symLinkTarget(itemPath);
