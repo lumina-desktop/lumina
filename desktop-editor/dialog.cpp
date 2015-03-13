@@ -15,6 +15,8 @@ Dialog::Dialog(QWidget *parent) :
     
     //Setup all the icons using libLumina
     this->setWindowIcon( LXDG::findIcon("preferences-desktop-default-applications","") );
+    ui->pbWorkingDir->setIcon( LXDG::findIcon("folder","") );
+    ui->pbCommand->setIcon( LXDG::findIcon("system-search","") );
 }
 
 
