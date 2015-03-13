@@ -113,6 +113,7 @@ void Dialog::on_pbWorkingDir_clicked()
                                     ui->lWorkingDir->text(),
                                     options);
     ui->lWorkingDir->setText(directory);
+    ui->lWorkingDir->setModified(true);
 }
 
 //this function is just like a regexp.
