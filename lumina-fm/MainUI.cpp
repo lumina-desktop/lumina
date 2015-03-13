@@ -1287,17 +1287,17 @@ void MainUI::RemoveItem(){
    if(!checkUserPerms()){ return; }
    //Get the selected items
    QStringList paths, names;
-   if(CItem.isEmpty()){
+   //if(CItem.isEmpty()){
      QFileInfoList sel = getSelectedItems();
      for(int i=0; i<sel.length(); i++){
        paths << sel[i].absoluteFilePath();
        names << sel[i].fileName();
      }
      if(sel.isEmpty()){ return; } //nothing selected
-  }else{
+  /*}else{
     paths << CItem;
     names << CItem.section("/",-1);
-  }
+  }*/
   //Verify permanent removal of file/dir
   if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+names.join("\n"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
     return; //cancelled
