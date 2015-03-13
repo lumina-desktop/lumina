@@ -12,6 +12,9 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
     desktopType="Application"; //default value
+    
+    //Setup all the icons using libLumina
+    this->setWindowIcon( LXDG::findIcon("preferences-desktop-default-applications","") );
 }
 
 
@@ -32,8 +35,7 @@ void Dialog::MissingInputs()
 //Initialise the layout of the screen.
 void Dialog::Initialise(QString param)
 {
-    //"application" is the default layout.
-
+	
     //in case of "link", several objects are no required
     if (param.startsWith("-link")) {
         ui->cbRunInTerminal->setVisible(false);
@@ -46,6 +48,9 @@ void Dialog::Initialise(QString param)
         desktopType="link";
     }
 }
+
+
+
 
 //load the desktop file or the required template
 void Dialog::LoadDesktopFile(QString input)

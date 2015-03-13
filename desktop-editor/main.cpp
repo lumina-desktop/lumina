@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     } else {
         w.MissingInputs();
     }
+    a.setApplicationName("Desktop Editor");
     w.show();
 
     return a.exec();
