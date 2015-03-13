@@ -17,7 +17,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="3" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="lblWorkingDir">
        <property name="text">
         <string>Working dir:</string>
        </property>
@@ -65,21 +65,21 @@
       </widget>
      </item>
      <item row="4" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="lblIcon">
        <property name="text">
         <string>Icon:</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="lblCommand">
        <property name="text">
         <string>Command:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lblComment">
        <property name="text">
         <string>Comment:</string>
        </property>
@@ -120,14 +120,14 @@
       </widget>
      </item>
      <item row="0" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="lblName">
        <property name="text">
         <string>Name:</string>
        </property>
       </widget>
      </item>
      <item row="5" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="lblOptions">
        <property name="text">
         <string>Options</string>
        </property>

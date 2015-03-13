@@ -44,9 +44,9 @@ void Dialog::Initialise(QString param)
         ui->cbStartupNotification->setVisible(false);
         ui->lCommand->setVisible(false);
         ui->pbCommand->setVisible(false);
-        ui->label_3->setVisible(false);
-        ui->label_6->setVisible(false);
-        ui->label_4->setText("URL"); //we use the WorkingDir boxes for URL
+        ui->lblCommand->setVisible(false);
+        ui->lblOptions->setVisible(false);
+        ui->lblWorkingDir->setText("URL"); //we use the WorkingDir boxes for URL
         desktopType="link";
     }
 }
