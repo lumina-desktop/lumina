@@ -279,11 +279,13 @@ void MainUI::setupMenus(){
   ui->combo_session_timezone->clear();
   QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
   QDateTime DT = QDateTime::currentDateTime();
-  QStringList tzlist;
+  QStringList tzlist; //Need to create a list which can be sorted appropriately
   for(int i=0; i<TZList.length(); i++){
     QTimeZone TZ(TZList[i]);
     if(TZ.country()<=0){ continue; } //skip this one
-    QString name = QString(tr("%1 (%2)")).arg(QLocale::countryToString(TZ.country()), TZ.abbreviation(DT));
+    QString name = QLocale::countryToString(TZ.country());
+    if(name.count() > 20){ name = name.left(20)+"..."; }
+    name = QString(tr("%1 (%2)")).arg(name, TZ.abbreviation(DT));
     if(tzlist.filter(name).isEmpty()){
       tzlist << name+"::::"+QString::number(i);
     }
