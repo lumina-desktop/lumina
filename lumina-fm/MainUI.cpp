@@ -973,7 +973,17 @@ void MainUI::ItemSelectionChanged(){
   }
   QString itname;
   if(sel.length()==1){ itname = sel[0].fileName(); }
-  ui->tool_act_fav->setEnabled(!itname.isEmpty() && !QFile::exists(favdir+itname) );
+  bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
+  if(ok){
+    if(QFile::exists(favdir+itname)){
+      //Make sure this favorite does not already point to the current file
+      QFileInfo info(favdir+itname);
+      if(info.isSymLink() && info.exists()){
+	ok = false; //still an active favorite - do not allow replacement
+      }
+    }
+  }
+  ui->tool_act_fav->setEnabled(ok);
 }
 
 //-------------------------------
@@ -1365,6 +1375,7 @@ void MainUI::FavoriteItem(){
   QString fname = CItem;
   QString fullpath = fname;
     fname = fname.section("/",-1); //turn this into just the file name
+  if(QFile::exists(favdir+fname)){ QFile::remove(favdir+fname); } //remove the stale link
   QFile::link(fullpath, favdir+fname);
   CItem.clear();
   ItemSelectionChanged();
