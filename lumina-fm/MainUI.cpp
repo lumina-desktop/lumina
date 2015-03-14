@@ -1480,8 +1480,13 @@ void MainUI::ChecksumItems(){
   qDebug() << " - Info:" << info;
   if(info.isEmpty() || (info.length() != files.length()) ){ return; }
   for(int i=0; i<info.length(); i++){
-    info[i] = QString("%2\t(%1)").arg(files[i].section("/",-1), info[i]);
+    info[i] = QString("%2  \t(%1)").arg(files[i].section("/",-1), info[i]);
   }
+  /*QMessageBox dlg(this);
+    dlg.setWindowFlags( Qt::Dialog );
+    dlg.setWindowTitle( tr("File Checksums") );
+    dlg.setInformativeText(info.join("\n"));
+  dlg.exec();*/
   QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
 }
 

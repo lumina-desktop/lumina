@@ -11,6 +11,7 @@
 #include <QImageReader>
 #include <QTime>
 #include <QDate>
+#include <QTimeZone>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
@@ -235,6 +236,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_help_date, SIGNAL(clicked()), this, SLOT(sessionShowDateCodes()) );
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
+  connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
 }
 
 void MainUI::setupMenus(){
@@ -273,7 +275,26 @@ void MainUI::setupMenus(){
     ui->combo_session_wtheme->addItem(fbstyles[i], fbdir.absoluteFilePath(fbstyles[i]));
   }
 
-
+  //Available Time zones
+  ui->combo_session_timezone->clear();
+  QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
+  QDateTime DT = QDateTime::currentDateTime();
+  QStringList tzlist;
+  for(int i=0; i<TZList.length(); i++){
+    QTimeZone TZ(TZList[i]);
+    if(TZ.country()<=0){ continue; } //skip this one
+    QString name = QString(tr("%1 (%2)")).arg(QLocale::countryToString(TZ.country()), TZ.abbreviation(DT));
+    if(tzlist.filter(name).isEmpty()){
+      tzlist << name+"::::"+QString::number(i);
+    }
+  }
+  tzlist.sort();
+  for(int i=0; i<tzlist.length(); i++){
+    ui->combo_session_timezone->addItem( tzlist[i].section("::::",0,0), TZList[tzlist[i].section("::::",1,1).toInt()]);
+  }
+  //ui->combo_session_timezone->sort();
+  //Now set the default/system value
+  ui->combo_session_timezone->insertItem(0,tr("System Time"));
 }
 
 int MainUI::currentDesktop(){
@@ -1734,6 +1755,14 @@ void MainUI::loadSessionSettings(){
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
+  if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
+    //System Time selected
+    ui->combo_session_timezone->setCurrentIndex(0);
+  }else{
+    int index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
+    if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
+    else{ ui->combo_session_timezone->setCurrentIndex(0); }
+  }
   
   //Now do the session theme options
   ui->combo_session_themefile->clear();
@@ -1826,6 +1855,14 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
+  if( ui->combo_session_timezone->currentIndex()==0){
+    //System Time selected
+    sessionsettings->setValue("CustomTimeZone", false);
+    sessionsettings->setValue("TimeZoneByteCode", QByteArray()); //clear the value
+  }else{
+    sessionsettings->setValue("CustomTimeZone", true);
+    sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
+  }
   
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
