@@ -196,13 +196,13 @@ void UserWidget::updateFavItems(){
   static_cast<QBoxLayout*>(ui->scroll_fav->widget()->layout())->addStretch();
   
   //Clean up any broken sym-links in the favorites directory
-  items = favdir.entryInfoList(QDir::System | QDir::NoDotAndDotDot, QDir::Name);
+  /*items = favdir.entryInfoList(QDir::System | QDir::NoDotAndDotDot, QDir::Name);
   for(int i=0; i<items.length(); i++){
     if(items[i].isSymLink() && !items[i].exists()){
       //Broken sym-link - remove it
       QFile::remove(items[i].absoluteFilePath());
     }
-  }
+  }*/
   
 }
 
