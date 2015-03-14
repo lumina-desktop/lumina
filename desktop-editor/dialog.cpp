@@ -5,6 +5,7 @@
 #include <QTemporaryFile>
 #include <QMessageBox>
 #include "LuminaUtils.h"
+#include <LuminaOS.h>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -101,10 +102,10 @@ void Dialog::LoadDesktopFile(QString input)
 
 void Dialog::on_pbCommand_clicked()
 {
- 	QString commandFolder="~";
-    if (!ui->lCommand->text().isEmpty()) {
-		commandFolder = ui->lCommand->text().section('/', 0, -2); 
-	}
+	//the default directory is the user's home directory
+ 	QString commandFolder = "~"; 
+    if (!ui->lCommand->text().isEmpty()) commandFolder = ui->lCommand->text().section('/', 0, -2); 
+    if (commandFolder.isEmpty()) commandFolder = "~";
    
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), commandFolder, tr("All Files (*)"));
@@ -117,10 +118,14 @@ void Dialog::on_pbCommand_clicked()
 
 void Dialog::on_pbWorkingDir_clicked()
 {
+    //the default directory is /
+    QString workingDir = "/";
+    if (ui->lWorkingDir->text().isEmpty()) workingDir = "/";
+    else workingDir = ui->lWorkingDir->text();
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
     QString directory = QFileDialog::getExistingDirectory(this,
                                     tr("Working Directory"),
-                                    ui->lWorkingDir->text(),
+                                    workingDir,
                                     options);
     if (!directory.isEmpty()) {
 		ui->lWorkingDir->setText(directory);
@@ -210,13 +215,11 @@ void Dialog::on_pbApply_clicked()
 
 void Dialog::on_pbIcon_clicked()
 {
-	QString iconFolder="~";
-    if (!iconFileName.isEmpty()) {
-		iconFolder = iconFileName.section('/', 0, -2); 
-	}
-	else if (!DF.icon.isEmpty()) {
-			iconFolder = DF.icon.section('/', 0, -2); 
-	}
+	//the default directory is local/share/icons
+	QString iconFolder = LOS::AppPrefix()+"/share/icons";
+    if (!iconFileName.isEmpty()) iconFolder = iconFileName.section('/', 0, -2); 	
+	else if (!DF.icon.isEmpty()) iconFolder = DF.icon.section('/', 0, -2); 
+	if (iconFolder.isEmpty()) iconFolder = LOS::AppPrefix()+"/share/icons";
 	
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), iconFolder, tr("Image Files (*.png *.jpg *.bmp)"));
