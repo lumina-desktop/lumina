@@ -973,7 +973,17 @@ void MainUI::ItemSelectionChanged(){
   }
   QString itname;
   if(sel.length()==1){ itname = sel[0].fileName(); }
-  ui->tool_act_fav->setEnabled(!itname.isEmpty() && !QFile::exists(favdir+itname) );
+  bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
+  if(ok){
+    if(QFile::exists(favdir+itname)){
+      //Make sure this favorite does not already point to the current file
+      QFileInfo info(favdir+itname);
+      if(info.isSymLink() && info.exists()){
+	ok = false; //still an active favorite - do not allow replacement
+      }
+    }
+  }
+  ui->tool_act_fav->setEnabled(ok);
 }
 
 //-------------------------------
@@ -1287,17 +1297,17 @@ void MainUI::RemoveItem(){
    if(!checkUserPerms()){ return; }
    //Get the selected items
    QStringList paths, names;
-   if(CItem.isEmpty()){
+   //if(CItem.isEmpty()){
      QFileInfoList sel = getSelectedItems();
      for(int i=0; i<sel.length(); i++){
        paths << sel[i].absoluteFilePath();
        names << sel[i].fileName();
      }
      if(sel.isEmpty()){ return; } //nothing selected
-  }else{
+  /*}else{
     paths << CItem;
     names << CItem.section("/",-1);
-  }
+  }*/
   //Verify permanent removal of file/dir
   if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+names.join("\n"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
     return; //cancelled
@@ -1365,6 +1375,7 @@ void MainUI::FavoriteItem(){
   QString fname = CItem;
   QString fullpath = fname;
     fname = fname.section("/",-1); //turn this into just the file name
+  if(QFile::exists(favdir+fname)){ QFile::remove(favdir+fname); } //remove the stale link
   QFile::link(fullpath, favdir+fname);
   CItem.clear();
   ItemSelectionChanged();
@@ -1480,8 +1491,13 @@ void MainUI::ChecksumItems(){
   qDebug() << " - Info:" << info;
   if(info.isEmpty() || (info.length() != files.length()) ){ return; }
   for(int i=0; i<info.length(); i++){
-    info[i] = QString("%2\t(%1)").arg(files[i].section("/",-1), info[i]);
+    info[i] = QString("%2  \t(%1)").arg(files[i].section("/",-1), info[i]);
   }
+  /*QMessageBox dlg(this);
+    dlg.setWindowFlags( Qt::Dialog );
+    dlg.setWindowTitle( tr("File Checksums") );
+    dlg.setInformativeText(info.join("\n"));
+  dlg.exec();*/
   QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
 }
 

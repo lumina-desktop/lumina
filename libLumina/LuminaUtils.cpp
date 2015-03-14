@@ -144,6 +144,50 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
 }
 
+QStringList LUtils::listFavorites(){
+  QStringList fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
+  return fav;
+}
+
+bool LUtils::saveFavorites(QStringList list){
+  return LUtils::writeFile(QDir::homePath()+"/.lumina/favorites/fav.list", list, true);
+}
+
+bool LUtils::isFavorite(QString path){
+  QStringList fav = LUtils::listFavorites();
+  for(int i=0; i<fav.length(); i++){
+    if(fav[i].endsWith("::::"+path)){ return true; }
+  }
+  return false;
+}
+
+bool LUtils::addFavorite(QString path, QString name){
+  //Generate the type of favorite this is
+  QFileInfo info(path);
+  QString type = "file";
+    if(info.isDir()){ type="dir"; }
+    else if(info.suffix()=="desktop"){ type="app"; }
+  //Assign a name if none given
+  if(name.isEmpty()){ name = info.fileName(); }
+  //Now add it to the list
+  QStringList fav = LUtils::listFavorites();
+  bool found = false;
+  for(int i=0; i<fav.length(); i++){
+    if(fav[i].endsWith("::::"+path)){ fav[i] = name+"::::"+type+"::::"+path; }
+  }
+  if(!found){ fav << name+"::::"+type+"::::"+path; }
+  return LUtils::saveFavorites(fav);
+}
+
+void LUtils::removeFavorite(QString path){
+  QStringList fav = LUtils::listFavorites();
+  bool changed = false;
+  for(int i=0; i<fav.length(); i++){
+    if(fav[i].endsWith("::::"+path)){ fav.removeAt(i); i--; changed=true;}
+  }
+  if(changed){ LUtils::saveFavorites(fav); }
+}
+
 void LUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
   QStringList sysDefaults;
