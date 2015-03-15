@@ -133,10 +133,12 @@ public:
 	unsigned int WindowWorkspace(WId); //The workspace the window is on
 	QRect WindowGeometry(WId, bool includeFrame = true); //the geometry of the window (frame excluded)
 	WINDOWSTATE WindowState(WId win); //Visible state of window
-	QString WindowVisibleIconName(WId win); //_WM_VISIBLE_ICON_NAME
-	QString WindowIconName(WId win); //_WM_ICON_NAME
-	QString WindowVisibleName(WId win); //_WM_VISIBLE_NAME
-	QString WindowName(WId win); //_WM_NAME
+	QString WindowVisibleIconName(WId win); //_NET_WM_VISIBLE_ICON_NAME
+	QString WindowIconName(WId win); //_NET_WM_ICON_NAME
+	QString WindowVisibleName(WId win); //_NET_WM_VISIBLE_NAME
+	QString WindowName(WId win); //_NET_WM_NAME
+	QString OldWindowName(WId win); //WM_NAME (old standard)
+	QString OldWindowIconName(WId win); //WM_ICON_NAME (old standard)
 	bool WindowIsMaximized(WId win);
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
 	QPixmap WindowImage(WId win); //Pull the image directly from the window

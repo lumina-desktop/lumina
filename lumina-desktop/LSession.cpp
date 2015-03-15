@@ -257,6 +257,11 @@ void LSession::checkUserFiles(){
     }*/
     LUtils::LoadSystemDefaults();
   }
+  if(oldversion <= 83){
+    //Convert the old->new favorites framework
+	  
+  }
+  
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
   if(!QFile::exists(dset)){
