@@ -25,7 +25,6 @@ public:
     void MissingInputs();
     void LoadDesktopFile(QString);
 
-
     ~Dialog();
     
 private slots:
@@ -36,8 +35,9 @@ private slots:
 
     void on_pbApply_clicked();
 
-
     void on_pbIcon_clicked();
+
+    void textReplace(QString &origin, QString from, QString to, QString topic);
 
 private:
     Ui::Dialog *ui;

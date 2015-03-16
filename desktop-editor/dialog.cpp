@@ -135,8 +135,20 @@ void Dialog::on_pbWorkingDir_clicked()
 
 //this function is just like a regexp.
 //we just change the required lines and we don't touch to the rest of the file and copy it back.
-void textReplace(QString &origin, QString from, QString to, QString topic)
+void Dialog::textReplace(QString &origin, QString from, QString to, QString topic)
 {
+    if (origin.contains(QRegExp("\n" + topic + "\\[\\S+\\]\\s*=",Qt::CaseInsensitive))) {
+		QMessageBox msgBox;
+		msgBox.setText(tr("By modifying this value, you will loose all translated versions"));
+		msgBox.setInformativeText(tr("The field:") + topic + tr( "is translated in several other languages. If you want to continue, you will loose all translated versions"));
+		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		int answer = msgBox.exec();
+		if (answer==QMessageBox::Ok) {
+			//remove all translated versions. The lang cannot be null, but the value can be.
+			origin.replace(QRegExp("\n" + topic + "\\[\\S+\\]\\s*=[^\n]*",Qt::CaseInsensitive), "");
+		}
+		else return;
+	}
     if (!from.isEmpty()) {
         origin.replace(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive),"\n" + topic + "=" + to + "\n");
     } else {
