@@ -152,12 +152,12 @@ bool LOS::userHasShutdownAccess(){
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -p now");
+  QProcess::startDetached("shutdown -po now");
 }
 
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -r now");
+  QProcess::startDetached("shutdown -ro now");
 }
 
 //Battery Availability
