@@ -23,6 +23,7 @@
 #include "systemdashboard/LSysDashboard.h"
 #include "showdesktop/LHomeButton.h"
 #include "appmenu/LAppMenuPlugin.h"
+#include "applauncher/AppLaunchButton.h"
 #include "systemtray/LSysTray.h" //must be last due to X11 compile issues
 
 class NewPP{
@@ -52,6 +53,8 @@ public:
 	    plug = new LSysDashboard(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("appmenu---")){
 	    plug = new LAppMenuPlugin(parent, plugin, horizontal);
+	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
+	    plug = new AppLaunchButtonPlugin(parent, plugin, horizontal);
 	  }else{
 	    qWarning() << "Invalid Panel Plugin:"<<plugin << " -- Ignored";
 	  }
