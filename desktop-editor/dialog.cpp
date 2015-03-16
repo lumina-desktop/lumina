@@ -138,7 +138,6 @@ void Dialog::on_pbWorkingDir_clicked()
 void textReplace(QString &origin, QString from, QString to, QString topic)
 {
     if (!from.isEmpty()) {
-        //TODO RegExp with ^ to detect begining of the line is not working
         origin.replace(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive),"\n" + topic + "=" + to + "\n");
     } else {
         //TODO: check if last char in \n. If not add it
