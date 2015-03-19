@@ -12,7 +12,7 @@
 AppLaunchButtonPlugin::AppLaunchButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
     button->setAutoRaise(true);
-    button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    button->setToolButtonStyle(Qt::ToolButtonIconOnly);
   appfile = id.section("---",0,0).section("::",1,1);
     if(!QFile::exists(appfile)){ appfile.clear(); }
     connect(button, SIGNAL(clicked()), this, SLOT(AppClicked()));
