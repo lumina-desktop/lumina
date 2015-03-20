@@ -448,7 +448,27 @@ void MainUI::setCurrentDir(QString dir){
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
   }
-  QString strSize = QString(tr("Items:")) + QString::number(fsmod->rootDirectory().entryInfoList().size());
+  QFileInfoList fileList = fsmod->rootDirectory().entryInfoList();
+  int i = 0;
+  qreal totalSizes = 0;
+  foreach (QFileInfo fileInfo, fileList )
+  {
+	  if (fileInfo.isFile()) {
+		  totalSizes += fileInfo.size();
+	      i += 1;
+	  }
+  }
+  QString strSize = QString(tr("Items: %1")).arg(i);
+  if (i>0 and totalSizes>1024*1024*1024) 
+    strSize += QString(tr(", size: %1 Gb")).arg(totalSizes/1024/1024/1024, 0,'f', 2);
+  else if (i>0 and totalSizes>1024*1024) 
+    strSize += QString(tr(", size: %1 Mb")).arg(totalSizes/1024/1024, 0,'f',2);
+  else if (i>0 and totalSizes>1024) 
+    strSize += QString(tr(", size: %1 Kb")).arg(totalSizes/1024, 0, 'f' , 2);
+  else
+  if (i>0) { strSize += QString(tr(", size: %1 b")).arg(totalSizes, 0, 'f' , 2);}
+  
+  
   ui->statusbar->showMessage(strSize);
   ui->tool_addToDir->setVisible(isUserWritable);
   ui->tool_addNewFile->setVisible(isUserWritable);
