@@ -16,6 +16,8 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 #include <QTimer>
+#include <QMenu>
+#include <QCursor>
 
 #include "../LDPlugin.h"
 
@@ -30,9 +32,15 @@ public:
 private:
 	QToolButton *button;
 	QFileSystemWatcher *watcher;
+	QMenu *menu;
 
 private slots:
 	void loadButton();
 	void buttonClicked();
+	void openContextMenu();
+	
+	void increaseIconSize();
+	void decreaseIconSize();
+	
 };
 #endif

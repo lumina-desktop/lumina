@@ -135,13 +135,20 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "homebutton";
     info.icon = "go-home";
   PANEL.insert(info.ID, info);
-  //Desktop Bar
+  //Start Menu
   info = LPI(); //clear it
     info.name = QObject::tr("Start Menu");
     info.description = QObject::tr("This provides instant-access to application that are installed on the system.");
     info.ID = "appmenu";
     info.icon = "Lumina-DE";
   PANEL.insert(info.ID, info);  
+  //Application Launcher
+  info = LPI(); //clear it
+    info.name = QObject::tr("Application Launcher");
+    info.description = QObject::tr("Pin an application shortcut directly to the panel");
+    info.ID = "applauncher";
+    info.icon = "quickopen";
+  PANEL.insert(info.ID, info); 
 }
 
 void LPlugins::LoadDesktopPlugins(){

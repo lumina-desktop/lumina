@@ -43,6 +43,16 @@ void printUsageInfo(){
   exit(1);
 }
 
+void ShowErrorDialog(int argc, char **argv, QString message){
+    //Setup the application
+    QApplication App(argc, argv);
+    LuminaThemeEngine theme(&App);
+	LUtils::LoadTranslation(&App,"lumina-open");
+    QMessageBox dlg(QMessageBox::Critical, QObject::tr("File Error"), message );
+    dlg.exec();
+    exit(1);
+}
+
 void showOSD(int argc, char **argv, QString message){
   //Setup the application
   QApplication App(argc, argv);
@@ -187,7 +197,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
   else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
-  if( !isFile && !isUrl ){ qDebug() << "Error: Invalid file or URL"; return;}
+  if( !isFile && !isUrl ){ ShowErrorDialog( argc, argv, QString(QObject::tr("Invalid file or URL: %1")).arg(inFile) ); }
   //Determing the type of file (extension)
   QString extension;
   //qDebug() << "File Type:" << isFile << isUrl;
@@ -209,8 +219,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
     if(!ok){
-      qDebug() << "[ERROR] Input *.desktop file could not be read:" << inFile;
-      exit(1);
+      ShowErrorDialog( argc, argv, QString(QObject::tr("File could not be opened: %1")).arg(inFile) );
     }
     switch(DF.type){
       case XDGDesktop::APP:
@@ -218,8 +227,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           cmd = LXDG::getDesktopExec(DF);
           if(!DF.path.isEmpty()){ path = DF.path; }
         }else{
-          qDebug() << "[ERROR] Input *.desktop application file is missing the Exec line:" << inFile;
-          exit(1);
+	  ShowErrorDialog( argc, argv, QString(QObject::tr("Application shortcut is missing the launching information (malformed shortcut): %1")).arg(inFile) );
         }
         break;
       case XDGDesktop::LINK:
@@ -229,8 +237,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           cmd.clear();
           extension = inFile.section(":",0,0);
         }else{
-          qDebug() << "[ERROR] Input *.desktop link file is missing the URL line:" << inFile;
-          exit(1);
+	  ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
         }
         break;
       case XDGDesktop::DIR:
@@ -240,13 +247,11 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           cmd.clear();
           extension = "directory";
         }else{
-          qDebug() << "[ERROR] Input *.desktop directory file is missing the Path line:" << inFile;
-          exit(1);
+	  ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
         }
         break;
       default:
-        qDebug() << "[ERROR] Unknown *.desktop file type:" << inFile;
-        exit(1);
+	ShowErrorDialog( argc, argv, QString(QObject::tr("Unknown type of shortcut : %1")).arg(inFile) );
     }
   }
   if(cmd.isEmpty()){

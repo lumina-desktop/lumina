@@ -200,10 +200,12 @@ void NotePadPlugin::updateContents(){
   QString note = cnote->currentData().toString();
   updating = true;
   LUtils::writeFile(note, edit->toPlainText().split("\n"), true);
+  QApplication::processEvents(); //make sure to process/discard the file changed signal before disabling the flag
   updating = false;
 }
 
 void NotePadPlugin::notesDirChanged(){
+  if(updating){ return; }
   QString cfile = settings->value("currentFile","").toString();
   QStringList notes;
   QDir dir(QDir::homePath()+"/Notes");

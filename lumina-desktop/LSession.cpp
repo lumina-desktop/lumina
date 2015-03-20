@@ -205,6 +205,9 @@ void LSession::launchStartupApps(){
   
   //Now play the login music
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+    //Make sure to re-set the system volume to the last-used value at outset
+    int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
   if(sessionsettings->value("EnableNumlock",true).toBool()){
@@ -254,6 +257,11 @@ void LSession::checkUserFiles(){
     }*/
     LUtils::LoadSystemDefaults();
   }
+  if(oldversion <= 83){
+    //Convert the old->new favorites framework
+	  
+  }
+  
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
   if(!QFile::exists(dset)){
@@ -315,21 +323,24 @@ void LSession::updateDesktops(){
       }
     }
     //qDebug() << " - Done Starting Desktops";
-    //Make sure all the background windows are registered on the system as virtual roots
-    QTimer::singleShot(200,this, SLOT(registerDesktopWindows()));
-    if(firstrun){ return; } //Done right here on first run
+
+    if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
-    for(int i=0; i<DESKTOPS.length(); i++){
-      if(DESKTOPS[i]->Screen() >= DW->screenCount()){
-	qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
-        DESKTOPS[i]->prepareToClose(); //hide();
-	delete DESKTOPS.takeAt(i);
-	i--;
-      }else{
-	qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
-        DESKTOPS[i]->show();
+      for(int i=0; i<DESKTOPS.length(); i++){
+        if(DESKTOPS[i]->Screen() >= DW->screenCount()){
+	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
+          DESKTOPS[i]->prepareToClose(); //hide();
+	  delete DESKTOPS.takeAt(i);
+	  i--;
+        }else{
+	  qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
+          DESKTOPS[i]->show();
+        }
       }
+      WM->updateWM(); //Make sure fluxbox also gets prompted to re-load screen config
     }
+    //Make sure all the background windows are registered on the system as virtual roots
+    QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
     //qDebug() << " - Done Checking Desktops";
 }
 

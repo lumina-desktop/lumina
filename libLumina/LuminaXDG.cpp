@@ -20,7 +20,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.isHidden=false;
     DF.useTerminal=false;
     DF.startupNotify=false;
-    DF.type = XDGDesktop::BAD;
+    DF.type = XDGDesktop::APP;
     DF.filePath = filePath;
     DF.exec = DF.tryexec = "";   // just to make sure this is initialized
   //Check input file path validity
@@ -63,6 +63,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     }
     else if( (var=="TryExec") && (DF.tryexec.isEmpty()) ) { DF.tryexec = val; }
     else if( (var=="Exec") && (DF.exec.isEmpty() ) ) { DF.exec = val; }   // only take the first Exec command in the file
+    else if( (var=="Path") && (DF.path.isEmpty() ) ){ DF.path = val; }
     else if(var=="NoDisplay" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Hidden" && !DF.isHidden){ DF.isHidden = (val.toLower()=="true"); }
     else if(var=="Categories"){ DF.catList = val.split(";",QString::SkipEmptyParts); }
@@ -82,7 +83,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       if(val.toLower()=="application"){ DF.type = XDGDesktop::APP; }
       else if(val.toLower()=="link"){ DF.type = XDGDesktop::LINK; }
       else if(val.toLower()=="dir"){ DF.type = XDGDesktop::DIR; }
-      else{ DF.type = XDGDesktop::BAD; }
+      else{ DF.type = XDGDesktop::BAD; } //Unknown type
     }
   } //end reading file
   file.close();
@@ -254,10 +255,11 @@ QString LXDG::getDesktopExec(XDGDesktop app){
     out = app.exec;
   }
   //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
-  if(out.contains("%i")){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
+  if(out.contains("%i") && !app.icon.isEmpty() ){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
   if(out.contains("%c")){ 
-    if(!app.name.isEmpty()){ out.replace("%c", ""+app.name+""); }
-    else if(!app.genericName.isEmpty()){ out.replace(" %c ", ""+app.genericName+""); }
+    if(!app.name.isEmpty()){ out.replace("%c", "\'"+app.name+"\'"); }
+    else if(!app.genericName.isEmpty()){ out.replace("%c", "\'"+app.genericName+"\'"); }
+    else{ out.replace("%c", "\'"+app.filePath.section("/",-1).section(".desktop",0,0)+"\'"); }
   }
   if(out.contains("%k")){ out.replace("%k", "\'"+app.filePath+"\'"); }
   return out;

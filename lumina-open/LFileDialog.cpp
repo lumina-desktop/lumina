@@ -239,7 +239,7 @@ void LFileDialog::on_tool_ok_clicked(){
     bool ok = false;
     XDGDesktop app = LXDG::loadDesktopFile(PREFAPPS[ui->combo_rec->currentIndex()], ok);
     //Set the output variables
-    appExec = app.exec;
+    appExec =  LXDG::getDesktopExec(app);
     appPath = app.path;
     appFile = app.filePath;
     setPreferredApplication(app.filePath); //bump this to the top of the preferred list for next time
@@ -248,7 +248,7 @@ void LFileDialog::on_tool_ok_clicked(){
     bool ok = false;
     XDGDesktop app = LXDG::loadDesktopFile(ui->tree_apps->currentItem()->whatsThis(0), ok);
     //Set the output variables
-    appExec = app.exec;
+    appExec = LXDG::getDesktopExec(app);
     appPath = app.path;
     appFile = app.filePath;
     setPreferredApplication(app.filePath); //save this app to this extension as a recommendation

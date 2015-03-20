@@ -287,6 +287,7 @@ void LDesktop::UpdateDesktop(){
       if(DEBUG){qDebug() << " -- New Plugin:" << plugins[i];}
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
       if(plug != 0){
+	connect(plug, SIGNAL(OpenDesktopMenu()), this, SLOT(ShowMenu()) );
 	//qDebug() << " -- Show Plugin";
 	PLUGINS << plug;
 	CreateDesktopPluginContainer(plug);

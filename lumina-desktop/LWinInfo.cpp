@@ -15,16 +15,18 @@
 QString  LWinInfo::text(){
   if(window==0){ return ""; }
   QString nm = LSession::handle()->XCB->WindowVisibleIconName(window);
-  if(nm.isEmpty()){ nm = LSession::handle()->XCB->WindowIconName(window); }
-  if(nm.isEmpty()){ nm = LSession::handle()->XCB->WindowVisibleName(window); }
-  if(nm.isEmpty()){ nm = LSession::handle()->XCB->WindowName(window); }
+  if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->WindowIconName(window); }
+  if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->WindowVisibleName(window); }
+  if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->WindowName(window); }
+  if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->OldWindowIconName(window); }
+  if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->OldWindowName(window); }
   return nm;
 }
 
 QIcon LWinInfo::icon(bool &noicon){
   if(window==0){ noicon = true; return QIcon();}
   noicon = false;
-  QIcon ico = LX11::WindowIcon(window);
+  QIcon ico = LSession::handle()->XCB->WindowIcon(window);
   //Check for a null icon, and supply one if necessary
   if(ico.isNull()){ ico = LXDG::findIcon( this->Class().toLower(),""); }
   if(ico.isNull()){ico = LXDG::findIcon("preferences-system-windows",""); noicon=true;}

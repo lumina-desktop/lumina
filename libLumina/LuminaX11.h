@@ -91,8 +91,8 @@ public:
 	static QString WindowVisibleName(WId); 	// long name (translated)
 	static QString WindowIconName(WId); 	// short name (untranslated)
 	static QString WindowVisibleIconName(WId); // short name (translated)
-	static QIcon WindowIcon(WId);			// Icon for the window
-	static QPixmap WindowImage(WId win, bool useleader=true);		// Image for the window
+	//static QIcon WindowIcon(WId);			// Icon for the window
+	//static QPixmap WindowImage(WId win, bool useleader=true);		// Image for the window
 	static int WindowDesktop(WId);			// Which virtual desktop the window is on
 	static WINDOWSTATE GetWindowState(WId win); //State of activity
 	static WId leaderWindow(WId); 			//Get the main window if this one is a redirect
@@ -133,11 +133,15 @@ public:
 	unsigned int WindowWorkspace(WId); //The workspace the window is on
 	QRect WindowGeometry(WId, bool includeFrame = true); //the geometry of the window (frame excluded)
 	WINDOWSTATE WindowState(WId win); //Visible state of window
-	QString WindowVisibleIconName(WId win); //_WM_VISIBLE_ICON_NAME
-	QString WindowIconName(WId win); //_WM_ICON_NAME
-	QString WindowVisibleName(WId win); //_WM_VISIBLE_NAME
-	QString WindowName(WId win); //_WM_NAME
+	QString WindowVisibleIconName(WId win); //_NET_WM_VISIBLE_ICON_NAME
+	QString WindowIconName(WId win); //_NET_WM_ICON_NAME
+	QString WindowVisibleName(WId win); //_NET_WM_VISIBLE_NAME
+	QString WindowName(WId win); //_NET_WM_NAME
+	QString OldWindowName(WId win); //WM_NAME (old standard)
+	QString OldWindowIconName(WId win); //WM_ICON_NAME (old standard)
 	bool WindowIsMaximized(WId win);
+	QIcon WindowIcon(WId win); //_NET_WM_ICON
+	QPixmap WindowImage(WId win); //Pull the image directly from the window
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces

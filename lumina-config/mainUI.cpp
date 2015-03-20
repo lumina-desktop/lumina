@@ -11,11 +11,13 @@
 #include <QImageReader>
 #include <QTime>
 #include <QDate>
+#include <QTimeZone>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
   this->setWindowIcon( LXDG::findIcon("preferences-desktop-display","") );
   PINFO = new LPlugins(); //load the info class
+  panadjust = false;
   DEFAULTBG = LOS::LuminaShare()+"desktop-background.jpg";
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
@@ -234,6 +236,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_help_date, SIGNAL(clicked()), this, SLOT(sessionShowDateCodes()) );
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
+  connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
 }
 
 void MainUI::setupMenus(){
@@ -272,7 +275,28 @@ void MainUI::setupMenus(){
     ui->combo_session_wtheme->addItem(fbstyles[i], fbdir.absoluteFilePath(fbstyles[i]));
   }
 
-
+  //Available Time zones
+  ui->combo_session_timezone->clear();
+  QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
+  QDateTime DT = QDateTime::currentDateTime();
+  QStringList tzlist; //Need to create a list which can be sorted appropriately
+  for(int i=0; i<TZList.length(); i++){
+    QTimeZone TZ(TZList[i]);
+    if(TZ.country()<=0){ continue; } //skip this one
+    QString name = QLocale::countryToString(TZ.country());
+    if(name.count() > 20){ name = name.left(20)+"..."; }
+    name = QString(tr("%1 (%2)")).arg(name, TZ.abbreviation(DT));
+    if(tzlist.filter(name).isEmpty()){
+      tzlist << name+"::::"+QString::number(i);
+    }
+  }
+  tzlist.sort();
+  for(int i=0; i<tzlist.length(); i++){
+    ui->combo_session_timezone->addItem( tzlist[i].section("::::",0,0), TZList[tzlist[i].section("::::",1,1).toInt()]);
+  }
+  //ui->combo_session_timezone->sort();
+  //Now set the default/system value
+  ui->combo_session_timezone->insertItem(0,tr("System Time"));
 }
 
 int MainUI::currentDesktop(){
@@ -485,11 +509,21 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->list_panel1_plugins->clear();
     for(int i=0; i<plugs.length(); i++){
       QString pid = plugs[i].section("---",0,0);
-      LPI info = PINFO->panelPluginInfo(pid);
-      if(!info.ID.isEmpty()){
-        QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+      if(pid.startsWith("applauncher")){
+	bool ok = false;
+	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
+	if(ok){
+	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
-	ui->list_panel1_plugins->addItem(it);
+	  ui->list_panel1_plugins->addItem(it);
+	}
+      }else{
+        LPI info = PINFO->panelPluginInfo(pid);
+        if(!info.ID.isEmpty()){
+          QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
+	  ui->list_panel1_plugins->addItem(it);
+        }
       }
     }
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
@@ -864,7 +898,8 @@ void MainUI::checkpanels(){
 
 void MainUI::adjustpanel1(){
   //Adjust panel 1 to complement a panel 2 change
-  if(loading){ return; }
+  if(loading || panadjust){ return; }
+  panadjust = true;
   qDebug() << "Adjust Panel 1:";
   ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
   bool changed = false;
@@ -883,11 +918,13 @@ void MainUI::adjustpanel1(){
     changed = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
   }
+  panadjust = false;
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
-  if(loading){ return; }
+  if(loading || panadjust){ return; }
+  panadjust = true;
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
   ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
@@ -907,7 +944,8 @@ void MainUI::adjustpanel2(){
     changed = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
   }
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  panadjust = false;
+  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 
@@ -935,14 +973,26 @@ void MainUI::addpanel1plugin(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
-  if(pan.isEmpty()){ return; } //nothing selected
-  //Add the new plugin to the list
-  LPI info = PINFO->panelPluginInfo(pan);
-  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
-    it->setWhatsThis(info.ID);
-  ui->list_panel1_plugins->addItem(it);
-  ui->list_panel1_plugins->setCurrentItem(it);
-  ui->list_panel1_plugins->scrollToItem(it);
+  if(pan == "applauncher"){
+    //Prompt for the application to add
+    XDGDesktop app = getSysApp();
+    if(app.filePath.isEmpty()){ return; } //cancelled
+    pan.append("::"+app.filePath);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+      it->setWhatsThis(pan);
+    ui->list_panel1_plugins->addItem(it);
+    ui->list_panel1_plugins->setCurrentItem(it);
+    ui->list_panel1_plugins->scrollToItem(it);
+  }else{
+    if(pan.isEmpty()){ return; } //nothing selected
+    //Add the new plugin to the list
+    LPI info = PINFO->panelPluginInfo(pan);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+      it->setWhatsThis(info.ID);
+    ui->list_panel1_plugins->addItem(it);
+    ui->list_panel1_plugins->setCurrentItem(it);
+    ui->list_panel1_plugins->scrollToItem(it);
+  }
   checkpanels(); //update buttons
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
@@ -953,14 +1003,26 @@ void MainUI::addpanel2plugin(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
-  if(pan.isEmpty()){ return; } //nothing selected
-  //Add the new plugin to the list
-  LPI info = PINFO->panelPluginInfo(pan);
-  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
-    it->setWhatsThis(info.ID);
-  ui->list_panel2_plugins->addItem(it);
-  ui->list_panel2_plugins->setCurrentItem(it);
-  ui->list_panel2_plugins->scrollToItem(it);
+  if(pan == "applauncher"){
+    //Prompt for the application to add
+    XDGDesktop app = getSysApp();
+    if(app.filePath.isEmpty()){ return; } //cancelled
+    pan.append("::"+app.filePath);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+      it->setWhatsThis(pan);
+    ui->list_panel2_plugins->addItem(it);
+    ui->list_panel2_plugins->setCurrentItem(it);
+    ui->list_panel2_plugins->scrollToItem(it);
+  }else{
+    if(pan.isEmpty()){ return; } //nothing selected
+    //Add the new plugin to the list
+    LPI info = PINFO->panelPluginInfo(pan);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+      it->setWhatsThis(info.ID);
+    ui->list_panel2_plugins->addItem(it);
+    ui->list_panel2_plugins->setCurrentItem(it);
+    ui->list_panel2_plugins->scrollToItem(it);
+  }
   checkpanels(); //update buttons
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
@@ -1729,6 +1791,14 @@ void MainUI::loadSessionSettings(){
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
+  if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
+    //System Time selected
+    ui->combo_session_timezone->setCurrentIndex(0);
+  }else{
+    int index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
+    if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
+    else{ ui->combo_session_timezone->setCurrentIndex(0); }
+  }
   
   //Now do the session theme options
   ui->combo_session_themefile->clear();
@@ -1821,6 +1891,14 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
+  if( ui->combo_session_timezone->currentIndex()==0){
+    //System Time selected
+    sessionsettings->setValue("CustomTimeZone", false);
+    sessionsettings->setValue("TimeZoneByteCode", QByteArray()); //clear the value
+  }else{
+    sessionsettings->setValue("CustomTimeZone", true);
+    sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
+  }
   
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
@@ -1828,6 +1906,7 @@ void MainUI::saveSessionSettings(){
   QString iconset = ui->combo_session_icontheme->currentText();
   QString font = ui->font_session_theme->currentFont().family();
   QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
+  //qDebug() << "Saving theme options:" << themefile << colorfile << iconset << font << fontsize;
   LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
 }
 

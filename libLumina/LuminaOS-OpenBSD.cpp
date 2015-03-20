@@ -190,4 +190,21 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
   return (min * 60);
 }
 
+//File Checksums
+QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
+  //on OpenBSD md5 has the following layout 
+  //>md5 LuminaThemes.o LuminaUtils.o 
+  //MD5 (LuminaThemes.o) = 50006505d9d7e54e5154eeb095555055
+  //MD5 (LuminaUtils.o) = d490878ee8866e55e5af571b98b4d448
+
+  QStringList info = LUtils::getCmdOutput("md5 \""+filepaths.join("\" \"")+"\"");
+  for(int i=0; i<info.length(); i++){
+    if( !info[i].contains(" = ") ){ info.removeAt(i); i--; }
+    else{
+      //Strip out the extra information
+      info[i] = info[i].section(" = ",1,1);
+    }
+  }
+ return info;
+}
 #endif

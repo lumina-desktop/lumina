@@ -16,6 +16,7 @@
 #include <QString>
 #include <QFile>
 #include <QDir>
+#include <QTimer>
 
 class LTHEME{
 public:
@@ -63,9 +64,11 @@ private:
 	QApplication *application;
 	QFileSystemWatcher *watcher;
 	QString theme,colors,icons, font, fontsize; //current settings
+	QTimer *syncTimer;
 
 private slots:
 	void watcherChange();
+	void reloadFiles();
 
 signals:
 	void updateIcons();

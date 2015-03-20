@@ -68,6 +68,10 @@ public slots:
 	  //This needs to be re-implemented in the subclassed plugin
 	    //This is where all the visuals are set if using Theme-dependant icons.
 	}
+	
+signals:
+	void OpenDesktopMenu();
+	
 };
 
 #endif

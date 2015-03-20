@@ -25,6 +25,7 @@
 #include <xcb/xproto.h>
 #include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_icccm.h>
+#include <xcb/xcb_image.h>
 
 
 //=====   WindowList() ========
@@ -425,6 +426,8 @@ bool LX11::EmbedWindow(WId win, WId container){
   //qDebug() << "Embed Window:" << win << container;
   XReparentWindow(disp, win, container,0,0);
   XSync(disp, false);
+  //Map the window
+  XMapRaised(disp, win); //make it visible again and raise it to the top
   //Check that the window has _XEMBED_INFO
   //qDebug() << " - check for _XEMBED_INFO";
   Atom embinfo = XInternAtom(disp, "_XEMBED_INFO",false);
@@ -436,7 +439,7 @@ bool LX11::EmbedWindow(WId win, WId container){
     return false; //Embedding error (no info?)
   }
   if(data){ XFree(data); } // clean up any data found
-	
+
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
   XEvent ev;
@@ -515,7 +518,7 @@ QString LX11::WindowVisibleIconName(WId win){
 }
 
 // ===== WindowIcon() =====
-QIcon LX11::WindowIcon(WId win){
+/*QIcon LX11::WindowIcon(WId win){
   //Use the _NET_WM_ICON value instead of the WMHints pixmaps
 	// - the pixmaps are very unstable and erratic
   QIcon icon;
@@ -544,11 +547,11 @@ QIcon LX11::WindowIcon(WId win){
     XFree(data);
   }
   return icon;
-}
+}*/
 
 
 // ===== WindowImage() =====
-QPixmap LX11::WindowImage(WId win, bool useleader){
+/*QPixmap LX11::WindowImage(WId win, bool useleader){
   QPixmap pix;
   Display *disp = QX11Info::display();
   WId leader = LX11::leaderWindow(win); //check for an alternate window that contains the image
@@ -565,7 +568,7 @@ QPixmap LX11::WindowImage(WId win, bool useleader){
   }
   //Return the pixmap
   return pix;
-}
+}*/
 
 // ===== GetNumberOfDesktops() =====
 int LX11::WindowDesktop(WId win){
@@ -1009,7 +1012,7 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
 }
 
 // === WindowVisibleIconName() ===
-QString LXCB::WindowVisibleIconName(WId win){ //_WM_VISIBLE_ICON_NAME
+QString LXCB::WindowVisibleIconName(WId win){ //_NET_WM_VISIBLE_ICON_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1021,7 +1024,7 @@ QString LXCB::WindowVisibleIconName(WId win){ //_WM_VISIBLE_ICON_NAME
 }
 
 // === WindowIconName() ===
-QString LXCB::WindowIconName(WId win){ //_WM_ICON_NAME
+QString LXCB::WindowIconName(WId win){ //_NET_WM_ICON_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1033,7 +1036,7 @@ QString LXCB::WindowIconName(WId win){ //_WM_ICON_NAME
 }
 
 // === WindowVisibleName() ===
-QString LXCB::WindowVisibleName(WId win){ //_WM_VISIBLE_NAME
+QString LXCB::WindowVisibleName(WId win){ //_NET_WM_VISIBLE_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1045,7 +1048,7 @@ QString LXCB::WindowVisibleName(WId win){ //_WM_VISIBLE_NAME
 }
 
 // === WindowName() ===
-QString LXCB::WindowName(WId win){ //_WM_NAME
+QString LXCB::WindowName(WId win){ //_NET_WM_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1054,6 +1057,32 @@ QString LXCB::WindowName(WId win){ //_WM_NAME
       out = QString::fromUtf8(data.strings, data.strings_len);
   }
   return out;
+}
+
+// === OldWindowName() ===
+QString LXCB::OldWindowName(WId win){ //WM_NAME (old standard)
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 == xcb_icccm_get_wm_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    QString name = QString::fromLocal8Bit(reply.name);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return name;
+  }else{
+    return "";
+  }	
+}
+
+// === OldWindowIconName() ===
+QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 == xcb_icccm_get_wm_icon_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    QString name = QString::fromLocal8Bit(reply.name);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return name;
+  }else{
+    return "";
+  }	
 }
 
 // === WindowIsMaximized() ===
@@ -1072,6 +1101,56 @@ bool LXCB::WindowIsMaximized(WId win){
     }
   }
   return false;
+}
+
+// === WindowIcon() ===
+QIcon LXCB::WindowIcon(WId win){
+  //Fetch the _NET_WM_ICON for the window and return it as a QIcon
+  QIcon icon;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_unchecked(&EWMH, win);
+  xcb_ewmh_get_wm_icon_reply_t reply;
+  if(1 == xcb_ewmh_get_wm_icon_reply(&EWMH, cookie, &reply, NULL)){
+    xcb_ewmh_wm_icon_iterator_t iter = xcb_ewmh_get_wm_icon_iterator(&reply);
+    //Just use the first
+    bool done =false;
+    while(!done){
+      //Now convert the current data into a Qt image
+      // - first 2 elements are width and height (removed via XCB functions)
+      // - data in rows from left to right and top to bottom
+      QImage image(iter.width, iter.height, QImage::Format_ARGB32); //initial setup
+	uint* dat = iter.data;
+	//dat+=2; //remember the first 2 element offset
+	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
+	  ((uint*)image.bits())[i] = *dat; 
+	}
+      icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
+      //Now see if there are any more icons available
+      done = (iter.rem<1); //number of icons remaining
+      if(!done){ xcb_ewmh_get_wm_icon_next(&iter); } //get the next icon data
+    }
+    xcb_ewmh_get_wm_icon_reply_wipe(&reply);
+  }
+  return icon;
+}
+
+// === WindowImage() ===
+QPixmap LXCB::WindowImage(WId win){
+  QPixmap pix;
+	
+  //First get the size of the window
+  xcb_get_geometry_cookie_t cookie = xcb_get_geometry_unchecked(QX11Info::connection(), win);
+  xcb_get_geometry_reply_t *reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
+  if(reply == 0){ return pix; } //could not determine window geometry
+  //Now get the image 
+  xcb_image_t *img = xcb_image_get(QX11Info::connection(), win, 0, 0, reply->width, reply->height, (uint32_t) AllPlanes, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  if(img!=0){
+    //Now convert the image into a QPixmap
+    pix.convertFromImage( QImage( (const uchar*) img->data, img->width, img->height, img->stride, QImage::Format_ARGB32_Premultiplied) );
+    //Clean up the xcb_image structure
+    xcb_image_destroy(img);
+  }
+  //Return the pixmap
+  return pix;
 }
 
 // === SetAsSticky() ===

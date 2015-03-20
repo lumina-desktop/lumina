@@ -173,7 +173,7 @@ void MainUI::setupIcons(){
   ui->tool_act_paste->setIcon( LXDG::findIcon("edit-paste","") );
   ui->tool_act_rename->setIcon( LXDG::findIcon("edit-rename","") );
   ui->tool_act_rm->setIcon( LXDG::findIcon("edit-delete","") );
-  ui->tool_act_fav->setIcon( LXDG::findIcon("quickopen","") );
+  ui->tool_act_fav->setIcon( LXDG::findIcon("bookmark-toolbar","") );
 	
   //Multimedia Player page
   ui->tool_player_next->setIcon( LXDG::findIcon("media-skip-forward","") );
@@ -945,6 +945,7 @@ void MainUI::OpenContextMenu(const QPoint &pt){
       contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(OpenItemWith()) );
     }
     contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename"), this, SLOT(RenameItem()) )->setEnabled(info.isWritable());
+    contextMenu->addAction(LXDG::findIcon("document-encrypted",""), tr("View Checksums"), this, SLOT(ChecksumItems()) );
     contextMenu->addSeparator();
   }
   bool hasSelection = !getSelectedItems().isEmpty();
@@ -979,7 +980,17 @@ void MainUI::ItemSelectionChanged(){
   }
   QString itname;
   if(sel.length()==1){ itname = sel[0].fileName(); }
-  ui->tool_act_fav->setEnabled(!itname.isEmpty() && !QFile::exists(favdir+itname) );
+  bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
+  if(ok){
+    if(QFile::exists(favdir+itname)){
+      //Make sure this favorite does not already point to the current file
+      QFileInfo info(favdir+itname);
+      if(info.isSymLink() && info.exists()){
+	ok = false; //still an active favorite - do not allow replacement
+      }
+    }
+  }
+  ui->tool_act_fav->setEnabled(ok);
 }
 
 //-------------------------------
@@ -1293,17 +1304,17 @@ void MainUI::RemoveItem(){
    if(!checkUserPerms()){ return; }
    //Get the selected items
    QStringList paths, names;
-   if(CItem.isEmpty()){
+   //if(CItem.isEmpty()){
      QFileInfoList sel = getSelectedItems();
      for(int i=0; i<sel.length(); i++){
        paths << sel[i].absoluteFilePath();
        names << sel[i].fileName();
      }
      if(sel.isEmpty()){ return; } //nothing selected
-  }else{
+  /*}else{
     paths << CItem;
     names << CItem.section("/",-1);
-  }
+  }*/
   //Verify permanent removal of file/dir
   if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+names.join("\n"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
     return; //cancelled
@@ -1371,6 +1382,7 @@ void MainUI::FavoriteItem(){
   QString fname = CItem;
   QString fullpath = fname;
     fname = fname.section("/",-1); //turn this into just the file name
+  if(QFile::exists(favdir+fname)){ QFile::remove(favdir+fname); } //remove the stale link
   QFile::link(fullpath, favdir+fname);
   CItem.clear();
   ItemSelectionChanged();
@@ -1470,8 +1482,30 @@ void MainUI::PasteItems(){
 	QApplication::clipboard()->setMimeData(dat);
     }
   }
-  ItemSelectionChanged();
-	
+  ItemSelectionChanged();	
+}
+
+void MainUI::ChecksumItems(){
+  if(ui->stackedWidget->currentWidget()!=ui->page_browser){ return; }
+  QFileInfoList sel = getSelectedItems();
+  if(sel.isEmpty()){ return; }
+  QStringList info, files;
+  for(int i=0; i<sel.length(); i++){
+    files << sel[i].absoluteFilePath();
+  }
+  qDebug() << "Run Checksums:" << files;
+  info = LOS::Checksums(files);
+  qDebug() << " - Info:" << info;
+  if(info.isEmpty() || (info.length() != files.length()) ){ return; }
+  for(int i=0; i<info.length(); i++){
+    info[i] = QString("%2  \t(%1)").arg(files[i].section("/",-1), info[i]);
+  }
+  /*QMessageBox dlg(this);
+    dlg.setWindowFlags( Qt::Dialog );
+    dlg.setWindowTitle( tr("File Checksums") );
+    dlg.setInformativeText(info.join("\n"));
+  dlg.exec();*/
+  QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
 }
 
 void MainUI::resizeEvent(QResizeEvent *event){

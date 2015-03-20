@@ -16,7 +16,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
   //Setup the Icons
     // - favorites tab
-    this->setTabIcon(0, rotateIcon(LXDG::findIcon("favorites","")) );
+    this->setTabIcon(0, rotateIcon(LXDG::findIcon("folder-favorites","")) );
     this->setTabText(0,"");
     // - apps tab
     this->setTabIcon(1, rotateIcon(LXDG::findIcon("system-run","")) );
@@ -194,6 +194,16 @@ void UserWidget::updateFavItems(){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
   }
   static_cast<QBoxLayout*>(ui->scroll_fav->widget()->layout())->addStretch();
+  
+  //Clean up any broken sym-links in the favorites directory
+  /*items = favdir.entryInfoList(QDir::System | QDir::NoDotAndDotDot, QDir::Name);
+  for(int i=0; i<items.length(); i++){
+    if(items[i].isSymLink() && !items[i].exists()){
+      //Broken sym-link - remove it
+      QFile::remove(items[i].absoluteFilePath());
+    }
+  }*/
+  
 }
 
 //Apps Tab

@@ -3,6 +3,8 @@
 #include <LuminaXDG.h>
 #include <QMediaServiceSupportedFormatsInterface>
 #include <QImageReader>
+#include <QDir>
+#include <QFileInfo>
 
 BackgroundWorker::BackgroundWorker() : QObject(){
 
@@ -14,6 +16,9 @@ BackgroundWorker::~BackgroundWorker(){
 
 void BackgroundWorker::startDirChecks(QString path){
   QDir dir(path);
+  //Make sure to remove any symlinks or redundency in the path
+  if(dir.canonicalPath()!=path){ path = dir.canonicalPath(); dir.cd(path); }
+  qDebug() << "Starting Dir Checks:" << path;
   //First check for image files
   if(imgFilter.isEmpty()){
     //Initial Run - load supported image extensions
@@ -34,27 +39,30 @@ void BackgroundWorker::startDirChecks(QString path){
   }
   QStringList files = dir.entryList(multiFilter, QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
   if(!files.isEmpty() && !multiFilter.isEmpty()){ emit MultimediaAvailable(files); }
-  
+  qDebug() << " - done with audio/multimedia checks";
   //Now check for ZFS snapshots of the directory
   if(!QFileInfo(path).isWritable() ){ return; } //skip ZFS checks if can't restore to this dir
   cdir = path;
   QStringList snapDirs; 
   QString baseSnapDir;
   bool found = false;
+  qDebug() << " - start searching for base snapshot directory";
   if(cdir == path && QFile::exists(csnapdir) ){ 
      //no need to re-search for it - just found it recently
     baseSnapDir= csnapdir; found=true;
   }else{
-    while(dir.absolutePath()!="/" && !found){
+    while(dir.canonicalPath()!="/" && !found){
       if(dir.exists(".zfs/snapshot")){ 
         baseSnapDir = dir.canonicalPath()+"/.zfs/snapshot";
 	found = true;
       }else{ dir.cdUp(); }
     }
   }
+  qDebug() << " - done with base snapshot directory";
   cdir = path; csnapdir = baseSnapDir;
   //Now find the snapshots that contain this directory and save them
   if(found){
+    qDebug() << " - start fetching snapshots";
     QString reldir = path;
 	  reldir.remove(baseSnapDir.section("/.zfs/snapshot",0,0)); //convert to a relative path
     dir.cd(baseSnapDir);
@@ -68,12 +76,13 @@ void BackgroundWorker::startDirChecks(QString path){
 	snapDirs[i] = QFileInfo(dir, snapDirs[i]+"/"+reldir).created().toString("yyyyMMddhhmmsszzz")+"::::"+snapDirs[i];
       }
     }
+    qDebug() << " - done fetching snapshots";
     snapDirs.sort();
     //Sort the snapshots by time (newest last) and format them
     for(int i=0; i<snapDirs.length(); i++){
       snapDirs[i] = dir.absolutePath()+"/"+snapDirs[i].section("::::",1,50)+"/"+reldir;
     }
     if(!snapDirs.isEmpty()){ emit SnapshotsAvailable(baseSnapDir, snapDirs); }
-    //qDebug() << "Found snapshots:" << snapDirs;
+    qDebug() << "Found snapshots";
   }
 }
