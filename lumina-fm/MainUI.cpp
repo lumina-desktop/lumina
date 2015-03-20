@@ -445,15 +445,11 @@ void MainUI::setCurrentDir(QString dir){
   //if(olddir!=rawdir){
     emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
   //}
-  if(isUserWritable){ 
-      if (DEBUG) {qDebug() << "# Items:" << fsmod->rootDirectory().entryInfoList().size();}
-      QString strSize = QString(tr("Items:")) + QString::number(fsmod->rootDirectory().entryInfoList().size());
-      ui->label_dir_stats->setText(strSize);
+  if(isUserWritable){ ui->label_dir_stats->setText(""); }
+  else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
   }
-  else{ 
-      QString strSize = QString(tr("Limited Access Directory. Items:")) + QString::number(fsmod->rootDirectory().entryInfoList().size());
-      ui->label_dir_stats->setText(strSize);
-  }
+  QString strSize = QString(tr("Items:")) + QString::number(fsmod->rootDirectory().entryInfoList().size());
+  ui->statusbar->showMessage(strSize);
   ui->tool_addToDir->setVisible(isUserWritable);
   ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
