@@ -396,6 +396,27 @@ QString MainUI::getCurrentDir(){
   return currentDir->whatsThis();
 }
 
+QString MainUI::ItemsInstatusBar(QFileInfoList fileList, QString message){
+  int i = 0;
+  qreal totalSizes = 0;
+  foreach (QFileInfo fileInfo, fileList )
+  {
+	  if (fileInfo.isFile()) totalSizes += fileInfo.size();
+	      i += 1;
+  }
+  if (i==0) return "";
+  QString strSize = QString(tr("%1: %2")).arg(message).arg(i);
+  if (i>0 and totalSizes>1024*1024*1024) 
+    strSize += QString(tr(", size: %1 Gb")).arg(totalSizes/1024/1024/1024, 0,'f', 2);
+  else if (i>0 and totalSizes>1024*1024) 
+    strSize += QString(tr(", size: %1 Mb")).arg(totalSizes/1024/1024, 0,'f',2);
+  else if (i>0 and totalSizes>1024) 
+    strSize += QString(tr(", size: %1 Kb")).arg(totalSizes/1024, 0, 'f' , 2);
+  else
+  if (totalSizes > 0) { strSize += QString(tr(", size: %1 b")).arg(totalSizes, 0, 'f' , 2);}
+  return strSize;
+}
+
 void MainUI::setCurrentDir(QString dir){
   if(dir.isEmpty()){ return; }
   if(syncTimer->isActive()){ syncTimer->stop(); } //already loading the info
@@ -449,27 +470,9 @@ void MainUI::setCurrentDir(QString dir){
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
   }
   QFileInfoList fileList = fsmod->rootDirectory().entryInfoList();
-  int i = 0;
-  qreal totalSizes = 0;
-  foreach (QFileInfo fileInfo, fileList )
-  {
-	  if (fileInfo.isFile()) {
-		  totalSizes += fileInfo.size();
-	      i += 1;
-	  }
-  }
-  QString strSize = QString(tr("Items: %1")).arg(i);
-  if (i>0 and totalSizes>1024*1024*1024) 
-    strSize += QString(tr(", size: %1 Gb")).arg(totalSizes/1024/1024/1024, 0,'f', 2);
-  else if (i>0 and totalSizes>1024*1024) 
-    strSize += QString(tr(", size: %1 Mb")).arg(totalSizes/1024/1024, 0,'f',2);
-  else if (i>0 and totalSizes>1024) 
-    strSize += QString(tr(", size: %1 Kb")).arg(totalSizes/1024, 0, 'f' , 2);
-  else
-  if (i>0) { strSize += QString(tr(", size: %1 b")).arg(totalSizes, 0, 'f' , 2);}
+  QString msgStatusBar = ItemsInstatusBar(fileList, tr("Items"));
+  if (!msgStatusBar.isEmpty()) ui->statusbar->showMessage(msgStatusBar);
   
-  
-  ui->statusbar->showMessage(strSize);
   ui->tool_addToDir->setVisible(isUserWritable);
   ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
@@ -982,6 +985,9 @@ void MainUI::OpenContextMenu(const QPoint &pt){
 void MainUI::ItemSelectionChanged(){
   //Enable/disable the action buttons
   QFileInfoList sel = getSelectedItems();
+  QString msgStatusBar = ItemsInstatusBar(sel, tr("Items selected"));
+  if (!msgStatusBar.isEmpty()) ui->statusbar->showMessage(msgStatusBar);
+  
   ui->tool_act_run->setEnabled(sel.length()==1);
   ui->tool_act_runwith->setEnabled(sel.length()==1);
   ui->tool_act_rm->setEnabled(!sel.isEmpty() && isUserWritable);
