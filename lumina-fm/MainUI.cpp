@@ -1037,6 +1037,10 @@ void MainUI::removePicture(){
   QString file = getCurrentDir();
   if(!file.endsWith("/")){ file.append("/"); }
   file.append(ui->combo_image_name->currentText());
+  //Verify permanent removal of file/dir
+  if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+file, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+    return; //cancelled
+  }
   if( QFile::remove(file) ){
     int index = ui->combo_image_name->currentIndex();
     ui->combo_image_name->removeItem( index );
