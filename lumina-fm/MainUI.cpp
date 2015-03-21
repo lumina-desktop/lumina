@@ -471,6 +471,12 @@ void MainUI::setCurrentDir(QString dir){
   }
   QFileInfoList fileList = fsmod->rootDirectory().entryInfoList();
   QString msgStatusBar = ItemsInstatusBar(fileList, tr("Items"));
+  //3 following lines should be in LOS
+  QStringList mountInfo = LUtils::getCmdOutput("df " + dir);
+  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
+  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
+  if (msgStatusBar.isEmpty()) msgStatusBar += tr("Capacity: ") + capacity;
+  else msgStatusBar += tr(", Capacity: ") + capacity;
   if (!msgStatusBar.isEmpty()) ui->statusbar->showMessage(msgStatusBar);
   
   ui->tool_addToDir->setVisible(isUserWritable);
