@@ -195,4 +195,9 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
   }
  return info;
 }
+
+//file system capacity
+QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
+  return QString;
+}
 #endif

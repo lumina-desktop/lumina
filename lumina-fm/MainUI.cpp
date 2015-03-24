@@ -469,12 +469,11 @@ void MainUI::setCurrentDir(QString dir){
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
   }
+  
+  //collect some statistics of dir and display them in statusbar
   QFileInfoList fileList = fsmod->rootDirectory().entryInfoList();
   QString msgStatusBar = ItemsInstatusBar(fileList, tr("Items"));
-  //3 following lines should be in LOS
-  QStringList mountInfo = LUtils::getCmdOutput("df " + dir);
-  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
+  QString capacity = LOS::FileSystemCapacity(dir) ;
   if (msgStatusBar.isEmpty()) msgStatusBar += tr("Capacity: ") + capacity;
   else msgStatusBar += tr(", Capacity: ") + capacity;
   if (!msgStatusBar.isEmpty()) ui->statusbar->showMessage(msgStatusBar);
