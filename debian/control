@@ -6,15 +6,17 @@ Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
                libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev, make, g++,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
-               libqt5x11extras5-dev, qttools5-dev-tools
+               libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev
 Standards-Version: 3.9.5
 Homepage: https://github.com/pcbsd/lumina
 
 Package: lumina-desktop
-Architecture: all
-Depends: libluminautils1, lumina-core, lumina-config, lumina-fm,
+Architecture: any
+Replaces: lumina-core (<< 0.8.3.372)
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
+         libluminautils1, lumina-config, lumina-fm, oxygen-icon-theme,
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
-         lxpolkit
+         lxpolkit, lumina-data, fluxbox, numlockx, xbacklight, xscreensaver
 Recommends: qt5-configuration-tool
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
@@ -38,23 +40,10 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils-dev (= ${binary:Vers
 Description: Debugging symbols for lumina desktop environment
  Debugging symbols for libluminautils1
 
-Package: lumina-core
-Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
-        fluxbox, numlockx, xbacklight, xscreensaver, oxygen-icon-theme
-Description: Core package for the lumina desktop environment
- This package provides the basic components of lumina
- - session manager
- - panel with plugins
- - wallpaper setter
- - fluxbox configurator
- - desktop icon manager and menu
- - wallpapers
-
 Package: lumina-config
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Configuration utility for the lumina desktop environment
  lumina-config allows to change various aspects of lumina and fluxbox, like the
  wallpaper beeing used, startup-applications, desktop-menu and more.
@@ -62,7 +51,7 @@ Description: Configuration utility for the lumina desktop environment
 Package: lumina-fm
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Filemanager for the lumina desktop environment
  Simple filemanager for lumina with support for multiple view modes and
  integrated slideshow-based picture viewer.
@@ -70,7 +59,7 @@ Description: Filemanager for the lumina desktop environment
 Package: lumina-open
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: xdg-open like utilityfor the lumina desktop environment
  lumina-open handles opening of files and urls according to the system wide
  mime type association. It also provides an optional selector if more than one
@@ -79,7 +68,7 @@ Description: xdg-open like utilityfor the lumina desktop environment
 Package: lumina-screenshot
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Screenshot utility for the lumina desktop environment
  Simple screenshot utility that allows to snapshot the whole desktop or a single
  window after a configurable delay.
@@ -87,7 +76,7 @@ Description: Screenshot utility for the lumina desktop environment
 Package: lumina-search
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Search utility for the lumina desktop environment
  Simple search utility that allows to search for applications or files and
  directories in the user's HOME directory.
@@ -95,7 +84,7 @@ Description: Search utility for the lumina desktop environment
 Package: lumina-info
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Basic information utility for Lumina
  lumina-info display various information about the Lumina installation,
  like paths or version.
@@ -103,7 +92,17 @@ Description: Basic information utility for Lumina
 Package: lumina-xconfig
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
-Replaces: lumina-core (<< 0.8.2)
+Replaces: lumina-core (<< 0.8.3.372)
 Description: Display configuration tool for the lumina desktop environment
- lumina-info display various information about the Lumina installation,
- like paths or version.
+ Simple multi-head aware display configuration tool for Lumina
+
+Package: lumina-data
+Architecture: all
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}), lumina-desktop (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Data files for the lumina Desktop environment
+ - Lumina Wallpapers
+ - Lumina Themes
+ - Lumina Translations
+ - Lumina Sounds
+ - Fallback fluxbox configuration

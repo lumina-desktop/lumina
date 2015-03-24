@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -602,8 +602,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>263</width>
-                 <height>178</height>
+                 <width>233</width>
+                 <height>150</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -799,8 +799,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>263</width>
-                 <height>178</height>
+                 <width>233</width>
+                 <height>150</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1631,6 +1631,26 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_26">
+                <property name="text">
+                 <string>Time Zone:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QComboBox" name="combo_session_timezone">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToMinimumContentsLength</enum>
                 </property>
                </widget>
               </item>

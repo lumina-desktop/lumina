@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QString>
 #include <QLocale>
+#include <QTimeZone>
 
 #include "../LPPlugin.h"
 
@@ -26,7 +27,8 @@ private:
 	QTimer *timer;
 	QLabel *labelWidget;
 	QString timefmt, datefmt;
-	bool deftime, defdate;
+	bool deftime, defdate, useTZ;
+	QTimeZone TZ;
 	
 private slots:
 	void updateTime();

@@ -1,0 +1,47 @@
+Notes and guidelines for developers/contributors to the Lumina desktop environment
+----------------------------------------------------------------
+
+1) General Organization:
+	a) libLumina: This is where all frameworks or general-purpose functions should be placed
+	  LuminaOS: Any operating-system specific routines (usually running 3rd-party or OS-specific utilities)
+	  LuminaX11: Any X11/XCB interactions. This keeps it separate for the future conversion to other graphics subsystems (Wayland?)
+	  LuminaXDG: Any FreeDesktop/XDG standards functionality.
+	  LuminaUtils: Any static functions/utilities that are useful for multiple utilities/plugins.
+	  Lumina<X>: The class/framework for functionality <X> (Examples: LuminaThemes, LuminaSingleApplication)
+	
+	b) Utility naming:
+	  Make sure that the binary names for utilities start with "lumina-". This ensures that it is easy for a command-line user to find/list lumina-specific utilities
+		
+	c) Utility Combinations:
+	  In order to avoid adding tons of extra utilities to Lumina, see if that functionality can be easily added to existing utilities first.
+	  For example, "lumina-open" contains not just the file detection/usage, but also the application crash handler and small/fast system interactions (for keyboard shortcut usage).
+	
+	d) 3rd-party dependencies
+	  Try to avoid using 3rd-party dependencies whenever possible. Qt provides almost all the functionaliaty necessary (in a cross-OS capability) for 95% of what is necessary.
+	  If another utility *is* required, place it within the LuminaOS class, and also provide a function for checking if that functionality is possible (is the utility installed?). 
+	  If the utility is *not* installed, just disable/hide that functionality within the Lumina utility and move on.
+	
+2) General Coding Guidelines
+	a) Keep it simple! Try to have many small functions instead of a couple large ones. This makes it easier to maintain/update later on, and allows for a lot more "re-use" of functionality.
+	b) Keep it readable! Remember that other people may need to make changes in the future.
+	c) Keep is translatable! Try to put all the text-setting routines (for a static form) within a single function that can be re-run if the locale changes.
+	d) Comment what you are doing! It is very helpful to have the comments form an "outline" of the functionality so somebody reading the code can easily get an idea of what is happening.
+	NOTE: See reference [1] for a nice synopsis of good practices for coding.
+	
+3) Specific Qt/Lumina Coding Guidelines
+	a) When using a Qt designer form (recommended for any UI with more than a couple widgets), make sure it is loaded under the "ui" namespace/variable
+	This ensures that when browsing the *.cpp code, it is easy to distinguish the widgets which should be configured/modified in the Qt designer utility.
+	b) When naming widgets, try to put a descriptor of the widget type at the front of the object name.
+	For example, a QComboBox should be named "combo_<something>", a QLabel would be "label_<something>". This makes it very easy to see in the code what type of widget is being used/modified at any given time.
+	c) Try to make function/variable names descriptive of what it manages. 
+	For example, a QSpinBox which handles the maximum number of items could be named "spin_maxItems". If there are multiple widgets with similar functionality, make sure to distinguish them in the name (Example: spin_maxDesktopItems, spin_maxPanelItems)
+	d) Make any custom dialogs/windows a separate class, and ensure the filenames (*.cpp/h) are the same as the class name. 
+	This makes it easy for someone to determine which file(s) contain the particular piece of information that is needed.
+	e) Don't break the event loop unless necessary! This is especially true for the lumina-desktop (plugins included) since you want to ensure that the UI remains responsive and does not "freeze" while waiting on some user-input.
+	f) When designing a UI, try to remember that the user might not have a mouse/keyboard when using the utility (it could be a touchscreen on a small device for instance).
+	g) Don't forget to update any packaging lists (pkg-plist) if you add new binaries/files that get installed. This makes it easier for packagers/distributors to know exactly what should be getting installed on the target system.
+	
+4) When in doubt about something, just ask!
+	Ken Moore is usually available/active on the "Lumina-DE" channel on the Freenode IRC server, or you can contact him via GitHub or email.
+
+[1] https://www.codecogs.com/pages/standards/programming.htm

@@ -89,7 +89,6 @@ private:
 	//Phonon Widgets for the multimedia player
 	QMediaPlayer *mediaObj;
 	QVideoWidget *videoDisplay;
-	//Phonon::AudioOutput *audioOut;
 	QSlider *playerSlider;
 	QString playerTTime; //total time - to prevent recalculation every tick
 
@@ -219,6 +218,7 @@ private slots:
 	void CutItems();
 	void CopyItems();
 	void PasteItems();
+	void ChecksumItems();
 
 signals:
 	void DirChanged(QString path);

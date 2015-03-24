@@ -12,6 +12,10 @@
 
 //#include <xcb/damage.h>
 //static xcb_damage_damage_t dmgID;
+
+#include <LSession.h>
+#include <QScreen>
+
 static int dmgID = 0;
 
 TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
@@ -115,17 +119,23 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Draw tray:" << AID << IID << this->winId();
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
-	QPixmap pix = LX11::WindowImage(AID, false);
+	QPixmap pix = LSession::handle()->XCB->WindowImage(AID);
 	if(pix.isNull()){
 	  //Try to grab the window directly with Qt
 	  qDebug() << " - -  Grab window directly";
-	  pix = QPixmap::grabWindow(AID);
+	  QList<QScreen*> scrnlist = QApplication::screens();
+	  for(int i=0; i<scrnlist.length(); i++){
+	      pix = scrnlist[i]->grabWindow(AID);
+	      break; //stop here
+	  }
 	}
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
 	  if(this->size() != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); qDebug() << "-- Icon size mismatch"; }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+	}else{
+	  qDebug() << " - -  No Tray Icon/Image found!" << "ID:" << AID;
 	}
     //qDebug() << " - Done";
   }

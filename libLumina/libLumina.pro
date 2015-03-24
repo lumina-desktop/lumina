@@ -42,7 +42,7 @@ SOURCES	+= LuminaXDG.cpp \
 
 INCLUDEPATH += $$PREFIX/include
 
-LIBS	+= -lX11 -lXrender -lXcomposite -lxcb -lxcb-ewmh -lxcb-icccm
+LIBS	+= -lX11 -lXrender -lXcomposite -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image
 
 include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \

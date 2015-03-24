@@ -171,4 +171,9 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
   return LUtils::getCmdOutput("apm -t").join("").toInt();
 }
 
+//File Checksums
+QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
+ return QStringList();
+}
+
 #endif

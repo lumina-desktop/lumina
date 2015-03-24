@@ -152,12 +152,12 @@ bool LOS::userHasShutdownAccess(){
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -p now");
+  QProcess::startDetached("shutdown -po now");
 }
 
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -r now");
+  QProcess::startDetached("shutdown -ro now");
 }
 
 //Battery Availability
@@ -183,4 +183,16 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
   return LUtils::getCmdOutput("apm -t").join("").toInt();
 }
 
+//File Checksums
+QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
+  QStringList info = LUtils::getCmdOutput("md5 \""+filepaths.join("\" \"")+"\"");
+  for(int i=0; i<info.length(); i++){
+    if( !info[i].contains(" = ") ){ info.removeAt(i); i--; }
+    else{
+      //Strip out the extra information
+      info[i] = info[i].section(" = ",1,1);
+    }
+  }
+ return info;
+}
 #endif

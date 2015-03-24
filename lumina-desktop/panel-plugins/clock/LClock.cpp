@@ -35,6 +35,7 @@ LClock::~LClock(){
 
 void LClock::updateTime(){
   QDateTime CT = QDateTime::currentDateTime();
+  if(useTZ){ CT = CT.toTimeZone(TZ); }
   //Now update the display
   QString label;
   if(deftime){ label = CT.time().toString(Qt::SystemLocaleShortDate) ; }
@@ -53,5 +54,8 @@ void LClock::updateFormats(){
   datefmt = LSession::handle()->sessionSettings()->value("DateFormat","").toString();
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
+  useTZ = LSession::handle()->sessionSettings()->value("CustomTimeZone",false).toBool();
+  if(useTZ){ TZ = QTimeZone( LSession::handle()->sessionSettings()->value("TimeZoneByteCode", QByteArray()).toByteArray() ); }
+  
 }
 

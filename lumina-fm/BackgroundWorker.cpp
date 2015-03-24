@@ -83,6 +83,6 @@ void BackgroundWorker::startDirChecks(QString path){
       snapDirs[i] = dir.absolutePath()+"/"+snapDirs[i].section("::::",1,50)+"/"+reldir;
     }
     if(!snapDirs.isEmpty()){ emit SnapshotsAvailable(baseSnapDir, snapDirs); }
-    qDebug() << "Found snapshots:" << snapDirs;
+    qDebug() << "Found snapshots";
   }
 }
