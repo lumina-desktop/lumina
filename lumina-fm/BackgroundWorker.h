@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QDateTime>
 
+#include <LuminaOS.h>
+
 
 class BackgroundWorker : public QObject{
 	Q_OBJECT
@@ -26,16 +28,19 @@ public:
 private:
 	QStringList multiFilter, imgFilter;
 	QString cdir, csnapdir; //last directory checked (and base snapshot dir found)
+	QString ItemsInstatusBar(QFileInfoList, QString);
 
 public slots:
 	//Kickoff processes with these slots
         // and then listen for the appropriate signals when finished
 	void startDirChecks(QString path);
+	void createStatusBarMsg(QFileInfoList fileList, QString path, QString message);
 
 signals:
 	void ImagesAvailable(QStringList files);
 	void MultimediaAvailable(QStringList files);
 	void SnapshotsAvailable(QString basedir, QStringList snappaths);
+	void Si_DisplayStatusBar(QString);
 	
 };
 
