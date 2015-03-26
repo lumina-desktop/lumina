@@ -90,26 +90,34 @@ void BackgroundWorker::startDirChecks(QString path){
 
 void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, QString message){
   //collect some statistics of dir and display them in statusbar
-  int i = 0;
-  qreal totalSizes = 0;
-  foreach (QFileInfo fileInfo, fileList )
-  {
-	  if (fileInfo.isFile()) totalSizes += fileInfo.size();
-	      i += 1;
+  //Get the total size of the items
+  double totalSizes = 0;
+  for(int i=0; i<fileList.length(); i++){
+    if(!fileList[i].isDir()){
+      totalSizes += fileList[i].size(); //in Bytes
+    }
   }
-  QString msgStatusBar = QString(tr("%1: %2")).arg(message).arg(i);
-  if (i>0 and totalSizes>1024*1024*1024) 
-    msgStatusBar += QString(tr(", size: %1 Gb")).arg(totalSizes/1024/1024/1024, 0,'f', 2);
-  else if (i>0 and totalSizes>1024*1024) 
-    msgStatusBar += QString(tr(", size: %1 Mb")).arg(totalSizes/1024/1024, 0,'f',2);
-  else if (i>0 and totalSizes>1024) 
-    msgStatusBar += QString(tr(", size: %1 Kb")).arg(totalSizes/1024, 0, 'f' , 2);
-  else
-    if (totalSizes > 0) { msgStatusBar += QString(tr(", size: %1 b")).arg(totalSizes, 0, 'f' , 2);}
+  //Convert the size into display units
+  static QStringList units = QStringList() << tr("B") << tr("KB") << tr("MB") << tr("GB") << tr("TB");
+  int cunit = 0;
+  while(cunit < units.length() && totalSizes > 1024){
+    cunit++;
+    totalSizes = totalSizes/1024;
+  }
+  //Assemble the message
+  QString msgStatusBar = QString(tr("%1: %2")).arg(message).arg(fileList.length());
+  if(totalSizes > 0){
+    totalSizes = qRound(totalSizes*100)/100.0; //round to 2 decimel places
+    msgStatusBar += "    "+QString(tr("Total size: %1 %2")).arg(QString::number(totalSizes), units[cunit]);
+  }
+  //If a path given, get the total capacity of it (percantage)
   if (!path.isEmpty()) { //path could be empty when fileList is based on user's selection
 	  QString capacity = LOS::FileSystemCapacity(path) ;
-      if (msgStatusBar.isEmpty()) msgStatusBar += tr("Capacity: ") + capacity;
-      else msgStatusBar += tr(", Capacity: ") + capacity;
+      if (msgStatusBar.isEmpty()) msgStatusBar += QString(tr("Capacity: %1")).arg(capacity);
+      else msgStatusBar += "   "+QString(tr("Capacity: %1")).arg(capacity);
   }
-  if (!msgStatusBar.isEmpty()) emit Si_DisplayStatusBar(msgStatusBar);
+  //Emit the signal to show this on the UI
+  if (!msgStatusBar.isEmpty()){
+    emit Si_DisplayStatusBar(msgStatusBar);
+  }
 }
