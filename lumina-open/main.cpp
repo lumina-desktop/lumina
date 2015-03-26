@@ -326,8 +326,7 @@ int main(int argc, char **argv){
   int retcode = p->exitCode();
   //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
   
-  //if(retcode!=0 ){
-  if(p->exitStatus() == QProcess::CrashExit or retcode > 0){
+  if(p->exitStatus() == QProcess::CrashExit || retcode > 0){
     qDebug() << "[lumina-open] Application Error:" << retcode;
     QString err = QString(p->readAllStandardError());
     if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
