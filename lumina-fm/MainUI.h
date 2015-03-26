@@ -114,7 +114,6 @@ private:
 	
 	//Common functions for browser info/usage
 	QString getCurrentDir();
-	QString ItemsInstatusBar(QFileInfoList fileList, QString message);
 	void setCurrentDir(QString);
 	QFileInfoList getSelectedItems();
 	//QModelIndexList getVisibleItems();

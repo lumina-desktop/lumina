@@ -209,7 +209,7 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
-  QStringList mountInfo = LUtils::getCmdOutput("df -h " + dir);
+  QStringList mountInfo = LUtils::getCmdOutput("df -h \"" + dir + "\"");
   QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
   //output: 200G of 400G available on /mount/point
   QString capacity = mountInfo[1].section(" ",3,3, skipEmpty) + " of " + mountInfo[1].section(" ",1,1, skipEmpty) + " available on " +  mountInfo[1].section(" ",5,5, skipEmpty);
