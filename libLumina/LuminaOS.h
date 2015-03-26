@@ -83,6 +83,9 @@ public:
 	
 	//Get the checksum for a file
 	static QStringList Checksums(QStringList filepaths); //Return: checksum of each input file (same order)
+	
+	//Get the filesystem capacity
+	static QString FileSystemCapacity(QString dir) ; //Return: percentage capacity as give by the df command
 };
 
 #endif

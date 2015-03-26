@@ -114,6 +114,7 @@ private:
 	
 	//Common functions for browser info/usage
 	QString getCurrentDir();
+	QString ItemsInstatusBar(QFileInfoList fileList, QString message);
 	void setCurrentDir(QString);
 	QFileInfoList getSelectedItems();
 	//QModelIndexList getVisibleItems();
@@ -219,9 +220,13 @@ private slots:
 	void CopyItems();
 	void PasteItems();
 	void ChecksumItems();
+	
+	//file info in status bar
+	void DisplayStatusBar(QString);
 
 signals:
 	void DirChanged(QString path);
+	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString message); 
 
 protected:
 	void resizeEvent(QResizeEvent*);

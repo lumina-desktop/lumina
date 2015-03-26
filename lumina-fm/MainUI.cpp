@@ -12,6 +12,8 @@
 #define DEBUG 0
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
+  //for Signal/slot we must register the Typedef of QFileInfoList
+  qRegisterMetaType<QFileInfoList>("QFileInfoList");
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
@@ -214,6 +216,10 @@ void MainUI::setupConnections(){
   connect(worker, SIGNAL(ImagesAvailable(QStringList)), this, SLOT(AvailablePictures(QStringList)) );
   connect(worker, SIGNAL(MultimediaAvailable(QStringList)), this, SLOT(AvailableMultimediaFiles(QStringList)) );
   connect(worker, SIGNAL(SnapshotsAvailable(QString, QStringList)), this, SLOT(AvailableBackups(QString, QStringList)) );
+
+  //Background worker class for statusbar
+  connect(this, SIGNAL(Si_AdaptStatusBar(QFileInfoList, QString, QString)), worker, SLOT(createStatusBarMsg(QFileInfoList, QString, QString)) );
+  connect(worker, SIGNAL(Si_DisplayStatusBar(QString)), this, SLOT(DisplayStatusBar(QString)) );
 	
   //Action buttons on browser page
   connect(ui->tool_act_run, SIGNAL(clicked()), this, SLOT(OpenItem()) );
@@ -447,8 +453,11 @@ void MainUI::setCurrentDir(QString dir){
   if(rawdir == olddir){
     emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
   }
+  emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), rawdir, tr("Items"));
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
-  else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
+  else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
+  }
+  
   ui->tool_addToDir->setVisible(isUserWritable);
   ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
@@ -539,6 +548,11 @@ void MainUI::AvailableBackups(QString basedir, QStringList snapdirs){
   
   //Now enable the button if any snapshots available
   ui->tool_goToRestore->setVisible(!snapDirs.isEmpty());
+}
+
+void MainUI::DisplayStatusBar(QString msg){
+	qDebug() << "message to show in the status bar:" << msg;
+	ui->statusbar->showMessage(msg);
 }
 
 void MainUI::AvailablePictures(QStringList pics){
@@ -962,6 +976,10 @@ void MainUI::OpenContextMenu(const QPoint &pt){
 void MainUI::ItemSelectionChanged(){
   //Enable/disable the action buttons
   QFileInfoList sel = getSelectedItems();
+  //display info related to files selected. 
+  //TO CHECK: impact if filesystem is very slow
+  if (sel.size()>0) worker->createStatusBarMsg(sel, "", tr("Items selected"));
+  
   ui->tool_act_run->setEnabled(sel.length()==1);
   ui->tool_act_runwith->setEnabled(sel.length()==1);
   ui->tool_act_rm->setEnabled(!sel.isEmpty() && isUserWritable);

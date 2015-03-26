@@ -194,4 +194,13 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
 QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
  return QStringList();
 }
+
+//file system capacity
+QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
+  QStringList mountInfo = LUtils::getCmdOutput("df " + dir);
+  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
+  //we take the 5th word on the 2 line
+  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
+  return capacity;
+}
 #endif
