@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=/home/wi/nas/github/lumina/desktop-editor/desktop-editor
+Icon=/usr/local/share/pixmaps/Lumina-DE.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;
+Name=Lumina Desktop Information
+Comment=View information about the Lumina Desktop Environment
+

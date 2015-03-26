@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     } else {
         w.MissingInputs();
     }
-    a.setApplicationName("Desktop Editor");
+    a.setApplicationName("Lumina File Info");
     w.show();
 
     return a.exec();

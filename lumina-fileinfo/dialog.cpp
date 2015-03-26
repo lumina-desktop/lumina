@@ -68,8 +68,8 @@ void Dialog::LoadDesktopFile(QString input)
     //if proposed file does not exist, than we will create one based on the templates
     //TODO: have a config directory to store templates
     if (!QFile::exists(input)) {
-        if (desktopType=="link") { QFile::copy("./desktop-link.template", desktopFileName);}
-        else { QFile::copy("./desktop-app.template", desktopFileName);}
+        if (desktopType=="link") { QFile::copy("./fileinfo-link.template", desktopFileName);}
+        else { QFile::copy("./fileinfo-app.template", desktopFileName);}
     }
 
     //use the standard LXDG object and load the desktop file
@@ -205,8 +205,6 @@ void Dialog::on_pbApply_clicked()
         file.close();
 
         //hack required to update the icon on the desktop
-        //maybe the solution would be to have a QFileSystemWatcher (in AppLauncherPlugin.cpp)
-        //on files instead of ~/Desktop
             QTemporaryFile tempFile ;
             tempFile.setAutoRemove(false);
             tempFile.open();

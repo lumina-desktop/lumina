@@ -37,6 +37,7 @@ private slots:
 	void increaseIconSize();
 	void decreaseIconSize();
 	void updateContents();
+	void displayProperties();
 
 
 public slots:
