@@ -219,6 +219,7 @@ QStringList FOWorker::removeItem(QString path, bool recursive){
 
 QStringList FOWorker::copyItem(QString oldpath, QString newpath){
   QStringList err;
+  if(oldpath == newpath){ return err; } //copy something onto itself - just skip it 
   if(QFileInfo(oldpath).isDir()){
     //Create a new directory with the same name (no way to copy dir+contents)
     QDir dir;
@@ -268,6 +269,10 @@ void FOWorker::slotStartOperations(){
     if(isRM){ //only old files
       olist << subfiles(ofiles[i], false); //dirs need to be last for removals
     }else if(isCP || isRESTORE){
+      if(nfiles[i] == ofiles[i]){
+	//Trying to copy a file/dir to itself - skip it
+	continue;
+      }
       if(QFile::exists(nfiles[i])){
 	if(!overwrite){
 	  nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
@@ -287,6 +292,12 @@ void FOWorker::slotStartOperations(){
 	QStringList err; err << tr("Invalid Move") << QString(tr("It is not possible to move a directory into itself. Please make a copy of the directory instead.\n\nOld Location: %1\nNew Location: %2")).arg(ofiles[i], nfiles[i]);
 	emit finished(err); return;
       }else{
+	//Check for existance of the new name
+	if(QFile::exists(nfiles[i])){
+	  if(!overwrite){
+	    nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
+	  }
+        }
 	//no changes necessary
         olist << ofiles[i];
         nlist << nfiles[i];
@@ -319,8 +330,17 @@ void FOWorker::slotStartOperations(){
       /*ui->label->setText( QString(tr("Moving: %1 to %2")).arg(ofiles[i].section("/",-1), nfiles[i].section("/",-1)) );
       QApplication::processEvents();*/
       emit startingItem(i+1,olist.length(), olist[i], nlist[i]);
-      if( !QFile::rename(ofiles[i], nfiles[i]) ){
-        errlist << ofiles[i];
+      //Clean up any overwritten files/dirs
+      if(QFile::exists(nlist[i])){
+	if(overwrite){
+	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
+	}
+      }
+      //Perform the move if no error yet (including skipping all children)
+      if( !errlist.contains(olist[i].section("/",0,-1)) ){ 
+        if( !QFile::rename(ofiles[i], nfiles[i]) ){
+          errlist << ofiles[i];
+        }
       }	
     }
     //ui->progressBar->setValue(i+1);

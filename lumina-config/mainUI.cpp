@@ -509,11 +509,21 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->list_panel1_plugins->clear();
     for(int i=0; i<plugs.length(); i++){
       QString pid = plugs[i].section("---",0,0);
-      LPI info = PINFO->panelPluginInfo(pid);
-      if(!info.ID.isEmpty()){
-        QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+      if(pid.startsWith("applauncher")){
+	bool ok = false;
+	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
+	if(ok){
+	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
-	ui->list_panel1_plugins->addItem(it);
+	  ui->list_panel1_plugins->addItem(it);
+	}
+      }else{
+        LPI info = PINFO->panelPluginInfo(pid);
+        if(!info.ID.isEmpty()){
+          QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
+	  ui->list_panel1_plugins->addItem(it);
+        }
       }
     }
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
@@ -891,8 +901,13 @@ void MainUI::adjustpanel1(){
   if(loading || panadjust){ return; }
   panadjust = true;
   qDebug() << "Adjust Panel 1:";
-  ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
-  bool changed = false;
+  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  if(!valchanged){
+    //Just a toolbox page change - switch to match and exit
+    ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
+    panadjust = false;
+    return;
+  }
   int newindex=0;
   switch(ui->combo_panel2_loc->currentIndex()){
     case 0:
@@ -905,11 +920,11 @@ void MainUI::adjustpanel1(){
 	newindex = 2; break;
   }
   if(newindex != ui->combo_panel1_loc->currentIndex()){ 
-    changed = true;
+    valchanged = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
   }
   panadjust = false;
-  if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
@@ -917,8 +932,14 @@ void MainUI::adjustpanel2(){
   panadjust = true;
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
-  ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
-  bool changed = false;
+  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  if(!valchanged){
+    //Just a toolbox page change - switch to match and exit
+    ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
+    panadjust = false;
+    return;
+  }
+  
   int newindex=0;
   switch(ui->combo_panel1_loc->currentIndex()){
     case 0:
@@ -931,11 +952,11 @@ void MainUI::adjustpanel2(){
 	newindex = 2; break;
   }
   if(newindex != ui->combo_panel2_loc->currentIndex()){ 
-    changed = true;
+    valchanged = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
   }
   panadjust = false;
-  if(!loading && changed){ ui->push_save->setEnabled(true); modpan = true; }
+  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 
@@ -963,14 +984,26 @@ void MainUI::addpanel1plugin(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
-  if(pan.isEmpty()){ return; } //nothing selected
-  //Add the new plugin to the list
-  LPI info = PINFO->panelPluginInfo(pan);
-  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
-    it->setWhatsThis(info.ID);
-  ui->list_panel1_plugins->addItem(it);
-  ui->list_panel1_plugins->setCurrentItem(it);
-  ui->list_panel1_plugins->scrollToItem(it);
+  if(pan == "applauncher"){
+    //Prompt for the application to add
+    XDGDesktop app = getSysApp();
+    if(app.filePath.isEmpty()){ return; } //cancelled
+    pan.append("::"+app.filePath);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+      it->setWhatsThis(pan);
+    ui->list_panel1_plugins->addItem(it);
+    ui->list_panel1_plugins->setCurrentItem(it);
+    ui->list_panel1_plugins->scrollToItem(it);
+  }else{
+    if(pan.isEmpty()){ return; } //nothing selected
+    //Add the new plugin to the list
+    LPI info = PINFO->panelPluginInfo(pan);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+      it->setWhatsThis(info.ID);
+    ui->list_panel1_plugins->addItem(it);
+    ui->list_panel1_plugins->setCurrentItem(it);
+    ui->list_panel1_plugins->scrollToItem(it);
+  }
   checkpanels(); //update buttons
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
@@ -981,14 +1014,26 @@ void MainUI::addpanel2plugin(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
-  if(pan.isEmpty()){ return; } //nothing selected
-  //Add the new plugin to the list
-  LPI info = PINFO->panelPluginInfo(pan);
-  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
-    it->setWhatsThis(info.ID);
-  ui->list_panel2_plugins->addItem(it);
-  ui->list_panel2_plugins->setCurrentItem(it);
-  ui->list_panel2_plugins->scrollToItem(it);
+  if(pan == "applauncher"){
+    //Prompt for the application to add
+    XDGDesktop app = getSysApp();
+    if(app.filePath.isEmpty()){ return; } //cancelled
+    pan.append("::"+app.filePath);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+      it->setWhatsThis(pan);
+    ui->list_panel2_plugins->addItem(it);
+    ui->list_panel2_plugins->setCurrentItem(it);
+    ui->list_panel2_plugins->scrollToItem(it);
+  }else{
+    if(pan.isEmpty()){ return; } //nothing selected
+    //Add the new plugin to the list
+    LPI info = PINFO->panelPluginInfo(pan);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+      it->setWhatsThis(info.ID);
+    ui->list_panel2_plugins->addItem(it);
+    ui->list_panel2_plugins->setCurrentItem(it);
+    ui->list_panel2_plugins->scrollToItem(it);
+  }
   checkpanels(); //update buttons
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }

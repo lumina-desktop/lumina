@@ -121,13 +121,14 @@ void LTaskButton::UpdateButton(){
     //single window
     this->setPopupMode(QToolButton::DelayedPopup);
     this->setMenu(actMenu);
-    if(showText){ this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
-    else if(noicon){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
-    else{ this->setText(""); }
+    if(showText){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
+    else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
+    else{ this->setToolButtonStyle(Qt::ToolButtonIconOnly); this->setText(""); }
   }else if(WINLIST.length() > 1){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
+    this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     if(noicon || showText){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }

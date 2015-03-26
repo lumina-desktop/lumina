@@ -7,18 +7,19 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
     lay->setContentsMargins(0,0,0,0);
   button = new QToolButton(this);
     button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    button->setIconSize(QSize(64,64));
     button->setAutoRaise(true);
     button->setText("..."); //Need to set something here so that initial sizing works properly
+    
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  this->setInitialSize(64,66+this->fontMetrics().height());
-  /*if(this->settings->allKeys().isEmpty()){
-    //Brand new plugin: set initial size
-    this->settings->setValue("location/width",64);
-    this->settings->setValue("location/height",66+this->fontMetrics().height());
-    this->settings->sync();
-  }*/
+  menu = new QMenu(this);
+	menu->addAction(LXDG::findIcon("zoom-in",""), tr("Increase Size"), this, SLOT(increaseIconSize()));
+	menu->addAction(LXDG::findIcon("zoom-out",""), tr("Decrease Size"), this, SLOT(decreaseIconSize()));
+  int icosize = settings->value("iconsize",64).toInt();
+    button->setIconSize(QSize(icosize,icosize));
+  this->setInitialSize(icosize,icosize+10+this->fontMetrics().height());
+  this->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu()) );
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
   QTimer::singleShot(1,this, SLOT(loadButton()) );
@@ -62,4 +63,27 @@ void AppLauncherPlugin::buttonClicked(){
     LSession::LaunchApplication("lumina-open \""+path+"\"");
   }
 	  
+}
+
+void AppLauncherPlugin::openContextMenu(){
+  if(button->underMouse()){
+    menu->popup(QCursor::pos());
+  }else{
+    emit OpenDesktopMenu();
+  }
+}
+	
+void AppLauncherPlugin::increaseIconSize(){
+  int icosize = settings->value("iconsize",64).toInt();
+  icosize += 16;
+  button->setIconSize(QSize(icosize,icosize));
+  settings->setValue("iconsize",icosize);
+}
+
+void AppLauncherPlugin::decreaseIconSize(){
+  int icosize = settings->value("iconsize",64).toInt();
+  if(icosize < 20){ return; } //cannot get smaller
+  icosize -= 16;
+  button->setIconSize(QSize(icosize,icosize));
+  settings->setValue("iconsize",icosize);
 }

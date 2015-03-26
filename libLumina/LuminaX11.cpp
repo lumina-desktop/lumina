@@ -1012,7 +1012,7 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
 }
 
 // === WindowVisibleIconName() ===
-QString LXCB::WindowVisibleIconName(WId win){ //_WM_VISIBLE_ICON_NAME
+QString LXCB::WindowVisibleIconName(WId win){ //_NET_WM_VISIBLE_ICON_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1024,7 +1024,7 @@ QString LXCB::WindowVisibleIconName(WId win){ //_WM_VISIBLE_ICON_NAME
 }
 
 // === WindowIconName() ===
-QString LXCB::WindowIconName(WId win){ //_WM_ICON_NAME
+QString LXCB::WindowIconName(WId win){ //_NET_WM_ICON_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1036,7 +1036,7 @@ QString LXCB::WindowIconName(WId win){ //_WM_ICON_NAME
 }
 
 // === WindowVisibleName() ===
-QString LXCB::WindowVisibleName(WId win){ //_WM_VISIBLE_NAME
+QString LXCB::WindowVisibleName(WId win){ //_NET_WM_VISIBLE_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1048,7 +1048,7 @@ QString LXCB::WindowVisibleName(WId win){ //_WM_VISIBLE_NAME
 }
 
 // === WindowName() ===
-QString LXCB::WindowName(WId win){ //_WM_NAME
+QString LXCB::WindowName(WId win){ //_NET_WM_NAME
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return out; } 
@@ -1057,6 +1057,32 @@ QString LXCB::WindowName(WId win){ //_WM_NAME
       out = QString::fromUtf8(data.strings, data.strings_len);
   }
   return out;
+}
+
+// === OldWindowName() ===
+QString LXCB::OldWindowName(WId win){ //WM_NAME (old standard)
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 == xcb_icccm_get_wm_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    QString name = QString::fromLocal8Bit(reply.name);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return name;
+  }else{
+    return "";
+  }	
+}
+
+// === OldWindowIconName() ===
+QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 == xcb_icccm_get_wm_icon_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    QString name = QString::fromLocal8Bit(reply.name);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return name;
+  }else{
+    return "";
+  }	
 }
 
 // === WindowIsMaximized() ===

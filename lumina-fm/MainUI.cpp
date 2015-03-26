@@ -442,9 +442,11 @@ void MainUI::setCurrentDir(QString dir){
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
-  //if(olddir!=rawdir){
+  //Make sure the shortcut buttons are enabled as necessary
+  // If the dir is already loaded into the fsmodel cache it will not emit the directoryLoaded() signal
+  if(rawdir == olddir){
     emit DirChanged(rawdir); //This will be automatically run when a new dir is loaded
-  //}
+  }
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory")); }
   ui->tool_addToDir->setVisible(isUserWritable);
@@ -825,6 +827,7 @@ void MainUI::reloadDirectory(){
 
 void MainUI::currentDirectoryLoaded(){
   //The directory was just loaded: refresh the action buttons as neccesary
+  // NOTE: This is only "caught" when a *new* directory is loaded into the model
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
@@ -1037,6 +1040,10 @@ void MainUI::removePicture(){
   QString file = getCurrentDir();
   if(!file.endsWith("/")){ file.append("/"); }
   file.append(ui->combo_image_name->currentText());
+  //Verify permanent removal of file/dir
+  if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+file, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+    return; //cancelled
+  }
   if( QFile::remove(file) ){
     int index = ui->combo_image_name->currentIndex();
     ui->combo_image_name->removeItem( index );

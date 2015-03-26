@@ -50,6 +50,7 @@ SOURCES += main.cpp \
 	panel-plugins/systemdashboard/SysMenuQuick.cpp \
 	panel-plugins/showdesktop/LHomeButton.cpp \
 	panel-plugins/appmenu/LAppMenuPlugin.cpp \
+	panel-plugins/applauncher/AppLaunchButton.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
 	desktop-plugins/notepad/NotepadPlugin.cpp \
@@ -89,6 +90,7 @@ HEADERS  += Globals.h \
 	panel-plugins/systemdashboard/SysMenuQuick.h \
 	panel-plugins/showdesktop/LHomeButton.h \
 	panel-plugins/appmenu/LAppMenuPlugin.h \
+	panel-plugins/applauncher/AppLaunchButton.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
