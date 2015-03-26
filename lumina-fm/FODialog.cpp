@@ -269,6 +269,10 @@ void FOWorker::slotStartOperations(){
     if(isRM){ //only old files
       olist << subfiles(ofiles[i], false); //dirs need to be last for removals
     }else if(isCP || isRESTORE){
+      if(nfiles[i] == ofiles[i]){
+	//Trying to copy a file/dir to itself - skip it
+	continue;
+      }
       if(QFile::exists(nfiles[i])){
 	if(!overwrite){
 	  nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
