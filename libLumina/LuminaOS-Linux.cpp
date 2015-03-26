@@ -209,7 +209,7 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
   QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
   QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
   //we take the 5th word on the 2 line
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
+  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty) + " used";
   return capacity;
 }
 #endif
