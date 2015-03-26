@@ -215,7 +215,7 @@ QString LOS::FileSystemCapacity(QString dir) {
   //>Filesystem  512-blocks      Used     Avail Capacity  Mounted on
   //>/dev/sd2l     14334588    739900  12877960     5%    /home
 
-  QStringList mountInfo = LUtils::getCmdOutput("df " + dir);
+  QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
   QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
   //we take the 5th word on the 2 line
   QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
