@@ -1134,26 +1134,6 @@ QIcon LXCB::WindowIcon(WId win){
   return icon;
 }
 
-// === WindowImage() ===
-QPixmap LXCB::WindowImage(WId win){
-  QPixmap pix;
-	
-  //First get the size of the window
-  xcb_get_geometry_cookie_t cookie = xcb_get_geometry_unchecked(QX11Info::connection(), win);
-  xcb_get_geometry_reply_t *reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
-  if(reply == 0){ return pix; } //could not determine window geometry
-  //Now get the image 
-  xcb_image_t *img = xcb_image_get(QX11Info::connection(), win, 0, 0, reply->width, reply->height, (uint32_t) AllPlanes, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  if(img!=0){
-    //Now convert the image into a QPixmap
-    pix.convertFromImage( QImage( (const uchar*) img->data, img->width, img->height, img->stride, QImage::Format_ARGB32_Premultiplied) );
-    //Clean up the xcb_image structure
-    xcb_image_destroy(img);
-  }
-  //Return the pixmap
-  return pix;
-}
-
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
   //Need to send a client message event for the window so the WM picks it up
@@ -1355,20 +1335,11 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
 // === EmbedWindow() ===
 bool LXCB::EmbedWindow(WId win, WId container){
   if(win==0 || container==0){ return false; }
-  //Reparent the window
-  //XCompositeRedirectSubwindows(disp, container, CompositeRedirectAutomatic); //container/window should be aware of each other
   //qDebug() << "Embed Window:" << win << container;
 
-  
   //Initialize any atoms that will be needed
-  //xcb_intern_atom_cookie_t acookie = xcb_intern_atom_unchecked(QX11Info::connection(), 0, 12, "_XEMBED_INFO");
   xcb_intern_atom_cookie_t ecookie = xcb_intern_atom_unchecked(QX11Info::connection(), 0, 7, "_XEMBED");
   
-  /*xcb_intern_atom_reply_t *areply = xcb_intern_atom_reply(QX11Info::connection(), acookie, NULL);
-  if(areply==0){ return false; } //unable to initialize the atom
-  xcb_atom_t embinfo = areply->atom;
-  free(areply); //done with this structure
-  */
   xcb_intern_atom_reply_t *ereply = xcb_intern_atom_reply(QX11Info::connection(), ecookie, NULL);
   if(ereply==0){ return false; } //unable to initialize the atom
   xcb_atom_t emb = ereply->atom;
@@ -1378,17 +1349,6 @@ bool LXCB::EmbedWindow(WId win, WId container){
   xcb_reparent_window(QX11Info::connection(), win, container, 0, 0);
   xcb_map_window(QX11Info::connection(), win);
   
-  //Check that the window has _XEMBED_INFO
-  //qDebug() << " - check for _XEMBED_INFO"; 
-  /*xcb_get_property_cookie_t cookie = xcb_get_property_unchecked(QX11Info::connection(), 0, win, embinfo, embinfo, 0, 2);
-  xcb_get_property_reply_t *reply = xcb_get_property_reply(QX11Info::connection(), cookie, NULL);
-  if(reply ==0 || reply->value_len<1){
-    //Embed Error
-    if(reply!=0){ free(reply); } //done with the reply
-    return false;
-  }
-  free(reply); //done with the reply structure
-*/
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
   xcb_client_message_event_t event;
@@ -1432,23 +1392,6 @@ bool LXCB::UnembedWindow(WId win){
   xcb_reparent_window(QX11Info::connection(), win, QX11Info::appRootWindow(), 0, 0);
   return true;	
 }
-
-// === GetTrayIconPixmap() ===
-/*QPixmap LXCB::SetTrayIconBackground(WId win, WId container, QSize size){
-  //Get the image of the container, copy the tray image onto it, and re-draw the combined image onto the tray
-  xcb_pixmap_t back, fore;
-  xcb_create_pixmap(QX11Info::connection(), depth, back, container, size->width(), size->height());
-  xcb_create_pixmap(QX11Info::connection(), depth, fore, win, size->width(), size->height());
-	
-  //Copy the foreround pixmap onto the background pixmap
-  xcb_copy_area( QX11Info::connection(), win, container, GC, 0,0,0,0 size->width(), size->height());
-	
-	
-  //Now free the pixmaps
-  xcb_free_pixmap(QX11Info::connection(), back);
-  xcb_free_pixmap(QX11Info::connection(), fore);	
-}*/
-
 
 
 // === SetScreenWorkArea() ===
