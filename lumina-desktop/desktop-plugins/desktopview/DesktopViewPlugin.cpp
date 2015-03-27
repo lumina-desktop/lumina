@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QClipboard>
 #include <QMimeData>
+#include <QImageReader>
 
 #include <LuminaXDG.h>
 #include "LSession.h"
@@ -126,6 +127,10 @@ void DesktopViewPlugin::decreaseIconSize(){
 
 void DesktopViewPlugin::updateContents(){
   list->clear();
+  if(imgExtensions.isEmpty()){
+    QList<QByteArray> fmt = QImageReader::supportedImageFormats();
+    for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
+  }
   int icosize = settings->value("IconSize",64).toInt();
   list->setGridSize(QSize(icosize+8,icosize+4+this->fontMetrics().height()));
   QDir dir(QDir::homePath()+"/Desktop");
@@ -151,6 +156,9 @@ void DesktopViewPlugin::updateContents(){
           it->setIcon( LXDG::findMimeIcon(files[i].fileName()) );
           it->setText( files[i].fileName() );		
 	}
+    }else if(imgExtensions.contains(files[i].suffix().toLower()) ){
+      it->setIcon( QIcon( QPixmap(files[i].absoluteFilePath()).scaled(icosize,icosize,Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ) );
+      it->setText( files[i].fileName() );	    
     }else{
       it->setIcon( LXDG::findMimeIcon( files[i].fileName() ) );
       it->setText( files[i].fileName() );
