@@ -8,6 +8,7 @@
 #include "ui_MainUI.h"
 
 #include <QImageWriter>
+#include <QFileInfo>
 
 #define DEBUG 0
 

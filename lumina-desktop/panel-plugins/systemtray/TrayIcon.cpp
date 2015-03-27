@@ -39,7 +39,7 @@ void TrayIcon::attachApp(WId id){
   AID = id;
   IID = this->winId(); //embed directly into this widget
   //IID = LX11::CreateWindow( this->winId(), this->rect() ); //Create an intermediate window to be the parent
-  if( LX11::EmbedWindow(AID, IID) ){
+  if( LSession::handle()->XCB->EmbedWindow(AID, IID) ){
     LX11::RestoreWindow(AID); //make it visible
     //XSelectInput(QX11Info::display(), AID, StructureNotifyMask);
     //xcb_damage_create(QX11Info::connection(), dmgID, AID, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
@@ -69,7 +69,7 @@ void TrayIcon::detachApp(){
   AID = 0;
   //Now detach the application window and clean up
   qDebug() << " - Unembed";
-  LX11::UnembedWindow(tmp);
+  LSession::handle()->XCB->UnembedWindow(tmp);
   //if(dmgID!=0){
     //XDamageDestroy(QX11Info::display(), dmgID);
   //}

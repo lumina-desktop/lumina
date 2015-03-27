@@ -152,6 +152,10 @@ public:
 	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
 	void MoveResizeWindow(WId win, QRect geom);
 	
+	//Window Embedding/Detaching (for system tray)
+	bool EmbedWindow(WId win, WId container);
+	bool UnembedWindow(WId win);
+	
 };
 
 #endif

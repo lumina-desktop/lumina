@@ -26,6 +26,7 @@
 #include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_icccm.h>
 #include <xcb/xcb_image.h>
+#include <xcb/composite.h>
 
 
 //=====   WindowList() ========
@@ -1350,6 +1351,85 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
   xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
 	
 }
+
+// === EmbedWindow() ===
+bool LXCB::EmbedWindow(WId win, WId container){
+  if(win==0 || container==0){ return false; }
+  //Reparent the window
+  //XCompositeRedirectSubwindows(disp, container, CompositeRedirectAutomatic); //container/window should be aware of each other
+  //qDebug() << "Embed Window:" << win << container;
+  xcb_reparent_window(QX11Info::connection(), win, container, 0, 0);
+  //Map the window
+  xcb_map_window(QX11Info::connection(), win);
+  
+  //Initialize any atoms that will be needed
+  xcb_intern_atom_cookie_t acookie = xcb_intern_atom_unchecked(QX11Info::connection(), 0, 12, "_XEMBED_INFO");
+  xcb_intern_atom_cookie_t ecookie = xcb_intern_atom_unchecked(QX11Info::connection(), 0, 7, "_XEMBED");
+  
+  xcb_intern_atom_reply_t *areply = xcb_intern_atom_reply(QX11Info::connection(), acookie, NULL);
+  if(areply==0){ return false; } //unable to initialize the atom
+  xcb_atom_t embinfo = areply->atom;
+  free(areply); //done with this structure
+  
+  xcb_intern_atom_reply_t *ereply = xcb_intern_atom_reply(QX11Info::connection(), ecookie, NULL);
+  if(ereply==0){ return false; } //unable to initialize the atom
+  xcb_atom_t emb = ereply->atom;
+  free(ereply); //done with this structure
+  
+  //Check that the window has _XEMBED_INFO
+  //qDebug() << " - check for _XEMBED_INFO"; 
+  xcb_get_property_cookie_t cookie = xcb_get_property_unchecked(QX11Info::connection(), 0, win, embinfo, embinfo, 0, 2);
+  xcb_get_property_reply_t *reply = xcb_get_property_reply(QX11Info::connection(), cookie, NULL);
+  if(reply ==0 || reply->value_len<1){
+    //Embed Error
+    if(reply!=0){ free(reply); } //done with the reply
+    return false;
+  }
+  free(reply); //done with the reply structure
+
+  //Now send the embed event to the app
+  //qDebug() << " - send _XEMBED event";
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = emb; //_XEMBED
+    event.data.data32[0] = CurrentTime; 
+    event.data.data32[1] = 0; //XEMBED_EMBEDDED_NOTIFY
+    event.data.data32[2] = 0;
+    event.data.data32[3] = container; //WID of the container
+    event.data.data32[4] = 0;
+
+    xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+  
+  //Now setup any redirects and return
+  //qDebug() << " - select Input";
+  //XSelectInput(disp, win, StructureNotifyMask); //Notify of structure changes
+  uint32_t val[] = {XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY};
+  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
+  //qDebug() << " - Composite Redirect";
+  xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL);
+
+  //qDebug() << " - Done";
+  return true;	
+}
+
+// === Unembed Window() ===
+bool LXCB::UnembedWindow(WId win){
+  //Display *disp = QX11Info::display();
+  //Remove redirects
+  //XSelectInput(disp, win, NoEventMask);
+  uint32_t val[] = {XCB_EVENT_MASK_NO_EVENT};	
+  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
+  //Make sure it is invisible
+  xcb_unmap_window(QX11Info::connection(), win);
+  //Reparent the window back to the root window
+  xcb_reparent_window(QX11Info::connection(), win, QX11Info::appRootWindow(), 0, 0);
+  return true;	
+}
+
+
+
 
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){
