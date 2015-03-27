@@ -155,6 +155,7 @@ public:
 	//Window Embedding/Detaching (for system tray)
 	bool EmbedWindow(WId win, WId container);
 	bool UnembedWindow(WId win);
+	//QPixmap GetTrayIconPixmap(WId win);
 	
 };
 
