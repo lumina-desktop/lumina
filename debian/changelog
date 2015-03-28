@@ -1,6 +1,9 @@
 lumina-desktop (0.8.3.440-1nano) unstable; urgency=low
 
   * New git snapshot
+  * add build dependency on libxcb-composite0-dev
+  * add dependency on usbmount (tool for automagic mounting
+    of external devices)
 
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Sat, 28 Mar 2015 18:38:13 +0100
 
