@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
 Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
-               libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev, make, g++,
+               libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
                libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev
@@ -98,7 +98,7 @@ Description: Display configuration tool for the lumina desktop environment
 
 Package: lumina-data
 Architecture: all
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}), lumina-desktop (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1, lumina-desktop
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Data files for the lumina Desktop environment
  - Lumina Wallpapers
