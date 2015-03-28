@@ -1,2 +1,3 @@
 usr/bin/Lumina-DE
-
+debian/luminaDesktop.conf   /etc
+debian/lumina-qt5ct         /etc
