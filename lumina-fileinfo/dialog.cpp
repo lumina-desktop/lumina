@@ -18,6 +18,20 @@ Dialog::Dialog(QWidget *parent) :
     this->setWindowIcon( LXDG::findIcon("preferences-desktop-default-applications","") );
     ui->pbWorkingDir->setIcon( LXDG::findIcon("folder","") );
     ui->pbCommand->setIcon( LXDG::findIcon("system-search","") );
+    
+    //we copy qrc templates in the home dir of the user. 
+    //this allow the user to adapt those template to is own whishes
+    QString templateFile = QDir::homePath() + "/.lumina/LuminaDE/fileinfo-link.template";
+    if (!QFile::exists(templateFile)) {
+	    QFile::copy(":defaults/fileinfo-link.template", templateFile);
+	    QFile(templateFile).setPermissions(QFileDevice::ReadUser|QFileDevice::WriteUser);
+	}
+	templateFile = QDir::homePath() + "/.lumina/LuminaDE/fileinfo-app.template";
+    if (!QFile::exists(templateFile)) {
+	    QFile::copy(":defaults/fileinfo-app.template", templateFile);
+	    QFile(templateFile).setPermissions(QFileDevice::ReadUser|QFileDevice::WriteUser);
+	}
+
 }
 
 
@@ -49,7 +63,7 @@ void Dialog::Initialise(QString param)
         ui->lblOptions->setVisible(false);
         ui->lblWorkingDir->setText("URL"); //we use the WorkingDir boxes for URL
         desktopType="link";
-    }
+    }    
 }
 
 
@@ -66,10 +80,23 @@ void Dialog::LoadDesktopFile(QString input)
     }
 
     //if proposed file does not exist, than we will create one based on the templates
-    //TODO: have a config directory to store templates
     if (!QFile::exists(input)) {
-        if (desktopType=="link") { QFile::copy("./fileinfo-link.template", desktopFileName);}
-        else { QFile::copy("./fileinfo-app.template", desktopFileName);}
+        if (desktopType=="link") { 
+			if (QFile::exists(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-link.template")) {
+				//We take the template from homedir
+				QFile::copy(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-link.template", desktopFileName);
+			} else {
+			    //last possibility os to use the qrc template. 
+			    //But based on the initialisation, this should never occurs
+			    QFile::copy(":defaults/fileinfo-link.template", desktopFileName);
+			}
+		} else { 
+			if (QFile::exists(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-app.template")) {
+				QFile::copy(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-app.template", desktopFileName);
+			} else {
+			    QFile::copy(":defaults/fileinfo-app.template", desktopFileName);
+			}
+		}
     }
 
     //use the standard LXDG object and load the desktop file
