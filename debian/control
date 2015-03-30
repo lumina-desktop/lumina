@@ -6,7 +6,8 @@ Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
                libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev, make, g++,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
-               libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev
+               libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev,
+               libxcb-composite0-dev
 Standards-Version: 3.9.5
 Homepage: https://github.com/pcbsd/lumina
 
@@ -16,7 +17,8 @@ Replaces: lumina-core (<< 0.8.3.372)
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
          libluminautils1, lumina-config, lumina-fm, oxygen-icon-theme,
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
-         lxpolkit, lumina-data, fluxbox, numlockx, xbacklight, xscreensaver
+         lxpolkit, lumina-data, fluxbox, numlockx, xbacklight, xscreensaver,
+         usbmount
 Recommends: qt5-configuration-tool
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
