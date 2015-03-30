@@ -51,6 +51,10 @@ void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QStr
 
 int main(int argc, char ** argv)
 {
+    if (QString(argv[1]) == QString("--version")){
+      qDebug() << LUtils::LuminaDesktopVersion();
+      return 0;
+    }
     if(!QFile::exists(LOS::LuminaShare())){
       qDebug() << "Lumina does not appear to be installed correctly. Cannot find: " << LOS::LuminaShare();
       return 1;
