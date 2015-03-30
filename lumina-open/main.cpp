@@ -144,7 +144,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     return w.appExec;
 }
 
-void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path){
+void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path, bool& watch){
   //Get the input file
     //Make sure to load the proper system encoding first
     LUtils::LoadTranslation(0,""); //bypass application modification
@@ -226,6 +226,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
         if(!DF.exec.isEmpty()){
           cmd = LXDG::getDesktopExec(DF);
           if(!DF.path.isEmpty()){ path = DF.path; }
+	  watch = DF.startupNotify;
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("Application shortcut is missing the launching information (malformed shortcut): %1")).arg(inFile) );
         }
@@ -236,6 +237,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.url;
           cmd.clear();
           extension = inFile.section(":",0,0);
+	  watch = DF.startupNotify;
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
         }
@@ -246,6 +248,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.path;
           cmd.clear();
           extension = "directory";
+	  watch = DF.startupNotify;
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
         }
@@ -296,47 +299,45 @@ int main(int argc, char **argv){
   LXDG::setEnvironmentVars();
   //now get the command
   QString cmd, args, path;
-  getCMD(argc, argv, cmd, args, path);
+  bool watch = true; //enable the crash handler by default (only disabled for some *.desktop inputs)
+  getCMD(argc, argv, cmd, args, path, watch);
   //qDebug() << "Run CMD:" << cmd << args;
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
   //if(!args.isEmpty()){ cmd.append(" "+args+""); }
   //int retcode = system( cmd.toUtf8() );
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
-  QProcess *p = new QProcess();
-  p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-  if(!path.isEmpty() && QFile::exists(path)){ p->setWorkingDirectory(path); }
-  p->start(cmd);
-  //Check the startup procedure
-  /*while(!p->waitForStarted(5000)){
-    if(p->state() == QProcess::NotRunning){
-     //bad/invalid start
-     qDebug() << "[lumina-open] Application did not start properly:"<<cmd;
-     return p->exitCode();
-    }else if(p->state() == QProcess::Running){
-     //This just missed the "started" signal - continue
-     break;
-    }
-  }*/
-  //Now check up on it once every minute until it is finished
-  while(!p->waitForFinished(60000)){
-    //qDebug() << "[lumina-open] process check:" << p->state();
-    if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
-  }
-  int retcode = p->exitCode();
-  //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
+  int retcode = 0;
+  if(!watch && path.isEmpty()){
+      //Nothing special about this one - just start it detached (less overhead)
+      QProcess::startDetached(cmd);
+  }else{
+    //Keep an eye on this process for errors and notify the user if it crashes
+    QProcess *p = new QProcess();
+    p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+    if(!path.isEmpty() && QFile::exists(path)){ p->setWorkingDirectory(path); }
+    p->start(cmd);
   
-  if(p->exitStatus() == QProcess::CrashExit || retcode > 0){
-    qDebug() << "[lumina-open] Application Error:" << retcode;
-    QString err = QString(p->readAllStandardError());
-    if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
-    //Setup the application
-    QApplication App(argc, argv);
-    LuminaThemeEngine theme(&App);
+    //Now check up on it once every minute until it is finished
+    while(!p->waitForFinished(60000)){
+      //qDebug() << "[lumina-open] process check:" << p->state();
+      if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
+    }
+    retcode = p->exitCode();
+    //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
+  
+    if( (p->exitStatus() == QProcess::CrashExit || retcode > 0) && watch){
+      qDebug() << "[lumina-open] Application Error:" << retcode;
+      QString err = QString(p->readAllStandardError());
+      if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
+      //Setup the application
+      QApplication App(argc, argv);
+      LuminaThemeEngine theme(&App);
 	LUtils::LoadTranslation(&App,"lumina-open");
-    QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
-    if(!err.isEmpty()){ dlg.setDetailedText(err); }
-    dlg.exec();
+      QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
+      if(!err.isEmpty()){ dlg.setDetailedText(err); }
+      dlg.exec();
+    }
   }
   return retcode;
 }
