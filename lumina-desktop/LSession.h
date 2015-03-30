@@ -112,6 +112,8 @@ private:
 
 	void CleanupSession();
 	
+	int VersionStringToNumber(QString version);
+	
 public slots:
 	void launchStartupApps();
 	void StartLogout();
