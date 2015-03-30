@@ -5,11 +5,17 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
-export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+QMAKE = /usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-USER_QMAKE_FLAGS = PREFIX=/usr LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) QT5LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/qt5
+USER_QMAKE_FLAGS = \
+	PREFIX=/usr \
+	LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
+	QT5LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/qt5 \
+	QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
+	QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed"
+
 QMAKE_EXTRA_DIRS = libLumina \
 	lumina-config \
 	lumina-desktop \
@@ -21,36 +27,32 @@ QMAKE_EXTRA_DIRS = libLumina \
 	lumina-xconfig
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	sed -e 's/LuminaOS-Linux/LuminaOS-Debian/g' -i libLumina/libLumina.pro
-	/usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake $(USER_QMAKE_FLAGS)
-	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && /usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake $(USER_QMAKE_FLAGS)); done
+	$(QMAKE) $(USER_QMAKE_FLAGS)
+	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && $(QMAKE) $(USER_QMAKE_FLAGS)); done
 
 override_dh_auto_clean:
-	-$(MAKE) distclean
-	-find $(CURDIR) -name *.qm | xargs rm
+	dh_auto_clean
+	-find $(CURDIR) -name *.qm -delete
 	-sed -e 's/LuminaOS-Debian/LuminaOS-Linux/g' -i libLumina/libLumina.pro
 
-override_dh_strip:
-	dh_strip -a --dbg-package=libluminautils-dbg
-
 override_dh_install:
-	dh_install --fail-missing
-	mkdir $(CURDIR)/debian/lumina-desktop/etc/
-	install -m644 $(CURDIR)/debian/luminaDesktop.conf \
-		$(CURDIR)/debian/lumina-desktop/etc/luminaDesktop.conf
+	dh_install --list-missing
 	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/lxpolkit" > \
 		$(CURDIR)/debian/lumina-desktop/etc/luminaStartapps
 	mv $(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE \
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE.real
 	install -m755 $(CURDIR)/debian/Lumina-DE \
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE
-	mkdir -p $(CURDIR)/debian/lumina-desktop/etc/default
-	install -m644 $(CURDIR)/debian/lumina-qt5ct \
-		$(CURDIR)/debian/lumina-desktop/etc/default/lumina-qt5ct
+	# make install / dh_auto_install will automatically strip the library.
+	# This is a work-around to preserve the debug symbols for the debug package.
+	install -m644 libLumina/libLuminaUtils.so.1.0.0 \
+		$(CURDIR)/debian/libluminautils1/usr/lib/$(DEB_HOST_MULTIARCH)
 
-override_dh_auto_install:
-	INSTALL_ROOT=$(CURDIR)/debian/tmp/ $(MAKE) install
-	-rm -rf $(CURDIR)/debian/tmp/usr/etc/
+override_dh_strip:
+	dh_strip -plibluminautils1 --dbg-package=libluminautils-dbg
+	dh_strip --remaining-packages
+
