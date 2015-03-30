@@ -99,6 +99,9 @@ public:
 	static QStringList findAVFileExtensions();
 	//Load all the "globs2" mime database files
 	static QStringList loadMimeFileGlobs2();
+	
+	//Find all the autostart *.desktop files
+	static QList<XDGDesktop> findAutoStartFiles(bool includeInvalid = false);
 };
 
 #endif

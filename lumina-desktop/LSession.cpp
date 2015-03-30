@@ -213,6 +213,18 @@ void LSession::launchStartupApps(){
   if(sessionsettings->value("EnableNumlock",true).toBool()){
     QProcess::startDetached("numlockx on");
   }
+  //Now get any XDG startup applications and launch them
+  QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
+  for(int i=0; i<xdgapps.length(); i++){
+    qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
+    if(xdgapps[i].startupNotify){
+      LSession::LaunchApplication("lumina-open \""+xdgapps[i].filePath+"\"");
+    }else{
+      //Don't update the mouse cursor
+      QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
+    }
+  }
+  
 }
 
 void LSession::StartLogout(){
