@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
 Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
-               libxcb1-dev, libx11-xcb-dev, libxcb-ewmh-dev, make, g++,
+               libxcb1-dev, libx11-xcb-dev, libxcb-composite0-dev, libxcb-ewmh-dev,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
                libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev,
@@ -25,20 +25,24 @@ Description: Lightweight Qt5-based desktop environment
 
 Package: libluminautils1
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Library for the lumina desktop environment
  Utility library for the lumina desktop environment
 
 Package: libluminautils-dev
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Section: libdevel
+Depends: ${misc:Depends}, libluminautils1 (= ${binary:Version})
 Description: Development files for lumina desktop environment
- Files needed to develop plugins or extensions for the lumina desktop environment,
- or using libluminautils1 in projects.
+ Files needed to develop plugins or extensions for the lumina desktop
+ environment, or using libluminautils1 in projects.
 
 Package: libluminautils-dbg
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils-dev (= ${binary:Version})
+Section: debug
+Priority: extra
+Depends: ${misc:Depends}, libluminautils1 (= ${binary:Version})
 Description: Debugging symbols for lumina desktop environment
  Debugging symbols for libluminautils1
 
@@ -47,8 +51,8 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Configuration utility for the lumina desktop environment
- lumina-config allows to change various aspects of lumina and fluxbox, like the
- wallpaper beeing used, startup-applications, desktop-menu and more.
+ lumina-config allows one to change various aspects of lumina and fluxbox, like
+ the wallpaper beeing used, startup-applications, desktop-menu and more.
 
 Package: lumina-fm
 Architecture: any
@@ -72,15 +76,15 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Screenshot utility for the lumina desktop environment
- Simple screenshot utility that allows to snapshot the whole desktop or a single
- window after a configurable delay.
+ Simple screenshot utility that allows one to snapshot the whole desktop or a
+ single window after a configurable delay.
 
 Package: lumina-search
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Search utility for the lumina desktop environment
- Simple search utility that allows to search for applications or files and
+ Simple search utility that allows one to search for applications or files and
  directories in the user's HOME directory.
 
 Package: lumina-info
@@ -100,11 +104,12 @@ Description: Display configuration tool for the lumina desktop environment
 
 Package: lumina-data
 Architecture: all
-Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}), lumina-desktop (= ${binary:Version})
+Depends: ${misc:Depends}, libluminautils1, lumina-desktop
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Data files for the lumina Desktop environment
- - Lumina Wallpapers
- - Lumina Themes
- - Lumina Translations
- - Lumina Sounds
- - Fallback fluxbox configuration
+ This package provides
+  * Lumina Wallpapers
+  * Lumina Themes
+  * Lumina Translations
+  * Lumina Sounds
+  * Fallback fluxbox configuration
