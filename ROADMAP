@@ -80,8 +80,8 @@ capsicum:
 --------------------------
 ROADMAP to 1.0.0-Release (large projects define release schedule)
 ---------------------------
-0.8.3 - Include "lumina-screensaver" as a replacement for xscreensaver
-0.8.4 - Integrate "capsicum" on FreeBSD for application/system security
+0.8.4 - Include "lumina-screensaver" as a replacement for xscreensaver
+0.8.5 - Integrate "capsicum" on FreeBSD for application/system security
 	- May have additional 0.8.x releases as necessary
 0.9.0 - Include "lumina-wm" as a replacement for Fluxbox
 
