@@ -16,6 +16,7 @@ public:
     explicit Dialog(QWidget *parent = 0);
 
     XDGDesktop DF ;
+    QString inMemoryFile;
 
     QString desktopFileName ;
     QString iconFileName;
@@ -38,6 +39,9 @@ private slots:
     void on_pbIcon_clicked();
 
     void textReplace(QString &origin, QString from, QString to, QString topic);
+    
+    void on_lName_textChanged(QString text);
+    void on_lComment_textChanged(QString text);
 
 private:
     Ui::Dialog *ui;

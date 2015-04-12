@@ -31,7 +31,6 @@ Dialog::Dialog(QWidget *parent) :
 	    QFile::copy(":defaults/fileinfo-app.template", templateFile);
 	    QFile(templateFile).setPermissions(QFileDevice::ReadUser|QFileDevice::WriteUser);
 	}
-
 }
 
 
@@ -124,6 +123,14 @@ void Dialog::LoadDesktopFile(QString input)
         QMessageBox::critical(this, tr("Error"), tr("Problem to read the desktop file called:") + desktopFileName );
         exit(1);
     }
+    
+    //we load the file in memory and will adapt it before saving it to disk
+    QFile file(desktopFileName);
+    inMemoryFile="";
+    if (file.open(QFile::ReadWrite)) { 
+		QTextStream fileData(&file);
+        inMemoryFile = fileData.readAll();
+    }
 }
 
 
@@ -164,22 +171,9 @@ void Dialog::on_pbWorkingDir_clicked()
 //we just change the required lines and we don't touch to the rest of the file and copy it back.
 void Dialog::textReplace(QString &origin, QString from, QString to, QString topic)
 {
-    if (origin.contains(QRegExp("\n" + topic + "\\[\\S+\\]\\s*=",Qt::CaseInsensitive))) {
-		QMessageBox msgBox;
-		msgBox.setText(tr("By modifying this value, you will loose all translated versions"));
-		msgBox.setInformativeText(tr("The field:") + topic + tr( "is translated in several other languages. If you want to continue, you will loose all translated versions"));
-		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-		int answer = msgBox.exec();
-		if (answer==QMessageBox::Ok) {
-			//remove all translated versions. The lang cannot be null, but the value can be.
-			origin.replace(QRegExp("\n" + topic + "\\[\\S+\\]\\s*=[^\n]*",Qt::CaseInsensitive), "");
-		}
-		else return;
-	}
-    if (!from.isEmpty()) {
+    if (origin.contains(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive))) {
         origin.replace(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive),"\n" + topic + "=" + to + "\n");
     } else {
-        //TODO: check if last char in \n. If not add it
         origin.append(topic + "=" + to + "\n");
     }
 }
@@ -187,65 +181,62 @@ void Dialog::textReplace(QString &origin, QString from, QString to, QString topi
 //we save the changes to the destination file
 void Dialog::on_pbApply_clicked()
 {
-    
-    QByteArray fileData;
+    QString from,to;
+	QString desktopTypeVal="Application";
+	if (DF.type == XDGDesktop::APP) { desktopTypeVal="Application"; }
+	else if (DF.type == XDGDesktop::LINK) { desktopTypeVal="Link"; }
+	else if (DF.type == XDGDesktop::DIR) { desktopTypeVal="Dir"; }
+	textReplace(inMemoryFile, desktopTypeVal, desktopType, "Type");
+
+	if (ui->lName->isModified()) { textReplace(inMemoryFile, DF.name, ui->lName->text(), "Name");}
+	if (ui->lComment->isModified()) { textReplace(inMemoryFile, DF.comment, ui->lComment->text(), "Comment");}
+	if (ui->lCommand->isModified()) { textReplace(inMemoryFile, DF.exec, ui->lCommand->text(),"Exec");}
+	if (desktopType=="link") {
+		//incase of "link" layout WorkingDir is corresponding to the URL
+		if (ui->lWorkingDir->isModified()) { textReplace(inMemoryFile, DF.url, ui->lWorkingDir->text(),"URL");}
+	} else {
+		if (ui->lWorkingDir->isModified()) { textReplace(inMemoryFile, DF.path, ui->lWorkingDir->text(),"Path");}
+	}
+	if (ui->cbStartupNotification->isChecked() != DF.startupNotify) {
+		if (DF.startupNotify) {from="true"; to="false";} else {from="false"; to="true";}
+		textReplace(inMemoryFile, from, to,"StartupNotify");
+	}
+	if (ui->cbRunInTerminal->isChecked() != DF.useTerminal) {
+		if (DF.useTerminal) {from="true"; to="false";} else {from="false"; to="true";}
+		textReplace(inMemoryFile, from, to,"Terminal");
+	}
+	if (!iconFileName.isEmpty()) {
+		from=DF.icon;
+		to=iconFileName;
+		textReplace(inMemoryFile, from, to,"Icon");
+	}
+
     QFile file(desktopFileName);
-    if (file.open(QFile::ReadWrite)) {
-        QString from,to;
-        fileData = file.readAll();
-        QString text(fileData);
+    if (file.open(QFile::ReadWrite)) { 
+      file.seek(0);
+	  file.write(inMemoryFile.toUtf8());
 
-        QString desktopTypeVal="Application";
-        if (DF.type == XDGDesktop::APP) { desktopTypeVal="Application"; }
-        else if (DF.type == XDGDesktop::LINK) { desktopTypeVal="Link"; }
-        else if (DF.type == XDGDesktop::DIR) { desktopTypeVal="Dir"; }
-        textReplace(text, desktopTypeVal, desktopType, "Type");
+	  file.resize(file.pos());//remove possible trailing lines
 
-        if (ui->lName->isModified()) { textReplace(text, DF.name, ui->lName->text(), "Name");}
-        if (ui->lComment->isModified()) { textReplace(text, DF.comment, ui->lComment->text(), "Comment");}
-        if (ui->lCommand->isModified()) { textReplace(text, DF.exec, ui->lCommand->text(),"Exec");}
-        if (desktopType=="link") {
-            //incase of "link" layout WorkingDir is corresponding to the URL
-            if (ui->lWorkingDir->isModified()) { textReplace(text, DF.url, ui->lWorkingDir->text(),"URL");}
-        } else {
-            if (ui->lWorkingDir->isModified()) { textReplace(text, DF.path, ui->lWorkingDir->text(),"Path");}
-        }
-        if (ui->cbStartupNotification->isChecked() != DF.startupNotify) {
-            if (DF.startupNotify) {from="true"; to="false";} else {from="false"; to="true";}
-            textReplace(text, from, to,"StartupNotify");
-        }
-        if (ui->cbRunInTerminal->isChecked() != DF.useTerminal) {
-            if (DF.useTerminal) {from="true"; to="false";} else {from="false"; to="true";}
-            textReplace(text, from, to,"Terminal");
-        }
-        if (!iconFileName.isEmpty()) {
-            from=DF.icon;
-            to=iconFileName;
-            textReplace(text, from, to,"Icon");
-        }
+	  file.close();
+	} else {
+		//problem to write to the disk
+	}
 
-        file.seek(0);
-        file.write(text.toUtf8());
+	//hack required to update the icon on the desktop
+		QTemporaryFile tempFile ;
+		tempFile.setAutoRemove(false);
+		tempFile.open();
+		tempFile.close();
 
-        file.resize(file.pos());//remove possible trailing lines
+		//TODO: capture errors
+		QString cmd = "mv";
+		cmd = cmd + " " + desktopFileName + " " + tempFile.fileName();
+		int ret = LUtils::runCmd(cmd);
 
-        file.close();
-
-        //hack required to update the icon on the desktop
-            QTemporaryFile tempFile ;
-            tempFile.setAutoRemove(false);
-            tempFile.open();
-            tempFile.close();
-
-            //TODO: capture errors
-            QString cmd = "mv";
-            cmd = cmd + " " + desktopFileName + " " + tempFile.fileName();
-            int ret = LUtils::runCmd(cmd);
-
-            cmd = "mv";
-            cmd = cmd + " " + tempFile.fileName() + " " + desktopFileName;
-            ret = LUtils::runCmd(cmd);
-    }
+		cmd = "mv";
+		cmd = cmd + " " + tempFile.fileName() + " " + desktopFileName;
+		ret = LUtils::runCmd(cmd);
 }
 
 
@@ -262,5 +253,39 @@ void Dialog::on_pbIcon_clicked()
     if (!fileName.isEmpty()) {
 		ui->pbIcon->setIcon(QPixmap(fileName));
 		iconFileName=fileName;
+	}
+}
+
+void Dialog::on_lName_textChanged(QString text)
+{
+	if (text != DF.name && inMemoryFile.contains(QRegExp("\nName\\[\\S+\\]\\s*=",Qt::CaseInsensitive))) {
+		QMessageBox msgBox;
+		msgBox.setText(tr("By modifying this value, you will loose all translated versions"));
+		msgBox.setInformativeText(tr("The field: Name is translated in several other languages. If you want to continue, you will loose all translated versions"));
+		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		int answer = msgBox.exec();
+		if (answer==QMessageBox::Ok) {
+			//remove all translated versions. The lang cannot be null, but the value can be.
+			inMemoryFile.replace(QRegExp("\nName\\[\\S+\\]\\s*=[^\n]*",Qt::CaseInsensitive), "");
+		} else {
+		  ui->lName->setText(DF.name);
+	  }
+	}
+}
+
+void Dialog::on_lComment_textChanged(QString text)
+{
+	if (text != DF.name && inMemoryFile.contains(QRegExp("\nComment\\[\\S+\\]\\s*=",Qt::CaseInsensitive))) {
+		QMessageBox msgBox;
+		msgBox.setText(tr("By modifying this value, you will loose all translated versions"));
+		msgBox.setInformativeText(tr("The field: Comment is translated in several other languages. If you want to continue, you will loose all translated versions"));
+		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		int answer = msgBox.exec();
+		if (answer==QMessageBox::Ok) {
+			//remove all translated versions. The lang cannot be null, but the value can be.
+			inMemoryFile.replace(QRegExp("\nComment\\[\\S+\\]\\s*=[^\n]*",Qt::CaseInsensitive), "");
+		} else {
+		  ui->lName->setText(DF.comment);
+	  }
 	}
 }
