@@ -27,6 +27,7 @@ private:
 	QListWidget *list;
 	QFileSystemWatcher *watcher;
 	QMenu *menu;
+	QStringList imgExtensions;
 
 private slots:
 	void runItems();
@@ -47,19 +48,6 @@ public slots:
 	void ThemeChange(){
 	  QTimer::singleShot(0,this, SLOT(updateContents()));
 	}
-	
-/*protected:
-	void mousePressEvent(QMouseEvent *ev){
-	  if(ev->button()==Qt::RightButton){
-	    qDebug() << " - got mouse event";
-	    //Only show the context menu if an item is under the mouse (don't block the desktop menu)
-	    if(list->itemAt( ev->globalPos()) !=0){
-	      ev->accept();
-	      showMenu(ev->globalPos());
-	    }
-	  }
-	}
-	*/
 
 };
 #endif

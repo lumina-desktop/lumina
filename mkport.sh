@@ -47,7 +47,7 @@ REV=`get_last_rev_git "."`
 rm ${distdir}/lumina*.tar.bz2 2>/dev/null
 echo "Creating lumina dist file for version: $REV"
 cd ..
-tar cvjf ${distdir}/lumina-${REV}.tar.bz2 --exclude .git lumina 2>/dev/null
+tar cvjf ${distdir}/lumina-${REV}.tar.bz2 --exclude .git --exclude Artwork lumina 2>/dev/null
 cd lumina
 
 # Copy ports files

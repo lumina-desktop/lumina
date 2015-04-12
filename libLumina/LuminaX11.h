@@ -141,7 +141,6 @@ public:
 	QString OldWindowIconName(WId win); //WM_ICON_NAME (old standard)
 	bool WindowIsMaximized(WId win);
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
-	QPixmap WindowImage(WId win); //Pull the image directly from the window
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces
@@ -151,6 +150,10 @@ public:
 	void ActivateWindow(WId); //request that the window become active
 	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
 	void MoveResizeWindow(WId win, QRect geom);
+	
+	//Window Embedding/Detaching (for system tray)
+	bool EmbedWindow(WId win, WId container);
+	bool UnembedWindow(WId win);
 	
 };
 

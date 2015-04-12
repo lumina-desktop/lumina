@@ -86,3 +86,38 @@ void BackgroundWorker::startDirChecks(QString path){
     qDebug() << "Found snapshots";
   }
 }
+
+
+void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, QString message){
+  //collect some statistics of dir and display them in statusbar
+  //Get the total size of the items
+  double totalSizes = 0;
+  for(int i=0; i<fileList.length(); i++){
+    if(!fileList[i].isDir()){
+      totalSizes += fileList[i].size(); //in Bytes
+    }
+  }
+  //Convert the size into display units
+  static QStringList units = QStringList() << tr("B") << tr("KB") << tr("MB") << tr("GB") << tr("TB");
+  int cunit = 0;
+  while(cunit < units.length() && totalSizes > 1024){
+    cunit++;
+    totalSizes = totalSizes/1024;
+  }
+  //Assemble the message
+  QString msgStatusBar = QString(tr("%1: %2")).arg(message).arg(fileList.length());
+  if(totalSizes > 0){
+    totalSizes = qRound(totalSizes*100)/100.0; //round to 2 decimel places
+    msgStatusBar += "    "+QString(tr("Total size: %1 %2")).arg(QString::number(totalSizes), units[cunit]);
+  }
+  //If a path given, get the total capacity of it (percantage)
+  if (!path.isEmpty()) { //path could be empty when fileList is based on user's selection
+	  QString capacity = LOS::FileSystemCapacity(path) ;
+      if (msgStatusBar.isEmpty()) msgStatusBar += QString(tr("Capacity: %1")).arg(capacity);
+      else msgStatusBar += "   "+QString(tr("Capacity: %1")).arg(capacity);
+  }
+  //Emit the signal to show this on the UI
+  if (!msgStatusBar.isEmpty()){
+    emit Si_DisplayStatusBar(msgStatusBar);
+  }
+}

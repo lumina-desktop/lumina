@@ -171,6 +171,20 @@ void LSession::CleanupSession(){
   for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
 }
 
+int LSession::VersionStringToNumber(QString version){
+  version = version.section("-",0,0); //trim any extra labels off the end
+  int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
+  maj = mid = min = 0; 
+  bool ok = true;
+  maj = version.section(".",0,0).toInt(&ok);
+  if(ok){ mid = version.section(".",1,1).toInt(&ok); }else{ maj = 0; }
+  if(ok){ min = version.section(".",2,2).toInt(&ok); }else{ mid = 0; }
+  if(!ok){ min = 0; }
+  //Now assemble the number
+  //NOTE: This format allows numbers to be anywhere from 0->999 without conflict
+  return (maj*1000000 + mid*1000 + min);
+}
+
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
@@ -213,6 +227,18 @@ void LSession::launchStartupApps(){
   if(sessionsettings->value("EnableNumlock",true).toBool()){
     QProcess::startDetached("numlockx on");
   }
+  //Now get any XDG startup applications and launch them
+  QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
+  for(int i=0; i<xdgapps.length(); i++){
+    qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
+    if(xdgapps[i].startupNotify){
+      LSession::LaunchApplication("lumina-open \""+xdgapps[i].filePath+"\"");
+    }else{
+      //Don't update the mouse cursor
+      QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
+    }
+  }
+  
 }
 
 void LSession::StartLogout(){
@@ -240,15 +266,16 @@ void LSession::watcherChange(QString changed){
 }
 
 void LSession::checkUserFiles(){
-  //version conversion examples: [1.0.0 -> 100], [1.2.0 -> 120], [0.6.0 -> 60]
-  int oldversion = sessionsettings->value("DesktopVersion","0").toString().section("-",0,0).remove(".").toInt();
-  bool newversion =  ( oldversion < this->applicationVersion().remove(".").toInt() );
+  //internal version conversion examples: 
+  //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
+  int oldversion = VersionStringToNumber(sessionsettings->value("DesktopVersion","0").toString());
+  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) );
   
   //Check for the desktop settings file
   QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
   bool firstrun = false;
-  if(!QFile::exists(dset) || oldversion < 50){
-    if( oldversion < 50 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
+  if(!QFile::exists(dset) || oldversion < 5000){
+    if( oldversion < 5000 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
     /*if(QFile::exists(LOS::LuminaShare()+"desktopsettings.conf")){
       if( QFile::copy(LOS::LuminaShare()+"desktopsettings.conf", dset) ){
@@ -257,10 +284,10 @@ void LSession::checkUserFiles(){
     }*/
     LUtils::LoadSystemDefaults();
   }
-  if(oldversion <= 83){
-    //Convert the old->new favorites framework
+  /*if(oldversion <= 8003){
+    //Convert the old->new favorites framework (Not implemented yet)
 	  
-  }
+  }*/
   
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";

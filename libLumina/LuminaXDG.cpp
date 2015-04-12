@@ -127,8 +127,8 @@ bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
       if(DEBUG){ qDebug() << " - Unknown file type"; } 
   }
   if(!showAll){
-    if(!dFile.showInList.isEmpty()){ ok = dFile.showInList.contains("Lumina"); }
-    else if(!dFile.notShowInList.isEmpty()){ ok = !dFile.notShowInList.contains("Lumina"); }
+    if(!dFile.showInList.isEmpty()){ ok = dFile.showInList.contains("Lumina", Qt::CaseInsensitive); }
+    else if(!dFile.notShowInList.isEmpty()){ ok = !dFile.notShowInList.contains("Lumina",Qt::CaseInsensitive); }
   }
   return ok;
 }
@@ -663,5 +663,61 @@ QStringList LXDG::loadMimeFileGlobs2(){
     }    
   }
   return mimeglobs;
+}
+
+//Find all the autostart *.desktop files
+QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
+	
+  //First get the list of directories to search (system first, user-provided files come later and overwrite sys files as needed)
+  QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+  paths << QString(getenv("XDG_CONFIG_HOME")).split(":");
+  //Now go through them and find any valid *.desktop files
+  QList<XDGDesktop> files;
+  QStringList filenames; //make it easy to see if this filename is an override
+  QDir dir;
+  for(int i=0;i<paths.length(); i++){
+    if(!QFile::exists(paths[i]+"/autostart")){ continue; }	  
+    dir.cd(paths[i]+"/autostart");
+    QStringList tmp = dir.entryList(QStringList() << "*.desktop", QDir::Files, QDir::Name);
+    for(int t=0; t<tmp.length(); t++){
+      bool ok = false;
+      XDGDesktop desk = LXDG::loadDesktopFile(dir.absoluteFilePath(tmp[t]), ok);
+      if(!ok){ continue; } //could not read file
+      //Now figure out what to do with it
+      if(filenames.contains(tmp[t])){
+	//This is an overwrite of a lower-priority (system?) autostart file
+	// find the other file
+	int old = -1;
+	for(int o=0; o<files.length(); o++){
+	  if(files[o].filePath.endsWith("/"+tmp[t])){ old = o; break; } //found it
+	}
+	if(LXDG::checkValidity(desk, false)){
+	  //Full override of the lower-priority file (might be replacing exec/tryexec fields)
+	  files[old] = desk;
+	}else{
+	  //Small override file (only the "Hidden" field listed in spec)
+	  files[old].isHidden = desk.isHidden; //replace this value with the override
+	  files << desk; //still add this to the array (will be ignored/skipped later)
+	}
+      }else{
+        //This is a new autostart file
+	files << desk;
+	filenames << tmp[t];
+      }
+    }//end of loop over *.desktop files
+  } //end of loop over directories
+  
+  //Now filter the results by validity if desired
+  if(!includeInvalid){
+    for(int i=0; i<files.length(); i++){
+      if( !LXDG::checkValidity(files[i], false) || files[i].isHidden ){
+        //Invalid file - go ahead and remove it from the output list
+	files.removeAt(i);
+	i--;
+      }
+    }
+  }
+	
+  return files;
 }
 

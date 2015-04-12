@@ -14,7 +14,8 @@ AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   APPS.clear();
   watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
-  QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
+  //QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
+  start(); //do the initial run during session init so things are responsive immediately.
 }
 
 AppMenu::~AppMenu(){
