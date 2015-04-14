@@ -34,12 +34,13 @@ LFileDialog::~LFileDialog(){
 void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
   //Set the labels for the file
   ui->label_file->setText( this->fontMetrics().elidedText( filename, Qt::ElideMiddle, 300 ) );
+  bool shownetwork = false;
   if(isFile){ ui->label_extension->setText( "("+extension+")"); }
-  else if(extension=="email"){ ui->label_extension->setText( QString(tr("(Email Link)")) ); }
-  else if(extension=="webbrowser"){  ui->label_extension->setText( QString(tr("(Internet URL)")) ); }
+  else if(extension=="email"){ ui->label_extension->setText( QString(tr("(Email Link)")) ); shownetwork = true; }
+  else if(extension=="webbrowser"){  ui->label_extension->setText( QString(tr("(Internet URL)")) ); shownetwork = true; }
   else{ui->label_extension->setText("("+extension+" link)"); }
   fileEXT = extension; //NOTE: this is the mime-type for the file now, not the extension
-  generateAppList();
+  generateAppList(shownetwork);
 }
 
 //static functions
@@ -160,7 +161,7 @@ void LFileDialog::updateUI(){
   ui->tool_ok->setEnabled(good);
 }
 
-void LFileDialog::generateAppList(){
+void LFileDialog::generateAppList(bool shownetwork){
   //Now load the preferred applications
   PREFAPPS = getPreferredApplications();
   ui->combo_rec->clear();
@@ -175,6 +176,12 @@ void LFileDialog::generateAppList(){
     QList<XDGDesktop> app = hash[cat[c]];
     QTreeWidgetItem *ci = new QTreeWidgetItem(ui->tree_apps, QStringList() << translateCat(cat[c]));
     for(int a=0; a<app.length(); a++){
+      if(shownetwork && (cat[c].toLower()=="network" || cat[c].toLower()=="utility") ){ 
+	//Need to show preferred internet applications - look for ones that handle URL's
+	if(app[a].exec.contains("%u") || app[a].exec.contains("%U")){
+          PREFAPPS << app[a].filePath; 
+	}
+      }
       QTreeWidgetItem *ti = new QTreeWidgetItem(ci, QStringList() << app[a].name);
         ti->setWhatsThis(0, app[a].filePath);
         ti->setIcon(0, LXDG::findIcon(app[a].icon, "application-x-desktop"));
