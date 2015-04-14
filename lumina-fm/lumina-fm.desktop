@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=lumina-fm %U
+Exec=lumina-fm %F
 Icon=/usr/local/share/pixmaps/Insight-FileManager.png
 Terminal=false
 Type=Application
