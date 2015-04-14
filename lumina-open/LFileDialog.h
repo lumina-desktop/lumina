@@ -61,7 +61,7 @@ private:
 	
 private slots:
 	void updateUI();
-	void generateAppList();
+	void generateAppList(bool shownetwork = false);
 	//Internal UI slots
 	void radioChanged();
 	//void on_group_binary_toggled(bool checked);
