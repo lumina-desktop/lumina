@@ -118,7 +118,7 @@ void Dialog::LoadDesktopFile(QString input)
         if (DF.startupNotify) ui->cbStartupNotification->setChecked(true); else ui->cbStartupNotification->setChecked(false);
         if (DF.useTerminal) ui->cbRunInTerminal->setChecked(true); else ui->cbRunInTerminal->setChecked(false);
         iconFileName="";
-        ui->pbIcon->setIcon(QPixmap(DF.icon));
+        ui->pbIcon->setIcon(LXDG::findIcon(DF.icon,""));
     } else {
         QMessageBox::critical(this, tr("Error"), tr("Problem to read the desktop file called:") + desktopFileName );
         exit(1);
@@ -137,9 +137,9 @@ void Dialog::LoadDesktopFile(QString input)
 void Dialog::on_pbCommand_clicked()
 {
 	//the default directory is the user's home directory
- 	QString commandFolder = "~"; 
+ 	QString commandFolder = QDir::homePath(); 
     if (!ui->lCommand->text().isEmpty()) commandFolder = ui->lCommand->text().section('/', 0, -2); 
-    if (commandFolder.isEmpty()) commandFolder = "~";
+    if (commandFolder.isEmpty()) commandFolder = QDir::homePath();
    
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open command"), commandFolder, tr("All Files (*)"));
