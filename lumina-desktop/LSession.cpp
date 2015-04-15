@@ -24,7 +24,7 @@
 #include <X11/extensions/Xdamage.h>
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -44,6 +44,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   TrayDmgEvent = 0;
   TrayDmgError = 0;
   cleansession = true;
+  TrayStopping = false;
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
   }
@@ -133,20 +134,20 @@ void LSession::setupSession(){
 void LSession::CleanupSession(){
   //Close any running applications and tray utilities (Make sure to keep the UI interactive)
   LSession::processEvents();
+  QDateTime time = QDateTime::currentDateTime();
+  qDebug() << "Start closing down the session: " << time.toString( Qt::SystemLocaleShortDate);
   //Start the logout chimes (if necessary)
-  if( sessionsettings->value("PlayLogoutAudio",true).toBool() ){
-    playAudioFile(LOS::LuminaShare()+"Logout.ogg");
-  }
-  
+  bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
+  if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
+  //Stop the background system tray (detaching/closing apps as necessary)
+  stopSystemTray(!cleansession);
+  //Now perform any other cleanup
   if(cleansession){
-    //Close any Tray Apps
-    for(int i=0; i<RunningTrayApps.length(); i++){
-      XCB->CloseWindow(RunningTrayApps[i]);
-      LSession::processEvents();
-    }  
     //Close any open windows
+    //qDebug() << " - Closing any open windows";
     QList<WId> WL = XCB->WindowList(true);
     for(int i=0; i<WL.length(); i++){
+      qDebug() << " - Closing window:" << XCB->WindowClass(WL[i]) << WL[i];
       XCB->CloseWindow(WL[i]);
       LSession::processEvents();
     }
@@ -155,20 +156,33 @@ void LSession::CleanupSession(){
     //Kill any remaining windows
     WL = XCB->WindowList(true); //all workspaces
     for(int i=0; i<WL.length(); i++){
-      LX11::KillWindow(WL[i]);
+      qDebug() << " - Window did not close, killing application:" << XCB->WindowClass(WL[i]) << WL[i];
+      XCB->KillClient(WL[i]);
       LSession::processEvents();
     }
   }
+  evFilter->StopEventHandling();
   //Stop the window manager
+  qDebug() << " - Stopping the window manager";
   WM->stopWM();
   //Now close down the desktop
+  qDebug() << " - Closing down the desktop elements";
   for(int i=0; i<DESKTOPS.length(); i++){
     DESKTOPS[i]->prepareToClose(); 
     //don't actually close them yet - that will happen when the session exits
     // this will leave the wallpapers up for a few moments (preventing black screens)
   }
   //Now wait a moment for things to close down before quitting
-  for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+  if(playaudio){
+    //wait a max of 3 seconds for audio to finish
+    bool waitmore = true;
+    for(int i=0; i<6 && waitmore; i++){
+      waitmore = !audioThread->wait(500);
+      LSession::processEvents();
+    }
+  }else{
+    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+  }
 }
 
 int LSession::VersionStringToNumber(QString version){
@@ -224,7 +238,7 @@ void LSession::launchStartupApps(){
     if(vol>=0){ LOS::setAudioVolume(vol); }
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
-  if(sessionsettings->value("EnableNumlock",true).toBool()){
+  if(sessionsettings->value("EnableNumlock",false).toBool()){
     QProcess::startDetached("numlockx on");
   }
   //Now get any XDG startup applications and launch them
@@ -383,7 +397,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   //Quick hack for making sure that new windows are not located underneath any panels
   // Get the window location
   QRect geom = XCB->WindowGeometry(win, true); //always include the frame if possible
-  if(DEBUG){ qDebug() << "Adjust Window Geometry:" << XCB->WindowClass(win) << !geom.isNull(); }
+  if(DEBUG){ qDebug() << "Check Window Geometry:" << XCB->WindowClass(win) << !geom.isNull(); }
   if(geom.isNull()){ return; } //Could not get geometry
   //Get the available geometry for the screen the window is on
   QRect desk;
@@ -397,15 +411,15 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   }
   //Adjust the window location if necessary
   if(maximize){
-    if(DEBUG){ qDebug() << "Maximizing New Window:" << desk.width() << desk.height(); }
+    if(DEBUG){ qDebug() << " - Maximizing New Window:" << desk.width() << desk.height(); }
     geom = desk; //Use the full screen
     XCB->MoveResizeWindow(win, geom);
     XCB->MaximizeWindow(win, true); //directly set the appropriate "maximized" flags (bypassing WM)
 	  
   }else if(!desk.contains(geom) ){
     if(DEBUG){
-      qDebug() << "Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
-      qDebug() << "Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
+      qDebug() << " - Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
+      qDebug() << " - Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
     }
     //Adjust origin point for left/top margins
     if(geom.y() < desk.y()){ geom.moveTop(desk.y()); } //move down to the edge (top panel)
@@ -414,15 +428,14 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
     if(geom.bottom() > desk.bottom() && geom.height() > 100){ geom.setBottom(desk.bottom()); }
     //Now move/resize the window
-    if(DEBUG){ qDebug() << "New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }
+    if(DEBUG){ qDebug() << " - New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }
     XCB->MoveResizeWindow(win, geom);
   }
   
 }
 
 void LSession::SessionEnding(){
-  audioThread->wait(3000); //wait a max of 3 seconds for the audio thread to finish
-  stopSystemTray();
+  stopSystemTray(); //just in case it was not stopped properly earlier
 }
 
 //===============
@@ -454,27 +467,22 @@ void LSession::systemWindow(){
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
-  //return; //Disable this for now: too many issues with Phonon at the moment (hangs the session)
   bool init = false;
   if(DEBUG){ qDebug() << "Play Audio File"; }
   if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
-  //if(mediaObj==0){   qDebug() << " - Initialize Phonon media Object"; mediaObj = new Phonon::MediaObject(); init = true;}
   if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); init = true;}
-  //if(audioOut==0){   qDebug() << " - Initialize Phonon audio output"; audioOut = new Phonon::AudioOutput(); init=true;}
   if(mediaObj && init){  //in case it errors for some reason
-    //qDebug() << " -- Create path between audio objects";
-    //Phonon::createPath(mediaObj, audioOut);
     qDebug() << " -- Move audio objects to separate thread";
     mediaObj->moveToThread(audioThread);
-    //audioOut->moveToThread(audioThread);
     audioThread->start();
   }
-  if(mediaObj !=0 ){//&& audioOut!=0){
-    //mediaObj->setCurrentSource(QUrl(filepath));
+  if(mediaObj !=0 ){
+    if(DEBUG){ qDebug() << " - starting playback:" << filepath; }
     mediaObj->setMedia(QUrl::fromLocalFile(filepath));
     mediaObj->setVolume(100);
     mediaObj->play();
-    //audioThread->start();
+    if(!audioThread->isRunning()){ audioThread->start(); }
+    LSession::processEvents();
   }
   if(DEBUG){ qDebug() << " - Done with Audio File"; }
 }
@@ -488,7 +496,7 @@ void LSession::WindowPropertyEvent(){
     //New Window found
     LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
-    for(int i=0; i<newapps.length(); i++){
+    for(int i=0; i<newapps.length() && !TrayStopping; i++){
       if(!RunningApps.contains(newapps[i])){ adjustWindowGeom(newapps[i]); }
     }
   }
@@ -505,14 +513,17 @@ void LSession::WindowPropertyEvent(WId win){
 }
 
 void LSession::SysTrayDockRequest(WId win){
+  if(TrayStopping){ return; }
   attachTrayWindow(win); //Check to see if the window is already registered
 }
 
 void LSession::WindowClosedEvent(WId win){
+  if(TrayStopping){ return; }
   removeTrayWindow(win); //Check to see if the window is a tray app
 }
 
 void LSession::WindowConfigureEvent(WId win){
+  if(TrayStopping){ return; } 
   for(int i=0; i<RunningTrayApps.length(); i++){
     if(win==RunningTrayApps[i]){
       if(DEBUG){ qDebug() << "SysTray: Configure Event"; }
@@ -523,6 +534,7 @@ void LSession::WindowConfigureEvent(WId win){
 }
 
 void LSession::WindowDamageEvent(WId win){
+  if(TrayStopping){ return; }
   for(int i=0; i<RunningTrayApps.length(); i++){
     if(win==RunningTrayApps[i]){
       if(DEBUG){ qDebug() << "SysTray: Damage Event"; }
@@ -533,7 +545,7 @@ void LSession::WindowDamageEvent(WId win){
 }
 
 void LSession::WindowSelectionClearEvent(WId win){
-  if(win==SystemTrayID){
+  if(win==SystemTrayID && !TrayStopping){
     qDebug() << "Stopping system tray";
     stopSystemTray(true); //make sure to detach all windows
   }
@@ -546,7 +558,8 @@ void LSession::WindowSelectionClearEvent(WId win){
 bool LSession::registerVisualTray(WId visualTray){
   //Only one visual tray can be registered at a time
   //  (limitation of how tray apps are embedded)
-  if(VisualTrayID==0){ VisualTrayID = visualTray; return true; }
+  if(TrayStopping){ return false; }
+  else if(VisualTrayID==0){ VisualTrayID = visualTray; return true; }
   else if(VisualTrayID==visualTray){ return true; }
   else{ return false; }
 }
@@ -555,7 +568,7 @@ void LSession::unregisterVisualTray(WId visualTray){
   if(VisualTrayID==visualTray){ 
     qDebug() << "Unregistered Visual Tray";
     VisualTrayID=0; 
-    emit VisualTrayAvailable();
+    if(!TrayStopping){ emit VisualTrayAvailable(); }
   }
 }
 
@@ -584,17 +597,29 @@ void LSession::startSystemTray(){
 }
 
 void LSession::stopSystemTray(bool detachall){
+  if(TrayStopping){ return; } //already run
+  qDebug() << "Stopping system tray...";
   TrayStopping = true; //make sure the internal list does not modified during this
   //Close all the running Tray Apps
-  for(int i=0; i<RunningTrayApps.length(); i++){
-    if(!detachall){ LX11::CloseWindow(RunningTrayApps[i]); }
+  QList<WId> tmpApps = RunningTrayApps;
+  RunningTrayApps.clear(); //clear this ahead of time so tray's do not attempt to re-access the apps
+  if(!detachall){
+    for(int i=0; i<tmpApps.length(); i++){
+      qDebug() << " - Stopping tray app:" << XCB->WindowClass(tmpApps[i]);
+      //XCB->CloseWindow(RunningTrayApps[i]);
+      //Tray apps are special and closing the window does not close the app
+      XCB->KillClient(tmpApps[i]);
+      LSession::processEvents();
+    }  
   }
+  //Now close down the tray backend
   LX11::closeSystemTray(SystemTrayID);
   SystemTrayID = 0;
   TrayDmgEvent = 0; 
   TrayDmgError = 0;
-  RunningTrayApps.clear();
+  evFilter->setTrayDamageFlag(0); //turn off tray event handling
   emit TrayListChanged();
+  LSession::processEvents();
 }
 
 void LSession::attachTrayWindow(WId win){
@@ -608,7 +633,7 @@ void LSession::attachTrayWindow(WId win){
 }
 
 void LSession::removeTrayWindow(WId win){
-  if(TrayStopping || SystemTrayID==0){ return; }
+  if(SystemTrayID==0){ return; }
   for(int i=0; i<RunningTrayApps.length(); i++){
     if(win==RunningTrayApps[i]){ 
       RunningTrayApps.removeAt(i); 

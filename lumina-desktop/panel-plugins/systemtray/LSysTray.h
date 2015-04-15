@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -12,7 +12,6 @@
 #include <QHBoxLayout>
 #include <QDebug>
 #include <QX11Info>
-//#include <QX11EmbedContainer>
 #include <QCoreApplication>
 
 //Local includes
@@ -30,6 +29,10 @@ public:
 	LSysTray(QWidget *parent = 0, QString id="systemtray", bool horizontal=true);
 	~LSysTray();
 
+	virtual void AboutToClose(){
+	  this->stop();		
+	}
+	
 private:
 	bool isRunning, stopping, checking;
 	QList<TrayIcon*> trayIcons;

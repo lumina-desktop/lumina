@@ -61,6 +61,7 @@ private:
 	xcb_atom_t _NET_SYSTEM_TRAY_OPCODE;
 	QList<xcb_atom_t> WinNotifyAtoms, SysNotifyAtoms;
 	int TrayDmgFlag; //internal damage event offset value for the system tray
+	bool stopping;
 	
 	void InitAtoms(){
 	  //Initialize any special atoms that we need to save/use regularly
@@ -93,7 +94,8 @@ private:
 public:
 	XCBEventFilter(LSession *sessionhandle);
 	void setTrayDamageFlag(int flag);
-	
+	void StopEventHandling(){ stopping = true; }
+
 	//This function format taken directly from the Qt5.3 documentation
 	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
 	
