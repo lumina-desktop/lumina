@@ -88,6 +88,15 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   } //end reading file
   file.close();
   //If there are OnlyShowIn desktops listed, add them to the name
+  if(DF.showInList.contains("lumina", Qt::CaseInsensitive)){
+    //Need to be careful about case insensitivity here - the QList functions don't understand it
+    for(int i=0; i<DF.showInList.length(); i++){
+      if(DF.showInList[i].toLower()=="lumina"){
+        DF.showInList.removeAt(i);
+	i--;
+      }
+    }
+  }
   if(!DF.showInList.isEmpty()){
     DF.name.append(" ("+DF.showInList.join(", ")+")");
   }
