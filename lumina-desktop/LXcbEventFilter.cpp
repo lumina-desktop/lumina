@@ -16,6 +16,7 @@
 XCBEventFilter::XCBEventFilter(LSession *sessionhandle) : QAbstractNativeEventFilter(){
   session = sessionhandle; //save this for interaction with the session later
   TrayDmgFlag = 0;
+  stopping = false;
   InitAtoms();
 }
 
@@ -27,6 +28,7 @@ void XCBEventFilter::setTrayDamageFlag(int flag){
 //This function format taken directly from the Qt5.3 documentation
 bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE
 {
+	if(stopping){ return false; } //don't do any parsing
 	//qDebug() << "New Event";
 	if(eventType=="xcb_generic_event_t"){
 	  //Convert to known event type (for X11 systems)
@@ -55,7 +57,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		//qDebug() << "Client Message Event";
 		//qDebug() << " - Root Window:" << QX11Info::appRootWindow();
 		//qDebug() << " - Given Window:" << ((xcb_client_message_event_t*)ev)->window;
-		if(  ((xcb_client_message_event_t*)ev)->type == _NET_SYSTEM_TRAY_OPCODE && ((xcb_client_message_event_t*)ev)->format == 32){
+		if( TrayDmgFlag!=0 &&  ((xcb_client_message_event_t*)ev)->type == _NET_SYSTEM_TRAY_OPCODE && ((xcb_client_message_event_t*)ev)->format == 32){
 		  //data32[0] is timestamp, [1] is opcode, [2] is  window handle
 		  if(SYSTEM_TRAY_REQUEST_DOCK == ((xcb_client_message_event_t*)ev)->data.data32[1]){
 		      session->SysTrayDockRequest( ((xcb_client_message_event_t*)ev)->data.data32[2] );
@@ -92,8 +94,10 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        break;
 //==============================	    
 	    default:
-		if( (ev->response_type & ~0x80)==TrayDmgFlag){
-		  session->WindowDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
+		if(TrayDmgFlag!=0){
+		  if( (ev->response_type & ~0x80)==TrayDmgFlag){
+		    session->WindowDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
+		  }
 		}/*else{
 	          qDebug() << "Default Event:" << (ev->response_type & ~0x80);
 	        }*/

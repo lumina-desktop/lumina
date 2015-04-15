@@ -46,6 +46,11 @@ public:
 	QString type(){
 	  return plugintype;
 	}
+
+	virtual void AboutToClose(){
+	  //This needs to be re-implemented in the subclasses plugin
+	    //This is for any last-minute cleanup before the plugin gets deleted
+	}
 	
 public slots:
 	virtual void LocaleChange(){
@@ -61,9 +66,6 @@ public slots:
 	    //This is where any horizontal/vertical orientations can be changed appropriately		
 	}
 	
-	/*virtual void ResetMouseFocus(){
-	  //
-	}*/
 };
 
 #endif

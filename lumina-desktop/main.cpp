@@ -90,7 +90,7 @@ int main(int argc, char ** argv)
     LUtils::LoadTranslation(&a, "lumina-desktop");
     //a.LoadLocale(QLocale().name());
     //Start launching external applications
-    QTimer::singleShot(2000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
+    QTimer::singleShot(3000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";

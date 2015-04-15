@@ -146,6 +146,7 @@ public:
 	void SetAsSticky(WId); //Stick to all workspaces
 	void SetAsPanel(WId); //Adjust all the window flags for a proper panel (cannot be done through Qt)
 	void CloseWindow(WId); //request that the window be closed
+	void KillClient(WId); //Force the application that created the window to close
 	void MinimizeWindow(WId); //request that the window be unmapped/minimized
 	void ActivateWindow(WId); //request that the window become active
 	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized

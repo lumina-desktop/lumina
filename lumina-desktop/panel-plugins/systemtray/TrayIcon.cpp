@@ -24,9 +24,9 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
 }
 
 TrayIcon::~TrayIcon(){
-  if(AID!=0){
+  /*if(AID!=0){
     detachApp();
-  }
+  }*/
 }
 
 WId TrayIcon::appID(){

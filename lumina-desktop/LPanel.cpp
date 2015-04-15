@@ -67,9 +67,7 @@ LPanel::~LPanel(){
 void LPanel::prepareToClose(){
   //Go through and remove all the plugins
   for(int i=0; i<PLUGINS.length(); i++){
-    if( PLUGINS[i]->type().startsWith("systemtray---") ){
-      static_cast<LSysTray*>(PLUGINS[i])->stop();
-    }
+    PLUGINS[i]->AboutToClose(); //any last cleanup for this plugin
     layout->takeAt(i); //remove from the layout
     delete PLUGINS.takeAt(i); //delete the actual widget
     LSession::processEvents();
