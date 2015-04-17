@@ -51,9 +51,9 @@ void LSysDashboard::updateIcon(bool force){
 	else if(force || button->icon().isNull()){ resetIcon(); }
       }else if(!charging){
         //Not charging (critical level or just unplugged)
-	if(bat<1){ button->setIcon( LXDG::findIcon("battery-missing","") ); QTimer::singleShot(5000, this, SLOT(resetIcon()));}
+	if(bat<5){ button->setIcon( LXDG::findIcon("battery-missing","") ); }
 	else if(bat < 15){ button->setIcon( LXDG::findIcon("battery-low","") ); QTimer::singleShot(5000, this, SLOT(resetIcon())); }
-	else if(bat < 30){ button->setIcon( LXDG::findIcon("battery-caution","") ); QTimer::singleShot(5000, this, SLOT(resetIcon()));}
+	else if(bat < 30 && batcharging){ button->setIcon( LXDG::findIcon("battery-caution","") ); QTimer::singleShot(5000, this, SLOT(resetIcon()));}
 	else if(bat < 50 && batcharging){ button->setIcon( LXDG::findIcon("battery-040","")); QTimer::singleShot(5000, this, SLOT(resetIcon()));}
 	else if(bat < 70 && batcharging){ button->setIcon( LXDG::findIcon("battery-060","")); QTimer::singleShot(5000, this, SLOT(resetIcon()));}
 	else if(bat < 90 && batcharging){ button->setIcon( LXDG::findIcon("battery-080","")); QTimer::singleShot(5000, this, SLOT(resetIcon()));}

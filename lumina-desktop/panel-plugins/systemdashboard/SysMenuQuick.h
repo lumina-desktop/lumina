@@ -32,12 +32,14 @@ public:
 private:
 	Ui::LSysMenuQuick *ui;
 	QSettings *settings;
-	
+	QTimer *brighttimer;
+
 	QString getRemainingTime(); //battery time left
 
 private slots:
 	void volSliderChanged();
-	void brightSliderChanged();
+	void brightSliderChanged(); //start the delay/collection timer
+	void setCurrentBrightness(); //perform the change
 	void startMixer();
 	void nextWorkspace();
 	void prevWorkspace();
