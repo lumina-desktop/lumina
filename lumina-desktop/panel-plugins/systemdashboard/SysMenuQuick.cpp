@@ -13,6 +13,9 @@
 LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSysMenuQuick){
   ui->setupUi(this);
   settings = new QSettings("panel-plugins","systemdashboard");
+  brighttimer = new QTimer(this);
+    brighttimer->setSingleShot(true);
+    brighttimer->setInterval(100); //100ms delay in setting the new value
   //Now reset the initial saved settings (if any)
   LOS::setScreenBrightness( settings->value("screenbrightness",100).toInt() ); //default to 100%
   LOS::setAudioVolume( settings->value("audiovolume", 100).toInt() ); //default to 100%
@@ -23,6 +26,7 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
   connect(ui->tool_wk_next, SIGNAL(clicked()), this, SLOT(nextWorkspace()) );
   connect(ui->tool_logout, SIGNAL(clicked()), this, SLOT(startLogout()) );
   connect(ui->tool_vol_mixer, SIGNAL(clicked()), this, SLOT(startMixer()) );
+  connect(brighttimer, SIGNAL(timeout()), this, SLOT(setCurrentBrightness()) );
   //And setup the default icons
   ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-system-power-management","").pixmap(ui->label_bright_icon->maximumSize()) );
   ui->tool_wk_prev->setIcon( LXDG::findIcon("go-previous-view",""));
@@ -114,12 +118,18 @@ void LSysMenuQuick::startMixer(){
 }
 
 void LSysMenuQuick::brightSliderChanged(){
+  //Brightness controls cannot operate extremely quickly - combine calls as necessary
+  if(brighttimer->isActive()){ brighttimer->stop(); }
+  brighttimer->start();
+}
+
+void LSysMenuQuick::setCurrentBrightness(){
   int val = ui->slider_brightness->value();
   LOS::setScreenBrightness(val);
   settings->setValue("screenbrightness",val);
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
-  ui->label_bright_text->setText( txt );
+  ui->label_bright_text->setText( txt );	
 }
 
 void LSysMenuQuick::nextWorkspace(){
