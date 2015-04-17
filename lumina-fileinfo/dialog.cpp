@@ -7,6 +7,40 @@
 #include "LuminaUtils.h"
 #include <LuminaOS.h>
 
+
+
+//this function is just like a regexp.
+//we just change the required lines and we don't touch to the rest of the file and copy it back.
+void Dialog::textReplace(QString &origin, QString from, QString to, QString topic)
+{
+    if (origin.contains(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive))) {
+        origin.replace(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive),"\n" + topic + "=" + to + "\n");
+    } else {
+        origin.append(topic + "=" + to + "\n");
+    }
+}
+
+//get the template from the user home directory or from the qrc files
+void Dialog::copyTemplate(QString templateType)   
+{
+	if ((templateType == "-link") or (templateType == "-app")) {
+		if (QFile::exists(QDir::homePath() + "/.lumina/LuminaDE/fileinfo" + templateType + ".template")) {
+			//We take the template from homedir
+			QFile::copy(QDir::homePath() + "/.lumina/LuminaDE/fileinfo" + templateType + ".template", desktopFileName);
+		} else {
+			//last possibility is to use the qrc template. 
+			//But based on the initialisation, this should never occurs
+			QFile::copy(":defaults/fileinfo" + templateType + ".template", desktopFileName);
+		}
+	} else {
+		//error message for developpers
+		qDebug() << "copyTemplate only accept '-link' or '-app' as parameter";
+	}
+}
+
+
+
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -60,8 +94,18 @@ void Dialog::Initialise(QString param)
         ui->pbCommand->setVisible(false);
         ui->lblCommand->setVisible(false);
         ui->lblOptions->setVisible(false);
-        ui->lblWorkingDir->setText("URL"); //we use the WorkingDir boxes for URL
+        ui->lblWorkingDir->setText(tr("URL")); //we use the WorkingDir boxes for URL
         desktopType="link";
+    }    
+    if (param.startsWith("-app")) {
+        ui->cbRunInTerminal->setVisible(true);
+        ui->cbStartupNotification->setVisible(true);
+        ui->lCommand->setVisible(true);
+        ui->pbCommand->setVisible(true);
+        ui->lblCommand->setVisible(true);
+        ui->lblOptions->setVisible(true);
+        ui->lblWorkingDir->setText(tr("Working dir")); 
+        desktopType="app";
     }    
 }
 
@@ -81,20 +125,9 @@ void Dialog::LoadDesktopFile(QString input)
     //if proposed file does not exist, than we will create one based on the templates
     if (!QFile::exists(input)) {
         if (desktopType=="link") { 
-			if (QFile::exists(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-link.template")) {
-				//We take the template from homedir
-				QFile::copy(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-link.template", desktopFileName);
-			} else {
-			    //last possibility os to use the qrc template. 
-			    //But based on the initialisation, this should never occurs
-			    QFile::copy(":defaults/fileinfo-link.template", desktopFileName);
-			}
+			copyTemplate("-link");
 		} else { 
-			if (QFile::exists(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-app.template")) {
-				QFile::copy(QDir::homePath() + "/.lumina/LuminaDE/fileinfo-app.template", desktopFileName);
-			} else {
-			    QFile::copy(":defaults/fileinfo-app.template", desktopFileName);
-			}
+			copyTemplate("-app");
 		}
     }
 
@@ -127,9 +160,44 @@ void Dialog::LoadDesktopFile(QString input)
     //we load the file in memory and will adapt it before saving it to disk
     QFile file(desktopFileName);
     inMemoryFile="";
-    if (file.open(QFile::ReadWrite)) { 
+    if (file.open(QFile::ReadOnly)) { 
 		QTextStream fileData(&file);
         inMemoryFile = fileData.readAll();
+        file.close();
+        //perform some validation checks
+        //TODO: put those Regex in a config file.
+        //this will allow checks improvements without compilation of the file
+        if ((inMemoryFile.contains(QRegExp(".*\\[Desktop Entry\\].*\n"))) && 
+           (inMemoryFile.contains(QRegExp("\n\\s*Type\\s*=.*\n"))) &&          
+           (inMemoryFile.contains(QRegExp("\n\\s*Name\\s*=.*\n")))) {
+			   //qDebug() << "sounds a good file"; 
+		} else {
+			//qDebug() << "wrong file!!!!";
+			QMessageBox msgBox;
+			msgBox.setIcon(QMessageBox::Question);
+			msgBox.setText(tr("There are some issues with this file !!!!"));
+			msgBox.setInformativeText(tr("Either you correct this file your self with an editor, or you start from scratch using the link or app template.\nPlease note that this process will update the file called:") + desktopFileName);
+			QPushButton *linkButton = msgBox.addButton("Link",QMessageBox::AcceptRole);
+			QPushButton *appButton = msgBox.addButton("App",QMessageBox::ResetRole);
+			QPushButton *cancelButton = msgBox.addButton("Cancel",QMessageBox::NoRole);
+			msgBox.exec();
+			if (msgBox.clickedButton() == linkButton) {
+				QFile::remove(desktopFileName);
+				copyTemplate("-link");
+				Initialise("-link");
+				LoadDesktopFile(desktopFileName);
+			}
+			if (msgBox.clickedButton() == appButton) {
+				QFile::remove(desktopFileName);
+				copyTemplate("-app");
+				Initialise("-app");
+				LoadDesktopFile(desktopFileName);
+			}
+			if (msgBox.clickedButton() == cancelButton) {
+				//we stop here
+				exit(0);
+			}
+		}
     }
 }
 
@@ -165,17 +233,6 @@ void Dialog::on_pbWorkingDir_clicked()
 		ui->lWorkingDir->setText(directory);
 		ui->lWorkingDir->setModified(true);
 	}
-}
-
-//this function is just like a regexp.
-//we just change the required lines and we don't touch to the rest of the file and copy it back.
-void Dialog::textReplace(QString &origin, QString from, QString to, QString topic)
-{
-    if (origin.contains(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive))) {
-        origin.replace(QRegExp("\n" + topic + "\\s*=\\s*" + from + "\n",Qt::CaseInsensitive),"\n" + topic + "=" + to + "\n");
-    } else {
-        origin.append(topic + "=" + to + "\n");
-    }
 }
 
 //we save the changes to the destination file
@@ -221,6 +278,7 @@ void Dialog::on_pbApply_clicked()
 	  file.close();
 	} else {
 		//problem to write to the disk
+		QMessageBox::critical(this, tr("Problem to write to disk"), tr("We have a problem to write the adapted desktop file to the disk. Can you re-try the modification after solving the issue with the disk ?"));
 	}
 
 	//hack required to update the icon on the desktop
@@ -269,7 +327,7 @@ void Dialog::on_lName_textChanged(QString text)
 			inMemoryFile.replace(QRegExp("\nName\\[\\S+\\]\\s*=[^\n]*",Qt::CaseInsensitive), "");
 		} else {
 		  ui->lName->setText(DF.name);
-	  }
+	    }
 	}
 }
 
@@ -289,3 +347,4 @@ void Dialog::on_lComment_textChanged(QString text)
 	  }
 	}
 }
+
