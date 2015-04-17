@@ -440,7 +440,7 @@ void MainUI::slotChangePage(bool enabled){
   }
   ui->group_screen->setVisible(showScreen && (ui->spin_screen->maximum()>1) );
   //Hide the save button for particular pages
-  ui->push_save->setVisible(!ui->actionDefaults->isChecked()); //hide on the default page
+  ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
   //Special functions for particular pages
   if(ui->page_panels->isVisible()){ checkpanels(); }
 
@@ -557,11 +557,21 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->list_panel2_plugins->clear();
     for(int i=0; i<plugs.length(); i++){
       QString pid = plugs[i].section("---",0,0);
-      LPI info = PINFO->panelPluginInfo(pid);
-      if(!info.ID.isEmpty()){
-        QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+      if(pid.startsWith("applauncher")){
+	bool ok = false;
+	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
+	if(ok){
+	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
-	ui->list_panel2_plugins->addItem(it);
+	  ui->list_panel2_plugins->addItem(it);
+	}
+      }else{
+        LPI info = PINFO->panelPluginInfo(pid);
+        if(!info.ID.isEmpty()){
+          QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
+	  ui->list_panel2_plugins->addItem(it);
+        }
       }
     }
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
@@ -730,6 +740,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
     moddesk = modpan = false;
     if(!screenonly){ modmenu = modshort = moddef = modses = false; }
     ui->push_save->setEnabled(modmenu || modshort || moddef || modses); //wait for new changes
+    ui->push_save->setVisible(!ui->actionDefaults->isChecked() || modmenu || modshort || moddef || modses);
 }
 
 
