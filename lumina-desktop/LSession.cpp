@@ -24,7 +24,7 @@
 #include <X11/extensions/Xdamage.h>
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -54,8 +54,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   settingsmenu = 0;
   currTranslator=0;
   mediaObj=0;
-  //audioOut=0;
-  audioThread=0;
+  //audioThread=0;
   sessionsettings=0;
   //Setup the event filter for Qt5
   evFilter =  new XCBEventFilter(this);
@@ -72,7 +71,6 @@ LSession::~LSession(){
   delete appmenu;
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
-  //if(audioOut!=0){delete audioOut; }
 }
 
 void LSession::setupSession(){
@@ -176,13 +174,17 @@ void LSession::CleanupSession(){
   if(playaudio){
     //wait a max of 3 seconds for audio to finish
     bool waitmore = true;
-    for(int i=0; i<6 && waitmore; i++){
-      waitmore = !audioThread->wait(500);
+    for(int i=0; i<60 && waitmore; i++){
+      usleep(50000); //50ms = 50000 us
+      waitmore = (mediaObj->state()==QMediaPlayer::PlayingState);
+      //waitmore = !audioThread->wait(500);
       LSession::processEvents();
     }
+    if(waitmore){ mediaObj->stop(); } //timed out
   }else{
-    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25000); } //1/2 second pause
   }
+  //if(audioThread!=0){ audioThread->exit(0); }
 }
 
 int LSession::VersionStringToNumber(QString version){
@@ -469,19 +471,19 @@ void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
   bool init = false;
   if(DEBUG){ qDebug() << "Play Audio File"; }
-  if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
+  //if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
   if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); init = true;}
-  if(mediaObj && init){  //in case it errors for some reason
+  /*if(mediaObj && init){  //in case it errors for some reason
     qDebug() << " -- Move audio objects to separate thread";
     mediaObj->moveToThread(audioThread);
     audioThread->start();
-  }
+  }*/
   if(mediaObj !=0 ){
     if(DEBUG){ qDebug() << " - starting playback:" << filepath; }
-    mediaObj->setMedia(QUrl::fromLocalFile(filepath));
     mediaObj->setVolume(100);
+    mediaObj->setMedia(QUrl::fromLocalFile(filepath));
     mediaObj->play();
-    if(!audioThread->isRunning()){ audioThread->start(); }
+    //if(!audioThread->isRunning()){ audioThread->start(); }
     LSession::processEvents();
   }
   if(DEBUG){ qDebug() << " - Done with Audio File"; }

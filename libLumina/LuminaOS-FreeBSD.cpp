@@ -72,12 +72,21 @@ void LOS::setScreenBrightness(int percent){
   if(percent<0){percent=0;}
   else if(percent>100){ percent=100; }
   float pf = percent/100.0; //convert to a decimel
-  //Run the command
-  QString cmd = "xbrightness  %1";
-  cmd = cmd.arg( QString::number( int(65535*pf) ) );
-  int ret = LUtils::runCmd(cmd);
+  //Run the command(s)
+  bool success = false;
+  // - try hardware setting first (PC-BSD only)
+  if(QFile::exists("/usr/local/bin/pc-sysconfig")){
+    QString ret = LUtils::getCmdOutput("pc-sysconfig \"setscreenbrightness "+QString::number(percent)+"\"").join("");
+    success = (ret.simplified() == "[SUCCESS]");
+  }
+  // - if hardware brightness does not work, use software brightness
+  if(!success){
+    QString cmd = "xbrightness  %1";
+    cmd = cmd.arg( QString::number( int(65535*pf) ) );
+    success = (0 == LUtils::runCmd(cmd) );
+  }
   //Save the result for later
-  if(ret!=0){ screenbrightness = -1; }
+  if(!success){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
   LUtils::writeFile(QDir::homePath()+"/.lumina/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }

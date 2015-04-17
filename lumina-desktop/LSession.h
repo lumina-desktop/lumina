@@ -97,7 +97,7 @@ private:
 	SettingsMenu *settingsmenu;
 	QTranslator *currTranslator;
 	QMediaPlayer *mediaObj;
-	QThread *audioThread;
+	//QThread *audioThread;
 	QSettings *sessionsettings;
 	bool cleansession;
 
