@@ -59,10 +59,7 @@ void ConfigUI::on_tool_adddirs_clicked(){
 }
 
 void ConfigUI::on_tool_rmdir_clicked(){
-  QList<QListWidgetItem*> sel = ui->list_excludes->selectedItems();
-  for(int i=0; i<sel.length(); i++){
-    ui->list_excludes->removeItemWidget(sel[i]);
-  }
+  qDeleteAll(ui->list_excludes->selectedItems());
 }
 
 void ConfigUI::on_list_excludes_itemSelectionChanged(){
