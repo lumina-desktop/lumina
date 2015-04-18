@@ -225,7 +225,7 @@ private slots:
 
 signals:
 	void DirChanged(QString path);
-	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString message); 
+	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 protected:
 	void resizeEvent(QResizeEvent*);

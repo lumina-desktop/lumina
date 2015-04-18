@@ -88,14 +88,19 @@ void BackgroundWorker::startDirChecks(QString path){
 }
 
 
-void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, QString message){
+void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles){
+
   //collect some statistics of dir and display them in statusbar
   //Get the total size of the items
   double totalSizes = 0;
+  int numberFolders = 0;
+  int numberFiles = 0;
   for(int i=0; i<fileList.length(); i++){
     if(!fileList[i].isDir()){
+      numberFiles += 1;
       totalSizes += fileList[i].size(); //in Bytes
     }
+    else { numberFolders += 1; }
   }
   //Convert the size into display units
   static QStringList units = QStringList() << tr("B") << tr("KB") << tr("MB") << tr("GB") << tr("TB");
@@ -105,7 +110,8 @@ void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, 
     totalSizes = totalSizes/1024;
   }
   //Assemble the message
-  QString msgStatusBar = QString(tr("%1: %2")).arg(message).arg(fileList.length());
+  QString msgStatusBar = QString(tr("%1: %2 / %3: %4")).arg(messageFolders).arg(numberFolders).arg(messageFiles).arg(numberFiles);
+
   if(totalSizes > 0){
     totalSizes = qRound(totalSizes*100)/100.0; //round to 2 decimel places
     msgStatusBar += "    "+QString(tr("Total size: %1 %2")).arg(QString::number(totalSizes), units[cunit]);
