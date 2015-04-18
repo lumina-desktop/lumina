@@ -219,7 +219,7 @@ void MainUI::setupConnections(){
   connect(worker, SIGNAL(SnapshotsAvailable(QString, QStringList)), this, SLOT(AvailableBackups(QString, QStringList)) );
 
   //Background worker class for statusbar
-  connect(this, SIGNAL(Si_AdaptStatusBar(QFileInfoList, QString, QString)), worker, SLOT(createStatusBarMsg(QFileInfoList, QString, QString)) );
+  connect(this, SIGNAL(Si_AdaptStatusBar(QFileInfoList, QString, QString, QString)), worker, SLOT(createStatusBarMsg(QFileInfoList, QString, QString, QString)) );
   connect(worker, SIGNAL(Si_DisplayStatusBar(QString)), this, SLOT(DisplayStatusBar(QString)) );
 	
   //Action buttons on browser page
@@ -850,7 +850,7 @@ void MainUI::currentDirectoryLoaded(){
   ui->tool_goToRestore->setVisible(false);
   ui->tool_goToImages->setVisible(false);
   emit DirChanged(getCurrentDir());
-  emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), getCurrentDir(), tr("Items"));
+  emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), getCurrentDir(), tr("Folders"), tr("Files"));
   ItemSelectionChanged();
 }
 
@@ -983,9 +983,9 @@ void MainUI::ItemSelectionChanged(){
   QFileInfoList sel = getSelectedItems();
   //display info related to files selected. 
   //TO CHECK: impact if filesystem is very slow
-  if(sel.size()>0){ emit Si_AdaptStatusBar(sel, "", tr("Items selected")); }
-  else{ emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), getCurrentDir(), tr("Items")); }	
-  
+  if(sel.size()>0){ emit Si_AdaptStatusBar(sel, "", tr("Selected Folders"), tr("Files"));}
+  else{ emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), getCurrentDir(), tr("Folders"), tr("Files")); }
+
   ui->tool_act_run->setEnabled(sel.length()==1);
   ui->tool_act_runwith->setEnabled(sel.length()==1);
   ui->tool_act_rm->setEnabled(!sel.isEmpty() && isUserWritable);
