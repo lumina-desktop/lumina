@@ -97,10 +97,10 @@ void BackgroundWorker::createStatusBarMsg(QFileInfoList fileList, QString path, 
   int numberFiles = 0;
   for(int i=0; i<fileList.length(); i++){
     if(!fileList[i].isDir()){
-      numberFiles += 1;
+      numberFiles++;
       totalSizes += fileList[i].size(); //in Bytes
     }
-    else { numberFolders += 1; }
+    else { numberFolders++; }
   }
   //Convert the size into display units
   static QStringList units = QStringList() << tr("B") << tr("KB") << tr("MB") << tr("GB") << tr("TB");
