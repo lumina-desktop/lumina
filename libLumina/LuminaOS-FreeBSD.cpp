@@ -173,18 +173,18 @@ void LOS::systemRestart(){ //start reboot sequence
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  //Check the supported CPU sleep states and ensure that S3 is listed
-  QStringList info = LUtils::getCmdOutput("sysctl -ae").filter("hw.acpi.supported_sleep_state=");
-  bool ok = false;
-  if(!info.isEmpty()){
-    ok = info.first().section("=",1,1).split(" ").contains("S3");
+  //This will only function on PC-BSD 
+  //(permissions issues on standard FreeBSD unless setup a special way)
+  bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
+  if(ok){
+    ok = LUtils::getCmdOutput("pc-sysconfig systemcansuspend").join("").toLower().contains("true");
   }
   return ok;
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-  LUtils::runCmd("acpiconf -s 3");
+  QProcess::startDetached("pc-sysconfig suspendsystem");
 }
 
 //Battery Availability
