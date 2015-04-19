@@ -36,9 +36,21 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-DragonFly.cpp \
 	LuminaOS-OpenBSD.cpp \
-	LuminaOS-Linux.cpp \
         LuminaOS-kFreeBSD.cpp
 #       new OS support can be added here
+
+# check linux distribution and use specific
+# LuminaOS support functions (or fall back to
+# generic one
+
+LINUX_DISTRIBUTION = $$system(lsb_release -si)
+
+equals(LINUX_DISTRIBUTION, "Debian"): {
+	SOURCES += LuminaOS-Debian.cpp
+} else {
+	SOURCES += LuminaOS-Linux.cpp
+}
+
 
 INCLUDEPATH += $$PREFIX/include
 
