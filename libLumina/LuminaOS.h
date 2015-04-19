@@ -71,6 +71,11 @@ public:
 	static void systemShutdown(); //start poweroff sequence
 	//System Restart
 	static void systemRestart(); //start reboot sequence
+	//Check for suspend support
+	static bool systemCanSuspend();
+	//Put the system into the suspend state
+	static void systemSuspend();
+
 
 	//Battery Availability
 	static bool hasBattery();
