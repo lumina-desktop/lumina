@@ -17,9 +17,9 @@ Replaces: lumina-core (<< 0.8.3.372)
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
          libluminautils1, lumina-config, lumina-fm, oxygen-icon-theme,
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
-         lxpolkit, lumina-data, fluxbox, numlockx, xbacklight, xscreensaver,
-         usbmount, gstreamer1.0-plugins-base, phonon4qt5-backend-gstreamer,
-         alsa-utils, acpi, pavucontrol
+         lumina-xconfig, lxpolkit, lumina-data, fluxbox, numlockx, xbacklight,
+         xscreensaver, usbmount, gstreamer1.0-plugins-base,
+         phonon4qt5-backend-gstreamer, alsa-utils, acpi, pavucontrol
 Recommends: qt5-configuration-tool
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
