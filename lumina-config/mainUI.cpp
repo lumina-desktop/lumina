@@ -237,6 +237,7 @@ void MainUI::setupConnections(){
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
   connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_datetimeorder, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
 }
 
 void MainUI::setupMenus(){
@@ -274,6 +275,13 @@ void MainUI::setupMenus(){
   for(int i=0; i<fbstyles.length(); i++){
     ui->combo_session_wtheme->addItem(fbstyles[i], fbdir.absoluteFilePath(fbstyles[i]));
   }
+
+  //Display formats for panel clock
+  ui->combo_session_datetimeorder->clear();
+  ui->combo_session_datetimeorder->addItem( tr("Time (Date as tooltip)"), "timeonly");
+  ui->combo_session_datetimeorder->addItem( tr("Date (Time as tooltip)"), "dateonly");
+  ui->combo_session_datetimeorder->addItem( tr("Time first then Date"), "timedate");
+  ui->combo_session_datetimeorder->addItem( tr("Date first then Time"), "datetime");
 
   //Available Time zones
   ui->combo_session_timezone->clear();
@@ -1813,11 +1821,13 @@ void MainUI::loadSessionSettings(){
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
+  index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder").toString() );
+  ui->combo_session_datetimeorder->setCurrentIndex(index);
   if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
     //System Time selected
     ui->combo_session_timezone->setCurrentIndex(0);
   }else{
-    int index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
+    index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
     if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
     else{ ui->combo_session_timezone->setCurrentIndex(0); }
   }
@@ -1913,6 +1923,7 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
+  sessionsettings->setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
   if( ui->combo_session_timezone->currentIndex()==0){
     //System Time selected
     sessionsettings->setValue("CustomTimeZone", false);
