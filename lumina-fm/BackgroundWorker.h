@@ -34,7 +34,7 @@ public slots:
 	//Kickoff processes with these slots
         // and then listen for the appropriate signals when finished
 	void startDirChecks(QString path);
-	void createStatusBarMsg(QFileInfoList fileList, QString path, QString message);
+	void createStatusBarMsg(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 signals:
 	void ImagesAvailable(QStringList files);

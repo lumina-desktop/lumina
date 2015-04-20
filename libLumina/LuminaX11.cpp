@@ -27,6 +27,7 @@
 #include <xcb/xcb_icccm.h>
 #include <xcb/xcb_image.h>
 #include <xcb/composite.h>
+#include <xcb/damage.h>
 
 
 //=====   WindowList() ========
@@ -1357,15 +1358,16 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
 }
 
 // === EmbedWindow() ===
-bool LXCB::EmbedWindow(WId win, WId container){
-  if(win==0 || container==0){ return false; }
+uint LXCB::EmbedWindow(WId win, WId container){
+  //This returns the damage control ID number (or 0 for a failure)
+  if(win==0 || container==0){ return 0; }
   //qDebug() << "Embed Window:" << win << container;
 
   //Initialize any atoms that will be needed
   xcb_intern_atom_cookie_t ecookie = xcb_intern_atom_unchecked(QX11Info::connection(), 0, 7, "_XEMBED");
   
   xcb_intern_atom_reply_t *ereply = xcb_intern_atom_reply(QX11Info::connection(), ecookie, NULL);
-  if(ereply==0){ return false; } //unable to initialize the atom
+  if(ereply==0){ return 0; } //unable to initialize the atom
   xcb_atom_t emb = ereply->atom;
   free(ereply); //done with this structure
   
@@ -1399,8 +1401,12 @@ bool LXCB::EmbedWindow(WId win, WId container){
   //Now map the window (will be a transparent child of the container)
   xcb_map_window(QX11Info::connection(), win);
   
+  //Now create/register the damage handler
+  xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
+  xcb_damage_create(QX11Info::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+  
   //qDebug() << " - Done";
-  return true;	
+  return ( (uint) dmgID );	
 }
 
 // === Unembed Window() ===

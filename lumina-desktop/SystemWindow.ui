@@ -14,8 +14,17 @@
    <string>System Options</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
-    <number>0</number>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
    </property>
    <item>
     <widget class="QFrame" name="frame">
@@ -47,8 +56,8 @@
           </property>
           <property name="iconSize">
            <size>
-            <width>60</width>
-            <height>60</height>
+            <width>64</width>
+            <height>64</height>
            </size>
           </property>
           <property name="toolButtonStyle">
@@ -63,8 +72,8 @@
           </property>
           <property name="iconSize">
            <size>
-            <width>60</width>
-            <height>60</height>
+            <width>64</width>
+            <height>64</height>
            </size>
           </property>
           <property name="toolButtonStyle">
@@ -79,8 +88,8 @@
           </property>
           <property name="iconSize">
            <size>
-            <width>60</width>
-            <height>60</height>
+            <width>64</width>
+            <height>64</height>
            </size>
           </property>
           <property name="toolButtonStyle">
@@ -113,9 +122,18 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QPushButton" name="push_cancel">
+         <widget class="QToolButton" name="push_cancel">
           <property name="text">
            <string>Cancel</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
           </property>
          </widget>
         </item>
@@ -133,9 +151,34 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="push_lock">
+         <widget class="QToolButton" name="push_lock">
           <property name="text">
-           <string>Lock Screen</string>
+           <string>Lock</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tool_suspend">
+          <property name="text">
+           <string>Suspend</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
           </property>
          </widget>
         </item>

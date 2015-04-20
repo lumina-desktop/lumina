@@ -8,6 +8,7 @@
 #include "LuminaOS.h"
 #include <unistd.h>
 
+#include <QDebug>
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
@@ -71,17 +72,18 @@ void LOS::setScreenBrightness(int percent){
   //ensure bounds
   if(percent<0){percent=0;}
   else if(percent>100){ percent=100; }
-  float pf = percent/100.0; //convert to a decimel
   //Run the command(s)
   bool success = false;
   // - try hardware setting first (PC-BSD only)
   if(QFile::exists("/usr/local/bin/pc-sysconfig")){
-    QString ret = LUtils::getCmdOutput("pc-sysconfig \"setscreenbrightness "+QString::number(percent)+"\"").join("");
-    success = (ret.simplified() == "[SUCCESS]");
+    QString ret = LUtils::getCmdOutput("pc-sysconfig", QStringList() <<"setscreenbrightness "+QString::number(percent)).join("");
+    success = ret.toLower().contains("success");
+    qDebug() << "Set hardware brightness:" << percent << success;
   }
   // - if hardware brightness does not work, use software brightness
   if(!success){
     QString cmd = "xbrightness  %1";
+    float pf = percent/100.0; //convert to a decimel
     cmd = cmd.arg( QString::number( int(65535*pf) ) );
     success = (0 == LUtils::runCmd(cmd) );
   }
@@ -167,6 +169,22 @@ void LOS::systemShutdown(){ //start poweroff sequence
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
   QProcess::startDetached("shutdown -ro now");
+}
+
+//Check for suspend support
+bool LOS::systemCanSuspend(){
+  //This will only function on PC-BSD 
+  //(permissions issues on standard FreeBSD unless setup a special way)
+  bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
+  if(ok){
+    ok = LUtils::getCmdOutput("pc-sysconfig systemcansuspend").join("").toLower().contains("true");
+  }
+  return ok;
+}
+
+//Put the system into the suspend state
+void LOS::systemSuspend(){
+  QProcess::startDetached("pc-sysconfig suspendsystem");
 }
 
 //Battery Availability
