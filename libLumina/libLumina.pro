@@ -43,7 +43,9 @@ SOURCES	+= LuminaXDG.cpp \
 # LuminaOS support functions (or fall back to
 # generic one
 
-LINUX_DISTRIBUTION = $$system(lsb_release -si)
+exists(/bin/lsb_release){
+  LINUX_DISTRIBUTION = $$system(lsb_release -si)
+}
 
 equals(LINUX_DISTRIBUTION, "Debian"): {
 	SOURCES += LuminaOS-Debian.cpp
@@ -52,9 +54,10 @@ equals(LINUX_DISTRIBUTION, "Debian"): {
 }
 
 
+
 INCLUDEPATH += $$PREFIX/include
 
-LIBS	+= -lX11 -lXrender -lXcomposite -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite
+LIBS	+= -lX11 -lXrender -lXcomposite -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage
 
 include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \
