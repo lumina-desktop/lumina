@@ -30,14 +30,12 @@ QMAKE_EXTRA_DIRS = libLumina \
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	sed -e 's/LuminaOS-Linux/LuminaOS-Debian/g' -i libLumina/libLumina.pro
 	$(QMAKE) $(USER_QMAKE_FLAGS)
 	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && $(QMAKE) $(USER_QMAKE_FLAGS)); done
 
 override_dh_auto_clean:
 	dh_auto_clean
 	-find $(CURDIR) -name *.qm -delete
-	-sed -e 's/LuminaOS-Debian/LuminaOS-Linux/g' -i libLumina/libLumina.pro
 
 override_dh_install:
 	dh_install --list-missing
