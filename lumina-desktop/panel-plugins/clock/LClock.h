@@ -26,7 +26,7 @@ public:
 private:
 	QTimer *timer;
 	QLabel *labelWidget;
-	QString timefmt, datefmt;
+	QString timefmt, datefmt, datetimeorder;
 	bool deftime, defdate, useTZ;
 	QTimeZone TZ;
 	
