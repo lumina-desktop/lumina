@@ -75,6 +75,7 @@ LSession::~LSession(){
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
+  if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
   //Seed random number generator (if needed)
@@ -134,6 +135,8 @@ void LSession::CleanupSession(){
   LSession::processEvents();
   QDateTime time = QDateTime::currentDateTime();
   qDebug() << "Start closing down the session: " << time.toString( Qt::SystemLocaleShortDate);
+  //Create a temporary flag to prevent crash dialogs from opening during cleanup
+  LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
@@ -184,6 +187,8 @@ void LSession::CleanupSession(){
   }else{
     for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25000); } //1/2 second pause
   }
+  //Clean up the temporary flag
+  if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   //if(audioThread!=0){ audioThread->exit(0); }
 }
 
