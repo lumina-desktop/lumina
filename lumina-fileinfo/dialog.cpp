@@ -284,17 +284,26 @@ void Dialog::on_pbApply_clicked()
 	//hack required to update the icon on the desktop
 		QTemporaryFile tempFile ;
 		tempFile.setAutoRemove(false);
+		tempFile.setFileTemplate("/tmp/lumina-XXXXXX");
 		tempFile.open();
 		tempFile.close();
 
-		//TODO: capture errors
 		QString cmd = "mv";
 		cmd = cmd + " " + desktopFileName + " " + tempFile.fileName();
 		int ret = LUtils::runCmd(cmd);
+		if (ret !=0 ) {
+            qDebug() << "Problem to execute:" << cmd;
+       		QMessageBox::critical(this, tr("Problem to write to disk"), tr("We have a problem to execute the following command:") + cmd);
+
+		}
 
 		cmd = "mv";
 		cmd = cmd + " " + tempFile.fileName() + " " + desktopFileName;
 		ret = LUtils::runCmd(cmd);
+		if (ret !=0 ) {
+            qDebug() << "Problem to execute:" << cmd;
+       		QMessageBox::critical(this, tr("Problem to write to disk"), tr("We have a problem to execute the following command:") + cmd);
+		}
 }
 
 
