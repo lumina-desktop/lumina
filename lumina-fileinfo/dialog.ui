@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Desktop Editor</string>
+   <string>File Information</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

@@ -49,9 +49,7 @@ Dialog::Dialog(QWidget *parent) :
     desktopType="Application"; //default value
     
     //Setup all the icons using libLumina
-    this->setWindowIcon( LXDG::findIcon("preferences-desktop-default-applications","") );
-    ui->pbWorkingDir->setIcon( LXDG::findIcon("folder","") );
-    ui->pbCommand->setIcon( LXDG::findIcon("system-search","") );
+    setupIcons();
     
     //we copy qrc templates in the home dir of the user. 
     //this allow the user to adapt those template to is own whishes
@@ -73,11 +71,17 @@ Dialog::~Dialog()
     delete ui;
 }
 
+void Dialog::setupIcons(){   
+    this->setWindowIcon( LXDG::findIcon("unknown","") );
+    ui->pbWorkingDir->setIcon( LXDG::findIcon("folder","") );
+    ui->pbCommand->setIcon( LXDG::findIcon("system-search","") );
+}
+
 //Inform the user that required input parameters are missing
 void Dialog::MissingInputs()
 {
     qDebug() << "We cannot continue without a desktop file !!!";
-    QMessageBox::critical(this, tr("Error"), tr("The application requires inputs: <-application>|<-link> desktopfile") );
+    QMessageBox::critical(this, tr("Error"), tr("Lumina-fileinfo requires inputs:")+"\n"+QString(tr("Example: \"%1\"")).arg("lumina-fileinfo <-application>|<-link> desktopfile") );
     exit(1);
 }
 
@@ -152,6 +156,7 @@ void Dialog::LoadDesktopFile(QString input)
         if (DF.useTerminal) ui->cbRunInTerminal->setChecked(true); else ui->cbRunInTerminal->setChecked(false);
         iconFileName="";
         ui->pbIcon->setIcon(LXDG::findIcon(DF.icon,""));
+	this->setWindowTitle(DF.filePath.section("/",-1));
     } else {
         QMessageBox::critical(this, tr("Error"), tr("Problem to read the desktop file called:") + desktopFileName );
         exit(1);

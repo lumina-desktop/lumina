@@ -27,7 +27,10 @@ public:
     void LoadDesktopFile(QString);
 
     ~Dialog();
-    
+
+public slots:
+    void setupIcons();
+
 private slots:
 
     void on_pbCommand_clicked();

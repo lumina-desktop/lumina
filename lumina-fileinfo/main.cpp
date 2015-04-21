@@ -1,10 +1,20 @@
+#include <QTranslator>
 #include <QApplication>
-#include "dialog.h"
+#include <QDebug>
+#include <QFile>
 
-int main(int argc, char *argv[])
+#include "dialog.h"
+#include <LuminaUtils.h>
+#include <LuminaThemes.h>
+
+int main(int argc, char ** argv)
 {
     QApplication a(argc, argv);
+    LUtils::LoadTranslation(&a, "lumina-fileinfo");
+    LuminaThemeEngine theme(&a);
+
     Dialog w;
+    QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     if (argc==2) {
         w.LoadDesktopFile(QString(argv[1]).simplified());
     } else if (argc==3) {
@@ -13,8 +23,8 @@ int main(int argc, char *argv[])
     } else {
         w.MissingInputs();
     }
-    a.setApplicationName("Lumina File Info");
     w.show();
 
-    return a.exec();
+    int retCode = a.exec();
+    return retCode;
 }
