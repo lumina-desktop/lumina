@@ -284,6 +284,18 @@ void LSession::watcherChange(QString changed){
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
+
+  //Now double-check all the watches files to ensure that none of them got removed
+
+  QStringList files = watcher->files();
+  if(files.length() < 4){
+    qDebug() << " - Resetting Watched Files...";
+    watcher->removePaths(files); //clear the current files before re-setting them
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
+    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
+    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
+  }
 }
 
 void LSession::checkUserFiles(){

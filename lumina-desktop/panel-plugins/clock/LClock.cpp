@@ -49,9 +49,12 @@ void LClock::updateTime(){
 	  labelWidget->setToolTip(timelabel);
   }else if(datetimeorder == "timedate"){
 	  label = timelabel + " " + datelabel;
+	  labelWidget->setToolTip("");
   }else if(datetimeorder == "datetime"){
 	  label = datelabel + " " + timelabel;
-  }else{ label = timelabel;
+	  labelWidget->setToolTip("");
+  }else{ 
+	 label = timelabel;
          labelWidget->setToolTip(datelabel);
   }
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
@@ -62,11 +65,12 @@ void LClock::updateTime(){
 }
 
 void LClock::updateFormats(){
+  qDebug() << "Updating clock format";
   timefmt = LSession::handle()->sessionSettings()->value("TimeFormat","").toString();
   datefmt = LSession::handle()->sessionSettings()->value("DateFormat","").toString();
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
-  datetimeorder = LSession::handle()->sessionSettings()->value("DateTimeOrder", "timeonly").toString();
+  datetimeorder = LSession::handle()->sessionSettings()->value("DateTimeOrder", "timeonly").toString().toLower();
   useTZ = LSession::handle()->sessionSettings()->value("CustomTimeZone",false).toBool();
   if(useTZ){ TZ = QTimeZone( LSession::handle()->sessionSettings()->value("TimeZoneByteCode", QByteArray()).toByteArray() ); }
   
