@@ -1821,7 +1821,7 @@ void MainUI::loadSessionSettings(){
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
-  index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder").toString() );
+  index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder","timeonly").toString() );
   ui->combo_session_datetimeorder->setCurrentIndex(index);
   if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
     //System Time selected
