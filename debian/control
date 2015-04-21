@@ -17,9 +17,10 @@ Replaces: lumina-core (<< 0.8.3.372)
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version}),
          libluminautils1, lumina-config, lumina-fm, oxygen-icon-theme,
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
-         lumina-xconfig, lxpolkit, lumina-data, fluxbox, numlockx, xbacklight,
-         xscreensaver, usbmount, gstreamer1.0-plugins-base,
-         phonon4qt5-backend-gstreamer, alsa-utils, acpi, pavucontrol
+         lumina-xconfig, lumina-fileinfo, lxpolkit, lumina-data, fluxbox,
+         numlockx, xbacklight, xscreensaver, usbmount, alsa-utils, acpi,
+         gstreamer1.0-plugins-base, phonon4qt5-backend-gstreamer,
+         pavucontrol
 Recommends: qt5-configuration-tool
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
@@ -102,6 +103,13 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Display configuration tool for the lumina desktop environment
  Simple multi-head aware display configuration tool for Lumina
+
+Package: lumina-fileinfo
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Desktop file editor for the lumina desktop environment
+ Advanced desktop file (menu) editor for Lumina
 
 Package: lumina-data
 Architecture: all
