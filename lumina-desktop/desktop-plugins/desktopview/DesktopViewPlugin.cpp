@@ -37,6 +37,8 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     menu->addAction( LXDG::findIcon("zoom-out",""), tr("Decrease Icons"), this, SLOT(decreaseIconSize()) );
     menu->addSeparator();
     menu->addAction( LXDG::findIcon("edit-delete",""), tr("Delete"), this, SLOT(deleteItems()) );
+    menu->addSeparator();
+    menu->addAction( LXDG::findIcon("system-search",""), tr("Properties"), this, SLOT(displayProperties()) );
   this->layout()->addWidget(list);
   this->setInitialSize(600,600);
   watcher = new QFileSystemWatcher(this);
@@ -165,4 +167,11 @@ void DesktopViewPlugin::updateContents(){
     }
     list->addItem(it);
   }
+}
+
+void DesktopViewPlugin::displayProperties(){
+    QList<QListWidgetItem*> sel = list->selectedItems();
+    for(int i=0; i<sel.length(); i++){
+      LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis());
+    }
 }

@@ -8,5 +8,6 @@ SUBDIRS+= libLumina \
 	 lumina-screenshot \
 	 lumina-search \
 	 lumina-info \
-	 lumina-xconfig
+	 lumina-xconfig \
+	 lumina-fileinfo
 
