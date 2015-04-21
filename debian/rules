@@ -24,7 +24,8 @@ QMAKE_EXTRA_DIRS = libLumina \
 	lumina-screenshot \
 	lumina-search \
 	lumina-info \
-	lumina-xconfig
+	lumina-xconfig #\
+#       lumina-fileinfo
 
 %:
 	dh $@ --parallel
