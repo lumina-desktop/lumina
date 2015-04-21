@@ -19,13 +19,13 @@ USER_QMAKE_FLAGS = \
 QMAKE_EXTRA_DIRS = libLumina \
 	lumina-config \
 	lumina-desktop \
-	lumina-fileinfo \
 	lumina-fm \
 	lumina-open \
 	lumina-screenshot \
 	lumina-search \
 	lumina-info \
-	lumina-xconfig
+	lumina-xconfig #\
+#       lumina-fileinfo
 
 %:
 	dh $@ --parallel
