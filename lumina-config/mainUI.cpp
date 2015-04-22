@@ -448,7 +448,7 @@ void MainUI::slotChangePage(bool enabled){
   }
   ui->group_screen->setVisible(showScreen && (ui->spin_screen->maximum()>1) );
   //Hide the save button for particular pages
-  ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
+  //ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
   //Special functions for particular pages
   if(ui->page_panels->isVisible()){ checkpanels(); }
 
