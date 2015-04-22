@@ -11,6 +11,7 @@
 #include <QDebug>
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
+static int audiovolume = -1;
 
 QString LOS::OSName(){ return "FreeBSD"; }
 
@@ -95,14 +96,31 @@ void LOS::setScreenBrightness(int percent){
 
 //Read the current volume
 int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 for errors)
-  QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
-  int out = -1;
-  if(!info.isEmpty()){
-    int L = info.section(":",1,1).toInt();
-    int R = info.section(":",2,2).toInt();
-    if(L>R){ out = L; }
-    else{ out = R; }
+  int out = audiovolume;
+  if(out < 0){
+    //First time session check: Load the last setting for this user
+    QString info = LUtils::readFile(QDir::homePath()+"/.lumina/.currentvolume").join("");
+    if(!info.isEmpty()){ 
+      out = info.simplified().toInt(); 
+      audiovolume = out; //unset this internal flag
+      return out; 
+    }
   }
+  
+    //probe the system for the current volume (other utils could be changing it)
+      QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
+      if(!info.isEmpty()){
+        int L = info.section(":",1,1).toInt();
+        int R = info.section(":",2,2).toInt();
+        if(L>R){ out = L; }
+        else{ out = R; }
+	if(out != audiovolume){
+	  //Volume changed by other utility: adjust the saved value as well
+	  LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(out), true);
+	}
+	audiovolume = out; 
+      }
+
   return out;
 }
 
@@ -115,13 +133,16 @@ void LOS::setAudioVolume(int percent){
     int L = info.section(":",1,1).toInt();
     int R = info.section(":",2,2).toInt();
     int diff = L-R;
+    if((percent == L) && (L==R)){ return; } //already set to that volume
     if(diff<0){ R=percent; L=percent+diff; } //R Greater
     else{ L=percent; R=percent-diff; } //L Greater or equal
     //Check bounds
     if(L<0){L=0;}else if(L>100){L=100;}
     if(R<0){R=0;}else if(R>100){R=100;}
     //Run Command
+    audiovolume = percent; //save for checking later
     LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
+    LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(percent), true);
   }	
 }
 

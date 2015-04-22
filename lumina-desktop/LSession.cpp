@@ -112,6 +112,15 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
 
+  //Re-load the screen brightness and volume settings from the previous session
+  qDebug() << " - Loading previous settings";
+  int tmp = LOS::audioVolume();
+  LOS::setAudioVolume(tmp);
+  qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
+  tmp = LOS::ScreenBrightness();
+  LOS::setScreenBrightness( tmp );
+  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
+  
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
@@ -209,6 +218,17 @@ int LSession::VersionStringToNumber(QString version){
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
+  //Now play the login music
+  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+    //Make sure to re-set the system volume to the last-used value at outset
+    int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }
+    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
+  }
+  //Enable Numlock 
+  if(sessionsettings->value("EnableNumlock",false).toBool()){
+    QProcess::startDetached("numlockx on");
+  }
   //First create the list of all possible locations in order of precedence
   // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
   QStringList filelist; 
@@ -235,19 +255,10 @@ void LSession::launchStartupApps(){
   entries.removeDuplicates(); //Just in case something is duplicated between system/user defaults
   for(int i=0; i<entries.length(); i++){
     qDebug() << " - Starting Application:" << entries[i];
-    LSession::LaunchApplication(entries[i]);  
+    LSession::LaunchApplication(entries[i]);
+    LSession::processEvents();
   }
   
-  //Now play the login music
-  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    //Make sure to re-set the system volume to the last-used value at outset
-    int vol = LOS::audioVolume();
-    if(vol>=0){ LOS::setAudioVolume(vol); }
-    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
-  }
-  if(sessionsettings->value("EnableNumlock",false).toBool()){
-    QProcess::startDetached("numlockx on");
-  }
   //Now get any XDG startup applications and launch them
   QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
   for(int i=0; i<xdgapps.length(); i++){
@@ -258,6 +269,7 @@ void LSession::launchStartupApps(){
       //Don't update the mouse cursor
       QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
     }
+    LSession::processEvents();
   }
   
 }
