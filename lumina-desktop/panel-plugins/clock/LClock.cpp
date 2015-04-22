@@ -38,10 +38,25 @@ void LClock::updateTime(){
   if(useTZ){ CT = CT.toTimeZone(TZ); }
   //Now update the display
   QString label;
-  if(deftime){ label = CT.time().toString(Qt::SystemLocaleShortDate) ; }
-  else{ label=CT.toString(timefmt); }
-  if(defdate){ labelWidget->setToolTip(CT.date().toString(Qt::SystemLocaleLongDate)); }
-  else{ labelWidget->setToolTip(CT.toString(datefmt)); }
+  QString timelabel;
+  QString datelabel;
+  if(deftime){ timelabel = CT.time().toString(Qt::SystemLocaleShortDate) ; }
+  else{ timelabel=CT.toString(timefmt); }
+  if(defdate){ datelabel = CT.date().toString(Qt::SystemLocaleLongDate); }
+  else{ datelabel = CT.toString(datefmt); }
+  if(datetimeorder == "dateonly"){
+	  label = datelabel;
+	  labelWidget->setToolTip(timelabel);
+  }else if(datetimeorder == "timedate"){
+	  label = timelabel + " " + datelabel;
+	  labelWidget->setToolTip("");
+  }else if(datetimeorder == "datetime"){
+	  label = datelabel + " " + timelabel;
+	  labelWidget->setToolTip("");
+  }else{ 
+	 label = timelabel;
+         labelWidget->setToolTip(datelabel);
+  }
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
     //different routine for vertical text (need newlines instead of spaces)
     label.replace(" ","\n");
@@ -50,10 +65,12 @@ void LClock::updateTime(){
 }
 
 void LClock::updateFormats(){
+  qDebug() << "Updating clock format";
   timefmt = LSession::handle()->sessionSettings()->value("TimeFormat","").toString();
   datefmt = LSession::handle()->sessionSettings()->value("DateFormat","").toString();
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
+  datetimeorder = LSession::handle()->sessionSettings()->value("DateTimeOrder", "timeonly").toString().toLower();
   useTZ = LSession::handle()->sessionSettings()->value("CustomTimeZone",false).toBool();
   if(useTZ){ TZ = QTimeZone( LSession::handle()->sessionSettings()->value("TimeZoneByteCode", QByteArray()).toByteArray() ); }
   

@@ -325,19 +325,19 @@ int main(int argc, char **argv){
     }
     retcode = p->exitCode();
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
-  
+    if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)
     if( (p->exitStatus() == QProcess::CrashExit || retcode > 0) && watch){
       qDebug() << "[lumina-open] Application Error:" << retcode;
       QString err = QString(p->readAllStandardError());
       if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
-      //Setup the application
-      QApplication App(argc, argv);
-      LuminaThemeEngine theme(&App);
-	LUtils::LoadTranslation(&App,"lumina-open");
-      QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
-      if(!err.isEmpty()){ dlg.setDetailedText(err); }
-      dlg.exec();
-    }
+        //Setup the application
+        QApplication App(argc, argv);
+        LuminaThemeEngine theme(&App);
+	  LUtils::LoadTranslation(&App,"lumina-open");
+        QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
+        if(!err.isEmpty()){ dlg.setDetailedText(err); }
+        dlg.exec();
+      }
   }
   return retcode;
 }

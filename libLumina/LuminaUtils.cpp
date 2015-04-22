@@ -201,8 +201,13 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   //Find the number of the left-most desktop screen
   QString screen = "0";
   QDesktopWidget *desk =QApplication::desktop();
+  QRect screenGeom;
   for(int i=0; i<desk->screenCount(); i++){
-     if(desk->screenGeometry(i).x()==0){ screen = QString::number(i); break; }
+     if(desk->screenGeometry(i).x()==0){ 
+	screen = QString::number(i); 
+	screenGeom = desk->screenGeometry(i); 
+	break; 
+    }
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
   QStringList deskset, sesset;
@@ -244,7 +249,11 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     QString istrue = (val=="true") ? "true": "false";
     //Now parse the variable and put the value in the proper file   
-    if(var=="panel1.pixelsize"){ deskset << "height="+val; }
+    if(var=="panel1.pixelsize"){ 
+      if(val.endsWith("%H")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+      else if(val.endsWith("%W")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+      deskset << "height="+val; 
+    }
     else if(var=="panel1.autohide"){ deskset << "hidepanel="+istrue; }
     else if(var=="panel1.location"){ deskset << "location="+val; }
     else if(var=="panel1.plugins"){ deskset << "pluginlist="+val; }
@@ -259,7 +268,11 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     QString istrue = (val=="true") ? "true": "false";
     //Now parse the variable and put the value in the proper file   
-    if(var=="panel2.pixelsize"){ deskset << "height="+val; }
+    if(var=="panel2.pixelsize"){ 
+      if(val.endsWith("%H")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+      else if(val.endsWith("%W")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+      deskset << "height="+val; 
+    }
     else if(var=="panel2.autohide"){ deskset << "hidepanel="+istrue; }
     else if(var=="panel2.location"){ deskset << "location="+val; }
     else if(var=="panel2.plugins"){ deskset << "pluginlist="+val; }
@@ -290,7 +303,10 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="theme.colorfile"){ themesettings[1] = val; }
     else if(var=="theme.iconset"){ themesettings[2] = val; }
     else if(var=="theme.font"){ themesettings[3] = val; }
-    else if(var=="theme.fontsize"){ themesettings[4] = val; }
+    else if(var=="theme.fontsize"){ 
+      if(val.endsWith("%")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 )+"px"; }
+      themesettings[4] = val; 
+    }
   }
   //Now double check that the custom theme/color files exist and reset it will the full path as necessary
   if(setTheme){

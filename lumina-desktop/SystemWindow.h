@@ -38,6 +38,8 @@ private slots:
 	
 	void sysShutdown();
 	
+	void sysSuspend();
+
 	void sysCancel(){
 	  this->close();
 	}

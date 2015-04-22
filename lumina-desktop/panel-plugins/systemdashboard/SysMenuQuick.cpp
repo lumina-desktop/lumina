@@ -12,13 +12,12 @@
 
 LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSysMenuQuick){
   ui->setupUi(this);
-  settings = new QSettings("panel-plugins","systemdashboard");
   brighttimer = new QTimer(this);
     brighttimer->setSingleShot(true);
-    brighttimer->setInterval(100); //100ms delay in setting the new value
-  //Now reset the initial saved settings (if any)
-  LOS::setScreenBrightness( settings->value("screenbrightness",100).toInt() ); //default to 100%
-  LOS::setAudioVolume( settings->value("audiovolume", 100).toInt() ); //default to 100%
+    brighttimer->setInterval(50); //50ms delay in setting the new value
+  //Now reset the initial saved settings (this is handles by the LOS/session now - 4/22/15)
+  UpdateMenu(); //do this once before all the signals/slots are connected below
+	
   //Now setup the connections
   connect(ui->slider_volume, SIGNAL(valueChanged(int)), this, SLOT(volSliderChanged()) );
   connect(ui->slider_brightness, SIGNAL(valueChanged(int)), this, SLOT(brightSliderChanged()) );
@@ -102,7 +101,6 @@ void LSysMenuQuick::UpdateMenu(){
 void LSysMenuQuick::volSliderChanged(){
   int val = ui->slider_volume->value();
   LOS::setAudioVolume(val);
-  settings->setValue("audiovolume",val);
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
   ui->label_vol_text->setText( txt );
@@ -121,12 +119,16 @@ void LSysMenuQuick::brightSliderChanged(){
   //Brightness controls cannot operate extremely quickly - combine calls as necessary
   if(brighttimer->isActive()){ brighttimer->stop(); }
   brighttimer->start();
+  //*DO* update the label right away
+  int val = ui->slider_brightness->value();
+  QString txt = QString::number(val)+"%";
+  if(val<100){ txt.prepend(" "); } //make sure no widget resizing
+  ui->label_bright_text->setText( txt );
 }
 
 void LSysMenuQuick::setCurrentBrightness(){
   int val = ui->slider_brightness->value();
   LOS::setScreenBrightness(val);
-  settings->setValue("screenbrightness",val);
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
   ui->label_bright_text->setText( txt );	

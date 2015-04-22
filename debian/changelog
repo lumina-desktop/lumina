@@ -1,3 +1,22 @@
+lumina-desktop (0.8.4.533-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * add lumina-fileinfo package
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 21 Apr 2015 20:36:42 +0200
+
+lumina-desktop (0.8.4.475-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * add runtime depencies for lumina-desktop:
+    - gstreamer1.0-plugins-base
+    - phonon4qt5-backend-gstreamer
+    - pavucontrol
+    - alsa-utils
+    - acpi
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sat, 18 Apr 2015 20:21:00 +0200
+
 lumina-desktop (0.8.3.440-1nano) unstable; urgency=low
 
   * New git snapshot

@@ -75,6 +75,7 @@ LSession::~LSession(){
 
 void LSession::setupSession(){
   qDebug() << "Initializing Session";
+  if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
   //Seed random number generator (if needed)
@@ -111,6 +112,15 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
 
+  //Re-load the screen brightness and volume settings from the previous session
+  qDebug() << " - Loading previous settings";
+  int tmp = LOS::audioVolume();
+  LOS::setAudioVolume(tmp);
+  qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
+  tmp = LOS::ScreenBrightness();
+  LOS::setScreenBrightness( tmp );
+  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
+  
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
@@ -134,6 +144,8 @@ void LSession::CleanupSession(){
   LSession::processEvents();
   QDateTime time = QDateTime::currentDateTime();
   qDebug() << "Start closing down the session: " << time.toString( Qt::SystemLocaleShortDate);
+  //Create a temporary flag to prevent crash dialogs from opening during cleanup
+  LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
@@ -184,6 +196,8 @@ void LSession::CleanupSession(){
   }else{
     for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25000); } //1/2 second pause
   }
+  //Clean up the temporary flag
+  if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   //if(audioThread!=0){ audioThread->exit(0); }
 }
 
@@ -204,6 +218,17 @@ int LSession::VersionStringToNumber(QString version){
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
+  //Now play the login music
+  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+    //Make sure to re-set the system volume to the last-used value at outset
+    int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }
+    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
+  }
+  //Enable Numlock 
+  if(sessionsettings->value("EnableNumlock",false).toBool()){
+    QProcess::startDetached("numlockx on");
+  }
   //First create the list of all possible locations in order of precedence
   // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
   QStringList filelist; 
@@ -230,19 +255,10 @@ void LSession::launchStartupApps(){
   entries.removeDuplicates(); //Just in case something is duplicated between system/user defaults
   for(int i=0; i<entries.length(); i++){
     qDebug() << " - Starting Application:" << entries[i];
-    LSession::LaunchApplication(entries[i]);  
+    LSession::LaunchApplication(entries[i]);
+    LSession::processEvents();
   }
   
-  //Now play the login music
-  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    //Make sure to re-set the system volume to the last-used value at outset
-    int vol = LOS::audioVolume();
-    if(vol>=0){ LOS::setAudioVolume(vol); }
-    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
-  }
-  if(sessionsettings->value("EnableNumlock",false).toBool()){
-    QProcess::startDetached("numlockx on");
-  }
   //Now get any XDG startup applications and launch them
   QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
   for(int i=0; i<xdgapps.length(); i++){
@@ -253,6 +269,7 @@ void LSession::launchStartupApps(){
       //Don't update the mouse cursor
       QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
     }
+    LSession::processEvents();
   }
   
 }
@@ -279,6 +296,18 @@ void LSession::watcherChange(QString changed){
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
+
+  //Now double-check all the watches files to ensure that none of them got removed
+
+  QStringList files = watcher->files();
+  if(files.length() < 4){
+    qDebug() << " - Resetting Watched Files...";
+    watcher->removePaths(files); //clear the current files before re-setting them
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
+    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
+    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
+    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
+  }
 }
 
 void LSession::checkUserFiles(){

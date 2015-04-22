@@ -8,19 +8,20 @@
 
 //#include <X11/Xlib.h>
 //#include <X11/Xutil.h>
-#include <X11/extensions/Xdamage.h>
+//#include <X11/extensions/Xdamage.h>
 
 //#include <xcb/damage.h>
 //static xcb_damage_damage_t dmgID;
 
 #include <LSession.h>
 #include <QScreen>
-
-static int dmgID = 0;
+#include <LuminaX11.h>
+//static int dmgID = 0;
 
 TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   AID = 0; //nothing yet
   IID = 0;
+  dmgID = 0;
 }
 
 TrayIcon::~TrayIcon(){
@@ -38,12 +39,10 @@ void TrayIcon::attachApp(WId id){
   else if(AID!=0){ qWarning() << "Tray Icon is already attached to a window!"; return; }
   AID = id;
   IID = this->winId(); //embed directly into this widget
-  //IID = LX11::CreateWindow( this->winId(), this->rect() ); //Create an intermediate window to be the parent
-  if( LSession::handle()->XCB->EmbedWindow(AID, IID) ){
+  dmgID = LSession::handle()->XCB->EmbedWindow(AID, IID);
+  if( dmgID != 0 ){
     LX11::RestoreWindow(AID); //make it visible
-    //XSelectInput(QX11Info::display(), AID, StructureNotifyMask);
-    //xcb_damage_create(QX11Info::connection(), dmgID, AID, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
-    dmgID = XDamageCreate( QX11Info::display(), AID, XDamageReportRawRectangles );
+    //dmgID = XDamageCreate( QX11Info::display(), AID, XDamageReportRawRectangles );
     qDebug() << "New System Tray App:" << AID;
     QTimer::singleShot(1000, this, SLOT(updateIcon()) );
   }else{

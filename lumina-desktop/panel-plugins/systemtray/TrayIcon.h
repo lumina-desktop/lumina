@@ -22,9 +22,7 @@
 #include <QImage>
 
 // libLumina includes
-#include <LuminaX11.h>
-
-//Local includes
+//#include <LuminaX11.h>
 
 class TrayIcon : public QWidget{
 	Q_OBJECT
@@ -42,19 +40,11 @@ public slots:
 
 private:
 	WId IID, AID; //icon ID and app ID
-
-//private slots:
-	//void slotAttach(); //so that the attachment can be done in a new thread
-	
+	uint dmgID; 
 
 protected:
 	void paintEvent(QPaintEvent *event);
-	//void moveEvent(QMoveEvent *event);
 	void resizeEvent(QResizeEvent *event);
-	//bool x11Event(XEvent *event);
 
-//signals:
-	//void AppClosed();
-	//void AppAttached();
 };
 #endif

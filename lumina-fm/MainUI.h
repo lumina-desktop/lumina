@@ -214,6 +214,7 @@ private slots:
 	void RemoveItem(); //Remove the item permanently
 	void RenameItem();
 	void FavoriteItem();
+	void ViewPropertiesItem();
 	 // - full selection actions
 	void CutItems();
 	void CopyItems();
@@ -225,7 +226,7 @@ private slots:
 
 signals:
 	void DirChanged(QString path);
-	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString message); 
+	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 protected:
 	void resizeEvent(QResizeEvent*);

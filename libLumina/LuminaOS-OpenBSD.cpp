@@ -166,6 +166,16 @@ void LOS::systemRestart(){ //start reboot sequence
   QProcess::startDetached("shutdown -r now");
 }
 
+//Check for suspend support
+bool LOS::systemCanSuspend(){
+  return false;
+}
+
+//Put the system into the suspend state
+void LOS::systemSuspend(){
+
+}
+
 //Battery Availability
 bool LOS::hasBattery(){
   int val = LUtils::getCmdOutput("apm -b").join("").toInt();

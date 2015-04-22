@@ -1,0 +1,6 @@
+<RCC>
+  <qresource>
+    <file>defaults/fileinfo-app.template</file>
+    <file>defaults/fileinfo-link.template</file>
+  </qresource>
+</RCC>

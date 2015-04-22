@@ -237,6 +237,7 @@ void MainUI::setupConnections(){
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
   connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_session_datetimeorder, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
 }
 
 void MainUI::setupMenus(){
@@ -274,6 +275,13 @@ void MainUI::setupMenus(){
   for(int i=0; i<fbstyles.length(); i++){
     ui->combo_session_wtheme->addItem(fbstyles[i], fbdir.absoluteFilePath(fbstyles[i]));
   }
+
+  //Display formats for panel clock
+  ui->combo_session_datetimeorder->clear();
+  ui->combo_session_datetimeorder->addItem( tr("Time (Date as tooltip)"), "timeonly");
+  ui->combo_session_datetimeorder->addItem( tr("Date (Time as tooltip)"), "dateonly");
+  ui->combo_session_datetimeorder->addItem( tr("Time first then Date"), "timedate");
+  ui->combo_session_datetimeorder->addItem( tr("Date first then Time"), "datetime");
 
   //Available Time zones
   ui->combo_session_timezone->clear();
@@ -440,7 +448,7 @@ void MainUI::slotChangePage(bool enabled){
   }
   ui->group_screen->setVisible(showScreen && (ui->spin_screen->maximum()>1) );
   //Hide the save button for particular pages
-  ui->push_save->setVisible(!ui->actionDefaults->isChecked()); //hide on the default page
+  ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
   //Special functions for particular pages
   if(ui->page_panels->isVisible()){ checkpanels(); }
 
@@ -557,11 +565,21 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->list_panel2_plugins->clear();
     for(int i=0; i<plugs.length(); i++){
       QString pid = plugs[i].section("---",0,0);
-      LPI info = PINFO->panelPluginInfo(pid);
-      if(!info.ID.isEmpty()){
-        QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+      if(pid.startsWith("applauncher")){
+	bool ok = false;
+	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
+	if(ok){
+	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
-	ui->list_panel2_plugins->addItem(it);
+	  ui->list_panel2_plugins->addItem(it);
+	}
+      }else{
+        LPI info = PINFO->panelPluginInfo(pid);
+        if(!info.ID.isEmpty()){
+          QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
+	  ui->list_panel2_plugins->addItem(it);
+        }
       }
     }
     QString color = settings->value(PPrefix+"color","rgba(255,255,255,160)").toString();
@@ -730,6 +748,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
     moddesk = modpan = false;
     if(!screenonly){ modmenu = modshort = moddef = modses = false; }
     ui->push_save->setEnabled(modmenu || modshort || moddef || modses); //wait for new changes
+    ui->push_save->setVisible(!ui->actionDefaults->isChecked() || modmenu || modshort || moddef || modses);
 }
 
 
@@ -1802,11 +1821,13 @@ void MainUI::loadSessionSettings(){
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings->value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
+  index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder","timeonly").toString() );
+  ui->combo_session_datetimeorder->setCurrentIndex(index);
   if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
     //System Time selected
     ui->combo_session_timezone->setCurrentIndex(0);
   }else{
-    int index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
+    index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
     if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
     else{ ui->combo_session_timezone->setCurrentIndex(0); }
   }
@@ -1902,6 +1923,7 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
+  sessionsettings->setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
   if( ui->combo_session_timezone->currentIndex()==0){
     //System Time selected
     sessionsettings->setValue("CustomTimeZone", false);

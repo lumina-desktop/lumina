@@ -153,7 +153,7 @@ public:
 	void MoveResizeWindow(WId win, QRect geom);
 	
 	//Window Embedding/Detaching (for system tray)
-	bool EmbedWindow(WId win, WId container);
+	uint EmbedWindow(WId win, WId container); //returns the damage ID (or 0 for an error)
 	bool UnembedWindow(WId win);
 	
 };
