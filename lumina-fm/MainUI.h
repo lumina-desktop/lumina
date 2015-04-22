@@ -214,6 +214,7 @@ private slots:
 	void RemoveItem(); //Remove the item permanently
 	void RenameItem();
 	void FavoriteItem();
+	void ViewPropertiesItem();
 	 // - full selection actions
 	void CutItems();
 	void CopyItems();

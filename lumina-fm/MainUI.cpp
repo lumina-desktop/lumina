@@ -970,6 +970,10 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(PasteItems()) )->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && isUserWritable);
   contextMenu->addSeparator();
   contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(RemoveItem()) )->setEnabled(info.isWritable()&&hasSelection);
+  if(LUtils::isValidBinary("lumina-fileinfo")){
+    contextMenu->addSeparator();
+    contextMenu->addAction(LXDG::findIcon("system-search",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection && info.fileName().endsWith(".desktop"));
+  }
   //Now show the menu
   if(radio_view_details->isChecked()){
     contextMenu->popup(ui->tree_dir_view->mapToGlobal(pt));
@@ -1410,6 +1414,16 @@ void MainUI::FavoriteItem(){
   QFile::link(fullpath, favdir+fname);
   CItem.clear();
   ItemSelectionChanged();
+}
+
+void MainUI::ViewPropertiesItem(){
+  if(CItem.isEmpty()){ 
+    QFileInfoList sel = getSelectedItems();
+    if(sel.isEmpty()){ return; }
+    else{ CItem = sel[0].absoluteFilePath(); }
+  }
+  QString file = CItem;
+  QProcess::startDetached("lumina-fileinfo \""+file+"\"");
 }
 
 void MainUI::CutItems(){
