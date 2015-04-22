@@ -137,7 +137,9 @@ void Dialog::LoadDesktopFile(QString input)
 
     //use the standard LXDG object and load the desktop file
     bool ok = false;
-    DF = LXDG::loadDesktopFile(desktopFileName, ok);
+    if(desktopFileName.endsWith(".desktop")){
+      DF = LXDG::loadDesktopFile(desktopFileName, ok);
+    }
     if( ok ) {
         if ((DF.type == XDGDesktop::LINK) && (desktopType!="link" )) {
             //we open a desktop type "link" but it was not mentionned by parameters
@@ -158,7 +160,7 @@ void Dialog::LoadDesktopFile(QString input)
         ui->pbIcon->setIcon(LXDG::findIcon(DF.icon,""));
 	this->setWindowTitle(DF.filePath.section("/",-1));
     } else {
-        QMessageBox::critical(this, tr("Error"), tr("Problem to read the desktop file called:") + desktopFileName );
+        QMessageBox::critical(this, tr("Error"), tr("Invalid File Supplied:") +"\n"+desktopFileName );
         exit(1);
     }
     
