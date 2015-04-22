@@ -45,6 +45,8 @@ SOURCES	+= LuminaXDG.cpp \
 
 exists(/bin/lsb_release){
   LINUX_DISTRIBUTION = $$system(lsb_release -si)
+} exists(/usr/bin/lsb_release){
+  LINUX_DISTRIBUTION = $$system(lsb_release -si)
 }
 
 equals(LINUX_DISTRIBUTION, "Debian"): {
