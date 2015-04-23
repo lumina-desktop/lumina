@@ -111,15 +111,6 @@ void LSession::setupSession(){
   appmenu = new AppMenu();
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
-
-  //Re-load the screen brightness and volume settings from the previous session
-  qDebug() << " - Loading previous settings";
-  int tmp = LOS::audioVolume();
-  LOS::setAudioVolume(tmp);
-  qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
-  tmp = LOS::ScreenBrightness();
-  LOS::setScreenBrightness( tmp );
-  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
@@ -218,13 +209,7 @@ int LSession::VersionStringToNumber(QString version){
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
-  //Now play the login music
-  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    //Make sure to re-set the system volume to the last-used value at outset
-    int vol = LOS::audioVolume();
-    if(vol>=0){ LOS::setAudioVolume(vol); }
-    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
-  }
+
   //Enable Numlock 
   if(sessionsettings->value("EnableNumlock",false).toBool()){
     QProcess::startDetached("numlockx on");
@@ -272,6 +257,23 @@ void LSession::launchStartupApps(){
     LSession::processEvents();
   }
   
+  //Re-load the screen brightness and volume settings from the previous session
+  // Wait until after the XDG-autostart functions, since the audio system might be started that way
+  qDebug() << " - Loading previous settings";
+  int tmp = LOS::audioVolume();
+  LOS::setAudioVolume(tmp);
+  qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
+  tmp = LOS::ScreenBrightness();
+  LOS::setScreenBrightness( tmp );
+  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
+  
+  //Now play the login music since we are finished
+  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+    //Make sure to re-set the system volume to the last-used value at outset
+    int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }
+    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
+  }
 }
 
 void LSession::StartLogout(){
