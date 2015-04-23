@@ -85,7 +85,7 @@ QString WMProcess::setupWM(){
     if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
       QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
     }
-    cmd = "fluxbox -rc "+confDir+"/fluxbox-init";
+    cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
   }else {
     cmd = WM;
   }
