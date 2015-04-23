@@ -12,6 +12,7 @@
 
 LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Take care of inputs
+  this->setMouseTracking(true);
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
@@ -283,6 +284,7 @@ void LPanel::enterEvent(QEvent *event){
     //Move the panel out so it is fully available
     this->move(showpoint);
   }
+  this->activateWindow();
   event->accept(); //just to quiet the compile warning
 }
 
