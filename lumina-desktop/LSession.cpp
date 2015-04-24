@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012-2014, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -401,12 +401,13 @@ void LSession::updateDesktops(){
       for(int i=0; i<DESKTOPS.length(); i++){
         if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
-          DESKTOPS[i]->prepareToClose(); //hide();
+          DESKTOPS[i]->prepareToClose();
 	  delete DESKTOPS.takeAt(i);
 	  i--;
         }else{
 	  qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
           DESKTOPS[i]->show();
+	  //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
         }
       }
       WM->updateWM(); //Make sure fluxbox also gets prompted to re-load screen config

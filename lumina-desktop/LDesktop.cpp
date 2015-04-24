@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012-2014, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -60,6 +60,7 @@ void LDesktop::show(){
 
 void LDesktop::prepareToClose(){
   //Get any panels ready to close
+  issyncing = true; //Stop handling any watcher events
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); delete PANELS.takeAt(i); i--; }
   //Now close down any desktop plugins
   desktoplocked = true; //make sure that plugin settings are preserved during removal
@@ -103,6 +104,40 @@ void LDesktop::SystemApplication(QAction* act){
   if(!act->whatsThis().isEmpty() && act->parent()==deskMenu){
     LSession::LaunchApplication("lumina-open \""+act->whatsThis()+"\"");
   }
+}
+
+void LDesktop::checkResolution(){
+  //Compare the current screen resolution with the last one used/saved
+  //NOTE: This should only be performed after all the elements have been initialized/created.
+  int oldWidth = settings->value(DPREFIX+"screen/lastWidth",-1).toInt();
+  int oldHeight = settings->value(DPREFIX+"screen/lastHeight",-1).toInt();
+  QRect scrn = LSession::desktop()->screenGeometry(desktopnumber);
+  issyncing = true;
+  settings->setValue(DPREFIX+"screen/lastWidth",scrn.width());
+  settings->setValue(DPREFIX+"screen/lastHeight",scrn.height());
+
+  if(oldWidth<1 || oldHeight<1 || scrn.width()<1 || scrn.height()<1){
+    //nothing to do - something invalid
+  }else if(scrn.width()==oldWidth && scrn.height()==oldHeight){
+    //nothing to do - same as before
+  }else{
+    //Calculate the scale factor between the old/new sizes in each dimension 
+    //  and forward that on to all the interface elements
+    double xscale = scrn.width()/((double) oldWidth);
+    double yscale = scrn.height()/((double) oldHeight);
+    //Update any panels
+    for(int i=0; i<PANELS.length(); i++){
+      PANELS[i]->scalePanel(xscale, yscale);
+    }
+    //Update any desktop plugins
+    for(int i=0; i<PLUGINS.length(); i++){
+      PLUGINS[i]->scalePlugin(xscale, yscale);
+    }
+    //QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
+    //QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
+  }
+  LSession::processEvents();
+  issyncing = false;
 }
 
 void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
@@ -165,8 +200,11 @@ void LDesktop::InitDesktop(){
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
   QTimer::singleShot(0,this, SLOT(UpdateBackground()) );
-  QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
-  QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
+  //QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
+  //QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
+  UpdatePanels();
+  UpdateDesktop();
+  //checkResolution();
 }
 
 void LDesktop::SettingsChanged(){

@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -40,6 +40,7 @@ private:
 	int screennum;
 	int panelnum;
 	QList<LPPlugin*> PLUGINS;
+	WId tmpID; //temporary window ID
 
 public:
 	LPanel(QSettings *file, int scr = 0, int num =0, QWidget *parent=0); //settings file, screen number, panel number
@@ -50,7 +51,8 @@ public:
 	}
 
 	void prepareToClose();
-	
+	void scalePanel(double xscale, double yscale);
+
 public slots:
 	void UpdatePanel();  //Load the settings file and update the panel appropriately
 	void UpdateLocale(); //Locale Changed externally

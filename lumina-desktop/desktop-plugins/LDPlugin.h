@@ -8,7 +8,7 @@
 //  Simply subclass this when creating a new plugin to enable correct
 //    visibility and usage within the desktop window
 //===========================================
-//  WARNING: Do *not* setup a custom context menu for plugins!
+//  WARNING: Do *not* setup a custom context menu for the entire plugins area!
 //     This can prevent access to the general desktop context menu if
 //     the plugin was maximized to fill the desktop area!
 //===========================================
@@ -57,6 +57,27 @@ public:
 		settings->setValue("location/height",height);
 		settings->sync();
 	    }
+	}
+
+	virtual void scalePlugin(double xscale, double yscale){
+          //This can be re-implemented in the subclassed plugin as necessary
+	  // Example: If there are icons in the plugin which should also be re-scaled
+
+	  int val = settings->value("location/width",0).toInt();
+	  if(val>0){ val = qRound(val*xscale); }
+	  settings->setValue("location/width",val);
+
+	  val = settings->value("location/height",0).toInt();
+	  if(val>0){ val = qRound(val*yscale); }
+	  settings->setValue("location/height",val);
+
+  	  val = settings->value("location/x",0).toInt();
+	  if(val>0){ val = qRound(val*xscale); }
+	  settings->setValue("location/x",val);
+
+  	  val = settings->value("location/y",0).toInt();
+	  if(val>0){ val = qRound(val*yscale); }
+	  settings->setValue("location/y",val);
 	}
 	
 public slots:

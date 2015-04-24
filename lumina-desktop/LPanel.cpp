@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -15,6 +15,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setMouseTracking(true);
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
+  tmpID = 0;
   //Setup the widget overlay for the entire panel to provide transparency effects
   panelArea = new QWidget(this);
   QBoxLayout *tmp = new QBoxLayout(QBoxLayout::LeftToRight);
@@ -27,8 +28,6 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   screen = LSession::desktop();
   PPREFIX = "panel"+QString::number(screennum)+"."+QString::number(num)+"/";
   defaultpanel = (screen->screenGeometry(screennum).x()==0 && num==0);
-  //if(settings->value("defaultpanel",QString::number(screen->primaryScreen())+".0").toString()==QString::number(screennum)+"."+QString::number(num) ){ defaultpanel=true;}
-  //else{defaultpanel=false; }
   horizontal=true; //use this by default initially
   hidden = false; //use this by default
   //Setup the panel
@@ -74,6 +73,19 @@ void LPanel::prepareToClose(){
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
   }	 
+}
+
+void LPanel::scalePanel(double xscale, double yscale){
+  int ht = settings->value(PPREFIX+"height", 30).toInt(); //this is technically the distance into the screen from the edge
+  QString loc = settings->value(PPREFIX+"location","").toString();
+  if(loc=="top" || loc=="bottom"){
+    ht = qRound(ht*yscale);
+  }else{
+    ht = qRound(ht*xscale);
+  }
+  settings->setValue(PPREFIX+"height", ht);
+  settings->sync();
+  QTimer::singleShot(0, this, SLOT(UpdatePanel()) );
 }
 
 //===========
@@ -284,6 +296,7 @@ void LPanel::enterEvent(QEvent *event){
     //Move the panel out so it is fully available
     this->move(showpoint);
   }
+  tmpID = LSession::handle()->XCB->ActiveWindow();
   this->activateWindow();
   event->accept(); //just to quiet the compile warning
 }
@@ -300,6 +313,8 @@ void LPanel::leaveEvent(QEvent *event){
     //Move the panel back to it's "hiding" spot
     this->move(hidepoint);
   }
+  if(tmpID!=0){ LSession::handle()->XCB->ActivateWindow(tmpID); }
+  tmpID = 0;
   event->accept(); //just to quiet the compile warning
 }
 
