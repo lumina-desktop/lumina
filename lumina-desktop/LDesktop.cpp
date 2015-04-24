@@ -200,10 +200,10 @@ void LDesktop::InitDesktop(){
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
   QTimer::singleShot(0,this, SLOT(UpdateBackground()) );
-  //QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
-  //QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
-  UpdatePanels();
-  UpdateDesktop();
+  QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
+  QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
+  //UpdatePanels();
+  //UpdateDesktop();
   //checkResolution();
 }
 
