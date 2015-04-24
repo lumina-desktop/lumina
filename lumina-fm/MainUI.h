@@ -207,15 +207,15 @@ private slots:
 	void playerFileChanged();
 	
 	//Context Menu Actions
-	 // - single item actions
 	void OpenItem(); //run "lumina-open" on it
 	void OpenItemWith(); //run "lumina-open -select" on it
-	void OpenDir(); //open the dir in a new tab
+	//void OpenDir(); //open the dir in a new tab
 	void RemoveItem(); //Remove the item permanently
+	 // - single item actions
 	void RenameItem();
 	void FavoriteItem();
-	void ViewPropertiesItem();
 	 // - full selection actions
+	void ViewPropertiesItem();
 	void CutItems();
 	void CopyItems();
 	void PasteItems();

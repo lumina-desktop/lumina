@@ -1,3 +1,10 @@
+lumina-desktop (0.8.4.556-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * reboot, shutdown and suspend via logind
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Thu, 23 Apr 2015 20:27:23 +0200
+
 lumina-desktop (0.8.4.533-1nano) unstable; urgency=low
 
   * New git snapshot

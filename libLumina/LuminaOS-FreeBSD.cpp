@@ -22,7 +22,7 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/softmanager.desktop"; } //graphical app/pkg manager
-QString LOS::QtConfigShortcut(){ return "/usr/local/bin/qtconfig-qt4"; } //qtconfig binary (NOT *.desktop file)
+QString LOS::QtConfigShortcut(){ return ""; } //qtconfig binary (NOT *.desktop file)
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
@@ -58,6 +58,7 @@ int LOS::ScreenBrightness(){
   //Make sure we are not running in VirtualBox (does not work in a VM)
   QStringList info = LUtils::getCmdOutput("pciconf -lv");
   if( !info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ return -1; }
+  else if( !LUtils::isValidBinary("xbrightness") ){ return -1; } //incomplete install
   //Now perform the standard brightness checks
   if(screenbrightness==-1){ //memory value
     if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){ //saved file value
@@ -70,6 +71,7 @@ int LOS::ScreenBrightness(){
 
 //Set screen brightness
 void LOS::setScreenBrightness(int percent){
+  if(percent == -1){ return; } //This is usually an invalid value passed directly to the setter
   //ensure bounds
   if(percent<0){percent=0;}
   else if(percent>100){ percent=100; }
