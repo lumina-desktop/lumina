@@ -100,7 +100,6 @@ QString info = LUtils::getCmdOutput("amixer get Master").join("").simplified();;
   }
   return out;
 
-
 }
 
 //Set the current volume
@@ -139,27 +138,37 @@ void LOS::startMixerUtility(){
 
 //Check for user system permission (shutdown/restart)
 bool LOS::userHasShutdownAccess(){
-  return true; //not implemented yet
+  QProcess::startDetached("dbus-send --system --print-reply=literal \
+  --type=method_call --dest=org.freedesktop.login1 \
+  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanPowerOff");
 }
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -h now");
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.PowerOff boolean:true");
 }
 
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -r now");
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.Reboot boolean:true");
 }
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  return false;
+  QProcess::startDetached("dbus-send --system --print-reply=literal \
+  --type=method_call --dest=org.freedesktop.login1 \
+  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanSuspend");
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.Suspend boolean:true");
 }
 
 //Battery Availability
