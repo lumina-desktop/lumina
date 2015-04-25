@@ -17,10 +17,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
 		MainUI.cpp \
 		Worker.cpp \
+		Settings.cpp \
 		ConfigUI.cpp
 
 HEADERS  += MainUI.h \
 		Worker.h \
+		Settings.h \
 		ConfigUI.h
 
 FORMS    += MainUI.ui \

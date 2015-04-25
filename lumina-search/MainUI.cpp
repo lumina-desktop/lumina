@@ -8,6 +8,10 @@
 #include "ui_MainUI.h"
 
 #include "ConfigUI.h"
+#include <QJsonObject>
+#include "Settings.h"
+#include <QDir>
+
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
@@ -42,12 +46,14 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(LaunchItem(QListWidgetItem*)) );
   connect(ui->tool_configure, SIGNAL(clicked()), this, SLOT(configureSearch()) );
   
-  //Setup the settings file
-  //TODO: load Json instead of Settings
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  settings = new QSettings("LuminaDE", "lumina-search",this);
-  searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
-  searcher->skipDirs = settings->value("SkipSearchDirs", QStringList()).toStringList();
+  //get the Default parameters
+  QJsonObject jsonObject;
+  if (JSonSettings::loadJsonSettings(jsonObject)) {
+	  JSonSettings::getSetDetails(jsonObject, 0, searcher->startDir, searcher->skipDirs);
+  } else {
+	  searcher->startDir = QDir::homePath();
+	  searcher->skipDirs.clear();
+  }
   
   this->show();
   workthread->start();
@@ -96,14 +102,7 @@ void MainUI::configureSearch(){
   if(dlg.newStartDir.isEmpty()){ return; }//cancelled
   QString startdir = dlg.newStartDir;
   QStringList skipdirs = dlg.newSkipDirs;
-  //TODO: add setName
 	
-  //Save these values for later
-  settings->setValue("StartSearchDir", startdir);
-  settings->setValue("SkipSearchDirs", skipdirs);
-	
-  //TOTO: change from settings to Json
-  //Set these values in the searcher
   searcher->startDir = startdir;
   searcher->skipDirs = skipdirs;
 }

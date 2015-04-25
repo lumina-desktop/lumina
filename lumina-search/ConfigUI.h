@@ -26,8 +26,8 @@ public:
 
 	QString newStartDir;
 	QStringList newSkipDirs;
-	QJsonObject jsonObject;
 	int currentJsonIndex ;
+	QJsonObject jsonObject;
 
 private:
 	Ui::ConfigUI *ui;
@@ -44,12 +44,8 @@ private slots:
 	void on_tool_removeSetName();
 	void on_cbSetName_changed(int index);
 	void on_cbSetName_text_changed(QString newText);
-	
-	bool loadJsonSettings();
-	bool saveJsonSettings();
-	QStringList getSetNames();
-	bool getSetDetails(int index, QString &startDir, QStringList &excludedDirs);
 	void updateJsonObject(int currentJsonIndex);
+	
 };
 	
 #endif

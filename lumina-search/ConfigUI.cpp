@@ -22,6 +22,7 @@
 #include <QJsonParseError>
 
 #include <LuminaXDG.h>
+#include "Settings.h"
 
 ConfigUI::ConfigUI(QWidget *parent) : QDialog(parent), ui(new Ui::ConfigUI){
   ui->setupUi(this);
@@ -49,8 +50,8 @@ ConfigUI::~ConfigUI(){
 }
 
 void ConfigUI::loadInitialValues(){
-  loadJsonSettings();
-  QStringList setNames = getSetNames();
+  JSonSettings::loadJsonSettings(jsonObject);
+  QStringList setNames = JSonSettings::getSetNames(jsonObject);
   ui->cbSetNames->addItems(setNames);
   ui->cbSetNames->setEditable(true);
 }
@@ -88,7 +89,8 @@ void ConfigUI::on_list_excludes_itemSelectionChanged(){
 
 void ConfigUI::on_buttonBox_accepted(){
   qDebug() << "click save button";
-  saveJsonSettings();
+  updateJsonObject(currentJsonIndex);
+  JSonSettings::saveJsonSettings(jsonObject, currentJsonIndex);
   newStartDir = ui->label_start->text();
   QStringList dirs;
   for(int i=0; i<ui->list_excludes->count(); i++){
@@ -139,7 +141,7 @@ void ConfigUI::on_cbSetName_changed(int index){
 		updateJsonObject(currentJsonIndex);
 	}
 	currentJsonIndex = index;
-	if (getSetDetails(index, startDir, excludedDirs)) {
+	if (JSonSettings::getSetDetails(jsonObject, index, startDir, excludedDirs)) {
 		qDebug() << "Set details:" << startDir << ";" << excludedDirs;
 		ui->label_start->setText(startDir);
 		ui->list_excludes->clear();
@@ -155,35 +157,6 @@ void ConfigUI::on_cbSetName_text_changed(QString newText)
 		return;
 	}
 	ui->cbSetNames->setItemText(ui->cbSetNames->currentIndex(),newText);
-}
-
-bool ConfigUI::loadJsonSettings() {
-	qDebug("loadJsonSettings");
-	QFile loadFile(QStringLiteral("search.settings"));
-	if (!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qWarning("Problem to read the settings!!!");
-		return false;
-	}
-	QByteArray jsonData = loadFile.readAll();
-	loadFile.close();
-	QJsonParseError parseError;
-	QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
-	if (parseError.error)
-	{
-		//TODO: such message could maybe in a log file
-        qWarning() << "Problem to parse the setting file here:" << jsonData.mid( parseError.offset - 10, parseError.offset + 10).replace('\n', ' ');    
-        qWarning() << parseError.errorString()  ;
-        jsonObject = jsonDoc.object();
-        return false;
-	}
-    jsonObject = jsonDoc.object();
-    qDebug() << "json root object:" << jsonObject["Sets"].toArray();
-    QStringList names = getSetNames();
-    if (names.at(0) != "Default") {
-		qWarning("settings incorrect, it does not contains 'Default'");
-		return false;
-	}
-    return true;
 }
 
 void ConfigUI::updateJsonObject(int index)
@@ -211,45 +184,4 @@ void ConfigUI::updateJsonObject(int index)
 	}
 	jsonObject["Sets"] = newArray;
 	qDebug() << "New root object:" << jsonObject["Sets"].toArray();
-}
-
-bool ConfigUI::saveJsonSettings() {
-	qDebug("saveJsonSettings");
-	updateJsonObject(currentJsonIndex);
-	qDebug() << "Json Root object:" << jsonObject;
-	QFile saveFile("search.settings");
-	if (!saveFile.open(QIODevice::WriteOnly)) {
-		qWarning("Problem to read the settings!!!");
-		return false;
-	}
-	QJsonDocument saveDoc(jsonObject);
-	saveFile.write(saveDoc.toJson());
-	saveFile.close();
-	return true;
-}
-
-QStringList ConfigUI::getSetNames() {
-	qDebug("getSetNames");
-	QStringList setNames;
-	qDebug() << "json root object:" << jsonObject["Sets"].toArray();
-	QJsonArray jsonEntries = jsonObject["Sets"].toArray();
-	for (int i = 0; i < jsonEntries.size(); ++i) {
-		QJsonObject entry = jsonEntries[i].toObject();
-		setNames.append(entry["Name"].toString());
-	}
-	qDebug() << setNames;
-	return setNames;
-}
-
-bool ConfigUI::getSetDetails(int index, QString &startDir, QStringList &excludedDirs){
-	qDebug() << "getSetDetails:" << index;
-	excludedDirs.clear();
-	QJsonArray jsonEntries = jsonObject["Sets"].toArray();
-	QJsonObject entry = jsonEntries[index].toObject();
-    startDir = entry["StartDir"].toString();
-    QJsonArray jsonExcludedDirs = entry["ExcludedDirs"].toArray();
-    for (int i = 0; i < jsonExcludedDirs.size(); ++i) {
-		excludedDirs.append(jsonExcludedDirs[i].toString());
-	}
-	return true;
 }

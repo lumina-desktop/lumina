@@ -10,7 +10,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QTimer>
-#include <QSettings>
+//#include <QSettings>
 #include <QThread>
 #include <QProcess>
 #include <QListWidgetItem>
@@ -37,7 +37,7 @@ private:
 	QThread *workthread;
 	QTimer *livetime;
 	Worker *searcher;
-	QSettings *settings;
+	//QSettings *settings;
 
 private slots:
 	//Button Slots
