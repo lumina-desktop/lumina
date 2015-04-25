@@ -46,13 +46,14 @@ public:
 
 
 	//Various functions for the favorites sub-system
-	// Formatting Note: "<name>::::[dir/file/app]::::<path>"
+	// Formatting Note: "<name>::::[dir/app/<mimetype>]::::<path>"
 	//   the <name> field might not be used for "app" flagged entries
 	static QStringList listFavorites();
 	static bool saveFavorites(QStringList);
 	static bool isFavorite(QString path);
 	static bool addFavorite(QString path, QString name = "");
 	static void removeFavorite(QString path);
+	static void upgradeFavorites(int fromoldversionnumber);
 	
 	//Load the default setup for the system
 	static void LoadSystemDefaults(bool skipOS = false);

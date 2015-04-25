@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2013, Ken Moore
+//  Copyright (c) 2013-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -16,6 +16,7 @@
 
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
+#include <LuminaXDG.h>
 
 //=============
 //  LUtils Functions
@@ -145,7 +146,13 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
 }
 
 QStringList LUtils::listFavorites(){
-  QStringList fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
+  static QStringList fav;
+  static QDateTime lastRead;
+  QDateTime cur = QDateTime::currentDateTime();
+  if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
+    fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
+    lastRead = cur;
+  }
   return fav;
 }
 
@@ -164,9 +171,10 @@ bool LUtils::isFavorite(QString path){
 bool LUtils::addFavorite(QString path, QString name){
   //Generate the type of favorite this is
   QFileInfo info(path);
-  QString type = "file";
-    if(info.isDir()){ type="dir"; }
-    else if(info.suffix()=="desktop"){ type="app"; }
+  QString type;
+  if(info.isDir()){ type="dir"; }
+  else if(info.suffix()=="desktop"){ type="app"; }
+  else{ type = LXDG::findAppMimeForFile(path); }
   //Assign a name if none given
   if(name.isEmpty()){ name = info.fileName(); }
   //Now add it to the list
@@ -187,6 +195,34 @@ void LUtils::removeFavorite(QString path){
   }
   if(changed){ LUtils::saveFavorites(fav); }
 }
+
+void LUtils::upgradeFavorites(int fromoldversionnumber){
+  if(fromoldversionnumber <= 8004){ // < pre-0.8.4>, sym-links in the ~/.lumina/favorites dir}
+    //Include 0.8.4-devel versions in this upgrade (need to distinguish b/w devel and release versions later somehow)
+    QDir favdir(QDir::homePath()+"/.lumina/favorites");
+    QFileInfoList symlinks = favdir.entryInfoList(QDir::Files | QDir::Dirs | QDir::System | QDir::NoDotAndDotDot);
+    QStringList favfile = LUtils::listFavorites(); //just in case some already exist
+    bool newentry = false;
+    for(int i=0; i<symlinks.length(); i++){
+      if(!symlinks[i].isSymLink()){ continue; } //not a symlink
+      QString path = symlinks[i].symLinkTarget();
+      QString name = symlinks[i].fileName(); //just use the name of the symlink from the old system
+      QString type;
+      if(symlinks[i].isDir()){ type = "dir"; }
+      else if(name.endsWith(".desktop")){ type = "app"; }
+      else{ type = LXDG::findAppMimeForFile(path); }
+      //Put the line into the file
+      favfile << name+"::::"+type+"::::"+path;
+      //Now remove the symlink - obsolete format
+      QFile::remove(symlinks[i].absoluteFilePath());
+      newentry = true;
+    }
+    if(newentry){
+      LUtils::saveFavorites(favfile);
+    }
+  } //end check for version <= 0.8.4
+
+}  
 
 void LUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
