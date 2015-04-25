@@ -335,7 +335,8 @@ void LPanel::leaveEvent(QEvent *event){
   if( !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
     if(hidden){ this->move(hidepoint); }
-    if(tmpID!=0){ LSession::handle()->XCB->ActivateWindow(tmpID); }
+    //Only re-activate the old window if the panel is still currently active
+    if(tmpID!=0 && (this->winId()==LSession::handle()->XCB->ActiveWindow()) ){ LSession::handle()->XCB->ActivateWindow(tmpID); }
     tmpID = 0;
   }
 
