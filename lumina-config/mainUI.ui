@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -374,7 +374,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_panels">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_desktopInterface">
            <attribute name="title">
@@ -602,8 +602,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>263</width>
-                 <height>178</height>
+                 <width>249</width>
+                 <height>215</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -630,24 +630,14 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Size:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QSpinBox" name="spin_panel1_size"/>
-                </item>
-                <item row="4" column="0">
+                <item row="6" column="0">
                  <widget class="QLabel" name="label_5">
                   <property name="text">
                    <string>Custom Color:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="1">
+                <item row="6" column="1">
                  <layout class="QHBoxLayout" name="horizontalLayout_8">
                   <item>
                    <widget class="QLabel" name="label_panel1_sample">
@@ -677,14 +667,14 @@
                   </item>
                  </layout>
                 </item>
-                <item row="2" column="1">
+                <item row="4" column="1">
                  <widget class="QCheckBox" name="check_panel1_hidepanel">
                   <property name="text">
                    <string>Auto-hide Panel </string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
+                <item row="5" column="1">
                  <widget class="QCheckBox" name="check_panel1_usetheme">
                   <property name="text">
                    <string>Follow Theme</string>
@@ -694,6 +684,53 @@
                   </property>
                  </widget>
                 </item>
+                <item row="2" column="1">
+                 <layout class="QVBoxLayout" name="verticalLayout_11">
+                  <item>
+                   <widget class="QSpinBox" name="spin_panel1_size">
+                    <property name="suffix">
+                     <string> pixels thick</string>
+                    </property>
+                    <property name="maximum">
+                     <number>500</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="spin_panel1_length">
+                    <property name="suffix">
+                     <string>% length</string>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Size:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_30">
+                  <property name="text">
+                   <string>Alignment:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QComboBox" name="combo_panel1_align"/>
+                </item>
                </layout>
               </widget>
               <widget class="QWidget" name="page_panel1_plugins">
@@ -701,7 +738,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>198</width>
+                 <width>197</width>
                  <height>117</height>
                 </rect>
                </property>
@@ -799,8 +836,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>263</width>
-                 <height>178</height>
+                 <width>249</width>
+                 <height>209</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -827,24 +864,14 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Size:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QSpinBox" name="spin_panel2_size"/>
-                </item>
-                <item row="4" column="0">
+                <item row="5" column="0">
                  <widget class="QLabel" name="label_9">
                   <property name="text">
                    <string>Custom Color:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="1">
+                <item row="5" column="1">
                  <layout class="QHBoxLayout" name="horizontalLayout_10">
                   <item>
                    <widget class="QLabel" name="label_panel2_sample">
@@ -874,14 +901,14 @@
                   </item>
                  </layout>
                 </item>
-                <item row="2" column="1">
+                <item row="3" column="1">
                  <widget class="QCheckBox" name="check_panel2_hidepanel">
                   <property name="text">
                    <string>Auto-hide Panel </string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
+                <item row="4" column="1">
                  <widget class="QCheckBox" name="check_panel2_usetheme">
                   <property name="text">
                    <string>Follow Theme</string>
@@ -891,6 +918,53 @@
                   </property>
                  </widget>
                 </item>
+                <item row="1" column="1">
+                 <layout class="QVBoxLayout" name="verticalLayout_20">
+                  <item>
+                   <widget class="QSpinBox" name="spin_panel2_size">
+                    <property name="suffix">
+                     <string> pixels thick</string>
+                    </property>
+                    <property name="maximum">
+                     <number>500</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="spin_panel2_length">
+                    <property name="suffix">
+                     <string>% length</string>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>Size:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_31">
+                  <property name="text">
+                   <string>Alignment:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QComboBox" name="combo_panel2_align"/>
+                </item>
                </layout>
               </widget>
               <widget class="QWidget" name="page_panel2_plugins">
@@ -898,7 +972,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>198</width>
+                 <width>197</width>
                  <height>117</height>
                 </rect>
                </property>
@@ -1801,8 +1875,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>510</width>
-                    <height>107</height>
+                    <width>129</width>
+                    <height>16</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
