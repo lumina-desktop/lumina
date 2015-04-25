@@ -246,7 +246,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     }
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
-  QStringList deskset, sesset;
+  QStringList deskset, sesset, lopenset;
   //First start with any session settings
   QStringList tmp = sysDefaults.filter("session.");
   sesset << "[General]"; //everything is in this section
@@ -261,7 +261,16 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(var=="session.enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
     else if(var=="session.playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
     else if(var=="session.playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
+    else if(var=="session.default.terminal"){ sesset << "default-terminal="+val; }
+    else if(var=="session.default.filemanager"){ 
+      sesset << "default-filemanager="+val;
+      lopenset << "directory="+val; 
+    }
+    else if(var=="session.default.webbrowser"){ lopenset << "webbrowser="+val; }
+    else if(var=="session.default.email"){ lopenset << "email="+val; }
   }
+  if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
+
   //Now do any desktop settings (only works for the primary desktop at the moment)
   tmp = sysDefaults.filter("desktop.");
   if(!tmp.isEmpty()){deskset << "[desktop-"+screen+"]"; }
@@ -378,4 +387,5 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
+  LUtils::writeFile(setdir+"/lumina-open.conf", lopenset, true);
 }
