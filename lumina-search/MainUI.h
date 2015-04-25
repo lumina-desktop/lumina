@@ -16,6 +16,7 @@
 #include <QListWidgetItem>
 
 #include <LuminaXDG.h>
+#include <QJsonObject>
 
 #include "Worker.h"
 
@@ -28,9 +29,12 @@ class MainUI : public QMainWindow{
 public:
 	MainUI();
 	~MainUI();
+	QJsonObject jsonObject;
 
 public slots:
 	void setupIcons();
+	bool initialise(QString param, QString paramValue);
+	bool initialise(QString param, QString paramValue, QString searchString);
 
 private:
 	Ui::MainUI *ui;

@@ -44,7 +44,7 @@ private slots:
 	void on_tool_removeSetName();
 	void on_cbSetName_changed(int index);
 	void on_cbSetName_text_changed(QString newText);
-	void updateJsonObject(int currentJsonIndex);
+	bool updateJsonObject(int currentJsonIndex);
 	
 };
 	

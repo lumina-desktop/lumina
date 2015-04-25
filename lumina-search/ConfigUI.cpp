@@ -20,6 +20,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonParseError>
+#include <QDir>
 
 #include <LuminaXDG.h>
 #include "Settings.h"
@@ -50,10 +51,25 @@ ConfigUI::~ConfigUI(){
 }
 
 void ConfigUI::loadInitialValues(){
-  JSonSettings::loadJsonSettings(jsonObject);
-  QStringList setNames = JSonSettings::getSetNames(jsonObject);
-  ui->cbSetNames->addItems(setNames);
-  ui->cbSetNames->setEditable(true);
+  if (!JSonSettings::loadJsonSettings(jsonObject)) {
+	  int ret = QMessageBox::critical(this, (tr("Issue to load the settings")) ,
+	                        tr("We have encountered issue during the load of the settings.\nDo you want to continue with a new file?"),
+	                        QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel);
+	  //TODO: add the config filename
+	  if (ret == QMessageBox::Ok) {
+		  //we start with a scratch config
+		  ui->label_start->setText(QDir::homePath()); //TODO: it does not work :(
+		  ui->cbSetNames->addItem(tr("Default"),tr("Default"));
+		  ui->list_excludes->clear();
+	  } else {
+		  qDebug() << "we close" ;
+		  exit(1);
+	  }
+  } else {
+      QStringList setNames = JSonSettings::getSetNames(jsonObject);
+      ui->cbSetNames->addItems(setNames);
+      ui->cbSetNames->setEditable(true);
+  }
 }
 
 void ConfigUI::on_tool_getStartDir_clicked(){
@@ -88,17 +104,19 @@ void ConfigUI::on_list_excludes_itemSelectionChanged(){
 }
 
 void ConfigUI::on_buttonBox_accepted(){
-  qDebug() << "click save button";
   updateJsonObject(currentJsonIndex);
-  JSonSettings::saveJsonSettings(jsonObject, currentJsonIndex);
-  newStartDir = ui->label_start->text();
-  QStringList dirs;
-  for(int i=0; i<ui->list_excludes->count(); i++){
-    dirs << ui->list_excludes->item(i)->text();
+  if (!JSonSettings::saveJsonSettings(jsonObject)) {
+	  QMessageBox::critical(this, tr("Issue to save the settings"), tr("We have encountered issue to save the settings.\nCan you check this?"));
+  } else {
+	  newStartDir = ui->label_start->text();
+	  QStringList dirs;
+	  for(int i=0; i<ui->list_excludes->count(); i++){
+		dirs << ui->list_excludes->item(i)->text();
+	  }
+	  dirs.removeDuplicates();
+	  newSkipDirs = dirs;
+	  this->close();
   }
-  dirs.removeDuplicates();
-  newSkipDirs = dirs;
-  this->close();
 }
 
 void ConfigUI::on_buttonBox_rejected(){
@@ -106,7 +124,6 @@ void ConfigUI::on_buttonBox_rejected(){
 }
 
 void ConfigUI::on_tool_addSetName() {
-	qDebug("add a set name");
 	bool ok;
     QString text = QInputDialog::getText(this, tr("Create a new Set Name"),
                                          tr("Name:"), QLineEdit::Normal,
@@ -118,7 +135,6 @@ void ConfigUI::on_tool_addSetName() {
 }
 
 void ConfigUI::on_tool_removeSetName() {
-	qDebug("remove a set Name");
 	int selIndex = ui->cbSetNames->currentIndex();
 	qDebug() << selIndex;
 	if (selIndex == 0) {
@@ -132,17 +148,19 @@ void ConfigUI::on_tool_removeSetName() {
 }
 
 void ConfigUI::on_cbSetName_changed(int index){
-	qDebug() << "SetName changed: index" << index << " currentJsonIndex:" << currentJsonIndex;
 	QString startDir;
 	QStringList excludedDirs;
 	if (currentJsonIndex != index)
 	{
 		//before update the fields, we save them
-		updateJsonObject(currentJsonIndex);
+		if (!updateJsonObject(currentJsonIndex)) {
+			QMessageBox::critical(this, tr("Start directory") + tr(" is not set"), tr("Please set the ") + tr("Start directory") + tr(" before coninuing"));
+			ui->cbSetNames->setCurrentIndex(currentJsonIndex);
+			return;
+		}
 	}
 	currentJsonIndex = index;
 	if (JSonSettings::getSetDetails(jsonObject, index, startDir, excludedDirs)) {
-		qDebug() << "Set details:" << startDir << ";" << excludedDirs;
 		ui->label_start->setText(startDir);
 		ui->list_excludes->clear();
 		ui->list_excludes->addItems(excludedDirs);
@@ -151,37 +169,35 @@ void ConfigUI::on_cbSetName_changed(int index){
 
 void ConfigUI::on_cbSetName_text_changed(QString newText)
 {
-	qDebug() << "combo text changed:" << newText;
-	if (ui->cbSetNames->currentIndex() == 0) {
-		qWarning("You cannot change this Set's name");
+	QJsonArray entries = jsonObject["Sets"].toArray();
+	QJsonObject fstObject = entries[0].toObject();
+	if ((ui->cbSetNames->currentIndex() == 0) && (fstObject["Name"].isString()) && (fstObject["Name"].toString() != newText)) {
+		qWarning("You cannot change this Set's name"); //TODO: add translate
+		QMessageBox::critical(this, tr("Default cannot be changed"), tr("You cannot change this Set Name.\nThe change you perform will not be taken into account"));
 		return;
 	}
 	ui->cbSetNames->setItemText(ui->cbSetNames->currentIndex(),newText);
 }
 
-void ConfigUI::updateJsonObject(int index)
+bool ConfigUI::updateJsonObject(int index)
 {
-	qDebug("updateJsonObject");
+    if (ui->label_start->text().isEmpty()) {
+		return false;
+	}
 	QJsonObject entry;
 	entry["Name"] = QJsonValue(ui->cbSetNames->itemText(index));
-	qDebug() << "index name:" << QJsonValue(ui->cbSetNames->itemText(index));
-	qDebug() << "current name" << QJsonValue(ui->cbSetNames->currentText());
 	entry["StartDir"]= ui->label_start->text();
 	QJsonArray jsonExcludedDirs;
 	for (int i = 0; i < ui->list_excludes->count(); ++i) {
 		jsonExcludedDirs.append(QJsonValue(ui->list_excludes->item(i)->text()));
 	}
 	entry["ExcludedDirs"] = jsonExcludedDirs;
-	qDebug() << "entry updated:" << currentJsonIndex;
-	qDebug() << entry;
 	QJsonArray newArray = jsonObject["Sets"].toArray();
 	if (index < newArray.count() ) {
-		qDebug("Update the entry");
 	    newArray.replace(currentJsonIndex,entry);
 	} else {
-		qDebug("Append the entry");
 		newArray.append(entry);
 	}
 	jsonObject["Sets"] = newArray;
-	qDebug() << "New root object:" << jsonObject["Sets"].toArray();
+	return true;
 }

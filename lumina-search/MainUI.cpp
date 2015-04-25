@@ -47,7 +47,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_configure, SIGNAL(clicked()), this, SLOT(configureSearch()) );
   
   //get the Default parameters
-  QJsonObject jsonObject;
   if (JSonSettings::loadJsonSettings(jsonObject)) {
 	  JSonSettings::getSetDetails(jsonObject, 0, searcher->startDir, searcher->skipDirs);
   } else {
@@ -73,6 +72,33 @@ void MainUI::setupIcons(){
   ui->tool_stop->setIcon( LXDG::findIcon("dialog-cancel","") );
   ui->tool_configure->setIcon( LXDG::findIcon("configure","") );
 }
+
+bool MainUI::initialise(QString param, QString paramValue) {
+	if (param.toLower() == "-setname") {
+		ui->radio_files->setChecked(true);
+	    int index = JSonSettings::getSetDetailsName(jsonObject, paramValue);
+	    if (index >=0) {
+    		return JSonSettings::getSetDetails(jsonObject, index, searcher->startDir, searcher->skipDirs);
+		}
+	}
+	if (param.toLower() == "-app") {
+		ui->radio_apps->setChecked(true);
+        ui->line_search->setText(paramValue);
+        startSearch();
+        return true;
+	}
+	return false;
+}
+
+bool MainUI::initialise(QString param, QString paramValue, QString searchString) {
+    if (initialise(param, paramValue)) {
+        ui->line_search->setText(searchString);
+        startSearch();
+        return true;
+	}
+	return false;
+}
+
 
 //==============
 //  PRIVATE SLOTS
