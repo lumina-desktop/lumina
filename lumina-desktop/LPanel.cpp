@@ -109,6 +109,8 @@ void LPanel::UpdatePanel(){
     layout->setDirection(QBoxLayout::TopToBottom);
   }
   int ht = settings->value(PPREFIX+"height", 30).toInt(); //this is technically the distance into the screen from the edge
+  int hidesize = qRound(ht*0.01); //use 1% of the panel size
+  if(hidesize<2){ hidesize=2; } //minimum of 2 pixels (need space for the mouse to go over it)
   //qDebug() << " - set Geometry";
   int xwid = screen->screenGeometry(screennum).width();
   int xhi = screen->screenGeometry(screennum).height();
@@ -121,8 +123,8 @@ void LPanel::UpdatePanel(){
     this->setGeometry(xloc,0,xwid, ht );
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), 2, "top");
-      hidepoint = QPoint(xloc, 2-ht);
+      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), hidesize, "top");
+      hidepoint = QPoint(xloc, hidesize-ht);
       showpoint = QPoint(xloc, 0);
       this->move(hidepoint); //Could bleed over onto the screen above
     }
@@ -133,8 +135,8 @@ void LPanel::UpdatePanel(){
     this->setGeometry(xloc,xhi-ht,xwid, ht );
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, xhi-ht, this->width(), ht, "bottom"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, xhi-2, this->width(), 2, "bottom"); 
-      hidepoint = QPoint(xloc, xhi-2);
+      LX11::ReservePanelLocation(this->winId(), xloc, xhi-hidesize, this->width(), hidesize, "bottom"); 
+      hidepoint = QPoint(xloc, xhi-hidesize);
       showpoint = QPoint(xloc, xhi-ht);
       this->move(hidepoint); //Could bleed over onto the screen below
     }
@@ -145,8 +147,8 @@ void LPanel::UpdatePanel(){
     this->setGeometry(xloc,0, ht, xhi);
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, ht, xhi, "left"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, 0, 2, xhi, "left"); 
-      hidepoint = QPoint(xloc-ht+2, 0);
+      LX11::ReservePanelLocation(this->winId(), xloc, 0, hidesize, xhi, "left"); 
+      hidepoint = QPoint(xloc-ht+hidesize, 0);
       showpoint = QPoint(xloc, 0);
       this->move(hidepoint); //Could bleed over onto the screen left
     }
@@ -157,8 +159,8 @@ void LPanel::UpdatePanel(){
     this->setGeometry(xloc+xwid-ht,0,ht, xhi);
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, 0, ht, xhi, "right"); }  
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc+xwid-2, 0, 2, xhi, "right"); 
-      hidepoint = QPoint(xloc+xwid-2, 0);
+      LX11::ReservePanelLocation(this->winId(), xloc+xwid-hidesize, 0, hidesize, xhi, "right"); 
+      hidepoint = QPoint(xloc+xwid-hidesize, 0);
       showpoint = QPoint(xloc+xwid-ht, 0);
       this->move(hidepoint); //Could bleed over onto the screen right
     }
