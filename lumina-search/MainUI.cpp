@@ -43,6 +43,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_configure, SIGNAL(clicked()), this, SLOT(configureSearch()) );
   
   //Setup the settings file
+  //TODO: load Json instead of Settings
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("LuminaDE", "lumina-search",this);
   searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
@@ -90,16 +91,18 @@ void MainUI::searchTypeChanged(){
 	
 void MainUI::configureSearch(){
   ConfigUI dlg(this);
-    dlg.loadInitialValues( searcher->startDir, searcher->skipDirs);
+    dlg.loadInitialValues(); 
     dlg.exec();
   if(dlg.newStartDir.isEmpty()){ return; }//cancelled
   QString startdir = dlg.newStartDir;
   QStringList skipdirs = dlg.newSkipDirs;
+  //TODO: add setName
 	
   //Save these values for later
   settings->setValue("StartSearchDir", startdir);
   settings->setValue("SkipSearchDirs", skipdirs);
 	
+  //TOTO: change from settings to Json
   //Set these values in the searcher
   searcher->startDir = startdir;
   searcher->skipDirs = skipdirs;
