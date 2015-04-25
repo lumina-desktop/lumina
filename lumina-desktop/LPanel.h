@@ -39,6 +39,7 @@ private:
 	bool defaultpanel, horizontal, hidden;
 	int screennum;
 	int panelnum;
+	int viswidth;
 	QList<LPPlugin*> PLUGINS;
 	WId tmpID; //temporary window ID
 
@@ -50,6 +51,13 @@ public:
 	  return panelnum;
 	}
 
+	QString prefix(){
+	  return PPREFIX;
+	}
+
+	int visibleWidth(){
+	  return viswidth;
+	}
 	void prepareToClose();
 	void scalePanel(double xscale, double yscale);
 

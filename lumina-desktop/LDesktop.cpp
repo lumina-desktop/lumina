@@ -468,7 +468,13 @@ void LDesktop::UpdatePanels(){
 void LDesktop::UpdateDesktopPluginArea(){
   QRegion visReg( bgWindow->geometry() ); //visible region (not hidden behind a panel)
   for(int i=0; i<PANELS.length(); i++){
-    visReg = visReg.subtracted( QRegion(PANELS[i]->geometry()) );
+    QRegion shifted = visReg;
+    QString loc = settings->value(PANELS[i]->prefix()+"location","top").toString().toLower();
+    if(loc=="top"){ shifted.translate(0, PANELS[i]->visibleWidth()); }
+    else if(loc=="bottom"){ shifted.translate(0, 0-PANELS[i]->visibleWidth()); }
+    else if(loc=="left"){ shifted.translate(PANELS[i]->visibleWidth(),0); }
+    else{ shifted.translate(0-PANELS[i]->visibleWidth(),0); }
+    visReg = visReg.intersected( shifted );
   }
   //Now make sure the desktop plugin area is only the visible area
   QRect rec = visReg.boundingRect();

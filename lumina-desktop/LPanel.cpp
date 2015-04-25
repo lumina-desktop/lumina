@@ -77,7 +77,7 @@ void LPanel::prepareToClose(){
 
 void LPanel::scalePanel(double xscale, double yscale){
   int ht = settings->value(PPREFIX+"height", 30).toInt(); //this is technically the distance into the screen from the edge
-  QString loc = settings->value(PPREFIX+"location","").toString();
+  QString loc = settings->value(PPREFIX+"location","").toString().toLower();
   if(loc=="top" || loc=="bottom"){
     ht = qRound(ht*yscale);
   }else{
@@ -97,7 +97,7 @@ void LPanel::UpdatePanel(){
   //First set the geometry of the panel and send the EWMH message to reserve that space
   if(DEBUG){ qDebug() << "Update Panel"; }
   hidden = settings->value(PPREFIX+"hidepanel",false).toBool(); //default to true for the moment
-  QString loc = settings->value(PPREFIX+"location","").toString();
+  QString loc = settings->value(PPREFIX+"location","").toString().toLower();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
   if(loc=="top" || loc=="bottom"){ 
     horizontal=true; 
@@ -111,16 +111,26 @@ void LPanel::UpdatePanel(){
   int ht = settings->value(PPREFIX+"height", 30).toInt(); //this is technically the distance into the screen from the edge
   int hidesize = qRound(ht*0.01); //use 1% of the panel size
   if(hidesize<2){ hidesize=2; } //minimum of 2 pixels (need space for the mouse to go over it)
+  if(hidden){ viswidth = hidesize; }
+  else{ viswidth = ht; }
+  if(DEBUG){ qDebug() << "Hidden Panel size:" << hidesize << "pixels"; }
   //qDebug() << " - set Geometry";
   int xwid = screen->screenGeometry(screennum).width();
   int xhi = screen->screenGeometry(screennum).height();
   int xloc = screen->screenGeometry(screennum).x();
+  double panelPercent = settings->value(PPREFIX+"lengthPercent",100).toInt();
+  if(panelPercent<1 || panelPercent>100){ panelPercent = 100; }
+  panelPercent = panelPercent/100.0;
+  QString panelPinLoc = settings->value(PPREFIX+"pinLocation","center").toString().toLower(); //[left/right/center] possible values (assume center otherwise)
   //xloc=xoffset;
   if(loc=="top"){ //top of screen
-    QSize sz = QSize(xwid, ht);
+    QSize sz = QSize(xwid*panelPercent, ht);
+    if(panelPinLoc=="left"){} // no change to xloc
+    else if(panelPinLoc=="right"){ xloc = xloc+xwid-sz.width(); }
+    else{ xloc = xloc+((xwid-sz.width())/2) ; } //centered
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc,0,xwid, ht );
+    this->setGeometry(xloc,0,sz.width(), sz.height());
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
     else{ 
       LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), hidesize, "top");
@@ -129,10 +139,13 @@ void LPanel::UpdatePanel(){
       this->move(hidepoint); //Could bleed over onto the screen above
     }
   }else if(loc=="bottom"){ //bottom of screen
-    QSize sz = QSize(xwid, ht);
+    QSize sz = QSize(xwid*panelPercent, ht);
+    if(panelPinLoc=="left"){} // no change to xloc
+    else if(panelPinLoc=="right"){ xloc = xloc+xwid-sz.width(); }
+    else{ xloc = xloc+((xwid-sz.width())/2) ; } //centered
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc,xhi-ht,xwid, ht );
+    this->setGeometry(xloc,xhi-ht,sz.width(), ht );
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, xhi-ht, this->width(), ht, "bottom"); }
     else{ 
       LX11::ReservePanelLocation(this->winId(), xloc, xhi-hidesize, this->width(), hidesize, "bottom"); 
@@ -141,27 +154,35 @@ void LPanel::UpdatePanel(){
       this->move(hidepoint); //Could bleed over onto the screen below
     }
   }else if(loc=="left"){ //left side of screen
-    QSize sz = QSize(ht, xhi);
+    QSize sz = QSize(ht, xhi*panelPercent);
+    int yloc = 0;
+    if(panelPinLoc=="left"){} //this is actually the top (left of center in length dimension)
+    else if(panelPinLoc=="right"){ yloc = yloc+xhi-sz.height(); }
+    else{ yloc = yloc+((xhi-sz.height())/2) ; } //centered
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc,0, ht, xhi);
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, ht, xhi, "left"); }
+    this->setGeometry(xloc,yloc, ht, sz.height());
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, yloc, ht, sz.height(), "left"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, 0, hidesize, xhi, "left"); 
-      hidepoint = QPoint(xloc-ht+hidesize, 0);
-      showpoint = QPoint(xloc, 0);
+      LX11::ReservePanelLocation(this->winId(), xloc, yloc, hidesize, sz.height(), "left"); 
+      hidepoint = QPoint(xloc-ht+hidesize, yloc);
+      showpoint = QPoint(xloc, yloc);
       this->move(hidepoint); //Could bleed over onto the screen left
     }
   }else{ //right side of screen
-    QSize sz = QSize(ht, xhi);
+    QSize sz = QSize(ht, xhi*panelPercent);
+    int yloc = 0;
+    if(panelPinLoc=="left"){} //this is actually the top (left of center in length dimension)
+    else if(panelPinLoc=="right"){ yloc = yloc+xhi-sz.height(); }
+    else{ yloc = yloc+((xhi-sz.height())/2) ; } //centered
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc+xwid-ht,0,ht, xhi);
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, 0, ht, xhi, "right"); }  
+    this->setGeometry(xloc+xwid-ht,yloc,ht, sz.height());
+    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, yloc, ht, sz.height(), "right"); }  
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc+xwid-hidesize, 0, hidesize, xhi, "right"); 
-      hidepoint = QPoint(xloc+xwid-hidesize, 0);
-      showpoint = QPoint(xloc+xwid-ht, 0);
+      LX11::ReservePanelLocation(this->winId(), xloc+xwid-hidesize, yloc, hidesize, sz.height(), "right"); 
+      hidepoint = QPoint(xloc+xwid-hidesize, yloc);
+      showpoint = QPoint(xloc+xwid-ht, yloc);
       this->move(hidepoint); //Could bleed over onto the screen right
     }
   }
@@ -311,12 +332,13 @@ void LPanel::leaveEvent(QEvent *event){
   //pt = this->mapFromGlobal(pt);
   //qDebug() << "Mouse Point (local):" << pt.x() << pt.y();
   qDebug() << "Contained:" << this->geometry().contains(pt);*/
-  if(hidden && !this->geometry().contains(QCursor::pos()) ){
+  if( !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
-    this->move(hidepoint);
+    if(hidden){ this->move(hidepoint); }
+    if(tmpID!=0){ LSession::handle()->XCB->ActivateWindow(tmpID); }
+    tmpID = 0;
   }
-  if(tmpID!=0){ LSession::handle()->XCB->ActivateWindow(tmpID); }
-  tmpID = 0;
+
   event->accept(); //just to quiet the compile warning
 }
 
