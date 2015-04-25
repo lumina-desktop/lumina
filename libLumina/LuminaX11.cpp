@@ -716,11 +716,11 @@ WId LX11::startSystemTray(int screen){
   
   //Get the appropriate atom for this screen
   QString str = QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(screen));
-  qDebug() << "Default Screen Atom Name:" << str;
+  //qDebug() << "Default Screen Atom Name:" << str;
   Atom _NET_SYSTEM_TRAY_S = XInternAtom(disp,str.toLatin1(),false);
   //Make sure that there is no other system tray running
   if(XGetSelectionOwner(disp, _NET_SYSTEM_TRAY_S) != None){
-    qWarning() << "An alternate system tray is currently in use";
+    qWarning() << " - An alternate system tray is currently in use";
     return 0;
   }
   //Create a simple window to register as the tray (not visible - just off the screen)
@@ -729,7 +729,7 @@ WId LX11::startSystemTray(int screen){
   XSetSelectionOwner(disp, _NET_SYSTEM_TRAY_S, LuminaSessionTrayID, CurrentTime);
   //Make sure that it was registered properly
   if(XGetSelectionOwner(disp, _NET_SYSTEM_TRAY_S) != LuminaSessionTrayID){
-    qWarning() << "Could not register the system tray";
+    qWarning() << " - Could not register the system tray";
     XDestroyWindow(disp, LuminaSessionTrayID);
     return 0;
   }

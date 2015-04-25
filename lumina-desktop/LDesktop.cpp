@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
@@ -107,8 +107,8 @@ void LDesktop::SystemApplication(QAction* act){
 }
 
 void LDesktop::checkResolution(){
-  //Compare the current screen resolution with the last one used/saved
-  //NOTE: This should only be performed after all the elements have been initialized/created.
+  //Compare the current screen resolution with the last one used/saved and adjust config values *only*
+  
   int oldWidth = settings->value(DPREFIX+"screen/lastWidth",-1).toInt();
   int oldHeight = settings->value(DPREFIX+"screen/lastHeight",-1).toInt();
   QRect scrn = LSession::desktop()->screenGeometry(desktopnumber);
@@ -125,18 +125,29 @@ void LDesktop::checkResolution(){
     //  and forward that on to all the interface elements
     double xscale = scrn.width()/((double) oldWidth);
     double yscale = scrn.height()/((double) oldHeight);
-    //Update any panels
-    for(int i=0; i<PANELS.length(); i++){
-      PANELS[i]->scalePanel(xscale, yscale);
+    if(DEBUG){
+      qDebug() << "Screen Resolution Changed:" << desktopnumber;
+      qDebug() << " - Old:" << QString::number(oldWidth)+"x"+QString::number(oldHeight);
+      qDebug() << " - New:" << QString::number(scrn.width())+"x"+QString::number(scrn.height());
+      qDebug() << " - Scale Factors:" << xscale << yscale;
+    }
+    //Update any panels in the config file
+    for(int i=0; i<4; i++){
+      QString PPREFIX = "panel"+QString::number(desktopnumber)+"."+QString::number(i)+"/";
+      int ht = settings->value(PPREFIX+"height",-1).toInt();
+      if(ht<1){ continue; } //no panel height defined
+      QString loc = settings->value(PPREFIX+"location","top").toString().toLower();
+      if(loc=="top" || loc=="bottom"){
+        settings->setValue(PPREFIX+"height", (int) ht*yscale); //vertical dimension
+      }else{
+        settings->setValue(PPREFIX+"height", (int) ht*xscale); //horizontal dimension
+      }
     }
     //Update any desktop plugins
-    for(int i=0; i<PLUGINS.length(); i++){
+    /*for(int i=0; i<PLUGINS.length(); i++){
       PLUGINS[i]->scalePlugin(xscale, yscale);
-    }
-    //QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
-    //QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
+    }*/
   }
-  LSession::processEvents();
   issyncing = false;
 }
 
@@ -162,6 +173,7 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
 // =====================
 void LDesktop::InitDesktop(){
   //This is called *once* during the main initialization routines
+  checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << desktopnumber; }
     connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
   if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height(); }
@@ -202,9 +214,6 @@ void LDesktop::InitDesktop(){
   QTimer::singleShot(0,this, SLOT(UpdateBackground()) );
   QTimer::singleShot(1,this, SLOT(UpdateDesktop()) );
   QTimer::singleShot(2,this, SLOT(UpdatePanels()) );
-  //UpdatePanels();
-  //UpdateDesktop();
-  //checkResolution();
 }
 
 void LDesktop::SettingsChanged(){

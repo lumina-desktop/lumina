@@ -8,7 +8,7 @@
 #include "LSession.h"
 #include "panel-plugins/systemtray/LSysTray.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Take care of inputs
