@@ -13,33 +13,33 @@
 
 
 class Worker : public QObject{
-	Q_OBJECT
+  Q_OBJECT
 public:
-	Worker(QObject *parent = 0);
-	~Worker();
+  Worker(QObject *parent = 0);
+  ~Worker();
 
-	QString startDir;
-	QStringList skipDirs;
+  QString startDir;
+  QStringList skipDirs;
 
 public slots:
-	void StartSearch(QString term, bool isApp);
-	void StopSearch();
+  void StartSearch(QString term, bool isApp);
+  void StopSearch();
 
 private:
-	QStringList applist;
-	bool stopsearch;
-	QString sterm;
-	bool sapp;
+  QStringList applist;
+  bool stopsearch;
+  QString sterm;
+  bool sapp;
 
-	bool searchDir(QString);
+  bool searchDir(QString);
 
 private slots:
-	void beginsearch();
-	
+  void beginsearch();
+
 signals:
-	void FoundItem(QString path);
-	void SearchUpdate(QString);
-	void SearchDone();
+  void FoundItem(QString path);
+  void SearchUpdate(QString);
+  void SearchDone();
 };
 
 #endif
