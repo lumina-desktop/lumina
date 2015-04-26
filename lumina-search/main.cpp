@@ -20,6 +20,11 @@ int main(int argc, char ** argv)
 
     MainUI w;
     QObject::connect(&theme,SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
+    if (argc == 3) 
+      w.initialise(QString(argv[1]).simplified(), QString(argv[2]).simplified());
+    if (argc == 4) 
+      w.initialise(QString(argv[1]).simplified(), QString(argv[2]).simplified(), QString(argv[3]).simplified());
+
     w.show();
 
     return a.exec();
