@@ -216,6 +216,7 @@ private slots:
 	void FavoriteItem();
 	 // - full selection actions
 	void ViewPropertiesItem();
+	void openTerminal();
 	void CutItems();
 	void CopyItems();
 	void PasteItems();

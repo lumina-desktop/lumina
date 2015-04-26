@@ -971,6 +971,11 @@ void MainUI::OpenContextMenu(const QPoint &pt){
     contextMenu->addSeparator();
     contextMenu->addAction(LXDG::findIcon("system-search",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection && info.fileName().endsWith(".desktop"));
   }
+  if (info.isDir() || CItem.isEmpty()) {
+    //in case the user click on a directory or click on the background
+    contextMenu->addSeparator();
+    contextMenu->addAction(LXDG::findIcon("system-search",""), tr("Open Terminal here"), this, SLOT(openTerminal()));
+  }
   //Now show the menu
   if(radio_view_details->isChecked()){
     contextMenu->popup(ui->tree_dir_view->mapToGlobal(pt));
@@ -1424,6 +1429,20 @@ void MainUI::ViewPropertiesItem(){
     }
   }
 }
+
+void MainUI::openTerminal(){
+  QFileInfoList sel = getSelectedItems();
+  QString shell;
+  if (getenv("SHELL")) shell = QString(getenv("SHELL"));
+  else shell = QString("/bin/sh");
+  if(sel.isEmpty()){ 
+    //TODO: replace xterm by the user's choice
+    QProcess::startDetached("xterm -e \"cd " + getCurrentDir() + " && " + shell + " \" ");
+  } else {
+    QProcess::startDetached("xterm -e \"cd " + sel[0].absoluteFilePath() + " && " + shell + " \" ");
+  }
+}
+
 
 void MainUI::CutItems(){
   //Only let this run if viewing the browser page
