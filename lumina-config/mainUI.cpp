@@ -171,8 +171,12 @@ void MainUI::setupConnections(){
   connect(ui->toolBox_panel2, SIGNAL(currentChanged(int)), this, SLOT(adjustpanel1()) );
   connect(ui->combo_panel1_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel2()) );
   connect(ui->combo_panel2_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel1()) );
+  connect(ui->combo_panel1_align, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->combo_panel2_align, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->spin_panel1_size, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->spin_panel2_size, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->spin_panel1_length, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->spin_panel2_length, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->check_panel1_hidepanel, SIGNAL(clicked()), this, SLOT(panelValChanged()) );
   connect(ui->check_panel2_hidepanel, SIGNAL(clicked()), this, SLOT(panelValChanged()) );
   connect(ui->check_panel1_usetheme, SIGNAL(clicked()), this, SLOT(panelValChanged()) );
@@ -258,6 +262,11 @@ void MainUI::setupMenus(){
   QStringList loc; loc << tr("Top") << tr("Bottom") << tr("Left") << tr("Right");
   ui->combo_panel1_loc->addItems(loc);
   ui->combo_panel2_loc->addItems(loc);
+  ui->combo_panel1_align->clear(); ui->combo_panel2_align->clear();
+  ui->combo_panel1_align->addItem(tr("Center"),"center"); ui->combo_panel2_align->addItem(tr("Center"),"center");
+  ui->combo_panel1_align->addItem(tr("Top/Left"),"left"); ui->combo_panel2_align->addItem(tr("Top/Left"),"left");
+  ui->combo_panel1_align->addItem(tr("Bottom/Right"),"right"); ui->combo_panel2_align->addItem(tr("Bottom/Right"),"right");
+
 
   //Session window manager settings
   ui->combo_session_wfocus->clear();
@@ -448,7 +457,7 @@ void MainUI::slotChangePage(bool enabled){
   }
   ui->group_screen->setVisible(showScreen && (ui->spin_screen->maximum()>1) );
   //Hide the save button for particular pages
-  ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
+  //ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
   //Special functions for particular pages
   if(ui->page_panels->isVisible()){ checkpanels(); }
 
@@ -505,6 +514,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     QString PPrefix = "panel"+QString::number(cdesk)+".0/";
     ui->toolBox_panel1->setVisible(true);
     ui->spin_panel1_size->setValue( settings->value( PPrefix+"height",30).toInt() );
+    ui->spin_panel1_length->setValue( settings->value( PPrefix+"lengthPercent",100).toInt() );
     ui->check_panel1_hidepanel->setChecked( settings->value(PPrefix+"hidepanel", false).toBool() );
     ui->check_panel1_usetheme->setChecked( !settings->value(PPrefix+"customcolor",false).toBool() );
     QString loc = settings->value(PPrefix+"location","top").toString().toLower();
@@ -512,6 +522,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
     else if(loc=="bottom"){ ui->combo_panel1_loc->setCurrentIndex(1); }
     else if(loc=="left"){ ui->combo_panel1_loc->setCurrentIndex(2); }
     else{ ui->combo_panel1_loc->setCurrentIndex(3); } //right
+    int aindex = ui->combo_panel1_align->findData(settings->value(PPrefix+"pinLocation","center").toString().toLower());
+    if(aindex>=0){ ui->combo_panel1_align->setCurrentIndex(aindex); }
     QStringList plugs = settings->value(PPrefix+"pluginlist", QStringList()).toStringList();
     if(plugs.isEmpty() && primary){ plugs << "userbutton" << "taskmanager" << "systemtray" << "clock" << "systemdashboard"; }
     ui->list_panel1_plugins->clear();
@@ -542,9 +554,11 @@ void MainUI::loadCurrentSettings(bool screenonly){
     //Panel 1 defaults
     ui->toolBox_panel1->setVisible(false); //not initially visible
     ui->spin_panel1_size->setValue(30);
+    ui->spin_panel1_length->setValue(100);
     ui->check_panel1_hidepanel->setChecked( false );
     ui->check_panel1_usetheme->setChecked( true );
     ui->combo_panel1_loc->setCurrentIndex(0); //Top
+    ui->combo_panel1_align->setCurrentIndex(0); //Center
     ui->list_panel1_plugins->clear();
     ui->label_panel1_sample->setWhatsThis("rgba(255,255,255,160)");
     ui->label_panel1_sample->setStyleSheet("background: rgba(255,255,255,160)");
@@ -554,6 +568,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->toolBox_panel2->setVisible(true);
     QString PPrefix = "panel"+QString::number(cdesk)+".1/";
     ui->spin_panel2_size->setValue( settings->value( PPrefix+"height",30).toInt() );
+    ui->spin_panel2_length->setValue( settings->value( PPrefix+"lengthPercent",100).toInt() );
     ui->check_panel2_hidepanel->setChecked( settings->value(PPrefix+"hidepanel", false).toBool() );
     ui->check_panel2_usetheme->setChecked( !settings->value(PPrefix+"customcolor",false).toBool() );
     QString loc = settings->value(PPrefix+"location","top").toString().toLower();
@@ -561,6 +576,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
     else if(loc=="bottom"){ ui->combo_panel2_loc->setCurrentIndex(1); }
     else if(loc=="left"){ ui->combo_panel2_loc->setCurrentIndex(2); }
     else{ ui->combo_panel2_loc->setCurrentIndex(3); } //right
+    int aindex = ui->combo_panel2_align->findData(settings->value(PPrefix+"pinLocation","center").toString().toLower());
+    if(aindex>=0){ ui->combo_panel2_align->setCurrentIndex(aindex); }
     QStringList plugs = settings->value(PPrefix+"pluginlist", QStringList()).toStringList();
     ui->list_panel2_plugins->clear();
     for(int i=0; i<plugs.length(); i++){
@@ -590,9 +607,11 @@ void MainUI::loadCurrentSettings(bool screenonly){
     //Panel 2 defaults
     ui->toolBox_panel2->setVisible(false); //not initially visible
     ui->spin_panel2_size->setValue(30);
+    ui->spin_panel2_length->setValue(100);
     ui->check_panel2_hidepanel->setChecked( false );
     ui->check_panel2_usetheme->setChecked( true );
     ui->combo_panel2_loc->setCurrentIndex(1); //Bottom
+    ui->combo_panel2_align->setCurrentIndex(0); //Center
     ui->list_panel2_plugins->clear();
     ui->label_panel2_sample->setWhatsThis("rgba(255,255,255,160)");
     ui->label_panel2_sample->setStyleSheet("background: rgba(255,255,255,160)");
@@ -677,6 +696,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       QString PPrefix = "panel"+QString::number(currentDesktop())+".0/";
       settings->setValue(PPrefix+"color", ui->label_panel1_sample->whatsThis());
       settings->setValue(PPrefix+"height", ui->spin_panel1_size->value());
+      settings->setValue(PPrefix+"lengthPercent", ui->spin_panel1_length->value());
       settings->setValue(PPrefix+"hidepanel", ui->check_panel1_hidepanel->isChecked());
       settings->setValue(PPrefix+"customcolor", !ui->check_panel1_usetheme->isChecked());
       int loc = ui->combo_panel1_loc->currentIndex();
@@ -684,6 +704,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       else if(loc==1){ settings->setValue(PPrefix+"location", "bottom"); }
       else if(loc==2){ settings->setValue(PPrefix+"location", "left"); }
       else{ settings->setValue(PPrefix+"location", "right"); }
+      settings->setValue(PPrefix+"pinLocation", ui->combo_panel1_align->currentData().toString());
       QStringList plugs;
       for(int i=0; i<ui->list_panel1_plugins->count(); i++){
 	plugs << ui->list_panel1_plugins->item(i)->whatsThis();
@@ -699,6 +720,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       QString PPrefix = "panel"+QString::number(currentDesktop())+".1/";
       settings->setValue(PPrefix+"color", ui->label_panel2_sample->whatsThis());
       settings->setValue(PPrefix+"height", ui->spin_panel2_size->value());
+      settings->setValue(PPrefix+"lengthPercent", ui->spin_panel2_length->value());
       settings->setValue(PPrefix+"hidepanel", ui->check_panel2_hidepanel->isChecked());
       settings->setValue(PPrefix+"customcolor", !ui->check_panel2_usetheme->isChecked());
       int loc = ui->combo_panel2_loc->currentIndex();
@@ -706,6 +728,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       else if(loc==1){ settings->setValue(PPrefix+"location", "bottom"); }
       else if(loc==2){ settings->setValue(PPrefix+"location", "left"); }
       else{ settings->setValue(PPrefix+"location", "right"); }
+      settings->setValue(PPrefix+"pinLocation", ui->combo_panel2_align->currentData().toString());
       QStringList plugs;
       for(int i=0; i<ui->list_panel2_plugins->count(); i++){
 	plugs << ui->list_panel2_plugins->item(i)->whatsThis();

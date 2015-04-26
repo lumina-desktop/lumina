@@ -258,7 +258,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }
   }
   if(cmd.isEmpty()){
-    if(extension=="binary"){ cmd = inFile; }
+    if(extension=="binary" && !showDLG){ cmd = inFile; }
     else{
     //Find out the proper application to use this file/directory
     useInputFile=true;
@@ -272,14 +272,21 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     // NOTE: lumina-open is only designed for a single input file,
     //    so no need to distinguish between the list codes (uppercase) 
     //    and the single-file codes (lowercase)
-    if(isFile && (cmd.contains("%f") || cmd.contains("%F") ) ){
+    //Special "inFile" format replacements for input codes
+    if( (cmd.contains("%f") || cmd.contains("%F") ) ){
+      //Apply any special field replacements for the desired format
+      inFile.replace("%20"," ");
+      //Now replace the field codes
       cmd.replace("%f","\""+inFile+"\"");
       cmd.replace("%F","\""+inFile+"\"");
-    }else if(isUrl && (cmd.contains("%U") || cmd.contains("%u")) ){
+    }else if( (cmd.contains("%U") || cmd.contains("%u")) ){
+      //Apply any special field replacements for the desired format
+      inFile.replace(" ", "%20");
+      //Now replace the field codes
       cmd.replace("%u","\""+inFile+"\"");
       cmd.replace("%U","\""+inFile+"\"");
     }else{
-      //No field codes (or improper field codes given - which is quite common)
+      //No field codes (or improper field codes given in the file - which is quite common)
       // - Just tack the input file on the end and let the app handle it as necessary
       cmd.append(" \""+inFile+"\"");
     }

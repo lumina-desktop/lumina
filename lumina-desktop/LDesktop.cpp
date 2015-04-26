@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012-2014, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
@@ -60,6 +60,7 @@ void LDesktop::show(){
 
 void LDesktop::prepareToClose(){
   //Get any panels ready to close
+  issyncing = true; //Stop handling any watcher events
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); delete PANELS.takeAt(i); i--; }
   //Now close down any desktop plugins
   desktoplocked = true; //make sure that plugin settings are preserved during removal
@@ -105,6 +106,51 @@ void LDesktop::SystemApplication(QAction* act){
   }
 }
 
+void LDesktop::checkResolution(){
+  //Compare the current screen resolution with the last one used/saved and adjust config values *only*
+  
+  int oldWidth = settings->value(DPREFIX+"screen/lastWidth",-1).toInt();
+  int oldHeight = settings->value(DPREFIX+"screen/lastHeight",-1).toInt();
+  QRect scrn = LSession::desktop()->screenGeometry(desktopnumber);
+  issyncing = true;
+  settings->setValue(DPREFIX+"screen/lastWidth",scrn.width());
+  settings->setValue(DPREFIX+"screen/lastHeight",scrn.height());
+
+  if(oldWidth<1 || oldHeight<1 || scrn.width()<1 || scrn.height()<1){
+    //nothing to do - something invalid
+  }else if(scrn.width()==oldWidth && scrn.height()==oldHeight){
+    //nothing to do - same as before
+  }else{
+    //Calculate the scale factor between the old/new sizes in each dimension 
+    //  and forward that on to all the interface elements
+    double xscale = scrn.width()/((double) oldWidth);
+    double yscale = scrn.height()/((double) oldHeight);
+    if(DEBUG){
+      qDebug() << "Screen Resolution Changed:" << desktopnumber;
+      qDebug() << " - Old:" << QString::number(oldWidth)+"x"+QString::number(oldHeight);
+      qDebug() << " - New:" << QString::number(scrn.width())+"x"+QString::number(scrn.height());
+      qDebug() << " - Scale Factors:" << xscale << yscale;
+    }
+    //Update any panels in the config file
+    for(int i=0; i<4; i++){
+      QString PPREFIX = "panel"+QString::number(desktopnumber)+"."+QString::number(i)+"/";
+      int ht = settings->value(PPREFIX+"height",-1).toInt();
+      if(ht<1){ continue; } //no panel height defined
+      QString loc = settings->value(PPREFIX+"location","top").toString().toLower();
+      if(loc=="top" || loc=="bottom"){
+        settings->setValue(PPREFIX+"height", (int) ht*yscale); //vertical dimension
+      }else{
+        settings->setValue(PPREFIX+"height", (int) ht*xscale); //horizontal dimension
+      }
+    }
+    //Update any desktop plugins
+    /*for(int i=0; i<PLUGINS.length(); i++){
+      PLUGINS[i]->scalePlugin(xscale, yscale);
+    }*/
+  }
+  issyncing = false;
+}
+
 void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
   //Verify that a container does not already exist for this plugin
   QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
@@ -127,6 +173,7 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
 // =====================
 void LDesktop::InitDesktop(){
   //This is called *once* during the main initialization routines
+  checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << desktopnumber; }
     connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
   if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height(); }
@@ -430,7 +477,13 @@ void LDesktop::UpdatePanels(){
 void LDesktop::UpdateDesktopPluginArea(){
   QRegion visReg( bgWindow->geometry() ); //visible region (not hidden behind a panel)
   for(int i=0; i<PANELS.length(); i++){
-    visReg = visReg.subtracted( QRegion(PANELS[i]->geometry()) );
+    QRegion shifted = visReg;
+    QString loc = settings->value(PANELS[i]->prefix()+"location","top").toString().toLower();
+    if(loc=="top"){ shifted.translate(0, PANELS[i]->visibleWidth()); }
+    else if(loc=="bottom"){ shifted.translate(0, 0-PANELS[i]->visibleWidth()); }
+    else if(loc=="left"){ shifted.translate(PANELS[i]->visibleWidth(),0); }
+    else{ shifted.translate(0-PANELS[i]->visibleWidth(),0); }
+    visReg = visReg.intersected( shifted );
   }
   //Now make sure the desktop plugin area is only the visible area
   QRect rec = visReg.boundingRect();

@@ -193,9 +193,9 @@ void LTaskButton::minimizeWindow(){
 void LTaskButton::triggerWindow(){
   LWinInfo win = currentWindow();
   //Check which state the window is currently in and flip it to the other
-  LXCB::WINDOWSTATE state = cstate;
-  if(DEBUG){ qDebug() << "Window State: " << state; }
-  if(state == LXCB::ACTIVE){
+  //LXCB::WINDOWSTATE state = cstate;
+  //if(DEBUG){ qDebug() << "Window State: " << state; }
+  if(cstate == LXCB::ACTIVE){
     if(DEBUG){ qDebug() << "Minimize Window:" << this->text(); }
     LSession::handle()->XCB->MinimizeWindow(win.windowID());
     QTimer::singleShot(100, this, SLOT(UpdateButton()) ); //make sure to update this button if losing active status

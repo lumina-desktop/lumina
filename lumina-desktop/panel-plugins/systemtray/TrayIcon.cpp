@@ -110,10 +110,10 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
-	  if(this->size() != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); qDebug() << "-- Icon size mismatch"; }
+	  if(this->size() != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 	}else{
-	  qDebug() << " - -  No Tray Icon/Image found!" << "ID:" << AID;
+	  qWarning() << " - -  No Tray Icon/Image found!" << "ID:" << AID;
 	}
     //qDebug() << " - Done";
   }

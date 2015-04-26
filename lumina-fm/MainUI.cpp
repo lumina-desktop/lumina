@@ -953,12 +953,9 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   //Create the context menu
   contextMenu->clear();
   if(!CItem.isEmpty()){  
-    if(info.isDir()){
-      contextMenu->addAction(LXDG::findIcon("tab-new-background",""), tr("Open in new tab"), this, SLOT(OpenDir()) );
-    }else{
-      contextMenu->addAction(LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(OpenItem()) );
-      contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(OpenItemWith()) );
-    }
+    contextMenu->addAction(LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(OpenItem()) );
+    contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(OpenItemWith()) );
+
     contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename"), this, SLOT(RenameItem()) )->setEnabled(info.isWritable());
     contextMenu->addAction(LXDG::findIcon("document-encrypted",""), tr("View Checksums"), this, SLOT(ChecksumItems()) );
     contextMenu->addSeparator();
@@ -990,8 +987,8 @@ void MainUI::ItemSelectionChanged(){
   if(sel.size()>0){ emit Si_AdaptStatusBar(sel, "", tr("Selected Folders"), tr("Files"));}
   else{ emit Si_AdaptStatusBar(fsmod->rootDirectory().entryInfoList(), getCurrentDir(), tr("Folders"), tr("Files")); }
 
-  ui->tool_act_run->setEnabled(sel.length()==1);
-  ui->tool_act_runwith->setEnabled(sel.length()==1);
+  ui->tool_act_run->setEnabled(!sel.isEmpty());
+  ui->tool_act_runwith->setEnabled(!sel.isEmpty());
   ui->tool_act_rm->setEnabled(!sel.isEmpty() && isUserWritable);
   ui->tool_act_rename->setEnabled(sel.length()==1 && isUserWritable);
   ui->tool_act_cut->setEnabled(!sel.isEmpty() && isUserWritable);
@@ -1293,30 +1290,32 @@ void MainUI::playerFileChanged(){
 // Context Menu Actions
 //----------------------------------
 void MainUI::OpenItem(){
-  if(CItem.isEmpty()){ 
-    QFileInfoList sel = getSelectedItems();
-    if(sel.isEmpty()){ return; }
-    else{ CItem = sel[0].absoluteFilePath(); }
-    if(sel[0].isDir()){ OpenDir(); return; } //just in case - open it in a new tab
+  QFileInfoList sel = getSelectedItems();
+  if(sel.isEmpty()){ return; }	
+  
+  QStringList dirs;
+  for(int i=0; i<sel.length(); i++){
+    if(sel[i].isDir()){ dirs << sel[i].absoluteFilePath(); }
+    else{
+      qDebug() << "Opening File:" << sel[i].absoluteFilePath();
+      QProcess::startDetached("lumina-open \""+sel[i].absoluteFilePath()+"\"");      
+    }
   }
-  qDebug() << "Opening File:" << CItem;
-  QProcess::startDetached("lumina-open \""+CItem+"\"");
+  if(!dirs.isEmpty()){ OpenDirs(dirs); }
   CItem.clear();
 }
 
 void MainUI::OpenItemWith(){
-  if(CItem.isEmpty()){ 
-    QFileInfoList sel = getSelectedItems();
-    if(sel.isEmpty()){ return; }
-    else{ CItem = sel[0].absoluteFilePath(); }
-    if(sel[0].isDir()){ OpenDir(); return; } //just in case - open it in a new tab
+  QFileInfoList sel = getSelectedItems();
+  if(sel.isEmpty()){ return; }	
+  for(int i=0; i<sel.length(); i++){
+      qDebug() << "Opening File With:" << sel[i].absoluteFilePath();
+      QProcess::startDetached("lumina-open -select \""+sel[i].absoluteFilePath()+"\"");
   }
-  qDebug() << "Opening File:" << CItem;
-  QProcess::startDetached("lumina-open -select \""+CItem+"\"");	
   CItem.clear();
 }
 
-void MainUI::OpenDir(){
+/*void MainUI::OpenDir(){
   if(CItem.isEmpty()){ 
     QFileInfoList sel = getSelectedItems();
     if(sel.isEmpty()){ return; }
@@ -1324,7 +1323,7 @@ void MainUI::OpenDir(){
   }
   OpenDirs(QStringList() << CItem);	
   CItem.clear();  
-}
+}*/
 
 void MainUI::RemoveItem(){
   //Only let this run if viewing the browser page
@@ -1417,13 +1416,13 @@ void MainUI::FavoriteItem(){
 }
 
 void MainUI::ViewPropertiesItem(){
-  if(CItem.isEmpty()){ 
-    QFileInfoList sel = getSelectedItems();
-    if(sel.isEmpty()){ return; }
-    else{ CItem = sel[0].absoluteFilePath(); }
+  QFileInfoList sel = getSelectedItems();
+  if(sel.isEmpty()){ return; }
+  for(int i=0; i<sel.length(); i++){
+    if(sel[i].absoluteFilePath().endsWith(".desktop")){
+      QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
+    }
   }
-  QString file = CItem;
-  QProcess::startDetached("lumina-fileinfo \""+file+"\"");
 }
 
 void MainUI::CutItems(){
