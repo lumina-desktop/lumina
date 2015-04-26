@@ -13,39 +13,39 @@
 
 
 namespace Ui{
-	class ConfigUI;
+  class ConfigUI;
 };
 
 class ConfigUI : public QDialog{
-	Q_OBJECT
+  Q_OBJECT
 public:
-	ConfigUI(QWidget *parent = 0);
-	~ConfigUI();
+  ConfigUI(QWidget *parent = 0);
+  ~ConfigUI();
 
-	void loadInitialValues();
+  void loadInitialValues();
 
-	QString newStartDir;
-	QStringList newSkipDirs;
-	int currentJsonIndex ;
-	QJsonObject jsonObject;
+  QString newStartDir;
+  QStringList newSkipDirs;
+  int currentJsonIndex ;
+  QJsonObject jsonObject;
 
 private:
-	Ui::ConfigUI *ui;
+  Ui::ConfigUI *ui;
 
 private slots:
-	void on_tool_getStartDir_clicked();
-	void on_tool_adddirs_clicked();
-	void on_tool_rmdir_clicked();
-	void on_list_excludes_itemSelectionChanged();
-	void on_buttonBox_accepted();
-	void on_buttonBox_rejected();
-	
-	void on_tool_addSetName();
-	void on_tool_removeSetName();
-	void on_cbSetName_changed(int index);
-	void on_cbSetName_text_changed(QString newText);
-	bool updateJsonObject(int currentJsonIndex);
-	
+  void on_tool_getStartDir_clicked();
+  void on_tool_adddirs_clicked();
+  void on_tool_rmdir_clicked();
+  void on_list_excludes_itemSelectionChanged();
+  void on_buttonBox_accepted();
+  void on_buttonBox_rejected();
+
+  void on_tool_addSetName();
+  void on_tool_removeSetName();
+  void on_cbSetName_changed(int index);
+  void on_cbSetName_text_changed(QString newText);
+  bool updateJsonObject(int currentJsonIndex);
+
 };
-	
+
 #endif
