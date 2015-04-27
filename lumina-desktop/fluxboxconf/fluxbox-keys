@@ -58,6 +58,10 @@ Mod1 Shift Tab :PrevWindow {groups} (workspace=[current])  (workspace=[current])
 Mod4 Tab :NextTab
 Mod4 Shift Tab :PrevTab
 
+# Arrange/Tile Current windows
+Mod4 Left :ArrangeWindowsStackRight (Layer=Normal)
+Mod4 Right :ArrangeWindowsStackLeft (Layer=Normal)
+
 # go to a specific tab in the current window
 Mod4 1 :Tab 1
 Mod4 2 :Tab 2
