@@ -1424,9 +1424,7 @@ void MainUI::ViewPropertiesItem(){
   QFileInfoList sel = getSelectedItems();
   if(sel.isEmpty()){ return; }
   for(int i=0; i<sel.length(); i++){
-    if(sel[i].absoluteFilePath().endsWith(".desktop")){
-      QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
-    }
+    QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
   }
 }
 
