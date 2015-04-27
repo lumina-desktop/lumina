@@ -1008,13 +1008,7 @@ void MainUI::ItemSelectionChanged(){
   if(sel.length()==1){ itname = sel[0].fileName(); }
   bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
   if(ok){
-    if(QFile::exists(favdir+itname)){
-      //Make sure this favorite does not already point to the current file
-      QFileInfo info(favdir+itname);
-      if(info.isSymLink() && info.exists()){
-	ok = false; //still an active favorite - do not allow replacement
-      }
-    }
+    ok = !LUtils::isFavorite(sel[0]);
   }
   ui->tool_act_fav->setEnabled(ok);
 }
