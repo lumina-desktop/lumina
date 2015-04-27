@@ -21,6 +21,7 @@ public:
 
 	QString newStartDir;
 	QStringList newSkipDirs;
+	bool newDefaults;
 
 private:
 	Ui::ConfigUI *ui;

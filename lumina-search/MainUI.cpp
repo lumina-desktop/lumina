@@ -47,7 +47,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   settings = new QSettings("LuminaDE", "lumina-search",this);
   searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
   searcher->skipDirs = settings->value("SkipSearchDirs", QStringList()).toStringList();
-  
+  updateDefaultStatusTip();
   this->show();
   workthread->start();
   QTimer::singleShot(0,this, SLOT(setupIcons()) );
@@ -65,6 +65,38 @@ void MainUI::setupIcons(){
   ui->push_done->setIcon( LXDG::findIcon("window-close","") );
   ui->tool_stop->setIcon( LXDG::findIcon("dialog-cancel","") );
   ui->tool_configure->setIcon( LXDG::findIcon("configure","") );
+}
+
+// ===============
+//    PUBLIC FUNCTIONS (for input handling primarily)
+// ===============
+void MainUI::disableExcludes(){
+  searcher->skipDirs.clear();
+  updateDefaultStatusTip();
+}
+
+void MainUI::setSearchDirectory(QString path){
+  ui->radio_files->setChecked(true);
+  searcher->startDir = path;
+  updateDefaultStatusTip();
+}
+
+void MainUI::setSearchTerm(QString text){
+  ui->line_search->setText(text);
+}
+
+//==============
+//  PRIVATE
+//==============
+void MainUI::updateDefaultStatusTip(){
+  if(ui->radio_files->isChecked()){
+    QString txt = tr("Search: %1 -- Smart: %2");
+    QString dir = searcher->startDir;
+      dir.replace(QDir::homePath(), "~");
+    QString smart = searcher->skipDirs.isEmpty() ? tr("Off"): tr("On");
+    txt = txt.arg(dir,smart);
+    ui->statusbar->showMessage(txt);
+  }
 }
 
 //==============
@@ -90,19 +122,23 @@ void MainUI::searchTypeChanged(){
 	
 void MainUI::configureSearch(){
   ConfigUI dlg(this);
-    dlg.loadInitialValues( searcher->startDir, searcher->skipDirs);
+    dlg.loadInitialValues( settings->value("StartSearchDir",QDir::homePath()).toString(), settings->value("SkipSearchDirs",QStringList()).toStringList());
     dlg.exec();
   if(dlg.newStartDir.isEmpty()){ return; }//cancelled
   QString startdir = dlg.newStartDir;
   QStringList skipdirs = dlg.newSkipDirs;
 	
-  //Save these values for later
-  settings->setValue("StartSearchDir", startdir);
-  settings->setValue("SkipSearchDirs", skipdirs);
-	
+  //Save these values for later (if selected)
+  if(dlg.newDefaults){
+    //save these values as the new defaults
+    settings->setValue("StartSearchDir", startdir);
+    settings->setValue("SkipSearchDirs", skipdirs);
+  }
+  
   //Set these values in the searcher
   searcher->startDir = startdir;
   searcher->skipDirs = skipdirs;
+  updateDefaultStatusTip();
 }
 
 void MainUI::searchChanged(){
@@ -114,7 +150,7 @@ void MainUI::searchChanged(){
 void MainUI::startSearch(){
   ui->listWidget->clear();
   stopSearch(); //just in case a search is still running
-  if(ui->line_search->text().isEmpty()){ return; } //nothing to search for
+  if(ui->line_search->text().isEmpty()){ updateDefaultStatusTip(); return; } //nothing to search for
   
   //emit the proper signal for the worker
   if(!workthread->isRunning()){ workthread->start(); } //make sure the thread is running
@@ -153,6 +189,7 @@ void MainUI::stopSearch(){
   searcher->StopSearch();
   ui->tool_stop->setVisible(false);
   ui->tool_configure->setVisible(ui->radio_files->isChecked());
+  updateDefaultStatusTip();
 }
 
 void MainUI::searchMessage(QString msg){
@@ -162,4 +199,5 @@ void MainUI::searchMessage(QString msg){
 void MainUI::searchFinished(){
   ui->tool_stop->setVisible(false);
   ui->tool_configure->setVisible(ui->radio_files->isChecked());
+  updateDefaultStatusTip();
 }

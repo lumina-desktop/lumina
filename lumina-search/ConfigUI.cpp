@@ -24,6 +24,7 @@ ConfigUI::ConfigUI(QWidget *parent) : QDialog(parent), ui(new Ui::ConfigUI){
   ui->tool_getStartDir->setIcon( LXDG::findIcon("folder","") );
   ui->tool_adddirs->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_rmdir->setIcon( LXDG::findIcon("list-remove","") );
+  newDefaults = false;
 }
 
 ConfigUI::~ConfigUI(){
@@ -74,6 +75,7 @@ void ConfigUI::on_buttonBox_accepted(){
   }
   dirs.removeDuplicates();
   newSkipDirs = dirs;
+  newDefaults = ui->check_setDefaults->isChecked();
   this->close();
 }
 
