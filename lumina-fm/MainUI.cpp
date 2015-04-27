@@ -974,7 +974,7 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(RemoveItem()) )->setEnabled(info.isWritable()&&hasSelection);
   if(LUtils::isValidBinary("lumina-fileinfo")){
     contextMenu->addSeparator();
-    contextMenu->addAction(LXDG::findIcon("system-search",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection && info.fileName().endsWith(".desktop"));
+    contextMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection);
   }
   //Now show the menu
   if(radio_view_details->isChecked()){
