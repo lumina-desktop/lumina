@@ -123,10 +123,12 @@ void UserItemWidget::setupButton(bool disable){
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
   if(button->whatsThis()=="add"){ 
-    QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
+    LUtils::addFavorite(icon->whatsThis());
+    //QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
     emit NewShortcut(); 
   }else if(button->whatsThis()=="remove"){ 
-    QFile::remove(icon->whatsThis()); //never remove the linkPath - since that is the actual file/dir
+    if(linkPath.isEmpty()){ QFile::remove(icon->whatsThis()); } //This is a desktop file
+    else{ LUtils::removeFavorite(icon->whatsThis()); } //This is a favorite
     emit RemovedShortcut(); 
   }
 }
