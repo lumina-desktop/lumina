@@ -10,42 +10,42 @@ class Dialog;
 
 class Dialog : public QDialog
 {
-    Q_OBJECT
-    
+  Q_OBJECT
+
 public:
-    explicit Dialog(QWidget *parent = 0);
+  explicit Dialog(QWidget *parent = 0);
 
-    XDGDesktop DF ;
-    QString inMemoryFile;
+  XDGDesktop DF ;
+  QString inMemoryFile;
 
-    QString desktopFileName ;
-    QString iconFileName;
-    QString desktopType;
+  QString desktopFileName ;
+  QString iconFileName;
+  QString desktopType;
 
-    void Initialise(QString);
-    void MissingInputs();
-    void LoadDesktopFile(QString);
+  void Initialise(QString);
+  void MissingInputs();
+  void LoadDesktopFile(QString);
 
-    ~Dialog();
+  ~Dialog();
 
 public slots:
-    void setupIcons();
+  void setupIcons();
 
 private slots:
 
-    void on_pbCommand_clicked();
-    void on_pbWorkingDir_clicked();
-    void on_pbApply_clicked();
-    void on_pbIcon_clicked();
+  void on_pbCommand_clicked();
+  void on_pbWorkingDir_clicked();
+  void on_pbApply_clicked();
+  void on_pbIcon_clicked();
 
-    void textReplace(QString &origin, QString from, QString to, QString topic);
-    void copyTemplate(QString templateType);
+  void textReplace(QString &origin, QString from, QString to, QString topic);
+  void copyTemplate(QString templateType);
     
-    void on_lName_textChanged(QString text);
-    void on_lComment_textChanged(QString text);
+  void on_lName_textChanged(QString text);
+  void on_lComment_textChanged(QString text);
 
 private:
-    Ui::Dialog *ui;
+  Ui::Dialog *ui;
 };
 
 #endif // DIALOG_H
