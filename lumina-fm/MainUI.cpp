@@ -679,6 +679,10 @@ void MainUI::on_actionNew_Tab_triggered(){
   tabBar->setCurrentIndex(tabBar->count()-1);
 }
 
+void MainUI::on_actionSearch_triggered(){
+  QProcess::startDetached("lumina-search -dir \""+getCurrentDir()+"\"");
+}
+
 void MainUI::on_actionClose_triggered(){
   if(tabBar->count() > 1){
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Quit"), tr("You have multiple tabs open. Are you sure you want to quit?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) ){
