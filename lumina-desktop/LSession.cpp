@@ -315,8 +315,10 @@ void LSession::watcherChange(QString changed){
 void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  int oldversion = VersionStringToNumber(sessionsettings->value("DesktopVersion","0").toString());
-  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) );
+  QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
+  int oldversion = VersionStringToNumber(OVS);
+  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
+  bool newrelease = ( OVS.endsWith("-devel", Qt::CaseInsensitive) && this->applicationVersion().endsWith("-release", Qt::CaseInsensitive) ); //Moving from devel to release
   
   //Check for the desktop settings file
   QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
@@ -331,10 +333,10 @@ void LSession::checkUserFiles(){
     }*/
     LUtils::LoadSystemDefaults();
   }
-  /*if(oldversion <= 8003){
-    //Convert the old->new favorites framework (Not implemented yet)
-	  
-  }*/
+  if(newversion || newrelease){
+    //Convert the favorites framework as necessary
+    LUtils::upgradeFavorites(oldversion);	  
+  }
   
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";

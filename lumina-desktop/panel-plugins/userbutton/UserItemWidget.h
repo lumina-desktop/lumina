@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -25,7 +25,7 @@
 class UserItemWidget : public QFrame{
 	Q_OBJECT
 public:
-	UserItemWidget(QWidget *parent=0, QString itemPath="", bool isDir=false, bool goback=false);
+	UserItemWidget(QWidget *parent=0, QString itemPath="", QString type="unknown", bool goback=false);
 	UserItemWidget(QWidget *parent=0, XDGDesktop item= XDGDesktop());
 	~UserItemWidget();
 
