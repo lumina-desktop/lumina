@@ -162,6 +162,7 @@ void MainUI::setupIcons(){
   ui->actionBackToBrowser->setIcon( LXDG::findIcon("go-previous","") );
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
+  ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
 	
   //Browser page
   ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
