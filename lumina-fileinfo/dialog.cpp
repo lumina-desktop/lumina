@@ -4,9 +4,9 @@
 #include <QRegExp>
 #include <QTemporaryFile>
 #include <QMessageBox>
+#include <QImageReader>
 #include "LuminaUtils.h"
 #include <LuminaOS.h>
-
 
 
 //this function is just like a regexp.
@@ -129,7 +129,41 @@ void Dialog::LoadDesktopFile(QString input)
       copyTemplate("-app");
     }
   }
-
+  this->setWindowTitle(desktopFileName.section("/",-1));
+  ui->tabWidget->setCurrentIndex(0); //always start on the file info tab
+  //Now load the file info and put it into the UI
+  QFileInfo info(desktopFileName);
+  QString mime = LXDG::findAppMimeForFile(desktopFileName);
+  
+  QList<QByteArray> fmt = QImageReader::supportedImageFormats();
+  bool foundimage=false;
+    for(int i=0; i<fmt.length(); i++){ 
+      if(info.suffix().toLower() == QString(fmt[i]).toLower()){foundimage=true; break; }
+    }
+  if(foundimage){
+    ui->label_file_icon->setPixmap( QPixmap(desktopFileName).scaledToHeight(64) );
+  }else{
+    ui->label_file_icon->setPixmap( LXDG::findMimeIcon(mime).pixmap(QSize(64,64)) );	  
+  }
+  ui->label_file_mimetype->setText(mime);
+  QString type;
+  if(desktopFileName.endsWith(".desktop")){ type = tr("XDG Shortcut"); }
+  else if(info.isDir()){ type = tr("Directory"); ui->label_file_icon->setPixmap( LXDG::findIcon("folder","").pixmap(QSize(64,64)) ); }
+  else if(info.isExecutable()){ type = tr("Binary"); }
+  else{ type = info.suffix().toUpper(); }
+  if(info.isHidden()){ type = QString(tr("Hidden %1")).arg(type); }
+  ui->label_file_type->setText(type);
+  ui->label_file_owner->setText(info.owner());
+  ui->label_file_group->setText(info.group());
+  QString perms;
+  if(info.isReadable() && info.isWritable()){ perms = tr("Read/Write"); }
+  else if(info.isReadable()){ perms = tr("Read Only"); }
+  else if(info.isWritable()){ perms = tr("Write Only"); }
+  else{ perms = tr("No Access"); }
+  ui->label_file_perms->setText(perms);
+  ui->label_file_created->setText( info.created().toString(Qt::SystemLocaleLongDate) );
+  ui->label_file_modified->setText( info.lastModified().toString(Qt::SystemLocaleLongDate) );
+  
   //use the standard LXDG object and load the desktop file
   bool ok = false;
   if(desktopFileName.endsWith(".desktop")){
@@ -153,10 +187,9 @@ void Dialog::LoadDesktopFile(QString input)
     if (DF.useTerminal) ui->cbRunInTerminal->setChecked(true); else ui->cbRunInTerminal->setChecked(false);
     iconFileName="";
     ui->pbIcon->setIcon(LXDG::findIcon(DF.icon,""));
-    this->setWindowTitle(DF.filePath.section("/",-1));
   } else {
-    QMessageBox::critical(this, tr("Error"), tr("Invalid File Supplied:") +"\n"+desktopFileName );
-    exit(1);
+    ui->tabWidget->removeTab(1);
+    return;
   }
 
   //we load the file in memory and will adapt it before saving it to disk
