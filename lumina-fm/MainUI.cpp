@@ -967,7 +967,7 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(PasteItems()) )->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && isUserWritable);
   contextMenu->addSeparator();
   contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(RemoveItem()) )->setEnabled(info.isWritable()&&hasSelection);
-  if(LUtils::isValidBinary("lumina-fileinfo")){
+  if(LUtils::isValidBinary("lumina-fileinfo") && info.fileName().endsWith(".desktop")){
     contextMenu->addSeparator();
     contextMenu->addAction(LXDG::findIcon("system-search",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection && info.fileName().endsWith(".desktop"));
   }
