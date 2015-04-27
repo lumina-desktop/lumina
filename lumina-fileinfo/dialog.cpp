@@ -153,6 +153,16 @@ void Dialog::LoadDesktopFile(QString input)
   else{ type = info.suffix().toUpper(); }
   if(info.isHidden()){ type = QString(tr("Hidden %1")).arg(type); }
   ui->label_file_type->setText(type);
+  double bytes = info.size();
+  QStringList lab; lab << "B" << "KB" << "MB" << "GB" << "TB" << "PB";
+  int i=0;
+  while(i<lab.length() && bytes>1024){
+    bytes = bytes/1024;
+    i++; //next label
+  }
+  //convert the size to two decimel places and add the label
+  QString sz = QString::number( qRound(bytes*100)/100.0 )+lab[i];
+  ui->label_file_size->setText( sz );
   ui->label_file_owner->setText(info.owner());
   ui->label_file_group->setText(info.group());
   QString perms;
@@ -187,6 +197,7 @@ void Dialog::LoadDesktopFile(QString input)
     if (DF.useTerminal) ui->cbRunInTerminal->setChecked(true); else ui->cbRunInTerminal->setChecked(false);
     iconFileName="";
     ui->pbIcon->setIcon(LXDG::findIcon(DF.icon,""));
+    if(!info.isWritable()){ ui->tab_deskedit->setEnabled(false); }
   } else {
     ui->tabWidget->removeTab(1);
     return;
