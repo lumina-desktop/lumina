@@ -1113,6 +1113,7 @@
      <string>File</string>
     </property>
     <addaction name="actionNew_Tab"/>
+    <addaction name="actionSearch"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -1295,6 +1296,14 @@
    </property>
    <property name="text">
     <string>Load Thumbnails</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="text">
+    <string>Search Directory</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

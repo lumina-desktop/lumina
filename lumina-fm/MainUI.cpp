@@ -162,6 +162,7 @@ void MainUI::setupIcons(){
   ui->actionBackToBrowser->setIcon( LXDG::findIcon("go-previous","") );
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
+  ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
 	
   //Browser page
   ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
@@ -677,6 +678,10 @@ void MainUI::on_actionNew_Tab_triggered(){
   OpenDirs(QStringList() << QDir::homePath());
   //Now go to that tab (always last)
   tabBar->setCurrentIndex(tabBar->count()-1);
+}
+
+void MainUI::on_actionSearch_triggered(){
+  QProcess::startDetached("lumina-search -dir \""+getCurrentDir()+"\"");
 }
 
 void MainUI::on_actionClose_triggered(){

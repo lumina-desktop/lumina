@@ -29,8 +29,13 @@ public:
 	MainUI();
 	~MainUI();
 
+	void disableExcludes();
+	void setSearchDirectory(QString path);
+	void setSearchTerm(QString text);
+
 public slots:
 	void setupIcons();
+	void startSearch(); //emit the proper signal for the worker
 
 private:
 	Ui::MainUI *ui;
@@ -38,6 +43,8 @@ private:
 	QTimer *livetime;
 	Worker *searcher;
 	QSettings *settings;
+
+	void updateDefaultStatusTip();
 
 private slots:
 	//Button Slots
@@ -52,7 +59,7 @@ private slots:
 	void searchChanged(); //for active searching while typing
 	
 	//Worker Interaction
-	void startSearch(); //emit the proper signal for the worker
+	//void startSearch(); //Moved to a public slot
 	void foundSearchItem(QString path); //To get the worker's results
 	void stopSearch();
 	void searchMessage(QString);
