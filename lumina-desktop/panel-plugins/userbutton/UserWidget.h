@@ -42,7 +42,9 @@ public slots:
 private:
 	Ui::UserWidget *ui;
 	QHash<QString, QList<XDGDesktop> > *sysapps;
-	QDateTime lastUpdate;
+	QDateTime lastUpdate, lastHomeUpdate;
+	QStringList favs;
+	QFileInfoList homefiles;
 	int cfav; //current favorite category
 	void ClearScrollArea(QScrollArea *area);
 	QIcon rotateIcon(QIcon);
@@ -52,7 +54,7 @@ private slots:
 
 	//Favorites Tab
 	void FavChanged(); //for ensuring radio-button-like behaviour
-	void updateFavItems();
+	void updateFavItems(bool newfilter = true); //if false, will only update if filesystem changes
 
 	//Apps Tab
 	void updateAppCategories();

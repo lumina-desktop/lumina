@@ -43,17 +43,19 @@ private:
 	//Special toolbuttons and menus
 	QToolButton *appB, *fileB, *dirB;
 	QMenu *appM, *dirM, *audioM, *videoM, *pictureM, *fileM, *otherM, *docM;
-	QStringList audioFilter, videoFilter, pictureFilter, docsFilter;
-	QFileInfoList totals;
+	//QStringList audioFilter, videoFilter, pictureFilter, docsFilter;
+	QFileInfoList homefiles;
+	QStringList favs;
 	QList<QToolButton*> APPLIST;
-	
+	QDateTime lastHomeUpdate;
+
 	void initializeDesktop();
 	//bool readDesktopFile(QString path, QString &name, QString &iconpath);
 	
 	QAction* newAction(QString filepath, QString name, QString iconpath);
 	QAction* newAction(QString filepath, QString name, QIcon icon);
 
-	void updateMenu(QMenu* menu, QFileInfoList files, bool trim = true);
+	//void updateMenu(QMenu* menu, QFileInfoList files, bool trim = true);
 
 	
 private slots:
