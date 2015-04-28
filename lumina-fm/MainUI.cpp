@@ -1008,7 +1008,7 @@ void MainUI::ItemSelectionChanged(){
   if(sel.length()==1){ itname = sel[0].fileName(); }
   bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
   if(ok){
-    ok = !LUtils::isFavorite(sel[0]);
+    ok = !LUtils::isFavorite(sel[0].canonicalFilePath());
   }
   ui->tool_act_fav->setEnabled(ok);
 }
@@ -1403,13 +1403,14 @@ void MainUI::FavoriteItem(){
   if(CItem.isEmpty()){ 
     QFileInfoList sel = getSelectedItems();
     if(sel.isEmpty()){ return; }
-    else{ CItem = sel[0].absoluteFilePath(); }
+    else{ CItem = sel[0].canonicalFilePath(); }
   }
-  QString fname = CItem;
-  QString fullpath = fname;
-    fname = fname.section("/",-1); //turn this into just the file name
+  //QString fname = CItem;
+  QString fullpath = CItem;
+    /*fname = fname.section("/",-1); //turn this into just the file name
   if(QFile::exists(favdir+fname)){ QFile::remove(favdir+fname); } //remove the stale link
-  QFile::link(fullpath, favdir+fname);
+  QFile::link(fullpath, favdir+fname);*/
+  LUtils::addFavorite(fullpath);
   CItem.clear();
   ItemSelectionChanged();
 }
