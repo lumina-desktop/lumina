@@ -80,17 +80,15 @@ int main(int argc, char ** argv)
     //Startup the Application
     if(DEBUG){ qDebug() << "Session Init:" << timer->elapsed(); }
     LSession a(argc, argv);
-    if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
-    LuminaThemeEngine theme(&a);
     //Setup Log File
     qInstallMessageHandler(MessageOutput);
-    if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
-    a.setupSession();
+    if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
+    LuminaThemeEngine theme(&a);
     if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
     LUtils::LoadTranslation(&a, "lumina-desktop");
-    //a.LoadLocale(QLocale().name());
-    //Start launching external applications
-    QTimer::singleShot(3000, &a, SLOT(launchStartupApps()) ); //wait a couple seconds first
+    if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
+    a.setupSession();
+
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";
