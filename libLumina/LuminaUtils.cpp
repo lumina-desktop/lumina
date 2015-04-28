@@ -22,7 +22,7 @@
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  return "0.8.4-Release"; 
+  return "0.8.5-devel"; 
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
