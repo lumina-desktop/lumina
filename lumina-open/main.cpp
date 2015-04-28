@@ -281,6 +281,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       cmd.replace("%F","\""+inFile+"\"");
     }else if( (cmd.contains("%U") || cmd.contains("%u")) ){
       //Apply any special field replacements for the desired format
+      if(!inFile.contains("://")){ inFile.prepend("file:"); } //local file - add the extra flag
       inFile.replace(" ", "%20");
       //Now replace the field codes
       cmd.replace("%u","\""+inFile+"\"");
