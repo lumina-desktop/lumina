@@ -65,6 +65,7 @@ private slots:
 	void slotGoToDir(QString dir);
 	void slotGoHome();
 	void slotOpenDir();
+	void slotOpenSearch();
 
 	//Slots for the special buttons
 	void openStore(){
