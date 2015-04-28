@@ -41,6 +41,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   SystemTrayID = 0; VisualTrayID = 0;
+  sysWindow = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
   cleansession = true;
@@ -111,6 +112,8 @@ void LSession::setupSession(){
   appmenu = new AppMenu();
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
+  if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
+  sysWindow = new SystemWindow();
   
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
@@ -495,8 +498,11 @@ QSettings* LSession::sessionSettings(){
 }
 
 void LSession::systemWindow(){
-  SystemWindow win;
-  win.exec();
+  if(sysWindow==0){ sysWindow = new SystemWindow(); }
+  else{ sysWindow->updateWindow(); }
+  sysWindow->show();
+  /*SystemWindow win;
+  win.exec();*/
   LSession::processEvents();
 }
 

@@ -26,6 +26,8 @@ public:
 	SystemWindow();
 	~SystemWindow();
 
+	void updateWindow();
+
 private:
 	Ui::SystemWindow *ui;
 

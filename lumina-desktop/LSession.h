@@ -95,9 +95,9 @@ private:
 	//Internal variable for global usage
 	AppMenu *appmenu;
 	SettingsMenu *settingsmenu;
+	SystemWindow *sysWindow;
 	QTranslator *currTranslator;
 	QMediaPlayer *mediaObj;
-	//QThread *audioThread;
 	QSettings *sessionsettings;
 	bool cleansession;
 
