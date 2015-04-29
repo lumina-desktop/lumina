@@ -12,9 +12,11 @@ Latest Stable Versions
 ----
 Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
 
-Qt5 - 0.8.3 (Beta): Use the qt5/0.8.3 branch of the source tree to fetch this version.
+Qt5 - 0.8.4 (Beta): Use the qt5/0.8.4 branch of the source tree to fetch this version.
 
 The master branch is where all development is performed and tested before the next release version is branched off.
+
+NOTE: Starting with version 0.8.4, you may also find packages versions of the source code for the individual releases of Lumina here on GitHub.
 
 Translations
 ----
