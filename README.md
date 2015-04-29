@@ -16,7 +16,7 @@ Qt5 - 0.8.4 (Beta): Use the qt5/0.8.4 branch of the source tree to fetch this ve
 
 The master branch is where all development is performed and tested before the next release version is branched off.
 
-NOTE: Starting with version 0.8.4, you may also find packages versions of the source code for the individual releases of Lumina here on GitHub.
+NOTE: Starting with version 0.8.4, you may also find packaged versions of the source code for the individual releases of Lumina here on GitHub. Please go to the "Releases" page here on GitHub for additional information.
 
 Translations
 ----
