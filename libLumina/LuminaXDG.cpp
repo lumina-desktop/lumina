@@ -16,6 +16,8 @@ static qint64 mimechecktime;
 XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   //Create the outputs
   ok=false;
+  //following the specifications, Name and Type are the mandatory in any .desktop file
+  bool hasName=false, hasType=false; 
   XDGDesktop DF;
     DF.isHidden=false;
     DF.useTerminal=false;
@@ -51,6 +53,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     if(var=="Name"){ 
       if(DF.name.isEmpty() && loc.isEmpty()){ DF.name = val; }
       else if(loc == lang){ DF.name = val; }
+      hasName = true;
     }else if(var=="GenericName"){ 
       if(DF.genericName.isEmpty() && loc.isEmpty()){ DF.genericName = val; }
       else if(loc == lang){ DF.genericName = val; }
@@ -84,6 +87,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       else if(val.toLower()=="link"){ DF.type = XDGDesktop::LINK; }
       else if(val.toLower()=="dir"){ DF.type = XDGDesktop::DIR; }
       else{ DF.type = XDGDesktop::BAD; } //Unknown type
+      hasType = true;
     }
   } //end reading file
   file.close();
@@ -105,7 +109,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
   }
   //Return the structure
-  ok=true;
+  if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
   return DF;
 }
 
