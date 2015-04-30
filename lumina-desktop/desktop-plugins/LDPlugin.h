@@ -41,7 +41,7 @@ public:
 	}
 	
 	~LDPlugin(){
-	  delete settings;
+	  
 	}
 	
 	QString ID(){
