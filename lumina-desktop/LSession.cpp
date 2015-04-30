@@ -322,7 +322,7 @@ void LSession::checkUserFiles(){
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
   int oldversion = VersionStringToNumber(OVS);
   bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
-  bool newrelease = ( OVS.endsWith("-devel", Qt::CaseInsensitive) && this->applicationVersion().endsWith("-release", Qt::CaseInsensitive) ); //Moving from devel to release
+  bool newrelease = ( OVS.contains("-devel", Qt::CaseInsensitive) && this->applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
   
   //Check for the desktop settings file
   QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";

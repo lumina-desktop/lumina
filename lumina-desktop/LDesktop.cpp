@@ -64,6 +64,14 @@ void LDesktop::prepareToClose(){
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); delete PANELS.takeAt(i); i--; }
   //Now close down any desktop plugins
   desktoplocked = true; //make sure that plugin settings are preserved during removal
+  //Remove all the current containers
+  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
+  for(int i=0; i<wins.length(); i++){
+    wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
+    bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
+    bgDesktop->removeSubWindow(wins[i]); //remove container from screen
+    delete wins[i]; //delete old container
+  }
   for(int i=0; i<PLUGINS.length(); i++){delete PLUGINS.takeAt(i); i--; }
 }
 
@@ -416,13 +424,26 @@ void LDesktop::AlignDesktopPlugins(){
 }
 
 void LDesktop::DesktopPluginRemoved(QString ID){
-  //Close down that plugin instance (NOTE: the container was already closed by the user)
+  //Close down that plugin instance (NOTE: the container might have already closed by the user)
+  if(DEBUG){ qDebug() << "Desktop Plugin Removed:" << ID; }
+  //First look for the container (just in case)
+  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
+  for(int i=0; i<wins.length(); i++){
+    if(wins[i]->whatsThis() == ID){
+      if(DEBUG){ qDebug() << " - Removing Plugin Container"; }
+      //wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
+      bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
+      bgDesktop->removeSubWindow(wins[i]); //remove container from screen
+      delete wins[i]; //delete old container
+      break;
+    }
+  }
 	
   //qDebug() << "PLUGINS:" << PLUGINS.length() << ID;
   for(int i=0; i<PLUGINS.length(); i++){
     if(PLUGINS[i]->ID() == ID){
       //qDebug() << "- found ID";
-      if(DEBUG){ qDebug() << "Deleting Desktop Plugin:" << ID; }
+      if(DEBUG){ qDebug() << " - Deleting Desktop Plugin:" << ID; }
       delete PLUGINS.takeAt(i);
       break;
     }
@@ -433,9 +454,12 @@ void LDesktop::DesktopPluginRemoved(QString ID){
   if(DEBUG){ qDebug() << " - Also removing plugin from future list"; }
   plugins.removeAll(ID);
     issyncing = true;
+    if(DEBUG){ qDebug() << " - Save modified plugins list"; }
     settings->setValue(DPREFIX+"pluginlist", plugins);
-    settings->sync();
+    if(DEBUG){ qDebug() << " - Unlock settings file in 200 ms"; }
+    //settings->sync();
   QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+  if(DEBUG){ qDebug() << " - Done removing plugin"; }
 }
 
 void LDesktop::UpdatePanels(){
@@ -476,13 +500,24 @@ void LDesktop::UpdatePanels(){
 
 void LDesktop::UpdateDesktopPluginArea(){
   QRegion visReg( bgWindow->geometry() ); //visible region (not hidden behind a panel)
+  QRect rawRect = visReg.boundingRect(); //initial value (screen size)
   for(int i=0; i<PANELS.length(); i++){
     QRegion shifted = visReg;
     QString loc = settings->value(PANELS[i]->prefix()+"location","top").toString().toLower();
-    if(loc=="top"){ shifted.translate(0, PANELS[i]->visibleWidth()); }
-    else if(loc=="bottom"){ shifted.translate(0, 0-PANELS[i]->visibleWidth()); }
-    else if(loc=="left"){ shifted.translate(PANELS[i]->visibleWidth(),0); }
-    else{ shifted.translate(0-PANELS[i]->visibleWidth(),0); }
+    int vis = PANELS[i]->visibleWidth();
+    if(loc=="top"){ 
+      if(!shifted.contains(QRect(rawRect.x(), rawRect.y(), rawRect.width(), vis))){ continue; }
+      shifted.translate(0, (rawRect.top()+vis)-shifted.boundingRect().top() ); 
+    }else if(loc=="bottom"){
+      if(!shifted.contains(QRect(rawRect.x(), rawRect.bottom()-vis, rawRect.width(), vis))){ continue; }	    
+      shifted.translate(0, (rawRect.bottom()-vis)-shifted.boundingRect().bottom()); 
+    }else if(loc=="left"){ 
+      if( !shifted.contains(QRect(rawRect.x(), rawRect.y(), vis,rawRect.height())) ){ continue; }
+      shifted.translate((rawRect.left()+vis)-shifted.boundingRect().left() ,0); 
+    }else{  //right
+      if(!shifted.contains(QRect(rawRect.right()-vis, rawRect.y(), vis,rawRect.height())) ){ continue; }
+      shifted.translate((rawRect.right()-vis)-shifted.boundingRect().right(),0); 
+    }
     visReg = visReg.intersected( shifted );
   }
   //Now make sure the desktop plugin area is only the visible area
@@ -492,11 +527,14 @@ void LDesktop::UpdateDesktopPluginArea(){
   globalWorkRect = rec; //save this for later
   rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y() ) );
   //qDebug() << "DPlug Area:" << rec.x() << rec.y() << rec.width() << rec.height();
+  if(rec == bgDesktop->geometry()){return; } //nothing changed
   bgDesktop->setGeometry( rec );
   bgDesktop->setBackground( QBrush(Qt::NoBrush) );
   bgDesktop->update();
   //Re-paint the panels (just in case a plugin was underneath it and the panel is transparent)
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
+  //Also need to re-arrange any desktop plugins to ensure that nothing is out of the screen area
+  AlignDesktopPlugins();
 }
 
 void LDesktop::UpdateBackground(){
