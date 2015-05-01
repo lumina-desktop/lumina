@@ -36,8 +36,11 @@ public:
 	LDPlugin(QWidget *parent = 0, QString id="unknown", bool opaque = false) : QFrame(parent){
 	  PLUGID=id;
 	  settings = new QSettings("desktop-plugins",PLUGID);
+	  //Use two values for stylesheet access, Visible or normal plugin base
 	  if(opaque){ this->setObjectName("LuminaDesktopPluginVisible"); }
 	  else{ this->setObjectName("LuminaDesktopPlugin"); }
+	  //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
+	  //this->setObjectName(id.section("---",0,0).section("::",0,0));
 	}
 	
 	~LDPlugin(){
