@@ -17,7 +17,7 @@
    <enum>QTabWidget::West</enum>
   </property>
   <property name="currentIndex">
-   <number>3</number>
+   <number>2</number>
   </property>
   <widget class="QWidget" name="tab_fav">
    <attribute name="title">
@@ -170,8 +170,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>28</height>
+         <width>260</width>
+         <height>247</height>
         </rect>
        </property>
       </widget>
@@ -276,8 +276,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>28</height>
+         <width>260</width>
+         <height>247</height>
         </rect>
        </property>
       </widget>
@@ -309,11 +309,61 @@
      <number>1</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="spacing">
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="horizontalSpacing">
+       <number>4</number>
+      </property>
+      <property name="verticalSpacing">
        <number>1</number>
       </property>
-      <item>
+      <item row="0" column="3">
+       <widget class="QToolButton" name="tool_home_search">
+        <property name="toolTip">
+         <string>Search this Directory</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="tool_home_browse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Open Directory</string>
+        </property>
+        <property name="text">
+         <string notr="true">Browse</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonIconOnly</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
        <widget class="QToolButton" name="tool_home_gohome">
         <property name="minimumSize">
          <size>
@@ -338,8 +388,14 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="1">
        <widget class="QLabel" name="label_home_dir">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -376,37 +432,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QToolButton" name="tool_home_browse">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>90</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Open Directory</string>
-        </property>
-        <property name="text">
-         <string notr="true">Browse</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
     <item>
@@ -419,8 +444,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>28</height>
+         <width>260</width>
+         <height>247</height>
         </rect>
        </property>
       </widget>

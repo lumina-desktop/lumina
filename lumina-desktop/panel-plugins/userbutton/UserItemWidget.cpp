@@ -1,15 +1,16 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 #include "UserItemWidget.h"
+#include <LuminaUtils.h>
 
-UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bool goback) : QFrame(parent){
+UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
   createWidget();
   //Now fill it appropriately
-  if(itemPath.endsWith(".desktop")){
+  if(itemPath.endsWith(".desktop") || type=="app"){
     bool ok = false;
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
     if(ok){
@@ -19,7 +20,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
       icon->setPixmap( LXDG::findIcon("unknown","").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) );
     }
-  }else if(isDir){
+  }else if(type=="dir"){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(goback){
       icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(32,32) );
@@ -30,14 +31,17 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(32,32) );
+    icon->setPixmap( LXDG::findMimeIcon(type).pixmap(32,32) );
     name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
   }
-  linkPath = QFile::symLinkTarget(itemPath);
   icon->setWhatsThis(itemPath);
-  if(isDir && !linkPath.isEmpty()){ isDir = false; } //not a real directory - just a sym link
-  isDirectory = isDir; //save this for later
-  isShortcut = itemPath.contains("/home/") && (itemPath.contains("/Desktop/") || itemPath.contains("/.lumina/favorites/") );
+  isDirectory = (type=="dir"); //save this for later
+  if(LUtils::isFavorite(itemPath)){
+    linkPath = itemPath;
+    isShortcut=true;
+  }else if( itemPath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+    isShortcut = true;
+  }
   //Now setup the button appropriately
   setupButton(goback);
 }
@@ -45,8 +49,14 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, bool isDir, bo
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   createWidget();
   isDirectory = false;
-  linkPath = QFile::symLinkTarget(item.filePath);
-  isShortcut = item.filePath.contains("/home/") && (item.filePath.contains("/Desktop/") || item.filePath.contains("/.lumina/favorites/") );
+  if(LUtils::isFavorite(item.filePath)){
+    linkPath = item.filePath;
+    isShortcut=true;
+  }else if( item.filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+    isShortcut = true;
+  }else{
+    isShortcut = false;
+  }
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(32,32) );
   name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) ); 
@@ -98,8 +108,8 @@ void UserItemWidget::setupButton(bool disable){
       button->setToolTip(tr("Delete File"));
     }
     connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  }else if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !QFile::exists( QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) ) ){
-    //This file does not have a desktop shortcut yet -- allow the user to add it
+  }else if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !LUtils::isFavorite(icon->whatsThis() ) ){
+    //This file does not have a shortcut yet -- allow the user to add it
     button->setWhatsThis("add");
     button->setIcon( LXDG::findIcon("bookmark-toolbar","") );    
     button->setToolTip(tr("Create Shortcut"));
@@ -113,10 +123,12 @@ void UserItemWidget::setupButton(bool disable){
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
   if(button->whatsThis()=="add"){ 
-    QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
+    LUtils::addFavorite(icon->whatsThis());
+    //QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
     emit NewShortcut(); 
   }else if(button->whatsThis()=="remove"){ 
-    QFile::remove(icon->whatsThis()); //never remove the linkPath - since that is the actual file/dir
+    if(linkPath.isEmpty()){ QFile::remove(icon->whatsThis()); } //This is a desktop file
+    else{ LUtils::removeFavorite(icon->whatsThis()); } //This is a favorite
     emit RemovedShortcut(); 
   }
 }

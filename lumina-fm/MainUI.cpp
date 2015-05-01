@@ -162,6 +162,7 @@ void MainUI::setupIcons(){
   ui->actionBackToBrowser->setIcon( LXDG::findIcon("go-previous","") );
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
+  ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
 	
   //Browser page
   ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
@@ -679,6 +680,10 @@ void MainUI::on_actionNew_Tab_triggered(){
   tabBar->setCurrentIndex(tabBar->count()-1);
 }
 
+void MainUI::on_actionSearch_triggered(){
+  QProcess::startDetached("lumina-search -dir \""+getCurrentDir()+"\"");
+}
+
 void MainUI::on_actionClose_triggered(){
   if(tabBar->count() > 1){
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Quit"), tr("You have multiple tabs open. Are you sure you want to quit?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) ){
@@ -969,7 +974,7 @@ void MainUI::OpenContextMenu(const QPoint &pt){
   contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(RemoveItem()) )->setEnabled(info.isWritable()&&hasSelection);
   if(LUtils::isValidBinary("lumina-fileinfo")){
     contextMenu->addSeparator();
-    contextMenu->addAction(LXDG::findIcon("system-search",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection && info.fileName().endsWith(".desktop"));
+    contextMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection);
   }
   if (info.isDir() || CItem.isEmpty()) {
     //in case the user click on a directory or click on the background
@@ -1008,13 +1013,7 @@ void MainUI::ItemSelectionChanged(){
   if(sel.length()==1){ itname = sel[0].fileName(); }
   bool ok = !itname.isEmpty() && (getCurrentDir()!=QDir::homePath()+"/Desktop");
   if(ok){
-    if(QFile::exists(favdir+itname)){
-      //Make sure this favorite does not already point to the current file
-      QFileInfo info(favdir+itname);
-      if(info.isSymLink() && info.exists()){
-	ok = false; //still an active favorite - do not allow replacement
-      }
-    }
+    ok = !LUtils::isFavorite(sel[0].canonicalFilePath());
   }
   ui->tool_act_fav->setEnabled(ok);
 }
@@ -1409,13 +1408,14 @@ void MainUI::FavoriteItem(){
   if(CItem.isEmpty()){ 
     QFileInfoList sel = getSelectedItems();
     if(sel.isEmpty()){ return; }
-    else{ CItem = sel[0].absoluteFilePath(); }
+    else{ CItem = sel[0].canonicalFilePath(); }
   }
-  QString fname = CItem;
-  QString fullpath = fname;
-    fname = fname.section("/",-1); //turn this into just the file name
+  //QString fname = CItem;
+  QString fullpath = CItem;
+    /*fname = fname.section("/",-1); //turn this into just the file name
   if(QFile::exists(favdir+fname)){ QFile::remove(favdir+fname); } //remove the stale link
-  QFile::link(fullpath, favdir+fname);
+  QFile::link(fullpath, favdir+fname);*/
+  LUtils::addFavorite(fullpath);
   CItem.clear();
   ItemSelectionChanged();
 }
@@ -1424,9 +1424,7 @@ void MainUI::ViewPropertiesItem(){
   QFileInfoList sel = getSelectedItems();
   if(sel.isEmpty()){ return; }
   for(int i=0; i<sel.length(); i++){
-    if(sel[i].absoluteFilePath().endsWith(".desktop")){
-      QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
-    }
+    QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
   }
 }
 

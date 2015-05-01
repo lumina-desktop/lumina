@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -35,6 +35,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   ui->tool_config_screensettings->setIcon( LXDG::findIcon("preferences-other","") );
   ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
   ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
+  ui->tool_home_search->setIcon( LXDG::findIcon("system-search","") );
   ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
@@ -46,6 +47,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->combo_app_cats, SIGNAL(currentIndexChanged(int)), this, SLOT(updateApps()) );
   connect(ui->tool_home_gohome, SIGNAL(clicked()), this, SLOT(slotGoHome()) );
   connect(ui->tool_home_browse, SIGNAL(clicked()), this, SLOT(slotOpenDir()) );
+  connect(ui->tool_home_search, SIGNAL(clicked()), this, SLOT(slotOpenSearch()) );
   connect(ui->tool_config_about, SIGNAL(clicked()), this, SLOT(openLuminaInfo()) );
   
   //Setup the special buttons
@@ -85,6 +87,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
     ui->tool_qtconfig->setVisible(false);
   }
   lastUpdate = QDateTime(); //make sure it refreshes 
+
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()) );
   QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
 }
@@ -147,6 +150,7 @@ void UserWidget::LaunchItem(QString path, bool fix){
 
 void UserWidget::FavChanged(){
   //uncheck the current item for a moment
+  int oldfav = cfav;
   if(cfav==0){ ui->tool_fav_apps->setChecked(false); }
   else if(cfav==1){ ui->tool_fav_dirs->setChecked(false); }
   if(cfav==2){ ui->tool_fav_files->setChecked(false); }
@@ -163,46 +167,59 @@ void UserWidget::FavChanged(){
     ui->tool_fav_dirs->setChecked(cfav==1);
     ui->tool_fav_files->setChecked(cfav==2);
   }
-  updateFavItems();
+  updateFavItems(oldfav!=cfav);
 }
 
-void UserWidget::updateFavItems(){
-  ClearScrollArea(ui->scroll_fav);
-  QFileInfoList items;
-  QDir homedir = QDir( QDir::homePath()+"/Desktop");
-  QDir favdir = QDir( QDir::homePath()+"/.lumina/favorites");
-  if(!favdir.exists()){ favdir.mkpath( QDir::homePath()+"/.lumina/favorites"); }
+void UserWidget::updateFavItems(bool newfilter){
+  QStringList newfavs = LUtils::listFavorites();
+  //qDebug() << "Favorites:" << newfavs;
+  if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
+    favs = newfavs;
+   
+    QDir homedir = QDir( QDir::homePath()+"/Desktop");
+    homefiles = homedir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+    lastHomeUpdate = QDateTime::currentDateTime();
+  }else if(!newfilter){ return; } //nothing new to change - stop now
+  QStringList favitems;
+  //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
   if(ui->tool_fav_apps->isChecked()){ 
-    items = homedir.entryInfoList(QStringList()<<"*.desktop", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    items << favdir.entryInfoList(QStringList()<<"*.desktop", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    favitems = favs.filter("::::app::::");
+    for(int i=0; i<homefiles.length(); i++){
+      if(homefiles[i].fileName().endsWith(".desktop")){
+        favitems << homefiles[i].fileName()+"::::app::::"+homefiles[i].absoluteFilePath();
+      }
+    }
   }else if(ui->tool_fav_dirs->isChecked()){ 
-    items = homedir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-    items << favdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    favitems = favs.filter("::::dir::::");
+    for(int i=0; i<homefiles.length(); i++){
+      if(homefiles[i].isDir()){
+        favitems << homefiles[i].fileName()+"::::dir::::"+homefiles[i].absoluteFilePath();
+      }
+    }
   }else{ 
     //Files
-    items = homedir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    items << favdir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    for(int i=0; i<items.length(); i++){
-      if(items[i].suffix()=="desktop"){ items.removeAt(i); i--; }
+    for(int i=0; i<favs.length(); i++){
+      QString type = favs[i].section("::::",1,1);
+      if(type != "app" && type !="dir"){
+        favitems << favs[i];
+      }
+    }
+    for(int i=0; i<homefiles.length(); i++){
+      if(!homefiles[i].isDir() && !homefiles[i].fileName().endsWith(".desktop") ){
+        favitems << homefiles[i].fileName()+"::::"+LXDG::findAppMimeForFile(homefiles[i].fileName())+"::::"+homefiles[i].absoluteFilePath();
+      }
     }
   }
-  for(int i=0; i<items.length(); i++){
-    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), items[i].absoluteFilePath(), ui->tool_fav_dirs->isChecked());
+  ClearScrollArea(ui->scroll_fav);
+  favitems.sort(); //sort them alphabetically
+  for(int i=0; i<favitems.length(); i++){
+    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) , ui->tool_fav_dirs->isChecked());
     ui->scroll_fav->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
   }
   static_cast<QBoxLayout*>(ui->scroll_fav->widget()->layout())->addStretch();
-  
-  //Clean up any broken sym-links in the favorites directory
-  /*items = favdir.entryInfoList(QDir::System | QDir::NoDotAndDotDot, QDir::Name);
-  for(int i=0; i<items.length(); i++){
-    if(items[i].isSymLink() && !items[i].exists()){
-      //Broken sym-link - remove it
-      QFile::remove(items[i].absoluteFilePath());
-    }
-  }*/
   
 }
 
@@ -268,8 +285,8 @@ void UserWidget::updateHome(){
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;
-    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], true, true); }
-    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), true, false); }
+    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], "dir", true); }
+    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), "dir", false); }
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
@@ -282,7 +299,7 @@ void UserWidget::slotGoToDir(QString dir){
   ui->label_home_dir->setWhatsThis(dir);
   updateHome();
 }
-	
+
 void UserWidget::slotGoHome(){
   slotGoToDir(QDir::homePath());
 }
@@ -290,7 +307,11 @@ void UserWidget::slotGoHome(){
 void UserWidget::slotOpenDir(){
   LaunchItem(ui->label_home_dir->whatsThis());
 }
-	
+
+void UserWidget::slotOpenSearch(){
+  LaunchItem("lumina-search -dir \""+ui->label_home_dir->whatsThis()+"\"", false); //use command as-is
+}
+
 void UserWidget::mouseMoveEvent( QMouseEvent *event){
   QTabBar *wid = tabBar();
   if(wid==0){ return; } //invalid widget found

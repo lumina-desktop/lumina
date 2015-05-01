@@ -41,6 +41,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   SystemTrayID = 0; VisualTrayID = 0;
+  sysWindow = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
   cleansession = true;
@@ -111,6 +112,8 @@ void LSession::setupSession(){
   appmenu = new AppMenu();
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
+  if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
+  sysWindow = new SystemWindow();
   
   //Now setup the system watcher for changes
   qDebug() << " - Initialize file system watcher";
@@ -128,6 +131,7 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
+  QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
 }
 
 void LSession::CleanupSession(){
@@ -315,8 +319,10 @@ void LSession::watcherChange(QString changed){
 void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  int oldversion = VersionStringToNumber(sessionsettings->value("DesktopVersion","0").toString());
-  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) );
+  QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
+  int oldversion = VersionStringToNumber(OVS);
+  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
+  bool newrelease = ( OVS.contains("-devel", Qt::CaseInsensitive) && this->applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
   
   //Check for the desktop settings file
   QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
@@ -331,10 +337,10 @@ void LSession::checkUserFiles(){
     }*/
     LUtils::LoadSystemDefaults();
   }
-  /*if(oldversion <= 8003){
-    //Convert the old->new favorites framework (Not implemented yet)
-	  
-  }*/
+  if(newversion || newrelease){
+    //Convert the favorites framework as necessary
+    LUtils::upgradeFavorites(oldversion);	  
+  }
   
   //Check for the default applications file for lumina-open
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
@@ -493,8 +499,11 @@ QSettings* LSession::sessionSettings(){
 }
 
 void LSession::systemWindow(){
-  SystemWindow win;
-  win.exec();
+  if(sysWindow==0){ sysWindow = new SystemWindow(); }
+  else{ sysWindow->updateWindow(); }
+  sysWindow->show();
+  /*SystemWindow win;
+  win.exec();*/
   LSession::processEvents();
 }
 

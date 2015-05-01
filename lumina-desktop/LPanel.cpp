@@ -335,9 +335,12 @@ void LPanel::leaveEvent(QEvent *event){
   if( !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
     if(hidden){ this->move(hidepoint); }
-    //Only re-activate the old window if the panel is still currently active
-    if(tmpID!=0 && (this->winId()==LSession::handle()->XCB->ActiveWindow()) ){ LSession::handle()->XCB->ActivateWindow(tmpID); }
-    tmpID = 0;
+    //Only re-activate the old window if the panel is still currently active and the old window is still visible
+    if(tmpID!=0){
+      LXCB::WINDOWSTATE state = LSession::handle()->XCB->WindowState(tmpID);
+      if( state!=LXCB::IGNORE && state !=LXCB::INVISIBLE && (this->winId()==LSession::handle()->XCB->ActiveWindow()) ){ LSession::handle()->XCB->ActivateWindow(tmpID); }
+      tmpID = 0;
+      }
   }
 
   event->accept(); //just to quiet the compile warning

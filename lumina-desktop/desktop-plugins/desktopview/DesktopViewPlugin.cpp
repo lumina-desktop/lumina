@@ -174,9 +174,6 @@ void DesktopViewPlugin::updateContents(){
 void DesktopViewPlugin::displayProperties(){
     QList<QListWidgetItem*> sel = list->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      //lumina-fileinfo only works on *.desktop files at the moment
-      if(sel[i]->whatsThis().endsWith(".desktop")){
-        LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis());
-      }
+      LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis());
     }
 }

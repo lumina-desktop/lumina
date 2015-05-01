@@ -33,6 +33,7 @@ private:
 	
 private slots:
 	void saveGeometry(){
+	    if(settings==0){ return; }
 	    settings->setValue("location/x", this->pos().x());
 	    settings->setValue("location/y", this->pos().y());
 	    settings->setValue("location/width", this->size().width());
@@ -45,14 +46,15 @@ public:
 	  locked = islocked;
 	  setup=true;
 	  syncTimer = new QTimer(this);
-	    syncTimer->setInterval(1000); //save settings 1 second after it is moved
+	    syncTimer->setInterval(500); //save settings 1 second after it is moved
 	    syncTimer->setSingleShot(true); //no repeats
 	    connect(syncTimer, SIGNAL(timeout()), this, SLOT(saveGeometry()) );
 	  this->setWhatsThis(plugin->ID());
 	  if(locked){ this->setWindowFlags(Qt::FramelessWindowHint); }
-	  else{ this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
+	  else{ this->setWindowFlags(Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
 	  settings = plugin->settings; //save this pointer for access later
-	  if(settings->allKeys().isEmpty()){
+	  if(settings!=0){
+	   if(settings->allKeys().isEmpty()){
 	    //Brand new plugin - no location/size info saved yet
 	    //save the initial size of the plugin - the initial location will be set automatically
 	      QSize sz = plugin->sizeHint();
@@ -60,7 +62,8 @@ public:
 	      settings->setValue("location/width", sz.width());
 	      settings->setValue("location/height", sz.height());
 	      settings->sync();
-	  }
+	   }
+          }
 	  this->setContentsMargins(0,0,0,0);
 	  if(!locked){
 	    this->setWindowTitle( plugin->ID().replace("---"," - ") );
@@ -115,14 +118,16 @@ protected:
 	}
 	
 	void closeEvent(QCloseEvent *event){
-	  if( !this->whatsThis().isEmpty() ){
+	  //qDebug() << "Desktop Plugin Close Event:" << this->whatsThis();
+	  if( !this->whatsThis().isEmpty() && !locked){
 	    //Plugin removed by the user - delete the settings file
 	    locked = true; //ensure that the save settings routines don't do anything during the close
 	    if(syncTimer->isActive()){ syncTimer->stop(); } //prevent save routine from running in a moment
 	    QFile::remove( settings->fileName() );
 	    emit PluginRemoved( this->whatsThis() );
 	  }
-	  event->accept(); //continue closing the widget
+	  settings = 0; //ensure we don't touch the settings file after a close event
+	  event->accept();
 	}
 	
 };
