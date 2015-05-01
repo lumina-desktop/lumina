@@ -1433,13 +1433,19 @@ void MainUI::ViewPropertiesItem(){
 void MainUI::openTerminal(){
   QFileInfoList sel = getSelectedItems();
   QString shell;
+  //we get the shell has defined in the environment
   if (getenv("SHELL")) shell = QString(getenv("SHELL"));
   else shell = QString("/bin/sh");
+    //we use the application defined as thate default terminal 
+  QSettings *sessionsettings = new QSettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
+  //xterm remains the default
+  QString defTerminal = sessionsettings->value("default-terminal", "xterm").toString();
   if(sel.isEmpty()){ 
-    //TODO: replace xterm by the user's choice
-    QProcess::startDetached("xterm -e \"cd " + getCurrentDir() + " && " + shell + " \" ");
+    //-e is the parameter for most of the terminal appliction to execute an external command. 
+    //In your case we start a shell in the selected directory
+    QProcess::startDetached(defTerminal + " -e \"cd " + getCurrentDir() + " && " + shell + " \" ");
   } else {
-    QProcess::startDetached("xterm -e \"cd " + sel[0].absoluteFilePath() + " && " + shell + " \" ");
+    QProcess::startDetached(defTerminal + " -e \"cd " + sel[0].absoluteFilePath() + " && " + shell + " \" ");
   }
 }
 
