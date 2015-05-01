@@ -7,9 +7,11 @@ TO-DO (small projects)
 New Desktop Plugins: 
 	- Picture Frame (rotating slideshow)
 	- Alarm Clock (simple clock alternative to the panel plugin with alarm functionality)
+	- Analog Clock
+	- System Tray
+	- Interface to Favorite Items
 	
 New Panel Plugins:
-	- Single-Application Launcher (application pinned to the panel)
 	- Minimalistic Task Tanager (no running overhead - when clicked it runs all 
 
 New Screensaver Plugins (after lumina-screensaver is written):
@@ -22,7 +24,6 @@ Add network probing functionality (for lumina-fm mainly)
 	
 Add OS-specific suspend/resume functionality
 	- Will be integrated into lumina-screensaver primarily
-	- Can also be integrated into the logout options
 	
 Redesign the lumina-open dialog (specifically, the widget used to browse the available applications).
 
@@ -31,7 +32,6 @@ Redesign the lumina-open dialog (specifically, the widget used to browse the ava
 TO-DO (medium projects)
 -----------------------------------------
 Abstraction (move into libLumina):
-	- Favorites Interaction (currently in userbutton plugin and lumina-fm)
 	- lumina-fm bookmarks? (possibly integrate into the favorites)
 	- Plugins (desktop and panel): this allows lumina-config to more easily probe/utilize
 	  the plugins that are available (easier to maintain/disable/add plugins on a per-build basis as well)
@@ -44,16 +44,17 @@ New Frameworks:
 	- LuminaThemeEngine library for use by all Qt applications 
 	  (binary module/wrapper around the current theme engine functionality)
 
-PDF Viewing Capabilities?
+PDF Viewing Capabilities (Extremely Low Priority: just created pc-pdfviewer for PC-BSD)
 	- Could be a new utility, but would prefer the functionality be put into libLumina 
 	 so that lumina-fm can also use it.
 	- Great for quickly viewing/printing PDF files (since most PDF utilities appear to be DE-specific)
 	
 	
+	
 ------------------------------------------
 TO-DO (large projects)
 ------------------------------------------
-lumina-screensaver:
+lumina-screensaver (Combined into lumina-wm):
 	- This utility is a replacement for xscreensaver, and will reduce the number of packages
 	required by Lumina considerably (removing all perl requirements)
 	- This utility will also be the power management interface for the lumina desktop
@@ -80,10 +81,8 @@ capsicum:
 --------------------------
 ROADMAP to 1.0.0-Release (large projects define release schedule)
 ---------------------------
-0.8.4 - Include "lumina-screensaver" as a replacement for xscreensaver
-0.8.5 - Integrate "capsicum" on FreeBSD for application/system security
-	- May have additional 0.8.x releases as necessary
-0.9.0 - Include "lumina-wm" as a replacement for Fluxbox
+0.8.x - Checkpoints for minor changes/improvements as lumina-wm is being developed
+0.9.0 - Include "lumina-wm" as a replacement for Fluxbox/xscreensaver
 
 Note: Will use 0.9.x series for serious bug fixing, appearance polishing, and
 	getting ready for the first offical (non-beta) release.

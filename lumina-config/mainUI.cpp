@@ -169,8 +169,8 @@ void MainUI::setupConnections(){
   connect(ui->tool_panel2_getcolor,SIGNAL(clicked()), this, SLOT(getpanel2color()) );
   connect(ui->toolBox_panel1, SIGNAL(currentChanged(int)), this, SLOT(adjustpanel2()) );
   connect(ui->toolBox_panel2, SIGNAL(currentChanged(int)), this, SLOT(adjustpanel1()) );
-  connect(ui->combo_panel1_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel2()) );
-  connect(ui->combo_panel2_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustpanel1()) );
+  connect(ui->combo_panel1_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
+  connect(ui->combo_panel2_loc, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->combo_panel1_align, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->combo_panel2_align, SIGNAL(currentIndexChanged(int)), this, SLOT(panelValChanged()) );
   connect(ui->spin_panel1_size, SIGNAL(valueChanged(int)), this, SLOT(panelValChanged()) );
@@ -943,14 +943,14 @@ void MainUI::adjustpanel1(){
   if(loading || panadjust){ return; }
   panadjust = true;
   qDebug() << "Adjust Panel 1:";
-  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
-  if(!valchanged){
+  //bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  //if(!valchanged){
     //Just a toolbox page change - switch to match and exit
     ui->toolBox_panel1->setCurrentIndex( ui->toolBox_panel2->currentIndex() );
     panadjust = false;
     return;
-  }
-  int newindex=0;
+  //}
+  /*int newindex=0;
   switch(ui->combo_panel2_loc->currentIndex()){
     case 0:
 	newindex = 1; break;
@@ -964,9 +964,9 @@ void MainUI::adjustpanel1(){
   if(newindex != ui->combo_panel1_loc->currentIndex()){ 
     valchanged = true;
     ui->combo_panel1_loc->setCurrentIndex(newindex);
-  }
-  panadjust = false;
-  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
+  }*/
+  //panadjust = false;
+  //if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 void MainUI::adjustpanel2(){
@@ -974,15 +974,15 @@ void MainUI::adjustpanel2(){
   panadjust = true;
   //Adjust panel 2 to complement a panel 1 change
   qDebug() << "Adjust Panel 2:";
-  bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
-  if(!valchanged){
+  //bool valchanged = ui->toolBox_panel1->currentIndex()==ui->toolBox_panel2->currentIndex();
+  //if(!valchanged){
     //Just a toolbox page change - switch to match and exit
     ui->toolBox_panel2->setCurrentIndex( ui->toolBox_panel1->currentIndex() );
     panadjust = false;
     return;
-  }
+  //}
   
-  int newindex=0;
+  /*int newindex=0;
   switch(ui->combo_panel1_loc->currentIndex()){
     case 0:
 	newindex = 1; break;
@@ -996,9 +996,9 @@ void MainUI::adjustpanel2(){
   if(newindex != ui->combo_panel2_loc->currentIndex()){ 
     valchanged = true;
     ui->combo_panel2_loc->setCurrentIndex(newindex);
-  }
-  panadjust = false;
-  if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
+  }*/
+  //panadjust = false;
+  //if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
 
