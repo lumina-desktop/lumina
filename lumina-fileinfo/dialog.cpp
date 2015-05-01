@@ -122,9 +122,11 @@ void Dialog::LoadDesktopFile(QString input)
     exit(1);
   }
   //if proposed file does not exist, than we will create one based on the templates
-  if (!QFile::exists(input)) {
+  QFileInfo info(desktopFileName);
+  if ((info.size() == 0) && (desktopFileName.endsWith(".desktop"))) {
+    QFile::remove(desktopFileName); //for the copy, we need to remove it
     if (desktopType=="link") {
-    copyTemplate("-link");
+      copyTemplate("-link");
     } else {
       copyTemplate("-app");
     }
@@ -132,7 +134,6 @@ void Dialog::LoadDesktopFile(QString input)
   this->setWindowTitle(desktopFileName.section("/",-1));
   ui->tabWidget->setCurrentIndex(0); //always start on the file info tab
   //Now load the file info and put it into the UI
-  QFileInfo info(desktopFileName);
   QString mime = LXDG::findAppMimeForFile(desktopFileName);
   
   QList<QByteArray> fmt = QImageReader::supportedImageFormats();
