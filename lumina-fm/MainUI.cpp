@@ -976,6 +976,11 @@ void MainUI::OpenContextMenu(const QPoint &pt){
     contextMenu->addSeparator();
     contextMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("File Properties"), this, SLOT(ViewPropertiesItem()) )->setEnabled(hasSelection);
   }
+  if (info.isDir() || CItem.isEmpty()) {
+    //in case the user click on a directory or click on the background
+    contextMenu->addSeparator();
+    contextMenu->addAction(LXDG::findIcon("system-search",""), tr("Open Terminal here"), this, SLOT(openTerminal()));
+  }
   //Now show the menu
   if(radio_view_details->isChecked()){
     contextMenu->popup(ui->tree_dir_view->mapToGlobal(pt));
@@ -1422,6 +1427,26 @@ void MainUI::ViewPropertiesItem(){
     QProcess::startDetached("lumina-fileinfo \""+sel[i].absoluteFilePath()+"\"");
   }
 }
+
+void MainUI::openTerminal(){
+  QFileInfoList sel = getSelectedItems();
+  QString shell;
+  //we get the shell has defined in the environment
+  if (getenv("SHELL")) shell = QString(getenv("SHELL"));
+  else shell = QString("/bin/sh");
+    //we use the application defined as thate default terminal 
+  QSettings *sessionsettings = new QSettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
+  //xterm remains the default
+  QString defTerminal = sessionsettings->value("default-terminal", "xterm").toString();
+  if(sel.isEmpty()){ 
+    //-e is the parameter for most of the terminal appliction to execute an external command. 
+    //In your case we start a shell in the selected directory
+    QProcess::startDetached(defTerminal + " -e \"cd " + getCurrentDir() + " && " + shell + " \" ");
+  } else {
+    QProcess::startDetached(defTerminal + " -e \"cd " + sel[0].absoluteFilePath() + " && " + shell + " \" ");
+  }
+}
+
 
 void MainUI::CutItems(){
   //Only let this run if viewing the browser page
