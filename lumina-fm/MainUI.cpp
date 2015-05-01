@@ -1438,6 +1438,17 @@ void MainUI::openTerminal(){
   QSettings *sessionsettings = new QSettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
   //xterm remains the default
   QString defTerminal = sessionsettings->value("default-terminal", "xterm").toString();
+  if(defTerminal.endsWith(".desktop")){
+    //Pull the binary name out of the shortcut
+    bool ok = false;
+    XDGDesktop DF = LXDG::loadDesktopFile(defTerminal,ok);
+    if(!ok){ defTerminal = "xterm"; }
+    else{ defTerminal = DF.exec.section(" ",0,0); } //only take the binary name - not any other flags
+  }
+  if( !LUtils::isValidBinary(defTerminal) ){
+    //The binary does not exist or is invalid
+    defTerminal = "xterm";
+  }	  
   if(sel.isEmpty()){ 
     //-e is the parameter for most of the terminal appliction to execute an external command. 
     //In your case we start a shell in the selected directory
