@@ -1182,8 +1182,6 @@ void LXCB::SetAsPanel(WId win){
     qDebug() << " -- Set no inputs flag";
      xcb_icccm_wm_hints_set_input(&hints, False); //set no input focus
      xcb_icccm_set_wm_hints(QX11Info::connection(), win, &hints); //save hints back to window
-    qDebug() << " -- Free the hints structure";
-     free(&hints); //free up hints structure
   }
   //  - Remove WM_TAKE_FOCUS from the WM_PROTOCOLS for the window
   //  - - Generate the necessary atoms
