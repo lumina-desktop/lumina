@@ -31,12 +31,15 @@ LDPlugin#applauncher  QWidget:hover{
   border-radius: 5px; 
   color: %%ALTBASECOLOR%%;
 }
+LDPlugin#applauncher QMenu{
+background: %%BASECOLOR%%;
+color: %%TEXTCOLOR%%;
+}
 
 LDPlugin#desktopview QWidget{
   background: transparent;
   border: 1px solid transparent;
 }
-
 LDPlugin#desktopview QListWidget::item{
   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   stop: 0 transparent, 
@@ -44,6 +47,10 @@ LDPlugin#desktopview QListWidget::item{
   stop: 1.0 %%ACCENTDISABLECOLOR%%);
   border-radius: 5px;
   color: %%ALTBASECOLOR%%;
+}
+LDPlugin#desktopview QMenu{
+background: %%BASECOLOR%%;
+color: %%TEXTCOLOR%%;
 }
 
 LDPlugin#desktopview QListWidget::item:hover{
