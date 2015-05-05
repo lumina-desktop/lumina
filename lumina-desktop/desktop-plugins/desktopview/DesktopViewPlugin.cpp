@@ -21,7 +21,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    list->setStyleSheet( "QListWidget{ background: transparent; border: none; }" );
+    //list->setStyleSheet( "QListWidget{ background: transparent; border: none; }" );
     int icosize = settings->value("IconSize",64).toInt();
     list->setIconSize(QSize(icosize,icosize));
     list->setUniformItemSizes(true);
