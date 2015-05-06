@@ -47,7 +47,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     watcher->addPath(QDir::homePath()+"/Desktop");
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(updateContents()) );
 	
-  connect(list, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(runItems()) );
+  connect(list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(runItems()) );
   connect(list, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)) );
   QTimer::singleShot(0,this, SLOT(updateContents()) );
 }
