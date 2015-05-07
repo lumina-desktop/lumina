@@ -81,7 +81,7 @@
     <message>
         <location filename="../MainUI.ui" line="344"/>
         <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Открыть в веб-браузере&lt;a&gt;</tranрslation>
+        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Открыть в веб-браузере&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="370"/>
