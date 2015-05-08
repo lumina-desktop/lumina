@@ -40,7 +40,8 @@ public:
 	  if(opaque){ this->setObjectName("LuminaDesktopPluginVisible"); }
 	  else{ this->setObjectName("LuminaDesktopPlugin"); }
 	  //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
-	  //this->setObjectName(id.section("---",0,0).section("::",0,0));
+	  qDebug() << "set Objectname:" << id.section("---",0,0).section("::",0,0);
+	  this->setObjectName(id.section("---",0,0).section("::",0,0));
 	}
 	
 	~LDPlugin(){
