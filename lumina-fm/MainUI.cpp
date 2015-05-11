@@ -434,11 +434,17 @@ void MainUI::setCurrentDir(QString dir){
     if(radio_view_details->isChecked()){
       ui->tree_dir_view->setRootIndex(fsmod->index(dir));
       ui->tree_dir_view->selectionModel()->clearSelection();
-      if(olddir.startsWith(rawdir)){ ui->tree_dir_view->selectionModel()->setCurrentIndex( fsmod->index(olddir),QItemSelectionModel::SelectCurrent ); }
+      if(olddir.startsWith(rawdir)){ 
+	ui->tree_dir_view->setCurrentIndex( fsmod->index(olddir)); 
+	ui->tree_dir_view->scrollTo( fsmod->index(olddir));
+      }
     }else{
       ui->list_dir_view->setRootIndex(fsmod->index(dir));
       ui->list_dir_view->selectionModel()->clearSelection();
-      if(olddir.startsWith(rawdir)){ ui->list_dir_view->selectionModel()->setCurrentIndex( fsmod->index(olddir),QItemSelectionModel::SelectCurrent ); }
+      if(olddir.startsWith(rawdir)){ 
+	ui->list_dir_view->setCurrentIndex( fsmod->index(olddir)); 
+	ui->list_dir_view->scrollTo( fsmod->index(olddir));
+      }
     }
   //Adjust the tab data
   tabBar->setTabWhatsThis( tabBar->currentIndex(), rawdir );
