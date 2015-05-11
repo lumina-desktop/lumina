@@ -109,6 +109,7 @@ void LPanel::UpdatePanel(){
     layout->setDirection(QBoxLayout::TopToBottom);
   }
   int ht = settings->value(PPREFIX+"height", 30).toInt(); //this is technically the distance into the screen from the edge
+  if(ht<=1){ ht = 30; } //some kind of error in the saved height - use the default value
   int hidesize = qRound(ht*0.01); //use 1% of the panel size
   if(hidesize<2){ hidesize=2; } //minimum of 2 pixels (need space for the mouse to go over it)
   if(hidden){ viswidth = hidesize; }
