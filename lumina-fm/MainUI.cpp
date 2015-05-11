@@ -434,9 +434,11 @@ void MainUI::setCurrentDir(QString dir){
     if(radio_view_details->isChecked()){
       ui->tree_dir_view->setRootIndex(fsmod->index(dir));
       ui->tree_dir_view->selectionModel()->clearSelection();
+      if(olddir.startsWith(rawdir)){ ui->tree_dir_view->selectionModel()->setCurrentIndex( fsmod->index(olddir),QItemSelectionModel::SelectCurrent ); }
     }else{
       ui->list_dir_view->setRootIndex(fsmod->index(dir));
       ui->list_dir_view->selectionModel()->clearSelection();
+      if(olddir.startsWith(rawdir)){ ui->list_dir_view->selectionModel()->setCurrentIndex( fsmod->index(olddir),QItemSelectionModel::SelectCurrent ); }
     }
   //Adjust the tab data
   tabBar->setTabWhatsThis( tabBar->currentIndex(), rawdir );
@@ -462,7 +464,7 @@ void MainUI::setCurrentDir(QString dir){
   if(isUserWritable){ ui->label_dir_stats->setText(""); }
   else{ ui->label_dir_stats->setText(tr("Limited Access Directory"));
   }
-  
+
   ui->tool_addToDir->setVisible(isUserWritable);
   ui->tool_addNewFile->setVisible(isUserWritable);
   ui->actionUpDir->setEnabled(dir!="/");
@@ -470,6 +472,7 @@ void MainUI::setCurrentDir(QString dir){
   ui->actionBookMark->setEnabled( rawdir!=QDir::homePath() && settings->value("bookmarks", QStringList()).toStringList().filter("::::"+rawdir).length()<1 );
   ItemSelectionChanged();
   RebuildDeviceMenu(); //keep this refreshed
+
 }
 
 QFileInfoList MainUI::getSelectedItems(){
