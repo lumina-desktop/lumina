@@ -436,14 +436,14 @@ void MainUI::setCurrentDir(QString dir){
       ui->tree_dir_view->selectionModel()->clearSelection();
       if(olddir.startsWith(rawdir)){ 
 	ui->tree_dir_view->setCurrentIndex( fsmod->index(olddir)); 
-	ui->tree_dir_view->scrollTo( fsmod->index(olddir));
+	ui->tree_dir_view->scrollTo( fsmod->index(olddir), QAbstractItemView::PositionAtTop);
       }
     }else{
       ui->list_dir_view->setRootIndex(fsmod->index(dir));
       ui->list_dir_view->selectionModel()->clearSelection();
       if(olddir.startsWith(rawdir)){ 
 	ui->list_dir_view->setCurrentIndex( fsmod->index(olddir)); 
-	ui->list_dir_view->scrollTo( fsmod->index(olddir));
+	ui->list_dir_view->scrollTo( fsmod->index(olddir), QAbstractItemView::PositionAtTop);
       }
     }
   //Adjust the tab data
