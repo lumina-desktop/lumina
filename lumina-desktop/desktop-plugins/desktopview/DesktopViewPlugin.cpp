@@ -14,17 +14,16 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
   this->setLayout( new QVBoxLayout());
     this->layout()->setContentsMargins(0,0,0,0);
   list = new QListWidget(this);
-    list->setUniformItemSizes(true);
+    //list->setUniformItemSizes(true);
     list->setViewMode(QListView::IconMode);
     list->setLayoutMode(QListView::Batched);
     list->setBatchSize(10); //keep it snappy
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    //list->setStyleSheet( "QListWidget{ background: transparent; border: none; }" );
-    int icosize = settings->value("IconSize",64).toInt();
-    list->setIconSize(QSize(icosize,icosize));
-    list->setUniformItemSizes(true);
+    //int icosize = settings->value("IconSize",64).toInt();
+    //list->setIconSize(QSize(icosize,icosize));
+    //list->setUniformItemSizes(true);
     list->setContextMenuPolicy(Qt::CustomContextMenu);
 	
   menu = new QMenu(this);
@@ -115,8 +114,9 @@ void DesktopViewPlugin::showMenu(const QPoint &pos){
 void DesktopViewPlugin::increaseIconSize(){
   int icosize = settings->value("IconSize",64).toInt();
   icosize+=16; //go in orders of 16 pixels
-  list->setIconSize(QSize(icosize,icosize));
+  //list->setIconSize(QSize(icosize,icosize));
   settings->setValue("IconSize",icosize);
+  settings->sync();
   updateContents();
 }
 
@@ -124,8 +124,9 @@ void DesktopViewPlugin::decreaseIconSize(){
   int icosize = settings->value("IconSize",64).toInt();
   if(icosize < 20){ return; } //too small to decrease more
   icosize-=16; //go in orders of 16 pixels
-  list->setIconSize(QSize(icosize,icosize));
+  //list->setIconSize(QSize(icosize,icosize));
   settings->setValue("IconSize",icosize);	
+  settings->sync();
   updateContents();
 }
 
@@ -136,38 +137,62 @@ void DesktopViewPlugin::updateContents(){
     for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
   }
   int icosize = settings->value("IconSize",64).toInt();
-  list->setGridSize(QSize(icosize+8,icosize+4+this->fontMetrics().height()));
+  QSize gridSZ = QSize(icosize+8,icosize+4+(2*this->fontMetrics().height()) );
+  //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
+  list->setGridSize(gridSZ);
+  list->setIconSize(QSize(icosize,icosize));
   QDir dir(QDir::homePath()+"/Desktop");
   QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::Type | QDir::DirsFirst);
   for(int i=0; i<files.length(); i++){
     QListWidgetItem *it = new QListWidgetItem;
+    it->setTextAlignment(Qt::AlignCenter);
     it->setWhatsThis(files[i].absoluteFilePath());
+    QString txt;
     if(files[i].isDir()){
 	it->setIcon( LXDG::findIcon("folder","") );
-	it->setText( files[i].fileName() );
+	txt = files[i].fileName();
     }else if(files[i].suffix() == "desktop" ){
 	bool ok = false;
 	XDGDesktop desk = LXDG::loadDesktopFile(files[i].absoluteFilePath(), ok);
 	if(ok){
 	  it->setIcon( LXDG::findIcon(desk.icon,"unknown") );
 	  if(desk.name.isEmpty()){
-	    it->setText( files[i].fileName() );
+	    txt = files[i].fileName();
 	  }else{
-            it->setText( desk.name );
+            txt = desk.name;
 	  }
 	}else{
 	  //Revert back to a standard file handling
           it->setIcon( LXDG::findMimeIcon(files[i].fileName()) );
-          it->setText( files[i].fileName() );		
+          txt = files[i].fileName();		
 	}
     }else if(imgExtensions.contains(files[i].suffix().toLower()) ){
       it->setIcon( QIcon( QPixmap(files[i].absoluteFilePath()).scaled(icosize,icosize,Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ) );
-      it->setText( files[i].fileName() );	    
+      txt = files[i].fileName();	    
     }else{
       it->setIcon( LXDG::findMimeIcon( files[i].fileName() ) );
-      it->setText( files[i].fileName() );
+      txt = files[i].fileName();
     }
+    //Now adjust the visible text as necessary based on font/grid sizing
+    it->setToolTip(txt);
+    if(this->fontMetrics().width(txt) > (gridSZ.width()-2) ){
+      //int dash = this->fontMetrics().width("-");
+      //Text too long, try to show it on two lines
+      txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
+      if(txt.contains("\n")){
+        //need to check each line
+	QStringList txtL = txt.split("\n");
+	for(int i=0; i<txtL.length(); i++){ txtL[i] = this->fontMetrics().elidedText(txtL[i], Qt::ElideRight, gridSZ.width()); }
+	txt = txtL.join("\n");
+      }else{
+        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*gridSZ.width());
+        //Now split the line in half for the two lines
+        txt.insert( (txt.count()/2), "\n");
+      }
+    }
+    it->setText(txt);
     list->addItem(it);
+    QApplication::processEvents(); //keep the UI snappy
   }
 }
 
