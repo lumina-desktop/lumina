@@ -55,8 +55,9 @@ public:
 
 class LXDG{
 public:
-	//Read a *.desktop file
+	//Read/write a *.desktop file
 	static XDGDesktop loadDesktopFile(QString filePath, bool& ok);
+	static bool saveDesktopFile(XDGDesktop dFile, bool merge = true);
 	//Check a *.desktop file for validity (showAll skips the DE-exclusivity checks)
 	static bool checkValidity(XDGDesktop dFile, bool showAll = true); 
 	//Check for a valid executable
@@ -102,6 +103,7 @@ public:
 	
 	//Find all the autostart *.desktop files
 	static QList<XDGDesktop> findAutoStartFiles(bool includeInvalid = false);
+	static bool setAutoStarted(bool autostart, XDGDesktop app);
 };
 
 #endif

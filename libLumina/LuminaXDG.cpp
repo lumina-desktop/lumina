@@ -17,7 +17,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   //Create the outputs
   ok=false;
   //following the specifications, Name and Type are the mandatory in any .desktop file
-  bool hasName=false, hasType=false; 
+  //bool hasName=false, hasType=false; 
   XDGDesktop DF;
     DF.isHidden=false;
     DF.useTerminal=false;
@@ -53,7 +53,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     if(var=="Name"){ 
       if(DF.name.isEmpty() && loc.isEmpty()){ DF.name = val; }
       else if(loc == lang){ DF.name = val; }
-      hasName = true;
+      //hasName = true;
     }else if(var=="GenericName"){ 
       if(DF.genericName.isEmpty() && loc.isEmpty()){ DF.genericName = val; }
       else if(loc == lang){ DF.genericName = val; }
@@ -87,7 +87,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       else if(val.toLower()=="link"){ DF.type = XDGDesktop::LINK; }
       else if(val.toLower()=="dir"){ DF.type = XDGDesktop::DIR; }
       else{ DF.type = XDGDesktop::BAD; } //Unknown type
-      hasType = true;
+      //hasType = true;
     }
   } //end reading file
   file.close();
@@ -109,8 +109,119 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
   }
   //Return the structure
-  if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
+  //if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
+  ok = true; //was able to open/read the file - validity determined later
   return DF;
+}
+
+bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
+  bool autofile = dFile.filePath.contains("/autostart/"); //use the "Hidden" field instead of the "NoDisplay"
+  int insertloc = -1;
+  QStringList info;
+  if(QFile::exists(dFile.filePath) && merge){
+    //Load the existing file and merge in in any changes
+    info = LUtils::readFile(dFile.filePath);
+    //set a couple flags based on the contents before we start iterating through
+    // - determine if a translated field was changed (need to remove all the now-invalid translations)
+    bool clearName, clearComment, clearGName; 
+    QString tmp = info.filter("Name=").first().section("=",1,50);
+    clearName=(tmp!=dFile.name);
+      tmp = info.filter("Comment=").first().section("=",1,50);
+    clearComment=(tmp!=dFile.comment);
+      tmp = info.filter("GenericName=").first().section("=",1,50);
+    clearGName=(tmp!=dFile.genericName);
+    //Now start iterating through the file and changing fields as necessary
+    bool insection = false;
+    for(int i=0; i<info.length(); i++){
+      if(info[i]=="[Desktop Entry]"){ 
+        insection = true; 
+	continue;
+      }else if(info[i].startsWith("[")){ 
+	if(insection){ insertloc = i; } //save this location for later insertions
+	insection = false; 
+	continue; 
+      }
+      if(!insection || info[i].isEmpty() || info[i].section("#",0,0).simplified().isEmpty()){ continue; }
+      QString var = info[i].section("=",0,0);
+      QString val = info[i].section("=",1,50).simplified();
+      //NOTE: Clear the dFile variable as it is found/set in the file (to keep track of what has been used already)
+      //    For boolian values, set them to false
+      // --LOCALIZED VALUES --
+      if(var.startsWith("Name")){
+        if(var.contains("[") && clearName){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+dFile.name; dFile.name.clear(); }
+      }else if(var.startsWith("GenericName")){
+        if(var.contains("[") && clearGName){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+dFile.genericName; dFile.genericName.clear(); }
+      }else if(var.startsWith("Comment")){
+        if(var.contains("[") && clearComment){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+dFile.comment; dFile.comment.clear(); }
+
+      // --STRING/LIST VALUES--
+      }else if(var=="Exec"){ info[i] = var+"="+dFile.exec; dFile.exec.clear(); }
+      else if(var=="TryExec"){ info[i] = var+"="+dFile.tryexec; dFile.tryexec.clear(); }
+      else if(var=="Path"){ info[i] = var+"="+dFile.path; dFile.path.clear(); }
+      else if(var=="Icon"){ info[i] = var+"="+dFile.icon; dFile.icon.clear(); }
+      else if(var=="StartupWMClass"){ info[i] = var+"="+dFile.startupWM; dFile.startupWM.clear(); }
+      else if(var=="MimeType"){ info[i] = var+"="+dFile.mimeList.join(";"); dFile.mimeList.clear(); }
+      else if(var=="Categories"){ info[i] = var+"="+dFile.catList.join(";"); dFile.catList.clear(); }
+      else if(var=="Keywords"){ info[i] = var+"="+dFile.keyList.join(";"); dFile.keyList.clear(); }
+      else if(var=="Actions"){ info[i] = var+"="+dFile.actionList.join(";"); dFile.actionList.clear(); }
+      else if(var=="OnlyShowIn"){ info[i] = var+"="+dFile.showInList.join(";"); dFile.showInList.clear(); }
+      else if(var=="NotShowIn"){ info[i] = var+"="+dFile.notShowInList.join(";"); dFile.notShowInList.clear(); }
+      else if(var=="URL"){ info[i] = var+"="+dFile.url; dFile.url.clear(); }
+      
+      // --BOOLIAN VALUES--
+      else if(var=="Hidden"){ 
+	if(!autofile){ info.removeAt(i); i--; continue; }
+	else{ info[i] = var+"="+(dFile.isHidden ? "true": "false"); dFile.isHidden=false;}
+      }else if(var=="NoDisplay"){ 
+	if(autofile){ info.removeAt(i); i--; continue; }
+	else{ info[i] = var+"="+(dFile.isHidden ? "true": "false"); dFile.isHidden=false;}
+      }else if(var=="Terminal"){ 
+	info[i] = var+"="+(dFile.useTerminal ? "true": "false"); dFile.useTerminal=false;
+      }else if(var=="StartupNotify"){ 
+	info[i] = var+"="+(dFile.startupNotify ? "true": "false"); dFile.startupNotify=false;
+      }
+      // Remove any lines that have been un-set or removed from the file
+      if(info[i].section("=",1,50).simplified().isEmpty()){ info.removeAt(i); i--; }
+    }
+    
+  }else{
+    //Just write a new file and overwrite any old one 
+    // (pre-set some values here which are always required)
+    info << "[Desktop Entry]";
+    info << "Version=1.0";
+    if(dFile.type==XDGDesktop::APP){ info << "Type=Application"; }
+    else if(dFile.type==XDGDesktop::LINK){ info << "Type=Link"; }
+    else if(dFile.type==XDGDesktop::DIR){ info << "Type=Dir"; }
+  }
+  
+  if(insertloc<0){ insertloc = info.size(); }//put it at the end
+  //Now add in any items that did not exist in the original file
+    if( !dFile.exec.isEmpty() ){ info.insert(insertloc,"Exec="+dFile.exec); }
+    if( !dFile.tryexec.isEmpty() ){ info.insert(insertloc,"TryExec="+dFile.tryexec); }
+    if( !dFile.path.isEmpty() ){ info.insert(insertloc,"Path="+dFile.path); }
+    if( !dFile.icon.isEmpty() ){ info.insert(insertloc,"Icon="+dFile.icon); }
+    if( !dFile.name.isEmpty() ){ info.insert(insertloc,"Name="+dFile.name); }
+    if( !dFile.genericName.isEmpty() ){ info.insert(insertloc,"GenericName="+dFile.genericName); }
+    if( !dFile.comment.isEmpty() ){ info.insert(insertloc,"Comment="+dFile.comment); }
+    if( !dFile.startupWM.isEmpty() ){ info.insert(insertloc,"StartupWMClass="+dFile.startupWM); }
+    if( !dFile.mimeList.isEmpty() ){ info.insert(insertloc,"MimeType="+dFile.mimeList.join(";")); }
+    if( !dFile.catList.isEmpty() ){ info.insert(insertloc,"Categories="+dFile.catList.join(";")); }
+    if( !dFile.keyList.isEmpty() ){ info.insert(insertloc,"Keywords="+dFile.keyList.join(";")); }
+    if( !dFile.actionList.isEmpty() ){ info.insert(insertloc,"Actions="+dFile.actionList.join(";")); }
+    if( !dFile.showInList.isEmpty() ){ info.insert(insertloc,"OnlyShowIn="+dFile.showInList.join(";")); }
+    else if( !dFile.notShowInList.isEmpty() ){ info.insert(insertloc,"NotShowIn="+dFile.notShowInList.join(";")); }
+    if( !dFile.url.isEmpty() ){ info.insert(insertloc,"URL="+dFile.url); }
+    if( dFile.isHidden && autofile ){ info.insert(insertloc,"Hidden=true"); }
+    else if(dFile.isHidden){ info.insert(insertloc,"NoDisplay=true"); }
+    if( dFile.useTerminal){ info.insert(insertloc,"Terminal=true"); }
+    if( dFile.startupNotify ){ info.insert(insertloc,"StartupNotify=true"); }
+    
+  //Now save the file
+  return LUtils::writeFile(dFile.filePath, info, true);
+
 }
 
 bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
@@ -142,6 +253,7 @@ bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
   if(!showAll){
     if(!dFile.showInList.isEmpty()){ ok = dFile.showInList.contains("Lumina", Qt::CaseInsensitive); }
     else if(!dFile.notShowInList.isEmpty()){ ok = !dFile.notShowInList.contains("Lumina",Qt::CaseInsensitive); }
+    else if(dFile.genericName.isEmpty()){ ok = false; }
   }
   return ok;
 }
@@ -713,7 +825,7 @@ QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
 	}else{
 	  //Small override file (only the "Hidden" field listed in spec)
 	  files[old].isHidden = desk.isHidden; //replace this value with the override
-	  files << desk; //still add this to the array (will be ignored/skipped later)
+	  //files << desk; //still add this to the array (will be ignored/skipped later)
 	}
       }else{
         //This is a new autostart file
@@ -735,5 +847,53 @@ QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
   }
 	
   return files;
+}
+
+bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
+  //First get the list of system directories to search (system first, user-provided files come later and overwrite sys files as needed)
+  QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+  QString upath = QString(getenv("XDG_CONFIG_HOME")).section(":",0,0);
+  if(upath.isEmpty()){ upath = QDir::homePath()+"/.config/autostart/"; }
+  bool sysfile = false;
+  for(int i=0; i<paths.length(); i++){
+    if(app.filePath.startsWith(paths[i]+"/autostart/") ){
+      sysfile = true;
+      //Change it to the user-modifiable directory
+      app.filePath = app.filePath.replace(paths[i]+"/autostart/", upath);
+    }
+  }
+  //Make sure the user-autostart dir is specified, and clean the app structure as necessary
+  if( !app.filePath.startsWith(upath) && autostart){ 
+    //Some other non-override autostart file - set it up to open with lumina-open
+    if(!app.filePath.endsWith(".desktop")){
+      app.exec = "lumina-open \""+app.filePath+"\"";
+      app.tryexec = app.filePath; //make sure this file exists
+      if(app.name.isEmpty()){ app.name = app.filePath.section("/",-1); }
+      if(app.icon.isEmpty()){ app.icon = LXDG::findAppMimeForFile(app.filePath); }
+      app.filePath = upath+app.filePath.section("/",-1)+".desktop";
+      app.type = XDGDesktop::APP;
+    }else{
+      //Some other *.desktop file on the system
+      // - setup a redirect to the other file
+      app.exec = "lumina-open \""+app.filePath+"\"";
+      app.tryexec = app.filePath; //make sure this file exists
+      // - Adjust the actual path where this file will get saved
+      app.filePath = upath+app.filePath.section("/",-1);
+    }
+  }
+  //Now save the "hidden" value into the file
+  app.isHidden = !autostart; //if hidden, it will not be autostarted
+  //Now save the file as necessary
+  bool saved = false;
+  if(sysfile){
+    //Just an override file for the "hidden" field - nothing more
+    QStringList info;
+      info << "[Desktop Entry]" << "Type=Application" << QString("Hidden=")+ (app.isHidden ? QString("true"): QString("false"));
+    saved = LUtils::writeFile(app.filePath, info, true);
+  }else{
+    //Need to actually save the full file
+    saved = LXDG::saveDesktopFile(app);
+  }
+  return saved;
 }
 

@@ -78,6 +78,7 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   if( file.open(QIODevice::WriteOnly | QIODevice::Truncate) ){
     QTextStream out(&file);
     out << contents.join("\n");
+    if(!contents.last().isEmpty()){ out << "\n"; } //always end with a new line
     file.close();
     ok = true;
   }
