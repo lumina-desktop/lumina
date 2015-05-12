@@ -429,9 +429,12 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
     matches << mime;
   }
   //qDebug() << "Matches:" << matches;
-  if(multiple){ out = matches.join("::::"); }
+  if(multiple && !matches.isEmpty() ){ out = matches.join("::::"); }
   else if( !matches.isEmpty() ){ out = matches.first(); }
-  else{ out.clear(); }
+  else{ //no mimetype found - assign one (internal only - no system database changes)
+    if(extension.isEmpty()){ out = "unknown/"+filename.toLower(); }
+    else{ out = "unknown/"+extension.toLower(); }
+  }
   //qDebug() << "Out:" << out;
   return out;
 }
