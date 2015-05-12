@@ -104,6 +104,7 @@ public:
 	//Find all the autostart *.desktop files
 	static QList<XDGDesktop> findAutoStartFiles(bool includeInvalid = false);
 	static bool setAutoStarted(bool autostart, XDGDesktop app);
+	static bool setAutoStarted(bool autostart, QString filePath); //for convenience
 };
 
 #endif

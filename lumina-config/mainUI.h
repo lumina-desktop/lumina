@@ -57,6 +57,7 @@ private:
 	QString panelcolor;
 	QString DEFAULTBG;
 	QList<XDGDesktop> sysApps;
+	QList<XDGDesktop> STARTAPPS;
 	bool loading, panadjust;
 	bool moddesk, modpan, modmenu, modshort, moddef, modses; //page modified flags
 	int panelnumber;
@@ -164,7 +165,7 @@ private slots:
 	void addsessionstartfile();
 	void sessionoptchanged();
 	void sessionthemechanged();
-	void sessionstartchanged();
+	//void sessionstartchanged();
 	void sessionEditColor();
 	void sessionEditTheme();
 	void sessionChangeUserIcon();

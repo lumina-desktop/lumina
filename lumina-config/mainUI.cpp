@@ -128,7 +128,7 @@ void MainUI::setupIcons(){
   ui->tabWidget_apps->setTabIcon( ui->tabWidget_apps->indexOf(ui->tab_defaults), LXDG::findIcon("preferences-desktop-filetype-association", "") );
 
   //Session Page
-  ui->tool_session_rmapp->setIcon( LXDG::findIcon("list-remove","") );
+  //ui->tool_session_rmapp->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_session_addapp->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_session_addbin->setIcon( LXDG::findIcon("system-search","") );
   ui->tool_session_addfile->setIcon( LXDG::findIcon("run-build-file","") );
@@ -217,7 +217,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_session_addapp, SIGNAL(clicked()), this, SLOT(addsessionstartapp()) );
   connect(ui->tool_session_addbin, SIGNAL(clicked()), this, SLOT(addsessionstartbin()) );
   connect(ui->tool_session_addfile, SIGNAL(clicked()), this, SLOT(addsessionstartfile()) );
-  connect(ui->tool_session_rmapp, SIGNAL(clicked()), this, SLOT(rmsessionstartitem()) );
+  //connect(ui->tool_session_rmapp, SIGNAL(clicked()), this, SLOT(rmsessionstartitem()) );
   connect(ui->combo_session_wfocus, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_wloc, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_wtheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionthemechanged()) );
@@ -225,7 +225,8 @@ void MainUI::setupConnections(){
   connect(ui->check_session_playloginaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->spin_session_wkspaces, SIGNAL(valueChanged(int)), this, SLOT(sessionoptchanged()) );
-  connect(ui->list_session_start, SIGNAL(currentRowChanged(int)), this, SLOT(sessionstartchanged()) );
+  //connect(ui->list_session_start, SIGNAL(currentRowChanged(int)), this, SLOT(sessionstartchanged()) );
+  connect(ui->list_session_start, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(sessionoptchanged()) );
   connect(ui->spin_session_fontsize, SIGNAL(valueChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_themefile, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_colorfile, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
@@ -771,7 +772,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
     moddesk = modpan = false;
     if(!screenonly){ modmenu = modshort = moddef = modses = false; }
     ui->push_save->setEnabled(modmenu || modshort || moddef || modses); //wait for new changes
-    ui->push_save->setVisible(!ui->actionDefaults->isChecked() || modmenu || modshort || moddef || modses);
+    //ui->push_save->setVisible(!ui->actionDefaults->isChecked() || modmenu || modshort || moddef || modses);
 }
 
 
@@ -1810,8 +1811,21 @@ void MainUI::loadSessionSettings(){
 
   //Now do the startup applications
   QStringList STARTUP = readFile(QDir::homePath()+"/.lumina/startapps");
+  STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << "StartApps:";
   ui->list_session_start->clear();
-  for(int i=0; i<STARTUP.length(); i++){
+  for(int i=0; i<STARTAPPS.length(); i++){
+  //qDebug() << STARTAPPS[i].filePath +" -> " +STARTAPPS[i].name << STARTAPPS[i].isHidden;
+    if( !LXDG::checkValidity(STARTAPPS[i],false) || !QFile::exists(STARTAPPS[i].filePath) ){ continue; }
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(STARTAPPS[i].icon,"application-x-executable"), STARTAPPS[i].name );
+	it->setWhatsThis(STARTAPPS[i].filePath); //keep the file location
+        it->setToolTip(STARTAPPS[i].comment);
+	if(STARTAPPS[i].isHidden){ it->setCheckState( Qt::Unchecked); }
+	else{it->setCheckState( Qt::Checked); }
+	ui->list_session_start->addItem(it);
+  }
+  
+  /*for(int i=0; i<STARTUP.length(); i++){
     if(STARTUP[i].startsWith("#")){ continue; }
     else if(STARTUP[i].startsWith("lumina-open ")){
       //Application or file
@@ -1835,7 +1849,7 @@ void MainUI::loadSessionSettings(){
 	      it->setWhatsThis(STARTUP[i]); //keep the raw line
 	ui->list_session_start->addItem(it);
     }
-  }
+  }*/
 
   //Now do the general session options
   ui->check_session_numlock->setChecked( sessionsettings->value("EnableNumlock", true).toBool() );
@@ -1900,7 +1914,7 @@ void MainUI::loadSessionSettings(){
   // - Font Size
   ui->spin_session_fontsize->setValue( current[4].section("p",0,0).toInt() );
   
-  sessionstartchanged(); //make sure to update buttons
+  //sessionstartchanged(); //make sure to update buttons
   sessionLoadTimeSample();
   sessionLoadDateSample();
 }
@@ -1931,14 +1945,35 @@ void MainUI::saveSessionSettings(){
 
   //Save the fluxbox settings
   bool ok = overwriteFile(QDir::homePath()+"/.lumina/fluxbox-init", FB);
-  if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/startapps"; }
+  if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/fluxbox-init"; }
+  
   //Now do the start apps
-  QStringList STARTUP;
+  bool newstartapps = false;
   for(int i=0; i<ui->list_session_start->count(); i++){
-    STARTUP << ui->list_session_start->item(i)->whatsThis();
+    QString file = ui->list_session_start->item(i)->whatsThis();
+    bool enabled = ui->list_session_start->item(i)->checkState()==Qt::Checked;
+    bool found = false;
+    for(int i=0; i<STARTAPPS.length(); i++){
+      if(STARTAPPS[i].filePath==file){
+        found = true;
+	if(enabled != !STARTAPPS[i].isHidden){
+	  //value is different
+	  qDebug() << "Setting Autostart:" << enabled << STARTAPPS[i].filePath;
+	  LXDG::setAutoStarted(enabled, STARTAPPS[i]);
+	}
+	break;
+      }
+    }
+    if(!found && enabled){
+      //New file/binary/app
+      qDebug() << "Adding new AutoStart File:" << file;
+      LXDG::setAutoStarted(enabled, file);
+      newstartapps = true;
+    }
   }
-  ok = overwriteFile(QDir::homePath()+"/.lumina/startapps", STARTUP);
-  if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/startapps"; }
+
+  //ok = overwriteFile(QDir::homePath()+"/.lumina/startapps", STARTUP);
+  //if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/startapps"; }
 
   //Now do the general session options
   sessionsettings->setValue("EnableNumlock", ui->check_session_numlock->isChecked());
@@ -1964,6 +1999,7 @@ void MainUI::saveSessionSettings(){
   QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
   //qDebug() << "Saving theme options:" << themefile << colorfile << iconset << font << fontsize;
   LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
+  if(newstartapps){ loadSessionSettings(); } //make sure to re-load the session settings to catch the new files
 }
 
 void MainUI::rmsessionstartitem(){
@@ -1977,7 +2013,10 @@ void MainUI::addsessionstartapp(){
   XDGDesktop desk = getSysApp();
   if(desk.filePath.isEmpty()){ return; } //cancelled
   QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
-    it->setWhatsThis("lumina-open "+desk.filePath); //command to be saved/run
+    it->setWhatsThis(desk.filePath);
+    it->setToolTip(desk.comment);
+    it->setCheckState(Qt::Checked);
+  
   ui->list_session_start->addItem(it);
   ui->list_session_start->setCurrentItem(it);
   sessionoptchanged();
@@ -1994,6 +2033,8 @@ void MainUI::addsessionstartbin(){
   }
   QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon("application-x-executable",""), bin.section("/",-1) );
     it->setWhatsThis(bin); //command to be saved/run
+    it->setToolTip(bin);
+    it->setCheckState(Qt::Checked);
   ui->list_session_start->addItem(it);
   ui->list_session_start->setCurrentItem(it);
   sessionoptchanged();
@@ -2003,8 +2044,10 @@ void MainUI::addsessionstartfile(){
   QString chkpath = QDir::homePath();
   QString bin = QFileDialog::getOpenFileName(this, tr("Select File"), chkpath, tr("All Files (*)") );
   if( bin.isEmpty() || !QFile::exists(bin) ){ return; } //cancelled
-  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon("unknown",""), bin.section("/",-1) );
-    it->setWhatsThis("lumina-open "+bin); //command to be saved/run
+  QListWidgetItem *it = new QListWidgetItem( LXDG::findMimeIcon(bin), bin.section("/",-1) );
+    it->setWhatsThis(bin); //file to be saved/run
+    it->setToolTip(bin);
+    it->setCheckState(Qt::Checked);
   ui->list_session_start->addItem(it);
   ui->list_session_start->setCurrentItem(it);
   sessionoptchanged();
@@ -2029,9 +2072,9 @@ void MainUI::sessionthemechanged(){
   sessionoptchanged();
 }
 
-void MainUI::sessionstartchanged(){
+/*void MainUI::sessionstartchanged(){
   ui->tool_session_rmapp->setEnabled( ui->list_session_start->currentRow()>=0 );
-}
+}*/
 
 void MainUI::sessionEditColor(){
   //Get the current color file

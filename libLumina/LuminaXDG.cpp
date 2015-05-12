@@ -253,7 +253,7 @@ bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
   if(!showAll){
     if(!dFile.showInList.isEmpty()){ ok = dFile.showInList.contains("Lumina", Qt::CaseInsensitive); }
     else if(!dFile.notShowInList.isEmpty()){ ok = !dFile.notShowInList.contains("Lumina",Qt::CaseInsensitive); }
-    else if(dFile.genericName.isEmpty()){ ok = false; }
+    else if(dFile.name.isEmpty()){ ok = false; }
   }
   return ok;
 }
@@ -854,6 +854,11 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
   QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
   QString upath = QString(getenv("XDG_CONFIG_HOME")).section(":",0,0);
   if(upath.isEmpty()){ upath = QDir::homePath()+"/.config/autostart/"; }
+  else{ upath.append("/autostart/"); }
+  //Quick check/finish for user-defined files which are getting disabled (just remove the file)
+  if(app.filePath.startsWith(upath) && !autostart){
+    return QFile::remove(app.filePath);
+  }
   bool sysfile = false;
   for(int i=0; i<paths.length(); i++){
     if(app.filePath.startsWith(paths[i]+"/autostart/") ){
@@ -869,11 +874,11 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
       app.exec = "lumina-open \""+app.filePath+"\"";
       app.tryexec = app.filePath; //make sure this file exists
       if(app.name.isEmpty()){ app.name = app.filePath.section("/",-1); }
-      if(app.icon.isEmpty()){ app.icon = LXDG::findAppMimeForFile(app.filePath); }
+      if(app.icon.isEmpty()){ app.icon = LXDG::findAppMimeForFile(app.filePath); app.icon.replace("/","-"); }
       app.filePath = upath+app.filePath.section("/",-1)+".desktop";
       app.type = XDGDesktop::APP;
     }else{
-      //Some other *.desktop file on the system
+      //Some other *.desktop file on the system (keep almost all the existing settings/values)
       // - setup a redirect to the other file
       app.exec = "lumina-open \""+app.filePath+"\"";
       app.tryexec = app.filePath; //make sure this file exists
@@ -885,6 +890,7 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
   app.isHidden = !autostart; //if hidden, it will not be autostarted
   //Now save the file as necessary
   bool saved = false;
+  //qDebug() << " - Saving AutoStart File:" << app.filePath << app.name << app.isHidden;
   if(sysfile){
     //Just an override file for the "hidden" field - nothing more
     QStringList info;
@@ -897,3 +903,16 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
   return saved;
 }
 
+bool LXDG::setAutoStarted(bool autostart, QString filePath){
+  //Convenience function for the auto-start setter
+  XDGDesktop desk;
+  if(filePath.endsWith(".desktop")){
+    bool ok = false;
+    desk = LXDG::loadDesktopFile(filePath, ok);
+    if(!ok){ return false; } //error reading input file
+  }else{
+    desk.filePath = filePath;
+    desk.useTerminal = false;
+  }
+  return LXDG::setAutoStarted(autostart, desk);
+}

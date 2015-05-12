@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -602,7 +602,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>249</width>
+                 <width>238</width>
                  <height>215</height>
                 </rect>
                </property>
@@ -836,7 +836,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>249</width>
+                 <width>238</width>
                  <height>209</height>
                 </rect>
                </property>
@@ -1223,13 +1223,6 @@
            <layout class="QVBoxLayout" name="verticalLayout_19">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_17">
-              <item>
-               <widget class="QToolButton" name="tool_session_rmapp">
-                <property name="text">
-                 <string notr="true">rem</string>
-                </property>
-               </widget>
-              </item>
               <item>
                <spacer name="horizontalSpacer_14">
                 <property name="orientation">
@@ -1876,7 +1869,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>129</width>
-                    <height>16</height>
+                    <height>28</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
