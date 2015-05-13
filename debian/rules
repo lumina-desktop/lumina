@@ -8,7 +8,6 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 QMAKE = /usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake
 
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 USER_QMAKE_FLAGS = \
 	PREFIX=/usr \
 	LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
