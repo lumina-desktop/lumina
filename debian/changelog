@@ -1,3 +1,11 @@
+lumina-desktop (0.8.5.638-1nano) unstable; urgency=low
+
+  * New git snapshot
+    - remove custom luminaStartapps (Lumina now uses XDG autostart)
+    - update luminaDesktop.conf
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Wed, 13 May 2015 18:42:16 +0200
+
 lumina-desktop (0.8.4.556-1nano) unstable; urgency=low
 
   * New git snapshot

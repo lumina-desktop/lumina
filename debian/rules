@@ -8,7 +8,6 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 QMAKE = /usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake
 
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 USER_QMAKE_FLAGS = \
 	PREFIX=/usr \
 	LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
@@ -40,8 +39,6 @@ override_dh_auto_clean:
 
 override_dh_install:
 	dh_install --list-missing
-	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/lxpolkit" > \
-		$(CURDIR)/debian/lumina-desktop/etc/luminaStartapps
 	mv $(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE \
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE.real
 	install -m755 $(CURDIR)/debian/Lumina-DE \
