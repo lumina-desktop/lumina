@@ -34,7 +34,7 @@ LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
   upTimer = new QTimer(this);
     upTimer->setInterval(300000); //maximum time between refreshes is 5 minutes
     connect(upTimer, SIGNAL(timeout()), this, SLOT(checkAll()) );
-  isRunning = false; stopping = false; checking = false;
+  isRunning = false; stopping = false; checking = false; pending = false;
   QTimer::singleShot(100, this, SLOT(start()) );
 	
   connect(LSession::handle(), SIGNAL(TrayListChanged()), this, SLOT(checkAll()) );
@@ -88,8 +88,9 @@ void LSysTray::stop(){
 //    PRIVATE FUNCTIONS
 // ========================
 void LSysTray::checkAll(){
-  if(!isRunning || stopping || checking){ return; } //Don't check if not running at the moment
+  if(!isRunning || stopping || checking){ pending = true; return; } //Don't check if not running at the moment
   checking = true;
+  pending = false;
   //Make sure this tray should handle the windows (was not disabled in the backend)
   bool TrayRunning = LSession::handle()->registerVisualTray(this->winId());
   //qDebug() << "System Tray: Check tray apps";
@@ -156,6 +157,7 @@ void LSysTray::checkAll(){
   }*/
   //qDebug() << " - System Tray: check done";
   checking = false;
+  if(pending){ QTimer::singleShot(0,this, SLOT(checkAll()) ); }
 }
 
 void LSysTray::UpdateTrayWindow(WId win){
@@ -164,9 +166,11 @@ void LSysTray::UpdateTrayWindow(WId win){
     if(trayIcons[i]->appID()==win){
       //qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
-      break;
+      return; //finished now
     }
-  }	 
+  }
+  //Could not find tray in the list, run the checkall routine to make sure we are not missing any
+  QTimer::singleShot(0,this, SLOT(checkAll()) );
 }
 
 

@@ -34,7 +34,7 @@ public:
 	}
 	
 private:
-	bool isRunning, stopping, checking;
+	bool isRunning, stopping, checking, pending;
 	QList<TrayIcon*> trayIcons;
 	QFrame *frame;
 	QBoxLayout *LI; //layout items
