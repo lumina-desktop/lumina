@@ -295,9 +295,11 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     QString istrue = (val=="true") ? "true": "false";
     //Now parse the variable and put the value in the proper file   
-    if(var=="panel1.pixelsize"){ 
-      if(val.endsWith("%H")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
-      else if(val.endsWith("%W")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+    if(var=="panel1.pixelsize"){
+      //qDebug() << "Panel Size:" << val;
+      if(val.endsWith("%h")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+      else if(val.endsWith("%w")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+      //qDebug() << " -- Adjusted:" << val;
       deskset << "height="+val; 
     }
     else if(var=="panel1.autohide"){ deskset << "hidepanel="+istrue; }
@@ -315,8 +317,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QString istrue = (val=="true") ? "true": "false";
     //Now parse the variable and put the value in the proper file   
     if(var=="panel2.pixelsize"){ 
-      if(val.endsWith("%H")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
-      else if(val.endsWith("%W")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+      if(val.endsWith("%h")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+      else if(val.endsWith("%w")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
       deskset << "height="+val; 
     }
     else if(var=="panel2.autohide"){ deskset << "hidepanel="+istrue; }
@@ -359,18 +361,21 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QStringList systhemes = LTHEME::availableSystemThemes();
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
-    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) ){
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[1].endsWith(".qss.template")){
+      themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
-	 if(systhemes[i].startsWith(themesettings[0]+"::::")){
+	 if(systhemes[i].startsWith(themesettings[0]+"::::"),Qt::CaseInsensitive){
 	    themesettings[0] = systhemes[i].section("::::",1,1); //Replace with the full path
 	    break;
 	 }
       }
     }
     //color file
-    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) ){
+    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".qss.colors") ){
+      //Remove any extra/invalid extension
+      themesettings[1] = themesettings[1].section(".qss",0,0).simplified();
       for(int i=0; i<syscolors.length(); i++){
-	 if(syscolors[i].startsWith(themesettings[1]+"::::")){
+	 if(syscolors[i].startsWith(themesettings[1]+"::::"),Qt::CaseInsensitive){
 	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
 	    break;
 	 }
