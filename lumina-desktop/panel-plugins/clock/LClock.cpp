@@ -48,10 +48,10 @@ void LClock::updateTime(){
 	  label = datelabel;
 	  labelWidget->setToolTip(timelabel);
   }else if(datetimeorder == "timedate"){
-	  label = timelabel + " " + datelabel;
+	  label = timelabel + "\n" + datelabel;
 	  labelWidget->setToolTip("");
   }else if(datetimeorder == "datetime"){
-	  label = datelabel + " " + timelabel;
+	  label = datelabel + "\n" + timelabel;
 	  labelWidget->setToolTip("");
   }else{ 
 	 label = timelabel;
