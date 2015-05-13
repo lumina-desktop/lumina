@@ -97,7 +97,6 @@ void LSession::setupSession(){
   startSystemTray();
 	
   //Launch Fluxbox
-  qDebug() << " - Launching Fluxbox";
   if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
   WM = new WMProcess();
     WM->startWM();
@@ -220,7 +219,7 @@ void LSession::launchStartupApps(){
   }
   //First create the list of all possible locations in order of precedence
   // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
-  QStringList filelist; 
+  /*QStringList filelist; 
     filelist << LOS::LuminaShare()+"startapps"; //anything special for the Lumina installation
     filelist << "/etc/luminaStartapps" << LOS::SysPrefix()+"luminaStartapps" << LOS::AppPrefix()+"luminaStartapps"; //System defaults
     filelist << QDir::homePath()+"/.lumina/startapps"; //User defaults
@@ -246,7 +245,7 @@ void LSession::launchStartupApps(){
     qDebug() << " - Starting Application:" << entries[i];
     LSession::LaunchApplication(entries[i]);
     LSession::processEvents();
-  }
+  }*/
   
   //Now get any XDG startup applications and launch them
   QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
@@ -330,16 +329,22 @@ void LSession::checkUserFiles(){
   if(!QFile::exists(dset) || oldversion < 5000){
     if( oldversion < 5000 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
-    /*if(QFile::exists(LOS::LuminaShare()+"desktopsettings.conf")){
-      if( QFile::copy(LOS::LuminaShare()+"desktopsettings.conf", dset) ){
-        QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
-      }
-    }*/
     LUtils::LoadSystemDefaults();
   }
+  //Convert the favorites framework as necessary (change occured with 0.8.4)
   if(newversion || newrelease){
-    //Convert the favorites framework as necessary
     LUtils::upgradeFavorites(oldversion);	  
+  }
+  //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
+  if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
+    QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
+    for(int i=0; i<cmds.length(); i++){
+      cmds[i] = cmds[i].remove("lumina-open").simplified(); //remove the file opener
+      if(cmds[i].startsWith("#") || cmds[i].isEmpty()){ continue; } //invalid line
+      
+      LXDG::setAutoStarted(true, cmds[i]);
+    }
+    QFile::remove(QDir::homePath()+"/.lumina/startapps"); //delete the old file
   }
   
   //Check for the default applications file for lumina-open
@@ -370,7 +375,7 @@ void LSession::checkUserFiles(){
   }
 
   if(firstrun){ qDebug() << "First time using Lumina!!"; }
-  else if(newversion){
+  else if(newversion || newrelease){
     qDebug() << "Updating session file to current version";
   }
 
