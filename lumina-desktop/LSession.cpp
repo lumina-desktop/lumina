@@ -213,10 +213,13 @@ void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
 
-  //Enable Numlock 
-  if(sessionsettings->value("EnableNumlock",false).toBool()){
-    QProcess::startDetached("numlockx on");
+  //Enable Numlock
+  if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
+    if(sessionsettings->value("EnableNumlock",false).toBool()){
+      QProcess::startDetached("numlockx on");
+    }
   }
+    
   //First create the list of all possible locations in order of precedence
   // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
   /*QStringList filelist; 
@@ -257,7 +260,12 @@ void LSession::launchStartupApps(){
       //Don't update the mouse cursor
       QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
     }
-    LSession::processEvents();
+    //Put a tiny bit of space between app starts (don't overload the system)
+    for(int i=0; i<5; i++){
+      usleep(50000); //50ms = 50000 us --> 250ms total wait
+      LSession::processEvents();
+    }
+    
   }
   
   //Re-load the screen brightness and volume settings from the previous session
