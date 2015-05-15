@@ -470,7 +470,9 @@ void MainUI::slotChangeScreen(){
   if(cscreen!=newscreen){
     if(moddesk || modpan){
       if(QMessageBox::Yes == QMessageBox::question(this, tr("Save Changes?"), tr("You currently have unsaved changes for this screen. Do you want to save them first?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) ){
+	ui->spin_screen->setValue(cscreen+1); //Make sure the old screen is selected for a moment
         saveCurrentSettings(true); //only save current screen settings
+	ui->spin_screen->setValue(newscreen+1); //Now reset back to the new screen
       }
     }
     loadCurrentSettings(true);
