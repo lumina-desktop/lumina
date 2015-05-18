@@ -42,16 +42,18 @@ void BackgroundWorker::startDirChecks(QString path){
   qDebug() << " - done with audio/multimedia checks";
   //Now check for ZFS snapshots of the directory
   if(!QFileInfo(path).isWritable() ){ return; } //skip ZFS checks if can't restore to this dir
-  cdir = path;
+  //cdir = path;
   QStringList snapDirs; 
   QString baseSnapDir;
   bool found = false;
   qDebug() << " - start searching for base snapshot directory";
   if(cdir == path && QFile::exists(csnapdir) ){ 
      //no need to re-search for it - just found it recently
+    qDebug() << " -- Use previous dir:" << cdir << csnapdir;
     baseSnapDir= csnapdir; found=true;
   }else{
     while(dir.canonicalPath()!="/" && !found){
+      qDebug() << " -- Checking for snapshot dir:" << dir.canonicalPath();
       if(dir.exists(".zfs/snapshot")){ 
         baseSnapDir = dir.canonicalPath()+"/.zfs/snapshot";
 	found = true;
