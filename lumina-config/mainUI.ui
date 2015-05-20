@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -129,6 +129,13 @@
                <widget class="QToolButton" name="tool_desk_addbg">
                 <property name="text">
                  <string notr="true">add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_desk_addbgcolor">
+                <property name="text">
+                 <string notr="true">addclr</string>
                 </property>
                </widget>
               </item>

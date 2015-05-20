@@ -81,6 +81,7 @@ void MainUI::setupIcons(){
 
   //Desktop Page
   ui->tool_desk_addbg->setIcon( LXDG::findIcon("list-add","") );
+  ui->tool_desk_addbgcolor->setIcon( LXDG::findIcon("format-fill-color","") );
   ui->tool_desk_rmbg->setIcon( LXDG::findIcon("list-remove","") );
   ui->push_addDesktopPlugin->setIcon( LXDG::findIcon("list-add","") );
   ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_wallpaper), LXDG::findIcon("preferences-desktop-wallpaper","") );
@@ -157,6 +158,7 @@ void MainUI::setupConnections(){
   connect(ui->radio_desk_multi, SIGNAL(toggled(bool)), this, SLOT(desktimechanged()) );
   connect(ui->push_addDesktopPlugin, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
   connect(ui->tool_desk_addbg, SIGNAL(clicked()), this, SLOT(deskbgadded()) );
+  connect(ui->tool_desk_addbgcolor, SIGNAL(clicked()), this, SLOT(deskbgcoloradded()) );
   connect(ui->tool_desk_rmbg, SIGNAL(clicked()), this, SLOT(deskbgremoved()) );
   connect(ui->spin_desk_min, SIGNAL(valueChanged(int)), this, SLOT(desktimechanged()) );
 
@@ -321,16 +323,22 @@ int MainUI::currentDesktop(){
   return ui->spin_screen->value()-1; //backend starts at 0, not 1
 }
 
-QString MainUI::getColorStyle(QString current){
+QString MainUI::getColorStyle(QString current, bool allowTransparency){
   QString out;
   //Convert the current color string into a QColor
   QStringList col = current.section(")",0,0).section("(",1,1).split(",");
   if(col.length()!=4){ col.clear(); col << "255" << "255" << "255" << "255"; }
   QColor ccol = QColor(col[0].toInt(), col[1].toInt(), col[2].toInt(), col[3].toInt()); //RGBA
-  QColor ncol = QColorDialog::getColor(ccol, this, tr("Select Panel Color"), QColorDialog::ShowAlphaChannel);
+  QColor ncol;
+    if(allowTransparency){ ncol= QColorDialog::getColor(ccol, this, tr("Select Panel Color"), QColorDialog::ShowAlphaChannel); }
+    else{ ncol= QColorDialog::getColor(ccol, this, tr("Select Panel Color")); }
   //Now convert the new color into a usable string and return
   if(ncol.isValid()){ //if the dialog was not cancelled
-    out = "rgba("+QString::number(ncol.red())+","+QString::number(ncol.green())+","+QString::number(ncol.blue())+","+QString::number(ncol.alpha())+")";
+    if(allowTransparency){
+      out = "rgba("+QString::number(ncol.red())+","+QString::number(ncol.green())+","+QString::number(ncol.blue())+","+QString::number(ncol.alpha())+")";
+    }else{
+      out = "rgb("+QString::number(ncol.red())+","+QString::number(ncol.green())+","+QString::number(ncol.blue())+")";
+    }
   }
   return out;
 }
@@ -499,6 +507,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
   ui->combo_desk_bg->clear();
   for(int i=0; i<bgs.length(); i++){
     if(bgs[i]=="default"){ ui->combo_desk_bg->addItem( QIcon(DEFAULTBG), tr("System Default"), bgs[i] ); }
+    else if(bgs[i].startsWith("rgb(")){ui->combo_desk_bg->addItem(QString(tr("Solid Color: %1")).arg(bgs[i]), bgs[i]); }
     else{ ui->combo_desk_bg->addItem( QIcon(bgs[i]), bgs[i].section("/",-1), bgs[i] ); }
   }
   ui->radio_desk_multi->setEnabled(bgs.length()>1);
@@ -799,6 +808,7 @@ void MainUI::deskbgchanged(){
   if(ui->combo_desk_bg->count()==0){
     ui->label_desk_bgview->setPixmap(QPixmap());
     ui->label_desk_bgview->setText(tr("No Background")+"\n"+tr("(use system default)"));
+    ui->label_desk_bgview->setStyleSheet("");
   }else{
     QString path = ui->combo_desk_bg->itemData( ui->combo_desk_bg->currentIndex() ).toString();
     if(path=="default"){ path = DEFAULTBG; }
@@ -807,9 +817,15 @@ void MainUI::deskbgchanged(){
       sz.setWidth( sz.width() - (2*ui->label_desk_bgview->frameWidth()) );
       sz.setHeight( sz.height() - (2*ui->label_desk_bgview->frameWidth()) );
       ui->label_desk_bgview->setPixmap( QPixmap(path).scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+      ui->label_desk_bgview->setStyleSheet("");
+    }else if(path.startsWith("rgb(")){
+      ui->label_desk_bgview->setPixmap(QPixmap());
+      ui->label_desk_bgview->setText("");
+      ui->label_desk_bgview->setStyleSheet("background-color: "+path+";");
     }else{
       ui->label_desk_bgview->setPixmap(QPixmap());
       ui->label_desk_bgview->setText(tr("File does not exist"));
+      ui->label_desk_bgview->setStyleSheet("");
     }
   }
   //See if this constitues a change to the current settings and enable the save button
@@ -852,6 +868,23 @@ void MainUI::deskbgadded(){
   }
   //Now move to the last item in the list (the new image(s));
   ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
+  //If multiple items selected, automatically enable the background rotation option
+  if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
+    ui->radio_desk_multi->setChecked(true);
+  }
+  ui->push_save->setEnabled(true); //this is definitely a change
+  moddesk = true;
+}
+
+void MainUI::deskbgcoloradded(){
+  //Prompt the user to select a color (no transparency allowed)
+  QString color = getColorStyle("",false); //no initial color
+  if(color.isEmpty()){ return; }
+  //Add it to the list
+  ui->combo_desk_bg->addItem( QString(tr("Solid Color: %1")).arg(color), color);
+  //Now move to the last item in the list (the new image(s));
+  ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
+  
   ui->push_save->setEnabled(true); //this is definitely a change
   moddesk = true;
 }

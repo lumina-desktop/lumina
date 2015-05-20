@@ -69,7 +69,7 @@ private:
 	int currentDesktop(); //the number for the current desktop
 
 	//Panels Page simplifications
-	QString getColorStyle(QString current);
+	QString getColorStyle(QString current, bool allowTransparency = true);
 	//QString getNewPanelPlugin();
 
 	//Get an application on the system
@@ -104,6 +104,7 @@ private slots:
 	void desktimechanged();
 	void deskbgremoved();
 	void deskbgadded();
+	void deskbgcoloradded();
 	void deskplugadded();
 
 

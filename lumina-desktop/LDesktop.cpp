@@ -547,7 +547,7 @@ void LDesktop::UpdateBackground(){
   //qDebug() << " - List:" << bgL << CBG;
     //Remove any invalid files
     for(int i=0; i<bgL.length(); i++){
-      if( (!QFile::exists(bgL[i]) && bgL[i]!="default") || bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if( (!QFile::exists(bgL[i]) && bgL[i]!="default" && !bgL[i].startsWith("rgb(") ) || bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
     }
     if(bgL.isEmpty()){ bgL << "default"; } //always fall back on the default
   //Determine if the background needs to be changed
@@ -574,7 +574,13 @@ void LDesktop::UpdateBackground(){
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
   if( (bgFile.toLower()=="default")){ bgFile = LOS::LuminaShare()+"desktop-background.jpg"; }
   //Now set this file as the current background
-  QString style = "QWidget#bgWindow{ border-image:url(%1) stretch;}";
+  QString style;
+  if(bgFile.startsWith("rgb(")){
+    //qDebug() << "Set background color:" << bgFile;
+    style = "QWidget#bgWindow{ border-image: none; background-color: %1;}";
+  }else{
+    style = "QWidget#bgWindow{ background-color: black; border-image:url(%1) stretch;}";
+  }
   style = style.arg(bgFile);
   bgWindow->setStyleSheet(style);
   bgWindow->show();
