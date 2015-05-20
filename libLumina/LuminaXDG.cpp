@@ -104,9 +104,22 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   if(!DF.showInList.isEmpty()){
     DF.name.append(" ("+DF.showInList.join(", ")+")");
   }
-  //Quick fix for showing "wine" applications (which quite often don't list a category)
+  //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
   if(DF.catList.isEmpty() && filePath.contains("/wine/")){
     DF.catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
+    //Also add a fix for the location of Wine icons
+    if( !DF.icon.isEmpty() ){
+      QStringList sizes; sizes << "256x256" << "128x128" << "64x64" << "48x48" << "32x32" << "16x16";
+      QString upath = QDir::homePath()+"/.local/share/icons/hicolor/%1/apps/%2.png";
+      //qDebug() << "Wine App: Check icon" << upath;
+      for(int i=0; i<sizes.length(); i++){
+        if( QFile::exists(upath.arg(sizes[i],DF.icon)) ){
+	  DF.icon = upath.arg(sizes[i],DF.icon);
+	  //qDebug() << " - Found Icon:" << DF.icon;
+	  break;
+	}
+      }
+    }
   }
   //Return the structure
   //if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
