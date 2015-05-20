@@ -312,38 +312,48 @@ int main(int argc, char **argv){
   //qDebug() << "Run CMD:" << cmd << args;
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
-  //if(!args.isEmpty()){ cmd.append(" "+args+""); }
-  //int retcode = system( cmd.toUtf8() );
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
   int retcode = 0;
+  
   if(!watch && path.isEmpty()){
       //Nothing special about this one - just start it detached (less overhead)
       QProcess::startDetached(cmd);
   }else{
     //Keep an eye on this process for errors and notify the user if it crashes
-    QProcess *p = new QProcess();
-    p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-    if(!path.isEmpty() && QFile::exists(path)){ p->setWorkingDirectory(path); }
-    p->start(cmd);
+    QString log;
+    if(cmd.contains("\\\\")){
+      //Special case (generally for Wine applications)
+      cmd = cmd.replace("\\\\","\\");
+      retcode = system(cmd.toLocal8Bit()); //need to run it through the "system" instead of QProcess
+    }else{
+      QProcess *p = new QProcess();
+      p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+      if(!path.isEmpty() && QFile::exists(path)){ 
+        //qDebug() << " - Setting working path:" << path;
+        p->setWorkingDirectory(path); 
+      }
+      p->start(cmd);
   
-    //Now check up on it once every minute until it is finished
-    while(!p->waitForFinished(60000)){
-      //qDebug() << "[lumina-open] process check:" << p->state();
-      if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
+      //Now check up on it once every minute until it is finished
+      while(!p->waitForFinished(60000)){
+        //qDebug() << "[lumina-open] process check:" << p->state();
+        if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
+      }
+      retcode = p->exitCode();
+      if(QProcess::CrashExit && retcode ==0){ retcode=1; } //so we catch it later
+      log = QString(p->readAllStandardError());
+      if(log.isEmpty()){ log = QString(p->readAllStandardOutput()); }
     }
-    retcode = p->exitCode();
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
     if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)
-    if( (p->exitStatus() == QProcess::CrashExit || retcode > 0) && watch){
+    if( (retcode > 0) && watch){
       qDebug() << "[lumina-open] Application Error:" << retcode;
-      QString err = QString(p->readAllStandardError());
-      if(err.isEmpty()){ err = QString(p->readAllStandardOutput()); }
         //Setup the application
         QApplication App(argc, argv);
         LuminaThemeEngine theme(&App);
 	  LUtils::LoadTranslation(&App,"lumina-open");
         QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
-        if(!err.isEmpty()){ dlg.setDetailedText(err); }
+        if(!log.isEmpty()){ dlg.setDetailedText(log); }
         dlg.exec();
       }
   }
