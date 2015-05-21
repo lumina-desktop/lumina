@@ -35,6 +35,7 @@ SOURCES += main.cpp \
 	AppMenu.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \
+	BootSplash.cpp \
 	panel-plugins/userbutton/LUserButton.cpp \
 	panel-plugins/userbutton/UserWidget.cpp \
 	panel-plugins/userbutton/UserItemWidget.cpp \
@@ -68,6 +69,7 @@ HEADERS  += Globals.h \
 	AppMenu.h \
 	SettingsMenu.h \
 	SystemWindow.h \
+	BootSplash.h \
 	panel-plugins/LPPlugin.h \
 	panel-plugins/NewPP.h \
 	panel-plugins/LTBWidget.h \
@@ -100,6 +102,7 @@ HEADERS  += Globals.h \
 #	desktop-plugins/messagecenter/MessageCenter.h
 
 FORMS    += SystemWindow.ui \
+	BootSplash.ui \
 	panel-plugins/userbutton/UserWidget.ui \
 	panel-plugins/systemdashboard/SysMenuQuick.ui \
 	desktop-plugins/audioplayer/PlayerWidget.ui

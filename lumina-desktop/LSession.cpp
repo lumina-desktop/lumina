@@ -9,6 +9,7 @@
 
 #include <QTime>
 #include "LXcbEventFilter.h"
+#include "BootSplash.h"
 
 //LibLumina X11 class
 #include <LuminaX11.h>
@@ -75,6 +76,8 @@ LSession::~LSession(){
 }
 
 void LSession::setupSession(){
+  BootSplash splash;
+    splash.showScreen("init");
   qDebug() << "Initializing Session";
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
@@ -82,10 +85,12 @@ void LSession::setupSession(){
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
   //Setup the QSettings default paths
+    splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");
   //Setup the user's lumina settings directory as necessary
+    splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
   checkUserFiles(); //adds these files to the watcher as well
 
@@ -93,20 +98,24 @@ void LSession::setupSession(){
   DESKTOPS.clear();
 	
   //Start the background system tray
+    splash.showScreen("systray");
   if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
   startSystemTray();
 	
   //Launch Fluxbox
+    splash.showScreen("wm");
   if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
   WM = new WMProcess();
     WM->startWM();
 	
   //Initialize the desktops
+    splash.showScreen("desktop");
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
   updateDesktops();
 
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
+    splash.showScreen("menus");
   if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
   appmenu = new AppMenu();
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
@@ -115,6 +124,7 @@ void LSession::setupSession(){
   sysWindow = new SystemWindow();
   
   //Now setup the system watcher for changes
+    splash.showScreen("final");
   qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
@@ -131,6 +141,7 @@ void LSession::setupSession(){
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
+  splash.close();
 }
 
 void LSession::CleanupSession(){
