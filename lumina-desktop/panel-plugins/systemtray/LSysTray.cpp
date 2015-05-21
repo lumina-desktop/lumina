@@ -94,7 +94,6 @@ void LSysTray::checkAll(){
   //Make sure this tray should handle the windows (was not disabled in the backend)
   bool TrayRunning = LSession::handle()->registerVisualTray(this->winId());
   //qDebug() << "System Tray: Check tray apps";
-  bool listChanged = false;
   QList<WId> wins = LSession::handle()->currentTrayApps(this->winId());
   for(int i=0; i<trayIcons.length(); i++){
     int index = wins.indexOf(trayIcons[i]->appID());
@@ -105,7 +104,6 @@ void LSysTray::checkAll(){
       LI->removeWidget(cont);
       delete cont;
       i--; //List size changed
-      listChanged = true;
       //Re-adjust the maximum widget size to account for what is left
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
         this->setMaximumSize( trayIcons.length()*this->height(), 10000);
@@ -144,8 +142,6 @@ void LSysTray::checkAll(){
 	LI->removeWidget(cont);
 	delete cont;
 	continue;
-      }else{
-	listChanged = true;
       }
     LI->update(); //make sure there is no blank space in the layout
   }
