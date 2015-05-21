@@ -534,10 +534,9 @@ void LSession::systemWindow(){
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
-  bool init = false;
   if(DEBUG){ qDebug() << "Play Audio File"; }
   //if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
-  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); init = true;}
+  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }
   /*if(mediaObj && init){  //in case it errors for some reason
     qDebug() << " -- Move audio objects to separate thread";
     mediaObj->moveToThread(audioThread);
