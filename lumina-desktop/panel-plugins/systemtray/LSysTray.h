@@ -75,6 +75,16 @@ public slots:
 	    trayIcons[i]->repaint();
 	  }
 	}
+	
+protected:
+	void paintEvent(QPaintEvent *event){
+	  //Also repaint all the tray icons
+	  for(int i=0; i<trayIcons.length(); i++){
+	    trayIcons[i]->update();
+	  }
+	  //Now pass the event on to the normal routine
+	  LPPlugin::paintEvent(event);
+	}
 };
 
 #endif
