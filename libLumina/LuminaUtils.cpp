@@ -146,6 +146,22 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
 }
 
+double LUtils::DisplaySizeToBytes(QString num){
+  num = num.toLower().simplified();
+  if(num.endsWith("b")){ num.chop(1); } //remove the "bytes" marker (if there is one)
+  QString lab = "b";
+  if(!num[num.size()-1].isNumber()){
+    lab = num.right(1); num.chop(1);
+  }
+  double N = num.toDouble();
+  QStringList labs; labs <<"b"<<"k"<<"m"<<"g"<<"t"<<"p"; //go up to petabytes for now
+  for(int i=0; i<labs.length(); i++){
+    if(lab==labs[i]){ break; }//already at the right units - break out
+    N = N*1024.0; //Move to the next unit of measurement
+  }
+  return N;
+}
+
 QStringList LUtils::listFavorites(){
   static QStringList fav;
   static QDateTime lastRead;

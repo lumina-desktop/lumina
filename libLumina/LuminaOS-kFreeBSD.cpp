@@ -173,5 +173,17 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
   return QString();
 }
 
+QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
+  return QStringList(); //not implemented yet
+}
+
+int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
+  return -1; //not implemented yet
+}
+
+int LOS::MemoryUsagePercent(){
+  return -1; //not implemented yet
+}
+
 #endif
 #endif

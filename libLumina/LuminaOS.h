@@ -91,6 +91,11 @@ public:
 	
 	//Get the filesystem capacity
 	static QString FileSystemCapacity(QString dir) ; //Return: percentage capacity as give by the df command
+	
+	//System CPU Information
+	static QStringList CPUTemperatures(); //Returns: List containing the temperature of any CPU's ("50C" for example)
+	static int CPUUsagePercent(); //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
+	static int MemoryUsagePercent(); //Returns: Overall percentage of the amount of available memory in use (-1 for errors)
 };
 
 #endif

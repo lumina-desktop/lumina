@@ -44,6 +44,7 @@ public:
 	//Load a translation file for a Lumina Project
 	static void LoadTranslation(QApplication *app, QString appname);
 
+	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)
 
 	//Various functions for the favorites sub-system
 	// Formatting Note: "<name>::::[dir/app/<mimetype>]::::<path>"

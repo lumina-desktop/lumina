@@ -255,4 +255,36 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
   return capacity;
 }
 
+QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
+  QStringList temps = LUtils::getCmdOutput("sysctl -ai").filter(".temperature:");
+  for(int i=0; i<temps.length(); i++){
+    temps[i] = temps[i].section(":",1,5).simplified(); //only pull out the value, not the variable
+  }
+  return temps;
+}
+
+int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
+  QStringList info = LUtils::getCmdOutput("iostat -t proc -Cd");
+  //Output: [cpu header, column headers, values(us ni sy in id)]
+  if(info.length()==3){
+    //idle value is the last one, use 100% minus that (don't worry about usage breakdown)
+    return (100 - info[2].section(" ",4,4,QString::SectionSkipEmpty).toInt());
+  }else{
+    return -1; //error
+  }
+}
+
+int LOS::MemoryUsagePercent(){
+  QStringList mem = LUtils::getCmdOutput("top -n 0").filter("Mem: ").first().section(":",1,50).split(", "); 
+  //Memory Labels: "Active", "Inact", "Wired", "Cache", "Buf", "Free" (usually in that order)
+  // Format of each entry: "<number><Unit> <Label>"
+  double fB = 0; //Free Bytes
+  double uB = 0; //Used Bytes
+  for(int i=0; i<mem.length(); i++){
+    if(mem[i].contains("Inact") || mem[i].contains("Free")){ fB = fB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0)); }
+    else{ uB = uB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0));  }
+  }
+  return qRound( (uB/(fB+uB)) * 100.0);
+}
+
 #endif
