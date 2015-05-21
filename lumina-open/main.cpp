@@ -340,7 +340,7 @@ int main(int argc, char **argv){
         if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
       }
       retcode = p->exitCode();
-      if(QProcess::CrashExit && retcode ==0){ retcode=1; } //so we catch it later
+      if( (p->exitStatus()==QProcess::CrashExit) && retcode ==0){ retcode=1; } //so we catch it later
       log = QString(p->readAllStandardError());
       if(log.isEmpty()){ log = QString(p->readAllStandardOutput()); }
     }
