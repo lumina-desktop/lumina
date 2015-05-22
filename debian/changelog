@@ -1,3 +1,11 @@
+lumina-desktop (0.8.5.661-1nano) unstable; urgency=low
+
+  * New git snapshot
+   - add dependency on top
+   - add support for cpu-usage and memory-usage in LuminaOS-Debian
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 22 May 2015 19:22:32 +0200
+
 lumina-desktop (0.8.5.638-1nano) unstable; urgency=low
 
   * New git snapshot

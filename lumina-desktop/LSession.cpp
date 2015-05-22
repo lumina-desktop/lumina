@@ -229,6 +229,9 @@ void LSession::launchStartupApps(){
     if(sessionsettings->value("EnableNumlock",false).toBool()){
       QProcess::startDetached("numlockx on");
     }
+    else{
+      QProcess::startDetached("numlockx off");
+    }
   }
     
   //First create the list of all possible locations in order of precedence
