@@ -27,7 +27,7 @@ MonitorWidget::~MonitorWidget(){
 void MonitorWidget::LoadIcons(){
   ui->tabWidget->setTabIcon(0,LXDG::findIcon("appointment-recurring","") ); //Summary
   ui->tabWidget->setTabIcon(1,LXDG::findIcon("cpu","") ); //CPU Log
-  ui->tabWidget->setTabIcon(2,LXDG::findIcon("media-flash-memory","") ); //Mem Log
+  ui->tabWidget->setTabIcon(2,LXDG::findIcon("media-flash-memory-stick","") ); //Mem Log
 }
 
 void MonitorWidget::UpdateStats(){ 
@@ -53,7 +53,7 @@ SysMonitorPlugin::SysMonitorPlugin(QWidget *parent, QString ID) : LDPlugin(paren
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(monitor);
 	
-  this->setInitialSize(300,75);
+  this->setInitialSize(monitor->width(),monitor->height());
 }
 
 SysMonitorPlugin::~SysMonitorPlugin(){
