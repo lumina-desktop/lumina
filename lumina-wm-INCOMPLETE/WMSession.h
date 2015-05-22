@@ -11,6 +11,7 @@
 #include <QStringList>
 
 #include "LScreenSaver.h"
+#include "LXcbEventFilter.h"
 
 class WMSession : public QObject{
 	Q_OBJECT
@@ -22,7 +23,7 @@ public:
 
 private:
 	//XCB Event Watcher
-
+	EventFilter *EFILTER;
 	//ScreenSaver
 	LScreenSaver *SS;
 

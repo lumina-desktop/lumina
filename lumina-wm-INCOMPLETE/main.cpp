@@ -32,8 +32,8 @@ int main(int argc, char ** argv)
     
     WMSession w;
     w.start();
-    QObject::connect(themes, SIGNAL(updateIcons()), &w, SLOT(reloadIcons()) );
-    QObject::connect(a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(newInputsAvailable(QStringList)) );
+    QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(reloadIcons()) );
+    QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(newInputsAvailable(QStringList)) );
     int retCode = a.exec();
     
     return retCode;

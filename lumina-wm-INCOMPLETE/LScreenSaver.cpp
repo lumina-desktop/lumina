@@ -34,9 +34,9 @@ void LScreenSaver::start(){
 
 void LScreenSaver::reloadSettings(){
   settings->sync();
-  starttimer->setInterval( settings.value("timedelaymin",10).toInt() * 60000 );
-  locktimer->setInterval( settings.value("lockdelaymin",1).toInt() * 60000 );
-  hidetimer->setInterval( settings.value("hidesecs",15).toInt() * 1000 );
+  starttimer->setInterval( settings->value("timedelaymin",10).toInt() * 60000 );
+  locktimer->setInterval( settings->value("lockdelaymin",1).toInt() * 60000 );
+  hidetimer->setInterval( settings->value("hidesecs",15).toInt() * 1000 );
 }
 
 void LScreenSaver::newInputEvent(){
@@ -64,7 +64,7 @@ void LScreenSaver::newInputEvent(){
     
   }else{
     //Neither running nor locked
-    if( settings.value("timedelaymin",10).toInt() > 0 ){ starttimer->start(); }
+    if( settings->value("timedelaymin",10).toInt() > 0 ){ starttimer->start(); }
   }
   
 }
@@ -76,14 +76,14 @@ void LScreenSaver::ShowScreenSaver(){
 	
   SSRunning = true;
   //Start the lock timer if necessary
-  if(!SSLocked && (settings.value("lockdelaymin",10).toInt()>0) ){ locktimer->start(); }
+  if(!SSLocked && (settings->value("lockdelaymin",10).toInt()>0) ){ locktimer->start(); }
 }
 
 void LScreenSaver::ShowLockScreen(){
 	
   SSLocked = true;
   //Start the timer for hiding the lock screen due to inactivity
-  if(settings.value("hidesecs",15).toInt() > 0 ){ hidetimer->start(); }
+  if(settings->value("hidesecs",15).toInt() > 0 ){ hidetimer->start(); }
 }
 
 void LScreenSaver::HideScreenSaver(){
