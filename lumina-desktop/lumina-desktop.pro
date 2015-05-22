@@ -55,7 +55,8 @@ SOURCES += main.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
 	desktop-plugins/notepad/NotepadPlugin.cpp \
-	desktop-plugins/audioplayer/PlayerWidget.cpp 
+	desktop-plugins/audioplayer/PlayerWidget.cpp \
+	desktop-plugins/systemmonitor/MonitorWidget.cpp
 #	desktop-plugins/messagecenter/MessageCenter.cpp
 
 
@@ -98,14 +99,16 @@ HEADERS  += Globals.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
 	desktop-plugins/desktopview/DesktopViewPlugin.h \
 	desktop-plugins/notepad/NotepadPlugin.h \
-	desktop-plugins/audioplayer/PlayerWidget.h 
+	desktop-plugins/audioplayer/PlayerWidget.h \
+	desktop-plugins/systemmonitor/MonitorWidget.h
 #	desktop-plugins/messagecenter/MessageCenter.h
 
 FORMS    += SystemWindow.ui \
 	BootSplash.ui \
 	panel-plugins/userbutton/UserWidget.ui \
 	panel-plugins/systemdashboard/SysMenuQuick.ui \
-	desktop-plugins/audioplayer/PlayerWidget.ui
+	desktop-plugins/audioplayer/PlayerWidget.ui \
+	desktop-plugins/systemmonitor/MonitorWidget.ui
 
 RESOURCES+= Lumina-DE.qrc
 

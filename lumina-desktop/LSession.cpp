@@ -296,6 +296,7 @@ void LSession::launchStartupApps(){
     if(vol>=0){ LOS::setAudioVolume(vol); }
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
+  qDebug() << " - Finished with startup routines";
 }
 
 void LSession::StartLogout(){

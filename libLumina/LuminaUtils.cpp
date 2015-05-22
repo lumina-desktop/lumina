@@ -26,35 +26,33 @@ QString LUtils::LuminaDesktopVersion(){
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
-  QProcess *proc = new QProcess;
-  proc->setProcessChannelMode(QProcess::MergedChannels);
+  QProcess proc;
+  proc.setProcessChannelMode(QProcess::MergedChannels);
   if(args.isEmpty()){
-    proc->start(cmd);
+    proc.start(cmd);
   }else{
-    proc->start(cmd, args);
+    proc.start(cmd, args);
   }
-  while(!proc->waitForFinished(300)){
+  while(!proc.waitForFinished(300)){
     QCoreApplication::processEvents();
   }
-  int ret = proc->exitCode();
-  delete proc;
+  int ret = proc.exitCode();
   return ret;
 	
 }
 
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
-  QProcess *proc = new QProcess;
-  proc->setProcessChannelMode(QProcess::MergedChannels);
+  QProcess proc;
+  proc.setProcessChannelMode(QProcess::MergedChannels);
   if(args.isEmpty()){
-    proc->start(cmd);
+    proc.start(cmd);
   }else{
-    proc->start(cmd,args);	  
+    proc.start(cmd,args);	  
   }
-  while(!proc->waitForFinished(300)){
+  while(!proc.waitForFinished(500)){
     QCoreApplication::processEvents();
   }
-  QStringList out = QString(proc->readAllStandardOutput()).split("\n");
-  delete proc;
+  QStringList out = QString(proc.readAllStandardOutput()).split("\n");
   return out;	
 }
 
@@ -148,6 +146,8 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
 
 double LUtils::DisplaySizeToBytes(QString num){
   num = num.toLower().simplified();
+  num = num.remove(" ");
+  if(num.isEmpty()){ return 0.0; }
   if(num.endsWith("b")){ num.chop(1); } //remove the "bytes" marker (if there is one)
   QString lab = "b";
   if(!num[num.size()-1].isNumber()){

@@ -257,25 +257,38 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
   QStringList temps = LUtils::getCmdOutput("sysctl -ai").filter(".temperature:");
+  temps.sort();
   for(int i=0; i<temps.length(); i++){
-    temps[i] = temps[i].section(":",1,5).simplified(); //only pull out the value, not the variable
+    if(temps[i].contains(".acpi.") || temps[i].contains(".cpu")){
+      temps[i] = temps[i].section(":",1,5).simplified(); //only pull out the value, not the variable
+    }else{
+      //non CPU temperature - skip it
+      temps.removeAt(i); i--;
+    }
   }
   return temps;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
-  QStringList info = LUtils::getCmdOutput("iostat -t proc -Cd");
-  //Output: [cpu header, column headers, values(us ni sy in id)]
-  if(info.length()==3){
-    //idle value is the last one, use 100% minus that (don't worry about usage breakdown)
-    return (100 - info[2].section(" ",4,4,QString::SectionSkipEmpty).toInt());
-  }else{
-    return -1; //error
+  //qDebug() << "Get CPU usage";
+  QStringList info = LUtils::getCmdOutput("iostat",QStringList() <<"-c"<<"2"<<"-t"<<"proc"<<"-w"<<"0.2");
+  if(info.length()<4){return -1;}
+  //Only need the idle percentage (last number on the 4th line)
+  info = info[3].split(" ",QString::SkipEmptyParts);
+  //qDebug() << "CPU Info:" << info;
+  if(info.isEmpty()){ return -1; }
+  QString idle = info.last();
+  if(idle.isEmpty()){ return -1; }
+  else{
+    return (100 - idle.toInt() );
   }
 }
 
 int LOS::MemoryUsagePercent(){
-  QStringList mem = LUtils::getCmdOutput("top -n 0").filter("Mem: ").first().section(":",1,50).split(", "); 
+  //qDebug() << "Get Mem Usage";
+  QStringList mem = LUtils::getCmdOutput("top -n 0").filter("Mem: ", Qt::CaseInsensitive);
+  if(mem.isEmpty()){ return -1; }
+  mem = mem.first().section(":",1,50).split(", "); 
   //Memory Labels: "Active", "Inact", "Wired", "Cache", "Buf", "Free" (usually in that order)
   // Format of each entry: "<number><Unit> <Label>"
   double fB = 0; //Free Bytes

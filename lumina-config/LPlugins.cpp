@@ -188,6 +188,13 @@ void LPlugins::LoadDesktopPlugins(){
     info.ID = "audioplayer";
     info.icon = "media-playback-start";
   DESKTOP.insert(info.ID, info);
+  //System Monitor Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("System Monitor");
+    info.description = QObject::tr("Keep track of system statistics such as CPU/Memory usage and CPU temperatures.");
+    info.ID = "systemmonitor";
+    info.icon = "cpu";
+  DESKTOP.insert(info.ID, info);
 }
 
 void LPlugins::LoadMenuPlugins(){

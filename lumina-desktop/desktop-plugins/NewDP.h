@@ -19,6 +19,7 @@
 #include "desktopview/DesktopViewPlugin.h"
 #include "notepad/NotepadPlugin.h"
 #include "audioplayer/PlayerWidget.h"
+#include "systemmonitor/MonitorWidget.h"
 //#include "messagecenter/MessageCenter.h"
 
 class NewDP{
@@ -38,6 +39,8 @@ public:
 	    plug = new NotePadPlugin(parent, plugin);
 	  }else if(plugin.section("---",0,0)=="audioplayer"){
 	    plug = new AudioPlayerPlugin(parent, plugin);
+	  }else if(plugin.section("---",0,0)=="systemmonitor"){
+	    plug = new SysMonitorPlugin(parent, plugin);
 	  //}else if(plugin.section("---",0,0)=="messagecenter"){
 	    //plug = new MessageCenterPlugin(parent, plugin);
 	  }else{
