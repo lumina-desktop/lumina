@@ -141,7 +141,7 @@ bool LOS::userHasShutdownAccess(){
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -h now");
+  QProcess::startDetached("shutdown -P -h now");
 }
 
 //System Restart

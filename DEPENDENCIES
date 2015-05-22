@@ -84,5 +84,5 @@ X.org and XCB extensions (possibly the XLib libraries above during the transitio
   xbacklight  (required for changing screen brightness)
   alsa-utils  (required for adjusting audio volume)
   acpi        (required for monitoring battery life)
-  numlockx    (required for changign state of numlock at login)
+  numlockx    (required for changing state of numlock at login)
   pavucontrol (required for detatched audio mixer)
