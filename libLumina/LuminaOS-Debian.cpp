@@ -138,7 +138,7 @@ void LOS::startMixerUtility(){
 
 //Check for user system permission (shutdown/restart)
 bool LOS::userHasShutdownAccess(){
-  QProcess::startDetached("dbus-send --system --print-reply=literal \
+  return QProcess::startDetached("dbus-send --system --print-reply=literal \
   --type=method_call --dest=org.freedesktop.login1 \
   /org/freedesktop/login1 org.freedesktop.login1.Manager.CanPowerOff");
 }
@@ -159,7 +159,7 @@ void LOS::systemRestart(){ //start reboot sequence
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  QProcess::startDetached("dbus-send --system --print-reply=literal \
+  return QProcess::startDetached("dbus-send --system --print-reply=literal \
   --type=method_call --dest=org.freedesktop.login1 \
   /org/freedesktop/login1 org.freedesktop.login1.Manager.CanSuspend");
 }
@@ -236,15 +236,37 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
-  return QStringList(); //not implemented yet
+  QStringList temp = LUtils::getCmdOutput("acpi -t").filter("degrees");
+  for(int i=0; i<temp.length(); i++){
+    if(temp[i].startsWith("Thermal")){
+      temp[i] = temp[i].section(" ", 4, 6);
+    }else{
+      temp.removeAt(i); i--;
+    }
+  }
+  qDebug() << "teperatures" << temp;
+  return temp;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
-  return -1; //not implemented yet
+  QStringList info = LUtils::getCmdOutput("top -bn1").filter("Cpu(s)");
+  if(info.isEmpty()){ return -1; }
+  QString idle = info.first().section(" ", 7, 7, QString::SectionSkipEmpty);
+  if(idle.isEmpty()){ return -1; }
+  else{
+    return (100 - idle.toDouble());
+  }
 }
 
 int LOS::MemoryUsagePercent(){
-  return -1; //not implemented yet
+  QStringList mem = LUtils::getCmdOutput("top -bn1").filter("Mem:");
+  if(mem.isEmpty()){ return -1; }
+  double fB = 0; //Free Bytes
+  double uB = 0; //Used Bytes
+  fB = mem.first().section(" ", 6, 6, QString::SectionSkipEmpty).toDouble();
+  uB = mem.first().section(" ", 4, 4, QString::SectionSkipEmpty).toDouble();
+  double per = (uB/(fB+uB)) * 100.0;
+  return qRound(per);
 }
 
 #endif

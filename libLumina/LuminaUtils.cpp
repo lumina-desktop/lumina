@@ -43,6 +43,10 @@ int LUtils::runCmd(QString cmd, QStringList args){
 
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   QProcess proc;
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+  env.insert("LANG", "C");
+  env.insert("LC_MESSAGES", "C");
+  proc.setProcessEnvironment(env);
   proc.setProcessChannelMode(QProcess::MergedChannels);
   if(args.isEmpty()){
     proc.start(cmd);
