@@ -2007,6 +2007,26 @@ void MainUI::saveSessionSettings(){
     }
   }
 
+  
+
+  if( !ui->push_session_setUserIcon->whatsThis().isEmpty()){
+    QString filepath = ui->push_session_setUserIcon->whatsThis();
+    if(filepath.isEmpty()){ filepath = QDir::homePath()+"/.loginIcon.png"; }
+    if(filepath=="reset"){
+      QFile::remove(QDir::homePath()+"/.loginIcon.png");
+    }else{
+      QPixmap pix(filepath);
+      //Now scale it down if necessary
+      if(pix.width() > 64 || pix.height()>64){
+        pix = pix.scaled(64,64,Qt::KeepAspectRatio, Qt::SmoothTransformation);
+      }
+      //Now save that to the icon file (will automatically convert it to a PNG file format)
+      pix.save(QDir::homePath()+"/.loginIcon.png");
+    }
+    ui->push_session_setUserIcon->setWhatsThis(""); //clear it for later
+    //Now touch the settings file so that it re-loads the panel
+    QProcess::startDetached("touch \""+settings->fileName()+"\"");
+  }
   //ok = overwriteFile(QDir::homePath()+"/.lumina/startapps", STARTUP);
   //if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/startapps"; }
 
@@ -2025,7 +2045,6 @@ void MainUI::saveSessionSettings(){
     sessionsettings->setValue("CustomTimeZone", true);
     sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
   }
-  
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
   QString colorfile = ui->combo_session_colorfile->itemData( ui->combo_session_colorfile->currentIndex() ).toString();
@@ -2176,11 +2195,15 @@ void MainUI::sessionChangeUserIcon(){
     //User cancelled the operation
     if(QFile::exists(QDir::homePath()+"/.loginIcon.png")){
       if(QMessageBox::Yes == QMessageBox::question(this,tr("Reset User Image"), tr("Would you like to reset the user image to the system default?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-	QFile::remove(QDir::homePath()+"/.loginIcon.png");
+	//QFile::remove(QDir::homePath()+"/.loginIcon.png");
+	ui->push_session_setUserIcon->setWhatsThis("reset");
+      }else{
+	return;
       }
     }
   }else{
-    QPixmap pix(filepath);
+    ui->push_session_setUserIcon->setWhatsThis(filepath);	
+    /*QPixmap pix(filepath);
     //Now scale it down if necessary
     if(pix.width() > 64 || pix.height()>64){
       pix = pix.scaled(64,64,Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -2188,10 +2211,14 @@ void MainUI::sessionChangeUserIcon(){
     //Now save that to the icon file (will automatically convert it to a PNG file format)
     pix.save(QDir::homePath()+"/.loginIcon.png");
     //Now touch the settings file so that it re-loads the panel
-    QProcess::startDetached("touch \""+settings->fileName()+"\"");
+    QProcess::startDetached("touch \""+settings->fileName()+"\"");*/
   }
   //Now re-load the icon in the UI
-  ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
+  QString path = ui->push_session_setUserIcon->whatsThis();
+  if(path.isEmpty()){ path = QDir::homePath()+"/.loginIcon.png"; }
+  if(path=="reset"){ path.clear(); }
+  ui->push_session_setUserIcon->setIcon( LXDG::findIcon(path, "user-identity") );
+  sessionoptchanged();
 }
 
 void MainUI::sessionResetSys(){
