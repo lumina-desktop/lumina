@@ -145,6 +145,7 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
 }
 
 double LUtils::DisplaySizeToBytes(QString num){
+  //qDebug() << "Convert Num to Bytes:" << num;
   num = num.toLower().simplified();
   num = num.remove(" ");
   if(num.isEmpty()){ return 0.0; }
@@ -159,6 +160,7 @@ double LUtils::DisplaySizeToBytes(QString num){
     if(lab==labs[i]){ break; }//already at the right units - break out
     N = N*1024.0; //Move to the next unit of measurement
   }
+  //qDebug() << " - Done:" << QString::number(N) << lab << num;
   return N;
 }
 

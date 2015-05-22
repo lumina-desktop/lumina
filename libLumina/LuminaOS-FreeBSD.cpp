@@ -297,7 +297,11 @@ int LOS::MemoryUsagePercent(){
     if(mem[i].contains("Inact") || mem[i].contains("Free")){ fB = fB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0)); }
     else{ uB = uB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0));  }
   }
-  return qRound( (uB/(fB+uB)) * 100.0);
+  qDebug() << "Memory Calc:" << mem;
+  qDebug() << " - Bytes:" << "U:"<<uB<<"F:"<< fB<<"T:"<< (uB+fB);
+  double per = (uB/(fB+uB)) * 100.0;
+  qDebug() << " - Percentage:" << per;
+  return qRound(per);
 }
 
 #endif
