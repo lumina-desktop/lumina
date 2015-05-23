@@ -25,7 +25,7 @@
 #include <X11/extensions/Xdamage.h>
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -108,21 +108,22 @@ void LSession::setupSession(){
   WM = new WMProcess();
     WM->startWM();
 	
-  //Initialize the desktops
-    splash.showScreen("desktop");
-  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
-  updateDesktops();
-
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
   if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
   appmenu = new AppMenu();
+  
+    splash.showScreen("menus");
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
-    //splash.showScreen("menus");
   settingsmenu = new SettingsMenu();
   if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
   sysWindow = new SystemWindow();
+  
+  //Initialize the desktops
+    splash.showScreen("desktop");
+  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
+  updateDesktops();
   
   //Now setup the system watcher for changes
     splash.showScreen("final");

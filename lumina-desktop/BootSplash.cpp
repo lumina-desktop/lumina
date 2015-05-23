@@ -29,15 +29,15 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
   }else if(loading=="wm"){
     txt = tr("Starting Window Manager..."); per = 50;
     icon = "preferences-system-windows-actions";	  
-  }else if(loading=="desktop"){
-    txt = tr("Initializing Desktop(s)..."); per = 60;
-    icon = "preferences-desktop-wallpaper";	
   }else if(loading=="apps"){
-    txt = tr("Detecting System Applications..."); per = 70;
+    txt = tr("Detecting System Applications..."); per = 60;
     icon = "preferences-desktop-icons";
   }else if(loading=="menus"){
-    txt = tr("Initializing System Menu(s)..."); per = 80;
+    txt = tr("Initializing System Menu(s)..."); per = 70;
     icon = "preferences-system-windows";
+  }else if(loading=="desktop"){
+    txt = tr("Initializing Desktop(s)..."); per = 80;
+    icon = "preferences-desktop-wallpaper";	
   }else if(loading=="final"){
     txt = tr("Performing Final Checks..."); per = 90;
     icon = "pcbsd";	  
