@@ -115,10 +115,11 @@ void LSession::setupSession(){
 
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
-    splash.showScreen("menus");
+    splash.showScreen("apps");
   if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
   appmenu = new AppMenu();
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
+  splash.showScreen("menus");
   settingsmenu = new SettingsMenu();
   if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
   sysWindow = new SystemWindow();
