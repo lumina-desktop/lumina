@@ -10,7 +10,7 @@
 #include <LuminaOS.h>
 
 SettingsMenu::SettingsMenu() : QMenu(){
-  QTimer::singleShot(10, this, SLOT(InitMenu()) );
+  QTimer::singleShot(100, this, SLOT(InitMenu()) );
 }
 
 SettingsMenu::~SettingsMenu(){
