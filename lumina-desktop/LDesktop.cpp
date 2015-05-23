@@ -321,7 +321,7 @@ void LDesktop::UpdateDesktop(){
     if(!plugins.contains(PLUGINS[i]->ID())){
       //Remove this plugin (with settings) - is not currently listed
       
-      DesktopPluginRemoved(PLUGINS[i]->ID());
+      DesktopPluginRemoved(PLUGINS[i]->ID(),true); //flag this as an internal removal
       i--;
     }
   }
@@ -423,7 +423,7 @@ void LDesktop::AlignDesktopPlugins(){
   }
 }
 
-void LDesktop::DesktopPluginRemoved(QString ID){
+void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
   //Close down that plugin instance (NOTE: the container might have already closed by the user)
   if(DEBUG){ qDebug() << "Desktop Plugin Removed:" << ID; }
   //First look for the container (just in case)
@@ -434,7 +434,7 @@ void LDesktop::DesktopPluginRemoved(QString ID){
       //wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
       bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
       bgDesktop->removeSubWindow(wins[i]); //remove container from screen
-      delete wins[i]; //delete old container
+      if(internal){ delete wins[i]; }//delete old container
       break;
     }
   }
@@ -456,6 +456,10 @@ void LDesktop::DesktopPluginRemoved(QString ID){
     issyncing = true;
     if(DEBUG){ qDebug() << " - Save modified plugins list"; }
     settings->setValue(DPREFIX+"pluginlist", plugins);
+    if(QFile::exists(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf")){
+      if(DEBUG){ qDebug() << " - Removing settings file"; }
+      QFile::remove(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf");
+    }
     if(DEBUG){ qDebug() << " - Unlock settings file in 200 ms"; }
     //settings->sync();
   QTimer::singleShot(200, this, SLOT(UnlockSettings()) );

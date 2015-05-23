@@ -92,7 +92,7 @@ private slots:
 	void UpdateDesktop();
 	void ToggleDesktopLock();
 	void AlignDesktopPlugins();
-	void DesktopPluginRemoved(QString);
+	void DesktopPluginRemoved(QString ID, bool internal = false);
 	
 	void UpdatePanels();
 	

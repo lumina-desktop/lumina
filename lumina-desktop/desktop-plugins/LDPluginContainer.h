@@ -122,12 +122,12 @@ protected:
 	  if( !this->whatsThis().isEmpty() && !locked){
 	    //Plugin removed by the user - delete the settings file
 	    locked = true; //ensure that the save settings routines don't do anything during the close
-	    if(syncTimer->isActive()){ syncTimer->stop(); } //prevent save routine from running in a moment
-	    QFile::remove( settings->fileName() );
+	    //QFile::remove( settings->fileName() );
 	    emit PluginRemoved( this->whatsThis() );
 	  }
+	  if(syncTimer->isActive()){ syncTimer->stop(); } //prevent save routine from running in a moment
 	  settings = 0; //ensure we don't touch the settings file after a close event
-	  event->accept();
+	  QMdiSubWindow::closeEvent(event); //continue closing this window
 	}
 	
 };
