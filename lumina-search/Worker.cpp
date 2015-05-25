@@ -2,6 +2,7 @@
 
 #include <QTimer>
 #include <LuminaXDG.h>
+#include <LuminaUtils.h>
 
 Worker::Worker(QObject *parent) : QObject(parent){
   //Get the list of all applications and save them in an easily-searchable form
@@ -67,6 +68,12 @@ void Worker::beginsearch(){
       if(stopsearch){ return; }
       emit FoundItem( tmp[i].section(":::4:::",1,1) );
     }
+    //Check if this is a binary name
+    if(stopsearch){ return; }
+    if(LUtils::isValidBinary(sterm)){
+      emit FoundItem(sterm);
+      return;
+    }
     //If items found, go ahead and stop now
     if(stopsearch){ return; }
     if(tmp.length()<1){
@@ -89,6 +96,7 @@ void Worker::beginsearch(){
         emit FoundItem( tmp[i].section(":::4:::",1,1) );
       }
     }
+    
   }else{
     //Search through the user's home directory and look for a file/dir starting with that term
     if(!sterm.contains("*")){

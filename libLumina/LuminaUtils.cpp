@@ -87,7 +87,7 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   return ok;
 }
 
-bool LUtils::isValidBinary(QString bin){
+bool LUtils::isValidBinary(QString& bin){
   if(!bin.startsWith("/")){
     //Relative path: search for it on the current "PATH" settings
     QStringList paths = QString(qgetenv("PATH")).split(":");
@@ -98,7 +98,9 @@ bool LUtils::isValidBinary(QString bin){
   //bin should be the full path by now
   if(!bin.startsWith("/")){ return false; }
   QFileInfo info(bin);
-  return (info.exists() && info.isExecutable());
+  bool good = (info.exists() && info.isExecutable());
+  if(good){ bin = info.absoluteFilePath(); }
+  return good;
 }
 
 QStringList LUtils::listSubDirectories(QString dir, bool recursive){

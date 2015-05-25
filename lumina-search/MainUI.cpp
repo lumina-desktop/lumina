@@ -113,7 +113,7 @@ if(ui->radio_apps->isChecked()){ this->close(); }
 }
 
 void MainUI::LaunchItem(QListWidgetItem *item){
-  QProcess::startDetached("lumina-open \""+item->whatsThis()+"\"");
+    QProcess::startDetached("lumina-open \""+item->whatsThis()+"\"");
 }
 
 void MainUI::searchTypeChanged(){
@@ -176,7 +176,11 @@ void MainUI::foundSearchItem(QString path){
       it->setIcon( LXDG::findIcon("inode-directory","") );
       it->setText( path.replace(QDir::homePath(), "~") );
     }else{ 
-      it->setIcon( LXDG::findMimeIcon(path.section("/",-1).section(".",-1)) ); 
+      if(QFileInfo(path).isExecutable()){
+	it->setIcon( LXDG::findIcon("application-x-executable","") ); 
+      }else{
+        it->setIcon( LXDG::findMimeIcon(path.section("/",-1).section(".",-1)) ); 
+      }
       it->setText( path.section("/",-1) );
     }
     

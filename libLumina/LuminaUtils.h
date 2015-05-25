@@ -36,7 +36,11 @@ public:
 	static bool writeFile(QString filepath, QStringList contents, bool overwrite=false);
 
 	//Check whether a file/path is a valid binary
-	static bool isValidBinary(QString bin); //full path or name only
+	static bool isValidBinary(QString& bin); //full path or name only
+	static bool isValidBinary(const char *bin){
+	  QString bins(bin);
+	  return isValidBinary(bins); //overload for a "junk" binary variable input
+	}
 
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
