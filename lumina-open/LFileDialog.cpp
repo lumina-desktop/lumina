@@ -141,7 +141,8 @@ void LFileDialog::updateUI(){
   bool good = false;
   if(ui->radio_custom->isChecked()){
     if(!ui->line_bin->text().isEmpty()){
-      good = LUtils::isValidBinary(ui->line_bin->text()); 
+      QString bin = ui->line_bin->text();
+      good = LUtils::isValidBinary(bin); 
       //Now verify that the file exists and is executable
       if( good ){
         ui->label_goodbin->setPixmap(QPixmap(":/icons/good.png"));
