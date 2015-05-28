@@ -10,6 +10,8 @@
 UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
   createWidget();
   //Now fill it appropriately
+  bool inHome = type.endsWith("-home"); //internal code
+  if(inHome){ type = type.remove("-home"); }
   if(itemPath.endsWith(".desktop") || type=="app"){
     bool ok = false;
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
@@ -39,8 +41,10 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
   if(LUtils::isFavorite(itemPath)){
     linkPath = itemPath;
     isShortcut=true;
-  }else if( itemPath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+  }else if( inHome ){//|| itemPath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
     isShortcut = true;
+  }else{
+    isShortcut = false;
   }
   //Now setup the button appropriately
   setupButton(goback);
@@ -95,20 +99,21 @@ void UserItemWidget::createWidget(){
 }
 
 void UserItemWidget::setupButton(bool disable){
+  if(isDirectory){ qDebug() << "Directory Entry:" << isShortcut << linkPath << icon->whatsThis(); }
+	
   if(disable){
     button->setVisible(false);
-  }else if( !isDirectory && isShortcut ){
-    //This is a current desktop shortcut -- allow the user to remove it
-    button->setWhatsThis("remove");
-    if(!linkPath.isEmpty()){
+  }else if(isShortcut && !linkPath.isEmpty()){ //Favorite Item - can always remove this
+      button->setWhatsThis("remove");
       button->setIcon( LXDG::findIcon("list-remove","") );
       button->setToolTip(tr("Remove Shortcut"));
-    }else{
+      connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
+  }else if(isShortcut && !isDirectory){ //Physical File - can remove
+      button->setWhatsThis("remove");
       button->setIcon( LXDG::findIcon("user-trash","") );
       button->setToolTip(tr("Delete File"));
-    }
-    connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  }else if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !LUtils::isFavorite(icon->whatsThis() ) ){
+      connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
+  }else if(!isShortcut){// if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !LUtils::isFavorite(icon->whatsThis() ) ){
     //This file does not have a shortcut yet -- allow the user to add it
     button->setWhatsThis("add");
     button->setIcon( LXDG::findIcon("bookmark-toolbar","") );    

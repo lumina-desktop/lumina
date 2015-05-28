@@ -186,14 +186,14 @@ void UserWidget::updateFavItems(bool newfilter){
     favitems = favs.filter("::::app::::");
     for(int i=0; i<homefiles.length(); i++){
       if(homefiles[i].fileName().endsWith(".desktop")){
-        favitems << homefiles[i].fileName()+"::::app::::"+homefiles[i].absoluteFilePath();
+        favitems << homefiles[i].fileName()+"::::app-home::::"+homefiles[i].absoluteFilePath();
       }
     }
   }else if(ui->tool_fav_dirs->isChecked()){ 
     favitems = favs.filter("::::dir::::");
     for(int i=0; i<homefiles.length(); i++){
       if(homefiles[i].isDir()){
-        favitems << homefiles[i].fileName()+"::::dir::::"+homefiles[i].absoluteFilePath();
+        favitems << homefiles[i].fileName()+"::::dir-home::::"+homefiles[i].absoluteFilePath();
       }
     }
   }else{ 
@@ -206,14 +206,14 @@ void UserWidget::updateFavItems(bool newfilter){
     }
     for(int i=0; i<homefiles.length(); i++){
       if(!homefiles[i].isDir() && !homefiles[i].fileName().endsWith(".desktop") ){
-        favitems << homefiles[i].fileName()+"::::"+LXDG::findAppMimeForFile(homefiles[i].fileName())+"::::"+homefiles[i].absoluteFilePath();
+        favitems << homefiles[i].fileName()+"::::"+LXDG::findAppMimeForFile(homefiles[i].fileName())+"-home::::"+homefiles[i].absoluteFilePath();
       }
     }
   }
   ClearScrollArea(ui->scroll_fav);
   favitems.sort(); //sort them alphabetically
   for(int i=0; i<favitems.length(); i++){
-    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) , ui->tool_fav_dirs->isChecked());
+    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
     ui->scroll_fav->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
@@ -282,11 +282,13 @@ void UserWidget::updateHome(){
   }
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
   items << homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); 
+  QString type = "dir";
+  if(homedir.absolutePath() == QDir::homePath()+"/Desktop"){ type.append("-home"); }//internal code
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;
-    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], "dir", true); }
-    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), "dir", false); }
+    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], type, true); }
+    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), type, false); }
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
