@@ -191,7 +191,11 @@ void LDeskBarPlugin::desktopChanged(){
       videoM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
     }else if(type.startsWith("image/")){
       //Add it to pictureM
-      pictureM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      if(LUtils::imageExtensions().contains(path.section("/",-1).section(".",-1).toLower()) ){
+	pictureM->addAction( newAction(path, name, QIcon(path)) );
+      }else{
+        pictureM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      }
     }else if(type.startsWith("text/")){
       //Add it to docM
       docM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );

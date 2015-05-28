@@ -33,7 +33,11 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    icon->setPixmap( LXDG::findMimeIcon(type).pixmap(32,32) );
+    if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
+      icon->setPixmap( QIcon(itemPath).pixmap(32,32) );
+    }else{
+      icon->setPixmap( LXDG::findMimeIcon(type).pixmap(32,32) );
+    }
     name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
   }
   icon->setWhatsThis(itemPath);
@@ -122,6 +126,9 @@ void UserItemWidget::setupButton(bool disable){
   }else{
     //This already has a desktop shortcut -- no special actions
     button->setVisible(false);
+  }
+  if(isShortcut){
+    name->setToolTip(icon->whatsThis()); //also allow the user to see the full shortcut path
   }
 }
 

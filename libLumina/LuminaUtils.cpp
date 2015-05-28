@@ -13,6 +13,7 @@
 #include <QTextCodec>
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QImageReader>
 
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
@@ -115,6 +116,16 @@ QStringList LUtils::listSubDirectories(QString dir, bool recursive){
     }
   }
   return out;
+}
+
+QStringList LUtils::imageExtensions(){
+  //Note that all the image extensions are lowercase!!
+  static QStringList imgExtensions;
+  if(imgExtensions.isEmpty()){
+    QList<QByteArray> fmt = QImageReader::supportedImageFormats();
+    for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
+  }
+  return imgExtensions;
 }
 
 void LUtils::LoadTranslation(QApplication *app, QString appname){

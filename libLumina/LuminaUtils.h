@@ -45,6 +45,9 @@ public:
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
 
+	//Get the list of all file extensions which Qt can read (lowercase)
+	static QStringList imageExtensions();
+	
 	//Load a translation file for a Lumina Project
 	static void LoadTranslation(QApplication *app, QString appname);
 

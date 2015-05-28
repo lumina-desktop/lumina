@@ -27,7 +27,7 @@ private:
 	QListWidget *list;
 	QFileSystemWatcher *watcher;
 	QMenu *menu;
-	QStringList imgExtensions;
+	//QStringList imgExtensions;
 
 private slots:
 	void runItems();

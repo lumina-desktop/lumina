@@ -132,10 +132,10 @@ void DesktopViewPlugin::decreaseIconSize(){
 
 void DesktopViewPlugin::updateContents(){
   list->clear();
-  if(imgExtensions.isEmpty()){
+  /*if(imgExtensions.isEmpty()){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
     for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
-  }
+  }*/
   int icosize = settings->value("IconSize",64).toInt();
   QSize gridSZ = QSize(icosize+8,icosize+4+(2*this->fontMetrics().height()) );
   //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
@@ -166,7 +166,7 @@ void DesktopViewPlugin::updateContents(){
           it->setIcon( LXDG::findMimeIcon(files[i].fileName()) );
           txt = files[i].fileName();		
 	}
-    }else if(imgExtensions.contains(files[i].suffix().toLower()) ){
+    }else if(LUtils::imageExtensions().contains(files[i].suffix().toLower()) ){
       it->setIcon( QIcon( QPixmap(files[i].absoluteFilePath()).scaled(icosize,icosize,Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ) );
       txt = files[i].fileName();	    
     }else{
