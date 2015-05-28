@@ -62,13 +62,19 @@ X.org and XCB extensions (possibly the XLib libraries above during the transitio
 === Linux Requirements ===
   These packages are required for building Lumina on Linux
   build-essential (this supplies g++, though clang should work too)
-  qt4-qmake
-  libqt4-core
-  libqt4-dev
-  libqt4-dev-bin
-  libqt4-gui
-  libqt4-network
-  libqt4-svg
+  qt5-default
+  qttools5-dev-tools
+  libqt5gui5 
+  qtmultimedia5-dev
+  libqt5multimediawidgets5
+  libqt5network5 
+  libqt5svg5-dev
+  libqt5x11extras5-dev
+  libxcb-icccm4-dev
+  libxcb-ewmh-dev
+  libxcb-composite0-dev
+  libxcb-damage0-dev
+  libxcb-util0-dev
   libphonon-dev
   libxcomposite-dev
   libxdamage-dev
