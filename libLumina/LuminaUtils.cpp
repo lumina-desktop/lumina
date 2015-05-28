@@ -321,6 +321,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="desktop.plugins"){ deskset << "pluginlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+
   //Now do any panel1 settings (only works for the primary desktop at the moment)
   tmp = sysDefaults.filter("panel1.");
   if(!tmp.isEmpty()){deskset << "[panel"+screen+".0]"; }
@@ -342,6 +343,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="panel1.plugins"){ deskset << "pluginlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+
   //Now do any panel2 settings (only works for the primary desktop at the moment)
   tmp = sysDefaults.filter("panel2.");
   if(!tmp.isEmpty()){deskset << "[panel"+screen+".1]"; }
@@ -361,6 +363,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="panel2.plugins"){ deskset << "pluginlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+
   //Now do any menu settings
   tmp = sysDefaults.filter("menu.");
   if(!tmp.isEmpty()){deskset << "[menu]"; }
@@ -372,6 +375,20 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(var=="menu.plugins"){ deskset << "itemlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
+
+  //Now do any custom favorites
+  tmp = sysDefaults.filter("favorites.");
+  if(!tmp.isEmpty()){deskset << "[menu]"; }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Now parse the variable and put the value in the proper file   
+    if(var=="favorites.add.ifexists" && QFile::exists(val)){ LUtils::addFavorite(val); }
+    else if(var=="favorites.add"){ LUtils::addFavorite(val); }
+    else if(var=="favorites.remove"){ LUtils::removeFavorite(val); }
+  }
+  
   //Now do any theme settings
   QStringList themesettings = LTHEME::currentSettings(); 
       //List: [theme path, colorspath, iconsname, font, fontsize]
