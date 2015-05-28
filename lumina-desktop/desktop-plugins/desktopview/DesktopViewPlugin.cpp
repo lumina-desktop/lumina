@@ -97,7 +97,11 @@ void DesktopViewPlugin::cutItems(){
 void DesktopViewPlugin::deleteItems(){
   QList<QListWidgetItem*> sel = list->selectedItems();
   for(int i=0; i<sel.length(); i++){
-    QFile::remove(sel[i]->whatsThis());
+    if(QFileInfo(sel[i]->whatsThis()).isDir()){
+      QProcess::startDetached("rm -r \""+sel[i]->whatsThis()+"\"");
+    }else{
+      QFile::remove(sel[i]->whatsThis());
+    }
   }
 }
 
