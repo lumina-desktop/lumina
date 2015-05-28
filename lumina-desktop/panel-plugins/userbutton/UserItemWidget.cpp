@@ -112,7 +112,7 @@ void UserItemWidget::setupButton(bool disable){
       button->setIcon( LXDG::findIcon("list-remove","") );
       button->setToolTip(tr("Remove Shortcut"));
       connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
-  }else if(isShortcut && !isDirectory){ //Physical File - can remove
+  }else if(isShortcut){ //Physical File/Dir - can remove
       button->setWhatsThis("remove");
       button->setIcon( LXDG::findIcon("user-trash","") );
       button->setToolTip(tr("Delete File"));
@@ -139,8 +139,14 @@ void UserItemWidget::buttonClicked(){
     //QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
     emit NewShortcut(); 
   }else if(button->whatsThis()=="remove"){ 
-    if(linkPath.isEmpty()){ QFile::remove(icon->whatsThis()); } //This is a desktop file
-    else{ LUtils::removeFavorite(icon->whatsThis()); } //This is a favorite
+    if(linkPath.isEmpty()){ 
+      //This is a desktop file
+      if(isDirectory){
+	QProcess::startDetached("rm -r \""+icon->whatsThis()+"\"");
+      }else{
+	QFile::remove(icon->whatsThis()); 
+      } 
+    }else{ LUtils::removeFavorite(icon->whatsThis()); } //This is a favorite
     emit RemovedShortcut(); 
   }
 }
