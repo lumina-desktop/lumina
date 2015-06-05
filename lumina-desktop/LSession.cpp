@@ -420,7 +420,8 @@ void LSession::updateDesktops(){
     for(int i=0; i<DW->screenCount(); i++){
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
-        if(DESKTOPS[j]->Screen()==i){ found = true; }
+	//Match either the screen number or the screen location (preventing duplicates)
+        if(DESKTOPS[j]->Screen()==i || DW->screenGeometry(i)==DW->screenGeometry(DESKTOPS[j]->Screen()) ){ found = true; }
       }
       if(!found){
 	//Start the desktop on the new screen

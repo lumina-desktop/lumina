@@ -116,7 +116,7 @@ void LDesktop::SystemApplication(QAction* act){
 
 void LDesktop::checkResolution(){
   //Compare the current screen resolution with the last one used/saved and adjust config values *only*
-  
+  //NOTE: This is only run the first time this desktop is created (before loading all the interface) - not on each desktop change
   int oldWidth = settings->value(DPREFIX+"screen/lastWidth",-1).toInt();
   int oldHeight = settings->value(DPREFIX+"screen/lastHeight",-1).toInt();
   QRect scrn = LSession::desktop()->screenGeometry(desktopnumber);
@@ -152,9 +152,22 @@ void LDesktop::checkResolution(){
       }
     }
     //Update any desktop plugins
-    /*for(int i=0; i<PLUGINS.length(); i++){
-      PLUGINS[i]->scalePlugin(xscale, yscale);
-    }*/
+    QStringList plugs = settings->value(DPREFIX+"pluginlist").toStringList();
+    QString pspath = QDir::homePath()+"/.lumina/desktop-plugins/%1.conf";
+    for(int i=0; i<plugs.length(); i++){
+      if(QFile::exists( pspath.arg(plugs[i]) )){
+        //Has existing settings file - need to adjust this as well
+	QSettings pset(QSettings::UserScope, "desktop-plugins",plugs[i]);
+	  if(pset.contains("location/height")){ pset.setValue( "location/height", qRound(pset.value("location/height").toInt()*yscale) ); }
+	  if(pset.contains("location/width")){ pset.setValue( "location/width", qRound(pset.value("location/width").toInt()*xscale) ); }
+	  if(pset.contains("location/x")){ pset.setValue( "location/x", qRound(pset.value("location/x").toInt()*xscale) ); }
+	  if(pset.contains("location/y")){ pset.setValue( "location/y", qRound(pset.value("location/y").toInt()*yscale) ); }
+	  if(pset.contains("IconSize")){ pset.setValue( "IconSize", qRound(pset.value("IconSize").toInt()*yscale) ); }
+	  if(pset.contains("iconsize")){ pset.setValue( "iconsize", qRound(pset.value("iconsize").toInt()*yscale) ); }
+	  pset.sync(); //make sure it gets saved to disk right away
+      }
+    }
+    
   }
   issyncing = false;
 }
