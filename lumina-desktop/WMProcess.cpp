@@ -43,6 +43,16 @@ void WMProcess::stopWM(){
   }
 }
 
+void WMProcess::restartWM(){
+  if(isRunning()){
+    inShutdown = true;
+    this->kill();
+    if(!this->waitForFinished(5000) ){ this->terminate(); };
+    inShutdown = false;	
+  }	  
+  this->startWM();
+}
+
 void WMProcess::updateWM(){
   if(isRunning()){
     ::kill(this->pid(), SIGUSR2); //send fluxbox the signal to reload it's configuration

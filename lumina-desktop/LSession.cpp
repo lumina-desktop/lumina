@@ -449,7 +449,7 @@ void LSession::updateDesktops(){
 	  //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
         }
       }
-      WM->updateWM(); //Make sure fluxbox also gets prompted to re-load screen config
+      WM->restartWM(); //Make sure fluxbox also gets prompted to re-load screen config
     }
     //Make sure all the background windows are registered on the system as virtual roots
     QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));

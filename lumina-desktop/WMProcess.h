@@ -23,6 +23,7 @@ public:
 	
 	void startWM();
 	void stopWM();
+	void restartWM();
 	void updateWM();
 	
 private:
