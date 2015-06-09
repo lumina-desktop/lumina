@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -22,11 +22,11 @@
 LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   frame = new QFrame(this);
   frame->setContentsMargins(0,0,0,0);
-  frame->setStyleSheet("QFrame{ background: transparent; border: 1px solid transparent; border-radius: 3px; }");
+  //frame->setStyleSheet("QFrame{ background: transparent; border: 1px solid transparent; border-radius: 3px; }");
   LI = new QBoxLayout( this->layout()->direction());
     frame->setLayout(LI);
     LI->setAlignment(Qt::AlignCenter);
-    LI->setSpacing(1);
+    LI->setSpacing(0);
     LI->setContentsMargins(0,0,0,0);
   this->layout()->addWidget(frame);
   this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
