@@ -318,24 +318,11 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
 
 int LOS::MemoryUsagePercent(){
   //SYSCTL: vm.stats.vm.v_<something>_count
-
-  //qDebug() << "Get Mem Usage";
-  QStringList mem = LUtils::getCmdOutput("top -n 0").filter("Mem: ", Qt::CaseInsensitive);
-  if(mem.isEmpty()){ return -1; }
-  mem = mem.first().section(":",1,50).split(", "); 
-  //Memory Labels: "Active", "Inact", "Wired", "Cache", "Buf", "Free" (usually in that order)
-  // Format of each entry: "<number><Unit> <Label>"
-  double fB = 0; //Free Bytes
-  double uB = 0; //Used Bytes
-  for(int i=0; i<mem.length(); i++){
-    if(mem[i].contains("Inact") || mem[i].contains("Free")){ fB = fB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0)); }
-    else{ uB = uB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0));  }
-  }
-  //qDebug() << "Memory Calc:" << mem;
-  //qDebug() << " - Bytes:" << "U:"<<uB<<"F:"<< fB<<"T:"<< (uB+fB);
-  double per = (uB/(fB+uB)) * 100.0;
-  //qDebug() << " - Percentage:" << per;
-  return qRound(per);
+  QStringList info = LUtils::getCmdOutput("sysctl -n vm.stats.vm.v_page_count vm.stats.vm.v_wire_count vm.stats.vm.v_active_count");
+  if(info.length()<3){ return -1; } //error in fetching information
+  //List output: [total, wired, active]
+  double perc = 100.0* (info[1].toLong()+info[2].toLong())/(info[0].toDouble());
+  return qRound(perc);
 }
 
 #endif
