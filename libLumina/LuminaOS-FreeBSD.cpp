@@ -325,4 +325,25 @@ int LOS::MemoryUsagePercent(){
   return qRound(perc);
 }
 
+QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
+  QStringList info = LUtils::getCmdOutput("iostat -dx -t IDE -t SCSI -t da");
+  if(info.length()<3){ return QStringList(); } //nothing from command
+  QStringList labs = info[1].split(" ",QString::SkipEmptyParts);
+  QStringList out;
+  QString fmt = "%1: %2 %3";
+  for(int i=2; i<info.length(); i++){ //skip the first two lines, just labels
+    info[i].replace("\t"," ");
+    if(i==1){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
+    else{
+      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device 
+      qDebug() << "Data Line:" << data;
+      if(data.length()>2 && labs.length()>2){
+        out << fmt.arg(data[0], data[1]+" "+labs[1], data[2]+" "+labs[2]);
+      }
+    }
+  }
+  
+  return out;
+}
+
 #endif

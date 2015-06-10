@@ -26,8 +26,9 @@ MonitorWidget::~MonitorWidget(){
 
 void MonitorWidget::LoadIcons(){
   ui->tabWidget->setTabIcon(0,LXDG::findIcon("appointment-recurring","") ); //Summary
-  ui->tabWidget->setTabIcon(1,LXDG::findIcon("cpu","") ); //CPU Log
-  ui->tabWidget->setTabIcon(2,LXDG::findIcon("media-flash-memory-stick","") ); //Mem Log
+  ui->tabWidget->setTabIcon(1,LXDG::findIcon("drive-harddisk","") ); //Disk Usage
+  //ui->tabWidget->setTabIcon(1,LXDG::findIcon("cpu","") ); //CPU Log
+  //ui->tabWidget->setTabIcon(2,LXDG::findIcon("media-flash-memory-stick","") ); //Mem Log
 }
 
 void MonitorWidget::UpdateStats(){ 
@@ -43,6 +44,7 @@ void MonitorWidget::UpdateStats(){
     ui->progress_mem->setValue(perc);
     if(perc<0){ ui->progress_mem->setEnabled(false); } //disable this for future checks
   }
+  ui->label_diskinfo->setText( LOS::DiskUsage().join("\n") );
   //Also perform/update the logs as necessary
   // -- TO DO --
 }

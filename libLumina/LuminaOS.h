@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-15, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -96,6 +96,7 @@ public:
 	static QStringList CPUTemperatures(); //Returns: List containing the temperature of any CPU's ("50C" for example)
 	static int CPUUsagePercent(); //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
 	static int MemoryUsagePercent(); //Returns: Overall percentage of the amount of available memory in use (-1 for errors)
+	static QStringList DiskUsage(); //Returns: List of current read/write stats for each device
 };
 
 #endif

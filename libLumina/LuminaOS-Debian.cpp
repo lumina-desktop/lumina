@@ -269,4 +269,7 @@ int LOS::MemoryUsagePercent(){
   return qRound(per);
 }
 
+QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
+  return QStringList(); //not implemented yet
+}
 #endif

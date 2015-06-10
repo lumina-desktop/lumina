@@ -133,4 +133,7 @@ int LOS::MemoryUsagePercent(){
   return -1; //not implemented yet
 }
 
+QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
+  return QStringList(); //not implemented yet
+}
 #endif
