@@ -31,16 +31,21 @@ LDPlugin#notepad{
   border-radius: 5px;
 }
 
+LDPlugin#systemmonitor{
+  background: %%BASECOLOR%%;
+  border-radius: 5px;
+}
+
 LDPlugin#applauncher  QToolButton{
 background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   stop: 0 transparent, 
   stop: 0.7 transparent,
-  stop: 1.0 %%ACCENTDISABLECOLOR%%);
+  stop: 1.0 %%PRIMARYDISABLECOLOR%%);
   border-radius: 5px; 
-  color: %%TEXTDISABLECOLOR%%;
+  color: %%TEXTCOLOR%%;
 }
 LDPlugin#applauncher  QToolButton:hover{
-  background: %%ACCENTDISABLECOLOR%%;
+  background: %%PRIMARYDISABLECOLOR%%;
   border-radius: 5px; 
   color: %%TEXTHIGHLIGHTCOLOR%%;
 }
@@ -53,9 +58,9 @@ LDPlugin#desktopview QListWidget::item{
   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   stop: 0 transparent, 
   stop: 0.7 transparent,
-  stop: 1.0 %%ACCENTDISABLECOLOR%%);
+  stop: 1.0 %%PRIMARYDISABLECOLOR%%);
   border-radius: 5px;
-  color: %%TEXTDISABLECOLOR%%;
+  color: %%TEXTCOLOR%%;
 }
 
 LDPlugin#desktopview QListWidget::item:hover{
