@@ -1,12 +1,14 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 #ifdef __FreeBSD__
 #include "LuminaOS.h"
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 #include <QDebug>
 //can't read xbrightness settings - assume invalid until set
@@ -256,35 +258,67 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
-  QStringList temps = LUtils::getCmdOutput("sysctl -ai").filter(".temperature:");
-  temps.sort();
-  for(int i=0; i<temps.length(); i++){
-    if(temps[i].contains(".acpi.") || temps[i].contains(".cpu")){
-      temps[i] = temps[i].section(":",1,5).simplified(); //only pull out the value, not the variable
-    }else{
-      //non CPU temperature - skip it
-      temps.removeAt(i); i--;
+  static QStringList vars = QStringList();
+  QStringList temps;
+  if(vars.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -ai").filter(".temperature:"); }
+  else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
+  
+    temps.sort();
+    for(int i=0; i<temps.length(); i++){
+      if(temps[i].contains(".acpi.") || temps[i].contains(".cpu")){
+        vars << temps[i].section(":",0,0); //save this variable for later checks
+        temps[i] = temps[i].section(":",1,5).simplified(); //only pull out the value, not the variable
+      }else{
+        //non CPU temperature - skip it
+        temps.removeAt(i); i--;
+      }
     }
-  }
+  /*}else{
+    //Already have the known variables - use the library call directly (much faster)
+    for(int i=0; i<vars.length(); i++){
+       float result[1000];
+       size_t len = sizeof(result);
+       if(0 != sysctlbyname(vars[i].toLocal8Bit(), result, &len, NULL, 0)){ continue; } //error returned
+       //result[len] = '\0'; //make sure to null-terminate the output
+       QString res;
+	for(int r=0; r<((int) len); r++){ res.append(QString::number(result[r])); }
+       temps << res;
+       qDebug() << "Temp Result:" << vars[i] << res << result << len;
+    }
+  }*/
   return temps;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
-  //qDebug() << "Get CPU usage";
-  QStringList info = LUtils::getCmdOutput("iostat",QStringList() <<"-c"<<"2"<<"-t"<<"proc"<<"-w"<<"0.2");
-  if(info.length()<4){return -1;}
-  //Only need the idle percentage (last number on the 4th line)
-  info = info[3].split(" ",QString::SkipEmptyParts);
-  //qDebug() << "CPU Info:" << info;
-  if(info.isEmpty()){ return -1; }
-  QString idle = info.last();
-  if(idle.isEmpty()){ return -1; }
-  else{
-    return (100 - idle.toInt() );
-  }
+    //Calculate the percentage based on the kernel information directly - no extra utilities
+    QStringList result = LUtils::getCmdOutput("sysctl -n kern.cp_times").join("").split(" ");
+    static QStringList last = QStringList();
+    if(last.isEmpty()){ last = result; return 0; } //need two ticks before it works properly
+
+    double tot = 0;
+    int cpnum = 0;
+    for(int i=4; i<result.length(); i+=5){
+      //The values come in blocks of 5 per CPU: [user,nice,system,interrupt,idle]
+      cpnum++; //the number of CPU's accounted for (to average out at the end)
+      //qDebug() <<"CPU:" << cpnum;
+      long sum = 0;
+      //Adjust/all the data to correspond to diffs from the previous check
+      for(int j=0; j<5; j++){
+        QString tmp = result[i-j];
+	result[i-j] = QString::number(result[i-j].toLong()-last[i-j].toLong()); //need the difference between last run and this one
+	sum += result[i-j].toLong();
+	last[i-j] = tmp; //make sure to keep the original value around for the next run
+      }
+      //Calculate the percentage used for this CPU (100% - IDLE%)
+      tot += 100.0L - ( (100.0L*result[i].toLong())/sum ); //remember IDLE is the last of the five values per CPU
+    }
+  return qRound(tot/cpnum);
+  
 }
 
 int LOS::MemoryUsagePercent(){
+  //SYSCTL: vm.stats.vm.v_<something>_count
+
   //qDebug() << "Get Mem Usage";
   QStringList mem = LUtils::getCmdOutput("top -n 0").filter("Mem: ", Qt::CaseInsensitive);
   if(mem.isEmpty()){ return -1; }
@@ -297,10 +331,10 @@ int LOS::MemoryUsagePercent(){
     if(mem[i].contains("Inact") || mem[i].contains("Free")){ fB = fB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0)); }
     else{ uB = uB+LUtils::DisplaySizeToBytes(mem[i].section(" ",0,0));  }
   }
-  qDebug() << "Memory Calc:" << mem;
-  qDebug() << " - Bytes:" << "U:"<<uB<<"F:"<< fB<<"T:"<< (uB+fB);
+  //qDebug() << "Memory Calc:" << mem;
+  //qDebug() << " - Bytes:" << "U:"<<uB<<"F:"<< fB<<"T:"<< (uB+fB);
   double per = (uB/(fB+uB)) * 100.0;
-  qDebug() << " - Percentage:" << per;
+  //qDebug() << " - Percentage:" << per;
   return qRound(per);
 }
 
