@@ -406,7 +406,9 @@ void LSession::checkUserFiles(){
 
 
   //Save the current version of the session to the settings file (for next time)
-  sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+  if(newversion || newrelease){
+    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+  }
 }
 
 void LSession::refreshWindowManager(){
@@ -449,7 +451,7 @@ void LSession::updateDesktops(){
 	  //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
         }
       }
-      WM->restartWM(); //Make sure fluxbox also gets prompted to re-load screen config
+      QTimer::singleShot(1000,WM, SLOT(restartWM())); //Make sure fluxbox also gets prompted to re-load screen config
     }
     //Make sure all the background windows are registered on the system as virtual roots
     QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
