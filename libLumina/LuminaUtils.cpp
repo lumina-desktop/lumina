@@ -283,8 +283,10 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
   QStringList deskset, sesset, lopenset;
-  //First start with any session settings
-  QStringList tmp = sysDefaults.filter("session.");
+  
+  // -- SESSION SETTINGS --
+  QStringList tmp = sysDefaults.filter("session_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("session."); }//for backwards compat
   sesset << "[General]"; //everything is in this section
   sesset << "DesktopVersion="+LUtils::LuminaDesktopVersion();
   for(int i=0; i<tmp.length(); i++){
@@ -292,118 +294,120 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     QString istrue = (val=="true") ? "true": "false";
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
 
-    if(var=="session.enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
-    else if(var=="session.playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
-    else if(var=="session.playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
-    else if(var=="session.default.terminal"){ sesset << "default-terminal="+val; }
-    else if(var=="session.default.filemanager"){ 
+    if(var=="session_enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
+    else if(var=="session_playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
+    else if(var=="session_playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
+    else if(var=="session_default_terminal"){ sesset << "default-terminal="+val; }
+    else if(var=="session_default_filemanager"){ 
       sesset << "default-filemanager="+val;
       lopenset << "directory="+val; 
     }
-    else if(var=="session.default.webbrowser"){ lopenset << "webbrowser="+val; }
-    else if(var=="session.default.email"){ lopenset << "email="+val; }
+    else if(var=="session_default_webbrowser"){ lopenset << "webbrowser="+val; }
+    else if(var=="session_default_email"){ lopenset << "email="+val; }
   }
   if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
 
-  //Now do any desktop settings (only works for the primary desktop at the moment)
-  tmp = sysDefaults.filter("desktop.");
+  // -- DESKTOP SETTINGS --
+  //(only works for the primary desktop at the moment)
+  tmp = sysDefaults.filter("desktop_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("desktop."); }//for backwards compat
   if(!tmp.isEmpty()){deskset << "[desktop-"+screen+"]"; }
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
-    if(var=="desktop.visiblepanels"){ deskset << "panels="+val; }
-    else if(var=="desktop.backgroundfiles"){ deskset << "background\\filelist="+val; }
-    else if(var=="desktop.backgroundrotateminutes"){ deskset << "background\\minutesToChange="+val; }
-    else if(var=="desktop.plugins"){ deskset << "pluginlist="+val; }
+    if(var=="desktop_visiblepanels"){ deskset << "panels="+val; }
+    else if(var=="desktop_backgroundfiles"){ deskset << "background\\filelist="+val; }
+    else if(var=="desktop_backgroundrotateminutes"){ deskset << "background\\minutesToChange="+val; }
+    else if(var=="desktop_plugins"){ deskset << "pluginlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
 
-  //Now do any panel1 settings (only works for the primary desktop at the moment)
-  tmp = sysDefaults.filter("panel1.");
-  if(!tmp.isEmpty()){deskset << "[panel"+screen+".0]"; }
-  for(int i=0; i<tmp.length(); i++){
-    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
-    QString var = tmp[i].section("=",0,0).toLower().simplified();
-    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
-    QString istrue = (val=="true") ? "true": "false";
-    //Now parse the variable and put the value in the proper file   
-    if(var=="panel1.pixelsize"){
-      //qDebug() << "Panel Size:" << val;
-      if(val.endsWith("%h")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
-      else if(val.endsWith("%w")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
-      //qDebug() << " -- Adjusted:" << val;
-      deskset << "height="+val; 
+  // -- PANEL SETTINGS --
+  //(only works for the primary desktop at the moment)
+  for(int i=1; i<11; i++){
+    QString panvar = "panel"+QString::number(i);
+    tmp = sysDefaults.filter(panvar);
+    if(!tmp.isEmpty()){deskset << "[panel"+screen+"."+QString::number(i-1)+"]"; }
+    for(int i=0; i<tmp.length(); i++){
+      if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+      QString var = tmp[i].section("=",0,0).toLower().simplified();
+      QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+      QString istrue = (val=="true") ? "true": "false";
+      //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+      if(var.contains(".")){ var.replace(".","_"); } 
+      //Now parse the variable and put the value in the proper file   
+      if(var==(panvar+"_pixelsize")){
+        //qDebug() << "Panel Size:" << val;
+        if(val.endsWith("%h")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+        else if(val.endsWith("%w")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+        //qDebug() << " -- Adjusted:" << val;
+        deskset << "height="+val; 
+      }
+      else if(var==(panvar+"_autohide")){ deskset << "hidepanel="+istrue; }
+      else if(var==(panvar+"_location")){ deskset << "location="+val; }
+      else if(var==(panvar+"_plugins")){ deskset << "pluginlist="+val; }
+      else if(var==(panvar+"_pinlocation")){ deskset << "pinLocation="+val; }
+      else if(var==(panvar+"_edgepercent")){ deskset << "lengthPercent="+val; }
     }
-    else if(var=="panel1.autohide"){ deskset << "hidepanel="+istrue; }
-    else if(var=="panel1.location"){ deskset << "location="+val; }
-    else if(var=="panel1.plugins"){ deskset << "pluginlist="+val; }
+    if(!tmp.isEmpty()){ deskset << ""; } //space between sections
   }
-  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
 
-  //Now do any panel2 settings (only works for the primary desktop at the moment)
-  tmp = sysDefaults.filter("panel2.");
-  if(!tmp.isEmpty()){deskset << "[panel"+screen+".1]"; }
-  for(int i=0; i<tmp.length(); i++){
-    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
-    QString var = tmp[i].section("=",0,0).toLower().simplified();
-    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
-    QString istrue = (val=="true") ? "true": "false";
-    //Now parse the variable and put the value in the proper file   
-    if(var=="panel2.pixelsize"){ 
-      if(val.endsWith("%h")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the height of the screen
-      else if(val.endsWith("%w")){ val = QString::number( (screenGeom.width()*val.section("%",0,0).toDouble())/100 ); }//adjust value to a percentage of the width of the screen
-      deskset << "height="+val; 
-    }
-    else if(var=="panel2.autohide"){ deskset << "hidepanel="+istrue; }
-    else if(var=="panel2.location"){ deskset << "location="+val; }
-    else if(var=="panel2.plugins"){ deskset << "pluginlist="+val; }
-  }
-  if(!tmp.isEmpty()){ deskset << ""; } //space between sections
-
-  //Now do any menu settings
-  tmp = sysDefaults.filter("menu.");
+  // -- MENU settings --
+  tmp = sysDefaults.filter("menu_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("menu."); } //backwards compat
   if(!tmp.isEmpty()){deskset << "[menu]"; }
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
-    if(var=="menu.plugins"){ deskset << "itemlist="+val; }
+    if(var=="menu_plugins"){ deskset << "itemlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
 
-  //Now do any custom favorites
-  tmp = sysDefaults.filter("favorites.");
-  if(!tmp.isEmpty()){deskset << "[menu]"; }
+  // -- FAVORITES --
+  tmp = sysDefaults.filter("favorites_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("favorites."); }
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
-    if(var=="favorites.add.ifexists" && QFile::exists(val)){ LUtils::addFavorite(val); }
-    else if(var=="favorites.add"){ LUtils::addFavorite(val); }
-    else if(var=="favorites.remove"){ LUtils::removeFavorite(val); }
+    if(var=="favorites_add_ifexists" && QFile::exists(val)){ LUtils::addFavorite(val); }
+    else if(var=="favorites_add"){ LUtils::addFavorite(val); }
+    else if(var=="favorites_remove"){ LUtils::removeFavorite(val); }
   }
   
   //Now do any theme settings
   QStringList themesettings = LTHEME::currentSettings(); 
       //List: [theme path, colorspath, iconsname, font, fontsize]
-  tmp = sysDefaults.filter("theme.");
+  tmp = sysDefaults.filter("theme_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("theme."); }
   bool setTheme = !tmp.isEmpty();
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
-    if(var=="theme.themefile"){ themesettings[0] = val; }
-    else if(var=="theme.colorfile"){ themesettings[1] = val; }
-    else if(var=="theme.iconset"){ themesettings[2] = val; }
-    else if(var=="theme.font"){ themesettings[3] = val; }
-    else if(var=="theme.fontsize"){ 
+    if(var=="theme_themefile"){ themesettings[0] = val; }
+    else if(var=="theme_colorfile"){ themesettings[1] = val; }
+    else if(var=="theme_iconset"){ themesettings[2] = val; }
+    else if(var=="theme_font"){ themesettings[3] = val; }
+    else if(var=="theme_fontsize"){ 
       if(val.endsWith("%")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 )+"px"; }
       themesettings[4] = val; 
     }
