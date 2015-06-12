@@ -181,6 +181,21 @@ double LUtils::DisplaySizeToBytes(QString num){
   return N;
 }
 
+//Various function for finding valid QtQuick plugins on the system
+bool LUtils::validQuickPlugin(QString ID){
+  return ( !LUtils::findQuickPluginFile(ID).isEmpty() );
+}
+
+QString LUtils::findQuickPluginFile(QString ID){
+  if(ID.startsWith("quick-")){ ID = ID.section("-",1,50); }
+  //Give preference to any user-supplied plugins (overwrites for system plugins)
+  QString path = QDir::homePath()+"/.lumina/quickplugins/"+ID+".qml";
+  if( QFile::exists(path) ){return path; }
+  path = LOS::LuminaShare()+"quickplugins/"+ID+".qml";
+  if( QFile::exists(path) ){return path; }
+  return ""; //could not be found
+}
+
 QStringList LUtils::listFavorites(){
   static QStringList fav;
   static QDateTime lastRead;

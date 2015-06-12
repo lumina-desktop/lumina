@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -53,6 +53,10 @@ public:
 
 	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)
 
+	//Various function for finding valid QtQuick plugins on the system
+	static bool validQuickPlugin(QString ID);
+	static QString findQuickPluginFile(QString ID);
+	
 	//Various functions for the favorites sub-system
 	// Formatting Note: "<name>::::[dir/app/<mimetype>]::::<path>"
 	//   the <name> field might not be used for "app" flagged entries

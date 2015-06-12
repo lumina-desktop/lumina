@@ -235,6 +235,9 @@ void LSession::launchStartupApps(){
       QProcess::startDetached("numlockx off");
     }
   }
+  int tmp = LOS::ScreenBrightness();
+  LOS::setScreenBrightness( tmp );
+  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
     
   //First create the list of all possible locations in order of precedence
   // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
@@ -287,12 +290,9 @@ void LSession::launchStartupApps(){
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
   qDebug() << " - Loading previous settings";
-  int tmp = LOS::audioVolume();
+  tmp = LOS::audioVolume();
   LOS::setAudioVolume(tmp);
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
-  tmp = LOS::ScreenBrightness();
-  LOS::setScreenBrightness( tmp );
-  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   
   //Now play the login music since we are finished
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){

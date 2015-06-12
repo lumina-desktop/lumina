@@ -1,6 +1,6 @@
 
 QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia quickwidgets
 
 TARGET = Lumina-DE
 isEmpty(PREFIX) {
@@ -94,13 +94,15 @@ HEADERS  += Globals.h \
 	panel-plugins/showdesktop/LHomeButton.h \
 	panel-plugins/appmenu/LAppMenuPlugin.h \
 	panel-plugins/applauncher/AppLaunchButton.h \
+	panel-plugins/quickcontainer/QuickPPlugin.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
 	desktop-plugins/desktopview/DesktopViewPlugin.h \
 	desktop-plugins/notepad/NotepadPlugin.h \
 	desktop-plugins/audioplayer/PlayerWidget.h \
-	desktop-plugins/systemmonitor/MonitorWidget.h
+	desktop-plugins/systemmonitor/MonitorWidget.h \
+	desktop-plugins/quickcontainer/QuickDPlugin.h
 #	desktop-plugins/messagecenter/MessageCenter.h
 
 FORMS    += SystemWindow.ui \

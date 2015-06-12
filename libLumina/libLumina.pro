@@ -81,6 +81,9 @@ themes.path=$$PREFIX/share/Lumina-DE/themes/
 themes.files=themes/Lumina-default.qss.template \
 		themes/None.qss.template
 
-INSTALLS += target include colors themes
+quickplugins.path=$$PREFIX/share/Lumina-DE/quickplugins/
+quickplugins.files=quickplugins/*.qml
+
+INSTALLS += target include colors themes quickplugins
 
 QMAKE_LIBDIR = $$LIBPREFIX/qt5 $$LIBPREFIX
