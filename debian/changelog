@@ -1,3 +1,13 @@
+lumina-desktop (0.8.5.697-1nano) unstable; urgency=low
+
+  * New git snapshot
+   - display "Not available" in system  monitor if cpu temp
+     can not be read
+   - add support for showing disk i/o stats in system monitor
+   - update luminaDesktop.conf to new format
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 12 Jun 2015 19:09:30 +0200
+
 lumina-desktop (0.8.5.661-1nano) unstable; urgency=low
 
   * New git snapshot
