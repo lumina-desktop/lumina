@@ -22,6 +22,7 @@ public:
 	  this->setLayout( new QVBoxLayout());
 	    this->layout()->setContentsMargins(0,0,0,0);
 	  container = new QQuickWidget(this);
+	    container->setResizeMode(QQuickWidget::SizeRootObjectToView);
 	  this->layout()->addWidget(container);
 	    container->setSource(QUrl::fromLocalFile( LUtils::findQuickPluginFile(ID.section("---",0,0)) ));
 	}

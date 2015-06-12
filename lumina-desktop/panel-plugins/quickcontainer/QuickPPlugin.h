@@ -20,9 +20,8 @@ class QuickPPlugin : public LPPlugin{
 	Q_OBJECT
 public:
 	QuickPPlugin(QWidget* parent, QString ID, bool horizontal) : LPPlugin(parent, ID){
-	  this->setLayout( new QVBoxLayout());
-	    this->layout()->setContentsMargins(0,0,0,0);
 	  container = new QQuickWidget(this);
+	    container->setResizeMode(QQuickWidget::SizeRootObjectToView);
 	  this->layout()->addWidget(container);
 	  horizontal = true; //just to silence compiler warning
 	    container->setSource(QUrl::fromLocalFile( LUtils::findQuickPluginFile(ID.section("---",0,0)) ));

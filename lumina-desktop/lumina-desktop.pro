@@ -94,7 +94,7 @@ HEADERS  += Globals.h \
 	panel-plugins/showdesktop/LHomeButton.h \
 	panel-plugins/appmenu/LAppMenuPlugin.h \
 	panel-plugins/applauncher/AppLaunchButton.h \
-	panel-plugins/quickcontainer/QuickPPlugin.h \
+#	panel-plugins/quickcontainer/QuickPPlugin.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \

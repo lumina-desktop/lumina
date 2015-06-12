@@ -24,7 +24,7 @@
 #include "showdesktop/LHomeButton.h"
 #include "appmenu/LAppMenuPlugin.h"
 #include "applauncher/AppLaunchButton.h"
-#include "quickcontainer/QuickPPlugin.h"
+//#include "quickcontainer/QuickPPlugin.h"
 #include "systemtray/LSysTray.h" //must be last due to X11 compile issues
 
 class NewPP{
@@ -56,8 +56,8 @@ public:
 	    plug = new LAppMenuPlugin(parent, plugin, horizontal);
 	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
 	    plug = new AppLaunchButtonPlugin(parent, plugin, horizontal);
-	  }else if( plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){
-	    plug = new QuickPPlugin(parent, plugin, horizontal);
+	  //}else if( plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){
+	    //plug = new QuickPPlugin(parent, plugin, horizontal);
 	  }else{
 	    qWarning() << "Invalid Panel Plugin:"<<plugin << " -- Ignored";
 	  }
