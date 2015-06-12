@@ -244,7 +244,9 @@ QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature o
       temp.removeAt(i); i--;
     }
   }
-  qDebug() << "teperatures" << temp;
+  if(temp.isEmpty()) {
+    temp << "Not available";
+  }
   return temp;
 }
 
@@ -270,6 +272,22 @@ int LOS::MemoryUsagePercent(){
 }
 
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
-  return QStringList(); //not implemented yet
+  QStringList info = LUtils::getCmdOutput("iostat -dx -N");
+  if(info.length()<3){ return QStringList(); } //nothing from command
+  QStringList labs = info[1].split(" ",QString::SkipEmptyParts);
+  QStringList out;
+  QString fmt = "%1: %2 %3";
+  for(int i=2; i<info.length(); i++){ //skip the first two lines, just labels
+    info[i].replace("\t"," ");
+    if(info[i].startsWith("Device:")){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
+    else{
+      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device 
+      if(data.length()>2 && labs.length()>2){
+        out << fmt.arg(data[0], data[3]+" "+labs[3], data[4]+" "+labs[4]);
+      }
+    }
+  }
+
+  return out;
 }
 #endif
