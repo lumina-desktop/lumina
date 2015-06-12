@@ -64,7 +64,7 @@ LDPlugin#desktopview QListWidget::item{
 }
 
 LDPlugin#desktopview QListWidget::item:hover{
-  background: %%ACCENTDISABLECOLOR%%;
+  background: %%PRIMARYDISABLECOLOR%%;
   border-radius: 5px;
   color: %%TEXTHIGHLIGHTCOLOR%%;
 }
