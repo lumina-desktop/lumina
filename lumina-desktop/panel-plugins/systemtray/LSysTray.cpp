@@ -36,7 +36,8 @@ LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
     connect(upTimer, SIGNAL(timeout()), this, SLOT(checkAll()) );
   isRunning = false; stopping = false; checking = false; pending = false;
   QTimer::singleShot(100, this, SLOT(start()) );
-	
+  //Also do one extra check a minute or so after startup (just in case something got missed in the initial flood of registrations)
+  QTimer::singleShot(90000,this, SLOT(checkAll()) ); 
   connect(LSession::handle(), SIGNAL(TrayListChanged()), this, SLOT(checkAll()) );
   connect(LSession::handle(), SIGNAL(TrayIconChanged(WId)), this, SLOT(UpdateTrayWindow(WId)) );
   connect(LSession::handle(), SIGNAL(VisualTrayAvailable()), this, SLOT(start()) );

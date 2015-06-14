@@ -70,7 +70,6 @@ private:
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;
 	QList<LDPlugin*> PLUGINS;
-	//QFileSystemWatcher *watcher;
 	QString CBG; //current background
 	QRect globalWorkRect;
 	void CreateDesktopPluginContainer(LDPlugin*);

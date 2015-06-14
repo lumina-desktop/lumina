@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
@@ -153,20 +153,26 @@ void LDesktop::checkResolution(){
     }
     //Update any desktop plugins
     QStringList plugs = settings->value(DPREFIX+"pluginlist").toStringList();
-    QString pspath = QDir::homePath()+"/.lumina/desktop-plugins/%1.conf";
+    QFileInfoList files = LSession::handle()->DesktopFiles();
+    for(int i=0; i<files.length(); i++){
+      plugs << "applauncher::"+files[i].absoluteFilePath()+"---"+DPREFIX;
+    }
+    //QString pspath = QDir::homePath()+"/.lumina/desktop-plugins/%1.conf";
+    QSettings *DP = LSession::handle()->DesktopPluginSettings();
+    QStringList keys = DP->allKeys();
     for(int i=0; i<plugs.length(); i++){
-      if(QFile::exists( pspath.arg(plugs[i]) )){
-        //Has existing settings file - need to adjust this as well
-	QSettings pset(QSettings::UserScope, "desktop-plugins",plugs[i]);
-	  if(pset.contains("location/height")){ pset.setValue( "location/height", qRound(pset.value("location/height").toInt()*yscale) ); }
-	  if(pset.contains("location/width")){ pset.setValue( "location/width", qRound(pset.value("location/width").toInt()*xscale) ); }
-	  if(pset.contains("location/x")){ pset.setValue( "location/x", qRound(pset.value("location/x").toInt()*xscale) ); }
-	  if(pset.contains("location/y")){ pset.setValue( "location/y", qRound(pset.value("location/y").toInt()*yscale) ); }
-	  if(pset.contains("IconSize")){ pset.setValue( "IconSize", qRound(pset.value("IconSize").toInt()*yscale) ); }
-	  if(pset.contains("iconsize")){ pset.setValue( "iconsize", qRound(pset.value("iconsize").toInt()*yscale) ); }
-	  pset.sync(); //make sure it gets saved to disk right away
+      QStringList filter = keys.filter(plugs[i]);
+      for(int j=0; j<filter.length(); j++){
+        //Has existing settings - need to adjust it
+	  if(filter[j].endsWith("location/height")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*yscale) ); }
+	  if(filter[j].endsWith("location/width")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*xscale) ); }
+	  if(filter[j].endsWith("location/x")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*xscale) ); }
+	  if(filter[j].endsWith("location/y")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*yscale) ); }
+	  if(filter[j].endsWith("IconSize")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*yscale) ); }
+	  if(filter[j].endsWith("iconsize")){ DP->setValue( filter[j], qRound(DP->value(filter[j]).toInt()*yscale) ); }
       }
     }
+    DP->sync(); //make sure it gets saved to disk right away
     
   }
   issyncing = false;
@@ -213,6 +219,7 @@ void LDesktop::InitDesktop(){
     connect(bgtimer, SIGNAL(timeout()), this, SLOT(UpdateBackground()) );
   //watcher = new QFileSystemWatcher(this);
     connect(QApplication::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
+    connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(UpdateDesktop()) );
     //watcher->addPath(settings->fileName());
     //connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
 
@@ -314,6 +321,7 @@ void LDesktop::winClicked(QAction* act){
 void LDesktop::UpdateDesktop(){
   if(DEBUG){ qDebug() << " - Update Desktop Plugins for screen:" << desktopnumber; }
   QStringList plugins = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
+
   if(defaultdesktop && plugins.isEmpty()){
     //plugins << "sample" << "sample" << "sample";
   }
@@ -329,11 +337,24 @@ void LDesktop::UpdateDesktop(){
 	  changed=true;
 	}
   }
+  if(changed){
+    //save the modified plugin list to file (so per-plugin settings are preserved)
+    issyncing=true; //don't let the change cause a refresh
+    settings->setValue(DPREFIX+"pluginlist", plugins);
+    settings->sync();
+    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+  }
+  //If generating desktop file launchers, add those in
+  if(settings->value(DPREFIX+"generateDesktopIcons",false).toBool()){
+    QFileInfoList files = LSession::handle()->DesktopFiles();
+    for(int i=0; i<files.length(); i++){
+      plugins << "applauncher::"+files[i].absoluteFilePath()+"---"+DPREFIX;
+    }
+  }
   //Go through the plugins and remove any existing ones that do not show up on the current list
   for(int i=0; i<PLUGINS.length(); i++){
     if(!plugins.contains(PLUGINS[i]->ID())){
       //Remove this plugin (with settings) - is not currently listed
-      
       DesktopPluginRemoved(PLUGINS[i]->ID(),true); //flag this as an internal removal
       i--;
     }
@@ -356,19 +377,12 @@ void LDesktop::UpdateDesktop(){
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
       if(plug != 0){
 	connect(plug, SIGNAL(OpenDesktopMenu()), this, SLOT(ShowMenu()) );
-	//qDebug() << " -- Show Plugin";
+	if(DEBUG){ qDebug() << " -- Show Plugin"; }
 	PLUGINS << plug;
 	CreateDesktopPluginContainer(plug);
+	if(DEBUG){ qDebug() << " -- Done Creating Plugin Container"; }
       }
     }
-
-  }
-  if(changed){
-    //save the modified plugin list to file (so per-plugin settings are preserved)
-    issyncing=true; //don't let the change cause a refresh
-    settings->setValue(DPREFIX+"pluginlist", plugins);
-    settings->sync();
-    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   }
 }
 
@@ -457,6 +471,7 @@ void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
     if(PLUGINS[i]->ID() == ID){
       //qDebug() << "- found ID";
       if(DEBUG){ qDebug() << " - Deleting Desktop Plugin:" << ID; }
+      PLUGINS[i]->removeSettings(); //Remove any settings associated with this plugin
       delete PLUGINS.takeAt(i);
       break;
     }
@@ -465,17 +480,17 @@ void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
   //Now remove that plugin from the internal list (then let the plugin system remove the actual plugin)
   QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
   if(DEBUG){ qDebug() << " - Also removing plugin from future list"; }
-  plugins.removeAll(ID);
+  if(plugins.removeAll(ID) > 0){
     issyncing = true;
     if(DEBUG){ qDebug() << " - Save modified plugins list"; }
     settings->setValue(DPREFIX+"pluginlist", plugins);
-    if(QFile::exists(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf")){
+    if(DEBUG){ qDebug() << " - Unlock settings file in 200 ms"; }
+    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+  }
+    /*if(QFile::exists(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf")){
       if(DEBUG){ qDebug() << " - Removing settings file"; }
       QFile::remove(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf");
-    }
-    if(DEBUG){ qDebug() << " - Unlock settings file in 200 ms"; }
-    //settings->sync();
-  QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+    }*/
   if(DEBUG){ qDebug() << " - Done removing plugin"; }
 }
 

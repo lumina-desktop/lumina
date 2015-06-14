@@ -27,43 +27,31 @@ class LDPluginContainer : public QMdiSubWindow{
 	Q_OBJECT
 	
 private:
-	QSettings *settings;
 	QTimer *syncTimer;
 	bool locked, setup;
-	
+	LDPlugin *PLUG;
+
 private slots:
 	void saveGeometry(){
-	    if(settings==0){ return; }
-	    settings->setValue("location/x", this->pos().x());
-	    settings->setValue("location/y", this->pos().y());
-	    settings->setValue("location/width", this->size().width());
-	    settings->setValue("location/height", this->size().height());
-	    settings->sync();
+	    if(PLUG==0){ return; }
+	    PLUG->saveSetting("location/x", this->pos().x());
+	    PLUG->saveSetting("location/y", this->pos().y());
+	    PLUG->saveSetting("location/width", this->size().width());
+	    PLUG->saveSetting("location/height", this->size().height());
 	}
 	
 public:
 	LDPluginContainer(LDPlugin *plugin = 0, bool islocked = true) : QMdiSubWindow(){
 	  locked = islocked;
 	  setup=true;
+	  PLUG = plugin;
 	  syncTimer = new QTimer(this);
 	    syncTimer->setInterval(500); //save settings 1 second after it is moved
 	    syncTimer->setSingleShot(true); //no repeats
 	    connect(syncTimer, SIGNAL(timeout()), this, SLOT(saveGeometry()) );
 	  this->setWhatsThis(plugin->ID());
 	  if(locked){ this->setWindowFlags(Qt::FramelessWindowHint); }
-	  else{ this->setWindowFlags(Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
-	  settings = plugin->settings; //save this pointer for access later
-	  if(settings!=0){
-	   if(settings->allKeys().isEmpty()){
-	    //Brand new plugin - no location/size info saved yet
-	    //save the initial size of the plugin - the initial location will be set automatically
-	      QSize sz = plugin->sizeHint();
-	      if(!sz.isValid()){ sz = QSize(64,64); }
-	      settings->setValue("location/width", sz.width());
-	      settings->setValue("location/height", sz.height());
-	      settings->sync();
-	   }
-          }
+	  else{ this->setWindowFlags(Qt::CustomizeWindowHint); }//Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
 	  this->setContentsMargins(0,0,0,0);
 	  if(!locked){
 	    this->setWindowTitle( plugin->ID().replace("---"," - ") );
@@ -80,7 +68,7 @@ public:
 	}
 
 	void loadInitialPosition(){
-	  QRect set(settings->value("location/x",-12345).toInt(), settings->value("location/y",-12345).toInt(), settings->value("location/width",this->widget()->sizeHint().width()).toInt(), settings->value("location/height",this->widget()->sizeHint().height()).toInt());
+	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",this->widget()->sizeHint().width()).toInt(), PLUG->readSetting("location/height",this->widget()->sizeHint().height()).toInt());
 	  //qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
@@ -122,11 +110,10 @@ protected:
 	  if( !this->whatsThis().isEmpty() && !locked){
 	    //Plugin removed by the user - delete the settings file
 	    locked = true; //ensure that the save settings routines don't do anything during the close
-	    //QFile::remove( settings->fileName() );
 	    emit PluginRemoved( this->whatsThis() );
 	  }
 	  if(syncTimer->isActive()){ syncTimer->stop(); } //prevent save routine from running in a moment
-	  settings = 0; //ensure we don't touch the settings file after a close event
+	  //settings = 0; //ensure we don't touch the settings file after a close event
 	  QMdiSubWindow::closeEvent(event); //continue closing this window
 	}
 	

@@ -15,9 +15,11 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   menu = new QMenu(this);
 	menu->addAction(LXDG::findIcon("zoom-in",""), tr("Increase Size"), this, SLOT(increaseIconSize()));
 	menu->addAction(LXDG::findIcon("zoom-out",""), tr("Decrease Size"), this, SLOT(decreaseIconSize()));
-  int icosize = settings->value("iconsize",64).toInt();
+  if( !ID.isEmpty() && ID.contains(QDir::homePath()+"/Desktop") ){
+    menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
+  }
+  int icosize = this->readSetting("iconsize",64).toInt();
     button->setIconSize(QSize(icosize,icosize));
-  this->setInitialSize(icosize,icosize+10+this->fontMetrics().height());
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu()) );
   watcher = new QFileSystemWatcher(this);
@@ -27,23 +29,68 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
 	
 void AppLauncherPlugin::loadButton(){
   QString def = this->ID().section("::",1,50).section("---",0,0).simplified();
-  QString path = this->settings->value("applicationpath",def).toString(); //use the default if necessary
+  QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary
   //qDebug() << "Default Application Launcher:" << def << path;
-  bool ok = false;
-  XDGDesktop file = LXDG::loadDesktopFile(path, ok);
-  if(path.isEmpty() || !QFile::exists(path) || !ok){
+  bool ok = QFile::exists(path);
+  QString txt;
+  if(path.endsWith(".desktop") && ok){
+    XDGDesktop file = LXDG::loadDesktopFile(path, ok);
+    if(path.isEmpty() || !QFile::exists(path) || !ok){
+      button->setWhatsThis("");
+      button->setIcon( LXDG::findIcon("quickopen-file","") );
+      txt = tr("Click to Set");
+      if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
+    }else{
+      button->setWhatsThis(file.filePath);
+      button->setIcon( LXDG::findIcon(file.icon,"quickopen") );
+      txt = file.name;
+      if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
+      watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
+    }
+  }else if(ok){
+    QFileInfo info(path);
+    button->setWhatsThis(info.fileName());
+    if(info.isDir()){
+	button->setIcon( LXDG::findIcon("folder","") );
+    }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
+      button->setIcon( QIcon(QPixmap(path).scaled(256,256)) ); //max size for thumbnails in memory	     
+    }else{
+      button->setIcon( LXDG::findMimeIcon(path) );
+    }
+    txt = info.fileName();
+    if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
+    watcher->addPath(path); //make sure to update this shortcut if the file changes
+  }else{
+    //InValid File
     button->setWhatsThis("");
-    button->setIcon( LXDG::findIcon("quickopen-file","") );
+    button->setIcon( LXDG::findIcon("quickopen","") );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
-  }else{
-    button->setWhatsThis(file.filePath);
-    button->setIcon( LXDG::findIcon(file.icon,"quickopen") );
-    button->setText( this->fontMetrics().elidedText(file.name, Qt::ElideRight, 64) );
-    if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
-    watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
   }
-  this->adjustSize(); //make sure to adjust the button on first show.
+  //Now adjust the visible text as necessary based on font/grid sizing
+  button->setToolTip(txt);
+  int icosize = this->readSetting("iconsize",64).toInt();
+    //qDebug() << "Initial Button Text:" << txt << icosize;
+    if(button->fontMetrics().width(txt) > (icosize-2) ){
+      //int dash = this->fontMetrics().width("-");
+      //Text too long, try to show it on two lines
+      txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
+      if(txt.contains("\n")){
+        //need to check each line
+	QStringList txtL = txt.split("\n");
+	for(int i=0; i<txtL.length(); i++){ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, icosize); }
+	txt = txtL.join("\n");
+      }else{
+        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*icosize);
+        //Now split the line in half for the two lines
+        txt.insert( (txt.count()/2), "\n");
+      }
+    }
+    //qDebug() << " - Setting Button Text:" << txt;
+    button->setText(txt);
+  
+  button->setFixedSize(icosize+4, icosize+8+(2*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
+  this->setInitialSize(button->width()+4, button->height()+4);
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	
@@ -57,7 +104,7 @@ void AppLauncherPlugin::buttonClicked(){
     bool ok = false;
     QString app = QInputDialog::getItem(this, tr("Select Application"), tr("Name:"), names, 0, false, &ok);
     if(!ok || names.indexOf(app)<0){ return; } //cancelled
-    this->settings->setValue("applicationpath", apps[ names.indexOf(app) ].filePath);
+    this->saveSetting("applicationpath", apps[ names.indexOf(app) ].filePath);
     QTimer::singleShot(0,this, SLOT(loadButton()));
   }else{
     LSession::LaunchApplication("lumina-open \""+path+"\"");
@@ -74,16 +121,24 @@ void AppLauncherPlugin::openContextMenu(){
 }
 	
 void AppLauncherPlugin::increaseIconSize(){
-  int icosize = settings->value("iconsize",64).toInt();
+  int icosize = this->readSetting("iconsize",64).toInt();
   icosize += 16;
   button->setIconSize(QSize(icosize,icosize));
-  settings->setValue("iconsize",icosize);
+  this->saveSetting("iconsize",icosize);
 }
 
 void AppLauncherPlugin::decreaseIconSize(){
-  int icosize = settings->value("iconsize",64).toInt();
+  int icosize = this->readSetting("iconsize",64).toInt();
   if(icosize < 20){ return; } //cannot get smaller
   icosize -= 16;
   button->setIconSize(QSize(icosize,icosize));
-  settings->setValue("iconsize",icosize);
+  this->saveSetting("iconsize",icosize);
+}
+
+void AppLauncherPlugin::deleteFile(){
+  if(QFileInfo(button->whatsThis()).isDir()){
+    QProcess::startDetached("rm -r \""+button->whatsThis()+"\"");
+  }else{
+    QFile::remove(button->whatsThis());
+  }
 }

@@ -21,7 +21,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    //int icosize = settings->value("IconSize",64).toInt();
+    //int icosize = this->readSetting("IconSize",64).toInt();
     //list->setIconSize(QSize(icosize,icosize));
     //list->setUniformItemSizes(true);
     list->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -42,10 +42,8 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
     }
   this->layout()->addWidget(list);
   this->setInitialSize(600,600);
-  watcher = new QFileSystemWatcher(this);
-    watcher->addPath(QDir::homePath()+"/Desktop");
-    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(updateContents()) );
-	
+    
+  connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateContents()) );
   connect(list, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(runItems()) );
   connect(list, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)) );
   QTimer::singleShot(0,this, SLOT(updateContents()) );
@@ -116,21 +114,19 @@ void DesktopViewPlugin::showMenu(const QPoint &pos){
 }
 
 void DesktopViewPlugin::increaseIconSize(){
-  int icosize = settings->value("IconSize",64).toInt();
+  int icosize = this->readSetting("IconSize",64).toInt();
   icosize+=16; //go in orders of 16 pixels
   //list->setIconSize(QSize(icosize,icosize));
-  settings->setValue("IconSize",icosize);
-  settings->sync();
+  this->saveSetting("IconSize",icosize);
   updateContents();
 }
 
 void DesktopViewPlugin::decreaseIconSize(){
-  int icosize = settings->value("IconSize",64).toInt();
+  int icosize = this->readSetting("IconSize",64).toInt();
   if(icosize < 20){ return; } //too small to decrease more
   icosize-=16; //go in orders of 16 pixels
   //list->setIconSize(QSize(icosize,icosize));
-  settings->setValue("IconSize",icosize);	
-  settings->sync();
+  this->saveSetting("IconSize",icosize);	
   updateContents();
 }
 
@@ -140,7 +136,7 @@ void DesktopViewPlugin::updateContents(){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
     for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
   }*/
-  int icosize = settings->value("IconSize",64).toInt();
+  int icosize = this->readSetting("IconSize",64).toInt();
   QSize gridSZ = QSize(icosize+8,icosize+4+(2*this->fontMetrics().height()) );
   //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
   list->setGridSize(gridSZ);

@@ -49,7 +49,7 @@ void MonitorWidget::UpdateStats(){
   // -- TO DO --
 }
 
-SysMonitorPlugin::SysMonitorPlugin(QWidget *parent, QString ID) : LDPlugin(parent, ID, true){
+SysMonitorPlugin::SysMonitorPlugin(QWidget *parent, QString ID) : LDPlugin(parent, ID){
   monitor = new MonitorWidget(this);
   this->setLayout( new QVBoxLayout() );
     this->layout()->setContentsMargins(0,0,0,0);

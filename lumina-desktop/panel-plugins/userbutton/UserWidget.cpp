@@ -89,6 +89,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   lastUpdate = QDateTime(); //make sure it refreshes 
 
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()) );
+  connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateFavItems()) );
   QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
 }
 
@@ -176,8 +177,7 @@ void UserWidget::updateFavItems(bool newfilter){
   if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
     favs = newfavs;
    
-    QDir homedir = QDir( QDir::homePath()+"/Desktop");
-    homefiles = homedir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+    homefiles = LSession::handle()->DesktopFiles();
     lastHomeUpdate = QDateTime::currentDateTime();
   }else if(!newfilter){ return; } //nothing new to change - stop now
   QStringList favitems;

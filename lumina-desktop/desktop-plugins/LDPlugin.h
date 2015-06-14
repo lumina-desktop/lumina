@@ -28,42 +28,34 @@ class LDPlugin : public QFrame{
 	Q_OBJECT
 	
 private:
-	QString PLUGID;
-	
-public:
+	QString PLUGID, prefix;
 	QSettings *settings;
 
-	LDPlugin(QWidget *parent = 0, QString id="unknown", bool opaque = false) : QFrame(parent){
-	  PLUGID=id;
-	  settings = new QSettings("desktop-plugins",PLUGID);
-	  //Use two values for stylesheet access, Visible or normal plugin base
-	  if(opaque){ this->setObjectName("LuminaDesktopPluginVisible"); }
-	  else{ this->setObjectName("LuminaDesktopPlugin"); }
-	  //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
-	  //qDebug() << "set Objectname:" << id.section("---",0,0).section("::",0,0);
-	  this->setObjectName(id.section("---",0,0).section("::",0,0));
-	}
+public:
+	LDPlugin(QWidget *parent = 0, QString id="unknown");
 	
-	~LDPlugin(){
-	  
-	}
+	~LDPlugin(){}
 	
 	QString ID(){
 	  return PLUGID;
 	}
 	
-	void setInitialSize(int width, int height){
-	    //Note: Only run this in the plugin initization routine:
-	    //  if the plugin is completely new (first time used), it will be this size
-	    if(settings->allKeys().isEmpty()){
-		//Brand new plugin: set initial size
-		settings->setValue("location/width",width);
-		settings->setValue("location/height",height);
-		settings->sync();
-	    }
+	void setInitialSize(int width, int height);
+	
+	void saveSetting(QString var, QVariant val){
+	  settings->setValue(prefix+var, val);
 	}
-
-	virtual void scalePlugin(double xscale, double yscale){
+	
+	QVariant readSetting(QString var, QVariant defaultval){
+	  return settings->value(prefix+var, defaultval);
+	}
+	
+	void removeSettings(){ //such as when a plugin is deleted
+	  QStringList list = settings->allKeys().filter(prefix);
+	   for(int i=0; i<list.length(); i++){ settings->remove(list[i]); }
+	}
+	
+	/*virtual void scalePlugin(double xscale, double yscale){
           //This can be re-implemented in the subclassed plugin as necessary
 	  // Example: If there are icons in the plugin which should also be re-scaled
 
@@ -82,7 +74,7 @@ public:
   	  val = settings->value("location/y",0).toInt();
 	  if(val>0){ val = qRound(val*yscale); }
 	  settings->setValue("location/y",val);
-	}
+	}*/
 	
 public slots:
 	virtual void LocaleChange(){

@@ -52,6 +52,7 @@ SOURCES += main.cpp \
 	panel-plugins/showdesktop/LHomeButton.cpp \
 	panel-plugins/appmenu/LAppMenuPlugin.cpp \
 	panel-plugins/applauncher/AppLaunchButton.cpp \
+	desktop-plugins/LDPlugin.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
 	desktop-plugins/notepad/NotepadPlugin.cpp \

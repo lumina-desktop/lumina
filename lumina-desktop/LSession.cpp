@@ -89,6 +89,7 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");
+  DPlugSettings = new QSettings("pluginsettings","desktopsettings");
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
@@ -123,6 +124,7 @@ void LSession::setupSession(){
   //Initialize the desktops
     splash.showScreen("desktop");
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
+  desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   updateDesktops();
   
   //Now setup the system watcher for changes
@@ -135,6 +137,7 @@ void LSession::setupSession(){
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
+    watcher->addPath( QDir::homePath() );
 
   //connect internal signals/slots
   connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(updateDesktops()) );
@@ -326,17 +329,21 @@ void LSession::watcherChange(QString changed){
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
-
+  else if(changed == QDir::homePath()+"/Desktop"){ 
+    desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
+    emit DesktopFilesChanged(); 
+  }
   //Now double-check all the watches files to ensure that none of them got removed
 
   QStringList files = watcher->files();
-  if(files.length() < 4){
+  if(files.length() < 5){
     qDebug() << " - Resetting Watched Files...";
     watcher->removePaths(files); //clear the current files before re-setting them
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
+    watcher->addPath( QDir::homePath()+"/Desktop");
   }
 }
 
@@ -505,6 +512,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     XCB->MoveResizeWindow(win, geom);
   }
   
+  
 }
 
 void LSession::SessionEnding(){
@@ -519,6 +527,10 @@ void LSession::LaunchApplication(QString cmd){
   QProcess::startDetached(cmd);
 }
 
+QFileInfoList LSession::DesktopFiles(){
+  return desktopFiles;	
+}
+
 AppMenu* LSession::applicationMenu(){
   return appmenu;
 }
@@ -529,6 +541,10 @@ SettingsMenu* LSession::settingsMenu(){
 
 QSettings* LSession::sessionSettings(){
   return sessionsettings;
+}
+
+QSettings* LSession::DesktopPluginSettings(){
+  return DPlugSettings;
 }
 
 void LSession::systemWindow(){

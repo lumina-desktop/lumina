@@ -41,6 +41,7 @@ private slots:
 	
 	void increaseIconSize();
 	void decreaseIconSize();
+	void deleteFile();
 	
 };
 #endif

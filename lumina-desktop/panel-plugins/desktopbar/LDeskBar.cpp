@@ -35,6 +35,7 @@ LDeskBarPlugin::LDeskBarPlugin(QWidget *parent, QString id, bool horizontal) : L
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(desktopChanged()) );
   QTimer::singleShot(1,this, SLOT(desktopChanged()) ); //make sure to load it the first time
   QTimer::singleShot(0,this, SLOT(OrientationChange()) ); //adjust sizes/layout
+  connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(desktopChanged()) );
 }
 
 LDeskBarPlugin::~LDeskBarPlugin(){
@@ -144,8 +145,7 @@ void LDeskBarPlugin::desktopChanged(){
   QStringList newfavs = LUtils::listFavorites();
   if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
   favs = newfavs;
-  QDir homedir = QDir( QDir::homePath()+"/Desktop");
-  homefiles = homedir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+  homefiles = LSession::handle()->DesktopFiles();
   lastHomeUpdate = QDateTime::currentDateTime();
   QStringList favitems = favs;
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>

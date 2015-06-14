@@ -25,7 +25,7 @@ public:
 	
 private:
 	QListWidget *list;
-	QFileSystemWatcher *watcher;
+	//QFileSystemWatcher *watcher;
 	QMenu *menu;
 	//QStringList imgExtensions;
 

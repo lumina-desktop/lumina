@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -74,6 +74,7 @@ public:
 	}
 	
 	static void LaunchApplication(QString cmd);
+	QFileInfoList DesktopFiles();
 	
 	AppMenu* applicationMenu();
 	void systemWindow();
@@ -81,7 +82,8 @@ public:
 	LXCB *XCB; //class for XCB usage
 	
 	QSettings* sessionSettings();
-
+	QSettings* DesktopPluginSettings();
+	
 	//Play System Audio
 	void playAudioFile(QString filepath);
 	//Window Adjustment Routine (due to Fluxbox not respecting _NET_WM_STRUT)
@@ -98,7 +100,7 @@ private:
 	SystemWindow *sysWindow;
 	QTranslator *currTranslator;
 	QMediaPlayer *mediaObj;
-	QSettings *sessionsettings;
+	QSettings *sessionsettings, *DPlugSettings;
 	bool cleansession;
 
 	//System Tray Variables
@@ -109,6 +111,7 @@ private:
 
 	//Task Manager Variables
 	QList<WId> RunningApps;
+	QFileInfoList desktopFiles;
 
 	void CleanupSession();
 	
@@ -151,6 +154,7 @@ signals:
 	void IconThemeChanged();
 	void DesktopConfigChanged();
 	void SessionConfigChanged();
+	void DesktopFilesChanged();
 	
 };
 

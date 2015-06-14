@@ -7,7 +7,8 @@
 #include <QFileDialog>
 #include <QInputDialog>
 
-NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID, true){
+NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
+  //qDebug() << "Creating Notepad Plugin:";
   QVBoxLayout *vlay = new QVBoxLayout();
   this->setLayout( new QVBoxLayout() );
     this->layout()->setContentsMargins(0,0,0,0);
@@ -54,34 +55,16 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID,
     edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     vlay->addWidget(edit);
 	
-  //Special detection of the old notes format and conversion to the new files format
-  if( this->settings->value("availableNotes",-1).toInt() > 0){
-    qDebug() << "Converting all old desktop notes into the new file-based format (located at ~/Notes/<name>.note)";
-    int notes = this->settings->value("availableNotes",1).toInt();
-    int current = settings->value("currentNote",1).toInt();
-    for(int i=0; i<(notes+1); i++){
-	QString note = settings->value("Note-"+QString::number(i),"").toString();
-	settings->remove("Note-"+QString::number(i));
-	if(!note.isEmpty()){
-	  //Save this note in the new file format
-	  LUtils::writeFile(QDir::homePath()+"/Notes/Note-"+QString::number(i)+".note", note.split("\n"), true);
-	}
-	if(i==current){
-	  //Convert the current note value to the new format
-	  settings->setValue("currentFile", QDir::homePath()+"/Notes/Note-"+QString::number(i)+".note");
-	}
-    }
-    //Clear the old settings-based values
-    settings->remove("availableNotes");
-    settings->remove("currentNote");
-  }
   //Now load the new file-based system for saving notes
-  settings->setValue("customFile",""); //always clear this when the plugin is initialized (only maintained per-session)
+  //qDebug() << "Saving a new setting";
+  this->saveSetting("customFile",""); //always clear this when the plugin is initialized (only maintained per-session)
+  //qDebug() << "Loading Notes Dir";
   notesDirChanged();
+  //qDebug() << "Set Sizing";
   
   //Now setup the initial values for the plugin
   this->setInitialSize(200,300);
-  
+  //qDebug() << "Connect Signals/slots";
   //Setup the button connections
   connect(open, SIGNAL(clicked()), this, SLOT(openNote()) );
   connect(add, SIGNAL(clicked()), this, SLOT(newNote()) );
@@ -92,7 +75,7 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID,
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(notesDirChanged()) ); //re-load the available notes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(noteChanged()) ); //re-load the current file
   QTimer::singleShot(0,this, SLOT(loadIcons()) );
-  
+  //qDebug() << " - Done with init";
 }
 
 NotePadPlugin::~NotePadPlugin(){
@@ -133,7 +116,7 @@ void NotePadPlugin::openNote(){
   }else{
     //New note - add it to the end of the list and then load it
     cnote->addItem(name, fullpath);
-    settings->setValue("customFile", fullpath); //save this as a custom file
+    this->saveSetting("customFile", fullpath); //save this as a custom file
     cnote->setCurrentIndex( cnote->count()-1 ); 
     QTimer::singleShot(1000, this, SLOT(notesDirChanged())); //Make sure to refresh the list (only one custom file at a time)
   }
@@ -179,7 +162,7 @@ void NotePadPlugin::remNote(){
   QString note = cnote->currentData().toString();
   if(note.isEmpty()){ return; }
   watcher->removePath(note); //remove this file from the watcher
-  settings->setValue("currentFile",""); //reset the internal value
+  this->saveSetting("currentFile",""); //reset the internal value
   QFile::remove(note); //remove the file
   //if(!note.startsWith(QDir::homePath()+"/Notes/") ){
     //If the file was not in the notes directory, need to manually prompt for a re-load
@@ -206,14 +189,14 @@ void NotePadPlugin::updateContents(){
 
 void NotePadPlugin::notesDirChanged(){
   if(updating){ return; }
-  QString cfile = settings->value("currentFile","").toString();
+  QString cfile = this->readSetting("currentFile","").toString();
   QStringList notes;
   QDir dir(QDir::homePath()+"/Notes");
   QStringList files = dir.entryList(QStringList() << "*.note", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
   for(int i=0; i<files.length(); i++){
     notes << dir.absoluteFilePath(files[i]);
   }
-  QString custom = settings->value("customFile","").toString();
+  QString custom = this->readSetting("customFile","").toString();
   if(!custom.isEmpty() && QFile::exists(custom) ){ notes << custom; } 
   //qDebug() << "Available Notes:" << notes << cfile;
   //Now update the UI list
@@ -249,16 +232,16 @@ void NotePadPlugin::noteChanged(){
     cnote->setCurrentIndex(0); 
     return; 
   }
-  QString oldnote = settings->value("currentFile","").toString();
+  QString oldnote = this->readSetting("currentFile","").toString();
   //qDebug() << "Note Changed:" << note << oldnote;
   if( oldnote!=note ){ 
     //Clear the old note file/setting
     if(!oldnote.isEmpty()){
       watcher->removePath(oldnote); 
-      settings->setValue("currentFile","");
+      this->saveSetting("currentFile","");
     }
     if(!note.isEmpty()){
-      settings->setValue("currentFile",note);
+      this->saveSetting("currentFile",note);
       watcher->addPath(note);
     }
   }
