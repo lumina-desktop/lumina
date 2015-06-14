@@ -44,6 +44,7 @@ public:
 	
 	void saveSetting(QString var, QVariant val){
 	  settings->setValue(prefix+var, val);
+	  settings->sync();
 	}
 	
 	QVariant readSetting(QString var, QVariant defaultval){

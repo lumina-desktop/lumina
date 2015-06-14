@@ -13,11 +13,6 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   menu = new QMenu(this);
-	menu->addAction(LXDG::findIcon("zoom-in",""), tr("Increase Size"), this, SLOT(increaseIconSize()));
-	menu->addAction(LXDG::findIcon("zoom-out",""), tr("Decrease Size"), this, SLOT(decreaseIconSize()));
-  if( !ID.isEmpty() && ID.contains(QDir::homePath()+"/Desktop") ){
-    menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
-  }
   int icosize = this->readSetting("iconsize",64).toInt();
     button->setIconSize(QSize(icosize,icosize));
   this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -49,7 +44,7 @@ void AppLauncherPlugin::loadButton(){
     }
   }else if(ok){
     QFileInfo info(path);
-    button->setWhatsThis(info.fileName());
+    button->setWhatsThis(info.absoluteFilePath());
     if(info.isDir()){
 	button->setIcon( LXDG::findIcon("folder","") );
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
@@ -88,6 +83,13 @@ void AppLauncherPlugin::loadButton(){
     }
     //qDebug() << " - Setting Button Text:" << txt;
     button->setText(txt);
+  //Now setup the menu again
+  menu->clear();
+  menu->addAction(LXDG::findIcon("zoom-in",""), tr("Increase Size"), this, SLOT(increaseIconSize()));
+  menu->addAction(LXDG::findIcon("zoom-out",""), tr("Decrease Size"), this, SLOT(decreaseIconSize()));
+  if( !button->whatsThis().isEmpty() && button->whatsThis().startsWith(QDir::homePath()+"/Desktop") ){
+    menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
+  }
   
   button->setFixedSize(icosize+4, icosize+8+(2*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
   this->setInitialSize(button->width()+4, button->height()+4);
@@ -125,6 +127,7 @@ void AppLauncherPlugin::increaseIconSize(){
   icosize += 16;
   button->setIconSize(QSize(icosize,icosize));
   this->saveSetting("iconsize",icosize);
+	
 }
 
 void AppLauncherPlugin::decreaseIconSize(){

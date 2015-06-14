@@ -26,7 +26,7 @@
 class NewDP{
 public:
 	static LDPlugin* createPlugin(QString plugin, QWidget* parent=0){
-	  qDebug() << "Create Plugin:" << plugin;
+	  //qDebug() << "Create Plugin:" << plugin;
 	  LDPlugin *plug = 0;
 	  if(plugin.section("---",0,0)=="sample"){
 	    plug = new SamplePlugin(parent, plugin);
@@ -50,7 +50,7 @@ public:
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
 	  }
-	  qDebug() << " -- done";
+	  //qDebug() << " -- done";
 	  return plug;
 	}
 

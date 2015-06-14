@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
