@@ -203,7 +203,13 @@ QStringList LUtils::listFavorites(){
   if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
     fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
     lastRead = cur;
+    if(fav.isEmpty()){
+      //Make sure the favorites dir exists, and create it if necessary
+      QDir dir(QDir::homePath()+"/.lumina/favorites");
+	if(!dir.exists()){ dir.mkpath(QDir::homePath()+"/.lumina/favorites"); }
+    }
   }
+  
   return fav;
 }
 
