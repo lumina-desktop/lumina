@@ -7,5 +7,5 @@
 DISTRO=${1}
 #Only perform the change if a distro-specific file is available
 if [ -r LuminaOS-${DISTRO}.cpp ]; then
-  sed "s/LuminaOS-Linux.cpp/LuminaOS-${DISTRO}/" libLumina.pro
+  sed -i "s/LuminaOS-Linux.cpp/LuminaOS-${DISTRO}.cpp/" Makefile
 fi
