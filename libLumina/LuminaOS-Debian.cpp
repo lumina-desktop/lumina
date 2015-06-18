@@ -106,7 +106,8 @@ QString info = LUtils::getCmdOutput("amixer get Master").join("").simplified();;
 void LOS::setAudioVolume(int percent){
   if(percent<0){percent=0;}
   else if(percent>100){percent=100;}
-  QString info = "amixer -c 0 sset Master,0 " + QString::number(percent) + "%";
+  // QString info = "amixer -c 0 sset Master,0 " + QString::number(percent) + "%";
+  QString info = "amixer set Master " + QString::number(percent) + "%";
   if(!info.isEmpty()){
     //Run Command
     LUtils::runCmd(info);
