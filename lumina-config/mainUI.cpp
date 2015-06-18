@@ -161,7 +161,8 @@ void MainUI::setupConnections(){
   connect(ui->tool_desk_addbgcolor, SIGNAL(clicked()), this, SLOT(deskbgcoloradded()) );
   connect(ui->tool_desk_rmbg, SIGNAL(clicked()), this, SLOT(deskbgremoved()) );
   connect(ui->spin_desk_min, SIGNAL(valueChanged(int)), this, SLOT(desktimechanged()) );
-
+  connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(desktimechanged()) ); //just need to poke the save routines
+	
   //Panels Page
   connect(ui->tool_panel1_add,SIGNAL(clicked()), this, SLOT(addpanel1()) );
   connect(ui->tool_panel2_add,SIGNAL(clicked()), this, SLOT(addpanel2()) );
@@ -510,6 +511,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     else if(bgs[i].startsWith("rgb(")){ui->combo_desk_bg->addItem(QString(tr("Solid Color: %1")).arg(bgs[i]), bgs[i]); }
     else{ ui->combo_desk_bg->addItem( QIcon(bgs[i]), bgs[i].section("/",-1), bgs[i] ); }
   }
+  ui->check_desktop_autolaunchers->setChecked(settings->value(DPrefix+"generateDesktopIcons", false).toBool());
   ui->radio_desk_multi->setEnabled(bgs.length()>1);
   if(bgs.length()>1){ ui->radio_desk_multi->setChecked(true);}
   else{ ui->radio_desk_single->setChecked(true); }
@@ -687,18 +689,19 @@ void MainUI::saveCurrentSettings(bool screenonly){
 
     // Desktop Page
     if(moddesk){
-    QStringList bgs; //get the list of backgrounds to use
-    if(ui->radio_desk_multi->isChecked()){
-      for(int i=0; i<ui->combo_desk_bg->count(); i++){
-	bgs << ui->combo_desk_bg->itemData(i).toString();
-      }
-    }else if(ui->combo_desk_bg->count() > 0){
+      QStringList bgs; //get the list of backgrounds to use
+      if(ui->radio_desk_multi->isChecked()){
+        for(int i=0; i<ui->combo_desk_bg->count(); i++){
+	  bgs << ui->combo_desk_bg->itemData(i).toString();
+        }
+      }else if(ui->combo_desk_bg->count() > 0){
 	bgs << ui->combo_desk_bg->itemData( ui->combo_desk_bg->currentIndex() ).toString();
 	bgs.removeAll("default");
-    }
-    if(bgs.isEmpty()){ bgs << "default"; } //Make sure to always fall back on the default
-    settings->setValue(DPrefix+"background/filelist", bgs);
-    settings->setValue(DPrefix+"background/minutesToChange", ui->spin_desk_min->value());
+      }
+      if(bgs.isEmpty()){ bgs << "default"; } //Make sure to always fall back on the default
+      settings->setValue(DPrefix+"background/filelist", bgs);
+      settings->setValue(DPrefix+"background/minutesToChange", ui->spin_desk_min->value());
+      settings->setValue(DPrefix+"generateDesktopIcons", ui->check_desktop_autolaunchers->isChecked());
     }
 
     // Panels Page

@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -508,6 +508,13 @@
                </layout>
               </item>
               <item>
+               <widget class="QCheckBox" name="check_desktop_autolaunchers">
+                <property name="text">
+                 <string>Auto-Create Desktop Shortcuts</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="label_23">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -609,7 +616,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>238</width>
+                 <width>249</width>
                  <height>215</height>
                 </rect>
                </property>
@@ -843,7 +850,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>238</width>
+                 <width>249</width>
                  <height>209</height>
                 </rect>
                </property>
@@ -1876,7 +1883,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>129</width>
-                    <height>28</height>
+                    <height>16</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
