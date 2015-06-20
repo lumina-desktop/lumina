@@ -14,23 +14,14 @@ QWidget#LuminaBootSplash{
 }
 
 /* Set the default canvas appearance for Lumina desktop plugins*/
-LDPlugin#audioplayer{
+/* Default to a non-transparent background for all desktop plugins*/
+LDPlugin{
   background: %%BASECOLOR%%;
   border-radius: 5px;
 }
-
-LDPlugin#calendar{
-  background: %%BASECOLOR%%;
-  border-radius: 5px;
-}
-
-LDPlugin#notepad{
-  background: %%BASECOLOR%%;
-  border-radius: 5px;
-}
-
-LDPlugin#systemmonitor{
-  background: %%BASECOLOR%%;
+/* Now specify which plugins should have a transparent background */
+LDPlugin#applauncher, LDPlugin#desktopview{
+  background: transparent;
   border-radius: 5px;
 }
 
@@ -39,11 +30,13 @@ background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   stop: 0 transparent, 
   stop: 0.7 transparent,
   stop: 1.0 %%PRIMARYDISABLECOLOR%%);
+  border: none;
   border-radius: 5px; 
   color: %%TEXTCOLOR%%;
 }
 LDPlugin#applauncher  QToolButton:hover{
   background: %%PRIMARYDISABLECOLOR%%;
+  border: none;
   border-radius: 5px; 
   color: %%TEXTHIGHLIGHTCOLOR%%;
 }

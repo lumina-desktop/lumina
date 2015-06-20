@@ -78,6 +78,7 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
   QFile file(filepath);
   if(file.exists() && !overwrite){ return false; }
   bool ok = false;
+  if(contents.isEmpty()){ contents << "\n"; }
   if( file.open(QIODevice::WriteOnly | QIODevice::Truncate) ){
     QTextStream out(&file);
     out << contents.join("\n");
@@ -202,6 +203,7 @@ QStringList LUtils::listFavorites(){
   QDateTime cur = QDateTime::currentDateTime();
   if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
     fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
+    fav.removeAll(""); //remove any empty lines
     lastRead = cur;
     if(fav.isEmpty()){
       //Make sure the favorites dir exists, and create it if necessary
