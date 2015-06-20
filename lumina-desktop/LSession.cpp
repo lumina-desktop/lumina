@@ -483,7 +483,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   //Get the available geometry for the screen the window is on
   QRect desk;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if( this->desktop()->screenGeometry(DESKTOPS[i]->Screen()).contains(geom.topLeft()) ){
+    if( this->desktop()->screenGeometry(DESKTOPS[i]->Screen()).contains(geom.center()) ){
       //Window is on this screen
       if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
       desk = DESKTOPS[i]->availableScreenGeom();
@@ -502,6 +502,8 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       qDebug() << " - Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
       qDebug() << " - Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
     }
+    QList<int> frame = XCB->WindowFrameGeometry(win);
+    if(DEBUG){ qDebug() << " - Frame:" << frame; }
     //Adjust origin point for left/top margins
     if(geom.y() < desk.y()){ geom.moveTop(desk.y()); } //move down to the edge (top panel)
     if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
