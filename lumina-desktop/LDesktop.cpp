@@ -186,12 +186,15 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
   }
   //Create a new plugin container
   LDPluginContainer *win = new LDPluginContainer(plug, desktoplocked);
-  if(desktoplocked){ bgDesktop->addSubWindow(win, Qt::FramelessWindowHint); }
-  else{ bgDesktop->addSubWindow(win, Qt::CustomizeWindowHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
-  win->adjustSize();
+  if(desktoplocked){ 
+	  bgDesktop->addSubWindow(win, Qt::FramelessWindowHint);
+  }else{ bgDesktop->addSubWindow(win, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint); }
+  //win->adjustSize();
   win->loadInitialPosition();
   win->show();
   win->update();
+  bgDesktop->update();
+  QApplication::processEvents();
   connect(win, SIGNAL(PluginRemoved(QString)), this, SLOT(DesktopPluginRemoved(QString)) );
 }
 
@@ -296,6 +299,8 @@ void LDesktop::UpdateMenu(bool fast){
   if(!desktoplocked){
     deskMenu->addAction(LXDG::findIcon("document-encrypt",""),tr("Lock Desktop"), this, SLOT(ToggleDesktopLock()) );
     deskMenu->addAction(LXDG::findIcon("snap-orthogonal",""),tr("Snap Plugins to Grid"), this, SLOT(AlignDesktopPlugins()) );
+    deskMenu->addAction(LXDG::findIcon("shapes",""), tr("Tile Plugins"), bgDesktop, SLOT(tileSubWindows()) );
+    deskMenu->addAction(LXDG::findIcon("window-duplicate",""), tr("Cascade Plugins"), bgDesktop, SLOT(cascadeSubWindows()) );
   }else{ deskMenu->addAction(LXDG::findIcon("document-decrypt",""),tr("Unlock Desktop"), this, SLOT(ToggleDesktopLock()) ); }
   deskMenu->addSeparator();
   deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Log Out"), this, SLOT(SystemLogout()) );
@@ -321,7 +326,6 @@ void LDesktop::winClicked(QAction* act){
 void LDesktop::UpdateDesktop(){
   if(DEBUG){ qDebug() << " - Update Desktop Plugins for screen:" << desktopnumber; }
   QStringList plugins = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
-
   if(defaultdesktop && plugins.isEmpty()){
     //plugins << "sample" << "sample" << "sample";
   }
@@ -379,10 +383,12 @@ void LDesktop::UpdateDesktop(){
 	connect(plug, SIGNAL(OpenDesktopMenu()), this, SLOT(ShowMenu()) );
 	if(DEBUG){ qDebug() << " -- Show Plugin"; }
 	PLUGINS << plug;
+	QApplication::processEvents(); //need a moment between plugin/container creation
 	CreateDesktopPluginContainer(plug);
 	if(DEBUG){ qDebug() << " -- Done Creating Plugin Container"; }
       }
     }
+    QApplication::processEvents(); //need to process events between loading of plugins
   }
 }
 

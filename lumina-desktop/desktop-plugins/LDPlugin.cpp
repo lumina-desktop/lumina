@@ -20,7 +20,7 @@ LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
 void LDPlugin::setInitialSize(int width, int height){
     //Note: Only run this in the plugin initization routine:
     //  if the plugin is completely new (first time used), it will be this size
-    if(settings->allKeys().filter(prefix).isEmpty()){
+    if(settings->allKeys().filter(prefix+"location").isEmpty()){
 	//Brand new plugin: set initial size
 	settings->setValue(prefix+"location/width",width);
 	settings->setValue(prefix+"location/height",height);

@@ -13,12 +13,19 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   menu = new QMenu(this);
-  int icosize = this->readSetting("iconsize",64).toInt();
-    button->setIconSize(QSize(icosize,icosize));
+  int icosize = this->readSetting("iconsize",-1).toInt();
+  if(icosize <1){ 
+    icosize = LSession::handle()->sessionSettings()->value("DefaultIconSize",64).toInt();
+    this->saveSetting("iconsize",icosize);
+  }
+  button->setIconSize(QSize(icosize,icosize));
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu()) );
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
+  //Calculate the initial size of the button
+  this->setInitialSize(icosize+8, icosize+8+qRound(2.2*button->fontMetrics().height()));
+	
   QTimer::singleShot(1,this, SLOT(loadButton()) );
 }
 	
@@ -73,7 +80,10 @@ void AppLauncherPlugin::loadButton(){
       if(txt.contains("\n")){
         //need to check each line
 	QStringList txtL = txt.split("\n");
-	for(int i=0; i<txtL.length(); i++){ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, icosize); }
+	for(int i=0; i<txtL.length(); i++){ 
+	  if(i>1){ txtL.removeAt(i); i--; } //Only take the first two lines
+	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, icosize);  }
+	}
 	txt = txtL.join("\n");
       }else{
         txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*icosize);
@@ -91,8 +101,8 @@ void AppLauncherPlugin::loadButton(){
     menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
   }
   
-  button->setFixedSize(icosize+4, icosize+8+(2*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
-  this->setInitialSize(button->width()+4, button->height()+4);
+  button->setFixedSize(icosize+4, icosize+8+qRound(2.1*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
+  //this->setInitialSize(button->width()+4, button->height()+4);
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	

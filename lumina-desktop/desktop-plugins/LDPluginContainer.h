@@ -50,32 +50,35 @@ public:
 	    syncTimer->setSingleShot(true); //no repeats
 	    connect(syncTimer, SIGNAL(timeout()), this, SLOT(saveGeometry()) );
 	  this->setWhatsThis(plugin->ID());
-	  if(locked){ this->setWindowFlags(Qt::FramelessWindowHint); }
-	  else{ this->setWindowFlags(Qt::CustomizeWindowHint); }//Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint); }
 	  this->setContentsMargins(0,0,0,0);
 	  if(!locked){
+	    this->setStyleSheet("LDPluginContainer{ border-size: 1px;}");
 	    this->setWindowTitle( plugin->ID().replace("---"," - ") );
-	    this->setWidget( new QWidget() );
+	    //this->setWidget( new QWidget() );
 	    this->setWidget( plugin );
-	    this->setWindowIcon(QIcon()); //remove the Qt icon
+	    //this->setWindowIcon(QIcon()); //remove the Qt icon
 	  }else{
 	    this->setStyleSheet("LDPluginContainer{ background: transparent; border: none;}");
 	    this->setWidget(plugin);
 	  }
+	  //qDebug() << "New Container:" << PLUG->size() << PLUG->sizeHint();
 	}
 	
 	~LDPluginContainer(){
 	}
 
 	void loadInitialPosition(){
-	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",this->widget()->sizeHint().width()).toInt(), PLUG->readSetting("location/height",this->widget()->sizeHint().height()).toInt());
+	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",this->widget()->size().width()).toInt(), PLUG->readSetting("location/height",this->widget()->size().height()).toInt());
 	  //qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
 	    if(set.x()!=-12345 && set.y()!=-12345){
 	      //custom location specified
+	      //qDebug() << " - Found Geom:" << set;
 	      this->setGeometry(set);
+	      //this->move(set.x(), set.y());
 	    }else{
+	      //qDebug() << " - Found Size:" << set;
 	      this->resize(set.width(), set.height());
 	    }
 	  setup=false; //done with setup

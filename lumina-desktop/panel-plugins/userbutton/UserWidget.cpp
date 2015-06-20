@@ -172,6 +172,7 @@ void UserWidget::FavChanged(){
 }
 
 void UserWidget::updateFavItems(bool newfilter){
+  //qDebug() << "Updating User Favorite Items";
   QStringList newfavs = LUtils::listFavorites();
   //qDebug() << "Favorites:" << newfavs;
   if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
@@ -180,6 +181,7 @@ void UserWidget::updateFavItems(bool newfilter){
     homefiles = LSession::handle()->DesktopFiles();
     lastHomeUpdate = QDateTime::currentDateTime();
   }else if(!newfilter){ return; } //nothing new to change - stop now
+  //qDebug() << " - Passed Smoke Test...";
   QStringList favitems;
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
   if(ui->tool_fav_apps->isChecked()){ 
@@ -211,7 +213,9 @@ void UserWidget::updateFavItems(bool newfilter){
     }
   }
   ClearScrollArea(ui->scroll_fav);
+  //qDebug() << " - Sorting Items";
   favitems.sort(); //sort them alphabetically
+  //qDebug() << " - Creating Items:" << favitems;
   for(int i=0; i<favitems.length(); i++){
     UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
     ui->scroll_fav->widget()->layout()->addWidget(it);
@@ -220,7 +224,7 @@ void UserWidget::updateFavItems(bool newfilter){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
   }
   static_cast<QBoxLayout*>(ui->scroll_fav->widget()->layout())->addStretch();
-  
+  //qDebug() << " - Done";
 }
 
 //Apps Tab

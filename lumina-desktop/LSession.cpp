@@ -331,6 +331,7 @@ void LSession::watcherChange(QString changed){
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
   else if(changed == QDir::homePath()+"/Desktop"){ 
     desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
+    if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
   }
   //Now double-check all the watches files to ensure that none of them got removed
