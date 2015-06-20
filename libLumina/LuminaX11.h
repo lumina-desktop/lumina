@@ -131,7 +131,8 @@ public:
 	//Window Information
 	QString WindowClass(WId);
 	unsigned int WindowWorkspace(WId); //The workspace the window is on
-	QRect WindowGeometry(WId, bool includeFrame = true); //the geometry of the window (frame excluded)
+	QRect WindowGeometry(WId win, bool includeFrame = true); //the geometry of the window (frame excluded)
+	QList<int> WindowFrameGeometry(WId win); //Returns: [top,bottom,left,right] sizes of the frame
 	WINDOWSTATE WindowState(WId win); //Visible state of window
 	QString WindowVisibleIconName(WId win); //_NET_WM_VISIBLE_ICON_NAME
 	QString WindowIconName(WId win); //_NET_WM_ICON_NAME

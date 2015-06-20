@@ -950,8 +950,8 @@ QRect LXCB::WindowGeometry(WId win, bool includeFrame){
 	    //adjust the origin point to account for the frame
 	    geom.translate(-frame.left, -frame.top); //move to the orign point for the frame
 	    //adjust the size (include the frame sizes)
-	    //geom.setWidth( geom.width() + frame.left + frame.right );
-	    //geom.setHeight( geom.height() + frame.top + frame.bottom );
+	    geom.setWidth( geom.width() + frame.left + frame.right );
+	    geom.setHeight( geom.height() + frame.top + frame.bottom );
 	}
 	//qDebug() << " - Frame:" << frame.left << frame.right << frame.top << frame.bottom;
 	//qDebug() << " - Modified with Frame:" << geom.x() << geom.y() << geom.width() << geom.height();
@@ -970,7 +970,21 @@ QRect LXCB::WindowGeometry(WId win, bool includeFrame){
   }else{
     //Need to do another catch for this situation (probably not mapped yet)
   }
-  
+  return geom;
+}
+
+QList<int> LXCB::WindowFrameGeometry(WId win){
+  //Returns: [top, bottom, left, right] sizes for the frame
+  QList<int> geom;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_frame_extents_unchecked(&EWMH, win);
+  if(cookie.sequence != 0){
+    xcb_ewmh_get_extents_reply_t frame;
+    if(1== xcb_ewmh_get_frame_extents_reply(&EWMH, cookie, &frame, NULL) ){
+      //adjust the origin point to account for the frame
+      geom << frame.top << frame.bottom << frame.left << frame.right;
+    }
+  }
+  if(geom.isEmpty()){ geom << 0 << 0 << 0 << 0; }
   return geom;
 }
 
