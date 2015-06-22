@@ -5,7 +5,7 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Categories=System;
-OnlyShowIn=LUMINA
+OnlyShowIn=Lumina
 Name=Lumina Desktop Information
 Comment=View information about the Lumina Desktop Environment
 

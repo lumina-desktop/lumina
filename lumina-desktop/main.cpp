@@ -63,8 +63,8 @@ int main(int argc, char ** argv)
     }
     //Setup any pre-QApplication initialization values
     LXDG::setEnvironmentVars();
-    setenv("DESKTOP_SESSION","LUMINA",1);
-    setenv("XDG_CURRENT_DESKTOP","LUMINA",1);
+    setenv("DESKTOP_SESSION","Lumina",1);
+    setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     //Setup the log file
     qDebug() << "Lumina Log File:" << logfile.fileName();
     if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
