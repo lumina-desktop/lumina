@@ -509,7 +509,10 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
     //Adjust size for bottom margins (within reason, since window titles are on top normally)
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
-    if(geom.bottom() > desk.bottom() && geom.height() > 100){ geom.setBottom(desk.bottom()); }
+    if(geom.bottom() > desk.bottom() && geom.height() > 100){ 
+      //Also adjust the sizing for the frame (the moveResize fuction is for the base window only)
+      geom.setBottom(desk.bottom()-frame[0]-frame[1]); 
+    }
     //Now move/resize the window
     if(DEBUG){ qDebug() << " - New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }
     XCB->MoveResizeWindow(win, geom);
