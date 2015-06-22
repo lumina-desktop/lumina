@@ -92,17 +92,15 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   } //end reading file
   file.close();
   //If there are OnlyShowIn desktops listed, add them to the name
-  if(DF.showInList.contains("lumina", Qt::CaseInsensitive)){
+  if( !DF.showInList.isEmpty() && !DF.showInList.contains("Lumina", Qt::CaseInsensitive) ){
+    /*QStringList added;
     //Need to be careful about case insensitivity here - the QList functions don't understand it
     for(int i=0; i<DF.showInList.length(); i++){
-      if(DF.showInList[i].toLower()=="lumina"){
-        DF.showInList.removeAt(i);
-	i--;
-      }
-    }
-  }
-  if(!DF.showInList.isEmpty()){
-    DF.name.append(" ("+DF.showInList.join(", ")+")");
+      if(DF.showInList[i].toLower()!="lumina"){ added << DF.showInList[i]; }
+    }*/
+    //if(!added.isEmpty()){ 
+      DF.name.append(" ("+DF.showInList.join(", ")+")"); 
+    //}
   }
   //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
   if(DF.catList.isEmpty() && filePath.contains("/wine/")){
