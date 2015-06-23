@@ -343,6 +343,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString istrue = (val=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
@@ -350,6 +351,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="desktop_backgroundfiles"){ deskset << "background\\filelist="+val; }
     else if(var=="desktop_backgroundrotateminutes"){ deskset << "background\\minutesToChange="+val; }
     else if(var=="desktop_plugins"){ deskset << "pluginlist="+val; }
+    else if(var=="desktop_generate_icons"){ deskset << "generateDesktopIcons="+istrue; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
 

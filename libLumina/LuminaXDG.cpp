@@ -406,7 +406,7 @@ void LXDG::setEnvironmentVars(){
   setenv("XDG_DATA_HOME",QString(QDir::homePath()+"/.local/share").toUtf8(), 0);
   setenv("XDG_CONFIG_HOME",QString(QDir::homePath()+"/.config").toUtf8(), 0);
   setenv("XDG_DATA_DIRS","/usr/local/share:/usr/share", 0);
-  setenv("XDG_CONFIG_DIRS","/etc/xdg", 0);
+  setenv("XDG_CONFIG_DIRS","/etc/xdg:/usr/local/etc/xdg", 0);
   setenv("XDG_CACHE_HOME",QString(QDir::homePath()+"/.cache").toUtf8(), 0);
   //Don't set "XDG_RUNTIME_DIR" yet - need to look into the specs
 }
