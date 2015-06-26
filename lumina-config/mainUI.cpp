@@ -88,7 +88,8 @@ void MainUI::setupIcons(){
   ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_themes), LXDG::findIcon("preferences-desktop-theme","") );
 
   //Panels Page
-  ui->tool_panel1_add->setIcon( LXDG::findIcon("list-add","") );
+  ui->tool_panels_add->setIcon( LXDG::findIcon("list-add","") );
+  /*ui->tool_panel1_add->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_panel1_rm->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_panel1_addplugin->setIcon( LXDG::findIcon("list-add","") );
   ui->tool_panel1_rmplugin->setIcon( LXDG::findIcon("list-remove","") );
@@ -108,6 +109,7 @@ void MainUI::setupIcons(){
   ui->toolBox_panel2->setItemIcon(1,LXDG::findIcon("preferences-plugin",""));
   ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_panels), LXDG::findIcon("configure-toolbars","") );
   ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_desktopInterface), LXDG::findIcon("preferences-plugin","") );
+  */
   
   //Menu Page
   ui->tool_menu_add->setIcon( LXDG::findIcon("list-add","") );
@@ -164,7 +166,8 @@ void MainUI::setupConnections(){
   connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(desktimechanged()) ); //just need to poke the save routines
 	
   //Panels Page
-  connect(ui->tool_panel1_add,SIGNAL(clicked()), this, SLOT(addpanel1()) );
+  connect(ui->tool_panels_add, SIGNAL(clicked()), this, SLOT(newPanel()) );
+  /*connect(ui->tool_panel1_add,SIGNAL(clicked()), this, SLOT(addpanel1()) );
   connect(ui->tool_panel2_add,SIGNAL(clicked()), this, SLOT(addpanel2()) );
   connect(ui->tool_panel1_rm,SIGNAL(clicked()), this, SLOT(rmpanel1()) );
   connect(ui->tool_panel2_rm,SIGNAL(clicked()), this, SLOT(rmpanel2()) );
@@ -192,7 +195,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_panel2_rmplugin, SIGNAL(clicked()), this, SLOT(rmpanel2plugin()) );
   connect(ui->tool_panel2_upplug, SIGNAL(clicked()), this, SLOT(uppanel2plugin()) );
   connect(ui->tool_panel2_dnplug, SIGNAL(clicked()), this, SLOT(dnpanel2plugin()) );
-
+  */
   //Menu Page
   connect(ui->tool_menu_add, SIGNAL(clicked()), this, SLOT(addmenuplugin()) );
   connect(ui->tool_menu_rm, SIGNAL(clicked()), this, SLOT(rmmenuplugin()) );
@@ -261,7 +264,7 @@ void MainUI::setupMenus(){
   */
 
   //Panel locations
-  ui->combo_panel1_loc->clear();
+  /*ui->combo_panel1_loc->clear();
   ui->combo_panel2_loc->clear();
   QStringList loc; loc << tr("Top") << tr("Bottom") << tr("Left") << tr("Right");
   ui->combo_panel1_loc->addItems(loc);
@@ -270,7 +273,7 @@ void MainUI::setupMenus(){
   ui->combo_panel1_align->addItem(tr("Center"),"center"); ui->combo_panel2_align->addItem(tr("Center"),"center");
   ui->combo_panel1_align->addItem(tr("Top/Left"),"left"); ui->combo_panel2_align->addItem(tr("Top/Left"),"left");
   ui->combo_panel1_align->addItem(tr("Bottom/Right"),"right"); ui->combo_panel2_align->addItem(tr("Bottom/Right"),"right");
-
+  */
 
   //Session window manager settings
   ui->combo_session_wfocus->clear();
@@ -469,7 +472,7 @@ void MainUI::slotChangePage(bool enabled){
   //Hide the save button for particular pages
   //ui->push_save->setVisible(!ui->actionDefaults->isChecked() || moddesk || modpan || modmenu || modshort || moddef || modses); //hide on the default page if nothing waiting to be saved
   //Special functions for particular pages
-  if(ui->page_panels->isVisible()){ checkpanels(); }
+  //if(ui->page_panels->isVisible()){ checkpanels(); }
 
 }
 
@@ -523,7 +526,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
   int panels = settings->value(DPrefix+"panels",-1).toInt();
   if(panels==-1 && primary){ panels=1; }
   panelnumber = panels;
-  if(panels >= 1){
+  loadPanels();
+  /*if(panels >= 1){
     //Load the panel 1 information
     QString PPrefix = "panel"+QString::number(cdesk)+".0/";
     ui->toolBox_panel1->setVisible(true);
@@ -631,6 +635,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
     ui->label_panel2_sample->setStyleSheet("background: rgba(255,255,255,160)");
   }
   checkpanels(); //make sure buttons are updated
+  */
 
 
   if(!screenonly){
@@ -705,8 +710,11 @@ void MainUI::saveCurrentSettings(bool screenonly){
     }
 
     // Panels Page
-    if(modpan){
-    settings->setValue(DPrefix+"panels", panelnumber);
+    if(modpan){ 
+	settings->setValue(DPrefix+"panels", PANELS.length());
+	savePanels(); 
+    }
+    /*settings->setValue(DPrefix+"panels", panelnumber);
     if(panelnumber>=1){
       QString PPrefix = "panel"+QString::number(currentDesktop())+".0/";
       settings->setValue(PPrefix+"color", ui->label_panel1_sample->whatsThis());
@@ -754,7 +762,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       QStringList keys = settings->allKeys().filter("panel"+QString::number(currentDesktop())+".1/");
       for(int i=0; i<keys.length(); i++){  settings->remove(keys[i]); }
     }
-    }
+    }*/
 
     // Menu Page
     if(modmenu && !screenonly){
@@ -923,7 +931,59 @@ void MainUI::panelValChanged(){
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
 }
 
-void MainUI::addpanel1(){
+void MainUI::newPanel(){
+  panelnumber++;
+  //Now create a new Panel widget with this number
+  PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
+    tmp->LoadSettings(settings, currentDesktop(), panelnumber-1);
+    PANELS << tmp;
+    connect(tmp, SIGNAL(PanelChanged()), this, SLOT(panelValChanged()) );
+    connect(tmp, SIGNAL(PanelRemoved(int)), this, SLOT(removePanel(int)) );
+    ui->scroll_panels->widget()->layout()->addWidget(tmp);
+}
+
+void MainUI::removePanel(int pan){ 
+  //connected to a signal from the panel widget
+  bool changed = false;
+  for(int i=0; i<PANELS.length(); i++){
+    int num = PANELS[i]->PanelNumber();
+    if(num==pan){
+      delete PANELS.takeAt(i);
+      i--;
+      changed = true;
+    }else if(num > pan){
+      PANELS[i]->ChangePanelNumber(num-1);
+      changed = true;
+    }
+  }
+  if(!changed){ return; } //nothing done
+  panelnumber--;
+  panelValChanged();
+}
+
+void MainUI::loadPanels(){
+  //First clean any current panels
+  for(int i=0; i<PANELS.length(); i++){ delete PANELS.takeAt(i); i--; }
+  //Now create new panels
+  int dnum = currentDesktop();
+  if(ui->scroll_panels->widget()->layout()==0){ ui->scroll_panels->widget()->setLayout( new QHBoxLayout() ); }
+  for(int i=0; i<panelnumber; i++){
+    PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
+    tmp->LoadSettings(settings, dnum, i);
+    PANELS << tmp;
+    connect(tmp, SIGNAL(PanelChanged()), this, SLOT(panelValChanged()) );
+    connect(tmp, SIGNAL(PanelRemoved(int)), this, SLOT(removePanel(int)) );
+    ui->scroll_panels->widget()->layout()->addWidget(tmp);
+  }
+}
+
+void MainUI::savePanels(){
+  for(int i=0; i<PANELS.length(); i++){
+    PANELS[i]->SaveSettings(settings);
+  }
+}
+
+/*void MainUI::addpanel1(){
   ui->toolBox_panel1->setVisible(true);
   panelnumber = 1;
   checkpanels();
@@ -989,21 +1049,6 @@ void MainUI::adjustpanel1(){
     panadjust = false;
     return;
   //}
-  /*int newindex=0;
-  switch(ui->combo_panel2_loc->currentIndex()){
-    case 0:
-	newindex = 1; break;
-    case 1:
-	newindex = 0; break;
-    case 2:
-	newindex = 3; break;
-    case 3:
-	newindex = 2; break;
-  }
-  if(newindex != ui->combo_panel1_loc->currentIndex()){ 
-    valchanged = true;
-    ui->combo_panel1_loc->setCurrentIndex(newindex);
-  }*/
   //panadjust = false;
   //if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
@@ -1020,22 +1065,6 @@ void MainUI::adjustpanel2(){
     panadjust = false;
     return;
   //}
-  
-  /*int newindex=0;
-  switch(ui->combo_panel1_loc->currentIndex()){
-    case 0:
-	newindex = 1; break;
-    case 1:
-	newindex = 0; break;
-    case 2:
-	newindex = 3; break;
-    case 3:
-	newindex = 2; break;
-  }
-  if(newindex != ui->combo_panel2_loc->currentIndex()){ 
-    valchanged = true;
-    ui->combo_panel2_loc->setCurrentIndex(newindex);
-  }*/
   //panadjust = false;
   //if(!loading && valchanged){ ui->push_save->setEnabled(true); modpan = true; }
 }
@@ -1161,7 +1190,7 @@ void MainUI::dnpanel2plugin(){
   ui->list_panel2_plugins->insertItem(row+1, ui->list_panel2_plugins->takeItem(row));
   ui->list_panel2_plugins->setCurrentRow(row+1);
   if(!loading){ ui->push_save->setEnabled(true); modpan = true; }
-}
+}*/
 
 
 //============

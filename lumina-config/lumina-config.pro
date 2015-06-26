@@ -19,7 +19,8 @@ SOURCES += main.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
 	   ThemeDialog.cpp \
-	   GetPluginDialog.cpp
+	   GetPluginDialog.cpp \
+	   PanelWidget.cpp
 
 HEADERS  += mainUI.h \
 		LPlugins.h \
@@ -27,14 +28,16 @@ HEADERS  += mainUI.h \
 		AppDialog.h \
 		ColorDialog.h \
 		ThemeDialog.h \
-		GetPluginDialog.h
+		GetPluginDialog.h \
+		PanelWidget.h
 
 FORMS    += mainUI.ui \
 		KeyCatch.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \
-		GetPluginDialog.ui
+		GetPluginDialog.ui \
+		PanelWidget.ui
 
 
 # RESOURCES+= lumina-config.qrc

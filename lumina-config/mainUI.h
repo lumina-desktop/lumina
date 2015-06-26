@@ -36,6 +36,7 @@
 #include "ColorDialog.h"
 #include "ThemeDialog.h"
 #include "GetPluginDialog.h"
+#include "PanelWidget.h"
 
 //namespace for using the *.ui file
 namespace Ui{
@@ -47,6 +48,12 @@ class MainUI : public QMainWindow{
 public:
 	MainUI();
 	~MainUI();
+
+	//Panels Page simplifications
+	QString getColorStyle(QString current, bool allowTransparency = true);
+
+	//Get an application on the system
+	XDGDesktop getSysApp(bool allowreset = false);
 
 private:
 	Ui::MainUI *ui; //the *.ui file access
@@ -61,19 +68,13 @@ private:
 	bool loading, panadjust;
 	bool moddesk, modpan, modmenu, modshort, moddef, modses; //page modified flags
 	int panelnumber;
+	QList<PanelWidget*> PANELS;
 
 	//General purpose functions (not connected to buttons)
 	void setupMenus(); //called during initialization
 	void setupConnections(); //called during intialization
 
 	int currentDesktop(); //the number for the current desktop
-
-	//Panels Page simplifications
-	QString getColorStyle(QString current, bool allowTransparency = true);
-	//QString getNewPanelPlugin();
-
-	//Get an application on the system
-	XDGDesktop getSysApp(bool allowreset = false);
 
 	//Convert to/from fluxbox keyboard shortcuts
 	QString dispToFluxKeys(QString);
@@ -110,7 +111,12 @@ private slots:
 
 	//Panels Page
 	void panelValChanged();
-	void addpanel1();
+	void newPanel();
+	void removePanel(int); //connected to a signal from the panel widget
+	void loadPanels();
+	void savePanels();
+	
+	/*void addpanel1();
 	void addpanel2();
 	void rmpanel1();
 	void rmpanel2();
@@ -128,7 +134,7 @@ private slots:
 	void uppanel1plugin();
 	void uppanel2plugin();
 	void dnpanel1plugin();
-	void dnpanel2plugin();
+	void dnpanel2plugin();*/
 
 	//Menu Page/Tab
 	void addmenuplugin();
