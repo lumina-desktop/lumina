@@ -241,36 +241,6 @@ void LSession::launchStartupApps(){
   int tmp = LOS::ScreenBrightness();
   LOS::setScreenBrightness( tmp );
   qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
-    
-  //First create the list of all possible locations in order of precedence
-  // NOTE: Lumina/system defaults should be launched earlier due to possible system admin utilities
-  /*QStringList filelist; 
-    filelist << LOS::LuminaShare()+"startapps"; //anything special for the Lumina installation
-    filelist << "/etc/luminaStartapps" << LOS::SysPrefix()+"luminaStartapps" << LOS::AppPrefix()+"luminaStartapps"; //System defaults
-    filelist << QDir::homePath()+"/.lumina/startapps"; //User defaults
-    filelist.removeDuplicates(); //just in case sysPrefix/appPrefix/etc are the same
-  //Now load all the available files
-  QStringList entries; //where to save good entries
-  for(int i=0; i<filelist.length(); i++){
-    if( !QFile::exists(filelist[i]) ){ continue; } //file does not exist
-    QFile file(filelist[i]);
-    if( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
-      QTextStream in(&file);
-      while(!in.atEnd()){
-        QString entry = in.readLine();
-        if(entry.startsWith("#") || entry.isEmpty()){ continue; }
-        entries << entry;
-      }
-      file.close();
-    }
-  }
-  //Now start all the listed apps
-  entries.removeDuplicates(); //Just in case something is duplicated between system/user defaults
-  for(int i=0; i<entries.length(); i++){
-    qDebug() << " - Starting Application:" << entries[i];
-    LSession::LaunchApplication(entries[i]);
-    LSession::processEvents();
-  }*/
   
   //Now get any XDG startup applications and launch them
   QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
