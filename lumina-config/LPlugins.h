@@ -7,6 +7,7 @@
 #ifndef _LUMINA_DESKTOP_CONFIG_PLUGINS_H
 #define _LUMINA_DESKTOP_CONFIG_PLUGINS_H
 
+#include <QObject>
 #include <QHash>
 #include <QString>
 #include <QStringList>
