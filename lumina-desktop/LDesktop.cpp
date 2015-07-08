@@ -178,11 +178,11 @@ void LDesktop::checkResolution(){
   issyncing = false;
 }
 
-void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
+LDPluginContainer* LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
   //Verify that a container does not already exist for this plugin
   QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
   for(int i=0; i<wins.length(); i++){
-    if(wins[i]->whatsThis()==plug->ID()){ return; }
+    if(wins[i]->whatsThis()==plug->ID()){ return 0; }
   }
   //Create a new plugin container
   LDPluginContainer *win = new LDPluginContainer(plug, desktoplocked);
@@ -191,11 +191,60 @@ void LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
   }else{ bgDesktop->addSubWindow(win, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint); }
   //win->adjustSize();
   win->loadInitialPosition();
+  if(DEBUG){ 
+    qDebug() << "Initial DP Geom:" << plug->geometry();
+    qDebug() << "  - Container Geom:" << win->geometry();
+  }
   win->show();
+  plug->update();
   win->update();
+  QApplication::processEvents();
   bgDesktop->update();
   QApplication::processEvents();
+	  
   connect(win, SIGNAL(PluginRemoved(QString)), this, SLOT(DesktopPluginRemoved(QString)) );
+  return win;
+}
+
+QPoint LDesktop::findNewPluginLocation(QRegion avail, QSize winsize){
+  //This just searches through the region of available space until it find the first location where it
+  //  will fit without overlapping anything else (scanning left->right, top->bottom)
+  QRect bounds = avail.boundingRect();
+  if(bounds.width()<winsize.width() || bounds.height()<winsize.height()){ return QPoint(-1,-1); }
+  qDebug() << "Bounds:" << bounds;
+  //return QPoint(-1,-1);
+
+  QPoint pt = bounds.topLeft(); //start in upper-left corner
+  bool found = false;
+  qDebug() << "Check Availability:" << bounds << winsize;
+  while(pt.y()+winsize.height() < bounds.bottom() && !found){
+    int dy = winsize.height()/2;
+    while(pt.x()+winsize.width() < bounds.right() && !found){
+      qDebug() << "Check X:" << pt << winsize;
+      //Check the horizontal position (incrementing as necessary)
+      QRect inter = avail.intersected(QRect(pt, winsize)).boundingRect();
+      qDebug() << " - Inter:" << inter;
+      if(inter.size() == winsize && avail.contains(inter) ){ found = true; } //use this point
+      else{
+	int dx = winsize.width() - inter.width();
+        if(dx>0 && inter.left() > pt.x()){ pt.setX( inter.left() ); }
+	else if(inter.width()==0){ pt.setX( pt.x()+winsize.width() ); }
+	else{ pt.setX( pt.x()+inter.width() ); }
+	//Also adjust the dy value to the smallest amount
+	int ddy = inter.height() - winsize.height();
+	if(ddy < dy && ddy>0){ dy = ddy; }
+      }
+     
+    }
+    if(!found){
+      //Nothing in the horizontal direction - increment the vertical dimension
+      pt.setX( bounds.left() ); //reset back to the left-most edge
+      pt.setY( pt.y()+dy );
+      qDebug() << "Check Y:" << pt << dy;
+    }
+  }
+  if(!found){ return QPoint(-1,-1); } //no space found - return an invalid point
+  else{ return pt; }
 }
 
 // =====================
@@ -356,6 +405,7 @@ void LDesktop::UpdateDesktop(){
     }
   }
   //Go through the plugins and remove any existing ones that do not show up on the current list
+
   for(int i=0; i<PLUGINS.length(); i++){
     if(!plugins.contains(PLUGINS[i]->ID())){
       //Remove this plugin (with settings) - is not currently listed
@@ -363,6 +413,15 @@ void LDesktop::UpdateDesktop(){
       i--;
     }
   }
+  //Now get an accounting of all the available/used space
+  QRegion avail(this->availableScreenGeom());
+  if(avail.isEmpty()){ avail = QRegion( QRect(QPoint(0,0),desktop->screenGeometry(desktopnumber).size()) ); }
+  qDebug() << "Available Screen Geom:" << avail.boundingRect();
+  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
+  for(int i=0; i<wins.length(); i++){
+      if(avail.contains(wins[i]->geometry())){ avail = avail.subtracted( QRegion(wins[i]->geometry()) ); }
+  }
+  qDebug() << " - after removals:" << avail.boundingRect();
   //Now add/update plugins
   for(int i=0; i<plugins.length(); i++){
     //See if this plugin is already there
@@ -381,11 +440,19 @@ void LDesktop::UpdateDesktop(){
       plug = NewDP::createPlugin(plugins[i], bgDesktop);
       if(plug != 0){
 	connect(plug, SIGNAL(OpenDesktopMenu()), this, SLOT(ShowMenu()) );
-	if(DEBUG){ qDebug() << " -- Show Plugin"; }
+	if(DEBUG){ qDebug() << " --- Show Plugin"; }
 	PLUGINS << plug;
 	QApplication::processEvents(); //need a moment between plugin/container creation
-	CreateDesktopPluginContainer(plug);
-	if(DEBUG){ qDebug() << " -- Done Creating Plugin Container"; }
+	LDPluginContainer *cont = CreateDesktopPluginContainer(plug);
+	/*if(!cont->hasFixedPosition()){
+	  //Need to arrange the location of the plugin (leave size alone)
+	  if(DEBUG){ qDebug() << " ---  Floating Plugin - find a spot for it"; }
+	  QPoint pt = findNewPluginLocation(avail, cont->size());
+	  if(pt.x()>=0 && pt.y()>=0){ cont->move(pt); }
+	}*/
+	//Done with this plugin - removed it's area from the available space
+	if(DEBUG){ qDebug() << " ---  Done Creating Plugin Container"; }
+	avail = avail.subtracted( QRegion(cont->geometry()) );
       }
     }
     QApplication::processEvents(); //need to process events between loading of plugins

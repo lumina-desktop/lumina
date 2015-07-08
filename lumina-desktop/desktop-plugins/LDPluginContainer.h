@@ -12,6 +12,7 @@
 
 #include <QObject>
 #include <QMdiSubWindow>
+#include <QApplication>
 #include <QSettings>
 #include <QMoveEvent>
 #include <QResizeEvent>
@@ -52,7 +53,7 @@ public:
 	  this->setWhatsThis(plugin->ID());
 	  this->setContentsMargins(0,0,0,0);
 	  if(!locked){
-	    this->setStyleSheet("LDPluginContainer{ border-size: 1px;}");
+	    //this->setStyleSheet("LDPluginContainer{ border-width: 1px;}");
 	    this->setWindowTitle( plugin->ID().replace("---"," - ") );
 	    //this->setWidget( new QWidget() );
 	    this->setWidget( plugin );
@@ -68,8 +69,8 @@ public:
 	}
 
 	void loadInitialPosition(){
-	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",this->widget()->size().width()).toInt(), PLUG->readSetting("location/height",this->widget()->size().height()).toInt());
-	  //qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
+	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",PLUG->size().width()).toInt(), PLUG->readSetting("location/height",PLUG->size().height()).toInt());
+	  qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
 	    if(set.x()!=-12345 && set.y()!=-12345){
@@ -81,7 +82,12 @@ public:
 	      //qDebug() << " - Found Size:" << set;
 	      this->resize(set.width(), set.height());
 	    }
+	  QApplication::processEvents();
 	  setup=false; //done with setup
+	}
+	
+	bool hasFixedPosition(){
+	  return (PLUG->readSetting("location/x",-12345).toInt() != -12345);
 	}
 
 signals:

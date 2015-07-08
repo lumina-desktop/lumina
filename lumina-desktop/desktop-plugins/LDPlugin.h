@@ -43,6 +43,7 @@ public:
 	void setInitialSize(int width, int height);
 	
 	void saveSetting(QString var, QVariant val){
+	  //qDebug() << "Saving Setting:" << prefix+var+QString(" = ")+val.toString();
 	  settings->setValue(prefix+var, val);
 	  settings->sync();
 	}

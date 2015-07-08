@@ -24,7 +24,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
   //Calculate the initial size of the button
-  this->setInitialSize(icosize+8, icosize+8+qRound(2.2*button->fontMetrics().height()));
+  this->setInitialSize((1.2*icosize)+8, icosize+8+qRound(2.3*button->fontMetrics().height()));
 	
   QTimer::singleShot(1,this, SLOT(loadButton()) );
 }
@@ -102,7 +102,6 @@ void AppLauncherPlugin::loadButton(){
   }
   
   button->setFixedSize(icosize+4, icosize+8+qRound(2.1*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
-  //this->setInitialSize(button->width()+4, button->height()+4);
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	

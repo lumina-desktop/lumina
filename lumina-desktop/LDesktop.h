@@ -72,8 +72,10 @@ private:
 	QList<LDPlugin*> PLUGINS;
 	QString CBG; //current background
 	QRect globalWorkRect;
-	void CreateDesktopPluginContainer(LDPlugin*);
+	LDPluginContainer* CreateDesktopPluginContainer(LDPlugin*);
 
+	QPoint findNewPluginLocation(QRegion avail, QSize winsize);
+	
 private slots:
 	void InitDesktop();
 	void SettingsChanged();

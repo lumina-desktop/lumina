@@ -16,14 +16,13 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
   list = new QListWidget(this);
     //list->setUniformItemSizes(true);
     list->setViewMode(QListView::IconMode);
-    list->setLayoutMode(QListView::Batched);
-    list->setBatchSize(10); //keep it snappy
+    //list->setLayoutMode(QListView::Batched);
+    list->setFlow(QListWidget::TopToBottom); //Qt bug workaround - need the opposite flow in the widget constructor
+    list->setWrapping(true);
+    //list->setBatchSize(10); //keep it snappy
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    //int icosize = this->readSetting("IconSize",64).toInt();
-    //list->setIconSize(QSize(icosize,icosize));
-    //list->setUniformItemSizes(true);
     list->setContextMenuPolicy(Qt::CustomContextMenu);
 	
   menu = new QMenu(this);
@@ -46,7 +45,7 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
   connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateContents()) );
   connect(list, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(runItems()) );
   connect(list, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)) );
-  QTimer::singleShot(0,this, SLOT(updateContents()) );
+  QTimer::singleShot(1000,this, SLOT(updateContents()) ); //wait a second before loading contents
 }
 
 DesktopViewPlugin::~DesktopViewPlugin(){
@@ -184,16 +183,21 @@ void DesktopViewPlugin::updateContents(){
 	QStringList txtL = txt.split("\n");
 	for(int i=0; i<txtL.length(); i++){ txtL[i] = this->fontMetrics().elidedText(txtL[i], Qt::ElideRight, gridSZ.width()); }
 	txt = txtL.join("\n");
+	if(txtL.length()>2){ txt = txt.section("\n",0,1); } //only keep the first two lines
       }else{
         txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*gridSZ.width());
         //Now split the line in half for the two lines
         txt.insert( (txt.count()/2), "\n");
       }
+    }else{
+      txt.append("\n "); //ensure two lines (2nd one invisible) - keeps formatting sane
     }
     it->setText(txt);
     list->addItem(it);
     QApplication::processEvents(); //keep the UI snappy
   }
+  list->setFlow(QListWidget::LeftToRight); //To ensure this is consistent - issues with putting it in the constructor
+  list->update(); //Re-paint the widget after all items are added 
 }
 
 void DesktopViewPlugin::displayProperties(){

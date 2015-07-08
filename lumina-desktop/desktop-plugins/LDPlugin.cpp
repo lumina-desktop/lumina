@@ -11,7 +11,7 @@
 LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
   PLUGID=id;
   prefix = id.replace("/","_")+"/";
-  qDebug() << "ID:" << PLUGID << prefix;
+  //qDebug() << "ID:" << PLUGID << prefix;
   settings = LSession::handle()->DesktopPluginSettings();
   //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
   this->setObjectName(id.section("---",0,0).section("::",0,0));
@@ -22,6 +22,7 @@ void LDPlugin::setInitialSize(int width, int height){
     //  if the plugin is completely new (first time used), it will be this size
     if(settings->allKeys().filter(prefix+"location").isEmpty()){
 	//Brand new plugin: set initial size
+	qDebug() << "Setting Initial Size:" << PLUGID << width << height;
 	settings->setValue(prefix+"location/width",width);
 	settings->setValue(prefix+"location/height",height);
 	settings->sync();

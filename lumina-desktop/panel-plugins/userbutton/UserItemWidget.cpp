@@ -103,7 +103,7 @@ void UserItemWidget::createWidget(){
 }
 
 void UserItemWidget::setupButton(bool disable){
-  if(isDirectory){ qDebug() << "Directory Entry:" << isShortcut << linkPath << icon->whatsThis(); }
+  //if(isDirectory){ qDebug() << "Directory Entry:" << isShortcut << linkPath << icon->whatsThis(); }
 	
   if(disable){
     button->setVisible(false);
