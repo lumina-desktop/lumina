@@ -24,12 +24,15 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
   //Calculate the initial size of the button
-  this->setInitialSize((1.2*icosize)+8, icosize+8+qRound(2.3*button->fontMetrics().height()));
+  //qDebug() << "Button Size:" << button->size();
+  //qDebug() << "Calculated:" << icosize+4 << icosize+8+qRound(2.15*button->fontMetrics().height());
+  //qDebug() << "Preferred Size:" << button->sizeHint();
+  this->setInitialSize(qRound(1.1*icosize)+4, icosize+8+qRound(2.5*button->fontMetrics().height()));
 	
-  QTimer::singleShot(1,this, SLOT(loadButton()) );
+  QTimer::singleShot(100,this, SLOT(loadButton()) );
 }
 	
-void AppLauncherPlugin::loadButton(){
+void AppLauncherPlugin::loadButton(bool onchange){
   QString def = this->ID().section("::",1,50).section("---",0,0).simplified();
   QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary
   //qDebug() << "Default Application Launcher:" << def << path;
@@ -72,8 +75,11 @@ void AppLauncherPlugin::loadButton(){
   //Now adjust the visible text as necessary based on font/grid sizing
   button->setToolTip(txt);
   int icosize = this->readSetting("iconsize",64).toInt();
+  int bwid = qRound(1.1*icosize);
+  button->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
+  if(onchange){ this->adjustSize( bwid+4, icosize+8+qRound(2.5*button->fontMetrics().height())); }
     //qDebug() << "Initial Button Text:" << txt << icosize;
-    if(button->fontMetrics().width(txt) > (icosize-2) ){
+    if(button->fontMetrics().width(txt) > (bwid-2) ){
       //int dash = this->fontMetrics().width("-");
       //Text too long, try to show it on two lines
       txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
@@ -82,11 +88,11 @@ void AppLauncherPlugin::loadButton(){
 	QStringList txtL = txt.split("\n");
 	for(int i=0; i<txtL.length(); i++){ 
 	  if(i>1){ txtL.removeAt(i); i--; } //Only take the first two lines
-	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, icosize);  }
+	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, bwid-2);  }
 	}
 	txt = txtL.join("\n");
       }else{
-        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*icosize);
+        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*bwid -4);
         //Now split the line in half for the two lines
         txt.insert( (txt.count()/2), "\n");
       }
@@ -101,7 +107,6 @@ void AppLauncherPlugin::loadButton(){
     menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
   }
   
-  button->setFixedSize(icosize+4, icosize+8+qRound(2.1*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	
@@ -136,6 +141,7 @@ void AppLauncherPlugin::increaseIconSize(){
   icosize += 16;
   button->setIconSize(QSize(icosize,icosize));
   this->saveSetting("iconsize",icosize);
+  this->loadButton(true); //redo size calculations
 	
 }
 
@@ -145,6 +151,7 @@ void AppLauncherPlugin::decreaseIconSize(){
   icosize -= 16;
   button->setIconSize(QSize(icosize,icosize));
   this->saveSetting("iconsize",icosize);
+  this->loadButton(true); //redo size calculations
 }
 
 void AppLauncherPlugin::deleteFile(){

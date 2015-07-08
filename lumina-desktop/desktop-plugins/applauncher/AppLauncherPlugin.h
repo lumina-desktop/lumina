@@ -35,7 +35,7 @@ private:
 	QMenu *menu;
 
 private slots:
-	void loadButton();
+	void loadButton(bool onchange = false);
 	void buttonClicked();
 	void openContextMenu();
 	

@@ -28,3 +28,10 @@ void LDPlugin::setInitialSize(int width, int height){
 	settings->sync();
     }
 }
+
+void LDPlugin::adjustSize(int width, int height){
+  settings->setValue(prefix+"location/width",width);
+  settings->setValue(prefix+"location/height",height);
+  settings->sync();	
+  emit PluginResized();
+}

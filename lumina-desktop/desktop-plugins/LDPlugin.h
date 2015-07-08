@@ -41,6 +41,7 @@ public:
 	}
 	
 	void setInitialSize(int width, int height);
+	void adjustSize(int width, int height);
 	
 	void saveSetting(QString var, QVariant val){
 	  //qDebug() << "Saving Setting:" << prefix+var+QString(" = ")+val.toString();
@@ -90,7 +91,7 @@ public slots:
 	
 signals:
 	void OpenDesktopMenu();
-	
+	void PluginResized();
 };
 
 #endif

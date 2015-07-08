@@ -35,10 +35,12 @@ private:
 private slots:
 	void saveGeometry(){
 	    if(PLUG==0){ return; }
-	    PLUG->saveSetting("location/x", this->pos().x());
-	    PLUG->saveSetting("location/y", this->pos().y());
-	    PLUG->saveSetting("location/width", this->size().width());
-	    PLUG->saveSetting("location/height", this->size().height());
+	    if(!locked && !setup){
+	      PLUG->saveSetting("location/x", this->pos().x());
+	      PLUG->saveSetting("location/y", this->pos().y());
+	      PLUG->saveSetting("location/width", this->size().width());
+	      PLUG->saveSetting("location/height", this->size().height());
+	    }
 	}
 	
 public:
@@ -47,7 +49,7 @@ public:
 	  setup=true;
 	  PLUG = plugin;
 	  syncTimer = new QTimer(this);
-	    syncTimer->setInterval(500); //save settings 1 second after it is moved
+	    syncTimer->setInterval(500); //save settings 1/2 second after it is moved
 	    syncTimer->setSingleShot(true); //no repeats
 	    connect(syncTimer, SIGNAL(timeout()), this, SLOT(saveGeometry()) );
 	  this->setWhatsThis(plugin->ID());
@@ -63,21 +65,40 @@ public:
 	    this->setWidget(plugin);
 	  }
 	  //qDebug() << "New Container:" << PLUG->size() << PLUG->sizeHint();
+	  connect(PLUG, SIGNAL(PluginResized()), this, SLOT(loadInitialPosition()) );
 	}
 	
 	~LDPluginContainer(){
 	}
+	
+	void saveNewPosition(QPoint pt){
+	  //generally only used while a plugin is locked and does not have an initial position
+	  // This works around an issue with QMdiArea moving the new container out of alignment
+	  if(PLUG==0){ return; }
+	  PLUG->saveSetting("location/x",pt.x());
+	  PLUG->saveSetting("location/y", pt.y());
+	}
+	
+	bool hasFixedPosition(){
+	  return (PLUG->readSetting("location/x",-12345).toInt() != -12345);
+	}
 
+public slots:
 	void loadInitialPosition(){
-	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",PLUG->size().width()).toInt(), PLUG->readSetting("location/height",PLUG->size().height()).toInt());
+	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",PLUG->size().width()).toInt() +4, PLUG->readSetting("location/height",PLUG->size().height()).toInt()+4);
 	  qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
+	    /*if(!locked){
+	      //adjust the size to account for the container borders/frame
+	      
+	    }*/
 	    if(set.x()!=-12345 && set.y()!=-12345){
 	      //custom location specified
 	      //qDebug() << " - Found Geom:" << set;
 	      this->setGeometry(set);
 	      //this->move(set.x(), set.y());
+	      //PLUG->resize(set.width(), set.height());
 	    }else{
 	      //qDebug() << " - Found Size:" << set;
 	      this->resize(set.width(), set.height());
@@ -86,9 +107,6 @@ public:
 	  setup=false; //done with setup
 	}
 	
-	bool hasFixedPosition(){
-	  return (PLUG->readSetting("location/x",-12345).toInt() != -12345);
-	}
 
 signals:
 	void PluginRemoved(QString);
