@@ -12,4 +12,6 @@ lumina-info/lumina-info
 lumina-open/lumina-open
 lumina-screenshot/lumina-screenshot
 lumina-search/lumina-search
-libLumina/libLuminaUtils.so.1.0
+lumina-fileinfo/lumina-fileinfo
+lumina-xconfig/lumina-xconfig
+libLumina/libLuminaUtils.so*
