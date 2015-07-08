@@ -68,6 +68,9 @@ int LOS::ScreenBrightness(){
       screenbrightness = val;
     }
   }
+  //If it gets to this point, then we have a valid (but new) installation
+  if(screenbrightness<0){ screenbrightness = 100; } //default value for systems 
+  
   return screenbrightness;	
 }
 
