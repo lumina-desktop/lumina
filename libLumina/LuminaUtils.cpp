@@ -19,6 +19,7 @@
 #include <LuminaThemes.h>
 #include <LuminaXDG.h>
 
+static QStringList fav;
 //=============
 //  LUtils Functions
 //=============
@@ -198,7 +199,6 @@ QString LUtils::findQuickPluginFile(QString ID){
 }
 
 QStringList LUtils::listFavorites(){
-  static QStringList fav;
   static QDateTime lastRead;
   QDateTime cur = QDateTime::currentDateTime();
   if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
@@ -216,7 +216,9 @@ QStringList LUtils::listFavorites(){
 }
 
 bool LUtils::saveFavorites(QStringList list){
-  return LUtils::writeFile(QDir::homePath()+"/.lumina/favorites/fav.list", list, true);
+  bool ok = LUtils::writeFile(QDir::homePath()+"/.lumina/favorites/fav.list", list, true);
+  if(ok){ fav = list; } //also save internally in case of rapid write/read of the file
+  return ok;
 }
 
 bool LUtils::isFavorite(QString path){
@@ -237,13 +239,13 @@ bool LUtils::addFavorite(QString path, QString name){
   //Assign a name if none given
   if(name.isEmpty()){ name = info.fileName(); }
   //Now add it to the list
-  QStringList fav = LUtils::listFavorites();
+  QStringList favs = LUtils::listFavorites();
   bool found = false;
-  for(int i=0; i<fav.length(); i++){
-    if(fav[i].endsWith("::::"+path)){ fav[i] = name+"::::"+type+"::::"+path; }
+  for(int i=0; i<favs.length(); i++){
+    if(favs[i].endsWith("::::"+path)){ favs[i] = name+"::::"+type+"::::"+path; }
   }
-  if(!found){ fav << name+"::::"+type+"::::"+path; }
-  return LUtils::saveFavorites(fav);
+  if(!found){ favs << name+"::::"+type+"::::"+path; }
+  return LUtils::saveFavorites(favs);
 }
 
 void LUtils::removeFavorite(QString path){
@@ -285,6 +287,7 @@ void LUtils::upgradeFavorites(int fromoldversionnumber){
 
 void LUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
+  qDebug() << "Loading System Defaults";
   QStringList sysDefaults;
   if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
@@ -406,25 +409,27 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
-    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
-    if(var=="favorites_add_ifexists" && QFile::exists(val)){ LUtils::addFavorite(val); }
-    else if(var=="favorites_add"){ LUtils::addFavorite(val); }
-    else if(var=="favorites_remove"){ LUtils::removeFavorite(val); }
+    //Now parse the variable and put the value in the proper file
+    qDebug() << "Favorite entry:" << var << val;
+    if(var=="favorites_add_ifexists" && QFile::exists(val)){ qDebug() << " - Exists/Adding:"; LUtils::addFavorite(val); }
+    else if(var=="favorites_add"){ qDebug() << " - Adding:"; LUtils::addFavorite(val); }
+    else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LUtils::removeFavorite(val); }
   }
   
   //Now do any theme settings
   QStringList themesettings = LTHEME::currentSettings(); 
       //List: [theme path, colorspath, iconsname, font, fontsize]
+  qDebug() << "Current Theme Color:" << themesettings[1];
   tmp = sysDefaults.filter("theme_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("theme."); }
   bool setTheme = !tmp.isEmpty();
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
-    QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
@@ -437,15 +442,18 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       themesettings[4] = val; 
     }
   }
+  //qDebug() << " - Now Color:" << themesettings[1] << setTheme;
+  
   //Now double check that the custom theme/color files exist and reset it will the full path as necessary
   if(setTheme){
     QStringList systhemes = LTHEME::availableSystemThemes();
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
+    qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
     if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[1].endsWith(".qss.template")){
       themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
-	 if(systhemes[i].startsWith(themesettings[0]+"::::"),Qt::CaseInsensitive){
+	 if(systhemes[i].startsWith(themesettings[0]+"::::",Qt::CaseInsensitive)){
 	    themesettings[0] = systhemes[i].section("::::",1,1); //Replace with the full path
 	    break;
 	 }
@@ -456,7 +464,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       //Remove any extra/invalid extension
       themesettings[1] = themesettings[1].section(".qss",0,0).simplified();
       for(int i=0; i<syscolors.length(); i++){
-	 if(syscolors[i].startsWith(themesettings[1]+"::::"),Qt::CaseInsensitive){
+	 if(syscolors[i].startsWith(themesettings[1]+"::::",Qt::CaseInsensitive)){
 	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
 	    break;
 	 }
