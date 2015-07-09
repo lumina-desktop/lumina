@@ -207,9 +207,9 @@ void LPanel::UpdatePanel(){
   
   //Then go through the plugins and create them as necessary
   QStringList plugins = settings->value(PPREFIX+"pluginlist", QStringList()).toStringList();
-  if(defaultpanel && plugins.isEmpty()){
+  /*if(defaultpanel && plugins.isEmpty()){
     plugins << "userbutton" << "taskmanager" << "spacer" << "systemtray" << "clock" << "systemdashboard";
-  }
+  }*/
   if(DEBUG){ qDebug() << " - Initialize Plugins: " << plugins; }
   for(int i=0; i<plugins.length(); i++){
     //Ensure this plugin has a unique ID (NOTE: this numbering does not persist between sessions)

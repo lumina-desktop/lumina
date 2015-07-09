@@ -576,7 +576,7 @@ void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
 void LDesktop::UpdatePanels(){
   if(DEBUG){ qDebug() << " - Update Panels For Screen:" << desktopnumber; }
   int panels = settings->value(DPREFIX+"panels", -1).toInt();
-  if(panels==-1 && defaultdesktop){ panels=1; } //need at least 1 panel on the primary desktop
+  //if(panels==-1 && defaultdesktop){ panels=1; } //need at least 1 panel on the primary desktop
   //Remove all extra panels
   for(int i=0; i<PANELS.length(); i++){
     if(panels <= PANELS[i]->number()){
