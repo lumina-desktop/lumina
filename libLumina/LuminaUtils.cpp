@@ -381,7 +381,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       }
       else if(var==(panvar+"_autohide")){ deskset << "hidepanel="+istrue; }
       else if(var==(panvar+"_location")){ deskset << "location="+val.toLower(); }
-      else if(var==(panvar+"_plugins")){ deskset << "pluginlist="+val.toLower(); }
+      else if(var==(panvar+"_plugins")){ deskset << "pluginlist="+val; }
       else if(var==(panvar+"_pinlocation")){ deskset << "pinLocation="+val.toLower(); }
       else if(var==(panvar+"_edgepercent")){ deskset << "lengthPercent="+val; }
     }
@@ -394,7 +394,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(!tmp.isEmpty()){deskset << "[menu]"; }
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
-    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString var = tmp[i].section("=",0,0).simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
