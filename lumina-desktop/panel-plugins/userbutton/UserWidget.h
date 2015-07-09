@@ -47,6 +47,7 @@ private:
 	QFileInfoList homefiles;
 	int cfav; //current favorite category
 	void ClearScrollArea(QScrollArea *area);
+	void SortScrollArea(QScrollArea *area);
 	QIcon rotateIcon(QIcon);
 
 private slots:

@@ -7,6 +7,7 @@
 #include "UserItemWidget.h"
 #include <LuminaUtils.h>
 
+#define TEXTCUTOFF 165
 UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
   createWidget();
   //Now fill it appropriately
@@ -17,10 +18,10 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
     if(ok){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) );
+      name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
     }else{
       icon->setPixmap( LXDG::findIcon("unknown","").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) );
+      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
     }
   }else if(type=="dir"){
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
@@ -29,18 +30,22 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
       name->setText( tr("Go Back") );
     }else{
       icon->setPixmap( LXDG::findIcon("folder","").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
+      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
     }
   }else{
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
-    if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
+    if(QFileInfo(itemPath).isDir()){
+      type = "dir";
+      icon->setPixmap( LXDG::findIcon("folder","").pixmap(32,32) );
+    }else if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
       icon->setPixmap( QIcon(itemPath).pixmap(32,32) );
     }else{
       icon->setPixmap( LXDG::findMimeIcon(type).pixmap(32,32) );
     }
-    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, 180) ); 
+    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
   }
   icon->setWhatsThis(itemPath);
+  if(!goback){ this->setWhatsThis(name->text()); }
   isDirectory = (type=="dir"); //save this for later
   if(LUtils::isFavorite(itemPath)){
     linkPath = itemPath;
@@ -67,7 +72,8 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent
   }
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(32,32) );
-  name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, 180) ); 
+  name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) ); 
+  this->setWhatsThis(name->text());
   icon->setWhatsThis(item.filePath);
   //Now setup the button appropriately
   setupButton();
@@ -154,5 +160,4 @@ void UserItemWidget::buttonClicked(){
 void UserItemWidget::ItemClicked(){
   if(!linkPath.isEmpty()){ emit RunItem(linkPath); }
   else{ emit RunItem(icon->whatsThis()); }
-  
 }

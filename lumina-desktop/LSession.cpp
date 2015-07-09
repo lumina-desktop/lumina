@@ -145,8 +145,10 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
+  //QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
   splash.close();
+  QApplication::processEvents();
+  launchStartupApps();
 }
 
 void LSession::CleanupSession(){

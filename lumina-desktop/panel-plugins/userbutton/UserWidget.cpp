@@ -108,7 +108,35 @@ void UserWidget::ClearScrollArea(QScrollArea *area){
     layout->setSpacing(2);
     layout->setContentsMargins(3,1,3,1);
     layout->setDirection(QBoxLayout::TopToBottom);
+    layout->setAlignment(Qt::AlignTop);
     area->widget()->setLayout(layout);
+}
+
+void UserWidget::SortScrollArea(QScrollArea *area){
+  //qDebug() << "Sorting Scroll Area:";
+  //Sort all the items in the scroll area alphabetically
+  QLayout *lay = area->widget()->layout();
+  QStringList items;
+  for(int i=0; i<lay->count(); i++){
+    items << lay->itemAt(i)->widget()->whatsThis();
+  }
+  
+  items.sort();
+  //qDebug() << " - Sorted Items:" << items;
+  for(int i=0; i<items.length(); i++){
+    if(items[i].isEmpty()){ continue; }
+    //QLayouts are weird in that they can only add items to the end - need to re-insert almost every item
+    for(int j=0; j<lay->count(); j++){
+      //Find this item
+      if(lay->itemAt(j)->widget()->whatsThis()==items[i]){
+	//Found it - now move it if necessary
+	//qDebug() << "Found Item:" << items[i] << i << j;
+	lay->addItem( lay->takeAt(j) );
+	break;
+      }
+    }
+  }
+  
 }
 
 QIcon UserWidget::rotateIcon(QIcon ico){
@@ -131,11 +159,18 @@ void UserWidget::UpdateMenu(){
     ui->tool_fav_files->setChecked(false);
     cfav = 0; //favorite apps
     updateFavItems();
-    ui->label_home_dir->setWhatsThis(QDir::homePath());
-    updateHome();
+    QString cdir = ui->label_home_dir->whatsThis();
+    if(cdir.isEmpty() || !QFile::exists(cdir) ){ 
+      //Directory deleted or nothing loaded yet
+      ui->label_home_dir->setWhatsThis(QDir::homePath());
+      QTimer::singleShot(0,this, SLOT(updateHome()) );
+    }else if( lastUpdate < QFileInfo(cdir).lastModified() ){
+      //Directory contents changed - reload it
+      QTimer::singleShot(0,this, SLOT(updateHome()) );
+    }
   if(lastUpdate < LSession::handle()->applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
     updateAppCategories();
-    updateApps();
+    QTimer::singleShot(0,this, SLOT(updateApps()) );
   }
   lastUpdate = QDateTime::currentDateTime();
 }
@@ -214,16 +249,17 @@ void UserWidget::updateFavItems(bool newfilter){
   }
   ClearScrollArea(ui->scroll_fav);
   //qDebug() << " - Sorting Items";
-  favitems.sort(); //sort them alphabetically
-  //qDebug() << " - Creating Items:" << favitems;
-  for(int i=0; i<favitems.length(); i++){
-    UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
-    ui->scroll_fav->widget()->layout()->addWidget(it);
-    connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
-    connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
-    connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
-  }
-  static_cast<QBoxLayout*>(ui->scroll_fav->widget()->layout())->addStretch();
+    favitems.sort(); //sort them alphabetically
+    //qDebug() << " - Creating Items:" << favitems;
+    for(int i=0; i<favitems.length(); i++){
+      UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
+      ui->scroll_fav->widget()->layout()->addWidget(it);
+      connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+      connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
+      connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
+      QApplication::processEvents(); //keep the UI snappy - might be a number of these
+    }
+  SortScrollArea(ui->scroll_fav);
   //qDebug() << " - Done";
 }
 
@@ -263,8 +299,8 @@ void UserWidget::updateApps(){
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
+    QApplication::processEvents(); //keep the UI snappy - might be a number of these
   }
-  static_cast<QBoxLayout*>(ui->scroll_apps->widget()->layout())->addStretch();
 }
 
 //Home Tab
@@ -285,25 +321,29 @@ void UserWidget::updateHome(){
     items << dir;
   }
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
-  items << homedir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); 
+  items << homedir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst); 
   QString type = "dir";
   if(homedir.absolutePath() == QDir::homePath()+"/Desktop"){ type.append("-home"); }//internal code
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;
     if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], type, true); }
-    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), type, false); }
+    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), "", false); }
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
+    QApplication::processEvents(); //keep the UI snappy - may be a lot of these to load
   }
-  static_cast<QBoxLayout*>(ui->scroll_home->widget()->layout())->addStretch();
 }
 
 void UserWidget::slotGoToDir(QString dir){
-  ui->label_home_dir->setWhatsThis(dir);
-  updateHome();
+  if(!QFileInfo(dir).isDir()){
+    LaunchItem(dir);
+  }else{
+    ui->label_home_dir->setWhatsThis(dir);
+    updateHome();
+  }
 }
 
 void UserWidget::slotGoHome(){
