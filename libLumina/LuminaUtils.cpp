@@ -191,11 +191,39 @@ bool LUtils::validQuickPlugin(QString ID){
 QString LUtils::findQuickPluginFile(QString ID){
   if(ID.startsWith("quick-")){ ID = ID.section("-",1,50); }
   //Give preference to any user-supplied plugins (overwrites for system plugins)
-  QString path = QDir::homePath()+"/.lumina/quickplugins/"+ID+".qml";
+  QString path = QDir::homePath()+"/.lumina/quickplugins/quick-"+ID+".qml";
   if( QFile::exists(path) ){return path; }
-  path = LOS::LuminaShare()+"quickplugins/"+ID+".qml";
+  path = LOS::LuminaShare()+"quickplugins/quick-"+ID+".qml";
   if( QFile::exists(path) ){return path; }
   return ""; //could not be found
+}
+
+QStringList LUtils::listQuickPlugins(){
+  QDir dir(QDir::homePath()+"/.lumina/quickplugins");
+  QStringList files = dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+  dir.cd(LOS::LuminaShare()+"quickplugins");
+  files << files = dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+  for(int i=0; i<files.length(); i++){
+    files[i] = files[i].section("quick-",1,100).section(".qml",0,0); //just grab the ID out of the middle of the filename
+  }
+  files.removeDuplicates();
+  return files;
+}
+
+QStringList LUtils::infoQuickPlugin(QString ID){ //Returns: [Name, Description, Icon]
+  QString path = findQuickPluginFile(ID);
+  if(path.isEmpty()){ return QStringList(); } //invalid ID
+  QStringList contents = LUtils::readFile(path).filter("//").filter("=").filter("Plugin");
+  if(contents.isEmpty()){ return QStringList(); } //invalid file (unreadable)
+  QStringList info; info << "" << "" << "";
+  for(int i=0; i<contents.length(); i++){
+    if(contents[i].contains("Plugin-Name=")){ info[0] = contents[i].section("Plugin-Name=",1,1).simplified(); }
+    else if(contents[i].contains("Plugin-Description=")){ info[1] = contents[i].section("Plugin-Description=",1,1).simplified(); }
+    else if(contents[i].contains("Plugin-Icon=")){ info[2] = contents[i].section("Plugin-Icon=",1,1).simplified(); }
+  }
+  if(info[0].isEmpty()){ info[0]=ID; }
+  if(info[2].isEmpty()){ info[2]="preferences-plugin"; }
+  return info;
 }
 
 QStringList LUtils::listFavorites(){
