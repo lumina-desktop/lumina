@@ -322,13 +322,13 @@ void UserWidget::updateHome(){
   }
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
   items << homedir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst); 
-  QString type = "dir";
+  QString type = "";
   if(homedir.absolutePath() == QDir::homePath()+"/Desktop"){ type.append("-home"); }//internal code
   for(int i=0; i<items.length(); i++){
     //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;
-    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], type, true); }
-    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), "", false); }
+    if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], "dir", true); } //go-back button
+    else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), type, false); }
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
