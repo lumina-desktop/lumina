@@ -591,8 +591,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>487</width>
-                 <height>263</height>
+                 <width>498</width>
+                 <height>270</height>
                 </rect>
                </property>
               </widget>
@@ -1384,7 +1384,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>129</width>
+                    <width>117</width>
                     <height>28</height>
                    </rect>
                   </property>
@@ -1504,13 +1504,13 @@
      <x>0</x>
      <y>0</y>
      <width>596</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="contextMenuPolicy">
-    <enum>Qt::NoContextMenu</enum>
+    <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
     <string>toolBar</string>
