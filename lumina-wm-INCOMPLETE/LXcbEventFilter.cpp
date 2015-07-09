@@ -30,10 +30,21 @@ EventFilter::EventFilter() : QObject(){
 
 void EventFilter::start(){
   QCoreApplication::instance()->installNativeEventFilter(EF);
+  xcb_generic_error_t *status;
+  xcb_connection_t *my_connection;
+  xcb_void_cookie_t window_attributes;
+  const unsigned int *returned;
   //Also ensure it gets root window events
 
-   //Need the "real" root window (not the virtual root which Qt might return
-   if( 0!= xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), L_XCB::root, XCB_CW_EVENT_MASK, (uint32_t[]){ROOT_EVENT_MASK} ) ) ){
+    //Need the "real" root window (not the virtual root which Qt might return
+   my_connection = QX11Info::connection();
+   returned = (uint32_t *) ROOT_EVENT_MASK;
+   window_attributes = xcb_change_window_attributes_checked(my_connection, L_XCB::root, XCB_CW_EVENT_MASK, returned);
+   status = xcb_request_check(my_connection, window_attributes);
+
+   // if( 0!= xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), L_XCB::root, XCB_CW_EVENT_MASK, (uint32_t[]){ROOT_EVENT_MASK} ) ) ){
+   if (status)
+   {
      qCritical() << "[ERROR] Unable to setup WM event retrieval. Is another WM running?";
      exit(1);
    }
