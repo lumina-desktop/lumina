@@ -6,6 +6,8 @@
 //===========================================
 #include "LPlugins.h"
 
+#include <LuminaUtils.h>
+
 LPlugins::LPlugins(){
   LoadPanelPlugins();
   LoadDesktopPlugins();
@@ -195,6 +197,18 @@ void LPlugins::LoadDesktopPlugins(){
     info.ID = "systemmonitor";
     info.icon = "cpu";
   DESKTOP.insert(info.ID, info);
+  //Available QtQuick scripts
+  QStringList quickID = LUtils::listQuickPlugins();
+  for(int i=0; i<quickID.length(); i++){
+    QStringList quickinfo = LUtils::infoQuickPlugin(quickID[i]); //Returns: [name, description, icon]
+    if(quickinfo.length() < 3){ continue; } //invalid file (unreadable/other)
+    info = LPI();
+      info.name = quickinfo[0];
+      info.description = quickinfo[1];
+      info.ID = "quick-"+quickID[i]; //the "quick-" prefix is required for the desktop plugin syntax 
+      info.icon = quickinfo[2];
+    DESKTOP.insert(info.ID, info);	  
+  }
 }
 
 void LPlugins::LoadMenuPlugins(){
