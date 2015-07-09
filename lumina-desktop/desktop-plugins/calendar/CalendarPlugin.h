@@ -21,6 +21,7 @@ public:
 	    this->layout()->setContentsMargins(0,0,0,0);
 	  cal = new QCalendarWidget(this);
 	  this->layout()->addWidget(cal);
+	  this->setInitialSize( cal->sizeHint().width(), cal->sizeHint().height() );
 	}
 	
 	~CalendarPlugin(){}

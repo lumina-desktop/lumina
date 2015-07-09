@@ -27,11 +27,14 @@ void LDPlugin::setInitialSize(int width, int height){
 	settings->setValue(prefix+"location/height",height);
 	settings->sync();
     }
+    //Now make sure the plugin is the saved size right away
+    this->resize( settings->value(prefix+"location/width").toInt(), settings->value(prefix+"location/height").toInt());
 }
 
 void LDPlugin::adjustSize(int width, int height){
   settings->setValue(prefix+"location/width",width);
   settings->setValue(prefix+"location/height",height);
   settings->sync();	
+  this->resize(width,height);
   emit PluginResized();
 }
