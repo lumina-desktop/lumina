@@ -86,7 +86,7 @@ public:
 public slots:
 	void loadInitialPosition(){
 	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",PLUG->size().width()).toInt() +4, PLUG->readSetting("location/height",PLUG->size().height()).toInt()+4);
-	  qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
+	  //qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
 	    /*if(!locked){

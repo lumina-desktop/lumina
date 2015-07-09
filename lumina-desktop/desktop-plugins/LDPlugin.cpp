@@ -22,7 +22,7 @@ void LDPlugin::setInitialSize(int width, int height){
     //  if the plugin is completely new (first time used), it will be this size
     if(settings->allKeys().filter(prefix+"location").isEmpty()){
 	//Brand new plugin: set initial size
-	qDebug() << "Setting Initial Size:" << PLUGID << width << height;
+	//qDebug() << "Setting Initial Size:" << PLUGID << width << height;
 	settings->setValue(prefix+"location/width",width);
 	settings->setValue(prefix+"location/height",height);
 	settings->sync();

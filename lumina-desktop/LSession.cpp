@@ -340,6 +340,9 @@ void LSession::checkUserFiles(){
   if(newversion || newrelease){
     LUtils::upgradeFavorites(oldversion);	  
   }
+  //Remove/convert any old desktop plugin files (Change occured with 0.8.5)
+  // - TO-DO
+  
   //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
   if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
     QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
@@ -481,7 +484,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
     //Adjust size for bottom margins (within reason, since window titles are on top normally)
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
-    if(geom.bottom() > desk.bottom() && geom.height() > 100){ 
+    if(geom.bottom() > desk.bottom() && geom.height() > 10){ 
       //Also adjust the sizing for the frame (the moveResize fuction is for the base window only)
       geom.setBottom(desk.bottom()-frame[0]-frame[1]); 
     }
