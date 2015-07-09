@@ -189,7 +189,7 @@ bool LUtils::validQuickPlugin(QString ID){
 }
 
 QString LUtils::findQuickPluginFile(QString ID){
-  if(ID.startsWith("quick-")){ ID = ID.section("-",1,50); }
+  if(ID.startsWith("quick-")){ ID = ID.section("-",1,50); } //just in case
   //Give preference to any user-supplied plugins (overwrites for system plugins)
   QString path = QDir::homePath()+"/.lumina/quickplugins/quick-"+ID+".qml";
   if( QFile::exists(path) ){return path; }

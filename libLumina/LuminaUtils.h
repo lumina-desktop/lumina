@@ -56,8 +56,9 @@ public:
 	//Various function for finding valid QtQuick plugins on the system
 	static bool validQuickPlugin(QString ID);
 	static QString findQuickPluginFile(QString ID);
-	QStringList listQuickPlugins(); //List of valid ID's
-	QStringList infoQuickPlugin(QString ID); //Returns: [Name, Description, Icon]
+	static QStringList listQuickPlugins(); //List of valid ID's
+	static QStringList infoQuickPlugin(QString ID); //Returns: [Name, Description, Icon]
+	
 	//Various functions for the favorites sub-system
 	// Formatting Note: "<name>::::[dir/app/<mimetype>]::::<path>"
 	//   the <name> field might not be used for "app" flagged entries
