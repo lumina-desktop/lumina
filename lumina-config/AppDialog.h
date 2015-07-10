@@ -39,8 +39,10 @@ public:
 	    ui->comboBox->addItem( LXDG::findIcon(APPS[i].icon,"application-x-executable"), APPS[i].name );
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
-	  QPoint center = QApplication::desktop()->screenGeometry(QCursor::pos()).center();
-	  this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
+	  if(parent!=0){
+	    QPoint center = parent->geometry().center();
+	    this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
+	  }
 	}
 	
 	~AppDialog(){}

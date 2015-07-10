@@ -14,6 +14,8 @@
 #include <QTimeZone>
 #include <QScrollBar>
 
+#include <unistd.h>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this); //load the designer file
   this->setWindowIcon( LXDG::findIcon("preferences-desktop-display","") );
@@ -91,27 +93,6 @@ void MainUI::setupIcons(){
   
   //Panels Page
   ui->tool_panels_add->setIcon( LXDG::findIcon("list-add","") );
-  /*ui->tool_panel1_add->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_panel1_rm->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_panel1_addplugin->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_panel1_rmplugin->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_panel1_upplug->setIcon( LXDG::findIcon("go-up","") );
-  ui->tool_panel1_dnplug->setIcon( LXDG::findIcon("go-down","") );
-  ui->tool_panel1_getcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
-  ui->toolBox_panel1->setItemIcon(0,LXDG::findIcon("preferences-desktop-display",""));
-  ui->toolBox_panel1->setItemIcon(1,LXDG::findIcon("preferences-plugin",""));
-  ui->tool_panel2_add->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_panel2_rm->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_panel2_addplugin->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_panel2_rmplugin->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_panel2_upplug->setIcon( LXDG::findIcon("go-up","") );
-  ui->tool_panel2_dnplug->setIcon( LXDG::findIcon("go-down","") );
-  ui->tool_panel2_getcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
-  ui->toolBox_panel2->setItemIcon(0,LXDG::findIcon("preferences-desktop-display",""));
-  ui->toolBox_panel2->setItemIcon(1,LXDG::findIcon("preferences-plugin",""));
-  ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_panels), LXDG::findIcon("configure-toolbars","") );
-  ui->tabWidget_panels->setTabIcon( ui->tabWidget_panels->indexOf(ui->tab_desktopInterface), LXDG::findIcon("preferences-plugin","") );
-  */
   
   //Menu Page
   ui->tool_menu_add->setIcon( LXDG::findIcon("list-add","") );
@@ -547,7 +528,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
 
 void MainUI::saveCurrentSettings(bool screenonly){
   QString DPrefix = "desktop-"+QString::number(currentDesktop())+"/";
-
+  bool needreload = false;
     // Desktop Page
     if(moddesk){
       QStringList bgs; //get the list of backgrounds to use
@@ -567,7 +548,10 @@ void MainUI::saveCurrentSettings(bool screenonly){
       for(int i=0; i<ui->list_desktop_plugins->count(); i++){
 	plugs << ui->list_desktop_plugins->item(i)->whatsThis();
       }
-      settings->setValue(DPrefix+"pluginlist", plugs);
+      if(settings->value(DPrefix+"pluginlist",QStringList()).toStringList() != plugs){
+        settings->setValue(DPrefix+"pluginlist", plugs);
+	needreload = true;
+      }
     }
 
     // Panels Page
@@ -607,6 +591,11 @@ void MainUI::saveCurrentSettings(bool screenonly){
     if(!screenonly){ modmenu = modshort = moddef = modses = false; }
     ui->push_save->setEnabled(modmenu || modshort || moddef || modses); //wait for new changes
     //ui->push_save->setVisible(!ui->actionDefaults->isChecked() || modmenu || modshort || moddef || modses);
+    if(needreload){
+      //Wait 1 second
+      for(int i=0; i<10; i++){ QApplication::processEvents(); usleep(100000); }
+      loadCurrentSettings(screenonly);
+    }
 }
 
 
@@ -900,7 +889,8 @@ void MainUI::loadKeyboardShortcuts(){
 	<< "Exec lumina-open -volumedown::::"+tr("Audio Volume Down") \
 	<< "Exec lumina-open -brightnessup::::"+tr("Screen Brightness Up") \
 	<< "Exec lumina-open -brightnessdown::::"+tr("Screen Brightness Down") \
-	<< "Exec lumina-screenshot::::"+tr("Take Screenshot");
+	<< "Exec lumina-screenshot::::"+tr("Take Screenshot") \
+	<< "Exec xscreensaver-command -lock::::"+tr("Lock Screen");
   for(int i=0; i<special.length(); i++){
     QString spec = info.filter(":"+special[i].section("::::",0,0)).join("").simplified();
     QTreeWidgetItem *it = new QTreeWidgetItem();

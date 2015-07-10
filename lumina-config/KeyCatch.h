@@ -76,12 +76,14 @@ protected:
 	    //Now get the main key
 	    qkeys.replace("+"," ");
 	    if(event->key()==0){
+	      if(qkeys.isEmpty()){ qkeys="None "; } //For Fluxbox, need "None <X Key number>"
 	      qkeys.append( QString::number(event->nativeVirtualKey()) );
 	    }else{
 	      qkeys.append( QKeySequence(event->key()).toString() ); //also save the text version (for display)
 	    }
 	    //Remove the modifier if it is only "shift", and the main key is not a symbol
 	    xkeys = qkeys;
+	    qkeys.remove("None "); //The display/Qt keycode does not need to show this
 	    if(!xkeys.section(" ",-1).isEmpty() && xkeys.contains("Shift ")){
 	      if(!xkeys.section(" ",-1).at(0).isLetter()){
 		xkeys.remove("Shift "); //The symbol/keycode is already different
