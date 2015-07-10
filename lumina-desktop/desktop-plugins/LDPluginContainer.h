@@ -35,12 +35,12 @@ private:
 private slots:
 	void saveGeometry(){
 	    if(PLUG==0){ return; }
-	    if(!locked && !setup){
+	    //if(!locked && !setup){
 	      PLUG->saveSetting("location/x", this->pos().x());
 	      PLUG->saveSetting("location/y", this->pos().y());
-	      PLUG->saveSetting("location/width", this->size().width());
-	      PLUG->saveSetting("location/height", this->size().height());
-	    }
+	      PLUG->saveSetting("location/width", this->width()-4);
+	      PLUG->saveSetting("location/height", this->height()-4);
+	    //}
 	}
 	
 public:
@@ -84,25 +84,27 @@ public:
 	}
 
 public slots:
+	void loadInitialSize(){
+	  if(PLUG==0){ return; }
+	  QSize sz(PLUG->readSetting("location/width",100).toInt(), PLUG->readSetting("location/height",100).toInt());
+	  this->resize(sz);
+	}
+	
 	void loadInitialPosition(){
 	  QRect set(PLUG->readSetting("location/x",-12345).toInt(), PLUG->readSetting("location/y",-12345).toInt(), PLUG->readSetting("location/width",PLUG->size().width()).toInt() +4, PLUG->readSetting("location/height",PLUG->size().height()).toInt()+4);
 	  //qDebug() << "Initial Plugin Location:" << set.x() << set.y() << set.width() << set.height();
 	    if(set.height() < 10){ set.setHeight(10); } //to prevent foot-shooting
 	    if(set.width() < 10){ set.setWidth(10); } //to prevent foot-shooting
-	    /*if(!locked){
-	      //adjust the size to account for the container borders/frame
-	      
-	    }*/
 	    if(set.x()!=-12345 && set.y()!=-12345){
-	      //custom location specified
-	      //qDebug() << " - Found Geom:" << set;
-	      this->setGeometry(set);
 	      //this->move(set.x(), set.y());
-	      //PLUG->resize(set.width(), set.height());
+	      this->setGeometry(set);
 	    }else{
-	      //qDebug() << " - Found Size:" << set;
+	      qDebug() << " - Found Size:" << set;
 	      this->resize(set.width(), set.height());
+	      qDebug() << " - Assigning location:" << this->pos();
+	      saveNewPosition(this->pos());
 	    }
+	  this->show();
 	  QApplication::processEvents();
 	  setup=false; //done with setup
 	}
@@ -113,8 +115,9 @@ signals:
 	
 protected:
 	void moveEvent(QMoveEvent *event){
+	  //qDebug() << "Move Event: " << PLUG->ID() << setup;
 	  //Save this location to the settings
-	  if(!locked && !setup){
+	  if( !setup ){
 	    if(syncTimer->isActive()){ syncTimer->stop(); }
 	    syncTimer->start();
 	    //qDebug() << "DP Move:" << event->pos().x() << event->pos().y();
@@ -124,7 +127,7 @@ protected:
 	
 	void resizeEvent(QResizeEvent *event){
 	  //Save this size info to the settings
-	  if(!locked && !setup){
+	  if(!setup){
 	    //qDebug() << "DP Resize:" << event->size().width() << event->size().height();
 	    if(syncTimer->isActive()){ syncTimer->stop(); }
 	    syncTimer->start();

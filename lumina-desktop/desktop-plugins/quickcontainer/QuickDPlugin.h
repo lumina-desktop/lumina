@@ -25,6 +25,7 @@ public:
 	    container->setResizeMode(QQuickWidget::SizeRootObjectToView);
 	  this->layout()->addWidget(container);
 	    container->setSource(QUrl::fromLocalFile( LUtils::findQuickPluginFile(ID.section("---",0,0)) ));
+	  this->setInitialSize(container->initialSize().width(), container->initialSize().height());
 	}
 	
 	~QuickDPlugin(){}

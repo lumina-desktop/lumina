@@ -55,7 +55,7 @@ SysMonitorPlugin::SysMonitorPlugin(QWidget *parent, QString ID) : LDPlugin(paren
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(monitor);
 	
-  this->setInitialSize(monitor->width(),monitor->height());
+  this->setInitialSize(monitor->sizeHint().width(),monitor->sizeHint().height());
 }
 
 SysMonitorPlugin::~SysMonitorPlugin(){

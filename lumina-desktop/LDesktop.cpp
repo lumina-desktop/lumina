@@ -11,7 +11,7 @@
 #include <LuminaX11.h>
 #include "LWinInfo.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
@@ -186,19 +186,31 @@ LDPluginContainer* LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
   }
   //Create a new plugin container
   LDPluginContainer *win = new LDPluginContainer(plug, desktoplocked);
+  win->loadInitialSize(); //Sizing should be done before adding the window to the area
   if(desktoplocked){ 
-	  bgDesktop->addSubWindow(win, Qt::Tool | Qt::FramelessWindowHint);
-  }else{ bgDesktop->addSubWindow(win, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint); }
-  win->loadInitialPosition();
+    bgDesktop->addSubWindow(win, Qt::Tool | Qt::FramelessWindowHint);
+  }else{ 
+    bgDesktop->addSubWindow(win, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+  }
+  if( !win->hasFixedPosition() ){ 
+    //NOTE: This section *only* runs for new plugins - it does not run for re-creations of old plugins
+    //Need to determine the location of the plugin (leave size alone)
+    if(DEBUG){ qDebug() << " ---  Floating Plugin - find a spot for it"; }
+    QPoint pt = findNewPluginLocation(availDPArea, win->size());
+    if(pt.x()>=0 && pt.y()>=0){
+      win->saveNewPosition(pt); 
+      win->move(pt);
+      if(DEBUG){ qDebug() << " --- Moving to point:" << pt; }
+    }
+    //Make sure to remove this plugin from the availability region
+    availDPArea = availDPArea.subtracted( QRegion(win->geometry()) );
+  }
+  QApplication::processEvents();	  
+  QTimer::singleShot(300+(5*PLUGINS.length()), win, SLOT(loadInitialPosition()) ); //Now load the position (if one is saved)
   if(DEBUG){ 
     qDebug() << "Initial DP Geom:" << plug->geometry();
     qDebug() << "  - Container Geom:" << win->geometry();
   }
-  win->show();
-  plug->update();
-  win->update();
-  bgDesktop->update();
-  QApplication::processEvents();
   QApplication::processEvents();
 	  
   connect(win, SIGNAL(PluginRemoved(QString)), this, SLOT(DesktopPluginRemoved(QString)) );
@@ -210,7 +222,7 @@ QPoint LDesktop::findNewPluginLocation(QRegion avail, QSize winsize){
   //  will fit without overlapping anything else (scanning left->right, top->bottom)
   //return QPoint(-1,-1); //just for testing
   QRect bounds = avail.boundingRect();
-  qDebug() << "Bounds:" << bounds;
+  //qDebug() << "Bounds:" << bounds;
   if(bounds.width()<winsize.width() || bounds.height()<winsize.height()){ return QPoint(-1,-1); }
 
   QPoint pt = bounds.topLeft(); //start in upper-left corner
@@ -220,16 +232,18 @@ QPoint LDesktop::findNewPluginLocation(QRegion avail, QSize winsize){
     int dy = winsize.height()/2;
     while(pt.x()+winsize.width() < bounds.right() && !found){
       //Check the horizontal position (incrementing as necessary)
-      QRect inter = avail.intersected(QRect(pt, winsize)).boundingRect();
-      if(DEBUG){ qDebug() << "Check X:" << pt << " - Inter:" << inter; }
-      if(inter.size() == winsize && avail.contains(inter) ){ found = true; } //use this point
+      QRegion intersect = avail.intersected(QRect(pt, winsize)); // full intersection
+      if(DEBUG){ qDebug() << "Check X:" << pt << " - Inter:" << intersect.boundingRect(); }
+      if(intersect.boundingRect().size()==winsize && intersect.rects().length()==1 ){ found = true; } //use this point
       else{
+	QRect inter = avail.intersected(QRect(pt, QSize(winsize.width(),1))).boundingRect(); //1D intersection in X-dir
 	int dx = winsize.width() - inter.width();
         if(dx>0 && inter.left() > pt.x()){ pt.setX( inter.left() ); }
 	else if(inter.width()==0){ pt.setX( pt.x()+winsize.width() ); }
 	else{ pt.setX( pt.x()+inter.width() ); }
 	//Also adjust the dy value to the smallest amount
-	int ddy = inter.height() - winsize.height();
+	inter = avail.intersected(QRect(pt, QSize(1,winsize.height()))).boundingRect(); //1D intersection in X-dir
+	int ddy = inter.y()-pt.y();
 	if(ddy < dy && ddy>0){ dy = ddy; }
       }
      
@@ -404,7 +418,6 @@ void LDesktop::UpdateDesktop(){
     }
   }
   //Go through the plugins and remove any existing ones that do not show up on the current list
-
   for(int i=0; i<PLUGINS.length(); i++){
     if(!plugins.contains(PLUGINS[i]->ID())){
       //Remove this plugin (with settings) - is not currently listed
@@ -412,18 +425,18 @@ void LDesktop::UpdateDesktop(){
       i--;
     }
   }
-  //Now get an accounting of all the available/used space
-  QRegion avail;//Note that this is child-geometry space
-  if(!bgDesktop->isVisible()){ avail = QRegion( QRect(QPoint(0,0),desktop->screenGeometry(desktopnumber).size()) ); }
-  else{ avail = QRegion(QRect(QPoint(0,0),bgDesktop->size()) ); qDebug() << "Desktop size:" << bgDesktop->size(); } 
+  //Now get an accounting of all the available/used space (overwriting the private variable)
+  QSize ssize = desktop->screenGeometry(desktopnumber).size();
+  //qDebug() << "Screen Size:" << ssize << desktopnumber;
+  if(bgDesktop->isVisible() && ( (bgDesktop->size().height() <= ssize.height()) && (bgDesktop->size().width() <= ssize.width()) )){ ssize = bgDesktop->size(); qDebug() << " - Adjusted:" << ssize; }
+  availDPArea = QRegion(QRect(QPoint(0,0), ssize)); //Note that this is child-geometry space
+  //Remove all the space currently occupied
   //qDebug() << "Available Screen Geom:" << avail.boundingRect();
-  //avail = avail.subtracted( bgDesktop->childrenRegion() ); //
-  /*QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){
-    QRect geom = wins[i]->geometry()
-    if(avail.contains(wins[i]->geometry())){ avail = avail.subtracted( QRegion(wins[i]->geometry()) ); }
-  }*/
-  //qDebug() << " - after removals:" << avail.boundingRect();
+  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
+  for(int i=0; i<wins.length(); i++){ 
+    qDebug() << "Subtracting Geom:" << wins[i]->geometry();
+    availDPArea = availDPArea.subtracted( QRegion(wins[i]->geometry()) ); 
+  }
   //Now add/update plugins
   for(int i=0; i<plugins.length(); i++){
     //See if this plugin is already there
@@ -445,24 +458,10 @@ void LDesktop::UpdateDesktop(){
 	if(DEBUG){ qDebug() << " --- Show Plugin"; }
 	PLUGINS << plug;
 	QApplication::processEvents(); //need a moment between plugin/container creation
-	QRegion tmpavail = avail - bgDesktop->childrenRegion(); //currently available space right now
 	LDPluginContainer *cont = CreateDesktopPluginContainer(plug);
-	cont->show();
-	QApplication::processEvents();
-	if(!cont->hasFixedPosition()){
-	  //Need to arrange the location of the plugin (leave size alone)
-	  if(DEBUG){ qDebug() << " ---  Floating Plugin - find a spot for it"; }
-	  QPoint pt = findNewPluginLocation(tmpavail, cont->size());
-	  if(pt.x()>=0 && pt.y()>=0){
-	    cont->saveNewPosition(pt); 
-	    QTimer::singleShot(500, cont, SLOT(loadInitialPosition()) ); //re-load geometry in a moment
-	    if(DEBUG){ qDebug() << " --- Moving to point:" << pt; }
-	  }
-	}
 	//Done with this plugin - removed it's area from the available space
 	if(DEBUG){ qDebug() << " ---  Done Creating Plugin Container" << cont->geometry(); }
-	//avail = avail.subtracted( QRegion(cont->geometry()) );
-	
+	//avail = avail.subtracted( QRegion(cont->geometry()) ); //remove this space from the available region as well
       }
     }
     QApplication::processEvents(); //need to process events between loading of plugins

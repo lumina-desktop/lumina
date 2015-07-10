@@ -20,6 +20,7 @@
 #include <QWidgetAction>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QRegion>
 
 
 #include <LuminaXDG.h>
@@ -59,7 +60,7 @@ private:
 	QDesktopWidget *desktop;
 	QString DPREFIX;
 	int desktopnumber;
-	//int xoffset;
+	QRegion availDPArea;
 	bool defaultdesktop, desktoplocked, issyncing, usewinmenu, bgupdating;
 	QStringList oldBGL;
 	QList<LPanel*> PANELS;

@@ -8,7 +8,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   button = new QToolButton(this);
     button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     button->setAutoRaise(true);
-    button->setText("..."); //Need to set something here so that initial sizing works properly
+    button->setText("...\n..."); //Need to set something here so that initial sizing works properly
     
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
@@ -27,8 +27,9 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   //qDebug() << "Button Size:" << button->size();
   //qDebug() << "Calculated:" << icosize+4 << icosize+8+qRound(2.15*button->fontMetrics().height());
   //qDebug() << "Preferred Size:" << button->sizeHint();
-  this->setInitialSize(qRound(1.1*icosize)+4, icosize+8+qRound(2.5*button->fontMetrics().height()));
-	
+  QSize sz(qRound(1.1*icosize), icosize+qRound(2.7*button->fontMetrics().height()) );
+  button->setFixedSize(sz); //make sure to adjust the button on first show.
+  this->setInitialSize(this->sizeHint().width()+2, this->sizeHint().height()+2); //give the container a bit of a buffer
   QTimer::singleShot(100,this, SLOT(loadButton()) );
 }
 	
@@ -76,7 +77,7 @@ void AppLauncherPlugin::loadButton(bool onchange){
   button->setToolTip(txt);
   int icosize = this->readSetting("iconsize",64).toInt();
   int bwid = qRound(1.1*icosize);
-  button->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
+  this->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
   if(onchange){ this->adjustSize( bwid+4, icosize+8+qRound(2.5*button->fontMetrics().height())); }
     //qDebug() << "Initial Button Text:" << txt << icosize;
     if(button->fontMetrics().width(txt) > (bwid-2) ){
@@ -97,6 +98,7 @@ void AppLauncherPlugin::loadButton(bool onchange){
         txt.insert( (txt.count()/2), "\n");
       }
     }
+    if(!txt.contains("\n")){ txt.append("\n "); } //always use two lines
     //qDebug() << " - Setting Button Text:" << txt;
     button->setText(txt);
   //Now setup the menu again

@@ -59,11 +59,12 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   //qDebug() << "Saving a new setting";
   this->saveSetting("customFile",""); //always clear this when the plugin is initialized (only maintained per-session)
   //qDebug() << "Loading Notes Dir";
-  notesDirChanged();
+  QTimer::singleShot(2000, this, SLOT(notesDirChanged()));
   //qDebug() << "Set Sizing";
   
   //Now setup the initial values for the plugin
-  this->setInitialSize(200,300);
+  qDebug() << "New Notepad:" << this->sizeHint() << this->size();
+  this->setInitialSize(this->sizeHint().width(),this->sizeHint().height());
   //qDebug() << "Connect Signals/slots";
   //Setup the button connections
   connect(open, SIGNAL(clicked()), this, SLOT(openNote()) );
