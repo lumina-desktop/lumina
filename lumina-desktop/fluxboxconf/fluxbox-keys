@@ -59,8 +59,8 @@ Mod4 Tab :NextTab
 Mod4 Shift Tab :PrevTab
 
 # Arrange/Tile Current windows
-Mod4 Left :ArrangeWindowsStackRight (Layer=Normal)
-Mod4 Right :ArrangeWindowsStackLeft (Layer=Normal)
+Mod1 Left :ArrangeWindowsStackRight (Layer=Normal)
+Mod1 Right :ArrangeWindowsStackLeft (Layer=Normal)
 
 # go to a specific tab in the current window
 Mod4 1 :Tab 1
@@ -141,5 +141,5 @@ Control Mod4 F11 :TakeToWorkspace 11
 Control Mod4 F12 :TakeToWorkspace 12
 
 Print :Exec lumina-screenshot
-
+Pause :Exec xscreensaver-command -lock
 

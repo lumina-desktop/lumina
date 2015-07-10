@@ -339,7 +339,7 @@ QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for ea
     if(i==1){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
     else{
       QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device 
-      qDebug() << "Data Line:" << data;
+      //qDebug() << "Data Line:" << data;
       if(data.length()>2 && labs.length()>2){
         out << fmt.arg(data[0], data[1]+" "+labs[1], data[2]+" "+labs[2]);
       }

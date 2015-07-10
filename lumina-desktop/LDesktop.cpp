@@ -361,8 +361,6 @@ void LDesktop::UpdateMenu(bool fast){
   if(!desktoplocked){
     deskMenu->addAction(LXDG::findIcon("document-encrypt",""),tr("Lock Desktop"), this, SLOT(ToggleDesktopLock()) );
     deskMenu->addAction(LXDG::findIcon("snap-orthogonal",""),tr("Snap Plugins to Grid"), this, SLOT(AlignDesktopPlugins()) );
-    deskMenu->addAction(LXDG::findIcon("shapes",""), tr("Tile Plugins"), bgDesktop, SLOT(tileSubWindows()) );
-    deskMenu->addAction(LXDG::findIcon("window-duplicate",""), tr("Cascade Plugins"), bgDesktop, SLOT(cascadeSubWindows()) );
   }else{ deskMenu->addAction(LXDG::findIcon("document-decrypt",""),tr("Unlock Desktop"), this, SLOT(ToggleDesktopLock()) ); }
   deskMenu->addSeparator();
   deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Log Out"), this, SLOT(SystemLogout()) );
