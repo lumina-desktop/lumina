@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>245</width>
-    <height>246</height>
+    <width>250</width>
+    <height>239</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>245</width>
+    <width>250</width>
     <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>245</width>
+    <width>400</width>
     <height>16777215</height>
    </size>
   </property>
@@ -87,8 +87,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>241</width>
-        <height>133</height>
+        <width>246</width>
+        <height>125</height>
        </rect>
       </property>
       <attribute name="label">
@@ -113,12 +113,19 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Screen Edge:</string>
+          <string>Edge:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="combo_edge"/>
+        <widget class="QComboBox" name="combo_edge">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_3">
@@ -177,7 +184,14 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QComboBox" name="combo_align"/>
+        <widget class="QComboBox" name="combo_align">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -186,8 +200,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>241</width>
-        <height>133</height>
+        <width>246</width>
+        <height>125</height>
        </rect>
       </property>
       <attribute name="label">
@@ -274,8 +288,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>241</width>
-        <height>133</height>
+        <width>260</width>
+        <height>112</height>
        </rect>
       </property>
       <attribute name="label">
@@ -295,7 +309,14 @@
         <number>2</number>
        </property>
        <item>
-        <widget class="QListWidget" name="list_plugins"/>
+        <widget class="QListWidget" name="list_plugins">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -318,9 +339,12 @@
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
+             <width>10</width>
              <height>20</height>
             </size>
            </property>

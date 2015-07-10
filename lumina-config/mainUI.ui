@@ -36,7 +36,7 @@
     <item>
      <widget class="QFrame" name="group_screen">
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
@@ -381,13 +381,65 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_panels">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_desktopInterface">
            <attribute name="title">
             <string>Desktop</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Quick-Access Menu</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" rowspan="3">
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_15">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Embedded Utilities</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QListWidget" name="list_menu"/>
+            </item>
+            <item row="1" column="2">
+             <widget class="QListWidget" name="list_desktop_plugins">
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ExtendedSelection</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_13">
               <item>
@@ -433,112 +485,39 @@
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QListWidget" name="list_menu"/>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Quick-Access Menu</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="label_15">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Embedded Utilities</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" rowspan="2">
-             <layout class="QVBoxLayout" name="verticalLayout_18">
+            <item row="2" column="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <spacer name="horizontalSpacer_7">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="push_addDesktopPlugin">
-                  <property name="text">
-                   <string>Add Utility to Screen</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_8">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="check_desktop_autolaunchers">
+               <widget class="QToolButton" name="tool_desktop_addplugin">
                 <property name="text">
-                 <string>Auto-Create Desktop Shortcuts</string>
+                 <string notr="true">add</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_23">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+               <widget class="QToolButton" name="tool_desktop_rmplugin">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Modifying or removing embedded utilities is performed from the desktop itself. Each screen may be individually unlocked (allowing modifications) from the quick-access menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string notr="true">rem</string>
                 </property>
-                <property name="scaledContents">
-                 <bool>true</bool>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <property name="indent">
-                 <number>10</number>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="check_desktop_autolaunchers">
+                <property name="text">
+                 <string>Generate Desktop Links</string>
                 </property>
                </widget>
               </item>
@@ -592,7 +571,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>498</width>
-                 <height>270</height>
+                 <height>292</height>
                 </rect>
                </property>
               </widget>
@@ -1385,7 +1364,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>117</width>
-                    <height>28</height>
+                    <height>17</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1497,16 +1476,6 @@
      </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>596</width>
-     <height>20</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="contextMenuPolicy">

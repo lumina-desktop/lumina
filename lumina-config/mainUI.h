@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -107,6 +107,7 @@ private slots:
 	void deskbgadded();
 	void deskbgcoloradded();
 	void deskplugadded();
+	void deskplugremoved();
 
 
 	//Panels Page
@@ -115,26 +116,6 @@ private slots:
 	void removePanel(int); //connected to a signal from the panel widget
 	void loadPanels();
 	void savePanels();
-	
-	/*void addpanel1();
-	void addpanel2();
-	void rmpanel1();
-	void rmpanel2();
-
-	void checkpanels();
-	void adjustpanel1();
-	void adjustpanel2();
-
-	void getpanel1color();
-	void getpanel2color();
-	void addpanel1plugin();
-	void addpanel2plugin();
-	void rmpanel1plugin();
-	void rmpanel2plugin();
-	void uppanel1plugin();
-	void uppanel2plugin();
-	void dnpanel1plugin();
-	void dnpanel2plugin();*/
 
 	//Menu Page/Tab
 	void addmenuplugin();
@@ -156,8 +137,6 @@ private slots:
 	void changeDefaultTerminal();
 	void loadDefaultSettings();
 	//void saveDefaultSettings();
-	//void adddefaultgroup();
-	//void adddefaultextension();
 	void cleardefaultitem();
 	void setdefaultitem();
 	void setdefaultbinary();
