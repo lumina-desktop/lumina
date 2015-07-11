@@ -262,7 +262,7 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
 }
 
 int LOS::MemoryUsagePercent(){
-  QStringList mem = LUtils::getCmdOutput("top -bn1").filter("Mem:");
+  QStringList mem = LUtils::getCmdOutput("top -bn1").filter("Mem :");
   if(mem.isEmpty()){ return -1; }
   double fB = 0; //Free Bytes
   double uB = 0; //Used Bytes
