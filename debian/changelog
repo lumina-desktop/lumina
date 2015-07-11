@@ -1,4 +1,4 @@
-lumina-deskopt (0.8.5.754-1nano) unstable; urgency=low
+lumina-desktop (0.8.5.754-1nano) unstable; urgency=low
 
   * New git snapshot
    - update LOS::MemoryUsagePercent() for output format
