@@ -266,8 +266,8 @@ int LOS::MemoryUsagePercent(){
   if(mem.isEmpty()){ return -1; }
   double fB = 0; //Free Bytes
   double uB = 0; //Used Bytes
-  fB = mem.first().section(" ", 6, 6, QString::SectionSkipEmpty).toDouble();
-  uB = mem.first().section(" ", 4, 4, QString::SectionSkipEmpty).toDouble();
+  fB = mem.first().section(" ", 5, 5, QString::SectionSkipEmpty).toDouble();
+  uB = mem.first().section(" ", 7, 7, QString::SectionSkipEmpty).toDouble();
   double per = (uB/(fB+uB)) * 100.0;
   return qRound(per);
 }
