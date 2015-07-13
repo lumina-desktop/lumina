@@ -24,7 +24,7 @@ static QStringList fav;
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  return "0.8.5-devel"; 
+  return "0.8.5-release"; 
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
