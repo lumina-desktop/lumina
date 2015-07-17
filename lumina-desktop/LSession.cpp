@@ -459,6 +459,7 @@ void LSession::registerDesktopWindows(){
 }
 
 void LSession::adjustWindowGeom(WId win, bool maximize){
+  if(DEBUG){ qDebug() << "AdjustWindowGeometry():" << win << maximize; }
   //Quick hack for making sure that new windows are not located underneath any panels
   // Get the window location
   QRect geom = XCB->WindowGeometry(win, false);
@@ -481,6 +482,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       break;
     }
   }
+  if(desk.isNull()){ return; } //Unable to deteremine screen
   //Adjust the window location if necessary
   if(maximize){
     if(DEBUG){ qDebug() << " - Maximizing New Window:" << desk.width() << desk.height(); }
@@ -495,12 +497,15 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     //Adjust size for bottom margins (within reason, since window titles are on top normally)
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
     if(fgeom.bottom() > desk.bottom() && geom.height() > 10){ 
+      if(DEBUG){ qDebug() << "Adjust Y:" << fgeom << geom << desk; }
       int diff = fgeom.bottom()-desk.bottom(); //amount of overlap
+      if(DEBUG){ qDebug() << "Y-Diff:" << diff; }
+      if(diff < 0){ diff = -diff; } //need a positive value
       if( (fgeom.height()+ diff)< desk.height()){
         //just move the window - there is room for it above
 	geom.setBottom(desk.bottom()-frame[1]); 
 	fgeom.setBottom(desk.bottom());
-      }else{
+      }else if(geom.height() < diff){ //window bigger than the difference
 	//Need to resize the window - keeping the origin point the same
 	geom.setHeight( geom.height()-diff-1 ); //shrink it by the difference (need an extra pixel somewhere)
 	fgeom.setHeight( fgeom.height()-diff );

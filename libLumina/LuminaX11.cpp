@@ -29,6 +29,7 @@
 #include <xcb/composite.h>
 #include <xcb/damage.h>
 
+#define DEBUG 0
 
 //=====   WindowList() ========
 QList<WId> LX11::WindowList(){
@@ -849,6 +850,7 @@ LXCB::~LXCB(){
 
 // === WindowList() ===
 QList<WId> LXCB::WindowList(bool rawlist){
+  if(DEBUG){ qDebug() << "XCB: WindowList()" << rawlist; }
   QList<WId> output;
   //qDebug() << "Get Client list cookie";
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_unchecked( &EWMH, 0);
@@ -872,6 +874,7 @@ QList<WId> LXCB::WindowList(bool rawlist){
 
 // === CurrentWorkspace() ===
 unsigned int LXCB::CurrentWorkspace(){
+  if(DEBUG){ qDebug() << "XCB: CurrentWorkspace()"; }
   //qDebug() << "Get Current Workspace";
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_current_desktop_unchecked(&EWMH, 0);
   uint32_t wkspace = 0;
@@ -882,6 +885,7 @@ unsigned int LXCB::CurrentWorkspace(){
 
 // === ActiveWindow() ===
 WId LXCB::ActiveWindow(){
+  if(DEBUG){ qDebug() << "XCB: ActiveWindow()"; }
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, 0);
   xcb_window_t actwin;
   if(1 == xcb_ewmh_get_active_window_reply(&EWMH, cookie, &actwin, NULL) ){
@@ -893,6 +897,7 @@ WId LXCB::ActiveWindow(){
 
 // === RegisterVirtualRoots() ===
 void LXCB::RegisterVirtualRoots(QList<WId> roots){
+  if(DEBUG){ qDebug() << "XCB: RegisterVirtualRoots()"; }
   //First convert the QList into the proper format
   xcb_window_t *list = new xcb_window_t[ roots.length() ];
   for(int i=0; i<roots.length(); i++){
@@ -906,6 +911,7 @@ void LXCB::RegisterVirtualRoots(QList<WId> roots){
 
 // === WindowClass() ===
 QString LXCB::WindowClass(WId win){
+  if(DEBUG){ qDebug() << "XCB: WindowClass()" << win; }
   QString out;
   if(win==0){ return ""; }
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
@@ -920,6 +926,7 @@ QString LXCB::WindowClass(WId win){
 
 // === WindowWorkspace() ===
 unsigned int LXCB::WindowWorkspace(WId win){
+  if(DEBUG){ qDebug() << "XCB: WindowWorkspace()" << win; }
   //qDebug() << "Get Window Workspace";
   if(win==0){ return 0; }
   uint32_t wkspace = 0;
@@ -932,6 +939,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
 
 // === WindowGeometry() ===
 QRect LXCB::WindowGeometry(WId win, bool includeFrame){
+  if(DEBUG){ qDebug() << "XCB: WindowGeometry()"; }
   QRect geom;
   if(win==0){ return geom; }
   xcb_get_geometry_cookie_t cookie = xcb_get_geometry(QX11Info::connection(), win);
@@ -974,14 +982,17 @@ QRect LXCB::WindowGeometry(WId win, bool includeFrame){
 }
 
 QList<int> LXCB::WindowFrameGeometry(WId win){
+  if(DEBUG){ qDebug() << "XCB: WindowFrameGeometry()"; }
   //Returns: [top, bottom, left, right] sizes for the frame
   QList<int> geom;
-  xcb_get_property_cookie_t cookie = xcb_ewmh_get_frame_extents_unchecked(&EWMH, win);
-  if(cookie.sequence != 0){
-    xcb_ewmh_get_extents_reply_t frame;
-    if(1== xcb_ewmh_get_frame_extents_reply(&EWMH, cookie, &frame, NULL) ){
-      //adjust the origin point to account for the frame
-      geom << frame.top << frame.bottom << frame.left << frame.right;
+  if(win!=0){
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_frame_extents_unchecked(&EWMH, win);
+    if(cookie.sequence != 0){
+      xcb_ewmh_get_extents_reply_t frame;
+      if(1== xcb_ewmh_get_frame_extents_reply(&EWMH, cookie, &frame, NULL) ){
+        //adjust the origin point to account for the frame
+        geom << frame.top << frame.bottom << frame.left << frame.right;
+      }
     }
   }
   if(geom.isEmpty()){ geom << 0 << 0 << 0 << 0; }
@@ -990,6 +1001,7 @@ QList<int> LXCB::WindowFrameGeometry(WId win){
 
 // === WindowState() ===
 LXCB::WINDOWSTATE LXCB::WindowState(WId win){
+  if(DEBUG){ qDebug() << "XCB: WindowState()"; }
   if(win==0){ return IGNORE; }
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return IGNORE; } 
@@ -1033,6 +1045,7 @@ LXCB::WINDOWSTATE LXCB::WindowState(WId win){
 
 // === WindowVisibleIconName() ===
 QString LXCB::WindowVisibleIconName(WId win){ //_NET_WM_VISIBLE_ICON_NAME
+  if(DEBUG){ qDebug() << "XCB: WindowVisibleIconName()"; }
   if(win==0){ return ""; }
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&EWMH, win);
@@ -1046,6 +1059,7 @@ QString LXCB::WindowVisibleIconName(WId win){ //_NET_WM_VISIBLE_ICON_NAME
 
 // === WindowIconName() ===
 QString LXCB::WindowIconName(WId win){ //_NET_WM_ICON_NAME
+  if(DEBUG){ qDebug() << "XCB: WindowIconName()"; }
   if(win==0){ return ""; }
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&EWMH, win);
@@ -1059,6 +1073,7 @@ QString LXCB::WindowIconName(WId win){ //_NET_WM_ICON_NAME
 
 // === WindowVisibleName() ===
 QString LXCB::WindowVisibleName(WId win){ //_NET_WM_VISIBLE_NAME
+  if(DEBUG){ qDebug() << "XCB: WindowVisibleName()"; }
   if(win==0){ return ""; }
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&EWMH, win);
@@ -1072,6 +1087,7 @@ QString LXCB::WindowVisibleName(WId win){ //_NET_WM_VISIBLE_NAME
 
 // === WindowName() ===
 QString LXCB::WindowName(WId win){ //_NET_WM_NAME
+  if(DEBUG){ qDebug() << "XCB: WindowName()"; }
   if(win==0){ return ""; }
   QString out;
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&EWMH, win);
@@ -1085,6 +1101,7 @@ QString LXCB::WindowName(WId win){ //_NET_WM_NAME
 
 // === OldWindowName() ===
 QString LXCB::OldWindowName(WId win){ //WM_NAME (old standard)
+  if(DEBUG){ qDebug() << "XCB: OldWindowName()"; }
   if(win==0){ return ""; }
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win);
   xcb_icccm_get_text_property_reply_t reply;
@@ -1099,6 +1116,7 @@ QString LXCB::OldWindowName(WId win){ //WM_NAME (old standard)
 
 // === OldWindowIconName() ===
 QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
+  if(DEBUG){ qDebug() << "XCB: OldWindowIconName()"; }
   if(win==0){ return ""; }
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win);
   xcb_icccm_get_text_property_reply_t reply;
@@ -1113,6 +1131,7 @@ QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
 
 // === WindowIsMaximized() ===
 bool LXCB::WindowIsMaximized(WId win){
+  if(DEBUG){ qDebug() << "XCB: WindowIsMaximized()"; }
   if(win==0){ return ""; }
   //See if the _NET_WM_STATE_MAXIMIZED_[VERT/HORZ] flags are set on the window
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
@@ -1133,6 +1152,7 @@ bool LXCB::WindowIsMaximized(WId win){
 // === WindowIcon() ===
 QIcon LXCB::WindowIcon(WId win){
   //Fetch the _NET_WM_ICON for the window and return it as a QIcon
+  if(DEBUG){ qDebug() << "XCB: WindowIcon()"; }
   QIcon icon;
   if(win==0){ return icon; }
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_unchecked(&EWMH, win);
@@ -1163,6 +1183,7 @@ QIcon LXCB::WindowIcon(WId win){
 
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
+  if(DEBUG){ qDebug() << "XCB: SetAsSticky()"; }
   if(win==0){ return; }
   //Need to send a client message event for the window so the WM picks it up
   xcb_client_message_event_t event;
@@ -1185,6 +1206,7 @@ void LXCB::SetAsSticky(WId win){
 
 // === SetDisableWMActions() ===
 void LXCB::SetDisableWMActions(WId win){
+  if(DEBUG){ qDebug() << "XCB: SetDisableWMActions()"; }
   //This disables all the various control that a WM allows for the window (except for allowing the "Sticky" state)
   xcb_atom_t list[1];
     list[0] = EWMH._NET_WM_ACTION_STICK;
@@ -1193,6 +1215,7 @@ void LXCB::SetDisableWMActions(WId win){
 
 // === SetAsPanel() ===
 void LXCB::SetAsPanel(WId win){
+  if(DEBUG){ qDebug() << "XCB: SetAsPanel()"; }
   if(win==0){ return; }
   SetDisableWMActions(win); //also need to disable WM actions for this window
   //Disable Input focus (panel activation ruins task manager window detection routines)
@@ -1272,6 +1295,7 @@ void LXCB::SetAsPanel(WId win){
 }
 
 void LXCB::SetAsDesktop(WId win){
+  if(DEBUG){ qDebug() << "XCB: SetAsDesktop()"; }
   if(win==0){ return; }
   SetDisableWMActions(win); //also need to disable WM actions for this window
   xcb_atom_t list[1];
@@ -1281,18 +1305,21 @@ void LXCB::SetAsDesktop(WId win){
 
 // === CloseWindow() ===
 void LXCB::CloseWindow(WId win){
+  if(DEBUG){ qDebug() << "XCB: CloseWindow()"; }
   if(win==0){ return; }
   //This will close the specified window (might not close the entire application)
   xcb_ewmh_request_close_window(&EWMH, 0, win, QX11Info::getTimestamp(), XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER);
 }
 
 void LXCB::KillClient(WId win){
+  if(DEBUG){ qDebug() << "XCB: KillClient()"; }
   if(win==0){ return; }
   //This will forcibly close the application which created WIN 
   xcb_kill_client(QX11Info::connection(), win);
 }
 // === MinimizeWindow() ===
 void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimized
+  if(DEBUG){ qDebug() << "XCB: MinimizeWindow()"; }
   if(win==0){ return; }
   //Note: Fluxbox completely removes this window from the open list if unmapped manually
  // xcb_unmap_window(QX11Info::connection(), win);
@@ -1315,6 +1342,7 @@ void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimi
 
 // === ActivateWindow() ===
 void LXCB::ActivateWindow(WId win){ //request that the window become active
+  if(DEBUG){ qDebug() << "XCB: ActivateWindow();"; }
   if(win==0){ return; }
   //First need to get the currently active window
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, 0);
@@ -1342,6 +1370,7 @@ void LXCB::ActivateWindow(WId win){ //request that the window become active
 
 // === MaximizeWindow() ===
 void LXCB::MaximizeWindow(WId win, bool flagsonly){ //request that the window become maximized
+  if(DEBUG){ qDebug() << "XCB: MaximizeWindow()"; }
   if(win==0){ return; }	
   if(flagsonly){
     //Directly set the flags on the window (bypassing the WM)
@@ -1369,6 +1398,7 @@ void LXCB::MaximizeWindow(WId win, bool flagsonly){ //request that the window be
 
 // === MoveResizeWindow() ===
 void LXCB::MoveResizeWindow(WId win, QRect geom){
+  if(DEBUG){ qDebug() << "XCB: MoveResizeWindow()"; }
   if(win==0){ return; }
   //NOTE: geom needs to be in root/absolute coordinates!
   //qDebug() << "MoveResize Window:" << geom.x() << geom.y() << geom.width() << geom.height();
@@ -1388,6 +1418,7 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
 
 // === EmbedWindow() ===
 uint LXCB::EmbedWindow(WId win, WId container){
+  if(DEBUG){ qDebug() << "XCB: EmbedWindow()"; }
   //This returns the damage control ID number (or 0 for a failure)
   if(win==0 || container==0){ return 0; }
   //qDebug() << "Embed Window:" << win << container;
@@ -1440,6 +1471,7 @@ uint LXCB::EmbedWindow(WId win, WId container){
 
 // === Unembed Window() ===
 bool LXCB::UnembedWindow(WId win){
+  if(DEBUG){ qDebug() << "XCB: UnembedWindow()"; }
   if(win==0){ return false; }
   //Display *disp = QX11Info::display();
   //Remove redirects
