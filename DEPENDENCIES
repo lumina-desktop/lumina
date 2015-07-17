@@ -80,6 +80,7 @@ X.org and XCB extensions (possibly the XLib libraries above during the transitio
   libxdamage-dev
   libxrender-dev
   libxcb-image0-dev
+  qtdeclarative5-dev
 
   These packages are required for running Lumina on Linux
   fluxbox
