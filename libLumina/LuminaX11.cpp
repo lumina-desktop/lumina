@@ -1183,9 +1183,18 @@ void LXCB::SetAsSticky(WId win){
   xcb_flush(QX11Info::connection()); //apply it right away*/
 }
 
+// === SetDisableWMActions() ===
+void LXCB::SetDisableWMActions(WId win){
+  //This disables all the various control that a WM allows for the window (except for allowing the "Sticky" state)
+  xcb_atom_t list[1];
+    list[0] = EWMH._NET_WM_ACTION_STICK;
+  xcb_ewmh_set_wm_allowed_actions(&EWMH, win, 1, list);
+}
+
 // === SetAsPanel() ===
 void LXCB::SetAsPanel(WId win){
   if(win==0){ return; }
+  SetDisableWMActions(win); //also need to disable WM actions for this window
   //Disable Input focus (panel activation ruins task manager window detection routines)
   //  - Disable Input flag in WM_HINTS
   xcb_icccm_wm_hints_t hints;
@@ -1260,6 +1269,14 @@ void LXCB::SetAsPanel(WId win){
   qDebug() << " - Set window as sticky";
   SetAsSticky(win);
 	
+}
+
+void LXCB::SetAsDesktop(WId win){
+  if(win==0){ return; }
+  SetDisableWMActions(win); //also need to disable WM actions for this window
+  xcb_atom_t list[1];
+    list[0] = EWMH._NET_WM_WINDOW_TYPE_DESKTOP;
+  xcb_ewmh_set_wm_window_type(&EWMH, win, 1, list);
 }
 
 // === CloseWindow() ===

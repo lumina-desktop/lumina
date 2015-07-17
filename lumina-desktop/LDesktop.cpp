@@ -292,8 +292,8 @@ void LDesktop::InitDesktop(){
   bgWindow = new QWidget();
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
-  	bgWindow->setWindowFlags(Qt::FramelessWindowHint);
-	LX11::SetAsDesktop(bgWindow->winId());
+  	bgWindow->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+	LSession::handle()->XCB->SetAsDesktop(bgWindow->winId());
 	bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
@@ -647,6 +647,8 @@ void LDesktop::UpdateDesktopPluginArea(){
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
   //Also need to re-arrange any desktop plugins to ensure that nothing is out of the screen area
   AlignDesktopPlugins();
+  //Make sure to re-disable any WM control flags
+  LSession::handle()->XCB->SetDisableWMActions(bgWindow->winId());
 }
 
 void LDesktop::UpdateBackground(){
