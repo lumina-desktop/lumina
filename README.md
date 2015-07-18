@@ -44,9 +44,12 @@ How to build from source
  - (Linux Note) If there is a customized OS template for your particular distro (not the general "Linux" template), you will need to change into the libLumina subdirectory and run the "make-linux-distro.sh" script to modify the project file for the Lumina library after running "qmake" in step 3. Be sure to change back to the base Lumina directory before moving on to step 4.
 Example usage: "cd libLumina && ./make-linux-distro.sh MYDISTRO && cd .." (where there is a LuminaOS-MYDISTRO.cpp template available).
 
+- (Another Linux note) On Fedora (and related Red Hat and CentOS distributions) the
+system libraries are stored in a different directory than most other distributions use. For this reason, the "qmake" command must include the LIBPREFIX flag. On a 64-bit machine, the "qmake" command that should be used is "qmake LIBPREFIX=/lib64". The QTLIBDIR may need to be set too if lrelease is not in your usual path.
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
 
 5) Run "make install" to install the Lumina desktop on your local system (requires admin/root privileges usually)
 
 6-optional) Run "make clean" to clean up all the temporary build files in the Lumina source tree.
+
