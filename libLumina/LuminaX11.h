@@ -145,7 +145,9 @@ public:
 	
 	//Window Modification
 	void SetAsSticky(WId); //Stick to all workspaces
+	void SetDisableWMActions(WId); //Disable WM control (shortcuts/automatic functions)
 	void SetAsPanel(WId); //Adjust all the window flags for a proper panel (cannot be done through Qt)
+	void SetAsDesktop(WId); //Adjust window flags to set as the desktop
 	void CloseWindow(WId); //request that the window be closed
 	void KillClient(WId); //Force the application that created the window to close
 	void MinimizeWindow(WId); //request that the window be unmapped/minimized

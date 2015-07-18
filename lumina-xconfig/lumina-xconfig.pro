@@ -104,3 +104,7 @@ dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
 INSTALLS += target dotrans
+
+NO_I18N{
+  INSTALLS -= dotrans
+}

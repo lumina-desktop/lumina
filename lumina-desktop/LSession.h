@@ -111,6 +111,7 @@ private:
 
 	//Task Manager Variables
 	QList<WId> RunningApps;
+	QList<WId> checkWin;
 	QFileInfoList desktopFiles;
 
 	void CleanupSession();
@@ -125,6 +126,7 @@ public slots:
 
 private slots:
 	void watcherChange(QString);
+	void checkWindowGeoms();
 
 	//System Tray Functions
 	void startSystemTray();

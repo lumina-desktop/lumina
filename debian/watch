@@ -1,0 +1,2 @@
+version=3
+https://github.com/pcbsd/lumina/releases/ .*/v(\d[\d\.]+)-Release\.tar\.gz

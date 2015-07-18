@@ -7,8 +7,8 @@ Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
                libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev,
-               libxcb-composite0-dev
-Standards-Version: 3.9.5
+               libxcb-composite0-dev, qtdeclarative5-dev
+Standards-Version: 3.9.6
 Homepage: https://github.com/pcbsd/lumina
 
 Package: lumina-desktop
@@ -113,7 +113,7 @@ Description: Desktop file editor for the lumina desktop environment
 
 Package: lumina-data
 Architecture: all
-Depends: ${misc:Depends}, libluminautils1, lumina-desktop
+Depends: ${misc:Depends}, libluminautils1
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Data files for the lumina Desktop environment
  This package provides

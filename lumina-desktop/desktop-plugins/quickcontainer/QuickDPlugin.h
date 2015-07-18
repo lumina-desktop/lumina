@@ -23,8 +23,10 @@ public:
 	    this->layout()->setContentsMargins(0,0,0,0);
 	  container = new QQuickWidget(this);
 	    container->setResizeMode(QQuickWidget::SizeRootObjectToView);
+	    connect(container, SIGNAL(statusChanged(QQuickWidget::Status)), this, SLOT(statusChange(QQuickWidget::Status)) );
 	  this->layout()->addWidget(container);
 	    container->setSource(QUrl::fromLocalFile( LUtils::findQuickPluginFile(ID.section("---",0,0)) ));
+	  QApplication::processEvents(); //to check for errors right away
 	  this->setInitialSize(container->initialSize().width(), container->initialSize().height());
 	}
 	
@@ -37,6 +39,7 @@ private slots:
 	void statusChange(QQuickWidget::Status status){
 	  if(status == QQuickWidget::Error){
 	    qDebug() << "Quick Widget Error:" << this->ID();
+	    container->setSource(QUrl()); //clear out the script - experienced an error
 	  }
 	}
 

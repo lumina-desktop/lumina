@@ -1,3 +1,11 @@
+lumina-desktop (0.8.5.754-1nano) unstable; urgency=low
+
+  * New git snapshot
+   - update LOS::MemoryUsagePercent() for output format
+     change in latest version of 'top' in Debian
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sat, 11 Jul 2015 16:07:42 +0200
+
 lumina-desktop (0.8.5.697-1nano) unstable; urgency=low
 
   * New git snapshot

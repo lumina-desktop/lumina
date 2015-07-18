@@ -24,7 +24,7 @@ static QStringList fav;
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  return "0.8.5-devel"; 
+  return "0.8.6-devel"; 
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
@@ -202,19 +202,24 @@ QStringList LUtils::listQuickPlugins(){
   QDir dir(QDir::homePath()+"/.lumina/quickplugins");
   QStringList files = dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
   dir.cd(LOS::LuminaShare()+"quickplugins");
-  files << files = dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+  files << dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
   for(int i=0; i<files.length(); i++){
     files[i] = files[i].section("quick-",1,100).section(".qml",0,0); //just grab the ID out of the middle of the filename
   }
   files.removeDuplicates();
+  //qDebug() << "Found Quick Plugins:" << files;
   return files;
 }
 
 QStringList LUtils::infoQuickPlugin(QString ID){ //Returns: [Name, Description, Icon]
+  //qDebug() << "Find Quick Info:" << ID;
   QString path = findQuickPluginFile(ID);
+  //qDebug() << " - path:" << path;
   if(path.isEmpty()){ return QStringList(); } //invalid ID
-  QStringList contents = LUtils::readFile(path).filter("//").filter("=").filter("Plugin");
+  QStringList contents = LUtils::readFile(path);
   if(contents.isEmpty()){ return QStringList(); } //invalid file (unreadable)
+  contents = contents.filter("//").filter("=").filter("Plugin"); //now just grab the comments
+  //qDebug() << " - Filtered Contents:" << contents;
   QStringList info; info << "" << "" << "";
   for(int i=0; i<contents.length(); i++){
     if(contents[i].contains("Plugin-Name=")){ info[0] = contents[i].section("Plugin-Name=",1,1).simplified(); }
@@ -223,6 +228,7 @@ QStringList LUtils::infoQuickPlugin(QString ID){ //Returns: [Name, Description, 
   }
   if(info[0].isEmpty()){ info[0]=ID; }
   if(info[2].isEmpty()){ info[2]="preferences-plugin"; }
+  //qDebug() << " - info:" << info;
   return info;
 }
 

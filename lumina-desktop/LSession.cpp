@@ -320,6 +320,15 @@ void LSession::watcherChange(QString changed){
   }
 }
 
+void LSession::checkWindowGeoms(){
+  //Only do one window per run (this will be called once per new window - with time delays between)
+  if(checkWin.isEmpty()){ return; }
+  if(RunningApps.contains(checkWin[0]) ){ //just to make sure it did not close during the delay
+    adjustWindowGeom( checkWin[0] );
+  }
+  checkWin.removeAt(0);
+}
+
 void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
@@ -450,11 +459,18 @@ void LSession::registerDesktopWindows(){
 }
 
 void LSession::adjustWindowGeom(WId win, bool maximize){
+  if(DEBUG){ qDebug() << "AdjustWindowGeometry():" << win << maximize; }
   //Quick hack for making sure that new windows are not located underneath any panels
   // Get the window location
-  QRect geom = XCB->WindowGeometry(win, true); //always include the frame if possible
-  if(DEBUG){ qDebug() << "Check Window Geometry:" << XCB->WindowClass(win) << !geom.isNull(); }
-  if(geom.isNull()){ return; } //Could not get geometry
+  QRect geom = XCB->WindowGeometry(win, false);
+  //Get the frame size
+  QList<int> frame = XCB->WindowFrameGeometry(win); //[top,bottom,left,right] sizes of the frame
+  //Calculate the full geometry (window + frame)
+  QRect fgeom = QRect(geom.x()-frame[2], geom.y()-frame[0], geom.width()+frame[2]+frame[3], geom.height()+frame[0]+frame[1]);
+  if(DEBUG){ 
+    qDebug() << "Check Window Geometry:" << XCB->WindowClass(win) << !geom.isNull() << geom << fgeom;
+  }
+  if(geom.isNull()){ return; } //Could not get geometry for some reason
   //Get the available geometry for the screen the window is on
   QRect desk;
   for(int i=0; i<DESKTOPS.length(); i++){
@@ -462,9 +478,11 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       //Window is on this screen
       if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
       desk = DESKTOPS[i]->availableScreenGeom();
+      if(DEBUG){ qDebug() << " - Screen Geom:" << desk; }
       break;
     }
   }
+  if(desk.isNull()){ return; } //Unable to deteremine screen
   //Adjust the window location if necessary
   if(maximize){
     if(DEBUG){ qDebug() << " - Maximizing New Window:" << desk.width() << desk.height(); }
@@ -472,27 +490,35 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     XCB->MoveResizeWindow(win, geom);
     XCB->MaximizeWindow(win, true); //directly set the appropriate "maximized" flags (bypassing WM)
 	  
-  }else if(!desk.contains(geom) ){
-    if(DEBUG){
-      qDebug() << " - Desk:" << desk.x() << desk.y() << desk.width() << desk.height();
-      qDebug() << " - Geom:" << geom.x() << geom.y() << geom.width() << geom.height();
-    }
-    QList<int> frame = XCB->WindowFrameGeometry(win);
-    if(DEBUG){ qDebug() << " - Frame:" << frame; }
+  }else if(!desk.contains(fgeom) ){
     //Adjust origin point for left/top margins
-    if(geom.y() < desk.y()){ geom.moveTop(desk.y()); } //move down to the edge (top panel)
-    if(geom.x() < desk.x()){ geom.moveLeft(desk.x()); } //move right to the edge (left panel)
+    if(fgeom.y() < desk.y()){ geom.moveTop(desk.y()+frame[0]); fgeom.moveTop(desk.y()); } //move down to the edge (top panel)
+    if(fgeom.x() < desk.x()){ geom.moveLeft(desk.x()+frame[2]); fgeom.moveLeft(desk.x()); } //move right to the edge (left panel)
     //Adjust size for bottom margins (within reason, since window titles are on top normally)
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
-    if(geom.bottom() > desk.bottom() && geom.height() > 10){ 
-      //Also adjust the sizing for the frame (the moveResize fuction is for the base window only)
-      geom.setBottom(desk.bottom()-frame[0]-frame[1]); 
+    if(fgeom.bottom() > desk.bottom() && geom.height() > 10){ 
+      if(DEBUG){ qDebug() << "Adjust Y:" << fgeom << geom << desk; }
+      int diff = fgeom.bottom()-desk.bottom(); //amount of overlap
+      if(DEBUG){ qDebug() << "Y-Diff:" << diff; }
+      if(diff < 0){ diff = -diff; } //need a positive value
+      if( (fgeom.height()+ diff)< desk.height()){
+        //just move the window - there is room for it above
+	geom.setBottom(desk.bottom()-frame[1]); 
+	fgeom.setBottom(desk.bottom());
+      }else if(geom.height() < diff){ //window bigger than the difference
+	//Need to resize the window - keeping the origin point the same
+	geom.setHeight( geom.height()-diff-1 ); //shrink it by the difference (need an extra pixel somewhere)
+	fgeom.setHeight( fgeom.height()-diff );
+      }
     }
     //Now move/resize the window
-    if(DEBUG){ qDebug() << " - New Geom:" << geom.x() << geom.y() << geom.width() << geom.height(); }
-    XCB->MoveResizeWindow(win, geom);
+    if(DEBUG){ 
+      qDebug() << " - New Geom:" << geom << fgeom; 
+    }
+    //Note: Fluxbox treats this weird, the origin point needs to be the total (frame included), 
+    //   but the size needs to be the raw (no frame) value
+    XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
   }
-  
   
 }
 
@@ -541,13 +567,7 @@ void LSession::systemWindow(){
 void LSession::playAudioFile(QString filepath){
   //Setup the audio output systems for the desktop
   if(DEBUG){ qDebug() << "Play Audio File"; }
-  //if(audioThread==0){   qDebug() << " - Initialize audio systems"; audioThread = new QThread(); init = true; }
   if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }
-  /*if(mediaObj && init){  //in case it errors for some reason
-    qDebug() << " -- Move audio objects to separate thread";
-    mediaObj->moveToThread(audioThread);
-    audioThread->start();
-  }*/
   if(mediaObj !=0 ){
     if(DEBUG){ qDebug() << " - starting playback:" << filepath; }
     mediaObj->setVolume(100);
@@ -569,7 +589,10 @@ void LSession::WindowPropertyEvent(){
     LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
-      if(!RunningApps.contains(newapps[i])){ adjustWindowGeom(newapps[i]); }
+      if(!RunningApps.contains(newapps[i])){ 
+        checkWin << newapps[i]; 
+	QTimer::singleShot(500, this, SLOT(checkWindowGeoms()) );
+      }
     }
   }
   RunningApps = newapps;

@@ -110,3 +110,7 @@ desktop.files=lumina-search.desktop
 desktop.path=$$PREFIX/share/applications/
 
 INSTALLS += target dotrans desktop
+
+NO_I18N{
+  INSTALLS -= dotrans
+}
