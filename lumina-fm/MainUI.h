@@ -97,7 +97,7 @@ private:
 	QString CItem; //the item that was right-clicked (for the context menu)
 	//QStringList imgFilter, multiFilter; //image/multimedia filters
 	QSettings *settings;
-	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *copyFilesShort, *pasteFilesShort, *deleteFilesShort;
+	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
 	QCompleter *dirCompleter;
 	bool isUserWritable, keepFocus;
 	QTimer *syncTimer;

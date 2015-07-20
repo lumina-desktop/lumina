@@ -104,6 +104,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   closeTabShort = new QShortcut( QKeySequence(tr("Ctrl+W")), this);
   copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
   pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
+  cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
   deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
   //Finish loading the interface
   workThread->start();
@@ -285,6 +286,7 @@ void MainUI::setupConnections(){
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(closeTabShort, SIGNAL(activated()), this, SLOT( tabClosed() ) );
   connect(copyFilesShort, SIGNAL(activated()), this, SLOT( CopyItems() ) );
+  connect(cutFilesShort, SIGNAL(activated()), this, SLOT( CutItems() ) );
   connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( PasteItems() ) );
   connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( RemoveItem() ) );
 }
