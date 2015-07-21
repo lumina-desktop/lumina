@@ -16,8 +16,9 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
     brighttimer->setSingleShot(true);
     brighttimer->setInterval(50); //50ms delay in setting the new value
   //Now reset the initial saved settings (this is handles by the LOS/session now - 4/22/15)
+  firstrun = true;
   UpdateMenu(); //do this once before all the signals/slots are connected below
-	
+  firstrun = false;
   //Now setup the connections
   connect(ui->slider_volume, SIGNAL(valueChanged(int)), this, SLOT(volSliderChanged()) );
   connect(ui->slider_brightness, SIGNAL(valueChanged(int)), this, SLOT(brightSliderChanged()) );
@@ -26,6 +27,7 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
   connect(ui->tool_logout, SIGNAL(clicked()), this, SLOT(startLogout()) );
   connect(ui->tool_vol_mixer, SIGNAL(clicked()), this, SLOT(startMixer()) );
   connect(brighttimer, SIGNAL(timeout()), this, SLOT(setCurrentBrightness()) );
+  connect(ui->combo_locale, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLocale()) );
   //And setup the default icons
   ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-system-power-management","").pixmap(ui->label_bright_icon->maximumSize()) );
   ui->tool_wk_prev->setIcon( LXDG::findIcon("go-previous-view",""));
@@ -66,8 +68,27 @@ void LSysMenuQuick::UpdateMenu(){
     ui->label_bright_text->setText(txt);
     if(ui->slider_brightness->value()!=val){ ui->slider_brightness->setValue(val); }
   }
+  
+  //Do any one-time checks
+  if(firstrun){
+    hasBat = LOS::hasBattery(); //No need to check this more than once - will not change in the middle of a session
+    //Current Locale
+    QStringList locales = LUtils::knownLocales();
+    ui->combo_locale->clear();
+    QLocale curr;
+    for(int i=0; i<locales.length(); i++){
+      QLocale loc(locales[i]);
+      ui->combo_locale->addItem(loc.nativeLanguageName(), locales[i]); //Make the display text prettier later
+      if(locales[i] == curr.name() || locales[i] == curr.name().section("_",0,0) ){
+        //Current Locale
+	ui->combo_locale->setCurrentIndex(ui->combo_locale->count()-1); //the last item in the list right now
+      }
+    }
+    ui->group_locale->setVisible(locales.length() > 1);
+  }
+  
   //Battery Status
-  if(LOS::hasBattery()){
+  if(hasBat){
     ui->group_battery->setVisible(true);
     val = LOS::batteryCharge();
     if(LOS::batteryIsCharging()){
@@ -177,4 +198,11 @@ QString LSysMenuQuick::getRemainingTime(){
 void LSysMenuQuick::startLogout(){
   emit CloseMenu();
   LSession::handle()->systemWindow();
+}
+
+void LSysMenuQuick::changeLocale(){
+  //Get the currently selected Locale
+  QString locale = ui->combo_locale->currentData().toString();
+  emit CloseMenu();
+  LSession::handle()->switchLocale(locale);
 }

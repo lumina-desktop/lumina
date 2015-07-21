@@ -176,12 +176,15 @@ QStringList LUtils::imageExtensions(){
 
 QStringList LUtils::knownLocales(){
   QDir i18n = QDir(LOS::LuminaShare()+"i18n");
+    if( !i18n.exists() ){ return QStringList(); }
   QStringList files = i18n.entryList(QStringList() << "lumina-desktop_*.qm", QDir::Files, QDir::Name);
+    if(files.isEmpty()){ return QStringList(); }
   //Now strip off the filename and just leave the locale tag
   for(int i=0; i<files.length(); i++){
      files[i].chop(3); //remove the ".qm" on the end
      files[i] = files[i].section("_",1,50).simplified();
   }
+  files << "en_US"; //default locale
   files.sort();
   return files;
 }

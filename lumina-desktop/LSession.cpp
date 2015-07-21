@@ -90,6 +90,19 @@ void LSession::setupSession(){
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   sessionsettings = new QSettings("LuminaDE", "sessionsettings");
   DPlugSettings = new QSettings("pluginsettings","desktopsettings");
+  //Load the proper translation files
+  if(sessionsettings->value("ForceInitialLocale",false).toBool()){
+    //Some system locale override it in place - change the env first
+    LUtils::setLocaleEnv( sessionsettings->value("InitLocale/LANG","").toString(), \
+				sessionsettings->value("InitLocale/LC_MESSAGES","").toString(), \
+				sessionsettings->value("InitLocale/LC_TIME","").toString(), \
+				sessionsettings->value("InitLocale/LC_NUMERIC","").toString(), \
+				sessionsettings->value("InitLocale/LC_MONETARY","").toString(), \
+				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
+				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
+  }
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop"); 
+//use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
@@ -552,6 +565,13 @@ QSettings* LSession::sessionSettings(){
 
 QSettings* LSession::DesktopPluginSettings(){
   return DPlugSettings;
+}
+
+//Temporarily change the session locale (nothing saved between sessions)
+void LSession::switchLocale(QString localeCode){
+  LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator); 
+  emit LocaleChanged();
 }
 
 void LSession::systemWindow(){

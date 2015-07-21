@@ -32,7 +32,7 @@ public:
 private:
 	Ui::LSysMenuQuick *ui;
 	QTimer *brighttimer;
-
+	bool firstrun, hasBat;
 	QString getRemainingTime(); //battery time left
 
 private slots:
@@ -43,6 +43,7 @@ private slots:
 	void nextWorkspace();
 	void prevWorkspace();
 	void startLogout();
+	void changeLocale();
 
 
 signals:

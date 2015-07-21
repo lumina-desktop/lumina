@@ -84,6 +84,9 @@ public:
 	QSettings* sessionSettings();
 	QSettings* DesktopPluginSettings();
 	
+	//Temporarily change the session locale (nothing saved between sessions)
+	void switchLocale(QString localeCode);
+	
 	//Play System Audio
 	void playAudioFile(QString filepath);
 	//Window Adjustment Routine (due to Fluxbox not respecting _NET_WM_STRUT)
