@@ -49,8 +49,12 @@ public:
 	static QStringList imageExtensions();
 	
 	//Load a translation file for a Lumina Project
-	static void LoadTranslation(QApplication *app, QString appname);
-
+	static void LoadTranslation(QApplication *app, QString appname, QString locale = "");
+	//Other localization shortcuts
+	static QStringList knownLocales(); //Note: This only lists locales known to Lumina (so the i18n files need to be installed)
+	static void setLocaleEnv(QString lang, QString msg="", QString time="", QString num="" ,QString money="",QString collate="", QString ctype="");
+	
+	//Number format conversions
 	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)
 
 	//Various function for finding valid QtQuick plugins on the system

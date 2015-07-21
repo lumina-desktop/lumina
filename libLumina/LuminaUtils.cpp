@@ -130,11 +130,12 @@ QStringList LUtils::imageExtensions(){
   return imgExtensions;
 }
 
-void LUtils::LoadTranslation(QApplication *app, QString appname){
+void LUtils::LoadTranslation(QApplication *app, QString appname, QString locale){
    //Get the current localization
     QString langEnc = "UTF-8"; //default value
-    QString langCode = getenv("LANG");
+    QString langCode = locale; //provided locale
     if(langCode.isEmpty()){ langCode = getenv("LC_ALL"); }
+    if(langCode.isEmpty()){ langCode = getenv("LANG"); }
     if(langCode.isEmpty()){ langCode = "en_US.UTF-8"; } //default to US english
     //See if the encoding is included and strip it out as necessary
     if(langCode.contains(".")){
@@ -161,6 +162,73 @@ void LUtils::LoadTranslation(QApplication *app, QString appname){
     }
     //Load current encoding for this locale
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
+}
+
+QStringList LUtils::knownLocales(){
+  QDir i18n = QDir(LOS::LuminaShare()+"i18n");
+  QStringList files = i18n.entryList(QStringList() << "lumina-desktop_*.qm", QDir::Files, QDir::Name);
+  //Now strip off the filename and just leave the locale tag
+  for(int i=0; i<files.length(); i++){
+     files[i].chop(3); //remove the ".qm" on the end
+     files[i] = files[i].section("_",1,50).simplified();
+  }
+  files.sort();
+  return files;
+}
+
+void LUtils::setLocaleEnv(QString lang, QString msg, QString time, QString num,QString money,QString collate, QString ctype){
+  //Adjust the current locale environment variables
+  bool all = false;
+  if(msg.isEmpty() && time.isEmpty() && num.isEmpty() && money.isEmpty() && collate.isEmpty() && ctype.isEmpty() ){
+    if(lang.isEmpty()){ return; } //nothing to do - no changes requested
+    all = true; //set everything to the "lang" value
+  }
+  //If no lang given, but others are given, then use the current setting
+  if(lang.isEmpty()){ lang = getenv("LC_ALL"); }
+  if(lang.isEmpty()){ lang = getenv("LANG"); }
+  if(lang.isEmpty()){ lang = "en_US"; }
+  //Now go through and set/unset the environment variables
+  // - LANG & LC_ALL
+  if(!lang.contains(".")){ lang.append(".UTF-8"); }
+  setenv("LANG",lang.toUtf8() ,1); //overwrite setting (this is always required as the fallback)
+  if(all){ setenv("LC_ALL",lang.toUtf8() ,1); }
+  else{ unsetenv("LC_ALL"); } //make sure the custom settings are used
+  // - LC_MESSAGES
+  if(msg.isEmpty()){ unsetenv("LC_MESSAGES"); }
+  else{
+    if(!msg.contains(".")){ msg.append(".UTF-8"); }
+    setenv("LC_MESSAGES",msg.toUtf8(),1);
+  }
+  // - LC_TIME
+  if(time.isEmpty()){ unsetenv("LC_TIME"); }
+  else{
+    if(!time.contains(".")){ time.append(".UTF-8"); }
+    setenv("LC_TIME",time.toUtf8(),1);
+  }
+    // - LC_NUMERIC
+  if(num.isEmpty()){ unsetenv("LC_NUMERIC"); }
+  else{
+    if(!num.contains(".")){ num.append(".UTF-8"); }
+    setenv("LC_NUMERIC",num.toUtf8(),1);
+  }
+    // - LC_MONETARY
+  if(money.isEmpty()){ unsetenv("LC_MONETARY"); }
+  else{
+    if(!money.contains(".")){ money.append(".UTF-8"); }
+    setenv("LC_MONETARY",money.toUtf8(),1);
+  }
+    // - LC_COLLATE
+  if(collate.isEmpty()){ unsetenv("LC_COLLATE"); }
+  else{
+    if(!collate.contains(".")){ collate.append(".UTF-8"); }
+    setenv("LC_COLLATE",collate.toUtf8(),1);
+  }
+    // - LC_CTYPE
+  if(ctype.isEmpty()){ unsetenv("LC_CTYPE"); }
+  else{
+    if(!ctype.contains(".")){ ctype.append(".UTF-8"); }
+    setenv("LC_CTYPE",ctype.toUtf8(),1);
+  }	
 }
 
 double LUtils::DisplaySizeToBytes(QString num){
