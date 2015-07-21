@@ -130,7 +130,7 @@ QStringList LUtils::imageExtensions(){
   return imgExtensions;
 }
 
-void LUtils::LoadTranslation(QApplication *app, QString appname, QString locale){
+ QTranslator* LUtils::LoadTranslation(QApplication *app, QString appname, QString locale, QTranslator *cTrans){
    //Get the current localization
     QString langEnc = "UTF-8"; //default value
     QString langCode = locale; //provided locale
@@ -148,20 +148,30 @@ void LUtils::LoadTranslation(QApplication *app, QString appname, QString locale)
     }
     if(app !=0){
       qDebug() << "Loading Locale:" << appname << langCode << langEnc;
+      //If an existing translator was provided, remove it first (will be replaced)
+      if(cTrans!=0){ app->removeTranslator(cTrans); }
       //Setup the translator
-      QTranslator *CurTranslator = new QTranslator();
+      cTrans = new QTranslator();
       //Use the shortened locale code if specific code does not have a corresponding file
-      if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") ){
+      if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") && langCode!="en_US" ){
         langCode.truncate( langCode.indexOf("_") );
       }
-      CurTranslator->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" );
-      app->installTranslator( CurTranslator );
+      if( cTrans->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" ) ){
+        app->installTranslator( cTrans );
+      }else{
+	//Translator could not be loaded for some reason
+	cTrans = 0;
+	if(langCode!="en_US"){
+	  qWarning() << " - Could not load Locale:" << langCode;
+	}
+      }
     }else{
       //Only going to set the encoding since no application given
       qDebug() << "Loading System Encoding:" << langEnc;
     }
     //Load current encoding for this locale
     QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
+    return cTrans;
 }
 
 QStringList LUtils::knownLocales(){

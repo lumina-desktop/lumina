@@ -43,6 +43,7 @@ private:
 	QLockFile *lockfile;
 	QLocalServer *lserver;
 	QString cfile;
+	QTranslator *cTrans; //current translation
 
 
 	void PerformLockChecks();

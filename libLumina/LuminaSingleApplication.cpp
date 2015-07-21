@@ -14,7 +14,7 @@
 
 LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) : QApplication(argc, argv){
   //Load the proper translation systems
-  LUtils::LoadTranslation(this, appname);
+  cTrans = LUtils::LoadTranslation(this, appname); //save the translator for later
   //Initialize a couple convenience internal variables
   cfile = QDir::tempPath()+"/.LSingleApp-%1-%2";
   QString username = QString(getlogin());
