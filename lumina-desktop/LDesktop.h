@@ -81,6 +81,8 @@ private slots:
 	void InitDesktop();
 	void SettingsChanged();
 	void UnlockSettings(){ issyncing=false; }
+	void LocaleChanged();
+	
 	//Menu functions
 	void UpdateMenu(bool fast = false);
 	void ShowMenu(){

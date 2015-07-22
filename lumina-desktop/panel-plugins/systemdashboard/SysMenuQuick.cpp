@@ -40,6 +40,7 @@ LSysMenuQuick::~LSysMenuQuick(){
 }
 
 void LSysMenuQuick::UpdateMenu(){
+  ui->retranslateUi(this);
   //Audio Volume
   int val = LOS::audioVolume();	
   QIcon ico;

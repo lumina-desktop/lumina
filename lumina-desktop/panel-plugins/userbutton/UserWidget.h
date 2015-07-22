@@ -37,7 +37,8 @@ public:
 	~UserWidget();
 
 public slots:
-	void UpdateMenu();
+	void UpdateAll(); //for re-translation/icon changes
+	void UpdateMenu(bool forceall = false); //for item changes
 
 private:
 	Ui::UserWidget *ui;

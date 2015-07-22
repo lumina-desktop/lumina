@@ -16,6 +16,7 @@ AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
   //QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
   start(); //do the initial run during session init so things are responsive immediately.
+  connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(watcherUpdate()) );
 }
 
 AppMenu::~AppMenu(){
@@ -30,6 +31,10 @@ QHash<QString, QList<XDGDesktop> >* AppMenu::currentAppHash(){
 //  PRIVATE
 //===========
 void AppMenu::updateAppList(){
+  //Make sure the title/icon are updated as well (in case of locale/icon change)
+  this->setTitle(tr("Applications"));
+  this->setIcon( LXDG::findIcon("system-run","") );
+  //Now update the lists
   this->clear();
   APPS.clear();
   QList<XDGDesktop> allfiles = LXDG::systemDesktopFiles();
@@ -91,8 +96,6 @@ void AppMenu::updateAppList(){
 //  PRIVATE SLOTS
 //=================
 void AppMenu::start(){
-  this->setTitle(tr("Applications"));
-  this->setIcon( LXDG::findIcon("system-run","") );
   //Setup the watcher
   watcher->addPaths(LXDG::systemApplicationDirs());
   //Now fill the menu the first time

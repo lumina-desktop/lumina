@@ -53,9 +53,7 @@ LDeskBarPlugin::~LDeskBarPlugin(){
 void LDeskBarPlugin::initializeDesktop(){
   //Applications on the desktop
   appB = new QToolButton(this);
-    appB->setIcon( LXDG::findIcon("favorites", "") );
     appB->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    appB->setToolTip(tr("Favorite Applications"));
     appB->setAutoRaise(true);
     appB->setPopupMode(QToolButton::InstantPopup);
   appM = new QMenu(this);
@@ -64,9 +62,7 @@ void LDeskBarPlugin::initializeDesktop(){
     connect(appM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
   //Directories on the desktop
   dirB = new QToolButton(this);
-    dirB->setIcon( LXDG::findIcon("folder", "") );
     dirB->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    dirB->setToolTip(tr("Favorite Folders"));
     dirB->setAutoRaise(true);
     dirB->setPopupMode(QToolButton::InstantPopup);
   dirM = new QMenu(this);
@@ -74,34 +70,29 @@ void LDeskBarPlugin::initializeDesktop(){
     this->layout()->addWidget(dirB);
     connect(dirM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
   //Audio Files on the desktop
-  audioM = new QMenu(tr("Audio"), this);
+  audioM = new QMenu(this);
     connect(audioM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
-    audioM->setIcon( LXDG::findIcon("audio-x-generic","") );
   //Video Files on the desktop
-  videoM = new QMenu(tr("Video"), this);
+  videoM = new QMenu(this);
     connect(videoM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
-    videoM->setIcon( LXDG::findIcon("video-x-generic","") );
   //Picture Files on the desktop
-  pictureM = new QMenu(tr("Pictures"), this);
+  pictureM = new QMenu(this);
     connect(pictureM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
-    pictureM->setIcon( LXDG::findIcon("image-x-generic","") );
   //Other Files on the desktop
-  otherM = new QMenu(tr("Other Files"), this);
+  otherM = new QMenu(this);
     connect(otherM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
-    otherM->setIcon( LXDG::findIcon("unknown","") );
-  docM = new QMenu(tr("Documents"), this);
+  docM = new QMenu(this);
     connect(docM,SIGNAL(triggered(QAction*)), this,SLOT(ActionTriggered(QAction*)) );
-    docM->setIcon( LXDG::findIcon("x-office-document","") );
   //All Files Button
   fileB = new QToolButton(this);
-    fileB->setIcon( LXDG::findIcon("document-multiple", "") );
     fileB->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    fileB->setToolTip(tr("Favorite Files") );
     fileB->setAutoRaise(true);
     fileB->setPopupMode(QToolButton::InstantPopup);
   fileM = new QMenu(this);
     fileB->setMenu(fileM);
     this->layout()->addWidget(fileB);
+    
+    updateIcons(); //set all the text/icons
 }
 
 QAction* LDeskBarPlugin::newAction(QString filepath, QString name, QString iconpath){
@@ -231,3 +222,22 @@ void LDeskBarPlugin::desktopChanged(){
   fileB->setVisible( !fileM->isEmpty() );
 }
 	
+void LDeskBarPlugin::updateIcons(){
+  //Set all the text/icons
+    appB->setIcon( LXDG::findIcon("favorites", "") );
+    appB->setToolTip(tr("Favorite Applications"));
+    dirB->setIcon( LXDG::findIcon("folder", "") );
+    dirB->setToolTip(tr("Favorite Folders"));
+    audioM->setTitle( tr("Audio") );
+    audioM->setIcon( LXDG::findIcon("audio-x-generic","") );
+    videoM->setTitle( tr("Video") );
+    videoM->setIcon( LXDG::findIcon("video-x-generic","") );
+    pictureM->setTitle( tr("Pictures") );
+    pictureM->setIcon( LXDG::findIcon("image-x-generic","") );
+    otherM->setTitle( tr("Other Files") );
+    otherM->setIcon( LXDG::findIcon("unknown","") );
+    docM->setTitle( tr("Documents") );
+    docM->setIcon( LXDG::findIcon("x-office-document","") );
+    fileB->setIcon( LXDG::findIcon("document-multiple", "") );
+    fileB->setToolTip(tr("Favorite Files") );
+}

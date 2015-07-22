@@ -15,6 +15,7 @@
 #include <QWidget>
 #include <QString>
 #include <QBoxLayout>
+#include <QApplication>
 
 class LPPlugin : public QWidget{
 	Q_OBJECT
@@ -34,6 +35,7 @@ public:
 	  LY->setContentsMargins(0,0,0,0);
 	  LY->setSpacing(1);
 	  this->setLayout(LY);
+	  connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChange()) );
 	}
 	
 	~LPPlugin(){

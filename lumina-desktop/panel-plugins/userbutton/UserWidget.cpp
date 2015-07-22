@@ -14,29 +14,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   if(parent!=0){ parent->setMouseTracking(true); }
   this->setMouseTracking(true);
   sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
-  //Setup the Icons
-    // - favorites tab
-    this->setTabIcon(0, rotateIcon(LXDG::findIcon("folder-favorites","")) );
-    this->setTabText(0,"");
-    // - apps tab
-    this->setTabIcon(1, rotateIcon(LXDG::findIcon("system-run","")) );
-    this->setTabText(1,"");
-    // - home tab
-    this->setTabIcon(2, rotateIcon(LXDG::findIcon("user-home","")) );
-    this->setTabText(2,"");
-    // - config tab
-    this->setTabIcon(3, rotateIcon(LXDG::findIcon("preferences-system","")) );
-    this->setTabText(3,"");
-  ui->tool_fav_apps->setIcon( LXDG::findIcon("system-run","") );
-  ui->tool_fav_dirs->setIcon( LXDG::findIcon("folder","") );
-  ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
-  ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
-  ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
-  ui->tool_config_screensettings->setIcon( LXDG::findIcon("preferences-other","") );
-  ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
-  ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
-  ui->tool_home_search->setIcon( LXDG::findIcon("system-search","") );
-  ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
+  
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
   connect(ui->tool_config_screensaver, SIGNAL(clicked()), this, SLOT(openScreenSaverConfig()) );
@@ -51,46 +29,15 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->tool_config_about, SIGNAL(clicked()), this, SLOT(openLuminaInfo()) );
   
   //Setup the special buttons
-  QString APPSTORE = LOS::AppStoreShortcut();
-  if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){
-    //Now load the info
-    bool ok = false;
-    XDGDesktop store = LXDG::loadDesktopFile(APPSTORE, ok);
-    if(ok){
-      ui->tool_app_store->setIcon( LXDG::findIcon(store.icon, "") );
-      ui->tool_app_store->setText( store.name );
-      connect(ui->tool_app_store, SIGNAL(clicked()), this, SLOT(openStore()) );
-    }
-    ui->tool_app_store->setVisible(ok); //availability
-  }else{
-    ui->tool_app_store->setVisible(false); //not available
-  }
-  QString CONTROLPANEL = LOS::ControlPanelShortcut();
-  if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
-    //Now load the info
-    bool ok = false;
-    XDGDesktop cpan = LXDG::loadDesktopFile(CONTROLPANEL, ok);
-    if(ok){
-      ui->tool_controlpanel->setIcon( LXDG::findIcon(cpan.icon, "") );
-      connect(ui->tool_controlpanel, SIGNAL(clicked()), this, SLOT(openControlPanel()) );
-    }
-    ui->tool_controlpanel->setVisible(ok); //availability
-  }else{
-    ui->tool_controlpanel->setVisible(false); //not available
-  }
-  QString QTCONFIG = LOS::QtConfigShortcut();
-  if(QFile::exists(QTCONFIG) && !QTCONFIG.isEmpty()){
-    ui->tool_qtconfig->setVisible(true);
-    ui->tool_qtconfig->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
-    connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );
-  }else{
-    ui->tool_qtconfig->setVisible(false);
-  }
+  connect(ui->tool_app_store, SIGNAL(clicked()), this, SLOT(openStore()) );
+  connect(ui->tool_controlpanel, SIGNAL(clicked()), this, SLOT(openControlPanel()) );
+  connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );
+  
   lastUpdate = QDateTime(); //make sure it refreshes 
 
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()) );
   connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateFavItems()) );
-  QTimer::singleShot(10,this, SLOT(UpdateMenu())); //make sure to load this once after initialization
+  QTimer::singleShot(10,this, SLOT(UpdateAll())); //make sure to load this once after initialization
 }
 
 UserWidget::~UserWidget(){
@@ -152,7 +99,70 @@ QIcon UserWidget::rotateIcon(QIcon ico){
 //============
 //  PRIVATE SLOTS
 //============
-void UserWidget::UpdateMenu(){
+void UserWidget::UpdateAll(){
+  ui->retranslateUi(this);
+  //Setup the Icons
+    // - favorites tab
+    this->setTabIcon(0, rotateIcon(LXDG::findIcon("folder-favorites","")) );
+    this->setTabText(0,"");
+    // - apps tab
+    this->setTabIcon(1, rotateIcon(LXDG::findIcon("system-run","")) );
+    this->setTabText(1,"");
+    // - home tab
+    this->setTabIcon(2, rotateIcon(LXDG::findIcon("user-home","")) );
+    this->setTabText(2,"");
+    // - config tab
+    this->setTabIcon(3, rotateIcon(LXDG::findIcon("preferences-system","")) );
+    this->setTabText(3,"");
+  ui->tool_fav_apps->setIcon( LXDG::findIcon("system-run","") );
+  ui->tool_fav_dirs->setIcon( LXDG::findIcon("folder","") );
+  ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
+  ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
+  ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
+  ui->tool_config_screensettings->setIcon( LXDG::findIcon("preferences-other","") );
+  ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
+  ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
+  ui->tool_home_search->setIcon( LXDG::findIcon("system-search","") );
+  ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
+  
+  //Setup the special buttons
+  QString APPSTORE = LOS::AppStoreShortcut();
+  if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){
+    //Now load the info
+    bool ok = false;
+    XDGDesktop store = LXDG::loadDesktopFile(APPSTORE, ok);
+    if(ok){
+      ui->tool_app_store->setIcon( LXDG::findIcon(store.icon, "") );
+      ui->tool_app_store->setText( store.name );
+    }
+    ui->tool_app_store->setVisible(ok); //availability
+  }else{
+    ui->tool_app_store->setVisible(false); //not available
+  }
+  QString CONTROLPANEL = LOS::ControlPanelShortcut();
+  if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
+    //Now load the info
+    bool ok = false;
+    XDGDesktop cpan = LXDG::loadDesktopFile(CONTROLPANEL, ok);
+    if(ok){
+      ui->tool_controlpanel->setIcon( LXDG::findIcon(cpan.icon, "") );
+    }
+    ui->tool_controlpanel->setVisible(ok); //availability
+  }else{
+    ui->tool_controlpanel->setVisible(false); //not available
+  }
+  QString QTCONFIG = LOS::QtConfigShortcut();
+  if(QFile::exists(QTCONFIG) && !QTCONFIG.isEmpty()){
+    ui->tool_qtconfig->setVisible(true);
+    ui->tool_qtconfig->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
+  }else{
+    ui->tool_qtconfig->setVisible(false);
+  }
+  //Now update the menus
+  UpdateMenu();	
+}
+
+void UserWidget::UpdateMenu(bool forceall){
     this->setCurrentWidget(ui->tab_fav);
     ui->tool_fav_apps->setChecked(true);
     ui->tool_fav_dirs->setChecked(false);
@@ -160,15 +170,15 @@ void UserWidget::UpdateMenu(){
     cfav = 0; //favorite apps
     updateFavItems();
     QString cdir = ui->label_home_dir->whatsThis();
-    if(cdir.isEmpty() || !QFile::exists(cdir) ){ 
+    if(cdir.isEmpty() || !QFile::exists(cdir)){ 
       //Directory deleted or nothing loaded yet
       ui->label_home_dir->setWhatsThis(QDir::homePath());
       QTimer::singleShot(0,this, SLOT(updateHome()) );
-    }else if( lastUpdate < QFileInfo(cdir).lastModified() ){
+    }else if( lastUpdate < QFileInfo(cdir).lastModified() || forceall){
       //Directory contents changed - reload it
       QTimer::singleShot(0,this, SLOT(updateHome()) );
     }
-  if(lastUpdate < LSession::handle()->applicationMenu()->lastHashUpdate || lastUpdate.isNull()){
+  if(lastUpdate < LSession::handle()->applicationMenu()->lastHashUpdate || lastUpdate.isNull() || forceall){
     updateAppCategories();
     QTimer::singleShot(0,this, SLOT(updateApps()) );
   }

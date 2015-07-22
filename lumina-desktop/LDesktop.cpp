@@ -282,11 +282,10 @@ void LDesktop::InitDesktop(){
   bgtimer = new QTimer(this);
     bgtimer->setSingleShot(true);
     connect(bgtimer, SIGNAL(timeout()), this, SLOT(UpdateBackground()) );
-  //watcher = new QFileSystemWatcher(this);
+
     connect(QApplication::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
     connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(UpdateDesktop()) );
-    //watcher->addPath(settings->fileName());
-    //connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(SettingsChanged()) );
+    connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChanged()) );
 
   if(DEBUG){ qDebug() << "Create bgWindow"; }
   bgWindow = new QWidget();
@@ -320,6 +319,13 @@ void LDesktop::SettingsChanged(){
   UpdateMenu();
   issyncing = false;
   QTimer::singleShot(100, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
+}
+
+void LDesktop::LocaleChanged(){
+  //Update any elements which require a re-translation
+  UpdateMenu(false); //do the full menu refresh
+  
+	
 }
 
 void LDesktop::UpdateMenu(bool fast){

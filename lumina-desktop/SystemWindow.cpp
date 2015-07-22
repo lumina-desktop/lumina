@@ -30,6 +30,7 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   //Disable buttons if necessary
   updateWindow();
   ui->tool_suspend->setVisible(LOS::systemCanSuspend()); //does not change with time - just do a single check
+  connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(updateWindow()) );
 }
 
 SystemWindow::~SystemWindow(){
@@ -38,6 +39,7 @@ SystemWindow::~SystemWindow(){
 
 void SystemWindow::updateWindow(){
   //Disable the shutdown/restart buttons if necessary
+  ui->retranslateUi(this);
   bool ok = LOS::userHasShutdownAccess();
     ui->tool_restart->setEnabled(ok);
     ui->tool_shutdown->setEnabled(ok);

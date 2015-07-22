@@ -62,6 +62,7 @@ public slots:
 	
 	void LocaleChange(){ 
 	  updateButtonVisuals();
+	  usermenu->UpdateAll();
 	}
 	
 	void ThemeChange(){

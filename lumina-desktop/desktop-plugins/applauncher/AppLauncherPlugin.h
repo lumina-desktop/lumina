@@ -42,6 +42,10 @@ private slots:
 	void increaseIconSize();
 	void decreaseIconSize();
 	void deleteFile();
-	
+
+public slots:
+	void LocaleChange(){
+	  loadButton(true); //force reload
+	}
 };
 #endif

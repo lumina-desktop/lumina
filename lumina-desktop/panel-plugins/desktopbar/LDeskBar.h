@@ -61,8 +61,14 @@ private:
 private slots:
 	void ActionTriggered(QAction* act);
 	void desktopChanged();
-	
+	void updateIcons();
+
 public slots:
+	void LocaleChange(){
+	  updateIcons();
+	  desktopChanged();
+	}
+	
 	void OrientationChange(){
 	  QSize sz;
 	  if(this->layout()->direction()==QBoxLayout::LeftToRight){

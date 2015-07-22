@@ -26,6 +26,7 @@ public:
 	SystemWindow();
 	~SystemWindow();
 
+public slots:
 	void updateWindow();
 
 private:

@@ -50,6 +50,10 @@ private slots:
 	void menuActionTriggered(QAction*);
 
 public slots:
+	void LocaleChange(){
+	  createMenu();
+	}
+	
 	void OrientationChange(){
 	  QSize sz;
 	  if(this->layout()->direction()==QBoxLayout::LeftToRight){

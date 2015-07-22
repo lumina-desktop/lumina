@@ -36,6 +36,10 @@ private slots:
 	QString getRemainingTime();
 
 public slots:
+	void LocaleChange(){
+	  updateBattery(true);
+	}
+	
 	void OrientationChange(){
 	  if(this->layout()->direction()==QBoxLayout::LeftToRight){
 	    label->setFixedSize( QSize(this->height(), this->height()) );

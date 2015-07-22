@@ -10,17 +10,21 @@
 #include <LuminaOS.h>
 
 SettingsMenu::SettingsMenu() : QMenu(){
-  QTimer::singleShot(100, this, SLOT(InitMenu()) );
+  connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
+  connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(UpdateMenu()) );
+	
+  QTimer::singleShot(100, this, SLOT(UpdateMenu()) );
 }
 
 SettingsMenu::~SettingsMenu(){
 	
 }
 
-void SettingsMenu::InitMenu(){
+void SettingsMenu::UpdateMenu(){
+  //Change the title/icon to account for locale/icon changes
   this->setTitle( tr("Settings") );
   this->setIcon( LXDG::findIcon("configure","") );
-  connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
+  this->clear();
   //Now setup the possible configuration options
   QAction *act = new QAction(LXDG::findIcon("preferences-desktop-screensaver",""), tr("Screensaver"), this);
 	act->setWhatsThis("xscreensaver-demo");
@@ -53,6 +57,7 @@ void SettingsMenu::InitMenu(){
 	act->setWhatsThis("lumina-info");
 	this->addAction(act);  
 }
+
 
 void SettingsMenu::runApp(QAction* act){
   LSession::LaunchApplication(act->whatsThis());
