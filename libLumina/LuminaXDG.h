@@ -30,11 +30,20 @@
 #include <QDateTime>
 #include <QDebug>
 
+class XDGDesktopAction{
+public:
+  //Admin variables
+  QString ID; //The ID name for this action (should correspond to an entry in the "actionList" for the XDGDesktop below)
+  //General Variables
+  QString name, icon, exec;
+};
+
 class XDGDesktop{
 public:
   enum XDGDesktopType { BAD, APP, LINK, DIR };
   //Admin variables
   QString filePath; //which file this structure contains the information for (absolute path)
+  QDateTime lastRead; //when this structure was created from the file
   XDGDesktopType type;
   //General variables
   QString name, genericName, comment, icon;
@@ -44,6 +53,7 @@ public:
   QString exec, tryexec, path, startupWM;
   QStringList actionList, mimeList, catList, keyList;
   bool useTerminal, startupNotify;
+  QList<XDGDesktopAction> actions;
   //Type 2 (LINK) variables
   QString url;
   
