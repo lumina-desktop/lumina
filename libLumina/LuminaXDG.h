@@ -81,7 +81,7 @@ public:
 	//Sort a list of Desktop files by name
 	static QList<XDGDesktop> sortDesktopNames(QList<XDGDesktop> apps);
 	//Get the executable line from a Desktop file
-	static QString getDesktopExec(XDGDesktop);
+	static QString getDesktopExec(XDGDesktop app, QString ActionID = "");
 	//Set all the default XDG Environment variables
 	static void setEnvironmentVars();
 	//Find an icon from the current/default theme

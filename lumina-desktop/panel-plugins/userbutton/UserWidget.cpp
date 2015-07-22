@@ -188,7 +188,7 @@ void UserWidget::UpdateMenu(bool forceall){
 void UserWidget::LaunchItem(QString path, bool fix){
   if(!path.isEmpty()){
     qDebug() << "Launch Application:" << path;
-    if(fix){ LSession::LaunchApplication("lumina-open \""+path+"\""); }
+    if( fix && !path.startsWith("lumina-open") ){ LSession::LaunchApplication("lumina-open \""+path+"\""); }
     else{ LSession::LaunchApplication(path); }
     emit CloseMenu(); //so the menu container will close
   }

@@ -148,7 +148,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Get the input file
     //Make sure to load the proper system encoding first
     LUtils::LoadTranslation(0,""); //bypass application modification
-  QString inFile;
+  QString inFile, ActionID;
   bool showDLG = false; //flag to bypass any default application setting
   if(argc > 1){
     for(int i=1; i<argc; i++){
@@ -184,6 +184,9 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
 	  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
 	}
 	return;
+      }else if( (QString(argv[i]).simplified() =="-action") && (argc>(i+1)) ){
+        ActionID = QString(argv[i+1]);
+	i++; //skip the next input
       }else{
         inFile = QString::fromLocal8Bit(argv[i]);
         break;
@@ -224,7 +227,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     switch(DF.type){
       case XDGDesktop::APP:
         if(!DF.exec.isEmpty()){
-          cmd = LXDG::getDesktopExec(DF);
+          cmd = LXDG::getDesktopExec(DF,ActionID);
           if(!DF.path.isEmpty()){ path = DF.path; }
 	  watch = DF.startupNotify;
         }else{
@@ -254,6 +257,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
         }
         break;
       default:
+	qDebug() << DF.type << DF.name << DF.icon << DF.exec;
 	ShowErrorDialog( argc, argv, QString(QObject::tr("Unknown type of shortcut : %1")).arg(inFile) );
     }
   }

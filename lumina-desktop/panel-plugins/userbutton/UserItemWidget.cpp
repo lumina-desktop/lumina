@@ -6,6 +6,7 @@
 //===========================================
 #include "UserItemWidget.h"
 #include <LuminaUtils.h>
+#include <QMenu>
 
 #define TEXTCUTOFF 165
 UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
@@ -19,11 +20,14 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
     if(ok){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
+      setupActions(item);
     }else{
       icon->setPixmap( LXDG::findIcon("unknown","").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
+      actButton->setVisible(false);
     }
   }else if(type=="dir"){
+    actButton->setVisible(false);
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(goback){
       icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(32,32) );
@@ -33,6 +37,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
       name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
     }
   }else{
+    actButton->setVisible(false);
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(QFileInfo(itemPath).isDir()){
       type = "dir";
@@ -75,9 +80,9 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent
   name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) ); 
   this->setWhatsThis(name->text());
   icon->setWhatsThis(item.filePath);
-  //Now setup the button appropriately
+  //Now setup the buttons appropriately
   setupButton();
-
+  setupActions(item);
 }
 
 UserItemWidget::~UserItemWidget(){ 
@@ -93,12 +98,17 @@ void UserItemWidget::createWidget(){
   button = new QToolButton(this);
     button->setIconSize( QSize(14,14) );
     button->setAutoRaise(true);
+  actButton = new QToolButton(this);
+    actButton->setPopupMode(QToolButton::InstantPopup);
+    actButton->setFixedSize( QSize(17,34) );
+    actButton->setArrowType(Qt::DownArrow);
   icon = new QLabel(this);
     icon->setFixedSize( QSize(34,34) );
   name = new QLabel(this);
   //Add them to the layout
   this->setLayout(new QHBoxLayout());
     this->layout()->setContentsMargins(1,1,1,1);
+    this->layout()->addWidget(actButton);
     this->layout()->addWidget(icon);
     this->layout()->addWidget(name);
     this->layout()->addWidget(button);
@@ -138,6 +148,19 @@ void UserItemWidget::setupButton(bool disable){
   }
 }
 
+void UserItemWidget::setupActions(XDGDesktop app){
+  if(app.actions.isEmpty()){ actButton->setVisible(false); return; }
+  //Actions Available - go ahead and list them all
+  actButton->setMenu( new QMenu(this) );
+  for(int i=0; i<app.actions.length(); i++){
+    QAction *act = new QAction(LXDG::findIcon(app.actions[i].icon, app.icon), app.actions[i].name, this);
+	act->setToolTip(app.actions[i].ID);
+        act->setWhatsThis(app.actions[i].ID);
+        actButton->menu()->addAction(act);	
+  }
+  connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
+}
+
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
   if(button->whatsThis()=="add"){ 
@@ -160,4 +183,12 @@ void UserItemWidget::buttonClicked(){
 void UserItemWidget::ItemClicked(){
   if(!linkPath.isEmpty()){ emit RunItem(linkPath); }
   else{ emit RunItem(icon->whatsThis()); }
+}
+
+void UserItemWidget::actionClicked(QAction *act){
+  actButton->menu()->hide();
+  QString cmd = "lumina-open -action \""+act->whatsThis()+"\" \"%1\"";
+  if(!linkPath.isEmpty()){ cmd = cmd.arg(linkPath); }
+  else{ cmd = cmd.arg(icon->whatsThis()); }
+  emit RunItem(cmd);
 }

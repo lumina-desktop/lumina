@@ -18,6 +18,7 @@
 #include <QDir>
 #include <QFile>
 #include <QMouseEvent>
+#include <QAction>
 
 
 #include <LuminaXDG.h>
@@ -30,17 +31,19 @@ public:
 	~UserItemWidget();
 
 private:
-	QToolButton *button;
+	QToolButton *button, *actButton;
 	QLabel *icon, *name;
 	bool isDirectory, isShortcut;
 	QString linkPath;
 	
 	void createWidget();
 	void setupButton(bool disable = false);
+	void setupActions(XDGDesktop);
 
 private slots:
 	void buttonClicked();
 	void ItemClicked();
+	void actionClicked(QAction*);
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event){

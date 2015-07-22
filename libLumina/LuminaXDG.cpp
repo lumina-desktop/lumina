@@ -25,25 +25,21 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     DF.filePath = filePath;
     DF.lastRead = QDateTime::currentDateTime();
     DF.exec = DF.tryexec = "";   // just to make sure this is initialized
-  //Check input file path validity
-  //QFile file(filePath);
-  //if(!file.exists()){ return DF; } //invalid file
+
   //Get the current localization code
   QString lang = QLocale::system().name(); //lang code
   QString slang = lang.section("_",0,0); //short lang code
-  //Open the file
-  //if(!file.open(QIODevice::Text | QIODevice::ReadOnly)){
-    //return DF;  
-  //}
-  //QTextStream os(&file);
+
   //Read in the File
   bool insection=false;
   bool inaction=false;
   QStringList file = LUtils::readFile(filePath);
   if(file.isEmpty()){ return DF; }
+  //if(filePath.contains("pcbsd")){ qDebug() << "Check File:" << filePath << lang << slang; }
   XDGDesktopAction CDA; //current desktop action
   for(int i=0; i<file.length(); i++){
     QString line = file[i];
+    //if(filePath.contains("pcbsd")){ qDebug() << " - Check Line:" << line << inaction << insection; }
     //Check if this is the end of a section
     if(line.startsWith("[") && inaction){ 
       insection=false; inaction=false;
@@ -57,13 +53,14 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       CDA.ID = line.section("]",0,0).section("Desktop Action",1,1).simplified();
       inaction = true;
       continue;
-    }else if(!insection || !inaction || line.startsWith("#")){ continue; }
+    }else if( (!insection && !inaction) || line.startsWith("#")){ continue; }
     //Now parse out the file
     line = line.simplified();
     QString var = line.section("=",0,0).simplified();
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
     QString val = line.section("=",1,50).simplified();
+    //if(filePath.contains("pcbsd")){ qDebug() << " -- " << var << val << loc; }
     //-------------------
     if(var=="Name"){ 
       if(insection){
@@ -415,14 +412,25 @@ QList<XDGDesktop> LXDG::sortDesktopNames(QList<XDGDesktop> apps){
   return out;
 }
 
-QString LXDG::getDesktopExec(XDGDesktop app){
+QString LXDG::getDesktopExec(XDGDesktop app, QString ActionID){
   //Generate the executable line for the application
   QString out;
-  if(app.exec.isEmpty()){ return ""; }
+  QString exec = app.exec;
+  if( !ActionID.isEmpty() ){
+    //Go through and grab the proper exec for the listed action
+    for(int i=0; i<app.actions.length(); i++){
+      if(app.actions[i].ID == ActionID){
+        exec = app.actions[i].exec;
+        break;
+      }
+    }
+  }
+  
+  if(exec.isEmpty()){ return ""; }
   else if(app.useTerminal){
-    out = "xterm -lc -e "+app.exec;  
+    out = "xterm -lc -e "+exec;  
   }else{
-    out = app.exec;
+    out =exec;
   }
   //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
   if(out.contains("%i") && !app.icon.isEmpty() ){ out.replace("%i", "--icon \'"+app.icon+"\'"); }
