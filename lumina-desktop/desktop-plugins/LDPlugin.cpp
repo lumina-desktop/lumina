@@ -16,6 +16,7 @@ LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
   //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
   this->setObjectName(id.section("---",0,0).section("::",0,0));
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChange()) );
+  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(ThemeChange()) );
 }
 
 void LDPlugin::setInitialSize(int width, int height){

@@ -31,6 +31,7 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   updateWindow();
   ui->tool_suspend->setVisible(LOS::systemCanSuspend()); //does not change with time - just do a single check
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(updateWindow()) );
+  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(updateWindow()) );
 }
 
 SystemWindow::~SystemWindow(){

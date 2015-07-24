@@ -67,6 +67,7 @@ public slots:
 	
 	void ThemeChange(){
 	  updateButtonVisuals();
+	  usermenu->UpdateAll();
 	}
 };
 

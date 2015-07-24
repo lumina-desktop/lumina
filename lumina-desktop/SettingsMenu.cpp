@@ -12,7 +12,7 @@
 SettingsMenu::SettingsMenu() : QMenu(){
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(UpdateMenu()) );
-	
+  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(UpdateMenu()) );	
   QTimer::singleShot(100, this, SLOT(UpdateMenu()) );
 }
 

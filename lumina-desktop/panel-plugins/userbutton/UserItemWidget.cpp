@@ -66,6 +66,10 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
 
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   createWidget();
+  menuopen = false;
+  menureset = new QTimer(this);
+    menureset->setSingleShot(true);
+    menureset->setInterval(1000); //1 second	
   isDirectory = false;
   if(LUtils::isFavorite(item.filePath)){
     linkPath = item.filePath;
@@ -108,8 +112,8 @@ void UserItemWidget::createWidget(){
   //Add them to the layout
   this->setLayout(new QHBoxLayout());
     this->layout()->setContentsMargins(1,1,1,1);
-    this->layout()->addWidget(actButton);
     this->layout()->addWidget(icon);
+    this->layout()->addWidget(actButton);
     this->layout()->addWidget(name);
     this->layout()->addWidget(button);
   //Set a custom object name so this can be tied into the Lumina Theme stylesheets
@@ -159,6 +163,8 @@ void UserItemWidget::setupActions(XDGDesktop app){
         actButton->menu()->addAction(act);	
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
+  connect(actButton->menu(), SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
+  connect(actButton->menu(), SIGNAL(aboutToHide()), this, SLOT(actionMenuClosed()) );
 }
 
 void UserItemWidget::buttonClicked(){

@@ -36,6 +36,7 @@ public:
 	  LY->setSpacing(1);
 	  this->setLayout(LY);
 	  connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChange()) );
+	  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(ThemeChange()) );
 	}
 	
 	~LPPlugin(){

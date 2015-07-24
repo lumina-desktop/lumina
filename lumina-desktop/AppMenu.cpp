@@ -17,6 +17,7 @@ AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   //QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
   start(); //do the initial run during session init so things are responsive immediately.
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(watcherUpdate()) );
+  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(watcherUpdate()) );
 }
 
 AppMenu::~AppMenu(){

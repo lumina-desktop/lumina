@@ -309,6 +309,13 @@ void LSession::StartReboot(){
   QCoreApplication::exit(0);	
 }
 
+void LSession::reloadIconTheme(){
+  //Wait a moment for things to settle before sending out the signal to the interfaces
+  QApplication::processEvents();
+  QApplication::processEvents();
+  emit IconThemeChanged();	
+}
+
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }

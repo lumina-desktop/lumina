@@ -127,6 +127,8 @@ public slots:
 	void StartShutdown();
 	void StartReboot();
 
+	void reloadIconTheme();
+
 private slots:
 	void watcherChange(QString);
 	void checkWindowGeoms();

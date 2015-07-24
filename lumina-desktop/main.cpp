@@ -84,6 +84,7 @@ int main(int argc, char ** argv)
     qInstallMessageHandler(MessageOutput);
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
     LuminaThemeEngine theme(&a);
+    QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
     //if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
     //LUtils::LoadTranslation(&a, "lumina-desktop");
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
