@@ -66,10 +66,6 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
 
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   createWidget();
-  menuopen = false;
-  menureset = new QTimer(this);
-    menureset->setSingleShot(true);
-    menureset->setInterval(1000); //1 second	
   isDirectory = false;
   if(LUtils::isFavorite(item.filePath)){
     linkPath = item.filePath;
@@ -98,6 +94,10 @@ UserItemWidget::~UserItemWidget(){
 
 void UserItemWidget::createWidget(){
   //Initialize the widgets
+  menuopen = false;
+  menureset = new QTimer(this);
+    menureset->setSingleShot(true);
+    menureset->setInterval(1000); //1 second	
   this->setContentsMargins(0,0,0,0);
   button = new QToolButton(this);
     button->setIconSize( QSize(14,14) );
@@ -165,6 +165,7 @@ void UserItemWidget::setupActions(XDGDesktop app){
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
   connect(actButton->menu(), SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
   connect(actButton->menu(), SIGNAL(aboutToHide()), this, SLOT(actionMenuClosed()) );
+  connect(menureset, SIGNAL(timeout()), this, SLOT(resetmenuflag()) );
 }
 
 void UserItemWidget::buttonClicked(){

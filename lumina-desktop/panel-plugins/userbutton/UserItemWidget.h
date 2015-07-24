@@ -48,8 +48,8 @@ private slots:
 	void actionClicked(QAction*);
 	//Functions to fix the submenu open/close issues
 	void actionMenuOpen(){ 
-		menuopen = true; 
-		if(menureset->isActive()){ menureset->stop(); } 
+	  if(menureset->isActive()){ menureset->stop(); } 
+	  menuopen = true; 
 	}
 	void resetmenuflag(){ menuopen = false; } //tied to the "menureset" timer
 	void actionMenuClosed(){ menureset->start(); }
