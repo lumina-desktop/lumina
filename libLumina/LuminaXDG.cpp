@@ -458,7 +458,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   bool DEBUG =false;
   if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
   if(QFile::exists(iconName) && iconName.startsWith("/")){ return QIcon(iconName); }
-  else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just looks for the icon
+  else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just look for the icon
   //Check if the icon is actually given
   if(iconName.isEmpty()){ 
     if(fallback.isEmpty()){  return QIcon(); }
@@ -488,7 +488,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   QIcon ico = QIcon::fromTheme(iconName);
   //Try to load the icon from /usr/local/share/pixmaps
   if( ico.isNull() ){
-    //qDebug() << "Could not find icon:" << iconName;
+    //qDebug() << "Could not find icon:" << iconName <<"In Theme:" << cTheme;
     QDir base(LOS::AppPrefix()+"share/pixmaps");
     QStringList matches = base.entryList(QStringList() << "*"+iconName+"*", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     if( !matches.isEmpty() ){
