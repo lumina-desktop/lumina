@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -570,8 +570,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>498</width>
-                 <height>292</height>
+                 <width>27</width>
+                 <height>16</height>
                 </rect>
                </property>
               </widget>
@@ -1285,6 +1285,90 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="tab_locale">
+           <attribute name="title">
+            <string>Locale</string>
+           </attribute>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Language</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="combo_locale_lang"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Messages</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="combo_locale_message"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Time</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="combo_locale_time"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Numeric</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="combo_locale_numeric"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Monetary</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QComboBox" name="combo_locale_monetary"/>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Collate</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QComboBox" name="combo_locale_collate"/>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>CType</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QComboBox" name="combo_locale_ctype"/>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="label_30">
+              <property name="text">
+               <string>System localization settings (restart required)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="tab_fluxbox">
            <attribute name="title">
             <string>Window System</string>
@@ -1363,8 +1447,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>117</width>
-                    <height>17</height>
+                    <width>518</width>
+                    <height>139</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">

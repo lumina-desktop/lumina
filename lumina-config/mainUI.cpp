@@ -32,7 +32,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->spin_screen->setMinimum(1);
     //Make sure this is only allows the current number of screens
     ui->spin_screen->setMaximum(desktop->screenCount());
-    ui->spin_screen->setValue(desktop->primaryScreen()+1); //have the current screen auto-selected
+    ui->spin_screen->setValue(desktop->screenNumber(this->mapToGlobal(this->geometry().center()))+1); //have the current screen auto-selected
   //qDebug() << "Number of Screens:" << desktop->screenCount();
   sysApps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
 
@@ -49,6 +49,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->tabWidget_panels->setCurrentIndex(0);
   
   slotChangePage(false);
+  
   QTimer::singleShot(10, this, SLOT(loadCurrentSettings()) );
 
   //Disable the incomplete pages/items at the moment
@@ -202,6 +203,13 @@ void MainUI::setupConnections(){
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
   connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_datetimeorder, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_lang, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_collate, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_ctype, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_message, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_monetary, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_numeric, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
+  connect(ui->combo_locale_time, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
 }
 
 void MainUI::setupMenus(){
@@ -252,6 +260,28 @@ void MainUI::setupMenus(){
   //ui->combo_session_timezone->sort();
   //Now set the default/system value
   ui->combo_session_timezone->insertItem(0,tr("System Time"));
+  
+  //Available localizations
+  QStringList langs = LUtils::knownLocales();
+    langs.sort();
+  QString def = tr("System Default");
+  ui->combo_locale_lang->addItem(def,"");
+  ui->combo_locale_collate->addItem(def,"");
+  ui->combo_locale_ctype->addItem(def,"");
+  ui->combo_locale_message->addItem(def,"");
+  ui->combo_locale_monetary->addItem(def,"");
+  ui->combo_locale_numeric->addItem(def,"");
+  ui->combo_locale_time->addItem(def,"");
+  for(int i=0; i<langs.length(); i++){
+    QString lan = QLocale(langs[i]).nativeLanguageName();
+      ui->combo_locale_lang->addItem(lan,langs[i]);
+      ui->combo_locale_collate->addItem(lan,langs[i]);
+      ui->combo_locale_ctype->addItem(lan,langs[i]);
+      ui->combo_locale_message->addItem(lan,langs[i]);
+      ui->combo_locale_monetary->addItem(lan,langs[i]);
+      ui->combo_locale_numeric->addItem(lan,langs[i]);
+      ui->combo_locale_time->addItem(lan,langs[i]);
+  }
 }
 
 int MainUI::currentDesktop(){
@@ -789,6 +819,10 @@ void MainUI::loadPanels(){
   int dnum = currentDesktop();
   if(ui->scroll_panels->widget()->layout()==0){ ui->scroll_panels->widget()->setLayout( new QHBoxLayout() ); }
   ui->scroll_panels->widget()->layout()->setAlignment(Qt::AlignLeft);
+  //Clear anything left over in the layout
+  for(int i=0; i<ui->scroll_panels->widget()->layout()->count(); i++){
+    delete ui->scroll_panels->widget()->layout()->takeAt(i);
+  }
   for(int i=0; i<panelnumber; i++){
     PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
     tmp->LoadSettings(settings, dnum, i);
@@ -1550,6 +1584,36 @@ void MainUI::loadSessionSettings(){
     else{ ui->combo_session_timezone->setCurrentIndex(0); }
   }
   
+  //Now do the localization settings
+  val = sessionsettings->value("InitLocale/LANG", "").toString();
+    index = ui->combo_locale_lang->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_lang->setCurrentIndex(index);
+  val = sessionsettings->value("InitLocale/LC_MESSAGES", "").toString();
+    index = ui->combo_locale_message->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_message->setCurrentIndex(index);
+  val = sessionsettings->value("InitLocale/LC_TIME", "").toString();
+    index = ui->combo_locale_time->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_time->setCurrentIndex(index);
+      val = sessionsettings->value("InitLocale/NUMERIC", "").toString();
+    index = ui->combo_locale_numeric->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_numeric->setCurrentIndex(index);
+      val = sessionsettings->value("InitLocale/MONETARY", "").toString();
+    index = ui->combo_locale_monetary->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_monetary->setCurrentIndex(index);
+      val = sessionsettings->value("InitLocale/COLLATE", "").toString();
+    index = ui->combo_locale_collate->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_collate->setCurrentIndex(index);
+      val = sessionsettings->value("InitLocale/CTYPE", "").toString();
+    index = ui->combo_locale_ctype->findData(val);
+    if(index<0){ index = 0; } //system default
+    ui->combo_locale_ctype->setCurrentIndex(index);
+  
   //Now do the session theme options
   ui->combo_session_themefile->clear();
   ui->combo_session_colorfile->clear();
@@ -1691,6 +1755,18 @@ void MainUI::saveSessionSettings(){
     sessionsettings->setValue("CustomTimeZone", true);
     sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
   }
+  
+  //Now do the locale settings
+  sessionsettings->setValue("InitLocale/LANG", ui->combo_locale_lang->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_MESSAGES", ui->combo_locale_message->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_TIME", ui->combo_locale_time->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_NUMERIC", ui->combo_locale_numeric->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_MONETARY", ui->combo_locale_monetary->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_COLLATE", ui->combo_locale_collate->currentData().toString() );
+  sessionsettings->setValue("InitLocale/LC_CTYPE", ui->combo_locale_ctype->currentData().toString() );
+  
+  
+  
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
   QString colorfile = ui->combo_session_colorfile->itemData( ui->combo_session_colorfile->currentIndex() ).toString();
