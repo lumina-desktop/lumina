@@ -76,6 +76,8 @@ public:
 	static void LaunchApplication(QString cmd);
 	QFileInfoList DesktopFiles();
 	
+	QRect screenGeom(int num);
+	
 	AppMenu* applicationMenu();
 	void systemWindow();
 	SettingsMenu* settingsMenu();
@@ -105,6 +107,7 @@ private:
 	QMediaPlayer *mediaObj;
 	QSettings *sessionsettings, *DPlugSettings;
 	bool cleansession;
+	QList<QRect> savedScreens;
 
 	//System Tray Variables
 	WId SystemTrayID, VisualTrayID;

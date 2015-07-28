@@ -126,7 +126,9 @@ public:
 	WId ActiveWindow(); //fetch the ID for the currently active window
 	
 	//Session Modification
+	bool CheckDisableXinerama(); //returns true if Xinerama was initially set but now disabled
 	void RegisterVirtualRoots(QList<WId> roots);
+	
 
 	//Window Information
 	QString WindowClass(WId);

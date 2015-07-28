@@ -895,6 +895,22 @@ WId LXCB::ActiveWindow(){
   }
 }
 
+// === CheckDisableXinerama() ===
+bool LXCB::CheckDisableXinerama(){ 
+  //returns true if Xinerama was initially set but now disabled
+  return false;
+  // TO-DO - not complete yet
+
+  /*xcb_query_extension_cookie_t cookie = xcb_query_extension_unchecked(QX11Info::connection(), 8, "Xinerama");
+  xcb_query_extension_reply_t *reply = xcb_query_extension_reply(QX11Info::connection(), cookie, NULL);
+	
+  if(reply!=0){
+  
+    free(reply);
+  }
+  */
+}
+
 // === RegisterVirtualRoots() ===
 void LXCB::RegisterVirtualRoots(QList<WId> roots){
   if(DEBUG){ qDebug() << "XCB: RegisterVirtualRoots()"; }
@@ -1294,6 +1310,7 @@ void LXCB::SetAsPanel(WId win){
 	
 }
 
+// === SetAsDesktop() ===
 void LXCB::SetAsDesktop(WId win){
   if(DEBUG){ qDebug() << "XCB: SetAsDesktop()"; }
   if(win==0){ return; }
@@ -1311,12 +1328,14 @@ void LXCB::CloseWindow(WId win){
   xcb_ewmh_request_close_window(&EWMH, 0, win, QX11Info::getTimestamp(), XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER);
 }
 
+// === KillClient() ===
 void LXCB::KillClient(WId win){
   if(DEBUG){ qDebug() << "XCB: KillClient()"; }
   if(win==0){ return; }
   //This will forcibly close the application which created WIN 
   xcb_kill_client(QX11Info::connection(), win);
 }
+
 // === MinimizeWindow() ===
 void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimized
   if(DEBUG){ qDebug() << "XCB: MinimizeWindow()"; }

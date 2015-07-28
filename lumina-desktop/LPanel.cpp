@@ -27,7 +27,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   panelnum = num; //save for later
   screen = LSession::desktop();
   PPREFIX = "panel"+QString::number(screennum)+"."+QString::number(num)+"/";
-  defaultpanel = (screen->screenGeometry(screennum).x()==0 && num==0);
+  defaultpanel = (LSession::handle()->screenGeom(screennum).x()==0 && num==0);
   horizontal=true; //use this by default initially
   hidden = false; //use this by default
   //Setup the panel
@@ -115,9 +115,9 @@ void LPanel::UpdatePanel(){
   else{ viswidth = ht; }
   if(DEBUG){ qDebug() << "Hidden Panel size:" << hidesize << "pixels"; }
   //qDebug() << " - set Geometry";
-  int xwid = screen->screenGeometry(screennum).width();
-  int xhi = screen->screenGeometry(screennum).height();
-  int xloc = screen->screenGeometry(screennum).x();
+  int xwid = LSession::handle()->screenGeom(screennum).width();
+  int xhi = LSession::handle()->screenGeom(screennum).height();
+  int xloc = LSession::handle()->screenGeom(screennum).x();
   double panelPercent = settings->value(PPREFIX+"lengthPercent",100).toInt();
   if(panelPercent<1 || panelPercent>100){ panelPercent = 100; }
   panelPercent = panelPercent/100.0;
@@ -303,7 +303,7 @@ void LPanel::paintEvent(QPaintEvent *event){
   if(hidden && (this->pos()==hidepoint) ){ rec.moveTo( this->mapToGlobal(rec.topLeft()-hidepoint+showpoint) ); }
   else{ rec.moveTo( this->mapToGlobal(rec.topLeft()) ); }
   //qDebug() << "Global Rec:" << rec.x() << rec.y() << screennum;
-  rec.moveTo( rec.x()-screen->screenGeometry(screennum).x(), rec.y() );
+  rec.moveTo( rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y() );
   //qDebug() << "Adjusted Global Rec:" << rec.x() << rec.y();
   painter->drawPixmap(event->rect(), bgWindow->grab(rec) );
   QWidget::paintEvent(event); //now pass the event along to the normal painting event

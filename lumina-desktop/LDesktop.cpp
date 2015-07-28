@@ -85,7 +85,7 @@ QRect LDesktop::availableScreenGeom(){
   if(bgDesktop!=0){
     return globalWorkRect; //saved from previous calculations
   }else{
-    return desktop->screenGeometry(desktopnumber);
+    return LSession::handle()->screenGeom(desktopnumber);
   }	  
 }
 
@@ -119,7 +119,8 @@ void LDesktop::checkResolution(){
   //NOTE: This is only run the first time this desktop is created (before loading all the interface) - not on each desktop change
   int oldWidth = settings->value(DPREFIX+"screen/lastWidth",-1).toInt();
   int oldHeight = settings->value(DPREFIX+"screen/lastHeight",-1).toInt();
-  QRect scrn = LSession::desktop()->screenGeometry(desktopnumber);
+  QRect scrn = LSession::handle()->screenGeom(desktopnumber);
+  if(scrn.isNull()){ return; }
   issyncing = true;
   settings->setValue(DPREFIX+"screen/lastWidth",scrn.width());
   settings->setValue(DPREFIX+"screen/lastHeight",scrn.height());
@@ -268,7 +269,7 @@ void LDesktop::InitDesktop(){
   checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << desktopnumber; }
     connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
-  if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber).x() << desktop->screenGeometry(desktopnumber).y() << desktop->screenGeometry(desktopnumber).width() << desktop->screenGeometry(desktopnumber).height(); }
+  if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber) << LSession::handle()->screenGeom(desktopnumber); }
   deskMenu = new QMenu(0);
     connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
   winMenu = new QMenu(0);
@@ -293,8 +294,8 @@ void LDesktop::InitDesktop(){
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
   	bgWindow->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 	LSession::handle()->XCB->SetAsDesktop(bgWindow->winId());
-	bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
-	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
+	bgWindow->setGeometry(LSession::handle()->screenGeom(desktopnumber));
+	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new QMdiArea(bgWindow);
 	//Make sure the desktop area is transparent to show the background
@@ -430,7 +431,7 @@ void LDesktop::UpdateDesktop(){
     }
   }
   //Now get an accounting of all the available/used space (overwriting the private variable)
-  QSize ssize = desktop->screenGeometry(desktopnumber).size();
+  QSize ssize = LSession::handle()->screenGeom(desktopnumber).size();
   //qDebug() << "Screen Size:" << ssize << desktopnumber;
   if(bgDesktop->isVisible() && ( (bgDesktop->size().height() <= ssize.height()) && (bgDesktop->size().width() <= ssize.width()) )){ ssize = bgDesktop->size(); qDebug() << " - Adjusted:" << ssize; }
   availDPArea = QRegion(QRect(QPoint(0,0), ssize)); //Note that this is child-geometry space

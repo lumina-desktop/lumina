@@ -8,6 +8,7 @@
 #include <LuminaOS.h>
 
 #include <QTime>
+#include <QScreen>
 #include "LXcbEventFilter.h"
 #include "BootSplash.h"
 
@@ -110,7 +111,9 @@ void LSession::setupSession(){
 
   //Initialize the internal variables
   DESKTOPS.clear();
-	
+  savedScreens.clear();
+  for(int i=0; i<this->desktop()->screenCount(); i++){ savedScreens << this->desktop()->screenGeometry(i); }
+      
   //Start the background system tray
     splash.showScreen("systray");
   if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
@@ -431,7 +434,9 @@ void LSession::updateDesktops(){
   //qDebug() << " - Update Desktops";
   QDesktopWidget *DW = this->desktop();
   bool firstrun = (DESKTOPS.length()==0);
+    if(!firstrun){ savedScreens.clear(); }
     for(int i=0; i<DW->screenCount(); i++){
+      if(!firstrun){ savedScreens << DW->screenGeometry(i); }
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
 	//Match either the screen number or the screen location (preventing duplicates)
@@ -439,7 +444,7 @@ void LSession::updateDesktops(){
       }
       if(!found){
 	//Start the desktop on the new screen
-        qDebug() << " - Start desktop on screen:" << i;
+        qDebug() << " - Start desktop on screen:" << i << DW->screenGeometry(i) << "Virtual:" << DW->isVirtualDesktop();
 	if(firstrun && DW->screenGeometry(i).x()==0){
 	  DESKTOPS << new LDesktop(i,true); //set this one as the default	
 	}else{
@@ -452,6 +457,7 @@ void LSession::updateDesktops(){
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
       for(int i=0; i<DESKTOPS.length(); i++){
+	
         if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
           DESKTOPS[i]->prepareToClose();
@@ -558,6 +564,22 @@ QFileInfoList LSession::DesktopFiles(){
   return desktopFiles;	
 }
 
+QRect LSession::screenGeom(int num){
+  if(num < 0 || num >= this->desktop()->screenCount() ){ return QRect(); }
+  QRect geom = this->desktop()->screenGeometry(num);
+  QScreen* scrn = this->screens().at(num);
+  if(DEBUG){ qDebug() << "Screen Geometry:" << num << geom << scrn->geometry() << scrn->virtualGeometry(); }
+  if(geom.isNull() ){
+    if( !scrn->geometry().isNull() ){ geom = scrn->geometry(); }
+    else if( !scrn->virtualGeometry().isNull() ){ geom = scrn->virtualGeometry(); }
+    else if(num < savedScreens.length() ){
+    //Qt is backfiring (Xinarama w/ Fluxbox?) - return the saved geometry
+    geom = savedScreens[num];	
+    }
+  }
+  return geom;
+}
+
 AppMenu* LSession::applicationMenu(){
   return appmenu;
 }
@@ -618,7 +640,7 @@ void LSession::WindowPropertyEvent(){
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
       if(!RunningApps.contains(newapps[i])){ 
         checkWin << newapps[i]; 
-	QTimer::singleShot(500, this, SLOT(checkWindowGeoms()) );
+	QTimer::singleShot(100, this, SLOT(checkWindowGeoms()) );
       }
     }
   }
