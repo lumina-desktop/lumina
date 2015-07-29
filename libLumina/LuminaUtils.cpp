@@ -446,16 +446,28 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
     }
     //Parse/save the value
-    if(var=="session_enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
-    else if(var=="session_playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
-    else if(var=="session_playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){ sesset << "default-terminal="+val; }
+    QString loset, sset; //temporary strings
+    if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
+    else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
+    else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
+    else if(var=="session_default_terminal"){ sset = "default-terminal="+val; }
     else if(var=="session_default_filemanager"){ 
-      sesset << "default-filemanager="+val;
-      lopenset << "directory="+val; 
+      sset = "default-filemanager="+val;
+      loset = "directory="+val; 
     }
-    else if(var=="session_default_webbrowser"){ lopenset << "webbrowser="+val; }
-    else if(var=="session_default_email"){ lopenset << "email="+val; }
+    else if(var=="session_default_webbrowser"){ loset = "webbrowser="+val; }
+    else if(var=="session_default_email"){ loset = "email="+val; }
+    //Put the line into the file (overwriting any previous assignment as necessary)
+    if(!loset.isEmpty()){
+      int index = lopenset.indexOf(loset.section("=",0,0)+"=*");
+      if(index<0){ lopenset << loset; } //new line
+      else{ lopenset[index] = loset; } //overwrite the other line
+    }
+    if(!sset.isEmpty()){
+      int index = sesset.indexOf(sset.section("=",0,0)+"=*");
+      if(index<0){ sesset << sset; } //new line
+      else{ sesset[index] = sset; } //overwrite the other line	    
+    }
   }
   if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
 
