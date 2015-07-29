@@ -15,14 +15,12 @@
 #include <QUrl>
 #include <QDebug>
 #include <QTranslator>
-//#include <QLocale>
 #include <QMessageBox>
 #include <QSplashScreen>
 #include <QDateTime>
 #include <QPixmap>
 #include <QColor>
 #include <QFont>
-//#include <QTextCodec>
 
 #include "LFileDialog.h"
 
@@ -350,7 +348,8 @@ int main(int argc, char **argv){
     }
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
     if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)
-    if( (retcode > 0) && watch){
+    if( (retcode > 0) && watch && !(retcode==1 && cmd.startsWith("pc-su ")) ){ //pc-su returns 1 if the user cancelles the operation
+      
       qDebug() << "[lumina-open] Application Error:" << retcode;
         //Setup the application
         QApplication App(argc, argv);
