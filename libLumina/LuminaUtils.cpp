@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QImageReader>
+#include <QRegExp>
 
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
@@ -459,12 +460,13 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="session_default_email"){ loset = "email="+val; }
     //Put the line into the file (overwriting any previous assignment as necessary)
     if(!loset.isEmpty()){
-      int index = lopenset.indexOf(loset.section("=",0,0)+"=*");
+      int index = lopenset.indexOf(QRegExp(loset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
+      qDebug() << "loset line:" << loset << index << lopenset;
       if(index<0){ lopenset << loset; } //new line
       else{ lopenset[index] = loset; } //overwrite the other line
     }
     if(!sset.isEmpty()){
-      int index = sesset.indexOf(sset.section("=",0,0)+"=*");
+      int index = sesset.indexOf(QRegExp(sset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
       if(index<0){ sesset << sset; } //new line
       else{ sesset[index] = sset; } //overwrite the other line	    
     }
