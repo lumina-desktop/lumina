@@ -438,7 +438,14 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
-
+  
+     //Special handling for values which need to exist first
+    if(var.endsWith("_ifexists") ){ 
+      var = var.remove("_ifexists"); //remove this flag from the variable
+      //Check if the value exists (absolute path only)
+      if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
+    }
+    //Parse/save the value
     if(var=="session_enablenumlock"){ sesset << "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sesset << "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sesset << "PlayLogoutAudio="+istrue; }
