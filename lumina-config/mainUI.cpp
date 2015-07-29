@@ -941,9 +941,14 @@ void MainUI::loadKeyboardShortcuts(){
   for(int i=0; i<info.length(); i++){
     //skip empty/invalid lines, as well as non-global shortcuts (OnMenu, OnWindow, etc..)
     if(info[i].isEmpty() || info[i].startsWith("#") || info[i].startsWith("!") || info[i].startsWith("On")){ continue; }
+    QString exec = info[i].section(":",1,100);
+    QString showexec = exec;
+    if(showexec.startsWith("If {Matches")){ showexec = showexec.section("{",2,2).section("}",0,0); }
+    if(showexec.startsWith("Exec ")){ showexec.replace("Exec ","Run "); }
+    else{ showexec = showexec.section("(",0,0).section("{",0,0); } //built-in command - remove the extra commands on some of them
     QTreeWidgetItem *it = new QTreeWidgetItem();
-      it->setText(0, info[i].section(":",1,10).replace("Exec ","Run ").section("{",0,0).simplified());
-      it->setWhatsThis(0, info[i].section(":",1,10));
+      it->setText(0, showexec.simplified() );
+      it->setWhatsThis(0, exec);
       it->setText(1, fluxToDispKeys(info[i].section(":",0,0)) ); //need to make this easier to read later
       it->setWhatsThis(1, info[i].section(":",0,0) );
     ui->tree_shortcut->addTopLevelItem(it);
