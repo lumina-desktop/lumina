@@ -44,6 +44,7 @@ void WMProcess::stopWM(){
 }
 
 void WMProcess::restartWM(){
+  qDebug() << "Restarting WM";
   if(isRunning()){
     inShutdown = true;
     this->kill();
@@ -55,6 +56,7 @@ void WMProcess::restartWM(){
 
 void WMProcess::updateWM(){
   if(isRunning()){
+    qDebug() << "Updating WM";
     ::kill(this->pid(), SIGUSR2); //send fluxbox the signal to reload it's configuration
   }
 }

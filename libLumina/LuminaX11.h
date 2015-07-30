@@ -143,6 +143,7 @@ public:
 	QString OldWindowName(WId win); //WM_NAME (old standard)
 	QString OldWindowIconName(WId win); //WM_ICON_NAME (old standard)
 	bool WindowIsMaximized(WId win);
+	int WindowIsFullscreen(WId win); //Returns the screen number if the window is fullscreen (or -1)
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
 	
 	//Window Modification

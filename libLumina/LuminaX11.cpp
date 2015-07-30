@@ -11,6 +11,8 @@
 #include <QFile>
 #include <QObject>
 #include <QImage>
+#include <QApplication>
+#include <QDesktopWidget>
 
 //X includes (these need to be last due to Qt compile issues)
 #include <X11/Xlib.h>
@@ -1165,6 +1167,50 @@ bool LXCB::WindowIsMaximized(WId win){
   return false;
 }
 
+// === WindowIsFullscreen() ===
+int LXCB::WindowIsFullscreen(WId win){
+ if(DEBUG){ qDebug() << "XCB: WindowIsFullscreen()"; }
+  if(win==0){ return -1; }	
+  //bool fullS = false;
+  //See if the _NET_WM_STATE_FULLSCREEN flag is set on the window
+  /*xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
+  if(cookie.sequence == 0){ return false; } 
+  xcb_ewmh_get_atoms_reply_t states;
+  if( 1 == xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &states, NULL) ){
+    //Loop over the states
+    for(unsigned int i=0; i<states.atoms_len; i++){
+      if(states.atoms[i] == EWMH._NET_WM_STATE_FULLSCREEN){
+	fullS = true; 
+	break;
+      }
+    }
+  }*/
+  //if(!fullS){
+    //Fallback check for windows which are painted above everything else 
+    // but don't have the FULLSCREEN flag set (even though they are technically full-screen)
+    int fscreen = -1;
+    //qDebug() << "FALLBACK FULLSCREEN CHECK:";
+    QRect geom = LXCB::WindowGeometry(win, false);
+    QDesktopWidget *desk = QApplication::desktop();
+    for(int i=0; i<desk->screenCount(); i++){
+      QRect sgeom = desk->screenGeometry(i);
+      qDebug() << " -- Check Window Geom:" << sgeom << geom << this->WindowClass(win);
+      if( sgeom.contains(geom.center()) ){
+	//Allow a 1 pixel variation in "full-screen" detection
+	qDebug() << " -- Found Screen:" << i;
+	if( geom.width() >= (sgeom.width()-1) && geom.height()>=(sgeom.height()-1) ){
+	  qDebug() << " -- Is Fullscreen!";
+	  //fullS = true;
+	  fscreen = i;
+	}
+	break; //found the screen which contains this window
+      }
+    }
+  //}
+  //return fullS;
+  return fscreen;
+}
+
 // === WindowIcon() ===
 QIcon LXCB::WindowIcon(WId win){
   //Fetch the _NET_WM_ICON for the window and return it as a QIcon
@@ -1237,17 +1283,17 @@ void LXCB::SetAsPanel(WId win){
   //Disable Input focus (panel activation ruins task manager window detection routines)
   //  - Disable Input flag in WM_HINTS
   xcb_icccm_wm_hints_t hints;
-  qDebug() << " - Disable WM_HINTS input flag";
+  //qDebug() << " - Disable WM_HINTS input flag";
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_hints_unchecked(QX11Info::connection(), win);
-  qDebug() << " -- got cookie";
+  //qDebug() << " -- got cookie";
   if(1 == xcb_icccm_get_wm_hints_reply(QX11Info::connection(), cookie, &hints, NULL) ){
-    qDebug() << " -- Set no inputs flag";
+    //qDebug() << " -- Set no inputs flag";
      xcb_icccm_wm_hints_set_input(&hints, False); //set no input focus
      xcb_icccm_set_wm_hints(QX11Info::connection(), win, &hints); //save hints back to window
   }
   //  - Remove WM_TAKE_FOCUS from the WM_PROTOCOLS for the window
   //  - - Generate the necessary atoms
-  qDebug() << " - Generate WM_PROTOCOLS and WM_TAKE_FOCUS atoms";
+  //qDebug() << " - Generate WM_PROTOCOLS and WM_TAKE_FOCUS atoms";
   xcb_atom_t WM_PROTOCOLS, WM_TAKE_FOCUS; //the two atoms needed
   xcb_intern_atom_reply_t *preply = xcb_intern_atom_reply(QX11Info::connection(), \
 			xcb_intern_atom(QX11Info::connection(), 0, 12, "WM_PROTOCOLS"), NULL);
@@ -1260,11 +1306,11 @@ void LXCB::SetAsPanel(WId win){
     free(preply);
     free(freply);
     gotatoms = true;
-    qDebug() << " -- success";
+    //qDebug() << " -- success";
   }
   //  - - Now update the protocols for the window
   if(gotatoms){ //requires the atoms
-    qDebug() << " - Get WM_PROTOCOLS";
+    //qDebug() << " - Get WM_PROTOCOLS";
     xcb_icccm_get_wm_protocols_reply_t proto;
     if( 1 == xcb_icccm_get_wm_protocols_reply(QX11Info::connection(), \
 			xcb_icccm_get_wm_protocols_unchecked(QX11Info::connection(), win, WM_PROTOCOLS), \
@@ -1274,12 +1320,12 @@ void LXCB::SetAsPanel(WId win){
 			//remove the take focus atom and re-save them
       bool needremove = false;
       //Note: This first loop is required so that we can initialize the modified list with a valid size
-      qDebug() << " -- Check current protocols";
+      //qDebug() << " -- Check current protocols";
       for(unsigned int i=0; i<proto.atoms_len; i++){
         if(proto.atoms[i] == WM_TAKE_FOCUS){ needremove = true; break;}
       }
       if(needremove){
-	qDebug() << " -- Remove WM_TAKE_FOCUS protocol";
+	//qDebug() << " -- Remove WM_TAKE_FOCUS protocol";
 	xcb_atom_t *protolist = new xcb_atom_t[proto.atoms_len-1];
 	int num = 0;
 	for(unsigned int i=0; i<proto.atoms_len; i++){
@@ -1288,10 +1334,10 @@ void LXCB::SetAsPanel(WId win){
 	    num++;
 	  }
 	}
-	qDebug() << " -- Re-save modified protocols";
+	//qDebug() << " -- Re-save modified protocols";
 	xcb_icccm_set_wm_protocols(QX11Info::connection(), win, WM_PROTOCOLS, num, protolist);
       }
-      qDebug() << " -- Clear protocols reply";
+      //qDebug() << " -- Clear protocols reply";
       xcb_icccm_get_wm_protocols_reply_wipe(&proto);
     }//end of get protocols check
   } //end of gotatoms check
@@ -1299,13 +1345,13 @@ void LXCB::SetAsPanel(WId win){
   //  - get the current window types (Not necessary, only 1 type of window needed)
   
   //  - set the adjusted window type(s)
-  qDebug() << " - Adjust window type";
+  //qDebug() << " - Adjust window type";
   xcb_atom_t list[1]; 
     list[0] = EWMH._NET_WM_WINDOW_TYPE_DOCK;
   xcb_ewmh_set_wm_window_type(&EWMH, win, 1, list);
   
   //Make sure it is on all workspaces
-  qDebug() << " - Set window as sticky";
+  //qDebug() << " - Set window as sticky";
   SetAsSticky(win);
 	
 }

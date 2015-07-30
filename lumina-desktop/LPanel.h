@@ -62,7 +62,7 @@ public:
 	void scalePanel(double xscale, double yscale);
 
 public slots:
-	void UpdatePanel();  //Load the settings file and update the panel appropriately
+	void UpdatePanel(bool geomonly = false);  //Load the settings file and update the panel appropriately
 	void UpdateLocale(); //Locale Changed externally
 	void UpdateTheme(); //Theme Changed externally
 

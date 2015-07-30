@@ -52,11 +52,11 @@ void LDesktop::show(){
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->show(); }
 }
 
-/*void LDesktop::hide(){
+void LDesktop::hide(){
   if(bgWindow!=0){ bgWindow->hide(); }
   if(bgDesktop!=0){ bgDesktop->hide(); }
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->hide(); }
-}*/
+}
 
 void LDesktop::prepareToClose(){
   //Get any panels ready to close
@@ -89,6 +89,23 @@ QRect LDesktop::availableScreenGeom(){
   }	  
 }
 
+void LDesktop::UpdateGeometry(){
+    //First make sure there is something different about the geometry
+    if(desktop->screenGeometry()==bgWindow->geometry()){ return; }
+    //Now update the screen
+    // NOTE: This functionality is highly event-driven based on X changes - so we need to keep things in order (no signals/slots)
+    qDebug() << "Changing Desktop Geom:" << desktopnumber;
+    bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
+    qDebug() << " - Update Desktop Plugin Area";
+    UpdateDesktopPluginArea();
+    /*qDebug() << " - Update Panel Geometry";
+    for(int i=0; PANELS.length(); i++){
+      PANELS[i]->UpdatePanel(true); //only update geometry
+    }*/
+    qDebug() << " - Done With Desktop Geom Updates";
+    //QTimer::singleShot(0, this, SLOT(UpdatePanels()));
+}
+	
 void LDesktop::SystemLogout(){
   LSession::handle()->systemWindow();
 }
@@ -268,7 +285,7 @@ void LDesktop::InitDesktop(){
   //This is called *once* during the main initialization routines
   checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << desktopnumber; }
-    connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
+    //connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
   if(DEBUG){ qDebug() << "Desktop #"<<desktopnumber<<" -> "<< desktop->screenGeometry(desktopnumber) << LSession::handle()->screenGeom(desktopnumber); }
   deskMenu = new QMenu(0);
     connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );

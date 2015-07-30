@@ -98,6 +98,7 @@ private:
 	WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
+	QTimer *screenTimer;
 
 	//Internal variable for global usage
 	AppMenu *appmenu;
@@ -134,6 +135,8 @@ public slots:
 
 private slots:
 	void watcherChange(QString);
+	void screensChanged();
+	void screenResized(int);
 	void checkWindowGeoms();
 
 	//System Tray Functions

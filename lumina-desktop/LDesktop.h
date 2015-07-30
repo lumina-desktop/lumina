@@ -40,12 +40,14 @@ public:
 	
 	int Screen(); //return the screen number this object is managing
 	void show();
-	//void hide();
+	void hide();
 	void prepareToClose();
 
 	WId backgroundID();
 	QRect availableScreenGeom();
 
+	void UpdateGeometry();
+	
 public slots:
 	void SystemLogout();
 	void SystemTerminal();
@@ -105,11 +107,5 @@ private slots:
 	void UpdateDesktopPluginArea(); //make sure the area is not underneath any panels
 
 	void UpdateBackground();
-	void UpdateGeometry(int screen){
-	  if(screen==desktopnumber){
-	    bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
-	    QTimer::singleShot(0, this, SLOT(UpdatePanels()));
-	  }
-	}
 };
 #endif

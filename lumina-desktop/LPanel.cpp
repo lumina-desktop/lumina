@@ -56,7 +56,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   LSession::handle()->XCB->SetAsSticky(this->winId());
   
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
-  connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
+  //connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
 }
 
 LPanel::~LPanel(){
@@ -90,12 +90,12 @@ void LPanel::scalePanel(double xscale, double yscale){
 //===========
 // PUBLIC SLOTS
 //===========
-void LPanel::UpdatePanel(){
+void LPanel::UpdatePanel(bool geomonly){
   //Create/Update the panel as designated in the Settings file
   settings->sync(); //make sure to catch external settings changes
   //First set the geometry of the panel and send the EWMH message to reserve that space
-  if(DEBUG){ qDebug() << "Update Panel"; }
-  hidden = settings->value(PPREFIX+"hidepanel",false).toBool(); //default to true for the moment
+  if(DEBUG){ qDebug() << "Update Panel: Geometry only=" << geomonly << "Screen Size:" << LSession::handle()->screenGeom(screennum); }
+  hidden = settings->value(PPREFIX+"hidepanel",false).toBool();
   QString loc = settings->value(PPREFIX+"location","").toString().toLower();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
   if(loc=="top" || loc=="bottom"){ 
@@ -122,15 +122,18 @@ void LPanel::UpdatePanel(){
   if(panelPercent<1 || panelPercent>100){ panelPercent = 100; }
   panelPercent = panelPercent/100.0;
   QString panelPinLoc = settings->value(PPREFIX+"pinLocation","center").toString().toLower(); //[left/right/center] possible values (assume center otherwise)
+  if(DEBUG){ qDebug() << " - Panel settings:" << QString::number(panelPercent)+QString("%") << panelPinLoc << loc; }
   //xloc=xoffset;
   if(loc=="top"){ //top of screen
     QSize sz = QSize(xwid*panelPercent, ht);
     if(panelPinLoc=="left"){} // no change to xloc
     else if(panelPinLoc=="right"){ xloc = xloc+xwid-sz.width(); }
     else{ xloc = xloc+((xwid-sz.width())/2) ; } //centered
+    //qDebug() << " - Panel Sizing:" << xloc << sz;
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,0,sz.width(), sz.height());
+    //qDebug() << " - Reserve Panel Localation";
     if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
     else{ 
       LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), hidesize, "top");
@@ -189,7 +192,8 @@ void LPanel::UpdatePanel(){
   //With QT5, we need to make sure to reset window properties on occasion
   //LSession::handle()->XCB->SetDisableWMActions(this->winId()); //ensure no WM actions
   //LSession::handle()->XCB->SetAsSticky(this->winId()); 
-  
+  if(DEBUG){ qDebug() << " - Done with panel geometry"; }
+  if(geomonly){ return; }
   //Now update the appearance of the toolbar
   if(settings->value(PPREFIX+"customcolor", false).toBool()){
     QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
@@ -315,8 +319,8 @@ void LPanel::enterEvent(QEvent *event){
     //Move the panel out so it is fully available
     this->move(showpoint);
   }
-  tmpID = LSession::handle()->XCB->ActiveWindow();
-  this->activateWindow();
+  //tmpID = LSession::handle()->XCB->ActiveWindow();
+  //this->activateWindow();
   event->accept(); //just to quiet the compile warning
 }
 

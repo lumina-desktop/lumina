@@ -23,9 +23,12 @@ public:
 	
 	void startWM();
 	void stopWM();
-	void restartWM();
+
 	void updateWM();
-	
+
+public slots:
+	void restartWM();
+
 private:
 	bool inShutdown;
 	bool isRunning();

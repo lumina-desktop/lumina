@@ -161,12 +161,13 @@ void LSysTray::UpdateTrayWindow(WId win){
   if(!isRunning || stopping || checking){ return; }
   for(int i=0; i<trayIcons.length(); i++){
     if(trayIcons[i]->appID()==win){
-      //qDebug() << "System Tray: Update Window " << win;
+      qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
       return; //finished now
     }
   }
   //Could not find tray in the list, run the checkall routine to make sure we are not missing any
+  qDebug() << "System Tray: Missing Window - check all";
   QTimer::singleShot(0,this, SLOT(checkAll()) );
 }
 

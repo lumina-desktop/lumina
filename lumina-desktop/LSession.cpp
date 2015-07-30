@@ -48,6 +48,10 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   TrayDmgError = 0;
   cleansession = true;
   TrayStopping = false;
+  screenTimer = new QTimer(this);
+    screenTimer->setSingleShot(true);
+    screenTimer->setInterval(2000); //0.2 seconds 
+    connect(screenTimer, SIGNAL(timeout()), this, SLOT(updateDesktops()) );
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
   }
@@ -156,7 +160,8 @@ void LSession::setupSession(){
     watcher->addPath( QDir::homePath() );
 
   //connect internal signals/slots
-  connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(updateDesktops()) );
+  connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
+  connect(this->desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
@@ -343,13 +348,27 @@ void LSession::watcherChange(QString changed){
   }
 }
 
+void LSession::screensChanged(){
+  qDebug() << "Screen Number Changed";
+  //if(screenTimer->isActive()){ screenTimer->stop(); }  
+  //screenTimer->start();
+  updateDesktops();
+}
+
+void LSession::screenResized(int scrn){
+  qDebug() << "Screen Resized:" << scrn << this->desktop()->screenGeometry(scrn);
+  for(int i=0; i<DESKTOPS.length(); i++){
+    if(DESKTOPS[i]->Screen() == scrn){ DESKTOPS[i]->UpdateGeometry(); return; }
+  }	  
+}
+
 void LSession::checkWindowGeoms(){
   //Only do one window per run (this will be called once per new window - with time delays between)
   if(checkWin.isEmpty()){ return; }
-  if(RunningApps.contains(checkWin[0]) ){ //just to make sure it did not close during the delay
-    adjustWindowGeom( checkWin[0] );
+  WId win = checkWin.takeFirst();
+  if(RunningApps.contains(win) ){ //just to make sure it did not close during the delay
+    adjustWindowGeom( win );
   }
-  checkWin.removeAt(0);
 }
 
 void LSession::checkUserFiles(){
@@ -431,9 +450,22 @@ void LSession::refreshWindowManager(){
 }
 
 void LSession::updateDesktops(){
-  //qDebug() << " - Update Desktops";
+  qDebug() << " - Update Desktops";
   QDesktopWidget *DW = this->desktop();
+  qDebug() << "  -- Number:" << DW->screenCount();
+  for(int i=0; i<DW->screenCount(); i++){ qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i); }
   bool firstrun = (DESKTOPS.length()==0);
+  bool numchange = DESKTOPS.length()!=DW->screenCount();
+    //Determine if this is a temporary X screen reset (some full-screen apps modify the screens)
+    /*WId actWin = XCB->ActiveWindow();
+    qDebug() << "  -- Active Window:" << XCB->WindowClass(actWin);
+    //See if the current app is full-screen
+    int fscreen = -1;
+    if( XCB->WindowClass(actWin) != "Lumina Desktop Environment" ){
+      fscreen = XCB->WindowIsFullscreen(actWin);
+    }*/
+    qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
+    //Now go through and 
     if(!firstrun){ savedScreens.clear(); }
     for(int i=0; i<DW->screenCount(); i++){
       if(!firstrun){ savedScreens << DW->screenGeometry(i); }
@@ -453,23 +485,31 @@ void LSession::updateDesktops(){
       }
     }
     //qDebug() << " - Done Starting Desktops";
-
+    //return; //temporary stop for debugging
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
       for(int i=0; i<DESKTOPS.length(); i++){
-	
-        if(DESKTOPS[i]->Screen() >= DW->screenCount()){
+	/*if(DESKTOPS[i]->Screen()==fscreen){
+	  qDebug() << " - Hide desktop on screen:" << fscreen;
+	  DESKTOPS[i]->hide();
+	}else*/ if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
           DESKTOPS[i]->prepareToClose();
 	  delete DESKTOPS.takeAt(i);
 	  i--;
         }else{
 	  qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
+	  //DESKTOPS[i]->UpdateGeometry();
           DESKTOPS[i]->show();
 	  //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
         }
       }
-      QTimer::singleShot(1000,WM, SLOT(restartWM())); //Make sure fluxbox also gets prompted to re-load screen config
+      //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes
+      if(numchange){
+	qDebug() << "Update WM"; 
+	//QTimer::singleShot(1000,WM, SLOT(restartWM()));  //Note: This causes crashes in X if a full-screen app
+	WM->updateWM();
+      }
     }
     //Make sure all the background windows are registered on the system as virtual roots
     QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
@@ -485,7 +525,9 @@ void LSession::registerDesktopWindows(){
 }
 
 void LSession::adjustWindowGeom(WId win, bool maximize){
-  if(DEBUG){ qDebug() << "AdjustWindowGeometry():" << win << maximize; }
+  //return; //temporary disable
+  if(DEBUG){ qDebug() << "AdjustWindowGeometry():" << win << maximize << XCB->WindowClass(win); }
+  if(XCB->WindowIsFullscreen(win) >=0 ){ return; } //don't touch it
   //Quick hack for making sure that new windows are not located underneath any panels
   // Get the window location
   QRect geom = XCB->WindowGeometry(win, false);
@@ -568,7 +610,7 @@ QRect LSession::screenGeom(int num){
   if(num < 0 || num >= this->desktop()->screenCount() ){ return QRect(); }
   QRect geom = this->desktop()->screenGeometry(num);
   QScreen* scrn = this->screens().at(num);
-  if(DEBUG){ qDebug() << "Screen Geometry:" << num << geom << scrn->geometry() << scrn->virtualGeometry(); }
+  //if(DEBUG){ qDebug() << "Screen Geometry:" << num << geom << scrn->geometry() << scrn->virtualGeometry(); }
   if(geom.isNull() ){
     if( !scrn->geometry().isNull() ){ geom = scrn->geometry(); }
     else if( !scrn->virtualGeometry().isNull() ){ geom = scrn->virtualGeometry(); }
@@ -635,11 +677,13 @@ void LSession::WindowPropertyEvent(){
   QList<WId> newapps = XCB->WindowList();
   if(RunningApps.length() < newapps.length()){
     //New Window found
+    qDebug() << "New window found";
     LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
       if(!RunningApps.contains(newapps[i])){ 
         checkWin << newapps[i]; 
+	if(DEBUG){ qDebug() << "New Window - check geom in a moment:" << XCB->WindowClass(newapps[i]); }
 	QTimer::singleShot(100, this, SLOT(checkWindowGeoms()) );
       }
     }
@@ -770,6 +814,7 @@ void LSession::attachTrayWindow(WId win){
   //static int appnum = 0;
   if(TrayStopping){ return; }
   if(RunningTrayApps.contains(win)){ return; } //already managed
+  qDebug() << "Session Tray: Window Added";
   RunningTrayApps << win;
   LSession::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Tray List Changed"; }
@@ -780,6 +825,7 @@ void LSession::removeTrayWindow(WId win){
   if(SystemTrayID==0){ return; }
   for(int i=0; i<RunningTrayApps.length(); i++){
     if(win==RunningTrayApps[i]){ 
+      qDebug() << "Session Tray: Window Removed";
       RunningTrayApps.removeAt(i); 
       emit TrayListChanged();
       break;	    
