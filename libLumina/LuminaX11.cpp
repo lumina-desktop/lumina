@@ -885,6 +885,16 @@ unsigned int LXCB::CurrentWorkspace(){
   return wkspace;
 }
 
+unsigned int LXCB::NumberOfWorkspaces(){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_number_of_desktops_unchecked(&EWMH, 0);
+  uint32_t number;
+  if(1==xcb_ewmh_get_number_of_desktops_reply(&EWMH, cookie, &number, NULL) ){
+    return number;
+  }else{
+    return 0; //unable to get this property
+  }
+}
+
 // === ActiveWindow() ===
 WId LXCB::ActiveWindow(){
   if(DEBUG){ qDebug() << "XCB: ActiveWindow()"; }
@@ -1479,6 +1489,41 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
   values[2] = geom.width(); values[3] = geom.height();
   xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
 	
+}
+
+// === ReserveLocation ===
+void LXCB::ReserveLocation(WId win, QRect geom, QString loc){
+  loc = loc.toLower().simplified();
+  //Put the values in the proper structures
+  xcb_ewmh_wm_strut_partial_t LOC;
+    //Initialize the structure to zeros
+    LOC.left = LOC.right = LOC.top = LOC.bottom = 0; //initial setting
+    LOC.left_start_y = LOC.left_end_y = LOC.right_start_y = LOC.right_end_y = 0;
+    LOC.top_start_x = LOC.top_end_x = LOC.bottom_start_x = LOC.bottom_end_x = 0;
+   //Now put the values into the structure based on location
+   if(loc=="top"){
+    //top of screen
+    LOC.top = geom.height(); //top width
+    LOC.top_start_x = geom.x(); //top x start
+    LOC.top_end_x = geom.x()+geom.width(); //top x end
+  }else if(loc=="bottom"){
+    //bottom of screen
+    LOC.bottom = geom.height(); //bottom width
+    LOC.bottom_start_x = geom.x(); //bottom x start
+    LOC.bottom_end_x = geom.x()+geom.width(); //bottom x end
+  }else if(loc=="left"){
+    LOC.left = geom.width();
+    LOC.left_start_y = geom.y();
+    LOC.left_end_y = geom.y()+geom.height();
+  }else{ //right
+    LOC.right = geom.width();
+    LOC.right_start_y = geom.y();
+    LOC.right_end_y = geom.y()+geom.height();
+  }
+	
+  //Change the property
+  xcb_ewmh_set_wm_strut_partial(&EWMH, win, LOC); //_NET_WM_STRUT_PARTIAL (not always used)
+  xcb_ewmh_set_wm_strut(&EWMH, win, LOC.left, LOC.right, LOC.top, LOC.bottom); //_NET_WM_STRUT
 }
 
 // === EmbedWindow() ===

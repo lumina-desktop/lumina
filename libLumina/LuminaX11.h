@@ -123,6 +123,7 @@ public:
 	// General Information
 	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
 	unsigned int CurrentWorkspace();
+	unsigned int NumberOfWorkspaces();
 	WId ActiveWindow(); //fetch the ID for the currently active window
 	
 	//Session Modification
@@ -157,6 +158,7 @@ public:
 	void ActivateWindow(WId); //request that the window become active
 	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
 	void MoveResizeWindow(WId win, QRect geom);
+	void ReserveLocation(WId win, QRect geom, QString loc);
 	
 	//Window Embedding/Detaching (for system tray)
 	uint EmbedWindow(WId win, WId container); //returns the damage ID (or 0 for an error)
