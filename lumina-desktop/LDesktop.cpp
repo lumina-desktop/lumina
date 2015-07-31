@@ -349,7 +349,7 @@ void LDesktop::LocaleChanged(){
 void LDesktop::UpdateMenu(bool fast){
   if(DEBUG){ qDebug() << " - Update Menu:" << desktopnumber; }
   //Put a label at the top
-  int num = LSession::handle()->XCB->CurrentWorkpace(); //LX11::GetCurrentDesktop();
+  int num = LSession::handle()->XCB->CurrentWorkspace(); //LX11::GetCurrentDesktop();
   if(DEBUG){ qDebug() << "Found workspace number:" << num; }
   if(num < 0){ workspacelabel->setText( "<b>"+tr("Lumina Desktop")+"</b>"); }
   else{ workspacelabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>"); }
