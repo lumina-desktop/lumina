@@ -13,7 +13,7 @@ system(./make-global-h.sh $$PREFIX)
 isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
-target.path = $$LIBPREFIX
+target.path = $$DESTDIR$$LIBPREFIX
 
 DESTDIR= $$_PRO_FILE_PWD_/
 

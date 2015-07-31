@@ -8,7 +8,7 @@ isEmpty(PREFIX) {
 target.path = $$PREFIX/bin
 
 isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
+ LIBPREFIX = $$DESTDIR$$PREFIX/lib
 }
 
 TEMPLATE = app

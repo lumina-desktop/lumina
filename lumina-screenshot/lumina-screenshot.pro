@@ -6,7 +6,7 @@ TARGET = lumina-screenshot
 isEmpty(PREFIX) {
  PREFIX = /usr/local
 }
-target.path = $$PREFIX/bin
+target.path = $$DESTDIR$$PREFIX/bin
 
 isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib

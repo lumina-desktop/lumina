@@ -134,9 +134,9 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMaximumSize(sz);
     this->setGeometry(xloc,0,sz.width(), sz.height());
     //qDebug() << " - Reserve Panel Localation";
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), ht, "top"); }
+    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "top"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, 0, this->width(), hidesize, "top");
+     LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, 0, this->width(), hidesize), "top");
       hidepoint = QPoint(xloc, hidesize-ht);
       showpoint = QPoint(xloc, 0);
       this->move(hidepoint); //Could bleed over onto the screen above
@@ -149,9 +149,9 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,xhi-ht,sz.width(), ht );
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, xhi-ht, this->width(), ht, "bottom"); }
+    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "bottom"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, xhi-hidesize, this->width(), hidesize, "bottom"); 
+      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, xhi-hidesize, this->width(), hidesize), "bottom"); 
       hidepoint = QPoint(xloc, xhi-hidesize);
       showpoint = QPoint(xloc, xhi-ht);
       this->move(hidepoint); //Could bleed over onto the screen below
@@ -165,9 +165,9 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc, ht, sz.height());
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc, yloc, ht, sz.height(), "left"); }
+    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "left"); }
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc, yloc, hidesize, sz.height(), "left"); 
+      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, hidesize, sz.height()), "left"); 
       hidepoint = QPoint(xloc-ht+hidesize, yloc);
       showpoint = QPoint(xloc, yloc);
       this->move(hidepoint); //Could bleed over onto the screen left
@@ -181,9 +181,9 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc+xwid-ht,yloc,ht, sz.height());
-    if(!hidden){ LX11::ReservePanelLocation(this->winId(), xloc+xwid-ht, yloc, ht, sz.height(), "right"); }  
+    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "right"); }  
     else{ 
-      LX11::ReservePanelLocation(this->winId(), xloc+xwid-hidesize, yloc, hidesize, sz.height(), "right"); 
+      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc+xwid-hidesize, yloc, hidesize, sz.height()), "right"); 
       hidepoint = QPoint(xloc+xwid-hidesize, yloc);
       showpoint = QPoint(xloc+xwid-ht, yloc);
       this->move(hidepoint); //Could bleed over onto the screen right
