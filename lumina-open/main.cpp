@@ -16,11 +16,11 @@
 #include <QDebug>
 #include <QTranslator>
 #include <QMessageBox>
-#include <QSplashScreen>
+#include <QLabel>
 #include <QDateTime>
 #include <QPixmap>
 #include <QColor>
-#include <QFont>
+#include <QDesktopWidget>
 
 #include "LFileDialog.h"
 
@@ -58,16 +58,19 @@ void showOSD(int argc, char **argv, QString message){
 
   //Display the OSD
   QPixmap pix(":/icons/OSD.png");
-  QSplashScreen splash(pix, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+  QLabel splash(0, Qt::Window | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
      splash.setWindowTitle("");
-     QFont myfont;
-	myfont.setBold(true);
-	myfont.setPixelSize(13);
-	splash.setFont(myfont);
+     splash.setStyleSheet("QLabel{background: black; color: white; font-weight: bold; font-size: 13pt; margin: 1ex;}");
+     splash.setAlignment(Qt::AlignCenter);
+
+
   qDebug() << "Display OSD";
+  splash.setText(message);
+  //Make sure it is centered on the current screen
+  QPoint center = App.desktop()->screenGeometry(QCursor::pos()).center();
+  splash.move(center.x()-(splash.sizeHint().width()/2), center.y()-(splash.sizeHint().height()/2));
   splash.show();
   //qDebug() << " - show message";
-  splash.showMessage(message, Qt::AlignCenter, Qt::white);
   //qDebug() << " - loop";
   QDateTime end = QDateTime::currentDateTime().addMSecs(800);
   while(QDateTime::currentDateTime() < end){ App.processEvents(); }
