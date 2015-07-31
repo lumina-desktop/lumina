@@ -349,7 +349,7 @@ void LDesktop::LocaleChanged(){
 void LDesktop::UpdateMenu(bool fast){
   if(DEBUG){ qDebug() << " - Update Menu:" << desktopnumber; }
   //Put a label at the top
-  int num = LX11::GetCurrentDesktop();
+  int num = LSession::handle()->XCB->CurrentWorkpace(); //LX11::GetCurrentDesktop();
   if(DEBUG){ qDebug() << "Found workspace number:" << num; }
   if(num < 0){ workspacelabel->setText( "<b>"+tr("Lumina Desktop")+"</b>"); }
   else{ workspacelabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>"); }
@@ -393,7 +393,7 @@ void LDesktop::UpdateMenu(bool fast){
 void LDesktop::UpdateWinMenu(){
   winMenu->clear();
   //Get the current list of windows
-  QList<WId> wins = LX11::WindowList();	
+  QList<WId> wins = LSession::handle()->XCB->WindowList();	
   //Now add them to the menu
   for(int i=0; i<wins.length(); i++){
     LWinInfo info(wins[i]);
@@ -404,7 +404,7 @@ void LDesktop::UpdateWinMenu(){
 }
 
 void LDesktop::winClicked(QAction* act){
-  LX11::ActivateWindow( act->data().toString().toULong() );	
+  LSession::handle()->XCB->ActivateWindow( act->data().toString().toULong() );	
 }
 
 void LDesktop::UpdateDesktop(){
