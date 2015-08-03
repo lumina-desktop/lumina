@@ -18,7 +18,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 	ui->toolBar->insertWidget(ui->actionNew, spacer);
 	
   setupIcons();
-	
+  ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
+  if(ui->spin_monitor->maximum()<2){
+    ui->spin_monitor->setEnabled(false);
+    ui->radio_monitor->setEnabled(false);
+  }	  
+
   //Setup the connections
   connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
   connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
@@ -29,7 +34,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 
   if(settings->value("screenshot-target", "window").toString() == "window") {
 	ui->radio_window->setChecked(true);
-  } else {
+  }else{
 	ui->radio_all->setChecked(true);
   }
 
@@ -82,7 +87,9 @@ bool MainUI::getWindow(){
     QString info = QInputDialog::getItem(this, tr("Select Window"), tr("Window:"), names, 0, false, &ok);
     if(!ok || names.indexOf(info)<0){ return false; } //cancelled
     cwin = wins[ names.indexOf(info) ];
-  } else {
+  }else if(ui->radio_monitor->isChecked()){
+    
+  }else{
     settings->setValue("screenshot-target", "desktop");
   }
   settings->setValue("screenshot-delay", ui->spin_delay->value());
@@ -91,9 +98,12 @@ bool MainUI::getWindow(){
 
 void MainUI::getPixmap(){
   QScreen *scrn = QApplication::screens().at(0);
-  if(cwin==0){
+  if(cwin==0 && ui->radio_window->isChecked() ){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
+  }else if(cwin==0 && ui->radio_monitor->isChecked()){
+    QRect geom = QApplication::desktop()->screenGeometry(ui->spin_monitor->value()-1);
+    cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
   }else{
     //Grab just the designated window
     cpic = scrn->grabWindow(cwin);
