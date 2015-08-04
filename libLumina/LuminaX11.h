@@ -164,6 +164,10 @@ public:
 	uint EmbedWindow(WId win, WId container); //returns the damage ID (or 0 for an error)
 	bool UnembedWindow(WId win);
 	
+	//System Tray Management
+	WId startSystemTray(int screen = 0); //Startup the system tray (returns window ID for tray)
+	void closeSystemTray(WId); //Close the system tray
+	
 };
 
 #endif

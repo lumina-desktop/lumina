@@ -773,7 +773,7 @@ QList<WId> LSession::currentTrayApps(WId visualTray){
 void LSession::startSystemTray(){
   if(SystemTrayID!=0){ return; }
   RunningTrayApps.clear(); //nothing running yet
-  SystemTrayID = LX11::startSystemTray(0);
+  SystemTrayID = XCB->startSystemTray(0);
   TrayStopping = false;
   if(SystemTrayID!=0){
     XSelectInput(QX11Info::display(), SystemTrayID, InputOutput); //make sure TrayID events get forwarded here
@@ -801,7 +801,7 @@ void LSession::stopSystemTray(bool detachall){
     }  
   }
   //Now close down the tray backend
-  LX11::closeSystemTray(SystemTrayID);
+ XCB->closeSystemTray(SystemTrayID);
   SystemTrayID = 0;
   TrayDmgEvent = 0; 
   TrayDmgError = 0;

@@ -28,8 +28,10 @@
 #include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_icccm.h>
 #include <xcb/xcb_image.h>
+#include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
+//#include <xcb/render.h>
 
 #define DEBUG 0
 
@@ -1595,6 +1597,112 @@ bool LXCB::UnembedWindow(WId win){
   return true;	
 }
 
+// ===== startSystemTray() =====
+WId LXCB::startSystemTray(int screen){
+  qDebug() << "Starting System Tray:" << screen;
+  //Setup the freedesktop standards compliance
+  
+  //Get the appropriate atom for this screen
+  QString str = QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(screen));
+  //qDebug() << "Default Screen Atom Name:" << str;
+  xcb_intern_atom_reply_t *treply = xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, str.length(), str.toLocal8Bit()), NULL);
+  xcb_intern_atom_reply_t *oreply = xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, 28, "_NET_SYSTEM_TRAY_ORIENTATION"), NULL);  
+  xcb_intern_atom_reply_t *vreply = xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, 23, "_NET_SYSTEM_TRAY_VISUAL"), NULL);  
+  if(treply==0){
+    qDebug() << " - ERROR: Could not initialize _NET_SYSTEM_TRAY_S<num> atom";
+    return 0;
+  }
+  if(oreply==0){
+    qDebug() << " - ERROR: Could not initialize _NET_SYSTEM_TRAY_ORIENTATION atom";
+    return 0;	  
+  }
+  if(vreply==0){
+    qDebug() << " - ERROR: Could not initialize _NET_SYSTEM_TRAY_VISUAL atom";
+    return 0;	  
+  }
+  xcb_atom_t _NET_SYSTEM_TRAY_S = treply->atom;
+  xcb_atom_t _NET_SYSTEM_TRAY_ORIENTATION = oreply->atom;
+  xcb_atom_t _NET_SYSTEM_TRAY_VISUAL = vreply->atom;
+  free(treply); //done with atom generation
+  free(oreply);
+  free(vreply);
+  
+  //Make sure that there is no other system tray running
+  xcb_get_selection_owner_reply_t *ownreply = xcb_get_selection_owner_reply(QX11Info::connection(), \
+						xcb_get_selection_owner_unchecked(QX11Info::connection(), _NET_SYSTEM_TRAY_S), NULL);
+  if(ownreply==0){
+    qWarning() << " - Could not get owner selection reply";
+    return 0;
+  }
+  if(ownreply->owner != 0){
+    free(ownreply);
+    qWarning() << " - An alternate system tray is currently in use";
+    return 0;
+  }
+  free(ownreply);
+  
+  //Create a simple window to register as the tray (not visible - just off the screen)
+  xcb_screen_t *root_screen = xcb_aux_get_screen(QX11Info::connection(), QX11Info::appScreen());
+  uint32_t params[] = {1};
+  WId LuminaSessionTrayID = xcb_generate_id(QX11Info::connection()); //need a new ID
+    xcb_create_window(QX11Info::connection(), root_screen->root_depth, \
+		LuminaSessionTrayID, root_screen->root, -1, -1, 1, 1, 0, \
+		XCB_WINDOW_CLASS_INPUT_OUTPUT, root_screen->root_visual, \
+		XCB_CW_OVERRIDE_REDIRECT, params);
+		
+  //Now register this widget as the system tray
+  xcb_set_selection_owner(QX11Info::connection(), LuminaSessionTrayID, _NET_SYSTEM_TRAY_S, XCB_CURRENT_TIME);
+  //Make sure that it was registered properly
+  ownreply = xcb_get_selection_owner_reply(QX11Info::connection(), \
+						xcb_get_selection_owner_unchecked(QX11Info::connection(), _NET_SYSTEM_TRAY_S), NULL);
+  
+  if(ownreply==0 || ownreply->owner != LuminaSessionTrayID){
+    if(ownreply!=0){ free(ownreply); }
+    qWarning() << " - Could not register the system tray";
+    xcb_destroy_window(QX11Info::connection(), LuminaSessionTrayID);
+    return 0;
+  }
+  free(ownreply); //done with structure
+  
+  //Now register the orientation of the system tray
+  uint32_t orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+   xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_REPLACE, LuminaSessionTrayID, \
+			_NET_SYSTEM_TRAY_ORIENTATION, XCB_ATOM_CARDINAL, 32, 1, &orient);
+
+  //Now set the visual ID for the system tray (same as the root window, but TrueColor)
+    xcb_visualtype_t *type = xcb_aux_find_visual_by_attrs(root_screen, XCB_VISUAL_CLASS_TRUE_COLOR, 32);
+    if(type!=0){
+      xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_REPLACE, LuminaSessionTrayID, \
+	  _NET_SYSTEM_TRAY_VISUAL, XCB_ATOM_VISUALID, 32, 1, &type->visual_id);	    
+    }else{
+      qWarning() << " - Could not set TrueColor visual for system tray";
+    }
+  
+  //Finally, send out an X event letting others know that the system tray is up and running
+   xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = root_screen->root;
+    event.type = EWMH.MANAGER; //MANAGER atom
+    event.data.data32[0] = CurrentTime; 
+    event.data.data32[1] = _NET_SYSTEM_TRAY_S; //_NET_SYSTEM_TRAY_S atom
+    event.data.data32[2] = LuminaSessionTrayID;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+    xcb_send_event(QX11Info::connection(), 0, root_screen->root,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+  
+  //Success
+  return LuminaSessionTrayID;
+}
+
+// ===== closeSystemTray() =====
+void LXCB::closeSystemTray(WId trayID){
+  xcb_destroy_window(QX11Info::connection(), trayID);
+}
 
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){
