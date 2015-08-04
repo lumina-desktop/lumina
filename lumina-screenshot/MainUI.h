@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -21,6 +21,7 @@
 
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
+#include <LuminaX11.h>
 
 namespace Ui{
 	class MainUI;
@@ -41,6 +42,7 @@ private:
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot
 	QSettings *settings;
+	LXCB *XCB; //Library access to window subsystems
 
 private slots:
 	//Button Slots

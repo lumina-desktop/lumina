@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -11,6 +11,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
+  XCB = new LXCB();
   cpic = QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()); //initial screenshot
   ppath = QDir::homePath();
   QWidget *spacer = new QWidget();
@@ -77,11 +78,11 @@ bool MainUI::getWindow(){
   if(ui->radio_window->isChecked()){
     settings->setValue("screenshot-target", "window");
     //Use xprop to get the desired window from the user
-    QList<WId> wins = LX11::WindowList();
+    QList<WId> wins = XCB->WindowList();
     wins.removeAll(this->winId()); //don't show this window
     QStringList names;
     for(int i=0; i<wins.length(); i++){
-      names << LX11::WindowClass(wins[i])+" ("+LX11::WindowName(wins[i])+")";
+      names << XCB->WindowClass(wins[i])+" ("+XCB->WindowName(wins[i])+")";
     }
     bool ok = false;
     QString info = QInputDialog::getItem(this, tr("Select Window"), tr("Window:"), names, 0, false, &ok);
@@ -106,7 +107,12 @@ void MainUI::getPixmap(){
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
   }else{
     //Grab just the designated window
-    cpic = scrn->grabWindow(cwin);
+    if(ui->check_frame->isChecked()){
+      QRect geom = XCB->WindowGeometry(cwin, true); //include the frame
+      cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
+    }else{
+      cpic = scrn->grabWindow(cwin);
+    }
   }
   this->show();
   //Now display the pixmap on the label as well

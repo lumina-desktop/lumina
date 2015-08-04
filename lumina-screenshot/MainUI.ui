@@ -49,7 +49,17 @@
        <property name="bottomMargin">
         <number>1</number>
        </property>
-       <item row="0" column="3">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="check_frame">
+         <property name="text">
+          <string>Include Borders</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <widget class="QSpinBox" name="spin_delay">
          <property name="suffix">
           <string> Seconds</string>
@@ -62,56 +72,53 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="spin_monitor">
-         <property name="prefix">
-          <string notr="true"># </string>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QRadioButton" name="radio_all">
          <property name="text">
           <string>Entire Session</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QRadioButton" name="radio_window">
          <property name="text">
           <string>Single Window</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QRadioButton" name="radio_monitor">
          <property name="text">
           <string>Single Screen</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2" rowspan="3">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
+       <item row="2" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QSpinBox" name="spin_monitor">
+           <property name="prefix">
+            <string notr="true"># </string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
