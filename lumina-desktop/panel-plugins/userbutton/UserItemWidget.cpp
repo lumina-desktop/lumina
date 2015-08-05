@@ -182,8 +182,11 @@ void UserItemWidget::buttonClicked(){
       }else{
 	QFile::remove(icon->whatsThis()); 
       } 
-    }else{ LUtils::removeFavorite(icon->whatsThis()); } //This is a favorite
-    emit RemovedShortcut(); 
+      //Don't emit the RemovedShortcut signal here - the automatic ~/Desktop watcher will see the change when finished
+    }else{ 
+      LUtils::removeFavorite(icon->whatsThis()); //This is a favorite
+      emit RemovedShortcut(); 
+    }
   }
 }
 

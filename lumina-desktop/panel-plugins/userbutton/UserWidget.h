@@ -50,6 +50,7 @@ private:
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
 	QIcon rotateIcon(QIcon);
+	bool updatingfavs;
 
 private slots:
 	void LaunchItem(QString path, bool fix = true);

@@ -11,6 +11,7 @@
 
 UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWidget){
   ui->setupUi(this);
+  updatingfavs = false;
   if(parent!=0){ parent->setMouseTracking(true); }
   this->setMouseTracking(true);
   sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
@@ -217,6 +218,8 @@ void UserWidget::FavChanged(){
 }
 
 void UserWidget::updateFavItems(bool newfilter){
+  if(updatingfavs){ return; }
+  updatingfavs = true;
   //qDebug() << "Updating User Favorite Items";
   QStringList newfavs = LUtils::listFavorites();
   //qDebug() << "Favorites:" << newfavs;
@@ -225,7 +228,7 @@ void UserWidget::updateFavItems(bool newfilter){
    
     homefiles = LSession::handle()->DesktopFiles();
     lastHomeUpdate = QDateTime::currentDateTime();
-  }else if(!newfilter){ return; } //nothing new to change - stop now
+  }else if(!newfilter){ updatingfavs = false; return; } //nothing new to change - stop now
   //qDebug() << " - Passed Smoke Test...";
   QStringList favitems;
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
@@ -270,6 +273,7 @@ void UserWidget::updateFavItems(bool newfilter){
       QApplication::processEvents(); //keep the UI snappy - might be a number of these
     }
   SortScrollArea(ui->scroll_fav);
+  updatingfavs = false;
   //qDebug() << " - Done";
 }
 

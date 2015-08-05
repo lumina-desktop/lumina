@@ -7,18 +7,6 @@
 #include "LSysTray.h"
 #include "../../LSession.h"
 
-/*#include <LuminaX11.h>
-//X includes (these need to be last due to Qt compile issues)
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xatom.h>
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/Xdamage.h>*/
-
-//Static variables for damage detection (tray update notifications)
-//static int dmgEvent = 0;
-//static int dmgError = 0;
-
 LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   frame = new QFrame(this);
   frame->setContentsMargins(0,0,0,0);
@@ -163,6 +151,7 @@ void LSysTray::UpdateTrayWindow(WId win){
     if(trayIcons[i]->appID()==win){
       qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
+      QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
       return; //finished now
     }
   }
