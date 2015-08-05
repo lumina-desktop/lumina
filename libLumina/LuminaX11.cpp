@@ -1163,12 +1163,6 @@ int LXCB::WindowIsFullscreen(WId win){
   return fscreen;
 }
 
-// === SelectInput() ===
-void LXCB::SelectInput(WId win){
-  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE | XCB_EVENT_MASK_STRUCTURE_NOTIFY;
-  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, &mask );
-}
-
 // === WindowIcon() ===
 QIcon LXCB::WindowIcon(WId win){
   //Fetch the _NET_WM_ICON for the window and return it as a QIcon
@@ -1200,6 +1194,21 @@ QIcon LXCB::WindowIcon(WId win){
   }
   return icon;
 }
+
+// === SelectInput() ===
+void LXCB::SelectInput(WId win){
+  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE | XCB_EVENT_MASK_STRUCTURE_NOTIFY;
+  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, &mask );
+}
+
+// === GenerateDamageID() ===
+uint LXCB::GenerateDamageID(WId win){
+  //Now create/register the damage handler
+  xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
+  xcb_damage_create(QX11Info::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+  return ( (uint) dmgID );		
+}
+
 
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){

@@ -19,11 +19,11 @@
 #include <unistd.h> //for usleep() usage
 
 //X includes (these need to be last due to Qt compile issues)
-#include <X11/Xlib.h>
+/*#include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/Xrender.h>
-#include <X11/extensions/Xdamage.h>
+#include <X11/extensions/Xdamage.h>*/
 
 #ifndef DEBUG
 #define DEBUG 0
@@ -777,7 +777,8 @@ void LSession::startSystemTray(){
   TrayStopping = false;
   if(SystemTrayID!=0){
     XCB->SelectInput(SystemTrayID); //make sure TrayID events get forwarded here
-    XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
+    TrayDmgEvent = XCB->GenerateDamageID(SystemTrayID);
+    //XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
     evFilter->setTrayDamageFlag(TrayDmgEvent);
     qDebug() << "System Tray Started Successfully";
     if(DEBUG){ qDebug() << " - System Tray Flags:" << TrayDmgEvent << TrayDmgError; }

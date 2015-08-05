@@ -12,7 +12,7 @@ isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
 
-LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lXdamage -lX11 -lxcb -lxcb-damage
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lxcb -lxcb-damage
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
