@@ -114,8 +114,8 @@ void LSysMenuQuick::UpdateMenu(){
     ui->group_battery->setVisible(false);
   }
   //Workspace
-  val = LX11::GetCurrentDesktop();
-  int tot = LX11::GetNumberOfDesktops();
+  val = LSession::handle()->XCB->CurrentWorkspace();
+  int tot = LSession::handle()->XCB->NumberOfWorkspaces();
   ui->group_workspace->setVisible(val>=0 && tot>1);
   ui->label_wk_text->setText( QString(tr("%1 of %2")).arg(QString::number(val+1), QString::number(tot)) );
 }
@@ -157,20 +157,22 @@ void LSysMenuQuick::setCurrentBrightness(){
 }
 
 void LSysMenuQuick::nextWorkspace(){
-  int cur = LX11::GetCurrentDesktop();
-  int tot = LX11::GetNumberOfDesktops();
+  int cur = LSession::handle()->XCB->CurrentWorkspace();
+  int tot = LSession::handle()->XCB->NumberOfWorkspaces();
+  //qDebug()<< "Next Workspace:" << cur << tot;
   cur++;
   if(cur>=tot){ cur = 0; } //back to beginning
-  LX11::SetCurrentDesktop(cur);
+  //qDebug() << " - New Current:" << cur;
+  LSession::handle()->XCB->SetCurrentWorkspace(cur);
 ui->label_wk_text->setText( QString(tr("%1 of %2")).arg(QString::number(cur+1), QString::number(tot)) );
 }
 
 void LSysMenuQuick::prevWorkspace(){
-  int cur = LX11::GetCurrentDesktop();
-  int tot = LX11::GetNumberOfDesktops();
+  int cur = LSession::handle()->XCB->CurrentWorkspace();
+  int tot = LSession::handle()->XCB->NumberOfWorkspaces();
   cur--;
   if(cur<0){ cur = tot-1; } //back to last
-  LX11::SetCurrentDesktop(cur);
+  LSession::handle()->XCB->SetCurrentWorkspace(cur);
   ui->label_wk_text->setText( QString(tr("%1 of %2")).arg(QString::number(cur+1), QString::number(tot)) );	
 }
 

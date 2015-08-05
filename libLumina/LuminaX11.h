@@ -45,7 +45,7 @@
 
 #define URGENCYHINT (1L << 8) //For window urgency detection
 
-class LX11{
+/*class LX11{
 public:
 	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
 	
@@ -106,7 +106,7 @@ public:
 	
 	//EWMH Convenience functions
 	static QString getNetWMProp(WId win, QString prop); //Returns a _NET_WM_* string value
-};
+};*/
 
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
@@ -129,7 +129,7 @@ public:
 	//Session Modification
 	bool CheckDisableXinerama(); //returns true if Xinerama was initially set but now disabled
 	void RegisterVirtualRoots(QList<WId> roots);
-	
+	void SetCurrentWorkspace(int);
 
 	//Window Information
 	QString WindowClass(WId);
@@ -156,8 +156,11 @@ public:
 	void KillClient(WId); //Force the application that created the window to close
 	void MinimizeWindow(WId); //request that the window be unmapped/minimized
 	void ActivateWindow(WId); //request that the window become active
+	void RestoreWindow(WId); //Re-map/raise the window
 	void MaximizeWindow(WId win, bool flagsonly = false); //request that the window become maximized
 	void MoveResizeWindow(WId win, QRect geom);
+	void ResizeWindow(WId win, int width, int height);
+	void ResizeWindow(WId win, QSize sz){ ResizeWindow(win, sz.width(), sz.height()); } //overload for simplicity
 	void ReserveLocation(WId win, QRect geom, QString loc);
 	
 	//Window Embedding/Detaching (for system tray)

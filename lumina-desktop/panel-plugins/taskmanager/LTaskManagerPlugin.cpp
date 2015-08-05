@@ -84,7 +84,7 @@ void LTaskManagerPlugin::UpdateButtons(){
     //New windows, create buttons for each (add grouping later)
     if(updating > ctime){ return; } //another thread kicked off already - stop this one
     //Check for a button that this can just be added to
-    QString ctxt = LX11::WindowClass(winlist[i]);
+    QString ctxt = LSession::handle()->XCB->WindowClass(winlist[i]);
     bool found = false;
     for(int b=0; b<BUTTONS.length(); b++){
       if(updating > ctime){ return; } //another thread kicked off already - stop this one

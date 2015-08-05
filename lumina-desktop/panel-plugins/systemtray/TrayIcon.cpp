@@ -1,22 +1,14 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 #include "TrayIcon.h"
 
-//#include <X11/Xlib.h>
-//#include <X11/Xutil.h>
-//#include <X11/extensions/Xdamage.h>
-
-//#include <xcb/damage.h>
-//static xcb_damage_damage_t dmgID;
-
 #include <LSession.h>
 #include <QScreen>
 #include <LuminaX11.h>
-//static int dmgID = 0;
 
 TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   AID = 0; //nothing yet
@@ -25,9 +17,6 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
 }
 
 TrayIcon::~TrayIcon(){
-  /*if(AID!=0){
-    detachApp();
-  }*/
 }
 
 WId TrayIcon::appID(){
@@ -41,13 +30,11 @@ void TrayIcon::attachApp(WId id){
   IID = this->winId(); //embed directly into this widget
   dmgID = LSession::handle()->XCB->EmbedWindow(AID, IID);
   if( dmgID != 0 ){
-    LX11::RestoreWindow(AID); //make it visible
-    //dmgID = XDamageCreate( QX11Info::display(), AID, XDamageReportRawRectangles );
+    LSession::handle()->XCB->RestoreWindow(AID); //make it visible
     qDebug() << "New System Tray App:" << AID;
     QTimer::singleShot(1000, this, SLOT(updateIcon()) );
   }else{
     qWarning() << "Could not Embed Tray Application:" << AID;
-    //LX11::DestroyWindow(IID);
     IID = 0;
     AID = 0;
   }
@@ -69,11 +56,7 @@ void TrayIcon::detachApp(){
   //Now detach the application window and clean up
   qDebug() << " - Unembed";
   LSession::handle()->XCB->UnembedWindow(tmp);
-  //if(dmgID!=0){
-    //XDamageDestroy(QX11Info::display(), dmgID);
-  //}
   qDebug() << " - finished app:" << tmp;
-  //if(IID!=this->winId()){ LX11::DestroyWindow(IID); }
   IID = 0;
 }
 
@@ -84,7 +67,7 @@ void TrayIcon::updateIcon(){
   if(AID==0){ return; }
   //Make sure the icon is square
   QSize icosize = this->size();
-  LX11::ResizeWindow(AID,  icosize.width(), icosize.height());
+  LSession::handle()->XCB->ResizeWindow(AID,  icosize.width(), icosize.height());
   QTimer::singleShot(500, this, SLOT(update()) ); //make sure to re-draw the window in a moment
 }
 
@@ -122,7 +105,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 void TrayIcon::resizeEvent(QResizeEvent *event){
   //qDebug() << "Resize Event:" << event->size().width() << event->size().height();	
   if(AID!=0){
-    LX11::ResizeWindow(AID,  event->size().width(), event->size().height());
+    LSession::handle()->XCB->ResizeWindow(AID,  event->size());
     QTimer::singleShot(500, this, SLOT(update()) ); //make sure to re-draw the window in a moment
   }
 }

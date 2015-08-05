@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LDesktopSwitcher.h"
+#include <LSession.h>
 
 LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal) {
   iconOld = -1;
@@ -114,8 +115,8 @@ QAction* LDesktopSwitcher::newAction(int what, QString name) {
 }
 
 void LDesktopSwitcher::createMenu() {
-  int cur = LX11::GetCurrentDesktop(); //current desktop number
-  int tot = LX11::GetNumberOfDesktops(); //total number of desktops
+  int cur = LSession::handle()->XCB->CurrentWorkspace(); //current desktop number
+  int tot = LSession::handle()->XCB->NumberOfWorkspaces(); //total number of desktops
   //qDebug() << "-- vor getCurrentDesktop SWITCH";
   qDebug() << "Virtual Desktops:" << tot << cur;
   menu->clear();
@@ -127,7 +128,7 @@ void LDesktopSwitcher::createMenu() {
 }
 
 void LDesktopSwitcher::menuActionTriggered(QAction* act) {
-  LX11::SetCurrentDesktop(act->whatsThis().toInt());
+  LSession::handle()->XCB->SetCurrentWorkspace(act->whatsThis().toInt());
   label->setToolTip(QString(tr("Workspace %1")).arg(act->whatsThis().toInt() +1));
   QTimer::singleShot(500, this, SLOT(createMenu()) ); //make sure the menu gets updated
 }

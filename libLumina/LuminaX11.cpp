@@ -15,11 +15,11 @@
 #include <QDesktopWidget>
 
 //X includes (these need to be last due to Qt compile issues)
-#include <X11/Xlib.h>
+/*#include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/Xrender.h>
-#include <X11/extensions/Xcomposite.h>
+#include <X11/extensions/Xcomposite.h>*/
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -36,7 +36,7 @@
 #define DEBUG 0
 
 //=====   WindowList() ========
-QList<WId> LX11::WindowList(){
+/*QList<WId> LX11::WindowList(){
   QList<WId> output;
   output << LX11::GetClientList();
 
@@ -53,13 +53,7 @@ QList<WId> LX11::WindowList(){
       //qDebug() << "Lumina Window:" << name << LX11::WindowName(output[i]);
       if(LX11::WindowName(output[i]).toLower()==name.toLower() ){ remove=true; }
     }
-    /*else if( name.isEmpty() ){ 
-      qDebug() << "Abnormal Window:" << output[i];
-	qDebug() << " - Class:" << name;
-	qDebug() << " - Text:" << LX11::WindowName(output[i]);
-	qDebug() << " - Visible Name:" << LX11::WindowVisibleName(output[i]);
-	qDebug() << " - Icon Name:" << LX11::WindowIconName(output[i]);
-    }*/
+
     if(remove){
       //qDebug() << "Skip Window:" << output[i];
       output.removeAt(i);
@@ -74,16 +68,6 @@ QList<WId> LX11::WindowList(){
 // ===== GetClientList() =====
 QList<WId> LX11::GetClientList(){
   QList<WId> output;
-  //XCB Library
-  /*qDebug() << "Get Client list cookie";
-  xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_unchecked( LX11::EWMH_C(), 0);
-  xcb_ewmh_get_windows_reply_t winlist;
-  qDebug() << "Get client list";
-  if( xcb_ewmh_get_client_list_reply( LX11::EWMH_C(), cookie, &winlist, NULL) ){
-    qDebug() << " - Loop over items";
-    for(unsigned int i=0; i<winlist.windows_len; i++){ output << winlist.windows[i]; }
-  }*/
-	
   //XLib
   Atom a = XInternAtom(QX11Info::display(), "_NET_CLIENT_LIST", true);
   Atom realType;
@@ -242,18 +226,6 @@ int LX11::GetCurrentDesktop(){
   }
   return number;	
 }
-
-// ===== ValidWindowEvent() =====
-/*bool LX11::ValidWindowEvent(Atom evAtom){
-	
-  if(evAtom == XInternAtom(QX11Info::display(),"_NET_CLIENT_LIST",false) ){ return true; }
-  else if( evAtom == XInternAtom(QX11Info::display(),"_NET_ACTIVE_WINDOW",false) ){ return true; }
-  else if( evAtom == XInternAtom(QX11Info::display(),"_NET_WM_NAME",false) ){ return true; }
-  else if( evAtom == XInternAtom(QX11Info::display(),"_NET_WM_VISIBLE_NAME",false) ){ return true; }
-  else if( evAtom == XInternAtom(QX11Info::display(),"_NET_WM_ICON_NAME",false) ){ return true; }
-  else if( evAtom == XInternAtom(QX11Info::display(),"_NET_WM_VISIBLE_ICON_NAME",false) ){ return true; }
-  else{ return false; }
-}*/
 
 // ===== CloseWindow() =====
 void LX11::CloseWindow(WId win){
@@ -524,59 +496,6 @@ QString LX11::WindowVisibleIconName(WId win){
   return LX11::getNetWMProp(win, "_NET_WM_VISIBLE_ICON_NAME");	
 }
 
-// ===== WindowIcon() =====
-/*QIcon LX11::WindowIcon(WId win){
-  //Use the _NET_WM_ICON value instead of the WMHints pixmaps
-	// - the pixmaps are very unstable and erratic
-  QIcon icon;
-  Display *disp = QX11Info::display();
-  Atom type;
-  Atom SA = XInternAtom(disp, "_NET_WM_ICON", false);
-  int format;
-  unsigned long num, bytes;
-  unsigned long *data = 0;
-  XGetWindowProperty( disp, win, SA, 0, LONG_MAX, False, AnyPropertyType,
-  	  			&type, &format, &num, &bytes, (uchar**)&data);
-  if(data != 0){
-    //qDebug() << "Icon Data Found:" << win;
-    ulong* dat = data;
-    while(dat < data+num){ //consider the fact that there may be multiple graphical layers
-    //Now convert it into a Qt image
-    // - first 2 elements are width and height
-    // - data in rows from left to right and top to bottom
-      QImage image(dat[0], dat[1], QImage::Format_ARGB32); //initial setup
-	dat+=2; //remember the first 2 element offset
-	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
-	  ((uint*)image.bits())[i] = *dat; 
-	}
-      icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
-    }
-    XFree(data);
-  }
-  return icon;
-}*/
-
-
-// ===== WindowImage() =====
-/*QPixmap LX11::WindowImage(WId win, bool useleader){
-  QPixmap pix;
-  Display *disp = QX11Info::display();
-  WId leader = LX11::leaderWindow(win); //check for an alternate window that contains the image
-  if(leader!=0 && useleader){ win = leader; } //use the leader window instead
-  //First get the size of the window image (embedded in the window attributes)
-  XWindowAttributes att; 
-  if( 0 == XGetWindowAttributes(disp, win, &att) ){ return pix; } //invalid window attributes
-  //Now extract the image
-  XImage *xim = XGetImage(disp, win, 0,0, att.width, att.height, AllPlanes, ZPixmap);
-  if(xim!=0){
-    //Convert the X image to a Qt Image
-    pix.convertFromImage( QImage( (const uchar*) xim->data, xim->width, xim->height, xim->bytes_per_line, QImage::Format_ARGB32_Premultiplied) );
-    XDestroyImage(xim); //clean up
-  }
-  //Return the pixmap
-  return pix;
-}*/
-
 // ===== GetNumberOfDesktops() =====
 int LX11::WindowDesktop(WId win){
   int number = -1;
@@ -834,7 +753,7 @@ QString LX11::getNetWMProp(WId win, QString prop){
   }
   return property;
 }
-
+*/
 //===============================
 //===============================
 // XCB LIBRARY FUNCTIONS
@@ -939,6 +858,26 @@ void LXCB::RegisterVirtualRoots(QList<WId> roots){
   delete list;
 }
 
+// ===== SetCurrentWorkspace() =====
+void LXCB::SetCurrentWorkspace(int number){
+  //Need to send a client message event for the window so the WM picks it up
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = QX11Info::appRootWindow();
+    event.type = EWMH._NET_CURRENT_DESKTOP;
+    event.data.data32[0] = number; //set to enabled
+    event.data.data32[1] = XCB_TIME_CURRENT_TIME;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+	
+  //EWMH function (does not seem to be recognized by Fluxbox)
+  xcb_ewmh_request_change_showing_desktop(&EWMH, QX11Info::appScreen(), number);
+}
+
 // === WindowClass() ===
 QString LXCB::WindowClass(WId win){
   if(DEBUG){ qDebug() << "XCB: WindowClass()" << win; }
@@ -1011,6 +950,7 @@ QRect LXCB::WindowGeometry(WId win, bool includeFrame){
   return geom;
 }
 
+// === WindowFrameGeometry() ===
 QList<int> LXCB::WindowFrameGeometry(WId win){
   if(DEBUG){ qDebug() << "XCB: WindowFrameGeometry()"; }
   //Returns: [top, bottom, left, right] sizes for the frame
@@ -1300,7 +1240,7 @@ void LXCB::SetAsPanel(WId win){
   //qDebug() << " -- got cookie";
   if(1 == xcb_icccm_get_wm_hints_reply(QX11Info::connection(), cookie, &hints, NULL) ){
     //qDebug() << " -- Set no inputs flag";
-     xcb_icccm_wm_hints_set_input(&hints, False); //set no input focus
+     xcb_icccm_wm_hints_set_input(&hints, false); //set no input focus
      xcb_icccm_set_wm_hints(QX11Info::connection(), win, &hints); //save hints back to window
   }
   //  - Remove WM_TAKE_FOCUS from the WM_PROTOCOLS for the window
@@ -1445,6 +1385,13 @@ void LXCB::ActivateWindow(WId win){ //request that the window become active
 	
 }
 
+// ===== RestoreWindow() =====
+void LXCB::RestoreWindow(WId win){
+    uint32_t val = XCB_STACK_MODE_ABOVE;
+    xcb_configure_window(QX11Info::connection(),  win, XCB_CONFIG_WINDOW_STACK_MODE, &val); //raise it
+    xcb_map_window(QX11Info::connection(), win); //map it
+}
+
 // === MaximizeWindow() ===
 void LXCB::MaximizeWindow(WId win, bool flagsonly){ //request that the window become maximized
   if(DEBUG){ qDebug() << "XCB: MaximizeWindow()"; }
@@ -1491,6 +1438,13 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
   values[2] = geom.width(); values[3] = geom.height();
   xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
 	
+}
+
+// ===== ResizeWindow() =====
+void LXCB::ResizeWindow(WId win, int width, int height){
+  //Use the basic XCB functions instead of ewmh
+  uint32_t values[] = {width, height};
+  xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
 }
 
 // === ReserveLocation ===
@@ -1554,7 +1508,7 @@ uint LXCB::EmbedWindow(WId win, WId container){
     event.format = 32;
     event.window = win;
     event.type = emb; //_XEMBED
-    event.data.data32[0] = CurrentTime; 
+    event.data.data32[0] = XCB_TIME_CURRENT_TIME; //CurrentTime; 
     event.data.data32[1] = 0; //XEMBED_EMBEDDED_NOTIFY
     event.data.data32[2] = 0;
     event.data.data32[3] = container; //WID of the container
@@ -1687,7 +1641,7 @@ WId LXCB::startSystemTray(int screen){
     event.format = 32;
     event.window = root_screen->root;
     event.type = EWMH.MANAGER; //MANAGER atom
-    event.data.data32[0] = CurrentTime; 
+    event.data.data32[0] = XCB_TIME_CURRENT_TIME; //CurrentTime;  
     event.data.data32[1] = _NET_SYSTEM_TRAY_S; //_NET_SYSTEM_TRAY_S atom
     event.data.data32[2] = LuminaSessionTrayID;
     event.data.data32[3] = 0;
