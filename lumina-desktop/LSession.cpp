@@ -776,7 +776,7 @@ void LSession::startSystemTray(){
   SystemTrayID = XCB->startSystemTray(0);
   TrayStopping = false;
   if(SystemTrayID!=0){
-    XSelectInput(QX11Info::display(), SystemTrayID, InputOutput); //make sure TrayID events get forwarded here
+    XCB->SelectInput(SystemTrayID); //make sure TrayID events get forwarded here
     XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
     evFilter->setTrayDamageFlag(TrayDmgEvent);
     qDebug() << "System Tray Started Successfully";

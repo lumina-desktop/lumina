@@ -1163,6 +1163,12 @@ int LXCB::WindowIsFullscreen(WId win){
   return fscreen;
 }
 
+// === SelectInput() ===
+void LXCB::SelectInput(WId win){
+  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE | XCB_EVENT_MASK_STRUCTURE_NOTIFY;
+  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, &mask );
+}
+
 // === WindowIcon() ===
 QIcon LXCB::WindowIcon(WId win){
   //Fetch the _NET_WM_ICON for the window and return it as a QIcon

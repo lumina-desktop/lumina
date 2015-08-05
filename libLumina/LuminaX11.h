@@ -148,6 +148,7 @@ public:
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
 	
 	//Window Modification
+	void SelectInput(WId); //XSelectInput replacement (to see window events)
 	void SetAsSticky(WId); //Stick to all workspaces
 	void SetDisableWMActions(WId); //Disable WM control (shortcuts/automatic functions)
 	void SetAsPanel(WId); //Adjust all the window flags for a proper panel (cannot be done through Qt)
