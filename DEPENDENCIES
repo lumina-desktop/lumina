@@ -2,63 +2,68 @@
 # FreeBSD port is listed in parentheses after the dependency whenever possible
 # Linux packages are listed by name as they appear in Debian, Ubuntu and Mint
 
-=== FreeBSD Requirements ===
+ == (Version 0.8.7+) ==
+ A C++ compiler (clang++, g++, other..)
+ Qt5.2+
+  - Qt Utilities for compilation/build
+  qmake 			(FreeBSD: devel/qmake5)
+  lrelease			(FreeBSD: devel/qt5-linguisttools)
+   -- Note: Additional build utilities may be required to build Qt itself - such as the "qt5-buildtools"
+  
+  - Specific Qt5 Modules
+  core			(FreeBSD: devel/qt5-core)
+  gui				(FreeBSD: x11-toolkits/qt5-gui)
+  widgets			(FreeBSD: x11-toolkits/qt5-widgets)
+  multimedia		(FreeBSD: multimedia/qt5-multimedia)
+  multimediawidgets	(FreeBSD: multimedia/qt5-multimedia)
+  network			(FreeBSD: net/qt5-network)
+  quickwidgets		(FreeBSD: x11-toolkits/qt5-quick)
+  x11extras		(FreeBSD: x11/qt5-x11extras)
 
-Runtime dependencies:
-
-fluxbox (x11-wm/fluxbox)
-fluxbox styles pack? (x11-themes/fluxbox-tenr-styles-pack)
-oxygen icon theme (x11-themes/kde4-icons-oxygen)
-xscreensaver & xscreensaver-demo  (x11/xscreensaver)
-numlockx (x11/numlockx)
-
-shutdown (/sbin/shutdown - built in) (System restart/poweroff)
-mount (/sbin/mount - built in) (Device Availability)
-apm (/usr/sbin/apm - built in) (Advanced Power Management utility)
-mixer (/usr/sbin/mixer - built in) (Audio System Mixer)
-xbrightness (x11/xbrightness) (Screen Brightness Control)
-
-
-Build time dependencies:
-== (Version 0.7.2) ==
-Qt 4.8+ 
-  qt4-core (devel/qt4-corelib))
-  qt4-gui (x11-toolkits/qt4-gui)
-  qmake-qt4 (devel/qmake4)
-  qt4-network (net/qt4-network)
-  qt4-linguist (devel/qt4-linguist)
-  qt4-svg (graphics/qt4-svg)
-  qt4-uiv (devel/qt4-uic)
-  qt4-moc (devel/qt4-moc)
-  qt4-rcc (devel/qt4-rcc)
-  devel/qt4-qtsolutions-singleapplication
+X.org/XCB libraries:
+  xcb			(FreeBSD: x11/libxcb)
+  xcb-util		(FreeBSD: x11/xcb-util)
+  xcb-ewmh	(FreeBSD: x11/xcb-util-wm)
+  xcb-icccm	(FreeBSD: x11/xcb-util-wm)
+  xcb-image	(FreeBSD: x11/xcb-util-image)
+  xcb-composite	(FreeBSD: x11/libxcb)
+  xcb-damage	(FreeBSD: x11/libxcb)
+  
+Additional Binaries/Packages (runtime):
+  fluxbox 			(FreeBSD: x11-wm/fluxbox)
+    -- Note: You may want to install additional fluxbox styles/themes (FreeBSD: x11-themes/fluxbox-tenr-styles-pack)
+  oxygen icon theme	(FreeBSD: x11-themes/kde4-icons-oxygen)
+    -- Note: Any icon theme pack may be used, but the oxygen theme is used as the fallback internally
+  xscreensaver		(FreeBSD: x11/xscreensaver)
+  numlockx			(FreeBSD: x11/numlockx)
+  xterm			(FreeBSD: x11/xterm)
+    -- Note: xterm is only a "soft" dependency since some apps require that they be started within a terminal (XDG specs)
+  
+  
+ =======================
+====  OS-SPECIFIC UTILITIES =====
+ =======================
  
-X.org and XLib with extensions: 
-  Xrender (x11/libXrender)
-  Xcomposite (x11/libXcomposite)
-  Xdamage (x11/libXdamage)
+=== FreeBSD/PC-BSD ===
+Required Tools
+  xbrightness	(x11/xbrightness) (Screen Brightness Control)
+
+Optional Tools
+  pc-sysconfig	(sysutils/pcbsd-utils-qt5 - Note that the pc-sysconfig service must also be running)
+  pc-mixer		(sysutils/pcbsd-utils-qt5)
   
-== (Version 0.8.0+) ==
-Qt 5.2+
-  qt5-core
-  qt5-buildtools
-  qt5-gui
-  qt5-widgets
-  qt5-multimedia
-  qt5-network
-  qt5-qmake
-  qt5-svg
-  qt5-x11extras
-
-X.org and XCB extensions (possibly the XLib libraries above during the transition phase):
-  libxcb
-  xcb-util-wm (window manager framework)
-  xcb-damage (included in base XCB lib?)
-  xcb-composite (included in base XCB lib?)
-  xcb-render (included in base XCB lib?)
-
-
   
+  
+  
+  
+  
+  
+====OLD INFO ABOUT LINUX DEPENDENCIES====
+ This information needs to be checked for accuracy and added above as necessary
+ 
+ Example: (FreeBSD: <something>, Debian: <something>, Fedora: <something>)
+ 
+ 
 === Linux Requirements (Debian/Ubuntu/Linux Mint) ===
   These packages are required for building Lumina on Linux
   distributions such as Debian, Ubuntu and Linux Mint.
