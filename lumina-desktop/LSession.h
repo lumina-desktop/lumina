@@ -108,7 +108,7 @@ private:
 	QMediaPlayer *mediaObj;
 	QSettings *sessionsettings, *DPlugSettings;
 	bool cleansession;
-	QList<QRect> savedScreens;
+	//QList<QRect> savedScreens;
 
 	//System Tray Variables
 	WId SystemTrayID, VisualTrayID;

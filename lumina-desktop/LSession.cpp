@@ -108,8 +108,8 @@ void LSession::setupSession(){
 
   //Initialize the internal variables
   DESKTOPS.clear();
-  savedScreens.clear();
-  for(int i=0; i<this->desktop()->screenCount(); i++){ savedScreens << this->desktop()->screenGeometry(i); }
+  //savedScreens.clear();
+  //for(int i=0; i<this->desktop()->screenCount(); i++){ savedScreens << this->desktop()->screenGeometry(i); }
       
   //Start the background system tray
     splash.showScreen("systray");
@@ -432,7 +432,6 @@ void LSession::checkUserFiles(){
     qDebug() << "Updating session file to current version";
   }
 
-
   //Save the current version of the session to the settings file (for next time)
   if(newversion || newrelease){
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());
@@ -460,9 +459,9 @@ void LSession::updateDesktops(){
     }*/
     qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
     //Now go through and 
-    if(!firstrun){ savedScreens.clear(); }
+    //if(!firstrun){ savedScreens.clear(); }
     for(int i=0; i<DW->screenCount(); i++){
-      if(!firstrun){ savedScreens << DW->screenGeometry(i); }
+      //if(!firstrun){ savedScreens << DW->screenGeometry(i); }
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
 	//Match either the screen number or the screen location (preventing duplicates)
@@ -608,10 +607,10 @@ QRect LSession::screenGeom(int num){
   if(geom.isNull() ){
     if( !scrn->geometry().isNull() ){ geom = scrn->geometry(); }
     else if( !scrn->virtualGeometry().isNull() ){ geom = scrn->virtualGeometry(); }
-    else if(num < savedScreens.length() ){
+    //else if(num < savedScreens.length() ){
     //Qt is backfiring (Xinarama w/ Fluxbox?) - return the saved geometry
-    geom = savedScreens[num];	
-    }
+    //geom = savedScreens[num];	
+    //}
   }
   return geom;
 }

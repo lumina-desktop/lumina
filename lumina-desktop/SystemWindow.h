@@ -2,17 +2,9 @@
 #define _LUMINA_DESKTOP_SYSTEM_WINDOW_H
 
 #include <QDialog>
-//#include <QCoreApplication>
-
-//#include <QList>
-//#include <QProcess>
 
 #include "ui_SystemWindow.h"
-//#include "Globals.h"
 
-//#include <LuminaXDG.h>
-//#include <LuminaX11.h>
-//#include <LuminaOS.h>
 
 
 
