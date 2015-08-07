@@ -149,7 +149,7 @@ void LSysTray::UpdateTrayWindow(WId win){
   if(!isRunning || stopping || checking){ return; }
   for(int i=0; i<trayIcons.length(); i++){
     if(trayIcons[i]->appID()==win){
-      qDebug() << "System Tray: Update Window " << win;
+      //qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
       QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
       return; //finished now

@@ -18,13 +18,6 @@
 
 #include <unistd.h> //for usleep() usage
 
-//X includes (these need to be last due to Qt compile issues)
-/*#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xatom.h>
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/Xdamage.h>*/
-
 #ifndef DEBUG
 #define DEBUG 0
 #endif
@@ -256,14 +249,15 @@ void LSession::launchStartupApps(){
   if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
     if(sessionsettings->value("EnableNumlock",false).toBool()){
       QProcess::startDetached("numlockx on");
-    }
-    else{
+    }else{
       QProcess::startDetached("numlockx off");
     }
   }
   int tmp = LOS::ScreenBrightness();
-  LOS::setScreenBrightness( tmp );
-  qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
+  if(tmp>0){ 
+    LOS::setScreenBrightness( tmp );
+    qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
+  }
   
   //Now get any XDG startup applications and launch them
   QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
@@ -276,7 +270,7 @@ void LSession::launchStartupApps(){
       QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
     }
     //Put a tiny bit of space between app starts (don't overload the system)
-    for(int i=0; i<5; i++){
+    for(int j=0; j<5; j++){
       usleep(50000); //50ms = 50000 us --> 250ms total wait
       LSession::processEvents();
     }
