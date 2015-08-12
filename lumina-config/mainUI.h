@@ -151,6 +151,7 @@ private slots:
 	void addsessionstartfile();
 	void sessionoptchanged();
 	void sessionthemechanged();
+	void sessionCursorChanged();
 	//void sessionstartchanged();
 	void sessionEditColor();
 	void sessionEditTheme();

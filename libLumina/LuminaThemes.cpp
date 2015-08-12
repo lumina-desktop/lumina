@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -12,6 +12,10 @@
 #include <QFont>
 #include <QDebug>
 #include <QObject>
+
+//Stuff necesary for Qt Cursor Reloads
+//#include "qxcbcursor.h" //needed to prod Qt to refresh the mouse cursor theme
+//#include <QCursor>
 
 QStringList LTHEME::availableSystemThemes(){ 
   //returns: [name::::path] for each item
@@ -82,6 +86,22 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
   return themes;
 }
 	
+QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
+  QStringList paths; paths << LOS::SysPrefix()+"lib/X11/icons/" << LOS::AppPrefix()+"lib/X11/icons/";
+  QStringList out;
+  for(int i=0; i<paths.length(); i++){
+    if( !QFile::exists(paths[i]) ){ continue; }
+    QDir dir(paths[i]);
+    QStringList tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    for(int j=0; j<tmp.length(); j++){
+      if(QFile::exists(paths[i]+tmp[j]+"/cursors")){
+        out << tmp[j]; //good theme - save it to the output list
+      }
+    }
+  }
+  return out;
+}
+
 //Save a new theme/color file
 bool LTHEME::saveLocalTheme(QString name, QStringList contents){
   QString localdir = QDir::homePath()+"/.lumina/themes/";
@@ -119,7 +139,25 @@ QStringList LTHEME::currentSettings(){ //returns [theme path, colorspath, iconsn
   
   return out;
 }
-	
+
+//Return the currently-selected Cursor theme
+QString LTHEME::currentCursor(){
+  //qDebug() << "Reading Current Cursor Theme:";
+  QStringList info = LUtils::readFile(QDir::homePath()+"/.icons/default/index.theme");
+  if(info.isEmpty()){ return ""; }
+  QString cursor;
+  bool insection = false;
+  for(int i=0; i<info.length(); i++){
+    if(info[i]=="[Icon Theme]"){ insection = true; continue;}
+    else if(insection && info[i].startsWith("Inherits=")){
+      cursor = info[i].section("=",1,1).simplified();
+      break;
+    }
+  }
+  //qDebug() << " - found theme:" << cursor;
+  return cursor;
+}
+
   //Change the current Theme/Colors/Icons
 bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize){
   QIcon::setThemeName(iconname);
@@ -134,7 +172,37 @@ bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString ic
 
   return ok;
 }
-	
+
+//Change the current Cursor Theme
+bool LTHEME::setCursorTheme(QString cursorname){
+//qDebug() << "Set Cursor Theme:" << cursorname;
+  QStringList info = LUtils::readFile(QDir::homePath()+"/.icons/default/index.theme");
+    bool insection = false;
+    bool changed = false;
+    QString newval = "Inherits="+cursorname;
+    for(int i=0; i<info.length() && !changed; i++){
+      if(info[i]=="[Icon Theme]"){ 
+	insection = true;
+      }else if( info[i].startsWith("[") && insection){ 
+	//Section does not have the setting - add it
+	info.insert(i, newval); 
+	changed =true;
+      }else if( info[i].startsWith("[") ){ 
+	insection = false;
+      }else if(insection && info[i].startsWith("Inherits=")){
+        info[i] = newval; //replace the current setting
+        changed = true;
+      }
+    } //end loop over file contents
+    if(!changed){ //Could not change the file contents for some reason
+      if(insection){ info << newval; } //end of file while in the section
+      else{ info << "[Icon Theme]" << newval; } //entire section missing from file
+    }
+    //Now save the file
+    //qDebug() << "Done saving the cursor:" << info;
+    return LUtils::writeFile(QDir::homePath()+"/.icons/default/index.theme", info, true);
+}
+
   //Return the complete stylesheet for a given theme/colors
 QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize){
   QString stylesheet = LUtils::readFile(themepath).join("\n");
@@ -162,6 +230,25 @@ QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString
   //qDebug() << "Assembled Style Sheet:\n" << stylesheet;
   return stylesheet;
 }
+// Extra information about a cursor theme
+QStringList LTHEME::cursorInformation(QString name){
+  //returns: [Name, Comment, Sample Image File]
+  QStringList out; out << "" << "" << ""; //ensure consistent output structure
+  QStringList paths; paths << LOS::SysPrefix()+"lib/X11/icons/" << LOS::AppPrefix()+"lib/X11/icons/";
+  for(int i=0; i<paths.length(); i++){
+    if(QFile::exists(paths[i]+name)){
+      if(QFile::exists(paths[i]+name+"/cursors/arrow")){ out[2] = paths[i]+name+"/cursors/arrow"; }
+      QStringList info = LUtils::readFile(paths[i]+name+"/index.theme");
+      for(int j=info.indexOf("[Icon Theme]"); j<info.length(); j++){
+	if(j<0){continue; } //just in case the index function errors out
+	if(info[j].startsWith("Name") && info[j].contains("=")){ out[0] = info[j].section("=",1,1).simplified(); }
+	else if(info[j].startsWith("Comment") && info[j].contains("=")){ out[1] = info[j].section("=",1,1).simplified(); }
+      }
+      break; //found the cursor
+    }
+  }
+  return out;
+}	
 
 //==================
 //  THEME ENGINE CLASS
@@ -175,14 +262,19 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   // Now load the theme stylesheet
   QStringList current = LTHEME::currentSettings();
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
+  cursors = LTHEME::currentCursor();
   application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
   QIcon::setThemeName(icons); //make sure this sets set within this environment
   syncTimer = new QTimer(this);
     syncTimer->setSingleShot(true);
     syncTimer->setInterval(500); //wait 1/2 second before re-loading the files
+  if(cursors.isEmpty()){
+    LTHEME::setCursorTheme("default"); //X11 fallback (always installed?)
+    cursors = "default";
+  }
   watcher = new QFileSystemWatcher(this);
 	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
-	watcher->addPaths( QStringList() << theme << colors ); //also watch these files for changes
+	watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" ); //also watch these files for changes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange()) );
   connect(syncTimer, SIGNAL(timeout()), this, SLOT(reloadFiles()) );
 }
@@ -204,8 +296,21 @@ void LuminaThemeEngine::reloadFiles(){
     QIcon::setThemeName(current[2]); //make sure this sets set within this environment
     emit updateIcons();
   }
+  QString ccurs = LTHEME::currentCursor();
+  if(cursors != ccurs){
+    emit updateCursors();
+    //Might be something we can do automatically here as well - since we have the QApplication handy
+    // - Note: setting/unsetting an override cursor does not update the current cursor bitmap
+    // Qt created a background database/hash/mapping of the theme pixmaps on startup 
+    //   So Qt itself needs to be prodded to update that mapping
+    /*QXcbCursor::cursorThemePropertyChanged( \
+	  new QXcbVirtualDesktop(QX11Info::connection(), application->screen()->handle(), QX11Info::appScreen()),
+	  ccurs.toData(), QVariant("Inherits"), NULL);*/
+	
+  }
   //Now save this for later checking
-  watcher->removePaths( QStringList() << theme << colors );
+  watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme");
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
-  watcher->addPaths( QStringList() << theme << colors );
+  cursors = ccurs;
+  watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme");
 }

@@ -181,6 +181,7 @@ void MainUI::setupConnections(){
   connect(ui->combo_session_wfocus, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_wloc, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_wtheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionthemechanged()) );
+  connect(ui->combo_session_cursortheme, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionCursorChanged()) );
   connect(ui->check_session_numlock, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playloginaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(stateChanged(int)), this, SLOT(sessionoptchanged()) );
@@ -238,6 +239,12 @@ void MainUI::setupMenus(){
   ui->combo_session_datetimeorder->addItem( tr("Time first then Date"), "timedate");
   ui->combo_session_datetimeorder->addItem( tr("Date first then Time"), "datetime");
 
+  //Available Cursor Themes
+  ui->combo_session_cursortheme->clear();
+  ui->combo_session_cursortheme->addItems( LTHEME::availableSystemCursors() );
+  //int cur = ui->combo_session_cursortheme->findText( LTHEME::currentCursor() );
+  //if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
+  
   //Available Time zones
   ui->combo_session_timezone->clear();
   QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
@@ -1664,9 +1671,13 @@ void MainUI::loadSessionSettings(){
   // - Font Size
   ui->spin_session_fontsize->setValue( current[4].section("p",0,0).toInt() );
   
+  int cur = ui->combo_session_cursortheme->findText( LTHEME::currentCursor() );
+  if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
+  
   //sessionstartchanged(); //make sure to update buttons
   sessionLoadTimeSample();
   sessionLoadDateSample();
+  sessionCursorChanged();
 }
 
 void MainUI::saveSessionSettings(){
@@ -1771,7 +1782,6 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("InitLocale/LC_CTYPE", ui->combo_locale_ctype->currentData().toString() );
   
   
-  
   //Now do the theme options
   QString themefile = ui->combo_session_themefile->itemData( ui->combo_session_themefile->currentIndex() ).toString();
   QString colorfile = ui->combo_session_colorfile->itemData( ui->combo_session_colorfile->currentIndex() ).toString();
@@ -1780,6 +1790,7 @@ void MainUI::saveSessionSettings(){
   QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
   //qDebug() << "Saving theme options:" << themefile << colorfile << iconset << font << fontsize;
   LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
+  LTHEME::setCursorTheme(ui->combo_session_cursortheme->currentText());
   if(newstartapps){ loadSessionSettings(); } //make sure to re-load the session settings to catch the new files
 }
 
@@ -1853,6 +1864,18 @@ void MainUI::sessionthemechanged(){
   sessionoptchanged();
 }
 
+void MainUI::sessionCursorChanged(){
+  //Update the Cursor Theme preview
+  QStringList info = LTHEME::cursorInformation(ui->combo_session_cursortheme->currentText());
+  // - info format: [name, comment. sample file]
+  qDebug() << "Cursor Information:" << ui->combo_session_cursortheme->currentText() << info;
+  QPixmap img(info[2]);
+  qDebug() << "Image Data:" << img.isNull() << img.size();
+  ui->label_cursor_sample->setPixmap( img.scaledToHeight(ui->label_cursor_sample->height(), Qt::SmoothTransformation) );
+  ui->label_cursor_sample->setToolTip(info[1]);
+  ui->combo_session_cursortheme->setToolTip(info[1]);
+  sessionoptchanged();
+}
 /*void MainUI::sessionstartchanged(){
   ui->tool_session_rmapp->setEnabled( ui->list_session_start->currentRow()>=0 );
 }*/
@@ -2006,4 +2029,3 @@ void MainUI::sessionShowDateCodes(){
     msg << tr("Text may be contained within single-quotes to ignore replacements");
   QMessageBox::information(this, tr("Date Codes"), msg.join("\n") );
 }
-

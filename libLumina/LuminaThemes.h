@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -26,19 +26,25 @@ public:
   static QStringList availableSystemColors(); 	//returns: [name::::path] for each item
   static QStringList availableLocalColors(); 	//returns: [name::::path] for each item
   static QStringList availableSystemIcons(); 	//returns: [name] for each item
-	
+  static QStringList availableSystemCursors();	//returns: [name] for each item
+
   //Save a new theme/color file
   static bool saveLocalTheme(QString name, QStringList contents);
   static bool saveLocalColors(QString name, QStringList contents);
-
+  
   //Return the currently selected Theme/Colors/Icons
   static QStringList currentSettings(); //returns [theme path, colorspath, iconsname, font, fontsize]
+  static QString currentCursor(); //returns: current cursor theme name
 
   //Change the current Theme/Colors/Icons
   static bool setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize);
-	
+  static bool setCursorTheme(QString cursorname);
+
   //Return the complete stylesheet for a given theme/colors
   static QString assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize);
+  
+  //Additional info for a cursor theme
+  static QStringList cursorInformation(QString name); //returns: [Name, Comment, Sample Image File]
   
 };
 
@@ -63,7 +69,7 @@ public:
 private:
 	QApplication *application;
 	QFileSystemWatcher *watcher;
-	QString theme,colors,icons, font, fontsize; //current settings
+	QString theme,colors,icons, font, fontsize, cursors; //current settings
 	QTimer *syncTimer;
 
 private slots:
@@ -72,6 +78,7 @@ private slots:
 
 signals:
 	void updateIcons();
+	void updateCursors();
 };
 
 
