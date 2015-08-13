@@ -1,3 +1,13 @@
+lumina-desktop (0.8.7.828-1nano) unstable; urgency=low
+
+  * New git snapshot
+    - debian/copyright: minor syntax fixes, add Upstream-Contact
+    - debian/control: improved package descriptions
+    - debian/merge-lumina-i18n.sh: script to merge latest translations from
+      https://github.com/pcbsd/lumina-i18n.git
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Thu, 13 Aug 2015 19:18:43 +0200
+
 lumina-desktop (0.8.6-1) unstable; urgency=low
 
   * New upstream release
