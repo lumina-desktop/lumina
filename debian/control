@@ -32,6 +32,8 @@ Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Library for the lumina desktop environment
  Utility library for the lumina desktop environment
+ .
+ This is the debianized version of libluminautils1.
 
 Package: libluminautils-dev
 Architecture: any
@@ -54,22 +56,23 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Configuration utility for the lumina desktop environment
- lumina-config allows one to change various aspects of lumina and fluxbox, like
- the wallpaper beeing used, startup-applications, desktop-menu and more.
+ lumina-config allows to change various aspects of lumina and fluxbox, like
+ the wallpaper beeing used, theme, icons, panel (and plugins), startup and 
+ default applications, desktop-menu and more.
 
 Package: lumina-fm
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Filemanager for the lumina desktop environment
- Simple filemanager for lumina with support for multiple view modes and
- integrated slideshow-based picture viewer.
+ Simple filemanager for lumina with support for multiple view modes, tabbed browsing,
+ including an integrated slideshow-based picture viewer.
 
 Package: lumina-open
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
-Description: xdg-open like utilityfor the lumina desktop environment
+Description: xdg-open like utility for the lumina desktop environment
  lumina-open handles opening of files and urls according to the system wide
  mime type association. It also provides an optional selector if more than one
  application is assigned with the given url or file type.
@@ -79,16 +82,19 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Screenshot utility for the lumina desktop environment
- Simple screenshot utility that allows one to snapshot the whole desktop or a
+ Simple screenshot utility that allows to snapshot the whole desktop or a
  single window after a configurable delay.
+ .
+ Optionally the window border can be hidden when taking a screenshot of a
+ single window.
 
 Package: lumina-search
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Search utility for the lumina desktop environment
- Simple search utility that allows one to search for applications or files and
- directories in the user's HOME directory.
+ Simple search utility that allows to search for applications or files and
+ directories in the user's HOME directory and launch or open them.
 
 Package: lumina-info
 Architecture: any
@@ -96,7 +102,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Basic information utility for Lumina
  lumina-info display various information about the Lumina installation,
- like paths or version.
+ like paths, contributors, license or version.
 
 Package: lumina-xconfig
 Architecture: any
