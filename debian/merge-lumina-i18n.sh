@@ -23,5 +23,11 @@ for lng in ${LANGS[@]}; do
 done
 
 echo "updated lumina translations."
-git commit */i18n/ -m "merge latest translations from https://github.com/pcbsd/lumina-i18n.git"
+
+# satisfy dpkg-source when building a GIT snapshot
+# first ensure all translations are known to GIT
+# then create a commit using only the translation files
+# other changes to the source will still be tracked by dpkg-source
+[[ -d "${CURDIR}"/.git ]] && ( git add */i18n/*.ts && git commit */i18n/*.ts \
+	-m "merge latest translations from https://github.com/pcbsd/lumina-i18n.git" )
 rm -rf lumina-i18n
