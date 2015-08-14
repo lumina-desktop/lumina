@@ -578,7 +578,12 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     }
     //Note: Fluxbox treats this weird, the origin point needs to be the total (frame included), 
     //   but the size needs to be the raw (no frame) value
-    XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
+    if(XCB->WindowClass(win)=="Take Screenshot"){ 
+      //Not sure why: but Fluxbox treats lumina-screenshot differently
+      XCB->MoveResizeWindow(win, geom);
+    }else{
+      XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
+    }
   }
   
 }
