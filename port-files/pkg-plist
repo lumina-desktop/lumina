@@ -32,6 +32,8 @@ share/Lumina-DE/fluxbox-init-rc
 share/Lumina-DE/fluxbox-keys
 share/Lumina-DE/Login.ogg
 share/Lumina-DE/Logout.ogg
+share/Lumina-DE/colors/Blue-Light.qss.colors
+share/Lumina-DE/colors/Grey-Dark.qss.colors
 share/Lumina-DE/colors/Lumina-Red.qss.colors
 share/Lumina-DE/colors/Lumina-Green.qss.colors
 share/Lumina-DE/colors/Lumina-Purple.qss.colors
