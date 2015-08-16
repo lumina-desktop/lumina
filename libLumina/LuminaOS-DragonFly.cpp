@@ -215,7 +215,15 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
 
 //File Checksums
 QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
- return QStringList();
+  QStringList info = LUtils::getCmdOutput("md5 \""+filepaths.join("\" \"")+"\"");
+  for(int i=0; i<info.length(); i++){
+    if( !info[i].contains(" = ") ){ info.removeAt(i); i--; }
+    else{
+      //Strip out the extra information
+      info[i] = info[i].section(" = ",1,1);
+    }
+  }
+ return info;
 }
 
 //file system capacity
