@@ -262,7 +262,12 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
 }
 
 int LOS::MemoryUsagePercent(){
-  return -1; //not implemented yet
+  //SYSCTL: vm.stats.vm.v_<something>_count
+  QStringList info = LUtils::getCmdOutput("sysctl -n vm.stats.vm.v_page_count vm.stats.vm.v_wire_count vm.stats.vm.v_active_count");
+  if(info.length()<3){ return -1; } //error in fetching information
+  //List output: [total, wired, active]
+  double perc = 100.0* (info[1].toLong()+info[2].toLong())/(info[0].toDouble());
+  return qRound(perc);
 }
 
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
