@@ -152,12 +152,12 @@ void LOS::changeAudioVolume(int percentdiff){
 
 //Check if a graphical audio mixer is installed
 bool LOS::hasMixerUtility(){
-  return QFile::exists("/usr/local/bin/pc-mixer");
+  return false; //not implemented yet for DragonFly
 }
 
 //Launch the graphical audio mixer utility
 void LOS::startMixerUtility(){
-  QProcess::startDetached("pc-mixer -notray");
+  //Not implemented yet for DragonFly
 }
 
 //Check for user system permission (shutdown/restart)
