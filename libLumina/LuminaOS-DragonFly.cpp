@@ -11,6 +11,7 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 static int audiovolume = -1;
+static int ncpu = -1;
 
 QString LOS::OSName(){ return "DragonFly BSD"; }
 
@@ -236,7 +237,24 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
-  return QStringList(); //not implemented yet
+  QStringList temps;
+
+  // Determine number of CPUs
+  if (ncpu == -1) {
+    ncpu = LUtils::getCmdOutput("sysctl -n hw.ncpu").join("").toInt();
+  }
+
+  // We couldn't get number of CPUs. Give up!
+  if (ncpu == -1) {
+    return temps;
+  }
+
+  for (int cpu = 0; cpu < ncpu; ++cpu) {
+    QString cmd = QString("sysctl -n hw.sensors.cpu") + QString::number(cpu) + QString(".temp0");
+    QString info = LUtils::getCmdOutput(cmd).join("");
+    temps << info.section(" ", 0, 1);
+  }
+  return temps;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
