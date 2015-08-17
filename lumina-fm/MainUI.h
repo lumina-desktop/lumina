@@ -55,6 +55,10 @@
 #include "BackgroundWorker.h"
 #include "DDFileSystemModel.h"
 
+#include "DirData.h"
+#include "widgets/MultimediaWidget.h"
+#include "widgets/SlideshowWidget.h"
+
 namespace Ui{
 	class MainUI;
 };

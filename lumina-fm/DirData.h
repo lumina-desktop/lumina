@@ -93,6 +93,10 @@ public:
 	  //Check the Qt subsystems to see if this image file can be read
 	  return ( !LUtils::imageExtensions().filter(this->suffix().toLower()).isEmpty() );
 	}
+	
+	bool isAVFile(){
+	  return (mime.startsWith("audio/") || mime.startsWith("video/") );
+	}
 };
 
 class LDirInfoList{
