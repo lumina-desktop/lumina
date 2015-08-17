@@ -10,6 +10,8 @@
 
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
+static int audiovolume = -1;
+static int ncpu = -1;
 
 QString LOS::OSName(){ return "DragonFly BSD"; }
 
@@ -58,35 +60,58 @@ int LOS::ScreenBrightness(){
       screenbrightness = val;
     }
   }
+  //If it gets to this point, then we have a valid (but new) installation
+  if(screenbrightness<0){ screenbrightness = 100; } //default value for systems
+
   return screenbrightness;	
 }
 
 //Set screen brightness
 void LOS::setScreenBrightness(int percent){
+  if(percent == -1){ return; } //This is usually an invalid value passed directly to the setter
   //ensure bounds
   if(percent<0){percent=0;}
   else if(percent>100){ percent=100; }
+  //Run the command(s)
+  bool success = false;
   float pf = percent/100.0; //convert to a decimel
   //Run the command
   QString cmd = "xbrightness  %1";
   cmd = cmd.arg( QString::number( int(65535*pf) ) );
-  int ret = LUtils::runCmd(cmd);
+  success = (0 == LUtils::runCmd(cmd) );
   //Save the result for later
-  if(ret!=0){ screenbrightness = -1; }
+  if(!success){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
   LUtils::writeFile(QDir::homePath()+"/.lumina/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }
 
 //Read the current volume
 int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 for errors)
+  int out = audiovolume;
+  if(out < 0){
+    //First time session check: Load the last setting for this user
+    QString info = LUtils::readFile(QDir::homePath()+"/.lumina/.currentvolume").join("");
+    if(!info.isEmpty()){
+      out = info.simplified().toInt();
+      audiovolume = out; //unset this internal flag
+      return out;
+    }
+  }
+
+  //probe the system for the current volume (other utils could be changing it)
   QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
-  int out = -1;
   if(!info.isEmpty()){
     int L = info.section(":",1,1).toInt();
     int R = info.section(":",2,2).toInt();
     if(L>R){ out = L; }
     else{ out = R; }
+    if(out != audiovolume){
+      //Volume changed by other utility: adjust the saved value as well
+      LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(out), true);
+    }
+    audiovolume = out;
   }
+
   return out;
 }
 
@@ -99,14 +124,17 @@ void LOS::setAudioVolume(int percent){
     int L = info.section(":",1,1).toInt();
     int R = info.section(":",2,2).toInt();
     int diff = L-R;
+    if((percent == L) && (L==R)){ return; } //already set to that volume
     if(diff<0){ R=percent; L=percent+diff; } //R Greater
     else{ L=percent; R=percent-diff; } //L Greater or equal
     //Check bounds
     if(L<0){L=0;}else if(L>100){L=100;}
     if(R<0){R=0;}else if(R>100){R=100;}
     //Run Command
+    audiovolume = percent; //save for checking later
     LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
-  }	
+    LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(percent), true);
+  }
 }
 
 //Change the current volume a set amount (+ or -)
@@ -125,12 +153,12 @@ void LOS::changeAudioVolume(int percentdiff){
 
 //Check if a graphical audio mixer is installed
 bool LOS::hasMixerUtility(){
-  return QFile::exists("/usr/local/bin/pc-mixer");
+  return false; //not implemented yet for DragonFly
 }
 
 //Launch the graphical audio mixer utility
 void LOS::startMixerUtility(){
-  QProcess::startDetached("pc-mixer -notray");
+  //Not implemented yet for DragonFly
 }
 
 //Check for user system permission (shutdown/restart)
@@ -160,30 +188,43 @@ void LOS::systemSuspend(){
 
 //Battery Availability
 bool LOS::hasBattery(){
-  int val = LUtils::getCmdOutput("apm -l").join("").toInt();
-  return (val >= 0 && val <= 100);
+  int val = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.units").join("").toInt();
+  return (val >= 1);
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  int charge = LUtils::getCmdOutput("apm -l").join("").toInt();
+  int charge = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.life").join("").toInt();
   if(charge > 100){ charge = -1; } //invalid charge 
   return charge;	
 }
 
 //Battery Charging State
 bool LOS::batteryIsCharging(){
-  return (LUtils::getCmdOutput("apm -a").join("").simplified() == "1");
+  return (LUtils::getCmdOutput("sysctl -n hw.acpi.battery.state").join("").simplified() == "2");
 }
 
 //Battery Time Remaining
 int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
-  return LUtils::getCmdOutput("apm -t").join("").toInt();
+  int time = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.time").join("").toInt();
+  if (time > 0) {
+    // time is in minutes
+    time *= 60;
+  }
+  return time;
 }
 
 //File Checksums
 QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
- return QStringList();
+  QStringList info = LUtils::getCmdOutput("md5 \""+filepaths.join("\" \"")+"\"");
+  for(int i=0; i<info.length(); i++){
+    if( !info[i].contains(" = ") ){ info.removeAt(i); i--; }
+    else{
+      //Strip out the extra information
+      info[i] = info[i].section(" = ",1,1);
+    }
+  }
+ return info;
 }
 
 //file system capacity
@@ -196,7 +237,24 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
-  return QStringList(); //not implemented yet
+  QStringList temps;
+
+  // Determine number of CPUs
+  if (ncpu == -1) {
+    ncpu = LUtils::getCmdOutput("sysctl -n hw.ncpu").join("").toInt();
+  }
+
+  // We couldn't get number of CPUs. Give up!
+  if (ncpu == -1) {
+    return temps;
+  }
+
+  for (int cpu = 0; cpu < ncpu; ++cpu) {
+    QString cmd = QString("sysctl -n hw.sensors.cpu") + QString::number(cpu) + QString(".temp0");
+    QString info = LUtils::getCmdOutput(cmd).join("");
+    temps << info.section(" ", 0, 1);
+  }
+  return temps;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
@@ -204,7 +262,12 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
 }
 
 int LOS::MemoryUsagePercent(){
-  return -1; //not implemented yet
+  //SYSCTL: vm.stats.vm.v_<something>_count
+  QStringList info = LUtils::getCmdOutput("sysctl -n vm.stats.vm.v_page_count vm.stats.vm.v_wire_count vm.stats.vm.v_active_count");
+  if(info.length()<3){ return -1; } //error in fetching information
+  //List output: [total, wired, active]
+  double perc = 100.0* (info[1].toLong()+info[2].toLong())/(info[0].toDouble());
+  return qRound(perc);
 }
 
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
