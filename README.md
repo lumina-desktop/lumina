@@ -1,7 +1,10 @@
 lumina
 ======
 
-The official source tree for the Lumina Desktop Environment.
+This is the official source tree for the Lumina Desktop Environment.
+
+For additional information about the project, please browse the official website for documentation, screenshots, and more: www.lumina-desktop.org
+
 
 Description
 =====
