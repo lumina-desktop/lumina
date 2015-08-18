@@ -5,23 +5,39 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LClock.h"
-
 #include "LSession.h"
+#include <LuminaThemes.h>
+#include <LuminaXDG.h>
 
 LClock::LClock(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
-  //Setup the widget
-  labelWidget = new QLabel(this);
-    labelWidget->setAlignment(Qt::AlignCenter);
-    labelWidget->setStyleSheet("font-weight: bold;");
-    labelWidget->setWordWrap(true);
-  this->layout()->setContentsMargins(3,0,3,0); //reserve some space on left/right
-  this->layout()->addWidget(labelWidget);
+  button = new QToolButton(this);
+    button->setAutoRaise(true);
+    button->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    button->setStyleSheet("font-weight: bold;");
+    button->setPopupMode(QToolButton::DelayedPopup); //make sure it runs the update routine first
+    button->setMenu(new QMenu());
+    connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
+  calendar = new QCalendarWidget(this);
+  calAct = new QWidgetAction(this);
+	calAct->setDefaultWidget(calendar);
+  TZMenu = new QMenu(this);
+    connect(TZMenu, SIGNAL(triggered(QAction*)), this, SLOT(ChangeTZ(QAction*)) );
+	
+  //Now assemble the menu
+  button->menu()->addAction(calAct);
+  button->menu()->addMenu(TZMenu);
+	
+  this->layout()->setContentsMargins(0,0,0,0); //reserve some space on left/right
+  this->layout()->addWidget(button);
 	
   //Setup the timer
   timer = new QTimer();
-    timer->setInterval(1000); //update once a second
+  //Load all the initial settings
   updateFormats();
-  updateTime();
+  LocaleChange();
+  ThemeChange();
+  OrientationChange();
+  //Now connect/start the timer
   connect(timer,SIGNAL(timeout()), this, SLOT(updateTime()) );
   connect(QApplication::instance(), SIGNAL(SessionConfigChanged()), this, SLOT(updateFormats()) );
   timer->start();
@@ -33,9 +49,8 @@ LClock::~LClock(){
 }
 
 
-void LClock::updateTime(){
+void LClock::updateTime(bool adjustformat){
   QDateTime CT = QDateTime::currentDateTime();
-  if(useTZ){ CT = CT.toTimeZone(TZ); }
   //Now update the display
   QString label;
   QString timelabel;
@@ -46,22 +61,49 @@ void LClock::updateTime(){
   else{ datelabel = CT.toString(datefmt); }
   if(datetimeorder == "dateonly"){
 	  label = datelabel;
-	  labelWidget->setToolTip(timelabel);
+	  //labelWidget->setToolTip(timelabel);
+	  button->setToolTip(timelabel);
   }else if(datetimeorder == "timedate"){
 	  label = timelabel + "\n" + datelabel;
-	  labelWidget->setToolTip("");
+	  //labelWidget->setToolTip("");
+	  button->setToolTip("");
   }else if(datetimeorder == "datetime"){
 	  label = datelabel + "\n" + timelabel;
-	  labelWidget->setToolTip("");
+	  //labelWidget->setToolTip("");
+	  button->setToolTip("");
   }else{ 
 	 label = timelabel;
-         labelWidget->setToolTip(datelabel);
+         //labelWidget->setToolTip(datelabel);
+	button->setToolTip(datelabel);
   }
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
     //different routine for vertical text (need newlines instead of spaces)
     label.replace(" ","\n");
   }
-  labelWidget->setText(label);
+  if(adjustformat){
+   /* //Check the font/spacing for the display and adjust as necessary
+    int wid = button->width(); //since text always is painted horizontal - no matter the widget orientation
+    //get the number of effective lines (with word wrap)
+    int lines = label.count("\n")+1;
+    int efflines = lines; //effective lines (with wordwrap)
+    for(int i=0; i<lines; i++){
+      if(button->fontMetrics().width(label.section("\n",i,i)) > wid){ efflines++; } //this line will wrap around
+    }
+    if( (button->fontMetrics().height()*efflines) > button->height() ){
+      //Force a pixel metric font size to fit everything
+      int szH = (button->height() - button->fontMetrics().lineSpacing() )/efflines;
+      //Need to supply a *width* pixel, not a height metric
+      int szW = (szH*button->fontMetrics().maxWidth())/button->fontMetrics().height();
+      qDebug() << "Change Clock font:" << button->height() << szH << szW << efflines << lines << button->fontMetrics().height() << button->fontMetrics().lineSpacing();
+      button->setStyleSheet("font-weight: bold; font-size: "+QString::number(szW)+"px;");
+      
+    }else{
+      button->setStyleSheet("font-weight: bold;");
+    }*/
+  }
+  button->setText(label);
+  //labelWidget->setText(label);
+
 }
 
 void LClock::updateFormats(){
@@ -70,9 +112,95 @@ void LClock::updateFormats(){
   datefmt = LSession::handle()->sessionSettings()->value("DateFormat","").toString();
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
+  //Adjust the timer interval based on the smallest unit displayed
+  if(deftime){ timer->setInterval(500); } //1/2 second
+  else if(timefmt.contains("z")){ timer->setInterval(1); } //every millisecond (smallest unit)
+  else if(timefmt.contains("s")){ timer->setInterval(500); } //1/2 second
+  else if(timefmt.contains("m")){ timer->setInterval(2000); } //2 seconds
+  else{ timer->setInterval(1000); } //unknown format - use 1 second interval
   datetimeorder = LSession::handle()->sessionSettings()->value("DateTimeOrder", "timeonly").toString().toLower();
-  useTZ = LSession::handle()->sessionSettings()->value("CustomTimeZone",false).toBool();
-  if(useTZ){ TZ = QTimeZone( LSession::handle()->sessionSettings()->value("TimeZoneByteCode", QByteArray()).toByteArray() ); }
+  updateTime(true);
+}
+
+void LClock::updateMenu(){
+  QDateTime cdt = QDateTime::currentDateTime();
+  TZMenu->setTitle(QString(tr("Time Zone (%1)")).arg(cdt.timeZoneAbbreviation()) );
+  calendar->showToday();
+}
+
+void LClock::openMenu(){
+  updateMenu();
+  button->showMenu();
+}
+
+void LClock::closeMenu(){
+  button->menu()->hide();
+}
+	
+void LClock::ChangeTZ(QAction *act){
+  LTHEME::setCustomEnvSetting("TZ",act->whatsThis());
+  QTimer::singleShot(500, this, SLOT(updateTime()) );
+}
+
+void LClock::LocaleChange(){
+  //Refresh all the time zone information
+  TZMenu->clear();
+    TZMenu->addAction(tr("Use System Time"));
+    TZMenu->addSeparator();
+  QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
+  //qDebug() << "Found Time Zones:" << TZList.length();
+  QDateTime cur = QDateTime::currentDateTime();
+
+  QString ccat; //current category
+  QStringList catAbb;
+  for(int i=0; i<TZList.length(); i++){
+    QTimeZone tmp(TZList[i]);
+    QString abbr = tmp.abbreviation(cur);
+    if(abbr.startsWith("UTC")){ continue; } //skip all the manual options at the end of the list
+    if(QString(tmp.id()).section("/",0,0)!=ccat){
+      //New category - save the old one and start a new one
+      if(!catAbb.isEmpty()){ 
+	catAbb.sort();
+	QMenu *tmpM = new QMenu(this);
+	  tmpM->setTitle(ccat);
+	for(int j=0; j<catAbb.length(); j++){
+	  QAction *act = new QAction(catAbb[j].section("::::",3,3)+" ("+catAbb[j].section("::::",1,1)+")",this);
+	    act->setWhatsThis(catAbb[j].section("::::",2,2));
+	  tmpM->addAction(act);
+	}
+	TZMenu->addMenu(tmpM); 
+      }
+      ccat = QString(tmp.id()).section("/",0,0);
+      catAbb.clear();
+    }
+    if(!catAbb.filter("::::"+abbr+"::::").isEmpty()){ continue; } //duplicate timezone/abbreviation for this cat
+    catAbb << "::::"+abbr+"::::"+tmp.id()+"::::"+tmp.displayName(QTimeZone::GenericTime, QTimeZone::LongName); //add new abbreviation to the list
+  }
+  //Now add the last category to the menu
+  if(!catAbb.isEmpty()){ 
+    catAbb.sort();
+    QMenu *tmpM = new QMenu(this);
+      tmpM->setTitle(ccat);
+    for(int j=0; j<catAbb.length(); j++){
+	QAction *act = new QAction(catAbb[j].section("::::",3,3)+" ("+catAbb[j].section("::::",1,1)+")",this);
+	  act->setWhatsThis(catAbb[j].section("::::",2,2));
+	tmpM->addAction(act);
+    }
+    TZMenu->addMenu(tmpM); 
+  }
   
 }
 
+void LClock::ThemeChange(){
+  TZMenu->setIcon(LXDG::findIcon("clock",""));
+}
+
+void LClock::OrientationChange(){
+  if(this->layout()->direction()==QBoxLayout::LeftToRight){
+    this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+  }else{
+    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+  }
+  updateTime(true); //re-adjust the font/spacings
+  this->layout()->update();
+}

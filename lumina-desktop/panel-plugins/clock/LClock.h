@@ -14,6 +14,11 @@
 #include <QString>
 #include <QLocale>
 #include <QTimeZone>
+#include <QCalendarWidget>
+#include <QWidgetAction>
+#include <QAction>
+#include <QToolButton>
+#include <QMenu>
 
 #include "../LPPlugin.h"
 
@@ -25,16 +30,27 @@ public:
 	
 private:
 	QTimer *timer;
-	QLabel *labelWidget;
+	QToolButton *button;
 	QString timefmt, datefmt, datetimeorder;
-	bool deftime, defdate, useTZ;
-	QTimeZone TZ;
+	bool deftime, defdate;
+	QMenu *TZMenu;
+	QCalendarWidget *calendar;
+	QWidgetAction *calAct;
 	
 private slots:
-	void updateTime();
+	void updateTime(bool adjustformat = false);
 	void updateFormats();
 
+	void updateMenu();
+	void openMenu();
+	void closeMenu();
 
+	void ChangeTZ(QAction*);
+
+public slots:
+	void LocaleChange();
+	void ThemeChange();
+	void OrientationChange();
 };
 
 #endif
