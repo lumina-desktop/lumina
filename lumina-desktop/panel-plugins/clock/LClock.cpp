@@ -102,7 +102,6 @@ void LClock::updateTime(bool adjustformat){
     }*/
   }
   button->setText(label);
-  //labelWidget->setText(label);
 
 }
 
@@ -148,9 +147,62 @@ void LClock::LocaleChange(){
     TZMenu->addAction(tr("Use System Time"));
     TZMenu->addSeparator();
   QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
-  //qDebug() << "Found Time Zones:" << TZList.length();
-  QDateTime cur = QDateTime::currentDateTime();
+  //Orgnize time zones for smaller menus (Continent/Country/City)
+  // Note: id = Continent/City
+  QStringList info;
+  for(int i=0; i<TZList.length(); i++){
+    QTimeZone tz(TZList[i]);
+    if(!QString(tz.id()).contains("/")){ continue; }
+    info << "::::"+QString(tz.id()).section("/",0,0)+"::::"+QLocale::countryToString(tz.country())+"::::"+QString(tz.id()).section("/",1,100).replace("_"," ")+"::::"+QString(tz.id());
+  }
+  //Now sort alphabetically
+  info.sort();
+  //Now create the menu tree
+  QString continent, country; //current continent/country
+  QMenu *tmpC=0; //continent menu
+  QMenu *tmpCM=0; //country menu
+  for(int i=0; i<info.length(); i++){
+    //Check if different continent
+    if(info[i].section("::::",1,1)!=continent){
+      if(tmpC!=0){
+        if(tmpCM!=0 && !tmpCM->isEmpty()){
+	  tmpC->addMenu(tmpCM);
+	}
+	if(!tmpC->isEmpty()){ TZMenu->addMenu(tmpC); }
+      }
+      tmpC = new QMenu(this);
+	tmpC->setTitle(info[i].section("::::",1,1));
+      tmpCM = new QMenu(this);
+	  tmpCM->setTitle(info[i].section("::::",2,2));
+    //Check if different country
+    }else if(info[i].section("::::",2,2)!=country){
+        if(tmpC!=0 && tmpCM!=0 && !tmpCM->isEmpty()){
+	  tmpC->addMenu(tmpCM);
+	}
+	tmpCM = new QMenu(this);
+	  tmpCM->setTitle(info[i].section("::::",2,2));
+    }
+    //Now create the entry within the country menu
+    if(tmpCM!=0){
+      QAction *act = new QAction(info[i].section("::::",3,3), this);
+	act->setWhatsThis(info[i].section("::::",4,4) );
+      tmpCM->addAction(act);
+    }
+    //Save the values for the next run
+    continent = info[i].section("::::",1,1);
+    country = info[i].section("::::",2,2);
 
+    if(i== info.length()-1){
+      //last go through - save all menus
+      if(tmpCM!=0 && tmpC!=0 && !tmpCM->isEmpty()){ tmpC->addMenu(tmpCM); }
+      if(tmpC!=0 && !tmpC->isEmpty()){ TZMenu->addMenu(tmpC); }
+    }
+  }
+  
+  //qDebug() << "Found Time Zones:" << TZList.length();
+  /*QDateTime cur = QDateTime::currentDateTime();
+  
+  QMenu *tmpCM = 0;
   QString ccat; //current category
   QStringList catAbb;
   for(int i=0; i<TZList.length(); i++){
@@ -177,7 +229,7 @@ void LClock::LocaleChange(){
     catAbb << "::::"+abbr+"::::"+tmp.id()+"::::"+tmp.displayName(QTimeZone::GenericTime, QTimeZone::LongName); //add new abbreviation to the list
   }
   //Now add the last category to the menu
-  if(!catAbb.isEmpty()){ 
+  if(tmpCM!=0 && !catAbb.isEmpty()){ 
     catAbb.sort();
     QMenu *tmpM = new QMenu(this);
       tmpM->setTitle(ccat);
@@ -187,7 +239,7 @@ void LClock::LocaleChange(){
 	tmpM->addAction(act);
     }
     TZMenu->addMenu(tmpM); 
-  }
+  }*/
   
 }
 
