@@ -12,6 +12,7 @@
 
 int main(int argc, char ** argv)
 {
+    LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-config"); //loads translations inside constructor
     if(!a.isPrimaryProcess()){ return 0; }
     

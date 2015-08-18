@@ -11,7 +11,7 @@
 #include <QImageReader>
 #include <QTime>
 #include <QDate>
-#include <QTimeZone>
+//#include <QTimeZone>
 #include <QScrollBar>
 
 #include <unistd.h>
@@ -202,7 +202,6 @@ void MainUI::setupConnections(){
   connect(ui->tool_help_date, SIGNAL(clicked()), this, SLOT(sessionShowDateCodes()) );
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
-  connect(ui->combo_session_timezone, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_session_datetimeorder, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_locale_lang, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
   connect(ui->combo_locale_collate, SIGNAL(currentIndexChanged(int)), this, SLOT(sessionoptchanged()) );
@@ -246,7 +245,7 @@ void MainUI::setupMenus(){
   //if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
   
   //Available Time zones
-  ui->combo_session_timezone->clear();
+  /*ui->combo_session_timezone->clear();
   QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
   QDateTime DT = QDateTime::currentDateTime();
   QStringList tzlist; //Need to create a list which can be sorted appropriately
@@ -256,6 +255,7 @@ void MainUI::setupMenus(){
     QString name = QLocale::countryToString(TZ.country());
     if(name.count() > 20){ name = name.left(20)+"..."; }
     name = QString(tr("%1 (%2)")).arg(name, TZ.abbreviation(DT));
+    qDebug() << "Time Zone:" << name << TZ.id();
     if(tzlist.filter(name).isEmpty()){
       tzlist << name+"::::"+QString::number(i);
     }
@@ -267,7 +267,7 @@ void MainUI::setupMenus(){
   //ui->combo_session_timezone->sort();
   //Now set the default/system value
   ui->combo_session_timezone->insertItem(0,tr("System Time"));
-  
+  */
   //Available localizations
   QStringList langs = LUtils::knownLocales();
     langs.sort();
@@ -1587,14 +1587,15 @@ void MainUI::loadSessionSettings(){
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
   index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder","timeonly").toString() );
   ui->combo_session_datetimeorder->setCurrentIndex(index);
-  if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
+  
+  /*if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
     //System Time selected
     ui->combo_session_timezone->setCurrentIndex(0);
   }else{
     index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
     if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
     else{ ui->combo_session_timezone->setCurrentIndex(0); }
-  }
+  }*/
   
   //Now do the localization settings
   val = sessionsettings->value("InitLocale/LANG", "").toString();
@@ -1763,14 +1764,14 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
   sessionsettings->setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
-  if( ui->combo_session_timezone->currentIndex()==0){
+  /*if( ui->combo_session_timezone->currentIndex()==0){
     //System Time selected
     sessionsettings->setValue("CustomTimeZone", false);
     sessionsettings->setValue("TimeZoneByteCode", QByteArray()); //clear the value
   }else{
     sessionsettings->setValue("CustomTimeZone", true);
     sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
-  }
+  }*/
   
   //Now do the locale settings
   sessionsettings->setValue("InitLocale/LANG", ui->combo_locale_lang->currentData().toString() );

@@ -11,19 +11,7 @@
 
 int main(int argc, char ** argv)
 {
-    /*QStringList in;
-    for(int i=1; i<argc; i++){ //skip the first arg (app binary)
-      QString path = argv[i];
-      if(path=="."){
-	//Insert the current working directory
-	in << QDir::currentPath();
-      }else{
-	if(!path.startsWith("/")){ path.prepend(QDir::currentPath()+"/"); }
-        in << path;
-      }
-    }
-    if(in.isEmpty()){ in << QDir::homePath(); }*/
-
+    LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-fm"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     qDebug() << "Loaded QApplication";

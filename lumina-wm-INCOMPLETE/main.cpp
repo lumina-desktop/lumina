@@ -23,6 +23,7 @@
 
 int main(int argc, char ** argv)
 {
+    LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-wm");
     if(!a.isPrimaryProcess()){ return 0; } //Inputs forwarded on to the primary already
     LuminaThemeEngine themes(&a);

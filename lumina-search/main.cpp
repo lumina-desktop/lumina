@@ -17,6 +17,7 @@
 int main(int argc, char ** argv)
 {
     //qDebug() << "Init App...";
+    LTHEME::LoadCustomEnvSettings();
     QApplication a(argc, argv);
     //qDebug() << "Init Theme Engine...";
     LuminaThemeEngine theme(&a);

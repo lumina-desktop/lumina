@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTimer>
+#include <QDateTime>
 
 class LTHEME{
 public:
@@ -46,11 +47,18 @@ public:
   //Additional info for a cursor theme
   static QStringList cursorInformation(QString name); //returns: [Name, Comment, Sample Image File]
   
+  //Environment settings
+  static QStringList CustomEnvSettings(); //view all the key=value settings
+  static void LoadCustomEnvSettings(); //will push the custom settings into the environment (recommended before loading the initial QApplication)
+  static bool setCustomEnvSetting(QString var, QString val); //variable/value pair (use an empty val to clear it)
+  static QString readCustomEnvSetting(QString var);
+  
 };
 
 
 //Simple class to setup a utility to use the Lumina theme
 //-----Example usage in "main.cpp" -------------------------------
+// LTHEME::LoadCustomEnvSettings();
 // QApplication a(argc,argv);
 // LuminaThemeEngine themes(&a)
 //------------------------------------------------------------------------------------
@@ -71,15 +79,16 @@ private:
 	QFileSystemWatcher *watcher;
 	QString theme,colors,icons, font, fontsize, cursors; //current settings
 	QTimer *syncTimer;
+	QDateTime lastcheck;
 
 private slots:
 	void watcherChange();
 	void reloadFiles();
 
 signals:
-	void updateIcons();
-	void updateCursors();
-};
-
+	void updateIcons(); 		//Icon theme changed
+	void updateCursors(); 	//Cursor theme changed
+	void EnvChanged(); 		//Some environment variable(s) changed
+};	
 
 #endif

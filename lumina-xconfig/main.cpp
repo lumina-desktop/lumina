@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
       }
     }
     if(in.isEmpty()){ in << QDir::homePath(); }*/
-
+   LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-xconfig"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     //qDebug() << "Loaded QApplication";

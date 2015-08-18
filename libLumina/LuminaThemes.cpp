@@ -13,6 +13,8 @@
 #include <QDebug>
 #include <QObject>
 
+#include <unistd.h>
+
 //Stuff necesary for Qt Cursor Reloads
 //#include "qxcbcursor.h" //needed to prod Qt to refresh the mouse cursor theme
 //#include <QCursor>
@@ -250,11 +252,70 @@ QStringList LTHEME::cursorInformation(QString name){
   return out;
 }	
 
+QStringList LTHEME::CustomEnvSettings(){ //view all the key=value settings
+  static QStringList info = QStringList();
+  static QDateTime lastcheck = QDateTime();
+  if(lastcheck.isNull() || lastcheck < QFileInfo(QDir::homePath()+"/.lumina/envsettings.conf").lastModified()){
+    lastcheck = QDateTime::currentDateTime();
+    info = LUtils::readFile(QDir::homePath()+"/.lumina/envsettings.conf");
+  }
+  return info;
+}
+
+void LTHEME::LoadCustomEnvSettings(){
+  //will push the custom settings into the environment (recommended before loading the initial QApplication)
+  QStringList info = LTHEME::CustomEnvSettings();
+  if(info.isEmpty()){
+    //Ensure the file exists, and create it otherwise;
+    if(!QFile::exists(QDir::homePath()+"/.lumina/envsettings.conf")){
+      LUtils::writeFile(QDir::homePath()+"/.lumina/envsettings.conf", QStringList() << "", true);
+    }
+  }
+  for(int i=0; i<info.length(); i++){
+    if(info[i].isEmpty()){ continue; }
+    if(info[i].section("=",1,100).isEmpty()){
+      unsetenv(info[i].section("=",0,0).toLocal8Bit());
+    }else{
+      setenv(info[i].section("=",0,0).toLocal8Bit(), info[i].section("=",1,100).simplified().toLocal8Bit(), 1);
+    }
+  }
+	
+}
+
+bool LTHEME::setCustomEnvSetting(QString var, QString val){ 
+  //variable/value pair (use an empty val to clear it)
+  QStringList info = LTHEME::CustomEnvSettings();
+  bool changed = false;
+  if(!info.filter(var+"=").isEmpty()){
+    for(int i=0; i<info.length(); i++){
+      //Make sure this is an exact variable match
+      if(!info[i].startsWith(var+"=")){ continue; }
+        //Found it - replace this line
+	info[i] = var+"="+val;
+	changed = true;
+    }
+  }
+  if(!changed){ info << var+"="+val; }
+  return LUtils::writeFile(QDir::homePath()+"/.lumina/envsettings.conf", info, true); 
+}
+
+QString LTHEME::readCustomEnvSetting(QString var){
+  QStringList info = LTHEME::CustomEnvSettings().filter(var+"=");
+  for(int i=0; i<info.length(); i++){
+    if(info[i].startsWith(var+"=")){
+      return info[i].section("=",1,100).simplified();
+    }
+  }
+  //If it gets here, no setting found for that variable
+  return "";
+}
+
 //==================
 //  THEME ENGINE CLASS
 //==================
 LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   application=app; //save this pointer for later
+  lastcheck = QDateTime::currentDateTime(); //
   //Make sure to prefer font antialiasing on the application
   QFont tmp = application->font();
   tmp.setStyleStrategy(QFont::PreferAntialias);
@@ -272,7 +333,9 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
     LTHEME::setCursorTheme("default"); //X11 fallback (always installed?)
     cursors = "default";
   }
+  //setenv("XCURSOR_THEME", cursors.toLocal8Bit(),1);
   watcher = new QFileSystemWatcher(this);
+	watcher->addPath( QDir::homePath()+"/.lumina/envsettings.conf" );
 	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
 	watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" ); //also watch these files for changes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange()) );
@@ -289,28 +352,45 @@ void LuminaThemeEngine::watcherChange(){
 }
 
 void LuminaThemeEngine::reloadFiles(){
-  QStringList current = LTHEME::currentSettings();
-  application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );
-	
-  if(icons!=current[2]){
-    QIcon::setThemeName(current[2]); //make sure this sets set within this environment
-    emit updateIcons();
+  //Check the Theme file/settings
+  if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified() ){
+    QStringList current = LTHEME::currentSettings();
+    application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
+    if(icons!=current[2]){
+      QIcon::setThemeName(current[2]); //make sure this sets set within this environment
+      emit updateIcons();
+    }
+    //save the settings for comparison later
+    theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
   }
-  QString ccurs = LTHEME::currentCursor();
-  if(cursors != ccurs){
-    emit updateCursors();
-    //Might be something we can do automatically here as well - since we have the QApplication handy
-    // - Note: setting/unsetting an override cursor does not update the current cursor bitmap
-    // Qt created a background database/hash/mapping of the theme pixmaps on startup 
-    //   So Qt itself needs to be prodded to update that mapping
-    /*QXcbCursor::cursorThemePropertyChanged( \
+  //Check the Cursor file/settings
+  if(lastcheck < QFileInfo(QDir::homePath()+"/.icons/default/index.theme").lastModified()){
+    QString ccurs = LTHEME::currentCursor();
+    if(cursors != ccurs){
+      emit updateCursors();
+      //Might be something we can do automatically here as well - since we have the QApplication handy
+      // - Note: setting/unsetting an override cursor does not update the current cursor bitmap
+      // Qt created a background database/hash/mapping of the theme pixmaps on startup 
+      //   So Qt itself needs to be prodded to update that mapping
+      /*QXcbCursor::cursorThemePropertyChanged( \
 	  new QXcbVirtualDesktop(QX11Info::connection(), application->screen()->handle(), QX11Info::appScreen()),
 	  ccurs.toData(), QVariant("Inherits"), NULL);*/
-	
+      //QCursorData::cleanup();
+      //QCursorData::initialize();
+      //setenv("XCURSOR_THEME", ccurs.toLocal8Bit(),1);
+    }
+    cursors = ccurs;
   }
-  //Now save this for later checking
-  watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme");
-  theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
-  cursors = ccurs;
-  watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme");
+  
+  
+  //Environment Changes
+  if( lastcheck < QFileInfo(QDir::homePath()+"/.lumina/envsettings.conf").lastModified()){
+    LTHEME::LoadCustomEnvSettings();
+    emit EnvChanged();
+  }
+  lastcheck = QDateTime::currentDateTime();
+  
+  //Now update the watched files to ensure nothing is missed
+  watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
+  watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
 }

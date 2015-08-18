@@ -65,6 +65,7 @@ int main(int argc, char ** argv)
       return 1;
     }
     //Setup any pre-QApplication initialization values
+    LTHEME::LoadCustomEnvSettings();
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);

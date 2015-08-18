@@ -116,6 +116,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     //Final catch: directory given - no valid default found - use lumina-fm
     if(extension=="directory" && !showDLG){ return "lumina-fm"; }
     //No default set -- Start up the application selection dialog
+    LTHEME::LoadCustomEnvSettings();
     QApplication App(argc, argv);
     LuminaThemeEngine theme(&App);
       LUtils::LoadTranslation(&App,"lumina-open");

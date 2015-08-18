@@ -12,6 +12,7 @@
 int main(int argc, char ** argv)
 {
     //qDebug() << "Create Single Application";
+    LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-info"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     //qDebug() << "Set Application Name";
