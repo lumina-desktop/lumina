@@ -265,6 +265,35 @@ double LUtils::DisplaySizeToBytes(QString num){
   return N;
 }
 
+QString LUtils::BytesToDisplaySize(qint64 ibytes){
+  static QStringList labs = QStringList();
+  if(labs.isEmpty()){ labs << "B" << "K" << "M" << "G" << "T" << "P"; }
+  //Now get the dominant unit
+  int c=0;
+  double bytes = ibytes; //need to keep decimel places for calculations
+  while(bytes>=1000 && c<labs.length() ){
+    bytes = bytes/1024;
+    c++;
+  } //labs[c] is the unit
+  //Bytes are now
+  //Now format the number (up to 3 digits, not including decimel places)
+  QString num;
+  if(bytes>=100){
+    //No decimel places
+    num = QString::number(qRound(bytes));
+  }else if(bytes>=10){
+    //need 1 decimel place
+    num = QString::number( (qRound(bytes*10)/10.0) );
+  }else if(bytes>1){
+    //need 2 decimel places
+    num = QString::number( (qRound(bytes*100)/100.0) );
+  }else{
+    //Fully decimel (3 places)
+    num = "0."+QString::number(qRound(bytes*1000));
+  }
+  return (num+labs[c]);
+}
+
 //Various function for finding valid QtQuick plugins on the system
 bool LUtils::validQuickPlugin(QString ID){
   return ( !LUtils::findQuickPluginFile(ID).isEmpty() );
