@@ -709,6 +709,19 @@ QString LXDG::findDefaultAppForMime(QString mime){
       }
       //Now check for relative paths to  file (in current priority-ordered work dir)
       else if( QFile::exists(workdir+"/"+white[w]) ){ cdefault=workdir+"/"+white[w]; break; }
+      //Now go through the XDG DATA dirs and see if the file is in there
+      else{
+	QStringList xdirs;
+	  xdirs << QString(getenv("XDG_DATA_HOME"))+"/applications/";
+	  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
+	    for(int t=0; t<tmp.length(); t++){ dirs << tmp[t]+"/applications/"; }
+	  //Now scan these dirs
+	  bool found = false;
+	  for(int x=0; x<xdirs.length() && !found; x++){
+	    if(QFile::exists(xdirs[x]+white[w])){cdefault=xdirs[x]+white[w]; found = true; }
+	  }
+	  if(found){ break; }
+      }
     }   
     /* WRITTEN BUT UNUSED CODE FOR MIMETYPE ASSOCIATIONS
     //Skip using this because it is simply an alternate/unsupported standard that conflicts with
