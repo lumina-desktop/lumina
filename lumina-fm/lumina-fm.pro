@@ -20,7 +20,8 @@ SOURCES += main.cpp \
 		BMMDialog.cpp \
 		BackgroundWorker.cpp \
 		widgets/MultimediaWidget.cpp \
-		widgets/SlideshowWidget.cpp
+		widgets/SlideshowWidget.cpp \
+		widgets/DirWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -30,13 +31,15 @@ HEADERS  += MainUI.h \
 		DDFileSystemModel.h \
 		DirData.h \
 		widgets/MultimediaWidget.h \
-		widgets/SlideshowWidget.h
+		widgets/SlideshowWidget.h \
+		widgets/DirWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
 		BMMDialog.ui \
 		widgets/MultimediaWidget.ui \
-		widgets/SlideshowWidget.ui
+		widgets/SlideshowWidget.ui \
+		widgets/DirWidget.ui
 
 # RESOURCES+= lumina-fm.qrc
 

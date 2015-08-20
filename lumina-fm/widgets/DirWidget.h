@@ -10,6 +10,7 @@
 #include <QList>
 #include <QWidget>
 #include <QObject>
+#include <QMenu>
 
 #include "../DirData.h"
 
@@ -39,19 +40,24 @@ public slots:
 	void UpdateIcons();
 	void UpdateText();
 	
+	//Button updates
+	void UpdateButtons();
+
 private:
 	Ui::DirWidget *ui;
 	QString ID, CDIR; //unique ID assigned by the parent and the current dir path
 	QList<LFileInfo> CLIST; //current item list (snap or not)
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining direcoty context while moving between snapshots
 	QStringList snapshots;
-	bool showDetails; //which widget to use for showing items
+	bool showDetails, canmodify; //which widget to use for showing items
 	QList<DETAILTYPES> listDetails;
+	QMenu *contextMenu;
 
 	void setupConnections();
-	
+	QStringList currentSelection();
+
 private slots:
-	//UI BUTTONS
+	//UI BUTTONS/Actions
 	// -- Left Action Buttons
 	void on_tool_act_copy_clicked();
 	void on_tool_act_cut_clicked();
@@ -61,9 +67,6 @@ private slots:
 	void on_tool_act_rm_clicked();
 	void on_tool_act_run_clicked();
 	void on_tool_act_runwith_clicked();
-        // -- Left Restore Buttons
-	void on_tool_restore_clicked();
-	void on_tool_restore_over_clicked();
 	// -- Bottom Action Buttons
 	void on_tool_goToImages_clicked();
 	void on_tool_goToPlayer_clicked();
@@ -71,8 +74,35 @@ private slots:
 	void on_tool_snap_newer_clicked();
 	void on_tool_snap_older_clicked();
 	void on_slider_snap_valueChanged(int);
+	// - Other Actions without a specific button on the side
+	void fileCheckSums();
+	void fileProperties();
+	void openTerminal();
+	void NewFile();
+	void NewDir();
+
+	//Browser Functions
+	void OpenContextMenu();
+	void SelectionChanged();
+
 signals:
-	void LoadDirectory(QString, QString); //ID, dirpath
-	void findSnaps(QString, QString); //ID, dirpath
+	//Directory loading/finding signals
+	void OpenDirectories(QStringList); //Directories to open in other tabs/columns
+	void LoadDirectory(QString, QString); //ID, dirpath (Directory to load here)
+	void findSnaps(QString, QString); //ID, dirpath (Request snapshot information for a directory)
+	
+	//External App/Widget launching
+	void PlayFiles(QList<LFileInfo>); //open in multimedia player
+	void ViewFiles(QList<LFileInfo>); //open in slideshow
+	void LaunchTerminal(QString); //dirpath
+	
+	//System Interactions
+	void CutFiles(QStringList); //file selection
+	void CopyFiles(QStringList); //file selection
+	void PasteFiles(QString); //current dir
+	void FavoriteFiles(QStringList); //file selection
+	void RenameFiles(QStringList); //file selection
+	void RemoveFiles(QStringList); //file selection
+	
 };
 #endif
