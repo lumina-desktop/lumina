@@ -266,6 +266,7 @@ void UserWidget::updateFavItems(bool newfilter){
     //qDebug() << " - Creating Items:" << favitems;
     for(int i=0; i<favitems.length(); i++){
       UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
+      if(!it->gooditem){ continue; }
       ui->scroll_fav->widget()->layout()->addWidget(it);
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );

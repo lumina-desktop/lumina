@@ -17,14 +17,13 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
   if(itemPath.endsWith(".desktop") || type=="app"){
     bool ok = false;
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
-    if(ok){
+    if(ok && LXDG::checkValidity(item) ){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
       setupActions(item);
     }else{
-      icon->setPixmap( LXDG::findIcon("unknown","").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
-      actButton->setVisible(false);
+      gooditem = false;
+      return;
     }
   }else if(type=="dir"){
     actButton->setVisible(false);
@@ -45,7 +44,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
     }else if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
       icon->setPixmap( QIcon(itemPath).pixmap(32,32) );
     }else{
-      icon->setPixmap( LXDG::findMimeIcon(type).pixmap(32,32) );
+      icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(32,32) );
     }
     name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
   }
@@ -94,6 +93,7 @@ UserItemWidget::~UserItemWidget(){
 
 void UserItemWidget::createWidget(){
   //Initialize the widgets
+  gooditem = true;
   menuopen = false;
   menureset = new QTimer(this);
     menureset->setSingleShot(true);

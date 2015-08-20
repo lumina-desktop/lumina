@@ -31,6 +31,7 @@ public:
 	UserItemWidget(QWidget *parent=0, XDGDesktop item= XDGDesktop());
 	~UserItemWidget();
 
+	bool gooditem;
 private:
 	QToolButton *button, *actButton;
 	QLabel *icon, *name;
