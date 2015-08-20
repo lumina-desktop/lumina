@@ -578,7 +578,8 @@ void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
       //qDebug() << "- found ID";
       if(DEBUG){ qDebug() << " - Deleting Desktop Plugin:" << ID; }
       //Special check for auto-generated desktop icons
-      if(ID.startsWith("applauncher::") && (ID.section("::",1,1).section("---",0,0).section("/",0,-1) == (QDir::homePath()+"/Desktop") ) ){
+      if(ID.startsWith("applauncher::")){
+	qDebug() << "Desktop Icon Removal:" << !internal;
 	PLUGINS[i]->removeSettings(!internal);  //Only remove the file if an external removal on an auto-generated shortcut
       }else{
         PLUGINS[i]->removeSettings(true); //Remove any settings associated with this plugin
