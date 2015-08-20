@@ -302,8 +302,8 @@ QString MainUI::getColorStyle(QString current, bool allowTransparency){
   if(col.length()!=4){ col.clear(); col << "255" << "255" << "255" << "255"; }
   QColor ccol = QColor(col[0].toInt(), col[1].toInt(), col[2].toInt(), col[3].toInt()); //RGBA
   QColor ncol;
-    if(allowTransparency){ ncol= QColorDialog::getColor(ccol, this, tr("Select Panel Color"), QColorDialog::ShowAlphaChannel); }
-    else{ ncol= QColorDialog::getColor(ccol, this, tr("Select Panel Color")); }
+    if(allowTransparency){ ncol= QColorDialog::getColor(ccol, this, tr("Select Color"), QColorDialog::ShowAlphaChannel); }
+    else{ ncol= QColorDialog::getColor(ccol, this, tr("Select Color")); }
   //Now convert the new color into a usable string and return
   if(ncol.isValid()){ //if the dialog was not cancelled
     if(allowTransparency){
