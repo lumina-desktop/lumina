@@ -555,6 +555,8 @@ void LDesktop::AlignDesktopPlugins(){
 }
 
 void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
+  //NOTE: This function is only run when the plugin is deliberately removed
+  //  The "internal" flag is for whether the plugin was closed by the user (external), or programmatically removed (internal)
   //Close down that plugin instance (NOTE: the container might have already closed by the user)
   if(DEBUG){ qDebug() << "Desktop Plugin Removed:" << ID; }
   //First look for the container (just in case)
@@ -569,13 +571,18 @@ void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
       break;
     }
   }
-	
+  
   //qDebug() << "PLUGINS:" << PLUGINS.length() << ID;
   for(int i=0; i<PLUGINS.length(); i++){
     if(PLUGINS[i]->ID() == ID){
       //qDebug() << "- found ID";
       if(DEBUG){ qDebug() << " - Deleting Desktop Plugin:" << ID; }
-      PLUGINS[i]->removeSettings(); //Remove any settings associated with this plugin
+      //Special check for auto-generated desktop icons
+      if(ID.startsWith("applauncher::") && (ID.section("::",1,1).section("---",0,0).section("/",0,-1) == (QDir::homePath()+"/Desktop") ) ){
+	PLUGINS[i]->removeSettings(!internal);  //Only remove the file if an external removal on an auto-generated shortcut
+      }else{
+        PLUGINS[i]->removeSettings(true); //Remove any settings associated with this plugin
+      }
       delete PLUGINS.takeAt(i);
       break;
     }

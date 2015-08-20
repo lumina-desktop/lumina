@@ -33,6 +33,13 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   QTimer::singleShot(100,this, SLOT(loadButton()) );
 }
 	
+void AppLauncherPlugin::Cleanup(){
+  //This is run only when the plugin was forcibly closed/removed
+  if(QFile::exists(button->whatsThis()) && button->whatsThis().startsWith(QDir::homePath()+"/Desktop") ){
+    deleteFile();
+  }
+}
+
 void AppLauncherPlugin::loadButton(bool onchange){
   QString def = this->ID().section("::",1,50).section("---",0,0).simplified();
   QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary

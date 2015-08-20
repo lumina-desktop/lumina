@@ -28,7 +28,9 @@ class AppLauncherPlugin : public LDPlugin{
 public:
 	AppLauncherPlugin(QWidget* parent, QString ID);
 	~AppLauncherPlugin(){}
-	
+
+	void Cleanup(); //special function for final cleanup
+		
 private:
 	QToolButton *button;
 	QFileSystemWatcher *watcher;

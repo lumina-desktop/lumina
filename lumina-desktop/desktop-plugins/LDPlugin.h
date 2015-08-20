@@ -53,9 +53,18 @@ public:
 	  return settings->value(prefix+var, defaultval);
 	}
 	
-	void removeSettings(){ //such as when a plugin is deleted
+	virtual void Cleanup(){
+	  //This needs to be re-implemented in the subclassed plugin
+	   //This is where any last-minute changes are performed before a plugin is removed permanently
+	   //Note1: This is *not* called if the plugin is being temporarily closed
+	   //Note2: All the settings for this plugin will be automatically removed after this is finished
+	}
+	
+	void removeSettings(bool permanent = false){ //such as when a plugin is deleted
+	  if(permanent){ Cleanup(); }
 	  QStringList list = settings->allKeys().filter(prefix);
 	   for(int i=0; i<list.length(); i++){ settings->remove(list[i]); }
+	
 	}
 	
 	/*virtual void scalePlugin(double xscale, double yscale){
