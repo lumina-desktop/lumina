@@ -4,8 +4,8 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifndef _LUMINA_FM_SLIDWSHOW_WIDGET_H
-#define _LUMINA_FM_SLIDWSHOW_WIDGET_H
+#ifndef _LUMINA_FM_SLIDESHOW_WIDGET_H
+#define _LUMINA_FM_SLIDESHOW_WIDGET_H
 
 #include <QList>
 #include <QWidget>

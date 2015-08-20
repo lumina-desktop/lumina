@@ -18,6 +18,8 @@
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
 
+#define ZSNAPDIR QString("/.zfs/snapshot/")
+
 //Need some extra information not usually available by a QFileInfo
 class LFileInfo : public QFileInfo{
 private:
@@ -74,7 +76,16 @@ public:
 	
 	// -- Return the icon to use for this file
 	QString iconfile(){
-	  return (icon.isEmpty() ? mime: icon); //Fall back on the mimetype if no icon listed
+	  if(!icon.isEmpty()){
+	    return icon;
+	  }else{
+	    if(!mime.isEmpty()){
+	      return mime.replace("/","-");
+	    }else if(this->isExecutable()){
+	      return "application-x-executable";
+	    }
+	  }
+	  return ""; //Fall back to nothing
 	}
 	
 	// -- Check if this is an XDG desktop file
@@ -106,6 +117,7 @@ public:
 	QList<LFileInfo> list;
 	QStringList fileNames; //list of filenames for comparison/checking sorting
 	QString dirpath; //directory this structure was reading
+	QString snapdir; //base snapshot directory (if one was requested/found)
 	bool hashidden;
 
 	//Access Functions
@@ -129,6 +141,9 @@ public:
 	    dirpath.clear(); //invalid directory now
 	    return;
 	  }
+	  if(dirpath.contains(ZSNAPDIR) && snapdir.isEmpty()){
+	    snapdir = dirpath.section(ZSNAPDIR,0,0)+ZSNAPDIR; //no need to go looking for it later
+	  }
 	  QFileInfoList dirlist;
 	  //Fill the structure
 	  list.clear();
@@ -141,7 +156,26 @@ public:
 	      list << LFileInfo(dirlist[i]); //generate the extra information for this file
 	      fileNames << dirlist[i].fileName(); //add the filename to the list
 	    }	
-	  
+	}
+	
+	void findSnapDir(){
+	  //Search the filesystem 
+	  if(dirpath.contains(ZSNAPDIR)){
+	    snapdir = dirpath.section(ZSNAPDIR,0,0)+ZSNAPDIR; //no need to go looking for it
+	  }else{
+	    //Need to backtrack 
+	    QDir dir(dirpath);
+	    bool found = false;
+	    while(dir.canonicalPath()!="/" && !found){
+	      //qDebug() << " -- Checking for snapshot dir:" << dir.canonicalPath();
+	      if(dir.exists(".zfs/snapshot")){
+		snapdir = dir.canonicalPath()+ZSNAPDIR;
+		found = true;
+	      }else{ 
+		dir.cdUp(); 
+	      }
+	    }//end loop 
+	  }
 	}
 
 };
@@ -153,34 +187,64 @@ private:
 	QHash<QString, LDirInfoList> HASH; //Where we cache any info for rapid access later
 
 signals:
-	void DirDataAvailable(QString, QList<LFileInfo>); //[ID, DATA]
+	void DirDataAvailable(QString, QString, QList<LFileInfo>); //[ID, Dirpath, DATA]
+	void SnapshotDataAvailable(QString, QString, QStringList); //[ID, BaseSnapDir, SnapNames]
 
 public:
 	//Variables
-	bool showHidden;
+	bool showHidden; //Whether hidden files/dirs should be output
+	bool zfsavailable; //Whether it should even bother looking for ZFS snapshots
 
 	//Functions
 	DirData(){ 
 	  showHidden = false; 
+	  zfsavailable = false;
 	}
 	~DirData(){}
 
 public slots:
 	void GetDirData(QString ID, QString dirpath){ 
 	  //The ID is used when returning the info in a moment
-	  if(!HASH.contains(dirpath)){
+	  //Make sure to use the canonical path in the HASH search - don't use 
+	  QString canon = QFileInfo(dirpath).canonicalFilePath();
+	  if(!HASH.contains(canon)){
 	    //New directory (not previously loaded)
-	    LDirInfoList info(dirpath);
+	    LDirInfoList info(canon);
 	      info.update(showHidden);
-	    HASH.insert(dirpath, info);
+	    HASH.insert(canon, info);
 	  }else{
 	    //See if the saved info needs to be updated
-	    if( (HASH.value(dirpath).hashidden != showHidden) || (QFileInfo(dirpath).lastModified() > HASH.value(dirpath).lastcheck) ){
-	      HASH[dirpath].update(showHidden);
+	    if( (HASH.value(canon).hashidden != showHidden) || (QFileInfo(canon).lastModified() > HASH.value(canon).lastcheck) ){
+	      HASH[canon].update(showHidden);
+	    }
+	  }
+	  emit DirDataAvailable(ID, dirpath, HASH.value(canon).list);
+	}
+	
+	void GetSnapshotData(QString ID, QString dirpath){
+	  QString base; QStringList snaps;
+	  //Only check if ZFS is flagged as available
+	  if(zfsavailable){
+	    //First find if the hash already has an entry for this directory
+	    if(!HASH.contains(dirpath)){
+	      LDirInfoList info(dirpath);
+	      HASH.insert(dirpath,info);
+	    }
+	    //Now see if a snapshot directory has already been located
+	    if(HASH.value(dirpath).snapdir.isEmpty()){
+	      HASH[dirpath].findSnapDir();
+	    }
+	    //Now read off all the available snapshots
+	    if(HASH.value(dirpath).snapdir != "-"){
+	      //Good snapshot directory found - read off the current snapshots (can change regularly - don't cache this)
+	      base = HASH.value(dirpath).snapdir;
+	      QDir dir(base);
+	      snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
+	      //NOTE: snaps are sorted oldest -> newest
 	    }
 	    
 	  }
-	  emit DirDataAvailable(ID, HASH.value(dirpath).list);
+	  emit SnapshotDataAvailable(ID, base, snaps); 
 	}
 	
 };
