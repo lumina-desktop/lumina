@@ -30,7 +30,8 @@ public:
 	QString id();
 	void setShowDetails(bool show);
 	void setShowSidebar(bool show);
-	void setDetails(QList<DETAILTYPES> list);
+	void setDetails(QList<DETAILTYPES> list); //Which details to show and in which order (L->R)
+	void setThumbnailSize(int px);
 	
 public slots:
 	void LoadDir(QString dir, QList<LFileInfo> list);

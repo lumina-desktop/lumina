@@ -47,9 +47,17 @@ void DirWidget::setShowSidebar(bool show){
 
 void DirWidget::setDetails(QList<DETAILTYPES> list){
   listDetails = list;
+  if(CDIR.isEmpty() || !showDetails){ return; } //don't need to reload dir if details are not visible
   emit LoadDirectory(ID, CDIR);
 }
 
+void DirWidget::setThumbnailSize(int px){
+  bool larger = ui->listWidget->iconSize().height() < px;
+  ui->listWidget->setIconSize(QSize(px,px));
+  ui->treeWidget->setIconSize(QSize(px,px));
+  if(CDIR.isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
+  emit LoadDirectory(ID, CDIR);  
+}
 // ================
 //    PUBLIC SLOTS
 // ================
@@ -237,16 +245,18 @@ void DirWidget::UpdateButtons(){
 //       PRIVATE
 // =================
 void DirWidget::setupConnections(){
-  //Tree Widget interaction
+  //Info routines
   connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
   connect(ui->listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
   connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
   connect(ui->listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
-	
-  /*connect(ui->tree_dir_view, SIGNAL(activated(const QModelIndex&)), this, SLOT(ItemRun(const QModelIndex&)) );	
-  connect(ui->list_dir_view, SIGNAL(activated(const QModelIndex&)), this, SLOT(ItemRun(const QModelIndex&)) );
-  connect(ui->tree_dir_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection, const QItemSelection)), this, SLOT(ItemSelectionChanged()) );
-  connect(ui->list_dir_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection, const QItemSelection)), this, SLOT(ItemSelectionChanged()) );*/
+
+  //Activation routines	
+  connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(ui->listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+
 	
 	
 }
