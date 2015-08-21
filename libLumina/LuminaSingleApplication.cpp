@@ -82,17 +82,21 @@ void LSingleApplication::PerformLockChecks(){
     lserver = new QLocalServer(this);
       connect(lserver, SIGNAL(newConnection()), this, SLOT(newInputsAvailable()) );
      if( lserver->listen(cfile) ){
+	qDebug() << " - Created new single-instance lock";
         lserver->setSocketOptions(QLocalServer::UserAccessOption);
 	//qDebug() << " - Success";
 	isActive = true;
      }else{
-	//qDebug() << " - Failure:" << lserver->errorString();
+	qDebug() << " - WARNING: Could not create single-instance framework";
+	qDebug() << "  - Falling back on standard application startup";
 	lockfile->unlock();
+	isActive = true;
      }
       
   }else{
     //forward the current inputs to the locked process for processing and exit
-    //qDebug() << "Forward inputs to locking process:" << inputlist;
+    qDebug() << "Single-instance lock found";
+    qDebug() << " - Forwarding inputs to locking process and exiting...";
     QLocalSocket socket(this);
 	socket.connectToServer(cfile);
 	socket.waitForConnected();
