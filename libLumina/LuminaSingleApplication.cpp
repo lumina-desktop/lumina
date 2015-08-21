@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QLocalSocket>
 #include <QDebug>
+#include <QX11Info>
 
 #include <unistd.h> //for getlogin()
 
@@ -16,15 +17,11 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
   //Load the proper translation systems
   cTrans = LUtils::LoadTranslation(this, appname); //save the translator for later
   //Initialize a couple convenience internal variables
-  cfile = QDir::tempPath()+"/.LSingleApp-%1-%2";
+  cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
   QString username = QString(getlogin());
   //For locking the process use the official process name - not the user input (no masking)
   appname = this->applicationName();
-  //Obscure the user/app in the filename (TO DO)
-  //qDebug() << username << appname;
-  //bool junk;
-  //qDebug() << QString::number( username.toInt(&junk,16) );
-  cfile = cfile.arg( username, appname );
+  cfile = cfile.arg( username, appname, QString::number(QX11Info::appScreen()) );
   lockfile = new QLockFile(cfile+"-lock");
     lockfile->setStaleLockTime(0); //long-lived processes
   for(int i=1; i<argc; i++){ 
@@ -68,8 +65,12 @@ void LSingleApplication::PerformLockChecks(){
     //qDebug() << " - Lock Info:" << pid << hostname << appname;
     if( appname!=this->applicationName() || !QFile::exists(cfile) ){
       //Some other process has the same PID or the server does not exist - stale lock
-      //qDebug() << " - Stale Lock";
-      lockfile->removeStaleLockFile();
+      qDebug() << " - Cleaning stale single-instance lock:";
+      if(lockfile->removeStaleLockFile() ){
+        if(QFile::exists(cfile)){ QLocalServer::removeServer(cfile); } //also remove stale socket/server file
+      }else{
+        qDebug() << " -- Could not remove lock file";
+      }
       //Now re-try to create the lock
       primary = lockfile->tryLock();
       //qDebug() << " - Try Lock Again:" << primary;
