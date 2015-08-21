@@ -96,13 +96,17 @@ void LSingleApplication::PerformLockChecks(){
   }else{
     //forward the current inputs to the locked process for processing and exit
     //Check the connection to the local server first
+    qDebug() << "Single-instance lock found";
     QLocalSocket socket(this);
 	socket.connectToServer(cfile);
 	socket.waitForConnected();
-	if(!socket.isValid()){ exit(1); } //error - could not forward info
+	if(!socket.isValid() || socket.state()!=QLocalSocket::ConnectedState){ 
+	  //error - could not forward info for some reason
+	  qDebug() << " - Could not connect to locking process: exiting...";
+		exit(1); 
+	} 
 	
-    qDebug() << "Single-instance lock found";
-    qDebug() << " - Forwarding inputs to locking process and exiting...";	
+    qDebug() << " - Forwarding inputs to locking process and closing down this instance...";	
 	socket.write( inputlist.join("::::").toLocal8Bit() );
 	socket.waitForDisconnected(500); //max out at 1/2 second (only hits this if no inputs)
   }
