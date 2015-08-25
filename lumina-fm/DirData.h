@@ -20,6 +20,8 @@
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
+#define DEBUG 0
+
 //Need some extra information not usually available by a QFileInfo
 class LFileInfo : public QFileInfo{
 private:
@@ -71,7 +73,8 @@ public:
 	//Functions for accessing the extra information
 	// -- Return the mimetype for the file
 	QString mimetype(){
-	  return mime;
+	  if(mime=="inode/directory"){ return ""; }
+	  else{ return mime; }
 	}
 	
 	// -- Return the icon to use for this file
@@ -80,7 +83,9 @@ public:
 	    return icon;
 	  }else{
 	    if(!mime.isEmpty()){
-	      return mime.replace("/","-");
+	      QString tmp = mime; 
+	      tmp.replace("/","-");
+	      return tmp;
 	    }else if(this->isExecutable()){
 	      return "application-x-executable";
 	    }
@@ -109,6 +114,7 @@ public:
 	  return (mime.startsWith("audio/") || mime.startsWith("video/") );
 	}
 };
+typedef QList<LFileInfo> LFileInfoList;
 
 class LDirInfoList{
 public:
@@ -187,7 +193,7 @@ private:
 	QHash<QString, LDirInfoList> HASH; //Where we cache any info for rapid access later
 
 signals:
-	void DirDataAvailable(QString, QString, QList<LFileInfo>); //[ID, Dirpath, DATA]
+	void DirDataAvailable(QString, QString, LFileInfoList); //[ID, Dirpath, DATA]
 	void SnapshotDataAvailable(QString, QString, QStringList); //[ID, BaseSnapDir, SnapNames]
 
 public:
@@ -204,6 +210,7 @@ public:
 
 public slots:
 	void GetDirData(QString ID, QString dirpath){ 
+	  if(DEBUG){ qDebug() << "GetDirData:" << ID << dirpath; }
 	  //The ID is used when returning the info in a moment
 	  //Make sure to use the canonical path in the HASH search - don't use 
 	  QString canon = QFileInfo(dirpath).canonicalFilePath();
@@ -218,10 +225,12 @@ public slots:
 	      HASH[canon].update(showHidden);
 	    }
 	  }
+	  if(DEBUG){ qDebug() << " -- Dir Data Found:" << ID << dirpath << HASH.value(canon).list.length(); }
 	  emit DirDataAvailable(ID, dirpath, HASH.value(canon).list);
 	}
 	
 	void GetSnapshotData(QString ID, QString dirpath){
+	  if(DEBUG){ qDebug() << "GetSnapshotData:" << ID << dirpath; }
 	  QString base; QStringList snaps;
 	  //Only check if ZFS is flagged as available
 	  if(zfsavailable){
@@ -239,11 +248,12 @@ public slots:
 	      //Good snapshot directory found - read off the current snapshots (can change regularly - don't cache this)
 	      base = HASH.value(dirpath).snapdir;
 	      QDir dir(base);
-	      snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
+	      snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time |QDir::Reversed );
 	      //NOTE: snaps are sorted oldest -> newest
 	    }
 	    
 	  }
+	  if(DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
 	  emit SnapshotDataAvailable(ID, base, snaps); 
 	}
 	

@@ -12,7 +12,7 @@
 
 SlideshowWidget::SlideshowWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SlideshowWidget){
   ui->setupUi(this); //load the designer file
-
+  zoom = 1;
   UpdateIcons();
   UpdateText();	
 }
@@ -24,11 +24,21 @@ SlideshowWidget::~SlideshowWidget(){
 // ================
 //    PUBLIC SLOTS
 // ================
+void SlideshowWidget::ClearImages(){
+  ui->combo_image_name->clear();	
+}
+
 void SlideshowWidget::LoadImages(QList<LFileInfo> list){
-  ui->combo_image_name->clear();
+  int cmax = ui->combo_image_name->count(); //current number of items
   for(int i=0; i<list.length(); i++){
     if(list[i].isImage()){ ui->combo_image_name->addItem(list[i].fileName(), list[i].absoluteFilePath() ); }
   }
+  //Now automatically show the first item from the batch of new ones
+  if(cmax < ui->combo_image_name->count()){ ui->combo_image_name->setCurrentIndex(cmax); }
+}
+
+void SlideshowWidget::refresh(){
+  UpdateImage();
 }
 
 //Theme change functions
@@ -40,6 +50,8 @@ void SlideshowWidget::UpdateIcons(){
   ui->tool_image_remove->setIcon( LXDG::findIcon("edit-delete","") );
   ui->tool_image_rotateleft->setIcon( LXDG::findIcon("object-rotate-left","") );
   ui->tool_image_rotateright->setIcon( LXDG::findIcon("object-rotate-right","") );
+  ui->tool_image_zoomin->setIcon( LXDG::findIcon("zoom-in","") );
+  ui->tool_image_zoomout->setIcon( LXDG::findIcon("zoom-out","") );
 }
 
 void SlideshowWidget::UpdateText(){
@@ -51,15 +63,12 @@ void SlideshowWidget::UpdateText(){
 //       PRIVATE
 // =================
 void SlideshowWidget::UpdateImage(){
-  if( !ui->label_image->isVisible() ){ return; } //don't update if not visible - can cause strange resizing issues
   QString file = ui->combo_image_name->currentData().toString();
-  /*if(!file.endsWith("/")){ file.append("/"); }
-  file.append(ui->combo_image_name->currentText());*/
-  //qDebug() << "Show Image:" << file;
+  qDebug() << "Show Image:" << file << "Zoom:" << zoom;
   QPixmap pix(file);
-  if(pix.size().width() > ui->label_image->contentsRect().width() || pix.size().height() > ui->label_image->contentsRect().height()){ 
-    pix = pix.scaled(ui->label_image->contentsRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation); 
-  }
+    QSize sz = ui->scrollArea->contentsRect().size();
+    if( sz.width()>pix.size().width() || sz.height()>pix.size().height()){ sz = pix.size(); } //100% size already - apply zoom after this
+    pix = pix.scaled(sz*zoom, Qt::KeepAspectRatio, Qt::SmoothTransformation); 
   ui->label_image->setPixmap(pix);
   //Now set/load the buttons
   ui->tool_image_goBegin->setEnabled(ui->combo_image_name->currentIndex()>0);
@@ -77,6 +86,8 @@ void SlideshowWidget::UpdateImage(){
   ui->tool_image_remove->setEnabled(isUserWritable);
   ui->tool_image_rotateleft->setEnabled(isUserWritable && canwrite);
   ui->tool_image_rotateright->setEnabled(isUserWritable && canwrite);
+  ui->tool_image_zoomin->setEnabled(zoom<2);
+  ui->tool_image_zoomout->setEnabled(zoom>0.25);
 }
 
 
@@ -84,8 +95,9 @@ void SlideshowWidget::UpdateImage(){
 //    PRIVATE SLOTS
 // =================
 // Picture rotation options
-void SlideshowWidget::on_combo_image_name_indexChanged(int index){
+void SlideshowWidget::on_combo_image_name_currentIndexChanged(int index){
   if(index>=0 && !ui->combo_image_name->currentData().toString().isEmpty()){
+    zoom = 1; //always reset the zoom level when changing images
     UpdateImage();
   }
 }
@@ -144,3 +156,14 @@ void SlideshowWidget::on_tool_image_rotateright_clicked(){
   //Now re-load the image in the UI
   UpdateImage();	
 }
+
+void SlideshowWidget::on_tool_image_zoomin_clicked(){
+  zoom+=0.25; //change 25% every time
+  UpdateImage();
+}
+
+void SlideshowWidget::on_tool_image_zoomout_clicked(){
+  zoom-=0.25; //change 25% every time
+  UpdateImage();
+}
+

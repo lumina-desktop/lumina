@@ -18,7 +18,6 @@ SOURCES += main.cpp \
 		MainUI.cpp \
 		FODialog.cpp \
 		BMMDialog.cpp \
-		BackgroundWorker.cpp \
 		widgets/MultimediaWidget.cpp \
 		widgets/SlideshowWidget.cpp \
 		widgets/DirWidget.cpp
@@ -26,9 +25,6 @@ SOURCES += main.cpp \
 HEADERS  += MainUI.h \
 		FODialog.h \
 		BMMDialog.h \
-		MimeIconProvider.h \
-		BackgroundWorker.h \
-		DDFileSystemModel.h \
 		DirData.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \

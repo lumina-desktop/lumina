@@ -7,29 +7,155 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>333</height>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="horizontalSpacing">
     <number>1</number>
    </property>
-   <property name="spacing">
+   <property name="verticalSpacing">
     <number>2</number>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="0" rowspan="2" colspan="2">
+    <layout class="QHBoxLayout" name="toolbar_layout"/>
+   </item>
+   <item row="1" column="1" rowspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>1</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="group_snaps">
+       <property name="title">
+        <string notr="true"/>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_snap">
+          <property name="text">
+           <string notr="true">Snap</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="slider_snap">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="value">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="invertedAppearance">
+           <bool>false</bool>
+          </property>
+          <property name="invertedControls">
+           <bool>false</bool>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksAbove</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tool_snap_older">
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tool_snap_newer">
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="indentation">
+        <number>0</number>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="allColumnsShowFocus">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerMinimumSectionSize">
+        <number>30</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="listWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
+       </property>
+       <property name="flow">
+        <enum>QListView::TopToBottom</enum>
+       </property>
+       <property name="isWrapping" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
     <widget class="QGroupBox" name="group_actions">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -269,109 +395,7 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <property name="spacing">
-      <number>1</number>
-     </property>
-     <item>
-      <widget class="QGroupBox" name="group_snaps">
-       <property name="title">
-        <string>Snapshots Available</string>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_snap">
-          <property name="text">
-           <string notr="true">Snap</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSlider" name="slider_snap">
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="value">
-           <number>1</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="invertedAppearance">
-           <bool>false</bool>
-          </property>
-          <property name="invertedControls">
-           <bool>false</bool>
-          </property>
-          <property name="tickPosition">
-           <enum>QSlider::TicksAbove</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tool_snap_older">
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tool_snap_newer">
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTreeWidget" name="treeWidget">
-       <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
-       </property>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item>
-      <widget class="QListWidget" name="listWidget">
-       <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectItems</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QLabel" name="label_status">
@@ -382,21 +406,109 @@
      </item>
      <item>
       <widget class="QToolButton" name="tool_goToImages">
+       <property name="statusTip">
+        <string>Add selected images to slideshow</string>
+       </property>
        <property name="text">
-        <string notr="true">img</string>
+        <string>Slideshow</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="tool_goToPlayer">
+       <property name="statusTip">
+        <string>Enqueue selection in multimedia player</string>
+       </property>
        <property name="text">
-        <string notr="true">play</string>
+        <string>Play</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
+  <action name="actionBack">
+   <property name="text">
+    <string notr="true">Back</string>
+   </property>
+   <property name="iconText">
+    <string>Back</string>
+   </property>
+   <property name="toolTip">
+    <string>Go back to previous directory</string>
+   </property>
+   <property name="statusTip">
+    <string>Go back to previous directory</string>
+   </property>
+  </action>
+  <action name="actionUp">
+   <property name="text">
+    <string notr="true">Up</string>
+   </property>
+   <property name="iconText">
+    <string>Up</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to parent directory</string>
+   </property>
+   <property name="statusTip">
+    <string>Go to parent directory</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="text">
+    <string notr="true">Home</string>
+   </property>
+   <property name="iconText">
+    <string>Home</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to home directory</string>
+   </property>
+   <property name="statusTip">
+    <string>Go to home directory</string>
+   </property>
+  </action>
+  <action name="actionStopLoad">
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="statusTip">
+    <string>Stopl loading the directory</string>
+   </property>
+  </action>
+  <action name="actionClose_Browser">
+   <property name="text">
+    <string notr="true">Close Browser</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Close Browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Close this browser</string>
+   </property>
+   <property name="statusTip">
+    <string>Close this browser</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

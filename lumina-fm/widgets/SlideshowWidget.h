@@ -24,7 +24,10 @@ public:
 	~SlideshowWidget();
 
 public slots:
+	void ClearImages();
 	void LoadImages(QList<LFileInfo> list);
+
+	void refresh(); //Note: This should be called right after the widget becomes visible
 
 	//Theme change functions
 	void UpdateIcons();
@@ -33,10 +36,11 @@ public slots:
 private:
 	Ui::SlideshowWidget *ui;
 	void UpdateImage();
+	double zoom;
 	
 private slots:
 	// Picture rotation options
-	void on_combo_image_name_indexChanged(int index);
+	void on_combo_image_name_currentIndexChanged(int index);
 	void on_tool_image_goEnd_clicked();
 	void on_tool_image_goNext_clicked();
 	void on_tool_image_goPrev_clicked();
@@ -46,6 +50,8 @@ private slots:
 	void on_tool_image_remove_clicked();
 	void on_tool_image_rotateleft_clicked();
 	void on_tool_image_rotateright_clicked();
+	void on_tool_image_zoomin_clicked();
+	void on_tool_image_zoomout_clicked();
 
 };
 #endif

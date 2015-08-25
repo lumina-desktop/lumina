@@ -47,9 +47,12 @@ MultimediaWidget::~MultimediaWidget(){
 // ================
 //    PUBLIC SLOTS
 // ================
-void MultimediaWidget::LoadMultimedia(QList<LFileInfo> list){
+void MultimediaWidget::ClearPlaylist(){
   mediaObj->stop();
   ui->combo_player_list->clear();
+}
+
+void MultimediaWidget::LoadMultimedia(QList<LFileInfo> list){
   for(int i=0; i<list.length(); i++){
     if(list[i].isAVFile()){ ui->combo_player_list->addItem(list[i].fileName(), list[i].absoluteFilePath() ); }
   }

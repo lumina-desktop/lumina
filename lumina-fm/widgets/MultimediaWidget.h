@@ -27,6 +27,7 @@ public:
 	~MultimediaWidget();
 
 public slots:
+	void ClearPlaylist();
 	void LoadMultimedia(QList<LFileInfo> list);
 
 	//Theme change functions

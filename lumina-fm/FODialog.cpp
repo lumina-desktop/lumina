@@ -10,6 +10,8 @@
 #include <QApplication>
 #include <QFontMetrics>
 
+#define DEBUG 1
+
 FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
   ui->setupUi(this); //load the designer file
   ui->label->setText(tr("Calculating"));
@@ -109,7 +111,8 @@ bool FODialog::CheckOverwrite(){
       QMessageBox::StandardButton ans = QMessageBox::question(this, tr("Overwrite Files?"), tr("Do you want to overwrite the existing files?")+"\n"+tr("Note: It will just add a number to the filename otherwise.")+"\n\n"+existing.join(", "), QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel, QMessageBox::NoToAll);
       if(ans==QMessageBox::NoToAll){ Worker->overwrite = 0; } //don't overwrite
       else if(ans==QMessageBox::YesToAll){ Worker->overwrite = 1; } //overwrite
-      else{ ok = false; } //cancel operations
+      else{ qDebug() << " - Cancelled"; ok = false; } //cancel operations
+      if(DEBUG){ qDebug() << " - Overwrite:" << Worker->overwrite; }
     }
   }
   QApplication::processEvents();
@@ -242,7 +245,7 @@ QStringList FOWorker::copyItem(QString oldpath, QString newpath){
 
 // ==== PRIVATE SLOTS ====
 void FOWorker::slotStartOperations(){
-  //qDebug() << "Start File operations" << isRM << isCP << isMV << ofiles << nfiles;
+  if(DEBUG){ qDebug() << "Start File operations" << isRM << isCP << isMV << ofiles << nfiles << overwrite; }
   //Now setup the UI
   /*ui->progressBar->setRange(0,ofiles.length());
   ui->progressBar->setValue(0);
@@ -269,13 +272,15 @@ void FOWorker::slotStartOperations(){
     if(isRM){ //only old files
       olist << subfiles(ofiles[i], false); //dirs need to be last for removals
     }else if(isCP || isRESTORE){
-      if(nfiles[i] == ofiles[i]){
+      if(nfiles[i] == ofiles[i] && overwrite==1){
 	//Trying to copy a file/dir to itself - skip it
 	continue;
       }
       if(QFile::exists(nfiles[i])){
-	if(!overwrite){
+	if(overwrite!=1){
+	  qDebug() << " - Get New Filename:" << nfiles[i];
 	  nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
+	  qDebug() << " -- nfiles[i]";
 	}
       }
       QStringList subs = subfiles(ofiles[i], true); //dirs need to be first for additions
@@ -294,7 +299,7 @@ void FOWorker::slotStartOperations(){
       }else{
 	//Check for existance of the new name
 	if(QFile::exists(nfiles[i])){
-	  if(!overwrite){
+	  if(overwrite!=1){
 	    nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
 	  }
         }
@@ -317,7 +322,7 @@ void FOWorker::slotStartOperations(){
       QApplication::processEvents();*/
       emit startingItem(i+1,olist.length(), olist[i],nlist[i]);
       if(QFile::exists(nlist[i])){
-	if(overwrite){
+	if(overwrite==1){
 	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
 	}
       }
@@ -332,7 +337,7 @@ void FOWorker::slotStartOperations(){
       emit startingItem(i+1,olist.length(), olist[i], nlist[i]);
       //Clean up any overwritten files/dirs
       if(QFile::exists(nlist[i])){
-	if(overwrite){
+	if(overwrite==1){
 	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
 	}
       }

@@ -19,9 +19,36 @@
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
+  //Assemble the toolbar for the widget
+  toolbar = new QToolBar(this);
+    toolbar->setContextMenuPolicy(Qt::CustomContextMenu);
+    toolbar->setFloatable(false);
+    toolbar->setMovable(false);
+    toolbar->setOrientation(Qt::Horizontal);
+    toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    //toolbar->setIconSize(QSize(32,32));
+  ui->toolbar_layout->addWidget(toolbar);
+  // - Add the buttons to the toolbar
+  toolbar->addAction(ui->actionBack);
+  toolbar->addAction(ui->actionUp);
+  toolbar->addAction(ui->actionHome);
+  line_dir = new QLineEdit(this);
+    toolbar->addWidget(line_dir);
+  toolbar->addAction(ui->actionStopLoad);
+  toolbar->addAction(ui->actionClose_Browser);
+  //Create the keyboard shortcuts
+  copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
+  pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
+  cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
+  deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
+  refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
+  //Create the filesystem watcher
+  watcher = new QFileSystemWatcher(this);
+  //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
   setShowDetails(true);
+  setShowThumbnails(true);
   UpdateIcons();
   UpdateText();	
   setupConnections();
@@ -31,24 +58,71 @@ DirWidget::~DirWidget(){
 	
 }
 
+void DirWidget::ChangeDir(QString dirpath){
+  emit LoadDirectory(ID, dirpath);
+}
+
+void DirWidget::setDirCompleter(QCompleter *comp){
+  line_dir->setCompleter(comp);
+}
+
 QString DirWidget::id(){
   return ID;
+}
+
+QString DirWidget::currentDir(){
+  return CDIR;	
 }
 
 void DirWidget::setShowDetails(bool show){
   showDetails = show;
   ui->listWidget->setVisible(!showDetails);
   ui->treeWidget->setVisible(showDetails);
+  this->refresh();
 }
 
 void DirWidget::setShowSidebar(bool show){
   ui->group_actions->setVisible(show);
 }
 
+void DirWidget::setShowThumbnails(bool show){
+  showThumbs = show;
+  this->refresh();
+}
+
 void DirWidget::setDetails(QList<DETAILTYPES> list){
   listDetails = list;
+  //Need to re-create the header item as well
+    QTreeWidgetItem *it = new QTreeWidgetItem();
+    int nmcol = -1; int typecol = -1;
+    for(int t=0; t<listDetails.length(); t++){
+      switch(listDetails[t]){
+	  case NAME:
+	    it->setText(t,tr("Name"));
+	    nmcol = t;
+	    break;
+	  case SIZE:
+	    it->setText(t,tr("Size"));
+	    break;
+	  case TYPE:
+	    it->setText(t, tr("Type"));
+	    typecol = t;
+	    break;
+	  case DATEMOD:
+	    it->setText(t, tr("Date Modified") );
+	    break;
+	  case DATECREATE:
+	    it->setText(t, tr("Date Created") );
+	    break;
+	}
+    }	  
+    ui->treeWidget->setHeaderItem(it);
+    //Now reset the sorting (alphabetically, dirs first)
+    if(nmcol>=0){ ui->treeWidget->sortItems(nmcol, Qt::AscendingOrder); } // sort by name
+    if(typecol>=0){ ui->treeWidget->sortItems(typecol, Qt::AscendingOrder); } //sort by type first
+    
   if(CDIR.isEmpty() || !showDetails){ return; } //don't need to reload dir if details are not visible
-  emit LoadDirectory(ID, CDIR);
+  this->refresh();
 }
 
 void DirWidget::setThumbnailSize(int px){
@@ -56,17 +130,25 @@ void DirWidget::setThumbnailSize(int px){
   ui->listWidget->setIconSize(QSize(px,px));
   ui->treeWidget->setIconSize(QSize(px,px));
   if(CDIR.isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
-  emit LoadDirectory(ID, CDIR);  
+  this->refresh();
 }
+
+void DirWidget::setShowCloseButton(bool show){
+  ui->actionClose_Browser->setVisible(show);
+}
+
 // ================
 //    PUBLIC SLOTS
 // ================
 void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(dir.isEmpty()){ return; } //nothing to do
+  qDebug() << "Load Dir:" << dir;
   QString lastdir = CDIR; //for some checks later
-  canmodify = QFileInfo(CDIR).isWritable();
-  CLIST = list; //save for later
+  QString lastbasedir = normalbasedir;
   CDIR = dir;
+  if(CDIR.endsWith("/")){ CDIR.chop(1); }
+  CLIST = list; //save for laterr
+  canmodify = QFileInfo(CDIR).isWritable();
   //Hide the extra buttons for a moment
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToImages->setVisible(false);
@@ -75,7 +157,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if( dir.contains(ZSNAPDIR) ){
     //This is a zfs snapshot - only update the saved paths necessary to rotate between snapshots/system
     snaprelpath = dir.section(ZSNAPDIR,1,1000).section("/",1,1000); //the relative path inside the snapshot
+    if(snaprelpath.endsWith("/")){ snaprelpath.chop(1); }
     normalbasedir = dir.section(ZSNAPDIR,0,0)+"/"+snaprelpath; //Update the new base directory
+    if(normalbasedir.endsWith("/")){ normalbasedir.chop(1); }
+    line_dir->setText(normalbasedir);
     //See if this was a manual move to the directory, or an internal move
     QString tmp = dir.section(ZSNAPDIR,0,0);
     if(tmp != snapbasedir.section(ZSNAPDIR,0,0)){
@@ -83,7 +168,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }
   }else{
     //This is a normal directory - prompt for snapshot information
-    normalbasedir = dir;
+    line_dir->setText(CDIR);
+    normalbasedir = CDIR;
     snapbasedir.clear();
     loadsnaps = true;
   }
@@ -94,37 +180,32 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     ui->slider_snap->setRange(1,1);
     emit findSnaps(ID, normalbasedir); 
   }
+  //Now update the history for this browser
+  if(!history.isEmpty() && history.last() == normalbasedir && lastbasedir!=normalbasedir ){
+    //We went back one - remove this from the history
+    history.takeLast();
+    ui->actionBack->setEnabled(!history.isEmpty());
+  }else if(lastbasedir!=normalbasedir){ //not a refresh or internal snapshot change
+    history << normalbasedir;
+    ui->actionBack->setEnabled(history.length()>1);
+  }
+  //Clear the current watcher
+  if(!watcher->directories().isEmpty()){ watcher->removePaths(watcher->directories()); }
+  if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
+  watcher->addPath(CDIR);
+  ui->actionStopLoad->setVisible(true);
+  stopload = false;
   //Clear the display widget
-  if(showDetails){ 
-    ui->treeWidget->clear(); 
-    //Need to re-create the header item as well
-    QTreeWidgetItem *it = new QTreeWidgetItem();
-    for(int t=0; t<listDetails.length(); t++){
-      switch(listDetails[t]){
-	  case NAME:
-	    it->setText(t,tr("Name"));
-	    break;
-	  case SIZE:
-	    it->setText(t,tr("Size"));
-	    break;
-	  case TYPE:
-	    it->setText(t, tr("Type"));
-	  case DATEMOD:
-	    it->setText(t, tr("Date Modified") );
-	    break;
-	  case DATECREATE:
-	    it->setText(t, tr("Date Created") );
-	    break;
-	}
-    }	  
-    ui->treeWidget->setHeaderItem(it);
-  }else{ ui->listWidget->clear(); }
+  if(showDetails){ ui->treeWidget->clear(); }
+  else{ ui->listWidget->clear(); }
   //Now fill the display widget
   bool hasimages, hasmultimedia;
   hasimages = hasmultimedia = false;
   for(int i=0; i<list.length(); i++){
+    if(stopload){ ui->actionStopLoad->setVisible(false); return; } //stop right now
     hasimages = hasimages || list[i].isImage();
     hasmultimedia = hasmultimedia || list[i].isAVFile();
+    //watcher->addPath(list[i].absoluteFilePath());
     if(showDetails){
       //Now create all the individual items for the details tree
       QTreeWidgetItem *it = new QTreeWidgetItem();
@@ -133,8 +214,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
         switch(listDetails[t]){
 	  case NAME:
 	    it->setText(t,list[i].fileName());
+	    it->setStatusTip(t, list[i].fileName());
 	    if(list[i].isImage()){
-	      it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->treeWidget->iconSize().height()) ) );
+	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->treeWidget->iconSize().height()) ) ); }
+	      else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
@@ -146,6 +229,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    break;
 	  case TYPE:
 	    it->setText(t, list[i].mimetype());
+	    break;
 	  case DATEMOD:
 	    it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
 	    break;
@@ -164,8 +248,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	QListWidgetItem *it = new QListWidgetItem();
 	    it->setWhatsThis(list[i].fileName());
 	    it->setText(list[i].fileName());
+	    it->setStatusTip(list[i].fileName());
 	    if(list[i].isImage()){
-	      it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->listWidget->iconSize().height()) ) );
+	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->treeWidget->iconSize().height()) ) ); }
+	      else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
@@ -177,15 +263,19 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }
     QApplication::processEvents(); //keep the UI snappy while loading a directory
   }
+  ui->actionStopLoad->setVisible(false);
   //Another check to ensure the current item is visible
   if(showDetails){
     if(ui->treeWidget->currentItem()!=0){ ui->treeWidget->scrollToItem(ui->treeWidget->currentItem()); }
+    for(int t=0; t<ui->treeWidget->columnCount(); t++){ui->treeWidget->resizeColumnToContents(t); }
   }else{
     if(ui->listWidget->currentItem()!=0){ ui->listWidget->scrollToItem(ui->listWidget->currentItem()); }
   }
   //Now Re-enable buttons as necessary
-  ui->tool_goToPlayer->setVisible(hasimages);
-  ui->tool_goToImages->setVisible(hasmultimedia);
+  ui->tool_goToPlayer->setVisible(hasmultimedia);
+  ui->tool_goToImages->setVisible(hasimages);
+  if(canmodify){ ui->label_status->setText(""); }
+  else{ ui->label_status->setText(tr("Restricted Access")); }
 }
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
@@ -211,6 +301,17 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
 	
 }
 
+void DirWidget::refresh(){
+  if(!CDIR.isEmpty() && ~ID.isEmpty()){ 
+    stopload = true; //just in case it is still loading
+    emit LoadDirectory(ID, CDIR); 
+  }
+}
+
+void DirWidget::refreshButtons(){
+  SelectionChanged();
+}
+
 //Theme change functions
 void DirWidget::UpdateIcons(){
   //ui->tool_addNewFile->setIcon( LXDG::findIcon("document-new",""));
@@ -231,6 +332,12 @@ void DirWidget::UpdateIcons(){
   ui->tool_act_rename->setIcon( LXDG::findIcon("edit-rename","") );
   ui->tool_act_rm->setIcon( LXDG::findIcon("edit-delete","") );
   ui->tool_act_fav->setIcon( LXDG::findIcon("bookmark-toolbar","") );
+  //ToolBar Buttons
+  ui->actionBack->setIcon( LXDG::findIcon("go-previous","") );
+  ui->actionUp->setIcon( LXDG::findIcon("go-up","") );
+  ui->actionHome->setIcon( LXDG::findIcon("go-home","") );
+  ui->actionStopLoad->setIcon( LXDG::findIcon("dialog-cancel","") );
+  ui->actionClose_Browser->setIcon( LXDG::findIcon("dialog-close","") );
 }
 
 void DirWidget::UpdateText(){
@@ -252,13 +359,19 @@ void DirWidget::setupConnections(){
   connect(ui->listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
 
   //Activation routines	
-  connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(on_tool_act_run_clicked()) );
   connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
-  connect(ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
-  connect(ui->listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(line_dir, SIGNAL(returnPressed()), this, SLOT(dir_changed()) );
 
-	
-	
+  //Keyboard Shortcuts
+  connect(copyFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_copy_clicked() ) );
+  connect(cutFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_cut_clicked() ) );
+  connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_paste_clicked() ) );
+  connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
+  connect(refreshShort, SIGNAL(activated()), this, SLOT( refresh()) );
+  //Filesystem Watcher
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(refresh()) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(refresh()) ); //just in case
 }
 
 QStringList DirWidget::currentSelection(){
@@ -352,11 +465,33 @@ void DirWidget::on_tool_act_runwith_clicked(){
 
 // -- Bottom Action Buttons
 void DirWidget::on_tool_goToImages_clicked(){
-  emit ViewFiles(CLIST);
+  QStringList sel = currentSelection();
+  if(sel.isEmpty()){ emit ViewFiles(CLIST); }
+  else{ 
+    //Just use the files from the current selection
+    LFileInfoList list;
+    for(int i=0; i<CLIST.length(); i++){
+      if(CLIST[i].isImage() && sel.contains(CLIST[i].fileName()) ){
+        list << CLIST[i]; //add to the list
+      }
+    }
+    if(!list.isEmpty()){ emit ViewFiles(list); }
+  }
 }
 
 void DirWidget::on_tool_goToPlayer_clicked(){
-  emit PlayFiles(CLIST);
+  QStringList sel = currentSelection();
+  if(sel.isEmpty()){ emit PlayFiles(CLIST); }
+  else{ 
+    //Just use the files from the current selection
+    LFileInfoList list;
+    for(int i=0; i<CLIST.length(); i++){
+      if(CLIST[i].isAVFile() && sel.contains(CLIST[i].fileName()) ){
+        list << CLIST[i]; //add to the list
+      }
+    }
+    if(!list.isEmpty()){ emit PlayFiles(list); }
+  }
 }
 
 // -- Top Snapshot Buttons
@@ -381,27 +516,71 @@ void DirWidget::on_slider_snap_valueChanged(int val){
   if(!ui->group_snaps->isEnabled()){ return; } //internal change - do not try to change the actual info
   //Determine which snapshot is now selected
   QString dir;
-  qDebug() << "Changing snapshot:" << CDIR << val;
+  //qDebug() << "Changing snapshot:" << CDIR << val;
+  stopload = true; //stop any currently-loading procedures
   if(val >= snapshots.length() || val < 0){ //active system selected
-    qDebug() << " - Load Active system:" << normalbasedir;
+    //qDebug() << " - Load Active system:" << normalbasedir;
     dir = normalbasedir;
   }else{
     dir = snapbasedir+snapshots[val]+"/";
     if(snaprelpath.isEmpty()){
       //Need to figure out the relative path within the snapshot
       snaprelpath = CDIR.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);
-      qDebug() << " - new snapshot-relative path:" << snaprelpath;
+      //qDebug() << " - new snapshot-relative path:" << snaprelpath;
     }
     dir.append(snaprelpath);
-    qDebug() << " - Load Snapshot:" << dir;
+    dir.replace("//","/"); //just in case any duplicate slashes from all the split/combining
+    //qDebug() << " - Load Snapshot:" << dir;
   }
   //Make sure this directory exists, and back up as necessary
+  
   while(!QFile::exists(dir) && !dir.isEmpty()){
-    dir = dir.section("/",0,-1); //back up one dir
+    dir = dir.section("/",0,-2); //back up one dir
   }
   if(dir.isEmpty()){ return; }
   //Load the newly selected snapshot
   emit LoadDirectory(ID, dir);
+}
+
+//Top Toolbar buttons
+void DirWidget::on_actionBack_triggered(){
+  if(history.isEmpty()){ return; } //cannot do anything
+  QString dir = history.takeLast();
+  if(dir == normalbasedir){
+    dir = history.last();
+  }
+  emit LoadDirectory(ID, dir);
+}
+
+void DirWidget::on_actionUp_triggered(){
+  QString dir = CDIR.section("/",0,-2);
+  //Quick check to ensure the directory exists
+  while(!QFile::exists(dir) && !dir.isEmpty()){
+    dir = dir.section("/",0,-2); //back up one additional dir
+  }
+  emit LoadDirectory(ID, dir);
+}
+
+void DirWidget::on_actionHome_triggered(){
+  emit LoadDirectory(ID, QDir::homePath());
+}
+
+void DirWidget::on_actionStopLoad_triggered(){
+  stopload = true;
+  ui->actionStopLoad->setVisible(false);
+}
+
+void DirWidget::dir_changed(){
+  QString dir = line_dir->text();
+  //Quick check to ensure the directory exists
+  while(!QFile::exists(dir) && !dir.isEmpty()){
+    dir = dir.section("/",0,-2); //back up one additional dir
+  }
+  emit LoadDirectory(ID, dir);
+}
+
+void DirWidget::on_actionClose_Browser_triggered(){
+  emit CloseBrowser(ID);
 }
 
 // - Other Actions without a specific button on the side

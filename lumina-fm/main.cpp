@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QStringList>
 
-#include "MainUI-old.h"
+#include "MainUI.h"
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 #include <LuminaUtils.h>
