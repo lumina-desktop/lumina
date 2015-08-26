@@ -135,7 +135,6 @@ void Dialog::LoadDesktopFile(QString input)
   ui->tabWidget->setCurrentIndex(0); //always start on the file info tab
   //Now load the file info and put it into the UI
   QString mime = LXDG::findAppMimeForFile(desktopFileName);
-  
   QList<QByteArray> fmt = QImageReader::supportedImageFormats();
   bool foundimage=false;
     for(int i=0; i<fmt.length(); i++){ 
@@ -149,8 +148,11 @@ void Dialog::LoadDesktopFile(QString input)
   ui->label_file_mimetype->setText(mime);
   QString type;
   if(desktopFileName.endsWith(".desktop")){ type = tr("XDG Shortcut"); }
-  else if(info.isDir()){ type = tr("Directory"); ui->label_file_icon->setPixmap( LXDG::findIcon("folder","").pixmap(QSize(64,64)) ); }
-  else if(info.isExecutable()){ type = tr("Binary"); }
+  else if(info.isDir()){ 
+    type = tr("Directory");
+    ui->label_file_mimetype->setText("inode/directory");
+    ui->label_file_icon->setPixmap( LXDG::findIcon("folder","").pixmap(QSize(64,64)) );
+  }else if(info.isExecutable()){ type = tr("Binary"); }
   else{ type = info.suffix().toUpper(); }
   if(info.isHidden()){ type = QString(tr("Hidden %1")).arg(type); }
   ui->label_file_type->setText(type);
