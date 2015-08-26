@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
@@ -128,8 +140,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>350</width>
-          <height>250</height>
+          <width>364</width>
+          <height>264</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">

@@ -11,6 +11,8 @@
 #include <QCursor>
 #include <QClipboard>
 #include <QMimeData>
+#include <QTimer>
+#include <QInputDialog>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
@@ -152,6 +154,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   //Hide the extra buttons for a moment
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToImages->setVisible(false);
+  ui->tool_new_dir->setVisible(canmodify);
+  ui->tool_new_file->setVisible(canmodify);
   //Determine if this is an internal ZFS snapshot
   bool loadsnaps = false;
   if( dir.contains(ZSNAPDIR) ){
@@ -322,7 +326,9 @@ void DirWidget::UpdateIcons(){
   ui->tool_snap_older->setIcon(LXDG::findIcon("go-previous-view","") );
   //Bottom-Action Buttons
   ui->tool_goToImages->setIcon( LXDG::findIcon("fileview-preview","") );
-  ui->tool_goToPlayer->setIcon( LXDG::findIcon("applications-multimedia","") );	
+  ui->tool_goToPlayer->setIcon( LXDG::findIcon("applications-multimedia","") );
+  ui->tool_new_file->setIcon( LXDG::findIcon("document-new","") );
+  ui->tool_new_dir->setIcon( LXDG::findIcon("folder-new","") );
   //Side-Action Buttons
   ui->tool_act_run->setIcon( LXDG::findIcon("run-build-file","") );
   ui->tool_act_runwith->setIcon( LXDG::findIcon("run-build-configure","") );
@@ -492,6 +498,48 @@ void DirWidget::on_tool_goToPlayer_clicked(){
     }
     if(!list.isEmpty()){ emit PlayFiles(list); }
   }
+}
+
+void DirWidget::on_tool_new_file_clicked(){
+  if(!canmodify){ return; } //cannot create anything here
+  //Prompt for the new filename
+  bool ok = false;
+  QString newdocument = QInputDialog::getText(this, tr("New Document"), tr("Name:"), QLineEdit::Normal, "", \
+        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+  if(!ok || newdocument.isEmpty()){ return; }	
+  //Create the empty file
+  QString full = CDIR;
+  if(!full.endsWith("/")){ full.append("/"); }
+  QFile file(full+newdocument);
+  if(file.open(QIODevice::ReadWrite)){
+    //If successfully opened, it has created a blank file
+    file.close();
+  }else{
+    QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));	  
+  }
+}
+
+void DirWidget::on_tool_new_dir_clicked(){
+  if(!canmodify){ return; } //cannot create anything here
+  //Prompt for the new dir name
+  bool ok = false;
+  QString newdir = QInputDialog::getText(this, tr("New Directory"), tr("Name:"), QLineEdit::Normal, "", \
+		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+  if(!ok || newdir.isEmpty()){ return; }
+  //Now create the new dir
+  QString full = CDIR;
+  if(!full.endsWith("/")){ full.append("/"); }
+  QDir dir(full); //open the current dir
+  full.append(newdir); //append the new name to the current dir
+  //Verify that the new dir does not already exist
+  if(dir.exists(full)){
+    QMessageBox::warning(this, tr("Invalid Name"), tr("A file or directory with that name already exists! Please pick a different name."));
+    QTimer::singleShot(0,this, SLOT(on_tool_addToDir_clicked()) ); //repeat this function
+  }else{
+    if(!dir.mkdir(newdir) ){
+      QMessageBox::warning(this, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
+    }
+  }	
 }
 
 // -- Top Snapshot Buttons

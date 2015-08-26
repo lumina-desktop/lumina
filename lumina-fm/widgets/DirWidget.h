@@ -99,6 +99,8 @@ private slots:
 	// -- Bottom Action Buttons
 	void on_tool_goToImages_clicked();
 	void on_tool_goToPlayer_clicked();
+	void on_tool_new_file_clicked();
+	void on_tool_new_dir_clicked();
 	// -- Top Snapshot Buttons
 	void on_tool_snap_newer_clicked();
 	void on_tool_snap_older_clicked();
