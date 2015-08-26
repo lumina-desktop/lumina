@@ -58,6 +58,10 @@ void MultimediaWidget::LoadMultimedia(QList<LFileInfo> list){
   }
 }
 
+void MultimediaWidget::Cleanup(){
+  mediaObj->stop(); //just make sure the player is stopped
+}
+
 //Theme change functions
 void MultimediaWidget::UpdateIcons(){
   ui->tool_player_next->setIcon( LXDG::findIcon("media-skip-forward","") );
@@ -159,7 +163,7 @@ void MultimediaWidget::playerError(){
 void MultimediaWidget::playerFinished(){
   if(ui->combo_player_list->currentIndex()<(ui->combo_player_list->count()-1) && ui->check_player_gotonext->isChecked()){
     ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()+1 );
-    QTimer::singleShot(0,this,SLOT(playerStart()));
+    QTimer::singleShot(0,this,SLOT(on_tool_player_play_clicked()));
   }else{
     ui->label_player_novideo->setText(tr("Finished"));
   }

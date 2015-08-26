@@ -29,6 +29,7 @@ public:
 public slots:
 	void ClearPlaylist();
 	void LoadMultimedia(QList<LFileInfo> list);
+	void Cleanup(); //perform actions necessary when closing the player
 
 	//Theme change functions
 	void UpdateIcons();

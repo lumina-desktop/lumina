@@ -216,7 +216,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    it->setText(t,list[i].fileName());
 	    it->setStatusTip(t, list[i].fileName());
 	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->treeWidget->iconSize().height()) ) ); }
+	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(ui->treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
 	      else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
@@ -250,7 +250,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    it->setText(list[i].fileName());
 	    it->setStatusTip(list[i].fileName());
 	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaledToHeight(ui->treeWidget->iconSize().height()) ) ); }
+	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(ui->listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
 	      else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );

@@ -521,6 +521,8 @@ void MainUI::tabClosed(int tab){
 	break;
       }
     }
+   }else if(info=="#MW"){
+      MW->Cleanup(); //prepare it to be hidden/removed
    }
   //Remove the tab (will automatically move to a different one);
   qDebug() << "Closing tab:" << tab << tabBar->tabText(tab);

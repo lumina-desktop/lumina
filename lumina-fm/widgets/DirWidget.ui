@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>334</height>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" columnstretch="0,1">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -35,19 +35,62 @@
    <item row="0" column="0" rowspan="2" colspan="2">
     <layout class="QHBoxLayout" name="toolbar_layout"/>
    </item>
-   <item row="1" column="1" rowspan="2">
+   <item row="3" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_status">
+       <property name="text">
+        <string notr="true">Status</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tool_goToImages">
+       <property name="statusTip">
+        <string>Add selected images to slideshow</string>
+       </property>
+       <property name="text">
+        <string>Slideshow</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tool_goToPlayer">
+       <property name="statusTip">
+        <string>Enqueue selection in multimedia player</string>
+       </property>
+       <property name="text">
+        <string>Play</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="spacing">
       <number>1</number>
      </property>
      <item>
-      <widget class="QGroupBox" name="group_snaps">
-       <property name="title">
-        <string notr="true"/>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
+      <widget class="QFrame" name="group_snaps">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="leftMargin">
          <number>1</number>
@@ -156,15 +199,12 @@
     </layout>
    </item>
    <item row="2" column="0">
-    <widget class="QGroupBox" name="group_actions">
+    <widget class="QFrame" name="group_actions">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="title">
-      <string/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="leftMargin">
@@ -394,55 +434,6 @@
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_status">
-       <property name="text">
-        <string notr="true">Status</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tool_goToImages">
-       <property name="statusTip">
-        <string>Add selected images to slideshow</string>
-       </property>
-       <property name="text">
-        <string>Slideshow</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextBesideIcon</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tool_goToPlayer">
-       <property name="statusTip">
-        <string>Enqueue selection in multimedia player</string>
-       </property>
-       <property name="text">
-        <string>Play</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextBesideIcon</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
   <action name="actionBack">
