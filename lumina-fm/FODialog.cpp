@@ -26,7 +26,7 @@ FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
 	
   //Make sure this dialog is centered on the parent
   if(parent!=0){
-    QPoint ctr = parent->geometry().center();
+    QPoint ctr = parent->mapToGlobal(parent->geometry().center());
     this->move( ctr.x()-(this->width()/2), ctr.y()-(this->height()/2) );
   }
   this->show();

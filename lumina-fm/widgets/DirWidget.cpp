@@ -18,6 +18,8 @@
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
 
+#include "../ScrollDialog.h"
+
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
@@ -679,14 +681,19 @@ void DirWidget::fileCheckSums(){
   qDebug() << " - Info:" << info;
   if(info.isEmpty() || (info.length() != files.length()) ){ return; }
   for(int i=0; i<info.length(); i++){
-    info[i] = QString("%2  \t(%1)").arg(files[i].section("/",-1), info[i]);
+    info[i] = QString("%2\n\t(%1)").arg(files[i].section("/",-1), info[i]);
   }
+  ScrollDialog dlg(this);
+    dlg.setWindowTitle( tr("File Checksums:") );
+    dlg.setWindowIcon( LXDG::findIcon("document-encrypted","") );
+    dlg.setText(info.join("\n"));
+  dlg.exec();
   /*QMessageBox dlg(this);
     dlg.setWindowFlags( Qt::Dialog );
     dlg.setWindowTitle( tr("File Checksums") );
     dlg.setDetailedText(info.join("\n"));
   dlg.exec();*/
-  QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
+  //QMessageBox::information(this, tr("File Checksums"), info.join("\n") );
 }
 
 void DirWidget::fileProperties(){

@@ -25,6 +25,7 @@ SOURCES += main.cpp \
 HEADERS  += MainUI.h \
 		FODialog.h \
 		BMMDialog.h \
+		ScrollDialog.h \
 		DirData.h \
 		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
