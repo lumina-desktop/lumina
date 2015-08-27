@@ -152,6 +152,9 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(CDIR.endsWith("/")){ CDIR.chop(1); }
   CLIST = list; //save for laterr
   canmodify = QFileInfo(CDIR).isWritable();
+  //Clear the status text
+  if(!canmodify){ui->label_status->setText(tr("(Limited Access) ")); }
+  else{ ui->label_status->setText(""); }
   //Hide the extra buttons for a moment
   ui->tool_goToPlayer->setVisible(false);
   ui->tool_goToImages->setVisible(false);
@@ -206,10 +209,15 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   //Now fill the display widget
   bool hasimages, hasmultimedia;
   hasimages = hasmultimedia = false;
+  int numdirs = 0;
+  qint64 filebytes = 0;
   for(int i=0; i<list.length(); i++){
     if(stopload){ ui->actionStopLoad->setVisible(false); return; } //stop right now
-    hasimages = hasimages || list[i].isImage();
-    hasmultimedia = hasmultimedia || list[i].isAVFile();
+    if(!hasimages && list[i].isImage()){ hasimages = true;  ui->tool_goToImages->setVisible(true); }
+    else if(!hasmultimedia && list[i].isAVFile()){ hasmultimedia = true;  ui->tool_goToPlayer->setVisible(true); }
+    //Update statistics
+    if(list[i].isDir()){ numdirs++; }
+    else{ filebytes += list[i].size(); }
     //watcher->addPath(list[i].absoluteFilePath());
     if(showDetails){
       //Now create all the individual items for the details tree
@@ -279,8 +287,23 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   //Now Re-enable buttons as necessary
   ui->tool_goToPlayer->setVisible(hasmultimedia);
   ui->tool_goToImages->setVisible(hasimages);
-  if(canmodify){ ui->label_status->setText(""); }
-  else{ ui->label_status->setText(tr("Restricted Access")); }
+  //Assemble any status message
+  QString stats = QString(tr("Capacity: %1")).arg(LOS::FileSystemCapacity(CDIR));
+  if(list.length()>0){
+    stats.prepend("\t");
+    if(numdirs < list.length()){
+      //Has Files
+      stats.prepend( QString(tr("Files: %1 (%2)")).arg(QString::number(list.length()-numdirs), LUtils::BytesToDisplaySize(filebytes)) );
+    }
+    if(numdirs > 0){
+      //Has Dirs
+      if(numdirs<list.length()){ stats.prepend(" / "); }//has files output already
+      stats.prepend( QString(tr("Dirs: %1")).arg(QString::number(numdirs)) );
+    }
+    
+  }
+  if(!canmodify){stats.prepend(tr("(Limited Access) ")); }
+  ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
 }
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
