@@ -26,6 +26,7 @@ HEADERS  += MainUI.h \
 		FODialog.h \
 		BMMDialog.h \
 		DirData.h \
+		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \
 		widgets/DirWidget.h

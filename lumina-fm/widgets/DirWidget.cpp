@@ -38,6 +38,11 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
     toolbar->addWidget(line_dir);
   toolbar->addAction(ui->actionStopLoad);
   toolbar->addAction(ui->actionClose_Browser);
+  //Add the browser widgets
+  listWidget = new DDListWidget(this);
+  treeWidget = new DDTreeWidget(this);
+  ui->browser_layout->addWidget(listWidget);
+  ui->browser_layout->addWidget(treeWidget);
   //Create the keyboard shortcuts
   copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
   pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
@@ -79,8 +84,8 @@ QString DirWidget::currentDir(){
 
 void DirWidget::setShowDetails(bool show){
   showDetails = show;
-  ui->listWidget->setVisible(!showDetails);
-  ui->treeWidget->setVisible(showDetails);
+  listWidget->setVisible(!showDetails);
+  treeWidget->setVisible(showDetails);
   this->refresh();
 }
 
@@ -119,19 +124,19 @@ void DirWidget::setDetails(QList<DETAILTYPES> list){
 	    break;
 	}
     }	  
-    ui->treeWidget->setHeaderItem(it);
+    treeWidget->setHeaderItem(it);
     //Now reset the sorting (alphabetically, dirs first)
-    if(nmcol>=0){ ui->treeWidget->sortItems(nmcol, Qt::AscendingOrder); } // sort by name
-    if(typecol>=0){ ui->treeWidget->sortItems(typecol, Qt::AscendingOrder); } //sort by type first
+    if(nmcol>=0){ treeWidget->sortItems(nmcol, Qt::AscendingOrder); } // sort by name
+    if(typecol>=0){ treeWidget->sortItems(typecol, Qt::AscendingOrder); } //sort by type first
     
   if(CDIR.isEmpty() || !showDetails){ return; } //don't need to reload dir if details are not visible
   this->refresh();
 }
 
 void DirWidget::setThumbnailSize(int px){
-  bool larger = ui->listWidget->iconSize().height() < px;
-  ui->listWidget->setIconSize(QSize(px,px));
-  ui->treeWidget->setIconSize(QSize(px,px));
+  bool larger = listWidget->iconSize().height() < px;
+  listWidget->setIconSize(QSize(px,px));
+  treeWidget->setIconSize(QSize(px,px));
   if(CDIR.isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
   this->refresh();
 }
@@ -160,6 +165,14 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->tool_goToImages->setVisible(false);
   ui->tool_new_dir->setVisible(canmodify);
   ui->tool_new_file->setVisible(canmodify);
+  //Set the drab/drop info as appripriate
+  if(canmodify){
+    listWidget->setWhatsThis(CDIR);
+    treeWidget->setWhatsThis(CDIR);
+  }else{
+    listWidget->setWhatsThis("");
+    treeWidget->setWhatsThis("");
+  }
   //Determine if this is an internal ZFS snapshot
   bool loadsnaps = false;
   if( dir.contains(ZSNAPDIR) ){
@@ -204,8 +217,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget
-  if(showDetails){ ui->treeWidget->clear(); }
-  else{ ui->listWidget->clear(); }
+  if(showDetails){ treeWidget->clear(); }
+  else{ listWidget->clear(); }
   //Now fill the display widget
   bool hasimages, hasmultimedia;
   hasimages = hasmultimedia = false;
@@ -222,14 +235,14 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     if(showDetails){
       //Now create all the individual items for the details tree
       QTreeWidgetItem *it = new QTreeWidgetItem();
-	it->setWhatsThis(0, list[i].fileName());
+	it->setWhatsThis(0, QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath());
       for(int t=0; t<listDetails.length(); t++){
         switch(listDetails[t]){
 	  case NAME:
 	    it->setText(t,list[i].fileName());
 	    it->setStatusTip(t, list[i].fileName());
 	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(ui->treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
+	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
 	      else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
@@ -251,27 +264,27 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    break;
 	}
       }
-      ui->treeWidget->addTopLevelItem(it);
-      if(lastdir == CDIR+"/"+it->whatsThis(0)){ 
-	ui->treeWidget->setCurrentItem(it);
-	ui->treeWidget->scrollToItem(it);
+      treeWidget->addTopLevelItem(it);
+      if(lastdir == CDIR+"/"+list[i].fileName()){ 
+	treeWidget->setCurrentItem(it);
+	treeWidget->scrollToItem(it);
       }
     }else{
 	//Create all the individual items for the basic list
 	QListWidgetItem *it = new QListWidgetItem();
-	    it->setWhatsThis(list[i].fileName());
+	    it->setWhatsThis( QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath()); //used for drag and drop
 	    it->setText(list[i].fileName());
 	    it->setStatusTip(list[i].fileName());
 	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(ui->listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
+	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
 	      else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else{
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
-	ui->listWidget->addItem(it);
+	listWidget->addItem(it);
 	if(lastdir == CDIR+"/"+it->whatsThis()){ 
-	  ui->listWidget->setCurrentItem(it);
-	  ui->listWidget->scrollToItem(it);
+	  listWidget->setCurrentItem(it);
+	  listWidget->scrollToItem(it);
 	}
     }
     QApplication::processEvents(); //keep the UI snappy while loading a directory
@@ -279,10 +292,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->actionStopLoad->setVisible(false);
   //Another check to ensure the current item is visible
   if(showDetails){
-    if(ui->treeWidget->currentItem()!=0){ ui->treeWidget->scrollToItem(ui->treeWidget->currentItem()); }
-    for(int t=0; t<ui->treeWidget->columnCount(); t++){ui->treeWidget->resizeColumnToContents(t); }
+    if(treeWidget->currentItem()!=0){ treeWidget->scrollToItem(treeWidget->currentItem()); }
+    for(int t=0; t<treeWidget->columnCount(); t++){treeWidget->resizeColumnToContents(t); }
   }else{
-    if(ui->listWidget->currentItem()!=0){ ui->listWidget->scrollToItem(ui->listWidget->currentItem()); }
+    if(listWidget->currentItem()!=0){ listWidget->scrollToItem(listWidget->currentItem()); }
   }
   //Now Re-enable buttons as necessary
   ui->tool_goToPlayer->setVisible(hasmultimedia);
@@ -383,14 +396,16 @@ void DirWidget::UpdateButtons(){
 // =================
 void DirWidget::setupConnections(){
   //Info routines
-  connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
-  connect(ui->listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
-  connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
-  connect(ui->listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
-
+  connect(treeWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
+  connect(listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(OpenContextMenu()) );
+  connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
+  connect(listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(SelectionChanged()) );
+  
   //Activation routines	
-  connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(on_tool_act_run_clicked()) );
-  connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(treeWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
+  connect(listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_tool_act_run_clicked()) );
+  connect(listWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(line_dir, SIGNAL(returnPressed()), this, SLOT(dir_changed()) );
 
   //Keyboard Shortcuts
@@ -407,14 +422,14 @@ void DirWidget::setupConnections(){
 QStringList DirWidget::currentSelection(){
   QStringList out;
   if(showDetails){
-    QList<QTreeWidgetItem*> sel = ui->treeWidget->selectedItems();
+    QList<QTreeWidgetItem*> sel = treeWidget->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      out << sel[i]->whatsThis(0);
+      out << sel[i]->whatsThis(0).section("::::",1,100); //absolute file path
     }
   }else{
-    QList<QListWidgetItem*> sel = ui->listWidget->selectedItems();
+    QList<QListWidgetItem*> sel = listWidget->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      out << sel[i]->whatsThis();
+      out << sel[i]->whatsThis().section("::::",1,100); //absolute file path
     }
   }
   out.removeDuplicates();
@@ -429,39 +444,34 @@ QStringList DirWidget::currentSelection(){
 void DirWidget::on_tool_act_cut_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
-  for(int i=0; i<sel.length(); i++){ sel[i] = CDIR+"/"+sel[i]; } //use absolute paths
   emit CutFiles(sel);
 }
 
 void DirWidget::on_tool_act_copy_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
-  for(int i=0; i<sel.length(); i++){ sel[i] = CDIR+"/"+sel[i]; } //use absolute paths
   emit CopyFiles(sel);	
 }
 
 void DirWidget::on_tool_act_fav_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
-  for(int i=0; i<sel.length(); i++){ sel[i] = CDIR+"/"+sel[i]; } //use absolute paths
   emit FavoriteFiles(sel);	
 }
 
 void DirWidget::on_tool_act_paste_clicked(){
-  emit PasteFiles(CDIR);
+  emit PasteFiles(CDIR, QStringList()); //use the clipboard for pasting
 }
 
 void DirWidget::on_tool_act_rename_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
-  for(int i=0; i<sel.length(); i++){ sel[i] = CDIR+"/"+sel[i]; } //use absolute paths
   emit RenameFiles(sel);		
 }
 
 void DirWidget::on_tool_act_rm_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
-  for(int i=0; i<sel.length(); i++){ sel[i] = CDIR+"/"+sel[i]; } //use absolute paths
   emit RemoveFiles(sel);	
 }
 
@@ -470,7 +480,6 @@ void DirWidget::on_tool_act_run_clicked(){
   if(sel.isEmpty()){ return; }
   QStringList dirs;
   for(int i=0; i<sel.length(); i++){ 
-    sel[i] = CDIR+"/"+sel[i]; //use absolute paths
     if(QFileInfo(sel[i]).isDir()){
       dirs << sel[i];
     }else{
@@ -490,7 +499,7 @@ void DirWidget::on_tool_act_runwith_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
   for(int i=0; i<sel.length(); i++){ 
-    QProcess::startDetached("lumina-open -select \""+CDIR+"/"+sel[i]+"\""); //use absolute paths
+    QProcess::startDetached("lumina-open -select \""+sel[i]+"\""); //use absolute paths
   }	  
 }
 
@@ -502,7 +511,7 @@ void DirWidget::on_tool_goToImages_clicked(){
     //Just use the files from the current selection
     LFileInfoList list;
     for(int i=0; i<CLIST.length(); i++){
-      if(CLIST[i].isImage() && sel.contains(CLIST[i].fileName()) ){
+      if(CLIST[i].isImage() && sel.contains(CLIST[i].absoluteFilePath()) ){
         list << CLIST[i]; //add to the list
       }
     }
@@ -517,7 +526,7 @@ void DirWidget::on_tool_goToPlayer_clicked(){
     //Just use the files from the current selection
     LFileInfoList list;
     for(int i=0; i<CLIST.length(); i++){
-      if(CLIST[i].isAVFile() && sel.contains(CLIST[i].fileName()) ){
+      if(CLIST[i].isAVFile() && sel.contains(CLIST[i].absoluteFilePath()) ){
         list << CLIST[i]; //add to the list
       }
     }
@@ -665,7 +674,6 @@ void DirWidget::on_actionClose_Browser_triggered(){
 void DirWidget::fileCheckSums(){
   QStringList files = currentSelection();
   if(files.isEmpty()){ return; }
-  for(int i=0; i<files.length(); i++){ files[i] = CDIR+"/"+files[i]; } //use absolute paths
   qDebug() << "Run Checksums:" << files;
   QStringList info = LOS::Checksums(files);
   qDebug() << " - Info:" << info;
@@ -690,7 +698,7 @@ void DirWidget::fileProperties(){
     return;
   }
   for(int i=0; i<sel.length(); i++){ 
-    QProcess::startDetached("lumina-fileinfo \""+CDIR+"/"+sel[i]+"\""); //use absolute paths
+    QProcess::startDetached("lumina-fileinfo \""+sel[i]+"\""); //use absolute paths
   }
 }
 

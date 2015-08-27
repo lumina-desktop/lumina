@@ -137,7 +137,7 @@ private slots:
 	void OpenTerminal(QString dirpath);
 	void CutFiles(QStringList); //file selection
 	void CopyFiles(QStringList); //file selection
-	void PasteFiles(QString); //current dir
+	void PasteFiles(QString, QStringList raw = QStringList() ); //current dir, optional list of commands
 	void FavoriteFiles(QStringList); //file selection
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection

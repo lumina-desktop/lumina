@@ -18,6 +18,7 @@
 
 
 #include "../DirData.h"
+#include "DDListWidgets.h"
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
@@ -76,6 +77,10 @@ private:
 	QToolBar *toolbar;
 	QLineEdit *line_dir;
 	QStringList history;
+	//The drag and drop brower widgets
+	DDListWidget *listWidget;
+	DDTreeWidget *treeWidget;
+
 	//Keyboard Shortcuts
 	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort, *refreshShort;
 	//Watcher to determine when the dir changes
@@ -139,7 +144,7 @@ signals:
 	//System Interactions
 	void CutFiles(QStringList); //file selection
 	void CopyFiles(QStringList); //file selection
-	void PasteFiles(QString); //current dir
+	void PasteFiles(QString, QStringList); //current dir
 	void FavoriteFiles(QStringList); //file selection
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection

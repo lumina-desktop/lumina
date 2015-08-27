@@ -139,7 +139,7 @@ void MainUI::OpenDirs(QStringList dirs){
     connect(DW, SIGNAL(FavoriteFiles(QStringList)), this, SLOT(FavoriteFiles(QStringList)) );
     connect(DW, SIGNAL(RenameFiles(QStringList)), this, SLOT(RenameFiles(QStringList)) );
     connect(DW, SIGNAL(RemoveFiles(QStringList)), this, SLOT(RemoveFiles(QStringList)) );
-    connect(DW, SIGNAL(PasteFiles(QString)), this, SLOT(PasteFiles(QString)) );
+    connect(DW, SIGNAL(PasteFiles(QString,QStringList)), this, SLOT(PasteFiles(QString, QStringList)) );
     connect(DW, SIGNAL(CloseBrowser(QString)), this, SLOT(CloseBrowser(QString)) );
     //Now create the tab for this 
     if(radio_view_tabs->isChecked()){
@@ -668,11 +668,14 @@ void MainUI::CopyFiles(QStringList list){
   for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->refreshButtons(); }
 }
 
-void MainUI::PasteFiles(QString dir){
+void MainUI::PasteFiles(QString dir, QStringList raw){
   qDebug() << "Paste Files:" << dir;
   QStringList cut, copy, newcut, newcopy;
-  const QMimeData *dat = QApplication::clipboard()->mimeData();
-  QStringList raw = QString(dat->data("x-special/lumina-copied-files")).split("\n");
+  if(raw.isEmpty()){
+    //Pull info from the clipboard
+    const QMimeData *dat = QApplication::clipboard()->mimeData();
+    raw = QString(dat->data("x-special/lumina-copied-files")).split("\n");
+  }
   if(!dir.endsWith("/")){ dir.append("/"); }
   for(int i=0; i<raw.length(); i++){
     if(raw[i].startsWith("cut::::")){ 
