@@ -61,6 +61,7 @@ DirWidget::~DirWidget(){
 }
 
 void DirWidget::ChangeDir(QString dirpath){
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dirpath);
 }
 
@@ -454,6 +455,7 @@ void DirWidget::on_tool_act_run_clicked(){
     }
   }	  
   if(!dirs.isEmpty()){
+    stopload = true; //just in case it is still loading
     emit LoadDirectory(ID, dirs.takeFirst()); //load the first directory in this widget
   }
   if(!dirs.isEmpty()){
@@ -587,6 +589,7 @@ void DirWidget::on_slider_snap_valueChanged(int val){
   }
   if(dir.isEmpty()){ return; }
   //Load the newly selected snapshot
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
 }
 
@@ -597,6 +600,7 @@ void DirWidget::on_actionBack_triggered(){
   if(dir == normalbasedir){
     dir = history.last();
   }
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
 }
 
@@ -606,10 +610,12 @@ void DirWidget::on_actionUp_triggered(){
   while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one additional dir
   }
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
 }
 
 void DirWidget::on_actionHome_triggered(){
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, QDir::homePath());
 }
 
@@ -624,6 +630,7 @@ void DirWidget::dir_changed(){
   while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one additional dir
   }
+  stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
 }
 

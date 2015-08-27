@@ -181,6 +181,12 @@
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDrop</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::MoveAction</enum>
+       </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
@@ -207,6 +213,12 @@
       <widget class="QListWidget" name="listWidget">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDrop</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::MoveAction</enum>
        </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
