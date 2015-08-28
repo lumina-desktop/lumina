@@ -54,6 +54,9 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
   //Create the filesystem watcher
   watcher = new QFileSystemWatcher(this);
+  synctimer = new QTimer(this);
+    synctimer->setInterval(100); // 1/10 second pause (combine simultaneous signals from the watcher)
+    synctimer->setSingleShot(true);
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
@@ -260,7 +263,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     //Update statistics
     if(list[i].isDir()){ numdirs++; }
     else{ filebytes += list[i].size(); }
-    //watcher->addPath(list[i].absoluteFilePath());
+    watcher->addPath(list[i].absoluteFilePath());
     if(showDetails){
       //Now create all the individual items for the details tree
       QTreeWidgetItem *it;
@@ -474,8 +477,9 @@ void DirWidget::setupConnections(){
   connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
   connect(refreshShort, SIGNAL(activated()), this, SLOT( refresh()) );
   //Filesystem Watcher
-  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(refresh()) );
-  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(refresh()) ); //just in case
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync()) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync()) ); //just in case
+  connect(synctimer, SIGNAL(timeout()), this, SLOT(refresh()) );
 }
 
 QStringList DirWidget::currentSelection(){
@@ -819,4 +823,9 @@ void DirWidget::SelectionChanged(){
   ui->tool_act_rm->setEnabled(hasselection && canmodify);
   ui->tool_act_run->setEnabled(hasselection);
   ui->tool_act_runwith->setEnabled(hasselection);
+}
+
+void DirWidget::startSync(){
+  if(synctimer->isActive()){ synctimer->stop(); }
+  synctimer->start();
 }

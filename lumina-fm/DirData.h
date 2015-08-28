@@ -20,101 +20,7 @@
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
-#define DEBUG 0
-
-//Need some extra information not usually available by a QFileInfo
-/*class LFileInfo : public QFileInfo{
-private:
-	QString mime, icon;
-	XDGDesktop desk;
-
-	void loadExtraInfo(){
-	  //Now load the extra information
-	  if(this->isDir()){
-	    mime = "inode/directory";
-	    //Special directory icons
-	    QString name = this->fileName().toLower();
-	    if(name=="desktop"){ icon = "user-desktop"; }
-	    else if(name=="tmp"){ icon = "folder-temp"; }
-	    else if(name=="video" || name=="videos"){ icon = "folder-video"; }
-	    else if(name=="music" || name=="audio"){ icon = "folder-sound"; }
-	    else if(name=="projects" || name=="devel"){ icon = "folder-development"; }
-	    else if(name=="notes"){ icon = "folder-txt"; }
-	    else if(name=="downloads"){ icon = "folder-downloads"; }
-	    else if(name=="documents"){ icon = "folder-documents"; }
-	    else if(name=="images" || name=="pictures"){ icon = "folder-image"; }
-	    else if( !this->isReadable() ){ icon = "folder-locked"; }
-	  }else if( this->suffix()=="desktop"){
-	    mime = "application/x-desktop";
-	    icon = "application-x-desktop"; //default value
-	    bool ok = false;
-	    desk = LXDG::loadDesktopFile(this->absoluteFilePath(), ok);
-	    if(ok){
-	      //use the specific desktop file info (if possible)
-	      if(!desk.icon.isEmpty()){ icon = desk.icon; }
-	    }
-	  }else{
-	    //Generic file, just determine the mimetype
-	    mime = LXDG::findAppMimeForFile(this->fileName());
-	  }
-	}
-	
-public:
-	LFileInfo(QString filepath){ //overloaded contructor
-	  this->setFile(filepath);
-	  loadExtraInfo();
-	}	
-	LFileInfo(QFileInfo info){ //overloaded contructor
-	  this->swap(info); //use the given QFileInfo without re-loading it
-	  loadExtraInfo();
-	}		
-	~LFileInfo(){}
-	
-	//Functions for accessing the extra information
-	// -- Return the mimetype for the file
-	QString mimetype(){
-	  if(mime=="inode/directory"){ return ""; }
-	  else{ return mime; }
-	}
-	
-	// -- Return the icon to use for this file
-	QString iconfile(){
-	  if(!icon.isEmpty()){
-	    return icon;
-	  }else{
-	    if(!mime.isEmpty()){
-	      QString tmp = mime; 
-	      tmp.replace("/","-");
-	      return tmp;
-	    }else if(this->isExecutable()){
-	      return "application-x-executable";
-	    }
-	  }
-	  return ""; //Fall back to nothing
-	}
-	
-	// -- Check if this is an XDG desktop file
-	bool isDesktopFile(){
-	  return (!desk.filePath.isEmpty());	
-	}
-	
-	// -- Allow access to the XDG desktop data structure
-	const XDGDesktop* XDG(){
-	  return &desk;
-	}
-	
-	// -- Check if this is a readable image file (for thumbnail support)
-	bool isImage(){
-	  if(!mime.startsWith("image/")){ return false; } //quick return for non-image files
-	  //Check the Qt subsystems to see if this image file can be read
-	  return ( !LUtils::imageExtensions().filter(this->suffix().toLower()).isEmpty() );
-	}
-	
-	bool isAVFile(){
-	  return (mime.startsWith("audio/") || mime.startsWith("video/") );
-	}
-};
-typedef QList<LFileInfo> LFileInfoList;*/
+#define DEBUG 1
 
 //Class used for keeping track of directory information in the HASH
 class LDirInfoList{
@@ -155,7 +61,7 @@ public:
 	  //Fill the structure
 	  list.clear();
 	  fileNames.clear();
-	  lastcheck = QDateTime::currentDateTime();
+	  lastcheck = QDateTime::currentDateTime().addMSecs(-500); //prevent missing any simultaneous dir changes
 	  if(showhidden){ dirlist = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden , QDir::Name | QDir::DirsFirst); }
 	  else{ dirlist = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot , QDir::Name | QDir::DirsFirst); }
 	  //Simple add routine - can make it more dynamic/selective about updating individual items later
@@ -254,7 +160,7 @@ public slots:
 	    }
 	    
 	  }
-	  if(DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
+	  //if(DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
 	  emit SnapshotDataAvailable(ID, base, snaps); 
 	}
 	

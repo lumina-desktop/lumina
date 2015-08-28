@@ -15,7 +15,7 @@
 #include <QLineEdit>
 #include <QShortcut>
 #include <QFileSystemWatcher>
-
+#include <QTimer>
 
 #include "../DirData.h"
 #include "DDListWidgets.h"
@@ -85,6 +85,7 @@ private:
 	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort, *refreshShort;
 	//Watcher to determine when the dir changes
 	QFileSystemWatcher *watcher;
+	QTimer *synctimer;
 
 	//Functions for internal use
 	void setupConnections();
@@ -124,10 +125,12 @@ private slots:
 	void openTerminal();
 	void NewFile();
 	void NewDir();
+	
 
 	//Browser Functions
 	void OpenContextMenu();
 	void SelectionChanged();
+	void startSync(); //used internally to collect/pause before updating the dir
 
 signals:
 	//Directory loading/finding signals
