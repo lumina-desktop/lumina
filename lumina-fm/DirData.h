@@ -23,7 +23,7 @@
 #define DEBUG 0
 
 //Need some extra information not usually available by a QFileInfo
-class LFileInfo : public QFileInfo{
+/*class LFileInfo : public QFileInfo{
 private:
 	QString mime, icon;
 	XDGDesktop desk;
@@ -114,8 +114,9 @@ public:
 	  return (mime.startsWith("audio/") || mime.startsWith("video/") );
 	}
 };
-typedef QList<LFileInfo> LFileInfoList;
+typedef QList<LFileInfo> LFileInfoList;*/
 
+//Class used for keeping track of directory information in the HASH
 class LDirInfoList{
 public:
 	//Internal variables
