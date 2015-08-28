@@ -148,7 +148,9 @@ void MainUI::OpenDirs(QStringList dirs){
       tabBar->setCurrentIndex(index);
     }else if(tabBar->count()<1){
       //Need to create the generic Browser tab
-	    
+      int index = tabBar->addTab( LXDG::findIcon("folder-open",""), "Browser" );
+      tabBar->setTabWhatsThis( index, "browser" );
+      tabBar->setCurrentIndex(index);
     }
     
     //Initialize the widget with the proper settings

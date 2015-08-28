@@ -39,6 +39,7 @@ public:
 	  this->setFlow(QListView::TopToBottom);
 	  this->setWrapping(true);
 	  this->setMouseTracking(true);
+	  //this->setSortingEnabled(true); //This sorts *only* by name - type is not preserved
 	}
 	~DDListWidget(){}
 
