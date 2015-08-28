@@ -13,6 +13,7 @@
 #include <QMimeData>
 #include <QTimer>
 #include <QInputDialog>
+#include <QScrollBar>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
@@ -219,6 +220,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget (if a new directory)
+  double scrollpercent = -1;
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
     else{ listWidget->clear(); }
@@ -234,6 +236,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  i--;
 	}
       }
+      QApplication::processEvents();
+      scrollpercent = treeWidget->verticalScrollBar()->value()/( (double) treeWidget->verticalScrollBar()->maximum());
     }else{
       for(int i=0; i<listWidget->count(); i++){
         if( !newfiles.contains(listWidget->item(i)->text()) ){
@@ -241,9 +245,9 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  i--;
 	}
       }
+      scrollpercent = listWidget->horizontalScrollBar()->value()/( (double) listWidget->horizontalScrollBar()->maximum());
     }
-    
-  }
+  } //end check for CDIR reload
   //Now fill the display widget
   bool hasimages, hasmultimedia;
   hasimages = hasmultimedia = false;
@@ -336,14 +340,24 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     QApplication::processEvents(); //keep the UI snappy while loading a directory
   }
   ui->actionStopLoad->setVisible(false);
-  //Another check to ensure the current item is visible
+  //Another check to ensure the current item is visible (or return to the same scroll position)
   if(stopload){ return; } //stop right now
-  if(showDetails){
-    if(treeWidget->currentItem()!=0){ treeWidget->scrollToItem(treeWidget->currentItem()); }
-    for(int t=0; t<treeWidget->columnCount(); t++){treeWidget->resizeColumnToContents(t); }
+  if(scrollpercent<0){
+    if(showDetails){
+      for(int t=0; t<treeWidget->columnCount(); t++){treeWidget->resizeColumnToContents(t); }
+      if(treeWidget->currentItem()!=0){ treeWidget->scrollToItem(treeWidget->currentItem()); }
+    }else{
+      if(listWidget->currentItem()!=0){ listWidget->scrollToItem(listWidget->currentItem()); }
+    }
   }else{
-    if(listWidget->currentItem()!=0){ listWidget->scrollToItem(listWidget->currentItem()); }
+    if(showDetails){
+      treeWidget->verticalScrollBar()->setValue( qRound(treeWidget->verticalScrollBar()->maximum()*scrollpercent) );
+    }else{
+      listWidget->horizontalScrollBar()->setValue( qRound(listWidget->horizontalScrollBar()->maximum()*scrollpercent) );
+    }
   }
+
+  
   if(stopload){ return; } //stop right now
   //Assemble any status message
   QString stats = QString(tr("Capacity: %1")).arg(LOS::FileSystemCapacity(CDIR));
@@ -360,7 +374,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }
     
   }
-  if(stopload){ return; } //stop right now
+  if(stopload){ return; } //stop right now  
   ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
 }
 
