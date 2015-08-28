@@ -1,14 +1,14 @@
 Summary:            A lightweight, portable desktop environment
 Name:               lumina-desktop
 Version:            0.8.6
-Release:            1%{?dist}
+Release:            3%{?dist}
 License:            BSD
 Group:              System Environment/Base
 Source0:            http://ftp.lumina-desktop.org/%{name}-%{version}.tar.gz
 URL:                http://lumina-desktop.org
 ExcludeArch:        s390 s390x
 BuildRequires:      gcc, gcc-c++, qt-devel, qt-config, qt5-qttools, qt5-qttools-devel, qt5-qtbase-gui, qt5-qtmultimedia-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, xcb-util-image, xcb-util-image-devel, xcb-util-wm-devel, libxcb-devel, xcb-util-devel, phonon-devel, phonon-qt5-devel, libXcomposite-devel, libXdamage-devel, libXrender-devel, qt5-qtdeclarative-devel
-Requires: qt5-style-oxygen, plasma-oxygen, xscreensaver, xbacklight, alsa-utils, acpi, numlockx, pavucontrol, xterm 
+Requires: fluxbox, qt5-style-oxygen, plasma-oxygen, xscreensaver, xbacklight, alsa-utils, acpi, numlockx, pavucontrol, xterm 
 
 %description
 The Lumina Desktop Environment is a lightweight system interface 
@@ -18,10 +18,9 @@ that is designed for use on any Unix-like operating system.
 %autosetup -n lumina-%{version}-Release
 
 %build
-qmake-qt5 CONFIG+=configure\ NO_I18N PREFIX=/usr/local LIBPREFIX=/lib64 
+qmake-qt5 CONFIG+=configure\ NO_I18N PREFIX=/usr/local LIBPREFIX=/lib
 
 %install
-#%make_install
 make 
 make INSTALL_ROOT=%{buildroot} install
 
@@ -36,10 +35,10 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/local/bin/lumina-xconfig
 /usr/local/bin/lumina-fileinfo
 /usr/local/etc/luminaDesktop.conf.dist
-/lib64/libLuminaUtils.so
-/lib64/libLuminaUtils.so.1
-/lib64/libLuminaUtils.so.1.0
-/lib64/libLuminaUtils.so.1.0.0
+/lib/libLuminaUtils.so
+/lib/libLuminaUtils.so.1
+/lib/libLuminaUtils.so.1.0
+/lib/libLuminaUtils.so.1.0.0
 /usr/local/include/LuminaXDG.h
 /usr/local/include/LuminaUtils.h
 /usr/local/include/LuminaX11.h
@@ -75,5 +74,8 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_red_1920x1080.jpg
 
 %changelog
+* Thu Aug 20 2015 Jesse Smith jsmith@resonatingmedia.com
+- Updated for 32-bit
+
 * Thu Jul 30 2015 Jesse Smith jsmith@resonatingmedia.com
 - Initial build
