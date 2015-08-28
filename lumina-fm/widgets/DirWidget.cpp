@@ -21,6 +21,8 @@
 
 #include "../ScrollDialog.h"
 
+#define DEBUG 0
+
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
@@ -156,6 +158,8 @@ void DirWidget::setShowCloseButton(bool show){
 // ================
 void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(dir.isEmpty()){ return; } //nothing to do
+  QTime time;
+  if(DEBUG){time.start(); }
   qDebug() << "Load Dir:" << dir;
   QString lastdir = CDIR; //for some checks later
   QString lastbasedir = normalbasedir;
@@ -163,6 +167,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(CDIR.endsWith("/")){ CDIR.chop(1); }
   CLIST = list; //save for laterr
   canmodify = QFileInfo(CDIR).isWritable();
+  if(DEBUG){ qDebug() << "Clear UI:" <<time.elapsed(); }
   //Clear the status text
   if(!canmodify){ui->label_status->setText(tr("(Limited Access) ")); }
   else{ ui->label_status->setText(""); }
@@ -171,7 +176,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->tool_goToImages->setVisible(false);
   ui->tool_new_dir->setVisible(canmodify);
   ui->tool_new_file->setVisible(canmodify);
-  //Set the drab/drop info as appripriate
+  //Set the drag/drop info as appripriate
   if(canmodify){
     listWidget->setWhatsThis(CDIR);
     treeWidget->setWhatsThis(CDIR);
@@ -181,6 +186,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   }
   //Determine if this is an internal ZFS snapshot
   bool loadsnaps = false;
+  if(DEBUG){ qDebug() << "Load Snap Info:" << time.elapsed(); }
   if( dir.contains(ZSNAPDIR) ){
     //This is a zfs snapshot - only update the saved paths necessary to rotate between snapshots/system
     snaprelpath = dir.section(ZSNAPDIR,1,1000).section("/",1,1000); //the relative path inside the snapshot
@@ -207,6 +213,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     ui->slider_snap->setRange(1,1);
     emit findSnaps(ID, normalbasedir); 
   }
+  if(DEBUG){ qDebug() << "Update History:" <<time.elapsed(); }
   //Now update the history for this browser
   if(!history.isEmpty() && history.last() == normalbasedir && lastbasedir!=normalbasedir ){
     //We went back one - remove this from the history
@@ -216,6 +223,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     history << normalbasedir;
     ui->actionBack->setEnabled(history.length()>1);
   }
+  if(DEBUG){ qDebug() << "Update Watcher:" << time.elapsed(); }
   //Clear the current watcher
   if(!watcher->directories().isEmpty()){ watcher->removePaths(watcher->directories()); }
   if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
@@ -223,6 +231,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget (if a new directory)
+    if(DEBUG){ qDebug() << "Clear Browser Widget:" << time.elapsed(); }
   double scrollpercent = -1;
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
@@ -256,6 +265,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   hasimages = hasmultimedia = false;
   int numdirs = 0;
   qint64 filebytes = 0;
+  if(DEBUG){ qDebug() << "Start Loop over items:" << time.elapsed(); }
   for(int i=0; i<list.length(); i++){
     if(stopload){ ui->actionStopLoad->setVisible(false); return; } //stop right now
     if(!hasimages && list[i].isImage()){ hasimages = true;  ui->tool_goToImages->setVisible(true); }
@@ -340,8 +350,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  listWidget->scrollToItem(it);
 	}
     }
-    QApplication::processEvents(); //keep the UI snappy while loading a directory
+    if(i%10==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
+    if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
+  if(DEBUG){ qDebug() << "Done with item loop:" << time.elapsed() << list.length(); }
   ui->actionStopLoad->setVisible(false);
   //Another check to ensure the current item is visible (or return to the same scroll position)
   if(stopload){ return; } //stop right now
@@ -362,6 +374,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 
   
   if(stopload){ return; } //stop right now
+  if(DEBUG){ qDebug() << "Assemble Status Message:" << time.elapsed(); }
   //Assemble any status message
   QString stats = QString(tr("Capacity: %1")).arg(LOS::FileSystemCapacity(CDIR));
   if(list.length()>0){
@@ -379,6 +392,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   }
   if(stopload){ return; } //stop right now  
   ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
+  if(DEBUG){ qDebug() << "DONE:" << time.elapsed(); }
 }
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
