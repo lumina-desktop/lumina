@@ -214,6 +214,9 @@
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://bugs.pcbsd.org/projects/pcbsd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open in Web Browser&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="3" column="0" colspan="2">
