@@ -30,6 +30,10 @@
 #include <QDateTime>
 #include <QDebug>
 
+
+// ======================
+// FreeDesktop Desktop Actions Framework (data structure)
+// ======================
 class XDGDesktopAction{
 public:
   //Admin variables
@@ -38,6 +42,9 @@ public:
   QString name, icon, exec;
 };
 
+// ======================
+//  FreeDesktop Desktop Entry Framework (data structure)
+// ======================
 class XDGDesktop{
 public:
   enum XDGDesktopType { BAD, APP, LINK, DIR };
@@ -62,7 +69,45 @@ public:
   ~XDGDesktop(){}
 };
 
+// ========================
+// File Information simplification class (combine QFileInfo with XDGDesktop)
+//  Need some extra information not usually available by a QFileInfo
+// ========================
+class LFileInfo : public QFileInfo{
+private:
+	QString mime, icon;
+	XDGDesktop desk;
 
+	void loadExtraInfo();
+	
+public:
+	//Couple overloaded contructors
+	LFileInfo(QString filepath);
+	LFileInfo(QFileInfo info);
+	~LFileInfo(){}
+	
+	//Functions for accessing the extra information
+	// -- Return the mimetype for the file
+	QString mimetype();
+	
+	// -- Return the icon file to use for this file
+	QString iconfile(); //Note: This string is auto-formatted for use in the LXDG::findIcon() routine.
+	
+	// -- Check if this is an XDG desktop file
+	bool isDesktopFile();
+	
+	// -- Allow access to the internal XDG desktop data structure
+	const XDGDesktop* XDG();
+	
+	//Other file type identification routines
+	bool isImage(); //Is a readable image file (for thumbnail support)
+	bool isAVFile(); //Is an audio/video file
+};
+typedef QList<LFileInfo> LFileInfoList;
+
+// ================================
+//  Collection of FreeDesktop standards interaction routines
+// ================================
 class LXDG{
 public:
 	//Read/write a *.desktop file
