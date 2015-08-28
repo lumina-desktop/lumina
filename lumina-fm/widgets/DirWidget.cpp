@@ -262,7 +262,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
       QTreeWidgetItem *it;
       bool addnew = false;
 	//See if an item already exists for this file
-	QList<QTreeWidgetItem*> items = treeWidget->findItems(list[i].fileName(),Qt::MatchExactly,0);
+	QList<QTreeWidgetItem*> items = treeWidget->findItems(list[i].fileName(),Qt::MatchExactly,0); //NOTE: This requires column 0 to be the name
 	if(items.isEmpty()){
 	    it = new QTreeWidgetItem();
 	    addnew = true;
@@ -337,15 +337,14 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   }
   ui->actionStopLoad->setVisible(false);
   //Another check to ensure the current item is visible
+  if(stopload){ return; } //stop right now
   if(showDetails){
     if(treeWidget->currentItem()!=0){ treeWidget->scrollToItem(treeWidget->currentItem()); }
     for(int t=0; t<treeWidget->columnCount(); t++){treeWidget->resizeColumnToContents(t); }
   }else{
     if(listWidget->currentItem()!=0){ listWidget->scrollToItem(listWidget->currentItem()); }
   }
-  //Now Re-enable buttons as necessary
-  ui->tool_goToPlayer->setVisible(hasmultimedia);
-  ui->tool_goToImages->setVisible(hasimages);
+  if(stopload){ return; } //stop right now
   //Assemble any status message
   QString stats = QString(tr("Capacity: %1")).arg(LOS::FileSystemCapacity(CDIR));
   if(list.length()>0){
@@ -361,6 +360,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }
     
   }
+  if(stopload){ return; } //stop right now
   ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
 }
 
