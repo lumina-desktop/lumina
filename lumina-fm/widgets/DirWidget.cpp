@@ -218,9 +218,32 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   watcher->addPath(CDIR);
   ui->actionStopLoad->setVisible(true);
   stopload = false;
-  //Clear the display widget
-  if(showDetails){ treeWidget->clear(); }
-  else{ listWidget->clear(); }
+  //Clear the display widget (if a new directory)
+  if(lastbasedir != normalbasedir){
+    if(showDetails){ treeWidget->clear(); }
+    else{ listWidget->clear(); }
+  }else{
+    //Need to be smarter about which items need to be removed
+    // - compare the old/new lists and remove any items not in the new listing (new items taken care of below)
+    QStringList newfiles; //just the filenames
+    for(int i=0; i<CLIST.length(); i++){ newfiles << CLIST[i].fileName(); }
+    if(showDetails){
+      for(int i=0; i<treeWidget->topLevelItemCount(); i++){
+        if( !newfiles.contains(treeWidget->topLevelItem(i)->whatsThis(0).section("/",-1)) ){
+	  delete treeWidget->takeTopLevelItem(i); 
+	  i--;
+	}
+      }
+    }else{
+      for(int i=0; i<listWidget->count(); i++){
+        if( !newfiles.contains(listWidget->item(i)->text()) ){
+	  delete listWidget->takeItem(i); 
+	  i--;
+	}
+      }
+    }
+    
+  }
   //Now fill the display widget
   bool hasimages, hasmultimedia;
   hasimages = hasmultimedia = false;
@@ -236,19 +259,31 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     //watcher->addPath(list[i].absoluteFilePath());
     if(showDetails){
       //Now create all the individual items for the details tree
-      QTreeWidgetItem *it = new QTreeWidgetItem();
+      QTreeWidgetItem *it;
+      bool addnew = false;
+	//See if an item already exists for this file
+	QList<QTreeWidgetItem*> items = treeWidget->findItems(list[i].fileName(),Qt::MatchExactly,0);
+	if(items.isEmpty()){
+	    it = new QTreeWidgetItem();
+	    addnew = true;
+	}else{
+	    it = items.first();
+	}
+	//Now update the entry contents
 	it->setWhatsThis(0, QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath());
       for(int t=0; t<listDetails.length(); t++){
         switch(listDetails[t]){
 	  case NAME:
 	    it->setText(t,list[i].fileName());
 	    it->setStatusTip(t, list[i].fileName());
-	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
-	      else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
-	    }else{
-	      it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
-	    }
+	      //Since the icon/image is based on the filename - only update this for a new item
+	      // (This is the slowest part of the routine)
+	      if(list[i].isImage()){
+	        if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
+	        else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
+	      }else if(addnew){
+	        it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
+	      }
 	    break;
 	  case SIZE:
 	    if(!list[i].isDir()){
@@ -266,21 +301,30 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    break;
 	}
       }
-      treeWidget->addTopLevelItem(it);
+      if(addnew){ treeWidget->addTopLevelItem(it); }
       if(lastdir == CDIR+"/"+list[i].fileName()){ 
 	treeWidget->setCurrentItem(it);
 	treeWidget->scrollToItem(it);
       }
     }else{
 	//Create all the individual items for the basic list
-	QListWidgetItem *it = new QListWidgetItem();
+	QListWidgetItem *it;
+	  //See if there is an existing item to re-use
+	  bool addnew = false;
+	  QList<QListWidgetItem*> items = listWidget->findItems(list[i].fileName(), Qt::MatchExactly);
+	  if(items.isEmpty()){
+	    it = new QListWidgetItem();
+	    addnew = true;
+	  }else{ it = items.first(); }
 	    it->setWhatsThis( QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath()); //used for drag and drop
 	    it->setText(list[i].fileName());
 	    it->setStatusTip(list[i].fileName());
+	    //Since the icon/image is based on the filename - only update this for a new items (non-thumbnail)
+	    // (This is the slowest part of the routine)
 	    if(list[i].isImage()){
 	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
 	      else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
-	    }else{
+	    }else if(addnew){
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
 	listWidget->addItem(it);
@@ -317,7 +361,6 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }
     
   }
-  if(!canmodify){stats.prepend(tr("(Limited Access) ")); }
   ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
 }
 
