@@ -20,7 +20,7 @@
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
-#define DEBUG 1
+#define DEBUG 0
 
 //Class used for keeping track of directory information in the HASH
 class LDirInfoList{

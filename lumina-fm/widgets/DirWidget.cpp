@@ -21,7 +21,9 @@
 
 #include "../ScrollDialog.h"
 
+#ifndef DEBUG
 #define DEBUG 0
+#endif
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -236,6 +238,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
     else{ listWidget->clear(); }
+    QApplication::processEvents(); //make sure it is cleared right away
   }else{
     //Need to be smarter about which items need to be removed
     // - compare the old/new lists and remove any items not in the new listing (new items taken care of below)
@@ -248,7 +251,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  i--;
 	}
       }
-      QApplication::processEvents();
+      QApplication::processEvents(); //make sure the scrollbar is up to date after removals
       scrollpercent = treeWidget->verticalScrollBar()->value()/( (double) treeWidget->verticalScrollBar()->maximum());
     }else{
       for(int i=0; i<listWidget->count(); i++){
@@ -257,6 +260,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  i--;
 	}
       }
+      QApplication::processEvents(); //make sure the scrollbar is up to date after removals
       scrollpercent = listWidget->horizontalScrollBar()->value()/( (double) listWidget->horizontalScrollBar()->maximum());
     }
   } //end check for CDIR reload
@@ -350,7 +354,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  listWidget->scrollToItem(it);
 	}
     }
-    if(i%10==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
+    if(i%20==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
     if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
   if(DEBUG){ qDebug() << "Done with item loop:" << time.elapsed() << list.length(); }
