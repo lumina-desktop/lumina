@@ -20,7 +20,7 @@
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
-#define DEBUG 0
+#define DIR_DEBUG 0
 
 //Class used for keeping track of directory information in the HASH
 class LDirInfoList{
@@ -117,7 +117,7 @@ public:
 
 public slots:
 	void GetDirData(QString ID, QString dirpath){ 
-	  if(DEBUG){ qDebug() << "GetDirData:" << ID << dirpath; }
+	  if(DIR_DEBUG){ qDebug() << "GetDirData:" << ID << dirpath; }
 	  //The ID is used when returning the info in a moment
 	  //Make sure to use the canonical path in the HASH search - don't use 
 	  QString canon = QFileInfo(dirpath).canonicalFilePath();
@@ -132,12 +132,12 @@ public slots:
 	      HASH[canon].update(showHidden);
 	    }
 	  }
-	  if(DEBUG){ qDebug() << " -- Dir Data Found:" << ID << dirpath << HASH.value(canon).list.length(); }
+	  if(DIR_DEBUG){ qDebug() << " -- Dir Data Found:" << ID << dirpath << HASH.value(canon).list.length(); }
 	  emit DirDataAvailable(ID, dirpath, HASH.value(canon).list);
 	}
 	
 	void GetSnapshotData(QString ID, QString dirpath){
-	  if(DEBUG){ qDebug() << "GetSnapshotData:" << ID << dirpath; }
+	  if(DIR_DEBUG){ qDebug() << "GetSnapshotData:" << ID << dirpath; }
 	  QString base; QStringList snaps;
 	  //Only check if ZFS is flagged as available
 	  if(zfsavailable){
@@ -160,7 +160,7 @@ public slots:
 	    }
 	    
 	  }
-	  //if(DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
+	  //if(DIR_DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
 	  emit SnapshotDataAvailable(ID, base, snaps); 
 	}
 	
