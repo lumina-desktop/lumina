@@ -16,13 +16,13 @@ isEmpty(LIBPREFIX) {
 
 
 SOURCES += main.cpp\
-        dialog.cpp
+        MainUI.cpp
 
-HEADERS  += dialog.h
+HEADERS  += MainUI.h
 
-FORMS    += dialog.ui
+FORMS    += MainUI.ui
 
-RESOURCES+= lumina-fileinfo.qrc
+#RESOURCES+= lumina-fileinfo.qrc
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 

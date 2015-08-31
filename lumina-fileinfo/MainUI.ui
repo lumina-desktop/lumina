@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>MainUI</class>
+ <widget class="QDialog" name="MainUI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_file">
       <attribute name="title">
@@ -172,6 +172,16 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_file_name">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_deskedit">
@@ -199,46 +209,19 @@
          <item row="3" column="0" alignment="Qt::AlignRight">
           <widget class="QLabel" name="lblWorkingDir">
            <property name="text">
-            <string>Working dir:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="pbWorkingDir">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>../../../../usr/local/share/icons/gnome/32x32/places/folder.png</normalon>
-            </iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="pbCommand">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>../../../../usr/local/share/icons/gnome/32x32/actions/gnome-run.png</normalon>
-            </iconset>
+            <string>Working Dir:</string>
            </property>
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QCheckBox" name="cbStartupNotification">
+          <widget class="QCheckBox" name="check_xdg_startupNotify">
            <property name="text">
             <string>Use startup notification</string>
            </property>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="lWorkingDir">
+          <widget class="QLineEdit" name="line_xdg_wdir">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -266,34 +249,10 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lCommand"/>
-         </item>
-         <item row="4" column="1" alignment="Qt::AlignLeft">
-          <widget class="QPushButton" name="pbIcon">
-           <property name="maximumSize">
-            <size>
-             <width>275</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>../../../../usr/local/share/icons/gnome/32x32/categories/xfce-graphics.png</normalon>
-            </iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>64</width>
-             <height>64</height>
-            </size>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="line_xdg_command"/>
          </item>
          <item row="6" column="1">
-          <widget class="QCheckBox" name="cbRunInTerminal">
+          <widget class="QCheckBox" name="check_xdg_useTerminal">
            <property name="text">
             <string>Run in terminal</string>
            </property>
@@ -314,10 +273,78 @@
           </widget>
          </item>
          <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="lName"/>
+          <widget class="QLineEdit" name="line_xdg_name"/>
          </item>
          <item row="1" column="1" colspan="2">
-          <widget class="QLineEdit" name="lComment"/>
+          <widget class="QLineEdit" name="line_xdg_comment"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QToolButton" name="tool_xdg_getCommand">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normalon>../../../../usr/local/share/icons/gnome/32x32/actions/gnome-run.png</normalon>
+            </iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QToolButton" name="tool_xdg_getDir">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normalon>../../../../usr/local/share/icons/gnome/32x32/places/folder.png</normalon>
+            </iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QToolButton" name="push_xdg_getIcon">
+             <property name="maximumSize">
+              <size>
+               <width>275</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>No Icon</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normalon>../../../../usr/local/share/icons/gnome/32x32/categories/xfce-graphics.png</normalon>
+              </iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>64</width>
+               <height>64</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -328,90 +355,54 @@
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pbCancel">
-           <property name="text">
-            <string>Cancel</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pbApply">
-           <property name="text">
-            <string>Apply</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="push_save">
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="push_close">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lName</tabstop>
-  <tabstop>lComment</tabstop>
-  <tabstop>lCommand</tabstop>
-  <tabstop>lWorkingDir</tabstop>
-  <tabstop>pbIcon</tabstop>
-  <tabstop>cbStartupNotification</tabstop>
-  <tabstop>cbRunInTerminal</tabstop>
-  <tabstop>pbCancel</tabstop>
-  <tabstop>pbApply</tabstop>
-  <tabstop>pbCommand</tabstop>
-  <tabstop>pbWorkingDir</tabstop>
+  <tabstop>line_xdg_name</tabstop>
+  <tabstop>line_xdg_comment</tabstop>
+  <tabstop>line_xdg_command</tabstop>
+  <tabstop>line_xdg_wdir</tabstop>
+  <tabstop>check_xdg_startupNotify</tabstop>
+  <tabstop>check_xdg_useTerminal</tabstop>
+  <tabstop>tool_xdg_getCommand</tabstop>
+  <tabstop>tool_xdg_getDir</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>pbCancel</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>274</x>
-     <y>316</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbApply</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>375</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>372</x>
-     <y>318</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
