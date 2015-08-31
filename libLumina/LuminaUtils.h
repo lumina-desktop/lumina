@@ -45,6 +45,9 @@ public:
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
 
+	//Convert an input file/dir path to an absolute file path
+	static QString PathToAbsolute(QString path);
+	
 	//Get the list of all file extensions which Qt can read (lowercase)
 	static QStringList imageExtensions();
 	
