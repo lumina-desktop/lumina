@@ -152,5 +152,8 @@ signals:
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection
 	
+protected:
+	void mouseReleaseEvent(QMouseEvent *);
+	
 };
 #endif

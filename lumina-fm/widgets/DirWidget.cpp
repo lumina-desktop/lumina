@@ -217,11 +217,14 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   }
   if(DEBUG){ qDebug() << "Update History:" <<time.elapsed(); }
   //Now update the history for this browser
+  //qDebug() << "History:" << history << normalbasedir << lastbasedir;
   if(!history.isEmpty() && history.last() == normalbasedir && lastbasedir!=normalbasedir ){
     //We went back one - remove this from the history
     history.takeLast();
     ui->actionBack->setEnabled(!history.isEmpty());
+    //qDebug() << " - Duplicate: removed item";
   }else if(lastbasedir!=normalbasedir){ //not a refresh or internal snapshot change
+    //qDebug() << " - New History Item:" << normalbasedir;
     history << normalbasedir;
     ui->actionBack->setEnabled(history.length()>1);
   }
@@ -710,8 +713,9 @@ void DirWidget::on_slider_snap_valueChanged(int val){
 void DirWidget::on_actionBack_triggered(){
   if(history.isEmpty()){ return; } //cannot do anything
   QString dir = history.takeLast();
+  //qDebug() << "Go Back:" << dir << normalbasedir << history.last();
   if(dir == normalbasedir){
-    dir = history.last();
+    dir = history.takeLast();
   }
   stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
@@ -846,4 +850,18 @@ void DirWidget::SelectionChanged(){
 void DirWidget::startSync(){
   if(synctimer->isActive()){ synctimer->stop(); }
   synctimer->start();
+}
+
+//====================
+//         PROTECTED
+//====================
+void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
+  if(ev->button()==Qt::BackButton){
+    ev->accept();
+    on_actionBack_triggered();
+  //}else if(ev->button()==Qt::ForwardButton()){
+    //ev->accept();
+  }else{
+    ev->ignore(); //not handled here
+  }
 }
