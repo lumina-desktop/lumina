@@ -83,9 +83,8 @@ bool LFileInfo::isDesktopFile(){
 }
 
 // -- Allow access to the XDG desktop data structure
-XDGDesktop* LFileInfo::XDG() const{
-
-  return (XDGDesktop * const)(&desk);
+XDGDesktop* LFileInfo::XDG(){
+  return &desk;
 }
 
 // -- Check if this is a readable image file (for thumbnail support)
@@ -244,6 +243,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
 }
 
 bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
+  qDebug() << "Save Desktop File:" << dFile.filePath << "Merge:" << merge;
   bool autofile = dFile.filePath.contains("/autostart/"); //use the "Hidden" field instead of the "NoDisplay"
   int insertloc = -1;
   QStringList info;
@@ -253,11 +253,14 @@ bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
     //set a couple flags based on the contents before we start iterating through
     // - determine if a translated field was changed (need to remove all the now-invalid translations)
     bool clearName, clearComment, clearGName; 
-    QString tmp = info.filter("Name=").first().section("=",1,50);
+    QString tmp = "";
+    if(!info.filter("Name=").isEmpty()){ tmp = info.filter("Name=").first().section("=",1,50); }
     clearName=(tmp!=dFile.name);
-      tmp = info.filter("Comment=").first().section("=",1,50);
+    tmp.clear();
+    if(!info.filter("Comment=").isEmpty()){ tmp = info.filter("Comment=").first().section("=",1,50); }
     clearComment=(tmp!=dFile.comment);
-      tmp = info.filter("GenericName=").first().section("=",1,50);
+    tmp.clear();
+    if(!info.filter("GenericName=").isEmpty()){ tmp = info.filter("GenericName=").first().section("=",1,50); }
     clearGName=(tmp!=dFile.genericName);
     //Now start iterating through the file and changing fields as necessary
     bool insection = false;
