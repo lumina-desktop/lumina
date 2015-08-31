@@ -97,7 +97,7 @@ public:
 	bool isDesktopFile();
 	
 	// -- Allow access to the internal XDG desktop data structure
-	const XDGDesktop* XDG();
+	XDGDesktop* XDG() const;
 	
 	//Other file type identification routines
 	bool isImage(); //Is a readable image file (for thumbnail support)

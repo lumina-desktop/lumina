@@ -83,8 +83,9 @@ bool LFileInfo::isDesktopFile(){
 }
 
 // -- Allow access to the XDG desktop data structure
-const XDGDesktop* LFileInfo::XDG(){
-  return &desk;
+XDGDesktop* LFileInfo::XDG() const{
+
+  return (XDGDesktop * const)(&desk);
 }
 
 // -- Check if this is a readable image file (for thumbnail support)
