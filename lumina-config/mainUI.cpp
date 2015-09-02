@@ -784,6 +784,8 @@ void MainUI::panelValChanged(){
 }
 
 void MainUI::newPanel(){
+
+  if(panelnumber<0){ panelnumber=0; } //just in case
   panelnumber++;
   //Now create a new Panel widget with this number
   PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
