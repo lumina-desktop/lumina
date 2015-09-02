@@ -357,7 +357,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  listWidget->scrollToItem(it);
 	}
     }
-    if(i%20==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
+    if(i%15==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
     if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
   if(DEBUG){ qDebug() << "Done with item loop:" << time.elapsed() << list.length(); }
@@ -689,11 +689,11 @@ void DirWidget::on_slider_snap_valueChanged(int val){
     dir = normalbasedir;
   }else{
     dir = snapbasedir+snapshots[val]+"/";
-    if(snaprelpath.isEmpty()){
+    //if(snaprelpath.isEmpty()){
       //Need to figure out the relative path within the snapshot
       snaprelpath = CDIR.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);
       //qDebug() << " - new snapshot-relative path:" << snaprelpath;
-    }
+    //}
     dir.append(snaprelpath);
     dir.replace("//","/"); //just in case any duplicate slashes from all the split/combining
     //qDebug() << " - Load Snapshot:" << dir;
