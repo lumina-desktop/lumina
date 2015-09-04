@@ -28,12 +28,15 @@ LRELEASE = $$QT5LIBDIR/bin/lrelease
 SOURCES += main.cpp \
 		WMSession.cpp \
 		LScreenSaver.cpp \
-		LXcbEventFilter.cpp
+		LXcbEventFilter.cpp \
+		LWindow.cpp
 
 
-HEADERS  += WMSession.h \
+HEADERS  += GlobalDefines.h \
+		WMSession.h \
 		LScreenSaver.h \
-		LXcbEventFilter.h
+		LXcbEventFilter.h \
+		LWindow.h
 
 FORMS    += 
 

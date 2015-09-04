@@ -56,7 +56,6 @@ void EventFilter::start(){
 //Constructor for the XCB event filter
 XCBEventFilter::XCBEventFilter(EventFilter *parent) : QAbstractNativeEventFilter(){
   obj = parent;
-  XCB = new LXCB();
   InitAtoms();
 }
 

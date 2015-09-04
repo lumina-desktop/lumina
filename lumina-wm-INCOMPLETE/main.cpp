@@ -4,25 +4,21 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#include <QDebug>
 
-#include <QFile>
-#include <QDir>
-#include <QString>
-#include <QTextStream>
-#include <QUrl>
+#include "GlobalDefines.h"
+//Initialize any global structures here
+LXCB *LWM::SYSTEM = 0;
 
-
+//Local includes
 #include "WMSession.h"
+#include "LWindow.h"
+#include <QDialog>
 
-#include <LuminaXDG.h> //from libLuminaUtils
-#include <LuminaThemes.h>
-#include <LuminaSingleApplication.h>
 
 //#define DEBUG 0
-
 int main(int argc, char ** argv)
 {
+    qDebug() << "Starting lumina-wm...";
     LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "lumina-wm");
     if(!a.isPrimaryProcess()){ return 0; } //Inputs forwarded on to the primary already
@@ -30,7 +26,25 @@ int main(int argc, char ** argv)
     
     //Setup the special settings prefix location
     QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-    
+    //Setup the global structures
+    LWM::SYSTEM = new LXCB();
+    if(argc>1 && QString::fromLocal8Bit(argv[1])=="testwin"){
+      //Simple override to test out the window class
+      qDebug() << "Starting window test...";
+      QLabel dlg(0, Qt::Window | Qt::BypassWindowManagerHint); //this test should be ignored by the current WM
+      dlg.setText("Sample Window");
+      dlg.setWindowTitle("Test");
+      dlg.setGeometry(100,100,200,100);
+      dlg.setStyleSheet("background: rgba(255,255,255,100); color: black;");
+      dlg.show();
+      qDebug() << " - Loading window frame...";
+      LWindow win(dlg.winId()); //have it wrap around the dialog
+      qDebug() << " - Show frame...";
+      win.windowChanged(LWM::Show);
+      qDebug() << " - Start event loop...";
+      a.setQuitOnLastWindowClosed(true);
+      return a.exec();
+    }
     WMSession w;
     w.start();
     QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(reloadIcons()) );

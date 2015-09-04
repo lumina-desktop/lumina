@@ -18,7 +18,6 @@ WMSession::WMSession(){
 }
 
 WMSession::~WMSession(){
-	
 }
 
 void WMSession::start(){

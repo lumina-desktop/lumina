@@ -7,8 +7,7 @@
 #ifndef _LUMINA_DESKTOP_WINDOW_MANAGER_SESSION_H
 #define _LUMINA_DESKTOP_WINDOW_MANAGER_SESSION_H
 
-#include <QObject>
-#include <QStringList>
+#include "GlobalDefines.h"
 
 #include "LScreenSaver.h"
 #include "LXcbEventFilter.h"

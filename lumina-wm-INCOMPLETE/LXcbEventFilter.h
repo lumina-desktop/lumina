@@ -9,19 +9,8 @@
 #ifndef _LUMINA_DESKTOP_XCB_FILTER_H
 #define _LUMINA_DESKTOP_XCB_FILTER_H
 
-#include <QAbstractNativeEventFilter>
-#include <QList>
-#include <QStringList>
-#include <QX11Info>
-#include <QCoreApplication>
+#include "GlobalDefines.h"
 
-#include <LuminaX11.h>
-
-#include <xcb/xcb.h>
-#include <xcb/xproto.h>
-#include <xcb/damage.h>
-#include <xcb/xcb_atom.h>
-#include <xcb/xcb_aux.h> //included in libxcb-util.so
 
 /*
 List of XCB response types (since almost impossible to find good docs on XCB)
@@ -108,29 +97,29 @@ public:
 	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
 		
 private:
-	LXCB *XCB;
+	//LXCB *XCB;
 	EventFilter *obj;
 	QList<xcb_atom_t> WinNotifyAtoms, SysNotifyAtoms;
 
 	void InitAtoms(){
 	  //Initialize any special atoms that we need to save/use regularly
-	  //NOTE: All the EWMH atoms are already saved in XCB->EWMH
+	  //NOTE: All the EWMH atoms are already saved globally in LWM::SYSTEM->EWMH
 	  WinNotifyAtoms.clear();
-	    WinNotifyAtoms << XCB->EWMH._NET_WM_NAME \
-					<< XCB->EWMH._NET_WM_VISIBLE_NAME \
-					<< XCB->EWMH._NET_WM_ICON_NAME \
-					<< XCB->EWMH._NET_WM_VISIBLE_ICON_NAME \
-					<< XCB->EWMH._NET_WM_ICON \
-					<< XCB->EWMH._NET_WM_ICON_GEOMETRY;
+	    WinNotifyAtoms << LWM::SYSTEM->EWMH._NET_WM_NAME \
+					<< LWM::SYSTEM->EWMH._NET_WM_VISIBLE_NAME \
+					<< LWM::SYSTEM->EWMH._NET_WM_ICON_NAME \
+					<< LWM::SYSTEM->EWMH._NET_WM_VISIBLE_ICON_NAME \
+					<< LWM::SYSTEM->EWMH._NET_WM_ICON \
+					<< LWM::SYSTEM->EWMH._NET_WM_ICON_GEOMETRY;
 		
 	  SysNotifyAtoms.clear();
-	    SysNotifyAtoms << XCB->EWMH._NET_CLIENT_LIST \
-					<< XCB->EWMH._NET_CLIENT_LIST_STACKING \
-					<< XCB->EWMH._NET_CURRENT_DESKTOP \
-					<< XCB->EWMH._NET_WM_STATE \
-					<< XCB->EWMH._NET_ACTIVE_WINDOW \
-					<< XCB->EWMH._NET_WM_ICON \
-					<< XCB->EWMH._NET_WM_ICON_GEOMETRY;
+	    SysNotifyAtoms << LWM::SYSTEM->EWMH._NET_CLIENT_LIST \
+					<< LWM::SYSTEM->EWMH._NET_CLIENT_LIST_STACKING \
+					<< LWM::SYSTEM->EWMH._NET_CURRENT_DESKTOP \
+					<< LWM::SYSTEM->EWMH._NET_WM_STATE \
+					<< LWM::SYSTEM->EWMH._NET_ACTIVE_WINDOW \
+					<< LWM::SYSTEM->EWMH._NET_WM_ICON \
+					<< LWM::SYSTEM->EWMH._NET_WM_ICON_GEOMETRY;
 
 	}
 	
