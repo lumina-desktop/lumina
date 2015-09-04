@@ -70,19 +70,13 @@ include.files=LuminaXDG.h \
 	LuminaSingleApplication.h
 
 colors.path=$$PREFIX/share/Lumina-DE/colors/
-colors.files=colors/Lumina-Red.qss.colors \
-		colors/Lumina-Green.qss.colors \
-		colors/Lumina-Purple.qss.colors \
-		colors/Lumina-Gold.qss.colors \
-		colors/Lumina-Glass.qss.colors \
-		colors/PCBSD10-Default.qss.colors
+colors.files=colors/*.qss.colors
 
 themes.path=$$PREFIX/share/Lumina-DE/themes/
-themes.files=themes/Lumina-default.qss.template \
-		themes/None.qss.template
+themes.files=themes/*.qss.template
 
 quickplugins.path=$$PREFIX/share/Lumina-DE/quickplugins/
-quickplugins.files=quickplugins/*.qml
+quickplugins.files=quickplugins/*
 
 INSTALLS += target include colors themes quickplugins
 
