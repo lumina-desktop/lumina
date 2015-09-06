@@ -7,11 +7,61 @@
 #ifdef __DragonFly__
 #include "LuminaOS.h"
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#include <sys/sensors.h>
 
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 static int audiovolume = -1;
-static int ncpu = -1;
+
+static bool get_sysctlbyname_int(const char *name, int *res) {
+    int r = 0;
+    size_t len = sizeof(r);
+    if (sysctlbyname(name, &r, &len, NULL, 0) == 0) {
+        *res = r;
+        return true;
+    }
+    return false;
+}
+
+#if 0
+static bool get_sysctlbyname_qstr(const char *name, QString &str) {
+    size_t len = 0;
+    sysctlbyname(name, NULL, &len, NULL, 0);
+    if (len > 0) {
+      void *buf = malloc(len);
+      if (buf) {
+        int res = sysctlbyname(name, buf, &len, NULL, 0);
+        if (res == 0) {
+          str = QString((char*) buf);
+        }
+        free(buf);
+        return (res == 0);
+      }
+    }
+    return false;
+}
+#endif
+
+// returns -1 on error.
+static int get_sysctlbyname_int(const char *name) {
+  int res = -1;
+  if (get_sysctlbyname_int(name, &res)) {
+    return res;
+  }
+  return -1;
+}
+
+static bool get_sysctlbyname_uint(const char *name, unsigned int *res) {
+    unsigned int r = 0;
+    size_t len = sizeof(r);
+    if (sysctlbyname(name, &r, &len, NULL, 0) == 0) {
+        *res = r;
+        return true;
+    }
+    return false;
+}
 
 QString LOS::OSName(){ return "DragonFly BSD"; }
 
@@ -188,25 +238,24 @@ void LOS::systemSuspend(){
 
 //Battery Availability
 bool LOS::hasBattery(){
-  int val = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.units").join("").toInt();
-  return (val >= 1);
+  return (get_sysctlbyname_int("hw.acpi.battery.units") >= 1);
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  int charge = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.life").join("").toInt();
+  int charge = get_sysctlbyname_int("hw.acpi.battery.life");
   if(charge > 100){ charge = -1; } //invalid charge 
   return charge;	
 }
 
 //Battery Charging State
 bool LOS::batteryIsCharging(){
-  return (LUtils::getCmdOutput("sysctl -n hw.acpi.battery.state").join("").simplified() == "2");
+  return (get_sysctlbyname_int("hw.acpi.battery.state") == 2);
 }
 
 //Battery Time Remaining
 int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
-  int time = LUtils::getCmdOutput("sysctl -n hw.acpi.battery.time").join("").toInt();
+  int time = get_sysctlbyname_int("hw.acpi.battery.time");
   if (time > 0) {
     // time is in minutes
     time *= 60;
@@ -236,24 +285,42 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
   return capacity;
 }
 
-QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
+static float sensor_value_to_degC(int64_t value) {
+    return (value - 273150000) / 1000000.0;
+}
+
+//Returns: List containing the temperature of any CPU's ("50C" for example)
+QStringList LOS::CPUTemperatures(){
   QStringList temps;
 
-  // Determine number of CPUs
-  if (ncpu == -1) {
-    ncpu = LUtils::getCmdOutput("sysctl -n hw.ncpu").join("").toInt();
+  int mib[5];
+  mib[0] = CTL_HW;
+  mib[1] = HW_SENSORS;
+
+  for (int dev=0; dev < MAXSENSORDEVICES; ++dev) {
+      struct sensordev sensordev;
+      size_t sdlen = sizeof(sensordev);
+
+      mib[2] = dev;
+      if (sysctl(mib, 3, &sensordev, &sdlen, NULL, 0) == -1) {
+        continue;
+      }
+      mib[3] = SENSOR_TEMP;
+      for (int numt=0; numt < sensordev.maxnumt[SENSOR_TEMP]; ++numt) {
+          mib[4] = numt;
+          struct sensor sensor;
+          size_t slen = sizeof(sensor);
+          if (sysctl(mib, 5, &sensor, &slen, NULL, 0) == -1) {
+            continue;
+          }
+
+          // XXX: Filter out non-cpu temperatures
+
+          int degC = (int)sensor_value_to_degC(sensor.value);
+          temps << QString::number(degC) + "C" + "(" + QString(sensordev.xname) + ")";
+      }
   }
 
-  // We couldn't get number of CPUs. Give up!
-  if (ncpu == -1) {
-    return temps;
-  }
-
-  for (int cpu = 0; cpu < ncpu; ++cpu) {
-    QString cmd = QString("sysctl -n hw.sensors.cpu") + QString::number(cpu) + QString(".temp0");
-    QString info = LUtils::getCmdOutput(cmd).join("");
-    temps << info.section(" ", 0, 1);
-  }
   return temps;
 }
 
@@ -263,10 +330,16 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
 
 int LOS::MemoryUsagePercent(){
   //SYSCTL: vm.stats.vm.v_<something>_count
-  QStringList info = LUtils::getCmdOutput("sysctl -n vm.stats.vm.v_page_count vm.stats.vm.v_wire_count vm.stats.vm.v_active_count");
-  if(info.length()<3){ return -1; } //error in fetching information
+  unsigned int v_page_count = 0;
+  unsigned int v_wire_count = 0;
+  unsigned int v_active_count = 0;
+
+  if (!get_sysctlbyname_uint("vm.stats.vm.v_page_count", &v_page_count)) return -1;
+  if (!get_sysctlbyname_uint("vm.stats.vm.v_wire_count", &v_wire_count)) return -1;
+  if (!get_sysctlbyname_uint("vm.stats.vm.v_active_count", &v_active_count)) return -1;
+
   //List output: [total, wired, active]
-  double perc = 100.0* (info[1].toLong()+info[2].toLong())/(info[0].toDouble());
+  double perc = 100.0 * ((long)v_wire_count+(long)v_active_count)/((double)v_page_count);
   return qRound(perc);
 }
 
