@@ -250,7 +250,7 @@ int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside th
 
 //Battery Charging State
 bool LOS::batteryIsCharging(){
-  return (get_sysctlbyname_int("hw.acpi.battery.state") == 2);
+  return (get_sysctlbyname_int("hw.acpi.battery.state") == 0);
 }
 
 //Battery Time Remaining
