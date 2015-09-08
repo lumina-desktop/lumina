@@ -166,7 +166,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   QString lastdir = CDIR; //for some checks later
   QString lastbasedir = normalbasedir;
   CDIR = dir;
-  if(CDIR.endsWith("/")){ CDIR.chop(1); }
+  if(CDIR.endsWith("/") && CDIR.length() != 1){ CDIR.chop(1); }
   CLIST = list; //save for laterr
   canmodify = QFileInfo(CDIR).isWritable();
   if(DEBUG){ qDebug() << "Clear UI:" <<time.elapsed(); }
@@ -723,6 +723,8 @@ void DirWidget::on_actionBack_triggered(){
 
 void DirWidget::on_actionUp_triggered(){
   QString dir = CDIR.section("/",0,-2);
+  if(dir.isEmpty())
+      dir = "/";
   //Quick check to ensure the directory exists
   while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one additional dir
