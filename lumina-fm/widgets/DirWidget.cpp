@@ -856,7 +856,9 @@ void DirWidget::startSync(){
 //         PROTECTED
 //====================
 void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
-  if(ev->button()==Qt::BackButton){
+  static Qt::MouseButtons backmap = Qt::BackButton | Qt::ExtraButton5;
+  //qDebug() << "Mouse Click:" << ev->button();
+  if(backmap.testFlag(ev->button())){
     ev->accept();
     on_actionBack_triggered();
   //}else if(ev->button()==Qt::ForwardButton()){

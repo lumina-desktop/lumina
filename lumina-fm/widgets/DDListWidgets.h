@@ -20,6 +20,7 @@
 #include <QDrag>
 #include <QFileInfo>
 #include <QDebug>
+#include <QMouseEvent>
 
 //==============
 //  LIST WIDGET
@@ -84,11 +85,14 @@ protected:
 		ev->setDropAction(Qt::CopyAction);
 	    }
 	    ev->accept(); //allow this to be dropped here
-	  }				
+	  }else{
+	    ev->ignore();
+	  }		  
 	}
 	
 	void dropEvent(QDropEvent *ev){
-	  if(this->whatsThis().isEmpty()){ return; } //not supported
+	  if(this->whatsThis().isEmpty()){ ev->ignore(); return; } //not supported
+	  //qDebug() << "Drop Event:";
 	  ev->accept(); //handled here
 	  QString dirpath = this->whatsThis();
 	  //See if the item under the drop point is a directory or not
@@ -101,6 +105,11 @@ protected:
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
 	  emit DataDropped( dirpath, QString(ev->mimeData()->data(MIME)).split("\n") );
+	}
+	
+	void mouseReleaseEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QListWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
 };
 
@@ -184,6 +193,11 @@ protected:
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
 	  emit DataDropped( dirpath, QString(ev->mimeData()->data(MIME)).split("\n") );
+	}
+	
+	void mouseReleaseEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QTreeWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
 };
 #endif
