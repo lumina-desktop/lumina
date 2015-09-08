@@ -123,8 +123,6 @@ private slots:
 	void fileCheckSums();
 	void fileProperties();
 	void openTerminal();
-	void NewFile();
-	void NewDir();
 	
 
 	//Browser Functions

@@ -778,9 +778,11 @@ void MainUI::RemoveFiles(QStringList list){
    }
   
   //Verify permanent removal of file/dir
-  if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?")+"\n\n"+names.join("\n"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-    return; //cancelled
-  }
+  QMessageBox dlgQ(QMessageBox::Question, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?"), QMessageBox::Yes | QMessageBox::No, this);
+    dlgQ.setDetailedText(tr("Items to be removed:")+"\n\n"+names.join("\n"));
+  dlgQ.exec();
+  if(dlgQ.result() != QMessageBox::Yes){ return; } //cancelled   
+
   //Now remove the file/dir
   qDebug() << " - Delete: "<<paths;
   FODialog dlg(this);

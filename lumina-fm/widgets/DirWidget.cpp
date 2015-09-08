@@ -796,14 +796,6 @@ void DirWidget::openTerminal(){
   emit LaunchTerminal(CDIR);
 }
 
-void DirWidget::NewFile(){
-	
-}
-
-void DirWidget::NewDir(){
-	
-}
-
 //Browser Functions
 void DirWidget::OpenContextMenu(){
   //First generate the context menu based on the selection
