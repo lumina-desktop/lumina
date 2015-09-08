@@ -153,7 +153,8 @@ void MainUI::GetDirSize(const QString dirname) const {
     }
     else
       ++file_number;
-    filesize += file_list[i].size();
+    if(!file_list[i].isSymLink())
+      filesize += file_list[i].size();
   }
   while(!head.isEmpty()) {
     if(terminate_thread)
@@ -171,7 +172,8 @@ void MainUI::GetDirSize(const QString dirname) const {
       }
       else
         ++file_number;
-      filesize += file_list[i].size();
+      if(!file_list[i].isSymLink())
+        filesize += file_list[i].size();
       if(i%update_frequency == 0)
         emit folder_size_changed(filesize, file_number, dir_number, false);
     }
