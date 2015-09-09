@@ -792,7 +792,6 @@ void MainUI::RemoveFiles(QStringList list){
 }
 
 void MainUI::CloseBrowser(QString ID){
-  if(DWLIST.length()<2){ return; } //cannot close the last browser
   //Find the tab associated with this browser first
   for(int i=0; i<tabBar->count(); i++){
     if(tabBar->tabWhatsThis(i)==ID){
@@ -806,6 +805,10 @@ void MainUI::CloseBrowser(QString ID){
       delete DWLIST.takeAt(i);
       break;
     }
+  }
+  //If the last browser was just closed, create a new one
+  if(DWLIST.isEmpty()){
+    OpenDirs(QStringList() << QDir::homePath());
   }
 }
 // ======================
