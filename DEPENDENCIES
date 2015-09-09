@@ -12,6 +12,7 @@
   
   - Specific Qt5 Modules
   core			(FreeBSD: devel/qt5-core)
+  concurrent		(FreeBSD: devel/qt5-concurrent)
   gui				(FreeBSD: x11-toolkits/qt5-gui)
   widgets			(FreeBSD: x11-toolkits/qt5-widgets)
   multimedia		(FreeBSD: multimedia/qt5-multimedia)
