@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QtConcurrent/QtConcurrentRun>
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
@@ -18,12 +19,13 @@ LFileInfo INFO = LFileInfo("");
 MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer form
   canwrite = false;
+  terminate_thread = false;
   UpdateIcons(); //Set all the icons in the dialog
   SetupConnections();
 }
 
 MainUI::~MainUI(){
-	
+  terminate_thread = true;
 }
 
 //=============
@@ -47,6 +49,10 @@ void MainUI::LoadFile(QString path, QString type){
   ui->label_file_name->setText( INFO.fileName() );
   ui->label_file_mimetype->setText( INFO.mimetype() );
   if(!INFO.isDir()){ ui->label_file_size->setText( LUtils::BytesToDisplaySize( INFO.size() ) ); }
+  else {
+    ui->label_file_size->setText(tr("---Calculating---"));
+    QtConcurrent::run(this, &MainUI::GetDirSize, INFO.absoluteFilePath());
+  }
   ui->label_file_owner->setText(INFO.owner());
   ui->label_file_group->setText(INFO.group());
   ui->label_file_created->setText( INFO.created().toString(Qt::SystemLocaleLongDate) );
@@ -110,7 +116,6 @@ void MainUI::LoadFile(QString path, QString type){
   //Setup the tab 
   if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
   else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
-  
 }
 
 void MainUI::UpdateIcons(){
@@ -128,6 +133,54 @@ void MainUI::ReloadAppIcon(){
   ui->push_xdg_getIcon->setIcon( LXDG::findIcon(ui->push_xdg_getIcon->whatsThis(),"") );
 }
 
+void MainUI::GetDirSize(const QString dirname) const {
+  const quint16 update_frequency = 2000; //For reducing the number of folder_size_changed calls
+  quint64 filesize = 0;
+  quint64 file_number = 0;
+  quint64 dir_number = 1;
+  QDir folder(dirname);
+  QFileInfoList file_list;
+  QString dir_name;
+  QList<QString> head;
+  folder.setFilter(QDir::Hidden|QDir::AllEntries|QDir::NoDotAndDotDot);
+  file_list = folder.entryInfoList();
+  for(int i=0; i<file_list.size(); ++i) {
+    if(terminate_thread)
+        break;
+    if(file_list[i].isDir() && !file_list[i].isSymLink()) {
+      ++dir_number;
+      head.prepend(file_list[i].absoluteFilePath());
+    }
+    else
+      ++file_number;
+    if(!file_list[i].isSymLink())
+      filesize += file_list[i].size();
+  }
+  while(!head.isEmpty()) {
+    if(terminate_thread)
+      break;
+    dir_name = head.takeFirst();
+    if(!folder.cd(dir_name)) {
+      qDebug() << "The folder " << dir_name << " doesn't exist";
+      continue;
+    }
+    file_list = folder.entryInfoList();
+    for(int i=0; i<file_list.size(); ++i) {
+      if(file_list[i].isDir() && !file_list[i].isSymLink()) {
+        ++dir_number;
+        head.prepend(file_list[i].absoluteFilePath());
+      }
+      else
+        ++file_number;
+      if(!file_list[i].isSymLink())
+        filesize += file_list[i].size();
+      if(i%update_frequency == 0)
+        emit folder_size_changed(filesize, file_number, dir_number, false);
+    }
+  }
+  emit folder_size_changed(filesize, file_number, dir_number, true);
+}
+
 // Initialization procedures
 void MainUI::SetupConnections(){
   connect(ui->line_xdg_command, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
@@ -136,10 +189,12 @@ void MainUI::SetupConnections(){
   connect(ui->line_xdg_wdir, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
   connect(ui->check_xdg_useTerminal, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
   connect(ui->check_xdg_startupNotify, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
+  connect(this, SIGNAL(folder_size_changed(quint64, quint64, quint64, bool)), this, SLOT(refresh_folder_size(quint64, quint64, quint64, bool)));
 }
 
 //UI Buttons
 void MainUI::on_push_close_clicked(){
+  terminate_thread = true;
   if(ui->push_save->isEnabled()){
     //Still have unsaved changes
     //TO-DO - prompt for whether to save the changes
@@ -234,3 +289,9 @@ void MainUI::xdgvaluechanged(){
   }
 }
 
+void MainUI::refresh_folder_size(quint64 size, quint64 files, quint64 folders, bool finished) {
+  if(finished)
+    ui->label_file_size->setText( LUtils::BytesToDisplaySize( size ) + " -- " + tr(" Folders: ") + QString::number(folders) + " / " + tr("Files: ") + QString::number(files) );
+  else
+    ui->label_file_size->setText( LUtils::BytesToDisplaySize( size ) + " -- " + tr(" Folders: ") + QString::number(folders) + " / " + tr("Files: ") + QString::number(files) + tr("  Calculating..." ));
+}
