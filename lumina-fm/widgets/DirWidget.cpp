@@ -111,7 +111,7 @@ void DirWidget::setShowThumbnails(bool show){
 void DirWidget::setDetails(QList<DETAILTYPES> list){
   listDetails = list;
   //Need to re-create the header item as well
-    QTreeWidgetItem *it = new QTreeWidgetItem();
+    CQTreeWidgetItem *it = new CQTreeWidgetItem();
     int nmcol = -1; int typecol = -1;
     for(int t=0; t<listDetails.length(); t++){
       switch(listDetails[t]){
@@ -283,15 +283,16 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     watcher->addPath(list[i].absoluteFilePath());
     if(showDetails){
       //Now create all the individual items for the details tree
-      QTreeWidgetItem *it;
+      CQTreeWidgetItem *it;
       bool addnew = false;
 	//See if an item already exists for this file
 	QList<QTreeWidgetItem*> items = treeWidget->findItems(list[i].fileName(),Qt::MatchExactly,0); //NOTE: This requires column 0 to be the name
 	if(items.isEmpty()){
-	    it = new QTreeWidgetItem();
+        it = new CQTreeWidgetItem();
 	    addnew = true;
 	}else{
-	    it = items.first();
+        // Safe downcasting because CQTreeWidgetItem only redefines the virtual function bool opearot<. Not new methos added.
+        it = static_cast<CQTreeWidgetItem *> (items.first());
 	}
 	//Now update the entry contents
 	it->setWhatsThis(0, QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath());
