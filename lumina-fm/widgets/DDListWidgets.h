@@ -111,6 +111,14 @@ protected:
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
 	  else{ QListWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
+	void mousePressEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QListWidget::mousePressEvent(ev); } //pass it along to the widget	  
+	}
+	/*void mouseMoveEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QListWidget::mouseMoveEvent(ev); } //pass it along to the widget		
+	}*/
 };
 
 //================
@@ -199,5 +207,13 @@ protected:
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
 	  else{ QTreeWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
+	void mousePressEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QTreeWidget::mousePressEvent(ev); } //pass it along to the widget	  
+	}
+	/*void mouseMoveEvent(QMouseEvent *ev){
+	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
+	  else{ QTreeWidget::mouseMoveEvent(ev); } //pass it along to the widget		
+	}*/
 };
 #endif

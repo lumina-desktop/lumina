@@ -46,17 +46,19 @@ void FODialog::setOverwrite(bool ovw){
 }
 
 //Public "start" functions
-void FODialog::RemoveFiles(QStringList paths){
+bool FODialog::RemoveFiles(QStringList paths){
   Worker->ofiles = paths;
   Worker->isRM = true;
   if(CheckOverwrite()){
     QTimer::singleShot(10,Worker, SLOT(slotStartOperations()));
+    return true;
   }else{
     this->close();
+    return false;
   }
 }
 
-void FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){ 	 
+bool FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){ 	 
   //same permissions as old files
   if(oldPaths.length() == newPaths.length()){
     Worker->ofiles = oldPaths; 
@@ -65,12 +67,14 @@ void FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){
   Worker->isCP=true;
   if(CheckOverwrite()){
     QTimer::singleShot(10,Worker, SLOT(slotStartOperations()));
+    return true;
   }else{
     this->close();
+    return false;
   }
 }
 
-void FODialog::RestoreFiles(QStringList oldPaths, QStringList newPaths){
+bool FODialog::RestoreFiles(QStringList oldPaths, QStringList newPaths){
   //user/group rw permissions
   if(oldPaths.length() == newPaths.length()){
     Worker->ofiles = oldPaths; 
@@ -79,22 +83,26 @@ void FODialog::RestoreFiles(QStringList oldPaths, QStringList newPaths){
   Worker->isRESTORE = true;
   if(CheckOverwrite()){
     QTimer::singleShot(10,Worker, SLOT(slotStartOperations()));
+    return true;
   }else{
     this->close();
+    return false;
   }
 }
 
-void FODialog::MoveFiles(QStringList oldPaths, QStringList newPaths){
+bool FODialog::MoveFiles(QStringList oldPaths, QStringList newPaths){
   //no change in permissions
   if(oldPaths.length() == newPaths.length()){
-    Worker->ofiles = oldPaths; \
+    Worker->ofiles = oldPaths;
     Worker->nfiles = newPaths;
   }
   Worker->isMV=true;
   if(CheckOverwrite()){
     QTimer::singleShot(10,Worker, SLOT(slotStartOperations()));
+    return true;
   }else{
     this->close();
+    return false;
   }
 }
 
@@ -111,7 +119,7 @@ bool FODialog::CheckOverwrite(){
       QMessageBox::StandardButton ans = QMessageBox::question(this, tr("Overwrite Files?"), tr("Do you want to overwrite the existing files?")+"\n"+tr("Note: It will just add a number to the filename otherwise.")+"\n\n"+existing.join(", "), QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel, QMessageBox::NoToAll);
       if(ans==QMessageBox::NoToAll){ Worker->overwrite = 0; } //don't overwrite
       else if(ans==QMessageBox::YesToAll){ Worker->overwrite = 1; } //overwrite
-      else{ qDebug() << " - Cancelled"; ok = false; } //cancel operations
+      else{ qDebug() << " - Cancelled"; Worker->overwrite = -1; ok = false; } //cancel operations
       if(DEBUG){ qDebug() << " - Overwrite:" << Worker->overwrite; }
     }
   }

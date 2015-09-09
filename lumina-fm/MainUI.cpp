@@ -694,7 +694,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
   if(!copy.isEmpty()){ 
     qDebug() << "Paste Copy:" << copy << "->" << newcopy;
     FODialog dlg(this);
-      dlg.CopyFiles(copy, newcopy);
+      if( !dlg.CopyFiles(copy, newcopy) ){ return; } //cancelled
       dlg.show();
       dlg.exec();
       errs = errs || !dlg.noerrors;
@@ -702,7 +702,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
   if(!cut.isEmpty()){
     qDebug() << "Paste Cut:" << cut << "->" << newcut;
     FODialog dlg(this);
-      dlg.MoveFiles(cut, newcut);
+      if(!dlg.MoveFiles(cut, newcut) ){ return; } //cancelled
       dlg.show();
       dlg.exec();
       errs = errs || !dlg.noerrors;

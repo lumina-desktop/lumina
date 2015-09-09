@@ -66,10 +66,10 @@ public:
 	bool noerrors;
 
 	void setOverwrite(bool);
-	void RemoveFiles(QStringList paths);
-	void CopyFiles(QStringList oldPaths, QStringList newPaths); 	  //same permissions as old files
-	void RestoreFiles(QStringList oldPaths, QStringList newPaths); //user/group rw permissions
-	void MoveFiles(QStringList oldPaths, QStringList newPaths);     //no change in permissions
+	bool RemoveFiles(QStringList paths);
+	bool CopyFiles(QStringList oldPaths, QStringList newPaths); 	  //same permissions as old files
+	bool RestoreFiles(QStringList oldPaths, QStringList newPaths); //user/group rw permissions
+	bool MoveFiles(QStringList oldPaths, QStringList newPaths);     //no change in permissions
 
 private:
 	Ui::FODialog *ui;
