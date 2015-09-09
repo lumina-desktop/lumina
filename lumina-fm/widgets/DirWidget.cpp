@@ -744,11 +744,15 @@ void DirWidget::on_actionStopLoad_triggered(){
 }
 
 void DirWidget::dir_changed(){
-  QString dir = line_dir->text();
+  QString dir = line_dir->text().simplified();
+  //Run the dir through the user-input checks
+  dir = LUtils::PathToAbsolute(dir);
+  qDebug() << "Dir:" << dir;
   //Quick check to ensure the directory exists
   while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one additional dir
   }
+  qDebug() << " - Now Dir:" << dir;
   stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
 }
