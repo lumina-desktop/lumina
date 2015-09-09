@@ -181,12 +181,11 @@ void LOS::startMixerUtility(){
 bool LOS::userHasShutdownAccess(){
   //User needs to be a part of the operator group to be able to run the shutdown command
   QStringList groups = LUtils::getCmdOutput("id -Gn").join(" ").split(" ");
-  bool ok = groups.contains("operator"); //not implemented yet
-  if(ok){
-    //If a PC-BSD system, also disable the shutdown/restart options if the system is in the middle of upgrading
-    ok = (QProcess::execute("pgrep -F /tmp/.updateInProgress")!=0); //this is 0 if updating right now
-  }
-  return ok;
+  return groups.contains("operator");
+}
+
+bool LOS::systemPerformingUpdates(){
+  return (QProcess::execute("pgrep -F /tmp/.updateInProgress")!=0); //this is 0 if updating right now
 }
 
 //System Shutdown

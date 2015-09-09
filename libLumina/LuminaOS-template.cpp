@@ -70,7 +70,12 @@ void LOS::startMixerUtility(){
 bool LOS::userHasShutdownAccess(){
   return false; //not implemented yet
 }
-	
+
+//Check for whether the system is safe to power off (no updates being perfomed)
+bool LOS::systemPerformingUpdates(){
+  return false; //Not implemented yet
+}
+
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("shutdown -p now");

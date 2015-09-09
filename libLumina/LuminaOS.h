@@ -67,6 +67,7 @@ public:
 
 	//Check for user system permission (shutdown/restart)
 	static bool userHasShutdownAccess();
+	static bool systemPerformingUpdates();
 	//System Shutdown
 	static void systemShutdown(); //start poweroff sequence
 	//System Restart

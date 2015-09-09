@@ -144,6 +144,11 @@ bool LOS::userHasShutdownAccess(){
   /org/freedesktop/login1 org.freedesktop.login1.Manager.CanPowerOff");
 }
 
+//Check for whether the system is safe to power off (no updates being perfomed)
+bool LOS::systemPerformingUpdates(){
+  return false; //Not implemented yet
+}
+
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
   QProcess::startDetached("dbus-send --system --print-reply \
