@@ -124,7 +124,7 @@ QStringList LUtils::listSubDirectories(QString dir, bool recursive){
 QString LUtils::PathToAbsolute(QString path){
   //Convert an input path to an absolute path (this does not check existance ot anything)
   if(path.startsWith("/")){ return path; } //already an absolute path
-  if(path.startsWith("~")){ path = path.remove(1); path.prepend(QDir::homePath()); }
+  if(path.startsWith("~")){ path.replace(0,1,QDir::homePath()); }
   if(!path.startsWith("/")){
     //Must be a relative path
     if(path.startsWith("./")){ path = path.remove(2); }
