@@ -52,6 +52,10 @@ public:
 	void setDetails(QList<DETAILTYPES> list); //Which details to show and in which order (L->R)
 	void setThumbnailSize(int px);
 	void setShowCloseButton(bool show);
+
+    //Date format for show items
+    static QString getDateFormat();
+    static void setDateFormat();
 	
 public slots:
 	void LoadDir(QString dir, LFileInfoList list);
@@ -94,6 +98,7 @@ private:
 	//Functions for internal use
 	void setupConnections();
 	QStringList currentSelection();
+    static QString date_format;
 
 private slots:
 	//UI BUTTONS/Actions
@@ -132,7 +137,7 @@ private slots:
 	//Browser Functions
 	void OpenContextMenu();
 	void SelectionChanged();
-	void startSync(); //used internally to collect/pause before updating the dir
+    void startSync(const QString &file); //used internally to collect/pause before updating the dir
 
 signals:
 	//Directory loading/finding signals
@@ -184,8 +189,8 @@ public:
         // Get the stored text and try to convert to QDateTime
         QString text = this->text(column);
         QString text_tmp = tmp.text(column);
-        QDateTime date_time = QDateTime::fromString(text, Qt::DefaultLocaleShortDate);
-        QDateTime date_time_tmp = QDateTime::fromString(text_tmp, Qt::DefaultLocaleShortDate);
+        QDateTime date_time = QDateTime::fromString(text, DirWidget::getDateFormat());
+        QDateTime date_time_tmp = QDateTime::fromString(text_tmp, DirWidget::getDateFormat());
         // If the conversion are ok in both objects, compare them
         if(date_time.isValid() && date_time_tmp.isValid())
           return date_time < date_time_tmp;

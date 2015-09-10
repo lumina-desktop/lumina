@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QInputDialog>
 #include <QScrollBar>
+#include <QSettings>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
@@ -24,6 +25,11 @@
 #ifndef DEBUG
 #define DEBUG 0
 #endif
+
+
+const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
+
+QString DirWidget::date_format = QString();
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -64,6 +70,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
+  setDateFormat();
   setShowDetails(true);
   setShowThumbnails(true);
   UpdateIcons();
@@ -233,6 +240,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(!watcher->directories().isEmpty()){ watcher->removePaths(watcher->directories()); }
   if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   watcher->addPath(CDIR);
+  // add sessionsettings to watcher so date_format can be update based on user settings
+  watcher->addPath(QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf");
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget (if a new directory)
@@ -319,10 +328,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    it->setText(t, list[i].mimetype());
 	    break;
 	  case DATEMOD:
-	    it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
+        it->setText(t, list[i].lastModified().toString(getDateFormat()) );
 	    break;
 	  case DATECREATE:
-	    it->setText(t, list[i].created().toString(Qt::DefaultLocaleShortDate) );
+        it->setText(t, list[i].created().toString(getDateFormat()) );
 	    break;
 	}
       }
@@ -499,8 +508,8 @@ void DirWidget::setupConnections(){
   connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
   connect(refreshShort, SIGNAL(activated()), this, SLOT( refresh()) );
   //Filesystem Watcher
-  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync()) );
-  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync()) ); //just in case
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync(const QString &)) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync(const QString &)) ); //just in case
   connect(synctimer, SIGNAL(timeout()), this, SLOT(refresh()) );
 }
 
@@ -846,7 +855,10 @@ void DirWidget::SelectionChanged(){
   ui->tool_act_runwith->setEnabled(hasselection);
 }
 
-void DirWidget::startSync(){
+void DirWidget::startSync(const QString &file){
+  //Update date_format based on user settings
+  if(file == sessionsettings_config_file)
+      setDateFormat();
   if(synctimer->isActive()){ synctimer->stop(); }
   synctimer->start();
 }
@@ -865,4 +877,30 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
   }else{
     ev->ignore(); //not handled here
   }
+}
+
+//====================
+//         STATIC
+//====================
+
+QString DirWidget::getDateFormat() {
+  return DirWidget::date_format;
+}
+
+// This function is only called if user changes sessionsettings. By doing so, operations like sorting by date
+// are faster because the date format is already stored in DirWidget::date_format static variable
+void DirWidget::setDateFormat() {
+  const QString default_date_format = "dddd, d MMMM yyyy";
+  const QString default_hour_format = "h:mm";
+  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  QSettings settings("LuminaDE","sessionsettings");
+  QString date, time;
+  // If DateFormat/TimeFormat don't exist or are empty, default values are setted
+  date = settings.value("DateFormat", default_date_format).toString();
+  time = settings.value("TimeFormat", default_hour_format).toString();
+  if(date.isEmpty())
+    date = default_date_format;
+  if(time.isEmpty())
+    time = default_hour_format;
+  DirWidget::date_format = date + "  " + time;
 }
