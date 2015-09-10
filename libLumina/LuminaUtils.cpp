@@ -306,6 +306,27 @@ QString LUtils::BytesToDisplaySize(qint64 ibytes){
   return (num+labs[c]);
 }
 
+QString LUtils::SecondsToDisplay(int secs){
+  if(secs < 0){ return "??"; }
+  QString rem; //remaining
+  if(secs > 3600){
+    int hours = secs/3600;
+    rem.append( QString::number(hours)+"h ");
+    secs = secs - (hours*3600);
+  }
+  if(secs > 60){
+    int min = secs/60;
+    rem.append( QString::number(min)+"m ");
+    secs = secs - (min*60);
+  }
+  if(secs > 0){
+    rem.append( QString::number(secs)+"s");
+  }else{
+    rem.append( "0s" );
+  }
+  return rem;
+}
+
 //Various function for finding valid QtQuick plugins on the system
 bool LUtils::validQuickPlugin(QString ID){
   return ( !LUtils::findQuickPluginFile(ID).isEmpty() );

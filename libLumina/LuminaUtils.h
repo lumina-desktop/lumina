@@ -61,6 +61,8 @@ public:
 	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)
 	static QString BytesToDisplaySize(qint64 bytes); //convert into a readable size (like 50M or 50KB)
 	
+	static QString SecondsToDisplay(int secs); //convert into a readable time
+	
 	//Various function for finding valid QtQuick plugins on the system
 	static bool validQuickPlugin(QString ID);
 	static QString findQuickPluginFile(QString ID);

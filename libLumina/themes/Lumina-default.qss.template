@@ -63,11 +63,11 @@ LDPlugin#desktopview QListWidget::item:hover{
 }
 
 /*For the special widgets on the user button*/
-UserItemWidget{
+UserItemWidget, ItemWidget{
   background: transparent;
   border-radius: 3px;
 }
-UserItemWidget:hover{
+UserItemWidget:hover, ItemWidget:hover{
   background: %%HIGHLIGHTCOLOR%%;
   color: %%TEXTHIGHLIGHTCOLOR%%;
 }

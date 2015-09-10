@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QTimer>
 #include <QDateTime>
+#include <QStyle>
+#include <QProxyStyle>
 
 class LTHEME{
 public:
@@ -55,6 +57,22 @@ public:
   
 };
 
+// Qt Style override to allow custom themeing/colors
+class LuminaThemeStyle : public QProxyStyle{
+	Q_OBJECT
+private:
+	bool darkfont;
+
+public:
+	LuminaThemeStyle();
+	~LuminaThemeStyle();
+
+	//Function to update the style (for use by the theme engine)
+	void update();	
+	//Subclassed functions 
+	void drawItemText(QPainter*, const QRect&, int, const QPalette&, bool, const QString&, QPalette::ColorRole) const;
+
+};
 
 //Simple class to setup a utility to use the Lumina theme
 //-----Example usage in "main.cpp" -------------------------------
@@ -80,6 +98,7 @@ private:
 	QString theme,colors,icons, font, fontsize, cursors; //current settings
 	QTimer *syncTimer;
 	QDateTime lastcheck;
+	LuminaThemeStyle *style;
 
 private slots:
 	void watcherChange();

@@ -815,8 +815,9 @@ uint LXCB::EmbedWindow(WId win, WId container){
   //Now setup any redirects and return
   //qDebug() << " - select Input";
   //XSelectInput(disp, win, StructureNotifyMask); //Notify of structure changes
-  uint32_t val[] = {XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY};
-  xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
+  //uint32_t val[] = {XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY};
+  //xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
+  this->SelectInput(win);
   //qDebug() << " - Composite Redirect";
   xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL);
 

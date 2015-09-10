@@ -185,7 +185,7 @@ bool LOS::userHasShutdownAccess(){
 }
 
 bool LOS::systemPerformingUpdates(){
-  return (QProcess::execute("pgrep -F /tmp/.updateInProgress")!=0); //this is 0 if updating right now
+  return (QProcess::execute("pgrep -F /tmp/.updateInProgress")==0); //this is 0 if updating right now
 }
 
 //System Shutdown

@@ -12,6 +12,8 @@
 #include <QFont>
 #include <QDebug>
 #include <QObject>
+#include <QPainter>
+#include <QPen>
 
 #include <unistd.h>
 
@@ -310,21 +312,91 @@ QString LTHEME::readCustomEnvSetting(QString var){
   return "";
 }
 
+// =========================
+//        LuminaThemeStyle
+// =========================
+LuminaThemeStyle::LuminaThemeStyle() : QProxyStyle(){
+  this->update();
+}
+
+LuminaThemeStyle::~LuminaThemeStyle(){
+	
+}
+
+//Function to update the style (for use by the theme engine)
+void LuminaThemeStyle::update(){
+  darkfont = true; //make this dynamic later
+}
+
+//Subclassed functions 
+void LuminaThemeStyle::drawItemText(QPainter *painter, const QRect &rect, int alignment, const QPalette &palette, bool enabled, const QString &text, QPalette::ColorRole textRole) const{
+  /*QFont cfont = painter->font();
+    cfont.setHintingPreference(QFont::PreferFullHinting);
+  QFont outfont = cfont;
+    outfont.setStretch(101);      
+    outfont.setLetterSpacing(QFont::PercentageSpacing, 99);
+  //Paint the background outline
+  if(darkfont){ painter->setPen(QPen(Qt::white)); }
+  else{ painter->setPen(QPen(Qt::black)); }
+  painter->setFont(outfont);
+  //QRect outline = QRect(rect.left()+2, rect.top()+2, rect.right()+2, rect.bottom()+2);
+  painter->drawText(rect, text);
+  
+  //Paint the text itself (Make this respect the "enabled" flag later)
+  painter->setFont(cfont);
+  if(darkfont){ painter->setPen(QPen(Qt::black)); }
+  else{ painter->setPen(QPen(Qt::white)); }
+  painter->drawText(rect, text);*/
+
+  QFont font = painter->font();
+  QFont cfont = font; //save for later
+    if(font.pixelSize()>0){ font.setPixelSize( font.pixelSize()-4); }
+    else{ font.setPointSize(font.pointSize()-1); }
+  painter->setFont(font);
+  //Create the path
+  QPainterPath path;
+    //path.setFillRule(Qt::WindingFill);
+    path.addText(rect.left(), rect.center().y()+(painter->fontMetrics().xHeight()/2), painter->font(), text);
+  //Now set the border/fill colors
+  QPen pen;
+    pen.setWidth(2);
+    if(darkfont){ 
+      pen.setColor(Qt::white); 
+      painter->fillPath(path,Qt::black);
+    }else{ 
+      pen.setColor(Qt::black); 
+      painter->fillPath(path,Qt::white);    
+    }
+  painter->setPen(pen);
+  painter->drawPath(path);
+  painter->setFont(cfont); //reset back to original font
+  
+}
+
+
 //==================
 //  THEME ENGINE CLASS
 //==================
 LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   application=app; //save this pointer for later
+  //style = new LuminaThemeStyle();
+    //Set the application-wide style
+   //application->setStyle( style );
+	
   lastcheck = QDateTime::currentDateTime(); //
-  //Make sure to prefer font antialiasing on the application
-  QFont tmp = application->font();
-  tmp.setStyleStrategy(QFont::PreferAntialias);
-  application->setFont(tmp);
   // Now load the theme stylesheet
   QStringList current = LTHEME::currentSettings();
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
   cursors = LTHEME::currentCursor();
   application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
+  //Make sure to prefer font antialiasing on the application
+  /*QFont tmp = application->font();
+    tmp.setStyleStrategy(QFont::PreferOutline);
+    tmp.setFamily(font);
+    tmp.setHintingPreference(QFont::PreferFullHinting);
+    if(fontsize.endsWith("pt")){ tmp.setPointSize(fontsize.section("pt",0,0).toInt()); }
+    else if(fontsize.endsWith("px")){ tmp.setPixelSize(fontsize.section("px",0,0).toInt()); }
+  application->setFont(tmp);*/
   QIcon::setThemeName(icons); //make sure this sets set within this environment
   syncTimer = new QTimer(this);
     syncTimer->setSingleShot(true);
@@ -333,6 +405,7 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
     LTHEME::setCursorTheme("default"); //X11 fallback (always installed?)
     cursors = "default";
   }
+
   //setenv("XCURSOR_THEME", cursors.toLocal8Bit(),1);
   watcher = new QFileSystemWatcher(this);
 	watcher->addPath( QDir::homePath()+"/.lumina/envsettings.conf" );
@@ -361,7 +434,17 @@ void LuminaThemeEngine::reloadFiles(){
       emit updateIcons();
     }
     //save the settings for comparison later
-    theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
+    theme = current[0]; colors=current[1]; icons=current[2];
+
+    if(font!=current[3] || fontsize!=current[4]){
+      font=current[3]; fontsize=current[4];
+      QFont tmp = application->font();
+        tmp.setStyleStrategy(QFont::PreferOutline);
+        tmp.setFamily(font);
+        if(fontsize.endsWith("pt")){ tmp.setPointSize(fontsize.section("pt",0,0).toInt()); }
+        else if(fontsize.endsWith("px")){ tmp.setPixelSize(fontsize.section("px",0,0).toInt()); }
+      application->setFont(tmp);
+    }
   }
   //Check the Cursor file/settings
   if(lastcheck < QFileInfo(QDir::homePath()+"/.icons/default/index.theme").lastModified()){
@@ -394,3 +477,4 @@ void LuminaThemeEngine::reloadFiles(){
   watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
   watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
 }
+
