@@ -6,6 +6,6 @@ Type=Application
 StartupNotify=true
 Categories=System;
 OnlyShowIn=Lumina
-Name=Lumina Desktop Information
+Name=Desktop Information
 Comment=View information about the Lumina Desktop Environment
 
