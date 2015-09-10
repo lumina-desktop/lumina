@@ -67,6 +67,13 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "userbutton";
     info.icon = "user-identity";
   PANEL.insert(info.ID, info);
+   //Application Menu
+  info = LPI(); //clear it
+    info.name = QObject::tr("Application Menu");
+    info.description = QObject::tr("This provides instant-access to application that are installed on the system.");
+    info.ID = "appmenu";
+    info.icon = "format-list-unordered";
+  PANEL.insert(info.ID, info);   
   //Desktop Bar
   info = LPI(); //clear it
     info.name = QObject::tr("Desktop Bar");
@@ -140,8 +147,8 @@ void LPlugins::LoadPanelPlugins(){
   //Start Menu
   info = LPI(); //clear it
     info.name = QObject::tr("Start Menu");
-    info.description = QObject::tr("This provides instant-access to application that are installed on the system.");
-    info.ID = "appmenu";
+    info.description = QObject::tr("Unified system access and application launch menu.");
+    info.ID = "systemstart";
     info.icon = "Lumina-DE";
   PANEL.insert(info.ID, info);  
   //Application Launcher
