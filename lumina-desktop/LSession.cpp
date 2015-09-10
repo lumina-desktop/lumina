@@ -19,7 +19,7 @@
 #include <unistd.h> //for usleep() usage
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -33,6 +33,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
+  this->setAttribute(Qt::AA_UseDesktopOpenGL);
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   SystemTrayID = 0; VisualTrayID = 0;
@@ -675,7 +676,7 @@ void LSession::WindowPropertyEvent(){
   QList<WId> newapps = XCB->WindowList();
   if(RunningApps.length() < newapps.length()){
     //New Window found
-    qDebug() << "New window found";
+    //qDebug() << "New window found";
     LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
@@ -695,6 +696,8 @@ void LSession::WindowPropertyEvent(WId win){
   if(RunningApps.contains(win)){
     if(DEBUG){ qDebug() << "Single-window property event"; }
     emit WindowListEvent();
+  }else if(RunningTrayApps.contains(win)){
+    emit TrayIconChanged(win);
   }
 }
 
@@ -710,24 +713,18 @@ void LSession::WindowClosedEvent(WId win){
 
 void LSession::WindowConfigureEvent(WId win){
   if(TrayStopping){ return; } 
-  for(int i=0; i<RunningTrayApps.length(); i++){
-    if(win==RunningTrayApps[i]){
+    if(RunningTrayApps.contains(win)){
       if(DEBUG){ qDebug() << "SysTray: Configure Event"; }
-      emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
-      break;
+      emit TrayIconChanged(win); //trigger a repaint event
     }
-  }
 }
 
 void LSession::WindowDamageEvent(WId win){
   if(TrayStopping){ return; }
-  for(int i=0; i<RunningTrayApps.length(); i++){
-    if(win==RunningTrayApps[i]){
+    if(RunningTrayApps.contains(win)){
       if(DEBUG){ qDebug() << "SysTray: Damage Event"; }
-      emit TrayIconChanged(RunningTrayApps[i]); //trigger a repaint event
-      break;
+      emit TrayIconChanged(win); //trigger a repaint event
     }
-  }	
 }
 
 void LSession::WindowSelectionClearEvent(WId win){

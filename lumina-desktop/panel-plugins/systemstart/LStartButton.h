@@ -1,14 +1,14 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 //  This panel plugin is the main button that allow the user to run 
 //    applications or logout of the desktop
 //===========================================
-#ifndef _LUMINA_DESKTOP_USER_MENU_PLUGIN_H
-#define _LUMINA_DESKTOP_USER_MENU_PLUGIN_H
+#ifndef _LUMINA_DESKTOP_START_MENU_PLUGIN_H
+#define _LUMINA_DESKTOP_START_MENU_PLUGIN_H
 
 // Qt includes
 #include <QMenu>
@@ -25,20 +25,20 @@
 // libLumina includes
 #include "LuminaXDG.h"
 
-#include "UserWidget.h"
+#include "StartMenu.h"
 
 // PANEL PLUGIN BUTTON
-class LUserButtonPlugin : public LPPlugin{
+class LStartButtonPlugin : public LPPlugin{
 	Q_OBJECT
 	
 public:
-	LUserButtonPlugin(QWidget *parent = 0, QString id = "userbutton", bool horizontal=true);
-	~LUserButtonPlugin();
+	LStartButtonPlugin(QWidget *parent = 0, QString id = "systemstart", bool horizontal=true);
+	~LStartButtonPlugin();
 	
 private:
 	QMenu *menu;
 	QWidgetAction *mact;
-	UserWidget *usermenu;
+	StartMenu *startmenu;
 	QToolButton *button;
 
 private slots:
@@ -62,12 +62,12 @@ public slots:
 	
 	void LocaleChange(){ 
 	  updateButtonVisuals();
-	  usermenu->UpdateAll();
+	  startmenu->UpdateAll();
 	}
 	
 	void ThemeChange(){
 	  updateButtonVisuals();
-	  usermenu->UpdateAll();
+	  startmenu->UpdateAll();
 	}
 };
 

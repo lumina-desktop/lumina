@@ -20,7 +20,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QImage>
-
+//#include <QWindow>
 // libLumina includes
 //#include <LuminaX11.h>
 
@@ -40,6 +40,7 @@ public slots:
 
 private:
 	WId IID, AID; //icon ID and app ID
+	//QWindow *WIN;
 	uint dmgID; 
 
 protected:

@@ -14,6 +14,8 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   AID = 0; //nothing yet
   IID = 0;
   dmgID = 0;
+  //this->setLayout(new QHBoxLayout);
+  //this->layout()->setContentsMargins(0,0,0,0);
 }
 
 TrayIcon::~TrayIcon(){
@@ -27,6 +29,9 @@ void TrayIcon::attachApp(WId id){
   if(id==0){ return; } //nothing to attach
   else if(AID!=0){ qWarning() << "Tray Icon is already attached to a window!"; return; }
   AID = id;
+  //WIN = QWindow::fromWinId(AID);
+  //connect(WIN, SIGNAL(
+  //this->layout()->addWidget( QWidget::createWindowContainer(WIN, this) );
   IID = this->winId(); //embed directly into this widget
   dmgID = LSession::handle()->XCB->EmbedWindow(AID, IID);
   if( dmgID != 0 ){
@@ -55,6 +60,7 @@ void TrayIcon::detachApp(){
   AID = 0;
   //Now detach the application window and clean up
   qDebug() << " - Unembed";
+  //WIN->setParent(0); //Reset parentage back to the main stack
   LSession::handle()->XCB->UnembedWindow(tmp);
   qDebug() << " - finished app:" << tmp;
   IID = 0;
@@ -83,7 +89,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Draw tray:" << AID << IID << this->winId();
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
-	QPixmap pix;
+	QPixmap pix; //= WIN->icon().pixmap(this->size());
 	  //Try to grab the window directly with Qt
 	  QList<QScreen*> scrnlist = QApplication::screens();
 	  for(int i=0; i<scrnlist.length(); i++){

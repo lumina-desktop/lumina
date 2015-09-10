@@ -102,7 +102,7 @@ void LSysTray::checkAll(){
     }else{
       //Tray Icon already exists
       //qDebug() << " - SysTray: Update Icon";
-      //trayIcons[i]->update();
+      trayIcons[i]->update();
       wins.removeAt(index); //Already found - remove from the list
     }
   }
@@ -149,7 +149,7 @@ void LSysTray::UpdateTrayWindow(WId win){
   if(!isRunning || stopping || checking){ return; }
   for(int i=0; i<trayIcons.length(); i++){
     if(trayIcons[i]->appID()==win){
-      //qDebug() << "System Tray: Update Window " << win;
+      qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->update(); 
       QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
       return; //finished now

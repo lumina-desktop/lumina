@@ -52,6 +52,9 @@ SOURCES += main.cpp \
 	panel-plugins/showdesktop/LHomeButton.cpp \
 	panel-plugins/appmenu/LAppMenuPlugin.cpp \
 	panel-plugins/applauncher/AppLaunchButton.cpp \
+	panel-plugins/systemstart/LStartButton.cpp \
+	panel-plugins/systemstart/StartMenu.cpp \
+	panel-plugins/systemstart/ItemWidget.cpp \
 	desktop-plugins/LDPlugin.cpp \
 	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
 	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
@@ -95,6 +98,9 @@ HEADERS  += Globals.h \
 	panel-plugins/showdesktop/LHomeButton.h \
 	panel-plugins/appmenu/LAppMenuPlugin.h \
 	panel-plugins/applauncher/AppLaunchButton.h \
+	panel-plugins/systemstart/LStartButton.h \
+	panel-plugins/systemstart/StartMenu.h \
+	panel-plugins/systemstart/ItemWidget.h \
 #	panel-plugins/quickcontainer/QuickPPlugin.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
@@ -110,6 +116,7 @@ FORMS    += SystemWindow.ui \
 	BootSplash.ui \
 	panel-plugins/userbutton/UserWidget.ui \
 	panel-plugins/systemdashboard/SysMenuQuick.ui \
+	panel-plugins/systemstart/StartMenu.ui \
 	desktop-plugins/audioplayer/PlayerWidget.ui \
 	desktop-plugins/systemmonitor/MonitorWidget.ui
 
