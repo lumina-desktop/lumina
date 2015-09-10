@@ -34,9 +34,10 @@ int main(int argc, char ** argv)
       QLabel dlg(0, Qt::Window | Qt::BypassWindowManagerHint); //this test should be ignored by the current WM
       dlg.setText("Sample Window");
       dlg.setWindowTitle("Test");
-      dlg.setGeometry(100,100,200,100);
+      dlg.resize(200,100);
       dlg.setStyleSheet("background: rgba(255,255,255,100); color: black;");
       dlg.show();
+      dlg.move(100,100);
       qDebug() << " - Loading window frame...";
       LWindow win(dlg.winId()); //have it wrap around the dialog
       qDebug() << " - Show frame...";

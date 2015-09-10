@@ -222,11 +222,11 @@ void LWindow::showAnimation(LWM::WindowAction act){
   //Setup the animation routine
   if(act==LWM::Show){
     if(useanimation){
-      if(lastGeom.isEmpty()){ lastGeom = this->geometry(); } //such as for a first showing
+      lastGeom = this->geometry();
       //Expand out from center point
       anim->setPropertyName("geometry");
       anim->setStartValue( QRect(lastGeom.center(), QSize(0,0) ) );
-      anim->setEndValue( QRect(lastGeom) );
+      anim->setEndValue( this->geometry() );
       //Fade in gradually
       //anim->setPropertyName("windowOpacity");
       //anim->setStartValue( 0.0 );
