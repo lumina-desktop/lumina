@@ -17,7 +17,7 @@
    <enum>QTabWidget::West</enum>
   </property>
   <property name="currentIndex">
-   <number>2</number>
+   <number>0</number>
   </property>
   <widget class="QWidget" name="tab_fav">
    <attribute name="title">
@@ -170,7 +170,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
+         <width>259</width>
          <height>247</height>
         </rect>
        </property>
@@ -184,7 +184,7 @@
     <string>Apps</string>
    </attribute>
    <attribute name="toolTip">
-    <string>System Applications</string>
+    <string>Applications</string>
    </attribute>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="spacing">
@@ -276,7 +276,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
+         <width>259</width>
          <height>247</height>
         </rect>
        </property>
@@ -444,7 +444,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
+         <width>259</width>
          <height>247</height>
         </rect>
        </property>
