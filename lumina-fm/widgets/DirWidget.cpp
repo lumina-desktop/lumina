@@ -170,7 +170,6 @@ void DirWidget::setDateFormat() {
   if(!date_format.isEmpty())
       date_format.clear();
   QSettings settings("LuminaDE","sessionsettings");
-  QString date, time;
   // If value doesn't exist or is not setted, empty string is returned
   date_format << settings.value("DateFormat").toString();
   date_format << settings.value("TimeFormat").toString();
