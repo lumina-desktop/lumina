@@ -29,8 +29,6 @@
 
 const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
 
-QStringList DirWidget::date_format = QStringList();
-
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
@@ -161,6 +159,23 @@ void DirWidget::setThumbnailSize(int px){
 void DirWidget::setShowCloseButton(bool show){
   ui->actionClose_Browser->setVisible(show);
 }
+
+QStringList DirWidget::getDateFormat() {
+  return date_format;
+}
+
+// This function is only called if user changes sessionsettings. By doing so, operations like sorting by date
+// are faster because the date format is already stored in DirWidget::date_format static variable
+void DirWidget::setDateFormat() {
+  if(!date_format.isEmpty())
+      date_format.clear();
+  QSettings settings("LuminaDE","sessionsettings");
+  QString date, time;
+  // If value doesn't exist or is not setted, empty string is returned
+  date_format << settings.value("DateFormat").toString();
+  date_format << settings.value("TimeFormat").toString();
+}
+
 
 // ================
 //    PUBLIC SLOTS
@@ -904,24 +919,4 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
   }else{
     ev->ignore(); //not handled here
   }
-}
-
-//====================
-//         STATIC
-//====================
-
-QStringList DirWidget::getDateFormat() {
-  return DirWidget::date_format;
-}
-
-// This function is only called if user changes sessionsettings. By doing so, operations like sorting by date
-// are faster because the date format is already stored in DirWidget::date_format static variable
-void DirWidget::setDateFormat() {
-  if(!DirWidget::date_format.isEmpty())
-      DirWidget::date_format.clear();
-  QSettings settings("LuminaDE","sessionsettings");
-  QString date, time;
-  // If value doesn't exist or is not setted, empty string is returned
-  DirWidget::date_format << settings.value("DateFormat").toString();
-  DirWidget::date_format << settings.value("TimeFormat").toString();
 }

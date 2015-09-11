@@ -54,8 +54,8 @@ public:
 	void setShowCloseButton(bool show);
 
     //Date format for show items
-    static QStringList getDateFormat();
-    static void setDateFormat();
+    QStringList getDateFormat();
+    void setDateFormat();
 	
 public slots:
 	void LoadDir(QString dir, LFileInfoList list);
@@ -98,7 +98,7 @@ private:
 	//Functions for internal use
 	void setupConnections();
 	QStringList currentSelection();
-    static QStringList date_format;
+    QStringList date_format;
 
 private slots:
 	//UI BUTTONS/Actions
