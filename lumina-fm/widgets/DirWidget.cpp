@@ -29,7 +29,7 @@
 
 const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
 
-QString DirWidget::date_format = QString();
+QStringList DirWidget::date_format = QStringList();
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -241,7 +241,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   watcher->addPath(CDIR);
   // add sessionsettings to watcher so date_format can be update based on user settings
-  watcher->addPath(QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf");
+  watcher->addPath(sessionsettings_config_file);
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget (if a new directory)
@@ -327,12 +327,39 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  case TYPE:
 	    it->setText(t, list[i].mimetype());
 	    break;
-	  case DATEMOD:
-        it->setText(t, list[i].lastModified().toString(getDateFormat()) );
-	    break;
-	  case DATECREATE:
-        it->setText(t, list[i].created().toString(getDateFormat()) );
-	    break;
+      case DATEMOD:
+        {
+          QStringList datetime_format = getDateFormat();
+          // Save datetime in WhatThis value. Lately will be used by CQTreeWidgetItem for sorting by date
+          it->setWhatsThis(DATEMOD, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
+          // Default configurition. Fallback to Qt::DefaultLocaleShortDate for formats
+          if(datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
+          // Date is setted but time not. Time goes to default
+          else if(!datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(Qt::DefaultLocaleShortDate));
+          // Time is setted but date not. Date goes to default
+          else if(datetime_format.at(0).isEmpty() && !datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(Qt::DefaultLocaleShortDate) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          // Both time and date setted.
+          else
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          break;
+        }
+      case DATECREATE:
+        {
+          QStringList datetime_format = getDateFormat();
+          it->setWhatsThis(DATECREATE, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
+          if(datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
+          else if(!datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(Qt::DefaultLocaleShortDate));
+          else if(datetime_format.at(0).isEmpty() && !datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(Qt::DefaultLocaleShortDate) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          else
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          break;
+        }
 	}
       }
       if(addnew){ treeWidget->addTopLevelItem(it); }
@@ -883,24 +910,18 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
 //         STATIC
 //====================
 
-QString DirWidget::getDateFormat() {
+QStringList DirWidget::getDateFormat() {
   return DirWidget::date_format;
 }
 
 // This function is only called if user changes sessionsettings. By doing so, operations like sorting by date
 // are faster because the date format is already stored in DirWidget::date_format static variable
 void DirWidget::setDateFormat() {
-  const QString default_date_format = "dddd, d MMMM yyyy";
-  const QString default_hour_format = "h:mm";
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  if(!DirWidget::date_format.isEmpty())
+      DirWidget::date_format.clear();
   QSettings settings("LuminaDE","sessionsettings");
   QString date, time;
-  // If DateFormat/TimeFormat don't exist or are empty, default values are setted
-  date = settings.value("DateFormat", default_date_format).toString();
-  time = settings.value("TimeFormat", default_hour_format).toString();
-  if(date.isEmpty())
-    date = default_date_format;
-  if(time.isEmpty())
-    time = default_hour_format;
-  DirWidget::date_format = date + "  " + time;
+  // If value doesn't exist or is not setted, empty string is returned
+  DirWidget::date_format << settings.value("DateFormat").toString();
+  DirWidget::date_format << settings.value("TimeFormat").toString();
 }

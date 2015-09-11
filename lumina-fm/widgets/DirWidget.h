@@ -54,7 +54,7 @@ public:
 	void setShowCloseButton(bool show);
 
     //Date format for show items
-    static QString getDateFormat();
+    static QStringList getDateFormat();
     static void setDateFormat();
 	
 public slots:
@@ -98,7 +98,7 @@ private:
 	//Functions for internal use
 	void setupConnections();
 	QStringList currentSelection();
-    static QString date_format;
+    static QStringList date_format;
 
 private slots:
 	//UI BUTTONS/Actions
@@ -185,22 +185,8 @@ public:
     inline virtual bool operator<(const QTreeWidgetItem &tmp) const {
       int column = this->treeWidget()->sortColumn();
       // We are in date text
-      if(column == DirWidget::DATEMOD || column == DirWidget::DATECREATE) {
-        // Get the stored text and try to convert to QDateTime
-        QString text = this->text(column);
-        QString text_tmp = tmp.text(column);
-        QDateTime date_time = QDateTime::fromString(text, DirWidget::getDateFormat());
-        QDateTime date_time_tmp = QDateTime::fromString(text_tmp, DirWidget::getDateFormat());
-        // If the conversion are ok in both objects, compare them
-        if(date_time.isValid() && date_time_tmp.isValid())
-          return date_time < date_time_tmp;
-        // If some of the dates are invalid, use the base class implementation (order by string)
-        else {
-          if(DEBUG)
-            qDebug() << "Cannot convert the date. Texts arrived are " << text << " and " << text_tmp;
-          return QTreeWidgetItem::operator <(tmp);
-        }
-      }
+      if(column == DirWidget::DATEMOD || column == DirWidget::DATECREATE)
+        return this->whatsThis(column) < tmp.whatsThis(column);
       // We are in size text
       else if(column == DirWidget::SIZE) {
         QString text = this->text(column);
