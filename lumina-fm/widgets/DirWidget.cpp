@@ -345,7 +345,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
         {
           QStringList datetime_format = getDateFormat();
           // Save datetime in WhatThis value. Lately will be used by CQTreeWidgetItem for sorting by date
-          it->setWhatsThis(DATEMOD, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
+          it->setWhatsThis(t, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
           // Default configurition. Fallback to Qt::DefaultLocaleShortDate for formats
           if(datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
             it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
