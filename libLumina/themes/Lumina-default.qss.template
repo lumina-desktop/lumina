@@ -574,7 +574,7 @@ QAbstractSpinBox::up-arrow{
  }
 QCalendarWidget QWidget{ 
    background-color: %%BASECOLOR%%; 
-   alternate-background-color: %%PRIMARYDISABLECOLOR%%;
+   alternate-background-color: %%HIGHLIGHTDISABLECOLOR%%;
    color: %%TEXTCOLOR%%;
 }
 QCalendarWidget QAbstractButton{
@@ -589,7 +589,7 @@ QCalendarWidget QAbstractItemView{
   selection-color: %%TEXTHIGHLIGHTCOLOR%%;
 }
 QCalendarWidget QWidget#qt_calendar_calendarview{ 
-  background-color: %%BASECOLOR%%; 
+  background-color: %%ALTBASECOLOR%%; 
   border: none;
 }
 
