@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QInputDialog>
 #include <QScrollBar>
+#include <QSettings>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
@@ -24,6 +25,9 @@
 #ifndef DEBUG
 #define DEBUG 0
 #endif
+
+
+const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -64,6 +68,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
+  setDateFormat();
   setShowDetails(true);
   setShowThumbnails(true);
   UpdateIcons();
@@ -155,6 +160,22 @@ void DirWidget::setShowCloseButton(bool show){
   ui->actionClose_Browser->setVisible(show);
 }
 
+QStringList DirWidget::getDateFormat() {
+  return date_format;
+}
+
+// This function is only called if user changes sessionsettings. By doing so, operations like sorting by date
+// are faster because the date format is already stored in DirWidget::date_format static variable
+void DirWidget::setDateFormat() {
+  if(!date_format.isEmpty())
+      date_format.clear();
+  QSettings settings("LuminaDE","sessionsettings");
+  // If value doesn't exist or is not setted, empty string is returned
+  date_format << settings.value("DateFormat").toString();
+  date_format << settings.value("TimeFormat").toString();
+}
+
+
 // ================
 //    PUBLIC SLOTS
 // ================
@@ -233,6 +254,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(!watcher->directories().isEmpty()){ watcher->removePaths(watcher->directories()); }
   if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   watcher->addPath(CDIR);
+  // add sessionsettings to watcher so date_format can be update based on user settings
+  watcher->addPath(sessionsettings_config_file);
   ui->actionStopLoad->setVisible(true);
   stopload = false;
   //Clear the display widget (if a new directory)
@@ -318,12 +341,39 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  case TYPE:
 	    it->setText(t, list[i].mimetype());
 	    break;
-	  case DATEMOD:
-	    it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
-	    break;
-	  case DATECREATE:
-	    it->setText(t, list[i].created().toString(Qt::DefaultLocaleShortDate) );
-	    break;
+      case DATEMOD:
+        {
+          QStringList datetime_format = getDateFormat();
+          // Save datetime in WhatThis value. Lately will be used by CQTreeWidgetItem for sorting by date
+          it->setWhatsThis(DATEMOD, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
+          // Default configurition. Fallback to Qt::DefaultLocaleShortDate for formats
+          if(datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
+          // Date is setted but time not. Time goes to default
+          else if(!datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(Qt::DefaultLocaleShortDate));
+          // Time is setted but date not. Date goes to default
+          else if(datetime_format.at(0).isEmpty() && !datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(Qt::DefaultLocaleShortDate) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          // Both time and date setted.
+          else
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          break;
+        }
+      case DATECREATE:
+        {
+          QStringList datetime_format = getDateFormat();
+          it->setWhatsThis(DATECREATE, list[i].lastModified().toString("yyyyMMddhhmmsszzz"));
+          if(datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().toString(Qt::DefaultLocaleShortDate) );
+          else if(!datetime_format.at(0).isEmpty() && datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(Qt::DefaultLocaleShortDate));
+          else if(datetime_format.at(0).isEmpty() && !datetime_format.at(1).isEmpty())
+            it->setText(t, list[i].lastModified().date().toString(Qt::DefaultLocaleShortDate) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          else
+            it->setText(t, list[i].lastModified().date().toString(datetime_format.at(0)) + " " + list[i].lastModified().time().toString(datetime_format.at(1)));
+          break;
+        }
 	}
       }
       if(addnew){ treeWidget->addTopLevelItem(it); }
@@ -499,8 +549,8 @@ void DirWidget::setupConnections(){
   connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
   connect(refreshShort, SIGNAL(activated()), this, SLOT( refresh()) );
   //Filesystem Watcher
-  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync()) );
-  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync()) ); //just in case
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync(const QString &)) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync(const QString &)) ); //just in case
   connect(synctimer, SIGNAL(timeout()), this, SLOT(refresh()) );
 }
 
@@ -846,7 +896,10 @@ void DirWidget::SelectionChanged(){
   ui->tool_act_runwith->setEnabled(hasselection);
 }
 
-void DirWidget::startSync(){
+void DirWidget::startSync(const QString &file){
+  //Update date_format based on user settings
+  if(file == sessionsettings_config_file)
+      setDateFormat();
   if(synctimer->isActive()){ synctimer->stop(); }
   synctimer->start();
 }

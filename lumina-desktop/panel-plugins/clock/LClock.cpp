@@ -55,9 +55,9 @@ void LClock::updateTime(bool adjustformat){
   QString label;
   QString timelabel;
   QString datelabel;
-  if(deftime){ timelabel = CT.time().toString(Qt::SystemLocaleShortDate) ; }
+  if(deftime){ timelabel = CT.time().toString(Qt::DefaultLocaleShortDate) ; }
   else{ timelabel=CT.toString(timefmt); }
-  if(defdate){ datelabel = CT.date().toString(Qt::SystemLocaleLongDate); }
+  if(defdate){ datelabel = CT.date().toString(Qt::DefaultLocaleShortDate); }
   else{ datelabel = CT.toString(datefmt); }
   if(datetimeorder == "dateonly"){
 	  label = datelabel;

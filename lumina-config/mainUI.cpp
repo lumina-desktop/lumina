@@ -1977,7 +1977,7 @@ void MainUI::sessionResetLumina(){
 
 void MainUI::sessionLoadTimeSample(){
   if(ui->line_session_time->text().simplified().isEmpty()){
-    ui->label_session_timesample->setText( QTime::currentTime().toString(Qt::SystemLocaleShortDate) );
+    ui->label_session_timesample->setText( QTime::currentTime().toString(Qt::DefaultLocaleShortDate) );
   }else{
     ui->label_session_timesample->setText( QTime::currentTime().toString( ui->line_session_time->text() ) );
   }
@@ -2000,7 +2000,7 @@ void MainUI::sessionShowTimeCodes(){
 
 void MainUI::sessionLoadDateSample(){
   if(ui->line_session_date->text().simplified().isEmpty()){
-    ui->label_session_datesample->setText( QDate::currentDate().toString(Qt::SystemLocaleLongDate) );
+    ui->label_session_datesample->setText( QDate::currentDate().toString(Qt::DefaultLocaleShortDate) );
   }else{
     ui->label_session_datesample->setText( QDate::currentDate().toString( ui->line_session_date->text() ) );
   }
