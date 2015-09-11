@@ -110,6 +110,7 @@ MainUI::~MainUI(){
 }
 
 void MainUI::OpenDirs(QStringList dirs){
+  //Now open the dirs
   if(dirs.isEmpty()){ dirs << QDir::homePath(); }
   QStringList invalid;
   for(int i=0; i<dirs.length(); i++){

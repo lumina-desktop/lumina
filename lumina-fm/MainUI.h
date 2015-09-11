@@ -102,6 +102,7 @@ private slots:
 	void slotSingleInstance(QStringList in){
 	  this->show();
 	  this->raise();
+	  this->activateWindow();
 	  this->OpenDirs(in);
 	}
 	
