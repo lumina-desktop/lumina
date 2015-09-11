@@ -149,6 +149,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_desk_rmbg, SIGNAL(clicked()), this, SLOT(deskbgremoved()) );
   connect(ui->spin_desk_min, SIGNAL(valueChanged(int)), this, SLOT(desktimechanged()) );
   connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(desktimechanged()) ); //just need to poke the save routines
+  connect(ui->combo_desk_layout, SIGNAL(currentIndexChanged(int)), this, SLOT(desktimechanged()) ); //just need to poke the save routines
   	
   //Panels Page
   connect(ui->tool_panels_add, SIGNAL(clicked()), this, SLOT(newPanel()) );
@@ -244,30 +245,18 @@ void MainUI::setupMenus(){
   //int cur = ui->combo_session_cursortheme->findText( LTHEME::currentCursor() );
   //if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
   
-  //Available Time zones
-  /*ui->combo_session_timezone->clear();
-  QList<QByteArray> TZList = QTimeZone::availableTimeZoneIds();
-  QDateTime DT = QDateTime::currentDateTime();
-  QStringList tzlist; //Need to create a list which can be sorted appropriately
-  for(int i=0; i<TZList.length(); i++){
-    QTimeZone TZ(TZList[i]);
-    if(TZ.country()<=0){ continue; } //skip this one
-    QString name = QLocale::countryToString(TZ.country());
-    if(name.count() > 20){ name = name.left(20)+"..."; }
-    name = QString(tr("%1 (%2)")).arg(name, TZ.abbreviation(DT));
-    qDebug() << "Time Zone:" << name << TZ.id();
-    if(tzlist.filter(name).isEmpty()){
-      tzlist << name+"::::"+QString::number(i);
-    }
-  }
-  tzlist.sort();
-  for(int i=0; i<tzlist.length(); i++){
-    ui->combo_session_timezone->addItem( tzlist[i].section("::::",0,0), TZList[tzlist[i].section("::::",1,1).toInt()]);
-  }
-  //ui->combo_session_timezone->sort();
-  //Now set the default/system value
-  ui->combo_session_timezone->insertItem(0,tr("System Time"));
-  */
+  //Available Wallpaper layout options
+  ui->combo_desk_layout->clear();
+  ui->combo_desk_layout->addItem(tr("Automatic"), "stretch");
+  ui->combo_desk_layout->addItem(tr("Tile"), "tile");
+  ui->combo_desk_layout->addItem(tr("Center"), "center");
+  ui->combo_desk_layout->addItem(tr("Top Left"), "topleft");
+  ui->combo_desk_layout->addItem(tr("Top Right"), "topright");
+  ui->combo_desk_layout->addItem(tr("Bottom Left"), "bottomleft");
+  ui->combo_desk_layout->addItem(tr("Bottom Right"), "bottomright");
+  
+  
+  
   //Available localizations
   QStringList langs = LUtils::knownLocales();
     langs.sort();
@@ -464,7 +453,7 @@ void MainUI::loadCurrentSettings(bool screenonly){
   for(int i=0; i<bgs.length(); i++){
     if(bgs[i]=="default"){ ui->combo_desk_bg->addItem( QIcon(DEFAULTBG), tr("System Default"), bgs[i] ); }
     else if(bgs[i].startsWith("rgb(")){ui->combo_desk_bg->addItem(QString(tr("Solid Color: %1")).arg(bgs[i]), bgs[i]); }
-    else{ ui->combo_desk_bg->addItem( QIcon(bgs[i]), bgs[i].section("/",-1), bgs[i] ); }
+    else{ ui->combo_desk_bg->addItem( QIcon(QPixmap(bgs[i]).scaled(64,64)), bgs[i].section("/",-1), bgs[i] ); }
   }
   ui->check_desktop_autolaunchers->setChecked(settings->value(DPrefix+"generateDesktopIcons", false).toBool());
   ui->radio_desk_multi->setEnabled(bgs.length()>1);
@@ -473,7 +462,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
   ui->spin_desk_min->setValue( settings->value(DPrefix+"background/minutesToChange", 5).toInt() );
   desktimechanged(); //ensure the display gets updated (in case the radio selection did not change);
   ui->label_desk_res->setText( tr("Screen Resolution:")+"\n"+QString::number(desktop->screenGeometry(cdesk).width())+"x"+QString::number(desktop->screenGeometry(cdesk).height()) );
-
+  int tmp = ui->combo_desk_layout->findData(settings->value(DPrefix+"background/format","stretch"));
+  if(tmp>=0){ ui->combo_desk_layout->setCurrentIndex(tmp); }
   QStringList dplugs = settings->value(DPrefix+"pluginlist",QStringList()).toStringList();
   ui->list_desktop_plugins->clear();
   for(int i=0; i<dplugs.length(); i++){
@@ -581,6 +571,7 @@ void MainUI::saveCurrentSettings(bool screenonly){
       settings->setValue(DPrefix+"background/filelist", bgs);
       settings->setValue(DPrefix+"background/minutesToChange", ui->spin_desk_min->value());
       settings->setValue(DPrefix+"generateDesktopIcons", ui->check_desktop_autolaunchers->isChecked());
+      settings->setValue(DPrefix+"background/format", ui->combo_desk_layout->currentData().toString());
       QStringList plugs;
       for(int i=0; i<ui->list_desktop_plugins->count(); i++){
 	plugs << ui->list_desktop_plugins->item(i)->whatsThis();

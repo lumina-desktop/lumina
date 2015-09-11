@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -217,6 +217,23 @@
                    <number>5</number>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="line_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_26">
+                  <property name="text">
+                   <string>Layout:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="combo_desk_layout"/>
                 </item>
                 <item>
                  <spacer name="verticalSpacer">
@@ -613,8 +630,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>498</width>
-                 <height>292</height>
+                 <width>98</width>
+                 <height>28</height>
                 </rect>
                </property>
               </widget>
@@ -1471,7 +1488,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>117</width>
-                    <height>17</height>
+                    <height>28</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
