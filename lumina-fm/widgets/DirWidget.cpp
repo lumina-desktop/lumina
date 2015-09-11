@@ -733,27 +733,27 @@ void DirWidget::on_slider_snap_valueChanged(int val){
   if(!ui->group_snaps->isEnabled()){ return; } //internal change - do not try to change the actual info
   //Determine which snapshot is now selected
   QString dir;
-  //qDebug() << "Changing snapshot:" << CDIR << val;
+  if(DEBUG){ qDebug() << "Changing snapshot:" << CDIR << val << snapbasedir; }
   stopload = true; //stop any currently-loading procedures
   if(val >= snapshots.length() || val < 0){ //active system selected
-    //qDebug() << " - Load Active system:" << normalbasedir;
+    if(DEBUG){ qDebug() << " - Load Active system:" << normalbasedir; }
     dir = normalbasedir;
   }else{
     dir = snapbasedir+snapshots[val]+"/";
-    //if(snaprelpath.isEmpty()){
+    if(snaprelpath.isEmpty()){
       //Need to figure out the relative path within the snapshot
-      snaprelpath = CDIR.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);
-      //qDebug() << " - new snapshot-relative path:" << snaprelpath;
-    //}
+      snaprelpath = normalbasedir.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);
+      if(DEBUG){ qDebug() << " - new snapshot-relative path:" << snaprelpath; }
+    }
     dir.append(snaprelpath);
     dir.replace("//","/"); //just in case any duplicate slashes from all the split/combining
-    //qDebug() << " - Load Snapshot:" << dir;
+    if(DEBUG){ qDebug() << " - Load Snapshot:" << dir; }
   }
   //Make sure this directory exists, and back up as necessary
   
-  while(!QFile::exists(dir) && !dir.isEmpty()){
+  /*while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one dir
-  }
+  }*/
   if(dir.isEmpty()){ return; }
   //Load the newly selected snapshot
   stopload = true; //just in case it is still loading
