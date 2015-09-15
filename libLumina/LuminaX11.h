@@ -106,12 +106,15 @@ public:
 	void ReserveLocation(WId win, QRect geom, QString loc);
 	
 	//Window Embedding/Detaching (for system tray)
+	//void SetWindowBackground(QWidget *parent, QRect area, WId client);
 	uint EmbedWindow(WId win, WId container); //returns the damage ID (or 0 for an error)
 	bool UnembedWindow(WId win);
+	QPixmap TrayImage(WId win);
 	
 	//System Tray Management
 	WId startSystemTray(int screen = 0); //Startup the system tray (returns window ID for tray)
 	void closeSystemTray(WId); //Close the system tray
+
 	
 	//============
 	// WM Functions (directly changing properties/settings)

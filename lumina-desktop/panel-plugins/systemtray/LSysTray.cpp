@@ -150,8 +150,9 @@ void LSysTray::UpdateTrayWindow(WId win){
   for(int i=0; i<trayIcons.length(); i++){
     if(trayIcons[i]->appID()==win){
       qDebug() << "System Tray: Update Window " << win;
-      trayIcons[i]->update(); 
-      QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
+      trayIcons[i]->repaint(); //don't use update() because we need an instant repaint (not a cached version)
+      //QTimer::singleShot(10, trayIcons[i], SLOT(repaint()) ); //re-paint in 10ms (give it a moment to settle)
+      //QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
       return; //finished now
     }
   }

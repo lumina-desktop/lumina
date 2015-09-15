@@ -59,7 +59,7 @@ equals(LINUX_DISTRIBUTION, "Debian"): {
 
 INCLUDEPATH += $$PREFIX/include
 
-LIBS	+= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util
+LIBS	+= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lXdamage 
 
 include.path=$$PREFIX/include/
 include.files=LuminaXDG.h \

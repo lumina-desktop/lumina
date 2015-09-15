@@ -13,13 +13,9 @@
 #include <QImage>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
 
-//X includes (these need to be last due to Qt compile issues)
-/*#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xatom.h>
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/Xcomposite.h>*/
+
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -31,7 +27,9 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
-//#include <xcb/render.h>
+
+//XLib includes
+#include <X11/extensions/Xdamage.h>
 
 #define DEBUG 0
 
@@ -478,7 +476,7 @@ QIcon LXCB::WindowIcon(WId win){
 
 // === SelectInput() ===
 void LXCB::SelectInput(WId win){
-  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE | XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT;
+  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_LEAVE_WINDOW |  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE;
   xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, &mask );
 }
 
@@ -778,6 +776,30 @@ void LXCB::ReserveLocation(WId win, QRect geom, QString loc){
   xcb_ewmh_set_wm_strut(&EWMH, win, LOC.left, LOC.right, LOC.top, LOC.bottom); //_NET_WM_STRUT
 }
 
+/*void LXCB::SetWindowBackground(QWidget *parent, QRect area, WId client){
+  //Copy the image from the parent onto the client (parent/child - for system tray apps)
+  //First create the background graphics context
+  //qDebug() << "Create graphics context";
+  //xcb_screen_t *root_screen = xcb_aux_get_screen(QX11Info::connection(), QX11Info::appScreen());
+  uint32_t val = XCB_GX_CLEAR;
+  xcb_gcontext_t graphic_context = xcb_generate_id(QX11Info::connection());
+	xcb_create_gc(QX11Info::connection(), graphic_context, client, XCB_GC_BACKGROUND | XCB_GC_FOREGROUND, &val); 
+  //qDebug() << "Copy Background Area";
+  //Now copy the image onto the client background
+  xcb_copy_area(QX11Info::connection(),
+          parent->winId(),
+          client,
+          graphic_context,
+          area.x(), area.y(),
+          0, 0,
+          area.width(), area.height());
+  //Now re-map the client so it paints on top of the new background
+  //qDebug() << "Map Window";
+  //xcb_map_window(QX11Info::connection(), client);
+  //Clean up variables
+  xcb_free_gc(QX11Info::connection(), graphic_context);
+}*/
+
 // === EmbedWindow() ===
 uint LXCB::EmbedWindow(WId win, WId container){
   if(DEBUG){ qDebug() << "XCB: EmbedWindow()"; }
@@ -813,20 +835,18 @@ uint LXCB::EmbedWindow(WId win, WId container){
     xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
   
   //Now setup any redirects and return
-  //qDebug() << " - select Input";
-  //XSelectInput(disp, win, StructureNotifyMask); //Notify of structure changes
-  //uint32_t val[] = {XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY};
-  //xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
-  this->SelectInput(win);
-  //qDebug() << " - Composite Redirect";
-  xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL);
+  this->SelectInput(win); //Notify of structure changes
+  xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
   //Now map the window (will be a transparent child of the container)
   xcb_map_window(QX11Info::connection(), win);
   
   //Now create/register the damage handler
-  xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
-  xcb_damage_create(QX11Info::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+  // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
+  //xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
+  //xcb_damage_create(QX11Info::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+  // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
+  Damage dmgID = XDamageCreate(QX11Info::display(), win, XDamageReportRawRectangles);
   
   //qDebug() << " - Done";
   return ( (uint) dmgID );	
@@ -836,9 +856,7 @@ uint LXCB::EmbedWindow(WId win, WId container){
 bool LXCB::UnembedWindow(WId win){
   if(DEBUG){ qDebug() << "XCB: UnembedWindow()"; }
   if(win==0){ return false; }
-  //Display *disp = QX11Info::display();
   //Remove redirects
-  //XSelectInput(disp, win, NoEventMask);
   uint32_t val[] = {XCB_EVENT_MASK_NO_EVENT};	
   xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, val);
   //Make sure it is invisible
@@ -846,6 +864,73 @@ bool LXCB::UnembedWindow(WId win){
   //Reparent the window back to the root window
   xcb_reparent_window(QX11Info::connection(), win, QX11Info::appRootWindow(), 0, 0);
   return true;	
+}
+
+// === TrayImage() ===
+QPixmap LXCB::TrayImage(WId win){
+  QPixmap pix;
+	
+  //Get the current QScreen (for XCB->Qt conversion)
+  QList<QScreen*> scrnlist = QApplication::screens();
+  if(scrnlist.isEmpty()){ return pix; }	
+
+  //Try to grab the given window directly with Qt
+  if(pix.isNull()){
+      pix = scrnlist[0]->grabWindow(win);
+  }
+  return pix;	
+  
+  //NOTE: Code below here saved for reference later (as necessary)
+  // -------------------------------
+  /*//First get the pixmap from the XCB compositing layer (since the tray images are redirected there)
+  xcb_pixmap_t pixmap = xcb_generate_id(QX11Info::connection());
+  xcb_composite_name_window_pixmap(QX11Info::connection(), win, pixmap);
+  //Get the sizing information about the pixmap
+  xcb_get_geometry_cookie_t Gcookie = xcb_get_geometry_unchecked(QX11Info::connection(), pixmap);
+  xcb_get_geometry_reply_t *Greply = xcb_get_geometry_reply(QX11Info::connection(), Gcookie, NULL);
+  if(Greply==0){ qDebug() << "[Tray Image] - Geom Fetch Error:"; return QPixmap(); } //Error in geometry detection
+  
+  //Now convert the XCB pixmap into an XCB image
+  xcb_get_image_cookie_t GIcookie = xcb_get_image_unchecked(QX11Info::connection(), XCB_IMAGE_FORMAT_Z_PIXMAP, pixmap, 0, 0, Greply->width, Greply->height, 0xffffffff);
+  xcb_get_image_reply_t *GIreply = xcb_get_image_reply(QX11Info::connection(), GIcookie, NULL);
+  if(GIreply==0){ qDebug() << "[Tray Image] - Image Convert Error:"; return QPixmap(); } //Error in conversion
+  uint8_t *GIdata = xcb_get_image_data(GIreply);
+  uint32_t BPL = xcb_get_image_data_length(GIreply) / Greply->height; //bytes per line
+  //Now convert the XCB image into a Qt Image
+  QImage image(const_cast<uint8_t *>(GIdata), Greply->width, Greply->height, BPL, QImage::Format_ARGB32_Premultiplied);
+  //Free the various data structures 
+  free(GIreply); //done with get image reply
+  xcb_free_pixmap(QX11Info::connection(), pixmap); //done with the raw pixmap
+  free(Greply); //done with geom reply*/
+  
+  /* NOTE: Found these little bit in the Qt sources - not sure if it is needed, but keep it here for reference
+        // we may have to swap the byte order based on system type
+        uint8_t image_byte_order = connection->setup()->image_byte_order;
+        if ((QSysInfo::ByteOrder == QSysInfo::LittleEndian && image_byte_order == XCB_IMAGE_ORDER_MSB_FIRST)
+            || (QSysInfo::ByteOrder == QSysInfo::BigEndian && image_byte_order == XCB_IMAGE_ORDER_LSB_FIRST))
+        {
+            for (int i=0; i < image.height(); i++) {
+                    uint *p = (uint*)image.scanLine(i);
+                    uint *end = p + image.width();
+                    while (p < end) {
+                        *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
+                            | ((*p >> 8) & 0x0000ff00) | ((*p >> 24) & 0x000000ff);
+                        p++;
+                    }
+            }
+        }*/
+
+        // fix-up alpha channel
+        /*if (image.format() == QImage::Format_RGB32) {
+            QRgb *p = (QRgb *)image.bits();
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x)
+                    p[x] |= 0xff000000;
+                p += bytes_per_line / 4;
+            }*/
+
+  //Convert the QImage into a QPixmap and return it
+  //return QPixmap::fromImage(image.copy());
 }
 
 // ===== startSystemTray() =====

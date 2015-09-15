@@ -31,6 +31,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	if(stopping){ return false; } //don't do any parsing
 	//qDebug() << "New Event";
 	if(eventType=="xcb_generic_event_t"){
+	  //qDebug() << " - XCB event";
 	  //Convert to known event type (for X11 systems)
 	   xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
 	  //Now parse the event and emit signals as necessary

@@ -3,6 +3,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QTimer>
+#include <QDebug>
 
 #include <LuminaXDG.h>
 
@@ -18,6 +19,7 @@ private slots:
     this->setToolTip("Icon Number:"+QString::number(iconnum));
     QString ico;
     //Rotate the icon every time
+    qDebug() << "Changing Icon:" << iconnum;
     if(iconnum <=0){ ico = "arrow-left"; iconnum=1; }
     else if(iconnum==1){ ico = "arrow-up"; iconnum=2; }
     else if(iconnum==2){ ico = "arrow-right"; iconnum=3; }

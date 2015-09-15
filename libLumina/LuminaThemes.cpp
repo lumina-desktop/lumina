@@ -315,7 +315,7 @@ QString LTHEME::readCustomEnvSetting(QString var){
 // =========================
 //        LuminaThemeStyle
 // =========================
-LuminaThemeStyle::LuminaThemeStyle() : QProxyStyle(){
+/*LuminaThemeStyle::LuminaThemeStyle() : QProxyStyle(){
   this->update();
 }
 
@@ -326,10 +326,10 @@ LuminaThemeStyle::~LuminaThemeStyle(){
 //Function to update the style (for use by the theme engine)
 void LuminaThemeStyle::update(){
   darkfont = true; //make this dynamic later
-}
+}*/
 
 //Subclassed functions 
-void LuminaThemeStyle::drawItemText(QPainter *painter, const QRect &rect, int alignment, const QPalette &palette, bool enabled, const QString &text, QPalette::ColorRole textRole) const{
+//void LuminaThemeStyle::drawItemText(QPainter *painter, const QRect &rect, int alignment, const QPalette &palette, bool enabled, const QString &text, QPalette::ColorRole textRole) const{
   /*QFont cfont = painter->font();
     cfont.setHintingPreference(QFont::PreferFullHinting);
   QFont outfont = cfont;
@@ -348,7 +348,7 @@ void LuminaThemeStyle::drawItemText(QPainter *painter, const QRect &rect, int al
   else{ painter->setPen(QPen(Qt::white)); }
   painter->drawText(rect, text);*/
 
-  QFont font = painter->font();
+  /*QFont font = painter->font();
   QFont cfont = font; //save for later
     if(font.pixelSize()>0){ font.setPixelSize( font.pixelSize()-4); }
     else{ font.setPointSize(font.pointSize()-1); }
@@ -369,9 +369,9 @@ void LuminaThemeStyle::drawItemText(QPainter *painter, const QRect &rect, int al
     }
   painter->setPen(pen);
   painter->drawPath(path);
-  painter->setFont(cfont); //reset back to original font
+  painter->setFont(cfont); //reset back to original font*/
   
-}
+//}
 
 
 //==================
@@ -439,7 +439,7 @@ void LuminaThemeEngine::reloadFiles(){
     if(font!=current[3] || fontsize!=current[4]){
       font=current[3]; fontsize=current[4];
       QFont tmp = application->font();
-        tmp.setStyleStrategy(QFont::PreferOutline);
+        tmp.setStyleStrategy(QFont::PreferAntialias);
         tmp.setFamily(font);
         if(fontsize.endsWith("pt")){ tmp.setPointSize(fontsize.section("pt",0,0).toInt()); }
         else if(fontsize.endsWith("px")){ tmp.setPixelSize(fontsize.section("px",0,0).toInt()); }

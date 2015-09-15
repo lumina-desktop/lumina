@@ -83,19 +83,29 @@ void TrayIcon::updateIcon(){
 void TrayIcon::paintEvent(QPaintEvent *event){
   QWidget::paintEvent(event); //make sure the background is already painted
   if(AID!=0){
+    //Update the background on the tray app
+    //qDebug() << "Paint Tray Background";
+    //LSession::handle()->XCB->SetWindowBackground(this, this->geometry(), AID);
     //qDebug() << "Paint Tray:" << AID;
     QPainter painter(this);
 	//Now paint the tray app on top of the background
 	//qDebug() << " - Draw tray:" << AID << IID << this->winId();
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
-	QPixmap pix; //= WIN->icon().pixmap(this->size());
-	  //Try to grab the window directly with Qt
-	  QList<QScreen*> scrnlist = QApplication::screens();
+	QPixmap pix = LSession::handle()->XCB->TrayImage(AID); //= WIN->icon().pixmap(this->size());
+	//if(pix.isNull()){
+	  //qDebug() << "Null Image - use Qt grab Window";
+	  //Try to grab the window directly with Qt instead
+	  /*QList<QScreen*> scrnlist = QApplication::screens();
 	  for(int i=0; i<scrnlist.length(); i++){
 	      pix = scrnlist[i]->grabWindow(AID);
 	      break; //stop here
 	  }
+        //}
+	if(pix.isNull()){
+	  qDebug() << "Null Qt Pixmap - Use XCB grab image:";
+	  pix = LSession::handle()->XCB->TrayImage(AID);
+	}*/
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){

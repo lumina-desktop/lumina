@@ -58,7 +58,7 @@ public:
 };
 
 // Qt Style override to allow custom themeing/colors
-class LuminaThemeStyle : public QProxyStyle{
+/*class LuminaThemeStyle : public QProxyStyle{
 	Q_OBJECT
 private:
 	bool darkfont;
@@ -72,7 +72,7 @@ public:
 	//Subclassed functions 
 	void drawItemText(QPainter*, const QRect&, int, const QPalette&, bool, const QString&, QPalette::ColorRole) const;
 
-};
+};*/
 
 //Simple class to setup a utility to use the Lumina theme
 //-----Example usage in "main.cpp" -------------------------------
@@ -98,7 +98,7 @@ private:
 	QString theme,colors,icons, font, fontsize, cursors; //current settings
 	QTimer *syncTimer;
 	QDateTime lastcheck;
-	LuminaThemeStyle *style;
+	//LuminaThemeStyle *style;
 
 private slots:
 	void watcherChange();
