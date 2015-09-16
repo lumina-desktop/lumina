@@ -198,6 +198,9 @@ font: bold;
       </item>
       <item>
        <widget class="QSlider" name="slider_brightness">
+        <property name="minimum">
+         <number>10</number>
+        </property>
         <property name="maximum">
          <number>100</number>
         </property>
