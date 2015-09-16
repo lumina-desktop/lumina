@@ -453,7 +453,8 @@ void MainUI::loadCurrentSettings(bool screenonly){
   for(int i=0; i<bgs.length(); i++){
     if(bgs[i]=="default"){ ui->combo_desk_bg->addItem( QIcon(DEFAULTBG), tr("System Default"), bgs[i] ); }
     else if(bgs[i].startsWith("rgb(")){ui->combo_desk_bg->addItem(QString(tr("Solid Color: %1")).arg(bgs[i]), bgs[i]); }
-    else{ ui->combo_desk_bg->addItem( QIcon(QPixmap(bgs[i]).scaled(64,64)), bgs[i].section("/",-1), bgs[i] ); }
+    //else{ ui->combo_desk_bg->addItem( QIcon(QPixmap(bgs[i]).scaled(64,64)), bgs[i].section("/",-1), bgs[i] ); }
+    else{ ui->combo_desk_bg->addItem( bgs[i].section("/",-1), bgs[i] ); } //disable the thumbnail - takes a long time for large collections of files
   }
   ui->check_desktop_autolaunchers->setChecked(settings->value(DPrefix+"generateDesktopIcons", false).toBool());
   ui->radio_desk_multi->setEnabled(bgs.length()>1);
@@ -643,7 +644,10 @@ void MainUI::deskbgchanged(){
       QSize sz = ui->label_desk_bgview->size();
       sz.setWidth( sz.width() - (2*ui->label_desk_bgview->frameWidth()) );
       sz.setHeight( sz.height() - (2*ui->label_desk_bgview->frameWidth()) );
-      ui->label_desk_bgview->setPixmap( QPixmap(path).scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+      //Update the preview/thumbnail for this item
+      QPixmap pix(path);
+      ui->label_desk_bgview->setPixmap( pix.scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+      ui->combo_desk_bg->setItemIcon(ui->combo_desk_bg->currentIndex(), pix.scaled(64,64) );
       ui->label_desk_bgview->setStyleSheet("");
     }else if(path.startsWith("rgb(")){
       ui->label_desk_bgview->setPixmap(QPixmap());
