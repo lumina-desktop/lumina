@@ -64,5 +64,7 @@ private slots:
 	void winClicked(QAction*);
 	void openActionMenu();
  
+signals:
+	void MenuClosed();
 };
 #endif

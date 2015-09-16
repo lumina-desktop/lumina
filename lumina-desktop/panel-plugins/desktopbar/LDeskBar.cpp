@@ -60,6 +60,7 @@ void LDeskBarPlugin::initializeDesktop(){
     appB->setMenu(appM);
     this->layout()->addWidget(appB);
     connect(appM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
+    connect(appM, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   //Directories on the desktop
   dirB = new QToolButton(this);
     dirB->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -69,6 +70,7 @@ void LDeskBarPlugin::initializeDesktop(){
     dirB->setMenu(dirM);
     this->layout()->addWidget(dirB);
     connect(dirM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
+    connect(dirM, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   //Audio Files on the desktop
   audioM = new QMenu(this);
     connect(audioM,SIGNAL(triggered(QAction*)),this,SLOT(ActionTriggered(QAction*)) );
@@ -205,6 +207,7 @@ void LDeskBarPlugin::desktopChanged(){
     if(!videoM->isEmpty()){ fileM->addMenu(videoM); }
     if(!otherM->isEmpty()){ fileM->addMenu(otherM); }
     //Check for a single submenu, and skip the main if need be
+    disconnect(fileB->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()) );
     if(fileM->actions().length()==1){
       if(!audioM->isEmpty()){ fileB->setMenu(audioM); }
       else if(!pictureM->isEmpty()){ fileB->setMenu(pictureM); }
@@ -214,6 +217,7 @@ void LDeskBarPlugin::desktopChanged(){
     }else{
       fileB->setMenu(fileM);	    
     }
+    connect(fileB->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
  } //end of check for if updates are needed
 
   //Setup the visibility of the buttons

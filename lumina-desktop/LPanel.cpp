@@ -15,7 +15,6 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setMouseTracking(true);
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
-  tmpID = 0;
   //Setup the widget overlay for the entire panel to provide transparency effects
   panelArea = new QWidget(this);
   QBoxLayout *tmp = new QBoxLayout(QBoxLayout::LeftToRight);
@@ -246,6 +245,7 @@ void LPanel::UpdatePanel(bool geomonly){
       if(plug != 0){ 
         PLUGINS.insert(i, plug);
         layout->insertWidget(i, PLUGINS[i]);
+	connect(plug, SIGNAL(MenuClosed()), this, SLOT(checkPanelFocus()));
       }else{
         //invalid plugin type
 	plugins.removeAt(i); //remove this invalid plugin from the list
@@ -293,6 +293,20 @@ void LPanel::UpdateTheme(){
   }	
 }
 
+// ===================
+//     PRIVATE SLOTS
+// ===================
+void LPanel::checkPanelFocus(){
+  if( !this->geometry().contains(QCursor::pos()) ){
+    //Move the panel back to it's "hiding" spot
+    if(hidden){ this->move(hidepoint); }
+    //Re-active the old window
+    if(LSession::handle()->activeWindow()!=0){
+      LSession::handle()->XCB->ActivateWindow(LSession::handle()->activeWindow());
+    }
+  }
+  
+}
 
 //===========
 // PROTECTED
@@ -319,8 +333,7 @@ void LPanel::enterEvent(QEvent *event){
     //Move the panel out so it is fully available
     this->move(showpoint);
   }
-  //tmpID = LSession::handle()->XCB->ActiveWindow();
-  //this->activateWindow();
+  this->activateWindow();
   event->accept(); //just to quiet the compile warning
 }
 
@@ -332,17 +345,7 @@ void LPanel::leaveEvent(QEvent *event){
   //pt = this->mapFromGlobal(pt);
   //qDebug() << "Mouse Point (local):" << pt.x() << pt.y();
   qDebug() << "Contained:" << this->geometry().contains(pt);*/
-  if( !this->geometry().contains(QCursor::pos()) ){
-    //Move the panel back to it's "hiding" spot
-    if(hidden){ this->move(hidepoint); }
-    //Only re-activate the old window if the panel is still currently active and the old window is still visible
-    if(tmpID!=0){
-      LXCB::WINDOWSTATE state = LSession::handle()->XCB->WindowState(tmpID);
-      if( state!=LXCB::IGNORE && state !=LXCB::INVISIBLE && (this->winId()==LSession::handle()->XCB->ActiveWindow()) ){ LSession::handle()->XCB->ActivateWindow(tmpID); }
-      tmpID = 0;
-      }
-  }
-
+  checkPanelFocus();
   event->accept(); //just to quiet the compile warning
 }
 

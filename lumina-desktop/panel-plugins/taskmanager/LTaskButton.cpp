@@ -25,6 +25,8 @@ LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent)
   connect(this, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   connect(winMenu, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openActionMenu()) );
   connect(winMenu, SIGNAL(triggered(QAction*)), this, SLOT(winClicked(QAction*)) );
+  connect(winMenu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
+  connect(actMenu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
 }
 
 LTaskButton::~LTaskButton(){
@@ -107,10 +109,13 @@ void LTaskButton::UpdateButton(){
     QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
       tmp->setData(i); //save which number in the WINLIST this entry is for
     LXCB::WINDOWSTATE stat = WINLIST[i].status(true); //update the saved state for the window
-    if(stat==LXCB::ATTENTION){ showstate = stat; } //highest priority
+    if(stat<LXCB::ACTIVE && WINLIST[i].windowID() == LSession::handle()->activeWindow()){ stat = LXCB::ACTIVE; }
+    if(stat > showstate){ showstate = stat; } //higher priority
+    
+    /*if(stat==LXCB::ATTENTION){ showstate = stat; } //highest priority
     else if( stat==LXCB::ACTIVE && showstate != LXCB::ATTENTION){ showstate = stat; } //next priority
     else if( stat==LXCB::VISIBLE && showstate != LXCB::ATTENTION && showstate != LXCB::ACTIVE){ showstate = stat; }
-    else if(showstate == LXCB::INVISIBLE || showstate == LXCB::IGNORE){ showstate = stat; } //anything is the same/better
+    else if(showstate == LXCB::INVISIBLE || showstate == LXCB::IGNORE){ showstate = stat; } //anything is the same/better*/
   }
   //Now setup the button appropriately
   // - visibility

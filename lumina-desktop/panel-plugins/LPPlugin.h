@@ -68,7 +68,9 @@ public slots:
 	  //This needs to be re-implemented in the subclasses plugin
 	    //This is where any horizontal/vertical orientations can be changed appropriately		
 	}
-	
+
+signals:
+	void MenuClosed(); //This needs to be emitted when any plugin's menu is closed for some reason (check/set focus properly)
 };
 
 #endif

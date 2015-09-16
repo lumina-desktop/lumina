@@ -19,6 +19,7 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
   label->setToolTip(QString("Workspace 1"));
   menu = new QMenu(this);
   connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuActionTriggered(QAction*)));
+  connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   label->setMenu(menu);
   this->layout()->addWidget(label);
 

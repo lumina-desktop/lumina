@@ -17,6 +17,7 @@ LClock::LClock(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, 
     button->setPopupMode(QToolButton::DelayedPopup); //make sure it runs the update routine first
     button->setMenu(new QMenu());
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
+    connect(button->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   calendar = new QCalendarWidget(this);
   calAct = new QWidgetAction(this);
 	calAct->setDefaultWidget(calendar);

@@ -14,6 +14,7 @@ LAppMenuPlugin::LAppMenuPlugin(QWidget *parent, QString id, bool horizontal) : L
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     button->setMenu( LSession::handle()->applicationMenu() );
+    connect(button->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
     button->setPopupMode(QToolButton::InstantPopup);
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);

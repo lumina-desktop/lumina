@@ -18,6 +18,7 @@ LSysDashboard::LSysDashboard(QWidget *parent, QString id, bool horizontal) : LPP
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);
   menu = new QMenu(this);
+    connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   sysmenu = new LSysMenuQuick(this);
     connect(sysmenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
   mact = new QWidgetAction(this);

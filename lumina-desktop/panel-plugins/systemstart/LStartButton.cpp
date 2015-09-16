@@ -17,6 +17,7 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
     this->layout()->addWidget(button);
   menu = new QMenu(this);
     menu->setContentsMargins(1,1,1,1);
+    connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   startmenu = new StartMenu(this);
     connect(startmenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
   mact = new QWidgetAction(this);

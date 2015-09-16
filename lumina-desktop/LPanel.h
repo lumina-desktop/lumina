@@ -41,7 +41,6 @@ private:
 	int panelnum;
 	int viswidth;
 	QList<LPPlugin*> PLUGINS;
-	WId tmpID; //temporary window ID
 
 public:
 	LPanel(QSettings *file, int scr = 0, int num =0, QWidget *parent=0); //settings file, screen number, panel number
@@ -65,6 +64,9 @@ public slots:
 	void UpdatePanel(bool geomonly = false);  //Load the settings file and update the panel appropriately
 	void UpdateLocale(); //Locale Changed externally
 	void UpdateTheme(); //Theme Changed externally
+
+private slots:
+	void checkPanelFocus();
 
 protected:
 	void paintEvent(QPaintEvent *event);

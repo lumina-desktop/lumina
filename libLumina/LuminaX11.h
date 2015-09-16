@@ -49,7 +49,7 @@
 class LXCB{
 	
 public:
-	enum WINDOWSTATE {VISIBLE, INVISIBLE, ACTIVE, ATTENTION, IGNORE};
+	enum WINDOWSTATE {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
 	
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 	

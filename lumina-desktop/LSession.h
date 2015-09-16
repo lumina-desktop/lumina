@@ -86,6 +86,9 @@ public:
 	QSettings* sessionSettings();
 	QSettings* DesktopPluginSettings();
 	
+	//Keep track of which non-desktop window should be treated as active
+	WId activeWindow(); //This will return the last active window if a desktop element is currently active
+	
 	//Temporarily change the session locale (nothing saved between sessions)
 	void switchLocale(QString localeCode);
 	
@@ -117,6 +120,7 @@ private:
 	bool TrayStopping;
 
 	//Task Manager Variables
+	WId lastActiveWin;
 	QList<WId> RunningApps;
 	QList<WId> checkWin;
 	QFileInfoList desktopFiles;

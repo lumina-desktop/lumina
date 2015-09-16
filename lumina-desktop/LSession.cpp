@@ -19,7 +19,7 @@
 #include <unistd.h> //for usleep() usage
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 XCBEventFilter *evFilter = 0;
@@ -40,6 +40,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   sysWindow = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
+  lastActiveWin = 0; 
   cleansession = true;
   TrayStopping = false;
   screenTimer = new QTimer(this);
@@ -637,6 +638,26 @@ QSettings* LSession::DesktopPluginSettings(){
   return DPlugSettings;
 }
 
+WId LSession::activeWindow(){
+  //Check the last active window pointer first
+  WId active = XCB->ActiveWindow();
+  qDebug() << "Check Active Window:" << active << lastActiveWin;
+  if(RunningApps.contains(active)){ lastActiveWin = active; }
+  else if(RunningApps.contains(lastActiveWin) && XCB->WindowState(lastActiveWin) >= LXCB::VISIBLE){} //no change needed
+  else{
+    //Need to change the last active window - find the first one which is visible
+    lastActiveWin = 0; //fallback value - nothing active
+    for(int i=0; i<RunningApps.length(); i++){
+      if(XCB->WindowState(RunningApps[i]) >= LXCB::VISIBLE){
+        lastActiveWin = RunningApps[i];
+	break;
+      }
+    }
+    qDebug() << " -- New Last Active Window:" << lastActiveWin;
+  }
+  return lastActiveWin;
+}
+
 //Temporarily change the session locale (nothing saved between sessions)
 void LSession::switchLocale(QString localeCode){
   LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
@@ -687,6 +708,8 @@ void LSession::WindowPropertyEvent(){
       }
     }
   }
+  
+  //Now save the list and send out the event
   RunningApps = newapps;
   emit WindowListEvent();
 }
@@ -695,7 +718,8 @@ void LSession::WindowPropertyEvent(WId win){
   //Emit the single-app signal if the window in question is one used by the task manager
   if(RunningApps.contains(win)){
     if(DEBUG){ qDebug() << "Single-window property event"; }
-    emit WindowListEvent();
+    //emit WindowListEvent();
+    WindowPropertyEvent(); //Run through the entire routine for window checks
   }else if(RunningTrayApps.contains(win)){
     emit TrayIconChanged(win);
   }
@@ -716,6 +740,8 @@ void LSession::WindowConfigureEvent(WId win){
     if(RunningTrayApps.contains(win)){
       if(DEBUG){ qDebug() << "SysTray: Configure Event"; }
       emit TrayIconChanged(win); //trigger a repaint event
+    }else if(RunningApps.contains(win)){
+      WindowPropertyEvent();
     }
 }
 

@@ -35,8 +35,8 @@ void LTaskManagerPlugin::UpdateButtons(){
   //Get the current window list
   QList<WId> winlist = LSession::handle()->XCB->WindowList();
   //Do not change the status of the previously active window if it just changed to a non-visible window
-  WId activeWin = LSession::handle()->XCB->ActiveWindow();
-  bool skipActive = !winlist.contains(activeWin);
+  //WId activeWin = LSession::handle()->XCB->ActiveWindow();
+  //bool skipActive = !winlist.contains(activeWin);
   //qDebug() << "Update Buttons:" << winlist;
   if(updating > ctime){ return; } //another thread kicked off already - stop this one
   //Now go through all the current buttons first
@@ -74,9 +74,9 @@ void LTaskManagerPlugin::UpdateButtons(){
     if(!updated){
       //qDebug() << "Update Button:" << i;
       if(updating > ctime){ return; } //another thread kicked off already - stop this one
-      if(!skipActive || !BUTTONS[i]->isActive()){
+      //if(!skipActive || !BUTTONS[i]->isActive()){
         QTimer::singleShot(1,BUTTONS[i], SLOT(UpdateButton()) ); //keep moving on
-      }
+      //}
     }
   }
   //Now go through the remaining windows
@@ -108,6 +108,7 @@ void LTaskManagerPlugin::UpdateButtons(){
 	    but->setIconSize(QSize(this->width(), this->width()));
 	}
       this->layout()->addWidget(but);
+      connect(but, SIGNAL(MenuClosed()), this, SIGNAL(MenuClosed()));
       BUTTONS << but;
     }
   }

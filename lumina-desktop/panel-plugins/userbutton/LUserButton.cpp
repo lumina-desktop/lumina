@@ -17,6 +17,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
     this->layout()->addWidget(button);
   menu = new QMenu(this);
     menu->setContentsMargins(1,1,1,1);
+    connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   usermenu = new UserWidget(this);
     connect(usermenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
   mact = new QWidgetAction(this);
