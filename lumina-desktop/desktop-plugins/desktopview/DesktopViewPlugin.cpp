@@ -14,16 +14,14 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
   this->setLayout( new QVBoxLayout());
     this->layout()->setContentsMargins(0,0,0,0);
   list = new QListWidget(this);
-    //list->setUniformItemSizes(true);
     list->setViewMode(QListView::IconMode);
-    //list->setLayoutMode(QListView::Batched);
     list->setFlow(QListWidget::TopToBottom); //Qt bug workaround - need the opposite flow in the widget constructor
     list->setWrapping(true);
-    //list->setBatchSize(10); //keep it snappy
     list->setSpacing(2);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
     list->setContextMenuPolicy(Qt::CustomContextMenu);
+    list->setMovement(QListView::Snap); //make sure items are "stuck" in the grid
 	
   menu = new QMenu(this);
     menu->addAction( LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(runItems()) );
@@ -105,7 +103,7 @@ void DesktopViewPlugin::deleteItems(){
 void DesktopViewPlugin::showMenu(const QPoint &pos){
   //Make sure there is an item underneath the mouse first
   if(list->itemAt(pos)!=0){
-    menu->popup(pos);
+    menu->popup(this->mapToGlobal(pos));
   }else{
     //Pass the context menu request on to the desktop (emit it from the plugin)
     emit OpenDesktopMenu();
@@ -117,7 +115,7 @@ void DesktopViewPlugin::increaseIconSize(){
   icosize+=16; //go in orders of 16 pixels
   //list->setIconSize(QSize(icosize,icosize));
   this->saveSetting("IconSize",icosize);
-  updateContents();
+  QTimer::singleShot(10, this, SLOT(updateContents()));
 }
 
 void DesktopViewPlugin::decreaseIconSize(){
@@ -126,17 +124,14 @@ void DesktopViewPlugin::decreaseIconSize(){
   icosize-=16; //go in orders of 16 pixels
   //list->setIconSize(QSize(icosize,icosize));
   this->saveSetting("IconSize",icosize);	
-  updateContents();
+  QTimer::singleShot(10,this, SLOT(updateContents()));
 }
 
 void DesktopViewPlugin::updateContents(){
   list->clear();
-  /*if(imgExtensions.isEmpty()){
-    QList<QByteArray> fmt = QImageReader::supportedImageFormats();
-    for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
-  }*/
+
   int icosize = this->readSetting("IconSize",64).toInt();
-  QSize gridSZ = QSize(icosize+8,icosize+4+(2*this->fontMetrics().height()) );
+  QSize gridSZ = QSize(2*icosize,icosize+4+(2*this->fontMetrics().height()) );
   //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
   list->setGridSize(gridSZ);
   list->setIconSize(QSize(icosize,icosize));
@@ -144,6 +139,7 @@ void DesktopViewPlugin::updateContents(){
   QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::Type | QDir::DirsFirst);
   for(int i=0; i<files.length(); i++){
     QListWidgetItem *it = new QListWidgetItem;
+    it->setSizeHint(gridSZ); //ensure uniform item sizes
     it->setTextAlignment(Qt::AlignCenter);
     it->setWhatsThis(files[i].absoluteFilePath());
     QString txt;
@@ -194,9 +190,9 @@ void DesktopViewPlugin::updateContents(){
     }
     it->setText(txt);
     list->addItem(it);
-    QApplication::processEvents(); //keep the UI snappy
+    if( (i%10) == 0){ QApplication::processEvents(); }//keep the UI snappy, every 10 items
   }
-  list->setFlow(QListWidget::LeftToRight); //To ensure this is consistent - issues with putting it in the constructor
+  list->setFlow(QListWidget::TopToBottom); //To ensure this is consistent - issues with putting it in the constructor
   list->update(); //Re-paint the widget after all items are added 
 }
 
