@@ -90,7 +90,7 @@ void LPlugins::LoadPanelPlugins(){
   PANEL.insert(info.ID, info);  	
   //Desktop Switcher
   info = LPI(); //clear it
-    info.name = QObject::tr("Desktop Switcher");
+    info.name = QObject::tr("Workspace Switcher");
     info.description = QObject::tr("Controls for switching between the various virtual desktops.");
     info.ID = "desktopswitcher";
     info.icon = "preferences-desktop-display-color";
@@ -139,7 +139,7 @@ void LPlugins::LoadPanelPlugins(){
   PANEL.insert(info.ID, info);  
   //Home Button
   info = LPI(); //clear it
-    info.name = QObject::tr("Home Button");
+    info.name = QObject::tr("Show Desktop");
     info.description = QObject::tr("Hide all open windows and show the desktop");
     info.ID = "homebutton";
     info.icon = "go-home";
