@@ -287,7 +287,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
       ui->tool_shutdown->setEnabled(!updating);
       ui->label_updating->setVisible(updating); //to let the user know *why* they can't shutdown/restart right now
     }
-    ui->tool_suspend->setVisible( LOS::systemCanSuspend() );
+    ui->frame_leave_suspend->setVisible( LOS::systemCanSuspend() );
   }
   
 }
