@@ -234,8 +234,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     ui->group_snaps->setEnabled(false); //to prevent the snap updates to be automatically used
     ui->group_snaps->setVisible(false);
     ui->slider_snap->setRange(1,1);
-    emit findSnaps(ID, normalbasedir); 
   }
+  emit findSnaps(ID, normalbasedir); 
   if(DEBUG){ qDebug() << "Update History:" <<time.elapsed(); }
   //Now update the history for this browser
   //qDebug() << "History:" << history << normalbasedir << lastbasedir;
