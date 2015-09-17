@@ -610,16 +610,14 @@ void MainUI::OpenImages(LFileInfoList list){
 }
 
 void MainUI::OpenTerminal(QString dirpath){
-  //QFileInfoList sel = getSelectedItems();
-  QString shell;
-  //we get the shell has defined in the environment
-  if (getenv("SHELL")) shell = QString(getenv("SHELL"));
-  else shell = QString("/bin/sh");
-    //we use the application defined as thate default terminal 
-  QSettings *sessionsettings = new QSettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
+  //we use the application defined as the default terminal 
+  QSettings sessionsettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
   //xterm remains the default
-  QString defTerminal = sessionsettings->value("default-terminal", "xterm").toString();
-  if(defTerminal.endsWith(".desktop")){
+  QString defTerminal = sessionsettings.value("default-terminal", "xterm").toString();
+  qDebug() << "Found default terminal:" << defTerminal;
+  //Now get the exec string and run it
+  QString cmd = LUtils::GenerateOpenTerminalExec(defTerminal, dirpath);
+  /*if(defTerminal.endsWith(".desktop")){
     //Pull the binary name out of the shortcut
     bool ok = false;
     XDGDesktop DF = LXDG::loadDesktopFile(defTerminal,ok);
@@ -633,7 +631,9 @@ void MainUI::OpenTerminal(QString dirpath){
 
     //-e is the parameter for most of the terminal appliction to execute an external command. 
     //In your case we start a shell in the selected directory
-    QProcess::startDetached(defTerminal + " -e \"cd " + dirpath + " && " + shell + " \" ");
+    QProcess::startDetached(defTerminal + " -e \"cd " + dirpath + " && " + shell + " \" ");*/
+  qDebug() << "Starting Terminal with command:" << cmd;
+  QProcess::startDetached(cmd);
 
 }
 
