@@ -107,6 +107,40 @@ bool LUtils::isValidBinary(QString& bin){
   return good;
 }
 
+QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
+  //Check the input terminal application (default/fallback - determined by calling application)
+  if(!LUtils::isValidBinary(term)){
+    if(term.endsWith(".desktop")){
+      //Pull the binary name out of the shortcut
+      bool ok = false;
+      XDGDesktop DF = LXDG::loadDesktopFile(term,ok);
+      if(!ok){ term = "xterm"; }
+      else{ term= DF.exec.section(" ",0,0); } //only take the binary name - not any other flags
+    }else{
+	term = "xterm"; //fallback
+    }
+  }
+  //Now create the calling command for the designated terminal
+  // NOTE: While the "-e" routine is supposed to be universal, many terminals do not properly use it
+  //  so add some special/known terminals here as necessary
+  QString exec;
+  if(term=="mate-terminal" || term=="lxterminal" || term=="gnome-terminal"){
+    exec = term+" --working-directory=\""+dirpath+"\"";
+  }else if(term=="xfce4-terminal"){
+    exec = term+" --default-working-directory=\""+dirpath+"\"";
+  }else if(term=="konsole"){
+    exec = term+" --workdir \""+dirpath+"\"";
+  }else{
+    //-e is the parameter for most of the terminal appliction to execute an external command. 
+    //In this case we start a shell in the selected directory
+      //Need the user's shell first
+      QString shell = QString(getenv("SHELL"));
+      if(!LUtils::isValidBinary(shell)){ shell = "/bin/sh"; } //universal fallback for a shell
+    exec = term + " -e \"cd " + dirpath + " && " + shell + " \" ";
+  }
+  return exec;
+}
+
 QStringList LUtils::listSubDirectories(QString dir, bool recursive){
   //This is a recursive method for returning the full paths of all subdirectories (if recursive flag is enabled)
   QDir maindir(dir);

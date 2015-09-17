@@ -42,6 +42,9 @@ public:
 	  return isValidBinary(bins); //overload for a "junk" binary variable input
 	}
 
+	//Create the exec string to open a terminal in a particular directory
+	static QString GenerateOpenTerminalExec(QString term, QString dirpath);
+	
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
 
