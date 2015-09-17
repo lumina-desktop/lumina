@@ -226,6 +226,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     //This is a normal directory - prompt for snapshot information
     line_dir->setText(CDIR);
     normalbasedir = CDIR;
+    if(!snapbasedir.isEmpty()){ watcher->removePath(snapbasedir); }
     snapbasedir.clear();
     loadsnaps = true;
   }
@@ -234,8 +235,9 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     ui->group_snaps->setEnabled(false); //to prevent the snap updates to be automatically used
     ui->group_snaps->setVisible(false);
     ui->slider_snap->setRange(1,1);
+    emit findSnaps(ID, normalbasedir);
   }
-  emit findSnaps(ID, normalbasedir); 
+
   if(DEBUG){ qDebug() << "Update History:" <<time.elapsed(); }
   //Now update the history for this browser
   //qDebug() << "History:" << history << normalbasedir << lastbasedir;
@@ -457,6 +459,7 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   //Save these value internally for use later
   snapbasedir = basedir;
   snapshots = snaps;
+  watcher->addPath(snapbasedir); //add this to the watcher in case snapshots get created/removed
   //Now update the UI as necessary
   
   ui->slider_snap->setRange(0, snaps.length());
@@ -898,8 +901,8 @@ void DirWidget::SelectionChanged(){
 
 void DirWidget::startSync(const QString &file){
   //Update date_format based on user settings
-  if(file == sessionsettings_config_file)
-      setDateFormat();
+  if(file == sessionsettings_config_file){ setDateFormat(); }
+  if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
   if(synctimer->isActive()){ synctimer->stop(); }
   synctimer->start();
 }

@@ -614,7 +614,7 @@ void MainUI::OpenTerminal(QString dirpath){
   QSettings sessionsettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
   //xterm remains the default
   QString defTerminal = sessionsettings.value("default-terminal", "xterm").toString();
-  qDebug() << "Found default terminal:" << defTerminal;
+  //qDebug() << "Found default terminal:" << defTerminal;
   //Now get the exec string and run it
   QString cmd = LUtils::GenerateOpenTerminalExec(defTerminal, dirpath);
   /*if(defTerminal.endsWith(".desktop")){
@@ -632,7 +632,7 @@ void MainUI::OpenTerminal(QString dirpath){
     //-e is the parameter for most of the terminal appliction to execute an external command. 
     //In your case we start a shell in the selected directory
     QProcess::startDetached(defTerminal + " -e \"cd " + dirpath + " && " + shell + " \" ");*/
-  qDebug() << "Starting Terminal with command:" << cmd;
+  //qDebug() << "Starting Terminal with command:" << cmd;
   QProcess::startDetached(cmd);
 
 }
