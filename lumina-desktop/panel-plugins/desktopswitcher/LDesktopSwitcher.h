@@ -46,6 +46,7 @@ private:
 	QAction* newAction(int, QString);
 	
 private slots:
+	void openMenu();
 	void createMenu();
 	void menuActionTriggered(QAction*);
 

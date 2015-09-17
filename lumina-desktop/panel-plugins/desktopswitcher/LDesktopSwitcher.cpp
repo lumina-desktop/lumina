@@ -12,11 +12,12 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
   this->setStyleSheet( "QToolButton::menu-indicator{ image: none; } QToolButton{padding: 0px;}");
   //Setup the widget
   label = new QToolButton(this);
-  label->setPopupMode(QToolButton::InstantPopup);
+  label->setPopupMode(QToolButton::DelayedPopup);
   label->setAutoRaise(true);
   label->setToolButtonStyle(Qt::ToolButtonIconOnly);
   label->setIcon( LXDG::findIcon("preferences-desktop-display-color", "") );
   label->setToolTip(QString("Workspace 1"));
+  connect(label, SIGNAL(clicked()), this, SLOT(openMenu()));
   menu = new QMenu(this);
   connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuActionTriggered(QAction*)));
   connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
@@ -108,6 +109,12 @@ int LDesktopSwitcher::getCurrentDesktop() {
   }
   return number;
 } */
+
+void LDesktopSwitcher::openMenu(){
+  //Make sure the menu is refreshed right before it opens
+  createMenu();
+  label->showMenu();
+}
 
 QAction* LDesktopSwitcher::newAction(int what, QString name) {
   QAction *act = new QAction(LXDG::findIcon("preferences-desktop-display-color", ":/images/preferences-desktop-display-color.png"), name, this);
