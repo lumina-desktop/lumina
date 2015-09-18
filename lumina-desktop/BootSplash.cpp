@@ -15,31 +15,31 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
   QString txt, icon;
   int per = 0;
   if(loading=="init"){
-    txt = tr("Initializing Session..."); per = 10;
+    txt = tr("Initializing Session …"); per = 10;
     icon = "preferences-system-login";
   }else if(loading=="settings"){
-    txt = tr("Loading Settings..."); per = 20;	  
+    txt = tr("Loading System Settings …"); per = 20;	  
     icon = "user-home";
   }else if(loading=="user"){
-    txt = tr("Checking User Settings..."); per = 30; 
+    txt = tr("Loading User Preferences …"); per = 30; 
     icon = "preferences-desktop-user";
   }else if(loading=="systray"){
-    txt = tr("Registering System Tray..."); per = 40;
+    txt = tr("Preparing System Tray …"); per = 40;
     icon = "preferences-plugin";
   }else if(loading=="wm"){
-    txt = tr("Starting Window Manager..."); per = 50;
+    txt = tr("Starting Window Manager …"); per = 50;
     icon = "preferences-system-windows-actions";	  
   }else if(loading=="apps"){
-    txt = tr("Detecting System Applications..."); per = 60;
+    txt = tr("Detecting Applications …"); per = 60;
     icon = "preferences-desktop-icons";
   }else if(loading=="menus"){
-    txt = tr("Initializing System Menu(s)..."); per = 70;
+    txt = tr("Preparing Menus …"); per = 70;
     icon = "preferences-system-windows";
   }else if(loading=="desktop"){
-    txt = tr("Initializing Desktop(s)..."); per = 80;
+    txt = tr("Preparing Workspace …"); per = 80;
     icon = "preferences-desktop-wallpaper";	
   }else if(loading=="final"){
-    txt = tr("Performing Final Checks..."); per = 90;
+    txt = tr("Finalizing …"); per = 90;
     icon = "pcbsd";	  
   }
   ui->progressBar->setValue(per);
