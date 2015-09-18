@@ -204,6 +204,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Now check what type of file this is
   if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
+  else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
   if( !isFile && !isUrl ){ ShowErrorDialog( argc, argv, QString(QObject::tr("Invalid file or URL: %1")).arg(inFile) ); }
   //Determing the type of file (extension)
   QString extension;
