@@ -13,11 +13,12 @@
 DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
   this->setLayout( new QVBoxLayout());
     this->layout()->setContentsMargins(0,0,0,0);
+	
   list = new QListWidget(this);
     list->setViewMode(QListView::IconMode);
     list->setFlow(QListWidget::TopToBottom); //Qt bug workaround - need the opposite flow in the widget constructor
     list->setWrapping(true);
-    list->setSpacing(2);
+    list->setSpacing(4);
     list->setSelectionBehavior(QAbstractItemView::SelectItems);
     list->setSelectionMode(QAbstractItemView::ExtendedSelection);
     list->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -131,7 +132,7 @@ void DesktopViewPlugin::updateContents(){
   list->clear();
 
   int icosize = this->readSetting("IconSize",64).toInt();
-  QSize gridSZ = QSize(2*icosize,icosize+4+(2*this->fontMetrics().height()) );
+  QSize gridSZ = QSize(qRound(1.8*icosize),icosize+4+(2*this->fontMetrics().height()) );
   //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
   list->setGridSize(gridSZ);
   list->setIconSize(QSize(icosize,icosize));
@@ -140,6 +141,7 @@ void DesktopViewPlugin::updateContents(){
   for(int i=0; i<files.length(); i++){
     QListWidgetItem *it = new QListWidgetItem;
     it->setSizeHint(gridSZ); //ensure uniform item sizes
+    //it->setForeground(QBrush(Qt::black, Qt::Dense2Pattern)); //Try to use a font color which will always be visible
     it->setTextAlignment(Qt::AlignCenter);
     it->setWhatsThis(files[i].absoluteFilePath());
     QString txt;
@@ -170,18 +172,18 @@ void DesktopViewPlugin::updateContents(){
     }
     //Now adjust the visible text as necessary based on font/grid sizing
     it->setToolTip(txt);
-    if(this->fontMetrics().width(txt) > (gridSZ.width()-2) ){
+    if(this->fontMetrics().width(txt) > (gridSZ.width()-4) ){
       //int dash = this->fontMetrics().width("-");
       //Text too long, try to show it on two lines
       txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
       if(txt.contains("\n")){
         //need to check each line
 	QStringList txtL = txt.split("\n");
-	for(int i=0; i<txtL.length(); i++){ txtL[i] = this->fontMetrics().elidedText(txtL[i], Qt::ElideRight, gridSZ.width()); }
+	for(int i=0; i<txtL.length(); i++){ txtL[i] = this->fontMetrics().elidedText(txtL[i], Qt::ElideRight, gridSZ.width()-4); }
 	txt = txtL.join("\n");
 	if(txtL.length()>2){ txt = txt.section("\n",0,1); } //only keep the first two lines
       }else{
-        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*gridSZ.width());
+        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*(gridSZ.width()-4));
         //Now split the line in half for the two lines
         txt.insert( (txt.count()/2), "\n");
       }

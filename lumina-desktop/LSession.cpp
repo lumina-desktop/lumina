@@ -641,7 +641,7 @@ QSettings* LSession::DesktopPluginSettings(){
 WId LSession::activeWindow(){
   //Check the last active window pointer first
   WId active = XCB->ActiveWindow();
-  qDebug() << "Check Active Window:" << active << lastActiveWin;
+  //qDebug() << "Check Active Window:" << active << lastActiveWin;
   if(RunningApps.contains(active)){ lastActiveWin = active; }
   else if(RunningApps.contains(lastActiveWin) && XCB->WindowState(lastActiveWin) >= LXCB::VISIBLE){} //no change needed
   else{
@@ -653,7 +653,7 @@ WId LSession::activeWindow(){
 	break;
       }
     }
-    qDebug() << " -- New Last Active Window:" << lastActiveWin;
+    //qDebug() << " -- New Last Active Window:" << lastActiveWin;
   }
   return lastActiveWin;
 }

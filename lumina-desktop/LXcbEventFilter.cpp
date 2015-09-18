@@ -96,9 +96,9 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================	    
 	    default:
 		if(TrayDmgFlag!=0){
-		  //if( (ev->response_type & ~0x80)==TrayDmgFlag){
+		  if( (ev->response_type & ~0x80)==TrayDmgFlag){
 		    session->WindowDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
-		  //}
+		  }
 		}/*else{
 	          qDebug() << "Default Event:" << (ev->response_type & ~0x80);
 	        }*/
