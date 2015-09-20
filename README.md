@@ -12,7 +12,7 @@ Latest Stable Versions
 ----
 Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
 
-Qt5 - 0.8.4 (Beta): Use the qt5/0.8.4 branch of the source tree to fetch this version.
+Qt5 - 0.8.6 (Beta): Use the qt5/0.8.6 branch of the source tree to fetch this version.
 
 The master branch is where all development is performed and tested before the next release version is branched off.
 
