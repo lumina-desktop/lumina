@@ -39,7 +39,7 @@ void StartMenu::UpdateAll(){
   ui->tool_launch_desksettings->setIcon(LXDG::findIcon("preferences-desktop",""));
   ui->tool_lock->setIcon(LXDG::findIcon("system-lock-screen",""));
   ui->tool_goto_logout->setIcon(LXDG::findIcon("system-log-out",""));
-  ui->tool_back->setIcon(LXDG::findIcon("go-back",""));
+  ui->tool_back->setIcon(LXDG::findIcon("go-previous",""));
   ui->tool_launch_deskinfo->setIcon(LXDG::findIcon("system-help",""));
 	
   ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-system-power-management","").pixmap(ui->tool_goto_apps->iconSize()) );
