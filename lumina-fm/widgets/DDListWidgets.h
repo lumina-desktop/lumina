@@ -21,6 +21,7 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QUrl>
 
 //==============
 //  LIST WIDGET
@@ -51,47 +52,42 @@ protected:
 	void startDrag(Qt::DropActions act){
 	  QList<QListWidgetItem*> items = this->selectedItems();
 	  if(items.length()<1){ return; }
-	  QStringList info;
-	  for(int i=0; i<items.length(); i++){ info << items[i]->whatsThis(); }
+	  QList<QUrl> urilist;
+	  for(int i=0; i<items.length(); i++){ 
+	    urilist << QUrl::fromLocalFile(items[i]->whatsThis().section("::::",1,100));	  
+	  }
 	  //Create the mime data
 	  QMimeData *mime = new QMimeData;
-	  mime->setData(MIME,info.join("\n").toLocal8Bit());
+	    mime->setUrls(urilist);
 	  //Create the drag structure
 	  QDrag *drag = new QDrag(this);
 	  drag->setMimeData(mime);
-	  drag->exec(act | Qt::MoveAction | Qt::CopyAction);
+	  /*if(info.first().section("::::",0,0)=="cut"){
+	    drag->exec(act | Qt::MoveAction);
+	  }else{*/
+	    drag->exec(act | Qt::CopyAction);
+	  //}
 	}
 
 	void dragEnterEvent(QDragEnterEvent *ev){
 	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasFormat(MIME);
-	  if(ev->mimeData()->hasFormat(MIME) && !this->whatsThis().isEmpty() ){
-	    //qDebug() << "Accepted:" << ev->mimeData()->data(MIME);
-	    if(QString(ev->mimeData()->data(MIME)).section("::::",0,0)=="cut"){
-		ev->setDropAction(Qt::MoveAction);
-	    }else{
-		ev->setDropAction(Qt::CopyAction);
-	    }
-	    ev->accept(); //allow this to be dropped here
-	  }		  
-	}
-	
-	void dragMoveEvent(QDragMoveEvent *ev){
-	  //qDebug() << "Drag Move Event:" << ev->mimeData()->hasFormat(MIME);
-	  if(ev->mimeData()->hasFormat(MIME) && !this->whatsThis().isEmpty()){
-	    //qDebug() << "Accepted:" << ev->mimeData()->data(MIME);
-	    if(QString(ev->mimeData()->data(MIME)).section("::::",0,0)=="cut"){
-		ev->setDropAction(Qt::MoveAction);
-	    }else{
-		ev->setDropAction(Qt::CopyAction);
-	    }
-	    ev->accept(); //allow this to be dropped here
+	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
+	    ev->acceptProposedAction(); //allow this to be dropped here
 	  }else{
 	    ev->ignore();
 	  }		  
 	}
 	
+	void dragMoveEvent(QDragMoveEvent *ev){
+	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
+	    ev->acceptProposedAction(); //allow this to be dropped here
+	  }else{
+	    ev->ignore();
+	  }
+	}
+	
 	void dropEvent(QDropEvent *ev){
-	  if(this->whatsThis().isEmpty()){ ev->ignore(); return; } //not supported
+	  if(this->whatsThis().isEmpty() || !ev->mimeData()->hasUrls() ){ ev->ignore(); return; } //not supported
 	  //qDebug() << "Drop Event:";
 	  ev->accept(); //handled here
 	  QString dirpath = this->whatsThis();
@@ -103,8 +99,16 @@ protected:
 	      dirpath = info.absoluteFilePath();
 	    }
 	  }
+	  //Now turn the input urls into local file paths
+	  QStringList files;
+	  foreach(const QUrl &url, ev->mimeData()->urls()){
+	    const QString filepath = url.toLocalFile();
+	    //If the target file is modifiable, assume a move - otherwise copy
+	    if(QFileInfo(filepath).isWritable()){ files << "cut::::"+filepath; }
+	    else{ files << "copy::::"+filepath; }
+	  }
 	  //qDebug() << "Drop Event:" << dirpath;
-	  emit DataDropped( dirpath, QString(ev->mimeData()->data(MIME)).split("\n") );
+	  emit DataDropped( dirpath, files );
 	}
 	
 	void mouseReleaseEvent(QMouseEvent *ev){
@@ -150,45 +154,42 @@ protected:
 	void startDrag(Qt::DropActions act){
 	  QList<QTreeWidgetItem*> items = this->selectedItems();
 	  if(items.length()<1){ return; }
-	  QStringList info;
-	  for(int i=0; i<items.length(); i++){ info << items[i]->whatsThis(0); }
+	  QList<QUrl> urilist;
+	  for(int i=0; i<items.length(); i++){ 
+	    urilist << QUrl::fromLocalFile(items[i]->whatsThis(0).section("::::",1,100));	  
+	  }
 	  //Create the mime data
 	  QMimeData *mime = new QMimeData;
-	  mime->setData(MIME,info.join("\n").toLocal8Bit());
+	    mime->setUrls(urilist);
 	  //Create the drag structure
 	  QDrag *drag = new QDrag(this);
 	  drag->setMimeData(mime);
-	  drag->exec(act | Qt::MoveAction | Qt::CopyAction);
+	  /*if(info.first().section("::::",0,0)=="cut"){
+	    drag->exec(act | Qt::MoveAction);
+	  }else{*/
+	    drag->exec(act | Qt::CopyAction| Qt::MoveAction);
+	  //}
 	}
 
 	void dragEnterEvent(QDragEnterEvent *ev){
 	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasFormat(MIME);
-	  if(ev->mimeData()->hasFormat(MIME) && !this->whatsThis().isEmpty() ){
-	    //qDebug() << "Accepted:" << ev->mimeData()->data(MIME);
-	    if(QString(ev->mimeData()->data(MIME)).section("::::",0,0)=="cut"){
-		ev->setDropAction(Qt::MoveAction);
-	    }else{
-		ev->setDropAction(Qt::CopyAction);
-	    }
-	    ev->accept(); //allow this to be dropped here
+	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
+	    ev->acceptProposedAction(); //allow this to be dropped here
+	  }else{
+	    ev->ignore();
 	  }		  
 	}
 	
 	void dragMoveEvent(QDragMoveEvent *ev){
-	  //qDebug() << "Drag Move Event:" << ev->mimeData()->hasFormat(MIME);
-	  if(ev->mimeData()->hasFormat(MIME) && !this->whatsThis().isEmpty()){
-	    //qDebug() << "Accepted:" << ev->mimeData()->data(MIME);
-	    if(QString(ev->mimeData()->data(MIME)).section("::::",0,0)=="cut"){
-		ev->setDropAction(Qt::MoveAction);
-	    }else{
-		ev->setDropAction(Qt::CopyAction);
-	    }
-	    ev->accept(); //allow this to be dropped here
-	  }				
+	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
+	    ev->acceptProposedAction(); //allow this to be dropped here
+	  }else{
+	    ev->ignore();
+	  }
 	}
 	
 	void dropEvent(QDropEvent *ev){
-	  if(this->whatsThis().isEmpty()){ return; } //not supported
+	  if(this->whatsThis().isEmpty() || !ev->mimeData()->hasUrls() ){ ev->ignore(); return; } //not supported
 	  ev->accept(); //handled here
 	  QString dirpath = this->whatsThis();
 	  //See if the item under the drop point is a directory or not
@@ -200,7 +201,16 @@ protected:
 	    }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
-	  emit DataDropped( dirpath, QString(ev->mimeData()->data(MIME)).split("\n") );
+	  //Now turn the input urls into local file paths
+	  QStringList files;
+	  foreach(const QUrl &url, ev->mimeData()->urls()){
+	    const QString filepath = url.toLocalFile();
+	    //If the target file is modifiable, assume a move - otherwise copy
+	    if(QFileInfo(filepath).isWritable()){ files << "cut::::"+filepath; }
+	    else{ files << "copy::::"+filepath; }
+	  }
+	  //qDebug() << "Drop Event:" << dirpath;
+	  emit DataDropped( dirpath, files );
 	}
 	
 	void mouseReleaseEvent(QMouseEvent *ev){

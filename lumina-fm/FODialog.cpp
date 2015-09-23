@@ -108,6 +108,16 @@ bool FODialog::MoveFiles(QStringList oldPaths, QStringList newPaths){
 
 bool FODialog::CheckOverwrite(){
   bool ok = true;
+  //Quick check that a file is not supposed to be moved/copied/restored onto itself
+  if(!Worker->isRM){
+    for(int i=0; i<Worker->nfiles.length(); i++){
+      if(Worker->nfiles[i] == Worker->ofiles[i]){
+        //duplicate - remove it from the queue
+	Worker->nfiles.removeAt(i); Worker->ofiles.removeAt(i);
+	i--;
+      }
+    }
+  }
   if(!Worker->isRM && Worker->overwrite==-1){
     //Check if the new files already exist, and prompt for action
     QStringList existing;

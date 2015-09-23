@@ -641,13 +641,16 @@ void MainUI::CutFiles(QStringList list){
   qDebug() << "Cut Files:" << list;
   if(list.isEmpty()){ return; } //nothing selected
   //Format the data string
+  QList<QUrl> urilist; //Also assemble a URI list for cros-app compat (no copy/cut distinguishing)
   for(int i=0; i<list.length(); i++){
+    urilist << QUrl::fromLocalFile(list[i]);
     list[i] = list[i].prepend("cut::::");
   }
   //Now save that data to the global clipboard
   QMimeData *dat = new QMimeData;
 	dat->clear();
 	dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
+	dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);
   //Update all the buttons to account for clipboard change
@@ -658,13 +661,16 @@ void MainUI::CopyFiles(QStringList list){
   qDebug() << "Copy Files:" << list;
   if(list.isEmpty()){ return; } //nothing selected
   //Format the data string
+  QList<QUrl> urilist; //Also assemble a URI list for cros-app compat (no copy/cut distinguishing)
   for(int i=0; i<list.length(); i++){
+    urilist << QUrl::fromLocalFile(list[i]);
     list[i] = list[i].prepend("copy::::");
   }
   //Now save that data to the global clipboard
   QMimeData *dat = new QMimeData;
 	dat->clear();
 	dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
+	dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);
   //Update all the buttons to account for clipboard change
