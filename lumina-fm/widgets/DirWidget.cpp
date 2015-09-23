@@ -63,7 +63,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   //Create the filesystem watcher
   watcher = new QFileSystemWatcher(this);
   synctimer = new QTimer(this);
-    synctimer->setInterval(100); // 1/10 second pause (combine simultaneous signals from the watcher)
+    synctimer->setInterval(1000); // 1 second pause (combine simultaneous signals from the watcher)
     synctimer->setSingleShot(true);
   //Now update the rest of the UI
   canmodify = false; //initial value
@@ -902,9 +902,13 @@ void DirWidget::SelectionChanged(){
 void DirWidget::startSync(const QString &file){
   //Update date_format based on user settings
   if(file == sessionsettings_config_file){ setDateFormat(); }
-  if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
-  if(synctimer->isActive()){ synctimer->stop(); }
-  synctimer->start();
+  else if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
+  else if(file == normalbasedir){ emit LoadDirectory(ID, normalbasedir); } //Directory changed (new/removed files)
+  else{
+    //Some file in the directory got changed - start the time for a dir reload 
+    // -- This prevents a directory from refreshing constantly if a file within the directory is changing all the time (such as a log file)
+    if(!synctimer->isActive()){ synctimer->start(); }
+  }
 }
 
 //====================
