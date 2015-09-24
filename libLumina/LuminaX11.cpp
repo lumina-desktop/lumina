@@ -178,9 +178,17 @@ unsigned int LXCB::WindowWorkspace(WId win){
   //qDebug() << "Get Window Workspace";
   if(win==0){ return 0; }
   uint32_t wkspace = 0;
+  xcb_get_property_cookie_t scookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return wkspace; } 
   xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
+  xcb_ewmh_get_atoms_reply_t reply;
+  if(1==xcb_ewmh_get_wm_state_reply(&EWMH,scookie, &reply, NULL)){
+    //Also check if this window is "sticky", in which case return the current workspace (on all of them)
+    for(unsigned int i=0; i<reply.atoms_len; i++){
+      if(reply.atoms[i]==EWMH._NET_WM_STATE_STICKY){ wkspace = LXCB::CurrentWorkspace(); break; }
+    }
+  }
   //qDebug() << " - done: " << wkspace;
   return wkspace;	
 }
