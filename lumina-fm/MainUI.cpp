@@ -301,7 +301,38 @@ void MainUI::RebuildDeviceMenu(){
   }
 }
 
-
+DirWidget* MainUI::FindActiveBrowser(){
+  //Find the current directory
+  DirWidget *curB = 0;
+  //Get the current tab ID to start with
+  QString cur = tabBar->tabWhatsThis(tabBar->currentIndex());
+  //if(cur.startsWith("#")){ cur.clear(); } //multimedia/player tab open
+  
+  if(DWLIST.length()==1){
+    //Only 1 browser open - use it
+    curB = DWLIST[0];
+  }else if(cur.startsWith("DW-")){
+    //This is a tab for a browser - just find the matching widget
+    for(int i=0; i<DWLIST.length(); i++){
+      if(DWLIST[i]->id()==cur){ curB = DWLIST[i]; break; }
+    }
+  }else{
+    //This is a bit more complex - either showing multiple columns or a non-browser tab is active
+    if(cur=="Browser"){
+      //Column View
+      QWidget *focus = QApplication::focusWidget(); //the widget which currently has focus
+      for(int i=0; i<DWLIST.length(); i++){
+        if(DWLIST[i]->isAncestorOf(focus)){ curB = DWLIST[i]; break; } //This browser has focus
+      }
+	    
+    }else{
+      //Non-Browser in focus - use the fallback below
+    }
+  }
+  //if all else fails - just use the first browser in the list (there should always be at least one)
+  if(curB==0 && !DWLIST.isEmpty()){ curB = DWLIST[0];  }
+  return curB;
+}
 
 //==============
 //    PRIVATE SLOTS
@@ -319,18 +350,9 @@ void MainUI::on_actionNew_Tab_triggered(){
 }
 
 void MainUI::on_actionSearch_triggered(){
-  //Find the current directory
-    QString cur = tabBar->tabWhatsThis(tabBar->currentIndex());
-    if(cur.startsWith("#")){ cur.clear(); } //multimedia/player tab open
-    else{
-      for(int i=0; i<DWLIST.length(); i++){
-        if(DWLIST[i]->id()==cur){
-	  //Found the current browser - load it here
-	  QProcess::startDetached("lumina-search -dir \""+DWLIST[i]->currentDir()+"\"");
-	  return;
-	}
-      }
-    }
+  DirWidget *dir = FindActiveBrowser();
+  if(dir==0){ return; }
+  QProcess::startDetached("lumina-search -dir \""+dir->currentDir()+"\"");
 }
 
 void MainUI::on_actionClose_triggered(){
@@ -374,16 +396,10 @@ void MainUI::goToBookmark(QAction *act){
     RebuildBookmarksMenu();
   }else{
     //Find the current directory
-    QString cur = tabBar->tabWhatsThis(tabBar->currentIndex());
-    if(cur.startsWith("#")){ cur.clear(); } //multimedia/player tab open
-    else{
-      for(int i=0; i<DWLIST.length(); i++){
-        if(DWLIST[i]->id()==cur){
-	  //Found the current browser - load it here
-	  DWLIST[i]->ChangeDir(act->whatsThis());
-	  return;
-	}
-      }
+    DirWidget *dir = FindActiveBrowser();
+    if(dir!=0){ 
+      dir->ChangeDir(act->whatsThis());
+      return;
     }
     //If no current dir could be found - open a new tab/column
     OpenDirs(QStringList() << act->whatsThis() );

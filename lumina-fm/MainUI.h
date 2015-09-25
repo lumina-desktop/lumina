@@ -98,6 +98,8 @@ private:
 	void RebuildBookmarksMenu();
 	void RebuildDeviceMenu();
 	
+	DirWidget* FindActiveBrowser();
+	
 private slots:
 	void slotSingleInstance(QStringList in){
 	  this->show();

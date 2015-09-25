@@ -98,7 +98,7 @@ private:
 	//Functions for internal use
 	void setupConnections();
 	QStringList currentSelection();
-    QStringList date_format;
+	QStringList date_format;
 
 private slots:
 	//UI BUTTONS/Actions

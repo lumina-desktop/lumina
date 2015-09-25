@@ -654,6 +654,7 @@ void DirWidget::on_tool_goToImages_clicked(){
       }
     }
     if(!list.isEmpty()){ emit ViewFiles(list); }
+    else{ emit ViewFiles(CLIST); } //invalid file(s) selected - just do everything
   }
 }
 
@@ -669,6 +670,7 @@ void DirWidget::on_tool_goToPlayer_clicked(){
       }
     }
     if(!list.isEmpty()){ emit PlayFiles(list); }
+    else{ emit PlayFiles(CLIST); } //invalid file(s) selected - just do everything
   }
 }
 
@@ -689,6 +691,8 @@ void DirWidget::on_tool_new_file_clicked(){
   }else{
     QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));	  
   }
+  //just in case the watcher does not work for this filesystem -queue up a sync
+  if(!synctimer->isActive()){ synctimer->start(); }
 }
 
 void DirWidget::on_tool_new_dir_clicked(){
@@ -711,7 +715,9 @@ void DirWidget::on_tool_new_dir_clicked(){
     if(!dir.mkdir(newdir) ){
       QMessageBox::warning(this, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
     }
-  }	
+  }
+  //just in case the watcher does not work for this filesystem -queue up a sync
+  if(!synctimer->isActive()){ synctimer->start(); }  
 }
 
 // -- Top Snapshot Buttons
@@ -903,8 +909,10 @@ void DirWidget::startSync(const QString &file){
   //Update date_format based on user settings
   if(file == sessionsettings_config_file){ setDateFormat(); }
   else if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
-  else if(file == normalbasedir){ emit LoadDirectory(ID, normalbasedir); } //Directory changed (new/removed files)
-  else{
+  else if(file == normalbasedir){ 
+    if(synctimer->isActive()){ synctimer->stop(); } //already starting a sync
+    emit LoadDirectory(ID, normalbasedir); //Directory changed (new/removed files)
+  }else{
     //Some file in the directory got changed - start the time for a dir reload 
     // -- This prevents a directory from refreshing constantly if a file within the directory is changing all the time (such as a log file)
     if(!synctimer->isActive()){ synctimer->start(); }
