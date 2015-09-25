@@ -263,10 +263,10 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   //Clear the display widget (if a new directory)
     if(DEBUG){ qDebug() << "Clear Browser Widget:" << time.elapsed(); }
   double scrollpercent = -1;
+  needThumbs.clear();
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
     else{ listWidget->clear(); }
-    needThumbs.clear();
     QApplication::processEvents(); //make sure it is cleared right away
   }else{
     //Need to be smarter about which items need to be removed
@@ -276,7 +276,6 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     if(showDetails){
       for(int i=0; i<treeWidget->topLevelItemCount(); i++){
         if( !newfiles.contains(treeWidget->topLevelItem(i)->whatsThis(0).section("/",-1)) ){
-	  if( needThumbs.contains(treeWidget->topLevelItem(i)->whatsThis(0)) ){ needThumbs.removeAll(treeWidget->topLevelItem(i)->whatsThis(0)); }
 	  delete treeWidget->takeTopLevelItem(i); 
 	  i--;
 	}
@@ -286,7 +285,6 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }else{
       for(int i=0; i<listWidget->count(); i++){
         if( !newfiles.contains(listWidget->item(i)->text()) ){
-	  if( needThumbs.contains(listWidget->item(i)->whatsThis()) ){ needThumbs.removeAll(listWidget->item(i)->whatsThis()); }
 	  delete listWidget->takeItem(i); 
 	  i--;
 	}
