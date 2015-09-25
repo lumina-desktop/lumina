@@ -266,6 +266,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
     else{ listWidget->clear(); }
+    needThumbs.clear();
     QApplication::processEvents(); //make sure it is cleared right away
   }else{
     //Need to be smarter about which items need to be removed
@@ -275,6 +276,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     if(showDetails){
       for(int i=0; i<treeWidget->topLevelItemCount(); i++){
         if( !newfiles.contains(treeWidget->topLevelItem(i)->whatsThis(0).section("/",-1)) ){
+	  if( needThumbs.contains(treeWidget->topLevelItem(i)->whatsThis(0)) ){ needThumbs.removeAll(treeWidget->topLevelItem(i)->whatsThis(0)); }
 	  delete treeWidget->takeTopLevelItem(i); 
 	  i--;
 	}
@@ -284,6 +286,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }else{
       for(int i=0; i<listWidget->count(); i++){
         if( !newfiles.contains(listWidget->item(i)->text()) ){
+	  if( needThumbs.contains(listWidget->item(i)->whatsThis()) ){ needThumbs.removeAll(listWidget->item(i)->whatsThis()); }
 	  delete listWidget->takeItem(i); 
 	  i--;
 	}
@@ -329,8 +332,11 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	      //Since the icon/image is based on the filename - only update this for a new item
 	      // (This is the slowest part of the routine)
 	      if(list[i].isImage()){
-	        if(showThumbs){ it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
-	        else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
+	        if(showThumbs){ 
+		  //it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); 
+		  it->setIcon(t, LXDG::findIcon("fileview-preview","image-x-generic") );
+		  needThumbs << list[i].fileName();	
+		}else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	      }else if(addnew){
 	        it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
 	      }
@@ -399,13 +405,16 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    //Since the icon/image is based on the filename - only update this for a new items (non-thumbnail)
 	    // (This is the slowest part of the routine)
 	    if(list[i].isImage()){
-	      if(showThumbs){ it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); }
-	      else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
+	      if(showThumbs){ 
+		it->setIcon(LXDG::findIcon("fileview-preview","image-x-generic") );
+		needThumbs << list[i].fileName();	
+		//it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
+	      }else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else if(addnew){
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
 	listWidget->addItem(it);
-	if(lastdir == CDIR+"/"+it->whatsThis()){ 
+	if(lastdir == CDIR+"/"+list[i].fileName()){ 
 	  listWidget->setCurrentItem(it);
 	  listWidget->scrollToItem(it);
 	}
@@ -453,6 +462,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(stopload){ return; } //stop right now  
   ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
   if(DEBUG){ qDebug() << "DONE:" << time.elapsed(); }
+  if(showThumbs){ QTimer::singleShot(0,this, SLOT(startLoadThumbs())); }
 }
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
@@ -577,6 +587,24 @@ QStringList DirWidget::currentSelection(){
 // =================
 //    PRIVATE SLOTS
 // =================
+void DirWidget::startLoadThumbs(){
+  //This just runs through the dir and loads all the thumbnails as needed
+  if(needThumbs.isEmpty()){ return; }
+  needThumbs.removeDuplicates(); //just in case
+  for(int i=0; i<needThumbs.length() && !stopload; i++){
+    if(showDetails){
+      //Use the tree widget
+      QTreeWidgetItem *it = treeWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
+      it->setIcon(0, QIcon( QPixmap(it->whatsThis(0).section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
+    }else{
+      //Use the list widget
+      QListWidgetItem *it = listWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
+      it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
+    }
+    QApplication::processEvents();
+  }
+}
+
 //UI BUTTONS
 // -- Left Action Buttons
 void DirWidget::on_tool_act_cut_clicked(){

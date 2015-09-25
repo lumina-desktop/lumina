@@ -76,8 +76,8 @@ private:
 	Ui::DirWidget *ui;
 	QString ID, CDIR; //unique ID assigned by the parent and the current dir path
 	LFileInfoList CLIST; //current item list (snap or not)
-	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining direcoty context while moving between snapshots
-	QStringList snapshots;
+	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
+	QStringList snapshots, needThumbs;
 	bool showDetails, showThumbs, canmodify, stopload; //which widget to use for showing items
 	QList<DETAILTYPES> listDetails;
 	QMenu *contextMenu;
@@ -101,6 +101,9 @@ private:
 	QStringList date_format;
 
 private slots:
+	//Internal loading of thumbnails
+	void startLoadThumbs();
+
 	//UI BUTTONS/Actions
 	// -- Left Action Buttons
 	void on_tool_act_copy_clicked();
@@ -137,7 +140,7 @@ private slots:
 	//Browser Functions
 	void OpenContextMenu();
 	void SelectionChanged();
-    void startSync(const QString &file); //used internally to collect/pause before updating the dir
+	void startSync(const QString &file); //used internally to collect/pause before updating the dir
 
 signals:
 	//Directory loading/finding signals
