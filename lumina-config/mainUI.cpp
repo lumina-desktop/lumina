@@ -226,12 +226,20 @@ void MainUI::setupMenus(){
   ui->combo_session_wloc->addItem( tr("Cascade"), "CascadePlacement");
   ui->combo_session_wloc->addItem( tr("Underneath Mouse"), "UnderMousePlacement");
   ui->combo_session_wtheme->clear();
-  QDir fbdir(LOS::AppPrefix()+"share/fluxbox/styles");
-  QStringList fbstyles = fbdir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-  for(int i=0; i<fbstyles.length(); i++){
-    ui->combo_session_wtheme->addItem(fbstyles[i], fbdir.absoluteFilePath(fbstyles[i]));
+  QStringList dirs; dirs << LOS::AppPrefix()+"share/fluxbox/styles" << QDir::homePath()+"/.fluxbox/styles";
+  QFileInfoList fbstyles; 
+  for(int i=0; i<dirs.length(); i++){
+    QDir fbdir(dirs[i]);
+    fbstyles << fbdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
   }
-
+  QString lastdir;
+  for(int i=0; i<fbstyles.length(); i++){
+    if(lastdir!=fbstyles[i].absolutePath()){
+      lastdir = fbstyles[i].absolutePath(); //save for checking later
+      if(ui->combo_session_wtheme->count()>0){ ui->combo_session_wtheme->insertSeparator(ui->combo_session_wtheme->count()); }
+    }
+    ui->combo_session_wtheme->addItem(fbstyles[i].fileName(), fbstyles[i].absoluteFilePath());
+  }
   //Display formats for panel clock
   ui->combo_session_datetimeorder->clear();
   ui->combo_session_datetimeorder->addItem( tr("Time (Date as tooltip)"), "timeonly");
@@ -1534,8 +1542,8 @@ void MainUI::loadSessionSettings(){
   if(!val.isEmpty()){ ui->spin_session_wkspaces->setValue(val.toInt()); }
 
   //Now do the startup applications
-  QStringList STARTUP = readFile(QDir::homePath()+"/.lumina/startapps");
-  STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //STARTUP = readFile(QDir::homePath()+"/.lumina/startapps");
+  QList<XDGDesktop> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
   //qDebug() << "StartApps:";
   ui->list_session_start->clear();
   for(int i=0; i<STARTAPPS.length(); i++){
