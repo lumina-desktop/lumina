@@ -1542,8 +1542,7 @@ void MainUI::loadSessionSettings(){
   if(!val.isEmpty()){ ui->spin_session_wkspaces->setValue(val.toInt()); }
 
   //Now do the startup applications
-  //STARTUP = readFile(QDir::homePath()+"/.lumina/startapps");
-  QList<XDGDesktop> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
   //qDebug() << "StartApps:";
   ui->list_session_start->clear();
   for(int i=0; i<STARTAPPS.length(); i++){
