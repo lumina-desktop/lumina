@@ -33,7 +33,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
-  this->setAttribute(Qt::AA_UseDesktopOpenGL);
+  //this->setAttribute(Qt::AA_UseDesktopOpenGL);
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
   //this->setStyle( new MenuProxyStyle); //QMenu icon size override
   SystemTrayID = 0; VisualTrayID = 0;
@@ -580,12 +580,12 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     }
     //Note: Fluxbox treats this weird, the origin point needs to be the total (frame included), 
     //   but the size needs to be the raw (no frame) value
-    if(XCB->WindowClass(win)=="Take Screenshot"){ 
+    //if(XCB->WindowClass(win)=="Take Screenshot"){ 
       //Not sure why: but Fluxbox treats lumina-screenshot differently
       XCB->MoveResizeWindow(win, geom);
-    }else{
-      XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
-    }
+    //}else{
+      //XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
+    //}
   }
   
 }
