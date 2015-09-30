@@ -1,6 +1,7 @@
 
 QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia quickwidgets
+CONFIG += debug_and_release
 
 TARGET = Lumina-DE
 isEmpty(PREFIX) {
@@ -30,6 +31,7 @@ SOURCES += main.cpp \
 	LXcbEventFilter.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
+	LDesktopPluginSpace.cpp \
 	LPanel.cpp \
 	LWinInfo.cpp \
 	AppMenu.cpp \
@@ -69,6 +71,7 @@ HEADERS  += Globals.h \
 	LXcbEventFilter.h \
 	LSession.h \
 	LDesktop.h \
+	LDesktopPluginSpace.h \
 	LPanel.h \
 	LWinInfo.h \
 	AppMenu.h \

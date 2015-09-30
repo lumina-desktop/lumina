@@ -1,6 +1,7 @@
 
 QT       += core network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
+CONFIG += debug_and_release
 
 TARGET=LuminaUtils
 
