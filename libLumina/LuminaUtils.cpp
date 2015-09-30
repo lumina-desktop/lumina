@@ -36,6 +36,7 @@ int LUtils::runCmd(QString cmd, QStringList args){
   }else{
     proc.start(cmd, args);
   }
+  if(!proc.waitForStarted(30000)){ return 1; } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(300)){
     QCoreApplication::processEvents();
   }
@@ -56,6 +57,7 @@ QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   }else{
     proc.start(cmd,args);	  
   }
+  if(!proc.waitForStarted(30000)){ return QStringList(); } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(500)){
     QCoreApplication::processEvents();
   }
