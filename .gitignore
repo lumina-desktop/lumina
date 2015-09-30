@@ -1,6 +1,7 @@
 global.h
 *.qm
-Makefile
+Makefile.Debug
+Makefile.Release
 *.o
 moc_*.cpp
 ui_*.h

@@ -1,6 +1,6 @@
 
 QT       += core gui widgets network
-CONFIG += debug_and_release
+
 
 TARGET = lumina-info
 isEmpty(PREFIX) {

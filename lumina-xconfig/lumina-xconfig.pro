@@ -13,7 +13,6 @@ isEmpty(LIBPREFIX) {
 }
 
 TEMPLATE = app
-CONFIG += debug_and_release
 
 SOURCES += main.cpp \
 	   mainUI.cpp
