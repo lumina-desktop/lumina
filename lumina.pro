@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 #Ensure the order listed below is preserved
-CONFIG += ordered
+CONFIG += ordered debug_and_release
 
 SUBDIRS+= libLumina \
 	 lumina-desktop \

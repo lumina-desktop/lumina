@@ -31,7 +31,7 @@ SOURCES += main.cpp \
 	LXcbEventFilter.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
-	LDesktopPluginSpace.cpp \
+#	LDesktopPluginSpace.cpp \
 	LPanel.cpp \
 	LWinInfo.cpp \
 	AppMenu.cpp \
@@ -71,7 +71,7 @@ HEADERS  += Globals.h \
 	LXcbEventFilter.h \
 	LSession.h \
 	LDesktop.h \
-	LDesktopPluginSpace.h \
+#	LDesktopPluginSpace.h \
 	LPanel.h \
 	LWinInfo.h \
 	AppMenu.h \
