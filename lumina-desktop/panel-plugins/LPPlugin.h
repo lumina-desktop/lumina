@@ -27,7 +27,7 @@ private:
 public:
 	LPPlugin(QWidget *parent = 0, QString ptype="unknown", bool horizontal = true) : QWidget(parent){
 	  plugintype=ptype;
-	  this->setContentsMargins(0,0,0,0);
+	  this->setContentsMargins(1,1,1,1);
 	  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	  this->setFocusPolicy(Qt::NoFocus); //no keyboard focus on the panel/plugins
 	  if(horizontal){LY = new QBoxLayout(QBoxLayout::LeftToRight, this); }
