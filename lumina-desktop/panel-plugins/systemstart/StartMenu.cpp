@@ -238,14 +238,14 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
       //Battery available - update the status button
       int charge = LOS::batteryCharge();
       QString TT, ICON;
-      if(val < 10){ ICON="-low"; }
-      else if(val<20){ ICON="-caution"; }
-      else if(val<40){ ICON="-040"; }
-      else if(val<60){ ICON="-060"; }
-      else if(val<80){ ICON="-080"; }
+      if(charge < 10){ ICON="-low"; }
+      else if(charge<20){ ICON="-caution"; }
+      else if(charge<40){ ICON="-040"; }
+      else if(charge<60){ ICON="-060"; }
+      else if(charge<80){ ICON="-080"; }
       else{ ICON="-100"; }
       if(LOS::batteryIsCharging()){
-	if(val>=80){ ICON.clear(); } //for charging, there is no suffix to the icon name over 80%
+	if(charge>=80){ ICON.clear(); } //for charging, there is no suffix to the icon name over 80%
 	ICON.prepend("battery-charging");
         TT = QString(tr("%1% (Plugged In)")).arg(QString::number(charge));
       }else{
@@ -254,6 +254,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
 	if(secs>1){ TT = QString(tr("%1% (%2 Estimated)")).arg(QString::number(charge), LUtils::SecondsToDisplay(secs)); }
 	else{ TT = QString(tr("%1% Remaining")).arg(QString::number(charge)); }
       }
+      //qDebug() << " Battery Icon:" <<  ICON << val << TT
       ui->label_status_battery->setPixmap( LXDG::findIcon(ICON,"").pixmap(ui->tool_goto_apps->iconSize()/2) );
       ui->label_status_battery->setToolTip(TT);
     }
