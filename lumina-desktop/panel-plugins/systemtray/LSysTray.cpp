@@ -149,7 +149,7 @@ void LSysTray::UpdateTrayWindow(WId win){
   if(!isRunning || stopping || checking){ return; }
   for(int i=0; i<trayIcons.length(); i++){
     if(trayIcons[i]->appID()==win){
-      qDebug() << "System Tray: Update Window " << win;
+      //qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->repaint(); //don't use update() because we need an instant repaint (not a cached version)
       //QTimer::singleShot(10, trayIcons[i], SLOT(repaint()) ); //re-paint in 10ms (give it a moment to settle)
       //QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
@@ -157,7 +157,7 @@ void LSysTray::UpdateTrayWindow(WId win){
     }
   }
   //Could not find tray in the list, run the checkall routine to make sure we are not missing any
-  qDebug() << "System Tray: Missing Window - check all";
+  //qDebug() << "System Tray: Missing Window - check all";
   QTimer::singleShot(0,this, SLOT(checkAll()) );
 }
 

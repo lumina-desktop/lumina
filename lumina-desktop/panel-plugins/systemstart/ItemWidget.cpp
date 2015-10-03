@@ -7,6 +7,7 @@
 #include "ItemWidget.h"
 #include <LuminaUtils.h>
 #include <QMenu>
+#include "../../LSession.h"
 
 #define TEXTCUTOFF 165
 ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
@@ -93,7 +94,6 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
 ItemWidget::~ItemWidget(){ 
 }
 
-
 void ItemWidget::createWidget(){
   //Initialize the widgets
   gooditem = true;
@@ -139,6 +139,13 @@ void ItemWidget::setupContextMenu(){
     //This file does not have a shortcut yet -- allow the user to add it
     contextMenu->addAction( LXDG::findIcon("bookmark-toolbar",""), tr("Add to Favorites"), this, SLOT(AddFavorite()) );
   }
+  //QuickLaunch Item
+  if(LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList().contains(icon->whatsThis()) ){ //Favorite Item - can always remove this
+    contextMenu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove from Quicklaunch"), this, SLOT(RemoveQL()) );
+  }else{
+    //This file does not have a shortcut yet -- allow the user to add it
+    contextMenu->addAction( LXDG::findIcon("quickopen",""), tr("Add to Quicklaunch"), this, SLOT(AddQL()) );
+  }
 }
 
 void ItemWidget::setupActions(XDGDesktop app){
@@ -175,6 +182,15 @@ void ItemWidget::AddFavorite(){
     emit NewShortcut();	
   }
   
+}
+void ItemWidget::RemoveQL(){
+  qDebug() << "Remove QuickLaunch Button:" << icon->whatsThis();
+  emit toggleQuickLaunch(icon->whatsThis(), false);
+}
+
+void ItemWidget::AddQL(){
+  qDebug() << "Add QuickLaunch Button:" << icon->whatsThis();
+  emit toggleQuickLaunch(icon->whatsThis(), true);	
 }
 
 

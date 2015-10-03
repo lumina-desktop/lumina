@@ -40,6 +40,7 @@ private:
 	QWidgetAction *mact;
 	StartMenu *startmenu;
 	QToolButton *button;
+	QList<QToolButton*> QUICKL;
 
 private slots:
 	void openMenu();
@@ -47,14 +48,19 @@ private slots:
 
 	void updateButtonVisuals();
 
+	void updateQuickLaunch(QStringList);
+	void LaunchQuick(QAction*);
+
 public slots:
 	void OrientationChange(){
 	  if(this->layout()->direction()==QBoxLayout::LeftToRight){
 	    this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
 	    button->setIconSize( QSize(this->height(), this->height()) );
+	    for(int i=0; i<QUICKL.length(); i++){ QUICKL[i]->setIconSize(QSize(this->height(), this->height())); }
 	  }else{
 	    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 	    button->setIconSize( QSize(this->width(), this->width()) );
+	    for(int i=0; i<QUICKL.length(); i++){ QUICKL[i]->setIconSize(QSize(this->width(), this->width())); }
 	  }
 	  this->layout()->update();
 	  updateButtonVisuals();

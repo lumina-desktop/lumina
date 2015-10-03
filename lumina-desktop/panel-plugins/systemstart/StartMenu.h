@@ -26,6 +26,8 @@ public slots:
 	void UpdateAll(); //for re-translation/icon changes
 	void UpdateMenu(bool forceall = false); //for item changes
 
+	void ReLoadQuickLaunch();
+
 private:
 	Ui::StartMenu *ui;
 	QHash<QString, QList<XDGDesktop> > *sysapps;
@@ -37,6 +39,7 @@ private:
 	
 private slots:
 	void LaunchItem(QString path, bool fix = true);
+	void UpdateQuickLaunch(QString, bool);
 
 	//Application/Favorite Listings
 	void UpdateApps();
@@ -84,6 +87,8 @@ private slots:
 
 signals:
 	void CloseMenu();
+	void UpdateQuickLaunch(QStringList);
+	
 };
 
 #endif

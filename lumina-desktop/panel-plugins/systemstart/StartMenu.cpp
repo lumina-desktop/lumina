@@ -105,6 +105,7 @@ void StartMenu::UpdateAll(){
   //Lumina Utilities
   ui->tool_launch_desksettings->setVisible(LUtils::isValidBinary("lumina-config"));
   ui->tool_launch_deskinfo->setVisible(LUtils::isValidBinary("lumina-info"));
+
 }
 
 void StartMenu::UpdateMenu(bool forceall){
@@ -117,6 +118,11 @@ void StartMenu::UpdateMenu(bool forceall){
     on_stackedWidget_currentChanged(0); //refresh/update the main page every time
   }
 }
+
+void StartMenu::ReLoadQuickLaunch(){
+  emit UpdateQuickLaunch( LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList() );  
+}
+
 // ==========================
 //        PRIVATE FUNCTIONS
 // ==========================
@@ -172,6 +178,15 @@ void StartMenu::LaunchItem(QString path, bool fix){
   }
 }
 
+void StartMenu::UpdateQuickLaunch(QString path, bool keep){
+  QStringList QL = LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList();
+  if(keep){QL << path; }
+  else{ QL.removeAll(path); }
+  QL.removeDuplicates();
+  LSession::handle()->sessionSettings()->setValue("QuicklaunchApps",QL);
+  emit UpdateQuickLaunch(QL);
+}
+
 //Listing Update routines
 void StartMenu::UpdateApps(){
   ClearScrollArea(ui->scroll_apps);
@@ -179,6 +194,7 @@ void StartMenu::UpdateApps(){
   QStringList cats = sysapps->keys();
   cats.sort();
   cats.removeAll("All");
+  //QStringList QL = LSession::handle()->sessionSettings()->value("QuickLaunchApps",QStringList()).toStringList();
   for(int c=0; c<cats.length(); c++){
     QList<XDGDesktop> apps = sysapps->value(cats[c]);
     if(apps.isEmpty()){ continue; }
@@ -194,6 +210,7 @@ void StartMenu::UpdateApps(){
       connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+      connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
   }
   
@@ -222,6 +239,7 @@ void StartMenu::UpdateFavs(){
       connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+      connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
     QApplication::processEvents();
   }

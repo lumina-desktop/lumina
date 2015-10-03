@@ -32,6 +32,7 @@ public:
 	~ItemWidget();
 
 	bool gooditem;
+
 private:
 	QToolButton *actButton;
 	QMenu *contextMenu;
@@ -49,6 +50,8 @@ private slots:
 	void PinToDesktop();
 	void RemoveFavorite();
 	void AddFavorite();
+	void RemoveQL();
+	void AddQL();
 	void ItemClicked();
 	void actionClicked(QAction*);
 	//Functions to fix the submenu open/close issues
@@ -74,6 +77,7 @@ signals:
 	void NewShortcut();
 	void RemovedShortcut();
 	void RunItem(QString cmd);
+	void toggleQuickLaunch(QString path, bool ok);
 
 };
 
