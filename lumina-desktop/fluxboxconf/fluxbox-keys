@@ -82,10 +82,6 @@ Mod1 F9  :If {Matches (Layer=Normal)} {Minimize}
 Mod1 F10  :If {Matches (Layer=Normal)} {Maximize}
 Mod1 F11  :If {Matches (Layer=Normal)} {Fullscreen}
 
-# Change workspace
-Control Mod1 Left  :PrevWorkspace
-Control Mod1 Right  :NextWorkspace
-
 # send the current window to previous/next workspace
 Mod4 Left  :If {Matches (Layer=Normal)} {SendToPrevWorkspace}
 Mod4 Right  :If {Matches (Layer=Normal)} {SendToNextWorkspace}
@@ -108,6 +104,12 @@ Control F10  :Workspace 10
 Control F11  :Workspace 11
 Control F12  :Workspace 12
 
+Control Mod1 Left  :PrevWorkspace
+Control Mod1 Right  :NextWorkspace
+
+# Control + MouseWheel to change workspaces
+Control Mouse4 :PrevWorkspace
+Control Mouse5 :NextWorkspace
 
 # send the current window to a specific workspace
 Mod4 F1  :SendToWorkspace 1
@@ -119,8 +121,8 @@ Mod4 F6  :SendToWorkspace 6
 Mod4 F7  :SendToWorkspace 7
 Mod4 F8  :SendToWorkspace 8
 Mod4 F9  :SendToWorkspace 9
-Mod4 F10 :SendToWorkspace 10
-Mod4 F11 :SendToWorkspace 11
+Mod4 F10  :SendToWorkspace 10
+Mod4 F11  :SendToWorkspace 11
 Mod4 F12 :SendToWorkspace 12
 
 # send the current window and change to a specific workspace
@@ -135,7 +137,7 @@ Control Mod4 F8  :If {Matches (Layer=Normal)} {TakeToWorkspace 8}
 Control Mod4 F9  :If {Matches (Layer=Normal)} {TakeToWorkspace 9}
 Control Mod4 F10  :If {Matches (Layer=Normal)} {TakeToWorkspace 10}
 Control Mod4 F11  :If {Matches (Layer=Normal)} {TakeToWorkspace 11}
-Control Mod4 F12  :If {Matches (Layer=Normal)} {TakeToWorkspace 12}
+Control Mod4 F12 :If {Matches (Layer=Normal)} {TakeToWorkspace 12}
 
 #Lumina Specific defaults
 Print  :Exec lumina-screenshot
