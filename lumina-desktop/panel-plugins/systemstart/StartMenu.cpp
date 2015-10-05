@@ -123,6 +123,16 @@ void StartMenu::ReLoadQuickLaunch(){
   emit UpdateQuickLaunch( LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList() );  
 }
 
+void StartMenu::UpdateQuickLaunch(QString path, bool keep){
+  QStringList QL = LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList();
+  if(keep){QL << path; }
+  else{ QL.removeAll(path); }
+  QL.removeDuplicates();
+  LSession::handle()->sessionSettings()->setValue("QuicklaunchApps",QL);
+  LSession::handle()->sessionSettings()->sync();
+  emit UpdateQuickLaunch(QL);
+}
+
 // ==========================
 //        PRIVATE FUNCTIONS
 // ==========================
@@ -176,15 +186,6 @@ void StartMenu::LaunchItem(QString path, bool fix){
     else{ LSession::LaunchApplication(path); }
     emit CloseMenu(); //so the menu container will close
   }
-}
-
-void StartMenu::UpdateQuickLaunch(QString path, bool keep){
-  QStringList QL = LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList();
-  if(keep){QL << path; }
-  else{ QL.removeAll(path); }
-  QL.removeDuplicates();
-  LSession::handle()->sessionSettings()->setValue("QuicklaunchApps",QL);
-  emit UpdateQuickLaunch(QL);
 }
 
 //Listing Update routines

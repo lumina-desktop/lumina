@@ -27,6 +27,7 @@ public slots:
 	void UpdateMenu(bool forceall = false); //for item changes
 
 	void ReLoadQuickLaunch();
+	void UpdateQuickLaunch(QString, bool);
 
 private:
 	Ui::StartMenu *ui;
@@ -39,7 +40,6 @@ private:
 	
 private slots:
 	void LaunchItem(QString path, bool fix = true);
-	void UpdateQuickLaunch(QString, bool);
 
 	//Application/Favorite Listings
 	void UpdateApps();

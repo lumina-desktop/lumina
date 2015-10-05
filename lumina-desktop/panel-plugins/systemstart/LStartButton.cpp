@@ -46,6 +46,7 @@ void LStartButtonPlugin::updateButtonVisuals(){
 void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
   //First clear any obsolete apps
   QStringList old;
+  qDebug() << "Update QuickLaunch Buttons";
   for(int i=0; i<QUICKL.length(); i++){
     if( !apps.contains(QUICKL[i]->whatsThis()) ){
       //App was removed
@@ -53,39 +54,46 @@ void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
       i--;
     }else{
       //App still listed - update the button
-      old << QUICKL[i]->defaultAction()->whatsThis(); //add the list of current buttons
+      old << QUICKL[i]->whatsThis(); //add the list of current buttons
       LFileInfo info(QUICKL[i]->whatsThis());
-      QUICKL[i]->defaultAction()->setIcon( LXDG::findIcon(info.iconfile(),"unknown") );
-      if(info.isDesktopFile()){ QUICKL[i]->defaultAction()->setToolTip( info.XDG()->name ); }
-      else{ QUICKL[i]->defaultAction()->setToolTip( info.fileName() ); }
+      QUICKL[i]->setIcon( LXDG::findIcon(info.iconfile(),"unknown") );
+      if(info.isDesktopFile()){ QUICKL[i]->setToolTip( info.XDG()->name ); }
+      else{ QUICKL[i]->setToolTip( info.fileName() ); }
     }
   }
   //Now go through and create any new buttons
   for(int i=0; i<apps.length(); i++){
     if( !old.contains(apps[i]) ){
       //New App
-      QToolButton *tmp = new QToolButton(this);
-      QAction *act = new QAction(tmp);
-	tmp->setDefaultAction(act);
-        act->setWhatsThis(apps[i]);
+      LQuickLaunchButton *tmp = new LQuickLaunchButton(apps[i], this);
       QUICKL << tmp;
       LFileInfo info(apps[i]);
-      act->setIcon( LXDG::findIcon( info.iconfile() ) );
-      if(info.isDesktopFile()){ act->setToolTip( info.XDG()->name ); }
-      else{ act->setToolTip( info.fileName() ); }
+      tmp->setIcon( LXDG::findIcon( info.iconfile() ) );
+      if(info.isDesktopFile()){ tmp->setToolTip( info.XDG()->name ); }
+      else{ tmp->setToolTip( info.fileName() ); }
       //Now add the button to the layout and connect the signal/slots
       this->layout()->insertWidget(i+1,tmp); //"button" is always in slot 0
-      connect(tmp, SIGNAL(triggered(QAction*)), this, SLOT(LaunchQuick(QAction*)) );
+      connect(tmp, SIGNAL(Launch(QString)), this, SLOT(LaunchQuick(QString)) );
+      connect(tmp, SIGNAL(Remove(QString)), this, SLOT(RemoveQuick(QString)) );
     }
   }
+  qDebug() << " - Done updateing QuickLaunch Buttons";
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
-void LStartButtonPlugin::LaunchQuick(QAction* act){
+void LStartButtonPlugin::LaunchQuick(QString file){
   //Need to get which button was clicked
-  qDebug() << "Quick Launch triggered:" << act->whatsThis();
-  if(!act->whatsThis().isEmpty()){
-    LSession::LaunchApplication("lumina-open \""+act->whatsThis()+"\"");
+  qDebug() << "Quick Launch triggered:" << file;
+  if(!file.isEmpty()){
+    LSession::LaunchApplication("lumina-open \""+file+"\"");
+    emit MenuClosed();
+  }
+}
+
+void LStartButtonPlugin::RemoveQuick(QString file){
+  qDebug() << "Remove Quicklaunch Button:" << file;
+  if(!file.isEmpty()){
+    startmenu->UpdateQuickLaunch(file, false); //always a removal
     emit MenuClosed();
   }
 }

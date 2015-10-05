@@ -16,7 +16,7 @@
 #include <QToolButton>
 #include <QString>
 #include <QWidget>
-
+#include <QMenu>
 
 // Lumina-desktop includes
 //#include "../../Globals.h"
@@ -26,6 +26,34 @@
 #include "LuminaXDG.h"
 
 #include "StartMenu.h"
+
+//Simple Tool Button For QuickLaunch Items
+class LQuickLaunchButton : public QToolButton{
+	Q_OBJECT
+signals:
+	void Launch(QString);
+	void Remove(QString);
+
+private slots:
+	void rmentry(){
+	  emit Remove(this->whatsThis());
+	}
+	void launchentry(){
+	  emit Launch(this->whatsThis());
+	}
+	
+public:
+	LQuickLaunchButton(QString path, QWidget* parent = 0) : QToolButton(parent){
+	  this->setWhatsThis(path);
+	  this->setMenu(new QMenu(this));
+	  this->setContextMenuPolicy(Qt::CustomContextMenu);
+	  this->menu()->addAction( LXDG::findIcon("edit-delete",""), tr("Remove from Quicklaunch"), this, SLOT(rmentry()) );
+	  connect(this, SIGNAL(clicked()), this, SLOT(launchentry()) );
+	  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu()) );
+	}
+	~LQuickLaunchButton(){}
+
+};
 
 // PANEL PLUGIN BUTTON
 class LStartButtonPlugin : public LPPlugin{
@@ -40,7 +68,7 @@ private:
 	QWidgetAction *mact;
 	StartMenu *startmenu;
 	QToolButton *button;
-	QList<QToolButton*> QUICKL;
+	QList<LQuickLaunchButton*> QUICKL;
 
 private slots:
 	void openMenu();
@@ -49,7 +77,8 @@ private slots:
 	void updateButtonVisuals();
 
 	void updateQuickLaunch(QStringList);
-	void LaunchQuick(QAction*);
+	void LaunchQuick(QString);
+	void RemoveQuick(QString);
 
 public slots:
 	void OrientationChange(){
