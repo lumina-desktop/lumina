@@ -299,7 +299,7 @@ void LPanel::UpdateTheme(){
 void LPanel::checkPanelFocus(){
   if( !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
-    if(hidden){ this->move(hidepoint); }
+    if(hidden){ this->move(hidepoint); this->update(); }
     //Re-active the old window
     if(LSession::handle()->activeWindow()!=0){
       LSession::handle()->XCB->ActivateWindow(LSession::handle()->activeWindow());
@@ -313,17 +313,14 @@ void LPanel::checkPanelFocus(){
 //===========
 void LPanel::paintEvent(QPaintEvent *event){
   QPainter *painter = new QPainter(this);
+  qDebug() << "Paint Tray:";
   //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
-  QRect rec(event->rect().x(), event->rect().y(), event->rect().width(), event->rect().height()); //already in global coords? (translating to bgWindow coords crashes Lumina)
+  QRect rec = this->geometry(); //start with the global geometry of the panel
   //Need to translate that rectangle to the background image coordinates
-  //qDebug() << "Rec:" << rec.x() << rec.y();
-  //Need to change to global coords for the main window
-  if(hidden && (this->pos()==hidepoint) ){ rec.moveTo( this->mapToGlobal(rec.topLeft()-hidepoint+showpoint) ); }
-  else{ rec.moveTo( this->mapToGlobal(rec.topLeft()) ); }
-  //qDebug() << "Global Rec:" << rec.x() << rec.y() << screennum;
+  //qDebug() << " - Rec:" << rec << hidden << this->geometry();
   rec.moveTo( rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y() );
-  //qDebug() << "Adjusted Global Rec:" << rec.x() << rec.y();
-  painter->drawPixmap(event->rect(), bgWindow->grab(rec) );
+  //qDebug() << " - Adjusted Global Rec:" << rec;
+  painter->drawPixmap(QRect(0,0,this->width(), this->height()), bgWindow->grab(rec) );
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }
 
@@ -332,6 +329,7 @@ void LPanel::enterEvent(QEvent *event){
   if(hidden){
     //Move the panel out so it is fully available
     this->move(showpoint);
+    this->update();
   }
   this->activateWindow();
   event->accept(); //just to quiet the compile warning

@@ -224,7 +224,7 @@ void LDesktop::InitDesktop(){
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
-      bgDesktop->SetIconSize(qRound(bgDesktop->height()/14.0)); // (For 1600x900 screens - this comes out to 64 pixel icons)
+      bgDesktop->SetIconSize(qRound(bgWindow->height()/14.0)); // (For 1600x900 screens - this comes out to 64 pixel icons)
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
   if(DEBUG){ qDebug() << " - Desktop Init Done:" << desktopnumber; }
   //Start the update processes

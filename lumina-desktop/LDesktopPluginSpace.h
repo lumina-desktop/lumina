@@ -14,6 +14,8 @@
 #include <QMimeData>
 #include <QSettings>
 #include <QDebug>
+#include <QFile>
+#include <QDir>
 
 #include "desktop-plugins/LDPlugin.h"
 
@@ -217,7 +219,15 @@ protected:
 	    qDebug() << "Desktop Drop Event:" << urls;
 	    for(int i=0; i<urls.length(); i++){
 	      //If this file is not in the desktop folder, move/copy it here
-	      // -- TO-DO
+	      if(urls[i].isLocalFile()){
+		QFileInfo info(urls[i].toLocalFile());
+		if(info.exists() && !QFile::exists(QDir::homePath()+"/Desktop/"+info.fileName())){
+		  //Make a link to the file here
+		  QFile::link(info.absoluteFilePath(), QDir::homePath()+"/Desktop/"+info.fileName());
+		}else{
+		  qWarning() << "Invalid desktop file drop (ignored):" << urls[i].toString();
+		}
+	      }
 
 	    }
 	  }else{

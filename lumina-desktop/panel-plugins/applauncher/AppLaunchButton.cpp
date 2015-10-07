@@ -8,6 +8,7 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
+#include <QInputDialog>
 
 AppLaunchButtonPlugin::AppLaunchButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);

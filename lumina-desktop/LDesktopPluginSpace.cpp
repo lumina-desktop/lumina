@@ -193,7 +193,7 @@ void LDesktopPluginSpace::reloadPlugins(){
     else if(ITEMS[i]->whatsThis().contains("---dlink") && items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)) ){ 
       //Account for the variation in the Plugin ID for desktop files
       items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50));
-    }else{ ITEMS[i]->Cleanup(); delete ITEMS.takeAt(i);  i--; } 
+    }else{ ITEMS[i]->removeSettings(true); delete ITEMS.takeAt(i);  i--; } //this is considered a permanent removal (cleans settings)
   }
   
   //Now create any new items
