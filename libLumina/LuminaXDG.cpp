@@ -573,7 +573,10 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   if(DEBUG){ qDebug() << "[LXDG] Icon search paths:" << paths; }
   //Finding an icon from the current theme is already built into Qt, just use it
   QString cTheme = QIcon::themeName();
-  if(cTheme.isEmpty()){ QIcon::setThemeName("oxygen"); } //set the XDG default theme
+  if(cTheme.isEmpty()){ 
+    QIcon::setThemeName("oxygen"); 
+    cTheme = "oxygen";	  
+  }
   if(DEBUG){ qDebug() << "[LXDG] Current theme:" << cTheme; }
   //Try to load the icon from the current theme
   QIcon ico = QIcon::fromTheme(iconName);
@@ -588,8 +591,9 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       //Fallback on a manual search over the default theme directories (hicolor, then oxygen)
       if( QDir::searchPaths("fallbackicons").isEmpty() ){
         //Set the fallback search paths
-	QString localbase = LOS::AppPrefix()+"share/icons/";
-        QDir::setSearchPaths("fallbackicons", QStringList() << getChildIconDirs(localbase+"hicolor") << getChildIconDirs(localbase+"oxygen") ); 
+	QString sysbase = LOS::AppPrefix()+"share/icons/";
+	QString localbase = QDir::homePath()+"/.local/share/icons/";
+        QDir::setSearchPaths("fallbackicons", QStringList() << getChildIconDirs(localbase+"hicolor") << getChildIconDirs(localbase+"oxygen")  << getChildIconDirs(sysbase+"hicolor") << getChildIconDirs(sysbase+"oxygen") ); 
       }
       if(QFile::exists("fallbackicons:"+iconName+".png")){
         ico = QIcon("fallbackicons:"+iconName+".png");
