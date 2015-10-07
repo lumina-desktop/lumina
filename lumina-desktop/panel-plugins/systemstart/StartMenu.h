@@ -9,6 +9,7 @@
 
 #include <QWidget>
 #include <QScrollArea>
+#include <QMouseEvent>
 
 #include <LuminaXDG.h>
 

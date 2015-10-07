@@ -36,10 +36,10 @@ void TrayIcon::attachApp(WId id){
   dmgID = LSession::handle()->XCB->EmbedWindow(AID, IID);
   if( dmgID != 0 ){
     LSession::handle()->XCB->RestoreWindow(AID); //make it visible
-    qDebug() << "New System Tray App:" << AID;
+    //qDebug() << "New System Tray App:" << AID;
     QTimer::singleShot(1000, this, SLOT(updateIcon()) );
   }else{
-    qWarning() << "Could not Embed Tray Application:" << AID;
+    //qWarning() << "Could not Embed Tray Application:" << AID;
     IID = 0;
     AID = 0;
   }
@@ -55,15 +55,15 @@ void TrayIcon::setSizeSquare(int side){
 // ==============
 void TrayIcon::detachApp(){
   if(AID==0){ return; } //already detached
-  qDebug() << "Detach App:" << AID;
+  //qDebug() << "Detach App:" << AID;
   //Temporarily move the AID, so that internal slots do not auto-run
   WId tmp = AID;
   AID = 0;
   //Now detach the application window and clean up
-  qDebug() << " - Unembed";
+  //qDebug() << " - Unembed";
   //WIN->setParent(0); //Reset parentage back to the main stack
   LSession::handle()->XCB->UnembedWindow(tmp);
-  qDebug() << " - finished app:" << tmp;
+  //qDebug() << " - finished app:" << tmp;
   IID = 0;
 }
 

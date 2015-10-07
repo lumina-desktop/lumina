@@ -115,10 +115,10 @@ void LSysTray::checkAll(){
       LI->addWidget(cont);
       //qDebug() << " - Update tray layout";
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
-        cont->setSizeSquare(this->height()-2*frame->frameWidth()); //horizontal tray
+        cont->setSizeSquare(this->height()-2-2*frame->frameWidth()); //horizontal tray
 	this->setMaximumSize( trayIcons.length()*this->height(), 10000);
       }else{
-	cont->setSizeSquare(this->width()-2*frame->frameWidth()); //vertical tray
+	cont->setSizeSquare(this->width()-2-2*frame->frameWidth()); //vertical tray
 	this->setMaximumSize(10000, trayIcons.length()*this->width());
       }
       LSession::processEvents();
@@ -126,7 +126,7 @@ void LSysTray::checkAll(){
       cont->attachApp(wins[i]);
       if(cont->appID()==0){ 
 	//could not attach window - remove the widget
-	qDebug() << "Invalid Tray Container:"; 
+	//qDebug() << "Invalid Tray Container:"; 
 	trayIcons.takeAt(trayIcons.length()-1); //Always at the end
 	LI->removeWidget(cont);
 	delete cont;

@@ -8,6 +8,7 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
+#include <LuminaUtils.h>
 
 LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
@@ -17,15 +18,16 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(button);
-  menu = new QMenu(this);
+  menu = new ResizeMenu(this);
     menu->setContentsMargins(1,1,1,1);
     connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   startmenu = new StartMenu(this);
     connect(startmenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
     connect(startmenu, SIGNAL(UpdateQuickLaunch(QStringList)), this, SLOT(updateQuickLaunch(QStringList)));
-  mact = new QWidgetAction(this);
+  menu->setContents(startmenu);
+  /*mact = new QWidgetAction(this);
     mact->setDefaultWidget(startmenu);
-    menu->addAction(mact);
+    menu->addAction(mact);*/
 	
   button->setMenu(menu);
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );

@@ -313,7 +313,7 @@ void LPanel::checkPanelFocus(){
 //===========
 void LPanel::paintEvent(QPaintEvent *event){
   QPainter *painter = new QPainter(this);
-  qDebug() << "Paint Tray:";
+  //qDebug() << "Paint Tray:";
   //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
   QRect rec = this->geometry(); //start with the global geometry of the panel
   //Need to translate that rectangle to the background image coordinates

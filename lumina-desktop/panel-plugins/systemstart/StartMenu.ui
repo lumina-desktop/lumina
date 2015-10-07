@@ -21,16 +21,16 @@
     <number>2</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item>
     <widget class="QLineEdit" name="line_search">
@@ -142,8 +142,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>180</width>
-            <height>195</height>
+            <width>178</width>
+            <height>193</height>
            </rect>
           </property>
          </widget>
@@ -394,8 +394,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>87</width>
-            <height>16</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>

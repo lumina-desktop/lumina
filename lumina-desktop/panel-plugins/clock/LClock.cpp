@@ -125,7 +125,8 @@ void LClock::updateFormats(){
 void LClock::updateMenu(){
   QDateTime cdt = QDateTime::currentDateTime();
   TZMenu->setTitle(QString(tr("Time Zone (%1)")).arg(cdt.timeZoneAbbreviation()) );
-  calendar->showToday();
+  calendar->showToday(); //make sure the current month is visible
+  calendar->setSelectedDate(QDate::currentDate()); //select the actual date for today
 }
 
 void LClock::openMenu(){

@@ -23,7 +23,8 @@
 #include "../LPPlugin.h" //main plugin widget
 
 // libLumina includes
-#include "LuminaXDG.h"
+#include <LuminaXDG.h>
+#include <LuminaUtils.h>
 
 #include "StartMenu.h"
 
@@ -64,8 +65,8 @@ public:
 	~LStartButtonPlugin();
 	
 private:
-	QMenu *menu;
-	QWidgetAction *mact;
+	ResizeMenu *menu;
+	//QWidgetAction *mact;
 	StartMenu *startmenu;
 	QToolButton *button;
 	QList<LQuickLaunchButton*> QUICKL;

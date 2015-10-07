@@ -359,9 +359,11 @@ void LDesktop::RemoveDeskPlugin(QString ID){
     //This was a temporary plugin (desktop file?) check for existance/dir and remove it as necessary
     QString path = ID.section("---",0,0).section("::",1,50); //full file path
     QFileInfo info(path);
-    if(info.exists() && info.canonicalPath()==QDir::homePath()+"/Desktop"){
+    qDebug() << "Removing applauncher:" << path << ID;
+    if(info.exists() && info.absolutePath()==QDir::homePath()+"/Desktop"){
        //Need to remove this file/dir as well
-       if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+info.absoluteFilePath()+"\""); }
+       qDebug() << "Removing File:" << path;
+       if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+path+"\""); }
        else{ QFile::remove(path); } //just remove the file/symlink directly
     }
   }

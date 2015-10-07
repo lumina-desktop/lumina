@@ -15,6 +15,7 @@
 
 StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
   ui->setupUi(this); //load the designer file
+  this->setMouseTracking(true);
   sysapps = LSession::handle()->applicationMenu()->currentAppHash();
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
   UpdateAll();

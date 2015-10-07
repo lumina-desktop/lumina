@@ -421,6 +421,7 @@ QStringList LXDG::systemApplicationDirs(){
       //for(int s=0; s<subs.length(); s++){ out << dir.absoluteFilePath(subs[s]); }
     }
   }
+  //qDebug() << "System Application Dirs:" << out;
   return out;
 }
 
