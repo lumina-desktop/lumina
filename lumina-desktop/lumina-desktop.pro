@@ -31,7 +31,7 @@ SOURCES += main.cpp \
 	LXcbEventFilter.cpp \
 	LSession.cpp \
 	LDesktop.cpp \
-#	LDesktopPluginSpace.cpp \
+	LDesktopPluginSpace.cpp \
 	LPanel.cpp \
 	LWinInfo.cpp \
 	AppMenu.cpp \
@@ -71,7 +71,7 @@ HEADERS  += Globals.h \
 	LXcbEventFilter.h \
 	LSession.h \
 	LDesktop.h \
-#	LDesktopPluginSpace.h \
+	LDesktopPluginSpace.h \
 	LPanel.h \
 	LWinInfo.h \
 	AppMenu.h \
@@ -82,7 +82,6 @@ HEADERS  += Globals.h \
 	panel-plugins/NewPP.h \
 	panel-plugins/LTBWidget.h \
 	desktop-plugins/LDPlugin.h \
-	desktop-plugins/LDPluginContainer.h \
 	desktop-plugins/NewDP.h \
 	panel-plugins/userbutton/LUserButton.h \
 	panel-plugins/userbutton/UserWidget.h \

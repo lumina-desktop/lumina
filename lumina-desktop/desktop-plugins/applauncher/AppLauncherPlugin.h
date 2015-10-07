@@ -34,20 +34,26 @@ public:
 private:
 	QToolButton *button;
 	QFileSystemWatcher *watcher;
-	QMenu *menu;
+	//QMenu *menu;
 
 private slots:
-	void loadButton(bool onchange = false);
+	void loadButton();
 	void buttonClicked();
-	void openContextMenu();
+	//void openContextMenu();
 	
-	void increaseIconSize();
-	void decreaseIconSize();
-	void deleteFile();
+	//void increaseIconSize();
+	//void decreaseIconSize();
+	//void deleteFile();
 
 public slots:
 	void LocaleChange(){
-	  loadButton(true); //force reload
+	  loadButton(); //force reload
+	}
+	
+protected:
+	void resizeEvent(QResizeEvent *ev){
+	  LDPlugin::resizeEvent(ev);
+	  QTimer::singleShot(10, this, SLOT(loadButton()) );
 	}
 };
 #endif

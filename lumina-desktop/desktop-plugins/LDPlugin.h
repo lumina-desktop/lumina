@@ -23,6 +23,9 @@
 #include <QSettings>
 #include <QMoveEvent>
 #include <QResizeEvent>
+#include <QMouseEvent>
+#include <QTimer>
+#include <QMenu>
 
 class LDPlugin : public QFrame{
 	Q_OBJECT
@@ -30,6 +33,10 @@ class LDPlugin : public QFrame{
 private:
 	QString PLUGID, prefix;
 	QSettings *settings;
+	QMenu *menu;
+	QTimer *dragTimer;
+
+	void setupMenu();
 
 public:
 	LDPlugin(QWidget *parent = 0, QString id="unknown");
@@ -41,7 +48,16 @@ public:
 	}
 	
 	void setInitialSize(int width, int height);
-	void adjustSize(int width, int height);
+	//void adjustSize(int width, int height);
+	
+	void savePluginGeometry(QRect geom){
+	  settings->setValue(prefix+"geometry/desktopGridPoints", geom);
+	  settings->sync();
+	}
+	
+	QRect loadPluginGeometry(){
+	  return settings->value(prefix+"geometry/desktopGridPoints", QRect()).toRect();	
+	}
 	
 	void saveSetting(QString var, QVariant val){
 	  //qDebug() << "Saving Setting:" << prefix+var+QString(" = ")+val.toString();
@@ -67,40 +83,63 @@ public:
 	
 	}
 	
-	/*virtual void scalePlugin(double xscale, double yscale){
-          //This can be re-implemented in the subclassed plugin as necessary
-	  // Example: If there are icons in the plugin which should also be re-scaled
-
-	  int val = settings->value("location/width",0).toInt();
-	  if(val>0){ val = qRound(val*xscale); }
-	  settings->setValue("location/width",val);
-
-	  val = settings->value("location/height",0).toInt();
-	  if(val>0){ val = qRound(val*yscale); }
-	  settings->setValue("location/height",val);
-
-  	  val = settings->value("location/x",0).toInt();
-	  if(val>0){ val = qRound(val*xscale); }
-	  settings->setValue("location/x",val);
-
-  	  val = settings->value("location/y",0).toInt();
-	  if(val>0){ val = qRound(val*yscale); }
-	  settings->setValue("location/y",val);
-	}*/
-	
 public slots:
 	virtual void LocaleChange(){
 	  //This needs to be re-implemented in the subclassed plugin
 	    //This is where all text is set/translated
+	  setupMenu();
 	}
 	virtual void ThemeChange(){
 	  //This needs to be re-implemented in the subclassed plugin
 	    //This is where all the visuals are set if using Theme-dependant icons.
+	  setupMenu();
+	}
+	void showPluginMenu(){
+	  menu->popup( QCursor::pos() );
 	}
 	
 signals:
 	void OpenDesktopMenu();
 	void PluginResized();
+	
+	//Signals for communication with the desktop layout system (not generally used by hand)
+	void StartMoving(QString); //ID of plugin
+	void StartResizing(QString); //ID of plugin
+	void RemovePlugin(QString); //ID of plugin
+	
+private slots:
+	void slotStartMove(){ 
+	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) ); 
+	  emit StartMoving(PLUGID); 
+	}
+	
+	void slotStartResize(){ 
+	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) ); 
+	  emit StartResizing(PLUGID); 
+	}
+	
+	void slotRemovePlugin(){ 
+	  removeSettings(true);
+	  emit RemovePlugin(PLUGID); 
+	}
+		
+protected:
+	void mousePressEvent(QMouseEvent *ev){
+	  if(!dragTimer->isActive() && ev->buttons().testFlag(Qt::LeftButton) ){ dragTimer->start(); }
+	  QWidget::mousePressEvent(ev);
+	}
+	void mouseReleaseEvent(QMouseEvent *ev){
+	  if(dragTimer->isActive()){ dragTimer->stop(); }
+	  QWidget::mouseReleaseEvent(ev);
+	}
+	void mouseMoveEvent(QMouseEvent *ev){
+	  if(ev->buttons().testFlag(Qt::LeftButton)){ 
+	    if(dragTimer->isActive()){ dragTimer->stop(); }
+	    slotStartMove(); 
+	  }
+	  QWidget::mouseMoveEvent(ev);
+	}
+	
 };
 
 #endif

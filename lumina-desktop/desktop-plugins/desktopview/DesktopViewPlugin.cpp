@@ -107,7 +107,8 @@ void DesktopViewPlugin::showMenu(const QPoint &pos){
     menu->popup(this->mapToGlobal(pos));
   }else{
     //Pass the context menu request on to the desktop (emit it from the plugin)
-    emit OpenDesktopMenu();
+    this->showPluginMenu();
+    //emit OpenDesktopMenu();
   }
 }
 

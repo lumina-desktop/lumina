@@ -65,14 +65,7 @@ void LDesktop::prepareToClose(){
   //Now close down any desktop plugins
   desktoplocked = true; //make sure that plugin settings are preserved during removal
   //Remove all the current containers
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){
-    wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
-    bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
-    bgDesktop->removeSubWindow(wins[i]); //remove container from screen
-    delete wins[i]; //delete old container
-  }
-  for(int i=0; i<PLUGINS.length(); i++){delete PLUGINS.takeAt(i); i--; }
+  bgDesktop->cleanup();
 }
 
 WId LDesktop::backgroundID(){
@@ -120,8 +113,6 @@ void LDesktop::SystemTerminal(){
 void LDesktop::SystemFileManager(){
   //Just open the home directory
   QString fm =  "lumina-open \""+QDir::homePath()+"\"";
-  //QString fm = LSession::handle()->sessionSettings()->value("default-filemanager","lumina-fm").toString();
-  //if(fm.endsWith(".desktop")){ fm = "lumina-open \""+fm+"\""; }
   LSession::LaunchApplication(fm);
 }
 
@@ -196,88 +187,6 @@ void LDesktop::checkResolution(){
   issyncing = false;
 }
 
-LDPluginContainer* LDesktop::CreateDesktopPluginContainer(LDPlugin *plug){
-  //Verify that a container does not already exist for this plugin
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){
-    if(wins[i]->whatsThis()==plug->ID()){ return 0; }
-  }
-  //Create a new plugin container
-  LDPluginContainer *win = new LDPluginContainer(plug, desktoplocked);
-  win->loadInitialSize(); //Sizing should be done before adding the window to the area
-  if(desktoplocked){ 
-    bgDesktop->addSubWindow(win, Qt::Tool | Qt::FramelessWindowHint);
-  }else{ 
-    bgDesktop->addSubWindow(win, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-  }
-  if( !win->hasFixedPosition() ){ 
-    //NOTE: This section *only* runs for new plugins - it does not run for re-creations of old plugins
-    //Need to determine the location of the plugin (leave size alone)
-    if(DEBUG){ qDebug() << " ---  Floating Plugin - find a spot for it"; }
-    QPoint pt = findNewPluginLocation(availDPArea, win->size());
-    if(pt.x()>=0 && pt.y()>=0){
-      win->saveNewPosition(pt); 
-      win->move(pt);
-      if(DEBUG){ qDebug() << " --- Moving to point:" << pt; }
-    }
-    //Make sure to remove this plugin from the availability region
-    availDPArea = availDPArea.subtracted( QRegion(win->geometry()) );
-  }
-  QApplication::processEvents();	  
-  QTimer::singleShot(300+(5*PLUGINS.length()), win, SLOT(loadInitialPosition()) ); //Now load the position (if one is saved)
-  if(DEBUG){ 
-    qDebug() << "Initial DP Geom:" << plug->geometry();
-    qDebug() << "  - Container Geom:" << win->geometry();
-  }
-  QApplication::processEvents();
-	  
-  connect(win, SIGNAL(PluginRemoved(QString)), this, SLOT(DesktopPluginRemoved(QString)) );
-  return win;
-}
-
-QPoint LDesktop::findNewPluginLocation(QRegion avail, QSize winsize){
-  //This just searches through the region of available space until it find the first location where it
-  //  will fit without overlapping anything else (scanning left->right, top->bottom)
-  //return QPoint(-1,-1); //just for testing
-  QRect bounds = avail.boundingRect();
-  //qDebug() << "Bounds:" << bounds;
-  if(bounds.width()<winsize.width() || bounds.height()<winsize.height()){ return QPoint(-1,-1); }
-
-  QPoint pt = bounds.topLeft(); //start in upper-left corner
-  bool found = false;
-  if(DEBUG){ qDebug() << "Check Availability:" << bounds << winsize; }
-  while(pt.y()+winsize.height() < bounds.bottom() && !found){
-    int dy = winsize.height()/2;
-    while(pt.x()+winsize.width() < bounds.right() && !found){
-      //Check the horizontal position (incrementing as necessary)
-      QRegion intersect = avail.intersected(QRect(pt, winsize)); // full intersection
-      if(DEBUG){ qDebug() << "Check X:" << pt << " - Inter:" << intersect.boundingRect(); }
-      if(intersect.boundingRect().size()==winsize && intersect.rects().length()==1 ){ found = true; } //use this point
-      else{
-	QRect inter = avail.intersected(QRect(pt, QSize(winsize.width(),1))).boundingRect(); //1D intersection in X-dir
-	int dx = winsize.width() - inter.width();
-        if(dx>0 && inter.left() > pt.x()){ pt.setX( inter.left() ); }
-	else if(inter.width()==0){ pt.setX( pt.x()+winsize.width() ); }
-	else{ pt.setX( pt.x()+inter.width() ); }
-	//Also adjust the dy value to the smallest amount
-	inter = avail.intersected(QRect(pt, QSize(1,winsize.height()))).boundingRect(); //1D intersection in X-dir
-	int ddy = inter.y()-pt.y();
-	if(ddy < dy && ddy>0){ dy = ddy; }
-      }
-     
-    }
-    if(!found){
-      //Nothing in the horizontal direction - increment the vertical dimension
-      pt.setX( bounds.left() ); //reset back to the left-most edge
-      pt.setY( pt.y()+dy );
-      if(DEBUG){ qDebug() << "Check Y:" << pt << dy; }
-    }
-  }
-  //qDebug() << "Found Point:" << found << pt;
-  if(!found){ return QPoint(-1,-1); } //no space found - return an invalid point
-  else{ return pt; }
-}
-
 // =====================
 //     PRIVATE SLOTS
 // =====================
@@ -314,10 +223,9 @@ void LDesktop::InitDesktop(){
 	bgWindow->setGeometry(LSession::handle()->screenGeom(desktopnumber));
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
-  bgDesktop = new QMdiArea(bgWindow);
-	//Make sure the desktop area is transparent to show the background
-        bgDesktop->setBackground( QBrush(Qt::NoBrush) );
-	bgDesktop->setStyleSheet( "QMdiArea{ border: none; background: transparent;}" );
+  bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
+      bgDesktop->SetIconSize(qRound(bgDesktop->height()/14.0)); // (For 1600x900 screens - this comes out to 64 pixel icons)
+      connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
   if(DEBUG){ qDebug() << " - Desktop Init Done:" << desktopnumber; }
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
@@ -342,8 +250,6 @@ void LDesktop::SettingsChanged(){
 void LDesktop::LocaleChanged(){
   //Update any elements which require a re-translation
   UpdateMenu(false); //do the full menu refresh
-  
-	
 }
 
 void LDesktop::UpdateMenu(bool fast){
@@ -363,7 +269,7 @@ void LDesktop::UpdateMenu(bool fast){
   usewinmenu=false;
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ deskMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(SystemTerminal()) ); }
-    else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("Insight-FileManager",""), tr("Browse System"), this, SLOT(SystemFileManager()) ); }
+    else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("user-home",""), tr("Browse System"), this, SLOT(SystemFileManager()) ); }
     else if(items[i]=="applications"){ deskMenu->addMenu( LSession::handle()->applicationMenu() ); }
     else if(items[i]=="line"){ deskMenu->addSeparator(); }
     else if(items[i]=="settings"){ deskMenu->addMenu( LSession::handle()->settingsMenu() ); }
@@ -381,11 +287,6 @@ void LDesktop::UpdateMenu(bool fast){
     }
   }
   //Now add the system quit options
-  deskMenu->addSeparator();
-  if(!desktoplocked){
-    deskMenu->addAction(LXDG::findIcon("document-encrypt",""),tr("Lock Desktop"), this, SLOT(ToggleDesktopLock()) );
-    deskMenu->addAction(LXDG::findIcon("snap-orthogonal",""),tr("Snap Plugins to Grid"), this, SLOT(AlignDesktopPlugins()) );
-  }else{ deskMenu->addAction(LXDG::findIcon("document-decrypt",""),tr("Unlock Desktop"), this, SLOT(ToggleDesktopLock()) ); }
   deskMenu->addSeparator();
   deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Log Out"), this, SLOT(SystemLogout()) );
 }
@@ -433,177 +334,37 @@ void LDesktop::UpdateDesktop(){
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   }
   //If generating desktop file launchers, add those in
+  QStringList filelist;
   if(settings->value(DPREFIX+"generateDesktopIcons",false).toBool()){
     QFileInfoList files = LSession::handle()->DesktopFiles();
     for(int i=0; i<files.length(); i++){
-      plugins << "applauncher::"+files[i].absoluteFilePath()+"---"+DPREFIX;
+	filelist << files[i].absoluteFilePath();
     }
   }
-  //Go through the plugins and remove any existing ones that do not show up on the current list
-  for(int i=0; i<PLUGINS.length(); i++){
-    if(!plugins.contains(PLUGINS[i]->ID())){
-      //Remove this plugin (with settings) - is not currently listed
-      DesktopPluginRemoved(PLUGINS[i]->ID(),true); //flag this as an internal removal
-      i--;
-    }
-  }
-  //Now get an accounting of all the available/used space (overwriting the private variable)
-  QSize ssize = LSession::handle()->screenGeom(desktopnumber).size();
-  //qDebug() << "Screen Size:" << ssize << desktopnumber;
-  if(bgDesktop->isVisible() && ( (bgDesktop->size().height() <= ssize.height()) && (bgDesktop->size().width() <= ssize.width()) )){ ssize = bgDesktop->size(); qDebug() << " - Adjusted:" << ssize; }
-  availDPArea = QRegion(QRect(QPoint(0,0), ssize)); //Note that this is child-geometry space
-  //Remove all the space currently occupied
-  //qDebug() << "Available Screen Geom:" << avail.boundingRect();
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){ 
-    qDebug() << "Subtracting Geom:" << wins[i]->geometry();
-    availDPArea = availDPArea.subtracted( QRegion(wins[i]->geometry()) ); 
-  }
-  //Now add/update plugins
-  for(int i=0; i<plugins.length(); i++){
-    //See if this plugin is already there
-    LDPlugin *plug = 0;
-    for(int p=0; p<PLUGINS.length(); p++){
-      //qDebug() << " -- Existing Plugin:" << PLUGINS[p]->ID() << p << PLUGINS.length();
-      if(PLUGINS[p]->ID()==plugins[i]){
-	//qDebug() << "  -- Found Plugin";
-	plug = PLUGINS[p];
-	break;
-      }
-    }
-    if(plug==0){
-      //New Plugin
-      if(DEBUG){qDebug() << " -- New Plugin:" << plugins[i];}
-      plug = NewDP::createPlugin(plugins[i], bgDesktop);
-      if(plug != 0){
-	connect(plug, SIGNAL(OpenDesktopMenu()), this, SLOT(ShowMenu()) );
-	if(DEBUG){ qDebug() << " --- Show Plugin"; }
-	PLUGINS << plug;
-	QApplication::processEvents(); //need a moment between plugin/container creation
-	LDPluginContainer *cont = CreateDesktopPluginContainer(plug);
-	//Done with this plugin - removed it's area from the available space
-	if(DEBUG){ qDebug() << " ---  Done Creating Plugin Container" << cont->geometry(); }
-	//avail = avail.subtracted( QRegion(cont->geometry()) ); //remove this space from the available region as well
-      }
-    }
-    QApplication::processEvents(); //need to process events between loading of plugins
-  }
+  UpdateDesktopPluginArea();
+  bgDesktop->LoadItems(plugins, filelist);
 }
 
-void LDesktop::ToggleDesktopLock(){
-  desktoplocked = !desktoplocked; //flip to other value
-  //Remove all the current containers
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){
-    wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
-    bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
-    bgDesktop->removeSubWindow(wins[i]); //remove container from screen
-    delete wins[i]; //delete old container
-  }
-  //Now recreate all the containers on the screen
-  for(int i=0; i<PLUGINS.length(); i++){
-    CreateDesktopPluginContainer(PLUGINS[i]);
-  }
-  bgDesktop->update(); //refresh visuals
-  UpdateMenu(false);
-}
-
-void LDesktop::AlignDesktopPlugins(){
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  QSize fit = bgDesktop->size();
-  //Auto-determine the best grid sizing
-    // It will try to exactly fit the desktop plugin area, with at least 10-20 grid points
-  int xgrid, ygrid;
-	xgrid = ygrid = 32;
-	//while(fit.width()%xgrid != 0){ xgrid = xgrid-1; }
-	//while(fit.height()%ygrid != 0){ ygrid = ygrid-1; }
-  //qDebug() << "Grid:" << xgrid << ygrid << fit.width() << fit.height();
-  //Make sure there are at least 10 points. It will not fit the area exactly, but should be very close
-  //while(xgrid < 10){ xgrid = xgrid*2; }
-  //while(ygrid < 10){ ygrid = ygrid*2; }
-  //qDebug() << "Grid (adjusted):" << xgrid << ygrid;
- // xgrid = int(fit.width()/xgrid); //now get the exact pixel size of the grid
-  //ygrid = int(fit.height()/ygrid); //now get the exact pixel size of the grid
-  //qDebug() << "Grid (pixel):" << xgrid << ygrid;
-  //qDebug() << "  X-Grid:" << xgrid << "("+QString::number(fit.width()/xgrid)+" points)";
-  //qDebug() << "  Y-Grid:" << ygrid << "("+QString::number(fit.height()/ygrid)+" points)";
-  for(int i=0; i<wins.length(); i++){
-    //align the plugin on a grid point (that is not right/bottom edge)
-    QRect geom = wins[i]->geometry();
-        int x, y;
-        if(geom.x()<0){ x=0; }
-	else{ x = qRound(geom.x()/float(xgrid)) * xgrid; }
-	if(x>= fit.width()){ x = fit.width()-xgrid; geom.setWidth(xgrid); }
-	if(geom.y()<0){ y=0; }
-	else{ y = qRound(geom.y()/float(ygrid)) * ygrid; }
-	if(y>= fit.height()){ y = fit.height()-ygrid; geom.setHeight(ygrid); }
-	geom.moveTo(x,y);
-    //Now adjust the size to also be the appropriate grid multiple
-	geom.setWidth( qRound(geom.width()/float(xgrid))*xgrid );
-	geom.setHeight( qRound(geom.height()/float(ygrid))*ygrid );
-
-    //Now check for edge spillover and adjust accordingly
-	int diff = (geom.x()+geom.width()) - bgDesktop->size().width();
-	if( diff > 0 ){ geom.moveTo( geom.x() - diff, geom.y() ); }
-	else if( diff > -11 ){ geom.setWidth( geom.width()-diff ); }
-	diff = (geom.y()+geom.height()) - bgDesktop->size().height();
-	if( diff > 0 ){ geom.moveTo( geom.x(), geom.y() - diff ); }
-	else if( diff > -11 ){ geom.setHeight( geom.height()-diff ); }
-    //Now move the plugin
-	wins[i]->setGeometry(geom);
-  }
-}
-
-void LDesktop::DesktopPluginRemoved(QString ID, bool internal){
-  //NOTE: This function is only run when the plugin is deliberately removed
-  //  The "internal" flag is for whether the plugin was closed by the user (external), or programmatically removed (internal)
-  //Close down that plugin instance (NOTE: the container might have already closed by the user)
-  if(DEBUG){ qDebug() << "Desktop Plugin Removed:" << ID; }
-  //First look for the container (just in case)
-  QList<QMdiSubWindow*> wins = bgDesktop->subWindowList();
-  for(int i=0; i<wins.length(); i++){
-    if(wins[i]->whatsThis() == ID){
-      if(DEBUG){ qDebug() << " - Removing Plugin Container"; }
-      //wins[i]->setWhatsThis(""); //clear this so it knows it is being temporarily removed
-      bgDesktop->removeSubWindow(wins[i]->widget()); //unhook plugin from container
-      bgDesktop->removeSubWindow(wins[i]); //remove container from screen
-      if(internal){ delete wins[i]; }//delete old container
-      break;
-    }
-  }
-  
-  //qDebug() << "PLUGINS:" << PLUGINS.length() << ID;
-  for(int i=0; i<PLUGINS.length(); i++){
-    if(PLUGINS[i]->ID() == ID){
-      //qDebug() << "- found ID";
-      if(DEBUG){ qDebug() << " - Deleting Desktop Plugin:" << ID; }
-      //Special check for auto-generated desktop icons
-      if(ID.startsWith("applauncher::")){
-	qDebug() << "Desktop Icon Removal:" << !internal;
-	PLUGINS[i]->removeSettings(!internal);  //Only remove the file if an external removal on an auto-generated shortcut
-      }else{
-        PLUGINS[i]->removeSettings(true); //Remove any settings associated with this plugin
-      }
-      delete PLUGINS.takeAt(i);
-      break;
-    }
-  }
-  
-  //Now remove that plugin from the internal list (then let the plugin system remove the actual plugin)
-  QStringList plugins = settings->value(DPREFIX+"pluginlist",QStringList()).toStringList();
-  if(DEBUG){ qDebug() << " - Also removing plugin from future list"; }
-  if(plugins.removeAll(ID) > 0){
-    issyncing = true;
-    if(DEBUG){ qDebug() << " - Save modified plugins list"; }
-    settings->setValue(DPREFIX+"pluginlist", plugins);
-    if(DEBUG){ qDebug() << " - Unlock settings file in 200 ms"; }
+void LDesktop::RemoveDeskPlugin(QString ID){
+  //This is called after a plugin is manually removed by the user
+  //	just need to ensure that the plugin is also removed from the settings file
+  QStringList plugs = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
+  if(plugs.contains(ID)){ 
+    plugs.removeAll(ID); 
+    issyncing=true; //don't let the change cause a refresh
+    settings->setValue(DPREFIX+"pluginlist", plugs);
+    settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
+  }else if(ID.startsWith("applauncher::") ){
+    //This was a temporary plugin (desktop file?) check for existance/dir and remove it as necessary
+    QString path = ID.section("---",0,0).section("::",1,50); //full file path
+    QFileInfo info(path);
+    if(info.exists() && info.canonicalPath()==QDir::homePath()+"/Desktop"){
+       //Need to remove this file/dir as well
+       if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+info.absoluteFilePath()+"\""); }
+       else{ QFile::remove(path); } //just remove the file/symlink directly
+    }
   }
-    /*if(QFile::exists(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf")){
-      if(DEBUG){ qDebug() << " - Removing settings file"; }
-      QFile::remove(QDir::homePath()+"/.lumina/desktop-plugins/"+ID+".conf");
-    }*/
-  if(DEBUG){ qDebug() << " - Done removing plugin"; }
 }
 
 void LDesktop::UpdatePanels(){
@@ -670,15 +431,12 @@ void LDesktop::UpdateDesktopPluginArea(){
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
   globalWorkRect = rec; //save this for later
   rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y() ) );
-  //qDebug() << "DPlug Area:" << rec.x() << rec.y() << rec.width() << rec.height();
-  if(rec == bgDesktop->geometry()){return; } //nothing changed
+  //qDebug() << "DPlug Area:" << rec << bgDesktop->geometry() << LSession::handle()->desktop()->availableGeometry(bgDesktop);
+  if(rec.size().isNull() || rec == bgDesktop->geometry()){return; } //nothing changed
   bgDesktop->setGeometry( rec );
-  bgDesktop->setBackground( QBrush(Qt::NoBrush) );
-  bgDesktop->update();
+  bgDesktop->UpdateGeom(); //just in case the plugin space itself needs to do anything
   //Re-paint the panels (just in case a plugin was underneath it and the panel is transparent)
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
-  //Also need to re-arrange any desktop plugins to ensure that nothing is out of the screen area
-  AlignDesktopPlugins();
   //Make sure to re-disable any WM control flags
   LSession::handle()->XCB->SetDisableWMActions(bgWindow->winId());
 }

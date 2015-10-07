@@ -28,9 +28,9 @@
 #include "LPanel.h"
 //#include "Globals.h"
 #include "AppMenu.h"
+#include "LDesktopPluginSpace.h"
 #include "desktop-plugins/LDPlugin.h"
-#include "desktop-plugins/LDPluginContainer.h"
-#include "desktop-plugins/NewDP.h"
+//#include "desktop-plugins/NewDP.h"
 
 class LDesktop : public QObject{
 	Q_OBJECT
@@ -66,18 +66,14 @@ private:
 	bool defaultdesktop, desktoplocked, issyncing, usewinmenu, bgupdating;
 	QStringList oldBGL;
 	QList<LPanel*> PANELS;
-	QMdiArea *bgDesktop; //desktop widget area
+	LDesktopPluginSpace *bgDesktop; //desktop plugin area
 	QWidget *bgWindow; //full screen background
 	QMenu *deskMenu, *winMenu;
-	//AppMenu *appmenu;
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;
 	QList<LDPlugin*> PLUGINS;
 	QString CBG; //current background
 	QRect globalWorkRect;
-	LDPluginContainer* CreateDesktopPluginContainer(LDPlugin*);
-
-	QPoint findNewPluginLocation(QRegion avail, QSize winsize);
 	
 private slots:
 	void InitDesktop();
@@ -98,9 +94,7 @@ private slots:
 	
 	//Desktop plugin system functions
 	void UpdateDesktop();
-	void ToggleDesktopLock();
-	void AlignDesktopPlugins();
-	void DesktopPluginRemoved(QString ID, bool internal = false);
+	void RemoveDeskPlugin(QString);
 	
 	void UpdatePanels();
 	

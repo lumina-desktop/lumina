@@ -7,16 +7,36 @@
 #include "LDPlugin.h"
 
 #include "../LSession.h"
+#include <LuminaXDG.h>
 
 LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
   PLUGID=id;
   prefix = id.replace("/","_")+"/";
   //qDebug() << "ID:" << PLUGID << prefix;
   settings = LSession::handle()->DesktopPluginSettings();
+  //Setup the plugin system control menu
+  menu = new QMenu(this);
+  setupMenu();
+  //Setup the internal timer for when to start/stop drag events
+  dragTimer = new QTimer(this);
+    dragTimer->setSingleShot(true);
+    dragTimer->setInterval(500); //1/2 second to show the plugin menu
+    connect(dragTimer, SIGNAL(timeout()), this, SLOT(showPluginMenu()));
   //Use plugin-specific values for stylesheet control (applauncher, desktopview, etc...)
   this->setObjectName(id.section("---",0,0).section("::",0,0));
+  this->setContextMenuPolicy(Qt::CustomContextMenu);
+  this->setMouseTracking(false); //only catch mouse movement events if the mouse is clicked/held on the plugin
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChange()) );
   connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(ThemeChange()) );
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showPluginMenu()) );
+}
+
+void LDPlugin::setupMenu(){
+  menu->clear();
+  menu->addAction( LXDG::findIcon("transform-move",""), tr("Start Moving Item"), this, SLOT(slotStartMove()) );
+  menu->addAction( LXDG::findIcon("transform-scale",""), tr("Start Resizing Item"), this, SLOT(slotStartResize()) );
+  menu->addSeparator();
+  menu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove Item"), this, SLOT(slotRemovePlugin()) );
 }
 
 void LDPlugin::setInitialSize(int width, int height){
@@ -33,10 +53,10 @@ void LDPlugin::setInitialSize(int width, int height){
     this->resize( settings->value(prefix+"location/width").toInt(), settings->value(prefix+"location/height").toInt());
 }
 
-void LDPlugin::adjustSize(int width, int height){
+/*void LDPlugin::adjustSize(int width, int height){
   settings->setValue(prefix+"location/width",width);
   settings->setValue(prefix+"location/height",height);
   settings->sync();	
   this->resize(width,height);
   emit PluginResized();
-}
+}*/
