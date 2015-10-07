@@ -145,7 +145,7 @@ QPoint LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int star
 	  }
         }
         if(ok){ pt = QPoint(col,row); found = true; } //found an open spot
-        row++;
+        //else{ row++; }
       }
       if(!found){ col++; row=0; } //go to the next column
     }	  
@@ -164,7 +164,7 @@ QPoint LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int star
 	  }
         }
         if(ok){ pt = QPoint(col,row); found = true; } //found an open spot
-        else{ col++; }
+        //else{ col++; }
       }
       if(!found){ row++; col=0;} //go to the next row
     }
