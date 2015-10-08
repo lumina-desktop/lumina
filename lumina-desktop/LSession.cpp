@@ -387,8 +387,21 @@ void LSession::checkUserFiles(){
   if(newversion || newrelease){
     LUtils::upgradeFavorites(oldversion);	  
   }
-  //Remove/convert any old desktop plugin files (Change occured with 0.8.5)
-  // - TO-DO
+  //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
+  if(oldversion <= 8007 && (newversion || newrelease)){
+    QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings", this);
+    QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
+    for(int i=0; i<plugKeys.length(); i++){
+      QStringList plugs = dset.value(plugKeys[i],QStringList()).toStringList();
+      //Do the appmenu/userbutton -> systemstart conversion
+      plugs = plugs.join(";;;;").replace("userbutton","systemstart").replace("appmenu","systemstart").split(";;;;");
+      //Remove any system dashboard plugins
+      plugs.removeAll("systemdashboard");
+      //Now save that back to the file
+      dset.setValue(plugKeys[i], plugs);
+    }
+    dset.sync();
+  }
   
   //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
   if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
