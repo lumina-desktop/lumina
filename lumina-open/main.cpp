@@ -156,6 +156,10 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     for(int i=1; i<argc; i++){
       if(QString(argv[i]).simplified() == "-select"){
       	showDLG = true;
+      }else if(QString(argv[i]).simplified() == "-testcrash"){
+	//Test the crash handler
+	binary = "internalcrashtest"; watch=true;
+	return;
       }else if(QString(argv[i]).simplified() == "-volumeup"){
 	int vol = LOS::audioVolume()+5; //increase 5%
 	if(vol>100){ vol=100; }
@@ -335,6 +339,9 @@ int main(int argc, char **argv){
       //Special case (generally for Wine applications)
       cmd = cmd.replace("\\\\","\\");
       retcode = system(cmd.toLocal8Bit()); //need to run it through the "system" instead of QProcess
+    }else if(cmd=="internalcrashtest"){
+      log = "This is a sample crash log";
+      retcode = 2;
     }else{
       QProcess *p = new QProcess();
       p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
@@ -343,7 +350,7 @@ int main(int argc, char **argv){
         p->setWorkingDirectory(path); 
       }
       p->start(cmd);
-  
+      
       //Now check up on it once every minute until it is finished
       while(!p->waitForFinished(60000)){
         //qDebug() << "[lumina-open] process check:" << p->state();
@@ -363,9 +370,11 @@ int main(int argc, char **argv){
         QApplication App(argc, argv);
         LuminaThemeEngine theme(&App);
 	  LUtils::LoadTranslation(&App,"lumina-open");
+	//App.setApplicationName("LuminaOpen");
         QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
-        if(!log.isEmpty()){ dlg.setDetailedText(log); }
-        dlg.exec();
+	  dlg.setWindowFlags(Qt::Window);
+          if(!log.isEmpty()){ dlg.setDetailedText(log); }
+          dlg.exec();
       }
   }
   return retcode;
