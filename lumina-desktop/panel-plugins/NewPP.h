@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -16,6 +16,7 @@
 #include "userbutton/LUserButton.h"
 #include "desktopbar/LDeskBar.h"
 #include "spacer/LSpacer.h"
+#include "line/LLine.h"
 #include "clock/LClock.h"
 #include "battery/LBattery.h"
 #include "desktopswitcher/LDesktopSwitcher.h"
@@ -40,6 +41,8 @@ public:
 	    plug = new LDeskBarPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("spacer---")){
 	    plug = new LSpacerPlugin(parent, plugin, horizontal);
+	  }else if(plugin.startsWith("line---")){
+	    plug = new LLinePlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("taskmanager")){
 	    //This one can be "taskmanager[-nogroups]---"
 	    plug = new LTaskManagerPlugin(parent, plugin, horizontal);
