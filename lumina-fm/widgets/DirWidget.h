@@ -77,7 +77,7 @@ private:
 	QString ID, CDIR; //unique ID assigned by the parent and the current dir path
 	LFileInfoList CLIST; //current item list (snap or not)
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
-	QStringList snapshots, needThumbs;
+	QStringList snapshots, needThumbs, tmpSel;
 	bool showDetails, showThumbs, canmodify, stopload; //which widget to use for showing items
 	QList<DETAILTYPES> listDetails;
 	QMenu *contextMenu;

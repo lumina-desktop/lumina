@@ -98,6 +98,10 @@ QString DirWidget::currentDir(){
 }
 
 void DirWidget::setShowDetails(bool show){
+  if(show!=showDetails){
+    //View about to change - ensure the selection gets transferred too
+    tmpSel = currentSelection();
+  }
   showDetails = show;
   listWidget->setVisible(!showDetails);
   treeWidget->setVisible(showDetails);
@@ -383,6 +387,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	}
       }
       if(addnew){ treeWidget->addTopLevelItem(it); }
+      if(tmpSel.contains(list[i].absoluteFilePath())){ it->setSelected(true); }
       if(lastdir == CDIR+"/"+list[i].fileName()){ 
 	treeWidget->setCurrentItem(it);
 	treeWidget->scrollToItem(it);
@@ -412,6 +417,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
 	    }
 	listWidget->addItem(it);
+	if(tmpSel.contains(list[i].absoluteFilePath())){ it->setSelected(true); }
 	if(lastdir == CDIR+"/"+list[i].fileName()){ 
 	  listWidget->setCurrentItem(it);
 	  listWidget->scrollToItem(it);
@@ -420,6 +426,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     if(i%15==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
     if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
+  tmpSel.clear();
   if(DEBUG){ qDebug() << "Done with item loop:" << time.elapsed() << list.length(); }
   ui->actionStopLoad->setVisible(false);
   //Another check to ensure the current item is visible (or return to the same scroll position)
