@@ -18,7 +18,7 @@ LFileDialog::LFileDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LFileDia
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("LuminaDE", "lumina-open",this);
   //Connect the signals/slots
-  connect(ui->tree_apps, SIGNAL(itemSelectionChanged()), this, SLOT(updateUI()) );
+  connect(ui->combo_apps, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()) );
   connect(ui->radio_rec, SIGNAL(toggled(bool)), this, SLOT(radioChanged()) );
   connect(ui->radio_avail, SIGNAL(toggled(bool)), this, SLOT(radioChanged()) );
   connect(ui->radio_custom, SIGNAL(toggled(bool)), this, SLOT(radioChanged()) );
@@ -154,10 +154,8 @@ void LFileDialog::updateUI(){
   else if(ui->radio_rec->isChecked()){
     good = true; //a valid app is always selected on this page if it is available
   }
-  else if(ui->tree_apps->topLevelItemCount() > 0 && ui->tree_apps->currentItem()!=0 ){
-    if(!ui->tree_apps->currentItem()->whatsThis(0).isEmpty()){ 
+  else if(ui->combo_apps->count() > 0 && !ui->combo_apps->currentData().toString().isEmpty() ){
       good=true;
-    }
   }
   ui->tool_ok->setEnabled(good);
 }
@@ -172,10 +170,13 @@ void LFileDialog::generateAppList(bool shownetwork){
   QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles() );
   QStringList cat = hash.keys();
   cat.sort(); //sort alphabetically
-  ui->tree_apps->clear();
+  ui->combo_apps->clear();
   for(int c=0; c<cat.length(); c++){
     QList<XDGDesktop> app = hash[cat[c]];
-    QTreeWidgetItem *ci = new QTreeWidgetItem(ui->tree_apps, QStringList() << translateCat(cat[c]));
+    if(app.length()<1){ continue; }
+    if(ui->combo_apps->count() >1){ ui->combo_apps->insertSeparator(ui->combo_apps->count()); }
+    ui->combo_apps->addItem(translateCat(cat[c]));
+    ui->combo_apps->insertSeparator(ui->combo_apps->count());
     for(int a=0; a<app.length(); a++){
       if(shownetwork && (cat[c].toLower()=="network" || cat[c].toLower()=="utility") ){ 
 	//Need to show preferred internet applications - look for ones that handle URL's
@@ -183,19 +184,17 @@ void LFileDialog::generateAppList(bool shownetwork){
           PREFAPPS << app[a].filePath; 
 	}
       }
-      QTreeWidgetItem *ti = new QTreeWidgetItem(ci, QStringList() << app[a].name);
-        ti->setWhatsThis(0, app[a].filePath);
-        ti->setIcon(0, LXDG::findIcon(app[a].icon, "application-x-desktop"));
-        ti->setToolTip(0, app[a].comment);
-      ci->addChild(ti);
+      ui->combo_apps->addItem(LXDG::findIcon(app[a].icon, "application-x-desktop"), app[a].name, app[a].filePath);
       //Check to see if this app matches the mime type
       if(app[a].mimeList.contains(mimetype) && !mimetype.isEmpty()){
         // also put this app in the preferred list
-	PREFAPPS.append(app[a].filePath);
+	PREFAPPS.append(app[a].filePath);	      
+	//If this is the first preferred app found - select this app initially
+	if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(ui->combo_apps->count()-1); }
       }
     }
-    ui->tree_apps->addTopLevelItem(ci);
   }
+  if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(2); } //Start on the first "real" app - not the first category header
   //Now add all the preferred applications
   PREFAPPS.removeDuplicates();
   for(int i=0; i<PREFAPPS.length(); i++){
@@ -254,7 +253,7 @@ void LFileDialog::on_tool_ok_clicked(){
   }else{
     //application selected
     bool ok = false;
-    XDGDesktop app = LXDG::loadDesktopFile(ui->tree_apps->currentItem()->whatsThis(0), ok);
+    XDGDesktop app = LXDG::loadDesktopFile(ui->combo_apps->currentData().toString(), ok);
     //Set the output variables
     appExec = LXDG::getDesktopExec(app);
     appPath = app.path;
