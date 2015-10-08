@@ -8,7 +8,7 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LuminaUtils.h> //This contains the "ResizeMenu" class
 
 LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
@@ -21,14 +21,14 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
   menu = new ResizeMenu(this);
     menu->setContentsMargins(1,1,1,1);
     connect(menu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
+    connect(menu, SIGNAL(MenuResized(QSize)), this, SLOT(SaveMenuSize(QSize)) );
   startmenu = new StartMenu(this);
     connect(startmenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
     connect(startmenu, SIGNAL(UpdateQuickLaunch(QStringList)), this, SLOT(updateQuickLaunch(QStringList)));
   menu->setContents(startmenu);
-  /*mact = new QWidgetAction(this);
-    mact->setDefaultWidget(startmenu);
-    menu->addAction(mact);*/
-	
+  QSize saved = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/"+this->type()+"/MenuSize", QSize(0,0)).toSize();
+  if(!saved.isNull()){ startmenu->setFixedSize(saved); } //re-load the previously saved value
+  
   button->setMenu(menu);
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
@@ -100,10 +100,16 @@ void LStartButtonPlugin::RemoveQuick(QString file){
   }
 }
 
+void LStartButtonPlugin::SaveMenuSize(QSize sz){
+  //Save this size for the menu
+  LSession::handle()->DesktopPluginSettings()->setValue("panelPlugs/"+this->type()+"/MenuSize", sz);
+}
+
 // ========================
 //    PRIVATE FUNCTIONS
 // ========================
 void LStartButtonPlugin::openMenu(){
+  if(menu->isVisible()){ return; } //don't re-show it - already open
   startmenu->UpdateMenu();
   button->showMenu();
 }

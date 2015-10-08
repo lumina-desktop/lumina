@@ -80,6 +80,7 @@ private slots:
 	void updateQuickLaunch(QStringList);
 	void LaunchQuick(QString);
 	void RemoveQuick(QString);
+	void SaveMenuSize(QSize);
 
 public slots:
 	void OrientationChange(){

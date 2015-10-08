@@ -747,36 +747,38 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
   QRect geom = this->geometry();
   //Note: The exact position does not matter as much as the size
   //  since the window will be moved again the next time it is shown
+  // The "-2" in the sizing below accounts for the menu margins
   switch(resizeSide){
     case TOP:
 	geom.setTop(ev->pos().y());
-        if(contents!=0){ contents->setFixedSize(geom.size()); }
+        this->setGeometry(geom);
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case BOTTOM:
 	geom.setBottom(ev->pos().y());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(geom.size()); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case LEFT:
 	geom.setLeft(ev->pos().x());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(geom.size()); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case RIGHT:
 	geom.setRight(ev->pos().x());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(geom.size()); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;
     default: //NONE
 	qDebug() << " - Mouse At:" << ev->pos();
 	//Just adjust the mouse cursor which is shown
-        if(ev->pos().x()==0){ this->setCursor(Qt::SizeHorCursor); }
-        else if(ev->pos().x() == this->width()){  this->setCursor(Qt::SizeHorCursor); }
-        else if(ev->pos().y()==0){ this->setCursor(Qt::SizeVerCursor); }
-        else if(ev->pos().y() == this->height()){ this->setCursor(Qt::SizeVerCursor); }
+        if(ev->pos().x()<=1 && ev->pos().x() >= -1){ this->setCursor(Qt::SizeHorCursor); }
+        else if(ev->pos().x() >= this->width()-1 && ev->pos().x() <= this->width()+1){  this->setCursor(Qt::SizeHorCursor); }
+        else if(ev->pos().y()<=1 && ev->pos().y() >= -1){ this->setCursor(Qt::SizeVerCursor); }
+        else if(ev->pos().y() >= this->height()-1 && ev->pos().y() <= this->height()+1){ this->setCursor(Qt::SizeVerCursor); }
 	else{ this->setCursor(Qt::ArrowCursor); }
   }
-  QWidget::mouseMoveEvent(ev);  //do normal processing as well
+  QMenu::mouseMoveEvent(ev);  //do normal processing as well
 }
 
 void ResizeMenu::mousePressEvent(QMouseEvent *ev){
@@ -789,16 +791,16 @@ void ResizeMenu::mousePressEvent(QMouseEvent *ev){
     else if(ev->pos().y() >= this->height()-1 && ev->pos().y() <= this->height()+1){ resizeSide = BOTTOM; used = true; }
   }
   if(used){ ev->accept(); }
-  else{ QWidget::mousePressEvent(ev); } //do normal processing
+  else{ QMenu::mousePressEvent(ev); } //do normal processing
 }
 
 void ResizeMenu::mouseReleaseEvent(QMouseEvent *ev){
   if(ev->button() == Qt::LeftButton && resizeSide!=NONE ){
     //qDebug() << "Mouse Release Event:" <<  ev->pos() << resizeSide;
     resizeSide = NONE;
-    emit MenuResized(this->size());
+    emit MenuResized(contents->size());
     ev->accept();
   }else{
-    QWidget::mouseReleaseEvent(ev);  //do normal processing
+    QMenu::mouseReleaseEvent(ev);  //do normal processing
   }
 }
