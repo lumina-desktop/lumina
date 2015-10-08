@@ -11,22 +11,40 @@
 
 #include <QCalendarWidget>
 #include <QVBoxLayout>
+#include <QDate>
+#include <QTimer>
 #include "../LDPlugin.h"
 
 class CalendarPlugin : public LDPlugin{
 	Q_OBJECT
+private:
+	QCalendarWidget *cal;
+	QTimer *timer;
+
 public:
 	CalendarPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
 	  this->setLayout( new QVBoxLayout());
 	    this->layout()->setContentsMargins(0,0,0,0);
 	  cal = new QCalendarWidget(this);
+	  cal->setSelectionMode(QCalendarWidget::NoSelection);
 	  this->layout()->addWidget(cal);
 	  this->setInitialSize( cal->sizeHint().width(), cal->sizeHint().height() );
+	  timer = new QTimer(this);
+	    timer->setInterval(1800000); //30 minute refresh timer
+	    timer->start();
+	  QTimer::singleShot(0,this, SLOT(updateDate()) );
 	}
 	
-	~CalendarPlugin(){}
+	~CalendarPlugin(){ timer->stop(); }
 	
-private:
-	QCalendarWidget *cal;
+private slots:
+	void updateDate(){
+	  if(cal->selectedDate() != QDate::currentDate()){
+	    cal->setSelectedDate(QDate::currentDate());
+	    cal->showSelectedDate();
+	  }
+	}
+	
+
 };
 #endif

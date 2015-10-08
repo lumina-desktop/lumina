@@ -1,11 +1,12 @@
 #include "AppLauncherPlugin.h"
 #include "../../LSession.h"
+#include "OutlineToolButton.h"
 
 AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
   QVBoxLayout *lay = new QVBoxLayout();
   this->setLayout(lay);
     lay->setContentsMargins(0,0,0,0);
-  button = new QToolButton(this);
+  button = new OutlineToolButton(this);
     button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     button->setAutoRaise(true);
     button->setText("...\n..."); //Need to set something here so that initial sizing works properly

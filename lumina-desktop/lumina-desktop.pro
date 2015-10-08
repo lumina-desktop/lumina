@@ -107,6 +107,7 @@ HEADERS  += Globals.h \
 	desktop-plugins/SamplePlugin.h \
 	desktop-plugins/calendar/CalendarPlugin.h \
 	desktop-plugins/applauncher/AppLauncherPlugin.h \
+	desktop-plugins/applauncher/OutlineToolButton.h \
 	desktop-plugins/desktopview/DesktopViewPlugin.h \
 	desktop-plugins/notepad/NotepadPlugin.h \
 	desktop-plugins/audioplayer/PlayerWidget.h \
