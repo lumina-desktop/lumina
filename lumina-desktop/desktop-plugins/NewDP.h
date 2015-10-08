@@ -13,7 +13,7 @@
 
 //List all the individual plugin includes here
 #include "LDPlugin.h"
-#include "SamplePlugin.h"
+//#include "SamplePlugin.h"
 #include "calendar/CalendarPlugin.h"
 #include "applauncher/AppLauncherPlugin.h"
 #include "desktopview/DesktopViewPlugin.h"
@@ -28,9 +28,10 @@ public:
 	static LDPlugin* createPlugin(QString plugin, QWidget* parent=0){
 	  //qDebug() << "Create Plugin:" << plugin;
 	  LDPlugin *plug = 0;
-	  if(plugin.section("---",0,0)=="sample"){
+	  /*if(plugin.section("---",0,0)=="sample"){
 	    plug = new SamplePlugin(parent, plugin);
-	  }else if(plugin.section("---",0,0)=="calendar"){
+	  }else */
+	  if(plugin.section("---",0,0)=="calendar"){
 	    plug = new CalendarPlugin(parent, plugin);
 	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
 	    //This plugin can be pre-initialized to a file path after the "::" delimiter

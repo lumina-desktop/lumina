@@ -38,32 +38,7 @@ SOURCES += main.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \
 	BootSplash.cpp \
-#	panel-plugins/userbutton/LUserButton.cpp \
-#	panel-plugins/userbutton/UserWidget.cpp \
-#	panel-plugins/userbutton/UserItemWidget.cpp \
-#	panel-plugins/desktopbar/LDeskBar.cpp \
-#	panel-plugins/taskmanager/LTaskManagerPlugin.cpp \
-#	panel-plugins/taskmanager/LTaskButton.cpp \
-#	panel-plugins/systemtray/LSysTray.cpp \
-#	panel-plugins/systemtray/TrayIcon.cpp \
-#	panel-plugins/clock/LClock.cpp \
-#	panel-plugins/battery/LBattery.cpp \
-#	panel-plugins/desktopswitcher/LDesktopSwitcher.cpp \
-#	panel-plugins/systemdashboard/LSysDashboard.cpp \
-#	panel-plugins/systemdashboard/SysMenuQuick.cpp \
-#	panel-plugins/showdesktop/LHomeButton.cpp \
-#	panel-plugins/appmenu/LAppMenuPlugin.cpp \
-#	panel-plugins/applauncher/AppLaunchButton.cpp \
-#	panel-plugins/systemstart/LStartButton.cpp \
-#	panel-plugins/systemstart/StartMenu.cpp \
-#	panel-plugins/systemstart/ItemWidget.cpp \
 	desktop-plugins/LDPlugin.cpp \
-	desktop-plugins/applauncher/AppLauncherPlugin.cpp \
-	desktop-plugins/desktopview/DesktopViewPlugin.cpp \
-	desktop-plugins/notepad/NotepadPlugin.cpp \
-	desktop-plugins/audioplayer/PlayerWidget.cpp \
-	desktop-plugins/systemmonitor/MonitorWidget.cpp
-#	desktop-plugins/messagecenter/MessageCenter.cpp
 
 
 HEADERS  += Globals.h \
@@ -83,47 +58,13 @@ HEADERS  += Globals.h \
 	panel-plugins/LTBWidget.h \
 	desktop-plugins/LDPlugin.h \
 	desktop-plugins/NewDP.h \
-#	panel-plugins/userbutton/LUserButton.h \
-#	panel-plugins/userbutton/UserWidget.h \
-#	panel-plugins/userbutton/UserItemWidget.h \
-#	panel-plugins/desktopbar/LDeskBar.h \
-#	panel-plugins/systemtray/LSysTray.h \
-#	panel-plugins/systemtray/TrayIcon.h \
-#	panel-plugins/spacer/LSpacer.h \
-#	panel-plugins/clock/LClock.h \
-#	panel-plugins/battery/LBattery.h \
-#	panel-plugins/desktopswitcher/LDesktopSwitcher.h \
-#	panel-plugins/taskmanager/LTaskManagerPlugin.h \
-#	panel-plugins/taskmanager/LTaskButton.h \
-#	panel-plugins/systemdashboard/LSysDashboard.h \
-#	panel-plugins/systemdashboard/SysMenuQuick.h \
-#	panel-plugins/showdesktop/LHomeButton.h \
-#	panel-plugins/appmenu/LAppMenuPlugin.h \
-#	panel-plugins/applauncher/AppLaunchButton.h \
-#	panel-plugins/systemstart/LStartButton.h \
-#	panel-plugins/systemstart/StartMenu.h \
-#	panel-plugins/systemstart/ItemWidget.h \
-#	panel-plugins/quickcontainer/QuickPPlugin.h \
-	desktop-plugins/SamplePlugin.h \
-	desktop-plugins/calendar/CalendarPlugin.h \
-	desktop-plugins/applauncher/AppLauncherPlugin.h \
-	desktop-plugins/applauncher/OutlineToolButton.h \
-	desktop-plugins/desktopview/DesktopViewPlugin.h \
-	desktop-plugins/notepad/NotepadPlugin.h \
-	desktop-plugins/audioplayer/PlayerWidget.h \
-	desktop-plugins/systemmonitor/MonitorWidget.h \
-	desktop-plugins/quickcontainer/QuickDPlugin.h
-#	desktop-plugins/messagecenter/MessageCenter.h
 
 FORMS    += SystemWindow.ui \
-	BootSplash.ui \
-#	panel-plugins/userbutton/UserWidget.ui \
-#	panel-plugins/systemdashboard/SysMenuQuick.ui \
-#	panel-plugins/systemstart/StartMenu.ui \
-	desktop-plugins/audioplayer/PlayerWidget.ui \
-	desktop-plugins/systemmonitor/MonitorWidget.ui
+	BootSplash.ui 
 
+#Now include all the files for the various plugins
 include(panel-plugins/panel-plugins.pri)
+include(desktop-plugins/desktop-plugins.pri)
 
 RESOURCES+= Lumina-DE.qrc
 
