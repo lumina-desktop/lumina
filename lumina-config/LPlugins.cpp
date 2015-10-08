@@ -87,6 +87,13 @@ void LPlugins::LoadPanelPlugins(){
     info.description = QObject::tr("Invisible spacer to separate plugins.");
     info.ID = "spacer";
     info.icon = "transform-move";
+  PANEL.insert(info.ID, info);
+  //Line
+  info = LPI(); //clear it
+    info.name = QObject::tr("Line");
+    info.description = QObject::tr("Simple line to provide visual separation between items.");
+    info.ID = "line";
+    info.icon = "insert-horizontal-rule";
   PANEL.insert(info.ID, info);  	
   //Desktop Switcher
   info = LPI(); //clear it
