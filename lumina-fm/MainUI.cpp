@@ -172,6 +172,10 @@ void MainUI::OpenDirs(QStringList dirs){
   if(!invalid.isEmpty()){
     QMessageBox::warning(this, tr("Invalid Directories"), tr("The following directories are invalid and could not be opened:")+"\n"+invalid.join(", ") );
   }
+  //Double check that there is at least 1 dir loaded
+  //qDebug() << "OpenDirs:" << DWLIST.length() << dirs << invalid << tabBar->currentIndex();
+  if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
+  
 }
 
 void MainUI::setupIcons(){
