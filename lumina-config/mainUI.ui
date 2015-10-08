@@ -113,6 +113,15 @@
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget_desktop">
           <property name="currentIndex">
@@ -438,10 +447,22 @@
       </widget>
       <widget class="QWidget" name="page_panels">
        <layout class="QVBoxLayout" name="verticalLayout_17">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget_panels">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_desktopInterface">
            <attribute name="title">
@@ -590,6 +611,21 @@
             <string>Panels</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_panels" rowstretch="0" columnstretch="0,0">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="horizontalSpacing">
+             <number>2</number>
+            </property>
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
@@ -630,8 +666,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>527</width>
+                 <height>320</height>
                 </rect>
                </property>
               </widget>
@@ -645,6 +681,15 @@
       </widget>
       <widget class="QWidget" name="page_shortcuts">
        <layout class="QVBoxLayout" name="verticalLayout_8">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <widget class="QTreeWidget" name="tree_shortcut">
           <property name="indentation">
@@ -766,6 +811,15 @@
       </widget>
       <widget class="QWidget" name="page_defaults">
        <layout class="QVBoxLayout" name="verticalLayout_9">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget_apps">
           <property name="currentIndex">
@@ -1064,7 +1118,6 @@
                 </layout>
                </item>
               </layout>
-              <zorder>tree_defaults</zorder>
              </widget>
             </item>
            </layout>
@@ -1075,6 +1128,15 @@
       </widget>
       <widget class="QWidget" name="page_session">
        <layout class="QVBoxLayout" name="verticalLayout_10">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget_session">
           <property name="toolTip">

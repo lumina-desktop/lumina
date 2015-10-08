@@ -829,7 +829,10 @@ void MainUI::loadPanels(){
   for(int i=0; i<PANELS.length(); i++){ delete PANELS.takeAt(i); i--; }
   //Now create new panels
   int dnum = currentDesktop();
-  if(ui->scroll_panels->widget()->layout()==0){ ui->scroll_panels->widget()->setLayout( new QHBoxLayout() ); }
+  if(ui->scroll_panels->widget()->layout()==0){ 
+    ui->scroll_panels->widget()->setLayout( new QHBoxLayout() ); 
+    ui->scroll_panels->widget()->layout()->setContentsMargins(0,0,0,0);
+  }
   ui->scroll_panels->widget()->layout()->setAlignment(Qt::AlignLeft);
   //Clear anything left over in the layout
   for(int i=0; i<ui->scroll_panels->widget()->layout()->count(); i++){

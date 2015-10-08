@@ -117,9 +117,9 @@ void PanelWidget::LoadIcons(){
   ui->tool_upplugin->setIcon( LXDG::findIcon("go-up","") );
   ui->tool_downplugin->setIcon( LXDG::findIcon("go-down","") );
   ui->tool_selectcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
-  ui->toolBox->setItemIcon(0,LXDG::findIcon("transform-move",""));
-  ui->toolBox->setItemIcon(1,LXDG::findIcon("preferences-desktop-display",""));
-  ui->toolBox->setItemIcon(2,LXDG::findIcon("preferences-plugin",""));
+  ui->tabWidget->setTabIcon(0,LXDG::findIcon("transform-move",""));
+  ui->tabWidget->setTabIcon(1,LXDG::findIcon("preferences-desktop-display",""));
+  ui->tabWidget->setTabIcon(2,LXDG::findIcon("preferences-plugin",""));
 }
 
 void PanelWidget::reloadColorSample(){

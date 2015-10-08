@@ -75,23 +75,21 @@
     </layout>
    </item>
    <item>
-    <widget class="QToolBox" name="toolBox">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>246</width>
-        <height>125</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+     <widget class="QWidget" name="tabWidgetPage1" native="true">
+      <attribute name="title">
+       <string notr="true"/>
+      </attribute>
+      <attribute name="toolTip">
        <string>Location</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
@@ -148,6 +146,9 @@
          <property name="singleStep">
           <number>5</number>
          </property>
+         <property name="value">
+          <number>40</number>
+         </property>
         </widget>
        </item>
        <item row="3" column="1">
@@ -195,16 +196,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>246</width>
-        <height>125</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidgetPage2" native="true">
+      <attribute name="title">
+       <string notr="true"/>
+      </attribute>
+      <attribute name="toolTip">
        <string>Appearance</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -283,16 +279,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>260</width>
-        <height>112</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidgetPage3" native="true">
+      <attribute name="title">
+       <string notr="true"/>
+      </attribute>
+      <attribute name="toolTip">
        <string>Plugins</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
