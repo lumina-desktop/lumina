@@ -606,7 +606,7 @@ void DirWidget::startLoadThumbs(){
       QListWidgetItem *it = listWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
-    QApplication::processEvents();
+    if(i%3==0){ QApplication::processEvents(); } // do 3 at a time
   }
 }
 
