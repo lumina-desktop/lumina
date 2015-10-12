@@ -752,22 +752,22 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
   // The "-2" in the sizing below accounts for the menu margins
   switch(resizeSide){
     case TOP:
-	geom.setTop(ev->pos().y());
+	geom.setTop(this->mapToGlobal(ev->pos()).y());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case BOTTOM:
-	geom.setBottom(ev->pos().y());
+	geom.setBottom( this->mapToGlobal(ev->pos()).y());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case LEFT:
-	geom.setLeft(ev->pos().x());
+	geom.setLeft(this->mapToGlobal(ev->pos()).x());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case RIGHT:
-	geom.setRight(ev->pos().x());
+	geom.setRight(this->mapToGlobal(ev->pos()).x());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;
