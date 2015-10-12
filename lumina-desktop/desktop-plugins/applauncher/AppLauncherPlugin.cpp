@@ -2,6 +2,8 @@
 #include "../../LSession.h"
 #include "OutlineToolButton.h"
 
+#define OUTMARGIN 8 //special margin for fonts due to the outlining effect from the OutlineToolbutton
+
 AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
   QVBoxLayout *lay = new QVBoxLayout();
   this->setLayout(lay);
@@ -92,7 +94,7 @@ void AppLauncherPlugin::loadButton(){
   //this->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
   //if(onchange){ this->adjustSize( bwid+4, icosize+8+qRound(2.5*button->fontMetrics().height())); }
     //qDebug() << "Initial Button Text:" << txt << icosize;
-    if(button->fontMetrics().width(txt) > (button->width()-2) ){
+    if(button->fontMetrics().width(txt) > (button->width()-OUTMARGIN) ){
       //int dash = this->fontMetrics().width("-");
       //Text too long, try to show it on two lines
       txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
@@ -101,13 +103,13 @@ void AppLauncherPlugin::loadButton(){
 	QStringList txtL = txt.split("\n");
 	for(int i=0; i<txtL.length(); i++){ 
 	  if(i>1){ txtL.removeAt(i); i--; } //Only take the first two lines
-	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, (button->width()-2) );  }
+	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, (button->width()-OUTMARGIN) );  }
 	}
 	txt = txtL.join("\n");
       }else{
-        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*button->width() -4);
+        txt = this->fontMetrics().elidedText(txt,Qt::ElideRight, 2*(button->width()-OUTMARGIN));
         //Now split the line in half for the two lines
-        txt.insert( (txt.count()/2), "\n");
+        txt.insert( ((txt.count()-2)/2), "\n");
       }
     }
     if(!txt.contains("\n")){ txt.append("\n "); } //always use two lines

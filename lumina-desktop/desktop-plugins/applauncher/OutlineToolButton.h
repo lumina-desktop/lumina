@@ -24,6 +24,11 @@ class OutlineToolButton : public QToolButton{
 	Q_OBJECT
 public:
 	OutlineToolButton(QWidget *parent=0) : QToolButton(parent){
+	  //This button needs slightly different font settings - do this in the constructor so that other widgets can take it into account.
+	  QFont font = this->font();
+	  font.setStyleStrategy(QFont::PreferAntialias); //Always set the font strategy (just in case it starts working down the road)
+	  font.setWeight(70); //need a slightly heavier weight due to outlining later
+	  this->setFont(font);
 	}
 	~OutlineToolButton(){}
 		
@@ -41,7 +46,7 @@ protected:
 	  QStyleOptionToolButton opt;
 	  initStyleOption(&opt);
 	    opt.font.setStyleStrategy(QFont::PreferAntialias); //Always set the font strategy (just in case it starts working down the road)
-	    opt.font.setWeight(2.5*opt.font.weight()); //need a slightly heavier weight due to outlining later
+	    opt.font.setWeight(65); //need a slightly heavier weight due to outlining later
 	    opt.text.clear(); //Don't paint the text yet - just the background/icon
 	  p.drawComplexControl(QStyle::CC_ToolButton, opt);  //This does all the normal QToolButton stuff - just not text
 	    //Now get the text rectangle for the widget
@@ -50,8 +55,8 @@ protected:
 	    QColor textC = opt.palette.text().color().toHsl(); //need the lightness value in a moment
 	    QColor outC = textC;
 	      //qDebug() << "Font Color Values:" << textC << textC.lightness() << textC.lightnessF();
-	      if(textC.lightnessF() > 0.5){ outC.setHsl(textC.hue(), textC.hslSaturation(), 0); }
-	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255); } //1000% lighter
+	      if(textC.lightnessF() > 0.5){ outC.setHsl(textC.hue(), textC.hslSaturation(), 0, 80); }
+	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 80); }
 	      //qDebug() << "Outline Color Values:" << outC;
 	    //Now generate a QPainterPath for the text
 	    QPainterPath path;
@@ -62,7 +67,7 @@ protected:
 	    path.setFillRule(Qt::WindingFill);
 	    //Now paint the text 
 	    p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing); //need antialiasing for this to work well (sub-pixel painting)
-	    p.strokePath(path, QPen(outC) ); //This will be the outline - 1pixel thick
+	    p.strokePath(path, QPen(QBrush(outC),1.8, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) ); //This will be the outline - 1pixel thick, semi-transparent
 	    p.fillPath(path, QBrush(textC)); //this will be the inside/text color
 	      
 	}
