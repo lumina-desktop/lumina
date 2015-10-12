@@ -273,7 +273,7 @@ void MainUI::RebuildDeviceMenu(){
   QStringList devs = LOS::ExternalDevicePaths();
     //Output Format: <type>::::<filesystem>::::<path>  (6/24/14 - version 0.4.0 )
         // <type> = [USB, HDRIVE, SDCARD, DVD, LVM, UNKNOWN]
-	
+  qDebug() << "Externally-mounted devices:" << devs;
   //Now add them to the menu appropriately
   for(int i=0; i<devs.length(); i++){
     //Skip hidden mount points (usually only for system usage - not user browsing)
@@ -414,7 +414,13 @@ void MainUI::goToDevice(QAction *act){
   if(act==ui->actionScan){
     RebuildDeviceMenu();
   }else{
-    //setCurrentDir(act->whatsThis());
+    DirWidget *dir = FindActiveBrowser();
+    if(dir!=0){ 
+      dir->ChangeDir(act->whatsThis());
+      return;
+    }
+    //If no current dir could be found - open a new tab/column
+    OpenDirs(QStringList() << act->whatsThis() );
   }
 }
 
@@ -637,21 +643,6 @@ void MainUI::OpenTerminal(QString dirpath){
   //qDebug() << "Found default terminal:" << defTerminal;
   //Now get the exec string and run it
   QString cmd = LUtils::GenerateOpenTerminalExec(defTerminal, dirpath);
-  /*if(defTerminal.endsWith(".desktop")){
-    //Pull the binary name out of the shortcut
-    bool ok = false;
-    XDGDesktop DF = LXDG::loadDesktopFile(defTerminal,ok);
-    if(!ok){ defTerminal = "xterm"; }
-    else{ defTerminal = DF.exec.section(" ",0,0); } //only take the binary name - not any other flags
-  }
-  if( !LUtils::isValidBinary(defTerminal) ){
-    //The binary does not exist or is invalid
-    defTerminal = "xterm";
-  }	  
-
-    //-e is the parameter for most of the terminal appliction to execute an external command. 
-    //In your case we start a shell in the selected directory
-    QProcess::startDetached(defTerminal + " -e \"cd " + dirpath + " && " + shell + " \" ");*/
   //qDebug() << "Starting Terminal with command:" << cmd;
   QProcess::startDetached(cmd);
 
