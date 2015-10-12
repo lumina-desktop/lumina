@@ -38,6 +38,7 @@ int LUtils::runCmd(QString cmd, QStringList args){
   }
   if(!proc.waitForStarted(30000)){ return 1; } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(300)){
+    if(proc.state() != QProcess::Running){ break; } //somehow missed the finished signal
     QCoreApplication::processEvents();
   }
   int ret = proc.exitCode();
@@ -59,6 +60,7 @@ QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   }
   if(!proc.waitForStarted(30000)){ return QStringList(); } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(500)){
+    if(proc.state() != QProcess::Running){ break; } //somehow missed the finished signal
     QCoreApplication::processEvents();
   }
   QStringList out = QString(proc.readAllStandardOutput()).split("\n");
