@@ -211,6 +211,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     listWidget->setWhatsThis("");
     treeWidget->setWhatsThis("");
   }
+  bool updateThumbs = (lastdir != CDIR);
   //Determine if this is an internal ZFS snapshot
   bool loadsnaps = false;
   if(DEBUG){ qDebug() << "Load Snap Info:" << time.elapsed(); }
@@ -267,7 +268,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   //Clear the display widget (if a new directory)
     if(DEBUG){ qDebug() << "Clear Browser Widget:" << time.elapsed(); }
   double scrollpercent = -1;
-  needThumbs.clear();
+  if(updateThumbs){ needThumbs.clear(); }
   if(lastbasedir != normalbasedir){
     if(showDetails){ treeWidget->clear(); }
     else{ listWidget->clear(); }
@@ -280,6 +281,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     if(showDetails){
       for(int i=0; i<treeWidget->topLevelItemCount(); i++){
         if( !newfiles.contains(treeWidget->topLevelItem(i)->whatsThis(0).section("/",-1)) ){
+	  if(!updateThumbs){ needThumbs.removeAll( treeWidget->topLevelItem(i)->whatsThis(0).section("::::",1,50)); }
 	  delete treeWidget->takeTopLevelItem(i); 
 	  i--;
 	}
@@ -289,6 +291,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     }else{
       for(int i=0; i<listWidget->count(); i++){
         if( !newfiles.contains(listWidget->item(i)->text()) ){
+	  if(!updateThumbs){ needThumbs.removeAll( listWidget->item(i)->whatsThis().section("::::",1,50)); }
 	  delete listWidget->takeItem(i); 
 	  i--;
 	}
@@ -302,6 +305,11 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   hasimages = hasmultimedia = false;
   int numdirs = 0;
   qint64 filebytes = 0;
+  //Setup the timer to see when we should process events
+  QTimer updatetime;
+    updatetime.setInterval(1000); //1 second updates
+    updatetime.setSingleShot(true);
+    updatetime.start();
   if(DEBUG){ qDebug() << "Start Loop over items:" << time.elapsed(); }
   for(int i=0; i<list.length(); i++){
     if(stopload){ ui->actionStopLoad->setVisible(false); return; } //stop right now
@@ -333,9 +341,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    it->setStatusTip(t, list[i].fileName());
 	      //Since the icon/image is based on the filename - only update this for a new item
 	      // (This is the slowest part of the routine)
-	      if(list[i].isImage()){
+	      if(list[i].isImage()&& (addnew || updateThumbs)){
 	        if(showThumbs){ 
-		  //it->setIcon(t, QIcon( QPixmap(list[i].absoluteFilePath()).scaled(treeWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) ); 
 		  it->setIcon(t, LXDG::findIcon("fileview-preview","image-x-generic") );
 		  needThumbs << list[i].fileName();	
 		}else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
@@ -402,16 +409,16 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    it = new QListWidgetItem();
 	    addnew = true;
 	  }else{ it = items.first(); }
-	    it->setWhatsThis( QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath()); //used for drag and drop
-	    it->setText(list[i].fileName());
-	    it->setStatusTip(list[i].fileName());
+
+	  it->setWhatsThis( QString(canmodify ? "cut": "copy")+"::::"+list[i].absoluteFilePath()); //used for drag and drop
+	  it->setText(list[i].fileName());
+	  it->setStatusTip(list[i].fileName());
 	    //Since the icon/image is based on the filename - only update this for a new items (non-thumbnail)
 	    // (This is the slowest part of the routine)
-	    if(list[i].isImage()){
+	    if(list[i].isImage() && (addnew || updateThumbs) ){
 	      if(showThumbs){ 
 		it->setIcon(LXDG::findIcon("fileview-preview","image-x-generic") );
 		needThumbs << list[i].fileName();	
-		//it->setIcon(QIcon( QPixmap(list[i].absoluteFilePath()).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
 	      }else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else if(addnew){
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
@@ -423,7 +430,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  listWidget->scrollToItem(it);
 	}
     }
-    if(i%15==0){ QApplication::processEvents(); }//keep the UI snappy while loading a directory
+    if(!updatetime.isActive()){ QApplication::processEvents(); updatetime.start(); }//keep the UI snappy while loading a directory
     if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
   tmpSel.clear();
@@ -474,7 +481,7 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   //Save these value internally for use later
   snapbasedir = basedir;
   snapshots = snaps;
-  watcher->addPath(snapbasedir); //add this to the watcher in case snapshots get created/removed
+  if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
   //Now update the UI as necessary
   
   ui->slider_snap->setRange(0, snaps.length());
@@ -596,6 +603,10 @@ void DirWidget::startLoadThumbs(){
   //This just runs through the dir and loads all the thumbnails as needed
   if(needThumbs.isEmpty()){ return; }
   needThumbs.removeDuplicates(); //just in case
+  QTimer updatetime;
+    updatetime.setInterval(1000); //1 second updates
+    updatetime.setSingleShot(true);
+    updatetime.start();
   for(int i=0; i<needThumbs.length() && !stopload; i++){
     if(showDetails){
       //Use the tree widget
@@ -606,7 +617,7 @@ void DirWidget::startLoadThumbs(){
       QListWidgetItem *it = listWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
-    if(i%3==0){ QApplication::processEvents(); } // do 3 at a time
+    if(!updatetime.isActive()){ QApplication::processEvents(); updatetime.start(); } //it has been a second - process events
   }
 }
 

@@ -128,9 +128,9 @@ public slots:
 	    HASH.insert(canon, info);
 	  }else{
 	    //See if the saved info needs to be updated
-	    if( (HASH.value(canon).hashidden != showHidden) || (QFileInfo(canon).lastModified() > HASH.value(canon).lastcheck) ){
+	    //if( (HASH.value(canon).hashidden != showHidden) || (QFileInfo(canon).lastModified() > HASH.value(canon).lastcheck) ){
 	      HASH[canon].update(showHidden);
-	    }
+	    //}
 	  }
 	  if(DIR_DEBUG){ qDebug() << " -- Dir Data Found:" << ID << dirpath << HASH.value(canon).list.length(); }
 	  emit DirDataAvailable(ID, dirpath, HASH.value(canon).list);
@@ -142,7 +142,7 @@ public slots:
 	  //Only check if ZFS is flagged as available
 	  if(zfsavailable){
 	    //First find if the hash already has an entry for this directory
-	    if(!HASH.contains(dirpath)){
+	    if(false){ //!HASH.contains(dirpath)){
 	      LDirInfoList info(dirpath);
 	      HASH.insert(dirpath,info);
 	    }
