@@ -213,6 +213,24 @@ QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString
   QStringList colors = LUtils::readFile(colorpath);
   //qDebug() << "Found Theme:" << themepath << stylesheet;
   //qDebug() << "Found Colors:" << colorpath << colors;
+  QStringList systhemes = availableSystemThemes();
+  QStringList locthemes = availableLocalThemes();
+  //Now do any inheritance between themes
+  int start = stylesheet.indexOf("INHERITS=");
+  while(start>=0){
+    QString line = stylesheet.mid(start, stylesheet.indexOf("\n",start)-start); //only get this line
+    QString inherit = line.section("=",1,1);
+    QString rStyle; //replacement stylesheet
+    if(!locthemes.filter(inherit+"::::").isEmpty()){
+       rStyle = LUtils::readFile(locthemes.filter(inherit+"::::").first().section("::::",1,1)).join("\n");
+    }else if(!systhemes.filter(inherit+"::::").isEmpty()){
+      rStyle = LUtils::readFile(systhemes.filter(inherit+"::::").first().section("::::",1,1)).join("\n");
+    }
+    stylesheet.replace(line, rStyle);
+    //Now look for the next one
+    start = stylesheet.indexOf("INHERITS=");
+  }
+  //Now perform the color replacements
   for(int i=0; i<colors.length(); i++){
     if(colors[i].isEmpty() || colors[i].startsWith("#")){ continue; }
     else if(colors[i].startsWith("PRIMARYCOLOR=")){ stylesheet = stylesheet.replace("%%PRIMARYCOLOR%%", colors[i].section("=",1,1).simplified()); }
