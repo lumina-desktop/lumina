@@ -26,10 +26,7 @@ LDPlugin#applauncher, LDPlugin#desktopview{
 }
 
 LDPlugin#applauncher  QToolButton{
-background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-  stop: 0 transparent, 
-  stop: 0.7 transparent,
-  stop: 1.0 %%PRIMARYDISABLECOLOR%%);
+background: transparent;
   border: none;
   border-radius: 5px; 
   color: %%TEXTCOLOR%%;
