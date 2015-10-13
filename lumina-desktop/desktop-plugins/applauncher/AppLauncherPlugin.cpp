@@ -57,12 +57,12 @@ void AppLauncherPlugin::loadButton(){
     XDGDesktop file = LXDG::loadDesktopFile(path, ok);
     if(path.isEmpty() || !QFile::exists(path) || !ok){
       button->setWhatsThis("");
-      button->setIcon( LXDG::findIcon("quickopen-file","") );
+      button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = tr("Click to Set");
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
     }else{
       button->setWhatsThis(file.filePath);
-      button->setIcon( LXDG::findIcon(file.icon,"quickopen") );
+      button->setIcon( QIcon(LXDG::findIcon(file.icon,"quickopen").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = file.name;
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
       watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
@@ -75,7 +75,7 @@ void AppLauncherPlugin::loadButton(){
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
       button->setIcon( QIcon(QPixmap(path).scaled(256,256)) ); //max size for thumbnails in memory	     
     }else{
-      button->setIcon( LXDG::findMimeIcon(path) );
+      button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     }
     txt = info.fileName();
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
@@ -83,18 +83,20 @@ void AppLauncherPlugin::loadButton(){
   }else{
     //InValid File
     button->setWhatsThis("");
-    button->setIcon( LXDG::findIcon("quickopen","") );
+    button->setIcon( QIcon(LXDG::findIcon("quickopen","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
   //Now adjust the visible text as necessary based on font/grid sizing
   button->setToolTip(txt);
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
-  if(button->icon().actualSize(button->iconSize()) != button->iconSize()){
+  /*if(button->icon().actualSize(QSize(icosize,icosize)).height() < icosize){
+    qDebug() << "Scale Up Icon:" << button->iconSize() << icosize << button->icon().actualSize(QSize(icosize,icosize));
     QIcon ico = button->icon();
-      ico.addPixmap( ico.pixmap(button->iconSize()).scaled(button->iconSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+      ico.addPixmap( ico.pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) );
+    qDebug() << "  - New Icon Size:" << ico.actualSize(QSize(icosize,icosize));
     button->setIcon(ico);
-  }
+  }*/
   //int icosize = this->readSetting("iconsize",64).toInt();
   //int bwid = qRound(1.1*icosize);
   //this->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.

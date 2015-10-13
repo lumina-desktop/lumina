@@ -374,7 +374,10 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 void LDesktop::IncreaseDesktopPluginIcons(){
   int cur = settings->value(DPREFIX+"IconSize",64).toInt();
   cur+=16;
+  issyncing=true; //don't let the change cause a refresh
   settings->setValue(DPREFIX+"IconSize",cur);
+    settings->sync();
+    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   bgDesktop->SetIconSize(cur);
 }
 
@@ -382,7 +385,10 @@ void LDesktop::DecreaseDesktopPluginIcons(){
   int cur = settings->value(DPREFIX+"IconSize",64).toInt();
   if(cur<32){ return; } //cannot get smaller than 16x16
   cur-=16;
+  issyncing=true; //don't let the change cause a refresh
   settings->setValue(DPREFIX+"IconSize",cur);
+    settings->sync();
+    QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   bgDesktop->SetIconSize(cur);	
 }
 

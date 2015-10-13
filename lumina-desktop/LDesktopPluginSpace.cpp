@@ -73,7 +73,7 @@ QSize LDesktopPluginSpace::calculateItemSize(int icosize){
   QSize sz;
     sz.setWidth(1.8*icosize);
     sz.setWidth( RoundUp(sz.width()/GRIDSIZE)); //always round up to cell numbers
-    sz.setHeight(icosize+ 2.1*this->fontMetrics().height() );
+    sz.setHeight(icosize+ 2.3*this->fontMetrics().height() );
     sz.setHeight( RoundUp(sz.height()/GRIDSIZE)); //always round up to cell number
   return sz;
 }
@@ -98,7 +98,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     geom.moveTo( findOpenSpot(geom.width(), geom.height()) );
   }else if(!ValidGeometry(plugID, gridToGeom(geom)) ){
     //Find a new location for the plugin (saved location is invalid)
-    QPoint pt = findOpenSpot(geom.width(), geom.height(), geom.y()-2, geom.x()-2); //try to get it within the same general area
+    QPoint pt = findOpenSpot(geom.width(), geom.height(), geom.y()-1, geom.x()-1); //try to get it within the same general area
     geom.moveTo(pt);
   }
   if(geom.x() < 0 || geom.y() < 0){

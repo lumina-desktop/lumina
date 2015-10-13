@@ -53,7 +53,7 @@ public slots:
 protected:
 	void resizeEvent(QResizeEvent *ev){
 	  LDPlugin::resizeEvent(ev);
-	  QTimer::singleShot(10, this, SLOT(loadButton()) );
+	  QTimer::singleShot(100, this, SLOT(loadButton()) );
 	}
 };
 #endif
