@@ -106,6 +106,8 @@ signals:
 	void StartMoving(QString); //ID of plugin
 	void StartResizing(QString); //ID of plugin
 	void RemovePlugin(QString); //ID of plugin
+	void IncreaseIconSize(); // only used for desktop icons
+	void DecreaseIconSize(); // only used for desktop icons
 	
 private slots:
 	void slotStartMove(){ 

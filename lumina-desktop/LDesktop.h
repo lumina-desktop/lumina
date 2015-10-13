@@ -95,6 +95,8 @@ private slots:
 	//Desktop plugin system functions
 	void UpdateDesktop();
 	void RemoveDeskPlugin(QString);
+	void IncreaseDesktopPluginIcons();
+	void DecreaseDesktopPluginIcons();
 	
 	void UpdatePanels();
 	

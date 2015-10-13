@@ -28,6 +28,8 @@ class LDesktopPluginSpace : public QWidget{
 	
 signals:
 	void PluginRemovedByUser(QString ID);
+	void IncreaseIcons(); //increase default icon sizes
+	void DecreaseIcons(); //decrease default icon sizes
 	
 public:
 	LDesktopPluginSpace(QWidget *parent = 0);
@@ -125,7 +127,7 @@ private:
 	}
 	
 private slots:
-	void reloadPlugins();
+	void reloadPlugins(bool ForceIconUpdate = false);
 
 	void StartItemMove(QString ID){
 	  setupDrag(ID, "move");

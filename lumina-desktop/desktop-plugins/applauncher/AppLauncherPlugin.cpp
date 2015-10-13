@@ -34,7 +34,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   //QSize sz(qRound(1.1*icosize), icosize+qRound(2.7*button->fontMetrics().height()) );
   //button->setFixedSize(sz); //make sure to adjust the button on first show.
   this->setInitialSize(120, 100); //give the container a bit of a buffer
-  QTimer::singleShot(100,this, SLOT(loadButton()) );
+  QTimer::singleShot(200,this, SLOT(loadButton()) );
 }
 	
 void AppLauncherPlugin::Cleanup(){
@@ -89,6 +89,12 @@ void AppLauncherPlugin::loadButton(){
   }
   //Now adjust the visible text as necessary based on font/grid sizing
   button->setToolTip(txt);
+  //Double check that the visual icon size matches the requested size - otherwise upscale the icon
+  if(button->icon().actualSize(button->iconSize()) != button->iconSize()){
+    QIcon ico = button->icon();
+      ico.addPixmap( ico.pixmap(button->iconSize()).scaled(button->iconSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+    button->setIcon(ico);
+  }
   //int icosize = this->readSetting("iconsize",64).toInt();
   //int bwid = qRound(1.1*icosize);
   //this->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.

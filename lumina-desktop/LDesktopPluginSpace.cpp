@@ -45,7 +45,7 @@ void LDesktopPluginSpace::SetIconSize(int size){
   itemSize = newsize; //save this for all the later icons which are generated (grid size)
   UpdateGeom();
   //Now re-set the item icon size
-  QTimer::singleShot(0,this, SLOT(reloadPlugins()) );
+  reloadPlugins(true);
 }
 
 void LDesktopPluginSpace::cleanup(){
@@ -73,7 +73,7 @@ QSize LDesktopPluginSpace::calculateItemSize(int icosize){
   QSize sz;
     sz.setWidth(1.8*icosize);
     sz.setWidth( RoundUp(sz.width()/GRIDSIZE)); //always round up to cell numbers
-    sz.setHeight(icosize+ 2.3*this->fontMetrics().height() );
+    sz.setHeight(icosize+ 2.1*this->fontMetrics().height() );
     sz.setHeight( RoundUp(sz.height()/GRIDSIZE)); //always round up to cell number
   return sz;
 }
@@ -114,6 +114,8 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     connect(plug, SIGNAL(StartMoving(QString)), this, SLOT(StartItemMove(QString)) );
     connect(plug, SIGNAL(StartResizing(QString)), this, SLOT(StartItemResize(QString)) );
     connect(plug, SIGNAL(RemovePlugin(QString)), this, SLOT(RemoveItem(QString)) );
+    connect(plug, SIGNAL(IncreaseIconSize()), this, SIGNAL(IncreaseIcons()) );
+    connect(plug, SIGNAL(DecreaseIconSize()), this, SIGNAL(DecreaseIcons()) );
   }
 }
 
@@ -184,7 +186,7 @@ QPoint LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int star
 // ===================
 //     PRIVATE SLOTS
 // ===================
-void LDesktopPluginSpace::reloadPlugins(){
+void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
   //Remove any plugins as necessary
   QStringList plugs = plugins;
   QStringList items = deskitems;
@@ -192,7 +194,20 @@ void LDesktopPluginSpace::reloadPlugins(){
     if(plugs.contains(ITEMS[i]->whatsThis())){ plugs.removeAll(ITEMS[i]->whatsThis()); }
     else if(ITEMS[i]->whatsThis().contains("---dlink") && items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)) ){ 
       //Account for the variation in the Plugin ID for desktop files
-      items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50));
+      if(ForceIconUpdate){ 
+	//Change the size of the existing plugin - preserving the location if possible
+	QRect geom = ITEMS[i]->loadPluginGeometry();
+	if(!geom.isNull()){
+	  geom.setSize(itemSize); //Reset back to default size (does not change location)
+	  ITEMS[i]->savePluginGeometry(geom);
+	}
+	//Now remove the plugin for the moment - run it through the re-creation routine below
+	delete ITEMS.takeAt(i);  
+	i--;
+      }else{
+        items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50));
+      }
+
     }else{ ITEMS[i]->removeSettings(true); delete ITEMS.takeAt(i);  i--; } //this is considered a permanent removal (cleans settings)
   }
   

@@ -224,8 +224,10 @@ void LDesktop::InitDesktop(){
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
-      bgDesktop->SetIconSize(qRound(bgWindow->height()/14.0)); // (For 1600x900 screens - this comes out to 64 pixel icons)
+      bgDesktop->SetIconSize( settings->value(DPREFIX+"IconSize",64).toInt() );
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
+      connect(bgDesktop, SIGNAL(IncreaseIcons()), this, SLOT(IncreaseDesktopPluginIcons()) );
+      connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
   if(DEBUG){ qDebug() << " - Desktop Init Done:" << desktopnumber; }
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
@@ -367,6 +369,21 @@ void LDesktop::RemoveDeskPlugin(QString ID){
        else{ QFile::remove(path); } //just remove the file/symlink directly
     }
   }
+}
+
+void LDesktop::IncreaseDesktopPluginIcons(){
+  int cur = settings->value(DPREFIX+"IconSize",64).toInt();
+  cur+=16;
+  settings->setValue(DPREFIX+"IconSize",cur);
+  bgDesktop->SetIconSize(cur);
+}
+
+void LDesktop::DecreaseDesktopPluginIcons(){
+  int cur = settings->value(DPREFIX+"IconSize",64).toInt();
+  if(cur<32){ return; } //cannot get smaller than 16x16
+  cur-=16;
+  settings->setValue(DPREFIX+"IconSize",cur);
+  bgDesktop->SetIconSize(cur);	
 }
 
 void LDesktop::UpdatePanels(){
