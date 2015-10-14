@@ -9,7 +9,8 @@
 #include <QMenu>
 #include "../../LSession.h"
 
-#define TEXTCUTOFF 165
+//#define TEXTCUTOFF 165
+
 ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
   createWidget();
   //Now fill it appropriately
@@ -20,7 +21,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
     if(ok && LXDG::checkValidity(item) ){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
+      name->setText( item.name); //this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
       setupActions(item);
     }else{
       gooditem = false;
@@ -34,7 +35,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       name->setText( tr("Go Back") );
     }else{
       icon->setPixmap( LXDG::findIcon("folder","").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
+      name->setText( itemPath.section("/",-1)); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
     }
   }else{
     actButton->setVisible(false);
@@ -47,7 +48,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     }else{
       icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(32,32) );
     }
-    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
+    name->setText( itemPath.section("/",-1) ); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
   }
   icon->setWhatsThis(itemPath);
   if(!goback){ this->setWhatsThis(name->text()); }
@@ -83,7 +84,7 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   }
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(32,32) );
-  name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) ); 
+  name->setText( item.name); //this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) ); 
   this->setWhatsThis(name->text());
   icon->setWhatsThis(item.filePath);
   //Now setup the buttons appropriately
@@ -115,6 +116,7 @@ void ItemWidget::createWidget(){
   icon = new QLabel(this);
     icon->setFixedSize( QSize(34,34) );
   name = new QLabel(this);
+    name->setWordWrap(true);
   //Add them to the layout
   this->setLayout(new QHBoxLayout());
     this->layout()->setContentsMargins(1,1,1,1);
