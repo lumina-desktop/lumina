@@ -90,7 +90,7 @@ private:
 	DDTreeWidget *treeWidget;
 
 	//Keyboard Shortcuts
-	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort, *refreshShort;
+	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
 	//Watcher to determine when the dir changes
 	QFileSystemWatcher *watcher;
 	QTimer *synctimer;

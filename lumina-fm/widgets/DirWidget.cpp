@@ -23,7 +23,7 @@
 #include "../ScrollDialog.h"
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 
@@ -59,11 +59,10 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
   cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
   deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
-  refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
   //Create the filesystem watcher
   watcher = new QFileSystemWatcher(this);
   synctimer = new QTimer(this);
-    synctimer->setInterval(1000); // 1 second pause (combine simultaneous signals from the watcher)
+    synctimer->setInterval(300); // 300 millisecond pause (combine simultaneous signals from the watcher)
     synctimer->setSingleShot(true);
   //Now update the rest of the UI
   canmodify = false; //initial value
@@ -306,10 +305,11 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   int numdirs = 0;
   qint64 filebytes = 0;
   //Setup the timer to see when we should process events
-  QTimer updatetime;
+  /*QTimer updatetime;
     updatetime.setInterval(1000); //1 second updates
     updatetime.setSingleShot(true);
-    updatetime.start();
+    updatetime.start();*/
+  QTime updatetime = QTime::currentTime().addMSecs(500);
   if(DEBUG){ qDebug() << "Start Loop over items:" << time.elapsed(); }
   for(int i=0; i<list.length(); i++){
     if(stopload){ ui->actionStopLoad->setVisible(false); return; } //stop right now
@@ -430,7 +430,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	  listWidget->scrollToItem(it);
 	}
     }
-    if(!updatetime.isActive()){ QApplication::processEvents(); updatetime.start(); }//keep the UI snappy while loading a directory
+    if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
     if(DEBUG){ qDebug() << " - item finished:" << i << time.elapsed(); }
   }
   tmpSel.clear();
@@ -572,7 +572,7 @@ void DirWidget::setupConnections(){
   connect(cutFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_cut_clicked() ) );
   connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_paste_clicked() ) );
   connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
-  connect(refreshShort, SIGNAL(activated()), this, SLOT( refresh()) );
+
   //Filesystem Watcher
   connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync(const QString &)) );
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync(const QString &)) ); //just in case
@@ -603,10 +603,7 @@ void DirWidget::startLoadThumbs(){
   //This just runs through the dir and loads all the thumbnails as needed
   if(needThumbs.isEmpty()){ return; }
   needThumbs.removeDuplicates(); //just in case
-  QTimer updatetime;
-    updatetime.setInterval(1000); //1 second updates
-    updatetime.setSingleShot(true);
-    updatetime.start();
+  QTime updatetime = QTime::currentTime().addMSecs(500);
   for(int i=0; i<needThumbs.length() && !stopload; i++){
     if(showDetails){
       //Use the tree widget
@@ -617,7 +614,7 @@ void DirWidget::startLoadThumbs(){
       QListWidgetItem *it = listWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
-    if(!updatetime.isActive()){ QApplication::processEvents(); updatetime.start(); } //it has been a second - process events
+    if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
   }
 }
 
@@ -953,10 +950,10 @@ void DirWidget::startSync(const QString &file){
   //Update date_format based on user settings
   if(file == sessionsettings_config_file){ setDateFormat(); }
   else if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
-  else if(file == normalbasedir){ 
+  /*else if(file == normalbasedir){ 
     if(synctimer->isActive()){ synctimer->stop(); } //already starting a sync
     emit LoadDirectory(ID, normalbasedir); //Directory changed (new/removed files)
-  }else{
+  }*/else{
     //Some file in the directory got changed - start the time for a dir reload 
     // -- This prevents a directory from refreshing constantly if a file within the directory is changing all the time (such as a log file)
     if(!synctimer->isActive()){ synctimer->start(); }

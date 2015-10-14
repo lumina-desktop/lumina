@@ -85,6 +85,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   closeTabShort = new QShortcut( QKeySequence(tr("Ctrl+W")), this);
+  refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
 
   //Finish loading the interface
   workThread->start();
@@ -215,6 +216,8 @@ void MainUI::setupConnections(){
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(closeTabShort, SIGNAL(activated()), this, SLOT( tabClosed() ) );
+  connect(refreshShort , SIGNAL(activated()), this, SLOT( refreshTabs() ) );
+  
 
 }
 
@@ -569,6 +572,11 @@ void MainUI::nextTab(){
   int cur = tabBar->currentIndex();
   if(cur == (tabBar->count()-1) ){ tabBar->setCurrentIndex(0); }
   else{ tabBar->setCurrentIndex( cur+1 ); }	
+}
+
+void MainUI::refreshTabs(){
+  DirWidget *cur = FindActiveBrowser();
+  if(cur!=0){ cur->refresh(); }
 }
 
 void MainUI::DirDataAvailable(QString id, QString dir, LFileInfoList list){

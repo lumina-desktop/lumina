@@ -88,7 +88,7 @@ private:
 	SlideshowWidget *SW;
 	
 	QSettings *settings;
-	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort;
+	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *refreshShort;
 	QCompleter *dirCompleter;
 
 	//Simplification Functions
@@ -129,6 +129,7 @@ private slots:
 	void tabClosed(int tab = -1);
 	void nextTab(); //For keyboard shortcuts
 	void prevTab(); //For keyboard shortcuts
+	void refreshTabs(); //For keyboard shortcut
 	
 	//Backend Info passing
 	void DirDataAvailable(QString, QString, LFileInfoList);

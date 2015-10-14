@@ -81,7 +81,11 @@ protected:
 	
 	void dragMoveEvent(QDragMoveEvent *ev){
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
-	    ev->acceptProposedAction(); //allow this to be dropped here
+	    //Change the drop type depending on the data/dir
+	    QString home = QDir::homePath();
+	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); }
+	    else{ ev->setDropAction(Qt::CopyAction); }
+	    ev->accept(); //allow this to be dropped here
 	  }else{
 	    ev->ignore();
 	  }
@@ -184,7 +188,11 @@ protected:
 	
 	void dragMoveEvent(QDragMoveEvent *ev){
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
-	    ev->acceptProposedAction(); //allow this to be dropped here
+	    //Change the drop type depending on the data/dir
+	    QString home = QDir::homePath();
+	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); }
+	    else{ ev->setDropAction(Qt::CopyAction); }
+	    ev->accept(); //allow this to be dropped here
 	  }else{
 	    ev->ignore();
 	  }
