@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QUrl>
+#include <QDir>
 
 //==============
 //  LIST WIDGET
@@ -101,10 +102,11 @@ protected:
 	  }
 	  //Now turn the input urls into local file paths
 	  QStringList files;
+	  QString home = QDir::homePath();
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
 	    //If the target file is modifiable, assume a move - otherwise copy
-	    if(QFileInfo(filepath).isWritable()){ files << "cut::::"+filepath; }
+	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){ files << "cut::::"+filepath; }
 	    else{ files << "copy::::"+filepath; }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
@@ -203,10 +205,11 @@ protected:
 	  //qDebug() << "Drop Event:" << dirpath;
 	  //Now turn the input urls into local file paths
 	  QStringList files;
+	  QString home = QDir::homePath();
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
 	    //If the target file is modifiable, assume a move - otherwise copy
-	    if(QFileInfo(filepath).isWritable()){ files << "cut::::"+filepath; }
+	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home)) ){ files << "cut::::"+filepath; }
 	    else{ files << "copy::::"+filepath; }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
