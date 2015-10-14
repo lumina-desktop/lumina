@@ -22,9 +22,7 @@
 
 #include "../ScrollDialog.h"
 
-#ifndef DEBUG
-#define DEBUG 1
-#endif
+#define DEBUG 0
 
 
 const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
@@ -190,8 +188,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   QString lastdir = CDIR; //for some checks later
   QString lastbasedir = normalbasedir;
   CDIR = dir;
-  if(CDIR.endsWith("/") && CDIR.length() != 1){ CDIR.chop(1); }
-  CLIST = list; //save for laterr
+  if(CDIR.endsWith("/") && CDIR.length() > 1){ CDIR.chop(1); }
+  CLIST = list; //save for later
   canmodify = QFileInfo(CDIR).isWritable();
   if(DEBUG){ qDebug() << "Clear UI:" <<time.elapsed(); }
   //Clear the status text
@@ -601,17 +599,22 @@ QStringList DirWidget::currentSelection(){
 // =================
 void DirWidget::startLoadThumbs(){
   //This just runs through the dir and loads all the thumbnails as needed
+  if(DEBUG){ qDebug() << "Start Loading Thumbnails:" << needThumbs; }
   if(needThumbs.isEmpty()){ return; }
   needThumbs.removeDuplicates(); //just in case
   QTime updatetime = QTime::currentTime().addMSecs(500);
   for(int i=0; i<needThumbs.length() && !stopload; i++){
     if(showDetails){
       //Use the tree widget
-      QTreeWidgetItem *it = treeWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
+      QList<QTreeWidgetItem*> items = treeWidget->findItems(needThumbs[i], Qt::MatchExactly);
+      if(items.isEmpty()){ continue; } //invalid item for some reason
+      QTreeWidgetItem *it = items.first();
       it->setIcon(0, QIcon( QPixmap(it->whatsThis(0).section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }else{
       //Use the list widget
-      QListWidgetItem *it = listWidget->findItems(needThumbs[i], Qt::MatchExactly).first();
+      QList<QListWidgetItem*> items = listWidget->findItems(needThumbs[i], Qt::MatchExactly);
+      if(items.isEmpty()){ continue; }
+      QListWidgetItem *it = items.first();
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
     if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
@@ -950,10 +953,10 @@ void DirWidget::startSync(const QString &file){
   //Update date_format based on user settings
   if(file == sessionsettings_config_file){ setDateFormat(); }
   else if(file == snapbasedir){ emit findSnaps(ID, normalbasedir); } //snapshot list changed
-  /*else if(file == normalbasedir){ 
-    if(synctimer->isActive()){ synctimer->stop(); } //already starting a sync
-    emit LoadDirectory(ID, normalbasedir); //Directory changed (new/removed files)
-  }*/else{
+  else if(file == normalbasedir){ 
+    if(synctimer->isActive()){ synctimer->stop(); } //already starting a sync - restart the timer
+    synctimer->start();
+  }else{
     //Some file in the directory got changed - start the time for a dir reload 
     // -- This prevents a directory from refreshing constantly if a file within the directory is changing all the time (such as a log file)
     if(!synctimer->isActive()){ synctimer->start(); }

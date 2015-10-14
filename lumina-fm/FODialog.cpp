@@ -372,4 +372,5 @@ void FOWorker::slotStartOperations(){
   //All finished, emit the signal
   errlist.removeAll(""); //make sure to clear any empty items
   emit finished(errlist);
+  qDebug() << "Done with File Operations";
 }

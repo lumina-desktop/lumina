@@ -22,10 +22,6 @@
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
-#ifndef DEBUG
-#define DEBUG 0
-#endif
-
 namespace Ui{
 	class DirWidget;
 };
