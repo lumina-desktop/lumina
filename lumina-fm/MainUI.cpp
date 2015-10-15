@@ -136,6 +136,7 @@ void MainUI::OpenDirs(QStringList dirs){
     }
     //Create the new DirWidget
     DirWidget *DW = new DirWidget("DW-"+QString::number(id), this);
+    DW->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->BrowserLayout->addWidget(DW);
     DWLIST << DW;
     //Connect the signals/slots for it
