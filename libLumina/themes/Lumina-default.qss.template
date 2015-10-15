@@ -181,12 +181,16 @@ QComboBox{
 QTreeView, QListView{
   background: %%ALTBASECOLOR%%;
   alternate-background-color: %%BASECOLOR%%;
-  selection-background-color: %%SECONDARYCOLOR%%;
+  /*selection-background-color: %%SECONDARYCOLOR%%;*/
   border: 1px solid %%ACCENTCOLOR%%;
   border-radius: 3px;
-  show-decoration-selected: 1;
+  /*show-decoration-selected: 1;*/
   color: %%TEXTCOLOR%%;
   selection-color: %%TEXTCOLOR%%;
+}
+
+QTreeView:focus, QListView:focus{
+  border: 1px solid %%HIGHLIGHTDISABLECOLOR%%;
 }
 
 /*
@@ -206,7 +210,12 @@ QTreeView::item:hover, QListView::item:hover{
 QTreeView::item:selected:hover, QListView::item:selected:hover{
   background: %%HIGHLIGHTDISABLECOLOR%%;
 }
-
+QTreeView::item:selected, QListView::item:selected{
+  background: %%SECONDARYDISABLECOLOR%%;
+}
+QTreeView::item:selected:focus, QListView::item:selected:focus{
+  background: %%SECONDARYCOLOR%%;
+}
 QHeaderView{
   background: %%HIGHLIGHTDISABLECOLOR%%;
   color: %%TEXTHIGHLIGHTCOLOR%%;
