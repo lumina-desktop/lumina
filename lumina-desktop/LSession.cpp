@@ -400,6 +400,19 @@ void LSession::checkUserFiles(){
       //Now save that back to the file
       dset.setValue(plugKeys[i], plugs);
     }
+    //Also remove any "desktopview" desktop plugin and enable the automatic desktop icons instead
+    plugKeys = dset.allKeys().filter("desktop-").filter("/pluginlist");
+    for(int i=0; i<plugKeys.length(); i++){
+      QStringList plugs = dset.value(plugKeys[i], QStringList()).toStringList();
+      QStringList old = plugs.filter("desktopview");
+      bool found = !old.isEmpty();
+      for(int j=0; j<old.length(); j++){ plugs.removeAll(old[j]); }
+      if(found){
+        dset.setValue(plugKeys[i],plugs); //save the modified plugin list
+	//Also set the auto-generate flag on this desktop
+	dset.setValue(plugKeys[i].section("/",0,0)+"/generateDesktopIcons", true);
+      }
+    }
     dset.sync();
   }
   
