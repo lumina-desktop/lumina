@@ -129,6 +129,7 @@ void LTaskButton::UpdateButton(){
     if(showText){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
     else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
     else{ this->setToolButtonStyle(Qt::ToolButtonIconOnly); this->setText(""); }
+    this->setToolTip(WINLIST[0].text());
   }else if(WINLIST.length() > 1){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
