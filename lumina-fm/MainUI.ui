@@ -122,10 +122,10 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew_Tab">
    <property name="text">
-    <string>New &amp;Tab</string>
+    <string>New Browser</string>
    </property>
    <property name="toolTip">
-    <string>New Dir Browser</string>
+    <string>New Browser</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
