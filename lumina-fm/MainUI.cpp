@@ -91,7 +91,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   closeTabShort = new QShortcut( QKeySequence(tr("Ctrl+W")), this);
   refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
-
+  copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
+  pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
+  cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
+  deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
+  
   //Finish loading the interface
   workThread->start();
   if(DEBUG){ qDebug() << " - Icons"; }
@@ -235,7 +239,10 @@ void MainUI::setupConnections(){
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(closeTabShort, SIGNAL(activated()), this, SLOT( tabClosed() ) );
   connect(refreshShort , SIGNAL(activated()), this, SLOT( refreshTabs() ) );
-  
+  connect(copyFilesShort, SIGNAL(activated()), this, SLOT( CopyFilesTriggered() ) );
+  connect(cutFilesShort, SIGNAL(activated()), this, SLOT( CutFilesTriggered() ) );
+  connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( PasteFilesTriggered() ) );
+  connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( DeleteFilesTriggered() ) );
 
 }
 
@@ -343,7 +350,7 @@ DirWidget* MainUI::FindActiveBrowser(){
     }
   }else{
     //This is a bit more complex - either showing multiple columns or a non-browser tab is active
-    if(cur=="Browser"){
+    if(cur=="browser"){
       //Column View
       QWidget *focus = QApplication::focusWidget(); //the widget which currently has focus
       for(int i=0; i<DWLIST.length(); i++){
@@ -600,6 +607,31 @@ void MainUI::nextTab(){
 void MainUI::refreshTabs(){
   DirWidget *cur = FindActiveBrowser();
   if(cur!=0){ cur->refresh(); }
+}
+
+//Special Keyboard shortcut interactions
+void MainUI::CopyFilesTriggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Copy Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCopySelection()) ); }
+}
+
+void MainUI::CutFilesTriggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Cut Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCutSelection()) );	 }
+}
+
+void MainUI::PasteFilesTriggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Paste Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryPasteSelection()) ); }
+}
+
+void MainUI::DeleteFilesTriggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Delete Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryDeleteSelection()) ); }
 }
 
 void MainUI::DirDataAvailable(QString id, QString dir, LFileInfoList list){

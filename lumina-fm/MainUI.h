@@ -89,6 +89,7 @@ private:
 	
 	QSettings *settings;
 	QShortcut *nextTabLShort, *nextTabRShort, *closeTabShort, *refreshShort;
+	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
 	QCompleter *dirCompleter;
 
 	//Simplification Functions
@@ -131,6 +132,12 @@ private slots:
 	void nextTab(); //For keyboard shortcuts
 	void prevTab(); //For keyboard shortcuts
 	void refreshTabs(); //For keyboard shortcut
+	
+	//Special Keyboard shortcut interactions
+	void CopyFilesTriggered();
+	void CutFilesTriggered();
+	void PasteFilesTriggered();
+	void DeleteFilesTriggered();
 	
 	//Backend Info passing
 	void DirDataAvailable(QString, QString, LFileInfoList);

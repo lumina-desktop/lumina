@@ -71,6 +71,12 @@ public slots:
 	//Button updates
 	void UpdateButtons();
 
+	//Keyboard Shortcuts triggered
+	void TryCutSelection();
+	void TryCopySelection();
+	void TryPasteSelection();
+	void TryDeleteSelection();
+
 private:
 	Ui::DirWidget *ui;
 	QString ID, CDIR; //unique ID assigned by the parent and the current dir path
@@ -90,7 +96,7 @@ private:
 	DDTreeWidget *treeWidget;
 
 	//Keyboard Shortcuts
-	QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
+	//QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
 	//Watcher to determine when the dir changes
 	QFileSystemWatcher *watcher;
 	QTimer *synctimer;

@@ -54,10 +54,10 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   ui->browser_layout->addWidget(listWidget);
   ui->browser_layout->addWidget(treeWidget);
   //Create the keyboard shortcuts
-  copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
+  /*copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
   pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
   cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
-  deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
+  deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);*/
   //Create the filesystem watcher
   watcher = new QFileSystemWatcher(this);
   synctimer = new QTimer(this);
@@ -555,6 +555,23 @@ void DirWidget::UpdateButtons(){
   SelectionChanged();
 }
 
+//Keyboard Shortcuts triggered
+void DirWidget::TryCutSelection(){
+  on_tool_act_cut_clicked();
+}
+
+void DirWidget::TryCopySelection(){
+  on_tool_act_copy_clicked();
+}
+
+void DirWidget::TryPasteSelection(){
+  on_tool_act_paste_clicked();
+}
+
+void DirWidget::TryDeleteSelection(){
+  on_tool_act_rm_clicked();
+}
+
 // =================
 //       PRIVATE
 // =================
@@ -573,10 +590,10 @@ void DirWidget::setupConnections(){
   connect(line_dir, SIGNAL(returnPressed()), this, SLOT(dir_changed()) );
 
   //Keyboard Shortcuts
-  connect(copyFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_copy_clicked() ) );
+  /*connect(copyFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_copy_clicked() ) );
   connect(cutFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_cut_clicked() ) );
   connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_paste_clicked() ) );
-  connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );
+  connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( on_tool_act_rm_clicked() ) );*/
 
   //Filesystem Watcher
   connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync(const QString &)) );
@@ -634,6 +651,7 @@ void DirWidget::startLoadThumbs(){
 // -- Left Action Buttons
 void DirWidget::on_tool_act_cut_clicked(){
   QStringList sel = currentSelection();
+  qDebug() << "Cutting Items to clipboard:" << sel;
   if(sel.isEmpty()){ return; }
   emit CutFiles(sel);
 }
@@ -641,16 +659,19 @@ void DirWidget::on_tool_act_cut_clicked(){
 void DirWidget::on_tool_act_copy_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
+  qDebug() << "Copying Items to clipboard:" << sel;
   emit CopyFiles(sel);	
 }
 
 void DirWidget::on_tool_act_fav_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
+
   emit FavoriteFiles(sel);	
 }
 
 void DirWidget::on_tool_act_paste_clicked(){
+  qDebug() << "Pasting Items from clipboard:" << CDIR;
   emit PasteFiles(CDIR, QStringList()); //use the clipboard for pasting
 }
 
@@ -663,6 +684,7 @@ void DirWidget::on_tool_act_rename_clicked(){
 void DirWidget::on_tool_act_rm_clicked(){
   QStringList sel = currentSelection();
   if(sel.isEmpty()){ return; }
+  qDebug() << "Deleting selected Items:" << sel;
   emit RemoveFiles(sel);	
 }
 
