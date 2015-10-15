@@ -201,7 +201,8 @@ void MainUI::setupIcons(){
 	
   //Setup all the icons using libLumina
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
-  ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new-background","") );
+  ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new","") );\
+  ui->actionNew_Window->setIcon( LXDG::findIcon("window-new","") );
   //ui->action_Preferences->setIcon( LXDG::findIcon("configure","") );
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
@@ -369,6 +370,10 @@ void MainUI::DisplayStatusBar(QString msg){
 //---------------------
 //Menu Actions
 //---------------------
+void MainUI::on_actionNew_Window_triggered(){
+  QProcess::startDetached("lumina-fm -new-instance");
+}
+
 void MainUI::on_actionNew_Tab_triggered(){
   OpenDirs(QStringList() << QDir::homePath());
 }

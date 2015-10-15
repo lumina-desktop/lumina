@@ -111,6 +111,7 @@ private slots:
 	//void slotStartSyncTimer();
 	
 	//Menu Actions
+	void on_actionNew_Window_triggered();
 	void on_actionNew_Tab_triggered();
 	void on_actionSearch_triggered();
 	void on_actionClose_triggered();

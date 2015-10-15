@@ -113,6 +113,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew_Window"/>
     <addaction name="actionNew_Tab"/>
     <addaction name="actionSearch"/>
     <addaction name="separator"/>
@@ -293,6 +294,17 @@
   <action name="actionSmaller_Icons">
    <property name="text">
     <string>Smaller Icons</string>
+   </property>
+  </action>
+  <action name="actionNew_Window">
+   <property name="text">
+    <string>New Window</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>
