@@ -26,6 +26,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   searcher = new Worker();
     searcher->moveToThread(workthread);
 	
+  closeShort = new QShortcut(QKeySequence(tr("Esc")), this);
+	
   //Setup the connections
   connect(livetime, SIGNAL(timeout()), this, SLOT(startSearch()) );
   connect(this, SIGNAL(SearchTerm(QString, bool)), searcher, SLOT(StartSearch(QString, bool)) );
@@ -41,6 +43,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(LaunchItem(QListWidgetItem*)) );
   connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(LaunchItem(QListWidgetItem*)) );
   connect(ui->tool_configure, SIGNAL(clicked()), this, SLOT(configureSearch()) );
+  connect(closeShort, SIGNAL(activated()), this, SLOT( close() ) );
   
   //Setup the settings file
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");

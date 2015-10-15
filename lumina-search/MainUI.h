@@ -14,6 +14,7 @@
 #include <QThread>
 #include <QProcess>
 #include <QListWidgetItem>
+#include <QShortcut>
 
 #include <LuminaXDG.h>
 
@@ -43,6 +44,7 @@ private:
 	QTimer *livetime;
 	Worker *searcher;
 	QSettings *settings;
+	QShortcut *closeShort;
 
 	void updateDefaultStatusTip();
 
