@@ -15,6 +15,7 @@
 #include <QInputDialog>
 #include <QScrollBar>
 #include <QSettings>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
@@ -74,7 +75,12 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
 }
 
 DirWidget::~DirWidget(){
-	
+  stopload = true; //just in case another thread is still loading/running
+}
+
+void DirWidget::cleanup(){
+  stopload = true; //just in case another thread is still loading/running
+  if(thumbThread.isRunning()){ thumbThread.waitForFinished(); } //this will stop really quickly with the flag set
 }
 
 void DirWidget::ChangeDir(QString dirpath){
@@ -473,7 +479,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
   if(!canmodify){ stats.prepend(tr("(Limited Access) ")); }
   ui->label_status->setText( stats.simplified() );
   if(DEBUG){ qDebug() << "DONE:" << time.elapsed(); }
-  if(showThumbs){ QTimer::singleShot(0,this, SLOT(startLoadThumbs())); }
+  if(showThumbs){ thumbThread = QtConcurrent::run(this, &DirWidget::startLoadThumbs); }
 }
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
@@ -603,22 +609,24 @@ void DirWidget::startLoadThumbs(){
   if(DEBUG){ qDebug() << "Start Loading Thumbnails:" << needThumbs; }
   if(needThumbs.isEmpty()){ return; }
   needThumbs.removeDuplicates(); //just in case
-  QTime updatetime = QTime::currentTime().addMSecs(500);
+  //QTime updatetime = QTime::currentTime().addMSecs(500);
   for(int i=0; i<needThumbs.length() && !stopload; i++){
     if(showDetails){
       //Use the tree widget
       QList<QTreeWidgetItem*> items = treeWidget->findItems(needThumbs[i], Qt::MatchExactly);
       if(items.isEmpty()){ continue; } //invalid item for some reason
+      if(stopload){ return; } //stop right now
       QTreeWidgetItem *it = items.first();
       it->setIcon(0, QIcon( QPixmap(it->whatsThis(0).section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }else{
       //Use the list widget
       QList<QListWidgetItem*> items = listWidget->findItems(needThumbs[i], Qt::MatchExactly);
       if(items.isEmpty()){ continue; }
+      if(stopload){ return; } //stop right now
       QListWidgetItem *it = items.first();
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
-    if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
+    //if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
   }
 }
 
@@ -780,8 +788,8 @@ void DirWidget::on_slider_snap_valueChanged(int val){
   ui->tool_snap_older->setEnabled(val > ui->slider_snap->minimum());
   if(val >= snapshots.length() || val < 0){ 
     ui->label_snap->setText(tr("Current"));
-  }else{
-    ui->label_snap->setText( QFileInfo(snapbasedir+snapshots[val]).created().toString(Qt::DefaultLocaleShortDate) );
+  }else if(QFile::exists(snapbasedir+snapshots[val])){
+    ui->label_snap->setText( QFileInfo(snapbasedir+snapshots[val]).lastModified().toString(Qt::DefaultLocaleShortDate) );
   }
   //Exit if a non-interactive snapshot change
   if(!ui->group_snaps->isEnabled()){ return; } //internal change - do not try to change the actual info
@@ -794,6 +802,14 @@ void DirWidget::on_slider_snap_valueChanged(int val){
     dir = normalbasedir;
   }else{
     dir = snapbasedir+snapshots[val]+"/";
+    if(!QFile::exists(dir)){
+      //This snapshot must have been removed in the background by pruning tools
+      //    move to a newer snapshot or the current base dir as necessary
+      qDebug() << "Snapshot no longer available:" << dir;
+      qDebug() << " - Reloading available snapshots";
+      emit findSnaps(ID, normalbasedir);
+      return;
+    }
     if(snaprelpath.isEmpty()){
       //Need to figure out the relative path within the snapshot
       snaprelpath = normalbasedir.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);

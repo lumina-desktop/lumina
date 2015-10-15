@@ -15,6 +15,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //for Signal/slot we must register the Typedef of QFileInfoList
   qRegisterMetaType<QFileInfoList>("QFileInfoList");
   qRegisterMetaType< LFileInfoList >("LFileInfoList");
+  //just to silence/fix some Qt connect warnings in QtConcurrent
+  qRegisterMetaType< QVector<int> >("QVector<int>"); 
+  qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
+	
+	
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
@@ -106,7 +111,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->cleanup();
+  }
   workThread->quit();
+  //Also ensure the work thread is stopped
   workThread->wait();
 }
 
@@ -556,6 +565,7 @@ void MainUI::tabClosed(int tab){
     if(DWLIST.length()<2){ return; }
     for(int i=0; i<DWLIST.length(); i++){
       if(info == DWLIST[i]->id()){
+	 DWLIST[i]->cleanup();
         delete DWLIST.takeAt(i);
 	break;
       }

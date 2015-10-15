@@ -1,6 +1,6 @@
 
 QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets network concurrent
 
 
 TARGET = lumina-fm

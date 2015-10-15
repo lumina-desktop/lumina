@@ -16,6 +16,7 @@
 #include <QShortcut>
 #include <QFileSystemWatcher>
 #include <QTimer>
+#include <QFuture>
 
 #include "../DirData.h"
 #include "DDListWidgets.h"
@@ -32,6 +33,8 @@ public:
 	enum DETAILTYPES{ NAME, SIZE, TYPE, DATEMOD, DATECREATE};
 	DirWidget(QString objID, QWidget *parent = 0); //needs a unique ID (to distinguish from other DirWidgets)
 	~DirWidget();
+	
+	void cleanup(); //called before the browser is closed down
 	
 	//Directory Managment
 	void ChangeDir(QString dirpath);
@@ -77,6 +80,7 @@ private:
 	bool showDetails, showThumbs, canmodify, stopload; //which widget to use for showing items
 	QList<DETAILTYPES> listDetails;
 	QMenu *contextMenu;
+	QFuture<void> thumbThread;
 	//The Toolbar and associated items
 	QToolBar *toolbar;
 	QLineEdit *line_dir;
