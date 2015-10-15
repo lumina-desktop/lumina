@@ -470,7 +470,8 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
     
   }
   if(stopload){ return; } //stop right now  
-  ui->label_status->setText( QString(ui->label_status->text()+stats).simplified() );
+  if(!canmodify){ stats.prepend(tr("(Limited Access) ")); }
+  ui->label_status->setText( stats.simplified() );
   if(DEBUG){ qDebug() << "DONE:" << time.elapsed(); }
   if(showThumbs){ QTimer::singleShot(0,this, SLOT(startLoadThumbs())); }
 }
