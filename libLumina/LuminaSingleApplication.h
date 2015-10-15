@@ -39,7 +39,7 @@ public:
 	QStringList inputlist; //in case the app wants access to modified inputs (relative path fixes and such)
 
 private:
-	bool isActive;
+	bool isActive, isBypass;
 	QLockFile *lockfile;
 	QLocalServer *lserver;
 	QString cfile;

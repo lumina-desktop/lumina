@@ -36,8 +36,13 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
       }
     inputlist << path; 
   }
-  isActive = false;
+  isActive = isBypass = false;
   lserver = 0;
+  //Now check for the manual CLI flag to bypass single-instance forwarding (if necessary)
+  if(inputlist.contains("-new-instance")){ 
+    isBypass = true;
+    inputlist.removeAll("-new-instance");
+  }
   PerformLockChecks();
 }
 
@@ -51,7 +56,7 @@ LSingleApplication::~LSingleApplication(){
 }
 
 bool LSingleApplication::isPrimaryProcess(){
-  return isActive;	
+  return (isActive || isBypass);	
 }
 
 void LSingleApplication::PerformLockChecks(){
@@ -94,7 +99,7 @@ void LSingleApplication::PerformLockChecks(){
 	isActive = true;
      }
       
-  }else{
+  }else if(!isBypass){
     //forward the current inputs to the locked process for processing and exit
     //Check the connection to the local server first
     qDebug() << "Single-instance lock found";
