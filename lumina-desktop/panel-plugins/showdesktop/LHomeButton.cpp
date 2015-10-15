@@ -26,7 +26,7 @@ LHomeButtonPlugin::~LHomeButtonPlugin(){
 }
 
 void LHomeButtonPlugin::updateButtonVisuals(){
-  button->setIcon( LXDG::findIcon("go-home", "") );
+  button->setIcon( LXDG::findIcon("user-desktop", "") );
 }
 
 // ========================
