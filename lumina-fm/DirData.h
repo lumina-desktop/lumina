@@ -156,6 +156,12 @@ public slots:
 	      base = HASH.value(dirpath).snapdir;
 	      QDir dir(base);
 	      snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time |QDir::Reversed );
+	      //Also remove any "empty" snapshots (might be leftover by tools like "zfsnap")
+	      for(int i=0; i<snaps.length(); i++){
+		dir.cd(base+"/"+snaps[i]);
+		//qDebug() << "Snapshot Dir Contents Count:" << dir.count() << snaps[i];
+	        if(dir.count() < 3 && dir.exists() ){ snaps.removeAt(i); i--; } // "." and ".." are always in the count
+	      }
 	      //NOTE: snaps are sorted oldest -> newest
 	    }
 	    
