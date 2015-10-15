@@ -65,6 +65,9 @@
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item row="6" column="0">
@@ -78,6 +81,9 @@
         <widget class="QLabel" name="label_file_group">
          <property name="text">
           <string notr="true"/>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -110,6 +116,9 @@
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item row="12" column="0">
@@ -138,12 +147,18 @@
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QLabel" name="label_file_type">
          <property name="text">
           <string notr="true"/>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -152,12 +167,18 @@
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item row="12" column="1">
         <widget class="QLabel" name="label_file_modified">
          <property name="text">
           <string notr="true"/>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -173,6 +194,9 @@
          <property name="text">
           <string notr="true"/>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -182,6 +206,9 @@
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
