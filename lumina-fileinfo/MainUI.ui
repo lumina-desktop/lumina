@@ -17,11 +17,14 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>true</bool>
      </property>
      <widget class="QWidget" name="tab_file">
       <attribute name="title">
-       <string>File Properties</string>
+       <string>File Information</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
        <property name="labelAlignment">
