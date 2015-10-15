@@ -124,8 +124,14 @@
    <property name="text">
     <string>New &amp;Tab</string>
    </property>
+   <property name="toolTip">
+    <string>New Dir Browser</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionClose">
@@ -199,6 +205,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionTabs">

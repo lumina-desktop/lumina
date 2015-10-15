@@ -148,11 +148,18 @@ void MainUI::OpenDirs(QStringList dirs){
       int index = tabBar->addTab( LXDG::findIcon("folder-open",""), dirs[i].section("/",-1) );
       tabBar->setTabWhatsThis( index, "DW-"+QString::number(id) );
       tabBar->setCurrentIndex(index);
-    }else if(tabBar->count()<1){
-      //Need to create the generic Browser tab
-      int index = tabBar->addTab( LXDG::findIcon("folder-open",""), "Browser" );
-      tabBar->setTabWhatsThis( index, "browser" );
-      tabBar->setCurrentIndex(index);
+    }else{
+      //Just make sure the browser tab is visible
+      bool found = false;
+      for(int i=0; i<tabBar->count() && !found; i++){
+        if(tabBar->tabWhatsThis(i)=="browser"){ tabBar->setCurrentIndex(i); found=true; }
+      }
+      if(!found){
+        //Need to create the generic Browser tab
+        int index = tabBar->addTab( LXDG::findIcon("folder-open",""), "Browser" );
+        tabBar->setTabWhatsThis( index, "browser" );
+        tabBar->setCurrentIndex(index);
+      }
     }
     
     //Initialize the widget with the proper settings
@@ -472,7 +479,7 @@ void MainUI::groupModeChanged(bool active){
     }
     //Now create the generic "browser" tab
     int tab = tabBar->addTab( LXDG::findIcon("folder-open",""), tr("Browser") );
-      tabBar->setTabWhatsThis(tab, "Browser" );
+      tabBar->setTabWhatsThis(tab, "browser" );
     for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->setShowCloseButton(true); }
   }
   if(tabBar->currentIndex()<0){ tabBar->setCurrentIndex(0); }
