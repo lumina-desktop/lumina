@@ -125,7 +125,8 @@ private slots:
 	void groupModeChanged(bool);
 	void on_actionLarger_Icons_triggered();
 	void on_actionSmaller_Icons_triggered();
-
+	void CreateBookMark();
+	
 	//Tab interactions
         void tabChanged(int tab = -1);
 	void tabClosed(int tab = -1);

@@ -150,6 +150,8 @@
      <string>Bookmarks</string>
     </property>
     <addaction name="actionManage_Bookmarks"/>
+    <addaction name="actionAdd_Bookmark"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuExternal_Devices">
     <property name="title">
@@ -302,6 +304,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionAdd_Bookmark">
+   <property name="text">
+    <string>Add Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>

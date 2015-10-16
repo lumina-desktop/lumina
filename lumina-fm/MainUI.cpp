@@ -207,8 +207,8 @@ void MainUI::setupIcons(){
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
   ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new","") );\
   ui->actionNew_Window->setIcon( LXDG::findIcon("window-new","") );
-  //ui->action_Preferences->setIcon( LXDG::findIcon("configure","") );
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
+  ui->actionAdd_Bookmark->setIcon( LXDG::findIcon("bookmark-new","") );
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
   ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
   ui->actionLarger_Icons->setIcon( LXDG::findIcon("zoom-in","") );
@@ -267,12 +267,10 @@ void MainUI::loadSettings(){
 
 void MainUI::RebuildBookmarksMenu(){
   //Create the bookmarks menu
-  ui->menuBookmarks->clear();
-    ui->menuBookmarks->addAction(ui->actionManage_Bookmarks);
-    ui->menuBookmarks->addSeparator();
   QStringList BM = settings->value("bookmarks", QStringList()).toStringList();
   ui->menuBookmarks->clear();
     ui->menuBookmarks->addAction(ui->actionManage_Bookmarks);
+    ui->menuBookmarks->addAction(ui->actionAdd_Bookmark);
     ui->menuBookmarks->addSeparator();
   bool changed = false;
   BM.sort(); //Sort alphabetically
@@ -430,6 +428,8 @@ void MainUI::goToBookmark(QAction *act){
       dlg.loadSettings(settings);
       dlg.exec();
     RebuildBookmarksMenu();
+  }else if(act == ui->actionAdd_Bookmark){
+    CreateBookMark();
   }else{
     //Find the current directory
     DirWidget *dir = FindActiveBrowser();
@@ -524,8 +524,8 @@ void MainUI::on_actionSmaller_Icons_triggered(){
   settings->setValue("iconsize", size);	
 }
 
-/*void MainUI::on_actionBookMark_triggered(){
-  QString dir = getCurrentDir();
+void MainUI::CreateBookMark(){
+  QString dir = FindActiveBrowser()->currentDir();
   bool ok = false;
   QString name = QInputDialog::getText(this, tr("New Bookmark"), tr("Name:"), QLineEdit::Normal, dir, \
 		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
@@ -541,8 +541,7 @@ void MainUI::on_actionSmaller_Icons_triggered(){
   settings->setValue("bookmarks", BM);
   //Now rebuild the bookmarks menu
   RebuildBookmarksMenu();
-  ui->actionBookMark->setEnabled(false); //already bookmarked
-}*/
+}
 
 void MainUI::tabChanged(int tab){
   if(tab<0){ tab = tabBar->currentIndex(); }
