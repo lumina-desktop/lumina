@@ -23,6 +23,7 @@ LDesktopPluginSpace::LDesktopPluginSpace(QWidget *parent) : QWidget(parent){
   this->setContextMenuPolicy(Qt::NoContextMenu);
   this->setMouseTracking(true);
   TopToBottom = true;
+  GRIDSIZE = 100.0; //default value if not set
   plugsettings = LSession::handle()->DesktopPluginSettings();
 
 }
@@ -41,8 +42,9 @@ void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
 
 void LDesktopPluginSpace::SetIconSize(int size){
   if(DEBUG){ qDebug() << "Set Desktop Icon Size:" << size; }
-  QSize newsize = calculateItemSize(size);
-  itemSize = newsize; //save this for all the later icons which are generated (grid size)
+  //QSize newsize = calculateItemSize(size);
+  GRIDSIZE = size; //turn the int into a float;
+  itemSize = QSize(1,1); //save this for all the later icons which are generated (grid size)
   UpdateGeom();
   //Now re-set the item icon size
   reloadPlugins(true);
@@ -88,11 +90,12 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   LDPlugin *plug = NewDP::createPlugin(plugID, this);
     plug->setWhatsThis(plugID);
   //Now get the geometry for the plugin
-  QRect geom = plug->loadPluginGeometry(); //in grid coords
+  QRect geom = plug->loadPluginGeometry(); //in pixel coords
+  if(!geom.isNull()){ geom = geomToGrid(geom); } //convert to grid coordinates
   if(geom.isNull()){
     //No previous location - need to calculate initial geom
     QSize sz = plug->sizeHint();
-    if(plugID.startsWith("applauncher::") ){ sz = itemSize*GRIDSIZE; }
+    if(plugID.startsWith("applauncher") ){ sz = itemSize*GRIDSIZE; }
     geom.setWidth( RoundUp(sz.width()/GRIDSIZE) );
     geom.setHeight( RoundUp(sz.height()/GRIDSIZE) );
     geom.moveTo( findOpenSpot(geom.width(), geom.height()) );
@@ -191,24 +194,22 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
   QStringList plugs = plugins;
   QStringList items = deskitems;
   for(int i=0; i<ITEMS.length(); i++){
-    if(plugs.contains(ITEMS[i]->whatsThis())){ plugs.removeAll(ITEMS[i]->whatsThis()); }
-    else if(ITEMS[i]->whatsThis().contains("---dlink") && items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)) ){ 
-      //Account for the variation in the Plugin ID for desktop files
-      if(ForceIconUpdate){ 
+    
+    if( ITEMS[i]->whatsThis().startsWith("applauncher") && ForceIconUpdate){ 
 	//Change the size of the existing plugin - preserving the location if possible
-	QRect geom = ITEMS[i]->loadPluginGeometry();
+	QRect geom = ITEMS[i]->loadPluginGeometry(); //pixel coords
 	if(!geom.isNull()){
+	  geom = geomToGrid(geom); //convert to grid coords
 	  geom.setSize(itemSize); //Reset back to default size (does not change location)
-	  ITEMS[i]->savePluginGeometry(geom);
+	  ITEMS[i]->savePluginGeometry( gridToGeom(geom)); //save it back in pixel coords
 	}
 	//Now remove the plugin for the moment - run it through the re-creation routine below
 	delete ITEMS.takeAt(i);  
 	i--;
-      }else{
-        items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50));
-      }
-
-    }else{ ITEMS[i]->removeSettings(true); delete ITEMS.takeAt(i);  i--; } //this is considered a permanent removal (cleans settings)
+    }
+    else if(plugs.contains(ITEMS[i]->whatsThis())){ plugs.removeAll(ITEMS[i]->whatsThis()); }
+    else if(items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50))){ items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)); }
+    else{ ITEMS[i]->removeSettings(true); delete ITEMS.takeAt(i);  i--; } //this is considered a permanent removal (cleans settings)
   }
   
   //Now create any new items

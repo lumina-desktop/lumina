@@ -21,7 +21,7 @@
 
 #define MIMETYPE QString("x-special/lumina-desktop-plugin")
 //#define MIMEPOS QString("x-special/lumina-desktop-plugin-pos")
-#define GRIDSIZE 16.0 //Need this to be a double/float - usually used for divisions
+//#define GRIDSIZE 64.0 //Need this to be a double/float - usually used for divisions
 
 class LDesktopPluginSpace : public QWidget{
   	Q_OBJECT
@@ -50,6 +50,7 @@ private:
 	QStringList plugins, deskitems;	
 	QList<LDPlugin*> ITEMS;
 	bool TopToBottom;
+	float GRIDSIZE;
 
 	int RoundUp(double num){
 	 int out = num; //This will truncate the number
@@ -80,12 +81,13 @@ private:
 	  //This function incorporates the bottom/right edge matchins procedures (for incomplete last grid)
 	  QRect geom(grid.x()*GRIDSIZE, grid.y()*GRIDSIZE, grid.width()*GRIDSIZE, grid.height()*GRIDSIZE);
 	  //Now check the edge conditions (last right/bottom grid points might be smaller than GRIDSIZE)
-	  //qDebug() << "GridToGeom:" << grid << geom;
-	  if(geom.right() > this->geometry().right() && (geom.right() -this->geometry().right())<GRIDSIZE ){
-	    geom.setRight(this->geometry().right()); //match up with the edge
+	  QSize areaSize = this->size(); //use the size of the area instead of the geometry - because we need this in child coordinates like "geom" above
+	  //qDebug() << "GridToGeom:" << grid << geom << "Area size:" << areaSize;
+	  if(geom.right() > areaSize.width() && (geom.right()-areaSize.width())<GRIDSIZE ){
+	    geom.setRight(areaSize.width()-1); //match up with the edge
 	  }
-	  if(geom.bottom() > this->geometry().bottom() && (geom.bottom() -this->geometry().bottom())<GRIDSIZE ){
-	    geom.setBottom(this->geometry().bottom()); //match up with the edge
+	  if(geom.bottom() > areaSize.height() && (geom.bottom() -areaSize.height())<GRIDSIZE ){
+	    geom.setBottom(areaSize.height()-1); //match up with the edge
 	  }
 	  //qDebug() << " - Adjusted:" << geom;
 	  return geom;
@@ -171,13 +173,16 @@ protected:
 		QPoint diff = grid - posToGrid(geom.center()); //difference in grid coords
 		  //qDebug() << "Move Event:" << "Diff:" << diff << "Geom:" << geom << grid << ev->pos();
 		  geom = geomToGrid(geom); //convert to grid coords
+		  //qDebug() << "Move Event:" << "Old geom (grid):" << geom;
 		  geom.moveTo( (geom.topLeft()+diff) );
+		  //qDebug() << " - After Move:" << geom;
 		  geom = gridToGeom(geom); //convert back to px coords with edge matching
-		  //qDebug() << " - Setting Geometry:" << geom;
+		  //qDebug() << " - new Geometry:" << geom;
 		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
+		    //qDebug() << " - Is valid";
 		    item->setGeometry(geom); 
 		    ev->acceptProposedAction(); 
-		    item->savePluginGeometry(geomToGrid(geom));
+		    item->savePluginGeometry(geom); //save in pixel coords
 		  }else{ ev->ignore(); } //invalid location
 		  
 	      }else{
@@ -197,7 +202,7 @@ protected:
 		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
 		    item->setGeometry(geom); 
 		    ev->acceptProposedAction();
-		    item->savePluginGeometry(geomToGrid(geom));
+		    item->savePluginGeometry(geom); //save in pixel coords
 	          }else{ ev->ignore(); } //invalid location
 	        }
 	      }

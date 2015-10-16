@@ -224,7 +224,7 @@ void LDesktop::InitDesktop(){
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
-      bgDesktop->SetIconSize( settings->value(DPREFIX+"IconSize",64).toInt() );
+      bgDesktop->SetIconSize( settings->value(DPREFIX+"GridSize",100).toInt() );
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
       connect(bgDesktop, SIGNAL(IncreaseIcons()), this, SLOT(IncreaseDesktopPluginIcons()) );
       connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
@@ -372,21 +372,21 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 }
 
 void LDesktop::IncreaseDesktopPluginIcons(){
-  int cur = settings->value(DPREFIX+"IconSize",64).toInt();
+  int cur = settings->value(DPREFIX+"GridSize",100).toInt();
   cur+=16;
   issyncing=true; //don't let the change cause a refresh
-  settings->setValue(DPREFIX+"IconSize",cur);
+  settings->setValue(DPREFIX+"GridSize",cur);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   bgDesktop->SetIconSize(cur);
 }
 
 void LDesktop::DecreaseDesktopPluginIcons(){
-  int cur = settings->value(DPREFIX+"IconSize",64).toInt();
+  int cur = settings->value(DPREFIX+"GridSize",100).toInt();
   if(cur<32){ return; } //cannot get smaller than 16x16
   cur-=16;
   issyncing=true; //don't let the change cause a refresh
-  settings->setValue(DPREFIX+"IconSize",cur);
+  settings->setValue(DPREFIX+"GridSize",cur);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
   bgDesktop->SetIconSize(cur);	

@@ -414,6 +414,10 @@ void LSession::checkUserFiles(){
       }
     }
     dset.sync();
+    //Due to the grid size change for desktop plugins, need to remove any old plugin geometries
+    if(QFile::exists(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf")){
+      QFile::remove(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf");
+    }
   }
   
   //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
