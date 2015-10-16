@@ -1,0 +1,62 @@
+Lumina 0.8.7 Keyboard Shortcuts
+========================
+Note: "Meta" is the standard OS-branded button (like the windows button) on keyboards
+
+---------------------------------------------
+Insight File Manager (lumina-fm)
+---------------------------------------------
+-- Application Interactions --
+Ctrl+Q: Close Application
+Ctrl+N: Open a new window (new lumina-fm process)
+
+-- Multiple Browser Interactions --
+Shift+[Left/Right arrow]: Change Tab (left/right)
+Ctrl+W: Close Current Browser (tab/column)
+Ctrl+T: New Browser (tab/column)
+
+-- Directory Interactions --
+F5: Refresh current directory
+Ctrl+D: Bookmark the current directory
+Ctrl+F: Search the current directory (launches lumina-search in file searching mode within the current dir)
+
+-- File Interactions --
+Ctrl+X: Cut selection to clipboard
+Ctrl+C: Copy selection to clipboard
+Ctrl+V: Paste files from clipboard
+Delete: Delete current selection
+
+---------------------------------------------
+lumina-search
+---------------------------------------------
+Escape: Close application
+Enter: Launch first app and close search (when on the app search bar with results available)
+Enter: Launch app and leave search open (when browsing through the search results)
+
+---------------------------------------------
+General System-wide shortcuts (can be modified by user: ~/.lumina/fluxbox-keys)
+---------------------------------------------
+ -- Window Interactions --
+Alt+F4: Close current window (if applicable)
+Alt+F5: Kill app related to current window (if applicable)
+Alt+F9: Minimize window (if applicable)
+Alt+F10: Maximize window (if applicable)
+Alt+F11: Fullscreen window (if applicable)
+Alt+LeftMouseButton: Start Moving window
+Alt+RightMouseButton: Start Resizing window
+
+-- Workspace Interactions --
+Ctrl+F<X>: Switch to workspace <X>
+Ctrl+Alt+[Left/Right]: Switch to [Previous/Next] workspace
+Ctrl+MouseWheel[Down/Up]: Switch to [Previous/Next] workspace
+Meta+F<X>: Send window to workspace <X>
+Control+Meta+F<X>: Take window to workspace <X> (send+switch)
+
+-- Application/System Interactions --
+Alt+F1: Launch xterm
+Alt+F2 or Meta+Spacebar: Launch lumina-search (in app-search mode initially)
+Print Screen: Launch lumina-screenshot
+Pause or Meta+L: Lock screen
+Meta+PageUp: Increase audio volume
+Meta+PageDown: Decrease audio volume
+Meta+Home: Increase Screen Brightness
+Meta+End: Decrease Screen Brightness
