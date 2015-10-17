@@ -33,7 +33,7 @@ LDesktopPluginSpace::~LDesktopPluginSpace(){
 }
 
 void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
-  if(DEBUG){ qDebug() << "Loading Desktop Items:" << plugs << files; }
+  if(DEBUG){ qDebug() << "Loading Desktop Items:" << plugs << files << "Area:" << this->size() << GRIDSIZE; }
   bool changes = false;
   if(plugs != plugins){ plugins = plugs; changes = true; }
   if(files != deskitems){ deskitems = files; changes = true; }
@@ -63,8 +63,25 @@ void LDesktopPluginSpace::cleanup(){
 //      PUBLIC SLOTS
 // ===================
 void LDesktopPluginSpace::UpdateGeom(){
-  if(DEBUG){ qDebug() << "Update Desktop Geom:"; }
-  //Currently no special checks - might need to add validation of all current plugin geometries in the future
+  if(DEBUG){ qDebug() << "Updated Desktop Geom:" << this->size() << GRIDSIZE << this->size()/GRIDSIZE; }
+  //Go through and check the locations/sizes of all items (particularly the ones on the bottom/right edges)
+  bool reload = false;
+  for(int i=0; i<ITEMS.length(); i++){
+    QRect grid = geomToGrid(ITEMS[i]->geometry());
+    if(DEBUG){ qDebug() << " - Check Plugin:" << grid; }
+    if( (grid.x()+grid.width() > this->width()/GRIDSIZE) || (grid.y()+grid.height() > this->height()/GRIDSIZE) ){
+      //This plugin is too far out of the screen - remove it and reload plugins (will find new location for it)
+      //qDebug() << " -- Out of bounds - recreate it...";
+      delete ITEMS.takeAt(i);
+      i--;
+      reload = true;
+    }else if( (grid.x()+grid.width() == this->width()/GRIDSIZE) || (grid.y()+grid.height() == this->height()/GRIDSIZE) ){
+      //This plugin is on the bottom/right screen edge - recalculate edge matching and re-apply geometry
+      //qDebug() << " -- On Screen Edge - adjust to fit...";
+      ITEMS[i]->setGeometry( gridToGeom(grid) );
+    }
+  }
+  if(reload){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
 }
 
 // ===================
