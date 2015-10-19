@@ -82,25 +82,32 @@ icons.files = Lumina-DE.png \
 
 icons.path = $$PREFIX/share/pixmaps
 
-wallpapers.files = wallpapers/Lumina_Wispy_gold_1920x1080.jpg \
-			wallpapers/Lumina_Wispy_green_1920x1080.jpg \
-			wallpapers/Lumina_Wispy_purple_1920x1080.jpg \
-			wallpapers/Lumina_Wispy_red_1920x1080.jpg
-wallpapers.path = $$PREFIX/share/wallpapers/Lumina-DE
-
 fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
 fluxconf.path = $$PREFIX/share/Lumina-DE/
 
-defaults.files = defaults/desktop-background.jpg \
-		defaults/defaultapps.conf \
-		defaults/luminaDesktop.conf \
+wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
+			wallpapers/Lumina_Wispy_green.jpg \
+			wallpapers/Lumina_Wispy_purple.jpg \
+			wallpapers/Lumina_Wispy_red.jpg
+wallpapers.path = $$PREFIX/share/wallpapers/Lumina-DE
+
+
+defaults.files = defaults/luminaDesktop.conf \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
 defaults.path = $$PREFIX/share/Lumina-DE/
 
 conf.path = $$PREFIX/etc
-conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
+
+#Now do any PC-BSD defaults (if set)
+PCBSD{
+  conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
+  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/desktop-background.jpg
+}else{
+  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
+  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/desktop-background.jpg
+}
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \

@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -62,19 +62,15 @@ void LClock::updateTime(bool adjustformat){
   else{ datelabel = CT.toString(datefmt); }
   if(datetimeorder == "dateonly"){
 	  label = datelabel;
-	  //labelWidget->setToolTip(timelabel);
 	  button->setToolTip(timelabel);
   }else if(datetimeorder == "timedate"){
 	  label = timelabel + "\n" + datelabel;
-	  //labelWidget->setToolTip("");
 	  button->setToolTip("");
   }else if(datetimeorder == "datetime"){
 	  label = datelabel + "\n" + timelabel;
-	  //labelWidget->setToolTip("");
 	  button->setToolTip("");
   }else{ 
 	 label = timelabel;
-         //labelWidget->setToolTip(datelabel);
 	button->setToolTip(datelabel);
   }
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
@@ -82,22 +78,15 @@ void LClock::updateTime(bool adjustformat){
     label.replace(" ","\n");
   }
   if(adjustformat){
-   /* //Check the font/spacing for the display and adjust as necessary
-    int wid = button->width(); //since text always is painted horizontal - no matter the widget orientation
-    //get the number of effective lines (with word wrap)
-    int lines = label.count("\n")+1;
-    int efflines = lines; //effective lines (with wordwrap)
-    for(int i=0; i<lines; i++){
-      if(button->fontMetrics().width(label.section("\n",i,i)) > wid){ efflines++; } //this line will wrap around
-    }
+   //Check the font/spacing for the display and adjust as necessary
+    /*double efflines = label.count("\n")+1; //effective lines (with wordwrap)
     if( (button->fontMetrics().height()*efflines) > button->height() ){
       //Force a pixel metric font size to fit everything
-      int szH = (button->height() - button->fontMetrics().lineSpacing() )/efflines;
+      int szH = qRound( (button->height() - button->fontMetrics().lineSpacing() )/efflines );
       //Need to supply a *width* pixel, not a height metric
-      int szW = (szH*button->fontMetrics().maxWidth())/button->fontMetrics().height();
-      qDebug() << "Change Clock font:" << button->height() << szH << szW << efflines << lines << button->fontMetrics().height() << button->fontMetrics().lineSpacing();
+      int szW = qRound( (szH*button->fontMetrics().maxWidth())/( (double) button->fontMetrics().height()) );
+      qDebug() << "Change Clock font:" << button->height() << szH << szW << efflines << button->fontMetrics().height() << button->fontMetrics().lineSpacing();
       button->setStyleSheet("font-weight: bold; font-size: "+QString::number(szW)+"px;");
-      
     }else{
       button->setStyleSheet("font-weight: bold;");
     }*/
@@ -251,9 +240,11 @@ void LClock::ThemeChange(){
 
 void LClock::OrientationChange(){
   if(this->layout()->direction()==QBoxLayout::LeftToRight){
-    this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
   }else{
-    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   }
   updateTime(true); //re-adjust the font/spacings
   this->layout()->update();
