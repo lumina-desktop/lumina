@@ -224,7 +224,10 @@ void LDesktop::InitDesktop(){
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
-      bgDesktop->SetIconSize( settings->value(DPREFIX+"GridSize",100).toInt() );
+      int grid = settings->value(DPREFIX+"GridSize",-1).toInt();
+      if(grid<0 && bgWindow->height() > 2000){ grid = 200; }
+      else if(grid<0){ grid = 100; }
+      bgDesktop->SetIconSize( grid );
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
       connect(bgDesktop, SIGNAL(IncreaseIcons()), this, SLOT(IncreaseDesktopPluginIcons()) );
       connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
@@ -372,7 +375,9 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 }
 
 void LDesktop::IncreaseDesktopPluginIcons(){
-  int cur = settings->value(DPREFIX+"GridSize",100).toInt();
+  int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
+  if(cur<0 && bgWindow->height() > 2000){ cur = 200; }
+  else if(cur<0){  cur = 100; }
   cur+=16;
   issyncing=true; //don't let the change cause a refresh
   settings->setValue(DPREFIX+"GridSize",cur);
@@ -382,7 +387,9 @@ void LDesktop::IncreaseDesktopPluginIcons(){
 }
 
 void LDesktop::DecreaseDesktopPluginIcons(){
-  int cur = settings->value(DPREFIX+"GridSize",100).toInt();
+  int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
+  if(cur<0 && bgWindow->height() > 2000){ cur = 200; }
+  else if(cur<0){ cur = 100; }
   if(cur<32){ return; } //cannot get smaller than 16x16
   cur-=16;
   issyncing=true; //don't let the change cause a refresh
