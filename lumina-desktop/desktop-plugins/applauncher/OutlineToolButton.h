@@ -18,6 +18,7 @@
 #include <QStylePainter>
 #include <QFont>
 #include <QDebug>
+#include <QMouseEvent>
 
 
 class OutlineToolButton : public QToolButton{
@@ -31,7 +32,21 @@ public:
 	}
 	~OutlineToolButton(){}
 		
+signals:
+	void DoubleClicked();
+		
 protected:
+	void mouseDoubleClickEvent(QMouseEvent *ev){
+	  ev->accept();
+	  emit DoubleClicked();
+	}
+	void mousePressEvent(QMouseEvent *ev){
+	  ev->ignore();
+	}
+	void mouseReleaseEvent(QMouseEvent *ev){
+	  ev->ignore();
+	}
+	
 	void paintEvent(QPaintEvent*){
 	  /* NOTE: This is what a standard QToolButton performs (peeked at Qt source code for this tidbit)
 	  QStylePainter p(this);

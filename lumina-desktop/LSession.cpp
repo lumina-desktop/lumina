@@ -436,11 +436,11 @@ void LSession::checkUserFiles(){
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
   if(!QFile::exists(dset)){
     firstrun = true;
-    if(QFile::exists(LOS::LuminaShare()+"defaultapps.conf")){
+    /*if(QFile::exists(LOS::LuminaShare()+"defaultapps.conf")){
       if( QFile::copy(LOS::LuminaShare()+"defaultapps.conf", dset) ){
         QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
       }
-    }
+    }*/
 
   }
   //Check the fluxbox configuration files

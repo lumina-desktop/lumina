@@ -14,7 +14,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
     button->setText("...\n..."); //Need to set something here so that initial sizing works properly
     button->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
   lay->addWidget(button, 0, Qt::AlignCenter);
-	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
+	connect(button, SIGNAL(DoubleClicked()), this, SLOT(buttonClicked()) );
   //menu = new QMenu(this);
   /*int icosize = this->readSetting("iconsize",-1).toInt();
   if(icosize <1){ 
