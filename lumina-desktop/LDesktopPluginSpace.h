@@ -59,7 +59,8 @@ private:
 	void addDesktopPlugin(QString plugID);
 
 
-	QRect findOpenSpot(int gridwidth = 1, int gridheight = 1, int startRow = 0, int startCol = 0);
+	QRect findOpenSpot(int gridwidth = 1, int gridheight = 1, int startRow = 0, int startCol = 0, bool reversed = false, QString plugID = "");
+	QRect findOpenSpot(QRect grid, QString plugID, bool recursive = false);
 	
 	QPoint posToGrid(QPoint pos){
 	  //This assumes a point in widget-relative coordinates
@@ -113,6 +114,7 @@ private:
 	}
 	
 	bool ValidGrid(QRect grid){
+	  qDebug() << "Check Valid Grid:" << grid << RoundUp(this->width()/GRIDSIZE) << RoundUp(this->height()/GRIDSIZE);
 	  //This just checks that the grid coordinates are not out of bounds - should still run ValidGeometry() below with the actual pixel geom
 	  if(grid.x()<0 || grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
 	  else if( (grid.x()+grid.width()) > RoundUp(this->width()/GRIDSIZE) ){ return false; }

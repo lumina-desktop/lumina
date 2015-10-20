@@ -73,7 +73,7 @@ void LDesktopPluginSpace::UpdateGeom(int oldgrid){
     if( !ValidGrid(grid) ){
       //This plugin is too far out of the screen - find new location for it
       if(DEBUG){ qDebug() << " -- Out of bounds - Find a new spot"; }
-      grid = findOpenSpot(grid.width(), grid.height(), grid.y()-1, grid.x()-1); //try to get a nearby spot first
+      grid = findOpenSpot(grid, ITEMS[i]->whatsThis(), true); //Reverse lookup spot
     }
     if(!ValidGrid(grid)){
       qDebug() << "No Place for plugin:" << ITEMS[i]->whatsThis();
@@ -113,7 +113,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     geom = findOpenSpot(geom.width(), geom.height() );
   }else if(!ValidGeometry(plugID, gridToGeom(geom)) ){
     //Find a new location for the plugin (saved location is invalid)
-    geom = findOpenSpot(geom.width(), geom.height(), geom.y()-1, geom.x()-1); //try to get it within the same general area
+    geom = findOpenSpot(geom.width(), geom.height(), geom.y(), geom.x(), true); //try to get it within the same general area (go backwards)
   }
   if(geom.x() < 0 || geom.y() < 0){
     qDebug() << "No available space for desktop plugin:" << plugID << " - IGNORING";
@@ -133,9 +133,10 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   }
 }
 
-QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int startRow, int startCol){
+QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int startRow, int startCol, bool reversed, QString plugID){
   //Note about the return QPoint: x() is the column number, y() is the row number
   QPoint pt(0,0);
+  //qDebug() << "FIND OPEN SPOT:" << gridwidth << gridheight << startRow << startCol << reversed;
   int row = startRow; int col = startCol;
   if(row<0){ row = 0; } //just in case - since this can be recursively called
   if(col<0){ col = 0; } //just in case - since this can be recursively called
@@ -143,9 +144,34 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
   int rowCount, colCount;
   rowCount = RoundUp(this->height()/GRIDSIZE);
   colCount = RoundUp(this->width()/GRIDSIZE);
+  if( (row+gridheight)>rowCount){ row = rowCount-gridheight; startRow = row; }
+  if( (col+gridwidth)>colCount){ col = colCount-gridwidth; startCol = col; }
   QRect geom(0, 0, gridwidth*GRIDSIZE, gridheight*GRIDSIZE); //origin point will be adjusted in a moment
   if(DEBUG){ qDebug() << "Search for plugin space:" << rowCount << colCount << gridheight << gridwidth << this->size(); }
-  if(TopToBottom){
+  if(TopToBottom && reversed && (startRow>0 || startCol>0) ){
+    //Arrange Top->Bottom (work backwards)
+    //qDebug() << "Search backwards for space:" << rowCount << colCount << startRow << startCol << gridheight << gridwidth;
+    while(col>=0 && !found){
+      while(row>=0 && !found){
+        bool ok = true;
+        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+	//qDebug() << " - Check Geom:" << geom << col << row;
+        //Check all the existing items to ensure no overlap
+        for(int i=0; i<ITEMS.length() && ok; i++){
+	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict
+          if(geom.intersects(ITEMS[i]->geometry())){
+            //Collision - move the next searchable row/column index
+	    ok = false;
+	    //qDebug() << "Collision:" << col << row;
+	    row = ((ITEMS[i]->geometry().y()-GRIDSIZE/2)/GRIDSIZE) -gridheight; //use top edge for next search (minus item height)
+	    //qDebug() << " - new row:" << row;
+	  }
+        }
+        if(ok){ pt = QPoint(col,row); found = true; } //found an open spot
+      }
+      if(!found){ col--; row=rowCount-gridheight; } //go to the previous column
+    }
+  }else if(TopToBottom){
     //Arrange Top->Bottom
     while(col<(colCount-gridwidth) && !found){
       while(row<(rowCount-gridheight) && !found){
@@ -154,6 +180,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
 	//qDebug() << " - Check Geom:" << geom << col << row;
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
+	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict
           if(geom.intersects(ITEMS[i]->geometry())){
             //Collision - move the next searchable row/column index
 	    ok = false;
@@ -164,6 +191,26 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
         //else{ row++; }
       }
       if(!found){ col++; row=0; } //go to the next column
+    }	    
+  }else if(reversed && (startRow>0 || startCol>0) ){
+    //Arrange Left->Right (work backwards)
+    while(row>=0 && !found){
+      while(col>=0 && !found){
+        bool ok = true;
+        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+        //Check all the existing items to ensure no overlap
+        for(int i=0; i<ITEMS.length() && ok; i++){
+	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict
+          if(geom.intersects(ITEMS[i]->geometry())){
+            //Collision - move the next searchable row/column index
+	    ok = false;
+	    col = (ITEMS[i]->geometry().x()-GRIDSIZE/2)/GRIDSIZE - gridwidth; // Fill according to row/column
+	  }
+        }
+        if(ok){ pt = QPoint(col,row); found = true; } //found an open spot
+        //else{ col++; }
+      }
+      if(!found){ row--; col=colCount-gridwidth;} //go to the previous row
     }	  
   }else{
     //Arrange Left->Right
@@ -173,6 +220,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
         geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
+	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict
           if(geom.intersects(ITEMS[i]->geometry())){
             //Collision - move the next searchable row/column index
 	    ok = false;
@@ -186,20 +234,27 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
     }
   }
   if(!found){
-    
-    if(startRow!=0 || startCol!=0){
-      //Did not check the entire screen yet - try that first
-      return findOpenSpot(gridwidth, gridheight, 0,0);
+    //qDebug() << "Could not find a spot:" << startRow << startCol << gridheight << gridwidth;
+    if( (startRow!=0 || startCol!=0) && !reversed){
+      //Did not check the entire screen yet - gradually work it's way back to the top/left corner
+      //qDebug() << " - Start backwards search";
+      return findOpenSpot(gridwidth, gridheight,startRow,startCol, true); //reverse the scan
     }else if(gridwidth>1 && gridheight>1){
       //Decrease the size of the item by 1x1 grid points and try again
+      //qDebug() << " - Out of space: Decrease item size and try again...";
       return findOpenSpot(gridwidth-1, gridheight-1, 0, 0);
     }else{
-      qDebug() << "Could not find an open spot for a desktop plugin:" << gridwidth << gridheight << startRow << startCol;
+      //qDebug() << " - Could not find an open spot for a desktop plugin:" << gridwidth << gridheight << startRow << startCol;
       return QRect(-1,-1,-1,-1);
     }
   }else{
     return QRect(pt,QSize(gridwidth,gridheight));
   }
+}
+
+QRect LDesktopPluginSpace::findOpenSpot(QRect grid, QString plugID, bool recursive){ //Reverse lookup spotc{
+  //This is just an overloaded simplification for checking currently existing plugins
+  return findOpenSpot(grid.width(), grid.height(), grid.y(), grid.x(), recursive, plugID);
 }
 
 // ===================
