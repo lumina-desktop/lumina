@@ -489,7 +489,7 @@
     <string notr="true"/>
    </property>
    <property name="statusTip">
-    <string>Stopl loading the directory</string>
+    <string>Stop loading the directory</string>
    </property>
   </action>
   <action name="actionClose_Browser">
