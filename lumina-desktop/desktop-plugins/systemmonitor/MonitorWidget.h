@@ -44,7 +44,7 @@ public:
 
 	virtual QSize defaultPluginSize(){
 	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
-	  return QSize(2,3);
+	  return QSize(3,2);
 	}
 	
 private:
