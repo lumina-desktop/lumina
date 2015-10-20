@@ -20,8 +20,6 @@
 #include "desktop-plugins/LDPlugin.h"
 
 #define MIMETYPE QString("x-special/lumina-desktop-plugin")
-//#define MIMEPOS QString("x-special/lumina-desktop-plugin-pos")
-//#define GRIDSIZE 64.0 //Need this to be a double/float - usually used for divisions
 
 class LDesktopPluginSpace : public QWidget{
   	Q_OBJECT
@@ -181,16 +179,15 @@ protected:
 		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
 		    //qDebug() << " - Is valid";
 		    item->setGeometry(geom); 
+		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
 		    ev->acceptProposedAction(); 
 		    item->savePluginGeometry(geom); //save in pixel coords
 		  }else{ ev->ignore(); } //invalid location
 		  
 	      }else{
 		//Resize operation
-		QPoint diff = ev->pos() - geom.center(); //need difference from center (pixels)
-		if(qAbs(diff.x())<GRIDSIZE/4 && qAbs(diff.y())<GRIDSIZE/4){
-		  ev->acceptProposedAction(); //nothing to do - but keep the drag active
-		}else{
+		QPoint diff = ev->pos() - (geom.center()-QPoint(1,1)); //need difference from center (pixels)
+		  //Note: Use the 1x1 pixel offset to ensure that the center point is not exactly on a grid point intersection (2x2, 4x4, etc)
 		  //qDebug() << "Resize Plugin:" << geom << grid << posToGrid(geom.center()) << diff;
 		  geom = geomToGrid(geom); //convert to grid coordinates now
 		  //qDebug() << " - Grid Geom:" << geom;
@@ -206,11 +203,11 @@ protected:
 		  //Check Validity of new geom
 		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
 		    item->setGeometry(geom); 
+		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
 		    ev->acceptProposedAction();
 		    item->savePluginGeometry(geom); //save in pixel coords
 	          }else{ ev->ignore(); } //invalid location
 	        }
-	      }
 	    }
 	  }else if(ev->mimeData()->hasUrls()){
   	    ev->acceptProposedAction(); //allow this to be dropped here

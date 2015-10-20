@@ -33,6 +33,7 @@ public:
 	    timer->setInterval(1800000); //30 minute refresh timer
 	    timer->start();
 	  QTimer::singleShot(0,this, SLOT(updateDate()) );
+	  connect(this, SIGNAL(PluginResized()), this, SLOT(UpdateCalendarSize()));
 	}
 	
 	~CalendarPlugin(){ timer->stop(); }
@@ -43,6 +44,9 @@ private slots:
 	    cal->setSelectedDate(QDate::currentDate());
 	    cal->showSelectedDate();
 	  }
+	}
+	void UpdateCalendarSize(){
+	  cal->setFixedSize(this->size());
 	}
 	
 

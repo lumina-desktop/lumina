@@ -141,7 +141,10 @@ protected:
 	  }
 	  QWidget::mouseMoveEvent(ev);
 	}
-	
+	void resizeEvent(QResizeEvent *ev){
+	  emit PluginResized();
+	  QFrame::resizeEvent(ev); //do normal processing
+	}
 };
 
 #endif
