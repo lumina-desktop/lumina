@@ -28,7 +28,6 @@ public:
 	  cal = new QCalendarWidget(this);
 	  cal->setSelectionMode(QCalendarWidget::NoSelection);
 	  this->layout()->addWidget(cal);
-	  this->setInitialSize( cal->sizeHint().width(), cal->sizeHint().height() );
 	  timer = new QTimer(this);
 	    timer->setInterval(1800000); //30 minute refresh timer
 	    timer->start();
@@ -37,6 +36,11 @@ public:
 	}
 	
 	~CalendarPlugin(){ timer->stop(); }
+	
+	virtual QSize defaultPluginSize(){
+	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
+	  return QSize(3,2);
+	}
 	
 private slots:
 	void updateDate(){

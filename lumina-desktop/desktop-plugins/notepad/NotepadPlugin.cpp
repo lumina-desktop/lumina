@@ -62,9 +62,6 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   QTimer::singleShot(2000, this, SLOT(notesDirChanged()));
   //qDebug() << "Set Sizing";
   
-  //Now setup the initial values for the plugin
-  qDebug() << "New Notepad:" << this->sizeHint() << this->size();
-  this->setInitialSize(this->sizeHint().width(),this->sizeHint().height());
   //qDebug() << "Connect Signals/slots";
   //Setup the button connections
   connect(open, SIGNAL(clicked()), this, SLOT(openNote()) );

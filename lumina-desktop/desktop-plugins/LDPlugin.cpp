@@ -42,7 +42,7 @@ void LDPlugin::setupMenu(){
   menu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove Item"), this, SLOT(slotRemovePlugin()) );
 }
 
-void LDPlugin::setInitialSize(int width, int height){
+/*void LDPlugin::setInitialSize(int width, int height){
     //Note: Only run this in the plugin initization routine:
     //  if the plugin is completely new (first time used), it will be this size
     if(settings->allKeys().filter(prefix+"location").isEmpty()){
@@ -54,12 +54,4 @@ void LDPlugin::setInitialSize(int width, int height){
     }
     //Now make sure the plugin is the saved size right away
     this->resize( settings->value(prefix+"location/width").toInt(), settings->value(prefix+"location/height").toInt());
-}
-
-/*void LDPlugin::adjustSize(int width, int height){
-  settings->setValue(prefix+"location/width",width);
-  settings->setValue(prefix+"location/height",height);
-  settings->sync();	
-  this->resize(width,height);
-  emit PluginResized();
 }*/

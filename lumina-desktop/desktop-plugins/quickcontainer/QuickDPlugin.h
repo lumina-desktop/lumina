@@ -27,11 +27,15 @@ public:
 	  this->layout()->addWidget(container);
 	    container->setSource(QUrl::fromLocalFile( LUtils::findQuickPluginFile(ID.section("---",0,0)) ));
 	  QApplication::processEvents(); //to check for errors right away
-	  this->setInitialSize(container->initialSize().width(), container->initialSize().height());
+	  //this->setInitialSize(container->initialSize().width(), container->initialSize().height());
 	}
 	
 	~QuickDPlugin(){}
 	
+	virtual QSize defaultPluginSize(){
+	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
+	  return QSize(2,2);
+	}
 private:
 	QQuickWidget *container;
 

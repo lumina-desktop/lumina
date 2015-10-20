@@ -23,6 +23,10 @@ public:
 	NotePadPlugin(QWidget* parent, QString ID);
 	~NotePadPlugin();
 	
+	virtual QSize defaultPluginSize(){
+	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
+	  return QSize(3,3);
+	}
 private:
 	QPlainTextEdit *edit;
 	QToolButton *open, *add, *rem;

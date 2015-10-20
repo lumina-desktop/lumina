@@ -39,7 +39,6 @@ DesktopViewPlugin::DesktopViewPlugin(QWidget* parent, QString ID) : LDPlugin(par
       menu->addAction( LXDG::findIcon("system-search",""), tr("Properties"), this, SLOT(displayProperties()) );
     }
   this->layout()->addWidget(list);
-  this->setInitialSize(300,300);
     
   connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateContents()) );
   connect(list, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(runItems()) );

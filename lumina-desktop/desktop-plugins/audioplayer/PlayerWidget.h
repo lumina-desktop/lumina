@@ -64,6 +64,11 @@ public:
 	AudioPlayerPlugin(QWidget* parent, QString ID);
 	~AudioPlayerPlugin();
 
+	virtual QSize defaultPluginSize(){
+	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
+	  return QSize(3,1);
+	}
+	
 private:
 	PlayerWidget *player;
 

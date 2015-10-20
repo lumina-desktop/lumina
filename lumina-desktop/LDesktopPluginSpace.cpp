@@ -43,11 +43,12 @@ void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
 void LDesktopPluginSpace::SetIconSize(int size){
   if(DEBUG){ qDebug() << "Set Desktop Icon Size:" << size; }
   //QSize newsize = calculateItemSize(size);
+  int oldsize = GRIDSIZE;
   GRIDSIZE = size; //turn the int into a float;
-  itemSize = QSize(1,1); //save this for all the later icons which are generated (grid size)
-  UpdateGeom();
+  //itemSize = QSize(1,1); //save this for all the later icons which are generated (grid size)
+  UpdateGeom(oldsize);
   //Now re-set the item icon size
-  reloadPlugins(true);
+  //reloadPlugins(true);
 }
 
 void LDesktopPluginSpace::cleanup(){
@@ -62,41 +63,37 @@ void LDesktopPluginSpace::cleanup(){
 // ===================
 //      PUBLIC SLOTS
 // ===================
-void LDesktopPluginSpace::UpdateGeom(){
+void LDesktopPluginSpace::UpdateGeom(int oldgrid){
   if(DEBUG){ qDebug() << "Updated Desktop Geom:" << this->size() << GRIDSIZE << this->size()/GRIDSIZE; }
   //Go through and check the locations/sizes of all items (particularly the ones on the bottom/right edges)
-  bool reload = false;
+  //bool reload = false;
   for(int i=0; i<ITEMS.length(); i++){
-    QRect grid = geomToGrid(ITEMS[i]->geometry());
-    if(DEBUG){ qDebug() << " - Check Plugin:" << grid; }
-    if( (grid.x()+grid.width() > this->width()/GRIDSIZE) || (grid.y()+grid.height() > this->height()/GRIDSIZE) ){
-      //This plugin is too far out of the screen - remove it and reload plugins (will find new location for it)
-      //qDebug() << " -- Out of bounds - recreate it...";
+    QRect grid = geomToGrid(ITEMS[i]->geometry(), oldgrid);
+    if(DEBUG){ qDebug() << " - Check Plugin:" << ITEMS[i]->whatsThis() << grid; }
+    if( !ValidGrid(grid) ){
+      //This plugin is too far out of the screen - find new location for it
+      if(DEBUG){ qDebug() << " -- Out of bounds - Find a new spot"; }
+      grid = findOpenSpot(grid.width(), grid.height(), grid.y()-1, grid.x()-1); //try to get a nearby spot first
+    }
+    if(!ValidGrid(grid)){
+      qDebug() << "No Place for plugin:" << ITEMS[i]->whatsThis();
+      qDebug() << " - Removing it for now...";
       delete ITEMS.takeAt(i);
       i--;
-      reload = true;
-    }else if( (grid.x()+grid.width() == this->width()/GRIDSIZE) || (grid.y()+grid.height() == this->height()/GRIDSIZE) ){
-      //This plugin is on the bottom/right screen edge - recalculate edge matching and re-apply geometry
-      //qDebug() << " -- On Screen Edge - adjust to fit...";
-      ITEMS[i]->setGeometry( gridToGeom(grid) );
+    }else{
+      //NOTE: We are not doing the ValidGeometry() checks because we are only resizing existing plugin with pre-set & valid grid positions
+      grid = gridToGeom(grid); //convert to pixels before saving/sizing
+      ITEMS[i]->setGeometry( grid );
+      ITEMS[i]->setFixedSize(grid.size());
+      ITEMS[i]->savePluginGeometry(grid);
     }
   }
-  if(reload){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
+  //if(reload){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
 }
 
 // ===================
 //          PRIVATE
 // ===================
-QSize LDesktopPluginSpace::calculateItemSize(int icosize){
-  //Note: This returns the size in numbers of cells (width = columnspan, height = rowspan)
-  QSize sz;
-    sz.setWidth(1.8*icosize);
-    sz.setWidth( RoundUp(sz.width()/GRIDSIZE)); //always round up to cell numbers
-    sz.setHeight(icosize+ 2.3*this->fontMetrics().height() );
-    sz.setHeight( RoundUp(sz.height()/GRIDSIZE)); //always round up to cell number
-  return sz;
-}
-
 void LDesktopPluginSpace::addDesktopItem(QString filepath){
   addDesktopPlugin("applauncher::"+filepath+"---dlink"+QString::number(LSession::handle()->desktop()->screenNumber(this)) );
 }
@@ -111,15 +108,12 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   if(!geom.isNull()){ geom = geomToGrid(geom); } //convert to grid coordinates
   if(geom.isNull()){
     //No previous location - need to calculate initial geom
-    QSize sz = plug->sizeHint();
-    if(plugID.startsWith("applauncher") ){ sz = itemSize*GRIDSIZE; }
-    geom.setWidth( RoundUp(sz.width()/GRIDSIZE) );
-    geom.setHeight( RoundUp(sz.height()/GRIDSIZE) );
-    geom.moveTo( findOpenSpot(geom.width(), geom.height()) );
+    QSize sz = plug->defaultPluginSize(); //in grid coordinates
+    geom.setSize(sz);
+    geom = findOpenSpot(geom.width(), geom.height() );
   }else if(!ValidGeometry(plugID, gridToGeom(geom)) ){
     //Find a new location for the plugin (saved location is invalid)
-    QPoint pt = findOpenSpot(geom.width(), geom.height(), geom.y()-1, geom.x()-1); //try to get it within the same general area
-    geom.moveTo(pt);
+    geom = findOpenSpot(geom.width(), geom.height(), geom.y()-1, geom.x()-1); //try to get it within the same general area
   }
   if(geom.x() < 0 || geom.y() < 0){
     qDebug() << "No available space for desktop plugin:" << plugID << " - IGNORING";
@@ -139,7 +133,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   }
 }
 
-QPoint LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int startRow, int startCol){
+QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int startRow, int startCol){
   //Note about the return QPoint: x() is the column number, y() is the row number
   QPoint pt(0,0);
   int row = startRow; int col = startCol;
@@ -192,15 +186,20 @@ QPoint LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int star
     }
   }
   if(!found){
-    //Decrease the size of the item by 1x1 grid points and try again
-    if(gridwidth>2 && gridheight>2){
-      pt = findOpenSpot(gridwidth-1, gridheight-1, 0, 0);
+    
+    if(startRow!=0 || startCol!=0){
+      //Did not check the entire screen yet - try that first
+      return findOpenSpot(gridwidth, gridheight, 0,0);
+    }else if(gridwidth>1 && gridheight>1){
+      //Decrease the size of the item by 1x1 grid points and try again
+      return findOpenSpot(gridwidth-1, gridheight-1, 0, 0);
     }else{
-      pt.setX(-1); pt.setY(-1); //invalid 
       qDebug() << "Could not find an open spot for a desktop plugin:" << gridwidth << gridheight << startRow << startCol;
+      return QRect(-1,-1,-1,-1);
     }
+  }else{
+    return QRect(pt,QSize(gridwidth,gridheight));
   }
-  return pt;
 }
 
 // ===================
@@ -214,12 +213,12 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
     
     if( ITEMS[i]->whatsThis().startsWith("applauncher") && ForceIconUpdate){ 
 	//Change the size of the existing plugin - preserving the location if possible
-	QRect geom = ITEMS[i]->loadPluginGeometry(); //pixel coords
+	/*QRect geom = ITEMS[i]->loadPluginGeometry(); //pixel coords
 	if(!geom.isNull()){
 	  geom = geomToGrid(geom); //convert to grid coords
 	  geom.setSize(itemSize); //Reset back to default size (does not change location)
 	  ITEMS[i]->savePluginGeometry( gridToGeom(geom)); //save it back in pixel coords
-	}
+	}*/
 	//Now remove the plugin for the moment - run it through the re-creation routine below
 	delete ITEMS.takeAt(i);  
 	i--;

@@ -15,25 +15,10 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
     button->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
   lay->addWidget(button, 0, Qt::AlignCenter);
 	connect(button, SIGNAL(DoubleClicked()), this, SLOT(buttonClicked()) );
-  //menu = new QMenu(this);
-  /*int icosize = this->readSetting("iconsize",-1).toInt();
-  if(icosize <1){ 
-    icosize = LSession::handle()->sessionSettings()->value("DefaultIconSize",64).toInt();
-    this->saveSetting("iconsize",icosize);
-  }*/
-  //int icosize
-  //button->setIconSize(QSize(icosize,icosize));
   button->setContextMenuPolicy(Qt::NoContextMenu);
-  //connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu()) );
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
-  //Calculate the initial size of the button
-  //qDebug() << "Button Size:" << button->size();
-  //qDebug() << "Calculated:" << icosize+4 << icosize+8+qRound(2.15*button->fontMetrics().height());
-  //qDebug() << "Preferred Size:" << button->sizeHint();
-  //QSize sz(qRound(1.1*icosize), icosize+qRound(2.7*button->fontMetrics().height()) );
-  //button->setFixedSize(sz); //make sure to adjust the button on first show.
-  this->setInitialSize(120, 100); //give the container a bit of a buffer
+
   QTimer::singleShot(200,this, SLOT(loadButton()) );
 }
 	
@@ -49,7 +34,7 @@ void AppLauncherPlugin::loadButton(){
   QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary
   //qDebug() << "Default Application Launcher:" << def << path;
   bool ok = QFile::exists(path);
-  int icosize = this->width()/1.8; //This is the same calculation as in the LDesktopPluginSpace
+  int icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
   button->setIconSize( QSize(icosize,icosize) );
   QString txt;

@@ -47,8 +47,11 @@ public:
 	  return PLUGID;
 	}
 	
-	void setInitialSize(int width, int height);
-	//void adjustSize(int width, int height);
+	virtual QSize defaultPluginSize(){
+	  //This needs to be re-implemented in the subclassed plugin
+	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
+	  return QSize(1,1); //1x1 grid size
+	}
 	
 	void savePluginGeometry(QRect geom){
 	  settings->setValue(prefix+"geometry/desktopGridPoints", geom);

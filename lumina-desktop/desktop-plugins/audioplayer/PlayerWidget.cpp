@@ -262,7 +262,6 @@ AudioPlayerPlugin::AudioPlayerPlugin(QWidget *parent, QString ID) : LDPlugin(par
     this->layout()->setContentsMargins(0,0,0,0);
     this->layout()->addWidget(player);
 	
-  this->setInitialSize(this->sizeHint().width(), this->sizeHint().height());
 }
 
 AudioPlayerPlugin::~AudioPlayerPlugin(){

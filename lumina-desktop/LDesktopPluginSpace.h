@@ -40,11 +40,10 @@ public:
 	void cleanup();
 
 public slots:
-	void UpdateGeom();
+	void UpdateGeom(int oldgrid = -1);
 
 private:
 	QSettings *plugsettings;
-	QSize itemSize;
 	QStringList plugins, deskitems;	
 	QList<LDPlugin*> ITEMS;
 	bool TopToBottom;
@@ -56,12 +55,11 @@ private:
 	 return out;
 	}
 
-	QSize calculateItemSize(int icosize);
-	void addDesktopItem(QString filepath); //This will convert it into a valid Plugin ID
+	void addDesktopItem(QString filepath); //This will convert it into a valid Plugin ID automatically
 	void addDesktopPlugin(QString plugID);
 
 
-	QPoint findOpenSpot(int gridwidth = 1, int gridheight = 1, int startRow = 0, int startCol = 0);
+	QRect findOpenSpot(int gridwidth = 1, int gridheight = 1, int startRow = 0, int startCol = 0);
 	
 	QPoint posToGrid(QPoint pos){
 	  //This assumes a point in widget-relative coordinates
@@ -70,11 +68,18 @@ private:
 	  return pos;
 	}
 	
-	QRect geomToGrid(QRect geom){
-	  return QRect( RoundUp(geom.x()/GRIDSIZE), RoundUp(geom.y()/GRIDSIZE), \
+	QRect geomToGrid(QRect geom, int grid = -1){
+	  if(grid<0){ 
+	    //use the current grid size
+	    return QRect( RoundUp(geom.x()/GRIDSIZE), RoundUp(geom.y()/GRIDSIZE), \
 			RoundUp(geom.width()/GRIDSIZE), RoundUp(geom.height()/GRIDSIZE) );
-		
+	  }else{
+	    //use the input grid size
+	    return QRect( RoundUp(geom.x()/((double) grid)), RoundUp(geom.y()/((double) grid)), \
+			RoundUp(geom.width()/((double) grid)), RoundUp(geom.height()/((double) grid)) );
+	  }
 	}
+	
 	QRect gridToGeom(QRect grid){
 	  //This function incorporates the bottom/right edge matchins procedures (for incomplete last grid)
 	  QRect geom(grid.x()*GRIDSIZE, grid.y()*GRIDSIZE, grid.width()*GRIDSIZE, grid.height()*GRIDSIZE);
@@ -105,6 +110,14 @@ private:
 	  QDrag *drag = new QDrag(this);
 	  drag->setMimeData(mime);
 	    drag->exec(Qt::CopyAction);	
+	}
+	
+	bool ValidGrid(QRect grid){
+	  //This just checks that the grid coordinates are not out of bounds - should still run ValidGeometry() below with the actual pixel geom
+	  if(grid.x()<0 || grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
+	  else if( (grid.x()+grid.width()) > RoundUp(this->width()/GRIDSIZE) ){ return false; }
+	  else if( (grid.y()+grid.height()) > RoundUp(this->height()/GRIDSIZE) ){ return false; }
+	  return true;
 	}
 	
 	bool ValidGeometry(QString id, QRect geom){
@@ -174,14 +187,17 @@ protected:
 		  //qDebug() << "Move Event:" << "Old geom (grid):" << geom;
 		  geom.moveTo( (geom.topLeft()+diff) );
 		  //qDebug() << " - After Move:" << geom;
-		  geom = gridToGeom(geom); //convert back to px coords with edge matching
-		  //qDebug() << " - new Geometry:" << geom;
-		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
-		    //qDebug() << " - Is valid";
+		  bool valid = ValidGrid(geom);
+		  if(valid){
+		    //Convert to pixel coordinates and check validity again
+		    geom = gridToGeom(geom); //convert back to px coords with edge matching
+		    valid = ValidGeometry(act.section("::::",1,50), geom);
+		  }
+		  if(valid){
 		    item->setGeometry(geom); 
 		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
 		    ev->acceptProposedAction(); 
-		    item->savePluginGeometry(geom); //save in pixel coords
+		    item->savePluginGeometry(geom); //save in pixel coords			  
 		  }else{ ev->ignore(); } //invalid location
 		  
 	      }else{
@@ -196,17 +212,18 @@ protected:
 		  if(diff.y()<0){ geom.setTop( ev->pos().y()/GRIDSIZE); } //expanding above  (round down)
 		  else if(diff.y()>0){ geom.setBottom( ev->pos().y()/GRIDSIZE); } //expanding below (round down)
 		  //qDebug() << " - Adjusted:" << geom;
-		  if(geom.width()<1 || geom.height()<1){ ev->ignore(); return; } //cannot have 0 size
-		  //Now convert back to pixel coords (includes edge matching/adjustments)
-		  geom = gridToGeom(geom);
-		  //qDebug() << " - Pixels:" << geom;
-		  //Check Validity of new geom
-		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
+		  bool valid = ValidGrid(geom);
+		  if(valid){
+		    //Convert to pixel coordinates and check validity again
+		    geom = gridToGeom(geom); //convert back to px coords with edge matching
+		    valid = ValidGeometry(act.section("::::",1,50), geom);
+		  }
+		  if(valid){
 		    item->setGeometry(geom); 
 		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
-		    ev->acceptProposedAction();
-		    item->savePluginGeometry(geom); //save in pixel coords
-	          }else{ ev->ignore(); } //invalid location
+		    ev->acceptProposedAction(); 
+		    item->savePluginGeometry(geom); //save in pixel coords			  
+		  }else{ ev->ignore(); } //invalid location
 	        }
 	    }
 	  }else if(ev->mimeData()->hasUrls()){
