@@ -187,17 +187,22 @@ protected:
 		  
 	      }else{
 		//Resize operation
-		QPoint diff = grid - posToGrid(geom.center());; //need difference from center (grid)
-		geom = geomToGrid(geom); //convert to grid coordinates now
-		if(diff.x()==0 && diff.y()==0){
+		QPoint diff = ev->pos() - geom.center(); //need difference from center (pixels)
+		if(qAbs(diff.x())<GRIDSIZE/4 && qAbs(diff.y())<GRIDSIZE/4){
 		  ev->acceptProposedAction(); //nothing to do - but keep the drag active
 		}else{
-		  if(diff.x()<0){ geom.setLeft( grid.x()); } //expanding to the left
-		  else if(diff.x()>0){ geom.setRight( grid.x()); } //expanding to the right
-		  if(diff.y()<0){ geom.setTop( grid.y()); } //expanding above
-		  else if(diff.y()>0){ geom.setBottom( grid.y()); } //expanding below
+		  //qDebug() << "Resize Plugin:" << geom << grid << posToGrid(geom.center()) << diff;
+		  geom = geomToGrid(geom); //convert to grid coordinates now
+		  //qDebug() << " - Grid Geom:" << geom;
+		  if(diff.x()<0){ geom.setLeft(ev->pos().x()/GRIDSIZE); } //expanding to the left (round down)
+		  else if(diff.x()>0){ geom.setRight( ev->pos().x()/GRIDSIZE); } //expanding to the right (round down)
+		  if(diff.y()<0){ geom.setTop( ev->pos().y()/GRIDSIZE); } //expanding above  (round down)
+		  else if(diff.y()>0){ geom.setBottom( ev->pos().y()/GRIDSIZE); } //expanding below (round down)
+		  //qDebug() << " - Adjusted:" << geom;
+		  if(geom.width()<1 || geom.height()<1){ ev->ignore(); return; } //cannot have 0 size
 		  //Now convert back to pixel coords (includes edge matching/adjustments)
 		  geom = gridToGeom(geom);
+		  //qDebug() << " - Pixels:" << geom;
 		  //Check Validity of new geom
 		  if(ValidGeometry(act.section("::::",1,50), geom)){ 
 		    item->setGeometry(geom); 
