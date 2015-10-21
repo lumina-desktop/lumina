@@ -700,7 +700,9 @@ void MainUI::deskbgadded(){
   QString dir = LOS::LuminaShare().section("/Lumina-DE",0,0)+"/wallpapers/Lumina-DE";
   qDebug() << "Looking for wallpaper dir:" << dir;
   if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
-  QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images (*.png *.xpm *.jpg)");
+  QStringList imgs = LUtils::imageExtensions();
+  for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
+  QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images ("+imgs.join(" ")+")");
   if(bgs.isEmpty()){ return; }
   for(int i=0; i<bgs.length(); i++){
     ui->combo_desk_bg->addItem( QIcon(bgs[i]), bgs[i].section("/",-1), bgs[i]);
