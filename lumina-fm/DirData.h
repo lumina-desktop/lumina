@@ -107,16 +107,19 @@ public:
 	//Variables
 	bool showHidden; //Whether hidden files/dirs should be output
 	bool zfsavailable; //Whether it should even bother looking for ZFS snapshots
+	bool pauseData; //When paused - this will ignore any requests for information (need to manually refresh browsers after unpause)
 
 	//Functions
 	DirData(){ 
 	  showHidden = false; 
 	  zfsavailable = false;
+	  pauseData = false;
 	}
 	~DirData(){}
-
+	
 public slots:
 	void GetDirData(QString ID, QString dirpath){ 
+	  if(pauseData){ return; }
 	  if(DIR_DEBUG){ qDebug() << "GetDirData:" << ID << dirpath; }
 	  //The ID is used when returning the info in a moment
 	  //Make sure to use the canonical path in the HASH search - don't use 
@@ -137,6 +140,7 @@ public slots:
 	}
 	
 	void GetSnapshotData(QString ID, QString dirpath){
+	  if(pauseData){ return; }
 	  if(DIR_DEBUG){ qDebug() << "GetSnapshotData:" << ID << dirpath; }
 	  QString base; QStringList snaps;
 	  //Only check if ZFS is flagged as available

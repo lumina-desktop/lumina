@@ -771,6 +771,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
   }
   bool errs = false;
   //Perform the copy/move operations
+  worker->pauseData = true; //pause any info requests
   if(!copy.isEmpty()){ 
     qDebug() << "Paste Copy:" << copy << "->" << newcopy;
     FODialog dlg(this);
@@ -787,6 +788,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
       dlg.exec();
       errs = errs || !dlg.noerrors;
   }
+  worker->pauseData = false; //resume info requests
   //Modify the clipboard appropriately
   if(!errs && !cut.isEmpty()){
     //Now clear the clipboard since those old file locations are now invalid
@@ -800,7 +802,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
     }
   }
   //Update all the buttons to account for clipboard change
-  for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->refreshButtons(); }
+  for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->refresh(); }
 }
 
 void MainUI::FavoriteFiles(QStringList list){
@@ -839,6 +841,7 @@ void MainUI::RenameFiles(QStringList list){
       }
     }
     //Now perform the move
+    //Don't pause the background worker for a simple rename - this operation is extremely fast
     qDebug() << "Rename:" << path+fname << "->" << path+nname;
     FODialog dlg(this);
       dlg.setOverwrite(overwrite);
@@ -865,10 +868,13 @@ void MainUI::RemoveFiles(QStringList list){
 
   //Now remove the file/dir
   qDebug() << " - Delete: "<<paths;
+  worker->pauseData = true; //pause any info requests
   FODialog dlg(this);
     dlg.RemoveFiles(paths);
     dlg.show();
     dlg.exec();
+  worker->pauseData = false; //resume info requests
+  for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->refresh(); }
 }
 
 void MainUI::CloseBrowser(QString ID){
