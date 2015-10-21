@@ -484,6 +484,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   //Save these value internally for use later
+  qDebug() << "ZFS Snapshots available:" << basedir << snaps;
   snapbasedir = basedir;
   snapshots = snaps;
   if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
@@ -832,11 +833,11 @@ void DirWidget::on_slider_snap_valueChanged(int val){
       emit findSnaps(ID, normalbasedir);
       return;
     }
-    if(snaprelpath.isEmpty()){
+    //if(snaprelpath.isEmpty()){
       //Need to figure out the relative path within the snapshot
       snaprelpath = normalbasedir.section(snapbasedir.section(ZSNAPDIR,0,0), 1,1000);
       if(DEBUG){ qDebug() << " - new snapshot-relative path:" << snaprelpath; }
-    }
+    //}
     dir.append(snaprelpath);
     dir.replace("//","/"); //just in case any duplicate slashes from all the split/combining
     if(DEBUG){ qDebug() << " - Load Snapshot:" << dir; }
