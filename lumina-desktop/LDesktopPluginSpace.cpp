@@ -113,7 +113,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     geom = findOpenSpot(geom.width(), geom.height() );
   }else if(!ValidGeometry(plugID, gridToGeom(geom)) ){
     //Find a new location for the plugin (saved location is invalid)
-    geom = findOpenSpot(geom.width(), geom.height(), geom.y(), geom.x(), true); //try to get it within the same general area (go backwards)
+    geom = findOpenSpot(geom.width(), geom.height(), geom.y(), geom.x(), false); //try to get it within the same general area first
   }
   if(geom.x() < 0 || geom.y() < 0){
     qDebug() << "No available space for desktop plugin:" << plugID << " - IGNORING";

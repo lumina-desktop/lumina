@@ -2,7 +2,7 @@
 #include "../../LSession.h"
 #include "OutlineToolButton.h"
 
-#define OUTMARGIN 8 //special margin for fonts due to the outlining effect from the OutlineToolbutton
+#define OUTMARGIN 10 //special margin for fonts due to the outlining effect from the OutlineToolbutton
 
 AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
   QVBoxLayout *lay = new QVBoxLayout();
@@ -24,9 +24,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
 	
 void AppLauncherPlugin::Cleanup(){
   //This is run only when the plugin was forcibly closed/removed
-  /*if(QFile::exists(button->whatsThis()) && button->whatsThis().startsWith(QDir::homePath()+"/Desktop") ){
-    deleteFile();
-  }*/
+
 }
 
 void AppLauncherPlugin::loadButton(){
@@ -34,6 +32,7 @@ void AppLauncherPlugin::loadButton(){
   QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary
   //qDebug() << "Default Application Launcher:" << def << path;
   bool ok = QFile::exists(path);
+  if(!ok){ emit RemovePlugin(this->ID()); return;}
   int icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
   button->setIconSize( QSize(icosize,icosize) );
@@ -75,22 +74,23 @@ void AppLauncherPlugin::loadButton(){
   //Now adjust the visible text as necessary based on font/grid sizing
   button->setToolTip(txt);
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
-  /*if(button->icon().actualSize(QSize(icosize,icosize)).height() < icosize){
-    qDebug() << "Scale Up Icon:" << button->iconSize() << icosize << button->icon().actualSize(QSize(icosize,icosize));
-    QIcon ico = button->icon();
-      ico.addPixmap( ico.pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) );
-    qDebug() << "  - New Icon Size:" << ico.actualSize(QSize(icosize,icosize));
-    button->setIcon(ico);
-  }*/
-  //int icosize = this->readSetting("iconsize",64).toInt();
-  //int bwid = qRound(1.1*icosize);
-  //this->setFixedSize(bwid, icosize+qRound(2.5*button->fontMetrics().height()) ); //make sure to adjust the button on first show.
-  //if(onchange){ this->adjustSize( bwid+4, icosize+8+qRound(2.5*button->fontMetrics().height())); }
-    //qDebug() << "Initial Button Text:" << txt << icosize;
     if(button->fontMetrics().width(txt) > (button->width()-OUTMARGIN) ){
-      //int dash = this->fontMetrics().width("-");
       //Text too long, try to show it on two lines
-      txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
+      //txt = button->fontMetrics().elidedText(txt, Qt::ElideRight, 2*(button->width()-OUTMARGIN), Qt::TextWordWrap);
+      txt =txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
+      //Go through and combine any lines
+       if(txt.contains("\n")){
+        //need to check each line
+	QStringList txtL = txt.split("\n");
+	for(int i=0; i<txtL.length(); i++){ 
+	  if(( i+1<txtL.length()) && (button->fontMetrics().width(txtL[i]) < button->width()/2) ){
+	    txtL[i] = txtL[i]+" "+txtL[i+1];
+	    txtL.removeAt(i+1);
+	  }
+	}
+	txt = txtL.join("\n").section("\n",0,2);
+      }
+            
       if(txt.contains("\n")){
         //need to check each line
 	QStringList txtL = txt.split("\n");
@@ -108,14 +108,7 @@ void AppLauncherPlugin::loadButton(){
     if(!txt.contains("\n")){ txt.append("\n "); } //always use two lines
     //qDebug() << " - Setting Button Text:" << txt;
     button->setText(txt);
-  //Now setup the menu again
-  //menu->clear();
-  /*menu->addAction(LXDG::findIcon("zoom-in",""), tr("Increase Size"), this, SLOT(increaseIconSize()));
-  menu->addAction(LXDG::findIcon("zoom-out",""), tr("Decrease Size"), this, SLOT(decreaseIconSize()));
-  if( !button->whatsThis().isEmpty() && button->whatsThis().startsWith(QDir::homePath()+"/Desktop") ){
-    menu->addAction(LXDG::findIcon("list-remove",""), tr("Delete File"), this, SLOT(deleteFile()) );	  
-  }*/
-  
+
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	
@@ -136,37 +129,3 @@ void AppLauncherPlugin::buttonClicked(){
   }
 	  
 }
-
-/*void AppLauncherPlugin::openContextMenu(){
-  if(button->underMouse()){
-    menu->popup(QCursor::pos());
-  }else{
-    emit OpenDesktopMenu();
-  }
-}*/
-	
-/*void AppLauncherPlugin::increaseIconSize(){
-  int icosize = this->readSetting("iconsize",64).toInt();
-  icosize += 16;
-  button->setIconSize(QSize(icosize,icosize));
-  this->saveSetting("iconsize",icosize);
-  this->loadButton(true); //redo size calculations
-	
-}
-
-void AppLauncherPlugin::decreaseIconSize(){
-  int icosize = this->readSetting("iconsize",64).toInt();
-  if(icosize < 20){ return; } //cannot get smaller
-  icosize -= 16;
-  button->setIconSize(QSize(icosize,icosize));
-  this->saveSetting("iconsize",icosize);
-  this->loadButton(true); //redo size calculations
-}
-
-void AppLauncherPlugin::deleteFile(){
-  if(QFileInfo(button->whatsThis()).isDir()){
-    QProcess::startDetached("rm -r \""+button->whatsThis()+"\"");
-  }else{
-    QFile::remove(button->whatsThis());
-  }
-}*/

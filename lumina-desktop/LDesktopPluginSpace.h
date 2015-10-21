@@ -114,7 +114,7 @@ private:
 	}
 	
 	bool ValidGrid(QRect grid){
-	  qDebug() << "Check Valid Grid:" << grid << RoundUp(this->width()/GRIDSIZE) << RoundUp(this->height()/GRIDSIZE);
+	  //qDebug() << "Check Valid Grid:" << grid << RoundUp(this->width()/GRIDSIZE) << RoundUp(this->height()/GRIDSIZE);
 	  //This just checks that the grid coordinates are not out of bounds - should still run ValidGeometry() below with the actual pixel geom
 	  if(grid.x()<0 || grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
 	  else if( (grid.x()+grid.width()) > RoundUp(this->width()/GRIDSIZE) ){ return false; }
