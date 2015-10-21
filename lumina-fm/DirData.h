@@ -155,23 +155,32 @@ public slots:
 	      HASH[dirpath].findSnapDir();
 	    }
 	    //Now read off all the available snapshots
-	    if(HASH.value(dirpath).snapdir != "-"){
+	    if(HASH.value(dirpath).snapdir != "-" && !HASH.value(dirpath).snapdir.isEmpty()){
 	      //Good snapshot directory found - read off the current snapshots (can change regularly - don't cache this)
 	      base = HASH.value(dirpath).snapdir;
 	      QDir dir(base);
+	      QString canon = QFileInfo(dirpath).canonicalFilePath();
+	      QString dcanon = QString(dir.canonicalPath()+"/").section(ZSNAPDIR,0,0);
+	      QString relpath = canon.section( dcanon+"/" ,-1);
+	      //qDebug() << "Snapshot Dir:" << base << dcanon << "Dir:" << dirpath << canon << "Relpath:" << relpath;
 	      snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time |QDir::Reversed );
 	      //Also remove any "empty" snapshots (might be leftover by tools like "zfsnap")
 	      for(int i=0; i<snaps.length(); i++){
 		dir.cd(base+"/"+snaps[i]);
-		//qDebug() << "Snapshot Dir Contents Count:" << dir.count() << snaps[i];
-	        if(dir.count() < 3 && dir.exists() ){ snaps.removeAt(i); i--; } // "." and ".." are always in the count
+	        if(relpath.isEmpty()){
+		  //Make sure the snapshot is not empty
+		  if(dir.count() < 3 && dir.exists() ){ snaps.removeAt(i); i--; } // "." and ".." are always in the count
+		//Make sure the snapshot contains the directory we are looking for
+	        }else if(!dir.exists(relpath)){ snaps.removeAt(i); i--; }
 	      }
 	      //NOTE: snaps are sorted oldest -> newest
 	    }
 	    
 	  }
 	  //if(DIR_DEBUG){ qDebug() << " -- Snap Data Found:" << ID << base << snaps; }
-	  emit SnapshotDataAvailable(ID, base, snaps); 
+	  if(!base.isEmpty() && !snaps.isEmpty()){
+	    emit SnapshotDataAvailable(ID, base, snaps); 
+	  }
 	}
 	
 };
