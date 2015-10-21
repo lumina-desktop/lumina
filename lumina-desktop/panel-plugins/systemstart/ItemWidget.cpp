@@ -186,12 +186,12 @@ void ItemWidget::updateItems(){
     if(iconPath.isEmpty()){
       //Use item path (thumbnail or mimetype)
       if(LUtils::imageExtensions().contains(icon->whatsThis().section("/",-1).section(".",-1).toLower()) ){
-        icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4) );
+        icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
       }else{
-        icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4) );
+        icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
       }
     }else{
-      icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4) );
+      icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
     }
   }else if(icon->pixmap()->size().height() > (H-4) ){
     icon->setPixmap( icon->pixmap()->scaled(H-4, H-4, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
