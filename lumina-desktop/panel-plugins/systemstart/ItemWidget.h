@@ -21,6 +21,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QTimer>
+#include <QResizeEvent>
 
 #include <LuminaXDG.h>
 
@@ -38,13 +39,15 @@ private:
 	QMenu *contextMenu;
 	QLabel *icon, *name;
 	bool isDirectory, isShortcut, menuopen;
-	QString linkPath;
+	QString linkPath, iconPath, text;
 	QTimer *menureset;
 	
 	void createWidget();
 	//void setupButton(bool disable = false);
 	void setupContextMenu();
 	void setupActions(XDGDesktop);
+
+	void updateItems(); //update the text/icon to match sizes
 
 private slots:
 	void PinToDesktop();
@@ -71,6 +74,11 @@ protected:
 	    setupContextMenu();
 	    contextMenu->popup(event->globalPos());
           }else if(event->button() != Qt::NoButton){ ItemClicked(); }
+	}
+	
+	void resizeEvent(QResizeEvent *ev){
+	  updateItems(); //update the sizing of everything
+	  QFrame::resizeEvent(ev); // do the normal procedures
 	}
 	
 signals:
