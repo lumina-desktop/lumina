@@ -83,9 +83,10 @@ void LDesktopPluginSpace::UpdateGeom(int oldgrid){
     }else{
       //NOTE: We are not doing the ValidGeometry() checks because we are only resizing existing plugin with pre-set & valid grid positions
       grid = gridToGeom(grid); //convert to pixels before saving/sizing
-      ITEMS[i]->setGeometry( grid );
+      MovePlugin(ITEMS[i], grid);
+      /*ITEMS[i]->setGeometry( grid );
       ITEMS[i]->setFixedSize(grid.size());
-      ITEMS[i]->savePluginGeometry(grid);
+      ITEMS[i]->savePluginGeometry(grid);*/
     }
   }
   //if(reload){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
@@ -121,7 +122,8 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   }else{
     if(DEBUG){ qDebug() <<  " - New Plugin Geometry (grid):" << geom; }
     //Now place the item in the proper spot/size
-    plug->setGeometry( gridToGeom(geom) );
+    MovePlugin(plug, gridToGeom(geom));
+    //plug->setGeometry( gridToGeom(geom) );
     plug->show();
     if(DEBUG){ qDebug() << " - New Plugin Geometry (px):" << plug->geometry(); }
     ITEMS << plug;

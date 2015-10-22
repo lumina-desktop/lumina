@@ -141,6 +141,12 @@ private:
 	  return 0;
 	}
 	
+	void MovePlugin(LDPlugin* plug, QRect geom){
+	  plug->setGeometry( geom );
+	  plug->setFixedSize(geom.size()); //needed for some plugins
+	  plug->savePluginGeometry(geom);	
+	}
+	
 private slots:
 	void reloadPlugins(bool ForceIconUpdate = false);
 
@@ -196,10 +202,11 @@ protected:
 		    valid = ValidGeometry(act.section("::::",1,50), geom);
 		  }
 		  if(valid){
-		    item->setGeometry(geom); 
-		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
+		    MovePlugin(item, geom);
+		    //item->setGeometry(geom); 
+		    //item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
 		    ev->acceptProposedAction(); 
-		    item->savePluginGeometry(geom); //save in pixel coords			  
+		    //item->savePluginGeometry(geom); //save in pixel coords			  
 		  }else{ ev->ignore(); } //invalid location
 		  
 	      }else{
@@ -221,10 +228,11 @@ protected:
 		    valid = ValidGeometry(act.section("::::",1,50), geom);
 		  }
 		  if(valid){
-		    item->setGeometry(geom); 
-		    item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
+		    MovePlugin(item, geom);
+		    //item->setGeometry(geom); 
+		    //item->setFixedSize(geom.size()); //needed due to resizing limitations and such for some plugins
 		    ev->acceptProposedAction(); 
-		    item->savePluginGeometry(geom); //save in pixel coords			  
+		    //item->savePluginGeometry(geom); //save in pixel coords			  
 		  }else{ ev->ignore(); } //invalid location
 	        }
 	    }
