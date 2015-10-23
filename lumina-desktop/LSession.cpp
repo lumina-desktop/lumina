@@ -608,13 +608,14 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     if(DEBUG){ 
       qDebug() << " - New Geom:" << geom << fgeom; 
     }
-    XCB->MoveResizeWindow(win, geom);
-
-    //For the random windows which are *still* off the top of the screen 
-    fgeom = XCB->WindowGeometry(win, true); //re-fetch the current geometry (including frame)
-    if(fgeom.y() <= desk.y()){
       //Need to use the frame origin point with the window size (for some reason - strange Fluxbox issue)
       XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
+
+    //For the random windows which are *still* off the top of the screen 
+    QRect nfgeom = XCB->WindowGeometry(win, true); //re-fetch the current geometry (including frame)
+    if(nfgeom!=fgeom){
+      if(DEBUG){ qDebug() << " -- Adjust again:" << fgeom; }
+      XCB->MoveResizeWindow(win, geom);
     }
   }
   
@@ -734,7 +735,7 @@ void LSession::WindowPropertyEvent(){
       if(!RunningApps.contains(newapps[i])){ 
         checkWin << newapps[i]; 
 	if(DEBUG){ qDebug() << "New Window - check geom in a moment:" << XCB->WindowClass(newapps[i]); }
-	QTimer::singleShot(100, this, SLOT(checkWindowGeoms()) );
+	QTimer::singleShot(50, this, SLOT(checkWindowGeoms()) );
       }
     }
   }
