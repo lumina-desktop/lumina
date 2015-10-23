@@ -170,6 +170,15 @@ void DesktopViewPlugin::updateContents(){
       it->setIcon( LXDG::findMimeIcon( files[i].fileName() ) );
       txt = files[i].fileName();
     }
+    //Add the sym-link overlay to the icon as necessary
+    if(files[i].isSymLink()){
+      QImage img = it->icon().pixmap(QSize(icosize,icosize)).toImage();
+      int oSize = icosize/2; //overlay size
+      QPixmap overlay = LXDG::findIcon("emblem-symbolic-link").pixmap(oSize,oSize).scaled(oSize,oSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+      QPainter painter(&img);
+        painter.drawPixmap(icosize-oSize,icosize-oSize,overlay); //put it in the bottom-right corner
+      it->setIcon( QIcon(QPixmap::fromImage(img)) );
+    }
     //Now adjust the visible text as necessary based on font/grid sizing
     it->setToolTip(txt);
     if(this->fontMetrics().width(txt) > (gridSZ.width()-4) ){
