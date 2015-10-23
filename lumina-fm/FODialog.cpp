@@ -10,7 +10,7 @@
 #include <QApplication>
 #include <QFontMetrics>
 
-#define DEBUG 1
+#define DEBUG 0
 
 FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
   ui->setupUi(this); //load the designer file
