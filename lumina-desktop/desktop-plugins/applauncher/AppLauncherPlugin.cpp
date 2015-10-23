@@ -71,6 +71,15 @@ void AppLauncherPlugin::loadButton(){
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
+  //If the file is a symlink, put the overlay on the icon
+  if(QFileInfo(path).isSymLink()){
+    QImage img = button->icon().pixmap(QSize(icosize,icosize)).toImage();
+    int oSize = icosize/2; //overlay size
+    QPixmap overlay = LXDG::findIcon("emblem-symbolic-link").pixmap(oSize,oSize).scaled(oSize,oSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPainter painter(&img);
+      painter.drawPixmap(icosize-oSize,icosize-oSize,overlay); //put it in the bottom-right corner
+    button->setIcon( QIcon(QPixmap::fromImage(img)) );
+  }
   //Now adjust the visible text as necessary based on font/grid sizing
   button->setToolTip(txt);
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
