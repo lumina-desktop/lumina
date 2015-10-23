@@ -608,18 +608,13 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     if(DEBUG){ 
       qDebug() << " - New Geom:" << geom << fgeom; 
     }
+    XCB->MoveResizeWindow(win, geom);
 
-   // if(fgeom.y() <= desk.y()){
-
-    //}else{
-      //Need to use the frame origin point with the window size (for some reason - strange Fluxbox issue)
-      XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
-    //}
     //For the random windows which are *still* off the top of the screen 
     fgeom = XCB->WindowGeometry(win, true); //re-fetch the current geometry (including frame)
     if(fgeom.y() <= desk.y()){
-      //This is a window off the top of the screen - use the window geom only (no frame included)
-      XCB->MoveResizeWindow(win, geom);
+      //Need to use the frame origin point with the window size (for some reason - strange Fluxbox issue)
+      XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
     }
   }
   
