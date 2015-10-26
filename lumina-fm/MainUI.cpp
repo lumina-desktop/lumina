@@ -573,8 +573,9 @@ void MainUI::tabClosed(int tab){
   if(tabBar->count()==1){ return; } //Can't close the only tab
   if(tab < 0){ tab = tabBar->currentIndex(); }
   QString info = tabBar->tabWhatsThis(tab);
+  if(info=="browser"){ return; }
+  //qDebug() << "Tab Closed:" << info;
    if(!info.startsWith("#")){ 
-    if(DWLIST.length()<2){ return; }
     for(int i=0; i<DWLIST.length(); i++){
       if(info == DWLIST[i]->id()){
 	 DWLIST[i]->cleanup();
@@ -589,6 +590,7 @@ void MainUI::tabClosed(int tab){
   qDebug() << "Closing tab:" << tab << tabBar->tabText(tab);
   tabBar->removeTab(tab);
   tabBar->setVisible( tabBar->count() > 1 );
+  if(DWLIST.isEmpty()){ OpenDirs(QStringList() << QDir::homePath() ); }
 }
 
 void MainUI::prevTab(){
