@@ -354,7 +354,7 @@ void StartMenu::on_tool_launch_deskinfo_clicked(){
 
 //Logout Buttons
 void StartMenu::on_tool_lock_clicked(){
-  LaunchItem("xscreensaver-command -lock", false);
+  QProcess::startDetached("xscreensaver-command -lock");
 }
 
 void StartMenu::on_tool_logout_clicked(){
