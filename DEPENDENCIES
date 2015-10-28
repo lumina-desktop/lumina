@@ -101,7 +101,7 @@ Optional Tools
   acpi        (required for monitoring battery life)
   numlockx    (required for changing state of numlock at login)
   pavucontrol (required for detatched audio mixer)
-
+  sysstatus 
 
 
 === Linux Requirements (Fedora/CentOS/Red Hat Enterprise Linux) ===
@@ -139,4 +139,4 @@ Optional Tools
   numlockx 
   pavucontrol
   xterm
-
+  sysstats
