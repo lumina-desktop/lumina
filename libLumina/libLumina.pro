@@ -1,6 +1,6 @@
 
 QT       += core network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent
 
 
 TARGET=LuminaUtils

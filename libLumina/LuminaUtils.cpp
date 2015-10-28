@@ -15,21 +15,45 @@
 #include <QDesktopWidget>
 #include <QImageReader>
 #include <QRegExp>
+#include <QFuture>
+#include <QtConcurrent>
 
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 #include <LuminaXDG.h>
 
 static QStringList fav;
+
+inline QStringList ProcessRun(QString cmd, QStringList args){
+  //Assemble outputs
+  QStringList out; out << "1" << ""; //error code, string output
+  QProcess proc;
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+  env.insert("LANG", "C");
+  env.insert("LC_MESSAGES", "C");
+  proc.setProcessEnvironment(env);
+  proc.setProcessChannelMode(QProcess::MergedChannels);
+  if(args.isEmpty()){
+    proc.start(cmd);
+  }else{
+    proc.start(cmd,args);	  
+  }
+  while(!proc.waitForFinished(500)){
+    if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
+  }
+  out[0] = QString::number(proc.exitCode());
+  out[1] = QString(proc.readAllStandardOutput());
+  return out;	
+}
 //=============
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  return "0.8.7-Release"; 
+  return "0.8.8-devel"; 
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
-  QProcess proc;
+  /*QProcess proc;
   proc.setProcessChannelMode(QProcess::MergedChannels);
   if(args.isEmpty()){
     proc.start(cmd);
@@ -42,12 +66,14 @@ int LUtils::runCmd(QString cmd, QStringList args){
     QCoreApplication::processEvents();
   }
   int ret = proc.exitCode();
-  return ret;
+  return ret;*/
+  QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
+  return future.result()[0].toInt(); //turn it back into an integer return code
 	
 }
 
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
-  QProcess proc;
+  /*QProcess proc;
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   env.insert("LANG", "C");
   env.insert("LC_MESSAGES", "C");
@@ -60,11 +86,13 @@ QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   }
   //if(!proc.waitForStarted(30000)){ return QStringList(); } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(300)){
-    if(proc.state() != QProcess::NotRunning){ break; } //somehow missed the finished signal
+    if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
     QCoreApplication::processEvents();
   }
   QStringList out = QString(proc.readAllStandardOutput()).split("\n");
-  return out;	
+  return out;*/
+  QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
+  return future.result()[1].split("\n"); //Split the return message into lines
 }
 
 QStringList LUtils::readFile(QString filepath){
