@@ -122,6 +122,34 @@ public:
 	//============
 	void WM_CloseWindow(WId win);
 	
+	// ICCCM Standards (older standards)
+	// -- WM_NAME
+	QString WM_ICCCM_GetName(WId win);
+	void WM_ICCCM_SetName(WId win, QString name);
+	// -- WM_ICON_NAME
+	QString WM_ICCCM_GetIconName(WId win);
+	void WM_ICCCM_SetIconName(WId win, QString name);
+	// --- WM_CLIENT_MACHINE
+	QString WM_ICCCM_GetClientMachine(WId win);
+	void WM_ICCCM_SetClientMachine(WId win, QString name);
+	// -- WM_CLASS
+	QString WM_ICCCM_GetClass(WId win);
+	void WM_ICCCM_SetClass(WId win, QString name);
+	// -- WM_TRANSIENT_FOR
+	
+	// -- WM_SIZE_HINTS
+	
+	// -- WM_NORMAL_HINTS
+	
+	// -- WM_HINTS
+	
+	// -- WM_PROTOCOLS
+	
+	
+	//NET_WM Standards (newer standards)
+	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
+	void WM_Set_Window_Supported(WId win); //set the atom list of supported features on the given window
+	
 };
 
 #endif

@@ -1080,4 +1080,82 @@ void LXCB::closeSystemTray(WId trayID){
 void LXCB::WM_CloseWindow(WId win){
   xcb_destroy_window(QX11Info::connection(), win);
 }
-	
+
+// --------------------------------------------------
+// ICCCM Standards (older standards)
+// --------------------------------------------------
+// -- WM_NAME
+QString LXCB::WM_ICCCM_GetName(WId win){
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 != xcb_icccm_get_wm_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    return ""; //error in fetching name
+  }else{
+    return QString::fromLocal8Bit(reply.name);
+  }
+}
+
+void LXCB::WM_ICCCM_SetName(WId win, QString name){
+  xcb_icccm_set_wm_name(QX11Info::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+}
+
+// -- WM_ICON_NAME
+QString LXCB::WM_ICCCM_GetIconName(WId win){
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 != xcb_icccm_get_wm_icon_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    return ""; //error in fetching name
+  }else{
+    return QString::fromLocal8Bit(reply.name);
+  }
+}
+
+void LXCB::WM_ICCCM_SetIconName(WId win, QString name){
+  xcb_icccm_set_wm_icon_name(QX11Info::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+}
+
+// -- WM_CLIENT_MACHINE
+QString LXCB::WM_ICCCM_GetClientMachine(WId win){
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_client_machine_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_text_property_reply_t reply;
+  if(1 != xcb_icccm_get_wm_client_machine_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    return ""; //error in fetching name
+  }else{
+    return QString::fromLocal8Bit(reply.name);
+  }
+}
+
+void LXCB::WM_ICCCM_SetClientMachine(WId win, QString name){
+  xcb_icccm_set_wm_client_machine(QX11Info::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+}
+
+// -- WM_CLASS
+QString LXCB::WM_ICCCM_GetClass(WId win){
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
+  xcb_icccm_get_wm_class_reply_t reply;
+  if(1 != xcb_icccm_get_wm_class_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    return ""; //error in fetching name
+  }else{
+    //Returns: "<instance name>::::<class name>"
+    return ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) );
+  }
+}
+
+void LXCB::WM_ICCCM_SetClass(WId win, QString name){
+  xcb_icccm_set_wm_class(QX11Info::connection(), win, name.length(), name.toLocal8Bit());
+}
+
+// --------------------------------------------------------
+// NET_WM Standards (newer standards)
+// --------------------------------------------------------
+void LXCB::WM_Set_Root_Supported(){
+  //NET_WM standards (ICCCM implied - no standard way to list those)
+  xcb_atom_t list[] = {};
+  xcb_ewmh_set_supported(&EWMH, QX11Info::appScreen(), 0,list);
+}
+
+void LXCB::WM_Set_Window_Supported(WId win){
+  //NET_WM standards (ICCCM implied - no standard way to list those)
+  xcb_atom_t list[] = {};
+  xcb_ewmh_set_wm_allowed_actions(&EWMH, win, 0, list);
+}
