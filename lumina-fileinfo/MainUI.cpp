@@ -116,6 +116,8 @@ void MainUI::LoadFile(QString path, QString type){
   //Setup the tab 
   if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
   else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
+  //Hide the tab bar (the autoHideTabBar setting was not added until Qt 5.4)
+  if(ui->tabWidget->count() < 2){ ui->tabWidget->tabBar()->hide(); }
 }
 
 void MainUI::UpdateIcons(){
