@@ -50,6 +50,36 @@ LXCB::~LXCB(){
   xcb_ewmh_connection_wipe(&EWMH);
 }
 
+// private function
+void LXCB::createWMAtoms(){
+  ATOMS.clear();
+  atoms.clear();
+  //List the atoms needed by some WM functions
+  atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW"; //WM_PROTOCOLS
+
+  //Create all the requests for the atoms
+  QList<xcb_intern_atom_reply_t*> reply;
+  for(int i=0; i<atoms.length(); i++){
+      reply << xcb_intern_atom_reply(QX11Info::connection(), \
+			xcb_intern_atom(QX11Info::connection(), 0, atoms[i].length(), atoms[i].toLocal8Bit()), NULL); 
+  }
+  //Now evaluate all the requests and save the atoms
+  for(int i=0; i<reply.length(); i++){
+    if(reply[i]!=0){
+      ATOMS << reply[i]->atom;
+      free(reply[i]); //done with this reply
+    }else{
+      //Invalid atom - could not be created
+      atoms.removeAt(i);
+      reply.removeAt(i);
+      i--;
+    }
+  }
+  
+  
+  
+}
+
 // === WindowList() ===
 QList<WId> LXCB::WindowList(bool rawlist){
   if(DEBUG){ qDebug() << "XCB: WindowList()" << rawlist; }
@@ -1144,6 +1174,29 @@ QString LXCB::WM_ICCCM_GetClass(WId win){
 void LXCB::WM_ICCCM_SetClass(WId win, QString name){
   xcb_icccm_set_wm_class(QX11Info::connection(), win, name.length(), name.toLocal8Bit());
 }
+
+// -- WM_TRANSIENT_FOR
+WId WM_ICCCM_GetTransientFor(WId win){
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_transient_for_unchecked(QX11Info::connection(), win);
+  xcb_window_t trans;
+  if(1!= xcb_icccm_get_wm_transient_for_reply(QX11Info::connection(), cookie, &trans, NULL) ){
+    return win; //error in fetching transient window ID (or none found)
+  }else{
+    return trans;
+  }
+}
+
+void WM_ICCCM_SetTransientFor(WId win, WId transient){
+  xcb_icccm_set_wm_transient_for(QX11Info::connection(), win, transient);
+}
+
+// -- WM_SIZE_HINTS
+	
+// -- WM_NORMAL_HINTS
+
+// -- WM_HINTS
+	
+// -- WM_PROTOCOLS
 
 // --------------------------------------------------------
 // NET_WM Standards (newer standards)

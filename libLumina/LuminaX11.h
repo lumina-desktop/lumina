@@ -50,12 +50,14 @@ class LXCB{
 	
 public:
 	enum WINDOWSTATE {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
-	
+	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};
+	enum ICCCM_PROTOCOLS {TAKE_FOCUS, DELETE_WINDOW};
+		
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
-	
+
 	LXCB();
 	~LXCB();
-	
+		
 	//== Main Interface functions ==
 	// General Information
 	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
@@ -133,10 +135,11 @@ public:
 	QString WM_ICCCM_GetClientMachine(WId win);
 	void WM_ICCCM_SetClientMachine(WId win, QString name);
 	// -- WM_CLASS
-	QString WM_ICCCM_GetClass(WId win);
+	QString WM_ICCCM_GetClass(WId win); //Returns: "<instance name>::::<class name>"
 	void WM_ICCCM_SetClass(WId win, QString name);
 	// -- WM_TRANSIENT_FOR
-	
+	WId WM_ICCCM_GetTransientFor(WId win); //Returns "win" for errors or no transient
+	void WM_ICCCM_SetTransientFor(WId win, WId transient);
 	// -- WM_SIZE_HINTS
 	
 	// -- WM_NORMAL_HINTS
@@ -150,6 +153,11 @@ public:
 	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
 	void WM_Set_Window_Supported(WId win); //set the atom list of supported features on the given window
 	
+private:
+	QList<xcb_atom_t> ATOMS;
+	QStringList atoms;
+
+	void createWMAtoms(); //fill the private lists above
 };
 
 #endif
