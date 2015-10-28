@@ -372,6 +372,7 @@ void LSession::checkUserFiles(){
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
   int oldversion = VersionStringToNumber(OVS);
+  int nversion = VersionStringToNumber(this->applicationVersion());
   bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
   bool newrelease = ( OVS.contains("-devel", Qt::CaseInsensitive) && this->applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
   
@@ -388,7 +389,7 @@ void LSession::checkUserFiles(){
     LUtils::upgradeFavorites(oldversion);	  
   }
   //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
-  if(oldversion <= 8007 && (newversion || newrelease)){
+  if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
     QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings", this);
     QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
     for(int i=0; i<plugKeys.length(); i++){
