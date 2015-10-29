@@ -45,7 +45,7 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   TrayStopping = false;
   screenTimer = new QTimer(this);
     screenTimer->setSingleShot(true);
-    screenTimer->setInterval(2000); //0.2 seconds 
+    screenTimer->setInterval(200); //0.2 seconds 
     connect(screenTimer, SIGNAL(timeout()), this, SLOT(updateDesktops()) );
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
@@ -346,16 +346,19 @@ void LSession::watcherChange(QString changed){
 
 void LSession::screensChanged(){
   qDebug() << "Screen Number Changed";
-  //if(screenTimer->isActive()){ screenTimer->stop(); }  
-  //screenTimer->start();
-  updateDesktops();
+  if(screenTimer->isActive()){ screenTimer->stop(); }  
+  screenTimer->start();
+  //updateDesktops();
 }
 
 void LSession::screenResized(int scrn){
   qDebug() << "Screen Resized:" << scrn << this->desktop()->screenGeometry(scrn);
-  for(int i=0; i<DESKTOPS.length(); i++){
+  /*for(int i=0; i<DESKTOPS.length(); i++){
     if(DESKTOPS[i]->Screen() == scrn){ DESKTOPS[i]->UpdateGeometry(); return; }
-  }	  
+  }*/	  
+  if(screenTimer->isActive()){ screenTimer->stop(); }  
+  screenTimer->start();	
+  //updateDesktops();
 }
 
 void LSession::checkWindowGeoms(){
