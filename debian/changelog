@@ -1,3 +1,9 @@
+lumina-desktop (0.8.7-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Valentin OVD <vovd.tanglu@gmail.com>  Thu, 29 Oct 2015 21:36:40 +0200
+
 lumina-desktop (0.8.7.828-1nano) unstable; urgency=low
 
   * New git snapshot
