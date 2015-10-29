@@ -238,7 +238,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
         if(!DF.exec.isEmpty()){
           cmd = LXDG::getDesktopExec(DF,ActionID);
           if(!DF.path.isEmpty()){ path = DF.path; }
-	  watch = DF.startupNotify;
+	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("Application shortcut is missing the launching information (malformed shortcut): %1")).arg(inFile) );
         }
@@ -249,7 +249,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.url;
           cmd.clear();
           extension = inFile.section(":",0,0);
-	  watch = DF.startupNotify;
+	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
         }
@@ -260,7 +260,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.path;
           cmd.clear();
           extension = "directory";
-	  watch = DF.startupNotify;
+	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
         }
