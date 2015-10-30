@@ -14,11 +14,16 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   AID = 0; //nothing yet
   IID = 0;
   dmgID = 0;
+  badpaints = 0;
   //this->setLayout(new QHBoxLayout);
   //this->layout()->setContentsMargins(0,0,0,0);
 }
 
 TrayIcon::~TrayIcon(){
+}
+
+void TrayIcon::cleanup(){
+  AID = IID = 0;
 }
 
 WId TrayIcon::appID(){
@@ -94,26 +99,21 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - - " << event->rect().x() << event->rect().y() << event->rect().width() << event->rect().height();
 	//qDebug() << " - Get image:" << AID;
 	QPixmap pix = LSession::handle()->XCB->TrayImage(AID); //= WIN->icon().pixmap(this->size());
-	//if(pix.isNull()){
-	  //qDebug() << "Null Image - use Qt grab Window";
-	  //Try to grab the window directly with Qt instead
-	  /*QList<QScreen*> scrnlist = QApplication::screens();
-	  for(int i=0; i<scrnlist.length(); i++){
-	      pix = scrnlist[i]->grabWindow(AID);
-	      break; //stop here
-	  }
-        //}
-	if(pix.isNull()){
-	  qDebug() << "Null Qt Pixmap - Use XCB grab image:";
-	  pix = LSession::handle()->XCB->TrayImage(AID);
-	}*/
+
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
 	  if(this->size() != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+	  badpaints = 0; //good paint
 	}else{
-	  qWarning() << " - -  No Tray Icon/Image found!" << "ID:" << AID;
+	  badpaints++;
+	  if(badpaints>5){
+	    qWarning() << " - -  No Tray Icon/Image found!" << "ID:" << AID;
+	    AID = 0; //reset back to nothing
+	    IID = 0;
+	    emit BadIcon(); //removed/destroyed in some non-valid way?
+	  }
 	}
     //qDebug() << " - Done";
   }

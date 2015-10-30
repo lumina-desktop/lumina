@@ -88,8 +88,9 @@ void LSysTray::checkAll(){
     int index = wins.indexOf(trayIcons[i]->appID());
     if(index < 0){
       //Tray Icon no longer exists: remove it
-      qDebug() << " - Visual System Tray: Remove Icon";
+      qDebug() << " - Visual System Tray: Remove Icon:" << trayIcons[i]->appID();
       TrayIcon *cont = trayIcons.takeAt(i);
+      cont->cleanup();
       LI->removeWidget(cont);
       delete cont;
       i--; //List size changed
@@ -108,9 +109,10 @@ void LSysTray::checkAll(){
   }
   //Now go through any remaining windows and add them
   for(int i=0; i<wins.length() && TrayRunning; i++){
-    qDebug() << " - Visual System Tray: Add Icon";
+    qDebug() << " - Visual System Tray: Add Icon:" << wins[i];
     TrayIcon *cont = new TrayIcon(this);
-      LSession::processEvents();
+      connect(cont, SIGNAL(BadIcon()), this, SLOT(checkAll()) );
+      //LSession::processEvents();
       trayIcons << cont;
       LI->addWidget(cont);
       //qDebug() << " - Update tray layout";
@@ -121,12 +123,12 @@ void LSysTray::checkAll(){
 	cont->setSizeSquare(this->width()-2-2*frame->frameWidth()); //vertical tray
 	this->setMaximumSize(10000, trayIcons.length()*this->width());
       }
-      LSession::processEvents();
+      //LSession::processEvents();
       //qDebug() << " - Attach tray app";
       cont->attachApp(wins[i]);
       if(cont->appID()==0){ 
 	//could not attach window - remove the widget
-	//qDebug() << "Invalid Tray Container:"; 
+	qDebug() << " - Invalid Tray App: Could Not Embed:"; 
 	trayIcons.takeAt(trayIcons.length()-1); //Always at the end
 	LI->removeWidget(cont);
 	delete cont;
@@ -151,8 +153,6 @@ void LSysTray::UpdateTrayWindow(WId win){
     if(trayIcons[i]->appID()==win){
       //qDebug() << "System Tray: Update Window " << win;
       trayIcons[i]->repaint(); //don't use update() because we need an instant repaint (not a cached version)
-      //QTimer::singleShot(10, trayIcons[i], SLOT(repaint()) ); //re-paint in 10ms (give it a moment to settle)
-      //QTimer::singleShot(1000, trayIcons[i], SLOT(update()) );
       return; //finished now
     }
   }

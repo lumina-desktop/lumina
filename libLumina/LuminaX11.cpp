@@ -842,7 +842,7 @@ void LXCB::ReserveLocation(WId win, QRect geom, QString loc){
 uint LXCB::EmbedWindow(WId win, WId container){
   if(DEBUG){ qDebug() << "XCB: EmbedWindow()"; }
   //This returns the damage control ID number (or 0 for a failure)
-  if(win==0 || container==0){ return 0; }
+  if(win==0 || container==0 || LXCB::WindowClass(win).isEmpty() ){ return 0; } //invalid window (destroyed before getting here?)
   //qDebug() << "Embed Window:" << win << container;
 
   //Initialize any atoms that will be needed

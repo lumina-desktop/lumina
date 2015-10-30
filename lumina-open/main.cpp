@@ -38,6 +38,7 @@ void printUsageInfo(){
   qDebug() << "Special Flags:";
   qDebug() << " \"-volume[up/down]\" Flag to increase/decrease audio volume by 5%";
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
+  qDebug() << " \"-autostart-apps\" Flag to launch all the various apps which are registered with XDG autostart specification";
   exit(1);
 }
 
@@ -75,6 +76,20 @@ void showOSD(int argc, char **argv, QString message){
   QDateTime end = QDateTime::currentDateTime().addMSecs(800);
   while(QDateTime::currentDateTime() < end){ App.processEvents(); }
   splash.hide();
+}
+
+void LaunchAutoStart(){
+  QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
+  for(int i=0; i<xdgapps.length(); i++){
+    //Generate command and clean up any stray "Exec" field codes (should not be any here)
+    QString cmd = LXDG::getDesktopExec(xdgapps[i]);
+    if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
+    //Now run the command
+    if(!cmd.isEmpty()){ 
+      qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
+      QProcess::startDetached(cmd); 
+    }
+  }
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
@@ -159,6 +174,9 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       }else if(QString(argv[i]).simplified() == "-testcrash"){
 	//Test the crash handler
 	binary = "internalcrashtest"; watch=true;
+	return;
+      }else if(QString(argv[i]).simplified() == "-autostart-apps"){
+	LaunchAutoStart();
 	return;
       }else if(QString(argv[i]).simplified() == "-volumeup"){
 	int vol = LOS::audioVolume()+5; //increase 5%

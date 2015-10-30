@@ -30,6 +30,8 @@ public:
 	TrayIcon(QWidget* parent = 0);
 	~TrayIcon();
 
+	void cleanup(); //about to be removed after window was detroyed
+
 	WId appID(); //the ID for the attached application
 	void attachApp(WId id);
 	void setSizeSquare(int side);
@@ -40,12 +42,14 @@ public slots:
 
 private:
 	WId IID, AID; //icon ID and app ID
-	//QWindow *WIN;
+	int badpaints;
 	uint dmgID; 
 
 protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
+signals:
+	void BadIcon();
 };
 #endif

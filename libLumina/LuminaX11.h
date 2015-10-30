@@ -21,18 +21,12 @@
 #include <QDebug>
 #include <QPainter>
 #include <QObject>
+#include <QFlags>
 // Addition includes for compilations (cause issues with X11 libs later)
-#include <QDir>
-#include <QEvent>
-#include <QHeaderView>
+//#include <QDir>
+//#include <QEvent>
+//#include <QHeaderView>
 
-
-
-//X includes (these need to be last due to Qt compile issues)
-//#include <X11/Xlib.h>
-//#include <X11/Xutil.h>
-//#include <X11/Xatom.h>
-//#include <X11/extensions/Xrender.h>
 
 #include <xcb/xcb_ewmh.h>
 
@@ -51,8 +45,11 @@ class LXCB{
 public:
 	enum WINDOWSTATE {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
 	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};
-	enum ICCCM_PROTOCOLS {TAKE_FOCUS, DELETE_WINDOW};
-		
+	//Now enums which can have multiple values at once
+	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
+	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
+	
+	
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 
 	LXCB();

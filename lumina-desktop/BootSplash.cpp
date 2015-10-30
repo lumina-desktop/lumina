@@ -41,10 +41,14 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
   }else if(loading=="final"){
     txt = tr("Finalizing …"); per = 90;
     icon = "pcbsd";	  
+  }else if(loading.startsWith("app::")){
+    txt = QString(tr("Starting App: %1")).arg(loading.section("::",1,50)); per = -1;
   }
-  ui->progressBar->setValue(per);
+  if(per>0){ ui->progressBar->setValue(per); }
+  else{ ui->progressBar->setRange(0,0); } //loading indicator
   ui->label_text->setText(txt);
-  ui->label_icon->setPixmap( LXDG::findIcon(icon, "Lumina-DE").pixmap(64,64) );
+  if(!icon.isEmpty()){ui->label_icon->setPixmap( LXDG::findIcon(icon, "Lumina-DE").pixmap(64,64) ); }
+  this->raise();
   this->show();
   this->update();
   QApplication::processEvents();

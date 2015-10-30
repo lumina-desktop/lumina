@@ -28,6 +28,7 @@
 #include "SystemWindow.h"
 #include "LDesktop.h"
 #include "WMProcess.h"
+//#include "BootSplash.h"
 
 #include <LuminaX11.h>
 
@@ -130,7 +131,6 @@ private:
 	int VersionStringToNumber(QString version);
 	
 public slots:
-	void launchStartupApps();
 	void StartLogout();
 	void StartShutdown();
 	void StartReboot();
@@ -138,6 +138,7 @@ public slots:
 	void reloadIconTheme();
 
 private slots:
+	void launchStartupApps(); //used during initialization
 	void watcherChange(QString);
 	void screensChanged();
 	void screenResized(int);

@@ -9,6 +9,7 @@
 
 #include <QTime>
 #include <QScreen>
+#include <QtConcurrent>
 #include "LXcbEventFilter.h"
 #include "BootSplash.h"
 
@@ -162,9 +163,11 @@ void LSession::setupSession(){
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   //QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
-  splash.close();
   QApplication::processEvents();
-  launchStartupApps();
+  //QtConcurrent::run(this, &LSession::launchStartupApps);
+  //launchStartupApps(&splash);
+  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  splash.close(); 
 }
 
 void LSession::CleanupSession(){
@@ -260,24 +263,20 @@ void LSession::launchStartupApps(){
     LOS::setScreenBrightness( tmp );
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
-  
+  QProcess::startDetached("nice lumina-open -autostart-apps");
   //Now get any XDG startup applications and launch them
-  QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
+  /*QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
   for(int i=0; i<xdgapps.length(); i++){
     qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
+    //splash->showScreen("app::"+xdgapps[i].name);
     if(xdgapps[i].startupNotify){
-      LSession::LaunchApplication("lumina-open \""+xdgapps[i].filePath+"\"");
+      LSession::LaunchApplication("nice lumina-open \""+xdgapps[i].filePath+"\"");
     }else{
       //Don't update the mouse cursor
-      QProcess::startDetached("lumina-open \""+xdgapps[i].filePath+"\"");
+      QProcess::startDetached("nice lumina-open \""+xdgapps[i].filePath+"\"");
     }
-    //Put a tiny bit of space between app starts (don't overload the system)
-    for(int j=0; j<5; j++){
-      usleep(50000); //50ms = 50000 us --> 250ms total wait
-      LSession::processEvents();
-    }
-    
-  }
+    LSession::processEvents();
+  }*/
   
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
@@ -818,6 +817,10 @@ void LSession::unregisterVisualTray(WId visualTray){
 
 QList<WId> LSession::currentTrayApps(WId visualTray){
   if(visualTray==VisualTrayID){
+    //Check the validity of all the current tray apps (make sure nothing closed erratically)
+    for(int i=0; i<RunningTrayApps.length(); i++){
+      if(XCB->WindowClass(RunningTrayApps[i]).isEmpty()){ RunningTrayApps.removeAt(i); i--; }
+    }
     return RunningTrayApps;
   }else if( registerVisualTray(visualTray) ){
     return RunningTrayApps;
