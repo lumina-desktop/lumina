@@ -28,6 +28,7 @@ LRELEASE = $$QT5LIBDIR/bin/lrelease
 SOURCES += main.cpp \
 		WMSession.cpp \
 		LScreenSaver.cpp \
+		SSBaseWidget.cpp \
 		LXcbEventFilter.cpp \
 		LWindow.cpp
 
@@ -35,10 +36,14 @@ SOURCES += main.cpp \
 HEADERS  += GlobalDefines.h \
 		WMSession.h \
 		LScreenSaver.h \
+		SSBaseWidget.h \
 		LXcbEventFilter.h \
 		LWindow.h
 
 FORMS    += 
+
+#Now add in all the screensaver animation plugins
+include(animations/animations.pri)
 
 INCLUDEPATH += ../libLumina $$PREFIX/include
 

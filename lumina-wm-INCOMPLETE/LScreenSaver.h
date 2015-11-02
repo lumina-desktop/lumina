@@ -7,20 +7,26 @@
 #ifndef _LUMINA_DESKTOP_SCREEN_SAVER_H
 #define _LUMINA_DESKTOP_SCREEN_SAVER_H
 
-#include <QObject>
+#include <QWidget>
 #include <QStringList>
 #include <QTimer>
 #include <QSettings>
 
-class LScreenSaver : public QObject{
+#include "SSBaseWidget.h"
+
+class LScreenSaver : public QWidget{
 	Q_OBJECT
 public:
 	LScreenSaver();
 	~LScreenSaver();
 
+	bool isLocked();
+
 private:
 	QTimer *starttimer, *locktimer, *hidetimer;
 	QSettings *settings;
+	QList<SSBaseWidget*> BASES;
+	
 	bool SSRunning, SSLocked;
 
 public slots:

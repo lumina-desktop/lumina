@@ -31,8 +31,14 @@
 #include <QX11Info>
 #include <QCoreApplication>
 #include <QPropertyAnimation>
+#include <QAnimationGroup>
+#include <QParallelAnimationGroup>
 #include <QWindow>
+#include <QWidget>
 #include <QBackingStore>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QSettings>
 
 // libLumina includes
 #include <LuminaX11.h>
