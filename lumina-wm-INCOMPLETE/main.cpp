@@ -28,7 +28,7 @@ int main(int argc, char ** argv)
     QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
     //Setup the global structures
     LWM::SYSTEM = new LXCB();
-    if(argc>1 && QString::fromLocal8Bit(argv[1])=="testwin"){
+    if( a.inputlist.contains("--test-win") ){
       //Simple override to test out the window class
       qDebug() << "Starting window test...";
       QLabel dlg(0, Qt::Window | Qt::BypassWindowManagerHint); //this test should be ignored by the current WM
@@ -36,8 +36,9 @@ int main(int argc, char ** argv)
       dlg.setWindowTitle("Test");
       dlg.resize(200,100);
       dlg.setStyleSheet("background: rgba(255,255,255,100); color: black;");
-      dlg.show();
       dlg.move(100,100);
+      dlg.show();
+      //dlg.move(100,100);
       qDebug() << " - Loading window frame...";
       LWindow win(dlg.winId()); //have it wrap around the dialog
       qDebug() << " - Show frame...";
@@ -47,7 +48,7 @@ int main(int argc, char ** argv)
       return a.exec();
     }
     WMSession w;
-    w.start();
+    w.start(a.inputlist.contains("--test-ss"));
     QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(reloadIcons()) );
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(newInputsAvailable(QStringList)) );
     int retCode = a.exec();

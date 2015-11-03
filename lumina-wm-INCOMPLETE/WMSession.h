@@ -18,7 +18,7 @@ public:
 	WMSession();
 	~WMSession();
 
-	void start();
+	void start(bool SSONLY = false);
 
 private:
 	//XCB Event Watcher

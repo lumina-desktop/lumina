@@ -23,8 +23,6 @@ public:
 	BaseAnimGroup(QWidget *parent, QSettings *set){
 	  canvas = parent;
 	  settings = set;
-	  //Now load the animations for this particular plugin
-	  LoadAnimations();
 	}
 	~BaseAnimGroup(){}
 	

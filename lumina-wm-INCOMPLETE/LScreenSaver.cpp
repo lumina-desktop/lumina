@@ -8,6 +8,8 @@
 #include <QScreen>
 #include <QApplication>
 
+#define DEBUG 1
+
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
     starttimer->setSingleShot(true);
@@ -36,7 +38,7 @@ bool LScreenSaver::isLocked(){
 // ===========
 void LScreenSaver::start(){
   reloadSettings(); //setup all the initial time frames
-  
+  starttimer->start(1000);// one second delay (for testing)
 }
 
 void LScreenSaver::reloadSettings(){
@@ -81,6 +83,7 @@ void LScreenSaver::newInputEvent(){
 //  PRIVATE SLOTS
 // ===========
 void LScreenSaver::ShowScreenSaver(){
+  if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = true;
   //Start the lock timer if necessary
   if(!SSLocked && (settings->value("lockdelaymin",10).toInt()>0) ){ locktimer->start(); }
@@ -114,12 +117,14 @@ void LScreenSaver::ShowScreenSaver(){
 }
 
 void LScreenSaver::ShowLockScreen(){
-  SSLocked = true;
+  if(DEBUG){ qDebug() << "Locking Screen Saver:" << QDateTime::currentDateTime().toString(); }
+  //SSLocked = true;
   //Start the timer for hiding the lock screen due to inactivity
   if(settings->value("hidesecs",15).toInt() > 0 ){ hidetimer->start(); }
 }
 
 void LScreenSaver::HideScreenSaver(){
+  if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
   if(!SSLocked){
     this->hide();
@@ -129,5 +134,6 @@ void LScreenSaver::HideScreenSaver(){
 }
 
 void LScreenSaver::HideLockScreen(){
+  if(DEBUG){ qDebug() << "Hiding Lock Screen:" << QDateTime::currentDateTime().toString(); }
   //Leave the Locked flag set (still locked, just not visible)
 }
