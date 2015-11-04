@@ -51,6 +51,7 @@ int main(int argc, char ** argv)
     w.start(a.inputlist.contains("--test-ss"));
     QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(reloadIcons()) );
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(newInputsAvailable(QStringList)) );
+    if(!a.inputlist.isEmpty()){ w.newInputsAvailable(a.inputlist); }
     int retCode = a.exec();
     
     return retCode;

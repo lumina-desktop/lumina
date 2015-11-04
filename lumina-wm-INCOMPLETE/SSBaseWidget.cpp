@@ -17,10 +17,11 @@ SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
   if(validPlugs.isEmpty()){ validPlugs << "none"; } //add more later
   settings = set; //needed to pass along for plugins to read any special options/settings
   ANIM = 0;
+  this->setMouseTracking(true);
 }
 
 SSBaseWidget::~SSBaseWidget(){
-	
+  if(ANIM!=0){ this->stopPainting(); }
 }
 	
 void SSBaseWidget::setPlugin(QString plug){
@@ -34,7 +35,11 @@ void SSBaseWidget::setPlugin(QString plug){
 // =============
 void SSBaseWidget::startPainting(){
   cplug = plugType;
-  if(ANIM!=0){ ANIM->clear(); }
+  //free up any old animation instance
+  if(ANIM!=0){ 
+    ANIM->stop(); ANIM->clear();
+    delete ANIM; ANIM = 0; 
+  } 
   //If a random plugin - grab one of the known plugins
   if(cplug=="random"){ 
     QStringList valid = BaseAnimGroup::KnownAnimations();
@@ -45,11 +50,13 @@ void SSBaseWidget::startPainting(){
   //Now list all the various plugins and start them appropriately
   QString style;
   if(cplug=="none"){
-    style = "background: transparent"; //show the underlying black parent widget
+    style = "background: transparent;"; //show the underlying black parent widget
+  }else{
+    style = "background: black;";
   }
   this->setStyleSheet(style);
+  this->repaint();
   //If not a stylesheet-based plugin - set it here
-  if(ANIM!=0){ free(ANIM); ANIM = 0; } //free up the old instance
   if(cplug!="none"){
     ANIM = BaseAnimGroup::NewAnimation(cplug, this, settings);
     connect(ANIM, SIGNAL(finished()), this, SLOT(startPainting()) ); //repeat the plugin as needed
@@ -69,5 +76,7 @@ void SSBaseWidget::stopPainting(){
   if(ANIM!=0){
     ANIM->stop();
     ANIM->clear();
+    delete ANIM;
+    ANIM = 0;
   }
 }

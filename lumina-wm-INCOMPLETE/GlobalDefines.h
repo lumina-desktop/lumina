@@ -39,6 +39,8 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QSettings>
+#include <QHostInfo>
+#include <QDesktopWidget>
 
 // libLumina includes
 #include <LuminaX11.h>

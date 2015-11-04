@@ -18,11 +18,17 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
   hidetimer = new QTimer(this);
     hidetimer->setSingleShot(true);
 	
+  LOCKER = new LLockScreen(this);
+	LOCKER->hide();
   settings = new QSettings("LuminaDE","lumina-screensaver",this);
   SSRunning = SSLocked = false;
   this->setObjectName("LSCREENSAVERBASE");
   this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: black; }");
   connect(starttimer, SIGNAL(timeout()), this, SLOT(ShowScreenSaver()) );
+  connect(locktimer, SIGNAL(timeout()), this, SLOT(LockScreen()) );
+  connect(hidetimer, SIGNAL(timeout()), this, SLOT(HideLockScreen()) );
+  connect(LOCKER, SIGNAL(ScreenUnlocked()), this, SLOT(SSFinished()) );
+  connect(LOCKER, SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
 }
 
 LScreenSaver::~LScreenSaver(){
@@ -33,12 +39,23 @@ bool LScreenSaver::isLocked(){
   return SSLocked;
 }
 
+void LScreenSaver::UpdateTimers(){
+  //This is generally used for programmatic changes
+  if(starttimer->isActive()){ starttimer->stop();}
+  if(locktimer->isActive()){ locktimer->stop(); }
+  if(hidetimer->isActive()){ hidetimer->stop(); }
+
+  if(!SSRunning && !SSLocked && (starttimer->interval() > 1000) ){ starttimer->start(); }  //time to SS start
+  else if( SSRunning && !SSLocked && (locktimer->interval() > 1000 ) ){ locktimer->start(); } //time to lock
+  else if( !SSRunning && SSLocked ){ hidetimer->start(); } //time to hide lock screen
+}
+
 // ===========
 //  PUBLIC SLOTS
 // ===========
 void LScreenSaver::start(){
   reloadSettings(); //setup all the initial time frames
-  starttimer->start(1000);// one second delay (for testing)
+  starttimer->start();
 }
 
 void LScreenSaver::reloadSettings(){
@@ -48,35 +65,23 @@ void LScreenSaver::reloadSettings(){
   hidetimer->setInterval( settings->value("hidesecs",15).toInt() * 1000 );
 }
 
-void LScreenSaver::newInputEvent(){
-  //First stop any timers that are running
-  if(starttimer->isActive()){ starttimer->stop();}
-  if(locktimer->isActive()){ locktimer->stop(); }
-  if(hidetimer->isActive()){ hidetimer->stop(); }
-    
+void LScreenSaver::newInputEvent(){  
   if(SSRunning && SSLocked){
     //Running and locked
     // Hide the running setting, and display the lock screen
     HideScreenSaver();
     ShowLockScreen();
-    //Start the timer for restarting the SS and hiding the lockscreen
-    hidetimer->start();
-	  
   }else if(SSRunning){
     //Only running, not locked
-    //De-activate the screensaver and start the main timer
     HideScreenSaver();
-    starttimer->start();
-	  
-  }else if(SSLocked){
-    //Only locked, not running
-    hidetimer->start(); //restart the time to hide the lock screen
-    
-  }else{
-    //Neither running nor locked
-    if( settings->value("timedelaymin",10).toInt() > 0 ){ starttimer->start(); }
   }
+  UpdateTimers();
   
+}
+
+void LScreenSaver::LockScreenNow(){
+  ShowScreenSaver();
+  LockScreen();
 }
 
 // ===========
@@ -85,25 +90,22 @@ void LScreenSaver::newInputEvent(){
 void LScreenSaver::ShowScreenSaver(){
   if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = true;
-  //Start the lock timer if necessary
-  if(!SSLocked && (settings->value("lockdelaymin",10).toInt()>0) ){ locktimer->start(); }
+  //Now remove any current Base widgets (prevent any lingering painting between sessions)
+  for(int i=0; i<BASES.length(); i++){
+    if(DEBUG){ qDebug() << " - Removing SS Base"; }
+    delete BASES.takeAt(i); i--;
+  }
   //Now go through and create/show all the various widgets
   QList<QScreen*> SCREENS = QApplication::screens();
   QRect bounds;
   for(int i=0; i<SCREENS.length(); i++){
     bounds = bounds.united(SCREENS[i]->geometry());
-    if( (BASES.length()-1) < i){
-      //Nothing for this screen yet - go ahead and create one
-      BASES << new SSBaseWidget(this, settings);
-    }
+    if(DEBUG){ qDebug() << " - New SS Base:" << i; }
+    BASES << new SSBaseWidget(this, settings);
+    connect(BASES[i], SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
     //Setup the geometry of the base to match the screen
     BASES[i]->setGeometry(SCREENS[i]->geometry());  //match this screen geometry
     BASES[i]->setPlugin(settings->value("screenplugin"+QString::number(i+1), settings->value("defaultscreenplugin","random").toString() ).toString() );
-
-  }
-  //Now remove any extra Base widgets (in case a screen was removed)
-  for(int i=SCREENS.length(); i<BASES.length(); i++){
-    delete BASES.takeAt(i); i--;
   }
   //Now set the overall parent widget geometry and show everything
   this->setGeometry(bounds); //overall background widget
@@ -112,15 +114,21 @@ void LScreenSaver::ShowScreenSaver(){
   this->activateWindow();
   for(int i=0; i<BASES.length(); i++){
     BASES[i]->show();
-    QTimer::singleShot(100, BASES[i], SLOT(startPainting()) ); //start in 1/2 second
+    BASES[i]->startPainting();
   }
+  UpdateTimers();
 }
 
 void LScreenSaver::ShowLockScreen(){
-  if(DEBUG){ qDebug() << "Locking Screen Saver:" << QDateTime::currentDateTime().toString(); }
-  //SSLocked = true;
+  if(DEBUG){ qDebug() << "Showing Lock Screen:" << QDateTime::currentDateTime().toString(); }
+  LOCKER->aboutToShow();
+  //Move the screen locker to the appropriate spot
+  QPoint ctr = QApplication::desktop()->screenGeometry(QCursor::pos()).center();
+  LOCKER->resize(LOCKER->sizeHint());
+  LOCKER->move(ctr - QPoint(LOCKER->width()/2, LOCKER->height()/2) );
+  LOCKER->show();
   //Start the timer for hiding the lock screen due to inactivity
-  if(settings->value("hidesecs",15).toInt() > 0 ){ hidetimer->start(); }
+  UpdateTimers();
 }
 
 void LScreenSaver::HideScreenSaver(){
@@ -130,10 +138,34 @@ void LScreenSaver::HideScreenSaver(){
     this->hide();
     emit ClosingScreenSaver();
   }
-  for(int i=0; i<BASES.length(); i++){ QTimer::singleShot(0,BASES[i], SLOT(stopPainting())); }
+  for(int i=0; i<BASES.length(); i++){ 
+    BASES[i]->hide();
+    BASES[i]->stopPainting(); 
+  }
+  UpdateTimers();
 }
 
 void LScreenSaver::HideLockScreen(){
   if(DEBUG){ qDebug() << "Hiding Lock Screen:" << QDateTime::currentDateTime().toString(); }
   //Leave the Locked flag set (still locked, just not visible)
+  LOCKER->aboutToHide();
+  LOCKER->hide();
+  this->repaint();
+  if(SSLocked){ ShowScreenSaver(); }
+  UpdateTimers();
+}
+
+void LScreenSaver::LockScreen(){
+  if(SSLocked){ return; }
+  if(DEBUG){ qDebug() << "Locking Screen:" << QDateTime::currentDateTime().toString(); }
+  SSLocked = true;
+  LOCKER->LoadSystemDetails();
+  UpdateTimers();
+}
+
+void LScreenSaver::SSFinished(){
+  if(DEBUG){ qDebug() << "Screensaver Finished:" << QDateTime::currentDateTime().toString(); }
+  SSLocked = false;
+  HideLockScreen();
+  HideScreenSaver();
 }

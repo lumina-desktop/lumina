@@ -41,6 +41,10 @@ void WMSession::reloadIcons(){
 	
 }
 
-void WMSession::newInputsAvailable(QStringList){
-	
+void WMSession::newInputsAvailable(QStringList inputs){
+  for(int i=0; i<inputs.length(); i++){
+    if(inputs[i]=="--lock-now" || inputs[i]=="--test-ss"){
+      QTimer::singleShot(0,SS, SLOT(LockScreenNow()) );
+    }
+  }
 }

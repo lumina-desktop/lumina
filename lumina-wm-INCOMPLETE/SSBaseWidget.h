@@ -32,6 +32,17 @@ private:
 private slots:
 	
 signals:
+	void InputDetected(); //just in case no event handling setup at the WM level
+
+protected:
+	void mouseMoveEvent(QMouseEvent *ev){
+	  ev->accept();
+	  emit InputDetected();
+	}
+	void keyPressEvent(QKeyEvent *ev){
+	  ev->accept();
+	  emit InputDetected();
+	}
 
 };
 

@@ -19,10 +19,10 @@ private:
 
 public:
 	SampleAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
-	~SampleAnimation(){}
+	~SampleAnimation(){ this->stop(); delete ball; }
 		
 	void LoadAnimations(){
-	  qDebug() << "Loading Sample Animation";
+	  //qDebug() << "Loading Sample Animation";
 	  ball = new QWidget(canvas);
 	  //This creates a red "ball" on the widget which is going to expand/contract in the center of the screen
 	  ball->setStyleSheet("background:  qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.341, fy:0.796, stop:0.00531915 rgba(107, 10, 10, 255), stop:0.521277 rgba(170, 10, 10, 255), stop:0.957447 rgba(200, 0, 0, 255), stop:0.994681 rgba(0, 0, 0, 225), stop:1 rgba(255, 255, 255, 0));");

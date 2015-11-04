@@ -1,6 +1,6 @@
 
 QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 TARGET = lumina-wm
 isEmpty(PREFIX) {
@@ -12,7 +12,7 @@ isEmpty(LIBPREFIX) {
  LIBPREFIX = $$PREFIX/lib
 }
 
-LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util
+LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util -lpam
 QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
@@ -29,6 +29,7 @@ SOURCES += main.cpp \
 		WMSession.cpp \
 		LScreenSaver.cpp \
 		SSBaseWidget.cpp \
+		LLockScreen.cpp \
 		LXcbEventFilter.cpp \
 		LWindow.cpp
 
@@ -37,10 +38,11 @@ HEADERS  += GlobalDefines.h \
 		WMSession.h \
 		LScreenSaver.h \
 		SSBaseWidget.h \
+		LLockScreen.h \
 		LXcbEventFilter.h \
 		LWindow.h
 
-FORMS    += 
+FORMS    += LLockScreen.ui
 
 #Now add in all the screensaver animation plugins
 include(animations/animations.pri)
