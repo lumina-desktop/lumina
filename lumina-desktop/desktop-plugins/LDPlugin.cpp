@@ -36,8 +36,8 @@ void LDPlugin::setupMenu(){
   menu->addAction( LXDG::findIcon("transform-move",""), tr("Start Moving Item"), this, SLOT(slotStartMove()) );
   menu->addAction( LXDG::findIcon("transform-scale",""), tr("Start Resizing Item"), this, SLOT(slotStartResize()) );
   menu->addSeparator();
-  menu->addAction( LXDG::findIcon("zoom-in",""), tr("Increase Desktop Icon Sizes"), this, SIGNAL(IncreaseIconSize()) );
-  menu->addAction( LXDG::findIcon("zoom-out",""), tr("Decrease Desktop Icon Sizes"), this, SIGNAL(DecreaseIconSize()) );
+  menu->addAction( LXDG::findIcon("zoom-in",""), tr("Increase Item Sizes"), this, SIGNAL(IncreaseIconSize()) );
+  menu->addAction( LXDG::findIcon("zoom-out",""), tr("Decrease Item Sizes"), this, SIGNAL(DecreaseIconSize()) );
   menu->addSeparator();
   menu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove Item"), this, SLOT(slotRemovePlugin()) );
 }
