@@ -41,6 +41,7 @@
 #include <QSettings>
 #include <QHostInfo>
 #include <QDesktopWidget>
+#include <QStyleOption>
 
 // libLumina includes
 #include <LuminaX11.h>

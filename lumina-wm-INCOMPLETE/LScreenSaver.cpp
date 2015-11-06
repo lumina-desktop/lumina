@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
-#define DEBUG 1
+#define DEBUG 0
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
@@ -23,7 +23,8 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
   settings = new QSettings("LuminaDE","lumina-screensaver",this);
   SSRunning = SSLocked = updating = false;
   this->setObjectName("LSCREENSAVERBASE");
-  this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: black; }");
+  this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: grey; }");
+  this->setMouseTracking(true);
   connect(starttimer, SIGNAL(timeout()), this, SLOT(ShowScreenSaver()) );
   connect(locktimer, SIGNAL(timeout()), this, SLOT(LockScreen()) );
   connect(hidetimer, SIGNAL(timeout()), this, SLOT(HideLockScreen()) );

@@ -49,6 +49,11 @@ signals:
 	void StartingScreenSaver();
 	void ClosingScreenSaver();
 
+protected:
+	void mouseMoveEvent(QMouseEvent*){
+	  QTimer::singleShot(0,this, SLOT(newInputEvent()));
+	}
+
 };
 
 #endif

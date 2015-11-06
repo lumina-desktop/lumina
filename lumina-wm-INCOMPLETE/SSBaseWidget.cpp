@@ -16,6 +16,7 @@ static QStringList validPlugs;
 SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
   if(validPlugs.isEmpty()){ validPlugs << "none"; } //add more later
   settings = set; //needed to pass along for plugins to read any special options/settings
+  this->setObjectName("LuminaBaseSSWidget");
   ANIM = 0;
   this->setMouseTracking(true);
 }
@@ -54,7 +55,7 @@ void SSBaseWidget::startPainting(){
   }else{
     style = "background: black;";
   }
-  this->setStyleSheet(style);
+  this->setStyleSheet("QWidget#LuminaBaseSSWidget{ "+style+"}");
   this->repaint();
   //If not a stylesheet-based plugin - set it here
   if(cplug!="none"){
