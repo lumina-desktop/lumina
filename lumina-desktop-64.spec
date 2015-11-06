@@ -1,14 +1,14 @@
 Summary:            A lightweight, portable desktop environment
 Name:               lumina-desktop
-Version:            0.8.6
-Release:            3%{?dist}
+Version:            0.8.7
+Release:            1%{?dist}
 License:            BSD
 Group:              System Environment/Base
 Source0:            http://ftp.lumina-desktop.org/%{name}-%{version}.tar.gz
 URL:                http://lumina-desktop.org
 ExcludeArch:        s390 s390x
 BuildRequires:      gcc, gcc-c++, qt-devel, qt-config, qt5-qttools, qt5-qttools-devel, qt5-qtbase-gui, qt5-qtmultimedia-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel, xcb-util-image, xcb-util-image-devel, xcb-util-wm-devel, libxcb-devel, xcb-util-devel, phonon-devel, phonon-qt5-devel, libXcomposite-devel, libXdamage-devel, libXrender-devel, qt5-qtdeclarative-devel
-Requires: fluxbox, qt5-style-oxygen, plasma-oxygen, xscreensaver, xbacklight, alsa-utils, acpi, numlockx, pavucontrol, xterm 
+Requires: fluxbox, qt5-style-oxygen, plasma-oxygen, xscreensaver, xbacklight, alsa-utils, acpi, numlockx, pavucontrol, xterm, sysstat
 
 %description
 The Lumina Desktop Environment is a lightweight system interface 
@@ -53,7 +53,6 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/local/share/pixmaps/Insight-FileManager.png
 /usr/share/xsessions/Lumina-DE.desktop
 /usr/local/share/Lumina-DE/desktop-background.jpg
-/usr/local/share/Lumina-DE/defaultapps.conf
 /usr/local/share/Lumina-DE/luminaDesktop.conf
 /usr/local/share/Lumina-DE/fluxbox-init-rc
 /usr/local/share/Lumina-DE/fluxbox-keys
@@ -68,11 +67,18 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/local/share/Lumina-DE/themes/Lumina-default.qss.template
 /usr/local/share/Lumina-DE/themes/None.qss.template
 /usr/local/share/Lumina-DE/quickplugins/quick-sample.qml
-/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_gold_1920x1080.jpg
-/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_green_1920x1080.jpg
-/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_purple_1920x1080.jpg
-/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_red_1920x1080.jpg
+/usr/local/share/Lumina-DE/colors/Blue-Light.qss.colors
+/usr/local/share/Lumina-DE/colors/Grey-Dark.qss.colors
+/usr/local/share/Lumina-DE/colors/Solarized-Dark.qss.colors
+/usr/local/share/Lumina-DE/colors/Solarized-Light.qss.colors
+/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_gold.jpg
+/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_green.jpg
+/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_purple.jpg
+/usr/local/share/wallpapers/Lumina-DE/Lumina_Wispy_red.jpg
 
 %changelog
+* Tue Oct 27 2015 Jesse Smith jsmith@resonatingmedia.com
+- Update to 0.8.7
+
 * Thu Jul 30 2015 Jesse Smith jsmith@resonatingmedia.com
 - Initial build
