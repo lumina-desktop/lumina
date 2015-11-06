@@ -1197,6 +1197,44 @@ void WM_ICCCM_SetTransientFor(WId win, WId transient){
 // -- WM_HINTS
 	
 // -- WM_PROTOCOLS
+LXCB::ICCCM_PROTOCOLS LXCB::WM_ICCCM_GetProtocols(WId win){
+  if(atoms.isEmpty()){ createWMAtoms(); }
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_protocols(QX11Info::connection(), win, EWMH.WM_PROTOCOLS);
+  xcb_icccm_get_wm_protocols_reply_t reply;
+  LXCB::ICCCM_PROTOCOLS flags;
+  if(1==xcb_icccm_get_wm_protocols_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.atoms_len; i++){
+      if(reply.atoms[i]==ATOMS[atoms.indexOf("WM_TAKE_FOCUS")]){ flags = flags | TAKE_FOCUS; }
+      else if(reply.atoms[i]==ATOMS[atoms.indexOf("WM_DELETE_WINDOW")]){ flags = flags | DELETE_WINDOW; }
+    }
+  }
+  return flags;	
+}
+
+void LXCB::WM_ICCCM_SetProtocols(WId win, LXCB::ICCCM_PROTOCOLS flags){
+  if(atoms.isEmpty()){ createWMAtoms(); }
+  xcb_atom_t *list;
+  int num;
+  if(flags.testFlag(TAKE_FOCUS) && flags.testFlag(DELETE_WINDOW)){
+    num = 2;
+    list = new xcb_atom_t[2];
+    list[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")];
+    list[1] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")];
+  }else if(flags.testFlag(TAKE_FOCUS)){
+    num = 1;
+    list = new xcb_atom_t[1];
+    list[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")];
+  }else if(flags.testFlag(DELETE_WINDOW)){
+    num = 1;
+    list = new xcb_atom_t[1];
+    list[0] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")];
+  }else{
+    num = 0;
+    list = new xcb_atom_t[0];
+  }
+  xcb_icccm_set_wm_protocols(QX11Info::connection(), win, EWMH.WM_PROTOCOLS, num, list);
+  
+}
 
 // --------------------------------------------------------
 // NET_WM Standards (newer standards)

@@ -22,10 +22,6 @@
 #include <QPainter>
 #include <QObject>
 #include <QFlags>
-// Addition includes for compilations (cause issues with X11 libs later)
-//#include <QDir>
-//#include <QEvent>
-//#include <QHeaderView>
 
 
 #include <xcb/xcb_ewmh.h>
@@ -144,7 +140,8 @@ public:
 	// -- WM_HINTS
 	
 	// -- WM_PROTOCOLS
-	
+	ICCCM_PROTOCOLS WM_ICCCM_GetProtocols(WId win);
+	void WM_ICCCM_SetProtocols(WId win, ICCCM_PROTOCOLS flags);
 	
 	//NET_WM Standards (newer standards)
 	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
