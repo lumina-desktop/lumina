@@ -29,13 +29,10 @@ private:
 	Ui::LLockScreen *ui;
 	int triesleft, attempts;
 	QTimer *waittime;
-
-	bool PAM_checkpass(QString user, QString pass, QString &info);
-	QString PAM_checkLockInfo(QString user); //info string with any password reset countdown info
-	QString PAM_getError(int ret);
-	bool PAM_lockSession(QString user);
+	QTimer *refreshtime;
 
 private slots:
+	void UpdateLockInfo();
 	void TryUnlock();
 	
 signals:

@@ -25,8 +25,8 @@ private:
 	QSettings *settings;
 	QList<SSBaseWidget*> BASES;
 	LLockScreen *LOCKER;
-
-	bool SSRunning, SSLocked;
+	int cBright;
+	bool SSRunning, SSLocked, updating;
 
 	void UpdateTimers();
 

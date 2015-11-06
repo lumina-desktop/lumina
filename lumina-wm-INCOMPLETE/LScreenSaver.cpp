@@ -21,7 +21,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
   LOCKER = new LLockScreen(this);
 	LOCKER->hide();
   settings = new QSettings("LuminaDE","lumina-screensaver",this);
-  SSRunning = SSLocked = false;
+  SSRunning = SSLocked = updating = false;
   this->setObjectName("LSCREENSAVERBASE");
   this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: black; }");
   connect(starttimer, SIGNAL(timeout()), this, SLOT(ShowScreenSaver()) );
@@ -66,6 +66,8 @@ void LScreenSaver::reloadSettings(){
 }
 
 void LScreenSaver::newInputEvent(){  
+  if(updating){ return; } //in the middle of making changes which could cause an event
+  if(DEBUG){ qDebug() << "New Input Event"; }
   if(SSRunning && SSLocked){
     //Running and locked
     // Hide the running setting, and display the lock screen
@@ -90,6 +92,7 @@ void LScreenSaver::LockScreenNow(){
 void LScreenSaver::ShowScreenSaver(){
   if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = true;
+  updating = true;
   //Now remove any current Base widgets (prevent any lingering painting between sessions)
   for(int i=0; i<BASES.length(); i++){
     if(DEBUG){ qDebug() << " - Removing SS Base"; }
@@ -98,6 +101,8 @@ void LScreenSaver::ShowScreenSaver(){
   //Now go through and create/show all the various widgets
   QList<QScreen*> SCREENS = QApplication::screens();
   QRect bounds;
+  cBright = LOS::ScreenBrightness();
+  if(cBright>0){ LOS::setScreenBrightness(cBright/2); } //cut to half while the screensaver is active
   for(int i=0; i<SCREENS.length(); i++){
     bounds = bounds.united(SCREENS[i]->geometry());
     if(DEBUG){ qDebug() << " - New SS Base:" << i; }
@@ -109,13 +114,16 @@ void LScreenSaver::ShowScreenSaver(){
   }
   //Now set the overall parent widget geometry and show everything
   this->setGeometry(bounds); //overall background widget
-  this->raise();
-  this->show();
-  this->activateWindow();
+  if(!this->isActiveWindow()){
+    this->raise();
+    this->show();
+    this->activateWindow(); 
+  }
   for(int i=0; i<BASES.length(); i++){
     BASES[i]->show();
     BASES[i]->startPainting();
   }
+  updating = false;
   UpdateTimers();
 }
 
@@ -134,6 +142,7 @@ void LScreenSaver::ShowLockScreen(){
 void LScreenSaver::HideScreenSaver(){
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
+  if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
   if(!SSLocked){
     this->hide();
     emit ClosingScreenSaver();
