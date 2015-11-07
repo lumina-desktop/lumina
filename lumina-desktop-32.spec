@@ -53,7 +53,6 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/local/share/pixmaps/Insight-FileManager.png
 /usr/share/xsessions/Lumina-DE.desktop
 /usr/local/share/Lumina-DE/desktop-background.jpg
-/usr/local/share/Lumina-DE/defaultapps.conf
 /usr/local/share/Lumina-DE/luminaDesktop.conf
 /usr/local/share/Lumina-DE/fluxbox-init-rc
 /usr/local/share/Lumina-DE/fluxbox-keys
