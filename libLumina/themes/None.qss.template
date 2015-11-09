@@ -29,7 +29,7 @@ LDPlugin#applauncher  QToolButton{
 background: transparent;
   border: none;
   border-radius: 5px; 
-  color: %%TEXTCOLOR%%;
+  color: black;
 }
 LDPlugin#applauncher  QToolButton:hover{
   background: %%PRIMARYDISABLECOLOR%%;

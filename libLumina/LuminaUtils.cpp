@@ -804,7 +804,7 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;
     default: //NONE
-	qDebug() << " - Mouse At:" << ev->pos();
+	//qDebug() << " - Mouse At:" << ev->pos();
 	//Just adjust the mouse cursor which is shown
         if(ev->pos().x()<=1 && ev->pos().x() >= -1){ this->setCursor(Qt::SizeHorCursor); }
         else if(ev->pos().x() >= this->width()-1 && ev->pos().x() <= this->width()+1){  this->setCursor(Qt::SizeHorCursor); }

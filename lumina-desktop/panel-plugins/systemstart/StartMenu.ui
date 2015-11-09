@@ -143,7 +143,7 @@
             <x>0</x>
             <y>0</y>
             <width>178</width>
-            <height>193</height>
+            <height>177</height>
            </rect>
           </property>
          </widget>
@@ -163,6 +163,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string>Browse Files</string>
@@ -188,6 +191,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string>Browse Applications</string>
@@ -221,6 +227,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Control Panel</string>
          </property>
@@ -245,6 +254,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string>Quick Settings</string>
@@ -283,6 +295,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">QToolButton::menu-arrow{ image: rightarrow-icon; }</string>
            </property>
@@ -311,6 +326,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="tool_lock">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string notr="true">lock</string>
            </property>
@@ -354,6 +372,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Manage Applications</string>
          </property>
@@ -367,6 +388,29 @@
           <enum>Qt::ToolButtonTextBesideIcon</enum>
          </property>
          <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_15">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="check_apps_showcats">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Show Categories</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="tristate">
           <bool>true</bool>
          </property>
         </widget>
@@ -394,8 +438,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>178</width>
+            <height>284</height>
            </rect>
           </property>
          </widget>
@@ -437,6 +481,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string>Configure Desktop</string>
            </property>
@@ -456,6 +503,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="tool_launch_deskinfo">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string notr="true">info</string>
            </property>
@@ -504,6 +554,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QToolButton" name="tool_launch_mixer">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string notr="true"/>
               </property>
@@ -520,6 +573,9 @@
             </item>
             <item>
              <widget class="QSlider" name="slider_volume">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="maximum">
                <number>100</number>
               </property>
@@ -597,6 +653,9 @@
             </item>
             <item>
              <widget class="QSlider" name="slider_bright">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="minimum">
                <number>10</number>
               </property>
@@ -655,6 +714,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QToolButton" name="tool_set_prevwkspace">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string notr="true">prev</string>
               </property>
@@ -678,6 +740,9 @@
             </item>
             <item>
              <widget class="QToolButton" name="tool_set_nextwkspace">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string notr="true">next</string>
               </property>
@@ -736,6 +801,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
            </widget>
           </item>
@@ -826,6 +894,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Suspend System</string>
             </property>
@@ -888,6 +959,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Restart System</string>
             </property>
@@ -912,6 +986,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Power Off System</string>
@@ -958,6 +1035,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Sign Out User</string>
          </property>
@@ -993,6 +1073,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>Back</string>

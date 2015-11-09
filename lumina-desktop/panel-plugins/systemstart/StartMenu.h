@@ -34,6 +34,7 @@ private:
 	Ui::StartMenu *ui;
 	QHash<QString, QList<XDGDesktop> > *sysapps;
 	QStringList favs;
+	QString CCat; //current category
 
 	//Simple utility functions
 	void ClearScrollArea(QScrollArea *area);
@@ -43,11 +44,13 @@ private slots:
 	void LaunchItem(QString path, bool fix = true);
 
 	//Application/Favorite Listings
+	void ChangeCategory(QString cat);
 	void UpdateApps();
 	void UpdateFavs();
 
 	// Page update routines
 	void on_stackedWidget_currentChanged(int); //page changed
+	void catViewChanged(); //application categorization view mode changed
 
 	//Page Change Buttons
 	void on_tool_goto_apps_clicked();

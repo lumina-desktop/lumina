@@ -28,8 +28,14 @@
 class ItemWidget : public QFrame{
 	Q_OBJECT
 public:
+	//Overloaded Constructors for various uses
+	// - Favorites (path/type)
 	ItemWidget(QWidget *parent=0, QString itemPath="", QString type="unknown", bool goback=false);
+	// - Generic Apps
 	ItemWidget(QWidget *parent=0, XDGDesktop item= XDGDesktop());
+	// - Categories
+	//ItemWidget(QWidget *parent=0, QString cat="");
+
 	~ItemWidget();
 
 	bool gooditem;
@@ -69,7 +75,7 @@ private slots:
 protected:
 	void mouseReleaseEvent(QMouseEvent *event){
 	  if(menuopen){ resetmenuflag(); } //skip this event if a submenu was open
-	  else if(event->button() == Qt::RightButton){ 
+	  else if(event->button() == Qt::RightButton && !icon->whatsThis().startsWith("chcat::::") ){ 
 	    menuopen = true; 
 	    setupContextMenu();
 	    contextMenu->popup(event->globalPos());

@@ -487,6 +487,24 @@ QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
   return out;
 }
 
+//Return the icon to use for the given category
+QString LXDG::DesktopCatToIcon(QString cat){
+  QString icon = "applications-other";
+  if(cat=="Multimedia"){ icon = "applications-multimedia"; }
+  else if(cat=="Development"){ icon = "applications-development"; }
+  else if(cat=="Education"){ icon = "applications-education"; }
+  else if(cat=="Game"){ icon = "applications-games"; }
+  else if(cat=="Graphics"){ icon = "applications-graphics"; }
+  else if(cat=="Network"){ icon = "applications-internet"; }
+  else if(cat=="Office"){ icon = "applications-office"; }
+  else if(cat=="Science"){ icon = "applications-science"; }
+  else if(cat=="Settings"){ icon = "preferences-system"; }
+  else if(cat=="System"){ icon = "applications-system"; }
+  else if(cat=="Utility"){ icon = "applications-utilities"; }
+  else if(cat=="Wine"){ icon = "wine"; }
+  return icon;
+}
+
 QList<XDGDesktop> LXDG::sortDesktopNames(QList<XDGDesktop> apps){
   //Sort the list by name of the application
   QHash<QString, XDGDesktop> sorter;

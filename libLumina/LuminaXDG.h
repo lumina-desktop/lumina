@@ -123,6 +123,8 @@ public:
 	static QList<XDGDesktop> systemDesktopFiles(bool showAll = false, bool showHidden = false);
 	//Sort a list of Desktop files into the proper categories
 	static QHash< QString, QList<XDGDesktop> > sortDesktopCats(QList<XDGDesktop> apps);
+	//Return the icon to use for the given category
+	static QString DesktopCatToIcon(QString cat);
 	//Sort a list of Desktop files by name
 	static QList<XDGDesktop> sortDesktopNames(QList<XDGDesktop> apps);
 	//Get the executable line from a Desktop file

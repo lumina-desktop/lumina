@@ -71,11 +71,11 @@ protected:
 	    QColor textC = opt.palette.text().color().toHsl(); //need the lightness value in a moment
 	    QColor outC = textC;
 	      //qDebug() << "Font Color Values:" << textC << textC.lightness() << textC.lightnessF();
-	      if(textC.lightnessF() > 0.5){ outC.setHsl(textC.hue(), textC.hslSaturation(), 0, 110); }
-	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 110); }
+	      if(textC.lightnessF() > 0.5){ outC.setHsl(textC.hue(), textC.hslSaturation(), 0, 90); }
+	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 90); }
 	      //qDebug() << "Outline Color Values:" << outC;
 	    //Now get the size of the outline border (need to scale for high-res monitors)
-	    qreal OWidth = opt.fontMetrics.width("o")/3.0;
+	    qreal OWidth = opt.fontMetrics.width("o")/3.5;
 	      //qDebug() << "Outline Width:" << OWidth;
 	    //Now generate a QPainterPath for the text
 	    QPainterPath path;
@@ -85,8 +85,11 @@ protected:
 	    }
 	    path.setFillRule(Qt::WindingFill);
 	    //Now paint the text 
+	    QRadialGradient RG(box.center(), box.width()/1.1); //width is always going to be greater than height
+	      RG.setColorAt(0, outC);
+	      RG.setColorAt(1, Qt::transparent);
 	    p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing); //need antialiasing for this to work well (sub-pixel painting)
-	    p.strokePath(path, QPen(QBrush(outC),OWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) ); //This will be the outline - 1pixel thick, semi-transparent
+	    p.strokePath(path, QPen(QBrush(RG),OWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) ); //This will be the outline - 1pixel thick, semi-transparent
 	    p.fillPath(path, QBrush(textC)); //this will be the inside/text color
 	      
 	}

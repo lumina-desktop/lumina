@@ -6,6 +6,7 @@
 //===========================================
 #include "StartMenu.h"
 #include "ui_StartMenu.h"
+//#include <QtConcurrent>
 
 #include <LuminaOS.h>
 #include "../../LSession.h"
@@ -18,6 +19,12 @@ StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
   this->setMouseTracking(true);
   sysapps = LSession::handle()->applicationMenu()->currentAppHash();
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
+  //Need to load the last used setting of the application list
+  QString state = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/systemstart/showcategories", "partial").toString();
+  if(state=="partial"){ui->check_apps_showcats->setCheckState(Qt::PartiallyChecked); }
+  else if(state=="true"){ ui->check_apps_showcats->setCheckState(Qt::Checked); }
+  else{ ui->check_apps_showcats->setCheckState(Qt::Unchecked); }
+  connect(ui->check_apps_showcats, SIGNAL(stateChanged(int)), this, SLOT(catViewChanged()) );
   UpdateAll();
   QTimer::singleShot(10, this,SLOT(UpdateApps()));
   QTimer::singleShot(10, this, SLOT(UpdateFavs()));
@@ -180,6 +187,10 @@ void StartMenu::SortScrollArea(QScrollArea *area){
 //        PRIVATE SLOTS
 // ========================
 void StartMenu::LaunchItem(QString path, bool fix){
+  if(path.startsWith("chcat::::")){ 
+    ChangeCategory(path.section("::::",1,50));
+    return;
+  }
   qDebug() << "Launching Item:" << path << fix;
   if(!path.isEmpty()){
     qDebug() << "Launch Application:" << path;
@@ -189,21 +200,85 @@ void StartMenu::LaunchItem(QString path, bool fix){
   }
 }
 
+void StartMenu::ChangeCategory(QString cat){
+  //This only happens on user interaction - make sure to run the update routine in a separate thread
+  CCat = cat;
+  UpdateApps();
+  //QtConcurrent::run(this, &StartMenu::UpdateApps);
+}
+
 //Listing Update routines
 void StartMenu::UpdateApps(){
   ClearScrollArea(ui->scroll_apps);
   //Now assemble the apps list (note: this normally happens in the background - not when it is visible/open)
-  QStringList cats = sysapps->keys();
-  cats.sort();
-  cats.removeAll("All");
-  //QStringList QL = LSession::handle()->sessionSettings()->value("QuickLaunchApps",QStringList()).toStringList();
-  for(int c=0; c<cats.length(); c++){
-    QList<XDGDesktop> apps = sysapps->value(cats[c]);
-    if(apps.isEmpty()){ continue; }
-    //Add the category label to the scroll
-    QLabel *catlabel = new QLabel("<b>"+cats[c]+"</b>",ui->scroll_apps->widget());
-      catlabel->setAlignment(Qt::AlignCenter);
-    ui->scroll_apps->widget()->layout()->addWidget(catlabel);
+  //qDebug() << "Update Apps:" << CCat << ui->check_apps_showcats->checkState();
+  if(ui->check_apps_showcats->checkState() == Qt::PartiallyChecked){
+    //qDebug() << " - Partially Checked";
+    //Show a single page of apps, but still divided up by categories
+    CCat.clear();
+    QStringList cats = sysapps->keys();
+    cats.sort();
+    cats.removeAll("All");
+    for(int c=0; c<cats.length(); c++){
+      QList<XDGDesktop> apps = sysapps->value(cats[c]);
+      if(apps.isEmpty()){ continue; }
+      //Add the category label to the scroll
+      QLabel *catlabel = new QLabel("<b>"+cats[c]+"</b>",ui->scroll_apps->widget());
+        catlabel->setAlignment(Qt::AlignCenter);
+      ui->scroll_apps->widget()->layout()->addWidget(catlabel);
+      //Now add all the apps for this category
+      for(int i=0; i<apps.length(); i++){
+        ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
+        if(!it->gooditem){ continue; } //invalid for some reason
+        ui->scroll_apps->widget()->layout()->addWidget(it);
+        connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
+        connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
+        connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+        connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
+      }
+    }
+    
+  }else if(ui->check_apps_showcats->checkState() == Qt::Checked){
+    //qDebug() << " - Checked";
+    //Only show categories to start with - and have the user click-into a cat to see apps
+    if(CCat.isEmpty()){
+      //No cat selected yet - show cats only
+      QStringList cats = sysapps->keys();
+      cats.sort();
+      cats.removeAll("All"); //This is not a "real" category
+      for(int c=0; c<cats.length(); c++){
+	ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), cats[c], "chcat::::"+cats[c] );
+        if(!it->gooditem){ continue; } //invalid for some reason
+        ui->scroll_apps->widget()->layout()->addWidget(it);
+        //connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
+        //connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
+        connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+        //connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
+      }
+    }else{
+      //Show the "go back" button
+      ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), CCat, "chcat::::"+CCat, true);
+        //if(!it->gooditem){ continue; } //invalid for some reason
+        ui->scroll_apps->widget()->layout()->addWidget(it);
+        connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+      //Show apps for this cat
+      QList<XDGDesktop> apps = sysapps->value(CCat); 
+      for(int i=0; i<apps.length(); i++){
+        ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
+        if(!it->gooditem){ continue; } //invalid for some reason
+        ui->scroll_apps->widget()->layout()->addWidget(it);
+        connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
+        connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
+        connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+        connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
+      }
+    }
+    
+  }else{
+    //qDebug() << " - Not Checked";
+    //No categories at all - just alphabetize all the apps
+    QList<XDGDesktop> apps = sysapps->value("All"); 
+    CCat.clear();
     //Now add all the apps for this category
     for(int i=0; i<apps.length(); i++){
       ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
@@ -215,6 +290,7 @@ void StartMenu::UpdateApps(){
       connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
   }
+  
   
 }
 
@@ -313,6 +389,23 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
   
 }
 
+void StartMenu::catViewChanged(){
+  QString state;
+  switch(ui->check_apps_showcats->checkState()){
+    case Qt::Checked:
+	state = "true";
+	break;
+    case Qt::PartiallyChecked:
+	state = "partial";
+        break;
+    default:
+	state = "false";
+  }
+  LSession::handle()->DesktopPluginSettings()->setValue("panelPlugs/systemstart/showcategories", state);
+  //Now kick off the reload of the apps list
+  UpdateApps();
+  //QtConcurrent::run(this, &StartMenu::UpdateApps); //this was a direct user change - keep it thread safe
+}
 //Page Change Buttons
 void StartMenu::on_tool_goto_apps_clicked(){
   ui->stackedWidget->setCurrentWidget(ui->page_apps);

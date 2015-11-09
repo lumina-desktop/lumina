@@ -42,6 +42,16 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       name->setText( itemPath.section("/",-1));
       text = itemPath.section("/",-1);
     }
+  }else if(type.startsWith("chcat::::")){
+    //Category given
+    actButton->setVisible(false);
+    iconPath = LXDG::DesktopCatToIcon(type.section("::::",1,50));
+    if(goback){ iconPath = "go-previous"; type = "chcat::::"; itemPath = "<B>("+itemPath+")</B>"; }
+    icon->setPixmap( LXDG::findIcon(iconPath,"applications-other").pixmap(64,64) );
+    name->setText(itemPath);
+    text = itemPath;
+    icon->setWhatsThis(type);
+    linkPath = type;
   }else{
     actButton->setVisible(false);
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
@@ -75,6 +85,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
   setupContextMenu();
 }
 
+// - Application constructor
 ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   createWidget();
   isDirectory = false;
@@ -115,15 +126,10 @@ void ItemWidget::createWidget(){
   contextMenu = new QMenu();
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
     connect(contextMenu, SIGNAL(aboutToHide()), this, SLOT(actionMenuClosed()) );
-  /*button = new QToolButton(this);
-    button->setIconSize( QSize(14,14) );
-    button->setAutoRaise(true);*/
   actButton = new QToolButton(this);
     actButton->setPopupMode(QToolButton::InstantPopup);
-    //actButton->setFixedSize( QSize(17,34) );
     actButton->setArrowType(Qt::DownArrow);
   icon = new QLabel(this);
-    //icon->setFixedSize( QSize(34,34) );
   name = new QLabel(this);
     name->setWordWrap(true);
   //Add them to the layout
