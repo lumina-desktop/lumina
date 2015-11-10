@@ -13,14 +13,14 @@
 //    after a number of failed attempts to prevent a user-level script from hammering this utility
 //===========================================
 //Standard C libary
-#include <unistd.h>
-#include <stdio.h>
+#include <unistd.h>	// Standard C
+#include <stdio.h> 	// Usage output
+#include <pwd.h>  		// User DB information
 
 //PAM/security libraries
 #include <sys/types.h>
 #include <security/pam_appl.h>
 #include <security/openpam.h>
-//#include <pwd.h>
 
 int main(int argc, char** argv){
   //Check the inputs
@@ -31,17 +31,20 @@ int main(int argc, char** argv){
     puts("Returns: 0 for a valid password, 1 for invalid");
     return 1;
   }
-  //Validate current user
+  //Validate current user (make sure current UID matches the logged-in user, 
   char* cUser = getlogin();
-  if( getuid()==0 ){ return 1; } //Will never check for root password
-  char* cPassword = argv[1];
+  struct passwd *pwd = 0;
+  pwd = getpwnam(cUser);
+  if(pwd==0){ return 1; } //Login user could not be found in the database? (should never happen)
+  if( getuid() != pwd->pw_uid ){ return 1; } //Current UID does not match currently logged-in user UID
   //Create the non-interactive PAM structures	
   pam_handle_t *pamh;
   struct pam_conv pamc = { openpam_nullconv, NULL };
     //Place the user-supplied password into the structure 
     int ret = pam_start( "system", cUser, &pamc, &pamh);
     if(ret != PAM_SUCCESS){ return 1; } //could not init PAM
-    ret = pam_set_item(pamh, PAM_AUTHTOK, cPassword);
+    //char* cPassword = argv[1];
+    ret = pam_set_item(pamh, PAM_AUTHTOK, argv[1]);
     //Authenticate with PAM
     ret = pam_authenticate(pamh,0); //this can be true without verifying password if pam_self.so is used in the auth procedures (common)
     if( ret == PAM_SUCCESS ){ ret = pam_acct_mgmt(pamh,0); } //Check for valid, unexpired account and verify access restrictions
