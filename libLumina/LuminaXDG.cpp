@@ -9,6 +9,7 @@
 #include "LuminaUtils.h"
 #include <QObject>
 #include <QMediaPlayer>
+#include <QSvgRenderer>
 
 static QStringList mimeglobs;
 static qint64 mimechecktime;
@@ -563,6 +564,9 @@ void LXDG::setEnvironmentVars(){
 }
 
 QIcon LXDG::findIcon(QString iconName, QString fallback){
+  //NOTE: This was re-written on 11/10/15 to avoid using the QIcon::fromTheme() framework
+  //   -- Too many issues with SVG files and/or search paths with the built-in system
+	
   //Check if the icon is an absolute path and exists
   bool DEBUG =false;
   if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
@@ -575,52 +579,86 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   }
   //Now try to find the icon from the theme
   if(DEBUG){ qDebug() << "[LXDG] Start search for icon"; }
-  //Check the default theme search paths
-  QStringList paths = QIcon::themeSearchPaths();
-  if(paths.isEmpty()){
-    //Set the XDG default icon theme search paths
-    paths << QDir::homePath()+"/.icons";
-    QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
-    xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
-    for(int i=0; i<xdd.length(); i++){
-      paths << xdd[i]+"/icons";	    
-    }
-    paths << LOS::AppPrefix()+"share/pixmaps";
-    QIcon::setThemeSearchPaths(paths);
-  }
-  if(DEBUG){ qDebug() << "[LXDG] Icon search paths:" << paths; }
-  //Finding an icon from the current theme is already built into Qt, just use it
+  //Get the currently-set theme
   QString cTheme = QIcon::themeName();
   if(cTheme.isEmpty()){ 
     QIcon::setThemeName("oxygen"); 
     cTheme = "oxygen";	  
   }
-  if(DEBUG){ qDebug() << "[LXDG] Current theme:" << cTheme; }
-  //Try to load the icon from the current theme
-  QIcon ico = QIcon::fromTheme(iconName);
-  //Try to load the icon from /usr/local/share/pixmaps
-  if( ico.isNull() ){
-    //qDebug() << "Could not find icon:" << iconName <<"In Theme:" << cTheme;
-    QDir base(LOS::AppPrefix()+"share/pixmaps");
-    QStringList matches = base.entryList(QStringList() << "*"+iconName+"*", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    if( !matches.isEmpty() ){
-      ico = QIcon(base.absoluteFilePath(matches[0])); //just use the first match
+  //Make sure the current search paths correspond to this theme
+  if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){
+    //Need to reset search paths: setup the "icontheme" "oxygen" and "fallback" sets
+    // - Get all the base icon directories
+    QStringList paths;
+      paths << QDir::homePath()+"/.icons/"; //ordered by priority - local user dirs first
+      QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
+        xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
+        for(int i=0; i<xdd.length(); i++){
+          if(QFile::exists(xdd[i]+"/icons")){ paths << xdd[i]+"/icons/"; }
+        }
+    //Now load all the dirs into the search paths
+    QStringList theme, oxy, fall;
+    for(int i=0; i<paths.length(); i++){
+      theme << getChildIconDirs( paths[i]+cTheme);
+      oxy << getChildIconDirs(paths[i]+"oxygen"); //Lumina base icon set
+      fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
+    }
+    //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
+    QDir::setSearchPaths("icontheme", theme);
+    QDir::setSearchPaths("oxygen", oxy);
+    QDir::setSearchPaths("fallback", fall);
+    //qDebug() << "Setting Icon Search Paths:" << "\nicontheme:" << theme << "\noxygen:" << oxy << "\nfallback:" << fall;
+  }
+  //Find the icon in the search paths
+  QIcon ico;
+  QStringList srch; srch << "icontheme" << "oxygen" << "fallback";
+  for(int i=0; i<srch.length() && ico.isNull(); i++){
+    //Look for a svg first
+    if(QFile::exists(srch[i]+":"+iconName+".svg") ){
+      //Temporary bypass for known bad icons (libreoffice only at the moment)
+      if( !iconName.startsWith("libreoffice") ){
+        //Be careful about how an SVG is loaded - needs to render the image onto a paint device
+        QSvgRenderer svg;
+        if( svg.load(srch[i]+":"+iconName+".svg") ){
+          ico.addFile(srch[i]+":"+iconName+".svg"); //could be loaded/parsed successfully
+        }else{
+          qDebug() << "Found bad SVG file:" << iconName+".svg  Theme:" << srch[i];
+        }
+      }
+    }
+    if(QFile::exists(srch[i]+":"+iconName+".png")){
+      //simple PNG image - load directly into the QIcon structure
+      ico.addFile(srch[i]+":"+iconName+".png");
+    }
+    
+  }
+  //If still no icon found, look for any image format inthe "pixmaps" directory
+  if(ico.isNull()){
+    if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+iconName)){
+      ico.addFile(LOS::AppPrefix()+"share/pixmaps/"+iconName);
     }else{
-      //Fallback on a manual search over the default theme directories (hicolor, then oxygen)
-      if( QDir::searchPaths("fallbackicons").isEmpty() ){
-        //Set the fallback search paths
-	QString sysbase = LOS::AppPrefix()+"share/icons/";
-	QString localbase = QDir::homePath()+"/.local/share/icons/";
-        QDir::setSearchPaths("fallbackicons", QStringList() << getChildIconDirs(localbase+"hicolor") << getChildIconDirs(localbase+"oxygen")  << getChildIconDirs(sysbase+"hicolor") << getChildIconDirs(sysbase+"oxygen") ); 
+      //Need to scan for any close match in the directory
+      QDir pix(LOS::AppPrefix()+"share/pixmaps");
+      QStringList formats = LUtils::imageExtensions();
+      QStringList found = pix.entryList(QStringList() << iconName, QDir::Files, QDir::Unsorted);
+      if(found.isEmpty()){ found = pix.entryList(QStringList() << iconName+"*", QDir::Files, QDir::Unsorted); }
+      //qDebug() << "Found pixmaps:" << found << formats;
+      //Use the first one found that is a valid format
+      for(int i=0; i<found.length(); i++){
+        if( formats.contains(found[i].section(".",-1).toLower()) ){
+	  ico.addFile( pix.absoluteFilePath(found[i]) );
+	  break;
+	}
       }
-      if(QFile::exists("fallbackicons:"+iconName+".png")){
-        ico = QIcon("fallbackicons:"+iconName+".png");
-      }
+      
     }
   }
   //Use the fallback icon if necessary
   if(ico.isNull() && !fallback.isEmpty()){
     ico = LXDG::findIcon(fallback,"");	  
+  }
+  if(ico.isNull()){
+    qDebug() << "Could not find icon:" << iconName << fallback;
   }
   //Return the icon
   return ico;
@@ -630,13 +668,24 @@ QStringList LXDG::getChildIconDirs(QString parent){
   //This is a recursive function that returns the absolute path(s) of directories with *.png files
   QDir D(parent);
   QStringList out;
-  QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::Reversed);
-  QStringList pngs = D.entryList(QStringList() << "*.png", QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort);
-  if(pngs.length() > 0){ out << D.absolutePath(); }
+  QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){ 
+    //Need to sort these directories by image size
+    //qDebug() << " - Parent:" << parent << "Dirs:" << dirs;
+    for(int i=0; i<dirs.length(); i++){
+      if(dirs[i].contains("x")){ dirs[i].prepend( QString::number(10-dirs[i].section("x",0,0).length())+QString::number(10-dirs[i].at(0).digitValue())+"::::"); }
+      else{ dirs[i].prepend( "0::::"); }
+    }
+    dirs.sort();
+    for(int i=0; i<dirs.length(); i++){ dirs[i] = dirs[i].section("::::",1,50); } //chop the sorter off the front again
+    //qDebug() << "Sorted:" << dirs;
+  }
+  QStringList img = D.entryList(QStringList() << "*.png" << "*.svg", QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort);
+  if(img.length() > 0){ out << D.absolutePath(); }
   for(int i=0; i<dirs.length(); i++){
-    pngs.clear();
-    pngs = getChildIconDirs(D.absoluteFilePath(dirs[i])); //re-use the old list variable
-    if(pngs.length() > 0){ out << pngs; }
+    img.clear();
+    img = getChildIconDirs(D.absoluteFilePath(dirs[i])); //re-use the old list variable
+    if(img.length() > 0){ out << img; }
   }
   return out;
 }

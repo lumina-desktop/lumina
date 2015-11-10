@@ -199,12 +199,15 @@ QString LUtils::PathToAbsolute(QString path){
   return path;
 }
 
-QStringList LUtils::imageExtensions(){
+QStringList LUtils::imageExtensions(bool wildcards){
   //Note that all the image extensions are lowercase!!
   static QStringList imgExtensions;
   if(imgExtensions.isEmpty()){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
-    for(int i=0; i<fmt.length(); i++){ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
+    for(int i=0; i<fmt.length(); i++){ 
+      if(wildcards){ imgExtensions << "*."+QString::fromLocal8Bit(fmt[i]);  }
+      else{ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
+    }
   }
   return imgExtensions;
 }

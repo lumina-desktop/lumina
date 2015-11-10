@@ -56,7 +56,7 @@ public:
 	static QString PathToAbsolute(QString path);
 	
 	//Get the list of all file extensions which Qt can read (lowercase)
-	static QStringList imageExtensions();
+	static QStringList imageExtensions(bool wildcards = false);
 	
 	//Load a translation file for a Lumina Project
 	static QTranslator* LoadTranslation(QApplication *app, QString appname, QString locale = "", QTranslator *cTrans = 0);

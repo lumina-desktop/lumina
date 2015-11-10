@@ -144,8 +144,86 @@ public:
 	void WM_ICCCM_SetProtocols(WId win, ICCCM_PROTOCOLS flags);
 	
 	//NET_WM Standards (newer standards)
+	
+	// -- ROOT WINDOW PROPERTIES
+	// _NET_SUPPORTED
 	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
+	// _NET_CLIENT_LIST
+	
+	// _NET_NUMBER_OF_DESKTOPS
+	
+	// _NET_DESKTOP_GEOMETRY
+	
+	// _NET_DESKTOP_VIEWPORT
+	
+	// _NET_CURRENT_DESKTOP
+	
+	// _NET_DESKTOP_NAMES
+	
+	// _NET_ACTIVE_WINDOW
+	
+	// _NET_WORKAREA
+	
+	// _NET_SUPPORTING_WM_CHECK
+	
+	// _NET_VIRTUAL_ROOTS
+	
+	// _NET_DESKTOP_LAYOUT
+	
+	// _NET_SHOWING_DESKTOP
+	
+	// -- ROOT WINDOW MESSAGES
+	// _NET_CLOSE_WINDOW
+	
+	// _NET_MOVERESIZE_WINDOW
+	
+	// _NET_WM_MOVERESIZE
+	
+	// _NET_RESTACK_WINDOW
+	
+	// _NET_REQUEST_FRAME_EXTENTS
+	
+	// -- WINDOW PROPERTIES
+	// _NET_SUPPORTED
 	void WM_Set_Window_Supported(WId win); //set the atom list of supported features on the given window
+	// _NET_WM_NAME
+	
+	// _NET_WM_VISIBLE_NAME
+	
+	// _NET_WM_ICON_NAME
+	
+	// _NET_WM_VISIBLE_ICON_NAME
+	
+	// _NET_WM_DESKTOP
+	
+	// _NET_WM_WINDOW_TYPE
+	
+	// _NET_WM_STATE
+	
+	// _NET_WM_ALLOWED_ACTIONS
+	
+	// _NET_WM_STRUT
+	
+	// _NET_WM_STRUT_PARTIAL
+	
+	// _NET_WM_ICON_GEOMETRY
+	
+	// _NET_WM_ICON
+	
+	// _NET_WM_PID
+	
+	// _NET_WM_HANDLED_ICONS
+	
+	// _NET_WM_USER_TIME
+	
+	// _NET_WM_USER_TIME_WINDOW
+	
+	// _NET_FRAME_EXTENTS
+	
+	// _NET_WM_OPAQUE_REGION
+	
+	// _NET_WM_BYPASS_COMPOSITOR
+	
 	
 private:
 	QList<xcb_atom_t> ATOMS;
