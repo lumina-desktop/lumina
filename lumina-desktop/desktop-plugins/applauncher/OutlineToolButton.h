@@ -72,10 +72,10 @@ protected:
 	    QColor outC = textC;
 	      //qDebug() << "Font Color Values:" << textC << textC.lightness() << textC.lightnessF();
 	      if(textC.lightnessF() > 0.5){ outC.setHsl(textC.hue(), textC.hslSaturation(), 0, 90); }
-	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 90); }
+	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 50); }
 	      //qDebug() << "Outline Color Values:" << outC;
 	    //Now get the size of the outline border (need to scale for high-res monitors)
-	    qreal OWidth = opt.fontMetrics.width("o")/3.5;
+	    qreal OWidth = opt.fontMetrics.width("o")/2.0;
 	      //qDebug() << "Outline Width:" << OWidth;
 	    //Now generate a QPainterPath for the text
 	    QPainterPath path;
@@ -85,7 +85,7 @@ protected:
 	    }
 	    path.setFillRule(Qt::WindingFill);
 	    //Now paint the text 
-	    QRadialGradient RG(box.center(), box.width()/1.1); //width is always going to be greater than height
+	    QRadialGradient RG(box.center(), box.width()*1.5); //width is always going to be greater than height
 	      RG.setColorAt(0, outC);
 	      RG.setColorAt(1, Qt::transparent);
 	    p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing); //need antialiasing for this to work well (sub-pixel painting)
