@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -1239,14 +1239,284 @@ void LXCB::WM_ICCCM_SetProtocols(WId win, LXCB::ICCCM_PROTOCOLS flags){
 // --------------------------------------------------------
 // NET_WM Standards (newer standards)
 // --------------------------------------------------------
+// _NET_SUPPORTED (Root)
 void LXCB::WM_Set_Root_Supported(){
   //NET_WM standards (ICCCM implied - no standard way to list those)
   xcb_atom_t list[] = {};
   xcb_ewmh_set_supported(&EWMH, QX11Info::appScreen(), 0,list);
 }
 
+// _NET_CLIENT_LIST
+QList<WId> LXCB::WM_Get_Client_List(bool stacking){
+  QList<WId> out;
+  if(stacking){
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list_stacking(&EWMH, QX11Info::appScreen());
+    xcb_ewmh_get_windows_reply_t reply;
+    if(1==xcb_ewmh_get_client_list_stacking_reply(&EWMH, cookie, &reply, NULL) ){
+      for(unsigned int i=0; i<reply.windows_len; i++){
+        out << reply.windows[i];
+      }
+    }
+  }else{
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list(&EWMH, QX11Info::appScreen());
+    xcb_ewmh_get_windows_reply_t reply;
+    if(1==xcb_ewmh_get_client_list_reply(&EWMH, cookie, &reply, NULL) ){
+      for(unsigned int i=0; i<reply.windows_len; i++){
+        out << reply.windows[i];
+      }
+    }
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Client_List(QList<WId> list, bool stacking){
+  //convert the QList into a generic array
+  xcb_window_t array[list.length()];
+  for(int i=0; i<list.length(); i++){ array[i] = list[i]; }
+  if(stacking){
+    xcb_ewmh_set_client_list_stacking(&EWMH, QX11Info::appScreen(), list.length(), array);
+  }else{
+    xcb_ewmh_set_client_list(&EWMH, QX11Info::appScreen(), list.length(), array);
+  }	  
+
+}
+
+// _NET_NUMBER_OF_DESKTOPS
+unsigned int LXCB::WM_Get_Number_Desktops(){
+  //return value equals 0 for errors
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_number_of_desktops_unchecked(&EWMH, QX11Info::appScreen());
+  uint32_t number = 0;
+  xcb_ewmh_get_number_of_desktops_reply(&EWMH, cookie, &number, NULL);
+  return number;
+}
+
+void LXCB::WM_SetNumber_Desktops(unsigned int number){
+  //NOTE: number should be at least 1	
+  xcb_ewmh_set_number_of_desktops(&EWMH, QX11Info::appScreen(), number);
+}
+
+// _NET_DESKTOP_GEOMETRY
+QSize LXCB::WM_Get_Desktop_Geometry(){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_desktop_geometry(&EWMH, QX11Info::appScreen());
+  uint32_t wid, hi;
+  wid = hi = 0;
+  xcb_ewmh_get_desktop_geometry_reply(&EWMH, cookie, &wid, &hi, NULL);
+  return QSize(wid,hi);
+}
+
+void LXCB::WM_Set_Desktop_Geometry(QSize size){
+  xcb_ewmh_set_desktop_geometry(&EWMH, QX11Info::appScreen(), size.width(), size.height());
+}
+
+// _NET_DESKTOP_VIEWPORT
+QList<QPoint> LXCB::WM_Get_Desktop_Viewport(){
+  QList<QPoint> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_desktop_viewport_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_ewmh_get_desktop_viewport_reply_t reply;
+  if(1==xcb_ewmh_get_desktop_viewport_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.desktop_viewport_len; i++){
+      out << QPoint( reply.desktop_viewport[i].x, reply.desktop_viewport[i].y );
+    }
+    xcb_ewmh_get_desktop_viewport_reply_wipe(&reply); //clean up the reply structure first
+  }	  
+  return out;
+}
+
+void LXCB::WM_Set_Desktop_Viewport(QList<QPoint> list){
+  //Turn the QList into xcb_ewmh_coordinates_t*
+  xcb_ewmh_coordinates_t array[list.length()];
+  for(int i=0; i<list.length(); i++){ array[i].x=list[i].x(); array[i].y=list[i].y(); }
+  //Now set the property
+  xcb_ewmh_set_desktop_viewport(&EWMH, QX11Info::appScreen(), list.length(), array);
+}
+
+// _NET_CURRENT_DESKTOP
+int LXCB::WM_Get_Current_Desktop(){
+  //Returns -1 for errors
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_current_desktop_unchecked(&EWMH, QX11Info::appScreen());
+  uint32_t num = 0;
+  if(1==xcb_ewmh_get_current_desktop_reply(&EWMH, cookie, &num, NULL) ){
+    return num;
+  }else{
+    return -1;
+  }
+}
+
+void LXCB::WM_Set_Current_Desktop(unsigned int num){
+  xcb_ewmh_set_current_desktop(&EWMH, QX11Info::appScreen(), num);
+}
+
+// _NET_DESKTOP_NAMES
+QStringList LXCB::WM_Get_Desktop_Names(){
+  QStringList out;
+  // ** ISSUES with the XCB_EWMH strings reply structure - 11/11/15  (skip for now)
+  // (Appears to be a char* instead of char** in the class definitions)
+  /*xcb_get_property_cookie_t cookie = xcb_ewmh_get_desktop_names_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_ewmh_get_utf8_strings_reply_t reply;
+  if(1==xcb_ewmh_get_desktop_names_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.strings_len; i++){
+      out << QString::fromUtf8( QByteArray(reply.strings[i]) );
+    }
+  }*/
+  return out;
+}
+
+void LXCB::WM_Set_Desktop_Names(QStringList list){
+  // ** ISSUES with the XCB_EWMH strings input structure - 11/11/15  (skip for now)
+  // (Appears to be a char* instead of char** in the class definitions)
+  /*//Convert to an array of char arrays
+  char *array[ list.length() ];
+  for(int i=0; i<list.length(); i++){array[i] = list[i].toUtf8().data(); }
+  //Now set the property
+  xcb_ewmh_set_desktop_names(&EWMH, QX11Info::appScreen(), list.length(), array);
+  */
+}
+
+// _NET_ACTIVE_WINDOW
+WId LXCB::WM_Get_Active_Window(){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_window_t win = 0;
+  xcb_ewmh_get_active_window_reply(&EWMH, cookie, &win, NULL);
+  return win;
+}
+
+void LXCB::WM_Set_Active_Window(WId win){
+  xcb_ewmh_set_active_window(&EWMH, QX11Info::appScreen(), win);	
+}
+
+// _NET_WORKAREA
+QList<QRect> LXCB::WM_Get_Workarea(){
+  QList<QRect> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_workarea_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_ewmh_get_workarea_reply_t reply;
+  if(1==xcb_ewmh_get_workarea_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.workarea_len ;i++){
+      out << QRect( reply.workarea[i].x, reply.workarea[i].y, reply.workarea[i].width, reply.workarea[i].height);
+    }
+    xcb_ewmh_get_workarea_reply_wipe(&reply);
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Workarea(QList<QRect> list){
+  //Convert to the XCB/EWMH data structures
+  xcb_ewmh_geometry_t array[list.length()];
+  for(int i=0; i<list.length(); i++){
+    array[i].x = list[i].x(); array[i].y = list[i].y();
+    array[i].width = list[i].width(); array[i].height = list[i].height();
+  }
+  //Now set the property
+  xcb_ewmh_set_workarea(&EWMH, QX11Info::appScreen(), list.length(), array);
+}
+
+// _NET_SUPPORTING_WM_CHECK
+WId LXCB::WM_Get_Supporting_WM(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_supporting_wm_check_unchecked(&EWMH, win);
+  xcb_window_t out = 0;
+  xcb_ewmh_get_supporting_wm_check_reply(&EWMH, cookie, &out, NULL);
+  return win;
+}
+
+void LXCB::WM_Set_Supporting_WM(WId child){
+  //Set this property on the root window first
+  xcb_ewmh_set_supporting_wm_check(&EWMH, QX11Info::appRootWindow(), child);
+  //Also set this property on the child window (pointing to itself)
+  xcb_ewmh_set_supporting_wm_check(&EWMH, child, child);
+}
+
+// _NET_VIRTUAL_ROOTS
+QList<WId> LXCB::WM_Get_Virtual_Roots(){
+  QList<WId> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_virtual_roots_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_ewmh_get_windows_reply_t reply;
+  if(1==xcb_ewmh_get_virtual_roots_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.windows_len; i++){
+      out << reply.windows[i];
+    }
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Virtual_Roots(QList<WId> list){
+  //Convert to XCB array
+  xcb_window_t array[list.length()];
+  for(int i=0; i<list.length(); i++){ array[i] = list[i]; }
+  //Set the property
+  xcb_ewmh_set_virtual_roots(&EWMH, QX11Info::appScreen(), list.length(), array);
+}
+
+// _NET_DESKTOP_LAYOUT
+
+// _NET_SHOWING_DESKTOP
+bool LXCB::WM_Get_Showing_Desktop(){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_showing_desktop_unchecked(&EWMH, QX11Info::appScreen());
+  uint32_t reply = 0;
+  xcb_ewmh_get_showing_desktop_reply(&EWMH, cookie, &reply, NULL);
+  return (reply==1);
+}
+
+void LXCB::WM_Set_Showing_Desktop(bool show){
+  xcb_ewmh_set_showing_desktop(&EWMH, QX11Info::appScreen(), (show ? 1 : 0) );
+}
+	
+// -- ROOT WINDOW MESSAGES/REQUESTS
+// _NET_CLOSE_WINDOW
+void LXCB::WM_Request_Close_Window(WId win){
+  xcb_ewmh_request_close_window(&EWMH, QX11Info::appScreen(), win, XCB_TIME_CURRENT_TIME, XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER); //user choice to close the window
+}
+
+// _NET_MOVERESIZE_WINDOW
+
+// _NET_WM_MOVERESIZE
+	
+// _NET_RESTACK_WINDOW
+	
+// _NET_REQUEST_FRAME_EXTENTS
+	
+	
+// === WINDOW PROPERTIES ===
+// _NET_SUPPORTED (Window)
 void LXCB::WM_Set_Window_Supported(WId win){
   //NET_WM standards (ICCCM implied - no standard way to list those)
   xcb_atom_t list[] = {};
   xcb_ewmh_set_wm_allowed_actions(&EWMH, win, 0, list);
 }
+
+// _NET_WM_NAME
+	
+// _NET_WM_VISIBLE_NAME
+	
+// _NET_WM_ICON_NAME
+	
+// _NET_WM_VISIBLE_ICON_NAME
+	
+// _NET_WM_DESKTOP
+	
+// _NET_WM_WINDOW_TYPE
+	
+// _NET_WM_STATE
+	
+// _NET_WM_ALLOWED_ACTIONS
+	
+// _NET_WM_STRUT
+	
+// _NET_WM_STRUT_PARTIAL
+	
+// _NET_WM_ICON_GEOMETRY
+	
+// _NET_WM_ICON
+	
+// _NET_WM_PID
+	
+// _NET_WM_HANDLED_ICONS
+	
+// _NET_WM_USER_TIME
+	
+// _NET_WM_USER_TIME_WINDOW
+	
+// _NET_FRAME_EXTENTS
+	
+// _NET_WM_OPAQUE_REGION
+	
+// _NET_WM_BYPASS_COMPOSITOR
+	

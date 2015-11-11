@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -149,39 +149,80 @@ public:
 	// _NET_SUPPORTED
 	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
 	// _NET_CLIENT_LIST
+	// Note: client list ordered oldest->newest, stacking list ordered bottom->top
+	QList<WId> WM_Get_Client_List(bool stacking = false);
+	void WM_Set_Client_List(QList<WId> list, bool stacking=false);
 	
 	// _NET_NUMBER_OF_DESKTOPS
+	// Note: This is the number of virtual workspaces, not monitors
+	unsigned int WM_Get_Number_Desktops(); //return value equals 0 for errors
+	void WM_SetNumber_Desktops(unsigned int number); //should be at least 1
 	
 	// _NET_DESKTOP_GEOMETRY
+	// Note: This property is the combined size and/or bounding rectangle of all monitors
+	//  The definition works well for single-monitors, but gets really fuzzy for multiple monitors
+	QSize WM_Get_Desktop_Geometry();
+	void WM_Set_Desktop_Geometry(QSize);
 	
 	// _NET_DESKTOP_VIEWPORT
+	// Note: This is the X/Y origin  of the viewport for each monitor 
+	//  Thi is normally (0,0) , unless desktop larger than monitor supports
+	QList<QPoint> WM_Get_Desktop_Viewport();
+	void WM_Set_Desktop_Viewport(QList<QPoint> list);
 	
 	// _NET_CURRENT_DESKTOP
+	// Note: Current workspace number. Range = 0 to (_NET_NUMBER_OF_DESKTOPS - 1)
+	int WM_Get_Current_Desktop(); //Returns -1 for errors
+	void WM_Set_Current_Desktop(unsigned int num);
 	
 	// _NET_DESKTOP_NAMES
+	QStringList WM_Get_Desktop_Names();
+	void WM_Set_Desktop_Names(QStringList list);
 	
 	// _NET_ACTIVE_WINDOW
+	WId WM_Get_Active_Window();
+	void WM_Set_Active_Window(WId win);
 	
 	// _NET_WORKAREA
+	// Note: The workarea is the recangle for each monitor where no space is reserved
+	//  This accounts for any STRUT's that are set, within the current VIEWPORT
+	QList<QRect> WM_Get_Workarea();
+	void WM_Set_Workarea(QList<QRect> list);
 	
 	// _NET_SUPPORTING_WM_CHECK
+	// Note: This needs to be set on two windows: root -> child, and child->child
+	// So the "set" function will do both at the same time
+	// The child window also needs the _NET_WM_NAME set to the window manager name
+	WId WM_Get_Supporting_WM(WId win);
+	void WM_Set_Supporting_WM(WId child);
 	
 	// _NET_VIRTUAL_ROOTS
+	QList<WId> WM_Get_Virtual_Roots();
+	void WM_Set_Virtual_Roots(QList<WId> list);
 	
 	// _NET_DESKTOP_LAYOUT
+	// NOTE: Skip this implementation for now - is supposed to be set by a pager (not the WM)
+	//   and the WM can choose to use/ignore it as necessary.
+	// (Just use the current XRandR layout instead of this setting/property)
 	
 	// _NET_SHOWING_DESKTOP
+	// Note: This is true/false depending on whether the WM is hiding all windows to show the desktop only
+	bool WM_Get_Showing_Desktop();
+	void WM_Set_Showing_Desktop(bool show);
 	
-	// -- ROOT WINDOW MESSAGES
+	// -- ROOT WINDOW MESSAGES/REQUESTS
 	// _NET_CLOSE_WINDOW
+	void WM_Request_Close_Window(WId win);
 	
-	// _NET_MOVERESIZE_WINDOW
+	// _NET_MOVERESIZE_WINDOW 
+	//void WM_Request_MoveResize_Window(WId win, LXCB::Gravity grav, LXCB::WindowOptFlags flags, QRect geom);
 	
 	// _NET_WM_MOVERESIZE
 	
 	// _NET_RESTACK_WINDOW
 	
 	// _NET_REQUEST_FRAME_EXTENTS
+	
 	
 	// -- WINDOW PROPERTIES
 	// _NET_SUPPORTED
