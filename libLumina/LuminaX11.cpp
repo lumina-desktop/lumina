@@ -1361,7 +1361,7 @@ QStringList LXCB::WM_Get_Desktop_Names(){
   return out;
 }
 
-void LXCB::WM_Set_Desktop_Names(QStringList list){
+void LXCB::WM_Set_Desktop_Names(QStringList){// list){
   // ** ISSUES with the XCB_EWMH strings input structure - 11/11/15  (skip for now)
   // (Appears to be a char* instead of char** in the class definitions)
   /*//Convert to an array of char arrays
