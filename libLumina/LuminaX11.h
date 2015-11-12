@@ -35,6 +35,16 @@
 
 #define URGENCYHINT (1L << 8) //For window urgency detection
 
+//Simple data container for doing STRUT_PARTIAL input/output calculations
+class strut_geom{
+public:
+  //Note: "Thick" will always be in the direction perpenticular to the start/end coordinates
+  //Example: A left strut will use start/end as Y coordinates, with "thick" in X coordinates starting from the left edge
+  unsigned int start, end, thick;
+  strut_geom(){ start = end = thick = 0; }
+  ~strut_geom(){}
+};
+
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
 	
@@ -43,8 +53,9 @@ public:
 	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};
 	enum GRAVITY {FORGET=0, NW=1, N=2, NE=3, W=4, CENTER=5, E=6, SW=7, S=8, SE=9, STATIC=10};
 	enum STACK_FLAG {ABOVE=0, BELOW=1, TOP_IF=2, BOTTOM_IF=3, OPPOSITE=4};
-	enum WINDOWTYPE {DESKTOP, DOCK, TOOLBAR, MENU, UTILITY, SPLASH, DIALOG, DROPDOWN_MENU, POPUP_MENU, TOOLTIP, NOTIFICATION, COMBO, DND, NORMALTYPE};
-	enum WINDOWSTATE {MODAL, STICKY, MAX_VERT, MAX_HORZ, SHADED, SKIP_TASKBAR, SKIP_PAGER, HIDDEN, FULLSCREEN, KEEP_ABOVE, KEEP_BELOW, DEMANDS_ATTENTION};
+	enum WINDOWTYPE {T_DESKTOP, T_DOCK, T_TOOLBAR, T_MENU, T_UTILITY, T_SPLASH, T_DIALOG, T_DROPDOWN_MENU, T_POPUP_MENU, T_TOOLTIP, T_NOTIFICATION, T_COMBO, T_DND, T_NORMAL};
+	enum WINDOWSTATE {S_MODAL, S_STICKY, S_MAX_VERT, S_MAX_HORZ, S_SHADED, S_SKIP_TASKBAR, S_SKIP_PAGER, S_HIDDEN, S_FULLSCREEN, S_ABOVE, S_BELOW, S_ATTENTION};
+	enum WINDOWACTION {A_MOVE, A_RESIZE, A_MINIMIZE, A_SHADE, A_STICK, A_MAX_VERT, A_MAX_HORZ, A_FULLSCREEN, A_CHANGE_DESKTOP, A_CLOSE, A_ABOVE, A_BELOW};
 	//Now enums which can have multiple values at once (Use the plural form for the QFlags)
 	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
 	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
@@ -273,14 +284,24 @@ public:
 	void WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list);
 	
 	// _NET_WM_ALLOWED_ACTIONS
+	QList<LXCB::WINDOWACTION> WM_Get_Window_Actions(WId win);
+	void WM_Set_Window_Actions(WId win, QList<LXCB::WINDOWACTION> list);
 	
 	// _NET_WM_STRUT
+	QList<unsigned int> WM_Get_Window_Strut(WId win); //Returns: [left,right,top,bottom] margins in pixels (always length 4)
+	void WM_Set_Window_Strut(WId win, QList<unsigned int> margins); //Input: [left, right, top, bottom] - must be length 4
 	
 	// _NET_WM_STRUT_PARTIAL
+	QList<strut_geom> WM_Get_Window_Strut_Partial(WId win); //Returns: [left,right,top,bottom] struts
+	void WM_Set_Window_Strut_Partial(WId win, QList<strut_geom> struts); //Input: [left,right,top,bottom] - must be length 4
 	
 	// _NET_WM_ICON_GEOMETRY
+	QRect WM_Get_Icon_Geometry(WId win);
+	void WM_Set_Icon_Geometry(WId win, QRect geom);
 	
 	// _NET_WM_ICON
+	// Note: Don't write a "Set" routine for this - that is handled on the client side and not the WM/DE side
+	QIcon WM_Get_Icon(WId win);
 	
 	// _NET_WM_PID
 	
@@ -291,6 +312,8 @@ public:
 	// _NET_WM_USER_TIME_WINDOW
 	
 	// _NET_FRAME_EXTENTS
+	QList<unsigned int> WM_Get_Frame_Extents(WId win); //Returns: [left,right,top,bottom] margins in pixels (always length 4)
+	void WM_Set_Frame_Extents(WId win, QList<unsigned int> margins); //Input: [left, right, top, bottom] - must be length 4
 	
 	// _NET_WM_OPAQUE_REGION
 	

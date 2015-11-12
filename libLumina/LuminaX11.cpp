@@ -1589,20 +1589,20 @@ QList<LXCB::WINDOWTYPE> LXCB::WM_Get_Window_Type(WId win){
   xcb_ewmh_get_atoms_reply_t reply;
   if(1==xcb_ewmh_get_wm_window_type_reply(&EWMH, cookie, &reply, NULL) ){
     for(unsigned int i=0; i<reply.atoms_len; i++){
-      if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ out << LXCB::DESKTOP; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DOCK){ out << LXCB::DOCK; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ out << LXCB::TOOLBAR; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_MENU){ out << LXCB::MENU; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_UTILITY){ out << LXCB::UTILITY; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_SPLASH){ out << LXCB::SPLASH; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DIALOG){ out << LXCB::DIALOG; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ out << LXCB::DROPDOWN_MENU; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ out << LXCB::POPUP_MENU; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ out << LXCB::TOOLTIP; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ out << LXCB::NOTIFICATION; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_COMBO){ out << LXCB::COMBO; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DND){ out << LXCB::DND; }
-      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NORMAL){ out << LXCB::NORMALTYPE; }
+      if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ out << LXCB::T_DESKTOP; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DOCK){ out << LXCB::T_DOCK; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ out << LXCB::T_TOOLBAR; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_MENU){ out << LXCB::T_MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_UTILITY){ out << LXCB::T_UTILITY; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_SPLASH){ out << LXCB::T_SPLASH; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DIALOG){ out << LXCB::T_DIALOG; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ out << LXCB::T_DROPDOWN_MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ out << LXCB::T_POPUP_MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ out << LXCB::T_TOOLTIP; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ out << LXCB::T_NOTIFICATION; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_COMBO){ out << LXCB::T_COMBO; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DND){ out << LXCB::T_DND; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NORMAL){ out << LXCB::T_NORMAL; }
     }
   }
   return out;
@@ -1613,31 +1613,31 @@ void LXCB::WM_Set_Window_Type(WId win, QList<LXCB::WINDOWTYPE> list){
   xcb_atom_t array[list.length()];
   for(int i=0; i<list.length(); i++){
     switch(list[i]){
-      case LXCB::DESKTOP:
+      case LXCB::T_DESKTOP:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_DESKTOP; break;
-      case LXCB::DOCK:
+      case LXCB::T_DOCK:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_DOCK; break;
-      case LXCB::TOOLBAR:
+      case LXCB::T_TOOLBAR:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_TOOLBAR; break;
-      case LXCB::MENU:
+      case LXCB::T_MENU:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_MENU; break;
-      case LXCB::UTILITY:
+      case LXCB::T_UTILITY:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_UTILITY; break;
-      case LXCB::SPLASH:
+      case LXCB::T_SPLASH:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_SPLASH; break;
-      case LXCB::DIALOG:
+      case LXCB::T_DIALOG:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_DIALOG; break;
-      case LXCB::DROPDOWN_MENU:
+      case LXCB::T_DROPDOWN_MENU:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU; break;
-      case LXCB::POPUP_MENU:
+      case LXCB::T_POPUP_MENU:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU; break;
-      case LXCB::TOOLTIP:
+      case LXCB::T_TOOLTIP:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_TOOLTIP; break;
-      case LXCB::NOTIFICATION:
+      case LXCB::T_NOTIFICATION:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION; break;
-      case LXCB::COMBO:
+      case LXCB::T_COMBO:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_COMBO; break;
-      case LXCB::DND:
+      case LXCB::T_DND:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_DND; break;
       default:
 	array[i] = EWMH._NET_WM_WINDOW_TYPE_NORMAL;
@@ -1654,18 +1654,18 @@ QList<LXCB::WINDOWSTATE> LXCB::WM_Get_Window_States(WId win){
   xcb_ewmh_get_atoms_reply_t reply;
   if(1==xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &reply, NULL) ){
     for(unsigned int i=0; i<reply.atoms_len; i++){
-      if(reply.atoms[i]==EWMH._NET_WM_STATE_MODAL){ out << LXCB::MODAL; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_STICKY){ out << LXCB::STICKY; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_VERT){ out << LXCB::MAX_VERT; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_HORZ){ out << LXCB::MAX_HORZ; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SHADED){ out << LXCB::SHADED; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_TASKBAR){ out << LXCB::SKIP_TASKBAR; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_PAGER){ out << LXCB::SKIP_PAGER; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_HIDDEN){ out << LXCB::HIDDEN; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_FULLSCREEN){ out << LXCB::FULLSCREEN; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_ABOVE){ out << LXCB::KEEP_ABOVE; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_BELOW){ out << LXCB::KEEP_BELOW; }
-      else if(reply.atoms[i]==EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ out << LXCB::DEMANDS_ATTENTION; }
+      if(reply.atoms[i]==EWMH._NET_WM_STATE_MODAL){ out << LXCB::S_MODAL; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_STICKY){ out << LXCB::S_STICKY; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_VERT){ out << LXCB::S_MAX_VERT; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_HORZ){ out << LXCB::S_MAX_HORZ; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SHADED){ out << LXCB::S_SHADED; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_TASKBAR){ out << LXCB::S_SKIP_TASKBAR; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_PAGER){ out << LXCB::S_SKIP_PAGER; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_HIDDEN){ out << LXCB::S_HIDDEN; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_FULLSCREEN){ out << LXCB::S_FULLSCREEN; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_ABOVE){ out << LXCB::S_ABOVE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_BELOW){ out << LXCB::S_BELOW; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ out << LXCB::S_ATTENTION; }
       //else if(reply.atoms[i]==EWMH._NET_WM_STATE_FOCUSED){ out << LXCB::FOCUSED; }
     }
   }
@@ -1677,29 +1677,29 @@ void LXCB::WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list){
   xcb_atom_t array[list.length()];
   for(int i=0; i<list.length(); i++){
     switch(list[i]){
-      case LXCB::MODAL:
+      case LXCB::S_MODAL:
 	array[i] = EWMH._NET_WM_STATE_MODAL; break;
-      case LXCB::STICKY:
+      case LXCB::S_STICKY:
 	array[i] = EWMH._NET_WM_STATE_STICKY; break;
-      case LXCB::MAX_VERT:
+      case LXCB::S_MAX_VERT:
 	array[i] = EWMH._NET_WM_STATE_MAXIMIZED_VERT; break;
-      case LXCB::MAX_HORZ:
+      case LXCB::S_MAX_HORZ:
 	array[i] = EWMH._NET_WM_STATE_MAXIMIZED_HORZ; break;
-      case LXCB::SHADED:
+      case LXCB::S_SHADED:
 	array[i] = EWMH._NET_WM_STATE_SHADED; break;
-      case LXCB::SKIP_TASKBAR:
+      case LXCB::S_SKIP_TASKBAR:
 	array[i] = EWMH._NET_WM_STATE_SKIP_TASKBAR; break;
-      case LXCB::SKIP_PAGER:
+      case LXCB::S_SKIP_PAGER:
 	array[i] = EWMH._NET_WM_STATE_SKIP_PAGER; break;
-      case LXCB::HIDDEN:
+      case LXCB::S_HIDDEN:
 	array[i] = EWMH._NET_WM_STATE_HIDDEN; break;
-      case LXCB::FULLSCREEN:
+      case LXCB::S_FULLSCREEN:
 	array[i] = EWMH._NET_WM_STATE_FULLSCREEN; break;
-      case LXCB::KEEP_ABOVE:
+      case LXCB::S_ABOVE:
 	array[i] = EWMH._NET_WM_STATE_ABOVE; break;
-      case LXCB::KEEP_BELOW:
+      case LXCB::S_BELOW:
 	array[i] = EWMH._NET_WM_STATE_BELOW; break;
-      case LXCB::DEMANDS_ATTENTION:
+      case LXCB::S_ATTENTION:
 	array[i] = EWMH._NET_WM_STATE_DEMANDS_ATTENTION; break;
       //case LXCB::FOCUSED:
 	//array[i] = EWMH._NET_WM_STATE_FOCUSED; break;
@@ -1710,15 +1710,162 @@ void LXCB::WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list){
 }
 
 // _NET_WM_ALLOWED_ACTIONS
-	
+QList<LXCB::WINDOWACTION> LXCB::WM_Get_Window_Actions(WId win){
+  QList<LXCB::WINDOWACTION> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_allowed_actions_unchecked(&EWMH, win);
+  xcb_ewmh_get_atoms_reply_t reply;
+  if(1==xcb_ewmh_get_wm_allowed_actions_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.atoms_len; i++){
+      if(reply.atoms[i]==EWMH._NET_WM_ACTION_MOVE){ out << LXCB::A_MOVE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_RESIZE){ out << LXCB::A_RESIZE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_MINIMIZE){ out << LXCB::A_MINIMIZE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_SHADE){ out << LXCB::A_SHADE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_STICK){ out << LXCB::A_STICK; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_MAXIMIZE_HORZ){ out << LXCB::A_MAX_HORZ; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_MAXIMIZE_VERT){ out << LXCB::A_MAX_VERT; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_FULLSCREEN){ out << LXCB::A_FULLSCREEN; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_CHANGE_DESKTOP){ out << LXCB::A_CHANGE_DESKTOP; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_CLOSE){ out << LXCB::A_CLOSE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_ABOVE){ out << LXCB::A_ABOVE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_ACTION_BELOW){ out << LXCB::A_BELOW; }
+    }
+  }
+  return out;	
+}
+
+void LXCB::WM_Set_Window_Actions(WId win, QList<LXCB::WINDOWACTION> list){
+  //Convert to the XCB format
+  xcb_atom_t array[list.length()];
+  for(int i=0; i<list.length(); i++){
+    switch(list[i]){
+      case LXCB::A_MOVE:
+	array[i] = EWMH._NET_WM_ACTION_MOVE; break;
+      case LXCB::A_RESIZE:
+	array[i] = EWMH._NET_WM_ACTION_RESIZE; break;
+      case LXCB::A_MINIMIZE:
+	array[i] = EWMH._NET_WM_ACTION_MINIMIZE; break;
+      case LXCB::A_SHADE:
+	array[i] = EWMH._NET_WM_ACTION_SHADE; break;
+      case LXCB::A_STICK:
+	array[i] = EWMH._NET_WM_ACTION_STICK; break;
+      case LXCB::A_MAX_HORZ:
+	array[i] = EWMH._NET_WM_ACTION_MAXIMIZE_HORZ; break;
+      case LXCB::A_MAX_VERT:
+	array[i] = EWMH._NET_WM_ACTION_MAXIMIZE_VERT; break;
+      case LXCB::A_FULLSCREEN:
+	array[i] = EWMH._NET_WM_ACTION_FULLSCREEN; break;
+      case LXCB::A_CHANGE_DESKTOP:
+	array[i] = EWMH._NET_WM_ACTION_CHANGE_DESKTOP; break;
+      case LXCB::A_CLOSE:
+	array[i] = EWMH._NET_WM_ACTION_CLOSE; break;
+      case LXCB::A_ABOVE:
+	array[i] = EWMH._NET_WM_ACTION_ABOVE; break;
+      case LXCB::A_BELOW:
+	array[i] = EWMH._NET_WM_ACTION_BELOW; break;
+    }
+  }
+  //Now set the property
+  xcb_ewmh_set_wm_allowed_actions(&EWMH, win, list.length(), array);
+}
+
 // _NET_WM_STRUT
-	
+QList<unsigned int> LXCB::WM_Get_Window_Strut(WId win){
+  //Returns: [left,right,top,bottom] margins in pixels (always length 4)
+  QList<unsigned int> out; out << 0 << 0 << 0 << 0; //init the output list
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_strut_unchecked(&EWMH, win);
+  xcb_ewmh_get_extents_reply_t reply;
+  if(1==xcb_ewmh_get_wm_strut_reply(&EWMH, cookie, &reply, NULL) ){
+    out[0] = reply.left;
+    out[1] = reply.right;
+    out[2] = reply.top;
+    out[3] = reply.bottom;
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Window_Strut(WId win, QList<unsigned int> margins){
+  //Input: [left, right, top, bottom] - must be length 4
+  while(margins.length()<4){ margins << 0; }
+  xcb_ewmh_set_wm_strut(&EWMH, win, margins[0], margins[1], margins[2], margins[3]);
+}
+
 // _NET_WM_STRUT_PARTIAL
-	
+QList<strut_geom> LXCB::WM_Get_Window_Strut_Partial(WId win){
+  //Returns: [left,right,top,bottom] struts
+  QList<strut_geom> out; out << strut_geom() << strut_geom() << strut_geom() << strut_geom();
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_strut_partial_unchecked(&EWMH, win);
+  xcb_ewmh_wm_strut_partial_t reply;
+  if(1==xcb_ewmh_get_wm_strut_partial_reply(&EWMH, cookie, &reply, NULL) ){
+    if(reply.left>0){
+      out[0].start = reply.left_start_y; out[0].end = reply.left_end_y; out[0].thick = reply.left;
+    }
+    if(reply.right>0){
+      out[1].start = reply.right_start_y; out[1].end = reply.right_end_y; out[1].thick = reply.right;
+    }
+    if(reply.top>0){
+      out[2].start = reply.top_start_x; out[2].end = reply.top_end_x; out[2].thick = reply.top;
+    }
+    if(reply.bottom>0){
+      out[3].start = reply.bottom_start_x; out[3].end = reply.bottom_end_x; out[3].thick = reply.bottom;
+    }
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Window_Strut_Partial(WId win, QList<strut_geom> struts){
+  //Input: [left,right,top,bottom] - must be length 4
+  while(struts.length() < 4){ struts << strut_geom(); }
+  //Convert to the XCB input format
+  xcb_ewmh_wm_strut_partial_t input;
+  input.left=struts[0].thick; input.left_start_y=struts[0].start; input.left_end_y=struts[0].end;
+  input.right=struts[1].thick; input.right_start_y=struts[1].start; input.right_end_y=struts[1].end;
+  input.top=struts[2].thick; input.top_start_x=struts[2].start; input.top_end_x=struts[2].end;
+  input.bottom=struts[3].thick; input.bottom_start_x=struts[3].start; input.bottom_end_x=struts[3].end;
+  //Now set the property
+  xcb_ewmh_set_wm_strut_partial(&EWMH, win, input);
+}
+
 // _NET_WM_ICON_GEOMETRY
-	
+QRect LXCB::WM_Get_Icon_Geometry(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_geometry_unchecked(&EWMH, win);
+  xcb_ewmh_geometry_t reply;
+  QRect out;
+  if(1==xcb_ewmh_get_wm_icon_geometry_reply(&EWMH, cookie, &reply, NULL) ){
+    out = QRect(reply.x, reply.y, reply.width, reply.height);
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Icon_Geometry(WId win, QRect geom){
+  //Note - 11/12/15: xcb_ewmh.h lists the inputs as "left/right/top/bottom"
+  //  but this might be an error and the real inputs are "x/y/width/height"
+  //  as in the other geometry get/set routines (and as returned by the xcb_ewmh_get_wm_icon_geometry() routine)
+  xcb_ewmh_set_wm_icon_geometry(&EWMH, win, geom.x(), geom.x()+geom.width(), geom.y(), geom.y()+geom.height());
+  //xcb_ewmh_set_wm_icon_geometry(&EWMH, win, geom.x(), geom.y(), geom.width(), geom.height());
+}
+
 // _NET_WM_ICON
-	
+QIcon LXCB::WM_Get_Icon(WId win){
+  //Note: The output is a QIcon because it allows for multiple varying-sized images to be loaded/used later as needed
+  // For each pixmap found here, add it (in its native size) to the icon structure
+  QIcon out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_unchecked(&EWMH, win);
+  xcb_ewmh_get_wm_icon_reply_t reply;
+  if(1==xcb_ewmh_get_wm_icon_reply(&EWMH, cookie, &reply, NULL) ){
+    //Now iterate over all the pixmaps and load them into the QIcon
+    xcb_ewmh_wm_icon_iterator_t it = xcb_ewmh_get_wm_icon_iterator(&reply);
+    while(it.index < reply.num_icons){
+      QImage img( (const unsigned char *) it.data, it.width, it.height, QImage::Format_ARGB32);
+      out.addPixmap( QPixmap::fromImage(img) );
+      if(it.rem>0){ xcb_ewmh_get_wm_icon_next(&it); } //go to the next pixmap
+      else{ break; } //just finished the last one - ensure this breaks out now (just in case)
+    }
+    //Clean up any background buffer for the reply
+    xcb_ewmh_get_wm_icon_reply_wipe(&reply);
+  }
+  return out;
+}
+
 // _NET_WM_PID
 	
 // _NET_WM_HANDLED_ICONS
@@ -1728,7 +1875,25 @@ void LXCB::WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list){
 // _NET_WM_USER_TIME_WINDOW
 	
 // _NET_FRAME_EXTENTS
-	
+QList<unsigned int> LXCB::WM_Get_Frame_Extents(WId win){
+  //Returns: [left,right,top,bottom] margins in pixels (always length 4)
+  QList<unsigned int> out; out << 0 << 0 << 0 << 0; //init the output list
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_frame_extents_unchecked(&EWMH, win);
+  xcb_ewmh_get_extents_reply_t reply;
+  if(1==xcb_ewmh_get_frame_extents_reply(&EWMH, cookie, &reply, NULL) ){
+    out[0] = reply.left;
+    out[1] = reply.right;
+    out[2] = reply.top;
+    out[3] = reply.bottom;
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Frame_Extents(WId win, QList<unsigned int> margins){
+  //Input: [left, right, top, bottom] - must be length 4
+  while(margins.length()<4){ margins << 0; }
+  xcb_ewmh_set_frame_extents(&EWMH, win, margins[0], margins[1], margins[2], margins[3]);
+}
 // _NET_WM_OPAQUE_REGION
 	
 // _NET_WM_BYPASS_COMPOSITOR
