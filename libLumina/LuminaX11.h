@@ -41,10 +41,13 @@ class LXCB{
 public:
 	enum WINDOWSTATE {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
 	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};
-	//Now enums which can have multiple values at once
+	enum GRAVITY {FORGET=0, NW=1, N=2, NE=3, W=4, CENTER=5, E=6, SW=7, S=8, SE=9, STATIC=10};
+	enum STACK_FLAG {ABOVE=0, BELOW=1, TOP_IF=2, BOTTOM_IF=3, OPPOSITE=4};
+	//Now enums which can have multiple values at once (Use the plural form for the QFlags)
 	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
 	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
-	
+	enum MOVERESIZE_WINDOW_FLAG { X=0x0, Y=0x1, WIDTH=0x2, HEIGHT=0x3};
+	Q_DECLARE_FLAGS(MOVERESIZE_WINDOW_FLAGS, MOVERESIZE_WINDOW_FLAG);
 	
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 
@@ -210,19 +213,27 @@ public:
 	bool WM_Get_Showing_Desktop();
 	void WM_Set_Showing_Desktop(bool show);
 	
-	// -- ROOT WINDOW MESSAGES/REQUESTS
+	// -- ROOT WINDOW MESSAGES/REQUESTS (for non-WM usage)
 	// _NET_CLOSE_WINDOW
 	void WM_Request_Close_Window(WId win);
 	
-	// _NET_MOVERESIZE_WINDOW 
-	//void WM_Request_MoveResize_Window(WId win, LXCB::Gravity grav, LXCB::WindowOptFlags flags, QRect geom);
+	// _NET_MOVERESIZE_WINDOW
+	// Note: Used for finalized movement/resize operations
+	void WM_Request_MoveResize_Window(WId win, QRect geom, bool fromuser = false,  LXCB::GRAVITY grav = LXCB::STATIC, LXCB::MOVERESIZE_WINDOW_FLAGS flags = LXCB::MOVERESIZE_WINDOW_FLAGS(LXCB::X | LXCB::Y | LXCB::WIDTH | LXCB::HEIGHT) );
 	
-	// _NET_WM_MOVERESIZE
+	// _NET_WM_MOVERESIZE 
+	// Note: Used for interactive clicks/changes to a window size/position
+	// There are known race conditions/issues with this X format - so skip it for now (11/12/15)
 	
 	// _NET_RESTACK_WINDOW
+	// Note: Send a request to re-stack a window (win) with respect to another window (sibling)
+	//   based on the flag to determine how the stack order should be changed
+	void WM_Request_Restack_Window(WId win, WId sibling, LXCB::STACK_FLAG flag);
 	
 	// _NET_REQUEST_FRAME_EXTENTS
-	
+	// Note: This is used by client windows to get the _NET_FRAME_EXTENTS property pre-set
+	//  by the WM before the window is actually mapped (just an estimate of the frame at least)
+	void WM_Request_Frame_Extents(WId win);
 	
 	// -- WINDOW PROPERTIES
 	// _NET_SUPPORTED
@@ -272,5 +283,8 @@ private:
 
 	void createWMAtoms(); //fill the private lists above
 };
+//Now also declare the flags for Qt to use
+Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::ICCCM_PROTOCOLS);
+Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::MOVERESIZE_WINDOW_FLAGS);
 
 #endif

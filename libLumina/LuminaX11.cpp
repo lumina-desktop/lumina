@@ -1446,6 +1446,7 @@ void LXCB::WM_Set_Virtual_Roots(QList<WId> list){
 }
 
 // _NET_DESKTOP_LAYOUT
+//  -- skipped for now - see note in LuminaX11.h
 
 // _NET_SHOWING_DESKTOP
 bool LXCB::WM_Get_Showing_Desktop(){
@@ -1466,13 +1467,33 @@ void LXCB::WM_Request_Close_Window(WId win){
 }
 
 // _NET_MOVERESIZE_WINDOW
+void LXCB::WM_Request_MoveResize_Window(WId win, QRect geom, bool fromuser,  LXCB::GRAVITY grav, LXCB::MOVERESIZE_WINDOW_FLAGS flags){
+  //Note: The LXCB::GRAVITY enum exactly matches the XCB values (just different names)
+  //Convert the flags into the XCB type
+  int eflags = 0; //xcb_ewmh_moveresize_window_opt_flags_t
+  if(flags.testFlag(LXCB::X)){ eflags = eflags | XCB_EWMH_MOVERESIZE_WINDOW_X; }
+  if(flags.testFlag(LXCB::Y)){ eflags = eflags | XCB_EWMH_MOVERESIZE_WINDOW_Y; }
+  if(flags.testFlag(LXCB::WIDTH)){ eflags = eflags | XCB_EWMH_MOVERESIZE_WINDOW_WIDTH; }
+  if(flags.testFlag(LXCB::HEIGHT)){ eflags = eflags | XCB_EWMH_MOVERESIZE_WINDOW_HEIGHT; }
+  
+  xcb_ewmh_request_moveresize_window(&EWMH, QX11Info::appScreen(), win, (xcb_gravity_t) grav, \
+		(fromuser ? XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER : XCB_EWMH_CLIENT_SOURCE_TYPE_NORMAL), \
+		(xcb_ewmh_moveresize_window_opt_flags_t) eflags, geom.x(), geom.y(), geom.width(), geom.height() );
+}
 
 // _NET_WM_MOVERESIZE
-	
+//  -- skipped for now - see note in LuminaX11.h
+
 // _NET_RESTACK_WINDOW
-	
+void LXCB::WM_Request_Restack_Window(WId win, WId sibling, LXCB::STACK_FLAG flag){
+  //Note: The STACK_FLAG enum matches the xcb_stack_mode_t enum exactly (just different names)
+  xcb_ewmh_request_restack_window(&EWMH, QX11Info::appScreen(), win, sibling, (xcb_stack_mode_t) flag);
+}
+
 // _NET_REQUEST_FRAME_EXTENTS
-	
+void LXCB::WM_Request_Frame_Extents(WId win){
+  xcb_ewmh_request_frame_extents(&EWMH, QX11Info::appScreen(), win);
+}
 	
 // === WINDOW PROPERTIES ===
 // _NET_SUPPORTED (Window)
