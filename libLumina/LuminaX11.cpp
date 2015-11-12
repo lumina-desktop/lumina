@@ -1504,15 +1504,82 @@ void LXCB::WM_Set_Window_Supported(WId win){
 }
 
 // _NET_WM_NAME
+QString LXCB::WM_Get_Name(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&EWMH, win);
+  xcb_ewmh_get_utf8_strings_reply_t reply;
+  QString out;
+  if(1==xcb_ewmh_get_wm_name_reply(&EWMH, cookie,&reply, NULL) ){
+    out = QString::fromUtf8(reply.strings);
+  }
+  return out;
+}
+void LXCB::WM_Set_Name(WId win, QString txt){
+  xcb_ewmh_set_wm_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+}
 	
 // _NET_WM_VISIBLE_NAME
+QString LXCB::WM_Get_Visible_Name(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&EWMH, win);
+  xcb_ewmh_get_utf8_strings_reply_t reply;
+  QString out;
+  if(1==xcb_ewmh_get_wm_visible_name_reply(&EWMH, cookie,&reply, NULL) ){
+    out = QString::fromUtf8(reply.strings);
+  }
+  return out;	
+}
+void LXCB::WM_Set_Visible_Name(WId win, QString txt){
+  xcb_ewmh_set_wm_visible_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+}
 	
 // _NET_WM_ICON_NAME
+QString LXCB::WM_Get_Icon_Name(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&EWMH, win);
+  xcb_ewmh_get_utf8_strings_reply_t reply;
+  QString out;
+  if(1==xcb_ewmh_get_wm_icon_name_reply(&EWMH, cookie,&reply, NULL) ){
+    out = QString::fromUtf8(reply.strings);
+  }
+  return out;
+}
+void LXCB::WM_Set_Icon_Name(WId win, QString txt){
+  xcb_ewmh_set_wm_icon_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+}
 	
 // _NET_WM_VISIBLE_ICON_NAME
+QString LXCB::WM_Get_Visible_Icon_Name(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&EWMH, win);
+  xcb_ewmh_get_utf8_strings_reply_t reply;
+  QString out;
+  if(1==xcb_ewmh_get_wm_visible_icon_name_reply(&EWMH, cookie,&reply, NULL) ){
+    out = QString::fromUtf8(reply.strings);
+  }
+  return out;
+}
+void LXCB::WM_Set_Visible_Icon_Name(WId win, QString txt){
+  xcb_ewmh_set_wm_visible_icon_name(&EWMH, win, txt.length(), txt.toUtf8().data());	
+}
 	
 // _NET_WM_DESKTOP
-	
+int LXCB::WM_Get_Desktop(WId win){
+  //returns -1 if window on all desktops
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
+  uint32_t num = 0;
+  int out = -1;
+  if(1==xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &num, NULL) ){
+    if(num!=0xFFFFFFFF){ out = num; }
+  }else{
+    //Error in fetching property (not set?)
+    // - put it on the current screen
+    out = WM_Get_Current_Desktop();
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Desktop(WId win, int num){
+  //use -1 to set it for all desktops
+  xcb_ewmh_set_wm_desktop(&EWMH, win, (num<0 ? 0xFFFFFFFF : qAbs(num) ) );
+}
+
 // _NET_WM_WINDOW_TYPE
 	
 // _NET_WM_STATE

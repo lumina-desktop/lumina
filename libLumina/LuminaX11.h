@@ -238,15 +238,27 @@ public:
 	// -- WINDOW PROPERTIES
 	// _NET_SUPPORTED
 	void WM_Set_Window_Supported(WId win); //set the atom list of supported features on the given window
+	
 	// _NET_WM_NAME
+	QString WM_Get_Name(WId win);
+	void WM_Set_Name(WId win, QString txt);
 	
 	// _NET_WM_VISIBLE_NAME
+	QString WM_Get_Visible_Name(WId win);
+	void WM_Set_Visible_Name(WId win, QString txt);
 	
 	// _NET_WM_ICON_NAME
+	QString WM_Get_Icon_Name(WId win);
+	void WM_Set_Icon_Name(WId win, QString txt);
 	
 	// _NET_WM_VISIBLE_ICON_NAME
+	QString WM_Get_Visible_Icon_Name(WId win);
+	void WM_Set_Visible_Icon_Name(WId win, QString txt);
 	
 	// _NET_WM_DESKTOP
+	// Note: This refers to the virtual workspace, not the monitor/screen number
+	int WM_Get_Desktop(WId win); //returns -1 if window on all desktops
+	void WM_Set_Desktop(WId win, int num); //use -1 to set it for all desktops
 	
 	// _NET_WM_WINDOW_TYPE
 	
@@ -283,7 +295,7 @@ private:
 
 	void createWMAtoms(); //fill the private lists above
 };
-//Now also declare the flags for Qt to use
+//Now also declare the flags for Qt to be able to use normal operations on them
 Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::ICCCM_PROTOCOLS);
 Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::MOVERESIZE_WINDOW_FLAGS);
 
