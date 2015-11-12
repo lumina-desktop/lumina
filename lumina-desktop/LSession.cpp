@@ -500,7 +500,8 @@ void LSession::updateDesktops(){
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
 	//Match either the screen number or the screen location (preventing duplicates)
-        if(DESKTOPS[j]->Screen()==i || DW->screenGeometry(i)==DW->screenGeometry(DESKTOPS[j]->Screen()) ){ found = true; }
+        //if(DESKTOPS[j]->Screen()==i || DW->screenGeometry(i)==DW->screenGeometry(DESKTOPS[j]->Screen()) ){ found = true; }
+	if(DESKTOPS[j]->Screen()==i ){ found = true; }
       }
       if(!found){
 	//Start the desktop on the new screen
