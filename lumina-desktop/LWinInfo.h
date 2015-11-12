@@ -25,7 +25,7 @@
 class LWinInfo{
 private:
 	WId window;
-	LXCB::WINDOWSTATE cstate; //current window state
+	LXCB::WINDOWVISIBILITY cstate; //current window state
 
 public:
 	LWinInfo(WId id = 0){
@@ -44,7 +44,7 @@ public:
 	QString  text();
 	QIcon icon(bool &noicon);
 	QString Class();
-	LXCB::WINDOWSTATE status(bool update = false);
+	LXCB::WINDOWVISIBILITY status(bool update = false);
 };
 
 #endif

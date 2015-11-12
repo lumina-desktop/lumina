@@ -49,7 +49,7 @@ private:
 	bool noicon, showText;
 
 	LWinInfo currentWindow(); //For getting the currently-active window
-	LXCB::WINDOWSTATE cstate; //current state of the button
+	LXCB::WINDOWVISIBILITY cstate; //current state of the button
 
 public slots:
 	void UpdateButton(); //re-sync the current window infomation

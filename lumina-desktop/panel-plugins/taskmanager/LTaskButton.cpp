@@ -87,7 +87,7 @@ void LTaskButton::UpdateButton(){
   LWINLIST = WINLIST;
   
   winMenu->clear();
-  LXCB::WINDOWSTATE showstate = LXCB::IGNORE;
+  LXCB::WINDOWVISIBILITY showstate = LXCB::IGNORE;
   for(int i=0; i<WINLIST.length(); i++){
     if(WINLIST[i].windowID() == 0){
       WINLIST.removeAt(i);
@@ -108,7 +108,7 @@ void LTaskButton::UpdateButton(){
     bool junk;
     QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
       tmp->setData(i); //save which number in the WINLIST this entry is for
-    LXCB::WINDOWSTATE stat = WINLIST[i].status(true); //update the saved state for the window
+    LXCB::WINDOWVISIBILITY stat = WINLIST[i].status(true); //update the saved state for the window
     if(stat<LXCB::ACTIVE && WINLIST[i].windowID() == LSession::handle()->activeWindow()){ stat = LXCB::ACTIVE; }
     if(stat > showstate){ showstate = stat; } //higher priority
     

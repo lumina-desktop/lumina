@@ -37,26 +37,10 @@ QString LWinInfo::Class(){
   return LSession::handle()->XCB->WindowClass(window);
 }
 	
-LXCB::WINDOWSTATE LWinInfo::status(bool update){
+LXCB::WINDOWVISIBILITY LWinInfo::status(bool update){
   if(window==0){ return LXCB::IGNORE; }
   if(update || cstate == LXCB::IGNORE){
     cstate = LSession::handle()->XCB->WindowState(window);
   }
   return cstate;
-  //LX11::WINDOWSTATE ws = LX11::GetWindowState(window);
- /*Lumina::STATES state;
-  switch(ws){
-    case LXCB::VISIBLE:
-	    state = Lumina::VISIBLE; break;
-    case LXCB::INVISIBLE:
-	    state = Lumina::INVISIBLE; break;
-    case LXCB::ACTIVE:
-	    state = Lumina::ACTIVE; break;
-    case LXCB::ATTENTION:
-	    state = Lumina::NOTIFICATION; break;
-    default:
-	    state = Lumina::NOSHOW;
-  }*/
-  //qDebug() << "Window State:" << ws << state;
-  //return ws;
 }

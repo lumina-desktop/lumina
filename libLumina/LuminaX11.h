@@ -39,15 +39,18 @@
 class LXCB{
 	
 public:
-	enum WINDOWSTATE {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
+	enum WINDOWVISIBILITY {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
 	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};
 	enum GRAVITY {FORGET=0, NW=1, N=2, NE=3, W=4, CENTER=5, E=6, SW=7, S=8, SE=9, STATIC=10};
 	enum STACK_FLAG {ABOVE=0, BELOW=1, TOP_IF=2, BOTTOM_IF=3, OPPOSITE=4};
+	enum WINDOWTYPE {DESKTOP, DOCK, TOOLBAR, MENU, UTILITY, SPLASH, DIALOG, DROPDOWN_MENU, POPUP_MENU, TOOLTIP, NOTIFICATION, COMBO, DND, NORMALTYPE};
+	enum WINDOWSTATE {MODAL, STICKY, MAX_VERT, MAX_HORZ, SHADED, SKIP_TASKBAR, SKIP_PAGER, HIDDEN, FULLSCREEN, KEEP_ABOVE, KEEP_BELOW, DEMANDS_ATTENTION};
 	//Now enums which can have multiple values at once (Use the plural form for the QFlags)
 	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
 	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
 	enum MOVERESIZE_WINDOW_FLAG { X=0x0, Y=0x1, WIDTH=0x2, HEIGHT=0x3};
 	Q_DECLARE_FLAGS(MOVERESIZE_WINDOW_FLAGS, MOVERESIZE_WINDOW_FLAG);
+
 	
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 
@@ -71,7 +74,7 @@ public:
 	unsigned int WindowWorkspace(WId); //The workspace the window is on
 	QRect WindowGeometry(WId win, bool includeFrame = true); //the geometry of the window (frame excluded)
 	QList<int> WindowFrameGeometry(WId win); //Returns: [top,bottom,left,right] sizes of the frame
-	WINDOWSTATE WindowState(WId win); //Visible state of window
+	LXCB::WINDOWVISIBILITY WindowState(WId win); //Visible state of window
 	QString WindowVisibleIconName(WId win); //_NET_WM_VISIBLE_ICON_NAME
 	QString WindowIconName(WId win); //_NET_WM_ICON_NAME
 	QString WindowVisibleName(WId win); //_NET_WM_VISIBLE_NAME
@@ -261,8 +264,13 @@ public:
 	void WM_Set_Desktop(WId win, int num); //use -1 to set it for all desktops
 	
 	// _NET_WM_WINDOW_TYPE
+	// Note: While this returns a list, they are ordered by priority for WM usage (use the first one known about)
+	QList<LXCB::WINDOWTYPE> WM_Get_Window_Type(WId win);
+	void WM_Set_Window_Type(WId win, QList<LXCB::WINDOWTYPE> list);
 	
 	// _NET_WM_STATE
+	QList<LXCB::WINDOWSTATE> WM_Get_Window_States(WId win);
+	void WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list);
 	
 	// _NET_WM_ALLOWED_ACTIONS
 	

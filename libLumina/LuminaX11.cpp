@@ -287,13 +287,13 @@ QList<int> LXCB::WindowFrameGeometry(WId win){
 }
 
 // === WindowState() ===
-LXCB::WINDOWSTATE LXCB::WindowState(WId win){
+LXCB::WINDOWVISIBILITY LXCB::WindowState(WId win){
   if(DEBUG){ qDebug() << "XCB: WindowState()"; }
   if(win==0){ return IGNORE; }
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return IGNORE; } 
   xcb_ewmh_get_atoms_reply_t states;
-  WINDOWSTATE cstate = IGNORE;
+  WINDOWVISIBILITY cstate = IGNORE;
   //First Check for special states (ATTENTION in particular);
   if( 1 == xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &states, NULL) ){
     for(unsigned int i=0; i<states.atoms_len; i++){
@@ -1581,9 +1581,134 @@ void LXCB::WM_Set_Desktop(WId win, int num){
 }
 
 // _NET_WM_WINDOW_TYPE
-	
+QList<LXCB::WINDOWTYPE> LXCB::WM_Get_Window_Type(WId win){
+  // Note: This will silently discard any unknown/non-standard window type flags
+  // The client should ensure to set at least one standardized type flag per the specifications.
+  QList<LXCB::WINDOWTYPE> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_window_type_unchecked(&EWMH, win);
+  xcb_ewmh_get_atoms_reply_t reply;
+  if(1==xcb_ewmh_get_wm_window_type_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.atoms_len; i++){
+      if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ out << LXCB::DESKTOP; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DOCK){ out << LXCB::DOCK; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ out << LXCB::TOOLBAR; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_MENU){ out << LXCB::MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_UTILITY){ out << LXCB::UTILITY; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_SPLASH){ out << LXCB::SPLASH; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DIALOG){ out << LXCB::DIALOG; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ out << LXCB::DROPDOWN_MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ out << LXCB::POPUP_MENU; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ out << LXCB::TOOLTIP; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ out << LXCB::NOTIFICATION; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_COMBO){ out << LXCB::COMBO; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DND){ out << LXCB::DND; }
+      else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NORMAL){ out << LXCB::NORMALTYPE; }
+    }
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Window_Type(WId win, QList<LXCB::WINDOWTYPE> list){
+  //Convert to the XCB format
+  xcb_atom_t array[list.length()];
+  for(int i=0; i<list.length(); i++){
+    switch(list[i]){
+      case LXCB::DESKTOP:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_DESKTOP; break;
+      case LXCB::DOCK:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_DOCK; break;
+      case LXCB::TOOLBAR:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_TOOLBAR; break;
+      case LXCB::MENU:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_MENU; break;
+      case LXCB::UTILITY:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_UTILITY; break;
+      case LXCB::SPLASH:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_SPLASH; break;
+      case LXCB::DIALOG:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_DIALOG; break;
+      case LXCB::DROPDOWN_MENU:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU; break;
+      case LXCB::POPUP_MENU:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU; break;
+      case LXCB::TOOLTIP:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_TOOLTIP; break;
+      case LXCB::NOTIFICATION:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION; break;
+      case LXCB::COMBO:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_COMBO; break;
+      case LXCB::DND:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_DND; break;
+      default:
+	array[i] = EWMH._NET_WM_WINDOW_TYPE_NORMAL;
+    }
+  }
+  //Now set the property
+  xcb_ewmh_set_wm_window_type(&EWMH, win, list.length(), array);
+}
+
 // _NET_WM_STATE
-	
+QList<LXCB::WINDOWSTATE> LXCB::WM_Get_Window_States(WId win){
+  QList<LXCB::WINDOWSTATE> out;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
+  xcb_ewmh_get_atoms_reply_t reply;
+  if(1==xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &reply, NULL) ){
+    for(unsigned int i=0; i<reply.atoms_len; i++){
+      if(reply.atoms[i]==EWMH._NET_WM_STATE_MODAL){ out << LXCB::MODAL; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_STICKY){ out << LXCB::STICKY; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_VERT){ out << LXCB::MAX_VERT; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_MAXIMIZED_HORZ){ out << LXCB::MAX_HORZ; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SHADED){ out << LXCB::SHADED; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_TASKBAR){ out << LXCB::SKIP_TASKBAR; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_SKIP_PAGER){ out << LXCB::SKIP_PAGER; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_HIDDEN){ out << LXCB::HIDDEN; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_FULLSCREEN){ out << LXCB::FULLSCREEN; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_ABOVE){ out << LXCB::KEEP_ABOVE; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_BELOW){ out << LXCB::KEEP_BELOW; }
+      else if(reply.atoms[i]==EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ out << LXCB::DEMANDS_ATTENTION; }
+      //else if(reply.atoms[i]==EWMH._NET_WM_STATE_FOCUSED){ out << LXCB::FOCUSED; }
+    }
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list){
+  //Convert to the XCB format
+  xcb_atom_t array[list.length()];
+  for(int i=0; i<list.length(); i++){
+    switch(list[i]){
+      case LXCB::MODAL:
+	array[i] = EWMH._NET_WM_STATE_MODAL; break;
+      case LXCB::STICKY:
+	array[i] = EWMH._NET_WM_STATE_STICKY; break;
+      case LXCB::MAX_VERT:
+	array[i] = EWMH._NET_WM_STATE_MAXIMIZED_VERT; break;
+      case LXCB::MAX_HORZ:
+	array[i] = EWMH._NET_WM_STATE_MAXIMIZED_HORZ; break;
+      case LXCB::SHADED:
+	array[i] = EWMH._NET_WM_STATE_SHADED; break;
+      case LXCB::SKIP_TASKBAR:
+	array[i] = EWMH._NET_WM_STATE_SKIP_TASKBAR; break;
+      case LXCB::SKIP_PAGER:
+	array[i] = EWMH._NET_WM_STATE_SKIP_PAGER; break;
+      case LXCB::HIDDEN:
+	array[i] = EWMH._NET_WM_STATE_HIDDEN; break;
+      case LXCB::FULLSCREEN:
+	array[i] = EWMH._NET_WM_STATE_FULLSCREEN; break;
+      case LXCB::KEEP_ABOVE:
+	array[i] = EWMH._NET_WM_STATE_ABOVE; break;
+      case LXCB::KEEP_BELOW:
+	array[i] = EWMH._NET_WM_STATE_BELOW; break;
+      case LXCB::DEMANDS_ATTENTION:
+	array[i] = EWMH._NET_WM_STATE_DEMANDS_ATTENTION; break;
+      //case LXCB::FOCUSED:
+	//array[i] = EWMH._NET_WM_STATE_FOCUSED; break;
+    }
+  }
+  //Now set the property
+  xcb_ewmh_set_wm_state(&EWMH, win, list.length(), array);	
+}
+
 // _NET_WM_ALLOWED_ACTIONS
 	
 // _NET_WM_STRUT

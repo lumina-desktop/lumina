@@ -18,7 +18,7 @@ class LTBWidget : public QToolButton{
 	Q_OBJECT
 
 private:
-	LXCB::WINDOWSTATE cstate;
+	LXCB::WINDOWVISIBILITY cstate;
 	//QString rawstyle;
 	void updateBackground(){
 	  //QString background = "background: transparent; "; //default value
@@ -52,7 +52,7 @@ public:
 	~LTBWidget(){ 
 	}
 	
-	void setState(LXCB::WINDOWSTATE newstate){
+	void setState(LXCB::WINDOWVISIBILITY newstate){
 	  cstate = newstate;
 	  updateBackground();
 	}
