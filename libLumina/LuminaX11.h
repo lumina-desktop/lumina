@@ -300,25 +300,60 @@ public:
 	void WM_Set_Icon_Geometry(WId win, QRect geom);
 	
 	// _NET_WM_ICON
-	// Note: Don't write a "Set" routine for this - that is handled on the client side and not the WM/DE side
+	// Note: Don't write a "Set" routine for this - is handled on the client side and not the WM/DE side
 	QIcon WM_Get_Icon(WId win);
 	
 	// _NET_WM_PID
+	// Note: Don't write a "Set" routine for this - is handled on the client side and not the WM/DE side
+	unsigned int WM_Get_Pid(WId win);
 	
 	// _NET_WM_HANDLED_ICONS
+	// Note: Probably not going to need this - is used by pagers exclusively to tell the WM 
+	//  not to provide task manager icons (not needed for an integrated WM/DE combination)
+	bool WM_Get_Handled_Icons(WId win);
+	void WM_Set_Handled_Icons(WId win, bool set);
 	
 	// _NET_WM_USER_TIME
+	// Note: The user time property on a client window is supposed to be updated on user activity,
+	//   allowing the WM to be able to distinguish user activity from automated window actions
+	unsigned int WM_Get_User_Time(WId win);
+	void WM_Set_User_Time(WId win, unsigned int xtime);
 	
 	// _NET_WM_USER_TIME_WINDOW
+	// This returns the window to watch for time update events, 
+	//  instead of constantly polling all the (toplevel?) windows for the app
+	// IGNORED - xcb_ewmh library does not appear to have valid support for this property yet (11/13/15)
+	//WId WM_Get_User_Time_WIndow(WId win);
+	//void WM_Set_User_Time_Window(WId win, WId utwin);
 	
 	// _NET_FRAME_EXTENTS
 	QList<unsigned int> WM_Get_Frame_Extents(WId win); //Returns: [left,right,top,bottom] margins in pixels (always length 4)
 	void WM_Set_Frame_Extents(WId win, QList<unsigned int> margins); //Input: [left, right, top, bottom] - must be length 4
 	
 	// _NET_WM_OPAQUE_REGION
+	// NOT SUPPORTED - missing in xcb_ewmh library (11/13/15)
 	
 	// _NET_WM_BYPASS_COMPOSITOR
+	// NOT SUPPORTED - missing in xcb_ewmh library (11/13/15)
 	
+	// === SPECIAL WM PROTOCOLS (EWMH) ===
+	// _NET_WM_PING
+	// Note: Used to determine if a window/app is hung before killing the process (with PID)
+	// The client window should respond instantly if it is still active (waiting on user input for instance)
+	void WM_Send_Ping(WId win);
+	
+	// _NET_WM_SYNC_REQUEST
+	uint64_t WM_Get_Sync_Request_Counter(WId win);
+	//void WM_Set_Sync_Request_Counter(WId win, uint64_t count);
+	
+	// _NET_WM_FULLSCREEN_MONITORS
+	QList<unsigned int> WM_Get_Fullscreen_Monitors(WId win); //Returns: [top,bottom,left,right] monitor numbers for window to use when fullscreen
+	void WM_Set_Fullscreen_Montors(WId win, QList<unsigned int> list); //Input: [top,bottom,left,right] monitor numbers
+	
+	// _NET_WM_CM_S(n)
+	// Note: This is used to check/register the compositing manager for the current X screen (#n)
+	WId WM_Get_CM_Owner();
+	void WM_Set_CM_Owner(WId win);
 	
 private:
 	QList<xcb_atom_t> ATOMS;

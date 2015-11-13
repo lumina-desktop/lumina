@@ -1867,13 +1867,50 @@ QIcon LXCB::WM_Get_Icon(WId win){
 }
 
 // _NET_WM_PID
-	
+unsigned int LXCB::WM_Get_Pid(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_pid_unchecked(&EWMH, win);
+  uint32_t pid = 0;
+  xcb_ewmh_get_wm_pid_reply(&EWMH, cookie, &pid, NULL);
+  return pid;
+}
+
 // _NET_WM_HANDLED_ICONS
-	
+bool LXCB::WM_Get_Handled_Icons(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_handled_icons_unchecked(&EWMH, win);
+  uint32_t num = 0;
+  xcb_ewmh_get_wm_handled_icons_reply(&EWMH, cookie, &num, NULL);
+  return (num!=0); //This flag is set on the window
+}
+
+void LXCB::WM_Set_Handled_Icons(WId win, bool set){
+  xcb_ewmh_set_wm_handled_icons(&EWMH, win, (set ? 1 : 0));
+}
+
 // _NET_WM_USER_TIME
-	
+unsigned int LXCB::WM_Get_User_Time(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_user_time_unchecked(&EWMH, win);
+  uint32_t out = 0;
+  xcb_ewmh_get_wm_user_time_reply(&EWMH, cookie, &out, NULL);
+  return out;
+}
+
+void LXCB::WM_Set_User_Time(WId win, unsigned int xtime){
+  xcb_ewmh_set_wm_user_time(&EWMH, win, xtime);
+}
+
 // _NET_WM_USER_TIME_WINDOW
-	
+/*
+WId LXCB::WM_Get_User_Time_WIndow(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_user_time_window_unchecked(&EWMH, win);
+  xcb_window_t out;
+  xcb_ewmh_get_user_time_window_reply(&EWMH, cookie, &out, NULL);
+  return out;
+}
+
+void LXCB::WM_Set_User_Time_Window(WId win, WId utwin){
+  xcb_ewmh_set_wm_user_time_window(&EWMH, win, utwin);
+}*/
+
 // _NET_FRAME_EXTENTS
 QList<unsigned int> LXCB::WM_Get_Frame_Extents(WId win){
   //Returns: [left,right,top,bottom] margins in pixels (always length 4)
@@ -1894,7 +1931,56 @@ void LXCB::WM_Set_Frame_Extents(WId win, QList<unsigned int> margins){
   while(margins.length()<4){ margins << 0; }
   xcb_ewmh_set_frame_extents(&EWMH, win, margins[0], margins[1], margins[2], margins[3]);
 }
+
 // _NET_WM_OPAQUE_REGION
 	
 // _NET_WM_BYPASS_COMPOSITOR
 	
+// === SPECIAL WM PROTOCOLS (EWMH) ===
+// _NET_WM_PING
+void LXCB::WM_Send_Ping(WId win){
+  xcb_ewmh_send_wm_ping(&EWMH, win, XCB_TIME_CURRENT_TIME);
+}
+
+// _NET_WM_SYNC_REQUEST
+uint64_t LXCB::WM_Get_Sync_Request_Counter(WId win){
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_sync_request_counter_unchecked(&EWMH, win);
+  uint64_t count = 0;
+  xcb_ewmh_get_wm_sync_request_counter_reply(&EWMH, cookie, &count, NULL);
+  return count;
+}
+
+/*void LXCB::WM_Set_Sync_Request_Counter(WId win, uint64_t count){
+  
+}*/
+
+// _NET_WM_FULLSCREEN_MONITORS
+QList<unsigned int> LXCB::WM_Get_Fullscreen_Monitors(WId win){
+  //Returns: [top,bottom,left,right] monitor numbers for window to use when fullscreen
+  QList<unsigned int> out; out << 0 << 0 << 0 << 0; //init the output array
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_fullscreen_monitors_unchecked(&EWMH, win);
+  xcb_ewmh_get_wm_fullscreen_monitors_reply_t reply;
+  if(1==xcb_ewmh_get_wm_fullscreen_monitors_reply(&EWMH, cookie, &reply, NULL) ){
+    out[0] = reply.top; out[1] = reply.bottom;
+    out[2] = reply.left; out[3] = reply.right;
+  }
+  return out;
+}
+
+void LXCB::WM_Set_Fullscreen_Montors(WId win, QList<unsigned int> list){
+  //Input: [top,bottom,left,right] monitor numbers
+  while(list.length()<4){ list << 0; }
+  xcb_ewmh_set_wm_fullscreen_monitors(&EWMH, win, list[0], list[1], list[2], list[3]);
+}
+
+// _NET_WM_CM_S(n)
+WId LXCB::WM_Get_CM_Owner(){
+  xcb_get_selection_owner_cookie_t cookie = xcb_ewmh_get_wm_cm_owner_unchecked(&EWMH, QX11Info::appScreen());
+  xcb_window_t owner = 0;
+  xcb_ewmh_get_wm_cm_owner_reply(&EWMH, cookie, &owner, NULL);
+  return owner;
+}
+
+void LXCB::WM_Set_CM_Owner(WId win){
+  xcb_ewmh_set_wm_cm_owner(&EWMH, QX11Info::appScreen(), win, XCB_TIME_CURRENT_TIME,0,0);
+}
