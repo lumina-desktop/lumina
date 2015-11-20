@@ -162,7 +162,8 @@ void LSession::setupSession(){
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   QApplication::processEvents();
-  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  launchStartupApps();
+  //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   QApplication::processEvents();
   splash.close(); 
 }
@@ -576,7 +577,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       break;
     }
   }
-  if(desk.isNull()){ return; } //Unable to deteremine screen
+  if(desk.isNull()){ return; } //Unable to determine screen
   //Adjust the window location if necessary
   if(maximize){
     if(DEBUG){ qDebug() << " - Maximizing New Window:" << desk.width() << desk.height(); }
@@ -599,7 +600,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
         //just move the window - there is room for it above
 	geom.setBottom(desk.bottom()-frame[1]); 
 	fgeom.setBottom(desk.bottom());
-      }else if(geom.height() < diff){ //window bigger than the difference
+      }else if(geom.height() > diff){ //window bigger than the difference
 	//Need to resize the window - keeping the origin point the same
 	geom.setHeight( geom.height()-diff-1 ); //shrink it by the difference (need an extra pixel somewhere)
 	fgeom.setHeight( fgeom.height()-diff );

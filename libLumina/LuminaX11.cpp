@@ -1170,6 +1170,7 @@ bool LXCB::WM_ManageWindow(WId win, bool needsmap){
                           XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_FOCUS_CHANGE)
   //return whether the window is/should be managed
+  if(WM_ICCCM_GetClass(win).isEmpty() ){ return false; }
   xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), win);
   xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
   if(attr == 0){ return false; } //could not get attributes of window

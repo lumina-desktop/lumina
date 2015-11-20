@@ -39,30 +39,38 @@ void LWindowFrame::InitWindow(){
 	titleBar = new QLabel(this); //This is the "container" for all the title buttons/widgets
 	  titleBar->setObjectName("TitleBar");
 	  titleBar->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+	  titleBar->setFocusPolicy(Qt::NoFocus);
+	  titleBar->setCursor(Qt::ArrowCursor);
 	title = new QLabel(this); //Shows the window title/text
 	  title->setObjectName("Title");
 	  title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	  title->setCursor(Qt::ArrowCursor);
+	  title->setFocusPolicy(Qt::NoFocus);
 	icon = new QLabel(this); //Contains the window icon
 	  icon->setObjectName("Icon");
 	  icon->setCursor(Qt::ArrowCursor);
+	  icon->setFocusPolicy(Qt::NoFocus);
 	minB = new QToolButton(this); //Minimize Button
 	  minB->setObjectName("Minimize");
 	  minB->setCursor(Qt::ArrowCursor);
+	  minB->setFocusPolicy(Qt::NoFocus);
 	  connect(minB, SIGNAL(clicked()), this, SLOT(minClicked()) );
 	maxB = new QToolButton(this); //Maximize Button
 	  maxB->setObjectName("Maximize");
 	  maxB->setCursor(Qt::ArrowCursor);
+	  maxB->setFocusPolicy(Qt::NoFocus);
 	  connect(maxB, SIGNAL(clicked()), this, SLOT(maxClicked()) );
 	closeB = new QToolButton(this);
 	  closeB->setObjectName("Close");
 	  closeB->setCursor(Qt::ArrowCursor);
+	  closeB->setFocusPolicy(Qt::NoFocus);
 	  connect(closeB, SIGNAL(clicked()), this, SLOT(closeClicked()) );
 	otherB = new QToolButton(this); //Button to place any other actions
 	  otherB->setObjectName("Options");
 	  otherB->setCursor(Qt::ArrowCursor);
 	  otherB->setPopupMode(QToolButton::InstantPopup);
 	  otherB->setStyleSheet("QToolButton::menu-indicator{ image: none; }");
+	  otherB->setFocusPolicy(Qt::NoFocus);
 	otherM = new QMenu(this); //menu of "other" actions for the window
 	  otherB->setMenu(otherM);
 	  connect(otherM, SIGNAL(triggered(QAction*)), this, SLOT(otherClicked(QAction*)) );
@@ -78,45 +86,48 @@ void LWindowFrame::InitWindow(){
 	titleBar->setLayout(HL);
 	QVBoxLayout *VL = new QVBoxLayout(this);
 	this->setLayout(VL);
-	VL->addWidget(titleBar);
-	VL->setAlignment(titleBar, Qt::AlignTop);
 	VL->setContentsMargins(0,0,0,0);
 	VL->setSpacing(0);
 	//Have the window take the same initial size of the client window
-	this->setGeometry( LWM::SYSTEM->WM_Window_Geom(CID) );
-	qDebug() << "First Geom:" << this->geometry();
-	if(this->width() < 100 && this->height() < 100){ this->resize(100,100); }
+	QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
+	this->setGeometry( geom );
+	qDebug() << "First Geom:" << geom;
+	if(geom.width() < 100 && geom.height() < 100){ this->resize(100,100); }
 	
 	//Now embed the native window into the frame
 	WIN = QWindow::fromWinId(CID);
 	WinWidget = QWidget::createWindowContainer( WIN, this);
+	  WinWidget->setCursor(Qt::ArrowCursor); //this is just a fallback - the window itself will adjust it
 	//WINBACK = new QBackingStore(WIN); //create a data backup for the widget
-	//this->layout()->addWidget( WinWidget );
-	//VL->setStretch(1,1);
+	
+	//Now assemble te initial layout for the window (all while still invisible)
+	VL->addWidget(titleBar);
+	VL->addWidget(WinWidget);
+        VL->setStretch(1,1);
 }
 
 LWindowFrame::ModState LWindowFrame::getStateAtPoint(QPoint pt, bool setoffset){
   //Note: pt should be in widget-relative coordinates, not global
   if(!this->layout()->geometry().contains(pt)){
     //above the frame itself - need to figure out which quadrant it is in (8-directions)
-    if(pt.y() < this->height()/3){
+    if(pt.y() < 3){
       //One of the top options
-      if(pt.x() < this->width()/3){ 
+      if(pt.x() < 3){ 
 	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
 	return ResizeTopLeft;
-      }else if(pt.x() > (2*this->width()/3)){ 
+      }else if(pt.x() > (this->width()-3)){ 
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
 	return ResizeTopRight;
       }else{ 
 	if(setoffset){ offset.setX(0); offset.setY(pt.y()); } //difference from top edge (X does not matter)
 	return ResizeTop; 
       }		    
-    }else if(pt.y() > (2*this->height())/3){
+    }else if(pt.y() > (this->height()-3) ){
       //One of the bottom options
-      if(pt.x() < this->width()/3){ 
+      if(pt.x() < 3){ 
 	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
 	return ResizeBottomLeft;
-      }else if(pt.x() > (2*this->width()/3)){ 
+      }else if(pt.x() > (this->width()-3)){ 
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
 	return ResizeBottomRight;
       }else{ 
@@ -125,12 +136,14 @@ LWindowFrame::ModState LWindowFrame::getStateAtPoint(QPoint pt, bool setoffset){
       }	
     }else{
       //One of the side options
-      if(pt.x() < this->width()/2){ 
+      if(pt.x() < 3){ 
 	if(setoffset){ offset.setX(pt.x()); offset.setY(0); } //difference from left edge (Y does not matter)
 	return ResizeLeft;
-      }else{ 
+      }else if(pt.x() > (this->width()-3) ){ 
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(0); } //difference from right edge (Y does not matter)
 	return ResizeRight;
+      }else{
+	return Normal;
       }
     }
   }
@@ -236,13 +249,12 @@ void LWindowFrame::showAnimation(LWM::WindowAction act){
       //anim->setStartValue( 0.0 );
       //anim->setEndValue( 1.0 );
     }else{
-      if(this->layout()->count() <2){ this->layout()->addWidget(WinWidget); }
+      ShowClient(true);
       this->raise();
       this->show(); //just show it right away
     }
     
   }else if(act==LWM::Hide){
-    if(this->layout()->count() >1){ this->layout()->removeWidget(WinWidget); }
     if(useanimation){
        //Collapse in on center point
       lastGeom = this->geometry();
@@ -255,7 +267,6 @@ void LWindowFrame::showAnimation(LWM::WindowAction act){
   }else if(act==LWM::Closed){
     //Need to clean up the container widget first to prevent XCB errors
     //qDebug() << "Window Closed:" << WIN->winId() << CID;
-    if(this->layout()->count() >1){ this->layout()->removeWidget(WinWidget); }
     if(useanimation){
        //Collapse in on center line
       lastGeom = this->geometry();
@@ -267,13 +278,26 @@ void LWindowFrame::showAnimation(LWM::WindowAction act){
     }
   }
   if(useanimation){ 
-    if(this->layout()->count() >1){ this->layout()->removeWidget(WinWidget); }
+    ShowClient(false);
     this->show();
-    //if(WIN!=0){ LWM::SYSTEM->WM_HideWindow(CID); }
     qDebug() << " - Starting Animation:" << act;
     lastAction = act;
     anim->start(); 
   };
+}
+
+void LWindowFrame::ShowClient(bool show){
+  if(show && this->layout()->indexOf(WinWidget)<0 && !Closing){
+    while(this->layout()->count()>0){ this->layout()->removeItem(0); }
+    this->layout()->addWidget(titleBar);
+    this->layout()->setAlignment(titleBar, Qt::AlignTop);
+    this->layout()->addWidget(WinWidget);
+    static_cast<QVBoxLayout*>(this->layout())->setStretch(1,1);
+    LWM::SYSTEM->WM_ShowWindow(CID);
+  }else if( !show && this->layout()->indexOf(WinWidget)>=0){
+    LWM::SYSTEM->WM_HideWindow(CID);
+    this->layout()->removeWidget(WinWidget);
+  }
 }
 
 void LWindowFrame::finishedAnimation(){
@@ -281,16 +305,17 @@ void LWindowFrame::finishedAnimation(){
   qDebug() << " - Finished Animation:" << lastAction;
   switch(lastAction){
     case LWM::Show:
-	if(WIN!=0 && !Closing){ LWM::SYSTEM->WM_ShowWindow(CID); }
-	if(this->layout()->count()<2){ this->layout()->addWidget(WinWidget); }
+	ShowClient(true);
         break;
     case LWM::Closed:
     case LWM::Hide:
 	this->hide();
+	LWM::SYSTEM->WM_HideWindow(this->winId());
     default:
 	break;
   }
   if(Closing){
+    qDebug() << "Emitting finished signal";
     emit Finished();
   }
 }
@@ -310,12 +335,6 @@ void LWindowFrame::windowChanged(LWM::WindowAction act){
   //A window property was changed - update accordingly
   switch(act){
     case LWM::Closed:
-	/*if(anim->state()==QAbstractAnimation::Running){ 
-	  anim->pause();
-	  //delete WinWidget;
-	  WIN = 0;
-	  anim->resume();
-	}*/
 	Closing = true;
     case LWM::Hide:
     case LWM::Show:
@@ -340,7 +359,7 @@ void LWindowFrame::closeClicked(){
 
 void LWindowFrame::minClicked(){
   qDebug() << "Minimize Window";
-  this->showMinimized();
+  //this->showMinimized(); //need direct modification with XCB
 }
 
 void LWindowFrame::maxClicked(){
