@@ -35,6 +35,8 @@
 
 #define URGENCYHINT (1L << 8) //For window urgency detection
 
+//Simple data container for the ICCCM hints (_size, _normal, _hints)
+
 //Simple data container for doing STRUT_PARTIAL input/output calculations
 class strut_geom{
 public:
@@ -44,6 +46,22 @@ public:
   strut_geom(){ start = end = thick = 0; }
   ~strut_geom(){}
 };
+
+/*class icccm_hints{
+public:
+  int x, y, width, height, min_width, min_height, max_width, max_height;
+  int width_inc, height_inc, min_aspect_num, min_aspect_den, max_aspect_num, max_aspect_den;
+  int base_width, base_height;
+  unsigned int flags;  //QFlags(LXCB::SIZE_HINT) combination
+  unsigned int win_gravity; //LXCB::GRAVITY value
+
+  icccm_hints(){
+    x=y=width=height=min_width=max_width=min_height=max_height = 0;
+    width_inc=height_inc=min_aspect_num=min_aspect_den=max_aspect_num=max_aspect_den = 0;
+    flags = win_gravity = 0;
+  }
+  ~icccm_hinits(){}
+};*/
 
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
@@ -59,9 +77,10 @@ public:
 	//Now enums which can have multiple values at once (Use the plural form for the QFlags)
 	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
 	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
+	enum SIZE_HINT { US_POSITION=1<<0, US_SIZE=1<<1, P_POSITION=1<<2, P_SIZE=1<<3, P_MIN_SIZE=1<<4, P_MAX_SIZE=1<<5, P_RESIZE_INC=1<<6, P_ASPECT=1<<7, BASE_SIZE=1<<8, P_WIN_GRAVITY=1<<9 };
+	Q_DECLARE_FLAGS(SIZE_HINTS, SIZE_HINT);
 	enum MOVERESIZE_WINDOW_FLAG { X=0x0, Y=0x1, WIDTH=0x2, HEIGHT=0x3};
 	Q_DECLARE_FLAGS(MOVERESIZE_WINDOW_FLAGS, MOVERESIZE_WINDOW_FLAG);
-
 	
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 
@@ -129,10 +148,21 @@ public:
 
 	
 	//============
-	// WM Functions (directly changing properties/settings)
+	// WM Functions (directly changing/reading properties)
 	//  - Using these directly may prevent the WM from seeing the change
 	//============
-	void WM_CloseWindow(WId win);
+	void WM_CloseWindow(WId win, bool force = false);
+	void WM_ShowWindow(WId win);
+	void WM_HideWindow(WId win);
+	
+	WId WM_CreateWindow(WId parent = 0);
+	
+	// WM Utility Functions
+	QList<WId> WM_RootWindows(); //return all windows which have root as the parent
+	bool WM_ManageWindow(WId win, bool needsmap = true); //return whether the window is/should be managed
+	QRect WM_Window_Geom(WId win); //Return the current window geometry
+	void setupEventsForFrame(WId frame);
+	bool setupEventsForRoot(WId root = 0);
 	
 	// ICCCM Standards (older standards)
 	// -- WM_NAME
@@ -154,7 +184,7 @@ public:
 	
 	// -- WM_NORMAL_HINTS
 	
-	// -- WM_HINTS
+	// -- WM_HINTS (contains WM_STATE)
 	
 	// -- WM_PROTOCOLS
 	ICCCM_PROTOCOLS WM_ICCCM_GetProtocols(WId win);
@@ -364,5 +394,6 @@ private:
 //Now also declare the flags for Qt to be able to use normal operations on them
 Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::ICCCM_PROTOCOLS);
 Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::MOVERESIZE_WINDOW_FLAGS);
+Q_DECLARE_OPERATORS_FOR_FLAGS(LXCB::SIZE_HINTS);
 
 #endif

@@ -55,7 +55,7 @@ void LXCB::createWMAtoms(){
   ATOMS.clear();
   atoms.clear();
   //List the atoms needed by some WM functions
-  atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW"; //WM_PROTOCOLS
+  atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS"; //WM_PROTOCOLS
 
   //Create all the requests for the atoms
   QList<xcb_intern_atom_reply_t*> reply;
@@ -1107,10 +1107,133 @@ void LXCB::closeSystemTray(WId trayID){
 // WM Functions (directly changing properties/settings)
 //  - Using these directly may prevent the WM from seeing the change
 //============
-void LXCB::WM_CloseWindow(WId win){
-  xcb_destroy_window(QX11Info::connection(), win);
+void LXCB::WM_CloseWindow(WId win, bool force){
+
+  if(!force){ // && WM_ICCCM_GetProtocols(win).testFlag(LXCB::DELETE_WINDOW)){
+    //Send the window a WM_DELETE_WINDOW message
+    if(atoms.isEmpty()){ createWMAtoms(); } //need these atoms
+    xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = ATOMS[atoms.indexOf("WM_PROTOCOLS")];
+    event.data.data32[0] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")];  
+    event.data.data32[1] = XCB_TIME_CURRENT_TIME; //CurrentTime;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+    xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+    xcb_flush(QX11Info::connection());
+  }else{ xcb_destroy_window(QX11Info::connection(), win); }
+
 }
 
+void LXCB::WM_ShowWindow(WId win){
+  xcb_map_window(QX11Info::connection(), win);
+}
+
+void LXCB::WM_HideWindow(WId win){
+  xcb_unmap_window(QX11Info::connection(), win);
+}
+
+QList<WId> LXCB::WM_RootWindows(){
+  xcb_query_tree_cookie_t cookie = xcb_query_tree(QX11Info::connection(), QX11Info::appRootWindow());
+  xcb_query_tree_reply_t *reply = 0;
+  QList<WId> out;
+  reply=xcb_query_tree_reply(QX11Info::connection(), cookie, NULL);
+  if(reply!=0){
+    int num = xcb_query_tree_children_length(reply);
+    xcb_window_t *children = xcb_query_tree_children(reply);
+    for(int i=0; i<num; i++){ 
+      if(!out.contains(children[i])){ out << children[i]; }
+    }
+    free(reply);
+  }
+  return out;
+}
+
+WId LXCB::WM_CreateWindow(WId parent){
+  if(parent ==0){ parent = QX11Info::appRootWindow(); }
+  xcb_screen_t *root_screen = xcb_aux_get_screen(QX11Info::connection(), QX11Info::appScreen());
+  uint32_t params[] = {1};
+  WId win = xcb_generate_id(QX11Info::connection()); //need a new ID
+    xcb_create_window(QX11Info::connection(), root_screen->root_depth, \
+		win, parent, -1, -1, 1, 1, 0, \
+		XCB_WINDOW_CLASS_INPUT_OUTPUT, root_screen->root_visual, \
+		XCB_CW_OVERRIDE_REDIRECT, params);
+  return win;
+}
+
+bool LXCB::WM_ManageWindow(WId win, bool needsmap){
+#define CLIENT_WIN_EVENT_MASK (XCB_EVENT_MASK_PROPERTY_CHANGE |  \
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_FOCUS_CHANGE)
+  //return whether the window is/should be managed
+  xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), win);
+  xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
+  if(attr == 0){ return false; } //could not get attributes of window
+  if(attr->override_redirect){ free(attr); return false; } //window has override redirect set (do not manage)
+  if(!needsmap && attr->map_state != XCB_MAP_STATE_VIEWABLE){ 
+    //window is never supposed to be visible (lots of these)
+    //if( !WM_ICCCM_GetClass(win).contains("xterm") ){ //Some windows mis-set this flag
+    qDebug() << " - Not Viewable.." << WM_ICCCM_GetClass(win);
+    free(attr);  return false; 
+    //}
+  }
+  //Setup event handling on the window
+  if( xcb_request_check(QX11Info::connection(), \
+	  xcb_change_window_attributes_checked(QX11Info::connection(), win, XCB_CW_EVENT_MASK, (uint32_t[]){CLIENT_WIN_EVENT_MASK } ) ) ){
+    //Could not change event mask - did the window get deleted already?
+    free(attr);
+    qDebug() << " - Could not change event mask";
+    return false;		  
+  }
+  
+  return true;
+}
+
+QRect LXCB::WM_Window_Geom(WId win){
+  xcb_get_geometry_cookie_t cookie = xcb_get_geometry_unchecked(QX11Info::connection(), win);
+  xcb_get_geometry_reply_t *reply = 0;
+  QRect geom;
+  reply = xcb_get_geometry_reply(QX11Info::connection(), cookie, NULL);
+  if(reply!=0){
+    geom = QRect(reply->x, reply->y, reply->width, reply->height);
+    free(reply);
+  }
+  return geom;
+}
+
+void LXCB::setupEventsForFrame(WId frame){
+  #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
+                          XCB_EVENT_MASK_BUTTON_RELEASE | 	\
+                          XCB_EVENT_MASK_POINTER_MOTION |	\
+			  XCB_EVENT_MASK_BUTTON_MOTION |	\
+                          XCB_EVENT_MASK_EXPOSURE |		\
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_ENTER_WINDOW)
+	
+  xcb_change_window_attributes(QX11Info::connection(), frame, XCB_CW_EVENT_MASK, (uint32_t[]){FRAME_WIN_EVENT_MASK } );
+}
+
+bool LXCB::setupEventsForRoot(WId root){
+ #define ROOT_WIN_EVENT_MASK (XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |  \
+                         XCB_EVENT_MASK_BUTTON_PRESS | 	\
+                         XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+			 XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
+                         XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+                         XCB_EVENT_MASK_POINTER_MOTION | 	\
+                         XCB_EVENT_MASK_PROPERTY_CHANGE | 	\
+			 XCB_EVENT_MASK_FOCUS_CHANGE |	\
+                         XCB_EVENT_MASK_ENTER_WINDOW)
+	
+  if(root==0){ root = QX11Info::appRootWindow(); }
+  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root, XCB_CW_EVENT_MASK, (uint32_t[]){ROOT_WIN_EVENT_MASK} ) ); 
+  return (status==0);
+}
 // --------------------------------------------------
 // ICCCM Standards (older standards)
 // --------------------------------------------------
@@ -1176,7 +1299,7 @@ void LXCB::WM_ICCCM_SetClass(WId win, QString name){
 }
 
 // -- WM_TRANSIENT_FOR
-WId WM_ICCCM_GetTransientFor(WId win){
+WId LXCB::WM_ICCCM_GetTransientFor(WId win){
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_transient_for_unchecked(QX11Info::connection(), win);
   xcb_window_t trans;
   if(1!= xcb_icccm_get_wm_transient_for_reply(QX11Info::connection(), cookie, &trans, NULL) ){
@@ -1186,7 +1309,7 @@ WId WM_ICCCM_GetTransientFor(WId win){
   }
 }
 
-void WM_ICCCM_SetTransientFor(WId win, WId transient){
+void LXCB::WM_ICCCM_SetTransientFor(WId win, WId transient){
   xcb_icccm_set_wm_transient_for(QX11Info::connection(), win, transient);
 }
 

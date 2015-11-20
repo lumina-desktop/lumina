@@ -30,20 +30,23 @@ EventFilter::EventFilter() : QObject(){
   EF = new XCBEventFilter(this);
   L_XCB::root_screen = xcb_aux_get_screen(QX11Info::connection(), QX11Info::appScreen());
   L_XCB::root = L_XCB::root_screen->root;
+  SSLocked = false;
+  WMFlag = 0;
 }
 
 void EventFilter::start(){
   if(DEBUG){ qDebug() << " - Install event filter..."; }
   QCoreApplication::instance()->installNativeEventFilter(EF);
    if(DEBUG){ qDebug() << " - Run request check..."; }
-   xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), L_XCB::root, XCB_CW_EVENT_MASK, (uint32_t[]){ROOT_EVENT_MASK} ) );
-   if(status){
+   if(!LWM::SYSTEM->setupEventsForRoot()){
      qCritical() << "[ERROR] Unable to setup WM event retrieval. Is another WM running?";
      exit(1);
    }
-   //xcb_screensaver_select_input(QX11Info::connection(),QX11Info::appRootWindow() , masks);
-   xcb_flush(QX11Info::connection());
-	
+  if(DEBUG){ qDebug() << " - Create WM ID Window"; }
+  WMFlag = LWM::SYSTEM->WM_CreateWindow();
+      LWM::SYSTEM->setupEventsForRoot(WMFlag);
+      LWM::SYSTEM->WM_Set_Supporting_WM(WMFlag);
+  QCoreApplication::instance()->flush();
 }
 	
 //Constructor for the XCB event filter
@@ -64,96 +67,138 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	  //Now parse the event and emit signals as necessary
 	  switch( ev->response_type & ~0x80){
 //==============================
+//  INTERACTIVITY EVENTS
+//==============================
 	    case XCB_KEY_PRESS:
-	 	qDebug() << "Key Press Event";
+		//This is a keyboard key press
+	 	//qDebug() << "Key Press Event";
 		obj->emit NewInputEvent();
+	        stopevent = BlockInputEvent( ((xcb_key_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
 	    case XCB_KEY_RELEASE:
-		qDebug() << "Key Release Event";
+		//This is a keyboard key release
+		//qDebug() << "Key Release Event";
 		obj->emit NewInputEvent();
+	        stopevent = BlockInputEvent( ((xcb_key_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
 	    case XCB_BUTTON_PRESS:
-		qDebug() << "Button Press Event";
+		//This is a mouse button press
+		//qDebug() << "Button Press Event";
 		obj->emit NewInputEvent();
+		stopevent = BlockInputEvent( ((xcb_button_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
+	        if(!stopevent){
+		  //Activate the window right now if needed
+		  if(LWM::SYSTEM->WM_Get_Active_Window()!=((xcb_button_press_event_t *) ev)->root){
+		    LWM::SYSTEM->WM_Set_Active_Window( ((xcb_button_press_event_t *) ev)->root);
+		  }
+		}
 		break;
 	    case XCB_BUTTON_RELEASE:
-		qDebug() << "Button Release Event";
-		obj->emit NewInputEvent();
+		//This is a mouse button release
+		//qDebug() << "Button Release Event";
+	        //xcb_button_release_event_t *tmp = (xcb_button_release_event_t *)ev;
+		stopevent = BlockInputEvent( ((xcb_button_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
 	    case XCB_MOTION_NOTIFY:
-		qDebug() << "Motion Notify Event";
+		//This is a mouse movement event
+		//qDebug() << "Motion Notify Event";
 		obj->emit NewInputEvent();
+	        stopevent = BlockInputEvent( ((xcb_motion_notify_event_t *) ev)->root ); //use the main "root" window - not the child widget);
+	        break;
+	    case XCB_ENTER_NOTIFY:
+		//This is a mouse movement event when mouse goes over a new window
+		//qDebug() << "Enter Notify Event";
+		obj->emit NewInputEvent();
+	        stopevent = BlockInputEvent( ((xcb_enter_notify_event_t *) ev)->root );
+	        break;
+	    case XCB_LEAVE_NOTIFY:
+		//This is a mouse movement event when mouse goes leaves a window
+		//qDebug() << "Leave Notify Event";
+		obj->emit NewInputEvent();
+	        stopevent = BlockInputEvent();
 	        break;
 //==============================
-	    case XCB_PROPERTY_NOTIFY:
-		qDebug() << "Property Notify Event:";
-	        //qDebug() << " - Root Window:" << QX11Info::appRootWindow();
+	    case XCB_EXPOSE:
+		//qDebug() << "Expose Notify Event:";
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
-		//System-specific proprty change
-		if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
-		  //Update the status/list of all running windows
-		  //session->WindowPropertyEvent();	
-			
-		//window-specific property change
-		}else if( WinNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
-		  //Ping only that window
-		  //session->WindowPropertyEvent( ((xcb_property_notify_event_t*)ev)->window );
-		  //session->WindowPropertyEvent();
-	        }
+		break;
+//==============================
+	    case XCB_MAP_NOTIFY:
+		break; //This is just a notification that a window was mapped - nothing needs to change here
+	    case XCB_MAP_REQUEST:
+		qDebug() << "Window Map Request Event";
+	        obj->emit ModifyWindow( ((xcb_map_request_event_t *) ev)->window, LWM::Show);
 		break;
 //==============================	    
-	    case XCB_CLIENT_MESSAGE:
-		qDebug() << "Client Message Event";
-		//qDebug() << " - Root Window:" << QX11Info::appRootWindow();
-		//qDebug() << " - Given Window:" << ((xcb_client_message_event_t*)ev)->window;
-		//if( TrayDmgFlag!=0 &&  ((xcb_client_message_event_t*)ev)->type == _NET_SYSTEM_TRAY_OPCODE && ((xcb_client_message_event_t*)ev)->format == 32){
-		  //data32[0] is timestamp, [1] is opcode, [2] is  window handle
-		  //if(SYSTEM_TRAY_REQUEST_DOCK == ((xcb_client_message_event_t*)ev)->data.data32[1]){
-		      //session->SysTrayDockRequest( ((xcb_client_message_event_t*)ev)->data.data32[2] );
-		  //}
-		  //Ignore the System Tray messages at the moment (let the WM handle it)
-		  
-		//window-specific property changes
-		/*}else if( ((xcb_client_message_event_t*)ev)->type == session->XCB->EWMH._NET_WM_STATE ){
-		  if( session->XCB->WindowIsMaximized( ((xcb_client_message_event_t*)ev)->window ) ){
-		    //Quick fix for maximized windows (since Fluxbox is not doing the STRUT detection properly)
-		    session->adjustWindowGeom( ((xcb_client_message_event_t*)ev)->window );
-		  }
-		  session->WindowPropertyEvent( ((xcb_client_message_event_t*)ev)->window );*/
-		//}else if( WinNotifyAtoms.contains( ((xcb_client_message_event_t*)ev)->type ) ){
-		  //Ping only that window
-		  //session->WindowPropertyEvent( ((xcb_client_message_event_t*)ev)->window );
-		  //session->WindowPropertyEvent();
-	        //}
+	    case XCB_CREATE_NOTIFY:
+		qDebug() << "Window Create Event";
 	        break;
+//==============================
+	    case XCB_UNMAP_NOTIFY:
+		qDebug() << "Window Unmap Event";
+		obj->emit ModifyWindow( ((xcb_unmap_notify_event_t *)ev)->window, LWM::Hide);
+		break;
 //==============================	    
 	    case XCB_DESTROY_NOTIFY:
 		qDebug() << "Window Closed Event";
-		//session->WindowClosedEvent( ( (xcb_destroy_notify_event_t*)ev )->window );
+	        obj->emit WindowClosed( ((xcb_destroy_notify_event_t *) ev)->window );
+	        break;
+//==============================
+	    case XCB_FOCUS_IN:
+		//qDebug() << "Focus In Event:";
+		break;	    
+//==============================
+	    case XCB_FOCUS_OUT:
+		//qDebug() << "Focus Out Event:";
+		break;
+//==============================
+	    case XCB_PROPERTY_NOTIFY:
+		//qDebug() << "Property Notify Event:";
+		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
+		break;
+//==============================	    
+	    case XCB_CLIENT_MESSAGE:
+		//qDebug() << "Client Message Event";
+		//qDebug() << " - Given Window:" << ((xcb_client_message_event_t*)ev)->window;
 	        break;
 //==============================	    
 	    case XCB_CONFIGURE_NOTIFY:
-		qDebug() << "Configure Notify Event";
-		//session->WindowConfigureEvent( ((xcb_configure_notify_event_t*)ev)->window );
+		//qDebug() << "Configure Notify Event";
+	        break;
+//==============================	    
+	    case XCB_CONFIGURE_REQUEST:
+		//qDebug() << "Configure Request Event";
 	        break;
 //==============================	    
 	    case XCB_SELECTION_CLEAR:
-		qDebug() << "Selection Clear Event";
-		//session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );  
+		//qDebug() << "Selection Clear Event";
 	        break;
 //==============================	    
+	    case 85: //not sure what event this is - but it seems to come up very often (just hide the notice)
+	    case 0:
+	    case XCB_GE_GENERIC:
+		break; //generic event - don't do anything special
 	    default:
-		//if(TrayDmgFlag!=0){
-		  //if( (ev->response_type & ~0x80)==TrayDmgFlag){
-		    //session->WindowDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
-		  //}
-		//}
-	        //else{
-	          qDebug() << "Default Event:" << (ev->response_type & ~0x80);
-	        //}
+		qDebug() << "Default Event:" << (ev->response_type & ~0x80);
 //==============================
 	  }
 	}
-	//qDebug() << " - finished event";
 	return stopevent;
+}
+
+bool XCBEventFilter::BlockInputEvent(WId win){
+  //Checks the current state of the WM and sets the stop flag as needed
+  // - Always let the screensaver know about the event first (need to reset timers and such)
+  obj->emit NewInputEvent();
+  // - Check the state of the screensaver
+  
+  if(obj->SSLocked){ qDebug() << "SS Locked"; return true; }
+  // - Check the state of any fullscreen apps
+  else if( win!=0 && !obj->FS_WINS.isEmpty()){
+    if(!obj->FS_WINS.contains(win) ){
+      //If this event is for an app underneath a fullscreen window - stop it
+      if(obj->FS_WINS.length() == QApplication::desktop()->screenCount()){ qDebug() << "Screens Covered"; return true; } //all screens covered right now
+    }
+  }
+  return false;
 }

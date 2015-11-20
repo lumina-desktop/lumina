@@ -57,7 +57,6 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   settingsmenu = 0;
   currTranslator=0;
   mediaObj=0;
-  //audioThread=0;
   sessionsettings=0;
   //Setup the event filter for Qt5
   evFilter =  new XCBEventFilter(this);
@@ -162,11 +161,9 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  //QTimer::singleShot(3000, this, SLOT(launchStartupApps()) ); //startup these processes in 3 seconds
   QApplication::processEvents();
-  //QtConcurrent::run(this, &LSession::launchStartupApps);
-  //launchStartupApps(&splash);
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  QApplication::processEvents();
   splash.close(); 
 }
 

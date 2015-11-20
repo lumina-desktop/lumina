@@ -11,6 +11,7 @@
 
 #include "LScreenSaver.h"
 #include "LXcbEventFilter.h"
+#include "LWindowManager.h"
 
 class WMSession : public QObject{
 	Q_OBJECT
@@ -25,9 +26,10 @@ private:
 	EventFilter *EFILTER;
 	//ScreenSaver
 	LScreenSaver *SS;
-
 	//Window Manager
-
+	LWindowManager *WM;
+	
+	QThread *EVThread; //X Event thread
 
 public slots:
 	void reloadIcons();

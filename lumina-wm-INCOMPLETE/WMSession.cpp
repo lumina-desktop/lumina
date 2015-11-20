@@ -15,9 +15,18 @@ WMSession::WMSession(){
   EFILTER = new EventFilter();
   if(DEBUG){ qDebug() << "Creating Screen Saver..."; }
   SS = new LScreenSaver();
-	
+  if(DEBUG){ qDebug() << "Creating Window Manager..."; }
+  WM = new LWindowManager();  
+  EVThread = new QThread();
+    EFILTER->moveToThread(EVThread);
   //Setup connections
   connect(EFILTER, SIGNAL(NewInputEvent()), SS, SLOT(newInputEvent()) );
+  connect(EFILTER, SIGNAL(NewManagedWindow(WId)), WM, SLOT(NewWindow(WId)) );
+  connect(EFILTER, SIGNAL(WindowClosed(WId)), WM, SLOT(ClosedWindow(WId)) );
+  connect(EFILTER, SIGNAL(ModifyWindow(WId, LWM::WindowAction)), WM, SLOT(ModifyWindow(WId,LWM::WindowAction)) );
+  connect(SS, SIGNAL(StartingScreenSaver()), EFILTER, SLOT(StartedSS()) );
+  connect(SS, SIGNAL(ClosingScreenSaver()), EFILTER, SLOT(StoppedSS()) );
+  connect(WM, SIGNAL(NewFullScreenWindows(QList<WId>)), EFILTER, SLOT(FullScreenChanged(QList<WId>)) );
 }
 
 WMSession::~WMSession(){
@@ -29,7 +38,10 @@ void WMSession::start(bool SSONLY){
   SS->start();
   if(SSONLY){ return; }
   //Now start pulling/filtering events
+  if(DEBUG){ qDebug() << "Starting Window Manager..."; }
+  WM->start();
   if(DEBUG){ qDebug() << "Starting Event Filter..."; }
+  EVThread->start();
   EFILTER->start();
   if(DEBUG){ qDebug() << "Done Starting WM session..."; }
 }

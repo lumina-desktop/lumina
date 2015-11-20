@@ -42,6 +42,7 @@
 #include <QHostInfo>
 #include <QDesktopWidget>
 #include <QStyleOption>
+#include <QThread>
 
 // libLumina includes
 #include <LuminaX11.h>
@@ -62,7 +63,7 @@
 //Global flags/structures
 namespace LWM{
 	//Flags/enumerations
-	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed};
+	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
 	
 	//Data structures
 	extern LXCB *SYSTEM;

@@ -42,7 +42,7 @@ int main(int argc, char ** argv)
       qDebug() << " - Loading window frame...";
       LWindow win(dlg.winId()); //have it wrap around the dialog
       qDebug() << " - Show frame...";
-      win.windowChanged(LWM::Show);
+      win.frame()->windowChanged(LWM::Show);
       qDebug() << " - Start event loop...";
       a.setQuitOnLastWindowClosed(true);
       return a.exec();

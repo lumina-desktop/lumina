@@ -9,14 +9,11 @@
 
 #include "GlobalDefines.h"
 
-class LWindow : public QFrame{
+class LWindowFrame : public QFrame{
 	Q_OBJECT
 public:
-	LWindow(WId client); //MUST have a valid client window
-	~LWindow();
-
-	WId clientID();
-	bool hasFrame();
+	LWindowFrame(WId client, QWidget *parent = 0); //MUST have a valid client window
+	~LWindowFrame();
 
 private:
 	void InitWindow(); //Initialize all  the internal widgets
@@ -32,8 +29,11 @@ private:
 	//General Properties/Modifications
 	WId CID; //Client ID
 	QWindow *WIN; //Embedded window container
+	QWidget *WinWidget;
+	bool Closing;
+	LWM::WindowAction lastAction;
 	//QBackingStore *WINBACK;
-	void SyncSize(); //sync the window/frame geometries
+	void SyncSize(bool fromwin = false); //sync the window/frame geometries
 	void SyncText();
 	
 	//Window Frame Widgets/Items
@@ -45,7 +45,8 @@ private:
 	//Animations
 	QPropertyAnimation *anim; //used for appear/disappear animations
 	QRect lastGeom; //used for appear/disappear animations
-	void showAnimation(LWM::WindowAction);
+	void showAnimation(LWM::WindowAction); //sets lastAction
+
 	
 public slots:
 	//These slots are generally used for the outside event watcher to prod for changes
@@ -53,19 +54,55 @@ public slots:
 	void windowChanged(LWM::WindowAction);
 
 private slots:
+	void finishedAnimation(); //uses lastAction
 	void closeClicked();
 	void minClicked();
 	void maxClicked();
 	void otherClicked(QAction*);
 
+	void CloseAll();
+	
 protected:
 	void mousePressEvent(QMouseEvent*);
 	void mouseMoveEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent*);
 
 signals:
-
-
+	void Finished(); //This means the window is completely finished (with animations and such) and should be removed from any lists
+	
 };
 
+class LWindow : public QObject{
+	Q_OBJECT
+signals:
+	void Finished(WId client); //ready to be removed
+private:
+	WId CID;
+	LWindowFrame *FID;
+private slots:
+	void frameclosed(){
+	  qDebug() << " - Window got frame closed signal";
+	  FID->close();
+	  delete FID;
+	  emit Finished(CID);
+	}
+public:
+	LWindow(WId client){
+	  FID= 0;
+	  CID = client;
+	  QList<LXCB::WINDOWTYPE> list = LWM::SYSTEM->WM_Get_Window_Type(CID);
+	  if(list.isEmpty() || (list.first()==LXCB::T_DIALOG || list.first()==LXCB::T_NORMAL) ){
+	    FID = new LWindowFrame(CID);
+	    connect(FID, SIGNAL(Finished()), this, SLOT(frameclosed()) );
+	  }
+	}
+	~LWindow(){ 
+	  if(FID!=0){delete FID;}
+	}
+	
+	WId clientID(){ return CID; }
+	bool hasFrame(){ return FID!=0; }
+	LWindowFrame* frame(){ return FID; }
+
+};
 #endif

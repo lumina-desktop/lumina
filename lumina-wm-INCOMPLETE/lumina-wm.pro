@@ -31,7 +31,8 @@ SOURCES += main.cpp \
 		SSBaseWidget.cpp \
 		LLockScreen.cpp \
 		LXcbEventFilter.cpp \
-		LWindow.cpp
+		LWindow.cpp \
+		LWindowManager.cpp
 
 
 HEADERS  += GlobalDefines.h \
@@ -40,7 +41,8 @@ HEADERS  += GlobalDefines.h \
 		SSBaseWidget.h \
 		LLockScreen.h \
 		LXcbEventFilter.h \
-		LWindow.h
+		LWindow.h \
+		LWindowManager.h
 
 FORMS    += LLockScreen.ui
 
