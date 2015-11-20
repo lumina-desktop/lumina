@@ -86,7 +86,9 @@ void LWindowFrame::InitWindow(){
 	titleBar->setLayout(HL);
 	QVBoxLayout *VL = new QVBoxLayout(this);
 	this->setLayout(VL);
-	VL->setContentsMargins(0,0,0,0);
+	//The WinWidget container appears shifted right/down by 1 pixel for some reason
+	// Adjust the margins to account for this variation
+	VL->setContentsMargins(1,1,2,2); 
 	VL->setSpacing(0);
 	//Have the window take the same initial size of the client window
 	QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
@@ -101,9 +103,9 @@ void LWindowFrame::InitWindow(){
 	//WINBACK = new QBackingStore(WIN); //create a data backup for the widget
 	
 	//Now assemble te initial layout for the window (all while still invisible)
-	VL->addWidget(titleBar);
+	/*VL->addWidget(titleBar);
 	VL->addWidget(WinWidget);
-        VL->setStretch(1,1);
+        VL->setStretch(1,1);*/
 }
 
 LWindowFrame::ModState LWindowFrame::getStateAtPoint(QPoint pt, bool setoffset){
@@ -309,6 +311,7 @@ void LWindowFrame::finishedAnimation(){
         break;
     case LWM::Closed:
     case LWM::Hide:
+	this->lower();
 	this->hide();
 	LWM::SYSTEM->WM_HideWindow(this->winId());
     default:
@@ -359,7 +362,7 @@ void LWindowFrame::closeClicked(){
 
 void LWindowFrame::minClicked(){
   qDebug() << "Minimize Window";
-  //this->showMinimized(); //need direct modification with XCB
+  windowChanged(LWM::Hide);
 }
 
 void LWindowFrame::maxClicked(){
