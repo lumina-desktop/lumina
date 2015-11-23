@@ -46,7 +46,7 @@ private:
 	QPropertyAnimation *anim; //used for appear/disappear animations
 	QRect lastGeom; //used for appear/disappear animations
 	void showAnimation(LWM::WindowAction); //sets lastAction
-
+	void ShowClient(bool show);
 	
 public slots:
 	//These slots are generally used for the outside event watcher to prod for changes
@@ -79,19 +79,25 @@ signals:
 private:
 	WId CID;
 	LWindowFrame *FID;
+	bool needsFrame(QList<LXCB::WINDOWTYPE> list){
+	  if(list.isEmpty()){ return true; } //assume a normal window (fallback)
+	  return !(list.contains(LXCB::T_DESKTOP) || list.contains(LXCB::T_DOCK) || list.contains(LXCB::T_TOOLBAR) \
+		|| list.contains(LXCB::T_UTILITY) || list.contains(LXCB::T_SPLASH) || list.contains(LXCB::T_DROPDOWN_MENU) \
+		|| list.contains(LXCB::T_TOOLTIP) || list.contains(LXCB::T_POPUP_MENU) || list.contains(LXCB::T_TOOLTIP) \
+	        || list.contains(LXCB::T_COMBO) || list.contains(LXCB::T_DND) );
+	}
 private slots:
 	void frameclosed(){
 	  qDebug() << " - Window got frame closed signal";
-	  FID->close();
-	  delete FID;
+	  //FID->close();
+	  //delete FID;
 	  emit Finished(CID);
 	}
 public:
 	LWindow(WId client){
 	  FID= 0;
 	  CID = client;
-	  QList<LXCB::WINDOWTYPE> list = LWM::SYSTEM->WM_Get_Window_Type(CID);
-	  if(list.isEmpty() || (list.first()==LXCB::T_DIALOG || list.first()==LXCB::T_NORMAL) ){
+	  if( needsFrame(LWM::SYSTEM->WM_Get_Window_Type(CID)) ){
 	    FID = new LWindowFrame(CID);
 	    connect(FID, SIGNAL(Finished()), this, SLOT(frameclosed()) );
 	  }

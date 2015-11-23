@@ -148,7 +148,10 @@ void LWindowManager::RepaintWindows(){
 //=================
 void LWindowManager::FinishedWindow(WId win){
   for(int i=0; i<WINS.length(); i++){
-    if(WINS[i]->clientID() == win){ qDebug() << " - Finished Window"; delete WINS.takeAt(i); break; }
+    if(WINS[i]->clientID() == win){ 
+      qDebug() << " - Finished Window"; 
+      delete WINS.takeAt(i); break; 
+    }
   }
   //Now update the list of clients
   RestackWindows();
