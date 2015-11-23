@@ -21,8 +21,9 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     if(ok && LXDG::checkValidity(item) ){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       iconPath = item.icon;
-      name->setText( item.name);
       text = item.name;
+      if(!item.comment.isEmpty()){ text.append("<br><i> -- "+item.comment+"</i>"); }
+      name->setText(text);
       setupActions(item);
     }else{
       gooditem = false;
@@ -102,9 +103,10 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   }
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(64,64) );
-  name->setText( item.name);
-  text = item.name;
-  this->setWhatsThis(name->text());
+      text = item.name;
+      if(!item.comment.isEmpty()){ text.append("<br><i> -- "+item.comment+"</i>"); }
+      name->setText(text);
+  this->setWhatsThis(item.name);
   icon->setWhatsThis(item.filePath);
   iconPath = item.icon;
   //Now setup the buttons appropriately
@@ -132,6 +134,8 @@ void ItemWidget::createWidget(){
   icon = new QLabel(this);
   name = new QLabel(this);
     name->setWordWrap(true);
+    name->setTextFormat(Qt::RichText);
+    name->setTextInteractionFlags(Qt::NoTextInteraction);
   //Add them to the layout
   this->setLayout(new QHBoxLayout());
     this->layout()->setContentsMargins(1,1,1,1);
@@ -186,7 +190,9 @@ void ItemWidget::updateItems(){
   int H = 2.3*name->fontMetrics().height(); //make sure the height is large enough for two lines
   icon->setFixedSize(QSize(H-4, H-4));
   actButton->setFixedSize( QSize( (H-4)/2, H-4) );
-  name->setText( name->fontMetrics().elidedText(text, Qt::ElideRight, name->width()) );
+  QStringList newname = text.split("<br>");
+  for(int i=0; i<newname.length(); i++){ newname[i] = name->fontMetrics().elidedText(newname[i], Qt::ElideRight, name->width()); }
+  name->setText( newname.join("<br>") );
   //Now reload the icon if necessary
   if(icon->pixmap()->size().height() < (H-4) ){
     if(iconPath.isEmpty()){

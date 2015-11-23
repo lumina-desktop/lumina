@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QtConcurrent>
 
 NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
   //qDebug() << "Creating Notepad Plugin:";
@@ -64,8 +65,8 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   
   //qDebug() << "Connect Signals/slots";
   //Setup the button connections
-  connect(open, SIGNAL(clicked()), this, SLOT(openNote()) );
-  connect(add, SIGNAL(clicked()), this, SLOT(newNote()) );
+  connect(open, SIGNAL(clicked()), this, SLOT(openNoteClicked()) );
+  connect(add, SIGNAL(clicked()), this, SLOT(newNoteClicked()) );
   connect(rem, SIGNAL(clicked()), this, SLOT(remNote()) );
   connect(edit, SIGNAL(textChanged()), this, SLOT(newTextAvailable()) );
   connect(cnote, SIGNAL(currentIndexChanged(QString)), this, SLOT(noteChanged()) );
@@ -134,9 +135,12 @@ void NotePadPlugin::newNote(){
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
   dlg.show();
   while( dlg.isVisible() ){
+    //this->thread()->usleep(300000); //300 ms between updates
     QApplication::processEvents();
   }
   QString name = dlg.textValue();
+  //make sure to remove any "bad" characters from the name
+  name.remove("\""); name.remove(";"); name.remove("\'"); name.replace("/","_");
   if(name.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   QString fullpath = QDir::homePath()+"/Notes/"+name;
   if(!fullpath.endsWith(".note")){ fullpath.append(".note"); }
@@ -154,6 +158,16 @@ void NotePadPlugin::newNote(){
     cnote->addItem(name, fullpath);
     cnote->setCurrentIndex( cnote->count()-1 ); 
   }
+}
+
+void NotePadPlugin::openNoteClicked(){
+  //QtConcurrent::run(this, &NotePadPlugin::openNote);
+  openNote();
+}
+
+void NotePadPlugin::newNoteClicked(){
+  //QtConcurrent::run(this, &NotePadPlugin::newNote);	
+  newNote();
 }
 
 void NotePadPlugin::remNote(){

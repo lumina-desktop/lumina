@@ -164,7 +164,7 @@ void LSession::setupSession(){
   QApplication::processEvents();
   launchStartupApps();
   //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
-  QApplication::processEvents();
+  //QApplication::processEvents();
   splash.close(); 
 }
 

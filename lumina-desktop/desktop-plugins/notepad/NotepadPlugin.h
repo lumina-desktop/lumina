@@ -36,9 +36,12 @@ private:
 	bool updating;
 	QTimer *typeTimer;
 
-private slots:
 	void openNote();
 	void newNote();
+
+private slots:
+	void openNoteClicked();
+	void newNoteClicked();
 	void remNote();
 	void newTextAvailable();
 	void updateContents();
