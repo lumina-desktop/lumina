@@ -677,7 +677,11 @@ WId LSession::activeWindow(){
   //qDebug() << "Check Active Window:" << active << lastActiveWin;
   if(RunningApps.contains(active)){ lastActiveWin = active; }
   else if(RunningApps.contains(lastActiveWin) && XCB->WindowState(lastActiveWin) >= LXCB::VISIBLE){} //no change needed
-  else{
+  else if(RunningApps.contains(lastActiveWin) && RunningApps.length()>1){
+    int start = RunningApps.indexOf(lastActiveWin);
+    if(start<1){ lastActiveWin = RunningApps.length()-1; } //wrap around to the last item
+    else{ lastActiveWin = RunningApps[start-1]; }
+  }else{
     //Need to change the last active window - find the first one which is visible
     lastActiveWin = 0; //fallback value - nothing active
     for(int i=0; i<RunningApps.length(); i++){

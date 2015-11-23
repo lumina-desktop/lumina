@@ -22,8 +22,9 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       iconPath = item.icon;
       text = item.name;
-      if(!item.comment.isEmpty()){ text.append("<br><i> -- "+item.comment+"</i>"); }
+      if(!item.genericName.isEmpty() && item.name!=item.genericName){ text.append("<br><i> -- "+item.genericName+"</i>"); }
       name->setText(text);
+      name->setToolTip(item.comment);
       setupActions(item);
     }else{
       gooditem = false;
@@ -79,7 +80,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
   }else{
     isShortcut = false;
   }
-  if(isShortcut){
+  if(isShortcut && name->toolTip().isEmpty()){
     name->setToolTip(icon->whatsThis()); //also allow the user to see the full shortcut path
   }
   //Now setup the button appropriately
@@ -104,8 +105,9 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(64,64) );
       text = item.name;
-      if(!item.comment.isEmpty()){ text.append("<br><i> -- "+item.comment+"</i>"); }
+      if(!item.genericName.isEmpty() && item.name!=item.genericName){ text.append("<br><i> -- "+item.genericName+"</i>"); }
       name->setText(text);
+      name->setToolTip(item.comment);
   this->setWhatsThis(item.name);
   icon->setWhatsThis(item.filePath);
   iconPath = item.icon;
