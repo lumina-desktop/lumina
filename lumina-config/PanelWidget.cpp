@@ -57,7 +57,7 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   ui->spin_plength->setValue( settings->value( prefix+"lengthPercent",100).toInt() );
   ui->spin_pxthick->setValue( settings->value( prefix+"height",30).toInt() );
   ui->check_autohide->setChecked( settings->value(prefix+"hidepanel", false).toBool() );
-  ui->group_customcolor->setChecked( settings->value(prefix+"customcolor",false).toBool() );
+  ui->group_customcolor->setChecked( settings->value(prefix+"customColor",false).toBool() );
   ui->label_color_sample->setWhatsThis( settings->value(prefix+"color","rgba(255,255,255,160)").toString());
   ui->list_plugins->clear();
   QStringList plugs = settings->value(prefix+"pluginlist",QStringList()).toStringList();

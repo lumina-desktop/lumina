@@ -188,13 +188,10 @@ void LPanel::UpdatePanel(bool geomonly){
       this->move(hidepoint); //Could bleed over onto the screen right
     }
   }
-  //With QT5, we need to make sure to reset window properties on occasion
-  //LSession::handle()->XCB->SetDisableWMActions(this->winId()); //ensure no WM actions
-  //LSession::handle()->XCB->SetAsSticky(this->winId()); 
   if(DEBUG){ qDebug() << " - Done with panel geometry"; }
   if(geomonly){ return; }
   //Now update the appearance of the toolbar
-  if(settings->value(PPREFIX+"customcolor", false).toBool()){
+  if(settings->value(PPREFIX+"customColor", false).toBool()){
     QString color = settings->value(PPREFIX+"color", "rgba(255,255,255,160)").toString();
     QString style = "QWidget#LuminaPanelColor{ background: %1; border-radius: 3px; border: 1px solid %1; }";
     style = style.arg(color);
