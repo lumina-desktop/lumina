@@ -10,6 +10,7 @@
 
 #include <LuminaOS.h>
 #include "../../LSession.h"
+#include <QtConcurrent>
 
 #include "ItemWidget.h"
 //#define SSAVER QString("xscreensaver-demo")
@@ -250,10 +251,7 @@ void StartMenu::UpdateApps(){
 	ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), cats[c], "chcat::::"+cats[c] );
         if(!it->gooditem){ continue; } //invalid for some reason
         ui->scroll_apps->widget()->layout()->addWidget(it);
-        //connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
-        //connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
         connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
-        //connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
       }
     }else{
       //Show the "go back" button
@@ -303,11 +301,37 @@ void StartMenu::UpdateFavs(){
   favs.sort();
   //Iterate over types of favorites
   QStringList rest = favs;
+  QStringList tmp;
   for(int type = 0; type<3; type++){
-    QStringList tmp;
     if(type==0){ tmp = favs.filter("::::app::::"); } //apps first
     else if(type==1){ tmp = favs.filter("::::dir::::"); } //dirs next
     else{ tmp = rest;  } //everything left over
+    if(type==1){
+      //Need to run a special routine for sorting the apps (already in the widget)
+      // Since each app actually might have a different name listed within the file
+      QLayout *lay = ui->scroll_favs->widget()->layout();
+      QStringList items;
+      for(int i=0; i<lay->count(); i++){
+        items << lay->itemAt(i)->widget()->whatsThis().toLower();
+      }
+  
+      items.sort();
+      //qDebug() << " - Sorted Items:" << items;
+      for(int i=0; i<items.length(); i++){
+        if(items[i].isEmpty()){ continue; }
+        //QLayouts are weird in that they can only add items to the end - need to re-insert almost every item
+        for(int j=0; j<lay->count(); j++){
+          //Find this item
+          if(lay->itemAt(j)->widget()->whatsThis().toLower()==items[i]){
+	    //Found it - now move it if necessary
+	    //qDebug() << "Found Item:" << items[i] << i << j;
+	    lay->addItem( lay->takeAt(j) );
+	    break;
+          }
+        }
+      }
+    }//end of special app sorting routine
+    tmp.sort(); //Sort alphabetically by name (dirs/files)
     for(int i=0; i<tmp.length(); i++){
       if(type<2){ rest.removeAll(tmp[i]); }
       if(!QFile::exists(tmp[i].section("::::",2,50))){ continue; } //invalid favorite - skip it
