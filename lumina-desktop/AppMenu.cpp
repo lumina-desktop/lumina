@@ -45,7 +45,7 @@ void AppMenu::updateAppList(){
   //Now fill the menu
   bool ok; //for checking inputs
     //Add link to the file manager
-    this->addAction( LXDG::findIcon("user-home", ""), tr("Open Home"), this, SLOT(launchFileManager()) );
+    this->addAction( LXDG::findIcon("user-home", ""), tr("Browse Files"), this, SLOT(launchFileManager()) );
     //--Look for the app store
     XDGDesktop store = LXDG::loadDesktopFile(appstorelink, ok);
     if(ok){

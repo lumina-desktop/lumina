@@ -274,7 +274,7 @@ void LDesktop::UpdateMenu(bool fast){
   usewinmenu=false;
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ deskMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(SystemTerminal()) ); }
-    else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("user-home",""), tr("Browse System"), this, SLOT(SystemFileManager()) ); }
+    else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"), this, SLOT(SystemFileManager()) ); }
     else if(items[i]=="applications"){ deskMenu->addMenu( LSession::handle()->applicationMenu() ); }
     else if(items[i]=="line"){ deskMenu->addSeparator(); }
     else if(items[i]=="settings"){ deskMenu->addMenu( LSession::handle()->settingsMenu() ); }
