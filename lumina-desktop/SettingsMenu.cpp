@@ -22,7 +22,7 @@ SettingsMenu::~SettingsMenu(){
 
 void SettingsMenu::UpdateMenu(){
   //Change the title/icon to account for locale/icon changes
-  this->setTitle( tr("Settings") );
+  this->setTitle( tr("Preferences") );
   this->setIcon( LXDG::findIcon("configure","") );
   this->clear();
   //Now setup the possible configuration options
@@ -32,7 +32,7 @@ void SettingsMenu::UpdateMenu(){
   act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("Desktop"), this);
 	act->setWhatsThis("lumina-config");
 	this->addAction(act);
-   act = new QAction( LXDG::findIcon("preferences-other",""), tr("Screen Configuration"), this);
+   act = new QAction( LXDG::findIcon("preferences-other",""), tr("Display"), this);
 	act->setWhatsThis("lumina-xconfig");
 	this->addAction(act);
   QString qtconfig = LOS::QtConfigShortcut();
