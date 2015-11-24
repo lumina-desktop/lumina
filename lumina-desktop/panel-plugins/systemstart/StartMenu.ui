@@ -259,7 +259,7 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
-          <string>Quick Settings</string>
+          <string>Preferences</string>
          </property>
          <property name="iconSize">
           <size>
@@ -438,8 +438,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>178</width>
-            <height>284</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>

@@ -138,7 +138,7 @@ void StartMenu::UpdateQuickLaunch(QString path, bool keep){
   else{ QL.removeAll(path); }
   QL.removeDuplicates();
   LSession::handle()->sessionSettings()->setValue("QuicklaunchApps",QL);
-  LSession::handle()->sessionSettings()->sync();
+  //LSession::handle()->sessionSettings()->sync();
   emit UpdateQuickLaunch(QL);
 }
 
