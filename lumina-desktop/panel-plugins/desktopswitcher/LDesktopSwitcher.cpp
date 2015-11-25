@@ -117,7 +117,7 @@ void LDesktopSwitcher::openMenu(){
 }
 
 QAction* LDesktopSwitcher::newAction(int what, QString name) {
-  QAction *act = new QAction(LXDG::findIcon("preferences-desktop-display-color", ":/images/preferences-desktop-display-color.png"), name, this);
+  QAction *act = new QAction(LXDG::findIcon("preferences-desktop-display", ""), name, this);
   act->setWhatsThis(QString::number(what));
   return act;
 }
