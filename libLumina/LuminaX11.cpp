@@ -1183,8 +1183,9 @@ bool LXCB::WM_ManageWindow(WId win, bool needsmap){
     //}
   }
   //Setup event handling on the window
+  uint32_t value_list[1] = {CLIENT_WIN_EVENT_MASK};
   if( xcb_request_check(QX11Info::connection(), \
-	  xcb_change_window_attributes_checked(QX11Info::connection(), win, XCB_CW_EVENT_MASK, (uint32_t[]){CLIENT_WIN_EVENT_MASK } ) ) ){
+	  xcb_change_window_attributes_checked(QX11Info::connection(), win, XCB_CW_EVENT_MASK, value_list ) ) ){
     //Could not change event mask - did the window get deleted already?
     free(attr);
     qDebug() << " - Could not change event mask";
@@ -1217,7 +1218,8 @@ void LXCB::setupEventsForFrame(WId frame){
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
 	
-  xcb_change_window_attributes(QX11Info::connection(), frame, XCB_CW_EVENT_MASK, (uint32_t[]){FRAME_WIN_EVENT_MASK } );
+  uint32_t value_list[1] = {FRAME_WIN_EVENT_MASK};
+  xcb_change_window_attributes(QX11Info::connection(), frame, XCB_CW_EVENT_MASK, value_list);
 }
 
 bool LXCB::setupEventsForRoot(WId root){
@@ -1232,7 +1234,8 @@ bool LXCB::setupEventsForRoot(WId root){
                          XCB_EVENT_MASK_ENTER_WINDOW)
 	
   if(root==0){ root = QX11Info::appRootWindow(); }
-  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root, XCB_CW_EVENT_MASK, (uint32_t[]){ROOT_WIN_EVENT_MASK} ) ); 
+  uint32_t value_list[1] = {ROOT_WIN_EVENT_MASK};
+  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root, XCB_CW_EVENT_MASK, value_list)); 
   return (status==0);
 }
 // --------------------------------------------------
