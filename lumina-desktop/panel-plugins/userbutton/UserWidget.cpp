@@ -66,7 +66,7 @@ void UserWidget::SortScrollArea(QScrollArea *area){
   QLayout *lay = area->widget()->layout();
   QStringList items;
   for(int i=0; i<lay->count(); i++){
-    items << lay->itemAt(i)->widget()->whatsThis();
+    items << lay->itemAt(i)->widget()->whatsThis().toLower();
   }
   
   items.sort();
@@ -76,7 +76,7 @@ void UserWidget::SortScrollArea(QScrollArea *area){
     //QLayouts are weird in that they can only add items to the end - need to re-insert almost every item
     for(int j=0; j<lay->count(); j++){
       //Find this item
-      if(lay->itemAt(j)->widget()->whatsThis()==items[i]){
+      if(lay->itemAt(j)->widget()->whatsThis().toLower()==items[i]){
 	//Found it - now move it if necessary
 	//qDebug() << "Found Item:" << items[i] << i << j;
 	lay->addItem( lay->takeAt(j) );
