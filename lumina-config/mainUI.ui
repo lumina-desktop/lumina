@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Desktop Configuration</string>
+   <string>Lumina Settings</string>
   </property>
   <property name="animated">
    <bool>true</bool>
@@ -666,8 +666,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>527</width>
-                 <height>320</height>
+                 <width>98</width>
+                 <height>28</height>
                 </rect>
                </property>
               </widget>
@@ -1548,7 +1548,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>117</width>
+                    <width>121</width>
                     <height>28</height>
                    </rect>
                   </property>
