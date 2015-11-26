@@ -82,8 +82,17 @@ void LOS::setScreenBrightness(int percent){
   else if(percent>100){ percent=100; }
   //Run the command(s)
   bool success = false;
-  // - try hardware setting first (PC-BSD only)
-  if(QFile::exists("/usr/local/bin/pc-sysconfig")){
+  // - try hardware setting first (PC-BSD || or intel_backlight)
+  if(QFile::exists("/usr/local/bin/intel_backlight")){
+    qDebug() << "/usr/local/bin/intel_backlight" << "was found!";
+    QString ret = LUtils::getCmdOutput("intel_backlight", QStringList() <<QString::number(percent)
+).join("");
+    success = ret.toLower().contains("set backlight to");
+    qDebug() << "Set hardware brightness:" << percent << success;
+    // Check if percentage = intel_backlight
+    qDebug() << "intel_backlight:" << LUtils::getCmdOutput("intel_backlight");
+  }
+  else if((QFile::exists("/usr/local/bin/pc-sysconfig")) && (!QFile::exists("/usr/local/bin/intel_backlight"))){
     QString ret = LUtils::getCmdOutput("pc-sysconfig", QStringList() <<"setscreenbrightness "+QString::number(percent)).join("");
     success = ret.toLower().contains("success");
     qDebug() << "Set hardware brightness:" << percent << success;
