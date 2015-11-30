@@ -121,7 +121,7 @@ void WMProcess::processFinished(int exitcode, QProcess::ExitStatus status){
       emit WMShutdown();
     }else{
       //restart the Window manager
-      qDebug() << "WM Stopped Unexpectedly: Restarting it..."
+      qDebug() << "WM Stopped Unexpectedly: Restarting it...";
       this->startWM();
     }
   }else{
