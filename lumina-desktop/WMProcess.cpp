@@ -27,8 +27,8 @@ WMProcess::~WMProcess(){
 void WMProcess::startWM(){
   inShutdown = false;
   QString cmd = setupWM();
-  this->start(cmd);
-  ssaver->start("xscreensaver -no-splash");
+  if(!isRunning()){this->start(cmd); }
+  if(ssaver->state() == QProcess::NotRunning){ ssaver->start("xscreensaver -no-splash"); }
 }
 
 void WMProcess::stopWM(){
@@ -121,6 +121,7 @@ void WMProcess::processFinished(int exitcode, QProcess::ExitStatus status){
       emit WMShutdown();
     }else{
       //restart the Window manager
+      qDebug() << "WM Stopped Unexpectedly: Restarting it..."
       this->startWM();
     }
   }else{
