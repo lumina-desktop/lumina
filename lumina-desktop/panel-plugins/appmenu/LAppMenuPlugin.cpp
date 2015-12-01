@@ -57,7 +57,7 @@ void LAppMenuPlugin::UpdateMenu(){
     bool ok; //for checking inputs
     //Add link to the file manager
     QAction *tmpact = mainmenu->addAction( LXDG::findIcon("user-home", ""), tr("Browse Files") );
-      tmpact->setWhatsThis("~");
+      tmpact->setWhatsThis("\""+QDir::homePath()+"\"");
     //--Look for the app store
     XDGDesktop store = LXDG::loadDesktopFile(LOS::AppStoreShortcut(), ok);
     if(ok){
