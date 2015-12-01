@@ -32,7 +32,7 @@ LAppMenuPlugin::~LAppMenuPlugin(){
 
 void LAppMenuPlugin::updateButtonVisuals(){
     button->setToolTip( tr("Quickly launch applications or open files"));
-    button->setText( tr("Start Here") );
+    button->setText( tr("Applications") );
     //Use the PC-BSD icon by default (or the Lumina icon for non-PC-BSD systems)
     button->setIcon( LXDG::findIcon("pcbsd","Lumina-DE") );
 }
