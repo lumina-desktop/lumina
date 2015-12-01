@@ -25,7 +25,9 @@
 
 XCBEventFilter *evFilter = 0;
 
-LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
+LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
+ if(this->isPrimaryProcess()){
+  connect(this, SIGNAL(InputsAvailable(QStringList)), this, SLOT(NewCommunication(QStringList)) );
   this->setApplicationName("Lumina Desktop Environment");
   this->setApplicationVersion( LUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
@@ -61,9 +63,11 @@ LSession::LSession(int &argc, char ** argv) : QApplication(argc, argv){
   //Setup the event filter for Qt5
   evFilter =  new XCBEventFilter(this);
   this->installNativeEventFilter( evFilter );
+ } //end check for primary process 
 }
 
 LSession::~LSession(){
+ if(this->isPrimaryProcess()){
   WM->stopWM();
   for(int i=0; i<DESKTOPS.length(); i++){
     delete DESKTOPS[i];
@@ -73,6 +77,7 @@ LSession::~LSession(){
   delete appmenu;
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
+ }
 }
 
 void LSession::setupSession(){
@@ -242,6 +247,15 @@ int LSession::VersionStringToNumber(QString version){
   //Now assemble the number
   //NOTE: This format allows numbers to be anywhere from 0->999 without conflict
   return (maj*1000000 + mid*1000 + min);
+}
+
+void LSession::NewCommunication(QStringList list){
+  if(DEBUG){ qDebug() << "New Communications:" << list; }
+  for(int i=0; i<list.length(); i++){
+    if(list[i]=="--check-geoms"){
+      screensChanged();
+    }
+  }	  
 }
 
 void LSession::launchStartupApps(){
@@ -482,51 +496,29 @@ void LSession::updateDesktops(){
   for(int i=0; i<DW->screenCount(); i++){ qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i); }
   bool firstrun = (DESKTOPS.length()==0);
   bool numchange = DESKTOPS.length()!=DW->screenCount();
-    //Determine if this is a temporary X screen reset (some full-screen apps modify the screens)
-    /*WId actWin = XCB->ActiveWindow();
-    qDebug() << "  -- Active Window:" << XCB->WindowClass(actWin);
-    //See if the current app is full-screen
-    int fscreen = -1;
-    if( XCB->WindowClass(actWin) != "Lumina Desktop Environment" ){
-      fscreen = XCB->WindowIsFullscreen(actWin);
-    }*/
-    qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
-    //Now go through and 
-    //if(!firstrun){ savedScreens.clear(); }
+    //qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
     for(int i=0; i<DW->screenCount(); i++){
-      //if(!firstrun){ savedScreens << DW->screenGeometry(i); }
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
-	//Match either the screen number or the screen location (preventing duplicates)
-        //if(DESKTOPS[j]->Screen()==i || DW->screenGeometry(i)==DW->screenGeometry(DESKTOPS[j]->Screen()) ){ found = true; }
 	if(DESKTOPS[j]->Screen()==i ){ found = true; }
       }
       if(!found){
 	//Start the desktop on the new screen
         qDebug() << " - Start desktop on screen:" << i << DW->screenGeometry(i) << "Virtual:" << DW->isVirtualDesktop();
-	if(firstrun && DW->screenGeometry(i).x()==0){
-	  DESKTOPS << new LDesktop(i,true); //set this one as the default	
-	}else{
           DESKTOPS << new LDesktop(i);
-	}
       }
     }
-    //qDebug() << " - Done Starting Desktops";
-    //return; //temporary stop for debugging
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
       for(int i=0; i<DESKTOPS.length(); i++){
-	/*if(DESKTOPS[i]->Screen()==fscreen){
-	  qDebug() << " - Hide desktop on screen:" << fscreen;
-	  DESKTOPS[i]->hide();
-	}else*/ if(DESKTOPS[i]->Screen() >= DW->screenCount()){
+	if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
           DESKTOPS[i]->prepareToClose();
 	  delete DESKTOPS.takeAt(i);
 	  i--;
         }else{
 	  qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
-	  //DESKTOPS[i]->UpdateGeometry();
+	  DESKTOPS[i]->UpdateGeometry();
           DESKTOPS[i]->show();
 	  //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
         }

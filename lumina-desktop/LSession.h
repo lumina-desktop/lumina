@@ -31,6 +31,7 @@
 //#include "BootSplash.h"
 
 #include <LuminaX11.h>
+#include <LuminaSingleApplication.h>
 
 //SYSTEM TRAY STANDARD DEFINITIONS
 #define SYSTEM_TRAY_REQUEST_DOCK 0
@@ -45,7 +46,7 @@ public:
 	}
 };*/
 
-class LSession : public QApplication{
+class LSession : public LSingleApplication{
 	Q_OBJECT
 public:
 	LSession(int &argc, char **argv);
@@ -138,6 +139,7 @@ public slots:
 	void reloadIconTheme();
 
 private slots:
+	void NewCommunication(QStringList);
 	void launchStartupApps(); //used during initialization
 	void watcherChange(QString);
 	void screensChanged();

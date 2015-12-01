@@ -84,7 +84,7 @@ QRect LDesktop::availableScreenGeom(){
 
 void LDesktop::UpdateGeometry(){
     //First make sure there is something different about the geometry
-    if(desktop->screenGeometry()==bgWindow->geometry()){ return; }
+    if(desktop->screenGeometry(desktopnumber)==bgWindow->geometry()){ return; }
     //Now update the screen
     // NOTE: This functionality is highly event-driven based on X changes - so we need to keep things in order (no signals/slots)
     qDebug() << "Changing Desktop Geom:" << desktopnumber;
@@ -96,7 +96,7 @@ void LDesktop::UpdateGeometry(){
       PANELS[i]->UpdatePanel(true); //only update geometry
     }*/
     qDebug() << " - Done With Desktop Geom Updates";
-    //QTimer::singleShot(0, this, SLOT(UpdatePanels()));
+    QTimer::singleShot(0, this, SLOT(UpdatePanels()));
 }
 	
 void LDesktop::SystemLogout(){

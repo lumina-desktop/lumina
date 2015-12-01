@@ -70,6 +70,10 @@ int main(int argc, char ** argv)
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
+    //Startup the Application
+    if(DEBUG){ qDebug() << "Session Init:";}
+    LSession a(argc, argv);
+    if(!a.isPrimaryProcess()){ return 0; }
     //Setup the log file
     qDebug() << "Lumina Log File:" << logfile.fileName();
     if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
@@ -82,9 +86,6 @@ int main(int argc, char ** argv)
     logfile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTime *timer=0;
     if(DEBUG){ timer = new QTime(); timer->start(); }
-    //Startup the Application
-    if(DEBUG){ qDebug() << "Session Init:" << timer->elapsed(); }
-    LSession a(argc, argv);
     //Setup Log File
     qInstallMessageHandler(MessageOutput);
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
