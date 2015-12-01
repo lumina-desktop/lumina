@@ -30,12 +30,13 @@ public:
 	
 private:
 	QToolButton *button;
+	QMenu *mainmenu;
 
 	void updateButtonVisuals();
 
 private slots:
-	//void openMenu();
-	//void closeMenu();
+	void LaunchItem(QAction* item);
+	void UpdateMenu();
 
 public slots:
 	void OrientationChange(){

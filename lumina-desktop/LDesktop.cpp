@@ -293,7 +293,7 @@ void LDesktop::UpdateMenu(bool fast){
   }
   //Now add the system quit options
   deskMenu->addSeparator();
-  deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Log Out"), this, SLOT(SystemLogout()) );
+  deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Leave"), this, SLOT(SystemLogout()) );
 }
 
 void LDesktop::UpdateWinMenu(){

@@ -698,9 +698,7 @@ void LSession::systemWindow(){
   if(sysWindow==0){ sysWindow = new SystemWindow(); }
   else{ sysWindow->updateWindow(); }
   sysWindow->show();
-  /*SystemWindow win;
-  win.exec();*/
-  LSession::processEvents();
+  //LSession::processEvents();
 }
 
 //Play System Audio
