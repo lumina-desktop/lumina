@@ -102,7 +102,7 @@ TRANSLATIONS =  i18n/lumina-info_af.ts \
 dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
 
-desktop.files=lumina-info.desktop
+desktop.files=lumina-info.desktop lumina-support.desktop
 desktop.path=$$PREFIX/share/applications/
 
 INSTALLS += target dotrans desktop

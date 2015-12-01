@@ -21,6 +21,7 @@ include/LuminaSingleApplication.h
 share/applications/lumina-fm.desktop
 share/applications/lumina-screenshot.desktop
 share/applications/lumina-search.desktop
+share/applications/lumina-support.desktop
 share/applications/lumina-info.desktop
 share/pixmaps/Lumina-DE.png
 share/pixmaps/Insight-FileManager.png

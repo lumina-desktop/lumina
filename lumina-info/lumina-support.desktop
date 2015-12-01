@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Link
+URL=https://webchat.freenode.net/?channels=%23lumina-desktop
+Icon=/usr/local/share/pixmaps/Lumina-DE.png
+Terminal=false
+StartupNotify=true
+Categories=System;
+OnlyShowIn=Lumina
+Name=Community Support
+GenericName=Get Desktop Help
+Comment=Ask for desktop support on the community IRC channel
+

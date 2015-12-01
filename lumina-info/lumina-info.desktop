@@ -7,5 +7,6 @@ StartupNotify=true
 Categories=System;
 OnlyShowIn=Lumina
 Name=Desktop Information
+GenericName=Version and Legal Information
 Comment=View information about the Lumina Desktop Environment
 
