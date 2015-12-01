@@ -44,6 +44,7 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	QList<ScreenInfo> SCREENS;
+	ScreenInfo currentScreenInfo();
 
 private slots:
 	void UpdateScreens();
@@ -52,6 +53,7 @@ private slots:
 	void MoveScreenRight();
 	void DeactivateScreen(QString device = "");
 	void ActivateScreen();
+	void ApplyChanges(); //config changes
 };
 
 #endif

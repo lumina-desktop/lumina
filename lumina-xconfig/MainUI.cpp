@@ -26,6 +26,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_deactivate, SIGNAL(clicked()), this, SLOT(DeactivateScreen()) );
   connect(ui->tool_moveleft, SIGNAL(clicked()), this, SLOT(MoveScreenLeft()) );
   connect(ui->tool_moveright, SIGNAL(clicked()), this, SLOT(MoveScreenRight()) );
+  connect(ui->tool_applyconfig, SIGNAL(clicked()), this, SLOT(ApplyChanges()) );
   connect(ui->list_screens, SIGNAL(itemSelectionChanged()),this, SLOT(ScreenSelected()) );
   QTimer::singleShot(0, this, SLOT(UpdateScreens()) );
 }
@@ -42,6 +43,20 @@ void MainUI::loadIcons(){
   ui->push_activate->setIcon( LXDG::findIcon("list-add","") );
   ui->push_rescan->setIcon( LXDG::findIcon("view-refresh","") );
   ui->push_close->setIcon( LXDG::findIcon("window-close","") );
+  ui->tabWidget->setTabIcon(0, LXDG::findIcon("preferences-desktop-display","") );
+  ui->tabWidget->setTabIcon(1, LXDG::findIcon("list-add","") );
+  ui->tool_applyconfig->setIcon( LXDG::findIcon("dialog-ok-apply","") );
+}
+
+ScreenInfo MainUI::currentScreenInfo(){
+  QListWidgetItem *item = ui->list_screens->currentItem();
+  if(item!=0){
+    for(int i=0; i<SCREENS.length(); i++){
+      if(SCREENS[i].ID==item->whatsThis()){ return SCREENS[i]; }
+    }
+  }
+  //Fallback when nothing found/selected
+  return ScreenInfo();
 }
 
 void MainUI::UpdateScreens(){
@@ -95,6 +110,8 @@ void MainUI::UpdateScreens(){
   bool found = true;
   int xoffset = 0; //start at 0
   int cnum = 0;
+  QString csel = "";
+  if(ui->list_screens->currentItem()!=0){ csel = ui->list_screens->currentItem()->whatsThis(); }
   ui->list_screens->clear();
   while(found){
     found = false; //make sure to break out if a screen is not found
@@ -110,6 +127,7 @@ void MainUI::UpdateScreens(){
 	  it->setText( SCREENS[i].ID+"\n  ("+QString::number(SCREENS[i].geom.width())+"x"+QString::number(SCREENS[i].geom.height())+")  " );
 	  it->setWhatsThis(SCREENS[i].ID);
 	ui->list_screens->addItem(it);
+	if(SCREENS[i].ID==csel){ ui->list_screens->setCurrentItem(it); }
       }
     }
   }
@@ -124,7 +142,15 @@ void MainUI::UpdateScreens(){
       ui->combo_cscreens->addItem(SCREENS[i].ID);
     }
   }
-  ui->group_avail->setVisible( ui->combo_availscreens->count()>0 );
+  if(ui->combo_availscreens->count()<1){
+    ui->group_avail->setVisible(false);
+    ui->tabWidget->setCurrentIndex(0);
+    ui->tabWidget->setTabEnabled(1,false);
+  }else{
+    ui->group_avail->setVisible(true);
+    ui->tabWidget->setTabEnabled(1,true);
+  }
+  if(ui->list_screens->currentItem()==0){ ui->list_screens->setCurrentRow(0); }
   ScreenSelected(); //update buttons
 }
 
@@ -135,11 +161,23 @@ void MainUI::ScreenSelected(){
     ui->tool_deactivate->setEnabled(false);
     ui->tool_moveleft->setEnabled(false);
     ui->tool_moveright->setEnabled(false);
+    ui->tab_config->setEnabled(false);
   }else{
     //Item selected
     ui->tool_deactivate->setEnabled(ui->list_screens->count()>1);
     ui->tool_moveleft->setEnabled(ui->list_screens->row(item) > 0);
     ui->tool_moveright->setEnabled(ui->list_screens->row(item) < (ui->list_screens->count()-1));
+    ui->tab_config->setEnabled(true);
+    //Update the info available on the config tab
+    ScreenInfo cur = currentScreenInfo();
+    ui->combo_resolution->clear();
+    QString cres = QString::number(cur.geom.width())+"x"+QString::number(cur.geom.height());
+    for(int i=0; i<cur.resList.length(); i++){
+      QString res = cur.resList[i].section(" ",0,0, QString::SectionSkipEmpty);
+      if(cur.resList[i].contains("+")){ ui->combo_resolution->addItem( QString(tr("%1 (Recommended)")).arg(res), res); }
+      else{ui->combo_resolution->addItem(res, res); }
+      if(cur.resList[i].contains(cres)){ ui->combo_resolution->setCurrentIndex(i); }
+    }
   }
 }
 
@@ -191,5 +229,15 @@ void MainUI::ActivateScreen(){
   QString loc = ui->combo_location->currentData().toString();
   if(ID.isEmpty() || DID.isEmpty() || loc.isEmpty()){ return; } //invalid inputs
   LUtils::runCmd("xrandr", QStringList() << "--output" << ID << loc << DID <<"--auto");
+  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+}
+
+void MainUI::ApplyChanges(){
+  QListWidgetItem *it = ui->list_screens->currentItem();
+  if(it==0){ return; } //nothing to do
+  QString newres = ui->combo_resolution->currentData().toString();
+  if(newres.isEmpty()){ return; } //nothing to do
+  qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
+  LUtils::runCmd("xrandr", QStringList() << "--output" << it->whatsThis() << "--mode" << newres);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
