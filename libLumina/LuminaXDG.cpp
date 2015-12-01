@@ -626,7 +626,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
 	  if(version>=1.1){
             ico.addFile(srch[i]+":"+iconName+".svg"); //could be loaded/parsed successfully
 	  }else{
-	    qDebug() << "Old SVG Version file:" << iconName+".svg  Theme:" << srch[i];
+	    //qDebug() << "Old SVG Version file:" << iconName+".svg  Theme:" << srch[i];
 	    //qDebug() << "SVGInfo:" << svginfo;
 	  }
         }else{

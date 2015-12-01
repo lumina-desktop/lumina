@@ -689,8 +689,10 @@ WId LSession::activeWindow(){
 
 //Temporarily change the session locale (nothing saved between sessions)
 void LSession::switchLocale(QString localeCode){
-  LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
   currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator); 
+  if(currTranslator!=0 || localeCode=="en_US"){ 
+    LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
+  }
   emit LocaleChanged();
 }
 

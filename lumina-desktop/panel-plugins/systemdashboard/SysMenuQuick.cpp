@@ -79,7 +79,7 @@ void LSysMenuQuick::UpdateMenu(){
     QLocale curr;
     for(int i=0; i<locales.length(); i++){
       QLocale loc(locales[i]);
-      ui->combo_locale->addItem(loc.nativeLanguageName(), locales[i]); //Make the display text prettier later
+      ui->combo_locale->addItem(loc.nativeLanguageName()+" ("+locales[i]+")", locales[i]); //Make the display text prettier later
       if(locales[i] == curr.name() || locales[i] == curr.name().section("_",0,0) ){
         //Current Locale
 	ui->combo_locale->setCurrentIndex(ui->combo_locale->count()-1); //the last item in the list right now

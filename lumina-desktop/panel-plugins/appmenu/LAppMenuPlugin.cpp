@@ -21,7 +21,7 @@ LAppMenuPlugin::LAppMenuPlugin(QWidget *parent, QString id, bool horizontal) : L
 
   connect(mainmenu, SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   connect(mainmenu, SIGNAL(triggered(QAction*)), this, SLOT(LaunchItem(QAction*)) );
-  connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SIGNAL(UpdateMenu()));
+  connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()));
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
   QTimer::singleShot(0,this, SLOT(UpdateMenu()) );
 }

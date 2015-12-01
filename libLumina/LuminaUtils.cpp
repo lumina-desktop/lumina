@@ -326,6 +326,14 @@ void LUtils::setLocaleEnv(QString lang, QString msg, QString time, QString num,Q
   }	
 }
 
+QString LUtils::currentLocale(){
+  QString curr = getenv("LC_ALL");// = QLocale::system();
+  if(curr.isEmpty()){ curr = getenv("LANG"); }
+  if(curr.isEmpty()){ curr = "en_US"; }
+  curr = curr.section(".",0,0); //remove any encodings off the end
+  return curr;
+}
+
 double LUtils::DisplaySizeToBytes(QString num){
   //qDebug() << "Convert Num to Bytes:" << num;
   num = num.toLower().simplified();

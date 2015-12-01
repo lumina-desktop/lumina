@@ -63,6 +63,7 @@ public:
 	//Other localization shortcuts
 	static QStringList knownLocales(); //Note: This only lists locales known to Lumina (so the i18n files need to be installed)
 	static void setLocaleEnv(QString lang, QString msg="", QString time="", QString num="" ,QString money="",QString collate="", QString ctype="");
+	static QString currentLocale();
 	
 	//Number format conversions
 	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)

@@ -99,11 +99,13 @@ void StartMenu::UpdateAll(){
   QStringList locales = LUtils::knownLocales();
   ui->stackedWidget->setCurrentWidget(ui->page_main); //need to ensure the settings page is not active
   ui->combo_locale->clear();
-  QLocale curr;
+  QString curr = LUtils::currentLocale();
+  qDebug() << "Update Locales:" << locales;
+  qDebug() << "Current Locale:" << curr;
   for(int i=0; i<locales.length(); i++){
     QLocale loc(locales[i]);
-    ui->combo_locale->addItem(loc.nativeLanguageName(), locales[i]); //Make the display text prettier later
-    if(locales[i] == curr.name() || locales[i] == curr.name().section("_",0,0) ){
+    ui->combo_locale->addItem(loc.nativeLanguageName() +" ("+locales[i]+")", locales[i]); //Make the display text prettier later
+    if(locales[i] == curr || locales[i] == curr.section("_",0,0) ){
       //Current Locale
       ui->combo_locale->setCurrentIndex(ui->combo_locale->count()-1); //the last item in the list right now
     }
@@ -553,6 +555,7 @@ void StartMenu::on_combo_locale_currentIndexChanged(int){
   if(ui->stackedWidget->currentWidget()!=ui->page_settings){ return; }
   QString locale = ui->combo_locale->currentData().toString();
   emit CloseMenu();
+  LSession::processEvents();
   LSession::handle()->switchLocale(locale);
 }
 
