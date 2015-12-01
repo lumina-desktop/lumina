@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>356</width>
-    <height>421</height>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -218,7 +218,7 @@
         <item row="6" column="1">
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://bugs.pcbsd.org/projects/pcbsd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open in Web Browser&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;a href=&quot;https://bugs.pcbsd.org/projects/pcbsd&quot;&gt;Open in Web Browser&lt;/a&gt;</string>
           </property>
           <property name="openExternalLinks">
            <bool>true</bool>
@@ -229,6 +229,29 @@
          <widget class="Line" name="line">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Community Support:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>&lt;a href=&quot;https://webchat.freenode.net/?channels=%23lumina-desktop&quot;&gt;Open in web browser&lt;/a&gt;</string>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
