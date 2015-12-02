@@ -36,18 +36,23 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   updating = false;
   //Setup the title bar header buttons
   QHBoxLayout *hlay = new QHBoxLayout();
-  open = new QToolButton(this);
+  config = new QToolButton(this);
+    config->setAutoRaise(true);
+    config->setMenu(new QMenu(this));
+    config->setPopupMode(QToolButton::InstantPopup);
+  /*open = new QToolButton(this);
     open->setAutoRaise(true);
   add = new QToolButton(this);
     add->setAutoRaise(true);
   rem = new QToolButton(this);
-    rem->setAutoRaise(true);
+    rem->setAutoRaise(true);*/
   cnote = new QComboBox(this);
 	
     hlay->addWidget(cnote);
-    hlay->addWidget(open);
-    hlay->addWidget(add);
-    hlay->addWidget(rem);
+    hlay->addWidget(config);
+    //hlay->addWidget(open);
+    //hlay->addWidget(add);
+    //hlay->addWidget(rem);
     vlay->addLayout(hlay);
 	
   //Setup the main text widget
@@ -65,9 +70,10 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   
   //qDebug() << "Connect Signals/slots";
   //Setup the button connections
-  connect(open, SIGNAL(clicked()), this, SLOT(openNoteClicked()) );
+  /*connect(open, SIGNAL(clicked()), this, SLOT(openNoteClicked()) );
   connect(add, SIGNAL(clicked()), this, SLOT(newNoteClicked()) );
-  connect(rem, SIGNAL(clicked()), this, SLOT(remNote()) );
+  connect(rem, SIGNAL(clicked()), this, SLOT(remNote()) );*/
+  //connect(config, SIGNAL(clicked()), this, SLOT(openConfigMenu()) );
   connect(edit, SIGNAL(textChanged()), this, SLOT(newTextAvailable()) );
   connect(cnote, SIGNAL(currentIndexChanged(QString)), this, SLOT(noteChanged()) );
   connect(typeTimer, SIGNAL(timeout()), this, SLOT(updateContents()) );
@@ -121,15 +127,17 @@ void NotePadPlugin::openNote(){
   }
 }
 
-void NotePadPlugin::newNote(){
+QString NotePadPlugin::newNoteName(QString oldname, bool tryagain){
   //Prompt for a name for the new note
   //qDebug() << "Create new note";
   QInputDialog dlg(0, Qt::Dialog | Qt::WindowStaysOnTopHint );
       dlg.setInputMode(QInputDialog::TextInput);
-      dlg.setLabelText(tr("New Note Name:"));
+      dlg.setLabelText(tr("Name:"));
       dlg.setTextEchoMode(QLineEdit::Normal);
-      dlg.setWindowTitle(tr("Create a new note"));
+      if(tryagain){ dlg.setWindowTitle(tr("Invalid Note Name: Try Again")); }
+      else{ dlg.setWindowTitle(tr("Select a Note Name")); }
       dlg.setWindowIcon( LXDG::findIcon("document-new","") );
+      dlg.setTextValue(oldname);
       //ensure it is centered on the current screen
       QPoint center = QApplication::desktop()->screenGeometry(this).center();
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
@@ -141,7 +149,35 @@ void NotePadPlugin::newNote(){
   QString name = dlg.textValue();
   //make sure to remove any "bad" characters from the name
   name.remove("\""); name.remove(";"); name.remove("\'"); name.replace("/","_");
-  if(name.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
+  if(name.isEmpty()  || dlg.result()!=QDialog::Accepted){ return ""; } //cancelled
+  //Check validity of the new note filename
+  QString fullpath = QDir::homePath()+"/Notes/"+name;
+  if(QFile::exists(fullpath)){
+    return newNoteName(name, true); //try again
+  }
+  return name; //good name - go ahead and return it
+}
+
+void NotePadPlugin::updateConfigMenu(){
+  //Re-create the menu and open it
+  config->menu()->clear();
+  config->menu()->addAction(LXDG::findIcon("document-open",""), tr("Open Text File"), this, SLOT(openNoteClicked()) );
+  config->menu()->addAction(LXDG::findIcon("document-new",""), tr("Create a Note"), this, SLOT(newNoteClicked()) );
+  if(cnote->currentIndex()>=0){
+    config->menu()->addSeparator();
+    config->menu()->addAction(LXDG::findIcon("document-edit",""), tr("Rename Note"), this, SLOT(renameNote()) );
+    config->menu()->addAction(LXDG::findIcon("document-close",""), tr("Delete Note"), this, SLOT(remNote()) );
+  }
+}
+
+void NotePadPlugin::openNoteClicked(){
+  openNote();
+}
+
+void NotePadPlugin::newNoteClicked(){
+  //QtConcurrent::run(this, &NotePadPlugin::newNote);	
+  QString name = newNoteName();
+  if(name.isEmpty()){ return; }
   QString fullpath = QDir::homePath()+"/Notes/"+name;
   if(!fullpath.endsWith(".note")){ fullpath.append(".note"); }
   //qDebug() << " - New Note:" << name << fullpath;
@@ -160,16 +196,6 @@ void NotePadPlugin::newNote(){
   }
 }
 
-void NotePadPlugin::openNoteClicked(){
-  //QtConcurrent::run(this, &NotePadPlugin::openNote);
-  openNote();
-}
-
-void NotePadPlugin::newNoteClicked(){
-  //QtConcurrent::run(this, &NotePadPlugin::newNote);	
-  newNote();
-}
-
 void NotePadPlugin::remNote(){
   QString note = cnote->currentData().toString();
   if(note.isEmpty()){ return; }
@@ -181,6 +207,24 @@ void NotePadPlugin::remNote(){
     // otherwise, the directory watcher will catch it and trigger a re-load (no need to double-load)
     notesDirChanged();
   //}
+}
+
+void NotePadPlugin::renameNote(){
+  int item = cnote->currentIndex();
+  if(item<0){ return; } //nothing selected
+  QString oldpath = cnote->currentData().toString();
+  if(oldpath.isEmpty() || !oldpath.endsWith(".note")){ return; }
+  QString name = newNoteName(cnote->currentText());
+  if(name.isEmpty()){ return; }
+  QString fullpath = QDir::homePath()+"/Notes/"+name;
+  if(!fullpath.endsWith(".note")){ fullpath.append(".note"); }
+  //qDebug() << " - New Note:" << name << fullpath;
+  //Update the current item data to point to this file
+  cnote->setItemText(item, name);
+  cnote->setItemData(item, fullpath);
+  //Now move the file over
+  QFile::rename(oldpath, fullpath);
+  noteChanged();
 }
 
 void NotePadPlugin::newTextAvailable(){
@@ -221,7 +265,7 @@ void NotePadPlugin::notesDirChanged(){
     cnote->addItem(name, notes[i]);
     if(notes[i]==cfile){ cnote->setCurrentIndex(i); found = true;}
   }
-  if(!found && !cfile.isEmpty()){
+  if(!found && !cfile.isEmpty() && QFile::exists(cfile)){
     //Current note is a manually-loaded text file
     cnote->addItem(cfile.section("/",-1), cfile);
     cnote->setCurrentIndex( cnote->count()-1 ); //last item
@@ -239,6 +283,7 @@ void NotePadPlugin::noteChanged(){
   if(cnote->currentIndex()>=0){
     note = cnote->currentData().toString();
   }
+  QTimer::singleShot(0, this, SLOT(updateConfigMenu()) );
   if(note.isEmpty() && cnote->count()>0){ 
     updating=false; 
     cnote->setCurrentIndex(0); 
@@ -268,7 +313,7 @@ void NotePadPlugin::noteChanged(){
   }
   //If no notes available - disable the editor until a new one is created
   edit->setEnabled(!note.isEmpty());
-  rem->setEnabled(!note.isEmpty());
+  //rem->setEnabled(!note.isEmpty());
   cnote->setEnabled(!note.isEmpty());
   //leave the new/open buttons enabled all the time
   updating = false;
@@ -276,7 +321,8 @@ void NotePadPlugin::noteChanged(){
 
 
 void NotePadPlugin::loadIcons(){
-  open->setIcon( LXDG::findIcon("document-open","") );
+  /*open->setIcon( LXDG::findIcon("document-open","") );
   add->setIcon( LXDG::findIcon("document-new","") );
-  rem->setIcon( LXDG::findIcon("document-close","") );
+  rem->setIcon( LXDG::findIcon("document-close","") );*/
+  config->setIcon( LXDG::findIcon("configure","") );
 }

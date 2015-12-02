@@ -29,7 +29,7 @@ public:
 	}
 private:
 	QPlainTextEdit *edit;
-	QToolButton *open, *add, *rem;
+	QToolButton *config; //*open, *add, *rem;
 	QComboBox *cnote;
 	QFrame *frame;
 	QFileSystemWatcher *watcher;
@@ -37,12 +37,15 @@ private:
 	QTimer *typeTimer;
 
 	void openNote();
-	void newNote();
+	QString newNoteName(QString oldname = "", bool tryagain = false);
 
 private slots:
+	void updateConfigMenu();
+
 	void openNoteClicked();
 	void newNoteClicked();
 	void remNote();
+	void renameNote();
 	void newTextAvailable();
 	void updateContents();
 
