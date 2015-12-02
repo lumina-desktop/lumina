@@ -83,11 +83,9 @@ private slots:
 	
 	//Menu functions
 	void UpdateMenu(bool fast = false);
-	void ShowMenu(const QPoint &pt = QPoint()){
+	void ShowMenu(){
 	  UpdateMenu(true); //run the fast version
-	  //qDebug() << "Show Context Menu:" << QCursor::pos() << pt;
-	  if(pt.isNull()){ deskMenu->popup(QCursor::pos()); }
-	  else{ deskMenu->popup( bgWindow->mapToGlobal(pt)); }
+	  deskMenu->popup(QCursor::pos()); //}
 	}
 	void UpdateWinMenu();
 	void winClicked(QAction*);

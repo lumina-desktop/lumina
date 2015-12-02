@@ -218,10 +218,11 @@ void LDesktop::InitDesktop(){
   bgWindow = new QWidget();
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
+	bgWindow->setFocusPolicy(Qt::StrongFocus);
   	bgWindow->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 	LSession::handle()->XCB->SetAsDesktop(bgWindow->winId());
 	bgWindow->setGeometry(LSession::handle()->screenGeom(desktopnumber));
-	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu(const QPoint&)) );
+	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace(bgWindow); //new QMdiArea(bgWindow);
       int grid = settings->value(DPREFIX+"GridSize",-1).toInt();
