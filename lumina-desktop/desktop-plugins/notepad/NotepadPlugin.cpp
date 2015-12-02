@@ -152,6 +152,7 @@ QString NotePadPlugin::newNoteName(QString oldname, bool tryagain){
   if(name.isEmpty()  || dlg.result()!=QDialog::Accepted){ return ""; } //cancelled
   //Check validity of the new note filename
   QString fullpath = QDir::homePath()+"/Notes/"+name;
+  if(!fullpath.endsWith(".note")){ fullpath.append(".note"); }
   if(QFile::exists(fullpath)){
     return newNoteName(name, true); //try again
   }
