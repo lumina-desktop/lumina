@@ -36,6 +36,7 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaSingleApplication.cpp \
 	LuminaOS-FreeBSD.cpp \
 	LuminaOS-DragonFly.cpp \
+	LuminaOS-NetBSD.cpp \
 	LuminaOS-OpenBSD.cpp \
         LuminaOS-kFreeBSD.cpp
 #       new OS support can be added here
