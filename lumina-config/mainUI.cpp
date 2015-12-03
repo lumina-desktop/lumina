@@ -163,8 +163,9 @@ void MainUI::setupConnections(){
 
   //Shortcuts Page
   connect(ui->tool_shortcut_clear, SIGNAL(clicked()), this, SLOT(clearKeyBinding()) );
-  connect(ui->tool_shortcut_set, SIGNAL(clicked()), this, SLOT(getKeyPress()) );
-
+  connect(ui->tool_shortcut_set, SIGNAL(clicked()), this, SLOT(applyKeyBinding()) );
+  connect(ui->tree_shortcut, SIGNAL(itemSelectionChanged()), this, SLOT(updateKeyConfig()) );
+  
   //Defaults Page
   connect(ui->tool_default_filemanager, SIGNAL(clicked()), this, SLOT(changeDefaultFileManager()) );
   connect(ui->tool_default_terminal, SIGNAL(clicked()), this, SLOT(changeDefaultTerminal()) );
@@ -1007,7 +1008,31 @@ void MainUI::clearKeyBinding(){
   modshort=true;
 }
 
-void MainUI::getKeyPress(){
+void MainUI::applyKeyBinding(){
+  QKeySequence seq = ui->keyEdit_shortcut->keySequence();
+  qDebug() << "New Key Sequence:" << seq.toString(QKeySequence::NativeText) << seq.toString(QKeySequence::PortableText);
+  if(seq.isEmpty()){
+    //Verify removal of the action first
+	  
+    //Now remove the action
+    delete ui->tree_shortcut->currentItem();
+  }else{
+    QTreeWidgetItem *it = ui->tree_shortcut->currentItem();
+     it->setText(1,seq.toString(QKeySequence::NativeText));
+     it->setWhatsThis(1,dispToFluxKeys(seq.toString(QKeySequence::PortableText)));
+     qDebug() << " - Flux Sequence:" << it->whatsThis(1);
+  }
+  ui->keyEdit_shortcut->clear();
+  ui->push_save->setEnabled(true);
+  modshort=true;
+}
+
+void MainUI::updateKeyConfig(){
+  ui->group_shortcut_modify->setEnabled(ui->tree_shortcut->currentItem()!=0);
+  ui->keyEdit_shortcut->clear();
+}
+
+/*void MainUI::getKeyPress(){
   if(ui->tree_shortcut->currentItem()==0){ return; } //nothing selected
   KeyCatch dlg(this);
   dlg.exec();
@@ -1020,7 +1045,7 @@ void MainUI::getKeyPress(){
   it->setWhatsThis(1,dispToFluxKeys(dlg.xkeys));
   ui->push_save->setEnabled(true);
   modshort=true;
-}
+}*/
 
 //===========
 // Defaults Page

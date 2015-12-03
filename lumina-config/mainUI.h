@@ -31,7 +31,7 @@
 
 // local includes
 #include "LPlugins.h"
-#include "KeyCatch.h"
+//#include "KeyCatch.h"
 #include "AppDialog.h"
 #include "ColorDialog.h"
 #include "ThemeDialog.h"
@@ -128,7 +128,9 @@ private slots:
 	void loadKeyboardShortcuts();
 	void saveKeyboardShortcuts();
 	void clearKeyBinding();
-	void getKeyPress();
+	void applyKeyBinding();
+	void updateKeyConfig();
+	//void getKeyPress();
 
 	//Defaults Page
 	void changeDefaultBrowser();
