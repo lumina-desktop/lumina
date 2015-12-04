@@ -28,6 +28,7 @@ signals:
 	void PluginRemovedByUser(QString ID);
 	void IncreaseIcons(); //increase default icon sizes
 	void DecreaseIcons(); //decrease default icon sizes
+	void HideDesktopMenu();
 	
 public:
 	LDesktopPluginSpace(QWidget *parent = 0);

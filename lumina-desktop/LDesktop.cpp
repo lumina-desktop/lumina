@@ -232,6 +232,7 @@ void LDesktop::InitDesktop(){
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
       connect(bgDesktop, SIGNAL(IncreaseIcons()), this, SLOT(IncreaseDesktopPluginIcons()) );
       connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
+      connect(bgDesktop, SIGNAL(HideDesktopMenu()), deskMenu, SLOT(hide()));
   if(DEBUG){ qDebug() << " - Desktop Init Done:" << desktopnumber; }
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );

@@ -98,11 +98,13 @@ public slots:
 	  setupMenu();
 	}
 	void showPluginMenu(){
+	  emit CloseDesktopMenu();
 	  menu->popup( QCursor::pos() );
 	}
 	
 signals:
 	void OpenDesktopMenu();
+	void CloseDesktopMenu();
 	void PluginResized();
 	
 	//Signals for communication with the desktop layout system (not generally used by hand)

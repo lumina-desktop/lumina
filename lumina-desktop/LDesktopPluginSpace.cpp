@@ -132,6 +132,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     connect(plug, SIGNAL(RemovePlugin(QString)), this, SLOT(RemoveItem(QString)) );
     connect(plug, SIGNAL(IncreaseIconSize()), this, SIGNAL(IncreaseIcons()) );
     connect(plug, SIGNAL(DecreaseIconSize()), this, SIGNAL(DecreaseIcons()) );
+    connect(plug, SIGNAL(CloseDesktopMenu()), this, SIGNAL(HideDesktopMenu()) );
   }
 }
 
