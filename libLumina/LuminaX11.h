@@ -47,21 +47,27 @@ public:
   ~strut_geom(){}
 };
 
-/*class icccm_hints{
+class icccm_size_hints{
 public:
   int x, y, width, height, min_width, min_height, max_width, max_height;
+  //Note: The "x","y","width", and "height" values are considered depreciated in the ICCCM specs
   int width_inc, height_inc, min_aspect_num, min_aspect_den, max_aspect_num, max_aspect_den;
   int base_width, base_height;
-  unsigned int flags;  //QFlags(LXCB::SIZE_HINT) combination
   unsigned int win_gravity; //LXCB::GRAVITY value
 
-  icccm_hints(){
-    x=y=width=height=min_width=max_width=min_height=max_height = 0;
-    width_inc=height_inc=min_aspect_num=min_aspect_den=max_aspect_num=max_aspect_den = 0;
-    flags = win_gravity = 0;
+  icccm_size_hints(){
+    x=y=width=height=min_width=max_width=min_height=max_height = -1;
+    width_inc=height_inc=min_aspect_num=min_aspect_den=max_aspect_num=max_aspect_den = -1;
+    win_gravity = 0;
   }
-  ~icccm_hinits(){}
-};*/
+  ~icccm_size_hints(){}
+  bool isValid(){
+    //See if any of the values are different from the init values
+    return ( x>=0 || y>=0 || width>=0 || height>=0 || min_width>=0 || min_height>=0 || max_width>=0 || max_height>=0 \
+	  || width_inc>=0 || height_inc>=0 || min_aspect_num>=0 || min_aspect_den>=0 || max_aspect_num>=0 || max_aspect_den>=0 \
+	  || base_width>=0 || base_height>=0 || win_gravity>0 );
+  }
+};
 
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
@@ -180,10 +186,12 @@ public:
 	// -- WM_TRANSIENT_FOR
 	WId WM_ICCCM_GetTransientFor(WId win); //Returns "win" for errors or no transient
 	void WM_ICCCM_SetTransientFor(WId win, WId transient);
-	// -- WM_SIZE_HINTS
-	
-	// -- WM_NORMAL_HINTS
-	
+	// -- WM_SIZE_HINTS (older property?)
+	icccm_size_hints WM_ICCCM_GetSizeHints(WId win); //most values in structure are -1 if not set
+	//void WM_ICCCM_SetSizeHints(WId win, icccm_size_hints hints);
+	// -- WM_NORMAL_HINTS (newer property? - check for this before falling back on WM_SIZE_HINTS)
+	icccm_size_hints WM_ICCCM_GetNormalHints(WId win); //most values in structure are -1 if not set
+	//void WM_ICCCM_SetNormalHints(WId win, icccm_size_hints hints);
 	// -- WM_HINTS (contains WM_STATE)
 	
 	// -- WM_PROTOCOLS

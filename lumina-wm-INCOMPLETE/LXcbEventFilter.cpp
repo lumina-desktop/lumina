@@ -183,7 +183,8 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================
 	  }
 	}
-	return stopevent;
+	return false; 
+	//never stop event handling (this will not impact the X events themselves - just the internal screensaver/WM/widgets)
 }
 
 bool XCBEventFilter::BlockInputEvent(WId win){
@@ -191,7 +192,6 @@ bool XCBEventFilter::BlockInputEvent(WId win){
   // - Always let the screensaver know about the event first (need to reset timers and such)
   obj->emit NewInputEvent();
   // - Check the state of the screensaver
-  
   if(obj->SSLocked){ qDebug() << "SS Locked"; return true; }
   // - Check the state of any fullscreen apps
   else if( win!=0 && !obj->FS_WINS.isEmpty()){

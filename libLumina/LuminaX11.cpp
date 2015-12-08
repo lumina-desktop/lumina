@@ -1317,9 +1317,63 @@ void LXCB::WM_ICCCM_SetTransientFor(WId win, WId transient){
   xcb_icccm_set_wm_transient_for(QX11Info::connection(), win, transient);
 }
 
-// -- WM_SIZE_HINTS
-	
-// -- WM_NORMAL_HINTS
+// -- WM_SIZE_HINTS (older property?)
+icccm_size_hints LXCB::WM_ICCCM_GetSizeHints(WId win){
+  //most values in structure are -1 if not set
+  icccm_size_hints hints;
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_size_hints_unchecked(QX11Info::connection(), win, XCB_ATOM_WM_SIZE_HINTS);
+  xcb_size_hints_t reply;
+  if(1==xcb_icccm_get_wm_size_hints_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    //Now go though and move any data into the output struct
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_POSITION)==XCB_ICCCM_SIZE_HINT_US_POSITION ){ hints.x=reply.x; hints.y=reply.y; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_SIZE)==XCB_ICCCM_SIZE_HINT_US_SIZE ){ hints.width=reply.width; hints.height=reply.height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_POSITION)==XCB_ICCCM_SIZE_HINT_P_POSITION ){ hints.x=reply.x; hints.y=reply.y; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_SIZE)==XCB_ICCCM_SIZE_HINT_P_SIZE ){ hints.width=reply.width; hints.height=reply.height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MIN_SIZE)==XCB_ICCCM_SIZE_HINT_P_MIN_SIZE ){ hints.min_width=reply.min_width; hints.min_height=reply.min_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MAX_SIZE)==XCB_ICCCM_SIZE_HINT_P_MAX_SIZE ){ hints.max_width=reply.max_width; hints.max_height=reply.max_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_RESIZE_INC)==XCB_ICCCM_SIZE_HINT_P_RESIZE_INC ){ hints.width_inc=reply.width_inc; hints.height_inc=reply.height_inc; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_ASPECT)==XCB_ICCCM_SIZE_HINT_P_ASPECT ){ hints.min_aspect_num=reply.min_aspect_num; hints.min_aspect_den=reply.min_aspect_den; hints.max_aspect_num=reply.max_aspect_num; hints.max_aspect_den=reply.max_aspect_den;}
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_BASE_SIZE)==XCB_ICCCM_SIZE_HINT_BASE_SIZE ){ hints.base_width=reply.base_width; hints.base_height=reply.base_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY)==XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY ){ hints.win_gravity=reply.win_gravity; }
+    //free(reply);
+  }
+  return hints;
+}
+
+//void WM_ICCCM_SetSizeHints(WId win, icccm_size_hints hints);
+
+// -- WM_NORMAL_HINTS (newer property? - check for this before falling back on WM_SIZE_HINTS)
+icccm_size_hints LXCB::WM_ICCCM_GetNormalHints(WId win){
+//most values in structure are -1 if not set
+  //most values in structure are -1 if not set
+  icccm_size_hints hints;
+  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_normal_hints_unchecked(QX11Info::connection(), win);
+  xcb_size_hints_t reply;
+  if(1==xcb_icccm_get_wm_normal_hints_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+    //Now go though and move any data into the output struct
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_POSITION)==XCB_ICCCM_SIZE_HINT_US_POSITION ){ hints.x=reply.x; hints.y=reply.y; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_SIZE)==XCB_ICCCM_SIZE_HINT_US_SIZE ){ hints.width=reply.width; hints.height=reply.height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_POSITION)==XCB_ICCCM_SIZE_HINT_P_POSITION ){ hints.x=reply.x; hints.y=reply.y; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_SIZE)==XCB_ICCCM_SIZE_HINT_P_SIZE ){ hints.width=reply.width; hints.height=reply.height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MIN_SIZE)==XCB_ICCCM_SIZE_HINT_P_MIN_SIZE ){ hints.min_width=reply.min_width; hints.min_height=reply.min_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MAX_SIZE)==XCB_ICCCM_SIZE_HINT_P_MAX_SIZE ){ hints.max_width=reply.max_width; hints.max_height=reply.max_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_RESIZE_INC)==XCB_ICCCM_SIZE_HINT_P_RESIZE_INC ){ hints.width_inc=reply.width_inc; hints.height_inc=reply.height_inc; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_ASPECT)==XCB_ICCCM_SIZE_HINT_P_ASPECT ){ hints.min_aspect_num=reply.min_aspect_num; hints.min_aspect_den=reply.min_aspect_den; hints.max_aspect_num=reply.max_aspect_num; hints.max_aspect_den=reply.max_aspect_den;}
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_BASE_SIZE)==XCB_ICCCM_SIZE_HINT_BASE_SIZE ){ hints.base_width=reply.base_width; hints.base_height=reply.base_height; }
+    if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY)==XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY ){ hints.win_gravity=reply.win_gravity; }
+    //free(reply);
+  }
+  return hints;	
+}
+
+/*void LXCB::WM_ICCCM_SetNormalHints(WId win, icccm_size_hints hints){
+  //Convert the data structure into the proper format
+  xcb_size_hints_t xhints;
+  if(hints.x>=0 || hints.y>=0){ xcb_icccm_size_hints_set_position(&xhints, 1, hints.x, hints.y); }
+  //if(hints.width>=0
+  
+  xcb_icccm_set_wm_normal_hints(QX11Info::connection(), win, &xhints);
+}*/
 
 // -- WM_HINTS
 	

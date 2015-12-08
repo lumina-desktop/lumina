@@ -91,10 +91,19 @@ void LWindowFrame::InitWindow(){
 	VL->setContentsMargins(1,1,2,2); 
 	VL->setSpacing(0);
 	//Have the window take the same initial size of the client window
-	QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
-	this->setGeometry( geom );
-	qDebug() << "First Geom:" << geom;
-	if(geom.width() < 100 && geom.height() < 100){ this->resize(100,100); }
+	qDebug() << " - Load Size Hints";
+	icccm_size_hints SH = LWM::SYSTEM->WM_ICCCM_GetNormalHints(CID);
+	qDebug() << " - - Got Normal Hints";
+	if(!SH.isValid()){ SH = LWM::SYSTEM->WM_ICCCM_GetSizeHints(CID); }
+	qDebug() << " - - Start resizing...";
+	if(SH.base_width>=0 && SH.base_height>=0){ this->resize(SH.base_width, SH.base_height); }
+	else if(SH.min_width>=0 && SH.min_height>=0){ this->resize(SH.min_width, SH.min_height); }
+	else if(SH.width>=0 && SH.height>=0){ this->resize(SH.width, SH.height); }
+	else{
+	  QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
+	  this->setGeometry( geom );
+	}
+	qDebug() << " - done";
 	
 	//Now embed the native window into the frame
 	WIN = QWindow::fromWinId(CID);
