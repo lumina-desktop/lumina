@@ -339,6 +339,7 @@ QString MainUI::dispToFluxKeys(QString in){
   in.replace("Ins","Insert");
   in.replace("Volume Up", "XF86AudioRaiseVolume"); //multimedia key
   in.replace("Volume Down", "XF86AudioLowerVolume"); //multimedia key
+  in.replace("+"," ");
   return in;
 }
 
