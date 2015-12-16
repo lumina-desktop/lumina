@@ -341,9 +341,11 @@ void LSession::watcherChange(QString changed){
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
   }
-  //Now double-check all the watches files to ensure that none of them got removed
-
-  QStringList files = watcher->files();
+  //Now ensure this file was not removed from the watcher
+  if(!watcher->files().contains(changed) && !watcher->directories().contains(changed)){
+    watcher->addPath(changed);
+  }
+  /*QStringList files = watcher->files();
   if(files.length() < 5){
     qDebug() << " - Resetting Watched Files...";
     watcher->removePaths(files); //clear the current files before re-setting them
@@ -352,7 +354,7 @@ void LSession::watcherChange(QString changed){
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
     watcher->addPath( QDir::homePath()+"/Desktop");
-  }
+  }*/
 }
 
 void LSession::screensChanged(){
