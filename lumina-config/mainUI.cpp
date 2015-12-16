@@ -231,7 +231,7 @@ void MainUI::setupMenus(){
   QFileInfoList fbstyles; 
   for(int i=0; i<dirs.length(); i++){
     QDir fbdir(dirs[i]);
-    fbstyles << fbdir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    fbstyles << fbdir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
   }
   QString lastdir;
   for(int i=0; i<fbstyles.length(); i++){
