@@ -66,7 +66,7 @@ session.screen0.strftimeFormat:	%l:%M
 session.titlebar.right:	Minimize Maximize Close
 session.colorsPerChannel:	4
 session.opaqueMove:	False
-session.styleFile:	/usr/local/share/fluxbox/styles/clouds
+session.styleFile:	/usr/local/share/fluxbox/styles/bora_black
 session.doubleClickInterval:	250
 session.iconbar:	false
 session.cacheLife:	5
