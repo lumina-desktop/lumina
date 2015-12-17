@@ -429,7 +429,7 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
 	watcher->addPath( QDir::homePath()+"/.lumina/envsettings.conf" );
 	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
 	watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" ); //also watch these files for changes
-  connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange()) );
+  connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(syncTimer, SIGNAL(timeout()), this, SLOT(reloadFiles()) );
 }
 
@@ -437,14 +437,19 @@ LuminaThemeEngine::~LuminaThemeEngine(){
 
 }
 
-void LuminaThemeEngine::watcherChange(){
+void LuminaThemeEngine::refresh(){
+  QTimer::singleShot(100,this, SLOT(reloadFiles()) );
+}
+
+void LuminaThemeEngine::watcherChange(QString file){
   if(syncTimer->isActive()){ syncTimer->stop(); }
   syncTimer->start();
+  if(!watcher->files().contains(file)){ watcher->addPath(file); }
 }
 
 void LuminaThemeEngine::reloadFiles(){
   //Check the Theme file/settings
-  if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified() ){
+  if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified().addSecs(1) ){
     QStringList current = LTHEME::currentSettings();
     application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
     if(icons!=current[2]){
