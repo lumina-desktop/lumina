@@ -70,8 +70,7 @@ int main(int argc, char ** argv)
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
-    //Startup the Application
-    if(DEBUG){ qDebug() << "Session Init:";}
+    //Startup the session
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
     //Setup the log file
@@ -95,7 +94,7 @@ int main(int argc, char ** argv)
     //LUtils::LoadTranslation(&a, "lumina-desktop");
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
-
+    theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";

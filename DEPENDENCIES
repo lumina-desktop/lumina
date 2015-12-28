@@ -94,8 +94,6 @@ Optional Tools
   fluxbox
   kde-style-oxygen
   xscreensaver
-
-  Optional packages
   xbacklight  (required for changing screen brightness)
   alsa-utils  (required for adjusting audio volume)
   acpi        (required for monitoring battery life)
@@ -110,12 +108,12 @@ Optional Tools
 
   gcc
   gcc-c++
-  qt-devel
   qt5-qttools-devel
-  qt-config
   qt5-qttools
-  qt5-qtbase-gui
+  qt5-linguist
+  qt5-qtbase-devel
   qt5-qtmultimedia-devel
+  qt5-qtdeclarative-devel
   qt5-qtsvg-devel
   qt5-qtx11extras-devel
   xcb-util-image
@@ -123,12 +121,9 @@ Optional Tools
   xcb-util-wm-devel
   libxcb-devel
   xcb-util-devel
-  phonon-devel
-  phonon-qt5-devel
   libXcomposite-devel
   libXdamage-devel
   libXrender-devel
-  qt5-qtdeclarative-devel
   fluxbox
   qt5-style-oxygen
   plasma-oxygen

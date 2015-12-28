@@ -92,6 +92,8 @@ public:
 	LuminaThemeEngine(QApplication *app);
 	~LuminaThemeEngine();
 
+	void refresh();
+
 private:
 	QApplication *application;
 	QFileSystemWatcher *watcher;
@@ -101,7 +103,7 @@ private:
 	//LuminaThemeStyle *style;
 
 private slots:
-	void watcherChange();
+	void watcherChange(QString);
 	void reloadFiles();
 
 signals:

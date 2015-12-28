@@ -574,6 +574,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
@@ -621,6 +622,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
@@ -643,6 +645,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
       QString var = tmp[i].section("=",0,0).toLower().simplified();
       QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+      if(val.isEmpty()){ continue; }
       QString istrue = (val.toLower()=="true") ? "true": "false";
       //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
       if(var.contains(".")){ var.replace(".","_"); } 
@@ -675,6 +678,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
+    if(val.isEmpty()){ continue; }
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
@@ -701,7 +705,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   //Now do any theme settings
   QStringList themesettings = LTHEME::currentSettings(); 
       //List: [theme path, colorspath, iconsname, font, fontsize]
-  qDebug() << "Current Theme Color:" << themesettings[1];
+  //qDebug() << "Current Theme Color:" << themesettings[1];
   tmp = sysDefaults.filter("theme_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("theme."); }
   bool setTheme = !tmp.isEmpty();
@@ -709,6 +713,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    if(val.isEmpty()){ continue; }
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
@@ -728,8 +733,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     QStringList systhemes = LTHEME::availableSystemThemes();
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
-    qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
-    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[1].endsWith(".qss.template")){
+    //qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss.template")){
       themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
 	 if(systhemes[i].startsWith(themesettings[0]+"::::",Qt::CaseInsensitive)){
@@ -750,7 +755,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       }
     }
   }
-  
+  //qDebug() << " - Final Theme Color:" << themesettings[1];
+
   //Ensure that the settings directory exists
   QString setdir = QDir::homePath()+"/.lumina/LuminaDE";
   if(!QFile::exists(setdir)){ 
