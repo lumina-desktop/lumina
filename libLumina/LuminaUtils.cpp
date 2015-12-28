@@ -655,8 +655,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
 	if(val.contains("%")){
 	  QString last = val.section("%",1,1).toLower(); //last character
 	  val = val.section("%",0,0);
-          if(last=="h"){ val = QString::number( (screenGeom.height()*val.toDouble())/100 ); }//adjust value to a percentage of the height of the screen
-          else if(last=="w"){ val = QString::number( (screenGeom.width()*val.toDouble())/100 ); }//adjust value to a percentage of the width of the screen
+          if(last=="h"){ val = QString::number( qRound(screenGeom.height()*val.toDouble())/100 ); }//adjust value to a percentage of the height of the screen
+          else if(last=="w"){ val = QString::number( qRound(screenGeom.width()*val.toDouble())/100 ); }//adjust value to a percentage of the width of the screen
         }
         //qDebug() << " -- Adjusted:" << val;
         deskset << "height="+val; 
