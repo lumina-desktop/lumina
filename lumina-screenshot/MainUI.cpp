@@ -99,7 +99,7 @@ bool MainUI::getWindow(){
 
 void MainUI::getPixmap(){
   QScreen *scrn = QApplication::screens().at(0);
-  if(cwin==0 && ui->radio_window->isChecked() ){
+  if( (cwin==0 && ui->radio_window->isChecked() ) || ui->radio_all->isChecked() ){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
   }else if(cwin==0 && ui->radio_monitor->isChecked()){
