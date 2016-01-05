@@ -10,6 +10,8 @@
 #include <QApplication>
 #include <QFontMetrics>
 
+#include <ScrollDialog.h>
+
 #define DEBUG 0
 
 FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
@@ -163,7 +165,10 @@ void FODialog::WorkDone(QStringList errlist){
     else if(Worker->isCP){ msg = tr("Could not copy these files:"); }
     else if(Worker->isRESTORE){ msg = tr("Could not restore these files:"); }
     else if(Worker->isMV){ msg = tr("Could not move these files:"); }
-    QMessageBox::warning(this, tr("File Errors"), msg+"\n\n"+errlist.join("\n"));
+    ScrollDialog dlg(this);
+      dlg.setWindowTitle(tr("File Errors"));
+      dlg.setText( msg+"\n\n"+errlist.join("\n") );
+      dlg.exec();
   }
   noerrors = errlist.isEmpty();
   this->close();
