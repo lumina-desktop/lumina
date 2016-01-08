@@ -1,3 +1,4 @@
+include("$${PWD}/../OS-detect.pri")
 
 QT       += core network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
@@ -5,15 +6,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent 
 
 TARGET=LuminaUtils
 
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
-
 system(./make-global-h.sh $$PREFIX)
 
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
 target.path = $$DESTDIR$$LIBPREFIX
 
 DESTDIR= $$_PRO_FILE_PWD_/
@@ -33,31 +27,23 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaUtils.cpp \
 	LuminaX11.cpp \
 	LuminaThemes.cpp \
-	LuminaSingleApplication.cpp \
-	LuminaOS-FreeBSD.cpp \
-	LuminaOS-DragonFly.cpp \
-	LuminaOS-NetBSD.cpp \
-	LuminaOS-OpenBSD.cpp \
-        LuminaOS-kFreeBSD.cpp
+	LuminaSingleApplication.cpp
+#	LuminaOS-FreeBSD.cpp \
+#	LuminaOS-DragonFly.cpp \
+#	LuminaOS-NetBSD.cpp \
+#	LuminaOS-OpenBSD.cpp \
+#     LuminaOS-kFreeBSD.cpp
 #       new OS support can be added here
 
 # check linux distribution and use specific
-# LuminaOS support functions (or fall back to
-# generic one
-
-exists(/bin/lsb_release){
-  LINUX_DISTRIBUTION = $$system(lsb_release -si)
-} exists(/usr/bin/lsb_release){
-  LINUX_DISTRIBUTION = $$system(lsb_release -si)
+# LuminaOS support functions (or fall back to generic one)
+exists($${PWD}/LuminaOS-$${LINUX_DISTRO}.cpp){
+  SOURCES += LuminaOS-$${LINUX_DISTRO}.cpp
+}else:exists($${PWD}/LuminaOS-$${OS}.cpp){
+  SOURCES += LuminaOS-$${OS}.cpp
+}else{
+  SOURCES += LuminaOS-template.cpp
 }
-
-equals(LINUX_DISTRIBUTION, "Debian"): {
-	SOURCES += LuminaOS-Debian.cpp
-} else {
-	SOURCES += LuminaOS-Linux.cpp
-}
-
-
 
 INCLUDEPATH += $$PREFIX/include
 

@@ -1,3 +1,6 @@
+
+include("OS-detect.pri")
+
 TEMPLATE = subdirs
 CONFIG += recursive
 

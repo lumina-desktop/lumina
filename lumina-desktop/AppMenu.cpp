@@ -49,7 +49,7 @@ void AppMenu::updateAppList(){
     //--Look for the app store
     XDGDesktop store = LXDG::loadDesktopFile(appstorelink, ok);
     if(ok){
-      this->addAction( LXDG::findIcon(store.icon, ""), tr("Install Applications"), this, SLOT(launchStore()) );
+      this->addAction( LXDG::findIcon(store.icon, ""), tr("Manage Applications"), this, SLOT(launchStore()) );
     }
     //--Look for the control panel
     store = LXDG::loadDesktopFile(controlpanellink, ok);
