@@ -49,7 +49,18 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  return "0.8.8-devel"; 
+  QString ver = "0.8.8-devel";
+  #ifdef GIT_VERSION
+  ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
+  #endif
+  return ver; 
+}
+
+QString LUtils::LuminaDesktopBuildDate(){
+  #ifdef BUILD_DATE
+  return BUILD_DATE;
+  #endif
+  return "";
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
@@ -548,8 +559,8 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
   if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::SysPrefix()+"etc/luminaDesktop.conf.dist"); }
-  if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile("/etc/luminaDesktop.conf"); }
-  if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile("/etc/luminaDesktop.conf.dist"); }
+  if(sysDefaults.isEmpty() && !skipOS) { sysDefaults = LUtils::readFile(L_ETCDIR+"/luminaDesktop.conf"); }
+  if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(L_ETCDIR+"/luminaDesktop.conf.dist"); }
   if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
   //Find the number of the left-most desktop screen
   QString screen = "0";

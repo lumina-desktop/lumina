@@ -26,7 +26,6 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
 QString LOS::AppStoreShortcut(){ return ""; } //graphical app/pkg manager
-QString LOS::QtConfigShortcut(){ return "/usr/bin/qtconfig-qt4"; } //qtconfig binary (NOT *.desktop file)
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){

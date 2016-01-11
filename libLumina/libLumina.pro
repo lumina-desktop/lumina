@@ -3,12 +3,17 @@ include("$${PWD}/../OS-detect.pri")
 QT       += core network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
 
+define
+#Setup any special defines (qmake -> C++)
+GIT_VERSION=$$system(git describe --always)
+!isEmpty(GIT_VERSION){
+  DEFINES += GIT_VERSION='"\\\"$${GIT_VERSION}\\\""'
+}
+DEFINES += BUILD_DATE='"\\\"$$system(date)\\\""'
 
 TARGET=LuminaUtils
 
-system(./make-global-h.sh $$PREFIX)
-
-target.path = $$DESTDIR$$LIBPREFIX
+target.path = $${DESTDIR}$${L_LIBDIR}
 
 DESTDIR= $$_PRO_FILE_PWD_/
 
@@ -28,14 +33,8 @@ SOURCES	+= LuminaXDG.cpp \
 	LuminaX11.cpp \
 	LuminaThemes.cpp \
 	LuminaSingleApplication.cpp
-#	LuminaOS-FreeBSD.cpp \
-#	LuminaOS-DragonFly.cpp \
-#	LuminaOS-NetBSD.cpp \
-#	LuminaOS-OpenBSD.cpp \
-#     LuminaOS-kFreeBSD.cpp
-#       new OS support can be added here
 
-# check linux distribution and use specific
+# Also load the OS template as available for
 # LuminaOS support functions (or fall back to generic one)
 exists($${PWD}/LuminaOS-$${LINUX_DISTRO}.cpp){
   SOURCES += LuminaOS-$${LINUX_DISTRO}.cpp
@@ -45,11 +44,9 @@ exists($${PWD}/LuminaOS-$${LINUX_DISTRO}.cpp){
   SOURCES += LuminaOS-template.cpp
 }
 
-INCLUDEPATH += $$PREFIX/include
-
 LIBS	+= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lXdamage 
 
-include.path=$$PREFIX/include/
+include.path=$${L_INCLUDEDIR}
 include.files=LuminaXDG.h \
 	LuminaUtils.h \
 	LuminaX11.h \
@@ -57,15 +54,13 @@ include.files=LuminaXDG.h \
 	LuminaOS.h \
 	LuminaSingleApplication.h
 
-colors.path=$$PREFIX/share/Lumina-DE/colors/
+colors.path=$${L_SHAREDIR}/Lumina-DE/colors
 colors.files=colors/*.qss.colors
 
-themes.path=$$PREFIX/share/Lumina-DE/themes/
+themes.path=$${L_SHAREDIR}/Lumina-DE/themes/
 themes.files=themes/*.qss.template
 
-quickplugins.path=$$PREFIX/share/Lumina-DE/quickplugins/
+quickplugins.path=$${L_SHAREDIR}/Lumina-DE/quickplugins/
 quickplugins.files=quickplugins/*
 
 INSTALLS += target include colors themes quickplugins
-
-QMAKE_LIBDIR = $$LIBPREFIX/qt5 $$LIBPREFIX

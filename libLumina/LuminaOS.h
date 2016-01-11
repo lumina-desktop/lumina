@@ -20,29 +20,20 @@
 
 #include "LuminaUtils.h"
 
-//First try to load the globals.h to set PREFIX
-#ifndef PREFIX
-#include "global.h"
-#endif
-//Now use the default value for PREFIX if not set
-#ifndef PREFIX
-#define PREFIX QString("/usr/local")
-#endif
-
+// NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
 class LOS{
 public:
 	//Return the name of the OS being used
 	static QString OSName(); 
 
 	//OS-specific prefix(s)
-	static QString LuminaShare(){ return (PREFIX+"/share/Lumina-DE/"); } //Install dir for Lumina share files
+	static QString LuminaShare(){ return (L_SHAREDIR+"/Lumina-DE/"); } //Install dir for Lumina share files
 	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
 	static QString SysPrefix(); //Prefix for system (/usr/ on FreeBSD)
 
 	//OS-specific application shortcuts (*.desktop files)
 	static QString ControlPanelShortcut();
 	static QString AppStoreShortcut();
-	static QString QtConfigShortcut();
 
 	//Scan for mounted external devices
 	static QStringList ExternalDevicePaths(); //Returns: QStringList[<type>::::<filesystem>::::<path>]

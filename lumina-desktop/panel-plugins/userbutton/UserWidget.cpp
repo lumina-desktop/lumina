@@ -32,7 +32,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   //Setup the special buttons
   connect(ui->tool_app_store, SIGNAL(clicked()), this, SLOT(openStore()) );
   connect(ui->tool_controlpanel, SIGNAL(clicked()), this, SLOT(openControlPanel()) );
-  connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );
+  //connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );
   
   lastUpdate = QDateTime(); //make sure it refreshes 
 
@@ -152,13 +152,13 @@ void UserWidget::UpdateAll(){
   }else{
     ui->tool_controlpanel->setVisible(false); //not available
   }
-  QString QTCONFIG = LOS::QtConfigShortcut();
+  /*QString QTCONFIG = LOS::QtConfigShortcut();
   if(QFile::exists(QTCONFIG) && !QTCONFIG.isEmpty()){
     ui->tool_qtconfig->setVisible(true);
     ui->tool_qtconfig->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
   }else{
     ui->tool_qtconfig->setVisible(false);
-  }
+  }*/
   //Now update the menus
   UpdateMenu();	
 }

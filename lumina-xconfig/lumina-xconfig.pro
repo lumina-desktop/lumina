@@ -1,16 +1,10 @@
+include("$${PWD}/../OS-detect.pri")
 
 QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 TARGET = lumina-xconfig
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
-target.path = $$DESTDIR$$PREFIX/bin
-
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
+target.path = $$DESTDIR$${L_BINDIR}
 
 TEMPLATE = app
 
@@ -23,18 +17,9 @@ FORMS    += mainUI.ui
 
 # RESOURCES+= lumina-config.qrc
 
-INCLUDEPATH += ../libLumina $$PREFIX/include
 
-LIBS += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
+LIBS += -lLuminaUtils
 
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
-LRELEASE = $$QT5LIBDIR/bin/lrelease
-
-
-QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-xconfig_af.ts \
@@ -100,8 +85,8 @@ TRANSLATIONS =  i18n/lumina-xconfig_af.ts \
                 i18n/lumina-xconfig_zh_TW.ts \
                 i18n/lumina-xconfig_zu.ts
 
-dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
 INSTALLS += target dotrans
 

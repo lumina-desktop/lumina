@@ -1,29 +1,17 @@
+include($${PWD}/../OS-detect.pri)
 
 QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia quickwidgets concurrent svg
 
 
 TARGET = Lumina-DE
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
-target.path = $$DESTDIR$$PREFIX/bin
+target.path = $$DESTDIR$${L_BINDIR}
 
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
 
-LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lxcb -lxcb-damage
-QMAKE_LIBDIR	= ../libLumina
+LIBS     += -lLuminaUtils -lxcb -lxcb-damage
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
-
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
-LRELEASE = $$QT5LIBDIR/bin/lrelease
 
 
 SOURCES += main.cpp \
@@ -68,45 +56,37 @@ include(desktop-plugins/desktop-plugins.pri)
 
 RESOURCES+= Lumina-DE.qrc
 
-INCLUDEPATH += ../libLumina $$PREFIX/include
-
-desktop.files = Lumina-DE.desktop
-linux-* {
-desktop.path = /usr/share/xsessions
-} else {
-desktop.path = $$PREFIX/share/xsessions
-}
+desktop.path = $${L_SESSDIR}
 
 icons.files = Lumina-DE.png \
 		Insight-FileManager.png
-
-icons.path = $$PREFIX/share/pixmaps
+icons.path = $${L_SHAREDIR}/pixmaps
 
 fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
-fluxconf.path = $$PREFIX/share/Lumina-DE/
+fluxconf.path = $${L_SHAREDIR}/Lumina-DE/
 
 wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
 			wallpapers/Lumina_Wispy_green.jpg \
 			wallpapers/Lumina_Wispy_purple.jpg \
 			wallpapers/Lumina_Wispy_red.jpg
-wallpapers.path = $$PREFIX/share/wallpapers/Lumina-DE
+wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
 
 
 defaults.files = defaults/luminaDesktop.conf \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
-defaults.path = $$PREFIX/share/Lumina-DE/
+defaults.path = $${L_SHAREDIR}/Lumina-DE/
 
-conf.path = $$PREFIX/etc
+conf.path = $${L_ETCDIR}
 
 #Now do any PC-BSD defaults (if set)
 PCBSD{
-  conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
-  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/desktop-background.jpg
+  conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/desktop-background.jpg
 }else{
-  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$$PREFIX/etc/luminaDesktop.conf.dist
-  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/desktop-background.jpg
+  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/desktop-background.jpg
 }
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
@@ -172,8 +152,8 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zh_TW.ts \
                 i18n/lumina-desktop_zu.ts
 
-dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
 INSTALLS += target desktop icons wallpapers defaults conf fluxconf dotrans
 

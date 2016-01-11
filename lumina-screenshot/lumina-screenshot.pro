@@ -1,17 +1,11 @@
+include("$${PWD}/../OS-detect.pri")
 
 QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 
 TARGET = lumina-screenshot
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
-target.path = $$DESTDIR$$PREFIX/bin
-
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
+target.path = $$DESTDIR$${L_BINDIR}
 
 TEMPLATE = app
 
@@ -22,17 +16,8 @@ HEADERS  += MainUI.h
 
 FORMS    += MainUI.ui
 
-INCLUDEPATH += ../libLumina $$PREFIX/include
+LIBS     += -lLuminaUtils
 
-LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils
-
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
-LRELEASE = $$QT5LIBDIR/bin/lrelease
-
-QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-screenshot_af.ts \
@@ -98,11 +83,11 @@ TRANSLATIONS =  i18n/lumina-screenshot_af.ts \
                 i18n/lumina-screenshot_zh_TW.ts \
                 i18n/lumina-screenshot_zu.ts
 
-dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
 desktop.files=lumina-screenshot.desktop
-desktop.path=$$PREFIX/share/applications/
+desktop.path=$${L_SHAREDIR}/applications/
 
 INSTALLS += target dotrans desktop
 

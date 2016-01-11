@@ -26,9 +26,10 @@
 
 class LUtils{
 public:
-	//Get the current version of the Lumina desktop
+	//Get the current version/build of the Lumina desktop
 	static QString LuminaDesktopVersion();
-	
+	static QString LuminaDesktopBuildDate();
+
 	//Run an external command and return the exit code
 	static int runCmd(QString cmd, QStringList args = QStringList());
 	//Run an external command and return any text output (one line per entry)

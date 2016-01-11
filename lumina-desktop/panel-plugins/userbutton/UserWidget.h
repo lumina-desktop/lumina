@@ -80,9 +80,6 @@ private slots:
 	void openDeskSettings(){
 	  LaunchItem("lumina-config", false);
 	}
-	void openQtConfig(){
-	  LaunchItem( LOS::QtConfigShortcut(), false);
-	}
 	void openScreenSaverConfig(){
 	  LaunchItem(SSAVER, false);
 	}

@@ -35,12 +35,12 @@ void SettingsMenu::UpdateMenu(){
    act = new QAction( LXDG::findIcon("preferences-other",""), tr("Display"), this);
 	act->setWhatsThis("lumina-xconfig");
 	this->addAction(act);
-  QString qtconfig = LOS::QtConfigShortcut();
+  /*QString qtconfig = LOS::QtConfigShortcut();
   if(QFile::exists(qtconfig) && !qtconfig.isEmpty()){
     act = new QAction( LXDG::findIcon("preferences-desktop-theme",""), tr("Window Theme"), this);
 	act->setWhatsThis(qtconfig);
 	this->addAction(act);
-  }
+  }*/
   QString CONTROLPANEL = LOS::ControlPanelShortcut();
   if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
     //Now load the info

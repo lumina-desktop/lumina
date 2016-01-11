@@ -1,29 +1,16 @@
+include("$${PWD}/../OS-detect.pri")
 
 QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 TARGET = lumina-wm
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
 target.path = $$DESTDIR$$PREFIX/bin
 
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
+LIBS     += -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util
 
-LIBS     += -L../libLumina -L$$LIBPREFIX -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util
-QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
-
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
-LRELEASE = $$QT5LIBDIR/bin/lrelease
-
 
 SOURCES += main.cpp \
 		WMSession.cpp \
@@ -48,8 +35,6 @@ FORMS    += LLockScreen.ui
 
 #Now add in all the screensaver animation plugins
 include(animations/animations.pri)
-
-INCLUDEPATH += ../libLumina $$PREFIX/include
 
 TRANSLATIONS =  i18n/lumina-wm_af.ts \
                 i18n/lumina-wm_ar.ts \
@@ -114,8 +99,8 @@ TRANSLATIONS =  i18n/lumina-wm_af.ts \
                 i18n/lumina-wm_zh_TW.ts \
                 i18n/lumina-wm_zu.ts
 
-dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
 INSTALLS += target dotrans
 
