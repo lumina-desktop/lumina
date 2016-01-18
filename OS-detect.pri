@@ -54,6 +54,8 @@
     L_SESSDIR=/usr/share/xsessions
     OS=Linux
     LIBS += -L/usr/local/lib -L/usr/lib -L/lib
+    PREFIX = /usr
+    
     exists(/bin/lsb_release){
       LINUX_DISTRO = $$system(lsb_release -si)
     } else:exists(/usr/bin/lsb_release){
@@ -63,12 +65,14 @@
     #Now switch through known Linux distro templates
     equals(LINUX_DISTRO, "Fedora"){
       PREFIX=/usr/local
-      L_LIBDIR=/lib64
+      equals($${QMAKE_HOST.arch},"amd64"){ L_LIBDIR=/lib64 }
+      else{ L_LIBDIR=/lib }
     }
     
   }else{ 
     OS="Unknown"; 
   }
+  
   MSG="Build Settings Loaded: $${OS}"
   equals(OS,"Linux"){ MSG+="-$${LINUX_DISTRO}" }
   message( $$MSG )
