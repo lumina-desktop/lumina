@@ -31,6 +31,10 @@ Redesign the lumina-open dialog (specifically, the widget used to browse the ava
 -----------------------------------------
 TO-DO (medium projects)
 -----------------------------------------
+Better Search Algorithms:
+	- implement keyword search and tagging ability
+	- general improvements to finding more relavent files
+	
 Abstraction (move into libLumina):
 	- lumina-fm bookmarks? (possibly integrate into the favorites)
 	- Plugins (desktop and panel): this allows lumina-config to more easily probe/utilize
