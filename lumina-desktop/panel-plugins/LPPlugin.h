@@ -32,6 +32,7 @@ public:
 	  this->setFocusPolicy(Qt::NoFocus); //no keyboard focus on the panel/plugins
 	  if(horizontal){LY = new QBoxLayout(QBoxLayout::LeftToRight, this); }
 	  else{ LY = new QBoxLayout(QBoxLayout::TopToBottom, this); }
+	  this->setObjectName(ptype.section("---",0,0));
 	  LY->setContentsMargins(0,0,0,0);
 	  LY->setSpacing(1);
 	  this->setLayout(LY);
