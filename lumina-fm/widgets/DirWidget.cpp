@@ -557,6 +557,10 @@ void DirWidget::UpdateButtons(){
 }
 
 //Keyboard Shortcuts triggered
+void DirWidget::TryRenameSelection(){
+  on_tool_act_rename_clicked();
+}
+
 void DirWidget::TryCutSelection(){
   on_tool_act_cut_clicked();
 }
