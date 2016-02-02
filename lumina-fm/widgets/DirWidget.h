@@ -72,6 +72,7 @@ public slots:
 	void UpdateButtons();
 
 	//Keyboard Shortcuts triggered
+    void TryRenameSelection();
 	void TryCutSelection();
 	void TryCopySelection();
 	void TryPasteSelection();

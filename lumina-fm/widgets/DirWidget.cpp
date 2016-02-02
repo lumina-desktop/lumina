@@ -557,6 +557,10 @@ void DirWidget::UpdateButtons(){
 }
 
 //Keyboard Shortcuts triggered
+void DirWidget::TryRenameSelection(){
+  on_tool_act_rename_clicked();
+}
+
 void DirWidget::TryCutSelection(){
   on_tool_act_cut_clicked();
 }
@@ -955,8 +959,8 @@ void DirWidget::OpenContextMenu(){
     contextMenu->addAction(LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(on_tool_act_run_clicked()) );
     contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(on_tool_act_runwith_clicked()) );
 
-    contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename"), this, SLOT(on_tool_act_rename_clicked()) )->setEnabled(canmodify);
-    contextMenu->addAction(LXDG::findIcon("document-encrypted",""), tr("View Checksums"), this, SLOT(fileCheckSums()) );
+    contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(on_tool_act_rename_clicked()) )->setEnabled(canmodify);
+    contextMenu->addAction(LXDG::findIcon("document-encrypted",""), tr("View Checksums..."), this, SLOT(fileCheckSums()) );
     contextMenu->addSeparator();
   }
   //Now add the general selection options
@@ -967,7 +971,7 @@ void DirWidget::OpenContextMenu(){
   contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(on_tool_act_rm_clicked()) )->setEnabled(canmodify&&!sel.isEmpty());
   if(LUtils::isValidBinary("lumina-fileinfo")){
     contextMenu->addSeparator();
-    contextMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("File Properties"), this, SLOT(fileProperties()) )->setEnabled(!sel.isEmpty());
+    contextMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("File Properties..."), this, SLOT(fileProperties()) )->setEnabled(!sel.isEmpty());
   }
   contextMenu->addSeparator();
   contextMenu->addAction(LXDG::findIcon("system-search",""), tr("Open Terminal here"), this, SLOT(openTerminal()));

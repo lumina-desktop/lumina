@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>373</height>
+             <height>371</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -116,6 +116,8 @@
     <addaction name="actionNew_Window"/>
     <addaction name="actionNew_Tab"/>
     <addaction name="actionSearch"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose_Browser"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -135,6 +137,8 @@
      </property>
      <addaction name="actionTabs_2"/>
     </widget>
+    <addaction name="actionRefresh"/>
+    <addaction name="separator"/>
     <addaction name="actionShow_Thumbnails"/>
     <addaction name="actionView_Hidden_Files"/>
     <addaction name="actionShow_Action_Buttons"/>
@@ -160,7 +164,20 @@
     <addaction name="actionScan"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionRename"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut_Selection"/>
+    <addaction name="actionCopy_Selection"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete_Selection"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuBookmarks"/>
    <addaction name="menuExternal_Devices"/>
@@ -247,7 +264,7 @@
   </action>
   <action name="actionSearch">
    <property name="text">
-    <string>Search Directory</string>
+    <string>Search Directory...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
@@ -292,10 +309,22 @@
    <property name="text">
     <string>Larger Icons</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionSmaller_Icons">
    <property name="text">
     <string>Smaller Icons</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionNew_Window">
@@ -315,6 +344,83 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="text">
+    <string>Rename...</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionCut_Selection">
+   <property name="text">
+    <string>Cut Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionCopy_Selection">
+   <property name="text">
+    <string>Copy Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionDelete_Selection">
+   <property name="text">
+    <string>Delete Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionClose_Browser">
+   <property name="text">
+    <string>Close Browser</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
