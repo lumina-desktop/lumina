@@ -89,12 +89,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   if(DEBUG){ qDebug() << " - Keyboard Shortcuts"; }
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
-  closeTabShort = new QShortcut( QKeySequence(tr("Ctrl+W")), this);
-  refreshShort = new QShortcut( QKeySequence(tr("F5")), this);
-  copyFilesShort = new QShortcut( QKeySequence(tr("Ctrl+C")), this);
-  pasteFilesShort = new QShortcut( QKeySequence(tr("Ctrl+V")), this);
-  cutFilesShort = new QShortcut( QKeySequence(tr("Ctrl+X")), this);
-  deleteFilesShort = new QShortcut( QKeySequence(tr("Delete")), this);
   
   //Finish loading the interface
   workThread->start();
@@ -204,19 +198,33 @@ void MainUI::setupIcons(){
   this->setWindowIcon( LXDG::findIcon("Insight-FileManager","") );
 	
   //Setup all the icons using libLumina
-  ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
-  ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new","") );\
+  // File menu
   ui->actionNew_Window->setIcon( LXDG::findIcon("window-new","") );
-  ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
-  ui->actionAdd_Bookmark->setIcon( LXDG::findIcon("bookmark-new","") );
-  ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
+  ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new","") );
   ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
-  ui->actionLarger_Icons->setIcon( LXDG::findIcon("zoom-in","") );
-  ui->actionSmaller_Icons->setIcon( LXDG::findIcon("zoom-out", "") );
-  //Menu Icons
+  ui->actionClose_Browser->setIcon( LXDG::findIcon("tab-close","") );
+  ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
+
+  // Edit menu
+  ui->actionRename->setIcon( LXDG::findIcon("edit-rename","") );
+  ui->actionCut_Selection->setIcon( LXDG::findIcon("edit-cut","") );
+  ui->actionCopy_Selection->setIcon( LXDG::findIcon("edit-copy","") );
+  ui->actionPaste->setIcon( LXDG::findIcon("edit-paste","") );
+  ui->actionDelete_Selection->setIcon( LXDG::findIcon("edit-delete","") );
+
+  // View menu
+  ui->actionRefresh->setIcon( LXDG::findIcon("view-refresh","") );
   ui->menuView_Mode->setIcon( LXDG::findIcon("view-choose","") );
   ui->menuGroup_Mode->setIcon( LXDG::findIcon("tab-duplicate","") );
-  
+  ui->actionLarger_Icons->setIcon( LXDG::findIcon("zoom-in","") );
+  ui->actionSmaller_Icons->setIcon( LXDG::findIcon("zoom-out", "") );
+
+  // Bookmarks menu
+  ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
+  ui->actionAdd_Bookmark->setIcon( LXDG::findIcon("bookmark-new","") );
+
+  // External Devices menu
+  ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
 }
 
 //==========
@@ -237,13 +245,6 @@ void MainUI::setupConnections(){
   //Special Keyboard Shortcuts
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
-  connect(closeTabShort, SIGNAL(activated()), this, SLOT( tabClosed() ) );
-  connect(refreshShort , SIGNAL(activated()), this, SLOT( refreshTabs() ) );
-  connect(copyFilesShort, SIGNAL(activated()), this, SLOT( CopyFilesTriggered() ) );
-  connect(cutFilesShort, SIGNAL(activated()), this, SLOT( CutFilesTriggered() ) );
-  connect(pasteFilesShort, SIGNAL(activated()), this, SLOT( PasteFilesTriggered() ) );
-  connect(deleteFilesShort, SIGNAL(activated()), this, SLOT( DeleteFilesTriggered() ) );
-
 }
 
 void MainUI::loadSettings(){
@@ -389,6 +390,10 @@ void MainUI::on_actionSearch_triggered(){
   QProcess::startDetached("lumina-search -dir \""+dir->currentDir()+"\"");
 }
 
+void MainUI::on_actionClose_Browser_triggered(){
+  tabClosed();
+}
+
 void MainUI::on_actionClose_triggered(){
   if(tabBar->count() > 1){
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Verify Quit"), tr("You have multiple tabs open. Are you sure you want to quit?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) ){
@@ -397,6 +402,41 @@ void MainUI::on_actionClose_triggered(){
   }
   qDebug() << "Closing Down...";
   this->close();
+}
+
+void MainUI::on_actionRename_triggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Rename Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryRenameSelection()) ); }
+}
+
+void MainUI::on_actionCut_Selection_triggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Cut Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCutSelection()) );	 }
+}
+
+void MainUI::on_actionCopy_Selection_triggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Copy Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCopySelection()) ); }
+}
+
+void MainUI::on_actionPaste_triggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Paste Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryPasteSelection()) ); }
+}
+
+void MainUI::on_actionDelete_Selection_triggered(){
+  DirWidget *dir = FindActiveBrowser();
+  if(DEBUG){ qDebug() << "Delete Shortcut Pressed:" << dir << dir->currentDir(); }
+  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryDeleteSelection()) ); }
+}
+
+void MainUI::on_actionRefresh_triggered(){
+  DirWidget *cur = FindActiveBrowser();
+  if(cur!=0){ cur->refresh(); }
 }
 
 void MainUI::on_actionView_Hidden_Files_triggered(){
@@ -603,36 +643,6 @@ void MainUI::nextTab(){
   int cur = tabBar->currentIndex();
   if(cur == (tabBar->count()-1) ){ tabBar->setCurrentIndex(0); }
   else{ tabBar->setCurrentIndex( cur+1 ); }	
-}
-
-void MainUI::refreshTabs(){
-  DirWidget *cur = FindActiveBrowser();
-  if(cur!=0){ cur->refresh(); }
-}
-
-//Special Keyboard shortcut interactions
-void MainUI::CopyFilesTriggered(){
-  DirWidget *dir = FindActiveBrowser();
-  if(DEBUG){ qDebug() << "Copy Shortcut Pressed:" << dir << dir->currentDir(); }
-  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCopySelection()) ); }
-}
-
-void MainUI::CutFilesTriggered(){
-  DirWidget *dir = FindActiveBrowser();
-  if(DEBUG){ qDebug() << "Cut Shortcut Pressed:" << dir << dir->currentDir(); }
-  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryCutSelection()) );	 }
-}
-
-void MainUI::PasteFilesTriggered(){
-  DirWidget *dir = FindActiveBrowser();
-  if(DEBUG){ qDebug() << "Paste Shortcut Pressed:" << dir << dir->currentDir(); }
-  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryPasteSelection()) ); }
-}
-
-void MainUI::DeleteFilesTriggered(){
-  DirWidget *dir = FindActiveBrowser();
-  if(DEBUG){ qDebug() << "Delete Shortcut Pressed:" << dir << dir->currentDir(); }
-  if(dir!=0){ QTimer::singleShot(0, dir, SLOT(TryDeleteSelection()) ); }
 }
 
 void MainUI::DirDataAvailable(QString id, QString dir, LFileInfoList list){
