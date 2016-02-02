@@ -212,7 +212,7 @@ void LPlugins::LoadDesktopPlugins(){
     info.icon = "cpu";
   DESKTOP.insert(info.ID, info);
   //Available QtQuick scripts
-  QStringList quickID = LUtils::listQuickPlugins();
+  /*QStringList quickID = LUtils::listQuickPlugins();
   for(int i=0; i<quickID.length(); i++){
     QStringList quickinfo = LUtils::infoQuickPlugin(quickID[i]); //Returns: [name, description, icon]
     if(quickinfo.length() < 3){ continue; } //invalid file (unreadable/other)
@@ -222,7 +222,7 @@ void LPlugins::LoadDesktopPlugins(){
       info.ID = "quick-"+quickID[i]; //the "quick-" prefix is required for the desktop plugin syntax 
       info.icon = quickinfo[2];
     DESKTOP.insert(info.ID, info);	  
-  }
+  }*/
 }
 
 void LPlugins::LoadMenuPlugins(){

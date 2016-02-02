@@ -11,8 +11,8 @@ HEADERS += $$PWD/calendar/CalendarPlugin.h \
 	$$PWD/desktopview/DesktopViewPlugin.h \
 	$$PWD/notepad/NotepadPlugin.h \
 	$$PWD/audioplayer/PlayerWidget.h \
-	$$PWD/systemmonitor/MonitorWidget.h \
-	$$PWD/quickcontainer/QuickDPlugin.h
+	$$PWD/systemmonitor/MonitorWidget.h
+#	$$PWD/quickcontainer/QuickDPlugin.h
 #	$$PWD/messagecenter/MessageCenter.h
 
 FORMS += $$PWD/audioplayer/PlayerWidget.ui \

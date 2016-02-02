@@ -20,7 +20,7 @@
 #include "notepad/NotepadPlugin.h"
 #include "audioplayer/PlayerWidget.h"
 #include "systemmonitor/MonitorWidget.h"
-#include "quickcontainer/QuickDPlugin.h"
+//#include "quickcontainer/QuickDPlugin.h"
 //#include "messagecenter/MessageCenter.h"
 
 class NewDP{
@@ -46,8 +46,8 @@ public:
 	    plug = new SysMonitorPlugin(parent, plugin);
 	  //}else if(plugin.section("---",0,0)=="messagecenter"){
 	    //plug = new MessageCenterPlugin(parent, plugin);
-	  }else if(plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){
-	    plug = new QuickDPlugin(parent, plugin);
+	  //}else if(plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){
+	    //plug = new QuickDPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
 	  }
