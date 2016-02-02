@@ -23,6 +23,7 @@
 #include <QStringList>
 #include <QLocalServer>
 #include <QLockFile>
+#include <QApplication>
 
 #include <LuminaUtils.h>
 

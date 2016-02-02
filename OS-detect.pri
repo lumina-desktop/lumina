@@ -20,8 +20,8 @@
   message("Build OS Info: $${QMAKE_HOST.os}, $${QMAKE_HOST.arch}, $${QMAKE_HOST.version_string}")
   
   #Load the initial library/includefile search locations (more can be added in the OS-specific sections below)
-  LIBS = -L$${PRO_FILE_PWD}/libLumina -L$$[QT_INSTALL_LIBS]
-  INCLUDEPATH = $${PRO_FILE_PWD}/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
+  LIBS = -L$${PWD}/libLumina -L$$[QT_INSTALL_LIBS]
+  INCLUDEPATH = $${PWD}/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
   
   #Setup the default values for build settings (if not explicitly set previously)
   !defined(PREFIX){ PREFIX=/usr/local }

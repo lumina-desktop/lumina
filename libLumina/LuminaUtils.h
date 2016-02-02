@@ -18,7 +18,7 @@
 #include <QFileInfo>
 #include <QObject>
 #include <QTranslator>
-#include <QApplication>
+//#include <QApplication>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QSize>
