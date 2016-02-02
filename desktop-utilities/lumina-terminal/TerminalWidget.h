@@ -10,6 +10,8 @@
 #include <QTextEdit>
 #include <QProcess>
 #include <QKeyEvent>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 class TerminalWidget : public QTextEdit{
 	Q_OBJECT
@@ -20,8 +22,9 @@ public:
 	void aboutToClose();
 
 private:
+	//QSerialPort *PROC;
 	QProcess *PROC;
-	QString inBuffer;
+
 private slots:
 	void UpdateText();
 	void ShellClosed();
@@ -30,7 +33,10 @@ signals:
 	void ProcessClosed(QString);
 
 protected:
-	void keyPressEvent(QKeyEvent *event);
+	void keyPressEvent(QKeyEvent *ev);
+	void mousePressEvent(QMouseEvent *ev);
+	void mouseDoubleClickEvent(QMouseEvent *ev);
+	void contextMenuEvent(QContextMenuEvent *ev);
 };
 
 #endif

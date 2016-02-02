@@ -6,6 +6,7 @@
 //===========================================
 #include <QSystemTrayIcon>
 #include <QDebug>
+#include <QSerialPortInfo>
 
 #include <LuminaSingleApplication.h>
 #include <LuminaThemes.h>
@@ -14,6 +15,10 @@
 
 #include "TrayIcon.h"
 int  main(int argc, char *argv[]) {
+   if(QSerialPortInfo::availablePorts().isEmpty()){
+     qDebug() << "No Serial Ports available!!!";
+     return 1;
+   }
    LTHEME::LoadCustomEnvSettings();
    LSingleApplication a(argc, argv, "lumina-terminal");
     if( !a.isPrimaryProcess() ){ return 0; } //poked the current process instead
