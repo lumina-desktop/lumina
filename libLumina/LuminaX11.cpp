@@ -164,7 +164,7 @@ void LXCB::RegisterVirtualRoots(QList<WId> roots){
   //Now set the property
   xcb_ewmh_set_virtual_roots(&EWMH, 0, roots.length(), list);
   //Now delete the temporary array from memory
-  delete list;
+  delete [] list;
 }
 
 // ===== SetCurrentWorkspace() =====
