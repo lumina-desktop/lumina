@@ -79,7 +79,7 @@
   message( $$MSG )
   
   # Setup the dirs needed to find/load libraries
-  QMAKE_LIBDIR =  $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
+  QMAKE_LIBDIR =  $${PWD}/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
   INCLUDEPATH +=$${PREFIX}/include
   
   # If the detailed install variables are not set - create them from the general vars
