@@ -191,7 +191,7 @@ void MainUI::MoveScreenLeft(){
   if(item == 0){ return; } //no item on the left (can't go left)
   QString LID = item->whatsThis(); //left ID
   //Now run the command
-  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--left-of" << LID << "--auto");
+  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--left-of" << LID);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
@@ -205,7 +205,7 @@ void MainUI::MoveScreenRight(){
   if(item == 0){ return; } //no item on the right (can't go right)
   QString RID = item->whatsThis(); //right ID
   //Now run the command
-  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--right-of" << RID << "--auto");
+  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--right-of" << RID);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
