@@ -110,6 +110,7 @@ private:
 private slots:
 	//Internal loading of thumbnails
 	void startLoadThumbs();
+	void showThumb(QString file, QIcon ico);
 
 	//UI BUTTONS/Actions
 	// -- Left Action Buttons
@@ -168,6 +169,9 @@ signals:
 	void FavoriteFiles(QStringList); //file selection
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection
+	
+	//Internal thumbnail loading system (multi-threaded)
+	void ThumbLoaded(QString, QIcon);
 	
 protected:
 	void mouseReleaseEvent(QMouseEvent *);

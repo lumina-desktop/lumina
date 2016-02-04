@@ -348,7 +348,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	      if(list[i].isImage()&& (addnew || updateThumbs)){
 	        if(showThumbs){ 
 		  it->setIcon(t, LXDG::findIcon("fileview-preview","image-x-generic") );
-		  needThumbs << list[i].fileName();	
+		  needThumbs << list[i].absoluteFilePath();	
 		}else{ it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	      }else if(addnew){
 	        it->setIcon(t, LXDG::findIcon(list[i].iconfile(),"unknown") );
@@ -422,7 +422,7 @@ void DirWidget::LoadDir(QString dir, QList<LFileInfo> list){
 	    if(list[i].isImage() && (addnew || updateThumbs) ){
 	      if(showThumbs){ 
 		it->setIcon(LXDG::findIcon("fileview-preview","image-x-generic") );
-		needThumbs << list[i].fileName();	
+		needThumbs << list[i].absoluteFilePath();	
 	      }else{ it->setIcon(LXDG::findIcon(list[i].iconfile(),"image-x-generic") ); }
 	    }else if(addnew){
 	      it->setIcon(LXDG::findIcon(list[i].iconfile(),"unknown") );
@@ -494,10 +494,10 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   if(CDIR.contains(ZSNAPDIR)){
     //The user was already within a snapshot - figure out which one and set the slider appropriately
     int index = snaps.indexOf( CDIR.section(ZSNAPDIR,1,1).section("/",0,0) );
-    if(index < 0){ index = snaps.length()+1; } //unknown - load the system (should never happen)
+    if(index < 0){ index = snaps.length(); } //unknown - load the system (should never happen)
     ui->slider_snap->setValue(index);
   }else{
-    ui->slider_snap->setValue(snaps.length()+1); //last item (normal system)
+    ui->slider_snap->setValue(snaps.length()); //last item (normal system)
   }
   QApplication::processEvents(); //let the slider changed signal get thrown away before we re-enable the widget
   ui->group_snaps->setEnabled(!snaps.isEmpty());
@@ -604,6 +604,9 @@ void DirWidget::setupConnections(){
   connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(startSync(const QString &)) );
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(startSync(const QString &)) ); //just in case
   connect(synctimer, SIGNAL(timeout()), this, SLOT(refresh()) );
+  
+  //Thumbnail loader
+  connect(this, SIGNAL(ThumbLoaded(QString, QIcon)), this, SLOT(showThumb(QString, QIcon)) );
 }
 
 QStringList DirWidget::currentSelection(){
@@ -632,7 +635,12 @@ void DirWidget::startLoadThumbs(){
   if(needThumbs.isEmpty()){ return; }
   needThumbs.removeDuplicates(); //just in case
   //QTime updatetime = QTime::currentTime().addMSecs(500);
-  for(int i=0; i<needThumbs.length() && !stopload; i++){
+  while(!needThumbs.isEmpty() && !stopload){
+    QString file = needThumbs.takeFirst();
+    QIcon ico(QPixmap(file).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) );
+    emit ThumbLoaded(file, ico);
+  }
+  /*for(int i=0; i<needThumbs.length() && !stopload; i++){
     if(showDetails){
       //Use the tree widget
       QList<QTreeWidgetItem*> items = treeWidget->findItems(needThumbs[i], Qt::MatchExactly);
@@ -649,7 +657,24 @@ void DirWidget::startLoadThumbs(){
       it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
     }
     //if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
-  }
+  }*/
+}
+
+void DirWidget::showThumb(QString file, QIcon ico){
+  if(showDetails){
+      //Use the tree widget
+      QList<QTreeWidgetItem*> items = treeWidget->findItems(file.section("/",-1), Qt::MatchExactly);
+      if(items.isEmpty() || stopload){ return; } //invalid item for some reason
+      QTreeWidgetItem *it = items.first();
+      it->setIcon(0, ico );
+    }else{
+      //Use the list widget
+      QList<QListWidgetItem*> items = listWidget->findItems(file.section("/",-1), Qt::MatchExactly);
+      if(items.isEmpty() || stopload){ return; } //invalid item for some reason
+      if(stopload){ return; } //stop right now
+      QListWidgetItem *it = items.first();
+      it->setIcon(ico);
+    }	
 }
 
 //UI BUTTONS
