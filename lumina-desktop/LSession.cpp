@@ -512,6 +512,8 @@ void LSession::updateDesktops(){
     }
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
+    if(DW->screenCount()<1){ return; } //stop here - no screens available temporarily (displayport/4K issue)
+    
       for(int i=0; i<DESKTOPS.length(); i++){
 	if(DESKTOPS[i]->Screen() >= DW->screenCount()){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
