@@ -16,6 +16,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QDir>
+#include <QFileInfo>
+#include <QProcess>
 
 #include "desktop-plugins/LDPlugin.h"
 
@@ -158,14 +160,26 @@ private slots:
 	  setupDrag(ID, "resize");
 	}
 	void RemoveItem(QString ID){
-	  for(int i=0; i<ITEMS.length(); i++){
-	    if(ITEMS[i]->whatsThis()==ID){
-	      ITEMS[i]->Cleanup();
-	      delete ITEMS.takeAt(i);
+	  //Special case - desktop file/dir link using the "applauncher" plugin	
+	  if(ID.startsWith("applauncher::")){
+	    QFileInfo info(ID.section("---",0,0).section("::",1,50) );
+	    if(info.exists() && info.absolutePath()==QDir::homePath()+"/Desktop"){
+	      qDebug() << "Deleting Desktop Item:" << info.absoluteFilePath();
+	      if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+info.absoluteFilePath()+"\""); }
+              else{ QFile::remove(info.absoluteFilePath()); } //just remove the file/symlink directly  
 	      emit PluginRemovedByUser(ID);
 	      return;
 	    }
 	  }
+	  //Any other type of plugin
+	  for(int i=0; i<ITEMS.length(); i++){
+	    if(ITEMS[i]->whatsThis()==ID){
+	      ITEMS[i]->Cleanup();
+	      delete ITEMS.takeAt(i);
+	      break;
+	    }
+	  }
+	  emit PluginRemovedByUser(ID);
 	}
 
 protected:

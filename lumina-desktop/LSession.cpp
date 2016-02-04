@@ -157,7 +157,7 @@ void LSession::setupSession(){
     watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
     watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
-    watcher->addPath( QDir::homePath() );
+    watcher->addPath( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
   connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
@@ -276,19 +276,6 @@ void LSession::launchStartupApps(){
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
   QProcess::startDetached("nice lumina-open -autostart-apps");
-  //Now get any XDG startup applications and launch them
-  /*QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
-  for(int i=0; i<xdgapps.length(); i++){
-    qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
-    //splash->showScreen("app::"+xdgapps[i].name);
-    if(xdgapps[i].startupNotify){
-      LSession::LaunchApplication("nice lumina-open \""+xdgapps[i].filePath+"\"");
-    }else{
-      //Don't update the mouse cursor
-      QProcess::startDetached("nice lumina-open \""+xdgapps[i].filePath+"\"");
-    }
-    LSession::processEvents();
-  }*/
   
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way

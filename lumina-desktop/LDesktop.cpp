@@ -362,7 +362,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
     settings->setValue(DPREFIX+"pluginlist", plugs);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
-  }else if(ID.startsWith("applauncher::") ){
+  }/*else if(ID.startsWith("applauncher::") ){
     //This was a temporary plugin (desktop file?) check for existance/dir and remove it as necessary
     QString path = ID.section("---",0,0).section("::",1,50); //full file path
     QFileInfo info(path);
@@ -373,7 +373,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
        if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+path+"\""); }
        else{ QFile::remove(path); } //just remove the file/symlink directly
     }
-  }
+  }*/
 }
 
 void LDesktop::IncreaseDesktopPluginIcons(){
