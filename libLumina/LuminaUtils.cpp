@@ -786,11 +786,13 @@ void LUtils::LoadSystemDefaults(bool skipOS){
 // =======================
 ResizeMenu::ResizeMenu(QWidget *parent) : QMenu(parent){
   this->setContentsMargins(1,1,1,1);
+  this->setMouseTracking(true);
   resizeSide = NONE;
   cAct = new QWidgetAction(this);
   contents = 0;
   connect(this, SIGNAL(aboutToShow()), this, SLOT(clearFlags()) );
   connect(this, SIGNAL(aboutToHide()), this, SLOT(clearFlags()) );
+  connect(cAct, SIGNAL(hovered()), this, SLOT(actionHovered()) );
 }
 
 ResizeMenu::~ResizeMenu(){
@@ -810,24 +812,29 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
   //Note: The exact position does not matter as much as the size
   //  since the window will be moved again the next time it is shown
   // The "-2" in the sizing below accounts for the menu margins
+  QPoint gpos = this->mapToGlobal(ev->pos());
   switch(resizeSide){
     case TOP:
-	geom.setTop(this->mapToGlobal(ev->pos()).y());
+	if(gpos.y() >= geom.bottom()-1){ break; }
+	geom.setTop(gpos.y());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case BOTTOM:
-	geom.setBottom( this->mapToGlobal(ev->pos()).y());
+	if(gpos.y() <= geom.top()+1){ break; }
+	geom.setBottom( gpos.y());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case LEFT:
-	geom.setLeft(this->mapToGlobal(ev->pos()).x());
+	if(gpos.x() >= geom.right()-1){ break; }
+	geom.setLeft(gpos.x());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;	    
     case RIGHT:
-	geom.setRight(this->mapToGlobal(ev->pos()).x());
+	if(gpos.x() <= geom.left()+1){ break; }
+	geom.setRight(gpos.x());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
         break;
