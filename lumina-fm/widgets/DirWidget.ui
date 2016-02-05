@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>349</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -157,9 +157,24 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_snap">
+         <widget class="QToolButton" name="tool_snap">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">padding-right: 5px;</string>
+          </property>
           <property name="text">
-           <string notr="true">Snap</string>
+           <string notr="true"/>
+          </property>
+          <property name="popupMode">
+           <enum>QToolButton::InstantPopup</enum>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextOnly</enum>
           </property>
          </widget>
         </item>

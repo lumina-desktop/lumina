@@ -489,7 +489,15 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   snapshots = snaps;
   if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
   //Now update the UI as necessary
-  
+  if(ui->tool_snap->menu()==0){ 
+    ui->tool_snap->setMenu(new QMenu(this)); 
+    connect(ui->tool_snap->menu(), SIGNAL(triggered(QAction*)), this, SLOT(direct_snap_selected(QAction*)) );
+  }
+  ui->tool_snap->menu()->clear();
+  for(int i=0; i<snapshots.length(); i++){
+    QAction *tmp = ui->tool_snap->menu()->addAction(snapshots[i]);
+      tmp->setWhatsThis(snapshots[i]);
+  }
   ui->slider_snap->setRange(0, snaps.length());
   if(CDIR.contains(ZSNAPDIR)){
     //The user was already within a snapshot - figure out which one and set the slider appropriately
@@ -499,12 +507,12 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   }else{
     ui->slider_snap->setValue(snaps.length()); //last item (normal system)
   }
+  on_slider_snap_valueChanged();
   QApplication::processEvents(); //let the slider changed signal get thrown away before we re-enable the widget
   ui->group_snaps->setEnabled(!snaps.isEmpty());
   ui->group_snaps->setVisible(!snaps.isEmpty());
   ui->tool_snap_newer->setEnabled(ui->slider_snap->value() < ui->slider_snap->maximum());
   ui->tool_snap_older->setEnabled(ui->slider_snap->value() > ui->slider_snap->minimum());
-	
 }
 
 void DirWidget::refresh(){
@@ -640,24 +648,6 @@ void DirWidget::startLoadThumbs(){
     QIcon ico(QPixmap(file).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) );
     emit ThumbLoaded(file, ico);
   }
-  /*for(int i=0; i<needThumbs.length() && !stopload; i++){
-    if(showDetails){
-      //Use the tree widget
-      QList<QTreeWidgetItem*> items = treeWidget->findItems(needThumbs[i], Qt::MatchExactly);
-      if(items.isEmpty()){ continue; } //invalid item for some reason
-      if(stopload){ return; } //stop right now
-      QTreeWidgetItem *it = items.first();
-      it->setIcon(0, QIcon( QPixmap(it->whatsThis(0).section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
-    }else{
-      //Use the list widget
-      QList<QListWidgetItem*> items = listWidget->findItems(needThumbs[i], Qt::MatchExactly);
-      if(items.isEmpty()){ continue; }
-      if(stopload){ return; } //stop right now
-      QListWidgetItem *it = items.first();
-      it->setIcon(QIcon( QPixmap(it->whatsThis().section("::::",1,100)).scaled(listWidget->iconSize(),Qt::IgnoreAspectRatio, Qt::FastTransformation) ) );
-    }
-    //if(QTime::currentTime() > updatetime){ QApplication::processEvents(); updatetime = QTime::currentTime().addMSecs(500); }//keep the UI snappy while loading a directory
-  }*/
 }
 
 void DirWidget::showThumb(QString file, QIcon ico){
@@ -835,16 +825,18 @@ void DirWidget::on_tool_snap_older_clicked(){
 }
 
 void DirWidget::on_slider_snap_valueChanged(int val){
+  bool labelsonly = false;
+  if(val==-1){ val = ui->slider_snap->value(); labelsonly=true; }
   //Update the snapshot interface
   ui->tool_snap_newer->setEnabled(val < ui->slider_snap->maximum());
   ui->tool_snap_older->setEnabled(val > ui->slider_snap->minimum());
   if(val >= snapshots.length() || val < 0){ 
-    ui->label_snap->setText(tr("Current"));
+    ui->tool_snap->setText(tr("Current"));
   }else if(QFile::exists(snapbasedir+snapshots[val])){
-    ui->label_snap->setText( QFileInfo(snapbasedir+snapshots[val]).lastModified().toString(Qt::DefaultLocaleShortDate) );
+    ui->tool_snap->setText( QFileInfo(snapbasedir+snapshots[val]).lastModified().toString(Qt::DefaultLocaleShortDate) );
   }
   //Exit if a non-interactive snapshot change
-  if(!ui->group_snaps->isEnabled()){ return; } //internal change - do not try to change the actual info
+  if(!ui->group_snaps->isEnabled() || labelsonly){ return; } //internal change - do not try to change the actual info
   //Determine which snapshot is now selected
   QString dir;
   if(DEBUG){ qDebug() << "Changing snapshot:" << CDIR << val << snapbasedir; }
@@ -872,14 +864,17 @@ void DirWidget::on_slider_snap_valueChanged(int val){
     if(DEBUG){ qDebug() << " - Load Snapshot:" << dir; }
   }
   //Make sure this directory exists, and back up as necessary
-  
-  /*while(!QFile::exists(dir) && !dir.isEmpty()){
-    dir = dir.section("/",0,-2); //back up one dir
-  }*/
   if(dir.isEmpty()){ return; }
   //Load the newly selected snapshot
   stopload = true; //just in case it is still loading
   emit LoadDirectory(ID, dir);
+}
+
+void DirWidget::direct_snap_selected(QAction *act){
+  QString snap = act->whatsThis();
+  int val = snapshots.indexOf(snap);
+  if(val<0){ return; }
+  else{ ui->slider_snap->setValue(val); }
 }
 
 //Top Toolbar buttons

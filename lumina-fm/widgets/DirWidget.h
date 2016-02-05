@@ -130,7 +130,9 @@ private slots:
 	// -- Top Snapshot Buttons
 	void on_tool_snap_newer_clicked();
 	void on_tool_snap_older_clicked();
-	void on_slider_snap_valueChanged(int);
+	void on_slider_snap_valueChanged(int val = -1);
+	void direct_snap_selected(QAction*);
+	
 	//Top Toolbar buttons
 	void on_actionBack_triggered();
 	void on_actionUp_triggered();
