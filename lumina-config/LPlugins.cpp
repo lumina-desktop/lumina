@@ -149,7 +149,7 @@ void LPlugins::LoadPanelPlugins(){
     info.name = QObject::tr("Show Desktop");
     info.description = QObject::tr("Hide all open windows and show the desktop");
     info.ID = "homebutton";
-    info.icon = "go-home";
+    info.icon = "user-desktop";
   PANEL.insert(info.ID, info);
   //Start Menu
   info = LPI(); //clear it
