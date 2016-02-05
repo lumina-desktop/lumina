@@ -51,6 +51,7 @@ void StartMenu::UpdateAll(){
   ui->tool_back->setIcon(LXDG::findIcon("go-previous",""));
   ui->tool_launch_deskinfo->setIcon(LXDG::findIcon("system-help",""));
 	
+  ui->tool_launch_mixer->setIcon( LXDG::findIcon("preferences-desktop-sound","") );
   ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-system-power-management","").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->label_locale_icon->setPixmap( LXDG::findIcon("preferences-desktop-locale","").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->tool_set_nextwkspace->setIcon(LXDG::findIcon("go-next-view",""));
@@ -103,7 +104,7 @@ void StartMenu::UpdateAll(){
   qDebug() << "Update Locales:" << locales;
   qDebug() << "Current Locale:" << curr;
   for(int i=0; i<locales.length(); i++){
-    QLocale loc(locales[i]);
+    QLocale loc( (locales[i]=="pt") ? "pt_PT" : locales[i] );
     ui->combo_locale->addItem(loc.nativeLanguageName() +" ("+locales[i]+")", locales[i]); //Make the display text prettier later
     if(locales[i] == curr || locales[i] == curr.section("_",0,0) ){
       //Current Locale
@@ -504,10 +505,10 @@ void StartMenu::on_slider_volume_valueChanged(int val){
   ui->label_vol->setText(QString::number(val)+"%");
   LOS::setAudioVolume(val);
   //Also adjust the icon for the volume
-  if(val<1){ ui->tool_launch_mixer->setIcon(LXDG::findIcon("audio-volume-muted","")); }
-  else if(val<33){ ui->tool_launch_mixer->setIcon(LXDG::findIcon("audio-volume-low","")); }
-  else if(val<66){ ui->tool_launch_mixer->setIcon(LXDG::findIcon("audio-volume-medium","")); }
-  else{ ui->tool_launch_mixer->setIcon(LXDG::findIcon("audio-volume-high","")); }
+  if(val<1){ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-muted","")); }
+  else if(val<33){ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-low","")); }
+  else if(val<66){ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-medium","")); }
+  else{ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-high","")); }
 }
 
 void StartMenu::on_tool_launch_mixer_clicked(){
@@ -517,6 +518,14 @@ void StartMenu::on_tool_launch_mixer_clicked(){
   }
 }
 
+void StartMenu::on_tool_mute_audio_clicked(){
+  static int lastvol = 50;
+  if(ui->slider_volume->value()==0){ ui->slider_volume->setValue(lastvol); }
+  else{
+    lastvol = ui->slider_volume->value();
+    ui->slider_volume->setValue(0);
+  }
+}
 	
 //Screen Brightness
 void StartMenu::on_slider_bright_valueChanged(int val){

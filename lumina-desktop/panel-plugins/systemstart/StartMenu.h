@@ -75,6 +75,7 @@ private slots:
 	//Audio Volume
 	void on_slider_volume_valueChanged(int);
 	void on_tool_launch_mixer_clicked();
+	void on_tool_mute_audio_clicked();
 	
 	//Screen Brightness
 	void on_slider_bright_valueChanged(int);

@@ -78,7 +78,7 @@ void LSysMenuQuick::UpdateMenu(){
     ui->combo_locale->clear();
     QLocale curr;
     for(int i=0; i<locales.length(); i++){
-      QLocale loc(locales[i]);
+      QLocale loc( (locales[i]=="pt") ? "pt_PT" : locales[i] );
       ui->combo_locale->addItem(loc.nativeLanguageName()+" ("+locales[i]+")", locales[i]); //Make the display text prettier later
       if(locales[i] == curr.name() || locales[i] == curr.name().section("_",0,0) ){
         //Current Locale
