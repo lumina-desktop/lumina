@@ -85,7 +85,6 @@ void MainUI::setupIcons(){
 
   //Desktop Page
   ui->tool_desk_addbg->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_desk_addbgcolor->setIcon( LXDG::findIcon("format-fill-color","") );
   ui->tool_desk_rmbg->setIcon( LXDG::findIcon("list-remove","") );
   ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_wallpaper), LXDG::findIcon("preferences-desktop-wallpaper","") );
   ui->tabWidget_desktop->setTabIcon( ui->tabWidget_desktop->indexOf(ui->tab_themes), LXDG::findIcon("preferences-desktop-theme","") );
@@ -145,7 +144,6 @@ void MainUI::setupConnections(){
   connect(ui->tool_desktop_addplugin, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
   connect(ui->tool_desktop_rmplugin, SIGNAL(clicked()), this, SLOT(deskplugremoved()) );
   connect(ui->tool_desk_addbg, SIGNAL(clicked()), this, SLOT(deskbgadded()) );
-  connect(ui->tool_desk_addbgcolor, SIGNAL(clicked()), this, SLOT(deskbgcoloradded()) );
   connect(ui->tool_desk_rmbg, SIGNAL(clicked()), this, SLOT(deskbgremoved()) );
   connect(ui->spin_desk_min, SIGNAL(valueChanged(int)), this, SLOT(desktimechanged()) );
   connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(desktimechanged()) ); //just need to poke the save routines
@@ -215,7 +213,14 @@ void MainUI::setupConnections(){
 }
 
 void MainUI::setupMenus(){
-
+  //Background file menu (different ways of loading files)
+  if(ui->tool_desk_addbg->menu()==0){ ui->tool_desk_addbg->setMenu(new QMenu(this)); }
+  ui->tool_desk_addbg->menu()->clear();
+  ui->tool_desk_addbg->menu()->addAction(LXDG::findIcon("document-new",""), tr("File(s)"), this, SLOT(deskbgadded()) );
+  ui->tool_desk_addbg->menu()->addAction(LXDG::findIcon("folder-new",""), tr("Directory (Single)"), this, SLOT(deskbgdiradded()) );
+  ui->tool_desk_addbg->menu()->addAction(LXDG::findIcon("document-open-folder",""), tr("Directory (Recursive)"), this, SLOT(deskbgdirradded()) );
+  ui->tool_desk_addbg->menu()->addAction(LXDG::findIcon("format-fill-color",""), tr("Solid Color"), this, SLOT(deskbgcoloradded()) );
+  
   //Session window manager settings
   ui->combo_session_wfocus->clear();
   ui->combo_session_wfocus->addItem( tr("Click To Focus"), "ClickToFocus");
@@ -704,7 +709,7 @@ void MainUI::deskbgadded(){
   if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
   QStringList imgs = LUtils::imageExtensions();
   for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
-  QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images ("+imgs.join(" ")+")");
+  QStringList bgs = QFileDialog::getOpenFileNames(this, tr("Find Background Image(s)"), dir, "Images ("+imgs.join(" ")+");;All Files (*)");
   if(bgs.isEmpty()){ return; }
   for(int i=0; i<bgs.length(); i++){
     ui->combo_desk_bg->addItem( QIcon(bgs[i]), bgs[i].section("/",-1), bgs[i]);
@@ -731,6 +736,66 @@ void MainUI::deskbgcoloradded(){
   ui->push_save->setEnabled(true); //this is definitely a change
   moddesk = true;
 }
+
+void MainUI::deskbgdiradded(){
+  //Add the files from a single directory
+ QString dir = LOS::LuminaShare().section("/Lumina-DE",0,0)+"/wallpapers/Lumina-DE";
+  qDebug() << "Looking for wallpaper dir:" << dir;
+  if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
+  dir = QFileDialog::getExistingDirectory(this, tr("Find Background Image Directory"), dir, QFileDialog::ReadOnly);
+  if(dir.isEmpty()){ return; }
+  //Got a directory - go ahead and find all the valid image files within it
+  QStringList imgs = LUtils::imageExtensions();
+  for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
+  QDir qdir(dir);
+  QStringList bgs = qdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+  if(bgs.isEmpty()){ return; }
+  for(int i=0; i<bgs.length(); i++){
+    ui->combo_desk_bg->addItem( bgs[i], qdir.absoluteFilePath(bgs[i]));
+  }
+  //Now move to the last item in the list (the new image(s));
+  ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
+  //If multiple items selected, automatically enable the background rotation option
+  if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
+    ui->radio_desk_multi->setChecked(true);
+  }
+  ui->push_save->setEnabled(true); //this is definitely a change
+  moddesk = true;	
+}
+
+void MainUI::deskbgdirradded(){
+  //Recursively add files from a directory
+ QString dir = LOS::LuminaShare().section("/Lumina-DE",0,0)+"/wallpapers/Lumina-DE";
+  qDebug() << "Looking for wallpaper dir:" << dir;
+  if( !QFile::exists(dir) ){ dir = QDir::homePath(); }
+  dir = QFileDialog::getExistingDirectory(this, tr("Find Background Image Directory"), dir, QFileDialog::ReadOnly);
+  if(dir.isEmpty()){ return; }
+  //Got a directory - go ahead and get all the valid image file formats
+  QStringList imgs = LUtils::imageExtensions();
+  for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
+  //Now load the directory and add all the valid files
+  QStringList dirs = LUtils::listSubDirectories(dir, true); //find/list all the dirs
+  dirs.prepend(dir); //make sure the main dir is also listed
+  QStringList bgs;
+  for(int d=0; d<dirs.length(); d++){
+    QDir qdir(dirs[d]);
+    QStringList tmp = qdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    for(int j=0; j<tmp.length(); j++){ bgs << qdir.absoluteFilePath(tmp[j]); }
+  }
+  //Now add all the files into the widget
+  for(int i=0; i<bgs.length(); i++){
+    ui->combo_desk_bg->addItem( bgs[i].section("/",-1), bgs[i] );
+  }
+  //Now move to the last item in the list (the new image(s));
+  ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
+  //If multiple items selected, automatically enable the background rotation option
+  if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
+    ui->radio_desk_multi->setChecked(true);
+  }
+  ui->push_save->setEnabled(true); //this is definitely a change
+  moddesk = true;		
+}
+
 
 void MainUI::deskplugadded(){
   GetPluginDialog dlg(this);
@@ -762,14 +827,6 @@ void MainUI::deskplugadded(){
   ui->list_desktop_plugins->scrollToItem(it);
   ui->push_save->setEnabled(true); 
   moddesk = true;
-  /*settings->sync(); //make sure we have the newly-modified list from the desktop (unique IDs for new plugins)
-  QString DPrefix = "desktop-"+QString::number(currentDesktop())+"/";
-  QStringList plugins = settings->value(DPrefix+"pluginlist").toStringList();
-  //qDebug() << "Current Plugins:" << plugins;
-  plugins << newplug;
-  //qDebug() << "New Plugins:" << plugins;
-  settings->setValue(DPrefix+"pluginlist", plugins);
-  settings->sync();*/
 }
 
 void MainUI::deskplugremoved(){
@@ -863,12 +920,6 @@ void MainUI::savePanels(){
 //    MENU PAGE
 //============
 void MainUI::addmenuplugin(){
-  /*QStringList names;
-  QStringList plugs = PINFO->menuPlugins();
-  for(int i=0; i<plugs.length(); i++){ names << PINFO->menuPluginInfo(plugs[i]).name; }
-  bool ok = false;
-  QString sel = QInputDialog::getItem(this,tr("New Menu Plugin"),tr("Plugin:"), names,0,false,&ok);
-  if(sel.isEmpty() || names.indexOf(sel) < 0 || !ok){ return; }*/
   GetPluginDialog dlg(this);
 	dlg.LoadPlugins("menu", PINFO);
 	dlg.exec();
@@ -1032,21 +1083,6 @@ void MainUI::updateKeyConfig(){
   ui->group_shortcut_modify->setEnabled(ui->tree_shortcut->currentItem()!=0);
   ui->keyEdit_shortcut->clear();
 }
-
-/*void MainUI::getKeyPress(){
-  if(ui->tree_shortcut->currentItem()==0){ return; } //nothing selected
-  KeyCatch dlg(this);
-  dlg.exec();
-  if(dlg.cancelled){ return; }
-  qDebug() << "Key Press:" << dlg.xkeys << dlg.qkeys;
-  QTreeWidgetItem *it = ui->tree_shortcut->currentItem();
-  //if(dlg.qkeys.endsWith("+")){ dlg.qkeys.replace("+"," "); dlg.qkeys = dlg.qkeys.append("+").simplified(); }
-  //else{ dlg.qkeys.replace("+"," "); }
-  it->setText(1,dlg.qkeys);
-  it->setWhatsThis(1,dispToFluxKeys(dlg.xkeys));
-  ui->push_save->setEnabled(true);
-  modshort=true;
-}*/
 
 //===========
 // Defaults Page
@@ -1322,127 +1358,8 @@ void MainUI::loadDefaultSettings(){
   
   ui->tree_defaults->sortItems(0,Qt::AscendingOrder);
   
-  /*
-  QStringList keys = appsettings->allKeys();
-  QStringList groups = keys.filter("Groups/");
-  if(groups.isEmpty()){
-    //setup default groups
-    appsettings->setValue("Groups/Web", QStringList() << "http" << "https" << "ftp");
-    appsettings->setValue("Groups/Email", QStringList() << "eml" << "msg" << "mailto");
-    appsettings->setValue("Groups/Development-C",QStringList() << "c" << "cpp" << "h" << "hpp");
-    appsettings->setValue("Groups/Development-Ruby",QStringList() << "rb" << "rbw");
-    appsettings->setValue("Groups/Development-Python",QStringList() << "py" << "pyw");
-    appsettings->setValue("Groups/Development-Fortran",QStringList() <<"f"<<"for"<<"f90"<<"f95"<<"f03"<<"f15");
-    appsettings->setValue("Groups/Images",QStringList() <<"jpg"<<"png"<<"tif"<<"gif"<<"bmp"<<"raw"<<"svg"<<"jpeg");
-    //Add more default groups later
-
-    appsettings->sync();
-    groups = appsettings->allKeys().filter("Groups/");
-  }
-  groups << "Uncategorized";
-  QStringList defaults = keys.filter("default/");
-  for(int g=0; g<groups.length(); g++){
-    //Create the group entry
-    QTreeWidgetItem *group = new QTreeWidgetItem( QStringList() << groups[g].section("/",-1) << "" );
-    ui->tree_defaults->addTopLevelItem(group);
-    //Now populate the group
-    if(g == groups.length()-1){
-      //uncategorized - everything leftover
-      for(int i=0; i<defaults.length(); i++){
-	QString path = appsettings->value(defaults[i],"").toString();
-	if(path.isEmpty()){ continue; } //ignore empty/uncategoried defaults
-	bool ok = false;
-	XDGDesktop file = LXDG::loadDesktopFile(path, ok);
-	QTreeWidgetItem *it = new QTreeWidgetItem(QStringList() << defaults[i].section("/",-1) << "");
-	it->setWhatsThis(1,path);
-	if(!ok || file.filePath.isEmpty()){
-	  //Might be a binary - just print out the raw "path"
-	  it->setText(1,path.section("/",-1));
-	  it->setIcon(1, LXDG::findIcon("application-x-executable","") );
-	}else{
-	  it->setText(1, file.name);
-	  it->setIcon(1, LXDG::findIcon(file.icon,"") );
-	}
-	group->addChild(it);
-      }
-    }else{
-      QStringList ch = appsettings->value(groups[g],QStringList()).toStringList();
-      for(int i=0; i<ch.length(); i++){
-	int index = defaults.indexOf("default/"+ch[i]);
-	if(index>=0){ defaults.removeAt(index); } //remove this item from the list
-        QString path = appsettings->value("default/"+ch[i],"").toString();
-	QTreeWidgetItem *it = new QTreeWidgetItem(QStringList() << ch[i] << "");
-	if( !path.isEmpty() ){
-	  //has something saved
-	  bool ok = false;
-	  XDGDesktop file = LXDG::loadDesktopFile(path, ok);
-	  it->setWhatsThis(1,path);
-	  if(!ok || file.filePath.isEmpty()){
-	    //Might be a binary - just print out the raw "path"
-	    it->setText(1,path.section("/",-1));
-	    it->setIcon(1, LXDG::findIcon("application-x-executable","") );
-	  }else{
-	    it->setText(1, file.name);
-	    it->setIcon(1, LXDG::findIcon(file.icon,"") );
-	  }
-	}
-	group->addChild(it);
-      }
-    }
-  }
-  */
   checkdefaulticons();
 }
-
-/*void MainUI::saveDefaultSettings(){
-  for(int i=0; i<ui->tree_defaults->topLevelItemCount(); i++){
-    //Groups
-    QTreeWidgetItem *group = ui->tree_defaults->topLevelItem(i);
-    QStringList items;
-    for(int c=0; c<group->childCount(); c++){
-      //Save this individual default value (and remember it later)
-      QTreeWidgetItem *it = group->child(c);
-      items << it->text(0);
-      if( !it->whatsThis(1).isEmpty()){
-	appsettings->setValue("default/"+it->text(0), it->whatsThis(1));
-      }
-    }
-    //Do not save the uncategorized group header (internal only)
-    if(group->text(0).toLower()!="uncategorized" && !items.isEmpty()){
-      appsettings->setValue("Groups/"+group->text(0), items);
-    }
-  }
-}*/
-
-/*void MainUI::adddefaultgroup(){
-  //Prompt for the group name
-  bool ok = false;
-  QString name = QInputDialog::getText(this, tr("New Application Group"), tr("Name:"), QLineEdit::Normal, "", &ok);
-  if(name.isEmpty() || !ok){ return; } //cancelled
-  //Make sure that name is not already taken
-
-  //Add it as a new top-level item
-  ui->tree_defaults->addTopLevelItem( new QTreeWidgetItem( QStringList() << name << "" ) );
-  ui->push_save->setEnabled(true);
-  moddef = true;
-}
-
-void MainUI::adddefaultextension(){
-  //Verify which group is selected
-  QTreeWidgetItem *it = ui->tree_defaults->currentItem();
-  if(it==0){ return; } //no selection
-  if(it->parent()!=0){ it = it->parent(); } //make sure to get the group item
-  //Prompt for the extension name
-  bool ok = false;
-  QString name = QInputDialog::getText(this, tr("New File Extension"), tr("Extension:"), QLineEdit::Normal, "", &ok);
-  if(name.isEmpty() || !ok){ return; } //cancelled
-  //Make sure that name is not already taken
-
-  //Add it as a new child of this group item
-  it->addChild( new QTreeWidgetItem( QStringList() << name << "" ) );
-  ui->push_save->setEnabled(true);
-  moddef = true;
-}*/
 
 void MainUI::cleardefaultitem(){
   QTreeWidgetItem *it = ui->tree_defaults->currentItem();
@@ -1529,15 +1446,7 @@ void MainUI::checkdefaulticons(){
   QTreeWidgetItem *it = ui->tree_defaults->currentItem();
   ui->tool_defaults_set->setEnabled(it!=0);
   ui->tool_defaults_clear->setEnabled(it!=0);
-  //ui->tool_defaults_addextension->setEnabled( it!=0);
   ui->tool_defaults_setbin->setEnabled(it!=0);
-  /*if(it!=0){
-    if(it->text(0)=="Uncategorized"){
-     ui->tool_defaults_set->setEnabled(false);
-     ui->tool_defaults_setbin->setEnabled(false);
-     ui->tool_defaults_clear->setEnabled(false);
-    }
-  }*/
 }
 
 //===========
@@ -1587,31 +1496,6 @@ void MainUI::loadSessionSettings(){
 	ui->list_session_start->addItem(it);
   }
   
-  /*for(int i=0; i<STARTUP.length(); i++){
-    if(STARTUP[i].startsWith("#")){ continue; }
-    else if(STARTUP[i].startsWith("lumina-open ")){
-      //Application or file
-      QString file = STARTUP[i].section("lumina-open ",0,0,QString::SectionSkipEmpty).simplified();
-      bool ok = false;
-      XDGDesktop desk = LXDG::loadDesktopFile(file, ok);
-      if(!desk.filePath.isEmpty() && ok && desk.filePath.endsWith(".desktop") ){
-        //Application
-	QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name);
-	      it->setWhatsThis(STARTUP[i]); //keep the raw line
-	ui->list_session_start->addItem(it);
-      }else{
-	//Some other file
-	QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon("unknown",""), file.section("/",-1));
-	      it->setWhatsThis(STARTUP[i]); //keep the raw line
-	ui->list_session_start->addItem(it);
-      }
-    }else{
-      //Some other utility (binary?)
-      QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon("application-x-executable",""), STARTUP[i].section(" ",0,0) );
-	      it->setWhatsThis(STARTUP[i]); //keep the raw line
-	ui->list_session_start->addItem(it);
-    }
-  }*/
 
   //Now do the general session options
   ui->check_session_numlock->setChecked( sessionsettings->value("EnableNumlock", true).toBool() );
@@ -1622,15 +1506,6 @@ void MainUI::loadSessionSettings(){
   ui->line_session_date->setText( sessionsettings->value("DateFormat","").toString() );
   index = ui->combo_session_datetimeorder->findData( sessionsettings->value("DateTimeOrder","timeonly").toString() );
   ui->combo_session_datetimeorder->setCurrentIndex(index);
-  
-  /*if( !sessionsettings->value("CustomTimeZone", false).toBool() ){
-    //System Time selected
-    ui->combo_session_timezone->setCurrentIndex(0);
-  }else{
-    index = ui->combo_session_timezone->findData( sessionsettings->value("TimeZoneByteCode",QByteArray()).toByteArray() );
-    if(index>0){ ui->combo_session_timezone->setCurrentIndex(index); }
-    else{ ui->combo_session_timezone->setCurrentIndex(0); }
-  }*/
   
   //Now do the localization settings
   val = sessionsettings->value("InitLocale/LANG", "").toString();
@@ -1789,8 +1664,6 @@ void MainUI::saveSessionSettings(){
     //Now touch the settings file so that it re-loads the panel
     QProcess::startDetached("touch \""+settings->fileName()+"\"");
   }
-  //ok = overwriteFile(QDir::homePath()+"/.lumina/startapps", STARTUP);
-  //if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/startapps"; }
 
   //Now do the general session options
   sessionsettings->setValue("EnableNumlock", ui->check_session_numlock->isChecked());
@@ -1799,14 +1672,6 @@ void MainUI::saveSessionSettings(){
   sessionsettings->setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings->setValue("DateFormat", ui->line_session_date->text());
   sessionsettings->setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
-  /*if( ui->combo_session_timezone->currentIndex()==0){
-    //System Time selected
-    sessionsettings->setValue("CustomTimeZone", false);
-    sessionsettings->setValue("TimeZoneByteCode", QByteArray()); //clear the value
-  }else{
-    sessionsettings->setValue("CustomTimeZone", true);
-    sessionsettings->setValue("TimeZoneByteCode", ui->combo_session_timezone->currentData().toByteArray()); //clear the value
-  }*/
   
   //Now do the locale settings
   sessionsettings->setValue("InitLocale/LANG", ui->combo_locale_lang->currentData().toString() );
@@ -1906,15 +1771,14 @@ void MainUI::sessionCursorChanged(){
   // - info format: [name, comment. sample file]
   qDebug() << "Cursor Information:" << ui->combo_session_cursortheme->currentText() << info;
   QPixmap img(info[2]);
-  qDebug() << "Image Data:" << img.isNull() << img.size();
-  ui->label_cursor_sample->setPixmap( img.scaledToHeight(ui->label_cursor_sample->height(), Qt::SmoothTransformation) );
+  //qDebug() << "Image Data:" << img.isNull() << img.size();
+  if(!img.isNull()){
+    ui->label_cursor_sample->setPixmap( img.scaledToHeight(ui->label_cursor_sample->height(), Qt::SmoothTransformation) );
+  }
   ui->label_cursor_sample->setToolTip(info[1]);
   ui->combo_session_cursortheme->setToolTip(info[1]);
   sessionoptchanged();
 }
-/*void MainUI::sessionstartchanged(){
-  ui->tool_session_rmapp->setEnabled( ui->list_session_start->currentRow()>=0 );
-}*/
 
 void MainUI::sessionEditColor(){
   //Get the current color file
@@ -1989,15 +1853,6 @@ void MainUI::sessionChangeUserIcon(){
     }
   }else{
     ui->push_session_setUserIcon->setWhatsThis(filepath);	
-    /*QPixmap pix(filepath);
-    //Now scale it down if necessary
-    if(pix.width() > 64 || pix.height()>64){
-      pix = pix.scaled(64,64,Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    }
-    //Now save that to the icon file (will automatically convert it to a PNG file format)
-    pix.save(QDir::homePath()+"/.loginIcon.png");
-    //Now touch the settings file so that it re-loads the panel
-    QProcess::startDetached("touch \""+settings->fileName()+"\"");*/
   }
   //Now re-load the icon in the UI
   QString path = ui->push_session_setUserIcon->whatsThis();

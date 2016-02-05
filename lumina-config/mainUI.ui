@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -137,14 +137,13 @@
               <item>
                <widget class="QToolButton" name="tool_desk_addbg">
                 <property name="text">
-                 <string notr="true">add</string>
+                 <string notr="true">  </string>
                 </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="tool_desk_addbgcolor">
-                <property name="text">
-                 <string notr="true">addclr</string>
+                <property name="popupMode">
+                 <enum>QToolButton::InstantPopup</enum>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonTextBesideIcon</enum>
                 </property>
                </widget>
               </item>
@@ -666,8 +665,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>523</width>
-                 <height>304</height>
+                 <width>522</width>
+                 <height>300</height>
                 </rect>
                </property>
               </widget>
@@ -1549,8 +1548,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>121</width>
-                    <height>19</height>
+                    <width>130</width>
+                    <height>28</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">

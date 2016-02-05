@@ -106,6 +106,8 @@ private slots:
 	void deskbgremoved();
 	void deskbgadded();
 	void deskbgcoloradded();
+	void deskbgdiradded();
+	void deskbgdirradded();
 	void deskplugadded();
 	void deskplugremoved();
 
