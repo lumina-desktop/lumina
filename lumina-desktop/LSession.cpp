@@ -48,7 +48,8 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   TrayStopping = false;
   screenTimer = new QTimer(this);
     screenTimer->setSingleShot(true);
-    screenTimer->setInterval(200); //0.2 seconds 
+    screenTimer->setInterval(2000); //2 seconds - This needs to be long(ish) to prevent being called while
+				    // X is still setting up any screens
     connect(screenTimer, SIGNAL(timeout()), this, SLOT(updateDesktops()) );
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
@@ -502,7 +503,8 @@ void LSession::updateDesktops(){
     }
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
-    
+
+      if(DESKTOPS.length() < 1){ return; }
       for(int i=0; i<DESKTOPS.length(); i++){
 
         // Check for 0x0 screen geom
