@@ -481,12 +481,15 @@ void LSession::refreshWindowManager(){
 void LSession::updateDesktops(){
   qDebug() << " - Update Desktops";
   QDesktopWidget *DW = this->desktop();
-  qDebug() << "  -- Number:" << DW->screenCount();
-  for(int i=0; i<DW->screenCount(); i++){ qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i); }
+  int sC = DW->screenCount();
+  qDebug() << "  -- Number:" << sC;
+  if(sC<1){ return; } //stop here - no screens available temporarily (displayport/4K issue)
+
+  for(int i=0; i<sC; i++){ qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i); }
   bool firstrun = (DESKTOPS.length()==0);
-  bool numchange = DESKTOPS.length()!=DW->screenCount();
+  bool numchange = DESKTOPS.length()!=sC;
     //qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
-    for(int i=0; i<DW->screenCount(); i++){
+    for(int i=0; i<sC; i++){
       bool found = false;
       for(int j=0; j<DESKTOPS.length() && !found; j++){
 	if(DESKTOPS[j]->Screen()==i ){ found = true; }
@@ -499,10 +502,17 @@ void LSession::updateDesktops(){
     }
     if(!firstrun){//Done right here on first run
     //Now go through and make sure to delete any desktops for detached screens
-    if(DW->screenCount()<1){ return; } //stop here - no screens available temporarily (displayport/4K issue)
     
       for(int i=0; i<DESKTOPS.length(); i++){
-	if(DESKTOPS[i]->Screen() >= DW->screenCount()){
+
+        // Check for 0x0 screen geom
+        QRect geom = DW->screenGeometry(i);
+        if ( geom.isNull() )
+          continue;
+        if ( geom.x() == 0 || geom.y() == 0 )
+	  continue;
+
+	if(DESKTOPS[i]->Screen() >= sC){
 	  qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
           DESKTOPS[i]->prepareToClose();
 	  delete DESKTOPS.takeAt(i);
