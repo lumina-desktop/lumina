@@ -347,9 +347,9 @@ void LSession::watcherChange(QString changed){
 
 void LSession::screensChanged(){
   qDebug() << "Screen Number Changed";
-  if(screenTimer->isActive()){ screenTimer->stop(); }  
-  screenTimer->start();
-  //updateDesktops();
+//if(screenTimer->isActive()){ screenTimer->stop(); }  
+//screenTimer->start();
+  updateDesktops();
 }
 
 void LSession::screenResized(int scrn){
@@ -491,6 +491,12 @@ void LSession::updateDesktops(){
 
   bool firstrun = (DESKTOPS.length()==0);
   bool numchange = DESKTOPS.length()!=sC;
+
+  // If the screen count is changing on us
+  if ( sC != DW->screenCount() ) {
+    qDebug() << "Screen Count changed while running";
+    return;
+  }
 
   //qDebug() << "  -- Desktop Flags:" << firstrun << numchange << DW->isVirtualDesktop();
   for(int i=0; i<sC; i++){
