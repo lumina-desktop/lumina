@@ -353,7 +353,7 @@ void LSession::screensChanged(){
 }
 
 void LSession::screenResized(int scrn){
-  qDebug() << "Screen Resized:" << scrn << this->desktop()->screenGeometry(scrn);
+  qDebug() << "Screen Resized:" << scrn; // << this->desktop()->screenGeometry(scrn);
   /*for(int i=0; i<DESKTOPS.length(); i++){
     if(DESKTOPS[i]->Screen() == scrn){ DESKTOPS[i]->UpdateGeometry(); return; }
   }*/	  
