@@ -57,6 +57,7 @@ include(desktop-plugins/desktop-plugins.pri)
 RESOURCES+= Lumina-DE.qrc
 
 desktop.path = $${L_SESSDIR}
+desktop.files = Lumina-DE.desktop
 
 icons.files = Lumina-DE.png \
 		Insight-FileManager.png
