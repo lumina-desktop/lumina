@@ -347,9 +347,9 @@ void LSession::watcherChange(QString changed){
 
 void LSession::screensChanged(){
   qDebug() << "Screen Number Changed";
-//if(screenTimer->isActive()){ screenTimer->stop(); }  
-//screenTimer->start();
-  updateDesktops();
+  if(screenTimer->isActive()){ screenTimer->stop(); }
+  screenTimer->start();
+  //updateDesktops();
 }
 
 void LSession::screenResized(int scrn){
