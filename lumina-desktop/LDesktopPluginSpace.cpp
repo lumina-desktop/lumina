@@ -54,7 +54,7 @@ void LDesktopPluginSpace::SetIconSize(int size){
 void LDesktopPluginSpace::cleanup(){
   //Perform any final cleanup actions here
   for(int i=0; i<ITEMS.length(); i++){
-    delete ITEMS.takeAt(i);
+    ITEMS.takeAt(i)->deleteLater();
     i--;
   }
   plugins.clear();
@@ -78,7 +78,7 @@ void LDesktopPluginSpace::UpdateGeom(int oldgrid){
     if(!ValidGrid(grid)){
       qDebug() << "No Place for plugin:" << ITEMS[i]->whatsThis();
       qDebug() << " - Removing it for now...";
-      delete ITEMS.takeAt(i);
+      ITEMS.takeAt(i)->deleteLater();
       i--;
     }else{
       //NOTE: We are not doing the ValidGeometry() checks because we are only resizing existing plugin with pre-set & valid grid positions
@@ -278,12 +278,12 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
 	  ITEMS[i]->savePluginGeometry( gridToGeom(geom)); //save it back in pixel coords
 	}*/
 	//Now remove the plugin for the moment - run it through the re-creation routine below
-	delete ITEMS.takeAt(i);  
+	ITEMS.takeAt(i)->deleteLater();  
 	i--;
     }
     else if(plugs.contains(ITEMS[i]->whatsThis())){ plugs.removeAll(ITEMS[i]->whatsThis()); }
     else if(items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50))){ items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)); }
-    else{ ITEMS[i]->removeSettings(true); delete ITEMS.takeAt(i);  i--; } //this is considered a permanent removal (cleans settings)
+    else{ ITEMS[i]->removeSettings(true); ITEMS.takeAt(i)->deleteLater();  i--; } //this is considered a permanent removal (cleans settings)
   }
   
   //Now create any new items

@@ -52,7 +52,7 @@ void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
   for(int i=0; i<QUICKL.length(); i++){
     if( !apps.contains(QUICKL[i]->whatsThis()) ){
       //App was removed
-      delete QUICKL.takeAt(i);
+      QUICKL.takeAt(i)->deleteLater();
       i--;
     }else{
       //App still listed - update the button
