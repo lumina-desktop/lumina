@@ -35,7 +35,6 @@ LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 
 LDesktop::~LDesktop(){
   delete deskMenu;
-  //delete appmenu;
   delete winMenu;
   delete bgWindow;
   delete workspacelabel;
@@ -61,7 +60,7 @@ void LDesktop::hide(){
 void LDesktop::prepareToClose(){
   //Get any panels ready to close
   issyncing = true; //Stop handling any watcher events
-  for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); delete PANELS.takeAt(i); i--; }
+  for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); PANELS.takeAt(i)->deleteLater(); i--; }
   //Now close down any desktop plugins
   desktoplocked = true; //make sure that plugin settings are preserved during removal
   //Remove all the current containers
@@ -362,18 +361,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
     settings->setValue(DPREFIX+"pluginlist", plugs);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
-  }/*else if(ID.startsWith("applauncher::") ){
-    //This was a temporary plugin (desktop file?) check for existance/dir and remove it as necessary
-    QString path = ID.section("---",0,0).section("::",1,50); //full file path
-    QFileInfo info(path);
-    qDebug() << "Removing applauncher:" << path << ID;
-    if(info.exists() && info.absolutePath()==QDir::homePath()+"/Desktop"){
-       //Need to remove this file/dir as well
-       qDebug() << "Removing File:" << path;
-       if(!info.isSymLink() && info.isDir()){ QProcess::startDetached("rm -r \""+path+"\""); }
-       else{ QFile::remove(path); } //just remove the file/symlink directly
-    }
-  }*/
+  }
 }
 
 void LDesktop::IncreaseDesktopPluginIcons(){
@@ -410,7 +398,7 @@ void LDesktop::UpdatePanels(){
     if(panels <= PANELS[i]->number()){
       if(DEBUG){ qDebug() << " -- Remove Panel:" << PANELS[i]->number(); }
       PANELS[i]->prepareToClose();
-      delete PANELS.takeAt(i);
+      PANELS.takeAt(i)->deleteLater();
       i--;
     }
   }
