@@ -45,6 +45,7 @@ override_dh_install:
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE
 	# make install / dh_auto_install will automatically strip the library.
 	# This is a work-around to preserve the debug symbols for the debug package.
+	install -m755 -d $(CURDIR)/debian/libluminautils1/usr/lib/$(DEB_HOST_MULTIARCH)
 	install -m644 libLumina/libLuminaUtils.so.1.0.0 \
 		$(CURDIR)/debian/libluminautils1/usr/lib/$(DEB_HOST_MULTIARCH)
 
