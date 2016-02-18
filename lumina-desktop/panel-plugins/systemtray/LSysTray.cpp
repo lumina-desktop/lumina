@@ -65,7 +65,7 @@ void LSysTray::stop(){
       trayIcons[i]->detachApp();
       TrayIcon *cont = trayIcons.takeAt(i);
         LI->removeWidget(cont);
-        delete cont;
+        cont->deleteLater();
     }
   }
   //Now let some other visual tray take over
@@ -92,7 +92,7 @@ void LSysTray::checkAll(){
       TrayIcon *cont = trayIcons.takeAt(i);
       cont->cleanup();
       LI->removeWidget(cont);
-      delete cont;
+      cont->deleteLater();
       i--; //List size changed
       //Re-adjust the maximum widget size to account for what is left
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
@@ -131,7 +131,7 @@ void LSysTray::checkAll(){
 	qDebug() << " - Invalid Tray App: Could Not Embed:"; 
 	trayIcons.takeAt(trayIcons.length()-1); //Always at the end
 	LI->removeWidget(cont);
-	delete cont;
+	cont->deleteLater();
 	continue;
       }
     LI->update(); //make sure there is no blank space in the layout

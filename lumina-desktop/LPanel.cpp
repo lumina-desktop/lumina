@@ -67,7 +67,7 @@ void LPanel::prepareToClose(){
   for(int i=0; i<PLUGINS.length(); i++){
     PLUGINS[i]->AboutToClose(); //any last cleanup for this plugin
     layout->takeAt(i); //remove from the layout
-    delete PLUGINS.takeAt(i); //delete the actual widget
+    PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
   }	 
@@ -262,7 +262,7 @@ void LPanel::UpdatePanel(bool geomonly){
       static_cast<LSysTray*>(PLUGINS[i])->stop();
     }
     layout->takeAt(i); //remove from the layout
-    delete PLUGINS.takeAt(i); //delete the actual widget
+    PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
   }

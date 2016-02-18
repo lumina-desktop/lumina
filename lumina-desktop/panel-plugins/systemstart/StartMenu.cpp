@@ -149,8 +149,7 @@ void StartMenu::UpdateQuickLaunch(QString path, bool keep){
 //        PRIVATE FUNCTIONS
 // ==========================
 void StartMenu::ClearScrollArea(QScrollArea *area){
-  QWidget *wgt = area->takeWidget();
-  delete wgt; //delete the widget and all children
+  area->takeWidget()->deleteLater();
   area->setWidget( new QWidget() ); //create a new widget in the scroll area
   area->widget()->setContentsMargins(0,0,0,0);
     QVBoxLayout *layout = new QVBoxLayout;
@@ -257,6 +256,7 @@ void StartMenu::UpdateApps(){
         connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       }
     }else{
+      //qDebug() << "Show Apps For category:" << CCat;
       //Show the "go back" button
       ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), CCat, "chcat::::"+CCat, true);
         //if(!it->gooditem){ continue; } //invalid for some reason
@@ -265,6 +265,7 @@ void StartMenu::UpdateApps(){
       //Show apps for this cat
       QList<XDGDesktop> apps = sysapps->value(CCat); 
       for(int i=0; i<apps.length(); i++){
+	//qDebug() << " - App:" << apps[i].name;
         ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
         if(!it->gooditem){ continue; } //invalid for some reason
         ui->scroll_apps->widget()->layout()->addWidget(it);
