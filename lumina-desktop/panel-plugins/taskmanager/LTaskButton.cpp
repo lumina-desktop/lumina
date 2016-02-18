@@ -126,8 +126,8 @@ void LTaskButton::UpdateButton(){
     //single window
     this->setPopupMode(QToolButton::DelayedPopup);
     this->setMenu(actMenu);
-    if(showText){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(WINLIST[0].text(), Qt::ElideRight,80) ); }
-    else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) ); }
+    if(showText){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( WINLIST[0].text()); }
+    else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( cname ); }
     else{ this->setToolButtonStyle(Qt::ToolButtonIconOnly); this->setText(""); }
     this->setToolTip(WINLIST[0].text());
   }else if(WINLIST.length() > 1){
@@ -135,7 +135,7 @@ void LTaskButton::UpdateButton(){
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
     this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    if(noicon || showText){ this->setText( this->fontMetrics().elidedText(cname, Qt::ElideRight ,80) +" ("+QString::number(WINLIST.length())+")" ); }
+    if(noicon || showText){ "("+QString::number(WINLIST.length())+") "+cname; }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }
   this->setState(showstate); //Make sure this is after the button setup so that it properly sets the margins/etc
