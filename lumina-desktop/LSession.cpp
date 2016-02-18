@@ -748,6 +748,7 @@ void LSession::WindowPropertyEvent(){
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
       if(!RunningApps.contains(newapps[i])){ 
         checkWin << newapps[i]; 
+	XCB->SelectInput(newapps[i]); //make sure we get property/focus events for this window
 	if(DEBUG){ qDebug() << "New Window - check geom in a moment:" << XCB->WindowClass(newapps[i]); }
 	QTimer::singleShot(50, this, SLOT(checkWindowGeoms()) );
       }
