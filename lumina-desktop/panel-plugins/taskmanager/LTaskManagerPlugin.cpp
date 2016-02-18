@@ -57,7 +57,7 @@ void LTaskManagerPlugin::UpdateButtons(){
 	  //Remove the entire button
 	  //qDebug() << "Window Closed: Remove Button" ;
 	  this->layout()->takeAt(i); //remove from the layout
-	  delete BUTTONS.takeAt(i);
+	  BUTTONS.takeAt(i)->deleteLater();
 	  i--;
 	  updated = true; //prevent updating a removed button
 	  break; //break out of the button->window loop
