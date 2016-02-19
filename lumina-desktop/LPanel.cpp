@@ -71,6 +71,7 @@ void LPanel::prepareToClose(){
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
   }	 
+  this->hide();
 }
 
 void LPanel::scalePanel(double xscale, double yscale){
