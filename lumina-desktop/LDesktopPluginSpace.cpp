@@ -59,6 +59,7 @@ void LDesktopPluginSpace::cleanup(){
   }
   plugins.clear();
   deskitems.clear();
+  this->hide();
 }
 // ===================
 //      PUBLIC SLOTS
