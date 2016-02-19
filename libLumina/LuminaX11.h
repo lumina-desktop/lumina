@@ -123,7 +123,7 @@ public:
 	
 	//Window Modification
 	// - SubStructure simplifications (not commonly used)
-	void SelectInput(WId); //XSelectInput replacement (to see window events)
+	void SelectInput(WId win, bool isEmbed = false); //XSelectInput replacement (to see window events)
 	uint GenerateDamageID(WId);
 	
 	// - General Window Modifications
