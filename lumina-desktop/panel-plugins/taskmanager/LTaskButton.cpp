@@ -20,6 +20,7 @@ LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent)
   this->setAutoRaise(false); //make sure these always look like buttons
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   this->setFocusPolicy(Qt::NoFocus);
+  this->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
   winMenu->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openActionMenu()) );
   connect(this, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
@@ -111,11 +112,6 @@ void LTaskButton::UpdateButton(){
     LXCB::WINDOWVISIBILITY stat = WINLIST[i].status(true); //update the saved state for the window
     if(stat<LXCB::ACTIVE && WINLIST[i].windowID() == LSession::handle()->activeWindow()){ stat = LXCB::ACTIVE; }
     if(stat > showstate){ showstate = stat; } //higher priority
-    
-    /*if(stat==LXCB::ATTENTION){ showstate = stat; } //highest priority
-    else if( stat==LXCB::ACTIVE && showstate != LXCB::ATTENTION){ showstate = stat; } //next priority
-    else if( stat==LXCB::VISIBLE && showstate != LXCB::ATTENTION && showstate != LXCB::ACTIVE){ showstate = stat; }
-    else if(showstate == LXCB::INVISIBLE || showstate == LXCB::IGNORE){ showstate = stat; } //anything is the same/better*/
   }
   //Now setup the button appropriately
   // - visibility

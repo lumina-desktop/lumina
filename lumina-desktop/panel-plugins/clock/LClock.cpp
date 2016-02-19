@@ -16,6 +16,8 @@ LClock::LClock(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, 
     button->setStyleSheet("font-weight: bold;");
     button->setPopupMode(QToolButton::DelayedPopup); //make sure it runs the update routine first
     button->setMenu(new QMenu());
+	//button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+	//this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     connect(button, SIGNAL(clicked()), this, SLOT(openMenu()));
     connect(button->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
   calendar = new QCalendarWidget(this);
@@ -101,7 +103,6 @@ void LClock::updateFormats(){
   datefmt = LSession::handle()->sessionSettings()->value("DateFormat","").toString();
   deftime = timefmt.simplified().isEmpty();
   defdate = datefmt.simplified().isEmpty();
-  this->setMinimumSize(button->fontMetrics().width(timefmt+"MMM")+10, 5);
   //Adjust the timer interval based on the smallest unit displayed
   if(deftime){ timer->setInterval(500); } //1/2 second
   else if(timefmt.contains("z")){ timer->setInterval(1); } //every millisecond (smallest unit)
@@ -109,7 +110,10 @@ void LClock::updateFormats(){
   else if(timefmt.contains("m")){ timer->setInterval(2000); } //2 seconds
   else{ timer->setInterval(1000); } //unknown format - use 1 second interval
   datetimeorder = LSession::handle()->sessionSettings()->value("DateTimeOrder", "timeonly").toString().toLower();
+  //this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   updateTime(true);
+  //Now fix the size of the widget with the new size hint
+  this->setFixedWidth( this->sizeHint().width() +6);
 }
 
 void LClock::updateMenu(){
