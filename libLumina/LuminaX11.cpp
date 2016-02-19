@@ -513,8 +513,13 @@ QIcon LXCB::WindowIcon(WId win){
 }
 
 // === SelectInput() ===
-void LXCB::SelectInput(WId win){
-  uint32_t mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_LEAVE_WINDOW |  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE;
+void LXCB::SelectInput(WId win, bool isEmbed){
+  uint32_t mask;
+  if(isEmbed){
+    mask = XCB_EVENT_MASK_ENTER_WINDOW | XCB_EVENT_MASK_LEAVE_WINDOW |  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT | XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE;
+  }else{
+    mask = XCB_EVENT_MASK_FOCUS_CHANGE | XCB_EVENT_MASK_PROPERTY_CHANGE;
+  }
   xcb_change_window_attributes(QX11Info::connection(), win, XCB_CW_EVENT_MASK, &mask );
 }
 
@@ -873,7 +878,7 @@ uint LXCB::EmbedWindow(WId win, WId container){
     xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
   
   //Now setup any redirects and return
-  this->SelectInput(win); //Notify of structure changes
+  this->SelectInput(win, true); //Notify of structure changes
   xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
   //Now map the window (will be a transparent child of the container)
