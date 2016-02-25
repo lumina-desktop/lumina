@@ -5,451 +5,368 @@
     <name>AppLauncherPlugin</name>
     <message>
         <source>Click to Set</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Klik om in te stellen</translation>
     </message>
     <message>
         <source>Select Application</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Selecteer applicatie</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Naam:</translation>
     </message>
 </context>
 <context>
     <name>AppMenu</name>
     <message>
         <source>Applications</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Applicaties</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Ontwikkeling</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Educatie</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Spellen</translation>
     </message>
     <message>
         <source>Graphics</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Grafisch</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Netwerk</translation>
     </message>
     <message>
         <source>Office</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Kantoor</translation>
     </message>
     <message>
         <source>Science</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Wetenschap</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Systeem</translation>
     </message>
     <message>
         <source>Utility</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Hulpprogramma's</translation>
     </message>
     <message>
         <source>Unsorted</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Niet gesorteerd</translation>
     </message>
     <message>
         <source>Open Home</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Open huis</translation>
     </message>
     <message>
         <source>Install Applications</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Installeer applicaties</translation>
     </message>
     <message>
         <source>Control Panel</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Beheer paneel</translation>
     </message>
 </context>
 <context>
     <name>LBattery</name>
     <message>
         <source>%1 % (Charging)</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>%1 % (Laden)</translation>
     </message>
     <message>
         <source>%1 % (%2 Remaining)</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>%1 % (%2 Resterend)</translation>
     </message>
 </context>
 <context>
     <name>LDeskBarPlugin</name>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Geluid</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Foto's</translation>
     </message>
     <message>
         <source>Other Files</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Overige bestanden</translation>
     </message>
     <message>
         <source>Documents</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Documenten</translation>
     </message>
     <message>
         <source>Favorite Applications</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favoriete applicaties</translation>
     </message>
     <message>
         <source>Favorite Folders</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favorite mappen</translation>
     </message>
     <message>
         <source>Favorite Files</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favoriete bestanden</translation>
     </message>
 </context>
 <context>
     <name>LDesktop</name>
     <message>
         <source>Terminal</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <source>Log Out</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Uitloggen</translation>
     </message>
     <message>
         <source>Lumina Desktop</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Lumina bureaublad</translation>
     </message>
     <message>
         <source>Workspace %1</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Werkplek %1</translation>
     </message>
     <message>
         <source>Browse System</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Blader door systeem</translation>
     </message>
     <message>
         <source>Lock Desktop</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Vergrendel bureaublad</translation>
     </message>
     <message>
         <source>Unlock Desktop</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Ontgrendel bureaublad</translation>
     </message>
     <message>
         <source>Snap Plugins to Grid</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Bind plugin aan rooster</translation>
     </message>
 </context>
 <context>
     <name>LDesktopSwitcher</name>
     <message>
         <source>Workspace %1</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Werkplek %1</translation>
     </message>
 </context>
 <context>
     <name>LSysMenuQuick</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>System Volume</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Systeem geluids volume</translation>
     </message>
     <message>
         <source>Screen Brightness</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Scherm helderheid</translation>
     </message>
     <message>
         <source>Battery Status</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Batterij status</translation>
     </message>
     <message>
         <source>Workspace</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Werkplek</translation>
     </message>
     <message>
         <source>charging</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>aan het opladen</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>%1 van %2</translation>
     </message>
     <message>
         <source>Log Out</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Uitloggen</translation>
     </message>
     <message>
         <source>Launch Audio Mixer</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Start audio mengpaneel</translation>
     </message>
 </context>
 <context>
     <name>LTaskButton</name>
     <message>
         <source>Close Window</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Scherm sluiten</translation>
     </message>
 </context>
 <context>
     <name>SettingsMenu</name>
     <message>
         <source>Desktop Settings</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Bureaublad instellingen</translation>
     </message>
     <message>
         <source>Screensaver</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Schermbeveiliging</translation>
     </message>
     <message>
         <source>Desktop</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Bureaublad</translation>
     </message>
     <message>
         <source>Window Theme</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Scherm thema</translation>
     </message>
 </context>
 <context>
     <name>SystemWindow</name>
     <message>
         <source>System Options</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>System opties</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Herstart</translation>
     </message>
     <message>
         <source>Shutdown</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Log Out</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Uitloggen</translation>
     </message>
 </context>
 <context>
     <name>UserItemWidget</name>
     <message>
         <source>Remove Shortcut</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Verwijder snelkoppeling</translation>
     </message>
     <message>
         <source>Create Shortcut</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Snelkoppeling aanmaken</translation>
     </message>
 </context>
 <context>
     <name>UserWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>Favorites</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favorieten</translation>
     </message>
     <message>
         <source>Favorite Applications</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favoriete applicaties</translation>
     </message>
     <message>
         <source>Favorite Directories</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favoriete mappen</translation>
     </message>
     <message>
         <source>Favorite FIles</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Favoriete bestanden</translation>
     </message>
     <message>
         <source>System Applications</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>System applicaties</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Thuis</translation>
     </message>
     <message>
         <source>Desktop Preferences</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Bureaublad voorkeuren</translation>
     </message>
     <message>
         <source>Control Panel</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Beheer paneel</translation>
     </message>
     <message>
         <source>Desktop Appearance/Plugins</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Bureaublad uiterlijk/plugins</translation>
     </message>
     <message>
         <source>Application Appearance</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Applicatie uiterlijk</translation>
     </message>
     <message>
         <source>Screensaver Settings</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Schermbeveiliging instellingen</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Ontwikkeling</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Educatie</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Spellen</translation>
     </message>
     <message>
         <source>Graphics</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Grafisch</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Netwerk</translation>
     </message>
     <message>
         <source>Office</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Kantoor</translation>
     </message>
     <message>
         <source>Science</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Wetenschap</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Systeem</translation>
     </message>
     <message>
         <source>Utility</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Hulpprogramma's</translation>
     </message>
     <message>
         <source>Unsorted</source>
-        <translation type="unfinished">
-            </translation>
+        <translation>Niet gesorteerd</translation>
     </message>
 </context>
 </TS>
