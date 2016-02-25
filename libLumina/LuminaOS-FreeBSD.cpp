@@ -197,12 +197,12 @@ bool LOS::systemPerformingUpdates(){
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -po now");
+  QProcess::startDetached("shutdown -p now");
 }
 
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -ro now");
+  QProcess::startDetached("shutdown -r now");
 }
 
 //Check for suspend support
