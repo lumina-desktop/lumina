@@ -88,7 +88,7 @@
     <message>
         <location filename="../dialog.cpp" line="125"/>
         <source>The filename cannot start with a &quot;-&quot;.</source>
-        <translation>Bestandnaam kan niet beginnen met een &quot;-&quat;.</translation>
+        <translation>Bestandnaam kan niet beginnen met een &quot;-&quot;.</translation>
     </message>
     <message>
         <location filename="../dialog.cpp" line="160"/>
