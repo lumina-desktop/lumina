@@ -14,7 +14,10 @@ override_dh_auto_configure:
 		PREFIX=/usr \
 		LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		L_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
-		L_ETCDIR=/etc
+		L_ETCDIR=/etc \
+		QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
+		QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed" \
+		CONFIG+=nostrip
 
 override_dh_auto_clean:
 	dh_auto_clean
