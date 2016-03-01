@@ -43,14 +43,6 @@ Description: Development files for lumina desktop environment
  Files needed to develop plugins or extensions for the lumina desktop
  environment, or using libluminautils1 in projects.
 
-Package: libluminautils-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends: ${misc:Depends}, libluminautils1 (= ${binary:Version})
-Description: Debugging symbols for lumina desktop environment
- Debugging symbols for libluminautils1
-
 Package: lumina-config
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version})
