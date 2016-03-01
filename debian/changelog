@@ -1,3 +1,10 @@
+lumina-desktop (0.9.0.1235-2nano) unstable; urgency=low
+
+  * New maintainer build
+  * add -dbgsym packages
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 01 Mar 2016 21:21:33 +0100
+
 lumina-desktop (0.9.0.1235-1nano) unstable; urgency=low
 
   * New git snapshot
