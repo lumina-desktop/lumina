@@ -61,12 +61,6 @@
       LINUX_DISTRO = $$system(lsb_release -si)
     }
     
-    #Now switch through known Linux distro templates
-    equals(LINUX_DISTRO, "Fedora"){
-      equals($${QMAKE_HOST.arch},"amd64"){ L_LIBDIR=/lib64 }
-      else{ L_LIBDIR=/lib }
-    }
-    
   }else{ 
     OS="Unknown"; 
   }
