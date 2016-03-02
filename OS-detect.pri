@@ -24,8 +24,8 @@
   INCLUDEPATH = $${PWD}/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
   
   #Setup the default values for build settings (if not explicitly set previously)
-  !defined(PREFIX){ PREFIX=/usr/local }
-  !defined(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
+  isEmpty(PREFIX){ PREFIX=/usr/local }
+  isEmpty(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
   
   #Now go through and setup any known OS build settings
   #  which are different from the defaults
@@ -47,7 +47,6 @@
   }else : netbsd-*{
     OS = NetBSD
     LIBS += -L/usr/local/lib -L/usr/lib
-    PREFIX=/usr/local
     LIBPREFIX=/usr/local/lib
     #Use the defaults for everything else
     
@@ -55,19 +54,11 @@
     L_SESSDIR=/usr/share/xsessions
     OS=Linux
     LIBS += -L/usr/local/lib -L/usr/lib -L/lib
-    PREFIX = /usr
     
     exists(/bin/lsb_release){
       LINUX_DISTRO = $$system(lsb_release -si)
     } else:exists(/usr/bin/lsb_release){
       LINUX_DISTRO = $$system(lsb_release -si)
-    }
-    
-    #Now switch through known Linux distro templates
-    equals(LINUX_DISTRO, "Fedora"){
-      PREFIX=/usr/local
-      equals($${QMAKE_HOST.arch},"amd64"){ L_LIBDIR=/lib64 }
-      else{ L_LIBDIR=/lib }
     }
     
   }else{ 
@@ -83,13 +74,13 @@
   INCLUDEPATH +=$${PREFIX}/include
   
   # If the detailed install variables are not set - create them from the general vars
-  !defined(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
-  !defined(L_LIBDIR){ L_LIBDIR = $${PREFIX}/lib }
-  !defined(L_ETCDIR){ L_ETCDIR = $${PREFIX}/etc }
-  !defined(L_SHAREDIR){ L_SHAREDIR = $${PREFIX}/share }
-  !defined(L_INCLUDEDIR){ L_INCLUDEDIR = $${PREFIX}/include }
-  !defined(L_SESSDIR){ L_SESSDIR = $${L_SHAREDIR}/xsessions }
-  !defined(LRELEASE){ LRELEASE = $$[QT_INSTALL_BINS]/lrelease }
+  isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
+  isEmpty(L_LIBDIR){ L_LIBDIR = $${PREFIX}/lib }
+  isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/etc }
+  isEmpty(L_SHAREDIR){ L_SHAREDIR = $${PREFIX}/share }
+  isEmpty(L_INCLUDEDIR){ L_INCLUDEDIR = $${PREFIX}/include }
+  isEmpty(L_SESSDIR){ L_SESSDIR = $${L_SHAREDIR}/xsessions }
+  isEmpty(LRELEASE){ LRELEASE = $$[QT_INSTALL_BINS]/lrelease }
   
   !exists(LRELEASE){ NO_I18N=true } #translations unavailable
   #Now convert any of these path variables into defines for C++ usage

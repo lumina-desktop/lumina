@@ -1,3 +1,45 @@
+lumina-desktop (0.9.0.1235-2nano) unstable; urgency=low
+
+  * New maintainer build
+  * add -dbgsym packages
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 01 Mar 2016 21:21:33 +0100
+
+lumina-desktop (0.9.0.1235-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * update for recent Linux distribution detection changes
+  * simplify rules
+  * add missing dependency on libqt5svg5
+  * install usr/share/applications/lumina-support.desktop
+  * install usr/share/Lumina-DE/quickplugins/quick-sample.qml
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 01 Mar 2016 18:43:22 +0100
+
+lumina-desktop (0.8.7.1081-1nano) unstable; urgency=low
+
+  * New git snapshot
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 25 Oct 2015 19:56:42 +0100
+
+lumina-desktop (0.8.7.980-1nano) unstable; urgency=low
+
+  * New git snapshot
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sat, 26 Sep 2015 10:40:30 +0200
+
+lumina-desktop (0.8.7.959-1nano) unstable; urgency=low
+
+  * New git snapshot
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 15 Sep 2015 20:42:54 +0200
+
+lumina-desktop (0.8.7.858-1nano) unstable; urgency=low
+
+  * New git snapshot
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Thu, 20 Aug 2015 20:07:40 +0200
+
 lumina-desktop (0.8.7.828-1nano) unstable; urgency=low
 
   * New git snapshot

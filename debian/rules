@@ -6,32 +6,18 @@ include /usr/share/dpkg/default.mk
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-QMAKE = /usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake
-
-USER_QMAKE_FLAGS = \
-	PREFIX=/usr \
-	LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
-	QT5LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/qt5 \
-	QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
-	QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed"
-
-QMAKE_EXTRA_DIRS = libLumina \
-	lumina-config \
-	lumina-desktop \
-	lumina-fm \
-	lumina-open \
-	lumina-screenshot \
-	lumina-search \
-	lumina-info \
-	lumina-xconfig \
-        lumina-fileinfo
-
 %:
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	$(QMAKE) $(USER_QMAKE_FLAGS)
-	for d in $(QMAKE_EXTRA_DIRS) ; do (cd $$d && $(QMAKE) $(USER_QMAKE_FLAGS)); done
+	/usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake \
+		PREFIX=/usr \
+		LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		L_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		L_ETCDIR=/etc \
+		QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
+		QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed" \
+		CONFIG+=nostrip
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -43,13 +29,3 @@ override_dh_install:
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE.real
 	install -m755 $(CURDIR)/debian/Lumina-DE \
 		$(CURDIR)/debian/lumina-desktop/usr/bin/Lumina-DE
-	# make install / dh_auto_install will automatically strip the library.
-	# This is a work-around to preserve the debug symbols for the debug package.
-	install -m755 -d $(CURDIR)/debian/libluminautils1/usr/lib/$(DEB_HOST_MULTIARCH)
-	install -m644 libLumina/libLuminaUtils.so.1.0.0 \
-		$(CURDIR)/debian/libluminautils1/usr/lib/$(DEB_HOST_MULTIARCH)
-
-override_dh_strip:
-	dh_strip -plibluminautils1 --dbg-package=libluminautils-dbg
-	dh_strip --remaining-packages
-
