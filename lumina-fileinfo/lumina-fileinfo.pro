@@ -7,7 +7,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
 TARGET = lumina-fileinfo
 TEMPLATE = app
 
-target.path = $$DESTDIR$${L_BINDIR}
+target.path = $${L_BINDIR}
 
 SOURCES += main.cpp\
         MainUI.cpp

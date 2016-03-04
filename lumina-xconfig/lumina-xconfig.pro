@@ -4,7 +4,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 TARGET = lumina-xconfig
-target.path = $$DESTDIR$${L_BINDIR}
+target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
