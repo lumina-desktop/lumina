@@ -4,7 +4,7 @@ QT       += core gui widgets network
 
 
 TARGET = lumina-info
-target.path = $${DESTDIR}$${L_BINDIR}
+target.path = $${L_BINDIR}
 
 TEMPLATE = app
 

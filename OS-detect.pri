@@ -5,6 +5,9 @@
 #  Main Build Variables (generally for finding existing files): 
 # 	PREFIX: 		Base install directory (${PREFIX}/[bin/share/etc/include] will be used)
 #	LIBPREFIX: 	Base install directory for libraries (usually ${PREFIX}/lib) 
+#  Automated build variables (for pkg builders and such)
+#	DESTDIR:		Prepended to the install location of all files (such as a temporary working directory)
+#				- Note that the Lumina will probably not run properly from this dir (not final install dir)
 #  Detailed Build Variables for installing files:
 #	L_BINDIR:		Directory to install binaries
 #	L_LIBDIR:		Directory to install Libraries
@@ -16,12 +19,13 @@
 # =============================================
 # Note: Make sure the OS variable matches the name of a libLumina/LuminaOS-<OS>.cpp file
 # =============================================
-!defined(OS){
+isEmpty(OS){
   message("Build OS Info: $${QMAKE_HOST.os}, $${QMAKE_HOST.arch}, $${QMAKE_HOST.version_string}")
   
   #Load the initial library/includefile search locations (more can be added in the OS-specific sections below)
   LIBS = -L$${PWD}/libLumina -L$$[QT_INSTALL_LIBS]
   INCLUDEPATH = $${PWD}/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
+  QMAKE_LIBDIR =  $${PWD}/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
   
   #Setup the default values for build settings (if not explicitly set previously)
   isEmpty(PREFIX){ PREFIX=/usr/local }
@@ -47,7 +51,6 @@
   }else : netbsd-*{
     OS = NetBSD
     LIBS += -L/usr/local/lib -L/usr/lib
-    LIBPREFIX=/usr/local/lib
     #Use the defaults for everything else
     
   }else : linux-*{
@@ -70,7 +73,6 @@
   message( $$MSG )
   
   # Setup the dirs needed to find/load libraries
-  QMAKE_LIBDIR =  $${PWD}/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
   INCLUDEPATH +=$${PREFIX}/include
   
   # If the detailed install variables are not set - create them from the general vars
@@ -83,8 +85,19 @@
   isEmpty(LRELEASE){ LRELEASE = $$[QT_INSTALL_BINS]/lrelease }
   
   !exists(LRELEASE){ NO_I18N=true } #translations unavailable
-  #Now convert any of these path variables into defines for C++ usage
+  
+  #Now convert any of these install path variables into defines for C++ usage
   DEFINES += PREFIX="QString\\\(\\\"$${PREFIX}\\\"\\\)"
   DEFINES += L_ETCDIR="QString\\\(\\\"$${L_ETCDIR}\\\"\\\)"
   DEFINES += L_SHAREDIR="QString\\\(\\\"$${L_SHAREDIR}\\\"\\\)"
+  
+  #If this is being installed to a temporary directory, change the paths where things get placed
+  !isEmpty(DESTDIR){
+    L_BINDIR = $$DESTDIR$${L_BINDIR}
+    L_LIBDIR = $$DESTDIR$${L_LIBDIR}
+    L_ETCDIR = $$DESTDIR$${L_ETCDIR}
+    L_SHAREDIR = $$DESTDIR$${L_SHAREDIR}
+    L_INCLUDEDIR = $$DESTDIR$${L_INCLUDEDIR}
+    L_SESSDIR = $$DESTDIR$${L_SESSDIR}
+  }
 }

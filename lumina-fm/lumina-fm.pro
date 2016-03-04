@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets net
 
 
 TARGET = lumina-fm
-target.path = $$DESTDIR$${L_BINDIR}
+target.path = $${L_BINDIR}
 
 TEMPLATE = app
 

@@ -13,7 +13,7 @@ DEFINES += BUILD_DATE='"\\\"$$system(date)\\\""'
 
 TARGET=LuminaUtils
 
-target.path = $${DESTDIR}$${L_LIBDIR}
+target.path = $${L_LIBDIR}
 
 DESTDIR= $$_PRO_FILE_PWD_/
 

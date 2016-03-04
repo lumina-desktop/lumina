@@ -4,7 +4,7 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 TARGET = lumina-wm
-target.path = $$DESTDIR$$PREFIX/bin
+target.path = $$PREFIX/bin
 
 LIBS     += -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util
 
