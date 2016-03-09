@@ -15,16 +15,18 @@ isEmpty(LIBPREFIX) {
 
 HEADERS	+= TrayIcon.h \
 		TermWindow.h \
-		TerminalWidget.h
+		TerminalWidget.h \
+		TtyProcess.h
 		
 SOURCES	+= main.cpp \
 		TrayIcon.cpp \
 		TermWindow.cpp \
-		TerminalWidget.cpp
+		TerminalWidget.cpp \
+		TtyProcess.cpp
 
 
 INCLUDEPATH += ../../libLumina $$PREFIX/include
-LIBS += -L../../libLumina -L$$LIBPREFIX -lLuminaUtils
+LIBS += -L../../libLumina -L$$LIBPREFIX -lLuminaUtils -lc
 
 isEmpty(QT5LIBDIR) {
  QT5LIBDIR = $$PREFIX/lib/qt5

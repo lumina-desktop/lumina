@@ -16,30 +16,23 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   //this->setReadOnly(true); //the key event catch will do the process/widget forwarding
   //this->setPlainText("WARNING: This utility is still incomplete and does not function properly yet");
   
-  //Create/open the serial port
-  /*PROC = new QSerialPort(this);
-    QList<QSerialPortInfo>  openports = QSerialPortInfo::availablePorts();
-    //Now print out all the information
-    if(openports.isEmpty()){ this->setEnabled(false);}
-    else{
-      //Go through the open ports until we find one that can be used
-      for(int i=0; i<openports.length(); i++){
-	qDebug() << "Port:" << openports[i].description();
-	qDebug() << "Name:" << openports[i].portName();
-	qDebug() << "Serial Number:" << openports[i].serialNumber();
-	qDebug() << "System Location:" << openports[i].systemLocation();
-	PROC->setPort(openports[i]);
-	if(PROC->open(QIODevice::ReadWrite) ){ break; }
-      }
-    }
+  //Create/open the TTY port
+  PROC = new TTYProcess(this);
+  qDebug() << "Open new TTY";
+  bool ok = PROC->start( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
+  qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
+
   //Connect the signals/slots
   connect(PROC, SIGNAL(readyRead()), this, SLOT(UpdateText()) );
   connect(PROC, SIGNAL(aboutToClose()), this, SLOT(ShellClosed()) );
-  */
-    
-   //Create/launch the process 
-  PROC = new QProcess(this);
+  
+  upTimer = new QTimer(this);
+    upTimer->setInterval(1000);
+    connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
+	
+   //Create/launch the QProcess 
+  /*PROC = new QProcess(this);
     PROC->setProcessChannelMode(QProcess::MergedChannels);
     PROC->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
     PROC->setProgram( PROC->processEnvironment().value("SHELL","/bin/sh") );
@@ -48,18 +41,18 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   connect(PROC, SIGNAL(readyReadStandardOutput()), this, SLOT(UpdateText()) );
   connect(PROC, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(ShellClosed()) );
   //Now start the shell
-  //PROC->start("login" , QStringList() << "-f" << getlogin(), QIODevice::ReadWrite);
-  PROC->start(QIODevice::ReadWrite);
+  PROC->start(QIODevice::ReadWrite);*/
   
+  upTimer->start();
 }
 
 TerminalWidget::~TerminalWidget(){
-	
+  aboutToClose();
 }
 
 void TerminalWidget::aboutToClose(){
-  //if(PROC->isOpen()){ PROC->close(); }
-  if(PROC->state()!=QProcess::NotRunning){ PROC->kill(); }
+  if(PROC->isOpen()){ PROC->close(); } //TTY PORT
+  //if(PROC->state()!=QProcess::NotRunning){ PROC->close(); PROC->kill(); } //QProcess
 }
 
 // ==================
@@ -67,9 +60,11 @@ void TerminalWidget::aboutToClose(){
 // ==================
 void TerminalWidget::UpdateText(){
   //read the data from the process
-  //QByteArray data = PROC->readAll();
-  qDebug() << "Process Data Available";
-  QByteArray data = PROC->readAllStandardOutput();
+  if(!PROC->isOpen()){ return; }
+  QByteArray data = PROC->readAll(); //TTY PORT
+  //QByteArray data = PROC->readAllStandardOutput(); //QProcess
+  if(data.length()<=0){ return; }
+  qDebug() << "Process Data:" << data;
   this->insertPlainText(QString(data));
   //adjust the scrollbar as needed
 	
@@ -85,22 +80,24 @@ void TerminalWidget::ShellClosed(){
 void TerminalWidget::keyPressEvent(QKeyEvent *ev){
     //Check for special key combinations first
     QString txt = ev->text();
+    if(txt.isEmpty()){ return; } // modifier key - nothing to send yet
     switch(ev->key()){
-	case Qt::Key_Backspace:
+	//case Qt::Key_Backspace:
 	case Qt::Key_Left:
 	case Qt::Key_Right:
 	case Qt::Key_Up:
 	case Qt::Key_Down:
 	  break;
-	case Qt::Key_Return:
+	/*case Qt::Key_Return:
 	case Qt::Key_Enter:
-	  txt = "\r";
+	  txt = "\r";*/
 	default:
 	  //All other events can get echoed onto the widget (non-movement)
 	  QTextEdit::keyPressEvent(ev); //echo the input on the widget
     }
+  QByteArray ba; ba.append(txt); //avoid any byte conversions
   qDebug() << "Forward Input:" << txt << ev->key();
-  PROC->write(txt.toLocal8Bit());
+  PROC->write(ba);
 }
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){
