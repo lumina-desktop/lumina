@@ -19,7 +19,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   //Create/open the TTY port
   PROC = new TTYProcess(this);
   qDebug() << "Open new TTY";
-  bool ok = PROC->start( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
+  bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
   qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
 

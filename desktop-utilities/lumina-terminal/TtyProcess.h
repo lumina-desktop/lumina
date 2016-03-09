@@ -12,16 +12,26 @@
 #ifndef _LUMINA_DESKTOP_UTILITIES_TERMINAL_TTY_PROCESS_WIDGET_H
 #define _LUMINA_DESKTOP_UTILITIES_TERMINAL_TTY_PROCESS_WIDGET_H
 
-#include <QSerialPort>
 #include <QDebug>
+#include <QFile>
 
-class TTYProcess : public QSerialPort{
+//Standard C library functions for PTY access/setup
+#include <stdlib.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <signal.h>
+
+
+class TTYProcess : public QFile{
 	Q_OBJECT
 public:
 	TTYProcess(QObject *parent = 0);
 	~TTYProcess();
 
-	bool start(QString prog, QStringList args = QStringList());
+	bool startTTY(QString prog, QStringList args = QStringList());
 
 private:
 	pid_t childProc;

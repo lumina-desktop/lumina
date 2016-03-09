@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <signal.h>
 
-TTYProcess::TTYProcess(QObject *parent) : QSerialPort(parent){
+TTYProcess::TTYProcess(QObject *parent) : QFile(parent){
   childProc = 0;	
 }
 
@@ -18,7 +18,7 @@ TTYProcess::~TTYProcess(){
 }
 		
 // === PUBLIC ===
-bool TTYProcess::start(QString prog, QStringList args){
+bool TTYProcess::startTTY(QString prog, QStringList args){
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
   char *cargs[args.length()+1];
@@ -26,6 +26,7 @@ bool TTYProcess::start(QString prog, QStringList args){
     if(i<args.length()){
       cargs[i] = new char[ args[i].toLocal8Bit().size()+1];
       strcpy( cargs[i], args[i].toLocal8Bit().data() );
+      cargs[i][strlen(args[i].toLocal8Bit())] = NULL;
     }else{
       cargs[i] = new char[1];
       strcpy(cargs[i],"\0");
@@ -40,9 +41,10 @@ bool TTYProcess::start(QString prog, QStringList args){
   if(tmp<0){ return false; } //error
   else{
     childProc = tmp;
-    this->setPortName( ptsname(FD) );
-    qDebug() << " - PTY:" << this->portName();
+    this->setFileName( ptsname(FD) );
+    //qDebug() << " - PTY:" << this->portName();
     return this->open(QIODevice::ReadWrite);
+    //return true;
   }
 }
 
@@ -81,6 +83,9 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     setsid();  //Make current process new session leader (so we can set controlling terminal)
     ioctl(0,TIOCSCTTY, 1); //Set the controlling terminal to the slave PTY
 	  
+    // Example my_args which works
+    // char *my_args[] = { "/bin/csh", NULL };
+
     //Execute the designated program
     rc = execvp(prog, child_args);
     ::close(fds); //no need to keep original file descriptor open any more
