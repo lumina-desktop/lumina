@@ -21,15 +21,18 @@ TTYProcess::~TTYProcess(){
 bool TTYProcess::startTTY(QString prog, QStringList args){
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
-  char *cargs[args.length()+1];
-  for(int i=0; i<args.length()+1; i++){
-    if(i<args.length()){
+  char *cargs[args.length()+2];
+  QByteArray nullarray;
+  for(int i=0; i<args.length()+2; i++){
+    // First arg needs to be the program
+    if ( i == 0 ) {
+      cargs[i] = new char[ prog.toLocal8Bit().size()+1];
+      strcpy( cargs[i], prog.toLocal8Bit().data() );
+    } else if(i<args.length()){
       cargs[i] = new char[ args[i].toLocal8Bit().size()+1];
       strcpy( cargs[i], args[i].toLocal8Bit().data() );
-      cargs[i][strlen(args[i].toLocal8Bit())] = NULL;
     }else{
-      cargs[i] = new char[1];
-      strcpy(cargs[i],"\0");
+      cargs[i] = NULL;
     }
   }
   qDebug() << "PTY Start:" << prog;
