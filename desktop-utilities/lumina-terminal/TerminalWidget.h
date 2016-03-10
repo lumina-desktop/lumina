@@ -27,7 +27,6 @@ private:
 	//QProcess *PROC;
 
 	QSocketNotifier *sn;
-	QTimer *upTimer;
 
 private slots:
 	void UpdateText();

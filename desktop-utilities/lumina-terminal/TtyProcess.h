@@ -13,7 +13,7 @@
 #define _LUMINA_DESKTOP_UTILITIES_TERMINAL_TTY_PROCESS_WIDGET_H
 
 #include <QDebug>
-#include <QFile>
+#include <QSocketNotifier>
 
 //Standard C library functions for PTY access/setup
 #include <stdlib.h>
@@ -22,21 +22,29 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <signal.h>
 
-
-class TTYProcess : public QFile{
+class TTYProcess : public QObject{
 	Q_OBJECT
 public:
 	TTYProcess(QObject *parent = 0);
 	~TTYProcess();
 
-	bool startTTY(int &retfd, QString prog, QStringList args = QStringList());
-	void writeTTY(QByteArray output);
+	bool startTTY(QString prog, QStringList args = QStringList());
+	void closeTTY();
 
+	//Primary read/write functions
+	void writeTTY(QByteArray output);
+	QByteArray readTTY();
+
+	//Status update checks
+	bool isOpen();
+	
 private:
 	pid_t childProc;
 	int ttyfd;
+	QSocketNotifier *sn;
 
 	//====================================
 	// C Library function for setting up the PTY
@@ -49,7 +57,12 @@ private:
 	//====================================
 	static pid_t LaunchProcess(int& fd, char *prog, char **child_args); 
 	
+private slots:
+	void checkStatus(int);
 
+signals:
+	void readyRead();
+	void processClosed();
 };
 
 #endif

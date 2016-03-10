@@ -1,24 +1,17 @@
 #include "TtyProcess.h"
 
-//Standard C library functions for PTY access/setup
-#include <stdlib.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <signal.h>
-
-TTYProcess::TTYProcess(QObject *parent) : QFile(parent){
-  childProc = 0;	
+TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
+  childProc = 0;
+  sn = 0;
+  ttyfd = 0;
 }
 
 TTYProcess::~TTYProcess(){
-  kill(childProc, SIGKILL);
+  closeTTY(); //make sure everything is closed properly
 }
 		
 // === PUBLIC ===
-bool TTYProcess::startTTY(int &retfd, QString prog, QStringList args){
+bool TTYProcess::startTTY(QString prog, QStringList args){
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
   char *cargs[args.length()+2];
@@ -44,18 +37,48 @@ bool TTYProcess::startTTY(int &retfd, QString prog, QStringList args){
   if(tmp<0){ return false; } //error
   else{
     childProc = tmp;
-    this->setFileName( ptsname(FD) );
-    retfd = FD;
+    //Load the file for close notifications
+      //TO-DO
+    //Watch the socket for activity
+    sn= new QSocketNotifier(FD, QSocketNotifier::Read);
+	sn->setEnabled(true);
+	connect(sn, SIGNAL(activated(int)), this, SLOT(checkStatus(int)) );
     ttyfd = FD;
     qDebug() << " - PTY:" << ptsname(FD);
-    return this->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
-    //return true;
+    return true;
+  }
+}
+
+void TTYProcess::closeTTY(){
+  int junk;
+  if(0==waitpid(childProc, &junk, WNOHANG)){
+    kill(childProc, SIGKILL);	
+  }
+  if(ttyfd!=0 && sn!=0){
+    sn->setEnabled(false);
+    ::close(ttyfd);
+    ttyfd = 0;
+    emit processClosed();
   }
 }
 
 void TTYProcess::writeTTY(QByteArray output){
   int written = ::write(ttyfd, output.data(), output.size());
   qDebug() << "Wrote:" << written;
+}
+
+QByteArray TTYProcess::readTTY(){
+  QByteArray BA;
+  if(sn==0){ return BA; } //not setup yet
+  char buffer[64];
+  ssize_t rtot = read(sn->socket(),&buffer,64);
+  buffer[rtot]='\0';
+  BA = QByteArray(buffer, rtot);
+  return BA;	
+}
+
+bool TTYProcess::isOpen(){
+  return (ttyfd!=0);
 }
 
 // === PRIVATE ===
@@ -100,4 +123,19 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   }
   //MASTER thread (or error)
   return PID;
+}
+
+// === PRIVATE SLOTS ===
+void TTYProcess::checkStatus(int sock){
+  //This is run when the socket gets activated
+  if(sock!=ttyfd){
+	  
+  }
+  //Make sure the child PID is still active
+  int junk;
+  if(0!=waitpid(childProc, &junk, WNOHANG)){
+    this->closeTTY(); //clean up everything else
+  }else{
+    emit readyRead();
+  }
 }

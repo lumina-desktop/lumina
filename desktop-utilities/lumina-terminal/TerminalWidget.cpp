@@ -19,24 +19,15 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   //Create/open the TTY port
   PROC = new TTYProcess(this);
   qDebug() << "Open new TTY";
-  int fd;
-  bool ok = PROC->startTTY( fd, QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
+  //int fd;
+  bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
   qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
 
   //Connect the signals/slots
-  //connect(PROC, SIGNAL(readyRead()), this, SLOT(UpdateText()) );
-  connect(PROC, SIGNAL(aboutToClose()), this, SLOT(ShellClosed()) );
-
-  sn= new QSocketNotifier(fd, QSocketNotifier::Read);
-  sn->setEnabled(true);
-  connect(sn, SIGNAL(activated(int)), this, SLOT(UpdateText()));
+  connect(PROC, SIGNAL(readyRead()), this, SLOT(UpdateText()) );
+  connect(PROC, SIGNAL(processClosed()), this, SLOT(ShellClosed()) );
   
-  upTimer = new QTimer(this);
-    upTimer->setInterval(1000);
-  //  connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
-
-  upTimer->start();
 }
 
 TerminalWidget::~TerminalWidget(){
@@ -44,8 +35,7 @@ TerminalWidget::~TerminalWidget(){
 }
 
 void TerminalWidget::aboutToClose(){
-  if(PROC->isOpen()){ PROC->close(); } //TTY PORT
-  //if(PROC->state()!=QProcess::NotRunning){ PROC->close(); PROC->kill(); } //QProcess
+  if(PROC->isOpen()){ PROC->closeTTY(); } //TTY PORT
 }
 
 // ==================
@@ -58,10 +48,11 @@ void TerminalWidget::UpdateText(){
   //if ( PROC->bytesAvailable() <= 0 )
   //  return;
 
-  qDebug() << "Reading all data";
+  /*qDebug() << "Reading all data";
   char buffer[64];
   ssize_t rtot = read(sn->socket(),&buffer,64);
-  buffer[rtot]='\0';
+  buffer[rtot]='\0';*/
+  QByteArray buffer = PROC->readTTY();
   qDebug() << "Process Data:" << QString(buffer);
   this->insertPlainText(QString(buffer));
   //adjust the scrollbar as needed
@@ -79,22 +70,22 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
     //Check for special key combinations first
     QString txt = ev->text();
     if(txt.isEmpty()){ return; } // modifier key - nothing to send yet
-    switch(ev->key()){
+    /*switch(ev->key()){
 	//case Qt::Key_Backspace:
 	case Qt::Key_Left:
 	case Qt::Key_Right:
 	case Qt::Key_Up:
 	case Qt::Key_Down:
 	  break;
-	/*case Qt::Key_Return:
-	case Qt::Key_Enter:
-	  txt = "\r";*/
-	default:
+	//case Qt::Key_Return:
+	//case Qt::Key_Enter:
+	  //txt = "\r";
+	//default:
 	  //All other events can get echoed onto the widget (non-movement)
-	  QTextEdit::keyPressEvent(ev); //echo the input on the widget
-    }
+	  //QTextEdit::keyPressEvent(ev); //echo the input on the widget
+    }*/
   QByteArray ba; ba.append(txt); //avoid any byte conversions
-  qDebug() << "Forward Input:" << txt << ev->key();
+  qDebug() << "Forward Input:" << txt << ev->key() << ba;
   PROC->writeTTY(ba);
 }
 
