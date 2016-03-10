@@ -63,8 +63,9 @@ void TTYProcess::closeTTY(){
 }
 
 void TTYProcess::writeTTY(QByteArray output){
-  int written = ::write(ttyfd, output.data(), output.size());
-  qDebug() << "Wrote:" << written;
+  //int written = 
+  ::write(ttyfd, output.data(), output.size());
+  //qDebug() << "Wrote:" << written;
 }
 
 QByteArray TTYProcess::readTTY(){
@@ -74,11 +75,63 @@ QByteArray TTYProcess::readTTY(){
   ssize_t rtot = read(sn->socket(),&buffer,64);
   buffer[rtot]='\0';
   BA = QByteArray(buffer, rtot);
-  return BA;	
+  if(!fragBA.isEmpty()){
+    //Have a leftover fragment, include this too
+    BA = BA.prepend(fragBA);
+    fragBA.clear();
+  }
+  bool bad = true;
+  BA = CleanANSI(BA, bad);
+  if(bad){ 
+    //incomplete fragent - read some more first
+    fragBA = BA; 
+    return readTTY();
+  }else{
+    return BA;
+  }
 }
 
 bool TTYProcess::isOpen(){
   return (ttyfd!=0);
+}
+
+QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
+  incomplete = true;
+  qDebug() << "Clean ANSI Data:" << raw;
+  //IN_LINE TERMINAL COLOR CODES (ANSI Escape Codes) "\x1B[<colorcode>m"
+  //  - Just remove them for now
+	
+  //Special XTERM encoding (legacy support)
+  int index = raw.indexOf("\x1B]");
+  while(index>=0){
+    //The end character of this sequence is the Bell command ("\x07")
+    int end = raw.indexOf("\x07");
+    if(end<0){ return raw; } //incomplete raw array
+    raw = raw.remove(index, end-index+1);
+    index = raw.indexOf("\x1B]");
+  }
+
+  // COLOR CODES	
+  index = raw.indexOf("\x1B[");
+  while(index>=0){
+    int end = raw.indexOf("m",index);
+    if(end<0){ return raw; } //incomplete raw array
+    raw = raw.remove(index, end-index+1);
+    index = raw.indexOf("\x1B[");
+  }
+  qDebug() << " - Removed Color Codes:" << raw;
+  
+  // SYSTEM BELL
+  index = raw.indexOf("\x07");
+  while(index>=0){ 
+    //qDebug() << "Remove Bell:" << index;
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x07");
+  }
+  qDebug() << " - Fully Cleaned:" << raw;
+  
+  incomplete = false;
+  return raw;
 }
 
 // === PRIVATE ===

@@ -9,6 +9,7 @@
 #include <QProcessEnvironment>
 #include <QDebug>
 #include <QApplication>
+#include <QScrollBar>
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
@@ -43,20 +44,14 @@ void TerminalWidget::aboutToClose(){
 // ==================
 void TerminalWidget::UpdateText(){
   //read the data from the process
-  qDebug() << "UpdateText";
+  //qDebug() << "UpdateText";
   if(!PROC->isOpen()){ return; }
-  //if ( PROC->bytesAvailable() <= 0 )
-  //  return;
-
-  /*qDebug() << "Reading all data";
-  char buffer[64];
-  ssize_t rtot = read(sn->socket(),&buffer,64);
-  buffer[rtot]='\0';*/
   QByteArray buffer = PROC->readTTY();
-  qDebug() << "Process Data:" << QString(buffer);
-  this->insertPlainText(QString(buffer));
+  QString text = QString(buffer);
+    text.replace("\r\n","\n");
+  this->insertPlainText(text);
   //adjust the scrollbar as needed
-	
+  this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
 }
 
 void TerminalWidget::ShellClosed(){
@@ -85,8 +80,9 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 	  //QTextEdit::keyPressEvent(ev); //echo the input on the widget
     }*/
   QByteArray ba; ba.append(txt); //avoid any byte conversions
-  qDebug() << "Forward Input:" << txt << ev->key() << ba;
+  //qDebug() << "Forward Input:" << txt << ev->key() << ba;
   PROC->writeTTY(ba);
+  ev->ignore();
 }
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){

@@ -41,11 +41,15 @@ public:
 	//Status update checks
 	bool isOpen();
 	
+	//Functions for handling ANSI escape codes (typically not used by hand)
+	QByteArray CleanANSI(QByteArray, bool &incomplete);
+
 private:
 	pid_t childProc;
 	int ttyfd;
 	QSocketNotifier *sn;
-
+	QByteArray fragBA; //fragment ByteArray
+	
 	//====================================
 	// C Library function for setting up the PTY
 	// Inputs:
