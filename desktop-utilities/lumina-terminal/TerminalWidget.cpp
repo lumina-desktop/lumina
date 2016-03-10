@@ -62,26 +62,14 @@ void TerminalWidget::ShellClosed(){
 //       PROTECTED
 // ==================
 void TerminalWidget::keyPressEvent(QKeyEvent *ev){
-    //Check for special key combinations first
-    QString txt = ev->text();
-    if(txt.isEmpty()){ return; } // modifier key - nothing to send yet
-    /*switch(ev->key()){
-	//case Qt::Key_Backspace:
-	case Qt::Key_Left:
-	case Qt::Key_Right:
-	case Qt::Key_Up:
-	case Qt::Key_Down:
-	  break;
-	//case Qt::Key_Return:
-	//case Qt::Key_Enter:
-	  //txt = "\r";
-	//default:
-	  //All other events can get echoed onto the widget (non-movement)
-	  //QTextEdit::keyPressEvent(ev); //echo the input on the widget
-    }*/
-  QByteArray ba; ba.append(txt); //avoid any byte conversions
-  //qDebug() << "Forward Input:" << txt << ev->key() << ba;
-  PROC->writeTTY(ba);
+	
+  if(ev->text().isEmpty() || ev->text()=="\b" ){
+    PROC->writeQtKey(ev->key());
+  }else{
+    QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
+    PROC->writeTTY(ba);
+  }
+  
   ev->ignore();
 }
 

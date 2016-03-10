@@ -14,6 +14,7 @@
 
 #include <QDebug>
 #include <QSocketNotifier>
+#include <QKeyEvent>
 
 //Standard C library functions for PTY access/setup
 #include <stdlib.h>
@@ -36,6 +37,7 @@ public:
 
 	//Primary read/write functions
 	void writeTTY(QByteArray output);
+	void writeQtKey(int key); //simplification function for handling special keys like arrows and such ( QKeyEvent()->key() )
 	QByteArray readTTY();
 
 	//Status update checks

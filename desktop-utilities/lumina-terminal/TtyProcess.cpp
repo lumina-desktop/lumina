@@ -63,9 +63,31 @@ void TTYProcess::closeTTY(){
 }
 
 void TTYProcess::writeTTY(QByteArray output){
-  //int written = 
+  qDebug() << "Write:" << output;
   ::write(ttyfd, output.data(), output.size());
-  //qDebug() << "Wrote:" << written;
+}
+
+void TTYProcess::writeQtKey(int key){
+  //Note that a shell does *not* take ANSI
+    QByteArray ba;
+    //Check for special keys
+    switch(key){
+      case Qt::Key_Backspace:
+	//ba.append("^H/x1b[8p");    
+        break;
+      case Qt::Key_Left:
+      case Qt::Key_Right:
+        break;
+      case Qt::Key_Up:
+        //ba.append("\x1b[(224;72)p");
+        break;
+      case Qt::Key_Down:
+        //ba.append("\x1b[(224;80)p");
+        break;
+  }
+   
+  //qDebug() << "Forward Input:" << txt << ev->key() << ba;
+  if(!ba.isEmpty()){ this->writeTTY(ba); }
 }
 
 QByteArray TTYProcess::readTTY(){
@@ -87,6 +109,7 @@ QByteArray TTYProcess::readTTY(){
     fragBA = BA; 
     return readTTY();
   }else{
+    qDebug() << "Read Data:" << BA;
     return BA;
   }
 }
@@ -97,7 +120,7 @@ bool TTYProcess::isOpen(){
 
 QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
   incomplete = true;
-  qDebug() << "Clean ANSI Data:" << raw;
+  //qDebug() << "Clean ANSI Data:" << raw;
   //IN_LINE TERMINAL COLOR CODES (ANSI Escape Codes) "\x1B[<colorcode>m"
   //  - Just remove them for now
 	
@@ -119,7 +142,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index, end-index+1);
     index = raw.indexOf("\x1B[");
   }
-  qDebug() << " - Removed Color Codes:" << raw;
+  //qDebug() << " - Removed Color Codes:" << raw;
   
   // SYSTEM BELL
   index = raw.indexOf("\x07");
@@ -128,7 +151,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index,1); 
     index = raw.indexOf("\x07");
   }
-  qDebug() << " - Fully Cleaned:" << raw;
+  //qDebug() << " - Fully Cleaned:" << raw;
   
   incomplete = false;
   return raw;
