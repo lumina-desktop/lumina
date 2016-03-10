@@ -61,7 +61,6 @@ void TerminalWidget::UpdateText(){
   qDebug() << "Reading all data";
   char buffer[64];
   ssize_t rtot = read(sn->socket(),&buffer,64);
-  qDebug()<<(quint8)buffer[0]<<(quint8)buffer[1]<<(quint8)buffer[2]<<(quint8)buffer[3];
   buffer[rtot]='\0';
   qDebug() << "Process Data:" << QString(buffer);
   this->insertPlainText(QString(buffer));
@@ -96,7 +95,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
     }
   QByteArray ba; ba.append(txt); //avoid any byte conversions
   qDebug() << "Forward Input:" << txt << ev->key();
-  PROC->write(ba);
+  PROC->writeTTY(ba);
 }
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){

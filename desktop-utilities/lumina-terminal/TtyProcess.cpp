@@ -46,10 +46,16 @@ bool TTYProcess::startTTY(int &retfd, QString prog, QStringList args){
     childProc = tmp;
     this->setFileName( ptsname(FD) );
     retfd = FD;
+    ttyfd = FD;
     qDebug() << " - PTY:" << ptsname(FD);
     return this->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
     //return true;
   }
+}
+
+void TTYProcess::writeTTY(QByteArray output){
+  int written = ::write(ttyfd, output.data(), output.size());
+  qDebug() << "Wrote:" << written;
 }
 
 // === PRIVATE ===

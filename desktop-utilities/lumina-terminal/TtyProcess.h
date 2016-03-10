@@ -32,9 +32,11 @@ public:
 	~TTYProcess();
 
 	bool startTTY(int &retfd, QString prog, QStringList args = QStringList());
+	void writeTTY(QByteArray output);
 
 private:
 	pid_t childProc;
+	int ttyfd;
 
 	//====================================
 	// C Library function for setting up the PTY
