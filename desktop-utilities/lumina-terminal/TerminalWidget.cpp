@@ -29,7 +29,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   
   upTimer = new QTimer(this);
     upTimer->setInterval(1000);
- //   connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
+    connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
 
   upTimer->start();
 }
@@ -48,7 +48,12 @@ void TerminalWidget::aboutToClose(){
 // ==================
 void TerminalWidget::UpdateText(){
   //read the data from the process
+  qDebug() << "UpdateText";
   if(!PROC->isOpen()){ return; }
+  if ( PROC->bytesAvailable() <= 0 )
+    return;
+
+  qDebug() << "Reading all data";
   QByteArray data = PROC->readAll(); //TTY PORT
   //QByteArray data = PROC->readAllStandardOutput(); //QProcess
   if(data.length()<=0){ return; }

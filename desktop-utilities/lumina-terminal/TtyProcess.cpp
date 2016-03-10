@@ -45,8 +45,8 @@ bool TTYProcess::startTTY(QString prog, QStringList args){
   else{
     childProc = tmp;
     this->setFileName( ptsname(FD) );
-    //qDebug() << " - PTY:" << this->portName();
-    return this->open(QIODevice::ReadWrite);
+    qDebug() << " - PTY:" << ptsname(FD);
+    return this->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
     //return true;
   }
 }
