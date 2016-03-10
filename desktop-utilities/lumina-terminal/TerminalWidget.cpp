@@ -19,17 +19,22 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   //Create/open the TTY port
   PROC = new TTYProcess(this);
   qDebug() << "Open new TTY";
-  bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
+  int fd;
+  bool ok = PROC->startTTY( fd, QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
   qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
 
   //Connect the signals/slots
-  connect(PROC, SIGNAL(readyRead()), this, SLOT(UpdateText()) );
+  //connect(PROC, SIGNAL(readyRead()), this, SLOT(UpdateText()) );
   connect(PROC, SIGNAL(aboutToClose()), this, SLOT(ShellClosed()) );
+
+  sn= new QSocketNotifier(fd, QSocketNotifier::Read);
+  sn->setEnabled(true);
+  connect(sn, SIGNAL(activated(int)), this, SLOT(UpdateText()));
   
   upTimer = new QTimer(this);
     upTimer->setInterval(1000);
-    connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
+  //  connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
 
   upTimer->start();
 }
@@ -50,15 +55,16 @@ void TerminalWidget::UpdateText(){
   //read the data from the process
   qDebug() << "UpdateText";
   if(!PROC->isOpen()){ return; }
-  if ( PROC->bytesAvailable() <= 0 )
-    return;
+  //if ( PROC->bytesAvailable() <= 0 )
+  //  return;
 
   qDebug() << "Reading all data";
-  QByteArray data = PROC->readAll(); //TTY PORT
-  //QByteArray data = PROC->readAllStandardOutput(); //QProcess
-  if(data.length()<=0){ return; }
-  qDebug() << "Process Data:" << data;
-  this->insertPlainText(QString(data));
+  char buffer[64];
+  ssize_t rtot = read(sn->socket(),&buffer,64);
+  qDebug()<<(quint8)buffer[0]<<(quint8)buffer[1]<<(quint8)buffer[2]<<(quint8)buffer[3];
+  buffer[rtot]='\0';
+  qDebug() << "Process Data:" << QString(buffer);
+  this->insertPlainText(QString(buffer));
   //adjust the scrollbar as needed
 	
 }

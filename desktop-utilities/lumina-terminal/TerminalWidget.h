@@ -9,6 +9,7 @@
 
 #include <QTextEdit>
 #include <QKeyEvent>
+#include <QSocketNotifier>
 #include <QTimer>
 
 #include "TtyProcess.h"
@@ -25,6 +26,7 @@ private:
 	TTYProcess *PROC;
 	//QProcess *PROC;
 
+	QSocketNotifier *sn;
 	QTimer *upTimer;
 
 private slots:

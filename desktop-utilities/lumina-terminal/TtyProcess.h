@@ -31,7 +31,7 @@ public:
 	TTYProcess(QObject *parent = 0);
 	~TTYProcess();
 
-	bool startTTY(QString prog, QStringList args = QStringList());
+	bool startTTY(int &retfd, QString prog, QStringList args = QStringList());
 
 private:
 	pid_t childProc;

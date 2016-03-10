@@ -18,7 +18,7 @@ TTYProcess::~TTYProcess(){
 }
 		
 // === PUBLIC ===
-bool TTYProcess::startTTY(QString prog, QStringList args){
+bool TTYProcess::startTTY(int &retfd, QString prog, QStringList args){
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
   char *cargs[args.length()+2];
@@ -45,6 +45,7 @@ bool TTYProcess::startTTY(QString prog, QStringList args){
   else{
     childProc = tmp;
     this->setFileName( ptsname(FD) );
+    retfd = FD;
     qDebug() << " - PTY:" << ptsname(FD);
     return this->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
     //return true;
@@ -86,10 +87,8 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     setsid();  //Make current process new session leader (so we can set controlling terminal)
     ioctl(0,TIOCSCTTY, 1); //Set the controlling terminal to the slave PTY
 	  
-    qDebug() << "Starting execvp";
     //Execute the designated program
     rc = execvp(prog, child_args);
-    qDebug() << "Stopping execvp";
     ::close(fds); //no need to keep original file descriptor open any more
     exit(rc);
   }
