@@ -29,20 +29,8 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   
   upTimer = new QTimer(this);
     upTimer->setInterval(1000);
-    connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
-	
-   //Create/launch the QProcess 
-  /*PROC = new QProcess(this);
-    PROC->setProcessChannelMode(QProcess::MergedChannels);
-    PROC->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-    PROC->setProgram( PROC->processEnvironment().value("SHELL","/bin/sh") );
-    PROC->setWorkingDirectory(dir);
-  //Connect the signals/slots
-  connect(PROC, SIGNAL(readyReadStandardOutput()), this, SLOT(UpdateText()) );
-  connect(PROC, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(ShellClosed()) );
-  //Now start the shell
-  PROC->start(QIODevice::ReadWrite);*/
-  
+ //   connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateText()) );
+
   upTimer->start();
 }
 

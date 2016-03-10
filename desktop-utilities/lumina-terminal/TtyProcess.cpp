@@ -86,11 +86,10 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     setsid();  //Make current process new session leader (so we can set controlling terminal)
     ioctl(0,TIOCSCTTY, 1); //Set the controlling terminal to the slave PTY
 	  
-    // Example my_args which works
-    // char *my_args[] = { "/bin/csh", NULL };
-
+    qDebug() << "Starting execvp";
     //Execute the designated program
     rc = execvp(prog, child_args);
+    qDebug() << "Stopping execvp";
     ::close(fds); //no need to keep original file descriptor open any more
     exit(rc);
   }
