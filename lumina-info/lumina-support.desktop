@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 URL=https://webchat.freenode.net/?channels=%23lumina-desktop
-Icon=/usr/local/share/pixmaps/Lumina-DE.png
+Icon=Lumina-DE
 Categories=System;
 OnlyShowIn=Lumina
 Name=Community Support
