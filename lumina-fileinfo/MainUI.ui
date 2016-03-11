@@ -310,11 +310,6 @@
            <property name="text">
             <string notr="true"/>
            </property>
-           <property name="icon">
-            <iconset>
-             <normalon>../../../../usr/local/share/icons/gnome/32x32/actions/gnome-run.png</normalon>
-            </iconset>
-           </property>
           </widget>
          </item>
          <item row="3" column="2">
@@ -324,11 +319,6 @@
            </property>
            <property name="text">
             <string notr="true"/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>../../../../usr/local/share/icons/gnome/32x32/places/folder.png</normalon>
-            </iconset>
            </property>
           </widget>
          </item>
@@ -344,11 +334,6 @@
              </property>
              <property name="text">
               <string>No Icon</string>
-             </property>
-             <property name="icon">
-              <iconset>
-               <normalon>../../../../usr/local/share/icons/gnome/32x32/categories/xfce-graphics.png</normalon>
-              </iconset>
              </property>
              <property name="iconSize">
               <size>
