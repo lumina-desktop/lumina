@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=Lumina-DE
 TryExec=Lumina-DE
-Icon=/usr/local/share/pixmaps/Lumina-DE.png
+Icon=Lumina-DE
 Type=Application
 Name=Lumina
 Name[de]=Lumina
