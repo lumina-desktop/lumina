@@ -871,7 +871,9 @@ QString LXDG::findDefaultAppForMime(QString mime){
     }
     // Now check for any white-listed files in this work dir 
     // find the full path to the file (should run even if nothing in this file)
+    //qDebug() << "WhiteList:" << white;
     for(int w=0; w<white.length(); w++){
+      if(white[w].isEmpty()){ continue; }
       //First check for absolute paths to *.desktop file
       if( white[w].startsWith("/") ){
 	 if( QFile::exists(white[w]) ){ cdefault=white[w]; break; }
@@ -884,9 +886,10 @@ QString LXDG::findDefaultAppForMime(QString mime){
 	QStringList xdirs;
 	  xdirs << QString(getenv("XDG_DATA_HOME"))+"/applications/";
 	  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
-	    for(int t=0; t<tmp.length(); t++){ dirs << tmp[t]+"/applications/"; }
+	    for(int t=0; t<tmp.length(); t++){ xdirs << tmp[t]+"/applications/"; }
 	  //Now scan these dirs
 	  bool found = false;
+	  //qDebug() << "Scan dirs:" << white[w] << xdirs;
 	  for(int x=0; x<xdirs.length() && !found; x++){
 	    if(QFile::exists(xdirs[x]+white[w])){cdefault=xdirs[x]+white[w]; found = true; }
 	  }

@@ -33,11 +33,12 @@ LFileDialog::~LFileDialog(){
 // ----------
 void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
   //Set the labels for the file
+  qDebug() << "SetFileInfo:" << filename << extension << isFile;
   ui->label_file->setText( this->fontMetrics().elidedText( filename, Qt::ElideMiddle, 300 ) );
   bool shownetwork = false;
   if(isFile){ ui->label_extension->setText( "("+extension+")"); }
   else if(extension=="email"){ ui->label_extension->setText( QString(tr("(Email Link)")) ); shownetwork = true; }
-  else if(extension=="webbrowser"){  ui->label_extension->setText( QString(tr("(Internet URL)")) ); shownetwork = true; }
+  else if(extension.startsWith("x-scheme-handler/")){  ui->label_extension->setText( QString(tr("(Internet URL - %1)")).arg(extension.section("/",-1)) ); shownetwork = true; }
   else{ui->label_extension->setText("("+extension+" link)"); }
   fileEXT = extension; //NOTE: this is the mime-type for the file now, not the extension
   generateAppList(shownetwork);
@@ -46,7 +47,11 @@ void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
 //static functions
 QString LFileDialog::getDefaultApp(QString extension){
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  if(extension.contains("/")){
+    return LXDG::findDefaultAppForMime(extension);
+  }else{
     return QSettings("LuminaDE", "lumina-open").value("default/"+extension,"").toString();
+  }
 }
 
 void LFileDialog::setDefaultApp(QString extension, QString appFile){

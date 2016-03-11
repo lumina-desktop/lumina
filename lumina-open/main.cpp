@@ -105,7 +105,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 	  else if(i+1==matches.length()){ extension = matches[0]; }
 	}
     }else{ defApp = LFileDialog::getDefaultApp(extension); }
-    
+    //qDebug() << "extension:" << extension << "defApp:" << defApp;
     if( !defApp.isEmpty() && !showDLG ){
       bool ok = false;
       if(defApp.endsWith(".desktop")){
@@ -129,7 +129,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       LFileDialog::setDefaultApp(extension, "");
     }
     //Final catch: directory given - no valid default found - use lumina-fm
-    if(extension=="directory" && !showDLG){ return "lumina-fm"; }
+    if(extension=="inode/directory" && !showDLG){ return "lumina-fm"; }
     //No default set -- Start up the application selection dialog
     LTHEME::LoadCustomEnvSettings();
     QApplication App(argc, argv);
@@ -137,7 +137,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
       LUtils::LoadTranslation(&App,"lumina-open");
 
     LFileDialog w;
-    if(extension=="email" || extension=="webbrowser"){
+    if(extension=="email" || extension.startsWith("x-scheme-handler/")){
       //URL
       w.setFileInfo(inFile, extension, false);
     }else{
@@ -235,12 +235,12 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     QFileInfo info(inFile);
     extension=info.suffix();
     //qDebug() << " - Extension:" << extension;
-    if(info.isDir()){ extension="directory"; }
+    if(info.isDir()){ extension="inode/directory"; }
     else if(info.isExecutable() && extension.isEmpty()){ extension="binary"; }
     else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
   }
   else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
-  else if(isUrl){ extension = "webbrowser"; }
+  else if(isUrl){ extension = "x-scheme-handler/"+inFile.section("://",0,0); } //webbrowser"; }
   //qDebug() << "Input:" << inFile << isFile << isUrl << extension;
   //if not an application  - find the right application to open the file
   QString cmd;

@@ -1096,6 +1096,8 @@ void MainUI::changeDefaultBrowser(){
     }
   //save the new app setting and adjust the button appearance
   appsettings->setValue("default/webbrowser", desk.filePath);
+  LXDG::setDefaultAppForMime("x-scheme-handler/http", desk.filePath.section("/",-1));
+  LXDG::setDefaultAppForMime("x-scheme-handler/https", desk.filePath.section("/",-1));
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1157,8 +1159,9 @@ void MainUI::changeDefaultFileManager(){
       desk.filePath="lumina-fm";
     }
   //save the new app setting and adjust the button appearance
-  appsettings->setValue("default/directory", desk.filePath);
-  sessionsettings->setValue("default-filemanager", desk.filePath);
+  //appsettings->setValue("default/directory", desk.filePath);
+  //sessionsettings->setValue("default-filemanager", desk.filePath);
+  LXDG::setDefaultAppForMime("inode/directory", desk.filePath.section("/",-1));
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1215,10 +1218,8 @@ void MainUI::changeDefaultTerminal(){
 void MainUI::loadDefaultSettings(){
   //First load the lumina-open specific defaults
     //  - Default File Manager
-  QString tmp = sessionsettings->value("default-filemanager", "lumina-fm").toString();
-  if( tmp!=appsettings->value("default/directory", "").toString() ){
-    appsettings->setValue("default/directory", tmp); //make sure they are consistent
-  }
+  QString tmp = LXDG::findDefaultAppForMime("inode/directory"); 
+  if(tmp.isEmpty()){ tmp = "lumina-fm"; }
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1262,7 +1263,7 @@ void MainUI::loadDefaultSettings(){
       ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
   }
   // - Default Web Browser
-  tmp = appsettings->value("default/webbrowser", "").toString();
+  tmp = LXDG::findDefaultAppForMime("x-scheme-handler/http"); //appsettings->value("default/webbrowser", "").toString();
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;
