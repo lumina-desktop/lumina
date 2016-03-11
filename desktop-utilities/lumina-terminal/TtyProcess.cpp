@@ -68,21 +68,20 @@ void TTYProcess::writeTTY(QByteArray output){
 }
 
 void TTYProcess::writeQtKey(int key){
-  //Note that a shell does *not* take ANSI
     QByteArray ba;
     //Check for special keys
     switch(key){
       case Qt::Key_Backspace:
-	//ba.append("^H/x1b[8p");    
+	ba.append("\x1b[D\x1b[K");    
         break;
       case Qt::Key_Left:
       case Qt::Key_Right:
         break;
       case Qt::Key_Up:
-        //ba.append("\x1b[(224;72)p");
+        ba.append("\x1b[A");
         break;
       case Qt::Key_Down:
-        //ba.append("\x1b[(224;80)p");
+        ba.append("\x1b[B");
         break;
   }
    
@@ -92,11 +91,13 @@ void TTYProcess::writeQtKey(int key){
 
 QByteArray TTYProcess::readTTY(){
   QByteArray BA;
+  qDebug() << "Read TTY";
   if(sn==0){ return BA; } //not setup yet
   char buffer[64];
   ssize_t rtot = read(sn->socket(),&buffer,64);
   buffer[rtot]='\0';
   BA = QByteArray(buffer, rtot);
+  qDebug() << " - Got Data:" << BA;
   if(!fragBA.isEmpty()){
     //Have a leftover fragment, include this too
     BA = BA.prepend(fragBA);
@@ -111,6 +112,21 @@ QByteArray TTYProcess::readTTY(){
   }else{
     qDebug() << "Read Data:" << BA;
     return BA;
+  }
+}
+
+void TTYProcess::setTerminalSize(QSize chars, QSize pixels){
+  if(ttyfd==0){ return; }
+  
+  struct winsize c_sz;
+    c_sz.ws_row = chars.height();
+    c_sz.ws_col = chars.width();
+    c_sz.ws_xpixel = pixels.width();
+    c_sz.ws_ypixel = pixels.height();
+  if( ioctl(ttyfd, TIOCSWINSZ, &ws) ){
+    qDebug() << "Error settings terminal size";
+  }else{
+    qDebug() <<"Set Terminal Size:" << pixels << chars;
   }
 }
 
@@ -134,12 +150,19 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     index = raw.indexOf("\x1B]");
   }
 
-  // COLOR CODES	
+  // GENERIC ANSI CODES	
   index = raw.indexOf("\x1B[");
   while(index>=0){
-    int end = raw.indexOf("m",index);
-    if(end<0){ return raw; } //incomplete raw array
-    raw = raw.remove(index, end-index+1);
+    //CURSOR MOVEMENT
+    int end = 0;
+    for(int i=1; i<raw.size() && end==0; i++){
+      if(raw.size() < index+i){ return raw; }//cut off - go back for more data
+      //qDebug() << "Check Char:" << raw.at(index+i);
+      if( QChar(raw.at(index+i)).isLetter() ){
+        end = i; //found the end of the control code
+      }
+    }
+    raw = raw.remove(index, 1+end); //control character +1 byte
     index = raw.indexOf("\x1B[");
   }
   //qDebug() << " - Removed Color Codes:" << raw;
@@ -151,8 +174,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index,1); 
     index = raw.indexOf("\x07");
   }
-  //qDebug() << " - Fully Cleaned:" << raw;
-  
+
   incomplete = false;
   return raw;
 }
@@ -178,7 +200,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     //Adjust the slave side mode to RAW
     struct termios TSET;
     rc = tcgetattr(fds, &TSET); //read the current settings
-    cfmakeraw(&TSET); //set the RAW mode on the settings
+    cfmakesane(&TSET); //set the RAW mode on the settings ( cfmakeraw(&TSET); )
     tcsetattr(fds, TCSANOW, &TSET); //apply the changed settings
 
     //Change the controlling terminal in child thread to the slave PTY

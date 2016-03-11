@@ -40,6 +40,9 @@ public:
 	void writeQtKey(int key); //simplification function for handling special keys like arrows and such ( QKeyEvent()->key() )
 	QByteArray readTTY();
 
+	//Setup the terminal size (characters and pixels)
+	void setTerminalSize(QSize chars, QSize pixels);
+
 	//Status update checks
 	bool isOpen();
 	

@@ -49,6 +49,11 @@ void TerminalWidget::UpdateText(){
   QByteArray buffer = PROC->readTTY();
   QString text = QString(buffer);
     text.replace("\r\n","\n");
+  //Special Cursor handling
+  while(text.startsWith("\b")){
+    this->textCursor().deletePreviousChar();
+    text = text.remove(0,1);
+  }
   this->insertPlainText(text);
   //adjust the scrollbar as needed
   this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
@@ -84,4 +89,15 @@ void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
 
 void TerminalWidget::contextMenuEvent(QContextMenuEvent *ev){
   Q_UNUSED(ev);	
+}
+
+void TerminalWidget::resizeEvent(QResizeEvent *ev){
+  if(!PROC->isOpen()){ return; }
+  QSize pix = ev->size(); //pixels
+  QSize chars; 
+    chars.setWidth( pix.width()/this->fontMetrics().width("W") );
+    chars.setHeight( pix.height()/this->fontMetrics().lineSpacing() );
+  
+  PROC->setTerminalSize(chars,pix);
+  QTextEdit::resizeEvent(ev);
 }

@@ -9,6 +9,7 @@
 
 #include <QTextEdit>
 #include <QKeyEvent>
+#include <QResizeEvent>
 #include <QSocketNotifier>
 #include <QTimer>
 
@@ -40,6 +41,7 @@ protected:
 	void mousePressEvent(QMouseEvent *ev);
 	void mouseDoubleClickEvent(QMouseEvent *ev);
 	void contextMenuEvent(QContextMenuEvent *ev);
+	void resizeEvent(QResizeEvent *ev);
 };
 
 #endif
