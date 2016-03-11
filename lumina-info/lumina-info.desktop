@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=lumina-info
-Icon=/usr/local/share/pixmaps/Lumina-DE.png
+Icon=Lumina-DE
 Terminal=false
 Type=Application
 StartupNotify=true
