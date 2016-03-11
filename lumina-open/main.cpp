@@ -240,7 +240,8 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
   }
   else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
-  else if(isUrl){ extension = "x-scheme-handler/"+inFile.section("://",0,0); } //webbrowser"; }
+  else if(isUrl && inFile.contains("://") ){ extension = "x-scheme-handler/"+inFile.section("://",0,0); }
+  else if(isUrl && inFile.startsWith("www.")){ extension = "x-scheme-handler/http"; inFile.prepend("http://"); } //this catches partial (but still valid) URL's ("www.<something>" for instance)
   //qDebug() << "Input:" << inFile << isFile << isUrl << extension;
   //if not an application  - find the right application to open the file
   QString cmd;
