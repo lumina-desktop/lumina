@@ -75,7 +75,10 @@ void TTYProcess::writeQtKey(int key){
 	ba.append("\x1b[D\x1b[K");    
         break;
       case Qt::Key_Left:
+	ba.append("\x1b[D");
+        break;
       case Qt::Key_Right:
+	ba.append("\x1b[C");
         break;
       case Qt::Key_Up:
         ba.append("\x1b[A");
@@ -150,7 +153,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     index = raw.indexOf("\x1B]");
   }
 
-  // GENERIC ANSI CODES	
+  // GENERIC ANSI CODES ((Make sure the output is not cut off in the middle of a code)
   index = raw.indexOf("\x1B[");
   while(index>=0){
     //CURSOR MOVEMENT
@@ -162,10 +165,8 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
         end = i; //found the end of the control code
       }
     }
-    raw = raw.remove(index, 1+end); //control character +1 byte
-    index = raw.indexOf("\x1B[");
+    index = raw.indexOf("\x1B[",index+1); //now find the next one
   }
-  //qDebug() << " - Removed Color Codes:" << raw;
   
   // SYSTEM BELL
   index = raw.indexOf("\x07");

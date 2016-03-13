@@ -9,6 +9,13 @@
 //   to be used for terminal-like apps (shells) which directly modify the terminal output
 //   rather than stick to input/output channels for communication.
 //===========================================
+//  IMPLEMENTATION NOTE
+//======================
+// The process requires/uses ANSI control codes (\x1B[<something>) for special operations
+//    such as moving the cursor, erasing characters, etc..
+//  It is recommended that you pair this class with the graphical "TerminalWidget.h" class
+//    or some other ANSI-compatible display widget.
+//===========================================
 #ifndef _LUMINA_DESKTOP_UTILITIES_TERMINAL_TTY_PROCESS_WIDGET_H
 #define _LUMINA_DESKTOP_UTILITIES_TERMINAL_TTY_PROCESS_WIDGET_H
 

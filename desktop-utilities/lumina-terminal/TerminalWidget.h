@@ -25,9 +25,11 @@ public:
 
 private:
 	TTYProcess *PROC;
-	//QProcess *PROC;
 
 	QSocketNotifier *sn;
+	
+	void applyData(QByteArray data); //overall data parsing
+	void applyANSI(QByteArray code); //individual code application
 
 private slots:
 	void UpdateText();
