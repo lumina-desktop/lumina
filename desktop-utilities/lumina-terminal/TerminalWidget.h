@@ -28,8 +28,11 @@ private:
 
 	QSocketNotifier *sn;
 	
+	//Incoming Data parsing
 	void applyData(QByteArray data); //overall data parsing
 	void applyANSI(QByteArray code); //individual code application
+	//Outgoing Data parsing
+	void sendKeyPress(int key);
 
 private slots:
 	void UpdateText();

@@ -67,7 +67,7 @@ void TTYProcess::writeTTY(QByteArray output){
   ::write(ttyfd, output.data(), output.size());
 }
 
-void TTYProcess::writeQtKey(int key){
+/*void TTYProcess::writeQtKey(int key){
     QByteArray ba;
     //Check for special keys
     switch(key){
@@ -90,7 +90,7 @@ void TTYProcess::writeQtKey(int key){
    
   //qDebug() << "Forward Input:" << txt << ev->key() << ba;
   if(!ba.isEmpty()){ this->writeTTY(ba); }
-}
+}*/
 
 QByteArray TTYProcess::readTTY(){
   QByteArray BA;

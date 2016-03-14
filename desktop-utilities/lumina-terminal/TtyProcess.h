@@ -44,7 +44,6 @@ public:
 
 	//Primary read/write functions
 	void writeTTY(QByteArray output);
-	void writeQtKey(int key); //simplification function for handling special keys like arrows and such ( QKeyEvent()->key() )
 	QByteArray readTTY();
 
 	//Setup the terminal size (characters and pixels)

@@ -84,11 +84,13 @@ void TerminalWidget::applyANSI(QByteArray code){
   }else if(code.endsWith("C")){ //Move Forward
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
-    this->textCursor().movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, num);
+    for(int i=0; i<num; i++){ this->moveCursor(QTextCursor::Right, QTextCursor::MoveAnchor); }
+    //this->textCursor().movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, num);
   }else if(code.endsWith("D")){ //Move Back
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
-    this->textCursor().movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, num);
+    for(int i=0; i<num; i++){ this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor); }
+    //this->textCursor().movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, num);
   }else if(code.endsWith("E")){ //Move Next/down Lines (go to beginning)
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
@@ -116,6 +118,35 @@ void TerminalWidget::applyANSI(QByteArray code){
   }
 }
 
+//Outgoing Data parsing
+void TerminalWidget::sendKeyPress(int key){
+  QByteArray ba;
+  //Check for special keys
+  switch(key){
+    case Qt::Key_Delete:
+	ba.append("\x7F");
+        break;
+    case Qt::Key_Backspace:
+	ba.append("\x08");    
+        break;
+    case Qt::Key_Left:
+	ba.append("\x1b[D");
+        break;
+    case Qt::Key_Right:
+	ba.append("\x1b[C");
+        break;
+    case Qt::Key_Up:
+        ba.append("\x1b[A");
+        break;
+    case Qt::Key_Down:
+        ba.append("\x1b[B");
+        break;
+  }
+   
+  //qDebug() << "Forward Input:" << txt << ev->key() << ba;
+  if(!ba.isEmpty()){ PROC->writeTTY(ba); }
+}
+
 // ==================
 //    PRIVATE SLOTS
 // ==================
@@ -138,7 +169,7 @@ void TerminalWidget::ShellClosed(){
 void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 	
   if(ev->text().isEmpty() || ev->text()=="\b" ){
-    PROC->writeQtKey(ev->key());
+    sendKeyPress(ev->key());
   }else{
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
     PROC->writeTTY(ba);
