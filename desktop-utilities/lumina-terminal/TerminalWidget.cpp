@@ -48,9 +48,9 @@ void TerminalWidget::applyData(QByteArray data){
   //Iterate through the data and apply it when possible
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
-      //Simple Backspace
-      this->textCursor().deletePreviousChar();
-	    
+      //Simple cursor backward 1 (NOT backspace in this context!!)
+      //this->textCursor().deletePreviousChar();
+      this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
     }else if( data.at(i)=='\x1B' ){
       //ANSI Control Code start
       //Look for the end of the code
@@ -59,10 +59,14 @@ void TerminalWidget::applyData(QByteArray data){
         if(QChar(data.at(i+j)).isLetter()){ end = j; }
       }
       if(end<0){ return; } //skip everything else - no end to code found
-      applyANSI(data.mid(i, end));
+      applyANSI(data.mid(i+1, end));
       i+=end; //move the final loop along - already handled these bytes
       
     }else{
+      //Special Check: if inserting text within a line, clear the rest of this line first
+      if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
+        applyANSI("[K");
+      }
       //Plaintext character - just add it here
       this->insertPlainText( QChar(data.at(i)) );
     }
@@ -72,6 +76,7 @@ void TerminalWidget::applyData(QByteArray data){
 
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
+  //qDebug() << "Handle ANSI:" << code;
   //CURSOR MOVEMENT
   if( code.endsWith("A") ){ //Move Up
     int num = 1;
@@ -103,7 +108,7 @@ void TerminalWidget::applyANSI(QByteArray code){
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     this->textCursor().setPosition(num);
-  }else if(code.endsWith("H")){ //Move to specific position (row/column)
+  }else if(code.endsWith("H") || code.endsWith("f") ){ //Move to specific position (row/column)
     int mid = code.indexOf(";");
     if(mid>0){
       int numR, numC; numR = numC = 1;
@@ -113,8 +118,27 @@ void TerminalWidget::applyANSI(QByteArray code){
       qDebug() << "Set Text Position (absolute):" << "Row:" << numR << "Col:" << numC;
       // TO-DO
     }
+    
+   // DISPLAY CLEAR CODES
   }else if(code.endsWith("J")){ //ED - Erase Display
     
+  }else if(code.endsWith("K")){ //EL - Erase in Line
+    int num = 0;
+    if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
+    qDebug() << "Erase Number" << num;
+    //Now determine what should be cleared based on code
+    if(num==1){
+	    
+    }else if(num==2){
+	    
+    }else{
+      //Clear from current cursor to end of line
+      for(int i=this->textCursor().position(); i<this->document()->characterCount()+1; i++){
+      //while(this->document()->characterAt(this->textCursor().position())!=QChar('\n') && this->textCursor().position() < this->document()->characterCount()){
+	if(this->document()->characterAt(this->textCursor().position())=='\n'){ break; }
+        this->textCursor().deleteChar();
+      }
+    }
   }
 }
 
