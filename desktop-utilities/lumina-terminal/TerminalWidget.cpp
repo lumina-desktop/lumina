@@ -128,13 +128,22 @@ void TerminalWidget::applyANSI(QByteArray code){
     qDebug() << "Erase Number" << num;
     //Now determine what should be cleared based on code
     if(num==1){
-	    
+      //Clear from current cursor to beginning of line
+      for(int i=this->textCursor().position(); i>=0; i--){
+	if(this->document()->characterAt(this->textCursor().position())=='\n'){ break; }
+        this->textCursor().deleteChar();
+      }	    
     }else if(num==2){
-	    
+      //Clear the entire line
+      //  rewind the starting point to the beginning of the line
+      int start = this->document()->find("\n", this->textCursor().position(), QTextDocument::FindBackward).position();
+      for(int i=start+1; i<this->document()->characterCount()+1; i++){
+	if(this->document()->characterAt(this->textCursor().position())=='\n'){ break; }
+        this->textCursor().deleteChar();
+      }
     }else{
       //Clear from current cursor to end of line
       for(int i=this->textCursor().position(); i<this->document()->characterCount()+1; i++){
-      //while(this->document()->characterAt(this->textCursor().position())!=QChar('\n') && this->textCursor().position() < this->document()->characterCount()){
 	if(this->document()->characterAt(this->textCursor().position())=='\n'){ break; }
         this->textCursor().deleteChar();
       }
