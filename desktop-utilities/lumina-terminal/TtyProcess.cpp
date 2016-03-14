@@ -1,5 +1,7 @@
 #include "TtyProcess.h"
 
+#include <QDir>
+
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
   sn = 0;
@@ -11,7 +13,9 @@ TTYProcess::~TTYProcess(){
 }
 		
 // === PUBLIC ===
-bool TTYProcess::startTTY(QString prog, QStringList args){
+bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
+  if(workdir=="~"){ workdir = QDir::homePath(); }
+  QDir::setCurrent(workdir);
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
   char *cargs[args.length()+2];
@@ -88,7 +92,8 @@ QByteArray TTYProcess::readTTY(){
     fragBA = BA; 
     return readTTY();
   }else{
-    qDebug() << "Read Data:" << BA;
+    //qDebug() << "Read Data:" << BA;
+    qDebug() << ".."; //Crashes when the debug line is removed - not sure why....
     return BA;
   }
 }

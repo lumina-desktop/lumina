@@ -14,7 +14,7 @@
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
   this->setLineWrapMode(QTextEdit::WidgetWidth);
-  this->setStyleSheet("");
+  //this->setStyleSheet("");
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   CFMT = this->textCursor().charFormat(); //current format
   
@@ -22,7 +22,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   PROC = new TTYProcess(this);
   qDebug() << "Open new TTY";
   //int fd;
-  bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh") );
+  bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh"), QStringList(), dir);
   qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
 
@@ -48,7 +48,6 @@ void TerminalWidget::applyData(QByteArray data){
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
       //Simple cursor backward 1 (NOT backspace in this context!!)
-      //this->textCursor().deletePreviousChar();
       this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
     }else if( data.at(i)=='\x1B' ){
       //ANSI Control Code start
@@ -67,7 +66,7 @@ void TerminalWidget::applyData(QByteArray data){
         applyANSI("[K");
       }
       //Plaintext character - just add it here
-      //qDebug() << "Insert Text:" << data.at(i) << CFMT.fontWeight();
+      //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
       this->textCursor().insertText( QChar(data.at(i)), CFMT );
     }
     
@@ -215,35 +214,48 @@ void TerminalWidget::applyANSIColor(int code){
   else if(code==29){ CFMT.setFontStrikeOut(false); } //Not Crossed out
   else if(code>=30 && code<=39){
     //Set the font color
-    QBrush brush = CFMT.foreground();
-    if(code==30){ brush.setColor(Qt::black); }
-    else if(code==31){ brush.setColor(Qt::red); }
-    else if(code==32){ brush.setColor(Qt::green); }
-    else if(code==33){ brush.setColor(Qt::yellow); }
-    else if(code==34){ brush.setColor(Qt::blue); }
-    else if(code==35){ brush.setColor(Qt::magenta); }
-    else if(code==36){ brush.setColor(Qt::cyan); }
-    else if(code==37){ brush.setColor(Qt::white); }
+   QColor color;
+    if(code==30){color=QColor(Qt::black); }
+    else if(code==31){ color=QColor(Qt::red); }
+    else if(code==32){ color=QColor(Qt::green); }
+    else if(code==33){ color=QColor(Qt::yellow); }
+    else if(code==34){ color=QColor(Qt::blue); }
+    else if(code==35){ color=QColor(Qt::magenta); }
+    else if(code==36){ color=QColor(Qt::cyan); }
+    else if(code==37){ color=QColor(Qt::white); }
     //48: Special extended color setting (unsupported)
-    else if(code==39){ brush.setColor( DEFFMT.foreground().color() ); } //reset to default color
+    else if(code==39){ color= DEFFMT.foreground().color(); } //reset to default color
+QBrush brush = CFMT.background();
+    color.setAlpha(255); //fully opaque
+    brush.setColor(color);
     CFMT.setForeground( brush );
   }
   else if(code>=40 && code<=49){
     //Set the font color
-    QBrush brush = CFMT.background();
-    if(code==40){ brush.setColor(Qt::black); }
-    else if(code==41){ brush.setColor(Qt::red); }
-    else if(code==42){ brush.setColor(Qt::green); }
-    else if(code==43){ brush.setColor(Qt::yellow); }
-    else if(code==44){ brush.setColor(Qt::blue); }
-    else if(code==45){ brush.setColor(Qt::magenta); }
-    else if(code==46){ brush.setColor(Qt::cyan); }
-    else if(code==47){ brush.setColor(Qt::white); }
+   QColor color;
+    if(code==40){color=QColor(Qt::black); }
+    else if(code==41){ color=QColor(Qt::red); }
+    else if(code==42){ color=QColor(Qt::green); }
+    else if(code==43){ color=QColor(Qt::yellow); }
+    else if(code==44){ color=QColor(Qt::blue); }
+    else if(code==45){ color=QColor(Qt::magenta); }
+    else if(code==46){ color=QColor(Qt::cyan); }
+    else if(code==47){ color=QColor(Qt::white); }
     //48: Special extended color setting (unsupported)
-    else if(code==49){ brush.setColor( DEFFMT.background().color() ); } //reset to default color
+    else if(code==49){ color= DEFFMT.background().color(); } //reset to default color
+    QBrush brush = CFMT.background();
+    color.setAlpha(255); //fully opaque
+    brush.setColor(color);
     CFMT.setBackground( brush );
   }
-  
+  //50: Reserved
+  //51: Framed
+  //52: Encircled
+  else if(code==53){ CFMT.setFontOverline(true); } //enable overline
+  //54: Not framed/circled (51/52)
+  else if(code==55){ CFMT.setFontOverline(false); } //disable overline
+  //56-59: Reserved
+  //60+: Not generally supported (special code for particular terminals such as aixterm)
 }
 
 //Outgoing Data parsing
@@ -308,7 +320,11 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){
   this->setFocus();
-  Q_UNUSED(ev);
+  if(ev->button()==Qt::RightButton){
+    QTextEdit::mousePressEvent(ev);	  
+  }else{
+    Q_UNUSED(ev);
+  }
 }
 
 void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
@@ -317,6 +333,8 @@ void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
 
 void TerminalWidget::contextMenuEvent(QContextMenuEvent *ev){
   Q_UNUSED(ev);	
+  //QTextEdit::contextMenuEvent(ev);
+  //Need to implement a custom context menu
 }
 
 void TerminalWidget::resizeEvent(QResizeEvent *ev){

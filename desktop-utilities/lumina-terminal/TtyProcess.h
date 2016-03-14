@@ -39,7 +39,7 @@ public:
 	TTYProcess(QObject *parent = 0);
 	~TTYProcess();
 
-	bool startTTY(QString prog, QStringList args = QStringList());
+	bool startTTY(QString prog, QStringList args = QStringList(), QString workdir = "~");
 	void closeTTY();
 
 	//Primary read/write functions
