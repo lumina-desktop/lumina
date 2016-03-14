@@ -63,38 +63,13 @@ void TTYProcess::closeTTY(){
 }
 
 void TTYProcess::writeTTY(QByteArray output){
-  qDebug() << "Write:" << output;
+  //qDebug() << "Write:" << output;
   ::write(ttyfd, output.data(), output.size());
 }
 
-/*void TTYProcess::writeQtKey(int key){
-    QByteArray ba;
-    //Check for special keys
-    switch(key){
-      case Qt::Key_Backspace:
-	ba.append("\x1b[D\x1b[K");    
-        break;
-      case Qt::Key_Left:
-	ba.append("\x1b[D");
-        break;
-      case Qt::Key_Right:
-	ba.append("\x1b[C");
-        break;
-      case Qt::Key_Up:
-        ba.append("\x1b[A");
-        break;
-      case Qt::Key_Down:
-        ba.append("\x1b[B");
-        break;
-  }
-   
-  //qDebug() << "Forward Input:" << txt << ev->key() << ba;
-  if(!ba.isEmpty()){ this->writeTTY(ba); }
-}*/
-
 QByteArray TTYProcess::readTTY(){
   QByteArray BA;
-  qDebug() << "Read TTY";
+  //qDebug() << "Read TTY";
   if(sn==0){ return BA; } //not setup yet
   char buffer[64];
   ssize_t rtot = read(sn->socket(),&buffer,64);
@@ -129,7 +104,7 @@ void TTYProcess::setTerminalSize(QSize chars, QSize pixels){
   if( ioctl(ttyfd, TIOCSWINSZ, &ws) ){
     qDebug() << "Error settings terminal size";
   }else{
-    qDebug() <<"Set Terminal Size:" << pixels << chars;
+    //qDebug() <<"Set Terminal Size:" << pixels << chars;
   }
 }
 

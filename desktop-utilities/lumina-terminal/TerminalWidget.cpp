@@ -14,8 +14,9 @@
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
   this->setLineWrapMode(QTextEdit::WidgetWidth);
-  //this->setReadOnly(true); //the key event catch will do the process/widget forwarding
-  //this->setPlainText("WARNING: This utility is still incomplete and does not function properly yet");
+  this->setStyleSheet("");
+  DEFFMT = this->textCursor().charFormat(); //save the default structure for later
+  CFMT = this->textCursor().charFormat(); //current format
   
   //Create/open the TTY port
   PROC = new TTYProcess(this);
@@ -43,8 +44,6 @@ void TerminalWidget::aboutToClose(){
 //          PRIVATE
 // ==================
 void TerminalWidget::applyData(QByteArray data){
-  //Quick global replacement (this widget reads both as newlines)
-  data = data.replace("\r\n","\n");
   //Iterate through the data and apply it when possible
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
@@ -62,13 +61,14 @@ void TerminalWidget::applyData(QByteArray data){
       applyANSI(data.mid(i+1, end));
       i+=end; //move the final loop along - already handled these bytes
       
-    }else{
+    }else if( data.at(i) != '\r' ) {
       //Special Check: if inserting text within a line, clear the rest of this line first
       if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
         applyANSI("[K");
       }
       //Plaintext character - just add it here
-      this->insertPlainText( QChar(data.at(i)) );
+      //qDebug() << "Insert Text:" << data.at(i) << CFMT.fontWeight();
+      this->textCursor().insertText( QChar(data.at(i)), CFMT );
     }
     
   } //end loop over data
@@ -77,6 +77,7 @@ void TerminalWidget::applyData(QByteArray data){
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
   //qDebug() << "Handle ANSI:" << code;
+	
   //CURSOR MOVEMENT
   if( code.endsWith("A") ){ //Move Up
     int num = 1;
@@ -121,11 +122,26 @@ void TerminalWidget::applyANSI(QByteArray code){
     
    // DISPLAY CLEAR CODES
   }else if(code.endsWith("J")){ //ED - Erase Display
-    
+    int num = 0;
+    if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
+    if(num==1){
+      //Clear from cursor to beginning of screen
+      for(int i=this->textCursor().position(); i>=0; i--){
+        this->textCursor().deletePreviousChar();
+      }
+    }else if(num==2){
+      //Clear the whole screen
+      this->clear();
+    }else{
+      //Clear from cursor to end of screen
+      for(int i=this->textCursor().position(); i<this->document()->characterCount()+1; i++){
+        this->textCursor().deleteChar();
+      } 
+    }	    
   }else if(code.endsWith("K")){ //EL - Erase in Line
     int num = 0;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
-    qDebug() << "Erase Number" << num;
+    //qDebug() << "Erase Number" << num;
     //Now determine what should be cleared based on code
     if(num==1){
       //Clear from current cursor to beginning of line
@@ -148,7 +164,86 @@ void TerminalWidget::applyANSI(QByteArray code){
         this->textCursor().deleteChar();
       }
     }
+    
+   //SCROLL MOVEMENT CODES 
+  }else if(code.endsWith("S")){ // SU - Scrolll Up
+	  
+  }else if(code.endsWith("T")){ // SD - Scroll Down
+	  
+	  
+  // GRAPHICS RENDERING
+  }else if(code.endsWith("m")){
+    //Format: "[<number>;<number>m" (no limit to sections separated by ";")
+    int start = 1;
+    int end = code.indexOf(";");
+    while(end>start){
+      applyANSIColor(code.mid(start, end-start).toInt());
+      //Now update the iterators and try again
+      start = end;
+      end = code.indexOf(";",start+1); //go to the next one
+    }
+    //Need the last section as well
+    end = code.size()-1;
+    if(end>start){ applyANSIColor(code.mid(start, end-start).toInt());}
+    else{ applyANSIColor(0); }
   }
+  
+  
+}
+
+void TerminalWidget::applyANSIColor(int code){
+  qDebug() << "Apply Color code:" << code;
+  if(code <=0){ CFMT = DEFFMT; } //Reset back to default
+  else if(code==1){  CFMT.setFontWeight(75); } //BOLD font
+  else if(code==2){ CFMT.setFontWeight(25); } //Faint font (smaller than normal by a bit)
+  else if(code==3){ CFMT.setFontWeight(75); } //Italic font
+  else if(code==4){ CFMT.setFontUnderline(true); } //Underline
+  //5-6: Blink text (unsupported)
+  //7: Reverse foreground/background (unsupported)
+  //8: Conceal (unsupported)
+  else if(code==9){ CFMT.setFontStrikeOut(true); } //Crossed out
+  //10-19: Change font family (unsupported)
+  //20: Fraktur Font (unsupported)
+  //21: Bold:off or Underline:Double (unsupported)
+  else if(code==22){ CFMT.setFontWeight(50); } //Normal weight
+  //23: Reset font (unsupported)
+  else if(code==24){ CFMT.setFontUnderline(false); } //disable underline
+  //25: Disable blinking (unsupported)
+  //26: Reserved
+  //27: Reset reversal (7) (unsupported)
+  //28: Reveal (cancel 8) (unsupported)
+  else if(code==29){ CFMT.setFontStrikeOut(false); } //Not Crossed out
+  else if(code>=30 && code<=39){
+    //Set the font color
+    QBrush brush = CFMT.foreground();
+    if(code==30){ brush.setColor(Qt::black); }
+    else if(code==31){ brush.setColor(Qt::red); }
+    else if(code==32){ brush.setColor(Qt::green); }
+    else if(code==33){ brush.setColor(Qt::yellow); }
+    else if(code==34){ brush.setColor(Qt::blue); }
+    else if(code==35){ brush.setColor(Qt::magenta); }
+    else if(code==36){ brush.setColor(Qt::cyan); }
+    else if(code==37){ brush.setColor(Qt::white); }
+    //48: Special extended color setting (unsupported)
+    else if(code==39){ brush.setColor( DEFFMT.foreground().color() ); } //reset to default color
+    CFMT.setForeground( brush );
+  }
+  else if(code>=40 && code<=49){
+    //Set the font color
+    QBrush brush = CFMT.background();
+    if(code==40){ brush.setColor(Qt::black); }
+    else if(code==41){ brush.setColor(Qt::red); }
+    else if(code==42){ brush.setColor(Qt::green); }
+    else if(code==43){ brush.setColor(Qt::yellow); }
+    else if(code==44){ brush.setColor(Qt::blue); }
+    else if(code==45){ brush.setColor(Qt::magenta); }
+    else if(code==46){ brush.setColor(Qt::cyan); }
+    else if(code==47){ brush.setColor(Qt::white); }
+    //48: Special extended color setting (unsupported)
+    else if(code==49){ brush.setColor( DEFFMT.background().color() ); } //reset to default color
+    CFMT.setBackground( brush );
+  }
+  
 }
 
 //Outgoing Data parsing

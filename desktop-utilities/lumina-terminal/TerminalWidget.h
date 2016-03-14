@@ -25,12 +25,13 @@ public:
 
 private:
 	TTYProcess *PROC;
+	QTextCharFormat DEFFMT, CFMT; //default/current text format
 
-	QSocketNotifier *sn;
-	
 	//Incoming Data parsing
 	void applyData(QByteArray data); //overall data parsing
 	void applyANSI(QByteArray code); //individual code application
+	void applyANSIColor(int code); //Add the designated color code to the  CFMT structure
+
 	//Outgoing Data parsing
 	void sendKeyPress(int key);
 
