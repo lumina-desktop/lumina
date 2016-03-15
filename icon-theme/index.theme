@@ -1,0 +1,31 @@
+[Icon Theme]
+Name=Lumina
+
+Comment=Creative Commons Attribution 4.0 International Public License
+
+DisplayDepth=32
+
+Inherits=hicolor
+
+Example=folder
+
+LinkOverlay=link
+LockOverlay=lockoverlay
+ShareOverlay=share
+ZipOverlay=zip
+
+DesktopDefault=scalable
+DesktopSizes=scalable
+ToolbarDefault=scalable
+ToolbarSizes=scalable
+MainToolbarDefault=scalable
+MainToolbarSizes=scalable
+SmallDefault=scalable
+SmallSizes=scalable
+PanelDefault=scalable
+PanelSizes=scalable
+DialogDefault=scalable
+DialogSizes=scalable
+
+Directories=scalable/actions, scalable/apps, scalable/categories, scalable/devices, scalable/emblems, scalable/mimetypes, scalable/places, scalable/special, scalable/status
+
