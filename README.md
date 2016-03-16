@@ -1,4 +1,4 @@
-lumina
+Lumina
 ======
 
 This is the official source tree for the Lumina Desktop Environment.
@@ -15,7 +15,7 @@ Latest Stable Versions
 ----
 Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
 
-Qt5 - 0.8.7 (Beta): Use the qt5/0.8.7 branch of the source tree to fetch this version.
+Qt5 - 0.8.8 (Beta): Use the qt5/0.8.8 branch of the source tree to fetch this version.
 
 The master branch is where all development is performed and tested before the next release version is branched off.
 
@@ -36,23 +36,28 @@ Bug Tracker: https://bugs.pcbsd.org/projects/pcbsd
 How to build from source
 ----
 1) Checkout the source repo to your local box (GitHub gives a few methods for this)
+* To update an exising checkout of the Lumina repo, run "git pull" while within the source directory. 
 
 2) In a terminal, change to the lumina repo directory (base dir, not one of the sub-projects)
 
 3) Run "qmake" on your local system to turn all the Qt project files (*.pro) into Makefiles
- - NOTE: If any of the Qt project files is modified (either by you or from updating the Lumina source tree), you will need to be sure to repeat this step to place those changes into your local Makefiles (otherwise you may experience strange build failures).
- - NOTE 2: The Qt5 version of qmake is located in /usr/local/lib/qt5/bin/qmake on FreeBSD, other OS's may have slightly different locations or names for qmake (such as qmake-qt5 for example)
- - NOTE 3: You can set a customized install PREFIX, LIBPREFIX, and QT5LIBDIR variables via the qmake command. PREFIX determines the base directory to install Lumina ("/usr/local" by default), LIBPREFIX determines the location to install/use libraries ("PREFIX/lib" by default), and QT5LIBDIR determines the location of the Qt5 libraries ("LIBPREFIX/qt5" by default). The syntax to set these custom values when running qmake is usually: "qmake PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix QT5LIBDIR=/main/qt5/library/dir"
+ * NOTE 1: The Qt5 version of qmake is located in /usr/local/lib/qt5/bin/qmake on FreeBSD, other OS's may have slightly different locations or names for qmake (such as qmake-qt5 for example)
+ * NOTE 2: Check the terminal output of the qmake command to ensure that your OS build settings were loaded properly. Here is an example:
 
- - (Linux Note) If there is a customized OS template for your particular distro (not the general "Linux" template), you will need to change into the libLumina subdirectory and run the "make-linux-distro.sh" script to modify the project file for the Lumina library after running "qmake" in step 3. Be sure to change back to the base Lumina directory before moving on to step 4.
-Example usage: "cd libLumina && ./make-linux-distro.sh MYDISTRO && cd .." (where there is a LuminaOS-MYDISTRO.cpp template available).
+> Project MESSAGE: Build OS Info: FreeBSD, amd64, FreeBSD 10.2-RELEASE-p11 #0: Thu Jan 14 15:48:17 UTC 2016 root@amd64-builder.pcbsd.org:/usr/obj/usr/src/sys/GENERIC
 
-- (Another Linux note) On Fedora (and related Red Hat and CentOS distributions) the
-system libraries are stored in a different directory than most other distributions use. For this reason, the "qmake" command must include the LIBPREFIX flag. On a 64-bit machine, the "qmake" command that should be used is "qmake LIBPREFIX=/lib64". The QTLIBDIR may need to be set too if lrelease is not in your usual path.
+> Project MESSAGE: Build Settings Loaded: FreeBSD
+
+ * Build Note: Compile-time options may be set at this time using qmake. The syntax for this is typically: `qmake CONFIG+="PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix DESTDIR=/some/temporary/packaging/dir"`. This is typically not needed unless you are setting up Lumina for automated build/packaging. If the automatically-detected build settings for your particular OS are invalid or need adjustment, please update the "OS-detect.pri" file as needed and send in your changes.
+  * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
+  * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
+  * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
+  * NO_I18N: (Recommended) Do not generate/install the translation files. If you wish to install translation files, please use the pcbsd/lumina-i18n repo for the full set (this repo only contains partial translations/templates).
+
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
 
 5) Run "make install" to install the Lumina desktop on your local system (requires admin/root privileges usually)
 
-6-optional) Run "make clean" to clean up all the temporary build files in the Lumina source tree.
+6-optional) Run "make distclean" to clean up all the build files in the Lumina source tree. (go back to step 3 later)
 
