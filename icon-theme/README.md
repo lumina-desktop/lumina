@@ -34,3 +34,8 @@ This theme is intended to be high-contrast and function on high-resolution syste
 * ~1249 icons total
 * ~300 are mimetype icons (low priority initially)
 * Many icons are slight variations of each other (arrows pointing different directions, alternate colors/emblems, etc..), so should be quite simple to submit icons in small groups (all single arrows, all double arrows, etc..)
+ 
+
+### Relevant Links to the FreeDesktop Specifications ###
+* Icon Theme Specification: https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
+* Icon Naming Specification: https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
