@@ -18,6 +18,8 @@ static int audiovolume = -1;
 QString LOS::OSName(){ return "FreeBSD"; }
 
 //OS-specific prefix(s)
+// NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
+QString LOS::LuminaShare(){ return (L_SHAREDIR+"/Lumina-DE/"); } //Install dir for Lumina share files
 QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 

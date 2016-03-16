@@ -20,14 +20,13 @@
 
 #include "LuminaUtils.h"
 
-// NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
 class LOS{
 public:
 	//Return the name of the OS being used
 	static QString OSName(); 
 
 	//OS-specific prefix(s)
-	static QString LuminaShare(){ return (L_SHAREDIR+"/Lumina-DE/"); } //Install dir for Lumina share files
+	static QString LuminaShare(); //Install dir for Lumina share files
 	static QString AppPrefix(); //Prefix for applications (/usr/local/ on FreeBSD)
 	static QString SysPrefix(); //Prefix for system (/usr/ on FreeBSD)
 
