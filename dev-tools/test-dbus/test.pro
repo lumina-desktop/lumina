@@ -4,6 +4,8 @@ QT  = core gui widgets
 #Just for consistency - remove the dbus module from this app build (in case "gui" or "widgets" pulled it in)
 QT -= dbus
 
+CONFIG += debug
+
 TARGET = test
 target.path = $${PWD}
 
