@@ -1,0 +1,31 @@
+#0  0x000000080318ed2a in thr_kill () from /lib/libc.so.7
+#1  0x000000080318ec96 in raise () from /lib/libc.so.7
+#2  0x000000080318d489 in abort () from /lib/libc.so.7
+#3  0x000000080d9eb6ef in ?? () from /usr/local/lib/libdbus-1.so.3
+#4  0x000000080d9e195f in ?? () from /usr/local/lib/libdbus-1.so.3
+#5  0x000000080d9e1edc in ?? () from /usr/local/lib/libdbus-1.so.3
+#6  0x000000080d9e9494 in ?? () from /usr/local/lib/libdbus-1.so.3
+#7  0x000000080d9ded1a in ?? () from /usr/local/lib/libdbus-1.so.3
+#8  0x000000080d9de17d in ?? () from /usr/local/lib/libdbus-1.so.3
+#9  0x000000080d9c6f80 in ?? () from /usr/local/lib/libdbus-1.so.3
+#10 0x000000080d9c43c2 in ?? () from /usr/local/lib/libdbus-1.so.3
+#11 0x000000080cb147c1 in QDBusConnection::connectToBus(QDBusConnection::BusType, QString const&) () from /usr/local/lib/libQt5DBus.so.5
+#12 0x000000080cb16bd7 in ?? () from /usr/local/lib/libQt5DBus.so.5
+#13 0x000000080cb16420 in QDBusConnection::sessionBus() ()
+   from /usr/local/lib/libQt5DBus.so.5
+#14 0x0000000809db4fd0 in ?? ()
+   from /usr/local/lib/qt5/plugins/platforms/libqxcb.so
+#15 0x0000000809dab08b in ?? ()
+   from /usr/local/lib/qt5/plugins/platforms/libqxcb.so
+#16 0x0000000809d7b4a8 in ?? ()
+   from /usr/local/lib/qt5/plugins/platforms/libqxcb.so
+#17 0x00000008014d2186 in QAccessible::updateAccessibility(QAccessibleEvent*)
+    () from /usr/local/lib/libQt5Gui.so.5
+#18 0x0000000800c40b3d in QAbstractButton::setText(QString const&) ()
+   from /usr/local/lib/libQt5Widgets.so.5
+#19 0x0000000000404216 in Ui_Test::retranslateUi (this=0x80a492490, 
+    Test=0x7fffffffea88) at ./ui_test.h:71
+#20 0x0000000000403e55 in Ui_Test::setupUi (this=0x80a492490, 
+    Test=0x7fffffffea88) at ./ui_test.h:63
+#21 0x000000000040367f in Test::Test (this=0x7fffffffea88) at ./test.h:22
+#22 0x00000000004034cf in main (argc=1, argv=0x7fffffffeb40) at main.cpp:7
