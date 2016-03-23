@@ -2,6 +2,7 @@
 Type=Link
 URL=https://webchat.freenode.net/?channels=%23lumina-desktop
 Icon=Lumina-DE
+Categories=System;
 OnlyShowIn=Lumina;
 Name=Community Support
 GenericName=Get Desktop Help
