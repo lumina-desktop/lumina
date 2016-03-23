@@ -104,6 +104,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   //This is used for generic plugins (QWidget-based)
   if(DEBUG){ qDebug() << "Adding Desktop Plugin:" << plugID; }
   LDPlugin *plug = NewDP::createPlugin(plugID, this);
+    if(plug==0){ return; } //invalid plugin
     plug->setWhatsThis(plugID);
   //Now get the geometry for the plugin
   QRect geom = plug->loadPluginGeometry(); //in pixel coords
