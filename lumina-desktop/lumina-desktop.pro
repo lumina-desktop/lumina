@@ -70,7 +70,11 @@ fluxconf.path = $${L_SHAREDIR}/Lumina-DE/
 wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
 			wallpapers/Lumina_Wispy_green.jpg \
 			wallpapers/Lumina_Wispy_purple.jpg \
-			wallpapers/Lumina_Wispy_red.jpg
+			wallpapers/Lumina_Wispy_red.jpg \
+			wallpapers/Lumina_Wispy_blue-grey.jpg \
+			wallpapers/Lumina_Wispy_blue-grey-zoom.jpg \
+			wallpapers/Lumina_Wispy_grey-blue.jpg \
+			wallpapers/Lumina_Wispy_grey-blue-zoom.jpg 
 wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
 
 
