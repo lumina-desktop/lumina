@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2016, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -13,28 +13,31 @@
 //can't read xbrightness settings - assume invalid until set
 static int screenbrightness = -1;
 
-QString LOS::OSName(){ return "Linux"; }
+QString LOS::OSName(){ return "Gentoo Linux"; }
 
 //OS-specific prefix(s)
 // NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
 QString LOS::LuminaShare(){ return (L_SHAREDIR+"/Lumina-DE/"); } //Install dir for Lumina share files
 QString LOS::AppPrefix(){ return "/usr/"; } //Prefix for applications
-QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
+QString LOS::SysPrefix(){ return "/"; } //Prefix for system
 
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
-QString LOS::AppStoreShortcut(){ return ""; } //graphical app/pkg manager
+QString LOS::AppStoreShortcut(){ return LOS::AppPrefix() + "/share/applications/porthole.desktop"; } //graphical app/pkg manager
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
-    //Returns: QStringList[<type>::::<filesystem>::::<path>]
-      //Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]
-  QStringList devs = LUtils::getCmdOutput("mount");
+  /* Returns: QStringList[<type>::::<filesystem>::::<path>]
+     Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]
+     df is much better for this than mount, because it skips
+     all non-physical devices (like bind-mounts from schroot)
+     so they are not listed in lumina-fm */
+  QStringList devs = LUtils::getCmdOutput("df --output=source,fstype,target");
   //Now check the output
   for(int i=0; i<devs.length(); i++){
     if(devs[i].startsWith("/dev/")){
       devs[i] = devs[i].simplified();
-      QString type = devs[i].section(" ",0,0);
+      QString type = devs[i].section(" on ",0,0);
       type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
       if(type.startsWith("sd") || type.startsWith("nvme"){ type = "HDRIVE"; }
@@ -42,7 +45,7 @@ QStringList LOS::ExternalDevicePaths(){
       else if(type.contains("mapper")){ type="LVM"; }
       else{ type = "UNKNOWN"; }
       //Now put the device in the proper output format
-      devs[i] = type+"::::"+devs[i].section(" ",4,4)+"::::"+devs[i].section(" ",2,2);
+      devs[i] = type + "::::" + devs[i].section(" ",1,1) + "::::" + devs[i].section(" ",2,2);
     }else{
       //invalid device - remove it from the list
       devs.removeAt(i);
@@ -98,16 +101,19 @@ QString info = LUtils::getCmdOutput("amixer get Master").join("").simplified();;
   }
   return out;
 
-
 }
 
 //Set the current volume
 void LOS::setAudioVolume(int percent){
   if(percent<0){percent=0;}
   else if(percent>100){percent=100;}
+  // QString info = "amixer -c 0 sset Master,0 " + QString::number(percent) + "%";
   QString info = "amixer set Master " + QString::number(percent) + "%";
-  //Run Command
-  LUtils::runCmd(info);
+  if(!info.isEmpty()){
+    //Run Command
+    LUtils::runCmd(info);
+  }
+
 }
 
 //Change the current volume a set amount (+ or -)
@@ -134,7 +140,9 @@ void LOS::startMixerUtility(){
 
 //Check for user system permission (shutdown/restart)
 bool LOS::userHasShutdownAccess(){
-  return true; //not implemented yet
+  return QProcess::startDetached("dbus-send --system --print-reply=literal \
+  --type=method_call --dest=org.freedesktop.login1 \
+  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanPowerOff");
 }
 
 //Check for whether the system is safe to power off (no updates being perfomed)
@@ -144,22 +152,30 @@ bool LOS::systemPerformingUpdates(){
 
 //System Shutdown
 void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -P -h now");
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.PowerOff boolean:true");
 }
 
 //System Restart
 void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -r now");
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.Reboot boolean:true");
 }
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  return false;
+  return QProcess::startDetached("dbus-send --system --print-reply=literal \
+  --type=method_call --dest=org.freedesktop.login1 \
+  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanSuspend");
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-
+  QProcess::startDetached("dbus-send --system --print-reply \
+  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
+  org.freedesktop.login1.Manager.Suspend boolean:true");
 }
 
 //Battery Availability
@@ -219,27 +235,66 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
-  QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
+  QStringList mountInfo = LUtils::getCmdOutput("df -h \"" + dir + "\"");
   QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  //we take the 5th word on the 2 line
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty) + " used";
+  //output: 200G of 400G available on /mount/point
+  QString capacity = mountInfo[1].section(" ",3,3, skipEmpty) + " of " + mountInfo[1].section(" ",1,1, skipEmpty) + " available on " +  mountInfo[1].section(" ",5,5, skipEmpty);
   return capacity;
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
-  return QStringList(); //not implemented yet
+  QStringList temp = LUtils::getCmdOutput("acpi -t").filter("degrees");
+  for(int i=0; i<temp.length(); i++){
+    if(temp[i].startsWith("Thermal")){
+      temp[i] = temp[i].section(" ", 4, 6);
+    }else{
+      temp.removeAt(i); i--;
+    }
+  }
+  if(temp.isEmpty()) {
+    temp << "Not available";
+  }
+  return temp;
 }
 
 int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)
-  return -1; //not implemented yet
+  QStringList info = LUtils::getCmdOutput("top -bn1").filter("Cpu(s)");
+  if(info.isEmpty()){ return -1; }
+  QString idle = info.first().section(" ", 7, 7, QString::SectionSkipEmpty);
+  if(idle.isEmpty()){ return -1; }
+  else{
+    return (100 - idle.toDouble());
+  }
 }
 
 int LOS::MemoryUsagePercent(){
-  return -1; //not implemented yet
+  QStringList mem = LUtils::getCmdOutput("top -bn1").filter("Mem :");
+  if(mem.isEmpty()){ return -1; }
+  double fB = 0; //Free Bytes
+  double uB = 0; //Used Bytes
+  fB = mem.first().section(" ", 5, 5, QString::SectionSkipEmpty).toDouble();
+  uB = mem.first().section(" ", 7, 7, QString::SectionSkipEmpty).toDouble();
+  double per = (uB/(fB+uB)) * 100.0;
+  return qRound(per);
 }
 
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
-  return QStringList(); //not implemented yet
-}
+  QStringList info = LUtils::getCmdOutput("iostat -dx -N");
+  if(info.length()<3){ return QStringList(); } //nothing from command
+  QStringList labs = info[1].split(" ",QString::SkipEmptyParts);
+  QStringList out;
+  QString fmt = "%1: %2 %3";
+  for(int i=2; i<info.length(); i++){ //skip the first two lines, just labels
+    info[i].replace("\t"," ");
+    if(info[i].startsWith("Device:")){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
+    else{
+      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device
+      if(data.length()>2 && labs.length()>2){
+        out << fmt.arg(data[0], data[3]+" "+labs[3], data[4]+" "+labs[4]);
+      }
+    }
+  }
 
+  return out;
+}
 #endif
