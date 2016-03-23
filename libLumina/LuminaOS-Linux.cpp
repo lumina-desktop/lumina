@@ -37,7 +37,7 @@ QStringList LOS::ExternalDevicePaths(){
       QString type = devs[i].section(" ",0,0);
       type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
-      if(type.startsWith("sd")){ type = "HDRIVE"; }
+      if(type.startsWith("sd") || type.startsWith("nvme"){ type = "HDRIVE"; }
       else if(type.startsWith("sr")){ type="DVD"; }
       else if(type.contains("mapper")){ type="LVM"; }
       else{ type = "UNKNOWN"; }

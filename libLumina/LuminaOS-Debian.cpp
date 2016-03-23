@@ -40,7 +40,7 @@ QStringList LOS::ExternalDevicePaths(){
       QString type = devs[i].section(" on ",0,0);
       type.remove("/dev/");
       //Determine the type of hardware device based on the dev node
-      if(type.startsWith("sd")){ type = "HDRIVE"; }
+      if(type.startsWith("sd") || type.startsWith("nvme"){ type = "HDRIVE"; }
       else if(type.startsWith("sr")){ type="DVD"; }
       else if(type.contains("mapper")){ type="LVM"; }
       else{ type = "UNKNOWN"; }
@@ -288,7 +288,7 @@ QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for ea
     info[i].replace("\t"," ");
     if(info[i].startsWith("Device:")){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
     else{
-      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device 
+      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device
       if(data.length()>2 && labs.length()>2){
         out << fmt.arg(data[0], data[3]+" "+labs[3], data[4]+" "+labs[4]);
       }
