@@ -51,7 +51,7 @@ private slots:
 	}
 	void saveScreenshot();
 	void quicksave();
-
+        void editScreenshot();
 	void startScreenshot();
 
 
