@@ -30,7 +30,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionquicksave, SIGNAL(triggered()), this, SLOT(quicksave()) );
   connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
   connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
-
+  connect(ui->actionEdit, SIGNAL(triggered()), this, SLOT(editScreenshot()) );
 
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("LuminaDE", "lumina-screenshot",this);
@@ -55,7 +55,7 @@ void MainUI::setupIcons(){
   ui->actionquicksave->setIcon( LXDG::findIcon("document-save","") );
   ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
   ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
-
+  ui->actionEdit->setIcon( LXDG::findIcon("edit-cut","") );
 }
 
 //==============
@@ -78,7 +78,11 @@ void MainUI::quicksave(){
    cpic.save(path, "png");
 }
 
-
+void MainUI::editScreenshot(){
+    QString tmppath = QString("/tmp/screenshot.png");
+    cpic.save(tmppath, "png");
+    QProcess::startDetached("gimp /tmp/screenshot.png ");
+}
 
 void MainUI::startScreenshot(){
   if( !getWindow() ){ return; }
