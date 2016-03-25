@@ -70,12 +70,8 @@ void MainUI::saveScreenshot(){
 }
 void MainUI::quicksave(){
     QString savedir = QDir::homePath() + "/Pictures/";
-    QDate date = QDate::currentDate();
-    QString dateString = date.toString();
-    QTime time = QTime::currentTime();
-    QString timeString = time.toString();
-    QString path = savedir + QString("Screenshot-[%1 - %2].png").arg(dateString).arg(timeString);
-   cpic.save(path, "png");
+    QString path = savedir + QString( "Screenshot-%1.png" ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") );
+    cpic.save(path, "png");
 }
 
 void MainUI::editScreenshot(){
