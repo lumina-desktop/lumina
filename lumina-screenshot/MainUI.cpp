@@ -77,7 +77,7 @@ void MainUI::quicksave(){
 void MainUI::editScreenshot(){
     QString tmppath = QString("/tmp/screenshot.png");
     cpic.save(tmppath, "png");
-    QProcess::startDetached("gimp /tmp/screenshot.png ");
+   QProcess::startDetached("lumina-open /tmp/screenshot.png");
 }
 
 void MainUI::startScreenshot(){
