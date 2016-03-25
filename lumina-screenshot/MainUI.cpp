@@ -27,8 +27,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 
   //Setup the connections
   connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
+  connect(ui->actionquicksave, SIGNAL(triggered()), this, SLOT(quicksave()) );
   connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
   connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
+  connect(ui->actionEdit, SIGNAL(triggered()), this, SLOT(editScreenshot()) );
 
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("LuminaDE", "lumina-screenshot",this);
@@ -49,10 +51,11 @@ MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  this->setWindowIcon( LXDG::findIcon("camera-web","") );
   ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
+  ui->actionquicksave->setIcon( LXDG::findIcon("document-save","") );
   ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
   ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
+  ui->actionEdit->setIcon( LXDG::findIcon("edit-cut","") );
 }
 
 //==============
@@ -64,6 +67,17 @@ void MainUI::saveScreenshot(){
   if(!filepath.endsWith(".png")){ filepath.append(".png"); }
   cpic.save(filepath, "png");
   ppath = filepath;
+}
+void MainUI::quicksave(){
+    QString savedir = QDir::homePath() + "/Pictures/";
+    QString path = savedir + QString( "Screenshot-%1.png" ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") );
+    cpic.save(path, "png");
+}
+
+void MainUI::editScreenshot(){
+    QString tmppath = QString("/tmp/screenshot.png");
+    cpic.save(tmppath, "png");
+   QProcess::startDetached("lumina-open /tmp/screenshot.png");
 }
 
 void MainUI::startScreenshot(){
