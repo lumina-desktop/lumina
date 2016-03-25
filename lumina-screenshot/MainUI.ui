@@ -188,7 +188,11 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-
+  <action name="actionEdit">
+   <property name="text">
+    <string>Crop</string>
+   </property>
+  </action>
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
