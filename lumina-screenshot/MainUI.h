@@ -50,7 +50,10 @@ private slots:
 	  this->close();
 	}
 	void saveScreenshot();
+	void quicksave();
+
 	void startScreenshot();
+
 
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
