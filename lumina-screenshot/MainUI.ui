@@ -156,8 +156,10 @@
    </attribute>
    <addaction name="actionQuit"/>
    <addaction name="actionSave"/>
+   <addaction name="actionquicksave"/>
+   <addaction name="actionEdit"/>
    <addaction name="actionNew"/>
-  </widget>
+ </widget>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
@@ -170,6 +172,25 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionquicksave">
+   <property name="text">
+    <string>Quick Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Quick Save Screenshot</string>
+   </property>
+   <property name="statusTip">
+    <string>Quick Save Screenshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Crop</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -187,7 +208,7 @@
    <property name="statusTip">
     <string>Take new snapshot</string>
    </property>
-  </action>
+</action>
  </widget>
  <resources/>
  <connections/>
