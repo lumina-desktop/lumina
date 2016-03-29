@@ -16,7 +16,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ppath = QDir::homePath();
   QWidget *spacer = new QWidget();
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	ui->toolBar->insertWidget(ui->actionNew, spacer);
+	ui->toolBar->insertWidget(ui->actionQuit, spacer);
 	
   setupIcons();
   ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
