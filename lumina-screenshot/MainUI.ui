@@ -155,10 +155,10 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew"/>
-   <addaction name="actionQuit"/>
    <addaction name="actionSave"/>
    <addaction name="actionquicksave"/>
    <addaction name="actionEdit"/>
+   <addaction name="actionQuit"/>
  </widget>
   <action name="actionSave">
    <property name="text">
