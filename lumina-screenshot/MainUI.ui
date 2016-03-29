@@ -192,6 +192,9 @@
    <property name="text">
     <string>Edit</string>
    </property>
+   <property name="toolTip">
+    <string>Edit Screenshot</string>
+   </property>
   </action>
   <action name="actionQuit">
    <property name="text">
