@@ -185,7 +185,7 @@
     <string>Quick Save Screenshot</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionEdit">
