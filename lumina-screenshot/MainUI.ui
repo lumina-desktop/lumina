@@ -190,7 +190,7 @@
   </action>
   <action name="actionEdit">
    <property name="text">
-    <string>Crop</string>
+    <string>Edit</string>
    </property>
   </action>
   <action name="actionQuit">
