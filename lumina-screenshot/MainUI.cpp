@@ -55,7 +55,7 @@ void MainUI::setupIcons(){
   ui->actionquicksave->setIcon( LXDG::findIcon("document-save","") );
   ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
   ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
-  ui->actionEdit->setIcon( LXDG::findIcon("edit-cut","") );
+  ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
 }
 
 //==============
