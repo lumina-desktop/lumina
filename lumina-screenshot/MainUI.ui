@@ -218,7 +218,7 @@
     <string>Snap</string>
    </property>
    <property name="statusTip">
-    <string>Take new snapshot</string>
+    <string>Take new Screenshot</string>
    </property>
 </action>
  </widget>
