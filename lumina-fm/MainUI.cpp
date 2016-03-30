@@ -32,6 +32,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //Reset the UI to the previously used size (if possible)
 QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   if(!orig.isEmpty() && orig.isValid()){
+     //Make sure the old size is larger than the default size hint
+    if(orig.width() < this->sizeHint().width()){ orig.setWidth(this->sizeHint().width()); }
+    if(orig.height() < this->sizeHint().height()){ orig.setHeight(this->sizeHint().height()); }    
+ 
   //initialize the non-ui widgets
   if(DEBUG){ qDebug() << " - Tab Bar Setup"; }
   tabBar = new QTabBar(this);
