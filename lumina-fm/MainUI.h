@@ -162,7 +162,11 @@ signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 protected:
-	void resizeEvent(QResizeEvent*);
+	void closeEvent(QCloseEvent *ev){
+	  emit ClientClosed(this);
+	  QMainWindow::closeEvent(ev);
+	}
+	
 
 };
 
