@@ -32,10 +32,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //Reset the UI to the previously used size (if possible)
 QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   if(!orig.isEmpty() && orig.isValid()){
-     //Make sure the old size is larger than the default size hint
+    //Make sure the old size is larger than the default size hint
     if(orig.width() < this->sizeHint().width()){ orig.setWidth(this->sizeHint().width()); }
     if(orig.height() < this->sizeHint().height()){ orig.setHeight(this->sizeHint().height()); }    
- //Also ensure the old size is smaller than the current screen size
+    //Also ensure the old size is smaller than the current screen size
     QSize screen = QApplication::desktop()->availableGeometry(this).size();
     if(orig.width() > screen.width()){ orig.setWidth(screen.width()); }
     if(orig.height() > screen.height()){ orig.setHeight(screen.height()); }
