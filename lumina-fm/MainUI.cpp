@@ -30,11 +30,17 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     //syncTimer->setInterval(200); //1/5 second (collect as many signals/slots as necessary
     //syncTimer->setSingleShot(true);
   //Reset the UI to the previously used size (if possible)
-  if(DEBUG){ qDebug() << " - Reset window size"; }
-  int height = settings->value("geometry/height",-1).toInt();
-  if(height>100 && height <= QApplication::desktop()->availableGeometry(this).height()){ this->resize(this->width(), height); }
-  int width = settings->value("geometry/width",-1).toInt();
-  if(width>100 && width <= QApplication::desktop()->availableGeometry(this).width()){ this->resize(width, this->height() ); }
+QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
+  if(!orig.isEmpty() && orig.isValid()){
+    //Make sure the old size is larger than the default size hint
+    if(orig.width() < this->sizeHint().width()){ orig.setWidth(this->sizeHint().width()); }
+    if(orig.height() < this->sizeHint().height()){ orig.setHeight(this->sizeHint().height()); }    
+    //Also ensure the old size is smaller than the current screen size
+    QSize screen = QApplication::desktop()->availableGeometry(this).size();
+    if(orig.width() > screen.width()){ orig.setWidth(screen.width()); }
+    if(orig.height() > screen.height()){ orig.setHeight(screen.height()); }
+    //Now resize the window
+    this->resize(orig);
   //initialize the non-ui widgets
   if(DEBUG){ qDebug() << " - Tab Bar Setup"; }
   tabBar = new QTabBar(this);
