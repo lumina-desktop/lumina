@@ -26,8 +26,7 @@ void XCBEventFilter::setTrayDamageFlag(int flag){
 }
 
 //This function format taken directly from the Qt5.3 documentation
-bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE
-{
+bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *){
 	if(stopping){ return false; } //don't do any parsing
 	//qDebug() << "New Event";
 	if(eventType=="xcb_generic_event_t"){

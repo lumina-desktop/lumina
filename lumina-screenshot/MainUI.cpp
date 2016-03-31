@@ -16,7 +16,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ppath = QDir::homePath();
   QWidget *spacer = new QWidget();
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	ui->toolBar->insertWidget(ui->actionNew, spacer);
+	ui->toolBar->insertWidget(ui->actionQuit, spacer);
 	
   setupIcons();
   ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
@@ -55,7 +55,7 @@ void MainUI::setupIcons(){
   ui->actionquicksave->setIcon( LXDG::findIcon("document-save","") );
   ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
   ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
-  ui->actionEdit->setIcon( LXDG::findIcon("edit-cut","") );
+  ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
 }
 
 //==============

@@ -162,7 +162,15 @@ signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 protected:
-	void resizeEvent(QResizeEvent*);
+	void closeEvent(QCloseEvent *ev){
+	  emit ClientClosed(this);
+	  QMainWindow::closeEvent(ev);
+	}
+	void resizeEvent(QResizeEvent *ev){
+	  //Save the new size to the settings file for later
+	  settings->setValue("preferences/MainWindowSize", ev->size());
+	  QMainWindow::resizeEvent(ev); //just in case the window needs to see the event too
+	}
 
 };
 
