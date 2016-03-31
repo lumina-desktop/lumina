@@ -164,7 +164,6 @@ signals:
 protected:
 	void closeEvent(QCloseEvent *ev){
 	  emit ClientClosed(this);
-	  QMainWindow::closeEvent(ev);
 	}
 	void resizeEvent(QResizeEvent *ev){
 	  //Save the new size to the settings file for later
