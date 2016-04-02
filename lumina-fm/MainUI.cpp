@@ -918,8 +918,8 @@ void MainUI::CloseBrowser(QString ID){
 }
 // ======================
 
-void MainUI::resizeEvent(QResizeEvent *event){
-  //Save the new size internally
-  settings->setValue("geometry/height", event->size().height());
-  settings->setValue("geometry/width", event->size().width());
-}
+//void MainUI::resizeEvent(QResizeEvent *event){
+//  //Save the new size internally
+//  settings->setValue("geometry/height", event->size().height());
+//  settings->setValue("geometry/width", event->size().width());
+//}
