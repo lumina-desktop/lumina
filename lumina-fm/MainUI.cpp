@@ -41,6 +41,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
     if(orig.height() > screen.height()){ orig.setHeight(screen.height()); }
     //Now resize the window
     this->resize(orig);
+  }
   //initialize the non-ui widgets
   if(DEBUG){ qDebug() << " - Tab Bar Setup"; }
   tabBar = new QTabBar(this);
