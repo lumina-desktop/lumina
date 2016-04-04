@@ -916,10 +916,3 @@ void MainUI::CloseBrowser(QString ID){
     OpenDirs(QStringList() << QDir::homePath());
   }
 }
-// ======================
-
-//void MainUI::resizeEvent(QResizeEvent *event){
-//  //Save the new size internally
-//  settings->setValue("geometry/height", event->size().height());
-//  settings->setValue("geometry/width", event->size().width());
-//}
