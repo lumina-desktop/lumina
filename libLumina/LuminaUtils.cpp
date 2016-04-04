@@ -152,7 +152,7 @@ bool LUtils::isValidBinary(QString& bin){
 
 QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
   //Check the input terminal application (default/fallback - determined by calling application)
-  if(!LUtils::isValidBinary(term)){
+  //if(!LUtils::isValidBinary(term)){
     if(term.endsWith(".desktop")){
       //Pull the binary name out of the shortcut
       bool ok = false;
@@ -162,11 +162,12 @@ QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
     }else{
 	term = "xterm"; //fallback
     }
-  }
+  //}
   //Now create the calling command for the designated terminal
   // NOTE: While the "-e" routine is supposed to be universal, many terminals do not properly use it
   //  so add some special/known terminals here as necessary
   QString exec;
+  qWarning() << " - Reached terminal initialization" << term;
   if(term=="mate-terminal" || term=="lxterminal" || term=="gnome-terminal"){
     exec = term+" --working-directory=\""+dirpath+"\"";
   }else if(term=="xfce4-terminal"){
@@ -181,6 +182,7 @@ QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
       if(!LUtils::isValidBinary(shell)){ shell = "/bin/sh"; } //universal fallback for a shell
     exec = term + " -e \"cd " + dirpath + " && " + shell + " \" ";
   }
+  qDebug() << exec;
   return exec;
 }
 
