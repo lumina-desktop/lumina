@@ -17,7 +17,7 @@ TrayIcon::TrayIcon() : QSystemTrayIcon(){
   this->setContextMenu(new QMenu());
   ScreenMenu = new QMenu();
     connect(ScreenMenu, SIGNAL(triggered(QAction*)), this, SLOT(ChangeScreen(QAction*)) );
-  TERM = new TermWindow();
+  TERM = new TermWindow(settings);
     //Load the current settings
     TERM->setTopOfScreen(settings->value("TopOfScreen",true).toBool());
     TERM->setCurrentScreen(settings->value("OnScreen",0).toInt());

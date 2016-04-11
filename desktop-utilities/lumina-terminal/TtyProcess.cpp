@@ -1,6 +1,7 @@
 #include "TtyProcess.h"
 
 #include <QDir>
+#include <QProcessEnvironment>
 
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
@@ -16,6 +17,13 @@ TTYProcess::~TTYProcess(){
 bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+  setenv("TERM","lumina-terminal",1);
+  setenv("TERMCAP","",1); //see /etc/termcap as well
+  QStringList filter = env.keys().filter("XTERM");
+  for(int i=0; i<filter.length(); i++){ unsetenv(filter[i].toLocal8Bit().data()); }
+  //if(env.contains("TERM")){ unsetenv("TERM"); }
+  //else if(env.contains
   //Turn the program/arguments into C-compatible arrays
   char cprog[prog.length()]; strcpy(cprog, prog.toLocal8Bit().data());
   char *cargs[args.length()+2];
@@ -77,9 +85,9 @@ QByteArray TTYProcess::readTTY(){
   if(sn==0){ return BA; } //not setup yet
   char buffer[64];
   ssize_t rtot = read(sn->socket(),&buffer,64);
-  buffer[rtot]='\0';
+  //buffer[rtot]='\0';
   BA = QByteArray(buffer, rtot);
-  qDebug() << " - Got Data:" << BA;
+  //qDebug() << " - Got Data:" << BA;
   if(!fragBA.isEmpty()){
     //Have a leftover fragment, include this too
     BA = BA.prepend(fragBA);
@@ -93,7 +101,6 @@ QByteArray TTYProcess::readTTY(){
     return readTTY();
   }else{
     //qDebug() << "Read Data:" << BA;
-    qDebug() << ".."; //Crashes when the debug line is removed - not sure why....
     return BA;
   }
 }
@@ -134,7 +141,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
   }
 
   // GENERIC ANSI CODES ((Make sure the output is not cut off in the middle of a code)
-  index = raw.indexOf("\x1B[");
+  index = raw.indexOf("\x1B");
   while(index>=0){
     //CURSOR MOVEMENT
     int end = 0;
@@ -145,7 +152,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
         end = i; //found the end of the control code
       }
     }
-    index = raw.indexOf("\x1B[",index+1); //now find the next one
+    index = raw.indexOf("\x1B",index+1); //now find the next one
   }
   
   // SYSTEM BELL
@@ -165,7 +172,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   //Returns: -1 for errors, positive value (file descriptor) for the master side of the TTY to watch	
 
   //First open/setup a new pseudo-terminal file/device on the system (master side)
-  fd = posix_openpt(O_RDWR); //open read/write
+  fd = posix_openpt(O_RDWR | O_NOCTTY); //open read/write
   if(fd<0){ return -1; } //could not create pseudo-terminal
   int rc = grantpt(fd); //set permissions
   if(rc!=0){ return -1; }
@@ -175,7 +182,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   pid_t PID = fork();
   if(PID==0){
     //SLAVE/child
-    int fds = ::open(ptsname(fd), O_RDWR); //open slave side read/write
+    int fds = ::open(ptsname(fd), O_RDWR | O_NOCTTY); //open slave side read/write
     ::close(fd); //close the master side from the slave thread
 	  
     //Adjust the slave side mode to RAW

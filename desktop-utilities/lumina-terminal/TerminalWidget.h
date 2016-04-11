@@ -28,6 +28,7 @@ private:
 	QTextCharFormat DEFFMT, CFMT; //default/current text format
 
 	//Incoming Data parsing
+	void InsertText(QString);
 	void applyData(QByteArray data); //overall data parsing
 	void applyANSI(QByteArray code); //individual code application
 	void applyANSIColor(int code); //Add the designated color code to the  CFMT structure

@@ -10,14 +10,24 @@
 #include <QDebug>
 #include <QApplication>
 #include <QScrollBar>
+#include <QTextBlock>
+
+//Special control code ending symbols (aside from letters)
+//QByteArray CC_END_SYMBOLS("@");
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
   this->setLineWrapMode(QTextEdit::WidgetWidth);
+  this->setAcceptRichText(false);
+  //this->setOverwriteMode(true);
   //this->setStyleSheet("");
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   CFMT = this->textCursor().charFormat(); //current format
-  
+  QFontDatabase FDB;
+  QStringList fonts = FDB.families(QFontDatabase::Latin);
+  for(int i=0; i<fonts.length(); i++){
+    if(FDB.isFixedPitch(fonts[i])){ this->setFont(QFont(fonts[i])); qDebug() << "Using Font:" << fonts[i]; break; }
+  }
   //Create/open the TTY port
   PROC = new TTYProcess(this);
   qDebug() << "Open new TTY";
@@ -43,34 +53,56 @@ void TerminalWidget::aboutToClose(){
 // ==================
 //          PRIVATE
 // ==================
+void TerminalWidget::InsertText(QString txt){
+  //qDebug() << "Insert Text:" << txt << "Cursor Pos:" << this->textCursor().position() << "Column:" << this->textCursor().columnNumber();
+  QTextCursor cur(this->textCursor());
+  cur.setCharFormat(CFMT);
+  cur.insertText( txt, CFMT);
+  this->textCursor().swap(cur);
+}
+
 void TerminalWidget::applyData(QByteArray data){
   //Iterate through the data and apply it when possible
+  QByteArray chars;
+  qDebug() << "Data:" << data;
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
+      //Flush current text buffer to widget
+      if(!chars.isEmpty()){
+	chars.chop(1);      
+	//InsertText(chars); chars.clear(); 
+      }else{
+        this->textCursor().deletePreviousChar();
+      }
       //Simple cursor backward 1 (NOT backspace in this context!!)
-      this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
+      //this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
     }else if( data.at(i)=='\x1B' ){
+      //Flush current text buffer to widget
+      if(!chars.isEmpty()){ InsertText(chars); chars.clear(); }
       //ANSI Control Code start
       //Look for the end of the code
       int end = -1;
       for(int j=1; j<(data.size()-i) && end<0; j++){
-        if(QChar(data.at(i+j)).isLetter()){ end = j; }
+        if(QChar(data.at(i+j)).isLetter() || data.at(i+j)=='@' ){ end = j; }
       }
       if(end<0){ return; } //skip everything else - no end to code found
       applyANSI(data.mid(i+1, end));
+      //qDebug() << "Code:" << data.mid(i+1, end) << "Next Char:" << data[i+end+2];
       i+=end; //move the final loop along - already handled these bytes
       
-    }else if( data.at(i) != '\r' ) {
+    }else if( data.at(i) != '\r' ){
       //Special Check: if inserting text within a line, clear the rest of this line first
       if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
         applyANSI("[K");
       }
+      chars.append(data.at(i));
       //Plaintext character - just add it here
       //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
-      this->textCursor().insertText( QChar(data.at(i)), CFMT );
+      //qDebug() << "  " << this->currentCharFormat().foreground().color() << this->currentCharFormat().background().color();
+      //this->textCursor().insertText( QChar(data.at(i)), CFMT );
     }
-    
   } //end loop over data
+  if(!chars.isEmpty()){ InsertText(chars); }
 }
 
 void TerminalWidget::applyANSI(QByteArray code){
@@ -112,17 +144,29 @@ void TerminalWidget::applyANSI(QByteArray code){
     int mid = code.indexOf(";");
     if(mid>0){
       int numR, numC; numR = numC = 1;
-      if(mid >=3){ numR = code.mid(1,mid-1).toInt(); }
-      if(mid < code.size()-1){ numC = code.mid(mid+1,code.size()-mid-1).toInt(); }
-      //this->textCursor().setPosition(
-      qDebug() << "Set Text Position (absolute):" << "Row:" << numR << "Col:" << numC;
-      // TO-DO
+      if(mid >=3){ numR = code.mid(1,mid-1).toInt()/this->fontMetrics().lineSpacing(); }
+      if(mid < code.size()-1){ numC = code.mid(mid+1,code.size()-mid-2).toInt(); }
+      qDebug() << "Set Text Position (absolute):" << "Code:" << code << "Row:" << numR << "Col:" << numC;
+      qDebug() << " - Current Pos:" << this->textCursor().position() << "Line Count:" << this->document()->lineCount();
+      //if(!this->textCursor().movePosition(QTextCursor::Start, QTextCursor::MoveAnchor,1) ){ qDebug() << "Could not go to start"; }
+      QTextCursor cur(this->textCursor());
+      cur.setPosition(0, QTextCursor::MoveAnchor); //go to start of document
+       qDebug() << " - Pos After Start Move:" << cur.position();
+      if( !cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, numR) ){ qDebug() << "Could not go to row:" << numR; }
+       qDebug() << " - Pos After Down Move:" << cur.position();
+      if( !cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }
+      /*this->textCursor().setPosition( this->document()->findBlockByLineNumber(numR).position() );
+      qDebug() << " - Pos After Row Move:" << this->textCursor().position();
+      if( !this->textCursor().movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }*/
+      qDebug() << " - Ending Pos:" << cur.position();
+      this->setTextCursor(cur);
     }
     
    // DISPLAY CLEAR CODES
   }else if(code.endsWith("J")){ //ED - Erase Display
     int num = 0;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
+    //qDebug() << "Erase Display:" << num;
     if(num==1){
       //Clear from cursor to beginning of screen
       for(int i=this->textCursor().position(); i>=0; i--){
@@ -130,6 +174,7 @@ void TerminalWidget::applyANSI(QByteArray code){
       }
     }else if(num==2){
       //Clear the whole screen
+      qDebug() << "Clear Screen:" << this->document()->lineCount();
       this->clear();
     }else{
       //Clear from cursor to end of screen
@@ -165,10 +210,10 @@ void TerminalWidget::applyANSI(QByteArray code){
     }
     
    //SCROLL MOVEMENT CODES 
-  }else if(code.endsWith("S")){ // SU - Scrolll Up
-	  
+  }else if(code.endsWith("S")){ // SU - Scroll Up
+    qDebug() << "Scroll Up:" << code;
   }else if(code.endsWith("T")){ // SD - Scroll Down
-	  
+    qDebug() << "Scroll Down:" << code;
 	  
   // GRAPHICS RENDERING
   }else if(code.endsWith("m")){
@@ -185,13 +230,20 @@ void TerminalWidget::applyANSI(QByteArray code){
     end = code.size()-1;
     if(end>start){ applyANSIColor(code.mid(start, end-start).toInt());}
     else{ applyANSIColor(0); }
+    
+    
+  // GRAPHICS MODES
+  }else if(code.endsWith("h")){
+	  
+  }else if(code.endsWith("l")){
+	  
+  }else{
+    qDebug() << "Unhandled Control Code:" << code;
   }
-  
-  
 }
 
 void TerminalWidget::applyANSIColor(int code){
-  qDebug() << "Apply Color code:" << code;
+  //qDebug() << "Apply Color code:" << code;
   if(code <=0){ CFMT = DEFFMT; } //Reset back to default
   else if(code==1){  CFMT.setFontWeight(75); } //BOLD font
   else if(code==2){ CFMT.setFontWeight(25); } //Faint font (smaller than normal by a bit)
@@ -229,6 +281,7 @@ QBrush brush = CFMT.background();
     color.setAlpha(255); //fully opaque
     brush.setColor(color);
     CFMT.setForeground( brush );
+    this->setTextColor(color); //just in case the format is not used
   }
   else if(code>=40 && code<=49){
     //Set the font color

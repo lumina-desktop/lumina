@@ -17,8 +17,9 @@
 // ===============
 //        PUBLIC
 // ===============
-TermWindow::TermWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint){//, ui(new Ui::TermWindow){
+TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint){//, ui(new Ui::TermWindow){
   CLOSING = false; //internal flag
+  settings = set;
   //Create the Window
   this->setLayout(new QVBoxLayout());
   this->setCursor(Qt::SplitVCursor);
@@ -49,6 +50,13 @@ TermWindow::TermWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint){
   //Now set the defaults
   screennum = 0; //default value
   setTopOfScreen(true); //default value
+  if(settings->contains("lastSize")){ 
+    //qDebug() << "Re-use last size:" << settings->value("lastSize").toSize();
+    this->resize( settings->value("lastSize").toSize() ); 
+    CalculateGeom();
+    //qDebug() << "After size:" << this->size();
+  }
+  
   //this->resize(this->width(),300);
   //this->setMinimumSize(20, 300);
   
@@ -96,11 +104,12 @@ void TermWindow::setTopOfScreen(bool ontop){
 //       PUBLIC SLOTS
 // =======================
 void TermWindow::ShowWindow(){
+  if(animRunning>=0){ return; } //something running
+  animRunning = 1;
   this->hide();
   QApplication::processEvents();
   CalculateGeom();
   //Now setup the animation
-  animRunning = 1;
   ANIM->setEndValue(this->geometry());
   if(onTop){ //use top edge
     ANIM->setStartValue( QRect(this->x(), this->y(), this->width(), 0) ); //same location - no height
@@ -108,10 +117,12 @@ void TermWindow::ShowWindow(){
     ANIM->setStartValue( QRect(this->x(), this->geometry().bottom(), this->width(), 0) ); //same location - no height
   }
   this->show();
+  qDebug() << "Start Animation" << ANIM->startValue() << ANIM->endValue();
   ANIM->start();
 }
 
 void TermWindow::HideWindow(){
+  if(animRunning>=0){ return; } //something running
   //Now setup the animation
   //Note: Do *not* use the private settings/variables because it may be changing right now - use the current geometry *ONLY*
   animRunning = 0;
@@ -128,6 +139,7 @@ void TermWindow::HideWindow(){
 }
 
 void TermWindow::CloseWindow(){
+  if(animRunning>=0){ return; } //something running
   //Now setup the animation
   animRunning = 2;
   ANIM->setStartValue(this->geometry());
@@ -153,6 +165,7 @@ void TermWindow::ReShowWindow(){
 //             PRIVATE
 // =======================
 void TermWindow::CalculateGeom(){
+  //qDebug() << "Calculating Geom:" << this->size();
   QDesktopWidget *desk = QApplication::desktop();
   if(desk->screenCount() <= screennum){ screennum = desk->primaryScreen(); } //invalid screen detected 
   //Now align the window with the proper screen edge
@@ -253,4 +266,5 @@ void TermWindow::mouseMoveEvent(QMouseEvent *ev){
 	    geom.setTop(ev->globalPos().y());
       this->setGeometry(geom);
     }
+    settings->setValue("lastSize",this->geometry().size());
 }
