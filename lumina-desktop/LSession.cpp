@@ -182,6 +182,7 @@ void LSession::CleanupSession(){
   //Create a temporary flag to prevent crash dialogs from opening during cleanup
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
+  LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Stop the background system tray (detaching/closing apps as necessary)
