@@ -80,8 +80,7 @@ public:
 	XCBEventFilter(EventFilter *parent);
 	~XCBEventFilter(){}
 
-	//This function format taken directly from the Qt5.3 documentation
-	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
+	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *);
 		
 private:
 	EventFilter *obj;

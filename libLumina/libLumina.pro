@@ -1,7 +1,6 @@
 include("$${PWD}/../OS-detect.pri")
 
-QT       += core network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
+QT       += core network widgets x11extras multimedia concurrent svg
 
 define
 #Setup any special defines (qmake -> C++)
@@ -60,7 +59,7 @@ colors.files=colors/*.qss.colors
 themes.path=$${L_SHAREDIR}/Lumina-DE/themes/
 themes.files=themes/*.qss.template
 
-quickplugins.path=$${L_SHAREDIR}/Lumina-DE/quickplugins/
-quickplugins.files=quickplugins/*
+#quickplugins.path=$${L_SHAREDIR}/Lumina-DE/quickplugins/
+#quickplugins.files=quickplugins/*
 
-INSTALLS += target include colors themes quickplugins
+INSTALLS += target include colors themes
