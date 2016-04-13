@@ -24,7 +24,6 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
-  //this->setStyleSheet("");
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   CFMT = this->textCursor().charFormat(); //current format
   selCursor = this->textCursor(); //used for keeping track of selections
@@ -63,7 +62,7 @@ void TerminalWidget::aboutToClose(){
 // ==================
 void TerminalWidget::InsertText(QString txt){
   if(txt.isEmpty()){ return; }
-  qDebug() << "Insert Text:" << txt << "Cursor Pos:" << this->textCursor().position() << "Column:" << this->textCursor().columnNumber();
+  //qDebug() << "Insert Text:" << txt << "Cursor Pos:" << this->textCursor().position() << "Column:" << this->textCursor().columnNumber();
   QTextCursor cur = this->textCursor();
   cur.setCharFormat(CFMT);
   cur.insertText( txt, CFMT);
@@ -115,8 +114,10 @@ void TerminalWidget::applyData(QByteArray data){
 
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
-  qDebug() << "Handle ANSI:" << code;
+  //qDebug() << "Handle ANSI:" << code;
 	
+  if(code.startsWith("[")){
+    // VT100 ESCAPE CODES
   //CURSOR MOVEMENT
   if( code.endsWith("A") ){ //Move Up
     int num = 1;
@@ -264,6 +265,11 @@ void TerminalWidget::applyANSI(QByteArray code){
   }else{
     qDebug() << "Unhandled Control Code:" << code;
   }
+  
+  } //End VT100 control codes
+  else{
+    qDebug() << "Unhandled Control Code:" << code;
+  }
 }
 
 void TerminalWidget::applyANSIColor(int code){
@@ -338,10 +344,8 @@ QBrush brush = CFMT.background();
 //Outgoing Data parsing
 void TerminalWidget::sendKeyPress(int key){
   QByteArray ba;
-  //QString cCol = QString::number(this->textCursor().columnNumber()); //current column number
-  //QString cLine = QString::number(this->document()->toPlainText().left(this->textCursor().position()).count("\n"));
-  //QString maxCol = QString::number( this->document()->toPlainText().section("\n",cLine.toInt(), cLine.toInt()).length()-1);
-  int fromEnd = this->document()->characterCount() - this->textCursor().position();
+  //if(this->textCursor()==selCursor){ this->setTextCursor(lastCursor); }
+  //int fromEnd = this->document()->characterCount() - this->textCursor().position();
   //Check for special keys
   switch(key){
     case Qt::Key_Delete:
@@ -366,13 +370,10 @@ void TerminalWidget::sendKeyPress(int key){
         ba.append("\x1b[H");
         break;	    
     case Qt::Key_End:
-	for(int i=0; i<fromEnd; i++){ 
-          ba.append("\x1b[C");
-	}
+	ba.append("\x1b[F");
         break;	    
   }
-   
-  qDebug() << "Forward Input:" << ba;
+   //qDebug() << "Forward Input:" << ba;
   if(!ba.isEmpty()){ PROC->writeTTY(ba); }
 }
 
@@ -412,6 +413,9 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
   if(ev->text().isEmpty() || ev->text()=="\b" ){
     sendKeyPress(ev->key());
   }else{
+    if(ev->key()==Qt::Key_Enter || ev->key()==Qt::Key_Return){
+      sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)
+    }
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
     PROC->writeTTY(ba);
   }
