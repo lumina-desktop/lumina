@@ -430,32 +430,32 @@ void TerminalWidget::mousePressEvent(QMouseEvent *ev){
   }else if(ev->button()==Qt::MiddleButton){
     pasteSelection();
   }else if(ev->button()==Qt::LeftButton){
-    lastCursor = this->textCursor();
+    if(this->textCursor()!=selCursor){ lastCursor = this->textCursor(); }
     selCursor = this->cursorForPosition(ev->pos());
-  }else{
-    Q_UNUSED(ev);
   }
+  Q_UNUSED(ev);
 }
 
 void TerminalWidget::mouseMoveEvent(QMouseEvent *ev){
   if(ev->button()==Qt::LeftButton){
     selCursor.setPosition(this->cursorForPosition(ev->pos()).position(), QTextCursor::KeepAnchor);
-    this->setTextCursor(selCursor);
+    if(selCursor.hasSelection()){ this->setTextCursor(selCursor); }
   }else{
     QTextEdit::mouseMoveEvent(ev);
   }
 }
+
 void TerminalWidget::mouseReleaseEvent(QMouseEvent *ev){
   if(ev->button()==Qt::LeftButton){
     selCursor.setPosition(this->cursorForPosition(ev->pos()).position(), QTextCursor::KeepAnchor);
-    this->setTextCursor(selCursor);
+    if(selCursor.hasSelection()){ this->setTextCursor(selCursor); }
+    else{ this->setTextCursor(lastCursor); }
   }else if(ev->button()==Qt::RightButton){
     copyA->setEnabled( selCursor.hasSelection() );
     pasteA->setEnabled( !QApplication::clipboard()->text().isEmpty() );
     contextMenu->popup( this->mapToGlobal(ev->pos()) );	  
-  }else{
-    Q_UNUSED(ev);
   }
+  Q_UNUSED(ev);
 }
 
 void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
