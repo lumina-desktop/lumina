@@ -53,12 +53,12 @@ void TrayIcon::parseInputs(QStringList inputs){
 // =================
 void TrayIcon::slotSingleInstance(QStringList inputs){
   //Note that this is only run for a secondary process forwarding its inputs
-  qDebug() << "Single Instance Event:" << inputs << termVisible;	
+  //qDebug() << "Single Instance Event:" << inputs << termVisible;	
   bool visible = termVisible;
   inputs = adjustInputs(inputs); //will adjust termVisible as necessary
   if(!inputs.isEmpty()){ TERM->OpenDirs(inputs); }
   //Only adjust the window if there was a change in the visibility status
-  qDebug() << "Set Visible:" << termVisible;
+  //qDebug() << "Set Visible:" << termVisible;
   if(!visible && termVisible){ QTimer::singleShot(0, TERM, SLOT(ShowWindow())); }
   else if(visible && !termVisible){ QTimer::singleShot(0, TERM, SLOT(HideWindow())); }
 }

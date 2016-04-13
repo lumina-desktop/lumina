@@ -12,6 +12,8 @@
 #include <QResizeEvent>
 #include <QSocketNotifier>
 #include <QTimer>
+#include <QMenu>
+#include <QClipboard>
 
 #include "TtyProcess.h"
 
@@ -26,6 +28,10 @@ public:
 private:
 	TTYProcess *PROC;
 	QTextCharFormat DEFFMT, CFMT; //default/current text format
+	QTextCursor selCursor, lastCursor;
+	QMenu *contextMenu;
+	QAction *copyA, *pasteA;
+	int selectionStart;
 
 	//Incoming Data parsing
 	void InsertText(QString);
@@ -40,14 +46,19 @@ private slots:
 	void UpdateText();
 	void ShellClosed();
 
+	void copySelection();
+	void pasteSelection();
+
 signals:
 	void ProcessClosed(QString);
 
 protected:
 	void keyPressEvent(QKeyEvent *ev);
 	void mousePressEvent(QMouseEvent *ev);
+	void mouseMoveEvent(QMouseEvent *ev);
+	void mouseReleaseEvent(QMouseEvent *ev);
 	void mouseDoubleClickEvent(QMouseEvent *ev);
-	void contextMenuEvent(QContextMenuEvent *ev);
+	//void contextMenuEvent(QContextMenuEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
 };
 

@@ -18,8 +18,10 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  setenv("TERM","lumina-terminal",1);
-  setenv("TERMCAP","",1); //see /etc/termcap as well
+  setenv("TERM","vt102",1); //VT102 emulation support
+  unsetenv("TERMCAP");
+  /*setenv("TERMCAP","mvterm|vv100|mvterm emulator with ANSI colors:\
+	:pa#64:Co#8:AF=\E[3%dm:AB=\E[4%dm:op=\E[100m:tc=vt102:",1); //see /etc/termcap as well*/
   QStringList filter = env.keys().filter("XTERM");
   for(int i=0; i<filter.length(); i++){ unsetenv(filter[i].toLocal8Bit().data()); }
   //if(env.contains("TERM")){ unsetenv("TERM"); }

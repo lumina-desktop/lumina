@@ -1,17 +1,9 @@
-TEMPLATE	= app
-LANGUAGE	= C++
+include("$${PWD}/../../OS-detect.pri")
+
 QT += core gui widgets network
-CONFIG	+= qt warn_on release
 
-isEmpty(PREFIX) {
- PREFIX = /usr/local
-}
 TARGET  = lumina-terminal
-target.path = $$DESTDIR$$PREFIX/bin
-
-isEmpty(LIBPREFIX) {
- LIBPREFIX = $$PREFIX/lib
-}
+target.path = $${L_BINDIR}
 
 HEADERS	+= TrayIcon.h \
 		TermWindow.h \
@@ -25,17 +17,9 @@ SOURCES	+= main.cpp \
 		TtyProcess.cpp
 
 
-INCLUDEPATH += ../../libLumina $$PREFIX/include
-LIBS += -L../../libLumina -L$$LIBPREFIX -lLuminaUtils -lc
-
-isEmpty(QT5LIBDIR) {
- QT5LIBDIR = $$PREFIX/lib/qt5
-}
-
-LRELEASE = $$QT5LIBDIR/bin/lrelease
+LIBS += -lLuminaUtils
 
 
-QMAKE_LIBDIR	= ../libLumina
 DEPENDPATH	+= ../../libLumina
 
 TRANSLATIONS =  i18n/lumina-terminal_af.ts \
@@ -101,8 +85,8 @@ TRANSLATIONS =  i18n/lumina-terminal_af.ts \
                 i18n/lumina-terminal_zh_TW.ts \
                 i18n/lumina-terminal_zu.ts
 
-dotrans.path=$$PREFIX/share/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$$PREFIX/share/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
 INSTALLS += target dotrans
 

@@ -40,12 +40,22 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
   closeS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q),this);
   newTabS = new QShortcut(QKeySequence::AddTab,this);
   closeTabS = new QShortcut(QKeySequence::Close,this);
+  prevTabS = new QShortcut(QKeySequence::PreviousChild,this);
+  nextTabS = new QShortcut(QKeySequence::NextChild,this);
+  //Print out all the keyboard shortcuts onto the screen
+  qDebug() << "New Tab Shortcut:" << QKeySequence::keyBindings(QKeySequence::AddTab);
+  qDebug() << "Close Tab Shortcut:" << QKeySequence::keyBindings(QKeySequence::Close);
+  qDebug() << "Next Tab Shortcut:" << QKeySequence::keyBindings(QKeySequence::NextChild);
+  qDebug() << "Previous Tab Shortcut:" << QKeySequence::keyBindings(QKeySequence::PreviousChild);
   //Connect the signals/slots
   connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(Close_Tab(int)) );
+  connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(focusOnWidget()) );
   connect(closeTabS, SIGNAL(activated()), this, SLOT(Close_Tab()) );
   connect(newTabS, SIGNAL(activated()), this, SLOT(New_Tab()) );
   connect(hideS, SIGNAL(activated()), this, SLOT(HideWindow()) );
   connect(closeS, SIGNAL(activated()), this, SLOT(CloseWindow()) );
+  connect(prevTabS, SIGNAL(activated()), this, SLOT(Prev_Tab()) );
+  connect(nextTabS, SIGNAL(activated()), this, SLOT(Next_Tab()) );
   
   //Now set the defaults
   screennum = 0; //default value
@@ -83,6 +93,8 @@ void TermWindow::OpenDirs(QStringList dirs){
     QString ID = GenerateTabID();
       page->setWhatsThis(ID);
     tabWidget->addTab(page, ID);
+    tabWidget->setCurrentWidget(page);
+    page->setFocus();
     qDebug() << "New Tab:" << ID << dirs[i];
     connect(page, SIGNAL(ProcessClosed(QString)), this, SLOT(Close_Tab(QString)) );
   }
@@ -117,7 +129,7 @@ void TermWindow::ShowWindow(){
     ANIM->setStartValue( QRect(this->x(), this->geometry().bottom(), this->width(), 0) ); //same location - no height
   }
   this->show();
-  qDebug() << "Start Animation" << ANIM->startValue() << ANIM->endValue();
+  //qDebug() << "Start Animation" << ANIM->startValue() << ANIM->endValue();
   ANIM->start();
 }
 
@@ -202,7 +214,7 @@ void TermWindow::Close_Tab(int tab){
   //qDebug() << "Close Tab:" << tab;
   if(tab<0){ tab = tabWidget->currentIndex(); }
   static_cast<TerminalWidget*>(tabWidget->widget(tab))->aboutToClose();
-  delete tabWidget->widget(tab); //delete the page within the tag
+  tabWidget->widget(tab)->deleteLater(); //delete the page within the tag
   tabWidget->removeTab(tab); // remove the tab itself
   //Make sure there is always at least one tab
   if(tabWidget->count() < 1){ 
@@ -218,6 +230,26 @@ void TermWindow::Close_Tab(QString ID){
       Close_Tab(i);
       return; //all done
     }
+  }
+}
+
+void TermWindow::Next_Tab(){
+  qDebug() << "Next Tab";
+  int next = tabWidget->currentIndex()+1;
+  if(next>=tabWidget->count()){ next = 0; }
+  tabWidget->setCurrentIndex(next);
+}
+
+void TermWindow::Prev_Tab(){
+  qDebug() << "Previous Tab";
+  int next = tabWidget->currentIndex()-1;
+  if(next<0){ next = tabWidget->count()-1; }
+  tabWidget->setCurrentIndex(next);	
+}
+
+void TermWindow::focusOnWidget(){
+  if(tabWidget->currentWidget()!=0){
+    tabWidget->currentWidget()->setFocus();
   }
 }
 

@@ -36,7 +36,7 @@ public slots:
 private:
 	QTabWidget *tabWidget;
 	QSettings *settings;
-	QShortcut *hideS, *closeS, *newTabS, *closeTabS;
+	QShortcut *hideS, *closeS, *newTabS, *closeTabS, *prevTabS, *nextTabS;
 	int screennum;
 	bool onTop, CLOSING;
 	QPropertyAnimation *ANIM;
@@ -51,7 +51,9 @@ private slots:
 	void New_Tab();
 	void Close_Tab(int tab = -1);
 	void Close_Tab(QString ID); //alternate form of the close routine - based on tab ID
-
+	void Next_Tab();
+	void Prev_Tab();
+	void focusOnWidget();
 	//Animation finishing
 	void AnimFinished();
 	
