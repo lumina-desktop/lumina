@@ -338,9 +338,10 @@ QBrush brush = CFMT.background();
 //Outgoing Data parsing
 void TerminalWidget::sendKeyPress(int key){
   QByteArray ba;
-  QString cCol = QString::number(this->textCursor().columnNumber()); //current column number
-  QString cLine = QString::number(this->document()->toPlainText().left(this->textCursor().position()).count("\n"));
-  QString maxCol = QString::number( this->document()->toPlainText().section("\n",cLine.toInt(), cLine.toInt()).length()-1);
+  //QString cCol = QString::number(this->textCursor().columnNumber()); //current column number
+  //QString cLine = QString::number(this->document()->toPlainText().left(this->textCursor().position()).count("\n"));
+  //QString maxCol = QString::number( this->document()->toPlainText().section("\n",cLine.toInt(), cLine.toInt()).length()-1);
+  int fromEnd = this->document()->characterCount() - this->textCursor().position();
   //Check for special keys
   switch(key){
     case Qt::Key_Delete:
@@ -362,12 +363,12 @@ void TerminalWidget::sendKeyPress(int key){
         ba.append("\x1b[B");
         break;
     case Qt::Key_Home:
-        ba.append( "\x1b[" ); //+cLine+";0H").toLocal8Bit().data() );
-	ba.append( cLine.toLocal8Bit().data() );
-	ba.append(";0H");
+        ba.append("\x1b[H");
         break;	    
     case Qt::Key_End:
-        ba.append( QString("\x1b["+cLine+";"+maxCol+"H").toLocal8Bit().data() );
+	for(int i=0; i<fromEnd; i++){ 
+          ba.append("\x1b[C");
+	}
         break;	    
   }
    

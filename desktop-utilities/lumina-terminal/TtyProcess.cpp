@@ -18,7 +18,7 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  setenv("TERM","vt102",1); //VT102 emulation support
+  setenv("TERM","vt100",1); //VT100 emulation support
   unsetenv("TERMCAP");
   /*setenv("TERMCAP","mvterm|vv100|mvterm emulator with ANSI colors:\
 	:pa#64:Co#8:AF=\E[3%dm:AB=\E[4%dm:op=\E[100m:tc=vt102:",1); //see /etc/termcap as well*/
