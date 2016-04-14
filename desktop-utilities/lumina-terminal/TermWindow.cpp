@@ -216,10 +216,9 @@ void TermWindow::Close_Tab(int tab){
   static_cast<TerminalWidget*>(tabWidget->widget(tab))->aboutToClose();
   tabWidget->widget(tab)->deleteLater(); //delete the page within the tag
   tabWidget->removeTab(tab); // remove the tab itself
-  //Make sure there is always at least one tab
+  //Let the tray know when the last terminal is closed
   if(tabWidget->count() < 1){ 
-    if(CLOSING){ emit TerminalFinished(); }
-    else{ New_Tab();  }
+    emit TerminalFinished();
   }
 }
 

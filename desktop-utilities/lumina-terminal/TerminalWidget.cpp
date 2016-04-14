@@ -413,10 +413,11 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
   if(ev->text().isEmpty() || ev->text()=="\b" ){
     sendKeyPress(ev->key());
   }else{
-    if(ev->key()==Qt::Key_Enter || ev->key()==Qt::Key_Return){
+    if( (ev->key()==Qt::Key_Enter || ev->key()==Qt::Key_Return) && !this->textCursor().atEnd() ){
       sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)
     }
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
+    //qDebug() << "Forward Input:" << ba;
     PROC->writeTTY(ba);
   }
   
