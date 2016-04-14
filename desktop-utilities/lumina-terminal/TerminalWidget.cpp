@@ -23,11 +23,14 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
+  this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   CFMT = this->textCursor().charFormat(); //current format
   selCursor = this->textCursor(); //used for keeping track of selections
   lastCursor = this->textCursor();
+  startrow = endrow = -1;
+  altkeypad = false;
   QFontDatabase FDB;
   QStringList fonts = FDB.families(QFontDatabase::Latin);
   for(int i=0; i<fonts.length(); i++){
@@ -90,7 +93,8 @@ void TerminalWidget::applyData(QByteArray data){
       //Look for the end of the code
       int end = -1;
       for(int j=1; j<(data.size()-i) && end<0; j++){
-        if(QChar(data.at(i+j)).isLetter() || data.at(i+j)=='@' ){ end = j; }
+        if(QChar(data.at(i+j)).isLetter() || (QChar(data.at(i+j)).isSymbol() && data.at(i+j)!=';') ){ end = j; }
+	else if(data.at(i+j)=='\x1B'){ end = j-1; } //start of the next control code
       }
       if(end<0){ return; } //skip everything else - no end to code found
       applyANSI(data.mid(i+1, end));
@@ -114,9 +118,15 @@ void TerminalWidget::applyData(QByteArray data){
 
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
-  //qDebug() << "Handle ANSI:" << code;
-	
-  if(code.startsWith("[")){
+  qDebug() << "Handle ANSI:" << code;
+  if(code.length()==1){
+    //KEYPAD MODES
+    if(code.at(0)=='='){ altkeypad = true; }
+    else if(code.at(0)=='>'){ altkeypad = false; }
+    else{
+      qDebug() << "Unhandled ANSI Code:" << code;
+    }
+  }else if(code.startsWith("[")){
     // VT100 ESCAPE CODES
   //CURSOR MOVEMENT
   if( code.endsWith("A") ){ //Move Up
@@ -165,8 +175,13 @@ void TerminalWidget::applyANSI(QByteArray code){
     int mid = code.indexOf(";");
     if(mid>1){
       int numR, numC; numR = numC = 1;
-      if(mid >=3){ numR = code.mid(1,mid-1).toInt(); }
+      if(mid >=2){ numR = code.mid(1,mid-1).toInt(); }
       if(mid < code.size()-1){ numC = code.mid(mid+1,code.size()-mid-2).toInt(); }
+      
+      if(startrow>=0 && endrow>=0){
+	if(numR == startrow){ numR = 0;}
+	else if(numR==endrow){ numR = this->document()->lineCount()-1; }
+      }
       qDebug() << "Set Text Position (absolute):" << "Code:" << code << "Row:" << numR << "Col:" << numC;
       //qDebug() << " - Current Pos:" << this->textCursor().position() << "Line Count:" << this->document()->lineCount();
       //if(!this->textCursor().movePosition(QTextCursor::Start, QTextCursor::MoveAnchor,1) ){ qDebug() << "Could not go to start"; }
@@ -179,13 +194,22 @@ void TerminalWidget::applyANSI(QByteArray code){
       /*this->textCursor().setPosition( this->document()->findBlockByLineNumber(numR).position() );
       qDebug() << " - Pos After Row Move:" << this->textCursor().position();
       if( !this->textCursor().movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }*/
-      qDebug() << " - Ending Pos:" << cur.position();
+      //qDebug() << " - Ending Pos:" << cur.position();
       this->setTextCursor(cur);
     }else{
       //Go to home position
       this->moveCursor(QTextCursor::Start);
     }
-    
+
+   // CURSOR MANAGEMENT
+  }else if(code.endsWith("r")){ //Tag top/bottom lines as perticular numbers
+    int mid = code.indexOf(";");
+    qDebug() << "New Row Codes:" << code << "midpoint:" << mid;
+    if(mid>1){
+      if(mid >=2){ startrow = code.mid(1,mid-1).toInt(); }
+      if(mid < code.size()-1){ endrow = code.mid(mid+1,code.size()-mid-2).toInt(); }
+    }
+    qDebug() << "New Row Codes:" << startrow << endrow;
    // DISPLAY CLEAR CODES
   }else if(code.endsWith("J")){ //ED - Erase Display
     int num = 0;
@@ -235,10 +259,10 @@ void TerminalWidget::applyANSI(QByteArray code){
     }
     
    //SCROLL MOVEMENT CODES 
-  }else if(code.endsWith("S")){ // SU - Scroll Up
-    qDebug() << "Scroll Up:" << code;
-  }else if(code.endsWith("T")){ // SD - Scroll Down
-    qDebug() << "Scroll Down:" << code;
+  //}else if(code.endsWith("S")){ // SU - Scroll Up
+    //qDebug() << "Scroll Up:" << code;
+  //}else if(code.endsWith("T")){ // SD - Scroll Down
+    //qDebug() << "Scroll Down:" << code;
 	  
   // GRAPHICS RENDERING
   }else if(code.endsWith("m")){
@@ -258,9 +282,9 @@ void TerminalWidget::applyANSI(QByteArray code){
     
     
   // GRAPHICS MODES
-  }else if(code.endsWith("h")){
+  //}else if(code.endsWith("h")){
 	  
-  }else if(code.endsWith("l")){
+  //}else if(code.endsWith("l")){
 	  
   }else{
     qDebug() << "Unhandled Control Code:" << code;
@@ -355,16 +379,20 @@ void TerminalWidget::sendKeyPress(int key){
 	ba.append("\x08");    
         break;
     case Qt::Key_Left:
-	ba.append("\x1b[D");
+	if(altkeypad){ ba.append("^[D"); }
+	else{ ba.append("\x1b[D"); }
         break;
     case Qt::Key_Right:
-	ba.append("\x1b[C");
+	if(altkeypad){ ba.append("^[C"); }
+	else{ ba.append("\x1b[C"); }
         break;
     case Qt::Key_Up:
-        ba.append("\x1b[A");
+        if(altkeypad){ ba.append("^[A"); }
+	else{ ba.append("\x1b[A"); }
         break;
     case Qt::Key_Down:
-        ba.append("\x1b[B");
+        if(altkeypad){ ba.append("^[B"); }
+	else{ ba.append("\x1b[B"); }
         break;
     case Qt::Key_Home:
         ba.append("\x1b[H");
@@ -373,7 +401,7 @@ void TerminalWidget::sendKeyPress(int key){
 	ba.append("\x1b[F");
         break;	    
   }
-   //qDebug() << "Forward Input:" << ba;
+   qDebug() << "Forward Input:" << ba;
   if(!ba.isEmpty()){ PROC->writeTTY(ba); }
 }
 
@@ -386,7 +414,8 @@ void TerminalWidget::UpdateText(){
   if(!PROC->isOpen()){ return; }
   applyData(PROC->readTTY());
   //adjust the scrollbar as needed
-  this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
+  this->ensureCursorVisible();
+  //this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
 }
 
 void TerminalWidget::ShellClosed(){

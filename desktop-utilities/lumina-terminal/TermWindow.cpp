@@ -36,7 +36,7 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
     ANIM->setDuration(300); //1/3 second animation
   connect(ANIM, SIGNAL(finished()), this, SLOT(AnimFinished()) );
   //Create the keyboard shortcuts
-  hideS = new QShortcut(QKeySequence(Qt::Key_Escape),this);
+  //hideS = new QShortcut(QKeySequence(Qt::Key_Escape),this);
   closeS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q),this);
   newTabS = new QShortcut(QKeySequence::AddTab,this);
   closeTabS = new QShortcut(QKeySequence::Close,this);
@@ -52,7 +52,7 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
   connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(focusOnWidget()) );
   connect(closeTabS, SIGNAL(activated()), this, SLOT(Close_Tab()) );
   connect(newTabS, SIGNAL(activated()), this, SLOT(New_Tab()) );
-  connect(hideS, SIGNAL(activated()), this, SLOT(HideWindow()) );
+  //connect(hideS, SIGNAL(activated()), this, SLOT(HideWindow()) );
   connect(closeS, SIGNAL(activated()), this, SLOT(CloseWindow()) );
   connect(prevTabS, SIGNAL(activated()), this, SLOT(Prev_Tab()) );
   connect(nextTabS, SIGNAL(activated()), this, SLOT(Next_Tab()) );

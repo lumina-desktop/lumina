@@ -42,6 +42,9 @@ private:
 	//Outgoing Data parsing
 	void sendKeyPress(int key);
 
+	//Special incoming data flags
+	int startrow, endrow; //indexes for the first/last row ("\x1b[A;Br" CC)
+	bool altkeypad;
 private slots:
 	void UpdateText();
 	void ShellClosed();
