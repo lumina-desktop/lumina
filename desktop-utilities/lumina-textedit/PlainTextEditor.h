@@ -30,11 +30,18 @@ private:
 	QWidget *LNW; //Line Number Widget
 	bool showLNW;
 
+	//Bracket/Perentheses matching functions
+	int matchleft, matchright; //positions within the document
+	void clearMatchData();
+	void highlightMatch(QChar ch, bool forward, int fromPos);
+
 private slots:
 	//Functions for managing the line number widget
 	void LNW_updateWidth();  	// Tied to the QPlainTextEdit::blockCountChanged() signal
 	void LNW_highlightLine();  		// Tied to the QPlainTextEdit::cursorPositionChanged() signal
 	void LNW_update(const QRect&, int); 	// Tied to the QPlainTextEdit::updateRequest() signal
+	//Function for running the matching routine
+	void checkMatchChar();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
