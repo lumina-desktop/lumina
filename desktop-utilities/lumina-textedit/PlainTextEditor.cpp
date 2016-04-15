@@ -10,21 +10,26 @@
 #include <QPainter>
 #include <QTextBlock>
 
+#include <LuminaUtils.h>
+
 //==============
 //       PUBLIC
 //==============
 PlainTextEditor::PlainTextEditor(QWidget *parent) : QPlainTextEdit(parent){
   LNW = new LNWidget(this);
   showLNW = true;
+  hasChanges = false;
   matchleft = matchright = -1;
+  SYNTAX = new Custom_Syntax(this->document());
   connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(LNW_updateWidth()) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(LNW_highlightLine()) );
   connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(LNW_update(const QRect&, int)) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(checkMatchChar()) );
-	
+  connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()) );
   LNW_updateWidth();
   LNW_highlightLine();
 }
+
 PlainTextEditor::~PlainTextEditor(){
 	
 }
@@ -33,6 +38,33 @@ void PlainTextEditor::showLineNumbers(bool show){
   showLNW = show;
   LNW->setVisible(show);
   LNW_updateWidth();
+}
+
+void PlainTextEditor::LoadSyntaxRule(QString type){
+  SYNTAX->loadRules(type);
+  SYNTAX->rehighlight();
+}
+
+//File loading/setting options
+void PlainTextEditor::LoadFile(QString filepath){
+  this->setWhatsThis(filepath);
+  this->clear();
+  SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
+  this->setPlainText( LUtils::readFile(filepath).join("\n") );
+  hasChanges = false;
+}
+
+void PlainTextEditor::SaveFile(){
+  if( !this->whatsThis().startsWith("/") ){
+    //prompt for a filename/path
+	  
+  }
+  bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
+  if(ok){ emit FileLoaded(this->whatsThis()); }
+}
+
+QString PlainTextEditor::currentFile(){
+  return this->whatsThis();
 }
 
 //Functions for managing the line number widget
@@ -163,6 +195,16 @@ void PlainTextEditor::checkMatchChar(){
   else if(ch==QChar(')')){ highlightMatch(QChar('('),false, pos); }
   else if(ch==QChar('{')){ highlightMatch(QChar('}'),true, pos); }
   else if(ch==QChar('}')){ highlightMatch(QChar('{'),false, pos); }
+  else if(ch==QChar('[')){ highlightMatch(QChar(']'),true, pos); }
+  else if(ch==QChar(']')){ highlightMatch(QChar('['),false, pos); }
+}
+
+//Functions for notifying the parent widget of changes
+void PlainTextEditor::textChanged(){
+  if(!hasChanges){
+    hasChanges = true;
+    emit UnsavedChanges( this->whatsThis() );
+  }
 }
 
 //==================

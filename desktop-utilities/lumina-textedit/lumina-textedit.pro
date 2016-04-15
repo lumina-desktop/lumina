@@ -5,13 +5,16 @@ QT += core gui widgets
 TARGET  = lumina-textedit
 target.path = $${L_BINDIR}
 
-HEADERS	+= PlainTextEditor.h \
+HEADERS	+= MainUI.h \
+			PlainTextEditor.h \
 			syntaxSupport.h
 		
 SOURCES	+= main.cpp \
-		PlainTextEditor.cpp \
-		syntaxSupport.cpp
+			MainUI.cpp \
+			PlainTextEditor.cpp \
+			syntaxSupport.cpp
 
+FORMS		+= MainUI.ui
 
 LIBS += -lLuminaUtils
 

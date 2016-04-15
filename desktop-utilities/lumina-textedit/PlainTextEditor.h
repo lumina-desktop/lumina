@@ -12,6 +12,8 @@
 #include <QResizeEvent>
 #include <QPaintEvent>
 
+#include "syntaxSupport.h"
+
 //QPlainTextEdit subclass for providing the actual text editor functionality
 class PlainTextEditor : public QPlainTextEdit{
 	Q_OBJECT
@@ -21,6 +23,12 @@ public:
 	
 	//Functions for setting up the editor
 	void showLineNumbers(bool show = true);
+	void LoadSyntaxRule(QString type);
+
+	//File loading/setting options
+	void LoadFile(QString filepath);
+	void SaveFile();
+	QString currentFile();
 
 	//Functions for managing the line number widget (internal - do not need to run directly)
 	int LNWWidth(); //replacing the LNW size hint detection
@@ -29,12 +37,16 @@ public:
 private:
 	QWidget *LNW; //Line Number Widget
 	bool showLNW;
+	//Syntax Highlighting class
+	Custom_Syntax *SYNTAX;
 
 	//Bracket/Perentheses matching functions
 	int matchleft, matchright; //positions within the document
 	void clearMatchData();
 	void highlightMatch(QChar ch, bool forward, int fromPos);
 
+	//Flags to keep track of changes
+	bool hasChanges;
 private slots:
 	//Functions for managing the line number widget
 	void LNW_updateWidth();  	// Tied to the QPlainTextEdit::blockCountChanged() signal
@@ -42,9 +54,16 @@ private slots:
 	void LNW_update(const QRect&, int); 	// Tied to the QPlainTextEdit::updateRequest() signal
 	//Function for running the matching routine
 	void checkMatchChar();
+	//Functions for notifying the parent widget of changes
+	void textChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
+
+signals:
+	void UnsavedChanges(QString); //filename
+	void FileLoaded(QString);
+	
 };
 
 //===========================================================

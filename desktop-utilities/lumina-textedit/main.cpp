@@ -10,8 +10,7 @@
 #include <LuminaThemes.h>
 #include <LuminaUtils.h>
 
-#include "PlainTextEditor.h"
-#include "syntaxSupport.h"
+#include "MainUI.h"
 
 int  main(int argc, char *argv[]) {
    LTHEME::LoadCustomEnvSettings();
@@ -19,14 +18,14 @@ int  main(int argc, char *argv[]) {
    LUtils::LoadTranslation(&a, "lumina-textedit");
    //Now go ahead and setup the app
    LuminaThemeEngine theme(&a);
-     
+   QStringList args;
+   for(int i=1; i<argc; i++){
+      args << QString(argv[i]);
+   }
    //Now start the window
-   PlainTextEditor W;
-    Custom_Syntax *syntax = new Custom_Syntax(W.document());
-	syntax->loadRules("C++");
-    W.showLineNumbers(true);
-    //QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
-
+   MainUI W;
+    QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
+    W.LoadArguments(args);
    W.show();
    return  a.exec();
 }
