@@ -48,6 +48,24 @@ void MainUI::loadIcons(){
   ui->tool_applyconfig->setIcon( LXDG::findIcon("dialog-ok-apply","") );
 }
 
+QStringList MainUI::currentOpts(){
+  //Read all the settings and create the xrandr options to maintain these settings
+  QStringList opts;
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].order <0){ continue; } //skip this screen - non-active
+    opts << "--output" << SCREENS[i].ID << "--mode" << QString::number(SCREENS[i].geom.width())+"x"+QString::number(SCREENS[i].geom.height());
+    if(SCREENS[i].order > 0){ 
+      //Get the ID of the previous screen
+      QString id; 
+      for(int j=0; j<SCREENS.length(); j++){ 
+        if(SCREENS[j].order == SCREENS[i].order-1){ id = SCREENS[j].ID; break;}
+      }
+      if(!id.isEmpty()){ opts << "--right-of" << id; }
+    }
+  }
+  return opts;
+}
+
 ScreenInfo MainUI::currentScreenInfo(){
   QListWidgetItem *item = ui->list_screens->currentItem();
   if(item!=0){
@@ -190,8 +208,16 @@ void MainUI::MoveScreenLeft(){
   item = ui->list_screens->item( ui->list_screens->row(item)-1 );
   if(item == 0){ return; } //no item on the left (can't go left)
   QString LID = item->whatsThis(); //left ID
+  //Adjust the order of the two screens
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID == CID){ SCREENS[i].order = SCREENS[i].order-1; }
+    else if(SCREENS[i].ID==LID){ SCREENS[i].order = SCREENS[i].order+1; }
+  }
   //Now run the command
-  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--left-of" << LID);
+  QStringList opts = currentOpts();
+  LUtils::runCmd("xrandr", opts); 
+  //Now run the command
+  //LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--left-of" << LID);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
@@ -204,8 +230,14 @@ void MainUI::MoveScreenRight(){
   item = ui->list_screens->item( ui->list_screens->row(item)+1 );
   if(item == 0){ return; } //no item on the right (can't go right)
   QString RID = item->whatsThis(); //right ID
+  //Adjust the order of the two screens
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID == RID){ SCREENS[i].order = SCREENS[i].order-1; }
+    else if(SCREENS[i].ID==CID){ SCREENS[i].order = SCREENS[i].order+1; }
+  }
   //Now run the command
-  LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--right-of" << RID);
+  QStringList opts = currentOpts();
+  LUtils::runCmd("xrandr", opts);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
@@ -218,7 +250,14 @@ void MainUI::DeactivateScreen(QString device){
     device = item->whatsThis();
   }
   if(device.isEmpty()){ return; } //nothing found
-  LUtils::runCmd("xrandr", QStringList() << "--output" << device << "--off");
+  //Remove the screen from the settings
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID==device){ SCREENS.removeAt(i); break; }
+  }
+  //Now run the command
+  QStringList opts = currentOpts();
+  opts << "--output" << device << "--off";
+  LUtils::runCmd("xrandr", opts);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
@@ -228,16 +267,29 @@ void MainUI::ActivateScreen(){
   QString DID = ui->combo_cscreens->currentText();
   QString loc = ui->combo_location->currentData().toString();
   if(ID.isEmpty() || DID.isEmpty() || loc.isEmpty()){ return; } //invalid inputs
-  LUtils::runCmd("xrandr", QStringList() << "--output" << ID << loc << DID <<"--auto");
+  QStringList opts = currentOpts();
+    opts << "--output" << ID << loc << DID <<"--auto";
+  //qDebug() << "Activate Options:" << opts;
+  LUtils::runCmd("xrandr", opts );
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
 void MainUI::ApplyChanges(){
+  //NOTE: need to re-specifiy the 
   QListWidgetItem *it = ui->list_screens->currentItem();
   if(it==0){ return; } //nothing to do
   QString newres = ui->combo_resolution->currentData().toString();
   if(newres.isEmpty()){ return; } //nothing to do
-  qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
-  LUtils::runCmd("xrandr", QStringList() << "--output" << it->whatsThis() << "--mode" << newres);
+  //qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
+  //Adjust the order of the two screens
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID == it->whatsThis()){
+      SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
+      SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
+    }
+  }
+  //Now run the command
+  QStringList opts = currentOpts();
+  LUtils::runCmd("xrandr", opts);
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }

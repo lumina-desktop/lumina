@@ -46,6 +46,8 @@ private:
 	QList<ScreenInfo> SCREENS;
 	ScreenInfo currentScreenInfo();
 
+	QStringList currentOpts();
+
 private slots:
 	void UpdateScreens();
 	void ScreenSelected();
