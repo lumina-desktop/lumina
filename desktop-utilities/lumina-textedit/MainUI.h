@@ -29,8 +29,10 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+
 	//Simplification functions
 	PlainTextEditor* currentEditor();
+	QString currentFileDir();
 
 private slots:
 	//Main Actions
@@ -39,6 +41,8 @@ private slots:
 	void SaveFile();
 	void SaveFileAs();
 	void UpdateHighlighting(QAction*);
+	//Tab Interactions
+	void updateTab(QString);
 
 };
 #endif

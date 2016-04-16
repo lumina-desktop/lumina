@@ -11,6 +11,9 @@
 
 #include <LuminaXDG.h>
 
+#include <QFileDialog>
+#include <QDir>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   this->setWindowTitle(tr("Text Editor"));
@@ -39,16 +42,21 @@ void MainUI::LoadArguments(QStringList args){ //CLI arguments
   	  
   }
   
-  if(ui->tabWidget->count()<1){
+  /*if(ui->tabWidget->count()<1){
     NewFile();
-  }
+  }*/
 }
 
 // =================
 //      PUBLIC SLOTS
 //=================
 void MainUI::updateIcons(){
-  ui->actionClose->setIcon(LXDG::findIcon("action-close") );
+  ui->actionClose->setIcon(LXDG::findIcon("application-exit") );
+  ui->actionNew_File->setIcon(LXDG::findIcon("document-new") );
+  ui->actionOpen_File->setIcon(LXDG::findIcon("document-open") );
+  ui->actionSave_File->setIcon(LXDG::findIcon("document-save") );
+  ui->actionSave_File_As->setIcon(LXDG::findIcon("document-save-as") );
+  ui->menuSyntax_Highlighting->setIcon( LXDG::findIcon("format-text-color") );
 
 }
 
@@ -60,6 +68,17 @@ PlainTextEditor* MainUI::currentEditor(){
   return static_cast<PlainTextEditor*>( ui->tabWidget->currentWidget() );
 }
 
+QString MainUI::currentFileDir(){
+  PlainTextEditor* cur = currentEditor();
+  QString dir;
+  if(cur!=0){
+    if(cur->currentFile().startsWith("/")){
+      dir = cur->currentFile().section("/",0,-2);
+    }
+  }
+  return dir;
+}
+
 // =================
 //    PRIVATE SLOTS
 //=================
@@ -69,28 +88,52 @@ void MainUI::NewFile(){
 }
 
 void MainUI::OpenFile(QString file){
+  QStringList files;
   if(file.isEmpty()){
     //Prompt for a file to open
-	  
+    files = QFileDialog::getOpenFileNames(this, tr("Open File(s)"), currentFileDir(), tr("Text Files (*)") );
+    if(files.isEmpty()){ return; } //cancelled
+  }else{
+    files << file;
   }
-  if(file.isEmpty()){ return; }
-  PlainTextEditor *edit = new PlainTextEditor(this);
-  ui->tabWidget->addTab(edit, file.section("/",-1));
-  edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
-  edit->LoadFile(file);
-  ui->tabWidget->setCurrentWidget(edit);
+  for(int i=0; i<files.length(); i++){
+    PlainTextEditor *edit = new PlainTextEditor(this);
+      connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
+      connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
+    ui->tabWidget->addTab(edit, files[i].section("/",-1));
+    edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
+    ui->tabWidget->setCurrentWidget(edit);
+    edit->LoadFile(files[i]);
+    edit->setFocus();
+    QApplication::processEvents(); //to catch the fileLoaded() signal
+  }
 }
 
 void MainUI::SaveFile(){
-	
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  cur->SaveFile();
 }
 
 void MainUI::SaveFileAs(){
-	
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  cur->SaveFile(true);	
 }
 
 void MainUI::UpdateHighlighting(QAction *act){
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   cur->LoadSyntaxRule(act->text());
+}
+
+void MainUI::updateTab(QString file){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; } //should never happen
+  int index = ui->tabWidget->currentIndex();
+  if(index<0){ index = 0; } //FALLBACK - use the first tab
+  bool changes = cur->hasChange();
+  ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
+  ui->actionSave_File->setEnabled(changes);
+  ui->actionSave_File_As->setEnabled(changes);
 }

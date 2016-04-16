@@ -27,8 +27,10 @@ public:
 
 	//File loading/setting options
 	void LoadFile(QString filepath);
-	void SaveFile();
+	void SaveFile(bool newname = false);
 	QString currentFile();
+
+	bool hasChange();
 
 	//Functions for managing the line number widget (internal - do not need to run directly)
 	int LNWWidth(); //replacing the LNW size hint detection

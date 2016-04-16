@@ -9,6 +9,7 @@
 #include <QColor>
 #include <QPainter>
 #include <QTextBlock>
+#include <QFileDialog>
 
 #include <LuminaUtils.h>
 
@@ -52,19 +53,28 @@ void PlainTextEditor::LoadFile(QString filepath){
   SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
   this->setPlainText( LUtils::readFile(filepath).join("\n") );
   hasChanges = false;
+  emit FileLoaded(this->whatsThis());
 }
 
-void PlainTextEditor::SaveFile(){
-  if( !this->whatsThis().startsWith("/") ){
+void PlainTextEditor::SaveFile(bool newname){
+  if( !this->whatsThis().startsWith("/") || newname ){
     //prompt for a filename/path
-	  
+    QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
+    if(file.isEmpty()){ return; }
+    else{ this->setWhatsThis(file); }
   }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
   if(ok){ emit FileLoaded(this->whatsThis()); }
+  SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
+  SYNTAX->rehighlight();
 }
 
 QString PlainTextEditor::currentFile(){
   return this->whatsThis();
+}
+
+bool PlainTextEditor::hasChange(){
+  return hasChanges;	
 }
 
 //Functions for managing the line number widget
