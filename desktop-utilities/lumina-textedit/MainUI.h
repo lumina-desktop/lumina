@@ -40,9 +40,15 @@ private slots:
 	void OpenFile(QString file = "");
 	void SaveFile();
 	void SaveFileAs();
+
+	//Other Menu Actions
 	void UpdateHighlighting(QAction*);
+	void showLineNumbers(bool);
+
 	//Tab Interactions
 	void updateTab(QString);
+	void tabChanged();
+	void tabClosed(int);
 
 };
 #endif

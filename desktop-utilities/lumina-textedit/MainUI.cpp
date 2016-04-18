@@ -30,6 +30,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionSave_File, SIGNAL(triggered()), this, SLOT(SaveFile()) );
   connect(ui->actionSave_File_As, SIGNAL(triggered()), this, SLOT(SaveFileAs()) );
   connect(ui->menuSyntax_Highlighting, SIGNAL(triggered(QAction*)), this, SLOT(UpdateHighlighting(QAction*)) );
+  connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
+  connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
+  connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   updateIcons();
 }
 
@@ -127,6 +130,13 @@ void MainUI::UpdateHighlighting(QAction *act){
   cur->LoadSyntaxRule(act->text());
 }
 
+void MainUI::showLineNumbers(bool show){
+  for(int i=0; i<ui->tabWidget->count(); i++){
+    PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+    edit->showLineNumbers(show);
+  }
+}
+
 void MainUI::updateTab(QString file){
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; } //should never happen
@@ -136,4 +146,24 @@ void MainUI::updateTab(QString file){
   ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
   ui->actionSave_File->setEnabled(changes);
   ui->actionSave_File_As->setEnabled(changes);
+}
+
+void MainUI::tabChanged(){
+  //update the buttons/menus based on the current widget
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; } //should never happen though
+  bool changes = cur->hasChange();
+  ui->actionSave_File->setEnabled(changes);
+  ui->actionSave_File_As->setEnabled(changes);
+}
+
+void MainUI::tabClosed(int tab){
+  PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(tab));
+  if(edit==0){ return; } //should never happen
+  if(edit->hasChange()){
+    //Verify if the user wants to lose any unsaved changes
+	  
+  }
+  ui->tabWidget->removeTab(tab);
+  edit->deleteLater();
 }
