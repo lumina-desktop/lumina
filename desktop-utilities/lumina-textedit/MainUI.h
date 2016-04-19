@@ -10,6 +10,7 @@
 #include <QMainWindow>
 #include <QStringList>
 #include <QSettings>
+#include <QShortcut>
 
 #include "PlainTextEditor.h"
 
@@ -31,6 +32,7 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	QSettings *settings;
+	QShortcut *closeFindS;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
@@ -55,6 +57,16 @@ private slots:
 	void tabChanged();
 	void tabClosed(int);
 
+	//Find/Replace functions
+	void closeFindReplace();
+	void openFind();
+	void openReplace();
+	
+	void findNext();
+	void findPrev();
+	void replaceOne();
+	void replaceAll();
+	
 protected:
 	void resizeEvent(QResizeEvent *ev){
 	  settings->setValue("lastSize", ev->size());

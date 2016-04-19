@@ -152,12 +152,12 @@ void Custom_Syntax::loadRules(QString type){
     // Strong Emphasis
     rule.format.setFontItalic(false);
     rule.format.setFontWeight(QFont::Bold);
-    rule.pattern = QRegExp("\\b[*]{2}.*[*]{2}\\b");
+    rule.pattern = QRegExp("\\b[*]{2}[^*\n]+[*]{2}\\b");
     rules << rule;
     // Emphasis
     rule.format.setFontItalic(true);
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("\\b[*].+[*]\\b");
+    rule.pattern = QRegExp("\\b[*][^*\n]+[*]\\b");
     rules << rule;
     // Code Sample
     rule.format.setFontItalic(false);

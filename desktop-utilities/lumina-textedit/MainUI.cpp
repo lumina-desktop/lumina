@@ -14,6 +14,7 @@
 
 #include <QFileDialog>
 #include <QDir>
+#include <QKeySequence>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -21,6 +22,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   Custom_Syntax::SetupDefaultColors(settings); //pre-load any color settings as needed
   this->setWindowTitle(tr("Text Editor"));
   ui->tabWidget->clear();
+  closeFindS = new QShortcut(QKeySequence(Qt::Key_Escape), this);
+    connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
+  ui->groupReplace->setVisible(false);
   //Update the menu of available syntax highlighting modes
   QStringList smodes = Custom_Syntax::availableRules();
   for(int i=0; i<smodes.length(); i++){
@@ -41,6 +45,14 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionCustomize_Colors, SIGNAL(triggered()), this, SLOT(ModifyColors()) );
+  connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(openFind()) );
+  connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(openReplace()) );
+  connect(ui->tool_find_next, SIGNAL(clicked()), this, SLOT(findNext()) );
+  connect(ui->tool_find_prev, SIGNAL(clicked()), this, SLOT(findPrev()) );
+  connect(ui->tool_replace, SIGNAL(clicked()), this, SLOT(replaceOne()) );
+  connect(ui->tool_replace_all, SIGNAL(clicked()), this, SLOT(replaceAll()) );
+  connect(ui->line_find, SIGNAL(returnPressed()), this, SLOT(findNext()) );
+  connect(ui->line_replace, SIGNAL(returnPressed()), this, SLOT(replaceOne()) );
   updateIcons();
   //Now load the initial size of the window
   QSize lastSize = settings->value("lastSize",QSize()).toSize();
@@ -56,6 +68,7 @@ MainUI::~MainUI(){
 void MainUI::LoadArguments(QStringList args){ //CLI arguments
   for(int i=0; i<args.length(); i++){
     OpenFile( LUtils::PathToAbsolute(args[i]) );
+  ui->line_find->setFocus();	
   }
 }
 
@@ -70,9 +83,17 @@ void MainUI::updateIcons(){
   ui->actionClose_File->setIcon(LXDG::findIcon("document-close") );
   ui->actionSave_File->setIcon(LXDG::findIcon("document-save") );
   ui->actionSave_File_As->setIcon(LXDG::findIcon("document-save-as") );
+  ui->actionFind->setIcon(LXDG::findIcon("edit-find") );
+  ui->actionReplace->setIcon(LXDG::findIcon("edit-find-replace") );
   ui->menuSyntax_Highlighting->setIcon( LXDG::findIcon("format-text-color") );
   ui->actionCustomize_Colors->setIcon( LXDG::findIcon("format-fill-color") );
-
+  //icons for the special find/replace groupbox
+  ui->tool_find_next->setIcon(LXDG::findIcon("go-down-search"));
+  ui->tool_find_prev->setIcon(LXDG::findIcon("go-up-search"));
+  ui->tool_find_casesensitive->setIcon(LXDG::findIcon("format-text-italic"));
+  ui->tool_replace->setIcon(LXDG::findIcon("arrow-down"));
+  ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
+  //ui->tool_find_next->setIcon(LXDG::findIcon(""));
 }
 
 // =================
@@ -118,6 +139,7 @@ void MainUI::OpenFile(QString file){
     ui->tabWidget->addTab(edit, files[i].section("/",-1));
     edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
     edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
     ui->tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
     edit->setFocus();
@@ -205,4 +227,90 @@ void MainUI::tabClosed(int tab){
   }
   ui->tabWidget->removeTab(tab);
   edit->deleteLater();
+}
+
+//Find/Replace functions
+void MainUI::closeFindReplace(){
+  ui->groupReplace->setVisible(false);
+  PlainTextEditor *cur = currentEditor();
+  if(cur!=0){ cur->setFocus(); }	
+}
+
+void MainUI::openFind(){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  ui->groupReplace->setVisible(true);
+  ui->line_find->setText( cur->textCursor().selectedText() );
+  ui->line_replace->setText(""); 
+  ui->line_find->setFocus();	
+}
+
+void MainUI::openReplace(){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  ui->groupReplace->setVisible(true);
+  ui->line_find->setText( cur->textCursor().selectedText() );
+  ui->line_replace->setText(""); 
+  ui->line_replace->setFocus();
+}
+
+void MainUI::findNext(){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  bool found = cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
+  if(!found){
+    //Try starting back at the top of the file
+    cur->moveCursor(QTextCursor::Start);
+    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );	  
+  }
+}
+
+void MainUI::findPrev(){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  bool found = cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively | QTextDocument::FindBackward : QTextDocument::FindBackward );
+  if(!found){
+    //Try starting back at the bottom of the file
+    cur->moveCursor(QTextCursor::End);
+    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively | QTextDocument::FindBackward : QTextDocument::FindBackward );	  
+  }
+}
+
+void MainUI::replaceOne(){
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  //See if the current selection matches the find field first
+  bool done = false;
+  if(cur->textCursor().selectedText()==ui->line_find->text()){
+    cur->insertPlainText(ui->line_replace->text());
+    done = true;
+  }else{
+    //Find/replace the next occurance of the string
+    bool found = cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
+    if(found){ cur->insertPlainText(ui->line_replace->text()); done = true;}
+  }
+  if(done){
+    //Re-highlight the newly-inserted text
+    cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
+  }
+}
+
+void MainUI::replaceAll(){
+PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  //See if the current selection matches the find field first
+  bool done = false;
+  if(cur->textCursor().selectedText()==ui->line_find->text()){
+    cur->insertPlainText(ui->line_replace->text());
+    done = true;
+  }
+  while( cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() ) ){
+    //Find/replace every occurance of the string
+    cur->insertPlainText(ui->line_replace->text());
+    done = true;
+  }
+  if(done){
+    //Re-highlight the newly-inserted text
+    cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
+  }
 }
