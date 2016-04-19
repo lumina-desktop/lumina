@@ -27,6 +27,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->menuSyntax_Highlighting->addAction(smodes[i]);
   }
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
+  ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   //Setup any connections
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->actionNew_File, SIGNAL(triggered()), this, SLOT(NewFile()) );
@@ -38,6 +39,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
   connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
+  connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionCustomize_Colors, SIGNAL(triggered()), this, SLOT(ModifyColors()) );
   updateIcons();
   //Now load the initial size of the window
@@ -115,6 +117,7 @@ void MainUI::OpenFile(QString file){
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
     ui->tabWidget->addTab(edit, files[i].section("/",-1));
     edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
+    edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
     ui->tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
     edit->setFocus();
@@ -151,6 +154,14 @@ void MainUI::showLineNumbers(bool show){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
     edit->showLineNumbers(show);
   }
+}
+
+void MainUI::wrapLines(bool wrap){
+  settings->setValue("wrapLines",wrap);
+  for(int i=0; i<ui->tabWidget->count(); i++){
+    PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+    edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+  }	
 }
 
 void MainUI::ModifyColors(){

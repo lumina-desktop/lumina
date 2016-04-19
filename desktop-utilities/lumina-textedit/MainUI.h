@@ -47,6 +47,7 @@ private slots:
 	//Other Menu Actions
 	void UpdateHighlighting(QAction*);
 	void showLineNumbers(bool);
+	void wrapLines(bool);
 	void ModifyColors();
 
 	//Tab Interactions

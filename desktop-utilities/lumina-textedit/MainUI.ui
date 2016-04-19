@@ -82,6 +82,7 @@
     </widget>
     <addaction name="menuSyntax_Highlighting"/>
     <addaction name="actionLine_Numbers"/>
+    <addaction name="actionWrap_Lines"/>
     <addaction name="separator"/>
     <addaction name="actionCustomize_Colors"/>
    </widget>
@@ -188,6 +189,17 @@
   <action name="actionCustomize_Colors">
    <property name="text">
     <string>Customize Colors</string>
+   </property>
+  </action>
+  <action name="actionWrap_Lines">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wrap Lines</string>
    </property>
   </action>
  </widget>

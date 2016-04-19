@@ -24,6 +24,8 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   hasChanges = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
+  //this->setObjectName("PlainTextEditor");
+  //this->setStyleSheet("QPlainTextEdit#PlainTextEditor{ }");
   SYNTAX = new Custom_Syntax(settings, this->document());
   connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(LNW_updateWidth()) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(LNW_highlightLine()) );
@@ -145,8 +147,8 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos){
   QList<QTextEdit::ExtraSelection> sels = this->extraSelections();	
   if(matchleft>=0){ 
     QTextEdit::ExtraSelection sel;
-    if(matchright>=0){ sel.format.setBackground(Qt::darkGreen); }
-    else{ sel.format.setBackground(Qt::darkRed); }
+    if(matchright>=0){ sel.format.setBackground( QColor(settings->value("colors/bracket-found").toString()) ); }
+    else{ sel.format.setBackground( QColor(settings->value("colors/bracket-missing").toString()) ); }
     QTextCursor cur = this->textCursor();
       cur.setPosition(matchleft);
       if(forward){ cur.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor); }
@@ -156,8 +158,8 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos){
   }
   if(matchright>=0){
     QTextEdit::ExtraSelection sel;
-    if(matchleft>=0){ sel.format.setBackground(Qt::darkGreen); }
-    else{ sel.format.setBackground(Qt::darkRed); }
+    if(matchleft>=0){ sel.format.setBackground( QColor(settings->value("colors/bracket-found").toString()) ); }
+    else{ sel.format.setBackground( QColor(settings->value("colors/bracket-missing").toString()) ); }
     QTextCursor cur = this->textCursor();
       cur.setPosition(matchright);
       if(!forward){ cur.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor); }
