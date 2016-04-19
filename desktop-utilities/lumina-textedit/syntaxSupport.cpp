@@ -10,12 +10,34 @@ QStringList Custom_Syntax::availableRules(){
   QStringList avail;
     avail << "C++";
     avail << "Python";
+    avail << "reST";
   return avail;
+}
+
+QStringList Custom_Syntax::knownColors(){
+  //Note: All these colors should be prefixed with "colors/" when accessing them from the settings file
+  QStringList avail;
+    //Standard colors
+    avail << "keyword" << "altkeyword" << "class" << "text" << "function" << "comment";
+	
+  return avail;
+}
+
+void Custom_Syntax::SetupDefaultColors(QSettings *settings){
+  if(settings->contains("colors/keyword")){ return; } //already has color info
+  settings->setValue("colors/keyword", QColor(Qt::blue).name() );
+  settings->setValue("colors/altkeyword", QColor(Qt::darkBlue).name() );
+  settings->setValue("colors/class", QColor(Qt::darkRed).name() );
+  settings->setValue("colors/text", QColor(Qt::darkMagenta).name() );
+  settings->setValue("colors/function", QColor(Qt::darkCyan).name() );
+  settings->setValue("colors/comment", QColor(Qt::darkGreen).name() );
 }
 
 QString Custom_Syntax::ruleForFile(QString filename){
   QString suffix = filename.section(".",-1);
   if(suffix=="cpp" || suffix=="hpp" || suffix=="c" || suffix=="h"){ return "C++"; }
+  else if(suffix=="py" || suffix=="pyc"){ return "Python"; }
+  else if(suffix=="rst"){ return "reST"; }
   return "";
 }
 
@@ -32,27 +54,27 @@ void Custom_Syntax::loadRules(QString type){
 			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile";
 	  
     SyntaxRule rule;
-	rule.format.setForeground(Qt::darkBlue);
+	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
 	rule.format.setFontWeight(QFont::Bold);
     for(int i=0; i<keywords.length(); i++){
       rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
       rules << rule;
     }
     //Class Names
-    rule.format.setForeground(Qt::darkMagenta);
+    rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
     rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
     rules << rule;
     //Quotes
-    rule.format.setForeground(Qt::red);
+    rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
     rule.pattern = QRegExp("\".*\"");
     rules << rule;
     //Functions
-    rule.format.setForeground(Qt::blue);
+    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
     rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
     rules << rule;
     //Comment (single line)
-    rule.format.setForeground(Qt::green);
+    rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
     rule.pattern = QRegExp("//[^\n]*");
     rules << rule;
     //Comment (multi-line)
@@ -71,7 +93,7 @@ void Custom_Syntax::loadRules(QString type){
 			<< "or" << "pass" << "print" << "raise" << "return" << "try" << "while" << "with" << "yield";
 	  
     SyntaxRule rule;
-	rule.format.setForeground(Qt::darkBlue);
+	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
 	rule.format.setFontWeight(QFont::Bold);
     for(int i=0; i<keywords.length(); i++){
       rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
@@ -82,18 +104,79 @@ void Custom_Syntax::loadRules(QString type){
     //rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
     //rules << rule;
     //Quotes
-    rule.format.setForeground(Qt::red);
+    rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
     rule.pattern = QRegExp("\".*\"");
     rules << rule;
     //Functions
-    rule.format.setForeground(Qt::blue);
+    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
     rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
     rules << rule;
     //Comment (single line)
-    rule.format.setForeground(Qt::green);
+    rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
     rule.pattern = QRegExp("#[^\n]*");
     rules << rule;
+    //Comment (multi-line)
+    //SyntaxRuleSplit srule;
+    //srule.format = rule.format; //re-use the single-line comment format
+    //srule.startPattern = QRegExp("/\\*");
+    //srule.endPattern = QRegExp("\\*/");
+    //splitrules << srule;
+    
+  }else if(type=="reST"){
+    //Keywords
+    QStringList keywords;
+	keywords << "emphasis" << "strong" << "literal" << "subscript" << "superscript" << "title-reference"; 
+    SyntaxRule rule;
+	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
+	rule.format.setFontWeight(QFont::Bold);
+    for(int i=0; i<keywords.length(); i++){
+      rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
+      rules << rule;
+    }
+    //Directives
+    /*keywords.clear();
+    keywords << "image"  << "figure" << "contents" << "container" << "rubric" << "topic" << "sidebar"  \
+	  << "parsed-literal" << "epigraph" << "highlights" << "pull-quote" << "compound" << "table" << "csv-table" \
+	  << "list-table" << "raw" << "include"<< "class" << "meta" << "title" << "default-role" << "role";
+    rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
+    for(int i=0; i<keywords.length(); i++){
+      rule.pattern = QRegExp("\\b"+keywords[i]+"::\\b"); //turn each keyword into a QRegExp and insert the rule
+      rules << rule;
+    }*/
+    //Reset the font color
+    // Emphasis
+    /*rule.format = QTextCharFormat();
+    rule.format.setFontItalic(true);
+    rule.pattern = QRegExp("\\b\\**\\*\\b");
+    rules << rule;
+    // Strong Emphasis
+    rule.format.setFontItalic(false);
+    rule.format.setFontWeight(QFont::Bold);
+    rule.pattern = QRegExp("\\b\\*\\**\\*\\*\\b");
+    rules << rule;
+    // Code Sample
+    rule.format.setFontWeight(QFont::Light);
+    rule.format.setFontFixedPitch(true);
+    rule.pattern = QRegExp("\\b\\`\\`*\\`\\`\\b");
+    rules << rule;
+    //Class Names
+    //rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
+    //rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
+    //rules << rule;
+    //Quotes
+    rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
+    rule.format.setFontWeight(QFont::Normal);
+    rule.pattern = QRegExp("\".*\"");
+    rules << rule;
+    //Functions
+    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
+    rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
+    rules << rule;*/
+    //Comment (single line)
+    //rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
+    //rule.pattern = QRegExp("\\b\\.\\.\\ [^\n]*");
+    //rules << rule;
     //Comment (multi-line)
     //SyntaxRuleSplit srule;
     //srule.format = rule.format; //re-use the single-line comment format

@@ -10,18 +10,21 @@
 #include <QPainter>
 #include <QTextBlock>
 #include <QFileDialog>
+#include <QDebug>
 
 #include <LuminaUtils.h>
 
 //==============
 //       PUBLIC
 //==============
-PlainTextEditor::PlainTextEditor(QWidget *parent) : QPlainTextEdit(parent){
+PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEdit(parent){
+  settings = set;
   LNW = new LNWidget(this);
   showLNW = true;
   hasChanges = false;
+  lastSaveContents.clear();
   matchleft = matchright = -1;
-  SYNTAX = new Custom_Syntax(this->document());
+  SYNTAX = new Custom_Syntax(settings, this->document());
   connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(LNW_updateWidth()) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(LNW_highlightLine()) );
   connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(LNW_update(const QRect&, int)) );
@@ -51,22 +54,26 @@ void PlainTextEditor::LoadFile(QString filepath){
   this->setWhatsThis(filepath);
   this->clear();
   SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
-  this->setPlainText( LUtils::readFile(filepath).join("\n") );
+  lastSaveContents = LUtils::readFile(filepath).join("\n");
+  this->setPlainText( lastSaveContents );
   hasChanges = false;
   emit FileLoaded(this->whatsThis());
 }
 
 void PlainTextEditor::SaveFile(bool newname){
+  //qDebug() << "Save File:" << this->whatsThis();
   if( !this->whatsThis().startsWith("/") || newname ){
     //prompt for a filename/path
     QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
     if(file.isEmpty()){ return; }
-    else{ this->setWhatsThis(file); }
+    this->setWhatsThis(file);
+    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
+    SYNTAX->rehighlight();
   }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
-  if(ok){ emit FileLoaded(this->whatsThis()); }
-  SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
-  SYNTAX->rehighlight();
+  hasChanges = !ok;
+  if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
+  //qDebug() << " - Success:" << ok << hasChanges;
 }
 
 QString PlainTextEditor::currentFile(){
@@ -84,7 +91,7 @@ int PlainTextEditor::LNWWidth(){
   if(lines<1){ lines = 1; }
   int chars = 1;
   while(lines>=10){ chars++; lines/=10; }
-  return (this->fontMetrics().width("9")*chars + 4); //make sure to add a tiny bit of padding
+  return (this->fontMetrics().width("9")*chars); //make sure to add a tiny bit of padding
 }
 
 void PlainTextEditor::paintLNW(QPaintEvent *ev){
@@ -211,10 +218,12 @@ void PlainTextEditor::checkMatchChar(){
 
 //Functions for notifying the parent widget of changes
 void PlainTextEditor::textChanged(){
-  if(!hasChanges){
-    hasChanges = true;
-    emit UnsavedChanges( this->whatsThis() );
-  }
+  //qDebug() << " - Got Text Changed signal";
+  bool changed = (lastSaveContents != this->toPlainText());
+  if(changed == hasChanges){ return; } //no change
+  hasChanges = changed; //save for reading later
+  if(hasChanges){  emit UnsavedChanges( this->whatsThis() ); }
+  else{ emit FileLoaded(this->whatsThis()); }
 }
 
 //==================

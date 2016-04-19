@@ -9,6 +9,7 @@
 
 #include <QMainWindow>
 #include <QStringList>
+#include <QSettings>
 
 #include "PlainTextEditor.h"
 
@@ -29,6 +30,7 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+	QSettings *settings;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
@@ -38,17 +40,23 @@ private slots:
 	//Main Actions
 	void NewFile();
 	void OpenFile(QString file = "");
+	void CloseFile(); //current file only
 	void SaveFile();
 	void SaveFileAs();
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction*);
 	void showLineNumbers(bool);
+	void ModifyColors();
 
 	//Tab Interactions
 	void updateTab(QString);
 	void tabChanged();
 	void tabClosed(int);
 
+protected:
+	void resizeEvent(QResizeEvent *ev){
+	  settings->setValue("lastSize", ev->size());
+	}
 };
 #endif

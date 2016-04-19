@@ -11,6 +11,7 @@
 #include <QTextDocument>
 #include <QTextCharFormat>
 #include <QString>
+#include <QSettings>
 
 //Simple syntax rules
 struct SyntaxRule{
@@ -26,15 +27,19 @@ struct SyntaxRuleSplit{
 class Custom_Syntax : public QSyntaxHighlighter{
 	Q_OBJECT
 private:
+	QSettings *settings;
 	QVector<SyntaxRule> rules;
 	QVector<SyntaxRuleSplit> splitrules;
 
 public:
-	Custom_Syntax(QTextDocument *parent = 0) : QSyntaxHighlighter(parent){
+	Custom_Syntax(QSettings *set, QTextDocument *parent = 0) : QSyntaxHighlighter(parent){
+	  settings = set;
 	}
 	~Custom_Syntax(){}
 	
 	static QStringList availableRules();
+	static QStringList knownColors();
+	static void SetupDefaultColors(QSettings *settings);
 	static QString ruleForFile(QString filename);
 	void loadRules(QString type);
 protected:

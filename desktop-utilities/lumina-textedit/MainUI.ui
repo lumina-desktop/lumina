@@ -62,6 +62,7 @@
     </property>
     <addaction name="actionNew_File"/>
     <addaction name="actionOpen_File"/>
+    <addaction name="actionClose_File"/>
     <addaction name="separator"/>
     <addaction name="actionSave_File"/>
     <addaction name="actionSave_File_As"/>
@@ -81,6 +82,8 @@
     </widget>
     <addaction name="menuSyntax_Highlighting"/>
     <addaction name="actionLine_Numbers"/>
+    <addaction name="separator"/>
+    <addaction name="actionCustomize_Colors"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -114,7 +117,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Line Numbers</string>
+    <string>Show Line Numbers</string>
    </property>
   </action>
   <action name="action_syntax_none">
@@ -126,15 +129,33 @@
    <property name="text">
     <string>New File</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionOpen_File">
    <property name="text">
     <string>Open File</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionSave_File">
    <property name="text">
     <string>Save File</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionSave_File_As">
@@ -145,6 +166,28 @@
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionClose_File">
+   <property name="text">
+    <string>Close File</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionCustomize_Colors">
+   <property name="text">
+    <string>Customize Colors</string>
    </property>
   </action>
  </widget>

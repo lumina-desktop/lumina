@@ -18,7 +18,7 @@
 class PlainTextEditor : public QPlainTextEdit{
 	Q_OBJECT
 public:
-	PlainTextEditor(QWidget *parent = 0);
+	PlainTextEditor(QSettings *set, QWidget *parent = 0);
 	~PlainTextEditor();
 	
 	//Functions for setting up the editor
@@ -39,6 +39,8 @@ public:
 private:
 	QWidget *LNW; //Line Number Widget
 	bool showLNW;
+	QSettings *settings;
+	QString lastSaveContents;
 	//Syntax Highlighting class
 	Custom_Syntax *SYNTAX;
 
