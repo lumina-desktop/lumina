@@ -24,6 +24,7 @@ public:
 	//Functions for setting up the editor
 	void showLineNumbers(bool show = true);
 	void LoadSyntaxRule(QString type);
+	void updateSyntaxColors();
 
 	//File loading/setting options
 	void LoadFile(QString filepath);

@@ -46,6 +46,7 @@ QString Custom_Syntax::ruleForFile(QString filename){
 
 void Custom_Syntax::loadRules(QString type){
   //NOTE: the "multiLineComment
+  lasttype = type;
   rules.clear();
   splitrules.clear();
   if(type=="C++"){

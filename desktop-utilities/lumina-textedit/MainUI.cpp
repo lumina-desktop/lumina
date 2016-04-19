@@ -15,11 +15,13 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QKeySequence>
+#include <QTimer>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   settings = new QSettings("lumina-desktop","lumina-textedit");
   Custom_Syntax::SetupDefaultColors(settings); //pre-load any color settings as needed
+  colorDLG = new ColorDialog(settings, this);
   this->setWindowTitle(tr("Text Editor"));
   ui->tabWidget->clear();
   closeFindS = new QShortcut(QKeySequence(Qt::Key_Escape), this);
@@ -53,6 +55,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_replace_all, SIGNAL(clicked()), this, SLOT(replaceAll()) );
   connect(ui->line_find, SIGNAL(returnPressed()), this, SLOT(findNext()) );
   connect(ui->line_replace, SIGNAL(returnPressed()), this, SLOT(replaceOne()) );
+  connect(colorDLG, SIGNAL(colorsChanged()), this, SLOT(UpdateHighlighting()) );
   updateIcons();
   //Now load the initial size of the window
   QSize lastSize = settings->value("lastSize",QSize()).toSize();
@@ -94,6 +97,8 @@ void MainUI::updateIcons(){
   ui->tool_replace->setIcon(LXDG::findIcon("arrow-down"));
   ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
   //ui->tool_find_next->setIcon(LXDG::findIcon(""));
+	
+  QTimer::singleShot(0,colorDLG, SLOT(updateIcons()) );
 }
 
 // =================
@@ -120,7 +125,7 @@ QString MainUI::currentFileDir(){
 //=================
 //Main Actions
 void MainUI::NewFile(){
-  OpenFile("New-"+QString::number(ui->tabWidget->count()+1));
+  OpenFile(QString::number(ui->tabWidget->count()+1)+"/"+tr("New File"));
 }
 
 void MainUI::OpenFile(QString file){
@@ -165,9 +170,17 @@ void MainUI::SaveFileAs(){
 }
 
 void MainUI::UpdateHighlighting(QAction *act){
-  PlainTextEditor *cur = currentEditor();
-  if(cur==0){ return; }
-  cur->LoadSyntaxRule(act->text());
+  if(act!=0){
+    //Single-editor change
+    PlainTextEditor *cur = currentEditor();
+    if(cur==0){ return; }
+    cur->LoadSyntaxRule(act->text());
+  }else{
+    //Have every editor reload the syntax rules (color changes)
+    for(int i=0; i<ui->tabWidget->count(); i++){
+      static_cast<PlainTextEditor*>(ui->tabWidget->widget(i))->updateSyntaxColors();
+    }
+  }
 }
 
 void MainUI::showLineNumbers(bool show){
@@ -187,7 +200,8 @@ void MainUI::wrapLines(bool wrap){
 }
 
 void MainUI::ModifyColors(){
-
+  colorDLG->LoadColors();
+  colorDLG->showNormal();
 }
 
 void MainUI::updateTab(QString file){

@@ -13,6 +13,7 @@
 #include <QShortcut>
 
 #include "PlainTextEditor.h"
+#include "ColorDialog.h"
 
 namespace Ui{
 	class MainUI;
@@ -31,6 +32,7 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+	ColorDialog *colorDLG;
 	QSettings *settings;
 	QShortcut *closeFindS;
 
@@ -47,7 +49,7 @@ private slots:
 	void SaveFileAs();
 
 	//Other Menu Actions
-	void UpdateHighlighting(QAction*);
+	void UpdateHighlighting(QAction *act = 0);
 	void showLineNumbers(bool);
 	void wrapLines(bool);
 	void ModifyColors();

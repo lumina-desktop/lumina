@@ -7,15 +7,17 @@ target.path = $${L_BINDIR}
 
 HEADERS	+= MainUI.h \
 			PlainTextEditor.h \
-			syntaxSupport.h
+			syntaxSupport.h \
+			ColorDialog.h
 		
 SOURCES	+= main.cpp \
 			MainUI.cpp \
 			PlainTextEditor.cpp \
-			syntaxSupport.cpp
+			syntaxSupport.cpp \
+			ColorDialog.cpp
 
-FORMS		+= MainUI.ui
-
+FORMS		+= MainUI.ui \
+			ColorDialog.ui
 LIBS += -lLuminaUtils
 
 

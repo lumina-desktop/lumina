@@ -28,6 +28,7 @@ class Custom_Syntax : public QSyntaxHighlighter{
 	Q_OBJECT
 private:
 	QSettings *settings;
+	QString lasttype;
 	QVector<SyntaxRule> rules;
 	QVector<SyntaxRuleSplit> splitrules;
 
@@ -36,12 +37,16 @@ public:
 	  settings = set;
 	}
 	~Custom_Syntax(){}
-	
+		
 	static QStringList availableRules();
 	static QStringList knownColors();
 	static void SetupDefaultColors(QSettings *settings);
 	static QString ruleForFile(QString filename);
 	void loadRules(QString type);
+		
+	void reloadRules(){
+	  loadRules(lasttype);
+	}
 protected:
 	void highlightBlock(const QString &text){
 	  for(int i=0; i<rules.length(); i++){

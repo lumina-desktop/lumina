@@ -51,6 +51,11 @@ void PlainTextEditor::LoadSyntaxRule(QString type){
   SYNTAX->rehighlight();
 }
 
+void PlainTextEditor::updateSyntaxColors(){
+  SYNTAX->reloadRules();
+  SYNTAX->rehighlight();	
+}
+
 //File loading/setting options
 void PlainTextEditor::LoadFile(QString filepath){
   this->setWhatsThis(filepath);
