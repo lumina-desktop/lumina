@@ -232,6 +232,7 @@ void MainUI::tabChanged(){
   ui->actionSave_File->setEnabled(changes);
   ui->actionSave_File_As->setEnabled(changes);
   this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
+  if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ ui->tabWidget->currentWidget()->setFocus(); }
 }
 
 void MainUI::tabClosed(int tab){
