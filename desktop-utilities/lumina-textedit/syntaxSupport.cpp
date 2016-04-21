@@ -71,7 +71,7 @@ void Custom_Syntax::loadRules(QString type){
     //Quotes
     rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("\".*\"");
+    rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
     rules << rule;
     //Functions
     rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
@@ -114,7 +114,7 @@ void Custom_Syntax::loadRules(QString type){
     //Quotes
     rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("\".*\"");
+    rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
     rules << rule;
     //Functions
     rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
@@ -173,7 +173,7 @@ void Custom_Syntax::loadRules(QString type){
     //Quotes
     rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("\".*\"");
+    rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
     rules << rule;
     //Functions
     rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
