@@ -25,15 +25,15 @@ QStringList Custom_Syntax::knownColors(){
 }
 
 void Custom_Syntax::SetupDefaultColors(QSettings *settings){
-  if(settings->contains("colors/keyword")){ return; } //already has color info
-  settings->setValue("colors/keyword", QColor(Qt::blue).name() );
-  settings->setValue("colors/altkeyword", QColor(Qt::darkBlue).name() );
-  settings->setValue("colors/class", QColor(Qt::darkRed).name() );
-  settings->setValue("colors/text", QColor(Qt::darkMagenta).name() );
-  settings->setValue("colors/function", QColor(Qt::darkCyan).name() );
-  settings->setValue("colors/comment", QColor(Qt::darkGreen).name() );
-  settings->setValue("colors/bracket-found", QColor(Qt::green).name() );
-  settings->setValue("colors/bracket-missing", QColor(Qt::red).name() );
+  if(!settings->contains("colors/keyword")){settings->setValue("colors/keyword", QColor(Qt::blue).name() ); }
+  if(!settings->contains("colors/altkeyword")){settings->setValue("colors/altkeyword", QColor(Qt::darkBlue).name() ); }
+  if(!settings->contains("colors/class")){settings->setValue("colors/class", QColor(Qt::darkRed).name() ); }
+  if(!settings->contains("colors/text")){settings->setValue("colors/text", QColor(Qt::darkMagenta).name() ); }
+  if(!settings->contains("colors/function")){settings->setValue("colors/function", QColor(Qt::darkCyan).name() ); }
+  if(!settings->contains("colors/comment")){settings->setValue("colors/comment", QColor(Qt::darkGreen).name() ); }
+  if(!settings->contains("colors/bracket-found")){settings->setValue("colors/bracket-found", QColor(Qt::green).name() ); }
+  if(!settings->contains("colors/bracket-missing")){settings->setValue("colors/bracket-missing", QColor(Qt::red).name() ); }
+  if(!settings->contains("colors/preprocessor")){settings->setValue("colors/preprocessor", QColor(Qt::darkYellow).name() ); }
 }
 
 QString Custom_Syntax::ruleForFile(QString filename){
@@ -77,6 +77,10 @@ void Custom_Syntax::loadRules(QString type){
     rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
     rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
     rules << rule;
+    //Proprocessor commands
+    rule.format.setForeground( QColor(settings->value("colors/preprocessor").toString()) );
+    rule.pattern = QRegExp("^#[^\n]*");
+    rules << rule;    
     //Comment (single line)
     rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
     rule.pattern = QRegExp("//[^\n]*");
