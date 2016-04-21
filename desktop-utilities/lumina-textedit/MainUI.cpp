@@ -221,6 +221,7 @@ void MainUI::updateTab(QString file){
   ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
   ui->actionSave_File->setEnabled(changes);
   ui->actionSave_File_As->setEnabled(changes);
+  this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
 }
 
 void MainUI::tabChanged(){
@@ -230,6 +231,7 @@ void MainUI::tabChanged(){
   bool changes = cur->hasChange();
   ui->actionSave_File->setEnabled(changes);
   ui->actionSave_File_As->setEnabled(changes);
+  this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
 }
 
 void MainUI::tabClosed(int tab){
