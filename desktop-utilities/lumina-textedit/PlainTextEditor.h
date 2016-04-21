@@ -48,7 +48,7 @@ private:
 	//Bracket/Perentheses matching functions
 	int matchleft, matchright; //positions within the document
 	void clearMatchData();
-	void highlightMatch(QChar ch, bool forward, int fromPos);
+	void highlightMatch(QChar ch, bool forward, int fromPos, QChar startch);
 
 	//Flags to keep track of changes
 	bool hasChanges;

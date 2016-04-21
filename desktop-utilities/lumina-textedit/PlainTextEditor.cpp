@@ -138,15 +138,29 @@ void PlainTextEditor::clearMatchData(){
   }
 }
 
-void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos){
-  if(forward){ 
-    matchleft = fromPos; 
-    QTextCursor cur = this->document()->find(ch, fromPos);
-    if(!cur.isNull()){ matchright = cur.position(); }
-  }else{ 
-    matchright = fromPos; 
-    QTextCursor cur = this->document()->find(ch, fromPos, QTextDocument::FindBackward);
-    if(!cur.isNull()){ matchleft = cur.position(); }	  
+void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar startch){
+  if(forward){ matchleft = fromPos;  }
+  else{ matchright = fromPos; }
+  
+  int nested = 1; //always start within the first nest (the primary nest)
+  int tmpFromPos = fromPos;
+  QString doc = this->toPlainText();
+  while( nested>0 && tmpFromPos<doc.length() && ( (tmpFromPos>=fromPos && forward) || ( tmpFromPos<=fromPos && !forward ) ) ){
+    if(forward){ 
+      QTextCursor cur = this->document()->find(ch, tmpFromPos);
+      if(!cur.isNull()){
+	nested += doc.mid(tmpFromPos+1, cur.position()-tmpFromPos).count(startch) -1;
+	if(nested==0){ matchright = cur.position(); }
+	else{ tmpFromPos = cur.position(); }
+      }else{ break; }
+    }else{ 
+      QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
+      if(!cur.isNull()){ 
+	nested += doc.mid(cur.position(), tmpFromPos-cur.position()).count(startch) -1;
+	if(nested==0){ matchleft = cur.position(); }
+	else{ tmpFromPos = cur.position()-1; }
+      }else{ break; }
+    }
   }
   
   //Now highlight the two characters
@@ -219,12 +233,12 @@ void PlainTextEditor::checkMatchChar(){
   bool tryback = true;
   while(tryback){
     tryback = false;
-    if(ch==QChar('(')){ highlightMatch(QChar(')'),true, pos); }
-    else if(ch==QChar(')')){ highlightMatch(QChar('('),false, pos); }
-    else if(ch==QChar('{')){ highlightMatch(QChar('}'),true, pos); }
-    else if(ch==QChar('}')){ highlightMatch(QChar('{'),false, pos); }
-    else if(ch==QChar('[')){ highlightMatch(QChar(']'),true, pos); }
-    else if(ch==QChar(']')){ highlightMatch(QChar('['),false, pos); }
+    if(ch==QChar('(')){ highlightMatch(QChar(')'),true, pos, QChar('(') ); }
+    else if(ch==QChar(')')){ highlightMatch(QChar('('),false, pos, QChar(')') ); }
+    else if(ch==QChar('{')){ highlightMatch(QChar('}'),true, pos, QChar('{') ); }
+    else if(ch==QChar('}')){ highlightMatch(QChar('{'),false, pos, QChar('}') ); }
+    else if(ch==QChar('[')){ highlightMatch(QChar(']'),true, pos, QChar('[') ); }
+    else if(ch==QChar(']')){ highlightMatch(QChar('['),false, pos, QChar(']') ); }
     else if(pos==this->textCursor().position()){
       //Try this one more time - using the previous character instead of the current character
       tryback = true;
