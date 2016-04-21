@@ -24,6 +24,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   hasChanges = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
+  this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
   //this->setObjectName("PlainTextEditor");
   //this->setStyleSheet("QPlainTextEdit#PlainTextEditor{ }");
   SYNTAX = new Custom_Syntax(settings, this->document());
