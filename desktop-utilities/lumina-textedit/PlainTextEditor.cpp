@@ -216,12 +216,22 @@ void PlainTextEditor::checkMatchChar(){
   clearMatchData();
   int pos = this->textCursor().position();
   QChar ch = this->document()->characterAt(pos);
-  if(ch==QChar('(')){ highlightMatch(QChar(')'),true, pos); }
-  else if(ch==QChar(')')){ highlightMatch(QChar('('),false, pos); }
-  else if(ch==QChar('{')){ highlightMatch(QChar('}'),true, pos); }
-  else if(ch==QChar('}')){ highlightMatch(QChar('{'),false, pos); }
-  else if(ch==QChar('[')){ highlightMatch(QChar(']'),true, pos); }
-  else if(ch==QChar(']')){ highlightMatch(QChar('['),false, pos); }
+  bool tryback = true;
+  while(tryback){
+    tryback = false;
+    if(ch==QChar('(')){ highlightMatch(QChar(')'),true, pos); }
+    else if(ch==QChar(')')){ highlightMatch(QChar('('),false, pos); }
+    else if(ch==QChar('{')){ highlightMatch(QChar('}'),true, pos); }
+    else if(ch==QChar('}')){ highlightMatch(QChar('{'),false, pos); }
+    else if(ch==QChar('[')){ highlightMatch(QChar(']'),true, pos); }
+    else if(ch==QChar(']')){ highlightMatch(QChar('['),false, pos); }
+    else if(pos==this->textCursor().position()){
+      //Try this one more time - using the previous character instead of the current character
+      tryback = true;
+      pos--;
+      ch = this->document()->characterAt(pos);
+    }
+  } //end check for next/previous char
 }
 
 //Functions for notifying the parent widget of changes
