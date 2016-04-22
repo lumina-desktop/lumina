@@ -55,11 +55,20 @@ void Custom_Syntax::loadRules(QString type){
 	keywords << "char" << "class" << "const" << "double" << "enum" << "explicit" << "friend" << "inline" \
 			<< "int" << "long" << "namespace" << "operator" << "private" << "protected" << "public" \
 			<< "short" << "signals" << "signed" << "slots" << "static" << "struct" << "template" \
-			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile";
-	  
+			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile" \
+			<< "true" << "false";
+
     SyntaxRule rule;
 	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
 	rule.format.setFontWeight(QFont::Bold);
+    for(int i=0; i<keywords.length(); i++){
+      rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
+      rules << rule;
+    }
+    //Alternate Keywords (built-in functions)
+    keywords.clear();
+    keywords << "for" << "while" << "switch" << "case" << "if";
+    rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
     for(int i=0; i<keywords.length(); i++){
       rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
       rules << rule;
