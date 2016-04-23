@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
-#define DEBUG 0
+#define DEBUG 1
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
