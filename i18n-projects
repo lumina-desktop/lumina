@@ -4,13 +4,19 @@
 # XXXXXX_LANG.ts <Qt project dir>
 # ^^^^^^ File prefix for .ts file
 
-lumina-config lumina-config 
-lumina-desktop lumina-desktop
-lumina-fm lumina-fm
-lumina-open lumina-open
-lumina-screenshot lumina-screenshot
-lumina-search lumina-search
-lumina-info lumina-info
-lumina-fileinfo lumina-fileinfo
-lumina-xconfig lumina-xconfig
+#Core
+lumina-desktop src-qt5/core/lumina-desktop
+lumina-info src-qt5/core/lumina-info
+lumina-open src-qt5/core/lumina-open
 
+#Core Utilities
+lumina-config src-qt5/core-utils/lumina-config
+lumina-search src-qt5/core-utils/lumina-search
+lumina-xconfig src-qt5/core-utils/lumina-xconfig
+
+#Desktop Utilities
+lumina-fm src-qt5/desktop-utils/lumina-fm
+lumina-textedit src-qt5/desktop-utils/lumina-textedit
+lumina-fileinfo src-qt5/desktop-utils/lumina-fileinfo
+#lumina-terminal src-qt5/desktop-utils/lumina-terminal
+lumina-screenshot src-qt5/desktop-utils/lumina-screenshot

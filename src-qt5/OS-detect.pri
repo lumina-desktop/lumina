@@ -23,9 +23,9 @@ isEmpty(OS){
   message("Build OS Info: $${QMAKE_HOST.os}, $${QMAKE_HOST.arch}, $${QMAKE_HOST.version_string}")
 
   #Load the initial library/includefile search locations (more can be added in the OS-specific sections below)
-  LIBS = -L$${PWD}/libLumina -L$$[QT_INSTALL_LIBS]
-  INCLUDEPATH = $${PWD}/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
-  QMAKE_LIBDIR =  $${PWD}/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
+  LIBS = -L$${PWD}/core/libLumina -L$$[QT_INSTALL_LIBS]
+  INCLUDEPATH = $${PWD}/core/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
+  QMAKE_LIBDIR =  $${PWD}/core/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
 
   #Setup the default values for build settings (if not explicitly set previously)
   isEmpty(PREFIX){ PREFIX=/usr/local }
