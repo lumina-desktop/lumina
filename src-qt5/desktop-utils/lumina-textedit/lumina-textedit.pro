@@ -89,9 +89,11 @@ TRANSLATIONS =  i18n/lumina-textedit_af.ts \
 dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
-INSTALLS += target dotrans
+desktop.files=lumina-textedit.desktop
+desktop.path=$${L_SHAREDIR}/applications/
+
+INSTALLS += target dotrans desktop
 
 NO_I18N{
   INSTALLS -= dotrans
 }
-
