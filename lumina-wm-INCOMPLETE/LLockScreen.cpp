@@ -7,6 +7,8 @@
 #include "LLockScreen.h"
 #include "ui_LLockScreen.h"
 
+#include <unistd.h>
+
 #define NUMTRIES 3
 #define WAITMINS 1
 #define DEBUG 1

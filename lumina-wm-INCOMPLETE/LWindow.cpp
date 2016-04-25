@@ -91,18 +91,17 @@ void LWindowFrame::InitWindow(){
 	VL->setContentsMargins(1,1,2,2); 
 	VL->setSpacing(0);
 	//Have the window take the same initial size of the client window
-	qDebug() << " - Load Size Hints";
+        QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
+	qDebug() << " - Load Size Hints" << "initial size:" << geom.size();
 	icccm_size_hints SH = LWM::SYSTEM->WM_ICCCM_GetNormalHints(CID);
 	qDebug() << " - - Got Normal Hints";
 	if(!SH.isValid()){ SH = LWM::SYSTEM->WM_ICCCM_GetSizeHints(CID); }
 	qDebug() << " - - Start resizing...";
-	if(SH.base_width>=0 && SH.base_height>=0){ this->resize(SH.base_width, SH.base_height); }
-	else if(SH.min_width>=0 && SH.min_height>=0){ this->resize(SH.min_width, SH.min_height); }
-	else if(SH.width>=0 && SH.height>=0){ this->resize(SH.width, SH.height); }
-	else{
-	  QRect geom = LWM::SYSTEM->WM_Window_Geom(CID);
-	  this->setGeometry( geom );
-	}
+	if(SH.base_width>geom.width() && SH.base_height>geom.height()){ this->resize(SH.base_width, SH.base_height); }
+	else if(SH.min_width>geom.width() && SH.min_height>geom.height()){ this->resize(SH.min_width, SH.min_height); }
+	else if(SH.width>geom.width() && SH.height>geom.height()){ this->resize(SH.width, SH.height); }
+	else if(geom.isNull()){ this->resize(100,80); }
+        else{ this->resize( geom.size() ); }
 	qDebug() << " - done";
 	
 	//Now embed the native window into the frame
@@ -404,6 +403,7 @@ void LWindowFrame::mousePressEvent(QMouseEvent *ev){
   offset.setX(0); offset.setY(0);
   if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
   this->activateWindow();
+  LWM::SYSTEM->WM_Set_Active_Window(CID);
   if(this->childAt(ev->pos())!=0){
     //Check for any non-left-click event and skip it
     if(ev->button()!=Qt::LeftButton){ return; }

@@ -80,9 +80,9 @@ private:
 	WId CID;
 	LWindowFrame *FID;
 	bool needsFrame(QList<LXCB::WINDOWTYPE> list){
-	  if(list.isEmpty()){ return true; } //assume a normal window (fallback)
+	  if(list.isEmpty()){ return !LWM::SYSTEM->WM_ICCCM_GetClass(CID).contains("Lumina-DE"); } //assume a normal window (fallback)
 	  return !(list.contains(LXCB::T_DESKTOP) || list.contains(LXCB::T_DOCK) || list.contains(LXCB::T_TOOLBAR) \
-		|| list.contains(LXCB::T_UTILITY) || list.contains(LXCB::T_SPLASH) || list.contains(LXCB::T_DROPDOWN_MENU) \
+	        || list.contains(LXCB::T_SPLASH) || list.contains(LXCB::T_DROPDOWN_MENU) \
 		|| list.contains(LXCB::T_TOOLTIP) || list.contains(LXCB::T_POPUP_MENU) || list.contains(LXCB::T_TOOLTIP) \
 	        || list.contains(LXCB::T_COMBO) || list.contains(LXCB::T_DND) );
 	}

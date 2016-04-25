@@ -59,7 +59,7 @@
 #include <xcb/xcb_atom.h>
 #include <xcb/xcb_aux.h> //included in libxcb-util.so
 
-#define ANIMTIME 100 //animation time in milliseconds
+#define ANIMTIME 80 //animation time in milliseconds
 //Global flags/structures
 namespace LWM{
 	//Flags/enumerations

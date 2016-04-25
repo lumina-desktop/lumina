@@ -28,7 +28,10 @@ void WMProcess::startWM(){
   inShutdown = false;
   QString cmd = setupWM();
   if(!isRunning()){this->start(cmd); }
-  if(ssaver->state() == QProcess::NotRunning){ ssaver->start("xscreensaver -no-splash"); }
+  if(ssaver->state() == QProcess::NotRunning  \
+	&&  LSession::handle()->sessionSettings()->value("WindowManager", "fluxbox").toString() != "lumina-wm"){
+     ssaver->start("xscreensaver -no-splash"); 
+  }
 }
 
 void WMProcess::stopWM(){
@@ -128,4 +131,3 @@ void WMProcess::processFinished(int exitcode, QProcess::ExitStatus status){
     cleanupConfig();
   }
 }
-

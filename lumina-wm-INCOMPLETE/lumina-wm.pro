@@ -4,13 +4,11 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras
 
 TARGET = lumina-wm
-target.path = $$PREFIX/bin
+target.path = $${L_BINDIR}
 
 LIBS     += -lLuminaUtils -lxcb -lxcb-damage -lxcb-composite -lxcb-screensaver -lxcb-util
 
 DEPENDPATH	+= ../libLumina
-
-TEMPLATE = app
 
 SOURCES += main.cpp \
 		WMSession.cpp \
