@@ -1,4 +1,4 @@
-include("$${PWD}/../OS-detect.pri")
+include("$${PWD}/../../OS-detect.pri")
 
 QT       += core network widgets x11extras multimedia concurrent svg
 

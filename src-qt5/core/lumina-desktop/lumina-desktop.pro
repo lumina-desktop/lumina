@@ -1,4 +1,4 @@
-include($${PWD}/../OS-detect.pri)
+include($${PWD}/../../OS-detect.pri)
 
 QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
