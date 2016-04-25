@@ -15,7 +15,6 @@
 #include <LuminaXDG.h>
 
 //Special control code ending symbols (aside from letters)
-//QByteArray CC_END_SYMBOLS("@");
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
@@ -441,6 +440,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 	
   if(ev->text().isEmpty() || ev->text()=="\b" ){
     sendKeyPress(ev->key());
+   //PROC->writeTTY( QByteArray::fromHex(ev->nativeVirtualKey()) );
   }else{
     if( (ev->key()==Qt::Key_Enter || ev->key()==Qt::Key_Return) && !this->textCursor().atEnd() ){
       sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)

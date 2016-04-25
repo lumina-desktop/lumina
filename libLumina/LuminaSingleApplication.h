@@ -46,7 +46,6 @@ private:
 	QString cfile;
 	QTranslator *cTrans; //current translation
 
-
 	void PerformLockChecks();
 
 private slots:
