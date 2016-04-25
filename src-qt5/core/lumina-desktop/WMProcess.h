@@ -34,7 +34,7 @@ private:
 	bool isRunning();
 	QString setupWM();
 	void cleanupConfig();
-	QProcess *ssaver;
+	//QProcess *ssaver;
 	
 private slots:
 	void processFinished(int exitcode, QProcess::ExitStatus status);
@@ -44,4 +44,3 @@ signals:
 };
 
 #endif
-

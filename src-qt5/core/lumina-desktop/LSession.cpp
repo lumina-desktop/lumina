@@ -376,7 +376,12 @@ void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
-  int oldversion = VersionStringToNumber(OVS);
+  bool changed = LUtils::checkUserFiles(OVS);
+  if(changed){
+    //Save the current version of the session to the settings file (for next time)
+    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+  }
+  /*int oldversion = VersionStringToNumber(OVS);
   int nversion = VersionStringToNumber(this->applicationVersion());
   bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
   bool newrelease = ( OVS.contains("-devel", Qt::CaseInsensitive) && this->applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
@@ -442,12 +447,6 @@ void LSession::checkUserFiles(){
   dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
   if(!QFile::exists(dset)){
     firstrun = true;
-    /*if(QFile::exists(LOS::LuminaShare()+"defaultapps.conf")){
-      if( QFile::copy(LOS::LuminaShare()+"defaultapps.conf", dset) ){
-        QFile::setPermissions(dset, QFile::ReadUser | QFile::WriteUser | QFile::ReadOwner | QFile::WriteOwner);
-      }
-    }*/
-
   }
   //Check the fluxbox configuration files
   dset = QDir::homePath()+"/.lumina/";
@@ -473,7 +472,7 @@ void LSession::checkUserFiles(){
   //Save the current version of the session to the settings file (for next time)
   if(newversion || newrelease){
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());
-  }
+  }*/
 }
 
 void LSession::refreshWindowManager(){

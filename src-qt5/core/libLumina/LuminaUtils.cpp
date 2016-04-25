@@ -783,6 +783,111 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   LUtils::writeFile(setdir+"/lumina-open.conf", lopenset, true);
 }
 
+bool LUtils::checkUserFiles(QString lastversion){
+  //internal version conversion examples: 
+  //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
+  //returns true if something changed
+  int oldversion = LUtils::VersionStringToNumber(lastversion);
+  int nversion = LUtils::VersionStringToNumber(QApplication::applicationVersion());
+  bool newversion =  ( oldversion < nversion ); //increasing version number
+  bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
+  
+  //Check for the desktop settings file
+  QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
+  bool firstrun = false;
+  if(!QFile::exists(dset) || oldversion < 5000){
+    if( oldversion < 5000 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
+    else{ firstrun = true; }
+    LUtils::LoadSystemDefaults();
+  }
+  //Convert the favorites framework as necessary (change occured with 0.8.4)
+  if(newversion || newrelease){
+    LUtils::upgradeFavorites(oldversion);	  
+  }
+  //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
+  if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
+    QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings");
+    QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
+    for(int i=0; i<plugKeys.length(); i++){
+      QStringList plugs = dset.value(plugKeys[i],QStringList()).toStringList();
+      //Do the appmenu/userbutton -> systemstart conversion
+      plugs = plugs.join(";;;;").replace("userbutton","systemstart").replace("appmenu","systemstart").split(";;;;");
+      //Remove any system dashboard plugins
+      plugs.removeAll("systemdashboard");
+      //Now save that back to the file
+      dset.setValue(plugKeys[i], plugs);
+    }
+    //Also remove any "desktopview" desktop plugin and enable the automatic desktop icons instead
+    plugKeys = dset.allKeys().filter("desktop-").filter("/pluginlist");
+    for(int i=0; i<plugKeys.length(); i++){
+      QStringList plugs = dset.value(plugKeys[i], QStringList()).toStringList();
+      QStringList old = plugs.filter("desktopview");
+      bool found = !old.isEmpty();
+      for(int j=0; j<old.length(); j++){ plugs.removeAll(old[j]); }
+      if(found){
+        dset.setValue(plugKeys[i],plugs); //save the modified plugin list
+	//Also set the auto-generate flag on this desktop
+	dset.setValue(plugKeys[i].section("/",0,0)+"/generateDesktopIcons", true);
+      }
+    }
+    dset.sync();
+    //Due to the grid size change for desktop plugins, need to remove any old plugin geometries
+    if(QFile::exists(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf")){
+      QFile::remove(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf");
+    }
+  }
+  
+  //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
+  if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
+    QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
+    for(int i=0; i<cmds.length(); i++){
+      cmds[i] = cmds[i].remove("lumina-open").simplified(); //remove the file opener
+      if(cmds[i].startsWith("#") || cmds[i].isEmpty()){ continue; } //invalid line
+      
+      LXDG::setAutoStarted(true, cmds[i]);
+    }
+    QFile::remove(QDir::homePath()+"/.lumina/startapps"); //delete the old file
+  }
+  
+  //Check for the default applications file for lumina-open
+  dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
+  if(!QFile::exists(dset)){
+    firstrun = true;
+  }
+  //Check the fluxbox configuration files
+  dset = QDir::homePath()+"/.lumina/";
+  bool fluxcopy = false;
+  if(!QFile::exists(dset+"fluxbox-init")){ fluxcopy=true; }
+  else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
+  else if(oldversion < 60){ fluxcopy=true; qDebug() << "Current fluxbox settings obsolete: Re-implementing defaults"; }
+  if(fluxcopy){
+    qDebug() << "Copying default fluxbox configuration files";
+    if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
+    if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
+    QFile::copy(LOS::LuminaShare()+"fluxbox-init-rc", dset+"fluxbox-init");
+    QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
+    QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+  }
+
+  if(firstrun){ qDebug() << "First time using Lumina!!"; }
+  return (firstrun || newversion || newrelease);
+}
+
+int LUtils::VersionStringToNumber(QString version){
+  version = version.section("-",0,0); //trim any extra labels off the end
+  int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
+  maj = mid = min = 0; 
+  bool ok = true;
+  maj = version.section(".",0,0).toInt(&ok);
+  if(ok){ mid = version.section(".",1,1).toInt(&ok); }else{ maj = 0; }
+  if(ok){ min = version.section(".",2,2).toInt(&ok); }else{ mid = 0; }
+  if(!ok){ min = 0; }
+  //Now assemble the number
+  //NOTE: This format allows numbers to be anywhere from 0->999 without conflict
+  return (maj*1000000 + mid*1000 + min);
+}
+
 // =======================
 //      RESIZEMENU CLASS
 // =======================

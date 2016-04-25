@@ -90,7 +90,9 @@ public:
 	
 	//Load the default setup for the system
 	static void LoadSystemDefaults(bool skipOS = false);
-	
+	static bool checkUserFiles(QString lastversion); //returns true if something changed
+	static int VersionStringToNumber(QString version); //convert the lumina version string to a number for comparisons
+
 };
 
 //Special subclass for a menu which the user can grab the edges and resize as necessary

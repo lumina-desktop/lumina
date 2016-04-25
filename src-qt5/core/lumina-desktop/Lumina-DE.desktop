@@ -1,6 +1,6 @@
 [Desktop Entry]
-Exec=Lumina-DE
-TryExec=Lumina-DE
+Exec=start-lumina-desktop
+TryExec=start-lumina-desktop
 Icon=Lumina-DE
 Type=Application
 Name=Lumina

@@ -13,7 +13,7 @@ WMProcess::WMProcess() : QProcess(){
   QString log = QDir::homePath()+"/.lumina/logs/wm.log";
   if(QFile::exists(log)){ QFile::remove(log); }
   this->setStandardOutputFile(log);
-  ssaver = new QProcess(0);
+  //ssaver = new QProcess(0);
   inShutdown = false;
 }
 
@@ -28,17 +28,17 @@ void WMProcess::startWM(){
   inShutdown = false;
   QString cmd = setupWM();
   if(!isRunning()){this->start(cmd); }
-  if(ssaver->state() == QProcess::NotRunning  \
+  /*if(ssaver->state() == QProcess::NotRunning  \
 	&&  LSession::handle()->sessionSettings()->value("WindowManager", "fluxbox").toString() != "lumina-wm"){
      ssaver->start("xscreensaver -no-splash"); 
-  }
+  }*/
 }
 
 void WMProcess::stopWM(){
   if(isRunning()){
     inShutdown = true;
     //QProcess::startDetached("fluxbox-remote closeallwindows");
-    ssaver->kill();
+    //ssaver->kill();
     this->kill();
     if(!this->waitForFinished(10000)){ this->terminate(); };
   }else{
