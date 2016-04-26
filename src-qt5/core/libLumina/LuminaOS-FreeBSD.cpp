@@ -25,7 +25,7 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
-QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/softmanager.desktop"; } //graphical app/pkg manager
+QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
