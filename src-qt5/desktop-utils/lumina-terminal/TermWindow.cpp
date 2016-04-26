@@ -18,6 +18,8 @@
 //        PUBLIC
 // ===============
 TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint){//, ui(new Ui::TermWindow){
+  this->setWindowOpacity(0.75);
+  //this->setStyleSheet( "QWidget{ background: transparent; }");
   CLOSING = false; //internal flag
   settings = set;
   //Create the Window

@@ -18,10 +18,12 @@
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
+  this->setStyleSheet("background: black; color: white;");
   this->setLineWrapMode(QTextEdit::WidgetWidth);
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
+  this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
   this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
