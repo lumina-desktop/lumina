@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>307</width>
-    <height>200</height>
+    <height>230</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -162,6 +162,12 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QComboBox" name="combo_rec">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="iconSize">
           <size>
            <width>20</width>
