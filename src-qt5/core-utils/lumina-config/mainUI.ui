@@ -109,7 +109,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_desktop">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -823,7 +823,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_apps">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_auto">
            <attribute name="title">
@@ -1163,7 +1163,7 @@
            <string/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -1568,8 +1568,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>138</width>
-                    <height>28</height>
+                    <width>573</width>
+                    <height>97</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1683,6 +1683,12 @@
    </layout>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="minimumSize">
+    <size>
+     <width>120</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
    </property>
@@ -1717,6 +1723,9 @@
    <property name="text">
     <string>Appearance</string>
    </property>
+   <property name="iconText">
+    <string> Appearance </string>
+   </property>
    <property name="toolTip">
     <string>Desktop Appearance</string>
    </property>
@@ -1726,7 +1735,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Interface</string>
+    <string>   Interface   </string>
+   </property>
+   <property name="iconText">
+    <string>     Interface    </string>
    </property>
    <property name="toolTip">
     <string>Interface Configuration</string>
@@ -1737,7 +1749,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Session</string>
+    <string>    Session    </string>
+   </property>
+   <property name="iconText">
+    <string>     Session      </string>
    </property>
    <property name="toolTip">
     <string>Session Options</string>
@@ -1750,6 +1765,9 @@
    <property name="text">
     <string>Applications</string>
    </property>
+   <property name="iconText">
+    <string> Applications </string>
+   </property>
    <property name="toolTip">
     <string>Application Management</string>
    </property>
@@ -1760,6 +1778,9 @@
    </property>
    <property name="text">
     <string>Shortcuts</string>
+   </property>
+   <property name="iconText">
+    <string>   Shortcuts   </string>
    </property>
    <property name="toolTip">
     <string>Keyboard Shortcuts</string>

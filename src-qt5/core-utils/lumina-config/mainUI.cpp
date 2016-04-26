@@ -35,7 +35,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     ui->spin_screen->setValue(desktop->screenNumber(this->mapToGlobal(this->geometry().center()))+1); //have the current screen auto-selected
   //qDebug() << "Number of Screens:" << desktop->screenCount();
   sysApps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
-
+  //Add a couple spacers to center the toolbar items
+  QWidget *tmp = new QWidget(this);
+    tmp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  ui->toolBar->insertWidget(ui->actionDesktop, tmp);
+  tmp = new QWidget(this);
+    tmp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  ui->toolBar->addWidget(tmp);	
   //Now finish setting up the UI
   setupIcons();
   setupMenus();
