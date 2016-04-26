@@ -10,6 +10,7 @@
 #include <LuminaOS.h>
 
 SettingsMenu::SettingsMenu() : QMenu(){
+  this->setObjectName("SettingsMenu");
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(UpdateMenu()) );
   connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(UpdateMenu()) );	
@@ -17,7 +18,7 @@ SettingsMenu::SettingsMenu() : QMenu(){
 }
 
 SettingsMenu::~SettingsMenu(){
-	
+  
 }
 
 void SettingsMenu::UpdateMenu(){
