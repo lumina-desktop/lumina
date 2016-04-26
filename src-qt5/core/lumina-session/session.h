@@ -6,54 +6,19 @@
 //===========================================
 #include <QObject>
 #include <QProcess>
-#include <QProcessEnvironment>
-
-#include <LuminaUtils.h>
 
 class LSession : public QObject{
+	Q_OBJECT
 private:
 	QList<QProcess*> PROCS;
 	bool stopping;
 
-	void startProcess(QString ID, QString command){
-	  QString logfile = QDir::homePath()+"/.lumina/logs/"+ID+".log";
-	  if(QFile::exists(logfile+".old")){ QFile::remove(logfile+".old"); }
-	  if(QFile::exists(logfile)){ QFile::rename(logfile,logfile+".old"); }
-	  QProcess *proc = new QProcess();
-	  proc->setProcessChannelMode(QProcess::MergedChannels);
-	  proc->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
-	  proc->setStandardOutputFile(logfile);
-	  proc->start(command, QIODevice::ReadOnly);
-	  connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished()) );
-	  PROCS << proc;
-	}
-
 private slots:
-	void stopall(){
-	  stopping = true;
-        for(int i=0; i<PROCS.length(); i++){
-	    if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->kill(); }
-	  }
-	}
+	void stopall();
 
-	void procFinished(){
-	  //Go through and check the status on all the procs to determine which one finished
-	 int stopped = 0;
-        for(int i=0; i<PROCS.length(); i++){
-	    if(PROCS[i]->state()==QProcess::NotRunning){ 
-	      stopped++;
-	      if(!stopping){
-	        //See if this process is the main desktop binary
-	        if(PROCS[i]->program().section("/",-1) == "Lumina-DE"){ stopall();  } //start closing down everything
-	        //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
-		  break;
-	      }
-	    }
-	  }
-	  if(stopping && stopped==PROCS.length()){
-	    QCoreApplication::exit(0);
-	  }
-	}
+	void procFinished();
+
+	void startProcess(QString ID, QString command);
 
 public:
 	LSession(){
@@ -61,21 +26,6 @@ public:
 	}
 	~LSession(){ }
 
-	void start(){
-	  //First check for a valid installation
-	  if( !LUtils::isValidBinary("fluxbox") || !LUtils::isValidBinary("Lumina-DE") ){
-	    exit(1);
-	  }
-	  //Window Manager First
-	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
-   	  //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
-	  //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
-	  //Desktop Next
-	  startProcess("runtime","Lumina-DE");
-	  //ScreenSaver
-	  if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
-	  //Compositing manager
-	  if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
-	}
+	void start();
 	
 };

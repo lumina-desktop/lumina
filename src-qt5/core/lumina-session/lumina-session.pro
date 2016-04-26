@@ -10,7 +10,8 @@ target.path = $${L_BINDIR}
 LIBS     += -lLuminaUtils -lxcb -lxcb-damage
 DEPENDPATH	+= ../libLumina
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+			session.cpp
 
 HEADERS  += session.h
 
