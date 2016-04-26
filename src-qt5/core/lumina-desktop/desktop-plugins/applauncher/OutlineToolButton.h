@@ -29,6 +29,7 @@ public:
 	  QFont font = this->font();
 	  font.setStyleStrategy(QFont::PreferAntialias); //Always set the font strategy (just in case it starts working down the road)
 	  this->setFont(font);
+	  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	}
 	~OutlineToolButton(){}
 		
