@@ -18,7 +18,7 @@
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
-  this->setStyleSheet("background: black; color: white;");
+  this->setStyleSheet("background: black;");
   this->setLineWrapMode(QTextEdit::WidgetWidth);
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
@@ -27,7 +27,8 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
-  CFMT = this->textCursor().charFormat(); //current format
+  DEFFMT.setForeground(Qt::white);
+  CFMT = DEFFMT; //current format
   selCursor = this->textCursor(); //used for keeping track of selections
   lastCursor = this->textCursor();
   startrow = endrow = -1;
@@ -67,10 +68,18 @@ void TerminalWidget::aboutToClose(){
 void TerminalWidget::InsertText(QString txt){
   if(txt.isEmpty()){ return; }
   //qDebug() << "Insert Text:" << txt << "Cursor Pos:" << this->textCursor().position() << "Column:" << this->textCursor().columnNumber();
-  QTextCursor cur = this->textCursor();
+ QTextCursor cur = this->textCursor();
+  this->insertPlainText(txt);
+  cur.setPosition( this->textCursor().position(), QTextCursor::KeepAnchor);
   cur.setCharFormat(CFMT);
-  cur.insertText( txt, CFMT);
-  this->setTextCursor(cur);
+  //Now make sure the new characters are the right color
+  QList<QTextEdit::ExtraSelection> sels = this->extraSelections();	
+  QTextEdit::ExtraSelection sel;
+  sel.format = CFMT;
+  sel.cursor = cur;
+  sels << sel;
+  this->setExtraSelections(sels);
+  qDebug() << "New Text. Format:" << CFMT.foreground() << CFMT.font();
 }
 
 void TerminalWidget::applyData(QByteArray data){
