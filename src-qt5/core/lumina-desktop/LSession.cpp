@@ -220,12 +220,11 @@ void LSession::CleanupSession(){
   }
   //Now wait a moment for things to close down before quitting
   if(playaudio){
-    //wait a max of 3 seconds for audio to finish
+    //wait a max of 5 seconds for audio to finish
     bool waitmore = true;
-    for(int i=0; i<60 && waitmore; i++){
+    for(int i=0; i<100 && waitmore; i++){
       usleep(50000); //50ms = 50000 us
       waitmore = (mediaObj->state()==QMediaPlayer::PlayingState);
-      //waitmore = !audioThread->wait(500);
       LSession::processEvents();
     }
     if(waitmore){ mediaObj->stop(); } //timed out
@@ -234,7 +233,6 @@ void LSession::CleanupSession(){
   }
   //Clean up the temporary flag
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
-  //if(audioThread!=0){ audioThread->exit(0); }
 }
 
 int LSession::VersionStringToNumber(QString version){

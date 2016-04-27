@@ -406,15 +406,18 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   QStringList current = LTHEME::currentSettings();
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
   cursors = LTHEME::currentCursor();
-  application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
-  //Make sure to prefer font antialiasing on the application
-  /*QFont tmp = application->font();
+  if(application->applicationFilePath().section("/",-1)=="Lumina-DE"){
+    application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
+  }else{
+    //Non-Desktop binary - only use alternate Qt methods (skip stylesheets)
+    QFont tmp = application->font();
     tmp.setStyleStrategy(QFont::PreferOutline);
     tmp.setFamily(font);
     tmp.setHintingPreference(QFont::PreferFullHinting);
     if(fontsize.endsWith("pt")){ tmp.setPointSize(fontsize.section("pt",0,0).toInt()); }
     else if(fontsize.endsWith("px")){ tmp.setPixelSize(fontsize.section("px",0,0).toInt()); }
-  application->setFont(tmp);*/
+    application->setFont(tmp);
+  }
   QIcon::setThemeName(icons); //make sure this sets set within this environment
   syncTimer = new QTimer(this);
     syncTimer->setSingleShot(true);
@@ -451,7 +454,9 @@ void LuminaThemeEngine::reloadFiles(){
   //Check the Theme file/settings
   if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified().addSecs(1) ){
     QStringList current = LTHEME::currentSettings();
-    application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
+    if(application->applicationFilePath().section("/",-1)=="Lumina-DE"){
+      application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
+    }
     if(icons!=current[2]){
       QIcon::setThemeName(current[2]); //make sure this sets set within this environment
       emit updateIcons();
@@ -500,4 +505,3 @@ void LuminaThemeEngine::reloadFiles(){
   watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
   watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
 }
-
