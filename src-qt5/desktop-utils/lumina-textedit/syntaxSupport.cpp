@@ -56,7 +56,7 @@ void Custom_Syntax::loadRules(QString type){
 			<< "int" << "long" << "namespace" << "operator" << "private" << "protected" << "public" \
 			<< "short" << "signals" << "signed" << "slots" << "static" << "struct" << "template" \
 			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile" \
-			<< "true" << "false";
+			<< "true" << "false" << "bool";
 
     SyntaxRule rule;
 	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
