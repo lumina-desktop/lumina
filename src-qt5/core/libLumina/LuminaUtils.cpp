@@ -899,7 +899,7 @@ ResizeMenu::ResizeMenu(QWidget *parent) : QMenu(parent){
   contents = 0;
   connect(this, SIGNAL(aboutToShow()), this, SLOT(clearFlags()) );
   connect(this, SIGNAL(aboutToHide()), this, SLOT(clearFlags()) );
-  connect(cAct, SIGNAL(hovered()), this, SLOT(actionHovered()) );
+  connect(cAct, SIGNAL(hovered()), this, SLOT(clearFlags()) );
 }
 
 ResizeMenu::~ResizeMenu(){

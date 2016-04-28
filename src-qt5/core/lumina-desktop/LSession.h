@@ -61,6 +61,7 @@ public:
 
 	//Special functions for XCB event filter parsing only 
 	//  (DO NOT USE MANUALLY)
+	void RootSizeChange();
 	void WindowPropertyEvent();
         void WindowPropertyEvent(WId);
 	void SysTrayDockRequest(WId);

@@ -17,6 +17,7 @@ XCBEventFilter::XCBEventFilter(LSession *sessionhandle) : QAbstractNativeEventFi
   session = sessionhandle; //save this for interaction with the session later
   TrayDmgFlag = 0;
   stopping = false;
+  session->XCB->SelectInput(QX11Info::appRootWindow()); //make sure we get root window events
   InitAtoms();
 }
 
@@ -41,7 +42,11 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        //qDebug() << " - Root Window:" << QX11Info::appRootWindow();
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
 		//System-specific proprty change
-		if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
+		if( ((xcb_property_notify_event_t*)ev)->window == QX11Info::appRootWindow() \
+			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_DESKTOP_GEOMETRY) \
+			  ||  (((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_WORKAREA) )){
+		  session->RootSizeChange();
+		}else if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Update the status/list of all running windows
 		  session->WindowPropertyEvent();	
 			
