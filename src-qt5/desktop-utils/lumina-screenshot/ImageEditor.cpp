@@ -137,5 +137,5 @@ void ImageEditor::paintEvent(QPaintEvent*){
   //Draw the image
     P.drawImage(QPoint(0,0), scaledIMG);
   //Now draw the selection rectangle over the top
-  if(!selRect.isNull()){ P.fillRect(selRect, QBrush(Qt::CrossPattern)); }
+  if(!selRect.isNull()){ P.fillRect(selRect, QBrush(QColor(100,100,100,100))); }
 }
