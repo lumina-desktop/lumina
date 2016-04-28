@@ -23,6 +23,8 @@
 #include <LuminaUtils.h>
 #include <LuminaX11.h>
 
+#include "ImageEditor.h"
+
 namespace Ui{
 	class MainUI;
 };
@@ -38,11 +40,15 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
-	QPixmap cpic; //current picture
+	bool mousegrabbed;
+	QRect lastgeom;
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot
 	QSettings *settings;
 	LXCB *XCB; //Library access to window subsystems
+
+	//Image Editor widget
+	ImageEditor *IMG;
 
 private slots:
 	//Button Slots
@@ -51,13 +57,17 @@ private slots:
 	}
 	void saveScreenshot();
 	void quicksave();
-        void editScreenshot();
+
 	void startScreenshot();
 
-
+	void imgselchanged(bool hassel);
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot
+
+protected:
+	void mouseReleaseEvent(QMouseEvent *ev);
+	void resizeEvent(QResizeEvent *ev);
 };
 
 #endif

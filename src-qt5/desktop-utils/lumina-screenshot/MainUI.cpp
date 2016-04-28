@@ -11,13 +11,13 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
+  mousegrabbed = false;
   XCB = new LXCB();
-  cpic = QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()); //initial screenshot
+  IMG = new ImageEditor(this);
+  ui->scrollArea->setWidget(IMG);
+  ui->tabWidget->setCurrentWidget(ui->tab_view);
   ppath = QDir::homePath();
-  QWidget *spacer = new QWidget();
-	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	ui->toolBar->insertWidget(ui->actionQuit, spacer);
-	
+
   setupIcons();
   ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
   if(ui->spin_monitor->maximum()<2){
@@ -26,93 +26,105 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   }	  
 
   //Setup the connections
-  connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
-  connect(ui->actionquicksave, SIGNAL(triggered()), this, SLOT(quicksave()) );
-  connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
-  connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
-  connect(ui->actionEdit, SIGNAL(triggered()), this, SLOT(editScreenshot()) );
+  connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(saveScreenshot()) );
+  connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
+  connect(ui->tool_quicksave, SIGNAL(clicked()), this, SLOT(quicksave()) );
+  connect(ui->actionQuick_Save, SIGNAL(triggered()), this, SLOT(quicksave()) );
+  connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeApplication()) );
+  connect(ui->push_snap, SIGNAL(clicked()), this, SLOT(startScreenshot()) );
+  connect(ui->actionTake_Screenshot, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
+  connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
+  connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
 
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("LuminaDE", "lumina-screenshot",this);
-
   if(settings->value("screenshot-target", "window").toString() == "window") {
 	ui->radio_window->setChecked(true);
   }else{
 	ui->radio_all->setChecked(true);
   }
-
   ui->spin_delay->setValue(settings->value("screenshot-delay", 0).toInt());
 
+  ui->tool_resize->setVisible(false); //not implemented yet
   this->show();
-  ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+  IMG->setDefaultSize(ui->scrollArea->maximumViewportSize());
+  IMG->LoadImage( QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()).toImage() ); //initial screenshot
+  //ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
 MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
-  ui->actionquicksave->setIcon( LXDG::findIcon("document-save","") );
-  ui->actionQuit->setIcon( LXDG::findIcon("application-exit","") );
-  ui->actionNew->setIcon( LXDG::findIcon("camera-web","") );	
-  ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
+  ui->tabWidget->setTabIcon(0, LXDG::findIcon("camera-web","") );
+  ui->tabWidget->setTabIcon(1, LXDG::findIcon("view-preview","") );
+  ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
+  ui->tool_quicksave->setIcon( LXDG::findIcon("document-edit","") );
+  ui->actionSave_As->setIcon( LXDG::findIcon("document-save-as","") );
+  ui->actionQuick_Save->setIcon( LXDG::findIcon("document-save","") );
+  ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
+  ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
+  ui->actionTake_Screenshot->setIcon( LXDG::findIcon("camera-web","") );
+  ui->tool_crop->setIcon( LXDG::findIcon("transform-crop","") );
+  ui->tool_resize->setIcon( LXDG::findIcon("transform-scale.png") );
+  //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
 }
 
 //==============
 //  PRIVATE SLOTS
 //==============
 void MainUI::saveScreenshot(){
+  if(mousegrabbed){ return; }
   QString filepath = QFileDialog::getSaveFileName(this, tr("Save Screenshot"), ppath, tr("PNG Files (*.png);;AllFiles (*)") );
   if(filepath.isEmpty()){ return; }
   if(!filepath.endsWith(".png")){ filepath.append(".png"); }
-  cpic.save(filepath, "png");
+  IMG->image().save(filepath, "png");
   ppath = filepath;
 }
 void MainUI::quicksave(){
+  if(mousegrabbed){ return; }
     QString savedir = QDir::homePath() + "/Pictures/";
     QString path = savedir + QString( "Screenshot-%1.png" ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") );
-    cpic.save(path, "png");
-}
-
-void MainUI::editScreenshot(){
-    QString tmppath = QString("/tmp/screenshot.png");
-    cpic.save(tmppath, "png");
-   QProcess::startDetached("lumina-open /tmp/screenshot.png");
+    IMG->image().save(path, "png");
+    QProcess::startDetached("lumina-open \""+path+"\"");
 }
 
 void MainUI::startScreenshot(){
+  if(mousegrabbed){ return; }
+  lastgeom = this->geometry();
   if( !getWindow() ){ return; }
   this->hide();
   QTimer::singleShot(50+ui->spin_delay->value()*1000, this, SLOT(getPixmap()));
 }
 
+void MainUI::imgselchanged(bool hassel){
+  ui->tool_crop->setEnabled(hassel);
+  ui->tool_resize->setEnabled(hassel);
+}
+
 bool MainUI::getWindow(){
   //Use this function to set cwin
   cwin = 0;
+  //Save all the current settings for later
+  settings->setValue("screenshot-delay", ui->spin_delay->value());
   if(ui->radio_window->isChecked()){
     settings->setValue("screenshot-target", "window");
-    //Use xprop to get the desired window from the user
-    QList<WId> wins = XCB->WindowList();
-    wins.removeAll(this->winId()); //don't show this window
-    QStringList names;
-    for(int i=0; i<wins.length(); i++){
-      names << XCB->WindowClass(wins[i])+" ("+XCB->WindowName(wins[i])+")";
-    }
-    bool ok = false;
-    QString info = QInputDialog::getItem(this, tr("Select Window"), tr("Window:"), names, 0, false, &ok);
-    if(!ok || names.indexOf(info)<0){ return false; } //cancelled
-    cwin = wins[ names.indexOf(info) ];
+    this->grabMouse( QCursor(Qt::CrossCursor) );
+    mousegrabbed = true;
+    this->centralWidget()->setEnabled(false);
+    //this->hide();
+    return false; //wait for the next click to continue
   }else if(ui->radio_monitor->isChecked()){
-    
+    //will auto-grab the proper monitor later
   }else{
     settings->setValue("screenshot-target", "desktop");
   }
-  settings->setValue("screenshot-delay", ui->spin_delay->value());
   return true;
 }
 
 void MainUI::getPixmap(){
   QScreen *scrn = QApplication::screens().at(0);
+  QPixmap cpic;
   if( (cwin==0 && ui->radio_window->isChecked() ) || ui->radio_all->isChecked() ){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
@@ -129,6 +141,34 @@ void MainUI::getPixmap(){
     }
   }
   this->show();
+  this->setGeometry(lastgeom);
+  ui->tabWidget->setCurrentWidget(ui->tab_view); //view it right now
   //Now display the pixmap on the label as well
-  ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+  IMG->LoadImage( cpic.toImage() );
+}
+
+void MainUI::mouseReleaseEvent(QMouseEvent *ev){
+  if(mousegrabbed){
+    mousegrabbed = false;
+    this->centralWidget()->setEnabled(true);
+    this->releaseMouse();
+    //In the middle of selecting a window to take a screenshot
+    //  Get the window underneath the mouse click and take the screenshot
+    QList<WId> wins = XCB->WindowList();
+    cwin = 0;
+    //qDebug() << "Try to select window:" << ev->globalPos(); 
+    for(int i=0; i<wins.length() && cwin==0; i++){
+      if( XCB->WindowGeometry(wins[i], true).contains(ev->globalPos()) ){ cwin = wins[i]; }
+    }
+    qDebug() << " - Got window:" << cwin;
+    if(cwin==this->winId()){  return; } //cancelled
+    this->hide();
+    QTimer::singleShot(50+ui->spin_delay->value()*1000, this, SLOT(getPixmap()));
+  }else{
+    QMainWindow::mouseReleaseEvent(ev); //normal processing
+  }
+}
+
+void MainUI::resizeEvent(QResizeEvent*){
+  IMG->setDefaultSize( ui->scrollArea->maximumViewportSize() );
 }
