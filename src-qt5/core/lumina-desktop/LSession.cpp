@@ -48,8 +48,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   TrayStopping = false;
   screenTimer = new QTimer(this);
     screenTimer->setSingleShot(true);
-    screenTimer->setInterval(1000); //2 seconds - This needs to be long(ish) to prevent being called while
-				    // X is still setting up any screens
+    screenTimer->setInterval(50);
     connect(screenTimer, SIGNAL(timeout()), this, SLOT(updateDesktops()) );
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
@@ -161,8 +160,8 @@ void LSession::setupSession(){
     watcher->addPath( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
-  connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
-  connect(this->desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
+  //connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
+  //connect(this->desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
@@ -723,6 +722,13 @@ void LSession::playAudioFile(QString filepath){
 // =======================
 //  XCB EVENT FILTER FUNCTIONS
 // =======================
+void LSession::RootSizeChange(){
+  qDebug() << "Got Root Size Change";
+  if(DESKTOPS.isEmpty()){ return; } //Initial setup not run yet
+  screenTimer->start();
+  //QTimer::singleShot(0,this, SLOT(screensChanged()) );
+}
+
 void LSession::WindowPropertyEvent(){
   if(DEBUG){ qDebug() << "Window Property Event"; }
   QList<WId> newapps = XCB->WindowList();
