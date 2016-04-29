@@ -118,6 +118,7 @@ void LPanel::UpdatePanel(bool geomonly){
   int xwid = LSession::handle()->screenGeom(screennum).width();
   int xhi = LSession::handle()->screenGeom(screennum).height();
   int xloc = LSession::handle()->screenGeom(screennum).x();
+  int yloc = LSession::handle()->screenGeom(screennum).y();
   double panelPercent = settings->value(PPREFIX+"lengthPercent",100).toInt();
   if(panelPercent<1 || panelPercent>100){ panelPercent = 100; }
   panelPercent = panelPercent/100.0;
@@ -132,13 +133,13 @@ void LPanel::UpdatePanel(bool geomonly){
     //qDebug() << " - Panel Sizing:" << xloc << sz;
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc,0,sz.width(), sz.height());
+    this->setGeometry(xloc,yloc,sz.width(), sz.height());
     //qDebug() << " - Reserve Panel Localation";
     if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "top"); }
     else{ 
-     LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, 0, this->width(), hidesize), "top");
-      hidepoint = QPoint(xloc, hidesize-ht);
-      showpoint = QPoint(xloc, 0);
+     LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, this->width(), hidesize), "top");
+      hidepoint = QPoint(xloc, yloc+hidesize-ht);
+      showpoint = QPoint(xloc, yloc);
       this->move(hidepoint); //Could bleed over onto the screen above
     }
   }else if(loc=="bottom"){ //bottom of screen
@@ -148,17 +149,16 @@ void LPanel::UpdatePanel(bool geomonly){
     else{ xloc = xloc+((xwid-sz.width())/2) ; } //centered
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
-    this->setGeometry(xloc,xhi-ht,sz.width(), ht );
+    this->setGeometry(xloc,yloc+xhi-ht,sz.width(), ht );
     if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "bottom"); }
     else{ 
-      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, xhi-hidesize, this->width(), hidesize), "bottom"); 
-      hidepoint = QPoint(xloc, xhi-hidesize);
-      showpoint = QPoint(xloc, xhi-ht);
+      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc,yloc+ xhi-hidesize, this->width(), hidesize), "bottom"); 
+      hidepoint = QPoint(xloc, yloc+xhi-hidesize);
+      showpoint = QPoint(xloc, yloc+xhi-ht);
       this->move(hidepoint); //Could bleed over onto the screen below
     }
   }else if(loc=="left"){ //left side of screen
     QSize sz = QSize(ht, xhi*panelPercent);
-    int yloc = 0;
     if(panelPinLoc=="left"){} //this is actually the top (left of center in length dimension)
     else if(panelPinLoc=="right"){ yloc = yloc+xhi-sz.height(); }
     else{ yloc = yloc+((xhi-sz.height())/2) ; } //centered
@@ -174,7 +174,6 @@ void LPanel::UpdatePanel(bool geomonly){
     }
   }else{ //right side of screen
     QSize sz = QSize(ht, xhi*panelPercent);
-    int yloc = 0;
     if(panelPinLoc=="left"){} //this is actually the top (left of center in length dimension)
     else if(panelPinLoc=="right"){ yloc = yloc+xhi-sz.height(); }
     else{ yloc = yloc+((xhi-sz.height())/2) ; } //centered
@@ -344,4 +343,3 @@ void LPanel::leaveEvent(QEvent *event){
   checkPanelFocus();
   event->accept(); //just to quiet the compile warning
 }
-

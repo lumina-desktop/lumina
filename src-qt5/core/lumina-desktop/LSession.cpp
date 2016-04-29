@@ -635,7 +635,7 @@ QFileInfoList LSession::DesktopFiles(){
 QRect LSession::screenGeom(int num){
   if(num < 0 || num >= this->desktop()->screenCount() ){ return QRect(); }
   QRect geom = this->desktop()->screenGeometry(num);
-  QScreen* scrn = this->screens().at(num);
+  /*QScreen* scrn = this->screens().at(num);
   //if(DEBUG){ qDebug() << "Screen Geometry:" << num << geom << scrn->geometry() << scrn->virtualGeometry(); }
   if(geom.isNull() ){
     if( !scrn->geometry().isNull() ){ geom = scrn->geometry(); }
@@ -644,7 +644,7 @@ QRect LSession::screenGeom(int num){
     //Qt is backfiring (Xinarama w/ Fluxbox?) - return the saved geometry
     //geom = savedScreens[num];	
     //}
-  }
+  }*/
   return geom;
 }
 
