@@ -300,16 +300,16 @@ void MainUI::replaceOne(){
   bool done = false;
   if(cur->textCursor().selectedText()==ui->line_find->text()){
     cur->insertPlainText(ui->line_replace->text());
-    done = true;
-  }else{
+    //done = true;
+  }//else{
     //Find/replace the next occurance of the string
     bool found = cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
-    if(found){ cur->insertPlainText(ui->line_replace->text()); done = true;}
-  }
-  if(done){
+    //if(found){ cur->insertPlainText(ui->line_replace->text()); done = true;}
+  //}
+  /*if(done){
     //Re-highlight the newly-inserted text
     cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
-  }
+  }*/
 }
 
 void MainUI::replaceAll(){
