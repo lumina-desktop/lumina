@@ -83,7 +83,10 @@ void MainUI::saveScreenshot(){
 }
 void MainUI::quicksave(){
   if(mousegrabbed){ return; }
-    QString savedir = QDir::homePath() + "/Pictures/";
+    QString savedir = QDir::homePath()+"/";
+    if(QFile::exists(savedir + "Pictures/")){ savedir.append("Pictures/"); }
+    else if(QFile::exists(savedir + "Images/")){ savedir.append("Images/"); }
+
     QString path = savedir + QString( "Screenshot-%1.png" ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") );
     IMG->image().save(path, "png");
     QProcess::startDetached("lumina-open \""+path+"\"");
