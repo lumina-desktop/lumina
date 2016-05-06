@@ -158,10 +158,16 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
     //In the middle of selecting a window to take a screenshot
     //  Get the window underneath the mouse click and take the screenshot
     QList<WId> wins = XCB->WindowList();
+    QList<WId> stack = XCB->WM_Get_Client_List(true);
     cwin = 0;
     //qDebug() << "Try to select window:" << ev->globalPos(); 
-    for(int i=0; i<wins.length() && cwin==0; i++){
-      if( XCB->WindowGeometry(wins[i], true).contains(ev->globalPos()) ){ cwin = wins[i]; }
+    //for(int i=0; i<stack.length(); i++){
+    for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
+      if(!wins.contains(stack[i])){ continue; }
+      if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){ 
+        qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
+        cwin = stack[i]; 
+      }
     }
     qDebug() << " - Got window:" << cwin;
     if(cwin==this->winId()){  return; } //cancelled
