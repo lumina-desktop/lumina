@@ -640,7 +640,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     }
     
   }
-  //If still no icon found, look for any image format inthe "pixmaps" directory
+  //If still no icon found, look for any image format in the "pixmaps" directory
   if(ico.isNull()){
     if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+iconName)){
       ico.addFile(LOS::AppPrefix()+"share/pixmaps/"+iconName);
@@ -682,6 +682,7 @@ QStringList LXDG::getChildIconDirs(QString parent){
     //qDebug() << " - Parent:" << parent << "Dirs:" << dirs;
     for(int i=0; i<dirs.length(); i++){
       if(dirs[i].contains("x")){ dirs[i].prepend( QString::number(10-dirs[i].section("x",0,0).length())+QString::number(10-dirs[i].at(0).digitValue())+"::::"); }
+      else if(dirs[i].at(0).isNumber()){dirs[i].prepend( QString::number(10-dirs[i].length())+QString::number(10-dirs[i].at(0).digitValue())+"::::"); }
       else{ dirs[i].prepend( "0::::"); }
     }
     dirs.sort();
