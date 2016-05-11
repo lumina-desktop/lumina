@@ -16,9 +16,10 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
   bool inHome = type.endsWith("-home"); //internal code
   if(inHome){ type = type.remove("-home"); }
   if(itemPath.endsWith(".desktop") || type=="app"){
-    bool ok = false;
-    XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
-    if(ok && LXDG::checkValidity(item) ){
+    XDGDesktop item = LXDG::loadDesktopFile(itemPath, gooditem);
+    if(gooditem){ gooditem = LXDG::checkValidity(item); }
+    //qDebug() << "Good Item:" << gooditem << itemPath;
+    if(gooditem){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       iconPath = item.icon;
       text = item.name;
@@ -27,7 +28,6 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       name->setToolTip(item.comment);
       setupActions(item);
     }else{
-      gooditem = false;
       return;
     }
   }else if(type=="dir"){

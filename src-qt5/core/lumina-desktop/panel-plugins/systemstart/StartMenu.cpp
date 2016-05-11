@@ -101,8 +101,8 @@ void StartMenu::UpdateAll(){
   ui->stackedWidget->setCurrentWidget(ui->page_main); //need to ensure the settings page is not active
   ui->combo_locale->clear();
   QString curr = LUtils::currentLocale();
-  qDebug() << "Update Locales:" << locales;
-  qDebug() << "Current Locale:" << curr;
+  //qDebug() << "Update Locales:" << locales;
+  //qDebug() << "Current Locale:" << curr;
   for(int i=0; i<locales.length(); i++){
     QLocale loc( (locales[i]=="pt") ? "pt_PT" : locales[i] );
     ui->combo_locale->addItem(loc.nativeLanguageName() +" ("+locales[i]+")", locales[i]); //Make the display text prettier later
@@ -121,14 +121,18 @@ void StartMenu::UpdateAll(){
 }
 
 void StartMenu::UpdateMenu(bool forceall){
+  //qDebug() << "Update Menu" << forceall;
   if(forceall){ UpdateAll(); }
   //Quick update routine before the menu is made visible
+  //qDebug() << "update favs";
   UpdateFavs();
+  //qDebug() << "check page";
   if(ui->stackedWidget->currentWidget() != ui->page_main){
     ui->stackedWidget->setCurrentWidget(ui->page_main); //just show the main page
   }else{
     on_stackedWidget_currentChanged(0); //refresh/update the main page every time
   }
+  //qDebug() << "done";
 }
 
 void StartMenu::ReLoadQuickLaunch(){
@@ -312,6 +316,7 @@ void StartMenu::UpdateFavs(){
     else{ tmp = rest;  } //everything left over
     if(type==1){
       //Need to run a special routine for sorting the apps (already in the widget)
+      //qDebug() << "Sort App Widgets...";
       // Since each app actually might have a different name listed within the file
       QLayout *lay = ui->scroll_favs->widget()->layout();
       QStringList items;
@@ -320,7 +325,7 @@ void StartMenu::UpdateFavs(){
       }
   
       items.sort();
-      //qDebug() << " - Sorted Items:" << items;
+     // qDebug() << " - Sorted Items:" << items;
       for(int i=0; i<items.length(); i++){
         if(items[i].isEmpty()){ continue; }
         //QLayouts are weird in that they can only add items to the end - need to re-insert almost every item
@@ -338,17 +343,27 @@ void StartMenu::UpdateFavs(){
     tmp.sort(); //Sort alphabetically by name (dirs/files)
     for(int i=0; i<tmp.length(); i++){
       if(type<2){ rest.removeAll(tmp[i]); }
-      if(!QFile::exists(tmp[i].section("::::",2,50))){ continue; } //invalid favorite - skip it
-      ItemWidget *it = new ItemWidget(ui->scroll_favs->widget(), tmp[i].section("::::",2,50), tmp[i].section("::::",1,1) );
-      if(!it->gooditem){ continue; } //invalid for some reason
+      if( !QFile::exists(tmp[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
+      ItemWidget *it = 0;
+      if( tmp[i].section("::::",2,-1).endsWith(".desktop")){
+        bool ok = false;
+        XDGDesktop item = LXDG::loadDesktopFile(tmp[i].section("::::",2,-1), ok);
+        if(ok){ ok = LXDG::checkValidity(item); }
+	if(ok){ it = new ItemWidget(ui->scroll_favs->widget(), item); }
+      }else{
+        it = new ItemWidget(ui->scroll_favs->widget(), tmp[i].section("::::",2,-1), tmp[i].section("::::",1,1) );
+      }
+      if(it==0){ continue; }
+      if(!it->gooditem){ it->deleteLater(); continue; } //invalid for some reason
       ui->scroll_favs->widget()->layout()->addWidget(it);
       connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
-    QApplication::processEvents();
-  }
+    //QApplication::processEvents();
+  } //end loop over types
+  //qDebug() << "End updateFavs";
 }
 
 // Page update routines
