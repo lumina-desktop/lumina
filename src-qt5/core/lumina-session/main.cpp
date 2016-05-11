@@ -9,9 +9,6 @@
 #include <QProcess>
 #include <QString>
 
-
-
-
 #include "session.h"
 #include <LuminaUtils.h>
 #include <LuminaOS.h>
@@ -39,7 +36,7 @@ int main(int argc, char ** argv)
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Check for any missing user config files
-
+    
     //Start X11 if needed
 
     //Configure X11 monitors if needed
