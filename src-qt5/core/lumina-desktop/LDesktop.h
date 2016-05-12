@@ -31,6 +31,7 @@
 #include "LDesktopPluginSpace.h"
 #include "desktop-plugins/LDPlugin.h"
 //#include "desktop-plugins/NewDP.h"
+#include "LDesktopBackground.h"
 
 class LDesktop : public QObject{
 	Q_OBJECT
@@ -67,7 +68,7 @@ private:
 	QStringList oldBGL;
 	QList<LPanel*> PANELS;
 	LDesktopPluginSpace *bgDesktop; //desktop plugin area
-	QWidget *bgWindow; //full screen background
+	LDesktopBackground *bgWindow; //full screen background
 	QMenu *deskMenu, *winMenu;
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;

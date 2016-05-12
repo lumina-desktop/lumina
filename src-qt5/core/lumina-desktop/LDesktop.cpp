@@ -214,7 +214,7 @@ void LDesktop::InitDesktop(){
     connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChanged()) );
 
   if(DEBUG){ qDebug() << "Create bgWindow"; }
-  bgWindow = new QWidget();
+  bgWindow = new LDesktopBackground();
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
 	bgWindow->setFocusPolicy(Qt::StrongFocus);
@@ -500,49 +500,8 @@ void LDesktop::UpdateBackground(){
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
   if( (bgFile.toLower()=="default")){ bgFile = LOS::LuminaShare()+"desktop-background.jpg"; }
   //Now set this file as the current background
-  QString style;
   QString format = settings->value(DPREFIX+"background/format","stretch").toString();
-  if(bgFile.startsWith("rgb(")){ style = "QWidget#bgWindow{ border-image: none; background-color: %1;}";
-  }else if( format == "center"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: center; background-repeat: no-repeat; }";
-  }else if( format == "topleft"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: top left; background-repeat: no-repeat; }";
-  }else if( format == "topright"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: top right; background-repeat: no-repeat; }";
-  }else if( format == "bottomleft"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: bottom left; background-repeat: no-repeat; }";
-  }else if( format == "bottomright"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: bottom right; background-repeat: no-repeat; }";
-  }else if( format == "tile"){ style = "QWidget#bgWindow{ background-color: black; border-image:url(%1) repeat;}";
-  }else if( format == "full" || format == "fit") { style = "";
-  }else{ /* STRETCH*/ style = "QWidget#bgWindow{ background-color: black; border-image:url(%1) stretch;}"; }
-  style = style.arg(bgFile);
-  bgWindow->setStyleSheet(style);
-  if(!bgFile.startsWith("rgb(") && (format == "full" || format == "fit")){
-    // Load the background file and scale
-    QPixmap background(bgFile);
-    Qt::AspectRatioMode mode;
-    if (format == "full") {
-      mode = Qt::KeepAspectRatioByExpanding;
-    } else {
-      mode = Qt::KeepAspectRatio;
-    }
-    background = background.scaled(bgWindow->size(), mode);
-    // Put the image at the center (for fit)
-    int dx = 0, dy = 0;
-    if (background.width() < bgWindow->width()) {
-      dx = (bgWindow->width() - background.width()) / 2;
-    }
-    if (background.height() < bgWindow->height()) {
-      dy = (bgWindow->height() - background.height()) / 2;
-    }
-    QPixmap fullBg(bgWindow->size());
-    fullBg.fill(Qt::black);
-    QPainter painter(&fullBg);
-    painter.setBrush(background);
-    painter.setBrushOrigin(dx, dy);
-    painter.drawRect(dx, dy, background.width(), background.height());
-    // Set the background
-    QPalette palette;
-    palette.setBrush(QPalette::Background, fullBg);
-    bgWindow->setPalette(palette);
-  }
-  bgWindow->show();
+  bgWindow->setBackground(bgFile, format);
   //Now reset the timer for the next change (if appropriate)
   if(bgtimer->isActive()){ bgtimer->stop(); }
   if(bgL.length() > 1){
