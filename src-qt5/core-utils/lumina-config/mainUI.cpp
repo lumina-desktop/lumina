@@ -268,6 +268,8 @@ void MainUI::setupMenus(){
   //Available Wallpaper layout options
   ui->combo_desk_layout->clear();
   ui->combo_desk_layout->addItem(tr("Automatic"), "stretch");
+  ui->combo_desk_layout->addItem(tr("Fullscreen"), "full");
+  ui->combo_desk_layout->addItem(tr("Fit screen"), "fit");
   ui->combo_desk_layout->addItem(tr("Tile"), "tile");
   ui->combo_desk_layout->addItem(tr("Center"), "center");
   ui->combo_desk_layout->addItem(tr("Top Left"), "topleft");

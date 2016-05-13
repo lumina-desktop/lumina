@@ -214,7 +214,7 @@ void LDesktop::InitDesktop(){
     connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChanged()) );
 
   if(DEBUG){ qDebug() << "Create bgWindow"; }
-  bgWindow = new QWidget();
+  bgWindow = new LDesktopBackground();
 	bgWindow->setObjectName("bgWindow");
 	bgWindow->setContextMenuPolicy(Qt::CustomContextMenu);
 	bgWindow->setFocusPolicy(Qt::StrongFocus);
@@ -500,19 +500,8 @@ void LDesktop::UpdateBackground(){
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
   if( (bgFile.toLower()=="default")){ bgFile = LOS::LuminaShare()+"desktop-background.jpg"; }
   //Now set this file as the current background
-  QString style;
   QString format = settings->value(DPREFIX+"background/format","stretch").toString();
-  if(bgFile.startsWith("rgb(")){ style = "QWidget#bgWindow{ border-image: none; background-color: %1;}";
-  }else if( format == "center"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: center; background-repeat: no-repeat; }";
-  }else if( format == "topleft"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: top left; background-repeat: no-repeat; }";
-  }else if( format == "topright"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: top right; background-repeat: no-repeat; }";
-  }else if( format == "bottomleft"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: bottom left; background-repeat: no-repeat; }";
-  }else if( format == "bottomright"){ style = "QWidget#bgWindow{ background: black url(%1); background-position: bottom right; background-repeat: no-repeat; }";
-  }else if( format == "tile"){ style = "QWidget#bgWindow{ background-color: black; border-image:url(%1) repeat;}";
-  }else{ /* STRETCH*/ style = "QWidget#bgWindow{ background-color: black; border-image:url(%1) stretch;}"; }
-  style = style.arg(bgFile);
-  bgWindow->setStyleSheet(style);
-  bgWindow->show();
+  bgWindow->setBackground(bgFile, format);
   //Now reset the timer for the next change (if appropriate)
   if(bgtimer->isActive()){ bgtimer->stop(); }
   if(bgL.length() > 1){
