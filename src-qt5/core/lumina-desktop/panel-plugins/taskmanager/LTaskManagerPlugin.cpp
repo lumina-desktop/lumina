@@ -34,6 +34,18 @@ void LTaskManagerPlugin::UpdateButtons(){
 	
   //Get the current window list
   QList<WId> winlist = LSession::handle()->XCB->WindowList();
+  // Ignore the windows which don't want to be listed
+  for (int i = 0; i < winlist.length(); i++) {
+    QList<LXCB::WINDOWSTATE> states = LSession::handle()->XCB->WM_Get_Window_States(winlist[i]);
+    for (int j = 0; j < states.length(); j++) {
+      if (states[j] == LXCB::S_SKIP_TASKBAR) {
+        // Skip taskbar window
+        winlist.removeAt(i);
+        i--;
+        break;
+      }
+    }
+  }
   //Do not change the status of the previously active window if it just changed to a non-visible window
   //WId activeWin = LSession::handle()->XCB->ActiveWindow();
   //bool skipActive = !winlist.contains(activeWin);
