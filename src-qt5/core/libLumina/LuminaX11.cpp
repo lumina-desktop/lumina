@@ -682,6 +682,7 @@ void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimi
 	
   //Need to send a client message event for the window so the WM picks it up
   xcb_client_message_event_t event;
+  memset(&event, 0, sizeof(event));
   event.response_type = XCB_CLIENT_MESSAGE;
   event.format = 32;
   event.window = win;
