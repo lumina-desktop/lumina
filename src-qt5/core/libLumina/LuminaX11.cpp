@@ -55,7 +55,7 @@ void LXCB::createWMAtoms(){
   ATOMS.clear();
   atoms.clear();
   //List the atoms needed by some WM functions
-  atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS"; //WM_PROTOCOLS
+  atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS" << "WM_CHANGE_STATE"; //WM_PROTOCOLS
 
   //Create all the requests for the atoms
   QList<xcb_intern_atom_reply_t*> reply;
@@ -675,23 +675,20 @@ void LXCB::KillClient(WId win){
 void LXCB::MinimizeWindow(WId win){ //request that the window be unmapped/minimized
   if(DEBUG){ qDebug() << "XCB: MinimizeWindow()"; }
   if(win==0){ return; }
+  if(atoms.isEmpty()){ createWMAtoms(); } //need these atoms
   //Note: Fluxbox completely removes this window from the open list if unmapped manually
  // xcb_unmap_window(QX11Info::connection(), win);
   //xcb_flush(QX11Info::connection()); //make sure the command is sent out right away
 	
   //Need to send a client message event for the window so the WM picks it up
   xcb_client_message_event_t event;
-    event.response_type = XCB_CLIENT_MESSAGE;
-    event.format = 32;
-    event.window = win;
-    event.type = EWMH._NET_WM_STATE;
-    event.data.data32[0] = 1; //set to toggle (switch back and forth)
-    event.data.data32[1] = EWMH._NET_WM_STATE_HIDDEN;
-    event.data.data32[2] = 0;
-    event.data.data32[3] = 0;
-    event.data.data32[4] = 0;
+  event.response_type = XCB_CLIENT_MESSAGE;
+  event.format = 32;
+  event.window = win;
+  event.type = ATOMS[atoms.indexOf("WM_CHANGE_STATE")];
+  event.data.data32[0] = XCB_ICCCM_WM_STATE_ICONIC;
 
-  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+  xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
 }
 
 // === ActivateWindow() ===
