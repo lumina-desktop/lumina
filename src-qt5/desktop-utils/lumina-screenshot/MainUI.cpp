@@ -66,7 +66,7 @@ void MainUI::setupIcons(){
   ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
   ui->actionTake_Screenshot->setIcon( LXDG::findIcon("camera-web","") );
   ui->tool_crop->setIcon( LXDG::findIcon("transform-crop","") );
-  ui->tool_resize->setIcon( LXDG::findIcon("transform-scale.png") );
+  ui->tool_resize->setIcon( LXDG::findIcon("transform-scale.png","") );
   //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
 }
 
