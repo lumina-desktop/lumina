@@ -378,6 +378,7 @@ void LSession::checkUserFiles(){
     //Save the current version of the session to the settings file (for next time)
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());
   }
+
   /*int oldversion = VersionStringToNumber(OVS);
   int nversion = VersionStringToNumber(this->applicationVersion());
   bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
