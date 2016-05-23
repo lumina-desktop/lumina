@@ -1,6 +1,7 @@
 # =============================================
 #  Subroutine for project files to detect which OS is compiling the project
 #  Generic variables it sets for internal use: OS, LINUX_DISTRO (if OS=="Linux")
+#  **DO NOT** forcibly define the OS and LINUX_DISTRO qmake variables from the command line!!
 # =============================================
 #  Main Build Variables (generally for finding existing files):
 # 	PREFIX: 		Base install directory (${PREFIX}/[bin/share/etc/include] will be used)
@@ -75,7 +76,7 @@ isEmpty(OS){
   message( $$MSG )
 
   # Setup the dirs needed to find/load libraries
-  INCLUDEPATH +=$${PREFIX}/include
+  INCLUDEPATH +=$${PREFIX}/include 
 
   # If the detailed install variables are not set - create them from the general vars
   isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
