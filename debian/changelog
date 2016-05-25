@@ -1,12 +1,17 @@
 lumina-desktop (0.9.1.1421-1nano) unstable; urgency=low
 
   * new git snapshot
+  * update lumina-fm.install
+  * update lumina-data.install
+  * update lumina-desktop.install
+  * add lumina-textedit package
+  * add lumina-textedit as dependency for lumina-desktop
 
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Wed, 25 May 2016 20:59:42 +0200
 
 lumina-desktop (0.9.0.1235-2nano) unstable; urgency=low
 
-  * New maintainer build
+  * New maintainance build
   * add -dbgsym packages
 
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 01 Mar 2016 21:21:33 +0100
