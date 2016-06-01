@@ -13,6 +13,8 @@
 #include <QDateTime>
 #include <QList>
 #include <QIcon>
+#include <QTimer>
+#include <QXmlStreamReader> //Contained in the Qt "core" module - don't need the full "xml" module for this
 
 struct RSSitem{
   //Required Fields
@@ -36,47 +38,57 @@ struct RSSchannel{
   //QStringList skipdays;
   // - icon info
   QIcon icon;
-  QString iconurl, icontitle, iconlink;
-  QSize iconsize;
+  QString icon_url, icon_title, icon_link, icon_description;
+  QSize icon_size;
   //All items within this channel
   QList<RSSitem> items;
 
   //Optional RSS2 elements ignored:
   // "cloud", "textInput", "rating", "language", "copyright", "managingEditor", "webMaster",
   // "category", "generator", "docs"
+
+  //Internal data for bookkeeping
+  QDateTime lastsync, nextsync;
 };
 
 class RSSReader : public QObject{
 	Q_OBJECT
 public:
-	RSSReader(QObject *parent);
+	RSSReader(QObject *parent, QString settingsPrefix);
 	~RSSReader();
 
 	//Information retrieval
 	QStringList channels(); //returns all ID's
-	Rsschannel dataForID(QString ID);
+	RSSchannel dataForID(QString ID);
 
 	//Initial setup
-	void addUrls();
+	void addUrls(QStringList urls);
 	void removeUrl(QString ID);
 	
 public slots:
 	void syncNow(); //not generally needed
 
 private:
-	QHash<QString, RSSchannel> data; // ID/data
-	//Network request functions
+	//Internal data objects
+	QHash<QString, RSSchannel> hash; // ID/data
+        QString setprefix;
+	QTimer *syncTimer;	
 	QNetworkAccessManager *NMAN;
+        QStringList outstandingURLS;
+
+	//Network request function
 	void requestRSS(QString url);
 	
 	//RSS parsing functions
-	RSSchannel readRSS(QByteArray rss);
-	RSSchannel readRSSChannel(QXmlStreamReader *rss)
+	RSSchannel readRSS(QByteArray bytes);
+	RSSchannel readRSSChannel(QXmlStreamReader *rss);
 	RSSitem readRSSItem(QXmlStreamReader *rss);
+        void readRSSImage(RSSchannel *item, QXmlStreamReader *rss);
 	QDateTime RSSDateTime(QString datetime);
 
 private slots:
 	void replyFinished(QNetworkReply *reply);
+	void checkTimes();
 
 signals:
 	void rssChanged(QString); //ID

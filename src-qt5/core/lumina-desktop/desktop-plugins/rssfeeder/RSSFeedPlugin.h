@@ -12,6 +12,8 @@
 #include <QTimer>
 #include "../LDPlugin.h"
 
+#include "RSSObjects.h"
+
 namespace Ui{
 	class RSSFeedPlugin;
 };
@@ -30,6 +32,7 @@ private:
 	Ui::RSSFeedPlugin *ui;
 	QMenu *optionsMenu;
 	QString setprefix; //settings prefix
+	RSSReader *RSS;
 
 	void updateOptionsMenu();
 
@@ -49,6 +52,7 @@ private slots:
 	// - Feed Management
 	void addNewFeed(); // the "add" button (current url in widget on page)
 	void removeFeed(); // the "remove" button (current feed for page)
+	void resyncFeeds();
 	// - Feed Interactions
 	void currentFeedChanged();
 	void openFeedPage(); //Open the website in a browser

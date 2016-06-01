@@ -102,7 +102,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QTextEdit" name="text_feed">
+        <widget class="QTextBrowser" name="text_feed">
          <property name="undoRedoEnabled">
           <bool>false</bool>
          </property>
@@ -118,6 +118,12 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+         <property name="openLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -191,8 +197,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>228</width>
-               <height>178</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
             </widget>
