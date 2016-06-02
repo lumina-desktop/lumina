@@ -18,21 +18,21 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>2</number>
+    <number>3</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>3</number>
    </property>
    <property name="rightMargin">
-    <number>2</number>
+    <number>3</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>3</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_feed">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -153,6 +153,9 @@ p, li { white-space: pre-wrap; }
            <property name="text">
             <string>Back to Feeds</string>
            </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -185,23 +188,10 @@ p, li { white-space: pre-wrap; }
            <number>0</number>
           </property>
           <item>
-           <widget class="QScrollArea" name="scroll_feed_info">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="widgetResizable">
+           <widget class="QTextBrowser" name="text_feed_info">
+            <property name="openExternalLinks">
              <bool>true</bool>
             </property>
-            <widget class="QWidget" name="scrollAreaWidgetContents_2">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
-            </widget>
            </widget>
           </item>
          </layout>
@@ -213,6 +203,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="push_rm_feed">
            <property name="text">
             <string>Remove Feed</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -243,6 +236,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="push_back2">
            <property name="text">
             <string>Back to Feeds</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -289,7 +285,24 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="line_new_url"/>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLineEdit" name="line_new_url"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tool_add_preset">
+              <property name="toolTip">
+               <string>Load a preset RSS Feed</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="popupMode">
+               <enum>QToolButton::InstantPopup</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -369,6 +382,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="push_back3">
            <property name="text">
             <string>Back to Feeds</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

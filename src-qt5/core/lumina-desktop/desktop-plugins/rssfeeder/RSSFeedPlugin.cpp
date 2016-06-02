@@ -24,6 +24,9 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   //Create the options menu
   optionsMenu = new QMenu(this);
   ui->tool_options->setMenu(optionsMenu);
+  presetMenu = new QMenu(this);
+  ui->tool_add_preset->setMenu(presetMenu);
+
   //Setup any signal/slot connections
   connect(ui->push_back1, SIGNAL(clicked()), this, SLOT(backToFeeds()) );
   connect(ui->push_back2, SIGNAL(clicked()), this, SLOT(backToFeeds()) );
@@ -34,8 +37,12 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   connect(ui->tool_gotosite, SIGNAL(clicked()), this, SLOT(openFeedPage()) );
   connect(ui->push_rm_feed, SIGNAL(clicked()), this, SLOT(removeFeed()) );
   connect(ui->push_add_url, SIGNAL(clicked()), this, SLOT(addNewFeed()) );
+  connect(ui->combo_feed, SIGNAL(currentIndexChanged(int)), this, SLOT(currentFeedChanged()) );
+
+  connect(presetMenu, SIGNAL(triggered(QAction*)), this, SLOT(loadPreset(QAction*)) );
+
   updateOptionsMenu();
-  QTimer::singleShot(0,this, SLOT(loadIcons()) );
+  QTimer::singleShot(0,this, SLOT(ThemeChange()) );
   //qDebug() << " - Done with init";
   QStringList feeds;
   if( !LSession::handle()->DesktopPluginSettings()->contains(setprefix+"currentfeeds") ){
@@ -46,6 +53,7 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     feeds = LSession::handle()->DesktopPluginSettings()->value(setprefix+"currentfeeds",QStringList()).toStringList();
   }
   RSS->addUrls(feeds);
+  backToFeeds(); //always load the first page
 }
 
 RSSFeedPlugin::~RSSFeedPlugin(){
@@ -62,15 +70,34 @@ void RSSFeedPlugin::updateOptionsMenu(){
   optionsMenu->addAction(LXDG::findIcon("configure",""), tr("Settings"), this, SLOT(openSettings()) );
   optionsMenu->addSeparator();
   optionsMenu->addAction(LXDG::findIcon("download",""), tr("Update Feeds Now"), this, SLOT(resyncFeeds()) );
+
+  presetMenu->clear();
+  QAction *tmp = presetMenu->addAction( tr("Lumina Desktop RSS") );
+    tmp->setWhatsThis("http://lumina-desktop.org/?feed=rss2");
+  //Add any other feeds here as needed (TO-DO)
+
+}
+
+void RSSFeedPlugin::checkFeedNotify(){
+  bool notify = false;
+  for(int i=0; i<ui->combo_feed->count() && !notify; i++){
+    if( !ui->combo_feed->itemData(i, Qt::WhatsThisRole).toString().isEmpty()){ notify = true;  }
+  }
+  QString style;
+  if(notify){ style = "QComboBox::down-arrow{ background-color: rgba(255,0,0,120); }"; }
+  ui->combo_feed->setStyleSheet(style);
 }
 
 //Simplification functions for loading feed info onto widgets
 void RSSFeedPlugin::updateFeed(QString ID){
-  //Save the datetime this feed was read
-  LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"feedReads/"+ID, QDateTime::currentDateTime() );
-  
   //Now clear/update the feed viewer (HTML)
   ui->text_feed->clear();
+  if(ID.isEmpty()){ return; } //nothing to show
+
+  //Save the datetime this feed was read
+  LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"feedReads/"+ID, QDateTime::currentDateTime() );
+  //Get the color to use for hyperlinks (need to specify in html)
+  QString color = ui->text_feed->palette().text().color().name(); //keep the hyperlinks the same color as the main text (different formatting still applies)
   QString html;
   RSSchannel data = RSS->dataForID(ID);
   ui->label_lastupdate->setText( data.lastsync.toString(Qt::DefaultLocaleShortDate) );
@@ -78,8 +105,17 @@ void RSSFeedPlugin::updateFeed(QString ID){
  // html.append("<ul style=\"margin-left: 3px;\">\n");
   for(int i=0; i<data.items.length(); i++){
     //html.append("<li>");
-    html.append("<h3><a href=\""+data.items[i].link+"\">"+data.items[i].title+"</a></h3>");
-    if(!data.items[i].pubdate.isNull()){html.append("<i>("+data.items[i].pubdate.toString(Qt::DefaultLocaleShortDate)+")</i><br>"); }
+    html.append("<h4><a href=\""+data.items[i].link+"\" style=\"color: "+color+";\">"+data.items[i].title+"</a></h4>");
+    if(!data.items[i].pubdate.isNull() || !data.items[i].author.isEmpty()){
+      html.append("<i>(");
+      if(!data.items[i].pubdate.isNull()){ html.append(data.items[i].pubdate.toString(Qt::DefaultLocaleShortDate)); }
+      if(!data.items[i].author.isEmpty()){ 
+        if(!html.endsWith("(")){ html.append(", "); } //spacing between date/author
+        if(!data.items[i].author_email.isEmpty()){ html.append("<a href=\"mailto:"+data.items[i].author_email+"\" style=\"color: "+color+";\">"+data.items[i].author+"</a>"); }
+        else{ html.append(data.items[i].author); }
+      }
+      html.append(")</i><br>");
+    }
     html.append(data.items[i].description);
     //html.append("</li>\n");
     if(i+1 < data.items.length()){ html.append("<br>"); }
@@ -91,6 +127,23 @@ void RSSFeedPlugin::updateFeed(QString ID){
 
 void RSSFeedPlugin::updateFeedInfo(QString ID){
   ui->page_feed_info->setWhatsThis(ID);
+  ui->text_feed_info->clear();
+  if(ID.isEmpty()){ return; }
+  //Get the color to use for hyperlinks (need to specify in html)
+  QString color = ui->text_feed->palette().text().color().name(); //keep the hyperlinks the same color as the main text (different formatting still applies)
+  QString html;
+  RSSchannel data = RSS->dataForID(ID);
+  // - generate the html
+  // <a href=\""+LINK+"\" style=\"color: "+color+";\">"+TEXT+"</a>
+  html.append( QString(tr("Feed URL: %1")).arg("<a href=\""+data.originalURL+"\" style=\"color: "+color+";\">"+data.originalURL+"</a>") +"<br><hr>");
+  html.append( QString(tr("Title: %1")).arg(data.title) +"<br>");
+  html.append( QString(tr("Description: %1")).arg(data.description) +"<br>");
+  html.append( QString(tr("Website: %1")).arg("<a href=\""+data.link+"\" style=\"color: "+color+";\">"+data.link+"</a>") +"<br><hr>");
+  if(!data.lastBuildDate.isNull()){ html.append( QString(tr("Last Build Date: %1")).arg(data.lastBuildDate.toString(Qt::DefaultLocaleShortDate)) +"<br>"); }
+  html.append( QString(tr("Last Sync: %1")).arg(data.lastsync.toString(Qt::DefaultLocaleShortDate)) +"<br>");
+  html.append( QString(tr("Next Sync: %1")).arg(data.nextsync.toString(Qt::DefaultLocaleShortDate)) +"<br>");
+  // - load that html into the viewer
+  ui->text_feed_info->setHtml(html);
 }
 
 //================
@@ -105,6 +158,7 @@ void RSSFeedPlugin::loadIcons(){
   ui->push_rm_feed->setIcon( LXDG::findIcon("list-remove","") );
   ui->push_add_url->setIcon( LXDG::findIcon("list-add","") );
   ui->push_save_settings->setIcon( LXDG::findIcon("document-save","") );
+  ui->tool_add_preset->setIcon( LXDG::findIcon("bookmark-new-list","") );
 }
 
 //GUI slots
@@ -165,15 +219,21 @@ void RSSFeedPlugin::addNewFeed(){
   backToFeeds();
 }
 
+void RSSFeedPlugin::loadPreset(QAction *act){
+  ui->line_new_url->setText( act->whatsThis() );
+}
+
 void RSSFeedPlugin::removeFeed(){
   QString ID = ui->page_feed_info->whatsThis();
   if(ID.isEmpty()){ return; }
   //Remove from the RSS feed object
+  RSSchannel info = RSS->dataForID(ID);
   RSS->removeUrl(ID);
   //Remove the URL from the settings file for next login
   QStringList feeds = LSession::handle()->DesktopPluginSettings()->value(setprefix+"currentfeeds",QStringList()).toStringList();
-  feeds.removeAll(ID);
+  feeds.removeAll(info.originalURL);
   LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"currentfeeds", feeds);
+  LSession::handle()->DesktopPluginSettings()->remove(setprefix+"feedReads/"+ID);
   //Now go back to the main page
   backToFeeds();
 }
@@ -186,9 +246,10 @@ void RSSFeedPlugin::resyncFeeds(){
 // - Feed Interactions
 void RSSFeedPlugin::currentFeedChanged(){
   QString ID = ui->combo_feed->currentData().toString();
-  if(ID.isEmpty()){ return; } //no feed selected
-  //Remove the "unread" color from the feed
+  //Remove the "unread" color/flag from the feed
   ui->combo_feed->setItemData( ui->combo_feed->currentIndex(), QBrush(Qt::transparent) , Qt::BackgroundRole);
+  ui->combo_feed->setItemData( ui->combo_feed->currentIndex(), "", Qt::WhatsThisRole);
+  checkFeedNotify();
   updateFeed(ID);
 }
 
@@ -197,7 +258,7 @@ void RSSFeedPlugin::openFeedPage(){ //Open main website for feed
   //Find the data associated with this feed
   RSSchannel data = RSS->dataForID(ID);
   QString url = data.link;
-  qDebug() << "Open Feed Page:" << url;
+  //qDebug() << "Open Feed Page:" << url;
   //Now launch the browser
   if(!url.isEmpty()){
     LSession::LaunchApplication("lumina-open \""+url+"\"");
@@ -254,6 +315,7 @@ void RSSFeedPlugin::UpdateFeedList(){
   if(IDS.contains(activate)){
     ui->combo_feed->setCurrentIndex( IDS.indexOf(activate) );
   }
+  checkFeedNotify();
 }
 
 void RSSFeedPlugin::RSSItemChanged(QString ID){
@@ -269,12 +331,17 @@ void RSSFeedPlugin::RSSItemChanged(QString ID){
       QColor color(Qt::transparent);
       if( info.lastBuildDate > LSession::handle()->DesktopPluginSettings()->value(setprefix+"feedReads/"+ID,QDateTime()).toDateTime() ){
         color = QColor(255,10,10,100); //semi-transparent red
+        ui->combo_feed->setItemData(i, "notify", Qt::WhatsThisRole);
+      }else{
+        ui->combo_feed->setItemData(i, "", Qt::WhatsThisRole);
       }
       ui->combo_feed->setItemData(i, QBrush(color) , Qt::BackgroundRole);
     }
   }
   if(ID == ui->combo_feed->currentData().toString()){
     currentFeedChanged(); //re-load the current feed
+  }else{
+    checkFeedNotify();
   }
 }
 

@@ -49,6 +49,7 @@ struct RSSchannel{
 
   //Internal data for bookkeeping
   QDateTime lastsync, nextsync;
+  QString originalURL; //in case it was redirected to some "fixed" url later
 };
 
 class RSSReader : public QObject{

@@ -30,11 +30,12 @@ public:
 	}
 private:
 	Ui::RSSFeedPlugin *ui;
-	QMenu *optionsMenu;
+	QMenu *optionsMenu, *presetMenu;
 	QString setprefix; //settings prefix
 	RSSReader *RSS;
 
 	void updateOptionsMenu();
+	void checkFeedNotify(); //check if unread feeds are available and change the styling a bit as needed
 
 	//Simplification functions for loading feed info onto widgets
 	void updateFeed(QString ID);
@@ -51,6 +52,7 @@ private slots:
 	void openSettings();
 	// - Feed Management
 	void addNewFeed(); // the "add" button (current url in widget on page)
+	void loadPreset(QAction*); //the add-preset menu
 	void removeFeed(); // the "remove" button (current feed for page)
 	void resyncFeeds();
 	// - Feed Interactions
