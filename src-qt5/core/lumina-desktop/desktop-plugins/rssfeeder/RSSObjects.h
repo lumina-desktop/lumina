@@ -15,6 +15,7 @@
 #include <QIcon>
 #include <QTimer>
 #include <QXmlStreamReader> //Contained in the Qt "core" module - don't need the full "xml" module for this
+#include <QSslError>
 
 struct RSSitem{
   //Required Fields
@@ -89,6 +90,7 @@ private:
 
 private slots:
 	void replyFinished(QNetworkReply *reply);
+	void sslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void checkTimes();
 
 signals:

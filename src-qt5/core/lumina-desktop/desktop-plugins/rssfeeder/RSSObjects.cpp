@@ -16,6 +16,7 @@
 RSSReader::RSSReader(QObject *parent, QString settingsPrefix) : QObject(parent){
   NMAN = new QNetworkAccessManager(this);
   connect(NMAN, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)) );
+  connect(NMAN, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(sslErrors(QNetworkReply*, const QList<QSslError>&)) );
 
   setprefix = settingsPrefix;
   syncTimer = new QTimer(this);
@@ -54,10 +55,13 @@ RSSchannel RSSReader::dataForID(QString ID){
 //Initial setup
 void RSSReader::addUrls(QStringList urls){
   //qDebug() << "Add URLS:" << urls;
+  QStringList known = hash.keys();
+  int orig = known.length();
+  for(int i=0; i<orig; i++){ known << hash[known[i]].originalURL; }
   for(int i=0; i<urls.length(); i++){
     //Note: Make sure we get the complete URL form for accurate comparison later
     QString url = QUrl(urls[i]).toString();
-    if(hash.contains(url)){ continue; } //already handled
+    if(known.contains(url)){ continue; } //already handled
     RSSchannel blank;
       blank.originalURL = url;
     hash.insert(url, blank); //put the empty struct into the hash for now
@@ -96,7 +100,7 @@ void RSSReader::requestRSS(QString url){
 RSSchannel RSSReader::readRSS(QByteArray bytes){
   //Note: We could expand this later to support multiple "channel"s per Feed
   //   but it seems like there is normally only one channel anyway
-  //qDebug() << "Read RSS:" << bytes;
+  //qDebug() << "Read RSS:" << bytes.left(100);
   QXmlStreamReader xml(bytes);
   RSSchannel rssinfo;
   //qDebug() << "Can Read XML Stream:" << !xml.hasError();
@@ -104,6 +108,7 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
     //qDebug() << " - RSS Element:" << xml.name();
     if(xml.name() == "rss" && xml.attributes().value("version") =="2.0"){
       while(xml.readNextStartElement()){
+        //qDebug() << " - RSS Element:" << xml.name();
         if(xml.name()=="channel"){ rssinfo = readRSSChannel(&xml); }
         else{ xml.skipCurrentElement(); }
       }
@@ -119,7 +124,10 @@ RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
     //qDebug() << " - RSS Element (channel):" <<rss->name();
     if(rss->name()=="item"){ info.items << readRSSItem(rss); }
     else if(rss->name()=="title"){ info.title = rss->readElementText(); }
-    else if(rss->name()=="link"){ info.link = rss->readElementText(); }
+    else if(rss->name()=="link"){ 
+      QString txt = rss->readElementText(); 
+      if(!txt.isEmpty()){ info.link = txt; } 
+    }
     else if(rss->name()=="description"){ info.description = rss->readElementText(); }
     else if(rss->name()=="lastBuildDate"){ info.lastBuildDate = RSSDateTime(rss->readElementText()); }
     else if(rss->name()=="pubDate"){ info.lastPubDate = RSSDateTime(rss->readElementText()); }
@@ -182,14 +190,14 @@ void RSSReader::replyFinished(QNetworkReply *reply){
   QByteArray data = reply->readAll();
   outstandingURLS.removeAll(url);
   if(data.isEmpty()){
-    qDebug() << "No data returned:" << url;
+    //qDebug() << "No data returned:" << url;
     //see if the URL can be adjusted for known issues
     bool handled = false;
     QUrl redirecturl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
     if(redirecturl.isValid() && (redirecturl.toString() != url )){
       //New URL redirect - make the change and send a new request
       QString newurl = redirecturl.toString();
-      qDebug() << " - Redirect to:" << newurl;
+      //qDebug() << " - Redirect to:" << newurl;
       if(hash.contains(url) && !hash.contains(newurl)){
         hash.insert(newurl, hash.take(url) ); //just move the data over to the new url
         requestRSS(newurl);
@@ -204,18 +212,18 @@ void RSSReader::replyFinished(QNetworkReply *reply){
   }
 
   if(!hash.contains(url)){ 
-    //qDebug() << " - hash does not contain URL!!";
+    //qDebug() << " - hash does not contain URL:" << url;
     //URL removed from list while a request was outstanding?
     //Could also be an icon fetch response
     QStringList keys = hash.keys();
     for(int i=0; i<keys.length(); i++){
-      if(hash[keys[i]].icon_url == url){
+      //qDebug() << " - Check for icon URL:" << hash[keys[i]].icon_url;
+      if(hash[keys[i]].icon_url.toLower() == url.toLower()){ //needs to be case-insensitive
         //Icon fetch response
         RSSchannel info = hash[keys[i]];
         QImage img = QImage::fromData(data);
         info.icon = QIcon( QPixmap::fromImage(img) );
-        //qDebug() << "Got Icon response:" << url << data;
-        //qDebug() << info.icon;
+        //qDebug() << "Got Icon response:" << url << info.icon;
         hash.insert(keys[i], info); //insert back into the hash
         emit rssChanged(keys[i]);
         break;
@@ -227,7 +235,10 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     RSSchannel info = readRSS(data); //QNetworkReply can be used as QIODevice
     reply->deleteLater(); //clean up
     //Validate the info and announce any changes
-    if(info.title.isEmpty() || info.link.isEmpty() || info.description.isEmpty()){ return; } //bad info/read
+    if(info.title.isEmpty() || info.link.isEmpty() || info.description.isEmpty()){ 
+      qDebug() << "Missing XML Information:" << url << info.title << info.link << info.description;
+      return; 
+    } //bad info/read
     //Update the bookkeeping elements of the info
     if(info.timetolive<=0){ info.timetolive = LSession::handle()->DesktopPluginSettings()->value(setprefix+"default_interval_minutes", 60).toInt(); }
     if(info.timetolive <=0){ info.timetolive = 60; } //error in integer conversion from settings?
@@ -241,6 +252,17 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     if(newinfo){ emit newChannelsAvailable(); } //new channel
     else if(changed){ emit rssChanged(url); } //update to existing channel
   }
+}
+
+void RSSReader::sslErrors(QNetworkReply *reply, const QList<QSslError> &errors){
+  int ok = 0;
+  qDebug() << "SSL Errors Detected (RSS Reader):" << reply->url();
+  for(int i=0; i<errors.length(); i++){
+    if(errors[i].error()==QSslError::SelfSignedCertificate || errors[i].error()==QSslError::SelfSignedCertificateInChain){ ok++; }
+    else{ qDebug() << "Unhandled SSL Error:" << errors[i].errorString(); }
+  }
+  if(ok==errors.length()){  qDebug() << " - Permitted:" << reply->url(); reply->ignoreSslErrors(); }
+  else{ qDebug() << " - Denied:" << reply->url(); }
 }
 
 void RSSReader::checkTimes(){
