@@ -26,6 +26,13 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
+//OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
+QStringList LOS::RSSFeeds(){ 
+  QStringList feeds;
+    feeds << "FreeBSD News Feed::::https://www.freebsd.org/news/rss.xml";
+    feeds << "PC-BSD News Feed::::http://blog.pcbsd.org/?feed=rss2";
+  return feeds;
+ } 
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){

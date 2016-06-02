@@ -74,6 +74,12 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
 QString LOS::AppStoreShortcut(){ return ""; } //graphical app/pkg manager
+//OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
+QStringList LOS::RSSFeeds(){ 
+  QStringList feeds;
+  feeds << "DragonFly BSD Feed::::http://www.dragonflybsd.org/recentchanges/index.rss";
+  return feeds; 
+} 
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){

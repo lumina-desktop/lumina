@@ -24,6 +24,8 @@ QString LOS::SysPrefix(){ return "/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
 QString LOS::AppStoreShortcut(){ return LOS::AppPrefix() + "/share/applications/synaptic.desktop"; } //graphical app/pkg manager
+//OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
+QStringList LOS::RSSFeeds(){ return QStringList(); } 
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){

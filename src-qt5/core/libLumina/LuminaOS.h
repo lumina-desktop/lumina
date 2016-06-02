@@ -34,6 +34,9 @@ public:
 	static QString ControlPanelShortcut();
 	static QString AppStoreShortcut();
 
+	//OS-specific RSS feeds 
+	static QStringList RSSFeeds(); //Return Format: QStringList[ <name>::::<url> ];
+
 	//Scan for mounted external devices
 	static QStringList ExternalDevicePaths(); //Returns: QStringList[<type>::::<filesystem>::::<path>]
 	  //Note: <type> = [USB, HDRIVE, DVD, SDCARD, UNKNOWN]
