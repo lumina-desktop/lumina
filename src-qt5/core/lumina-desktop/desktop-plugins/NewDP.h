@@ -22,7 +22,7 @@
 #include "systemmonitor/MonitorWidget.h"
 //#include "quickcontainer/QuickDPlugin.h"
 //#include "messagecenter/MessageCenter.h"
-#include "rssfeeder/RSSFeedPlugin.h"
+#include "rssreader/RSSFeedPlugin.h"
 
 class NewDP{
 public:
@@ -49,7 +49,7 @@ public:
 	    //plug = new MessageCenterPlugin(parent, plugin);
 	  //}else if(plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){
 	    //plug = new QuickDPlugin(parent, plugin);
-	  }else if(plugin.section("---",0,0)=="rssfeeder"){
+	  }else if(plugin.section("---",0,0)=="rssreader"){
 	    plug = new RSSFeedPlugin(parent, plugin);
 	  }else{
 	    qWarning() << "Invalid Desktop Plugin:"<<plugin << " -- Ignored";
