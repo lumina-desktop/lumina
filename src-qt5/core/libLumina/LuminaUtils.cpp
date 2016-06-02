@@ -211,6 +211,23 @@ QString LUtils::PathToAbsolute(QString path){
   }
   return path;
 }
+QString LUtils::AppToAbsolute(QString path){
+  if(path.startsWith("/") || QFile::exists(path)){ return path; }
+  if(path.endsWith(".desktop")){
+    //Look in the XDG dirs
+    QStringList dirs = LXDG::systemApplicationDirs();
+    for(int i=0; i<dirs.length(); i++){
+      if(QFile::exists(dirs[i]+"/"+path)){ return (dirs[i]+"/"+path); }
+    }
+  }else{
+    //Look on $PATH for the binary
+    QStringList paths = QString(getenv("PATH")).split(":");
+    for(int i=0; i<paths.length(); i++){
+      if(QFile::exists(paths[i]+"/"+path)){ return (paths[i]+"/"+path); }
+    }
+  }
+  return path;
+}
 
 QStringList LUtils::imageExtensions(bool wildcards){
   //Note that all the image extensions are lowercase!!
@@ -593,12 +610,14 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file   
   
+    if(var.contains("_default_")){ val = AppToAbsolute(val); } //got an application/binary
      //Special handling for values which need to exist first
     if(var.endsWith("_ifexists") ){ 
       var = var.remove("_ifexists"); //remove this flag from the variable
       //Check if the value exists (absolute path only)
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
     }
+  
     //Parse/save the value
     QString loset, sset; //temporary strings
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
@@ -606,11 +625,16 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
     else if(var=="session_default_terminal"){ sset = "default-terminal="+val; }
     else if(var=="session_default_filemanager"){ 
+      LXDG::setDefaultAppForMime("inode/directory", val);
       sset = "default-filemanager="+val;
       loset = "directory="+val; 
+    }else if(var=="session_default_webbrowser"){ 
+      loset = "webbrowser="+val; 
+      LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
+      LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
+    }else if(var=="session_default_email"){ 
+      loset = "email="+val; 
     }
-    else if(var=="session_default_webbrowser"){ loset = "webbrowser="+val; }
-    else if(var=="session_default_email"){ loset = "email="+val; }
     //Put the line into the file (overwriting any previous assignment as necessary)
     if(!loset.isEmpty()){
       int index = lopenset.indexOf(QRegExp(loset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
@@ -710,6 +734,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(var.contains(".")){ var.replace(".","_"); } 
     //Now parse the variable and put the value in the proper file
     qDebug() << "Favorite entry:" << var << val;
+    val = AppToAbsolute(val); //turn any relative files into absolute
     if(var=="favorites_add_ifexists" && QFile::exists(val)){ qDebug() << " - Exists/Adding:"; LUtils::addFavorite(val); }
     else if(var=="favorites_add"){ qDebug() << " - Adding:"; LUtils::addFavorite(val); }
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LUtils::removeFavorite(val); }

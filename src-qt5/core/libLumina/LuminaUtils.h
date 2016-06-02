@@ -54,8 +54,9 @@ public:
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
 
 	//Convert an input file/dir path to an absolute file path
-	static QString PathToAbsolute(QString path);
-	
+	static QString PathToAbsolute(QString path); //This is primarily for CLI usage (relative paths)
+	static QString AppToAbsolute(QString path); //This is for looking up a binary/ *.desktop path
+
 	//Get the list of all file extensions which Qt can read (lowercase)
 	static QStringList imageExtensions(bool wildcards = false);
 	

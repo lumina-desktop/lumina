@@ -32,6 +32,7 @@ QHash<QString, QList<XDGDesktop> >* AppMenu::currentAppHash(){
 //  PRIVATE
 //===========
 void AppMenu::updateAppList(){
+  watcher->removePaths(watcher->directories());
   //Make sure the title/icon are updated as well (in case of locale/icon change)
   this->setTitle(tr("Applications"));
   this->setIcon( LXDG::findIcon("system-run","") );
@@ -111,6 +112,7 @@ void AppMenu::updateAppList(){
       }
       this->addMenu(menu);
     }
+    watcher->addPaths(LXDG::systemApplicationDirs());
     emit AppMenuUpdated();
 }
 

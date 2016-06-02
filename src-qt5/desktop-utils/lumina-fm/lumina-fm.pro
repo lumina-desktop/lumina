@@ -34,11 +34,10 @@ FORMS    += MainUI.ui \
 		widgets/SlideshowWidget.ui \
 		widgets/DirWidget.ui
 
-# RESOURCES+= lumina-fm.qrc
+icons.files = Insight-FileManager.png
+icons.path = $${L_SHAREDIR}/pixmaps
 
 LIBS     += -lLuminaUtils
-
-DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-fm_af.ts \
                 i18n/lumina-fm_ar.ts \
@@ -109,7 +108,7 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-fm.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target dotrans desktop
+INSTALLS += target dotrans desktop icons
 
 NO_I18N{
   INSTALLS -= dotrans
