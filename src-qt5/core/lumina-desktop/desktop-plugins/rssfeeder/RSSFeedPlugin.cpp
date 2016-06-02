@@ -47,6 +47,8 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   QStringList feeds;
   if( !LSession::handle()->DesktopPluginSettings()->contains(setprefix+"currentfeeds") ){
     //First-time run of the plugin - automatically load the default feeds
+    feeds = LOS::RSSFeeds();
+    for(int i=0; i<feeds.length(); i++){ feeds[i] = feeds[i].section("::::",1,-1); } //just need url right now
     feeds << "http://lumina-desktop.org/?feed=rss2"; //Lumina Desktop blog feed
     LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"currentfeeds", feeds);
   }else{
@@ -72,10 +74,13 @@ void RSSFeedPlugin::updateOptionsMenu(){
   optionsMenu->addAction(LXDG::findIcon("download",""), tr("Update Feeds Now"), this, SLOT(resyncFeeds()) );
 
   presetMenu->clear();
-  QAction *tmp = presetMenu->addAction( tr("Lumina Desktop RSS") );
-    tmp->setWhatsThis("http://lumina-desktop.org/?feed=rss2");
-  //Add any other feeds here as needed (TO-DO)
-
+  QStringList feeds = LOS::RSSFeeds();
+  feeds << tr("Lumina Desktop RSS")+"::::http://lumina-desktop.org/?feed=rss2";
+  feeds.sort();
+  for(int i=0; i<feeds.length(); i++){ 
+    QAction *tmp = presetMenu->addAction(feeds[i].section("::::",0,0) );
+    tmp->setWhatsThis( feeds[i].section("::::",1,-1) );
+  }
 }
 
 void RSSFeedPlugin::checkFeedNotify(){
@@ -84,7 +89,7 @@ void RSSFeedPlugin::checkFeedNotify(){
     if( !ui->combo_feed->itemData(i, Qt::WhatsThisRole).toString().isEmpty()){ notify = true;  }
   }
   QString style;
-  if(notify){ style = "QComboBox::down-arrow{ background-color: rgba(255,0,0,120); }"; }
+  if(notify){ style = "QComboBox{ background-color: rgba(255,0,0,120); }"; }
   ui->combo_feed->setStyleSheet(style);
 }
 
