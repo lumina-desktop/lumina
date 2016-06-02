@@ -106,7 +106,7 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
   //qDebug() << "Can Read XML Stream:" << !xml.hasError();
   if(xml.readNextStartElement()){
     //qDebug() << " - RSS Element:" << xml.name();
-    if(xml.name() == "rss" && xml.attributes().value("version") =="2.0"){
+    if(xml.name() == "rss" && (xml.attributes().value("version") =="2.0" || xml.attributes().value("version") =="0.91") ){
       while(xml.readNextStartElement()){
         //qDebug() << " - RSS Element:" << xml.name();
         if(xml.name()=="channel"){ rssinfo = readRSSChannel(&xml); }
