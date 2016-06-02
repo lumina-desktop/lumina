@@ -211,6 +211,13 @@ void LPlugins::LoadDesktopPlugins(){
     info.ID = "systemmonitor";
     info.icon = "cpu";
   DESKTOP.insert(info.ID, info);
+  //RSS Reader Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("RSS Reader");
+    info.description = QObject::tr("Monitor RSS Feeds (Requires internet connection)");
+    info.ID = "rssfeeder";
+    info.icon = "application-rss+xml";
+  DESKTOP.insert(info.ID, info);
   //Available QtQuick scripts
   /*QStringList quickID = LUtils::listQuickPlugins();
   for(int i=0; i<quickID.length(); i++){
