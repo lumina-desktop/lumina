@@ -31,6 +31,7 @@ public:
 	  timer = new QTimer(this);
 	    timer->setInterval(1800000); //30 minute refresh timer
 	    timer->start();
+          connect(timer, SIGNAL(timeout()), this, SLOT(updateDate()) );
 	  QTimer::singleShot(0,this, SLOT(updateDate()) );
 	  connect(this, SIGNAL(PluginResized()), this, SLOT(UpdateCalendarSize()));
 	}
