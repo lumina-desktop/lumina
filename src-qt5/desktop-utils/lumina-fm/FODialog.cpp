@@ -193,7 +193,7 @@ QStringList FOWorker::subfiles(QString dirpath, bool dirsfirst){
       for(int i=0; i<subdirs.length(); i++){ out << subfiles(dir.absoluteFilePath(subdirs[i]), dirsfirst); }
     }
     //List the files
-    QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden, QDir::NoSort);
+    QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System, QDir::NoSort);
     for(int i=0; i<files.length(); i++){ out << dir.absoluteFilePath(files[i]); }
     
     if(!dirsfirst){
