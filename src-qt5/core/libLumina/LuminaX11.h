@@ -69,6 +69,14 @@ public:
   }
 };
 
+//simple data structure for passing around the XRANDR information
+/*class monitor_info{
+public:
+	QString ID;
+	bool active;
+	QRect geometry;
+};*/
+
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
 	
@@ -393,6 +401,12 @@ public:
 	WId WM_Get_CM_Owner();
 	void WM_Set_CM_Owner(WId win);
 	
+	//============
+	// RANDR Functions (directly reading changing monitor outputs)
+	//============
+	//QList<monitor_info> RR_List_Monitors();
+	//void RR_Set_Monitors(QList<monitor_info> monitors);
+
 private:
 	QList<xcb_atom_t> ATOMS;
 	QStringList atoms;

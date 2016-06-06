@@ -9,9 +9,11 @@ target.path = $${L_BINDIR}
 TEMPLATE = app
 
 SOURCES += main.cpp \
-	   mainUI.cpp
+		mainUI.cpp \
+		ScreenSettings.cpp
 
-HEADERS  += mainUI.h
+HEADERS  += mainUI.h \
+		ScreenSettings.h
 
 FORMS    += mainUI.ui
 

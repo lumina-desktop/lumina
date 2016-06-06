@@ -54,6 +54,7 @@ QStringList MainUI::currentOpts(){
   for(int i=0; i<SCREENS.length(); i++){
     if(SCREENS[i].order <0){ continue; } //skip this screen - non-active
     opts << "--output" << SCREENS[i].ID << "--mode" << QString::number(SCREENS[i].geom.width())+"x"+QString::number(SCREENS[i].geom.height());
+    if(SCREENS[i].isprimary){ opts << "--primary"; }
     if(SCREENS[i].order > 0){ 
       //Get the ID of the previous screen
       QString id; 
@@ -79,8 +80,8 @@ ScreenInfo MainUI::currentScreenInfo(){
 
 void MainUI::UpdateScreens(){
   //First probe the server for current screens
-  SCREENS.clear();
-  QStringList info = LUtils::getCmdOutput("xrandr -q");
+  SCREENS = RRSettings::CurrentScreens();
+  /*QStringList info = LUtils::getCmdOutput("xrandr -q");
   ScreenInfo cscreen;
   for(int i=0; i<info.length(); i++){
     if(info[i].contains("connected") ){
@@ -105,6 +106,7 @@ void MainUI::UpdateScreens(){
 	UpdateScreens();
 	return;
       }else if( !devres.isEmpty() ){
+        cscreen.isprimary = info[i].contains(" primary ");
 	//Device that is connected and attached (has a resolution)
 	qDebug() << "Create new Screen entry:" << dev << devres;
 	cscreen.ID = dev;
@@ -121,9 +123,9 @@ void MainUI::UpdateScreens(){
       //available resolution for a device
       cscreen.resList << info[i].section("\t",0,0,QString::SectionSkipEmpty);
     }
-  }
+  } //end loop over info lines
   if(!cscreen.ID.isEmpty()){ SCREENS << cscreen; } //make sure to add the last screen to the array
-  
+  */
   //Now go through the screens and arrange them in order from left->right in the UI
   bool found = true;
   int xoffset = 0; //start at 0
@@ -138,7 +140,7 @@ void MainUI::UpdateScreens(){
       else if(SCREENS[i].geom.x()==xoffset){
 	found = true; //make sure to look for the next one
 	xoffset = xoffset+SCREENS[i].geom.width(); //next number to look for
-	SCREENS[i].order = cnum; //assign the currrent order to it
+	SCREENS[i].order = cnum; //assign the current order to it
 	cnum++; //get ready for the next one
 	QListWidgetItem *it = new QListWidgetItem();
 	  it->setTextAlignment(Qt::AlignCenter);
@@ -170,6 +172,7 @@ void MainUI::UpdateScreens(){
   }
   if(ui->list_screens->currentItem()==0){ ui->list_screens->setCurrentRow(0); }
   ScreenSelected(); //update buttons
+  RRSettings::SaveScreens(SCREENS);
 }
 
 void MainUI::ScreenSelected(){
@@ -196,6 +199,7 @@ void MainUI::ScreenSelected(){
       else{ui->combo_resolution->addItem(res, res); }
       if(cur.resList[i].contains(cres)){ ui->combo_resolution->setCurrentIndex(i); }
     }
+    ui->check_primary->setChecked( cur.isprimary );
   }
 }
 
@@ -282,11 +286,13 @@ void MainUI::ApplyChanges(){
   if(newres.isEmpty()){ return; } //nothing to do
   //qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
   //Adjust the order of the two screens
+  bool setprimary = ui->check_primary->isChecked();
   for(int i=0; i<SCREENS.length(); i++){
     if(SCREENS[i].ID == it->whatsThis()){
       SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
       SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
     }
+    if(setprimary){ SCREENS[i].isprimary = SCREENS[i].ID==it->whatsThis(); }
   }
   //Now run the command
   QStringList opts = currentOpts();

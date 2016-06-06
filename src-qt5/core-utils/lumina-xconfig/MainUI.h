@@ -12,17 +12,7 @@
 #include <QString>
 #include <QList>
 
-class ScreenInfo{
-  public:	
-	QString ID;
-	QRect geom; //screen geometry
-	int order; //left to right
-	QStringList resList;
-	ScreenInfo(){
-	  order = -1; //initial value is invalid	
-	}
-	~ScreenInfo(){}
-};
+#include "ScreenSettings.h"
 
 namespace Ui{
 	class MainUI;

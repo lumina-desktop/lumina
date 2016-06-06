@@ -40,7 +40,9 @@ int main(int argc, char ** argv)
     //Start X11 if needed
 
     //Configure X11 monitors if needed
-
+    if(LUtils::isValidBinary("lumina-xconfig")){ 
+      QProcess::execute("lumina-xconfig --reset-monitors");
+    }
     //Startup the session
     QCoreApplication a(argc, argv);
     LSession sess;
