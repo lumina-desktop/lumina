@@ -1136,7 +1136,8 @@ void MainUI::changeDefaultEmail(){
       desk.filePath="";
     }
   //save the new app setting and adjust the button appearance
-  appsettings->setValue("default/email", desk.filePath);
+  LXDG::setDefaultAppForMime("application/email",desk.filePath);
+ // appsettings->setValue("default/email", desk.filePath);
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1200,7 +1201,8 @@ void MainUI::changeDefaultTerminal(){
       desk.filePath="xterm";
     }
   //save the new app setting and adjust the button appearance
-  sessionsettings->setValue("default-terminal", desk.filePath);
+  LXDG::setDefaultAppForMime("application/terminal",desk.filePath);
+ //sessionsettings->setValue("default-terminal", desk.filePath);
   QString tmp = desk.filePath;
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1249,7 +1251,7 @@ void MainUI::loadDefaultSettings(){
       ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
   }
   // - Default Terminal
-  tmp = sessionsettings->value("default-terminal", "xterm").toString();
+  tmp =LXDG::findDefaultAppForMime("application/terminal"); //sessionsettings->value("default-terminal", "xterm").toString();
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;
@@ -1293,7 +1295,7 @@ void MainUI::loadDefaultSettings(){
       ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
   }
   // - Default Email Client
-  tmp = appsettings->value("default/email", "").toString();
+  tmp = LXDG::findDefaultAppForMime("application/email"); //appsettings->value("default/email", "").toString();
   if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
   if(tmp.endsWith(".desktop")){
     bool ok = false;

@@ -101,6 +101,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 	//qDebug() << "Matches:" << matches;
 	for(int i=0; i<matches.length(); i++){
 	  defApp = LXDG::findDefaultAppForMime(matches[i]);
+          //qDebug() << "MimeType:" << matches[i] << defApp;
 	  if(!defApp.isEmpty()){ extension = matches[i]; break; }
 	  else if(i+1==matches.length()){ extension = matches[0]; }
 	}
@@ -226,6 +227,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   //Now check what type of file this is
   if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
+  else if(inFile.startsWith("mailto:")){ isUrl= true; }
   else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
   if( !isFile && !isUrl ){ ShowErrorDialog( argc, argv, QString(QObject::tr("Invalid file or URL: %1")).arg(inFile) ); }
   //Determing the type of file (extension)
@@ -239,7 +241,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     else if(info.isExecutable() && extension.isEmpty()){ extension="binary"; }
     else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
   }
-  else if(isUrl && inFile.startsWith("mailto:")){ extension = "email"; }
+  else if(isUrl && inFile.startsWith("mailto:")){ extension = "application/email"; }
   else if(isUrl && inFile.contains("://") ){ extension = "x-scheme-handler/"+inFile.section("://",0,0); }
   else if(isUrl && inFile.startsWith("www.")){ extension = "x-scheme-handler/http"; inFile.prepend("http://"); } //this catches partial (but still valid) URL's ("www.<something>" for instance)
   //qDebug() << "Input:" << inFile << isFile << isUrl << extension;
@@ -314,7 +316,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       cmd.replace("%F","\""+inFile+"\"");
     }else if( (cmd.contains("%U") || cmd.contains("%u")) ){
       //Apply any special field replacements for the desired format
-      if(!inFile.contains("://")){ inFile.prepend("file://"); } //local file - add the extra flag
+      if(!inFile.contains("://") && !isUrl){ inFile.prepend("file://"); } //local file - add the extra flag
       inFile.replace(" ", "%20");
       //Now replace the field codes
       cmd.replace("%u","\""+inFile+"\"");
