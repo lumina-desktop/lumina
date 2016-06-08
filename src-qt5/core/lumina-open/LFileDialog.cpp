@@ -15,8 +15,8 @@ LFileDialog::LFileDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LFileDia
   appExec.clear();
   appPath.clear();
   appFile.clear();
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  settings = new QSettings("LuminaDE", "lumina-open",this);
+  //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
+  settings = new QSettings("lumina-desktop", "lumina-open", this);
   //Connect the signals/slots
   connect(ui->combo_apps, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()) );
   connect(ui->radio_rec, SIGNAL(toggled(bool)), this, SLOT(radioChanged()) );
