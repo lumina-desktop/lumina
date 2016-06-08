@@ -623,17 +623,20 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){ sset = "default-terminal="+val; }
-    else if(var=="session_default_filemanager"){ 
+    else if(var=="session_default_terminal"){ 
+      LXDG::setDefaultAppForMime("application/terminal", val);
+      //sset = "default-terminal="+val; 
+    }else if(var=="session_default_filemanager"){ 
       LXDG::setDefaultAppForMime("inode/directory", val);
-      sset = "default-filemanager="+val;
-      loset = "directory="+val; 
+      //sset = "default-filemanager="+val;
+      //loset = "directory="+val; 
     }else if(var=="session_default_webbrowser"){ 
-      loset = "webbrowser="+val; 
+      //loset = "webbrowser="+val; 
       LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
       LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
     }else if(var=="session_default_email"){ 
-      loset = "email="+val; 
+      LXDG::setDefaultAppForMime("application/email",val);
+      //loset = "email="+val; 
     }
     //Put the line into the file (overwriting any previous assignment as necessary)
     if(!loset.isEmpty()){
