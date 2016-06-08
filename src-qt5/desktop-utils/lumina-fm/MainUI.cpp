@@ -718,7 +718,7 @@ void MainUI::OpenImages(LFileInfoList list){
 
 void MainUI::OpenTerminal(QString dirpath){
   //we use the application defined as the default terminal 
-  QSettings sessionsettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
+  //QSettings sessionsettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
   //xterm remains the default
   QString defTerminal = LXDG::findDefaultAppForMime("application/terminal"); //sessionsettings.value("default-terminal", "xterm").toString();
   qDebug() << "Found default terminal:" << defTerminal;
