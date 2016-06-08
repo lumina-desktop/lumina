@@ -859,13 +859,15 @@ QString LXDG::findDefaultAppForMime(QString mime){
     if(!QFile::exists(dirs[i])){ continue; }
     QStringList info = LUtils::readFile(dirs[i]);
     if(info.isEmpty()){ continue; }
-    QString workdir = dirs[i].section("/",0,-1); //just the directory
+    QString workdir = dirs[i].section("/",0,-2); //just the directory
+   // qDebug() << "Check File:" << mime << dirs[i] << workdir;
     int def = info.indexOf("[Default Applications]"); //find this line to start on
     if(def>=0){
       for(int d=def+1; d<info.length(); d++){
+        //qDebug() << "Check Line:" << info[d];
         if(info[d].startsWith("[")){ break; } //starting a new section now - finished with defaults
 	if(info[d].contains(mime+"=")){
-	  white << info[d].section("=",1,50).split(";");
+	  white << info[d].section("=",1,-1).split(";");
 	  break;
 	}
       }
@@ -884,17 +886,8 @@ QString LXDG::findDefaultAppForMime(QString mime){
       else if( QFile::exists(workdir+"/"+white[w]) ){ cdefault=workdir+"/"+white[w]; break; }
       //Now go through the XDG DATA dirs and see if the file is in there
       else{
-	QStringList xdirs;
-	  xdirs << QString(getenv("XDG_DATA_HOME"))+"/applications/";
-	  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
-	    for(int t=0; t<tmp.length(); t++){ xdirs << tmp[t]+"/applications/"; }
-	  //Now scan these dirs
-	  bool found = false;
-	  //qDebug() << "Scan dirs:" << white[w] << xdirs;
-	  for(int x=0; x<xdirs.length() && !found; x++){
-	    if(QFile::exists(xdirs[x]+white[w])){cdefault=xdirs[x]+white[w]; found = true; }
-	  }
-	  if(found){ break; }
+        white[w] = LUtils::AppToAbsolute(white[w]);
+        if(QFile::exists(white[w])){ cdefault = white[w]; }
       }
     }   
     /* WRITTEN BUT UNUSED CODE FOR MIMETYPE ASSOCIATIONS

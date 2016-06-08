@@ -46,6 +46,7 @@ void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
 
 //static functions
 QString LFileDialog::getDefaultApp(QString extension){
+  qDebug() << "Get Default App:" << extension;
   QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   if(extension.contains("/")){
     return LXDG::findDefaultAppForMime(extension);
@@ -66,7 +67,7 @@ void LFileDialog::setDefaultApp(QString extension, QString appFile){
     }else{
       QSettings("LuminaDE", "lumina-open").setValue("default/"+extension,appFile);
     }
-    }
+  }
 }
 
 // -----------
@@ -283,4 +284,3 @@ void LFileDialog::on_tool_findBin_clicked(){
 void LFileDialog::on_line_bin_textChanged(){
   updateUI();
 }
-
