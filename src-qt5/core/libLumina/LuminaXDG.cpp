@@ -866,10 +866,16 @@ QString LXDG::findDefaultAppForMime(QString mime){
       for(int d=def+1; d<info.length(); d++){
         //qDebug() << "Check Line:" << info[d];
         if(info[d].startsWith("[")){ break; } //starting a new section now - finished with defaults
-	if(info[d].contains(mime+"=")){
+	if(info[d].contains(mime+"=") ){
 	  white << info[d].section("=",1,-1).split(";");
 	  break;
-	}
+	}else if(info[d].contains("*") && info[d].contains("=") ){
+          QRegExp rg(info[d].section("=",0,0), Qt::CaseSensitive, QRegExp::WildcardUnix);
+          if(rg.exactMatch(mime)){
+	    white << info[d].section("=",1,-1).split(";");
+	    break;
+          }
+        }
       }
     }
     // Now check for any white-listed files in this work dir 

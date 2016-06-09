@@ -593,7 +593,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     }
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
-  QStringList deskset, sesset, lopenset;
+  QStringList deskset, sesset;//, lopenset;
   
   // -- SESSION SETTINGS --
   QStringList tmp = sysDefaults.filter("session_");
@@ -619,7 +619,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     }
   
     //Parse/save the value
-    QString loset, sset; //temporary strings
+    QString sset; //temporary strings
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
@@ -639,19 +639,42 @@ void LUtils::LoadSystemDefaults(bool skipOS){
       //loset = "email="+val; 
     }
     //Put the line into the file (overwriting any previous assignment as necessary)
-    if(!loset.isEmpty()){
+    /*if(!loset.isEmpty()){
       int index = lopenset.indexOf(QRegExp(loset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
       qDebug() << "loset line:" << loset << index << lopenset;
       if(index<0){ lopenset << loset; } //new line
       else{ lopenset[index] = loset; } //overwrite the other line
-    }
+    }*/
     if(!sset.isEmpty()){
       int index = sesset.indexOf(QRegExp(sset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
       if(index<0){ sesset << sset; } //new line
       else{ sesset[index] = sset; } //overwrite the other line	    
     }
   }
-  if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
+  //if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
+
+ // -- MIMETYPE DEFAULTS --
+  tmp = sysDefaults.filter("mime_default_");
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    if(val.isEmpty()){ continue; }
+    QString istrue = (val.toLower()=="true") ? "true": "false";
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
+    //Now parse the variable and put the value in the proper file   
+    val = AppToAbsolute(val);
+     //Special handling for values which need to exist first
+    if(var.endsWith("_ifexists") ){ 
+      var = var.remove("_ifexists"); //remove this flag from the variable
+      //Check if the value exists (absolute path only)
+      if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
+    }
+    //Now turn this variable into the mimetype only
+    var = var.section("_default_",1,-1);
+    LXDG::setDefaultAppForMime(var, val);
+  }
 
   // -- DESKTOP SETTINGS --
   //(only works for the primary desktop at the moment)
@@ -808,7 +831,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
-  LUtils::writeFile(setdir+"/lumina-open.conf", lopenset, true);
+  //LUtils::writeFile(setdir+"/lumina-open.conf", lopenset, true);
 }
 
 bool LUtils::checkUserFiles(QString lastversion){
