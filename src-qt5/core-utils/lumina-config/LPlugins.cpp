@@ -215,7 +215,7 @@ void LPlugins::LoadDesktopPlugins(){
   info = LPI(); //clear it
     info.name = QObject::tr("RSS Reader");
     info.description = QObject::tr("Monitor RSS Feeds (Requires internet connection)");
-    info.ID = "rssfeeder";
+    info.ID = "rssreader";
     info.icon = "application-rss+xml";
   DESKTOP.insert(info.ID, info);
   //Available QtQuick scripts
