@@ -854,11 +854,11 @@ QString LXDG::findDefaultAppForMime(QString mime){
 	
   //Now go through all the files in order of priority until a default is found
   QString cdefault;
-  QStringList white; //lists to keep track of during the search (black unused at the moment)
   for(int i=0; i<dirs.length() && cdefault.isEmpty(); i++){
     if(!QFile::exists(dirs[i])){ continue; }
     QStringList info = LUtils::readFile(dirs[i]);
     if(info.isEmpty()){ continue; }
+    QStringList white; //lists to keep track of during the search (black unused at the moment)
     QString workdir = dirs[i].section("/",0,-2); //just the directory
    // qDebug() << "Check File:" << mime << dirs[i] << workdir;
     int def = info.indexOf("[Default Applications]"); //find this line to start on
@@ -867,13 +867,12 @@ QString LXDG::findDefaultAppForMime(QString mime){
         //qDebug() << "Check Line:" << info[d];
         if(info[d].startsWith("[")){ break; } //starting a new section now - finished with defaults
 	if(info[d].contains(mime+"=") ){
-	  white << info[d].section("=",1,-1).split(";");
-	  break;
+	  white = info[d].section("=",1,-1).split(";") + white; //exact mime match - put at front of list
+          break; //already found exact match
 	}else if(info[d].contains("*") && info[d].contains("=") ){
           QRegExp rg(info[d].section("=",0,0), Qt::CaseSensitive, QRegExp::WildcardUnix);
           if(rg.exactMatch(mime)){
-	    white << info[d].section("=",1,-1).split(";");
-	    break;
+	    white << info[d].section("=",1,-1).split(";"); //partial mime match - put at end of list
           }
         }
       }
@@ -895,7 +894,7 @@ QString LXDG::findDefaultAppForMime(QString mime){
         white[w] = LUtils::AppToAbsolute(white[w]);
         if(QFile::exists(white[w])){ cdefault = white[w]; }
       }
-    }   
+    }
     /* WRITTEN BUT UNUSED CODE FOR MIMETYPE ASSOCIATIONS
     //Skip using this because it is simply an alternate/unsupported standard that conflicts with
       the current mimetype database standards. It is better/faster to parse 1 or 2 database glob files
