@@ -42,7 +42,7 @@ LStartButtonPlugin::~LStartButtonPlugin(){
 void LStartButtonPlugin::updateButtonVisuals(){
     button->setToolTip(tr(""));
     button->setText( SYSTEM::user() );
-    button->setIcon( LXDG::findIcon("start-here","Lumina-DE") ); //force icon refresh
+    button->setIcon( LXDG::findIcon("start-here-lumina","Lumina-DE") ); //force icon refresh
 }
 
 void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
