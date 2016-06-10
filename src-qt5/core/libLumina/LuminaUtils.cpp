@@ -489,6 +489,7 @@ QStringList LUtils::listFavorites(){
   if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
     fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
     fav.removeAll(""); //remove any empty lines
+    fav.removeDuplicates();
     lastRead = cur;
     if(fav.isEmpty()){
       //Make sure the favorites dir exists, and create it if necessary
@@ -501,6 +502,7 @@ QStringList LUtils::listFavorites(){
 }
 
 bool LUtils::saveFavorites(QStringList list){
+  list.removeDuplicates();
   bool ok = LUtils::writeFile(QDir::homePath()+"/.lumina/favorites/fav.list", list, true);
   if(ok){ fav = list; } //also save internally in case of rapid write/read of the file
   return ok;
