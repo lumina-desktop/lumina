@@ -18,7 +18,7 @@
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
-  this->setStyleSheet("background: black;");
+  this->setStyleSheet("background: black; color: white;");
   this->setLineWrapMode(QTextEdit::WidgetWidth);
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
