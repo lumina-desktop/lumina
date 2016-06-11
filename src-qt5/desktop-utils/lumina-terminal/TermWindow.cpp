@@ -18,8 +18,7 @@
 //        PUBLIC
 // ===============
 TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint){//, ui(new Ui::TermWindow){
-  this->setWindowOpacity(0.75);
-  //this->setStyleSheet( "QWidget{ background: transparent; }");
+  this->setWindowOpacity(0.85);
   CLOSING = false; //internal flag
   settings = set;
   //Create the Window
@@ -213,7 +212,7 @@ void TermWindow::New_Tab(){
 }
 
 void TermWindow::Close_Tab(int tab){
-  //qDebug() << "Close Tab:" << tab;
+  qDebug() << "Close Tab:" << tab;
   if(tab<0){ tab = tabWidget->currentIndex(); }
   static_cast<TerminalWidget*>(tabWidget->widget(tab))->aboutToClose();
   tabWidget->widget(tab)->deleteLater(); //delete the page within the tag
@@ -226,8 +225,10 @@ void TermWindow::Close_Tab(int tab){
 
 void TermWindow::Close_Tab(QString ID){
   //Close a tab based on it's ID instead of it's tab number
+  qDebug() << "Close Tab by ID:" << ID;
   for(int i=0; i<tabWidget->count(); i++){
     if(tabWidget->widget(i)->whatsThis()==ID){
+      qDebug() << " - Start close by number:" << i;
       Close_Tab(i);
       return; //all done
     }

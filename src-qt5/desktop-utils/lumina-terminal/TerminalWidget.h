@@ -32,6 +32,7 @@ private:
 	QMenu *contextMenu;
 	QAction *copyA, *pasteA;
 	int selectionStart;
+	bool closing;
 
 	//Incoming Data parsing
 	void InsertText(QString);

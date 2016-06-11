@@ -18,13 +18,14 @@
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
-  this->setStyleSheet("background: black; color: white;");
+  closing = false;
+  this->setStyleSheet("QTextEdit{ background: black; color: white; }");
   this->setLineWrapMode(QTextEdit::WidgetWidth);
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
   this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
-  this->setWordWrapMode(QTextOption::NoWrap);
+  //this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   DEFFMT.setForeground(Qt::white);
@@ -59,7 +60,9 @@ TerminalWidget::~TerminalWidget(){
 }
 
 void TerminalWidget::aboutToClose(){
+  closing = true;
   if(PROC->isOpen()){ PROC->closeTTY(); } //TTY PORT
+  //delete PROC->
 }
 
 // ==================
@@ -79,7 +82,7 @@ void TerminalWidget::InsertText(QString txt){
   sel.cursor = cur;
   sels << sel;
   this->setExtraSelections(sels);
-  qDebug() << "New Text. Format:" << CFMT.foreground() << CFMT.font();
+  //qDebug() << "New Text. Format:" << CFMT.foreground() << CFMT.font();
 }
 
 void TerminalWidget::applyData(QByteArray data){
@@ -429,7 +432,9 @@ void TerminalWidget::UpdateText(){
 }
 
 void TerminalWidget::ShellClosed(){
-  emit ProcessClosed(this->whatsThis());
+  if(!closing){
+    emit ProcessClosed(this->whatsThis());
+  }
 }
 
 void TerminalWidget::copySelection(){
