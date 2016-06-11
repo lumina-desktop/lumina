@@ -33,10 +33,13 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
   QTimer::singleShot(0, startmenu, SLOT(ReLoadQuickLaunch()) );
+  //Setup the global shortcut handling for opening the start menu
+  connect(QApplication::instance(), SIGNAL(StartButtonActivated()), this, SLOT(shortcutActivated()) );
+  LSession::handle()->registerStartButton(this->type());
 }
 
 LStartButtonPlugin::~LStartButtonPlugin(){
-
+  LSession::handle()->unregisterStartButton(this->type());
 }
 
 void LStartButtonPlugin::updateButtonVisuals(){
@@ -116,4 +119,11 @@ void LStartButtonPlugin::openMenu(){
 
 void LStartButtonPlugin::closeMenu(){
   menu->hide();
+}
+
+void LStartButtonPlugin::shortcutActivated(){
+  if(LSession::handle()->registerStartButton(this->type())){
+    if(menu->isVisible()){ closeMenu(); }
+    else{ openMenu(); }
+  }
 }

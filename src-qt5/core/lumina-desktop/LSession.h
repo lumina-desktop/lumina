@@ -59,6 +59,10 @@ public:
 	bool registerVisualTray(WId);
 	void unregisterVisualTray(WId);
 
+	//Public start menu buttons
+	bool registerStartButton(QString ID);
+	void unregisterStartButton(QString ID);
+
 	//Special functions for XCB event filter parsing only 
 	//  (DO NOT USE MANUALLY)
 	void RootSizeChange();
@@ -121,6 +125,8 @@ private:
 	int TrayDmgEvent, TrayDmgError;
 	QList<WId> RunningTrayApps;
 	bool TrayStopping;
+	//Start Button Variables
+	QString StartButtonID;
 
 	//Task Manager Variables
 	WId lastActiveWin;
@@ -167,6 +173,9 @@ signals:
 	void VisualTrayAvailable(); //new Visual Tray Plugin can be registered
 	void TrayListChanged(); //Item added/removed from the list
 	void TrayIconChanged(WId); //WinID of Tray App
+	//Start Button signals
+	void StartButtonAvailable();
+	void StartButtonActivated();
 	//Task Manager Signals
 	void WindowListEvent(WId);
 	void WindowListEvent();

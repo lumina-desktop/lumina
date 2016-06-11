@@ -253,6 +253,8 @@ void LSession::NewCommunication(QStringList list){
   for(int i=0; i<list.length(); i++){
     if(list[i]=="--check-geoms"){
       screensChanged();
+    }else if(list[i]=="--show-start"){ 
+      emit StartButtonActivated();
     }
   }	  
 }
@@ -896,4 +898,18 @@ void LSession::removeTrayWindow(WId win){
       break;	    
     }
   }	
+}
+//=========================
+//  START MENU FUNCTIONS
+//=========================
+bool LSession::registerStartButton(QString ID){
+  if(StartButtonID.isEmpty()){ StartButtonID = ID; }
+  return (StartButtonID==ID);
+}
+
+void LSession::unregisterStartButton(QString ID){
+  if(StartButtonID == ID){
+    StartButtonID.clear();
+    emit StartButtonAvailable();
+  }
 }
