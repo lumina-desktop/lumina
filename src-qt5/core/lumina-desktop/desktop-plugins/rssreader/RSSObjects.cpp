@@ -37,7 +37,7 @@ QStringList RSSReader::channels(){
   for(int  i=0; i<urls.length(); i++){
     QString title = hash[urls[i]].title;
     if(title.isEmpty()){ title = "ZZZ"; } //put currently-invalid ones at the end of the list
-    ids << title+" : "+urls[i];
+    ids << title+" : "+hash[urls[i]].originalURL;
   }
   ids.sort();
   //Now strip off all the titles again to just get the IDs
@@ -48,20 +48,19 @@ QStringList RSSReader::channels(){
 }
 
 RSSchannel RSSReader::dataForID(QString ID){
-  if(hash.contains(ID)){ return hash[ID]; }
+  QString key =  keyForUrl(ID);
+  if(hash.contains(key)){ return hash[key]; }
   else{ return RSSchannel(); }
 }
 
 //Initial setup
 void RSSReader::addUrls(QStringList urls){
   //qDebug() << "Add URLS:" << urls;
-  QStringList known = hash.keys();
-  int orig = known.length();
-  for(int i=0; i<orig; i++){ known << hash[known[i]].originalURL; }
   for(int i=0; i<urls.length(); i++){
     //Note: Make sure we get the complete URL form for accurate comparison later
     QString url = QUrl(urls[i]).toString();
-    if(known.contains(url)){ continue; } //already handled
+    QString key = keyForUrl(url);
+    if(hash.contains(key)){ continue; } //already handled
     RSSchannel blank;
       blank.originalURL = url;
     hash.insert(url, blank); //put the empty struct into the hash for now
@@ -71,7 +70,8 @@ void RSSReader::addUrls(QStringList urls){
 }
 
 void RSSReader::removeUrl(QString ID){
-  if(hash.contains(ID)){ hash.remove(ID); }
+  QString key = keyForUrl(ID);
+  if(hash.contains(key)){ hash.remove(key); }
   emit newChannelsAvailable();
 }
 
@@ -81,13 +81,23 @@ void RSSReader::removeUrl(QString ID){
 void RSSReader::syncNow(){
   QStringList urls = hash.keys();
   for(int i=0; i<urls.length(); i++){
-    requestRSS(urls[i]);
+    requestRSS(hash[urls[i]].originalURL);
   }
 }
 
 //=================
 //         PRIVATE
 //=================
+QString RSSReader::keyForUrl(QString url){ 
+  //get current hash key for this URL
+  QStringList keys = hash.keys();
+  if(keys.contains(url)){ return url; } //this is already a valid key
+  for(int i=0; i<keys.length(); i++){
+    if(hash[keys[i]].originalURL == url){ return keys[i]; } //this was an original URL
+  }
+  return "";
+}
+
 void RSSReader::requestRSS(QString url){
   if(!outstandingURLS.contains(url)){
     //qDebug() << "Request URL:" << url;
@@ -187,6 +197,7 @@ QDateTime RSSReader::RSSDateTime(QString datetime){
 void RSSReader::replyFinished(QNetworkReply *reply){
   QString url = reply->request().url().toString();
   //qDebug() << "Got Reply:" << url;
+  QString key = keyForUrl(url); //current hash key for this URL
   QByteArray data = reply->readAll();
   outstandingURLS.removeAll(url);
   if(data.isEmpty()){
@@ -198,20 +209,20 @@ void RSSReader::replyFinished(QNetworkReply *reply){
       //New URL redirect - make the change and send a new request
       QString newurl = redirecturl.toString();
       //qDebug() << " - Redirect to:" << newurl;
-      if(hash.contains(url) && !hash.contains(newurl)){
-        hash.insert(newurl, hash.take(url) ); //just move the data over to the new url
+      if(hash.contains(key) && !hash.contains(newurl)){
+        hash.insert(newurl, hash.take(key) ); //just move the data over to the new url
         requestRSS(newurl);
         emit newChannelsAvailable();
         handled = true;
       }      
     }
-    if(!handled && hash.contains(url) ){ 
-      emit rssChanged(url);
+    if(!handled && hash.contains(key) ){ 
+      emit rssChanged(hash[key].originalURL);
     }
     return;
   }
 
-  if(!hash.contains(url)){ 
+  if(!hash.contains(key)){ 
     //qDebug() << " - hash does not contain URL:" << url;
     //URL removed from list while a request was outstanding?
     //Could also be an icon fetch response
@@ -225,7 +236,7 @@ void RSSReader::replyFinished(QNetworkReply *reply){
         info.icon = QIcon( QPixmap::fromImage(img) );
         //qDebug() << "Got Icon response:" << url << info.icon;
         hash.insert(keys[i], info); //insert back into the hash
-        emit rssChanged(keys[i]);
+        emit rssChanged( hash[keys[i]].originalURL );
         break;
       }
     }
@@ -244,13 +255,14 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     if(info.timetolive <=0){ info.timetolive = 60; } //error in integer conversion from settings?
     info.lastsync = QDateTime::currentDateTime(); info.nextsync = info.lastsync.addSecs(info.timetolive * 60); 
     //Now see if anything changed and save the info into the hash
-    bool changed = (hash[url].lastBuildDate.isNull() || (hash[url].lastBuildDate < info.lastBuildDate) );
+    bool changed = (hash[key].lastBuildDate.isNull() || (hash[key].lastBuildDate < info.lastBuildDate) );
     bool newinfo = false;
-    if(changed){ newinfo = hash[url].title.isEmpty(); } //no previous info from this URL
-    info.originalURL = hash[url].originalURL; //make sure this info gets preserved across updates
-    hash.insert(url, info);
+    if(changed){ newinfo = hash[key].title.isEmpty(); } //no previous info from this URL
+    info.originalURL = hash[key].originalURL; //make sure this info gets preserved across updates
+    if(!hash[key].icon.isNull()){ info.icon = hash[key].icon; } //copy over the icon from the previous reply
+    hash.insert(key, info);
     if(newinfo){ emit newChannelsAvailable(); } //new channel
-    else if(changed){ emit rssChanged(url); } //update to existing channel
+    else if(changed){ emit rssChanged(info.originalURL); } //update to existing channel
   }
 }
 

@@ -78,6 +78,10 @@ private:
 	QNetworkAccessManager *NMAN;
         QStringList outstandingURLS;
 
+
+	//Simple hash data search functions
+        QString keyForUrl(QString url);
+
 	//Network request function
 	void requestRSS(QString url);
 	
