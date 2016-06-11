@@ -122,8 +122,12 @@ void LTaskButton::UpdateButton(){
     //single window
     this->setPopupMode(QToolButton::DelayedPopup);
     this->setMenu(actMenu);
-    if(showText){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( WINLIST[0].text()); }
-    else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( cname ); }
+    if(showText){ 
+      QString txt = WINLIST[0].text();
+      if(txt.length()>30){ txt.truncate(27); txt.append("..."); }
+      else if(txt.length()<30){ txt = txt.leftJustified(30, ' '); }
+      this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText(txt);
+     }else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( cname ); }
     else{ this->setToolButtonStyle(Qt::ToolButtonIconOnly); this->setText(""); }
     this->setToolTip(WINLIST[0].text());
   }else if(WINLIST.length() > 1){

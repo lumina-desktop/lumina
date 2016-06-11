@@ -21,7 +21,7 @@ QString  LWinInfo::text(){
   if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->OldWindowIconName(window); }
   if(nm.simplified().isEmpty()){ nm = LSession::handle()->XCB->OldWindowName(window); }
   //Make sure that the text is a reasonable size (40 char limit)
-  if(nm.length()>40){ nm = nm.left(40)+"..."; }
+  //if(nm.length()>40){ nm = nm.left(40)+"..."; }
   return nm;
 }
 
