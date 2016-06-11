@@ -33,7 +33,7 @@ void LSession::procFinished(){
       stopped++;
       if(!stopping){
         //See if this process is the main desktop binary
-        if(PROCS[i]->program().section("/",-1) == "Lumina-DE"){ stopall();  } //start closing down everything
+        if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         break;
       }
@@ -62,7 +62,7 @@ void LSession::startProcess(QString ID, QString command){
 
 void LSession::start(){
   //First check for a valid installation
-  if( !LUtils::isValidBinary("fluxbox") || !LUtils::isValidBinary("Lumina-DE") ){
+  if( !LUtils::isValidBinary("fluxbox") || !LUtils::isValidBinary("lumina-desktop") ){
     exit(1);
   }
   //Window Manager First
@@ -70,7 +70,7 @@ void LSession::start(){
   //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
   //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
   //Desktop Next
-  startProcess("runtime","Lumina-DE");
+  startProcess("runtime","lumina-desktop");
   //ScreenSaver
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
   //Compositing manager

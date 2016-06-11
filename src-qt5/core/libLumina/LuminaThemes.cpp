@@ -406,7 +406,7 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
   QStringList current = LTHEME::currentSettings();
   theme = current[0]; colors=current[1]; icons=current[2]; font=current[3]; fontsize=current[4];
   cursors = LTHEME::currentCursor();
-  if(application->applicationFilePath().section("/",-1)=="Lumina-DE"){
+  if(application->applicationFilePath().section("/",-1)=="lumina-desktop"){
     application->setStyleSheet( LTHEME::assembleStyleSheet(theme, colors, font, fontsize) );
   }else{
     //Non-Desktop binary - only use alternate Qt methods (skip stylesheets)
