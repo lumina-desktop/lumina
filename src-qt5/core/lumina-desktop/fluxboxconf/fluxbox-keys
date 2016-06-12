@@ -149,4 +149,4 @@ Mod4 Next :Exec lumina-open -volumedown
 Mod4 Home  :Exec lumina-open -brightnessup
 Mod4 End  :Exec lumina-open -brightnessdown
 F12 :Exec lumina-terminal -toggle
-Mod4 :Exec lumina-desktop --show-start
+115 :Exec lumina-desktop --show-start
