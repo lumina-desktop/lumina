@@ -44,6 +44,7 @@ private:
 private slots:
 	void openMenu();
 	void closeMenu();
+	void shortcutActivated();
 
 	void updateButtonVisuals();
 

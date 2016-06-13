@@ -24,6 +24,9 @@ LAppMenuPlugin::LAppMenuPlugin(QWidget *parent, QString id, bool horizontal) : L
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()));
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
   QTimer::singleShot(0,this, SLOT(UpdateMenu()) );
+  //Setup the global shortcut handling for opening the start menu
+  connect(QApplication::instance(), SIGNAL(StartButtonActivated()), this, SLOT(shortcutActivated()) );
+  LSession::handle()->registerStartButton(this->type());
 }
 
 LAppMenuPlugin::~LAppMenuPlugin(){
@@ -40,6 +43,13 @@ void LAppMenuPlugin::updateButtonVisuals(){
 // ========================
 //    PRIVATE FUNCTIONS
 // ========================
+void LAppMenuPlugin::shortcutActivated(){
+  if(LSession::handle()->registerStartButton(this->type())){
+    if(button->menu()->isVisible()){ button->menu()->hide(); }
+    else{ button->showMenu(); }
+  }
+}
+
 void LAppMenuPlugin::LaunchItem(QAction* item){
   QString appFile = item->whatsThis();
   if(appFile.startsWith("internal::")){

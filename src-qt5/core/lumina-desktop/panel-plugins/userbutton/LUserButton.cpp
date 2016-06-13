@@ -26,6 +26,10 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
 	
   button->setMenu(menu);
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
+  //Setup the global shortcut handling for opening the start menu
+  connect(QApplication::instance(), SIGNAL(StartButtonActivated()), this, SLOT(shortcutActivated()) );
+  LSession::handle()->registerStartButton(this->type());
+
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
@@ -55,3 +59,9 @@ void LUserButtonPlugin::closeMenu(){
   menu->hide();
 }
 
+void LUserButtonPlugin::shortcutActivated(){
+  if(LSession::handle()->registerStartButton(this->type())){
+    if(menu->isVisible()){ closeMenu(); }
+    else{ openMenu(); }
+  }
+}

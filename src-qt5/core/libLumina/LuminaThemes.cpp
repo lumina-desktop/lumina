@@ -454,7 +454,7 @@ void LuminaThemeEngine::reloadFiles(){
   //Check the Theme file/settings
   if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified().addSecs(1) ){
     QStringList current = LTHEME::currentSettings();
-    if(application->applicationFilePath().section("/",-1)=="Lumina-DE"){
+    if(application->applicationFilePath().section("/",-1)=="lumina-desktop"){
       application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
     }
     if(icons!=current[2]){

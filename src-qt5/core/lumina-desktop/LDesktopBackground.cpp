@@ -8,7 +8,7 @@
 
 #include <QPainter>
 
-void LDesktopBackground::paintEvent(QPaintEvent *pe) {
+void LDesktopBackground::paintEvent(QPaintEvent *) {
     if (bgPixmap != NULL) {
         QPainter painter(this);
         painter.setBrush(*bgPixmap);

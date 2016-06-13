@@ -35,6 +35,7 @@ private:
 	void updateButtonVisuals();
 
 private slots:
+	void shortcutActivated();
 	void LaunchItem(QAction* item);
 	void UpdateMenu();
 
