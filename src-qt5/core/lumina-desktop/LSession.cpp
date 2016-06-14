@@ -92,9 +92,8 @@ void LSession::setupSession(){
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  sessionsettings = new QSettings("LuminaDE", "sessionsettings");
-  DPlugSettings = new QSettings("pluginsettings","desktopsettings");
+  sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
+  DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
   //Load the proper translation files
   if(sessionsettings->value("ForceInitialLocale",false).toBool()){
     //Some system locale override it in place - change the env first
@@ -150,11 +149,13 @@ void LSession::setupSession(){
   qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
-    //watcher->addPath( QDir::homePath()+"/.lumina/stylesheet.qss" );
-    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
-    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
-    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
-    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
+    QString confdir = sessionsettings->fileName().section("/",0,-2);
+    watcher->addPath( sessionsettings->fileName() );
+    watcher->addPath( confdir+"/desktopsettings.conf" );
+    watcher->addPath( confdir+"/fluxbox-init" );
+    watcher->addPath( confdir+"/fluxbox-keys" );
+    //Try to watch the localized desktop folder too
+    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcher->addPath( QDir::homePath()+"/"+tr("Desktop") ); }
     watcher->addPath( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
@@ -322,8 +323,8 @@ void LSession::watcherChange(QString changed){
   if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
-  else if(changed == QDir::homePath()+"/Desktop"){ 
-    desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
+  else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){ 
+    desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
   }

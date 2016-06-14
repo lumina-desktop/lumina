@@ -23,10 +23,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   panadjust = false;
   DEFAULTBG = LOS::LuminaShare()+"desktop-background.jpg";
   //Be careful about the QSettings setup, it must match the lumina-desktop setup
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  settings = new QSettings( QSettings::UserScope, "LuminaDE", "desktopsettings", this);
-  appsettings = new QSettings( QSettings::UserScope, "LuminaDE", "lumina-open", this);
-  sessionsettings = new QSettings( QSettings::UserScope, "LuminaDE","sessionsettings", this);
+  settings = new QSettings( QSettings::UserScope, "lumina-desktop", "desktopsettings", this);
+  appsettings = new QSettings( QSettings::UserScope, "lumina-desktop", "lumina-open", this);
+  sessionsettings = new QSettings( QSettings::UserScope, "lumina-desktop","sessionsettings", this);
   qDebug() << "Settings File:" << settings->fileName();
   desktop = new QDesktopWidget();
   ui->spin_screen->setMinimum(1);
@@ -994,7 +993,7 @@ void MainUI::checkmenuicons(){
 //===========
 void MainUI::loadKeyboardShortcuts(){
   ui->tree_shortcut->clear();
-  QStringList info = readFile(QDir::homePath()+"/.lumina/fluxbox-keys");
+  QStringList info = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-keys");
   //First take care of the special Lumina options
   QStringList special;
   special << "Exec lumina-open -volumeup::::"+tr("Audio Volume Up") \
@@ -1041,7 +1040,7 @@ void MainUI::saveKeyboardShortcuts(){
     current << it->whatsThis(1)+" :"+it->whatsThis(0); //Full Fluxbox command line
   }
 
-  QStringList info = readFile(QDir::homePath()+"/.lumina/fluxbox-keys");
+  QStringList info = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-keys");
   for(int i=0; i<info.length(); i++){
     if(info[i].isEmpty() || info[i].startsWith("#") || info[i].startsWith("!")){ continue; }
     if(current.filter(info[i].section(":",1,10)).length() > 0){
@@ -1056,7 +1055,7 @@ void MainUI::saveKeyboardShortcuts(){
   for(int i=0; i<current.length(); i++){
     if(!current[i].section(" :",0,0).isEmpty()){ info << current[i]; }
   }
-  bool ok = overwriteFile(QDir::homePath()+"/.lumina/fluxbox-keys", info);
+  bool ok = overwriteFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-keys", info);
   if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/fluxbox-keys"; }
 }
 
@@ -1464,7 +1463,7 @@ void MainUI::checkdefaulticons(){
 // Session Page
 //===========
 void MainUI::loadSessionSettings(){
-  QStringList FB = readFile(QDir::homePath()+"/.lumina/fluxbox-init");
+  QStringList FB = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init");
   QString val;
   //Do the window placement
   val = FB.filter("session.screen0.windowPlacement:").join("").section(":",1,1).simplified();
@@ -1604,7 +1603,7 @@ void MainUI::loadSessionSettings(){
 
 void MainUI::saveSessionSettings(){
   //Do the fluxbox settings first
-  QStringList FB = readFile(QDir::homePath()+"/.lumina/fluxbox-init");
+  QStringList FB = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init");
   // - window placement
   int index = FB.indexOf( FB.filter("session.screen0.windowPlacement:").join("") );
   QString line = "session.screen0.windowPlacement:\t"+ui->combo_session_wloc->itemData( ui->combo_session_wloc->currentIndex() ).toString();
@@ -1627,7 +1626,7 @@ void MainUI::saveSessionSettings(){
   else{ FB[index] = line; } //replace the current setting with the new one
 
   //Save the fluxbox settings
-  bool ok = overwriteFile(QDir::homePath()+"/.lumina/fluxbox-init", FB);
+  bool ok = overwriteFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init", FB);
   if(!ok){ qDebug() << "Warning: Could not save ~/.lumina/fluxbox-init"; }
   
   //Now do the start apps

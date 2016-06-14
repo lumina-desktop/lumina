@@ -457,7 +457,7 @@ QProgressBar::chunk:horizontal{
  margin-bottom: 2px;
 }
 
-LDPlugin#applauncher  QToolButton{
+LDPlugin#applauncher  QToolButton, LDPlugin, LDPlugin#desktopview QListWidget::item{
  background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 30), stop:1 rgba(229, 229, 229, 70));
  border-width: 3px;
  border-style: solid;
@@ -468,7 +468,7 @@ LDPlugin#applauncher  QToolButton{
   border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
   color: white;
 }
-LDPlugin#applauncher  QToolButton:hover{
+LDPlugin#applauncher  QToolButton:hover, LDPlugin#desktopview QListWidget::item:hover{
  background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 100), stop:1 rgba(229, 229, 229, 150));
  border-width: 3px;
  border-style: solid;
@@ -477,7 +477,6 @@ LDPlugin#applauncher  QToolButton:hover{
   border-bottom-color: qradialgradient(spread:pad, cx:0.5, cy:0, radius:0.5, fx:0.5, fy:0, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
   border-left-color: qradialgradient(spread:pad, cx:1, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
   border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
-  color: white;
   color: %%TEXTHIGHLIGHTCOLOR%%;
 }
 QWidget#LuminaPanelColor{

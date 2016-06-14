@@ -24,7 +24,7 @@ LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
   usewinmenu=false;
 
   //Setup the internal variables
-  settings = new QSettings(QSettings::UserScope, "LuminaDE","desktopsettings", this);
+  settings = new QSettings(QSettings::UserScope, "lumina-desktop","desktopsettings", this);
   //qDebug() << " - Desktop Settings File:" << settings->fileName();
   if(!QFile::exists(settings->fileName())){ settings->setValue(DPREFIX+"background/filelist",QStringList()<<"default"); settings->sync(); }
   bgWindow = 0;

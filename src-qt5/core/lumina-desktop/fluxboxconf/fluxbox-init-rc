@@ -73,10 +73,9 @@ session.cacheLife:	5
 session.ignoreBorder:	false
 session.tabsAttachArea:	Window
 session.tabPadding:	0
-session.keyFile:	~/.lumina/fluxbox-keys
+session.keyFile:	${XDG_CONFIG_HOME}/lumina-desktop/fluxbox-keys
 session.configVersion:	13
 session.autoRaiseDelay:	250
 session.cacheMax:	200
 session.imageDither:	True
 session.forcePseudoTransparency:	True
-

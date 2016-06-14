@@ -442,7 +442,7 @@ bool LUtils::validQuickPlugin(QString ID){
 QString LUtils::findQuickPluginFile(QString ID){
   if(ID.startsWith("quick-")){ ID = ID.section("-",1,50); } //just in case
   //Give preference to any user-supplied plugins (overwrites for system plugins)
-  QString path = QDir::homePath()+"/.lumina/quickplugins/quick-"+ID+".qml";
+  QString path = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/quickplugins/quick-"+ID+".qml";
   if( QFile::exists(path) ){return path; }
   path = LOS::LuminaShare()+"quickplugins/quick-"+ID+".qml";
   if( QFile::exists(path) ){return path; }
@@ -450,7 +450,7 @@ QString LUtils::findQuickPluginFile(QString ID){
 }
 
 QStringList LUtils::listQuickPlugins(){
-  QDir dir(QDir::homePath()+"/.lumina/quickplugins");
+  QDir dir(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/quickplugins");
   QStringList files = dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
   dir.cd(LOS::LuminaShare()+"quickplugins");
   files << dir.entryList(QStringList() << "quick-*.qml", QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
@@ -486,16 +486,16 @@ QStringList LUtils::infoQuickPlugin(QString ID){ //Returns: [Name, Description, 
 QStringList LUtils::listFavorites(){
   static QDateTime lastRead;
   QDateTime cur = QDateTime::currentDateTime();
-  if(lastRead.isNull() || lastRead<QFileInfo(QDir::homePath()+"/.lumina/favorites/fav.list").lastModified()){
-    fav = LUtils::readFile(QDir::homePath()+"/.lumina/favorites/fav.list");
+  if(lastRead.isNull() || lastRead<QFileInfo( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list").lastModified()){
+    fav = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list");
     fav.removeAll(""); //remove any empty lines
     fav.removeDuplicates();
     lastRead = cur;
-    if(fav.isEmpty()){
+    /*if(fav.isEmpty()){
       //Make sure the favorites dir exists, and create it if necessary
       QDir dir(QDir::homePath()+"/.lumina/favorites");
 	if(!dir.exists()){ dir.mkpath(QDir::homePath()+"/.lumina/favorites"); }
-    }
+    }*/
   }
   
   return fav;
@@ -503,7 +503,7 @@ QStringList LUtils::listFavorites(){
 
 bool LUtils::saveFavorites(QStringList list){
   list.removeDuplicates();
-  bool ok = LUtils::writeFile(QDir::homePath()+"/.lumina/favorites/fav.list", list, true);
+  bool ok = LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list", list, true);
   if(ok){ fav = list; } //also save internally in case of rapid write/read of the file
   return ok;
 }
@@ -545,7 +545,7 @@ void LUtils::removeFavorite(QString path){
 }
 
 void LUtils::upgradeFavorites(int fromoldversionnumber){
-  if(fromoldversionnumber <= 8004){ // < pre-0.8.4>, sym-links in the ~/.lumina/favorites dir}
+  /*if(fromoldversionnumber <= 8004){ // < pre-0.8.4>, sym-links in the ~/.lumina/favorites dir}
     //Include 0.8.4-devel versions in this upgrade (need to distinguish b/w devel and release versions later somehow)
     QDir favdir(QDir::homePath()+"/.lumina/favorites");
     QFileInfoList symlinks = favdir.entryInfoList(QDir::Files | QDir::Dirs | QDir::System | QDir::NoDotAndDotDot);
@@ -568,7 +568,7 @@ void LUtils::upgradeFavorites(int fromoldversionnumber){
     if(newentry){
       LUtils::saveFavorites(favfile);
     }
-  } //end check for version <= 0.8.4
+  }*/ //end check for version <= 0.8.4
 
 }  
 
@@ -824,7 +824,7 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   //qDebug() << " - Final Theme Color:" << themesettings[1];
 
   //Ensure that the settings directory exists
-  QString setdir = QDir::homePath()+"/.lumina/LuminaDE";
+  QString setdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
   if(!QFile::exists(setdir)){ 
     QDir dir; 
     dir.mkpath(setdir); 
@@ -845,11 +845,12 @@ bool LUtils::checkUserFiles(QString lastversion){
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
   
+  QString confdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
   //Check for the desktop settings file
-  QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
+  QString dset = confdir+"desktopsettings.conf";
   bool firstrun = false;
-  if(!QFile::exists(dset) || oldversion < 5000){
-    if( oldversion < 5000 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
+  if(!QFile::exists(dset) || oldversion < 100000){
+    if( oldversion < 100000 && nversion>=100000 ){ system("rm -rf ~/.lumina"); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
     LUtils::LoadSystemDefaults();
   }
@@ -858,7 +859,7 @@ bool LUtils::checkUserFiles(QString lastversion){
     LUtils::upgradeFavorites(oldversion);	  
   }
   //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
-  if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
+  /*if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
     QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings");
     QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
     for(int i=0; i<plugKeys.length(); i++){
@@ -888,10 +889,10 @@ bool LUtils::checkUserFiles(QString lastversion){
     if(QFile::exists(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf")){
       QFile::remove(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf");
     }
-  }
+  }*/
   
   //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
-  if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
+  /*if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
     QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
     for(int i=0; i<cmds.length(); i++){
       cmds[i] = cmds[i].remove("lumina-open").simplified(); //remove the file opener
@@ -900,15 +901,13 @@ bool LUtils::checkUserFiles(QString lastversion){
       LXDG::setAutoStarted(true, cmds[i]);
     }
     QFile::remove(QDir::homePath()+"/.lumina/startapps"); //delete the old file
-  }
+  }*/
   
-  //Check for the default applications file for lumina-open
-  dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
-  if(!QFile::exists(dset)){
+  //Check the fluxbox configuration files
+  dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
+  if(!QFile::exists(dset+"fluxbox-init")){
     firstrun = true;
   }
-  //Check the fluxbox configuration files
-  dset = QDir::homePath()+"/.lumina/";
   bool fluxcopy = false;
   if(!QFile::exists(dset+"fluxbox-init")){ fluxcopy=true; }
   else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
@@ -917,7 +916,9 @@ bool LUtils::checkUserFiles(QString lastversion){
     qDebug() << "Copying default fluxbox configuration files";
     if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
     if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
-    QFile::copy(LOS::LuminaShare()+"fluxbox-init-rc", dset+"fluxbox-init");
+    QString finit = LUtils::readFile(LOS::LuminaShare()+"fluxbox-init-rc").join("\n");
+     finit.replace("${XDG_CONFIG_HOME}", QString(getenv("XDG_CONFIG_HOME")));
+     LUtils::writeFile(dset+"fluxbox-init", finit.split("\n"));
     QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
     QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);

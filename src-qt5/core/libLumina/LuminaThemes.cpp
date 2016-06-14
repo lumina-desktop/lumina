@@ -33,7 +33,7 @@ QStringList LTHEME::availableSystemThemes(){
 }
 
 QStringList LTHEME::availableLocalThemes(){	//returns: [name::::path] for each item
-  QDir dir(QDir::homePath()+"/.lumina/themes");
+  QDir dir( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes");
   QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
@@ -54,7 +54,7 @@ QStringList LTHEME::availableSystemColors(){ 	//returns: [name::::path] for each
 }
 
 QStringList LTHEME::availableLocalColors(){ 	//returns: [name::::path] for each item
-  QDir dir(QDir::homePath()+"/.lumina/colors");
+  QDir dir(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors");
   QStringList list = dir.entryList(QStringList() <<"*.qss.colors", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
@@ -108,13 +108,13 @@ QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
 
 //Save a new theme/color file
 bool LTHEME::saveLocalTheme(QString name, QStringList contents){
-  QString localdir = QDir::homePath()+"/.lumina/themes/";
+  QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes/";
   if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
   return LUtils::writeFile(localdir+name+".qss.template", contents, true);
 }
 
 bool LTHEME::saveLocalColors(QString name, QStringList contents){
-  QString localdir = QDir::homePath()+"/.lumina/colors/";
+  QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors/";
   if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
   return LUtils::writeFile(localdir+name+".qss.colors", contents, true);	
 }
@@ -122,7 +122,7 @@ bool LTHEME::saveLocalColors(QString name, QStringList contents){
 //Return the currently selected Theme/Colors/Icons
 QStringList LTHEME::currentSettings(){ //returns [theme path, colorspath, iconsname, font, fontsize]
   QStringList out; out << "" << "" << "" << "" << "";
-  QStringList settings = LUtils::readFile(QDir::homePath()+"/.lumina/themesettings.cfg");
+  QStringList settings = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg");
   for(int i=0; i<settings.length(); i++){
     if(settings[i].startsWith("THEMEFILE=")){ out[0] = settings[i].section("=",1,1).simplified(); }
     else if(settings[i].startsWith("COLORFILE=")){ out[1] = settings[i].section("=",1,1).simplified(); }
@@ -172,7 +172,7 @@ bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString ic
 	contents << "ICONTHEME="+iconname;
 	contents << "FONTFAMILY="+font;
 	contents << "FONTSIZE="+fontsize;
-  bool ok = LUtils::writeFile(QDir::homePath()+"/.lumina/themesettings.cfg", contents, true);
+  bool ok = LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg", contents, true);
 
   return ok;
 }
@@ -275,9 +275,9 @@ QStringList LTHEME::cursorInformation(QString name){
 QStringList LTHEME::CustomEnvSettings(){ //view all the key=value settings
   static QStringList info = QStringList();
   static QDateTime lastcheck = QDateTime();
-  if(lastcheck.isNull() || lastcheck < QFileInfo(QDir::homePath()+"/.lumina/envsettings.conf").lastModified()){
+  if(lastcheck.isNull() || lastcheck < QFileInfo(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf").lastModified()){
     lastcheck = QDateTime::currentDateTime();
-    info = LUtils::readFile(QDir::homePath()+"/.lumina/envsettings.conf");
+    info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf");
   }
   return info;
 }
@@ -287,8 +287,8 @@ void LTHEME::LoadCustomEnvSettings(){
   QStringList info = LTHEME::CustomEnvSettings();
   if(info.isEmpty()){
     //Ensure the file exists, and create it otherwise;
-    if(!QFile::exists(QDir::homePath()+"/.lumina/envsettings.conf")){
-      LUtils::writeFile(QDir::homePath()+"/.lumina/envsettings.conf", QStringList() << "", true);
+    if(!QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf")){
+      LUtils::writeFile( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf", QStringList() << "", true);
     }
   }
   for(int i=0; i<info.length(); i++){
@@ -316,7 +316,7 @@ bool LTHEME::setCustomEnvSetting(QString var, QString val){
     }
   }
   if(!changed){ info << var+"="+val; }
-  return LUtils::writeFile(QDir::homePath()+"/.lumina/envsettings.conf", info, true); 
+  return LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf", info, true); 
 }
 
 QString LTHEME::readCustomEnvSetting(QString var){
@@ -429,8 +429,8 @@ LuminaThemeEngine::LuminaThemeEngine(QApplication *app){
 
   //setenv("XCURSOR_THEME", cursors.toLocal8Bit(),1);
   watcher = new QFileSystemWatcher(this);
-	watcher->addPath( QDir::homePath()+"/.lumina/envsettings.conf" );
-	watcher->addPath( QDir::homePath()+"/.lumina/themesettings.cfg" );
+	watcher->addPath( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf" );
+	watcher->addPath( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg" );
 	watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" ); //also watch these files for changes
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(syncTimer, SIGNAL(timeout()), this, SLOT(reloadFiles()) );
@@ -452,7 +452,7 @@ void LuminaThemeEngine::watcherChange(QString file){
 
 void LuminaThemeEngine::reloadFiles(){
   //Check the Theme file/settings
-  if(lastcheck < QFileInfo(QDir::homePath()+"/.lumina/themesettings.cfg").lastModified().addSecs(1) ){
+  if(lastcheck < QFileInfo(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg").lastModified().addSecs(1) ){
     QStringList current = LTHEME::currentSettings();
     if(application->applicationFilePath().section("/",-1)=="lumina-desktop"){
       application->setStyleSheet( LTHEME::assembleStyleSheet(current[0], current[1], current[3], current[4]) );	
@@ -495,13 +495,13 @@ void LuminaThemeEngine::reloadFiles(){
   
   
   //Environment Changes
-  if( lastcheck < QFileInfo(QDir::homePath()+"/.lumina/envsettings.conf").lastModified()){
+  if( lastcheck < QFileInfo(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf").lastModified()){
     LTHEME::LoadCustomEnvSettings();
     emit EnvChanged();
   }
   lastcheck = QDateTime::currentDateTime();
   
   //Now update the watched files to ensure nothing is missed
-  watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
-  watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QDir::homePath()+"/.lumina/envsettings.conf");
+  watcher->removePaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf");
+  watcher->addPaths( QStringList() << theme << colors << QDir::homePath()+"/.icons/default/index.theme" << QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf");
 }

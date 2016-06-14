@@ -45,7 +45,7 @@ void LSession::procFinished(){
 }
 
 void LSession::startProcess(QString ID, QString command){
-  QString dir = QDir::homePath()+"/.lumina/logs";
+  QString dir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs";
   if(!QFile::exists(dir)){ QDir tmp(dir); tmp.mkpath(dir); }
   QString logfile = dir+"/"+ID+".log";
   if(QFile::exists(logfile+".old")){ QFile::remove(logfile+".old"); }

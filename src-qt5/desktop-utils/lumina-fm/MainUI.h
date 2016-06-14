@@ -81,7 +81,7 @@ private:
 	QMenu *contextMenu;
 	QRadioButton *radio_view_details, *radio_view_list, *radio_view_tabs, *radio_view_cols;
 	QWidgetAction *detWA, *listWA, *tabsWA, *colsWA;
-	QString favdir;
+
 	//UI Widgets
 	QList<DirWidget*> DWLIST;
 	MultimediaWidget *MW;

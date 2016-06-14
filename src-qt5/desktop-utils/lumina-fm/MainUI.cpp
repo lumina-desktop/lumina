@@ -22,10 +22,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 	
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
-  //Be careful about the QSettings setup, it must match the lumina-desktop setup
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  settings = new QSettings( QSettings::UserScope, "LuminaDE", "lumina-fm", this);
-  favdir = QDir::homePath()+"/.lumina/favorites/"; //save this for later
+  settings = new QSettings( QSettings::UserScope, "lumina-desktop", "lumina-fm", this);
+
   //syncTimer =  new QTimer(this);
     //syncTimer->setInterval(200); //1/5 second (collect as many signals/slots as necessary
     //syncTimer->setSingleShot(true);

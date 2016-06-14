@@ -26,7 +26,7 @@
 
 #define DEBUG 0
 
-QFile logfile(QDir::homePath()+"/.lumina/logs/runtime.log");
+/*QFile logfile;
 void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
   QString txt;
   switch(type){
@@ -45,12 +45,14 @@ void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QStr
   	  txt = QString("FATAL: %1").arg(msg);
 	  txt += "\nContext: "+QString(context.file)+" Line: "+QString(context.line)+" Function: "+QString(context.function);
   	  break;
+  default:
+      txt = msg;
   }
 
   QTextStream out(&logfile);
   out << txt;
   if(!txt.endsWith("\n")){ out << "\n"; }
-}
+}*/
 
 int main(int argc, char ** argv)
 {
@@ -74,6 +76,7 @@ int main(int argc, char ** argv)
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
     //Setup the log file
+   /* logfile.setFileName( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs/runtime.log" );
     qDebug() << "Lumina Log File:" << logfile.fileName();
     if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
     if(logfile.exists()){ QFile::rename(logfile.fileName(), logfile.fileName()+".old"); }
@@ -82,11 +85,11 @@ int main(int argc, char ** argv)
         QDir dir;
         dir.mkpath(QDir::homePath()+"/.lumina/logs");
       }
-    logfile.open(QIODevice::WriteOnly | QIODevice::Append);
+    logfile.open(QIODevice::WriteOnly | QIODevice::Append);*/
     QTime *timer=0;
     if(DEBUG){ timer = new QTime(); timer->start(); }
     //Setup Log File
-    qInstallMessageHandler(MessageOutput);
+    //qInstallMessageHandler(MessageOutput);
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
     LuminaThemeEngine theme(&a);
     QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
@@ -99,6 +102,6 @@ int main(int argc, char ** argv)
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";
     qDebug() << "Finished Closing Down Lumina";
-    logfile.close();
+    //logfile.close();
     return retCode;
 }

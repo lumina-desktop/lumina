@@ -24,8 +24,6 @@ int main(int argc, char ** argv)
     if(!a.isPrimaryProcess()){ return 0; } //Inputs forwarded on to the primary already
     LuminaThemeEngine themes(&a);
     
-    //Setup the special settings prefix location
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
     //Setup the global structures
     LWM::SYSTEM = new LXCB();
     if( a.inputlist.contains("--test-win") ){

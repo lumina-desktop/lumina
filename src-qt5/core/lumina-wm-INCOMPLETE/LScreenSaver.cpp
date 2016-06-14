@@ -20,7 +20,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
 	
   LOCKER = new LLockScreen(this);
 	LOCKER->hide();
-  settings = new QSettings("LuminaDE","lumina-screensaver",this);
+  settings = new QSettings("lumina-desktop","lumina-screensaver",this);
   SSRunning = SSLocked = updating = false;
   this->setObjectName("LSCREENSAVERBASE");
   this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: grey; }");

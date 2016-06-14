@@ -49,7 +49,7 @@ public:
 	
 private:
 	Ui::LFileDialog *ui;
-	QString fileEXT;
+	QString fileEXT, filePath;
 	QSettings *settings;
 	QStringList PREFAPPS;
 	

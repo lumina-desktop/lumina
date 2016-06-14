@@ -10,7 +10,7 @@
 WMProcess::WMProcess() : QProcess(){
   connect(this,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(processFinished(int, QProcess::ExitStatus)) );
   this->setProcessChannelMode(QProcess::MergedChannels);
-  QString log = QDir::homePath()+"/.lumina/logs/wm.log";
+  QString log = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs/wm.log";
   if(QFile::exists(log)){ QFile::remove(log); }
   this->setStandardOutputFile(log);
   //ssaver = new QProcess(0);
@@ -74,23 +74,8 @@ QString WMProcess::setupWM(){
   QString WM = LSession::handle()->sessionSettings()->value("WindowManager", "fluxbox").toString();
   QString cmd="echo WM Disabled";
   //leave the option to add other window managers here (for testing purposes)
-  if(WM=="openbox"){
-    QString confDir = QDir::homePath()+"/.config/openbox";
-    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
-    if(!QFile::exists(confDir+"lumina-rc.xml")){
-      QFile::copy(":/openboxconf/lumina-rc.xml",confDir+"/lumina-rc.xml");
-      QFile::setPermissions(confDir+"/lumina-rc.xml", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    }
-    if(!QFile::exists(confDir+"lumina-menu.xml")){
-      QFile::copy(":/openboxconf/lumina-menu.xml",confDir+"/lumina-menu.xml");
-      QFile::setPermissions(confDir+"/lumina-menu.xml", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    }
-    //Now copy the configuration files around as necessary
-    //if(QFile::exists(confDir+"/rc.xml")){ QFile::rename(confDir+"/rc.xml",confDir+"/openbox-rc.xml"); }
-    //QFile::copy(confDir+"/lumina-rc.xml",confDir+"/rc.xml");
-    cmd = "openbox --debug --sm-disable --config-file "+confDir+"/lumina-rc.xml";
-  }else if(WM=="fluxbox"){
-    QString confDir = QDir::homePath()+"/.lumina";
+  if(WM=="fluxbox"){
+    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
     if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
     if(!QFile::exists(confDir+"/fluxbox-init")){
       QFile::copy(":/fluxboxconf/fluxbox-init-rc",confDir+"/fluxbox-init");

@@ -36,8 +36,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
 
-  //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  settings = new QSettings("LuminaDE", "lumina-screenshot",this);
+  settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
   if(settings->value("screenshot-target", "window").toString() == "window") {
 	ui->radio_window->setChecked(true);
   }else{

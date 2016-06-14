@@ -15,7 +15,6 @@ LFileDialog::LFileDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LFileDia
   appExec.clear();
   appPath.clear();
   appFile.clear();
-  //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
   settings = new QSettings("lumina-desktop", "lumina-open", this);
   //Connect the signals/slots
   connect(ui->combo_apps, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()) );
@@ -34,6 +33,7 @@ LFileDialog::~LFileDialog(){
 void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
   //Set the labels for the file
   qDebug() << "SetFileInfo:" << filename << extension << isFile;
+  filePath = filename; //save for later
   ui->label_file->setText( this->fontMetrics().elidedText( filename, Qt::ElideMiddle, 300 ) );
   bool shownetwork = false;
   if(isFile){ ui->label_extension->setText( "("+extension+")"); }
@@ -46,28 +46,17 @@ void LFileDialog::setFileInfo(QString filename, QString extension, bool isFile){
 
 //static functions
 QString LFileDialog::getDefaultApp(QString extension){
+  if(!extension.contains("/")){ return ""; }
   qDebug() << "Get Default App:" << extension;
-  QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-  if(extension.contains("/")){
-    return LXDG::findDefaultAppForMime(extension);
-  }else{
-    return QSettings("LuminaDE", "lumina-open").value("default/"+extension,"").toString();
-  }
+  return LXDG::findDefaultAppForMime(extension);
 }
 
 void LFileDialog::setDefaultApp(QString extension, QString appFile){
-  if(extension.contains("/")){
+  if(!extension.contains("/")){ extension = LXDG::findAppMimeForFile(appFile); }
+
     //mime type default: set on the system itself
     if(appFile.endsWith(".desktop")){ appFile = appFile.section("/",-1); } //only need the relative path
     LXDG::setDefaultAppForMime(extension, appFile);
-  }else{
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, QDir::homePath()+"/.lumina");
-    if(appFile.isEmpty()){
-      QSettings("LuminaDE", "lumina-open").remove("default/"+extension);
-    }else{
-      QSettings("LuminaDE", "lumina-open").setValue("default/"+extension,appFile);
-    }
-  }
 }
 
 // -----------
@@ -172,7 +161,7 @@ void LFileDialog::generateAppList(bool shownetwork){
   PREFAPPS = getPreferredApplications();
   ui->combo_rec->clear();
   //Now get the application mimetype for the file extension (if available)
-  QString mimetype = fileEXT;
+  QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
   //Now add all the detected applications
   QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles() );
   QStringList cat = hash.keys();
@@ -193,11 +182,14 @@ void LFileDialog::generateAppList(bool shownetwork){
       }
       ui->combo_apps->addItem(LXDG::findIcon(app[a].icon, "application-x-desktop"), app[a].name, app[a].filePath);
       //Check to see if this app matches the mime type
-      if(app[a].mimeList.contains(mimetype) && !mimetype.isEmpty()){
-        // also put this app in the preferred list
-	PREFAPPS.append(app[a].filePath);	      
-	//If this is the first preferred app found - select this app initially
-	if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(ui->combo_apps->count()-1); }
+      if(!mimetypes.isEmpty()){
+        QStringList tmp = mimetypes; tmp << app[a].mimeList;
+        if(tmp.removeDuplicates() > 0 ){
+          // also put this app in the preferred list
+	  PREFAPPS.append(app[a].filePath);	      
+	  //If this is the first preferred app found - select this app initially
+	  if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(ui->combo_apps->count()-1); }
+        }
       }
     }
   }

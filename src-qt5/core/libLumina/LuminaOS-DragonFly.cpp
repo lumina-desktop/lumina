@@ -112,8 +112,8 @@ QStringList LOS::ExternalDevicePaths(){
 int LOS::ScreenBrightness(){
   //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
   if(screenbrightness==-1){
-    if(QFile::exists(QDir::homePath()+"/.lumina/.currentxbrightness")){
-      int val = LUtils::readFile(QDir::homePath()+"/.lumina/.currentxbrightness").join("").simplified().toInt();
+    if(QFile::exists(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness")){
+      int val = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness").join("").simplified().toInt();
       screenbrightness = val;
     }
   }
@@ -139,7 +139,7 @@ void LOS::setScreenBrightness(int percent){
   //Save the result for later
   if(!success){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
-  LUtils::writeFile(QDir::homePath()+"/.lumina/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
+  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }
 
 //Read the current volume
@@ -147,7 +147,7 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
   int out = audiovolume;
   if(out < 0){
     //First time session check: Load the last setting for this user
-    QString info = LUtils::readFile(QDir::homePath()+"/.lumina/.currentvolume").join("");
+    QString info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume").join("");
     if(!info.isEmpty()){
       out = info.simplified().toInt();
       audiovolume = out; //unset this internal flag
@@ -164,7 +164,7 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
     else{ out = R; }
     if(out != audiovolume){
       //Volume changed by other utility: adjust the saved value as well
-      LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(out), true);
+      LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(out), true);
     }
     audiovolume = out;
   }
@@ -190,7 +190,7 @@ void LOS::setAudioVolume(int percent){
     //Run Command
     audiovolume = percent; //save for checking later
     LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
-    LUtils::writeFile(QDir::homePath()+"/.lumina/.currentvolume", QStringList() << QString::number(percent), true);
+    LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(percent), true);
   }
 }
 
