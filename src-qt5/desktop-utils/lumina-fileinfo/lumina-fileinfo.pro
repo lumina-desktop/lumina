@@ -89,8 +89,8 @@ TRANSLATIONS =  i18n/lumina-fileinfo_af.ts \
 dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
-INSTALLS += target dotrans
+INSTALLS += target
 
-NO_I18N{
-  INSTALLS -= dotrans
+WITH_I18N{
+  INSTALLS += dotrans
 }

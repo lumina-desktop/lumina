@@ -19,19 +19,19 @@ int  main(int argc, char *argv[]) {
     if( !a.isPrimaryProcess() ){ return 0; } //poked the current process instead
 	
    //First make sure a system tray is available
-  /*qDebug() << "Checking for system tray";
+  qDebug() << "Checking for system tray";
    bool ready = false;
    for(int i=0; i<60 && !ready; i++){
       ready = QSystemTrayIcon::isSystemTrayAvailable();
       if(!ready){
 	//Pause for 5 seconds
-        sleep(5); //don't worry about stopping event handling - nothing running yet
+        sleep(5); //don't worry about stopping event handling - nothing really running yet
       }
    }
    if(!ready){
      qDebug() << "Could not find any available system tray after 5 minutes: exiting....";
      return 1;
-   }*/
+   }
    
    //Now go ahead and setup the app
    LuminaThemeEngine theme(&a);

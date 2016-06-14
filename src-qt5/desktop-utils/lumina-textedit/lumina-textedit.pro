@@ -92,8 +92,8 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-textedit.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target dotrans desktop
+INSTALLS += target desktop
 
-NO_I18N{
-  INSTALLS -= dotrans
+WITH_I18N{
+  INSTALLS += dotrans
 }

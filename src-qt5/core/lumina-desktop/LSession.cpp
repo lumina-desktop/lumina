@@ -115,8 +115,6 @@ void LSession::setupSession(){
 
   //Initialize the internal variables
   DESKTOPS.clear();
-  //savedScreens.clear();
-  //for(int i=0; i<this->desktop()->screenCount(); i++){ savedScreens << this->desktop()->screenGeometry(i); }
       
   //Start the background system tray
     splash.showScreen("systray");
@@ -333,33 +331,18 @@ void LSession::watcherChange(QString changed){
   if(!watcher->files().contains(changed) && !watcher->directories().contains(changed)){
     watcher->addPath(changed);
   }
-  /*QStringList files = watcher->files();
-  if(files.length() < 5){
-    qDebug() << " - Resetting Watched Files...";
-    watcher->removePaths(files); //clear the current files before re-setting them
-    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/sessionsettings.conf" );
-    watcher->addPath( QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf" );
-    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-init" );
-    watcher->addPath( QDir::homePath()+"/.lumina/fluxbox-keys" );
-    watcher->addPath( QDir::homePath()+"/Desktop");
-  }*/
 }
 
 void LSession::screensChanged(){
   qDebug() << "Screen Number Changed";
   if(screenTimer->isActive()){ screenTimer->stop(); }
   screenTimer->start();
-  //updateDesktops();
 }
 
 void LSession::screenResized(int scrn){
-  qDebug() << "Screen Resized:" << scrn; // << this->desktop()->screenGeometry(scrn);
-  /*for(int i=0; i<DESKTOPS.length(); i++){
-    if(DESKTOPS[i]->Screen() == scrn){ DESKTOPS[i]->UpdateGeometry(); return; }
-  }*/	  
+  qDebug() << "Screen Resized:" << scrn;
   if(screenTimer->isActive()){ screenTimer->stop(); }  
   screenTimer->start();	
-  //updateDesktops();
 }
 
 void LSession::checkWindowGeoms(){
@@ -380,99 +363,6 @@ void LSession::checkUserFiles(){
     //Save the current version of the session to the settings file (for next time)
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());
   }
-
-  /*int oldversion = VersionStringToNumber(OVS);
-  int nversion = VersionStringToNumber(this->applicationVersion());
-  bool newversion =  ( oldversion < VersionStringToNumber(this->applicationVersion()) ); //increasing version number
-  bool newrelease = ( OVS.contains("-devel", Qt::CaseInsensitive) && this->applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
-  
-  //Check for the desktop settings file
-  QString dset = QDir::homePath()+"/.lumina/LuminaDE/desktopsettings.conf";
-  bool firstrun = false;
-  if(!QFile::exists(dset) || oldversion < 5000){
-    if( oldversion < 5000 ){ QFile::remove(dset); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
-    else{ firstrun = true; }
-    LUtils::LoadSystemDefaults();
-  }
-  //Convert the favorites framework as necessary (change occured with 0.8.4)
-  if(newversion || newrelease){
-    LUtils::upgradeFavorites(oldversion);	  
-  }
-  //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
-  if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
-    QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings", this);
-    QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
-    for(int i=0; i<plugKeys.length(); i++){
-      QStringList plugs = dset.value(plugKeys[i],QStringList()).toStringList();
-      //Do the appmenu/userbutton -> systemstart conversion
-      plugs = plugs.join(";;;;").replace("userbutton","systemstart").replace("appmenu","systemstart").split(";;;;");
-      //Remove any system dashboard plugins
-      plugs.removeAll("systemdashboard");
-      //Now save that back to the file
-      dset.setValue(plugKeys[i], plugs);
-    }
-    //Also remove any "desktopview" desktop plugin and enable the automatic desktop icons instead
-    plugKeys = dset.allKeys().filter("desktop-").filter("/pluginlist");
-    for(int i=0; i<plugKeys.length(); i++){
-      QStringList plugs = dset.value(plugKeys[i], QStringList()).toStringList();
-      QStringList old = plugs.filter("desktopview");
-      bool found = !old.isEmpty();
-      for(int j=0; j<old.length(); j++){ plugs.removeAll(old[j]); }
-      if(found){
-        dset.setValue(plugKeys[i],plugs); //save the modified plugin list
-	//Also set the auto-generate flag on this desktop
-	dset.setValue(plugKeys[i].section("/",0,0)+"/generateDesktopIcons", true);
-      }
-    }
-    dset.sync();
-    //Due to the grid size change for desktop plugins, need to remove any old plugin geometries
-    if(QFile::exists(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf")){
-      QFile::remove(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf");
-    }
-  }
-  
-  //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
-  if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
-    QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
-    for(int i=0; i<cmds.length(); i++){
-      cmds[i] = cmds[i].remove("lumina-open").simplified(); //remove the file opener
-      if(cmds[i].startsWith("#") || cmds[i].isEmpty()){ continue; } //invalid line
-      
-      LXDG::setAutoStarted(true, cmds[i]);
-    }
-    QFile::remove(QDir::homePath()+"/.lumina/startapps"); //delete the old file
-  }
-  
-  //Check for the default applications file for lumina-open
-  dset = QDir::homePath()+"/.lumina/LuminaDE/lumina-open.conf";
-  if(!QFile::exists(dset)){
-    firstrun = true;
-  }
-  //Check the fluxbox configuration files
-  dset = QDir::homePath()+"/.lumina/";
-  bool fluxcopy = false;
-  if(!QFile::exists(dset+"fluxbox-init")){ fluxcopy=true; }
-  else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
-  else if(oldversion < 60){ fluxcopy=true; qDebug() << "Current fluxbox settings obsolete: Re-implementing defaults"; }
-  if(fluxcopy){
-    qDebug() << "Copying default fluxbox configuration files";
-    if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
-    if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
-    QFile::copy(LOS::LuminaShare()+"fluxbox-init-rc", dset+"fluxbox-init");
-    QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
-    QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-  }
-
-  if(firstrun){ qDebug() << "First time using Lumina!!"; }
-  else if(newversion || newrelease){
-    qDebug() << "Updating session file to current version";
-  }
-
-  //Save the current version of the session to the settings file (for next time)
-  if(newversion || newrelease){
-    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
-  }*/
 }
 
 void LSession::refreshWindowManager(){
@@ -513,7 +403,6 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
-        //QTimer::singleShot(0,DESKTOPS[i], SLOT(checkResolution()));
       }  
   }
   
@@ -529,7 +418,6 @@ void LSession::updateDesktops(){
   //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes in the middle of a session
     if(numchange && !firstrun) {
       qDebug() << "Update WM";
-      //QTimer::singleShot(1000,WM, SLOT(restartWM()));  //Note: This causes crashes in X if a full-screen app
       WM->updateWM();
     }
 
@@ -605,16 +493,6 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       qDebug() << " - New Geom:" << geom << fgeom; 
     }
     XCB->WM_Request_MoveResize_Window(win, geom);
-    /*
-      //Need to use the frame origin point with the window size (for some reason - strange Fluxbox issue)
-      XCB->MoveResizeWindow(win, QRect(fgeom.topLeft(), geom.size()) );
-
-    //For the random windows which are *still* off the top of the screen 
-    QRect nfgeom = XCB->WindowGeometry(win, true); //re-fetch the current geometry (including frame)
-    if(nfgeom!=fgeom){
-      if(DEBUG){ qDebug() << " -- Adjust again:" << fgeom; }
-      XCB->MoveResizeWindow(win, geom);
-    }*/
   }
   
 }
@@ -638,16 +516,6 @@ QFileInfoList LSession::DesktopFiles(){
 QRect LSession::screenGeom(int num){
   if(num < 0 || num >= this->desktop()->screenCount() ){ return QRect(); }
   QRect geom = this->desktop()->screenGeometry(num);
-  /*QScreen* scrn = this->screens().at(num);
-  //if(DEBUG){ qDebug() << "Screen Geometry:" << num << geom << scrn->geometry() << scrn->virtualGeometry(); }
-  if(geom.isNull() ){
-    if( !scrn->geometry().isNull() ){ geom = scrn->geometry(); }
-    else if( !scrn->virtualGeometry().isNull() ){ geom = scrn->virtualGeometry(); }
-    //else if(num < savedScreens.length() ){
-    //Qt is backfiring (Xinarama w/ Fluxbox?) - return the saved geometry
-    //geom = savedScreens[num];	
-    //}
-  }*/
   return geom;
 }
 
@@ -717,7 +585,6 @@ void LSession::playAudioFile(QString filepath){
     mediaObj->setVolume(100);
     mediaObj->setMedia(QUrl::fromLocalFile(filepath));
     mediaObj->play();
-    //if(!audioThread->isRunning()){ audioThread->start(); }
     LSession::processEvents();
   }
   if(DEBUG){ qDebug() << " - Done with Audio File"; }
@@ -729,7 +596,6 @@ void LSession::RootSizeChange(){
   qDebug() << "Got Root Size Change";
   if(DESKTOPS.isEmpty()){ return; } //Initial setup not run yet
   screenTimer->start();
-  //QTimer::singleShot(0,this, SLOT(screensChanged()) );
 }
 
 void LSession::WindowPropertyEvent(){
@@ -844,7 +710,6 @@ void LSession::startSystemTray(){
   if(SystemTrayID!=0){
     XCB->SelectInput(SystemTrayID); //make sure TrayID events get forwarded here
     TrayDmgEvent = XCB->GenerateDamageID(SystemTrayID);
-    //XDamageQueryExtension( QX11Info::display(), &TrayDmgEvent, &TrayDmgError);
     evFilter->setTrayDamageFlag(TrayDmgEvent);
     qDebug() << "System Tray Started Successfully";
     if(DEBUG){ qDebug() << " - System Tray Flags:" << TrayDmgEvent << TrayDmgError; }
@@ -861,7 +726,6 @@ void LSession::stopSystemTray(bool detachall){
   if(!detachall){
     for(int i=0; i<tmpApps.length(); i++){
       qDebug() << " - Stopping tray app:" << XCB->WindowClass(tmpApps[i]);
-      //XCB->CloseWindow(RunningTrayApps[i]);
       //Tray apps are special and closing the window does not close the app
       XCB->KillClient(tmpApps[i]);
       LSession::processEvents();

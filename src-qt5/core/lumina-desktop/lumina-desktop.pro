@@ -162,8 +162,8 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
 
-INSTALLS += target desktop icons wallpapers defaults conf fluxconf dotrans
+INSTALLS += target desktop icons wallpapers defaults conf fluxconf
 
-NO_I18N{
-  INSTALLS -= dotrans
+WITH_I18N{
+  INSTALLS += dotrans
 }
