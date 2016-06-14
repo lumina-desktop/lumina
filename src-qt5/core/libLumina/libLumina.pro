@@ -53,13 +53,13 @@ include.files=LuminaXDG.h \
 	LuminaOS.h \
 	LuminaSingleApplication.h
 
-colors.path=$${L_SHAREDIR}/Lumina-DE/colors
+colors.path=$${L_SHAREDIR}/lumina-desktop/colors
 colors.files=colors/*.qss.colors
 
-themes.path=$${L_SHAREDIR}/Lumina-DE/themes/
+themes.path=$${L_SHAREDIR}/lumina-desktop/themes/
 themes.files=themes/*.qss.template
 
-#quickplugins.path=$${L_SHAREDIR}/Lumina-DE/quickplugins/
+#quickplugins.path=$${L_SHAREDIR}/lumina-desktop/quickplugins/
 #quickplugins.files=quickplugins/*
 
 INSTALLS += target include colors themes

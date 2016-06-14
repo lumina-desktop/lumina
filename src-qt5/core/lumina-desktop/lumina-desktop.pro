@@ -67,7 +67,7 @@ icons.path = $${L_SHAREDIR}/pixmaps
 
 fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
-fluxconf.path = $${L_SHAREDIR}/Lumina-DE/
+fluxconf.path = $${L_SHAREDIR}/lumina-desktop/
 
 wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
 			wallpapers/Lumina_Wispy_green.jpg \
@@ -83,17 +83,17 @@ wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
 defaults.files = defaults/luminaDesktop.conf \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
-defaults.path = $${L_SHAREDIR}/Lumina-DE/
+defaults.path = $${L_SHAREDIR}/lumina-desktop/
 
 conf.path = $${L_ETCDIR}
 
 #Now do any PC-BSD defaults (if set)
 PCBSD{
   conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
-  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/desktop-background.jpg
+  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }else{
   conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
-  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/desktop-background.jpg
+  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
@@ -159,8 +159,8 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zh_TW.ts \
                 i18n/lumina-desktop_zu.ts
 
-dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 INSTALLS += target desktop icons wallpapers defaults conf fluxconf
 

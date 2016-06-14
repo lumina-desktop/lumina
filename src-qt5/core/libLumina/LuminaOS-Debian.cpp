@@ -17,7 +17,7 @@ QString LOS::OSName(){ return "Debian GNU/Linux"; }
 
 //OS-specific prefix(s)
 // NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
-QString LOS::LuminaShare(){ return (L_SHAREDIR+"/Lumina-DE/"); } //Install dir for Lumina share files
+QString LOS::LuminaShare(){ return (L_SHAREDIR+"/lumina-desktop/"); } //Install dir for Lumina share files
 QString LOS::AppPrefix(){ return "/usr/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/"; } //Prefix for system
 

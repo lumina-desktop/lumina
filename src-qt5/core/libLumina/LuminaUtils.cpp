@@ -849,7 +849,7 @@ bool LUtils::checkUserFiles(QString lastversion){
   //Check for the desktop settings file
   QString dset = confdir+"desktopsettings.conf";
   bool firstrun = false;
-  if(!QFile::exists(dset) || oldversion < 100000){
+  if(!QFile::exists(dset) || oldversion < 5000){
     if( oldversion < 100000 && nversion>=100000 ){ system("rm -rf ~/.lumina"); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
     LUtils::LoadSystemDefaults();
