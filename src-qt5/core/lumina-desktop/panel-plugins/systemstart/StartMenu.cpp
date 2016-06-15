@@ -230,7 +230,7 @@ void StartMenu::do_search(QString search, bool force){
     }
   }
   found.sort(Qt::CaseInsensitive); //sort by priority/type (lower numbers are higher on list)
-  qDebug() << "Sorted Items:" << found;
+  //qDebug() << "Sorted Items:" << found;
   //Now add the items to the menu in order
   for(int i=0; i<found.length(); i++){
     if( !QFile::exists(found[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
@@ -251,6 +251,10 @@ void StartMenu::do_search(QString search, bool force){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
+    if(i%3==0){ 
+      QApplication::processEvents();
+      if(searchTimer->isActive()){ return; } //search changed - go ahead and stop here
+    }
   }
   ui->stackedWidget->setCurrentWidget(ui->page_search);
 }
