@@ -15,7 +15,7 @@ Latest Stable Versions
 ----
 Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
 
-Qt5 - 0.8.8 (Beta): Use the qt5/0.8.8 branch of the source tree to fetch this version.
+Qt5 - 0.9.0 (Beta): Use the qt5/0.9.0 branch of the source tree to fetch this version.
 
 The master branch is where all development is performed and tested before the next release version is branched off.
 
@@ -52,7 +52,7 @@ How to build from source
   * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
   * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
   * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
-  * NO_I18N: (Recommended) Do not generate/install the translation files. If you wish to install translation files, please use the pcbsd/lumina-i18n repo for the full set (this repo only contains partial translations/templates).
+  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the pcbsd/lumina-i18n repo instead.
 
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
