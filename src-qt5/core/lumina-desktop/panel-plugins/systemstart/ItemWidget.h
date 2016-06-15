@@ -40,6 +40,8 @@ public:
 
 	bool gooditem;
 
+	void triggerItem(); //trigger this item - just as if it was clicked on
+
 private:
 	QToolButton *actButton;
 	QMenu *contextMenu;

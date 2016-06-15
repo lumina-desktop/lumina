@@ -42,7 +42,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page_main">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -143,7 +143,7 @@
             <x>0</x>
             <y>0</y>
             <width>179</width>
-            <height>169</height>
+            <height>177</height>
            </rect>
           </property>
          </widget>
@@ -439,7 +439,7 @@
             <x>0</x>
             <y>0</y>
             <width>179</width>
-            <height>280</height>
+            <height>284</height>
            </rect>
           </property>
          </widget>
@@ -1083,6 +1083,27 @@
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_search">
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QScrollArea" name="scroll_search">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>161</width>
+            <height>332</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>

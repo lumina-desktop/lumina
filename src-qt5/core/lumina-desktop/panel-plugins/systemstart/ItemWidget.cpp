@@ -64,7 +64,8 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     }else if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
       icon->setPixmap( QIcon(itemPath).pixmap(64,64) );
     }else{
-      icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(64,64) );
+      if( LUtils::isValidBinary(itemPath) ){  icon->setPixmap( LXDG::findIcon(type, "application-x-executable").pixmap(64,64) ); }
+      else{ icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(64,64) ); }
     }
     name->setText( itemPath.section("/",-1) ); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
     text = itemPath.section("/",-1) ;
@@ -117,6 +118,10 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
 }
 
 ItemWidget::~ItemWidget(){ 
+}
+
+void ItemWidget::triggerItem(){
+  ItemClicked();
 }
 
 void ItemWidget::createWidget(){

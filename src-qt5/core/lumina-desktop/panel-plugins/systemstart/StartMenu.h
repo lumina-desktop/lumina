@@ -34,12 +34,14 @@ private:
 	Ui::StartMenu *ui;
 	QHash<QString, QList<XDGDesktop> > *sysapps;
 	QStringList favs;
-	QString CCat; //current category
+	QString CCat, CSearch, topsearch; //current category/search
+	QTimer *searchTimer;        
 
 	//Simple utility functions
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
-	
+	void do_search(QString search, bool force);	
+
 private slots:
 	void LaunchItem(QString path, bool fix = true);
 
@@ -88,7 +90,9 @@ private slots:
 	void on_combo_locale_currentIndexChanged(int);
 	
 	//Search
-	void on_line_search_editingFinished();
+	void on_line_search_textEdited(QString);
+        void startSearch();
+	void on_line_search_returnPressed();
 
 signals:
 	void CloseMenu();

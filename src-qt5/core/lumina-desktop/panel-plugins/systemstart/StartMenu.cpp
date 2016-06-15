@@ -18,6 +18,10 @@
 StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
   ui->setupUi(this); //load the designer file
   this->setMouseTracking(true);
+  searchTimer = new QTimer(this);
+    searchTimer->setInterval(300); //~1/3 second
+    searchTimer->setSingleShot(true);
+  connect(searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()) );
   sysapps = LSession::handle()->applicationMenu()->currentAppHash();
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
   //Need to load the last used setting of the application list
@@ -122,6 +126,7 @@ void StartMenu::UpdateAll(){
 
 void StartMenu::UpdateMenu(bool forceall){
   //qDebug() << "Update Menu" << forceall;
+  ui->line_search->clear();
   if(forceall){ UpdateAll(); }
   //Quick update routine before the menu is made visible
   //qDebug() << "update favs";
@@ -188,6 +193,66 @@ void StartMenu::SortScrollArea(QScrollArea *area){
       }
     }
   }
+}
+
+void StartMenu::do_search(QString search, bool force){
+  search = search.simplified(); //remove unneccesary whitespace
+  if(search == CSearch && !force){ 
+    //nothing new - just ensure the page is visible
+    if(ui->stackedWidget->currentWidget()!=ui->page_search  ){ ui->stackedWidget->setCurrentWidget(ui->page_search); }
+    return; 
+  }else if(search.isEmpty()){
+    CSearch.clear();
+    if(ui->stackedWidget->currentWidget()==ui->page_search  ){ on_tool_back_clicked(); }
+    return;
+  }
+  //Got a search term - check it
+  CSearch = search; //save this for comparison later
+  qDebug() << "Search for term:" << search;
+  ClearScrollArea(ui->scroll_search);
+  topsearch.clear();
+  //Now find any items which match the search
+  QStringList found; //syntax: [<sorter>::::<mimetype>::::<filepath>]
+  QString tmp = search;
+  if(LUtils::isValidBinary(tmp)){ found << "0::::application/x-executable::::"+tmp; }
+  QList<XDGDesktop> apps = sysapps->value("All");
+  for(int i=0; i<apps.length(); i++){
+    int priority = -1;
+    if(apps[i].name.toLower()==search.toLower()){ priority = 10; }
+    else if(apps[i].name.startsWith(search, Qt::CaseInsensitive)){ priority = 15; }
+    else if(apps[i].name.contains(search, Qt::CaseInsensitive)){ priority = 19; }
+    else if(apps[i].genericName.contains(search, Qt::CaseInsensitive)){ priority = 20; }
+    else if(apps[i].comment.contains(search, Qt::CaseInsensitive)){ priority = 30; }
+    //Can add other filters here later
+
+    if(priority>0){
+      found << QString::number(priority)+"::::app::::"+apps[i].filePath;
+    }
+  }
+  found.sort(Qt::CaseInsensitive); //sort by priority/type (lower numbers are higher on list)
+  qDebug() << "Sorted Items:" << found;
+  //Now add the items to the menu in order
+  for(int i=0; i<found.length(); i++){
+    if( !QFile::exists(found[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
+    if(topsearch.isEmpty()){ topsearch = found[i].section("::::",2,-1); }
+    ItemWidget *it = 0;
+    if( found[i].section("::::",2,-1).endsWith(".desktop")){
+      bool ok = false;
+      XDGDesktop item = LXDG::loadDesktopFile(found[i].section("::::",2,-1), ok);
+      if(ok){ ok = LXDG::checkValidity(item); }
+      if(ok){ it = new ItemWidget(ui->scroll_favs->widget(), item); }
+    }else{
+      it = new ItemWidget(ui->scroll_favs->widget(), found[i].section("::::",2,-1), found[i].section("::::",1,1) );
+    }
+    if(it==0){ continue; }
+    if(!it->gooditem){ it->deleteLater(); continue; } //invalid for some reason
+    ui->scroll_search->widget()->layout()->addWidget(it);
+    connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
+    connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
+    connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
+    connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
+  }
+  ui->stackedWidget->setCurrentWidget(ui->page_search);
 }
 
 // ========================
@@ -370,7 +435,8 @@ void StartMenu::UpdateFavs(){
 void StartMenu::on_stackedWidget_currentChanged(int val){
   QWidget *page = ui->stackedWidget->widget(val);
   ui->tool_back->setVisible(page != ui->page_main);
-  ui->line_search->setVisible(false); //not implemented yet
+  ui->line_search->setFocus();
+
   //Now the page specific updates
   if(page == ui->page_main){
     if(!ui->label_status_battery->whatsThis().isEmpty()){
@@ -587,6 +653,17 @@ void StartMenu::on_combo_locale_currentIndexChanged(int){
 
 	
 //Search
-void StartMenu::on_line_search_editingFinished(){
-	
+void StartMenu::on_line_search_textEdited(QString){
+  if(searchTimer->isActive()){ searchTimer->stop(); }
+  searchTimer->start();
+}
+
+void StartMenu::startSearch(){
+  if(!this->isVisible()){ return; } //menu closed while timer was active
+ do_search(ui->line_search->text(),false); //auto-launched
+}
+
+void StartMenu::on_line_search_returnPressed(){
+  if(topsearch.isEmpty()){ return; }
+  LaunchItem(topsearch);
 }
