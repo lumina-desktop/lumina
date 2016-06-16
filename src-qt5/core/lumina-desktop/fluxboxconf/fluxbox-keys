@@ -142,11 +142,11 @@ Control Mod4 F12 :If {Matches (Layer=Normal)} {TakeToWorkspace 12}
 #Lumina Specific defaults
 Print  :Exec lumina-screenshot
 Pause  :Exec xscreensaver-command -lock
-Mod4 L  :Exec xscreensaver-command -lock
-Mod4 space  :Exec lumina-search
-Mod4 Prior :Exec lumina-open -volumeup
-Mod4 Next :Exec lumina-open -volumedown
-Mod4 Home  :Exec lumina-open -brightnessup
-Mod4 End  :Exec lumina-open -brightnessdown
+Mod1 L  :Exec xscreensaver-command -lock
+Mod1 space  :Exec lumina-search
+Mod1 Prior :Exec lumina-open -volumeup
+Mod1 Next :Exec lumina-open -volumedown
+Mod1 Home  :Exec lumina-open -brightnessup
+Mod1 End  :Exec lumina-open -brightnessdown
 F12 :Exec lumina-terminal -toggle
 115 :Exec lumina-desktop --show-start
