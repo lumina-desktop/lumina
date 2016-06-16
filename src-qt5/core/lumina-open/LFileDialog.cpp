@@ -163,7 +163,7 @@ void LFileDialog::generateAppList(bool shownetwork){
   //Now get the application mimetype for the file extension (if available)
   QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
   //Now add all the detected applications
-  QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles() );
+  QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles(false,true) );
   QStringList cat = hash.keys();
   cat.sort(); //sort alphabetically
   ui->combo_apps->clear();
