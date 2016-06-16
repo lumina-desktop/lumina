@@ -19,11 +19,17 @@ QLineEdit, QTextEdit, QTextBrowser, QPlainTextEdit, QSpinBox, QDateEdit, QDateTi
 }
 
 /* PAGES OF CONTAINER WIDGETS */
-QStackedWidget .QWidget, QTabWidget .QWidget{
+QStackedWidget .QWidget{
   background: transparent;
   color: %%TEXTCOLOR%%;
   border: none;
 }
+QTabWidget{
+  background: %%ALTBASECOLOR%%;
+  color: %%TEXTCOLOR%%;
+  border: none;
+}
+
 QToolBox::tab{
   color: %%TEXTCOLOR%%;
 }
