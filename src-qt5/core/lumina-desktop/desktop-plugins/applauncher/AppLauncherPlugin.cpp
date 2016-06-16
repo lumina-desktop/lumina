@@ -46,7 +46,7 @@ void AppLauncherPlugin::loadButton(){
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
     }else{
       button->setWhatsThis(file.filePath);
-      button->setIcon( QIcon(LXDG::findIcon(file.icon,"quickopen").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+      button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = file.name;
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
       watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
