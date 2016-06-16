@@ -37,15 +37,10 @@ public:
 	~LDeskBarPlugin();
 	
 private:
-	//QHBoxLayout *layout;
-	QString desktopPath;
 	QFileSystemWatcher *watcher;
 	//Special toolbuttons and menus
 	QToolButton *appB, *fileB, *dirB;
 	QMenu *appM, *dirM, *audioM, *videoM, *pictureM, *fileM, *otherM, *docM;
-	//QStringList audioFilter, videoFilter, pictureFilter, docsFilter;
-	QFileInfoList homefiles;
-	QStringList favs;
 	QList<QToolButton*> APPLIST;
 	QDateTime lastHomeUpdate;
 
@@ -60,13 +55,14 @@ private:
 	
 private slots:
 	void ActionTriggered(QAction* act);
-	void desktopChanged();
+        void filechanged(QString);
+	void updateFiles();
 	void updateIcons();
 
 public slots:
 	void LocaleChange(){
 	  updateIcons();
-	  desktopChanged();
+	  updateFiles();
 	}
 	
 	void OrientationChange(){
@@ -90,4 +86,3 @@ public slots:
 
 
 #endif
-

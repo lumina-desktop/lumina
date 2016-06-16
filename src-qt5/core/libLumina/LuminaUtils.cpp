@@ -212,6 +212,7 @@ QString LUtils::PathToAbsolute(QString path){
   return path;
 }
 QString LUtils::AppToAbsolute(QString path){
+  if(path.startsWith("~/")){ path = path.replace("~/", QDir::homePath()+"/" ); }
   if(path.startsWith("/") || QFile::exists(path)){ return path; }
   if(path.endsWith(".desktop")){
     //Look in the XDG dirs
@@ -491,11 +492,6 @@ QStringList LUtils::listFavorites(){
     fav.removeAll(""); //remove any empty lines
     fav.removeDuplicates();
     lastRead = cur;
-    /*if(fav.isEmpty()){
-      //Make sure the favorites dir exists, and create it if necessary
-      QDir dir(QDir::homePath()+"/.lumina/favorites");
-	if(!dir.exists()){ dir.mkpath(QDir::homePath()+"/.lumina/favorites"); }
-    }*/
   }
   
   return fav;
@@ -767,7 +763,27 @@ void LUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="favorites_add"){ qDebug() << " - Adding:"; LUtils::addFavorite(val); }
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LUtils::removeFavorite(val); }
   }
-  
+
+  // -- QUICKLAUNCH --
+  tmp = sysDefaults.filter("quicklaunch_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("quicklaunch."); }
+  QStringList quickL;
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
+    //Now parse the variable and put the value in the proper file
+    val = AppToAbsolute(val); //turn any relative files into absolute
+    if(var=="quicklaunch_add_ifexists" && QFile::exists(val)){ quickL << val; }
+    else if(var=="quicklaunch_add"){ quickL << val; }
+  }
+  if(!quickL.isEmpty()){ 
+    if(sesset.isEmpty()){ sesset << "[General]"; } //everything is in this section
+    sesset << "QuicklaunchApps="+quickL.join(", "); 
+  }
+
   //Now do any theme settings
   QStringList themesettings = LTHEME::currentSettings(); 
       //List: [theme path, colorspath, iconsname, font, fontsize]

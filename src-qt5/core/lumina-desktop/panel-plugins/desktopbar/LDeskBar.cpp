@@ -10,41 +10,21 @@
 LDeskBarPlugin::LDeskBarPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   this->layout()->setContentsMargins(0,0,0,0);
   this->setStyleSheet( "QToolButton::menu-indicator{ image: none; } QToolButton{ padding: 0px; }");
-  //Find the path to the desktop folder
-  if(QFile::exists(QDir::homePath()+"/Desktop")){ desktopPath = QDir::homePath()+"/Desktop"; }
-  else if(QFile::exists(QDir::homePath()+"/desktop")){ desktopPath = QDir::homePath()+"/desktop"; }
-  else{ desktopPath=""; }
-  //Make sure the favorites directory exists
-  if(!QFile::exists(QDir::homePath()+"/.lumina/favorites") ){
-    QDir dir;
-    dir.mkpath(QDir::homePath()+"/.lumina/favorites");
-  }
-  //Setup the filter lists for the different types of files
-  /*audioFilter <<"*.ogg"<<"*.mp3"<<"*.wav"<<"*.aif"<<"*.iff"<<"*.m3u"<<"*.m4a"<<"*.mid"<<"*.mpa"<<"*.ra"<<"*.wma";
-  videoFilter <<"*.3g2"<<"*.3gp"<<"*.asf"<<"*.asx"<<"*.avi"<<"*.flv"<<"*.m4v"<<"*.mov"<<"*.mp4"<<"*.mpg"<<"*.rm"<<"*.srt"<<"*.swf"<<"*.vob"<<"*.wmv";
-  pictureFilter <<"*.bmp"<<"*.dds"<<"*.gif"<<"*.jpg"<<"*.png"<<"*.psd"<<"*.thm"<<"*.tif"<<"*.tiff"<<"*.ai"<<"*.eps"<<"*.ps"<<"*.svg"<<"*.ico";
-  docsFilter << "*.txt"<<"*.rtf"<<"*.doc"<<"*.docx"<<"*.odf"<<"*.pdf";*/
+
   //initialize the desktop bar items
   initializeDesktop();
   //setup the directory watcher
+  QString fav = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list";
+  if(!QFile::exists(fav)){ QProcess::execute("touch \""+fav+"\""); }
   watcher = new QFileSystemWatcher(this);
-  if(!desktopPath.isEmpty()){ 
-    watcher->addPath(desktopPath);
-    watcher->addPath(QDir::homePath()+"/.lumina/favorites");
-  }
-  connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(desktopChanged()) );
-  QTimer::singleShot(1,this, SLOT(desktopChanged()) ); //make sure to load it the first time
+    watcher->addPath( fav );
+  connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(filechanged(QString)) );
+  QTimer::singleShot(1,this, SLOT(updateFiles()) ); //make sure to load it the first time
   QTimer::singleShot(0,this, SLOT(OrientationChange()) ); //adjust sizes/layout
-  connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(desktopChanged()) );
+  connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateFiles()) );
 }
 
 LDeskBarPlugin::~LDeskBarPlugin(){
-  if(!desktopPath.isEmpty()){
-    watcher->removePath(desktopPath);
-    disconnect(watcher);
-  }
-  delete watcher;
-  
 }
 
 // =======================
@@ -107,23 +87,6 @@ QAction* LDeskBarPlugin::newAction(QString filepath, QString name, QIcon icon){
   return act;	 
 }
 
-/*void LDeskBarPlugin::updateMenu(QMenu* menu, QFileInfoList files, bool trim){
-  menu->clear();
-  //re-create the menu (since it is hidden from view)
-  QStringList filevals;
-  for(int i=0; i<files.length(); i++){
-    qDebug() << "New Menu Item:" << files[i].fileName();
-    if(trim){ totals.removeAll(files[i]); }
-    filevals << files[i].fileName()+"::::"+files[i].canonicalFilePath();
-    //menu->addAction( newAction( files[i].canonicalFilePath(), files[i].fileName(), "") );
-  }
-  //Now sort the list by file name
-  filevals.sort();
-  for(int i=0; i<filevals.length(); i++){
-    menu->addAction( newAction( filevals[i].section("::::",1,1), filevals[i].section("::::",0,0), "") );
-  }
-}*/
-
 // =======================
 //     PRIVATE SLOTS
 // =======================
@@ -133,14 +96,13 @@ void LDeskBarPlugin::ActionTriggered(QAction* act){
  qDebug() << "Open File:" << cmd;
  LSession::LaunchApplication(cmd);
 }
-
-void LDeskBarPlugin::desktopChanged(){
-  QStringList newfavs = LUtils::listFavorites();
-  if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
-  favs = newfavs;
-  homefiles = LSession::handle()->DesktopFiles();
-  lastHomeUpdate = QDateTime::currentDateTime();
-  QStringList favitems = favs;
+void LDeskBarPlugin::filechanged(QString file){
+  updateFiles();
+  if(!watcher->files().contains(file)){ watcher->addPath(file); } //make sure the file does not get removed from the watcher
+}
+void LDeskBarPlugin::updateFiles(){
+  QFileInfoList homefiles = LSession::handle()->DesktopFiles();
+  QStringList favitems = LUtils::listFavorites();
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
     for(int i=0; i<homefiles.length(); i++){
       QString type;
@@ -218,7 +180,6 @@ void LDeskBarPlugin::desktopChanged(){
       fileB->setMenu(fileM);	    
     }
     connect(fileB->menu(), SIGNAL(aboutToHide()), this, SIGNAL(MenuClosed()));
- } //end of check for if updates are needed
 
   //Setup the visibility of the buttons
   appB->setVisible( !appM->isEmpty() );

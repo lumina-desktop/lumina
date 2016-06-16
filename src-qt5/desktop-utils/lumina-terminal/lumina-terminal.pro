@@ -17,7 +17,7 @@ SOURCES	+= main.cpp \
 		TtyProcess.cpp
 
 
-LIBS += -lLuminaUtils
+LIBS += -lLuminaUtils -lncurses
 
 
 DEPENDPATH	+= ../../libLumina

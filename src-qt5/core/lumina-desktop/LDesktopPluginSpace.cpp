@@ -113,7 +113,9 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     //No previous location - need to calculate initial geom
     QSize sz = plug->defaultPluginSize(); //in grid coordinates
     geom.setSize(sz);
-    geom = findOpenSpot(geom.width(), geom.height() );
+    //if an applauncher - add from top-left, otherwise add in from bottom-right
+    if(plugID.startsWith("applauncher")){ geom = findOpenSpot(geom.width(), geom.height() ); }
+    else{ geom = findOpenSpot(geom.width(), geom.height(), RoundUp(this->height()/GRIDSIZE), RoundUp(this->width()/GRIDSIZE), true); }
   }else if(!ValidGeometry(plugID, gridToGeom(geom)) ){
     //Find a new location for the plugin (saved location is invalid)
     geom = findOpenSpot(geom.width(), geom.height(), geom.y(), geom.x(), false); //try to get it within the same general area first

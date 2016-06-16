@@ -24,6 +24,10 @@ QStackedWidget .QWidget{
   color: %%TEXTCOLOR%%;
   border: none;
 }
+/* Transparency does not work on main pages within tabwidgets*/
+QTabWidget QStackedWidget .QWidget{
+  background: %%ALTBASECOLOR%%;
+}
 QTabWidget{
   background: %%ALTBASECOLOR%%;
   color: %%TEXTCOLOR%%;
