@@ -85,8 +85,8 @@ TRANSLATIONS =  i18n/lumina-screenshot_af.ts \
                 i18n/lumina-screenshot_zh_TW.ts \
                 i18n/lumina-screenshot_zu.ts
 
-dotrans.path=$${L_SHAREDIR}/Lumina-DE/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/Lumina-DE/i18n/
+dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-screenshot.desktop
 desktop.path=$${L_SHAREDIR}/applications/
