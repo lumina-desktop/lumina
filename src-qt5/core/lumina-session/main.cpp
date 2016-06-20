@@ -29,6 +29,14 @@ int main(int argc, char ** argv)
       qDebug() << "Lumina does not appear to be installed correctly. Cannot find: " << LOS::LuminaShare();
       return 1;
     }
+    //Start X11 if needed
+    QString disp = QString(getenv("DISPLAY")).simplified();
+    if(disp.isEmpty()){
+      //No X session found. Go ahead and re-init this binary within an xinit call
+      QStringList args; args << QCoreApplication::applicationFilePath();
+      if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
+      return QProcess::execute("xinit", args);
+    }
     //Setup any initialization values
     LTHEME::LoadCustomEnvSettings();
     LXDG::setEnvironmentVars();
@@ -37,7 +45,7 @@ int main(int argc, char ** argv)
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Check for any missing user config files
     
-    //Start X11 if needed
+
 
     //Configure X11 monitors if needed
     if(LUtils::isValidBinary("lumina-xconfig")){ 
