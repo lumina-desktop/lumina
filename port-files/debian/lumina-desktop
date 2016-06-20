@@ -6,4 +6,4 @@ if test -f /usr/bin/qt5ct && test ${LUMINA_USE_QT5CT} = TRUE; then
 	export QT_QPA_PLATFORMTHEME=qt5ct
 fi
 
-/usr/bin/Lumina-DE.real
+/usr/bin/lumina-desktop.real

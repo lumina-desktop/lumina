@@ -20,7 +20,7 @@ get_last_rev_git()
 }
 
 if [ -z "$1" ] ; then
-   echo "Usage: ./mkports.sh <outdir>"
+   echo "Usage: ./mkports-freebsd.sh <outdir>"
    exit 1
 fi
 
@@ -46,13 +46,13 @@ REV=`get_last_rev_git "."`
 # Make the dist files
 rm ${distdir}/lumina*.tar.bz2 2>/dev/null
 echo "Creating lumina dist file for version: $REV"
-cd ..
+cd ../..
 tar cvjf ${distdir}/lumina-${REV}.tar.bz2 --exclude .git --exclude Artwork lumina 2>/dev/null
-cd lumina
+cd lumina/port-files
 
 # Copy ports files
 rm -rf ${portsdir}/x11/lumina 2>/dev/null
-cp -r port-files ${portsdir}/x11/lumina
+cp -r FreeBSD ${portsdir}/x11/lumina
 
 # Set the version numbers
 sed -i '' "s|CHGVERSION|${REV}|g" ${portsdir}/x11/lumina/Makefile
