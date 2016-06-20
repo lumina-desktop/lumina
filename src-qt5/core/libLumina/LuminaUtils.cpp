@@ -269,7 +269,9 @@ QStringList LUtils::imageExtensions(bool wildcards){
       if(!QFile::exists(LOS::LuminaShare()+"i18n/"+appname+"_" + langCode + ".qm") && langCode!="en_US" ){
         langCode.truncate( langCode.indexOf("_") );
       }
-      if( cTrans->load( appname+QString("_") + langCode, LOS::LuminaShare()+"i18n/" ) ){
+      QString filename = appname+"_"+langCode+".qm";
+      //qDebug() << "FileName:" << filename << "Dir:" << LOS::LuminaShare()+"i18n/";
+      if( cTrans->load( filename, LOS::LuminaShare()+"i18n/" ) ){
         app->installTranslator( cTrans );
       }else{
 	//Translator could not be loaded for some reason
