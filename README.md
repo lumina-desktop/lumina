@@ -9,7 +9,7 @@ For additional information about the project, please browse the official website
 Description
 =====
 
-Lumina-DE is a lightweight, BSD licensed desktop environment designed specifically for use on FreeBSD (although it should be easily portable to other Unix-like OS's as well).
+The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
 Latest Stable Versions
 ----
@@ -60,4 +60,3 @@ How to build from source
 5) Run "make install" to install the Lumina desktop on your local system (requires admin/root privileges usually)
 
 6-optional) Run "make distclean" to clean up all the build files in the Lumina source tree. (go back to step 3 later)
-
