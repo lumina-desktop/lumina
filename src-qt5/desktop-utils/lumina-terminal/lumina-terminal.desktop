@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=lumina-terminal %F
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+Name=Lumina Terminal
+Comment=Dropdown 

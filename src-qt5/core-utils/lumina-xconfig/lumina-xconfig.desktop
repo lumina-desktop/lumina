@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=lumina-xconfig
+Icon=video-display
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+Name=Lumina Screen Configuration
+Comment=Setup monitors and screens
