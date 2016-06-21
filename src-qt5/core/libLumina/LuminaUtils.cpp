@@ -851,7 +851,23 @@ void LUtils::LoadSystemDefaults(bool skipOS){
   if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
-  //LUtils::writeFile(setdir+"/lumina-open.conf", lopenset, true);
+  
+  //Now run any extra config scripts or utilities as needed
+  tmp = sysDefaults.filter("usersetup_run");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("usersetup.run"); }
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
+    if(var.contains(".")){ var.replace(".","_"); } 
+    //Now parse the variable and put the value in the proper file
+    if(var=="usersetup_run"){
+      qDebug() << "Running user setup command:" << val;
+      QProcess::execute(val);
+    }
+  }
+   
 }
 
 bool LUtils::checkUserFiles(QString lastversion){
