@@ -272,19 +272,21 @@ QStringList LTHEME::cursorInformation(QString name){
   return out;
 }	
 
-QStringList LTHEME::CustomEnvSettings(){ //view all the key=value settings
-  static QStringList info = QStringList();
-  static QDateTime lastcheck = QDateTime();
-  if(lastcheck.isNull() || lastcheck < QFileInfo(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf").lastModified()){
-    lastcheck = QDateTime::currentDateTime();
-    info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf");
+QStringList LTHEME::CustomEnvSettings(bool useronly){ //view all the key=value settings
+  QStringList newinfo;
+  if(!useronly){
+    QStringList sysfiles;  sysfiles << L_ETCDIR+"/lumina_environment.conf" << LOS::LuminaShare()+"lumina_environment.conf";
+    for(int i=0; i<sysfiles.length() && newinfo.isEmpty(); i++){ 
+      newinfo << LUtils::readFile(sysfiles[i]);
+    }
   }
-  return info;
+  newinfo << LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf");
+  return newinfo;
 }
 
 void LTHEME::LoadCustomEnvSettings(){
   //will push the custom settings into the environment (recommended before loading the initial QApplication)
-  QStringList info = LTHEME::CustomEnvSettings();
+  QStringList info = LTHEME::CustomEnvSettings(false); //all settings
   if(info.isEmpty()){
     //Ensure the file exists, and create it otherwise;
     if(!QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/envsettings.conf")){
@@ -304,7 +306,7 @@ void LTHEME::LoadCustomEnvSettings(){
 
 bool LTHEME::setCustomEnvSetting(QString var, QString val){ 
   //variable/value pair (use an empty val to clear it)
-  QStringList info = LTHEME::CustomEnvSettings();
+  QStringList info = LTHEME::CustomEnvSettings(true); //user only
   bool changed = false;
   if(!info.filter(var+"=").isEmpty()){
     for(int i=0; i<info.length(); i++){
@@ -321,7 +323,7 @@ bool LTHEME::setCustomEnvSetting(QString var, QString val){
 
 QString LTHEME::readCustomEnvSetting(QString var){
   QStringList info = LTHEME::CustomEnvSettings().filter(var+"=");
-  for(int i=0; i<info.length(); i++){
+  for(int i=info.length()-1; i>=0; i--){
     if(info[i].startsWith(var+"=")){
       return info[i].section("=",1,100).simplified();
     }

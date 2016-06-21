@@ -50,7 +50,7 @@ public:
   static QStringList cursorInformation(QString name); //returns: [Name, Comment, Sample Image File]
   
   //Environment settings
-  static QStringList CustomEnvSettings(); //view all the key=value settings
+  static QStringList CustomEnvSettings(bool useronly = false); //view all the key=value settings
   static void LoadCustomEnvSettings(); //will push the custom settings into the environment (recommended before loading the initial QApplication)
   static bool setCustomEnvSetting(QString var, QString val); //variable/value pair (use an empty val to clear it)
   static QString readCustomEnvSetting(QString var);
