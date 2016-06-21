@@ -57,7 +57,7 @@ session.screen0.focusSameHead:	true
 session.screen0.focusModel:	ClickFocus
 session.screen0.workspacewarping:	true
 session.screen0.maxDisableResize:	false
-session.screen0.autoRaise:	true
+session.screen0.autoRaise:	false
 session.screen0.allowRemoteActions:	false
 session.screen0.tooltipDelay:	500
 session.screen0.colPlacementDirection:	TopToBottom
