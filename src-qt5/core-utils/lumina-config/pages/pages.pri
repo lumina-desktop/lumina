@@ -1,5 +1,6 @@
 
 HEADERS	+= 	$${PWD}/getPage.h \
+		$${PWD}/PageWidget.h \
 		$${PWD}/page_main.h
 #		$${PWD}/page_autostart.h \
 #		$${PWD}/page_defaultapps.h \

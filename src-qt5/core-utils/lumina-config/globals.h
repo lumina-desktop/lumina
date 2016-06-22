@@ -12,6 +12,7 @@
 #include <QList>
 #include <QWidget>
 #include <QDesktopWidget>
+#include <QMainWindow>
 
 //Now the Lumina Library classes
 #include <LuminaXDG.h>

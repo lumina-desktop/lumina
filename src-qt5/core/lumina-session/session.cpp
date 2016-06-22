@@ -69,10 +69,11 @@ void LSession::start(){
   // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
   //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
   //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
+  //Compositing manager
+  if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
   //Desktop Next
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
-  //Compositing manager
-  if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+
 }

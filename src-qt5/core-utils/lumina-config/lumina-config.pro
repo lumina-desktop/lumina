@@ -12,6 +12,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
 	   mainUI.cpp \
+	   mainWindow.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
 	   ThemeDialog.cpp \
@@ -19,6 +20,7 @@ SOURCES += main.cpp \
 	   PanelWidget.cpp
 
 HEADERS  += mainUI.h \
+		mainWindow.h \
 		LPlugins.h \
 		KeyCatch.h \
 		AppDialog.h \
@@ -28,6 +30,7 @@ HEADERS  += mainUI.h \
 		PanelWidget.h
 
 FORMS    += mainUI.ui \
+		mainWindow.ui \
 		KeyCatch.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
@@ -35,6 +38,7 @@ FORMS    += mainUI.ui \
 		GetPluginDialog.ui \
 		PanelWidget.ui
 
+include("pages/pages.pri")
 
 # RESOURCES+= lumina-config.qrc
 

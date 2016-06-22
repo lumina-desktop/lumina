@@ -4,30 +4,28 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifndef _LUMINA_CONFIG_PAGE_MAIN_H
-#define _LUMINA_CONFIG_PAGE_MAIN_H
-#include "../globals.h"
-#include "PageWidget.h"
+#ifndef _LUMINA_CONFIG_MAIN_WINDOW_H
+#define _LUMINA_CONFIG_MAIN_WINDOW_H
+#include "globals.h"
 
 namespace Ui{
-	class page_main;
+	class mainWindow;
 };
 
-class page_main : public PageWidget{
+class mainWindow : public QMainWindow{
 	Q_OBJECT
 public:
-	page_main(QWidget *parent);
-	~page_main();
+	mainWindow();
+	~mainWindow();
 
 public slots:
-	void SaveSettings();
-	void LoadSettings(int screennum);
-	void updateIcons();
+	void slotSingleInstance();
+	void setupIcons();
 
 private:
-	Ui::page_main *ui;
+	Ui::mainWindow *ui;
 
 private slots:
-	
+
 };
 #endif

@@ -43,11 +43,11 @@ public slots:
 	//User requested to save any pending changes
 	virtual void SaveSettings(){} 
 	virtual void LoadSettings(int){} //INPUT: Screen number (0+)
-	virtual void updateIcons();
+	virtual void updateIcons(){}
 
 	//Simplification function for widget connections
 	void settingChanged(){
-	  emit HasPendingChanged(true);
+	  emit HasPendingChanges(true);
 	}
 };
 
