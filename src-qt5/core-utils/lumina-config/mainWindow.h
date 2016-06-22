@@ -24,8 +24,15 @@ public slots:
 
 private:
 	Ui::mainWindow *ui;
+	QString cpage; //current page
+
+	void changePage(QString id);
 
 private slots:
+	//Page signals
+	void pageCanSave(bool);
+	void pageSetTitle(QString);
+	void page_change(QString);
 
 };
 #endif

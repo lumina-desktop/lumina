@@ -31,6 +31,8 @@ public:
 	PageWidget(QWidget *parent) : QWidget(parent){}
 	~PageWidget(){}
 		
+	virtual bool needsScreenSelector(){ return false; } //change this to true for pages which load/set options on a per-screen basis
+
 signals:
 	//emit this when the page has changes which are waiting to be saved
 	void HasPendingChanges(bool);
