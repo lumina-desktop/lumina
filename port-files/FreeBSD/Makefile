@@ -13,13 +13,13 @@ COMMENT=	Lumina Desktop Environment
 
 LICENSE=	BSD3CLAUSE
 
-RUN_DEPENDS=	xorg>=0:${PORTSDIR}/x11/xorg \
+RUN_DEPENDS=	xorg>=0:${PORTSDIR}/x11/xorg-minimal \
 		fluxbox>=0:${PORTSDIR}/x11-wm/fluxbox \
-		fluxbox-tenr-styles-pack>=0:${PORTSDIR}/x11-themes/fluxbox-tenr-styles-pack \
 		kde4-icons-oxygen>=0:${PORTSDIR}/x11-themes/kde4-icons-oxygen \
 		xscreensaver:${PORTSDIR}/x11/xscreensaver \
-		xscreensaver-demo:${PORTSDIR}/x11/xscreensaver \
 		xbrightness:${PORTSDIR}/x11/xbrightness \
+		xcompmgr:$PORTSDIR}/x11-wm/xcompmgr
+		xrandr:${PORTSDIR}/x11/xrandr \
 		numlockx:${PORTSDIR}/x11/numlockx
 
 CONFLICTS=      lumina-devel-0*
@@ -38,10 +38,10 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:${PORTSDIR}/multimedia/gstreamer1-plugi
 MAKE_JOBS_UNSAFE=yes
 
 USE_XORG=	x11 xdamage
-USE_XCB=		x11extras wm
+USE_XCB=	x11extras wm
 USE_LDCONFIG=	yes
 USE_QT5=	core gui network svg multimedia imageformats \
-		buildtools x11extras concurrent
+		buildtools_build x11extras concurrent
 USES=		desktop-file-utils qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	pcbsd
