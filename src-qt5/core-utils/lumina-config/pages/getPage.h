@@ -26,8 +26,8 @@ static QList<PAGEINFO> KnownPages(){
   // Valid Groups: ["appearance", "interface", "session", "apps"]
   QList<PAGEINFO> list;
   //Reminder: <ID>, <name>, <title>, <icon>, <comment>, <category>, <server subsytem list>, <search tags>
-  
-	return list;
+  list << PageInfo("wallpapers", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "theme");
+  return list;
 }
 
 //Add any sub-pages here

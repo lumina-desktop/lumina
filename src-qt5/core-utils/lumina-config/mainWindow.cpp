@@ -15,6 +15,7 @@
 //=============
 mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   ui->setupUi(this);
+  setupIcons();
   changePage(""); //load the default main page
 }
 
@@ -31,6 +32,7 @@ void mainWindow::slotSingleInstance(){
 
 void mainWindow::setupIcons(){
   ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
+  ui->actionBack->setIcon( LXDG::findIcon("go-previous-view","") );
 }
 
 //=============
@@ -75,3 +77,15 @@ void mainWindow::page_change(QString id){
   }
   changePage(id);
 }
+
+void mainWindow::on_actionSave_triggered(){
+  pageCanSave(false); //disable for the moment (page might re-enable later)
+  static_cast<PageWidget*>(this->centralWidget())->SaveSettings();
+
+}
+
+void mainWindow::on_actionBack_triggered(){
+  if(cpage.isEmpty()){ this->close(); } //main menu - go ahead and close it
+  else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
+}
+

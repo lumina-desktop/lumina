@@ -33,6 +33,9 @@ private slots:
 	void pageCanSave(bool);
 	void pageSetTitle(QString);
 	void page_change(QString);
+	//Toolbar actions
+	void on_actionSave_triggered();
+	void on_actionBack_triggered();
 
 };
 #endif
