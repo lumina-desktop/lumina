@@ -366,7 +366,7 @@
            </property>
            <property name="icon">
             <iconset resource="lumina-info.qrc">
-             <normaloff>:/Images/pcbsd_logo.png</normaloff>:/Images/pcbsd_logo.png</iconset>
+             <normaloff>:/Images/trueos_logo.png</normaloff>:/Images/trueos_logo.png</iconset>
            </property>
           </item>
           <item>
