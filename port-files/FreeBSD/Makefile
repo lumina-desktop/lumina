@@ -27,7 +27,7 @@ CONFLICTS=      lumina-devel-0*
 OPTIONS_DEFINE=	MULTIMEDIA PCBSD
 OPTIONS_DEFAULT=	MULTIMEDIA
 MULTIMEDIA_DESC=	Install multimedia support backend (gstreamer)
-PCBSD_DESC=	Use the PC-BSD system interface settings.
+PCBSD_DESC=	Use the TrueOS system interface settings.
 
 .include <bsd.port.options.mk>
 

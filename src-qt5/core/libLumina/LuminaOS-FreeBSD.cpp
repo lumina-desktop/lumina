@@ -30,7 +30,7 @@ QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.d
 QStringList LOS::RSSFeeds(){ 
   QStringList feeds;
     feeds << "FreeBSD News Feed::::https://www.freebsd.org/news/rss.xml";
-    feeds << "PC-BSD News Feed::::https://blog.pcbsd.org/?feed=rss2";
+    feeds << "TrueOS News Feed::::https://blog.pcbsd.org/?feed=rss2";
   return feeds;
  } 
 
@@ -90,9 +90,9 @@ void LOS::setScreenBrightness(int percent){
   else if(percent>100){ percent=100; }
   //Run the command(s)
   bool success = false;
-  // - try hardware setting first (PC-BSD || or intel_backlight)
+  // - try hardware setting first (TrueOS || or intel_backlight)
   if( LUtils::isValidBinary("pc-sysconfig") ){
-    //Use PC-BSD tool (direct sysctl control)
+    //Use TrueOS tool (direct sysctl control)
     QString ret = LUtils::getCmdOutput("pc-sysconfig", QStringList() <<"setscreenbrightness "+QString::number(percent)).join("");
     success = ret.toLower().contains("success");
     qDebug() << "Set hardware brightness:" << percent << success;
@@ -216,7 +216,7 @@ void LOS::systemRestart(){ //start reboot sequence
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  //This will only function on PC-BSD 
+  //This will only function on TrueOS 
   //(permissions issues on standard FreeBSD unless setup a special way)
   bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
   if(ok){

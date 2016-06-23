@@ -356,7 +356,7 @@
           </property>
           <item>
            <property name="text">
-            <string notr="true">PC-BSD</string>
+            <string notr="true">TrueOS</string>
            </property>
            <property name="toolTip">
             <string notr="true">www.pcbsd.org</string>

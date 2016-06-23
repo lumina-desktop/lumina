@@ -45,7 +45,7 @@ Additional Binaries/Packages (runtime):
 ====  OS-SPECIFIC UTILITIES =====
  =======================
  
-=== FreeBSD/PC-BSD ===
+=== FreeBSD/TrueOS ===
 Required Tools
   xbrightness	(x11/xbrightness) (Screen Brightness Control)
 

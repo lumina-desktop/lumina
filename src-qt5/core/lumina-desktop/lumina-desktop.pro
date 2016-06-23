@@ -87,7 +87,7 @@ defaults.path = $${L_SHAREDIR}/lumina-desktop/
 
 conf.path = $${L_ETCDIR}
 
-#Now do any PC-BSD defaults (if set)
+#Now do any TrueOS defaults (if set)
 PCBSD{
   conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
   defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
