@@ -52,7 +52,7 @@ How to build from source
   * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
   * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
   * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
-  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the pcbsd/lumina-i18n repo instead.
+  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the trueos/lumina-i18n repo instead.
 
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
