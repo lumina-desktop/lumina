@@ -23,13 +23,13 @@ NOTE: Starting with version 0.8.4, you may also find packaged versions of the so
 
 Translations
 ----
-All the translation files for Lumina are available through the PC-BSD pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
+All the translation files for Lumina are available through the TrueOS pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
 
 Translation Website URL: http://translate.pcbsd.org/
 
 How to file bug reports or feature requests
 ----
-Please submit any bug reports or feature requests through the PC-BSD bug tracker, as this ensures that your submissions will be addressed in a timely manner (developers on GitHub may also create a ticket through the GitHub issues tracker, although it is not as feature-full as the PC-BSD bug tracker). If you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
+Please submit any bug reports or feature requests through the TrueOS bug tracker, as this ensures that your submissions will be addressed in a timely manner (developers on GitHub may also create a ticket through the GitHub issues tracker, although it is not as feature-full as the TrueOS bug tracker). If you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
 
 Bug Tracker: https://bugs.pcbsd.org/projects/pcbsd
 
@@ -52,7 +52,7 @@ How to build from source
   * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
   * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
   * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
-  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the pcbsd/lumina-i18n repo instead.
+  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the trueos/lumina-i18n repo instead.
 
 
 4) Run "make" to compile all the Lumina projects (can be done as user)

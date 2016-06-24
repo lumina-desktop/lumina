@@ -94,7 +94,8 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   if(DEBUG){ qDebug() << " - Keyboard Shortcuts"; }
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
-  
+  togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
+
   //Finish loading the interface
   workThread->start();
   if(DEBUG){ qDebug() << " - Icons"; }
@@ -240,7 +241,7 @@ void MainUI::setupConnections(){
   connect(tabBar, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
   connect(ui->menuBookmarks, SIGNAL(triggered(QAction*)), this, SLOT(goToBookmark(QAction*)) );
   connect(ui->menuExternal_Devices, SIGNAL(triggered(QAction*)), this, SLOT(goToDevice(QAction*)) );
-	
+
   //Radio Buttons
   connect(radio_view_details, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
   connect(radio_view_list, SIGNAL(toggled(bool)), this, SLOT(viewModeChanged(bool)) );
@@ -250,6 +251,15 @@ void MainUI::setupConnections(){
   //Special Keyboard Shortcuts
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
+  connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
+}
+
+void MainUI::togglehiddenfiles()
+{
+    //change setChecked to inverse value
+    ui->actionView_Hidden_Files->setChecked( !settings->value("showhidden", true).toBool() );
+    // then trigger function
+    on_actionView_Hidden_Files_triggered();
 }
 
 void MainUI::loadSettings(){
