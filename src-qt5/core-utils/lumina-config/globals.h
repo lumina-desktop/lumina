@@ -12,8 +12,15 @@
 #include <QList>
 #include <QWidget>
 #include <QDesktopWidget>
+#include <QScreen>
 #include <QMainWindow>
 #include <QTreeWidgetItem>
+#include <QToolButton>
+#include <QSettings>
+#include <QFileDialog>
+#include <QColorDialog>
+#include <QMessageBox>
+
 //Now the Lumina Library classes
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>

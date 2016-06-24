@@ -21,10 +21,12 @@ public:
 public slots:
 	void slotSingleInstance();
 	void setupIcons();
+	void loadMonitors();
 
 private:
 	Ui::mainWindow *ui;
 	QString cpage; //current page
+
 
 	void changePage(QString id);
 
@@ -32,10 +34,11 @@ private slots:
 	//Page signals
 	void pageCanSave(bool);
 	void pageSetTitle(QString);
-	void page_change(QString);
+	bool page_change(QString);
 	//Toolbar actions
 	void on_actionSave_triggered();
 	void on_actionBack_triggered();
+        void changeMonitor(QAction*);
 
 };
 #endif

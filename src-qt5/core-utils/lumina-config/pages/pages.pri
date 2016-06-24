@@ -1,7 +1,8 @@
 
 HEADERS	+= 	$${PWD}/getPage.h \
 		$${PWD}/PageWidget.h \
-		$${PWD}/page_main.h
+		$${PWD}/page_main.h \
+		$${PWD}/page_wallpaper.h
 #		$${PWD}/page_autostart.h \
 #		$${PWD}/page_defaultapps.h \
 #		$${PWD}/page_fluxbox_keys.h \
@@ -12,10 +13,10 @@ HEADERS	+= 	$${PWD}/getPage.h \
 #		$${PWD}/page_session_locale.h \
 #		$${PWD}/page_session_options.h \
 #		$${PWD}/page_theme.h \
-#		$${PWD}/page_wallpaper.h
-		
 
-SOURCES	+=	$${PWD}/page_main.cpp
+
+SOURCES	+=	$${PWD}/page_main.cpp \
+		$${PWD}/page_wallpaper.cpp
 #		$${PWD}/page_autostart.cpp \
 #		$${PWD}/page_defaultapps.cpp \
 #		$${PWD}/page_fluxbox_keys.cpp \
@@ -26,9 +27,10 @@ SOURCES	+=	$${PWD}/page_main.cpp
 #		$${PWD}/page_session_locale.cpp \
 #		$${PWD}/page_session_options.cpp \
 #		$${PWD}/page_theme.cpp \
-#		$${PWD}/page_wallpaper.cpp
+
 		
-FORMS	+=	$${PWD}/page_main.ui
+FORMS	+=	$${PWD}/page_main.ui \
+		$${PWD}/page_wallpaper.ui
 #		$${PWD}/page_autostart.ui \
 #		$${PWD}/page_defaultapps.ui \
 #		$${PWD}/page_fluxbox_keys.ui \
@@ -39,4 +41,3 @@ FORMS	+=	$${PWD}/page_main.ui
 #		$${PWD}/page_session_locale.ui \
 #		$${PWD}/page_session_options.ui \
 #		$${PWD}/page_theme.ui \
-#		$${PWD}/page_wallpaper.ui

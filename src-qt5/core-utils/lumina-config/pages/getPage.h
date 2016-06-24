@@ -26,16 +26,17 @@ static QList<PAGEINFO> KnownPages(){
   // Valid Groups: ["appearance", "interface", "session", "apps"]
   QList<PAGEINFO> list;
   //Reminder: <ID>, <name>, <title>, <icon>, <comment>, <category>, <server subsytem list>, <search tags>
-  list << PageInfo("wallpapers", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "theme");
+  list << PageInfo("wallpaper", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "theme");
   return list;
 }
 
 //Add any sub-pages here
 #include "page_main.h"
+#include "page_wallpaper.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
-  //if(id=="page_beadm"){ return new beadm_page(parent, core); }
+  if(id=="wallpaper"){ return new page_wallpaper(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }
