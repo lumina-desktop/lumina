@@ -26,5 +26,6 @@
 #include <LuminaUtils.h>
 #include <LuminaX11.h>
 #include <LuminaOS.h>
+#include <LuminaThemes.h>
 
 #endif
