@@ -85,7 +85,7 @@ void mainWindow::changePage(QString id){
   //Now load the new page
   page->LoadSettings(ui->actionMonitor->whatsThis().toInt()); //need to make this show the current screen as needed
   //Now update this UI a bit based on page settings
-  ui->actionMonitor->setVisible( page->needsScreenSelector() );// && ui->actionMonitor->menu()->actions().length()>1 );
+  ui->actionMonitor->setVisible( page->needsScreenSelector() && ui->actionMonitor->menu()->actions().length()>1 );
 
   this->showNormal();
 }
