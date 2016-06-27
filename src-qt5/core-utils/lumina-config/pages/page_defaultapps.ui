@@ -15,25 +15,28 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <item>
     <widget class="QTabWidget" name="tabWidget_apps">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="tab_defaults">
       <attribute name="title">
-       <string>File Defaults</string>
+       <string>Advanced</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="leftMargin">
@@ -160,9 +163,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_auto">
       <attribute name="title">
-       <string>Common Applications</string>
+       <string>Basic Settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
