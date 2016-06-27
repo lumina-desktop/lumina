@@ -29,7 +29,7 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("wallpaper", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "image");
   list << PageInfo("theme", QObject::tr("Change Desktop Theme"), QObject::tr("Theme Settings"), "preferences-desktop-theme",QObject::tr("Change interface fonts and colors"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "theme" << "plugins");
   list << PageInfo("autostart", QObject::tr("Startup Services and Applications"), QObject::tr("Startup Settings"), "preferences-system-session-services",QObject::tr("Automatically start applications or services"), "session", QStringList(), QStringList() << "apps" << "autostart" << "services" << "xdg" << "startup" << "session");
-  list << PageInfo("defaultapps", QObject::tr("Default Applications for File Type"), QObject::tr("Mimetype Settings"), "preferences-desktop-filetype-association",QObject::tr("Change default applications"), "apps", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
+  list << PageInfo("defaultapps", QObject::tr("Default Applications for File Type"), QObject::tr("Mimetype Settings"), "preferences-desktop-filetype-association",QObject::tr("Change default applications"), "session", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
   return list;
 }
 
