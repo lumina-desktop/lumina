@@ -220,7 +220,6 @@ void MainUI::updateTab(QString file){
   //qDebug() << "Update Tab:" << file << cur << changes;
   ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
   ui->actionSave_File->setEnabled(changes);
-  ui->actionSave_File_As->setEnabled(changes);
   this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
 }
 
@@ -230,7 +229,6 @@ void MainUI::tabChanged(){
   if(cur==0){ return; } //should never happen though
   bool changes = cur->hasChange();
   ui->actionSave_File->setEnabled(changes);
-  ui->actionSave_File_As->setEnabled(changes);
   this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
   if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ ui->tabWidget->currentWidget()->setFocus(); }
 }
