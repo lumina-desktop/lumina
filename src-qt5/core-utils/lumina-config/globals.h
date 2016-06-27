@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QMessageBox>
+#include <QShortcut>
 
 //Now the Lumina Library classes
 #include <LuminaXDG.h>

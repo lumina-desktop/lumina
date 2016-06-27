@@ -66,8 +66,8 @@
    <property name="statusTip">
     <string>Back to overall settings</string>
    </property>
-   <property name="shortcut">
-    <string>Esc</string>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionMonitor">

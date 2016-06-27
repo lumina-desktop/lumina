@@ -20,6 +20,8 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   QWidget *tmp = new QWidget(this);
     tmp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   ui->toolBar->insertWidget(ui->actionSave, tmp); //after the save button
+  backShortcut = new QShortcut(Qt::Key_Escape, this);
+    connect(backShortcut, SIGNAL(activated()), this, SLOT(on_actionBack_triggered()) );
   setupIcons();
   loadMonitors();
   changePage(""); //load the default main page
@@ -37,6 +39,7 @@ void mainWindow::slotSingleInstance(){
 }
 
 void mainWindow::setupIcons(){
+  this->setWindowIcon( LXDG::findIcon("preferences-desktop") );
   ui->actionSave->setIcon( LXDG::findIcon("document-save","") );
   ui->actionBack->setIcon( LXDG::findIcon("go-previous-view","") );
   ui->actionMonitor->setIcon(LXDG::findIcon("preferences-desktop-display","") );
@@ -81,12 +84,14 @@ void mainWindow::changePage(QString id){
     connect(page, SIGNAL(HasPendingChanges(bool)), this, SLOT(pageCanSave(bool)) );
     connect(page, SIGNAL(ChangePageTitle(QString)), this, SLOT(pageSetTitle(QString)) );
     connect(page, SIGNAL(ChangePage(QString)), this, SLOT(page_change(QString)) );
+    page->setFocus();
+    ui->toolBar->setVisible( !cpage.isEmpty() );
   }
   //Now load the new page
   page->LoadSettings(ui->actionMonitor->whatsThis().toInt()); //need to make this show the current screen as needed
   //Now update this UI a bit based on page settings
   ui->actionMonitor->setVisible( page->needsScreenSelector() && ui->actionMonitor->menu()->actions().length()>1 );
-
+  
   this->showNormal();
 }
 //================

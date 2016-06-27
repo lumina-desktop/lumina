@@ -25,6 +25,7 @@ public slots:
 
 private:
 	Ui::mainWindow *ui;
+	QShortcut *backShortcut;
 	QString cpage; //current page
 
 

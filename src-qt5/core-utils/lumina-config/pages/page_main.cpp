@@ -84,6 +84,7 @@ void page_main::LoadSettings(int){
   INFO.clear();
   INFO = KnownPages();
   UpdateItems("");
+  ui->lineEdit->setFocus();
 }
 
 void page_main::updateIcons(){
