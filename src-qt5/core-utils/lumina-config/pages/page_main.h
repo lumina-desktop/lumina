@@ -32,5 +32,6 @@ private:
 
 private slots:
 	void itemTriggered(QTreeWidgetItem*);
+	void searchChanged(QString);
 };
 #endif

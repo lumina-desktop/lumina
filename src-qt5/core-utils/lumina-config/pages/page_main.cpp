@@ -14,6 +14,7 @@
 page_main::page_main(QWidget *parent) : PageWidget(parent), ui(new Ui::page_main()){
   ui->setupUi(this);
   connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*)) );
+  connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)) );
 }
 
 page_main::~page_main(){
@@ -36,13 +37,17 @@ void page_main::UpdateItems(QString search){
     apps->setIcon(0, LXDG::findIcon("preferences-desktop-filetype-association",""));
     apps->setText(0, tr("Application Settings"));
   //Now go through and add in the known pages for each category
+  QStringList SL = search.split(" "); //search list
   for(int i=0; i<INFO.length(); i++){
     if(!search.isEmpty() ){
       //See if this item needs to be included or not
       QStringList info; info << INFO[i].name.split(" ") << INFO[i].title.split(" ") << INFO[i].comment.split(" ") << INFO[i].search_tags;
       info.removeDuplicates(); //remove any duplicate terms/info first
-      info << search.split(" "); //add the terms we want to search for
-      if(0<info.removeDuplicates()){ continue; } //no duplicates between search terms and available info
+      bool ok = true;
+      for(int s=0; s<SL.length() && ok; s++){
+	ok = !info.filter(SL[s]).isEmpty();
+      }
+      if(!ok){ continue; } //no duplicates between search terms and available info
     }
     qDebug() << "Item Found:" << INFO[i].id << INFO[i].title;
     QTreeWidgetItem *it = new QTreeWidgetItem();
@@ -58,10 +63,10 @@ void page_main::UpdateItems(QString search){
     else{ ui->treeWidget->addTopLevelItem(it); }
   }
   //Now add the categories to the tree widget if they are non-empty
-  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); }
-  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); }
-  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); }
-  if(apps->childCount()>0){ ui->treeWidget->addTopLevelItem(apps); }
+  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); }
+  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
+  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
+  if(apps->childCount()>0){ ui->treeWidget->addTopLevelItem(apps); apps->setExpanded(true); }
 }
 
 //================
@@ -92,4 +97,8 @@ void page_main::itemTriggered(QTreeWidgetItem *it){
   }else if(!it->whatsThis(0).isEmpty()){
     emit ChangePage(it->whatsThis(0));
   }
+}
+
+void page_main::searchChanged(QString txt){
+  UpdateItems(txt.simplified());
 }

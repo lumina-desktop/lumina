@@ -22,7 +22,6 @@ SOURCES += main.cpp \
 HEADERS  += mainUI.h \
 		mainWindow.h \
 		LPlugins.h \
-		KeyCatch.h \
 		AppDialog.h \
 		ColorDialog.h \
 		ThemeDialog.h \
@@ -31,7 +30,6 @@ HEADERS  += mainUI.h \
 
 FORMS    += mainUI.ui \
 		mainWindow.ui \
-		KeyCatch.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \
@@ -45,7 +43,7 @@ include("pages/pages.pri")
 LIBS += -lLuminaUtils
 
 
-DEPENDPATH	+= ../libLumina
+DEPENDPATH	+= ../../core/libLumina
 
 TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_ar.ts \
