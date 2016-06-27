@@ -13,7 +13,9 @@
 //==========
 page_main::page_main(QWidget *parent) : PageWidget(parent), ui(new Ui::page_main()){
   ui->setupUi(this);
+  ui->treeWidget->setMouseTracking(true);
   connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*)) );
+  connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*)) );
   connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)) );
 }
 
