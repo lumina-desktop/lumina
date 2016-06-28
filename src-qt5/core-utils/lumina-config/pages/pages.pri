@@ -10,9 +10,9 @@ HEADERS	+= 	$${PWD}/getPage.h \
 		$${PWD}/page_fluxbox_settings.h \
 		$${PWD}/page_interface_desktop.h \
 		$${PWD}/page_interface_menu.h \
-		$${PWD}/page_interface_panels.h 
-#		$${PWD}/page_session_locale.h \
-#		$${PWD}/page_session_options.h \
+		$${PWD}/page_interface_panels.h \
+		$${PWD}/page_session_locale.h \
+		$${PWD}/page_session_options.h 
 
 
 SOURCES	+=	$${PWD}/page_main.cpp \
@@ -24,9 +24,9 @@ SOURCES	+=	$${PWD}/page_main.cpp \
 		$${PWD}/page_fluxbox_settings.cpp \
 		$${PWD}/page_interface_desktop.cpp \
 		$${PWD}/page_interface_menu.cpp \
-		$${PWD}/page_interface_panels.cpp 
-#		$${PWD}/page_session_locale.cpp \
-#		$${PWD}/page_session_options.cpp \
+		$${PWD}/page_interface_panels.cpp \
+		$${PWD}/page_session_locale.cpp \
+		$${PWD}/page_session_options.cpp 
 
 		
 FORMS	+=	$${PWD}/page_main.ui \

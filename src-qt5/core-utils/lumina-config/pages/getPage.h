@@ -23,7 +23,7 @@ static PAGEINFO PageInfo(QString ID, QString i_name, QString i_title, QString i_
 //List all the known pages
 // **** Add new page entries here ****
 static QList<PAGEINFO> KnownPages(){
-  // Valid Groups: ["appearance", "interface", "session", "apps"]
+  // Valid Groups: ["appearance", "interface", "session", "user"]
   QList<PAGEINFO> list;
   //Reminder: <ID>, <name>, <title>, <icon>, <comment>, <category>, <server subsytem list>, <search tags>
   list << PageInfo("wallpaper", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "image");
@@ -35,6 +35,8 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("interface-desktop", QObject::tr("Desktop Icons and Plugins"), QObject::tr("Desktop Plugins"), "preferences-desktop-icons",QObject::tr("Change what icons or tools are embedded on the desktop"), "interface", QStringList(), QStringList() << "desktop" << "plugins" << "embed" << "icons" << "utilities");
   list << PageInfo("interface-panel", QObject::tr("Floating Panels and Plugins"), QObject::tr("Panels and Plugins"), "configure-toolbars",QObject::tr("Change any floating panels and what they show"), "interface", QStringList(), QStringList() << "desktop" << "toolbar" << "panel" << "floating" << "plugins");
   list << PageInfo("interface-menu", QObject::tr("Context Menu and Plugins"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
+  list << PageInfo("session-locale", QObject::tr("Localization Options"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
+  list << PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
   return list;
 }
 
@@ -49,6 +51,8 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_interface_desktop.h"
 #include "page_interface_panels.h"
 #include "page_interface_menu.h"
+#include "page_session_locale.h"
+#include "page_session_options.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -61,6 +65,8 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="interface-desktop"){ return new page_interface_desktop(parent); }
   else if(id=="interface-panel"){ return new page_interface_panels(parent); }
   else if(id=="interface-menu"){ return new page_interface_menu(parent); }
+  else if(id=="session-locale"){ return new page_session_locale(parent); }
+  else if(id=="session-options"){ return new page_session_options(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }

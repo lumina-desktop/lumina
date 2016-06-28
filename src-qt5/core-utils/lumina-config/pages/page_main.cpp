@@ -35,9 +35,9 @@ void page_main::UpdateItems(QString search){
   QTreeWidgetItem *session = new QTreeWidgetItem();
     session->setIcon(0, LXDG::findIcon("preferences-system-session-services",""));
     session->setText(0, tr("Desktop Session Options"));
-  QTreeWidgetItem *apps = new QTreeWidgetItem();
-    apps->setIcon(0, LXDG::findIcon("preferences-desktop-filetype-association",""));
-    apps->setText(0, tr("Application Settings"));
+  QTreeWidgetItem *user = new QTreeWidgetItem();
+    user->setIcon(0, LXDG::findIcon("preferences-desktop-user",""));
+    user->setText(0, tr("User Settings"));
   //Now go through and add in the known pages for each category
   QStringList SL = search.split(" "); //search list
   for(int i=0; i<INFO.length(); i++){
@@ -51,7 +51,7 @@ void page_main::UpdateItems(QString search){
       }
       if(!ok){ continue; } //no duplicates between search terms and available info
     }
-    qDebug() << "Item Found:" << INFO[i].id << INFO[i].title;
+    //qDebug() << "Item Found:" << INFO[i].id << INFO[i].title;
     QTreeWidgetItem *it = new QTreeWidgetItem();
       it->setIcon(0, LXDG::findIcon(INFO[i].icon,"") );
       it->setText(0, INFO[i].name);
@@ -61,14 +61,14 @@ void page_main::UpdateItems(QString search){
     if(INFO[i].category=="interface"){ interface->addChild(it); }
     else if(INFO[i].category=="appearance"){ appearance->addChild(it); }
     else if(INFO[i].category=="session"){ session->addChild(it); }
-    else if(INFO[i].category=="apps"){ apps->addChild(it); }
+    else if(INFO[i].category=="user"){ user->addChild(it); }
     else{ ui->treeWidget->addTopLevelItem(it); }
   }
   //Now add the categories to the tree widget if they are non-empty
   if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); }
   if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
   if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
-  if(apps->childCount()>0){ ui->treeWidget->addTopLevelItem(apps); apps->setExpanded(true); }
+  if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); }
 }
 
 //================

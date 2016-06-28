@@ -21,6 +21,7 @@
 #include <QColorDialog>
 #include <QMessageBox>
 #include <QShortcut>
+#include <QImageReader>
 
 //Now the Lumina Library classes
 #include <LuminaXDG.h>
