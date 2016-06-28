@@ -42,7 +42,7 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_autostart.h"
 #include "page_defaultapps.h"
 #include "page_fluxbox_keys.h"
-//#include "page_fluxbox_settings.h"
+#include "page_fluxbox_settings.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -51,7 +51,7 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="autostart"){ return new page_autostart(parent); }
   else if(id=="defaultapps"){ return new page_defaultapps(parent); }
   else if(id=="fluxbox-keys"){ return new page_fluxbox_keys(parent); }
-//  else if(id=="fluxbox-session"){ return new page_fluxbox_settings(parent); }
+  else if(id=="fluxbox-settings"){ return new page_fluxbox_settings(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }

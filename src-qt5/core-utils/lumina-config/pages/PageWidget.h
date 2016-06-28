@@ -50,7 +50,7 @@ public slots:
 	virtual void updateIcons(){}
 
 	//Simplification function for widget connections
-	void settingChanged(){
+	virtual void settingChanged(){
 	  emit HasPendingChanges(true);
 	}
 };
