@@ -14,6 +14,7 @@
 page_sample::page_sample(QWidget *parent) : PageWidget(parent), ui(new Ui::page_sample()){
   ui->setupUi(this);
 
+ updateIcons();
 }
 
 page_sample::~page_sample(){
@@ -37,6 +38,10 @@ void page_sample::LoadSettings(int){
 void page_sample::updateIcons(){
 
 }
+
+//=================
+//         PRIVATE 
+//=================
 
 //=================
 //    PRIVATE SLOTS
