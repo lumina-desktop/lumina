@@ -18,6 +18,7 @@ page_interface_desktop::page_interface_desktop(QWidget *parent) : PageWidget(par
   PINFO = new LPlugins();
   connect(ui->tool_desktop_addplugin, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
   connect(ui->tool_desktop_rmplugin, SIGNAL(clicked()), this, SLOT(deskplugremoved()) );
+  connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(settingChanged()) );
   updateIcons();
 }
 
