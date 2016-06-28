@@ -11,7 +11,6 @@ target.path = $${L_BINDIR}
 TEMPLATE = app
 
 SOURCES += main.cpp \
-	   mainUI.cpp \
 	   mainWindow.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
@@ -19,8 +18,7 @@ SOURCES += main.cpp \
 	   GetPluginDialog.cpp \
 	   PanelWidget.cpp
 
-HEADERS  += mainUI.h \
-		mainWindow.h \
+HEADERS  += mainWindow.h \
 		LPlugins.h \
 		AppDialog.h \
 		ColorDialog.h \
@@ -28,8 +26,7 @@ HEADERS  += mainUI.h \
 		GetPluginDialog.h \
 		PanelWidget.h
 
-FORMS    += mainUI.ui \
-		mainWindow.ui \
+FORMS    += mainWindow.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \

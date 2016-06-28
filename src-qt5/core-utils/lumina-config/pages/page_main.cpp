@@ -14,6 +14,7 @@
 page_main::page_main(QWidget *parent) : PageWidget(parent), ui(new Ui::page_main()){
   ui->setupUi(this);
   ui->treeWidget->setMouseTracking(true);
+  ui->treeWidget->setSortingEnabled(false); //the QTreeView sort flag always puts them in backwards (reverse-alphabetical)
   connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*)) );
   connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*)) );
   connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)) );
@@ -65,10 +66,11 @@ void page_main::UpdateItems(QString search){
     else{ ui->treeWidget->addTopLevelItem(it); }
   }
   //Now add the categories to the tree widget if they are non-empty
-  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); }
-  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
-  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
-  if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); }
+  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(!search.isEmpty()); }
+  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(!search.isEmpty()); }
+  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(!search.isEmpty()); }
+  if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(!search.isEmpty()); }
+  ui->treeWidget->sortItems(0, Qt::AscendingOrder);
 }
 
 //================
