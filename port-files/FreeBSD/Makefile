@@ -37,10 +37,10 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:multimedia/gstreamer1-plugins-core
 
 MAKE_JOBS_UNSAFE=yes
 
-USE_XORG=	x11 xdamage
-USE_XCB=	x11extras wm
+USE_XORG=	x11 xdamage xcb
+USE_XCB=	x11extras wm ewmh util-wm
 USE_LDCONFIG=	yes
-USE_QT5=	core gui network svg multimedia imageformats \
+USE_QT5=	core gui widgets network svg multimedia imageformats \
 		buildtools_build x11extras concurrent
 USES=		desktop-file-utils qmake
 USE_GITHUB=	yes
