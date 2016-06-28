@@ -89,9 +89,9 @@ conf.path = $${L_ETCDIR}
 
 #Now do any OS-specific defaults (if available)
 #First see if there is a known OS override first
-TRUEOS{ 
-  message("Installing defaults for OS: TrueOS")
-  OS=TrueOS
+!isEmpty(DEFAULT_SETTINGS){ 
+  message("Installing defaults settings for OS: $${DEFAULT_SETTINGS}")
+  OS=$${DEFAULT_SETTINGS}
 }
 exists("defaults/luminaDesktop-$${OS}.conf"){
   message(" -- Found OS-specific system config file: $${OS}");
