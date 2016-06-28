@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
    <item>
     <layout class="QFormLayout" name="formLayout_4">
      <item row="0" column="0">
@@ -87,8 +99,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>356</width>
-           <height>109</height>
+           <width>362</width>
+           <height>115</height>
           </rect>
          </property>
          <property name="sizePolicy">

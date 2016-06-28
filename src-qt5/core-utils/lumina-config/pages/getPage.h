@@ -30,6 +30,8 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("theme", QObject::tr("Change Desktop Theme"), QObject::tr("Theme Settings"), "preferences-desktop-theme",QObject::tr("Change interface fonts and colors"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "theme" << "plugins");
   list << PageInfo("autostart", QObject::tr("Startup Services and Applications"), QObject::tr("Startup Settings"), "preferences-system-session-services",QObject::tr("Automatically start applications or services"), "session", QStringList(), QStringList() << "apps" << "autostart" << "services" << "xdg" << "startup" << "session");
   list << PageInfo("defaultapps", QObject::tr("Default Applications for File Type"), QObject::tr("Mimetype Settings"), "preferences-desktop-filetype-association",QObject::tr("Change default applications"), "session", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
+  list << PageInfo("fluxbox-keys", QObject::tr("Keyboard Shortcuts"), QObject::tr("Keyboard Shortcuts"), "preferences-desktop-keyboard",QObject::tr("Change keyboard shortcuts"), "session", QStringList(), QStringList() << "apps" << "fluxbox" << "keys" << "keyboard" << "session" << "launch");
+  list << PageInfo("fluxbox-settings", QObject::tr("Window Manager"), QObject::tr("Window Settings"), "preferences-system-windows",QObject::tr("Change window settings and appearances"), "appearance", QStringList(), QStringList() << "window" << "frame" << "border" << "workspace" << "theme" << "fluxbox" << "session");
   return list;
 }
 
@@ -39,6 +41,8 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_theme.h"
 #include "page_autostart.h"
 #include "page_defaultapps.h"
+#include "page_fluxbox_keys.h"
+//#include "page_fluxbox_settings.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -46,6 +50,8 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="theme"){ return new page_theme(parent); }
   else if(id=="autostart"){ return new page_autostart(parent); }
   else if(id=="defaultapps"){ return new page_defaultapps(parent); }
+  else if(id=="fluxbox-keys"){ return new page_fluxbox_keys(parent); }
+//  else if(id=="fluxbox-session"){ return new page_fluxbox_settings(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }
