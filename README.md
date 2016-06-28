@@ -50,10 +50,15 @@ How to build from source
 
  * Build Note: Compile-time options may be set at this time using qmake. The syntax for this is typically: `qmake CONFIG+="PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix DESTDIR=/some/temporary/packaging/dir"`. This is typically not needed unless you are setting up Lumina for automated build/packaging. If the automatically-detected build settings for your particular OS are invalid or need adjustment, please update the "OS-detect.pri" file as needed and send in your changes.
   * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
+	Example: `qmake PREFIX=/usr/local`
   * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
+	Example: `qmake LIBPREFIX=/usr/local/lib`
   * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
+	Example: `qmake DESTDIR=/my/build/dir`
   * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the trueos/lumina-i18n repo instead.
-
+	Example: `qmake CONFIG+=WITH_I18N`
+  * debug: (not recommended for release builds) Do not strip all the debugging information out of the binaries (used for performing backtraces on builds that crash or for other development tests)
+	Example: `qmake CONFIG+=debug`
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
 
