@@ -48,7 +48,7 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_fluxbox_settings.h"
 #include "page_interface_desktop.h"
 #include "page_interface_panels.h"
-//#include "page_interface_menu.h"
+#include "page_interface_menu.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -60,7 +60,7 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="fluxbox-settings"){ return new page_fluxbox_settings(parent); }
   else if(id=="interface-desktop"){ return new page_interface_desktop(parent); }
   else if(id=="interface-panel"){ return new page_interface_panels(parent); }
-//  else if(id=="interface-menu"){ return new page_interface_menu(parent); }
+  else if(id=="interface-menu"){ return new page_interface_menu(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }
