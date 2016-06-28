@@ -49,7 +49,7 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  QString ver = "0.9.1-Release";
+  QString ver = "1.0.0-Devel";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif
