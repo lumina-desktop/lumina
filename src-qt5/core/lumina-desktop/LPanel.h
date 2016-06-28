@@ -36,7 +36,7 @@ private:
 	QDesktopWidget *screen;
 	QWidget *bgWindow, *panelArea;
 	QPoint hidepoint, showpoint; //for hidden panels: locations when hidden/visible
-	bool defaultpanel, horizontal, hidden;
+	bool defaultpanel, horizontal, hidden, hascompositer;
 	int screennum;
 	int panelnum;
 	int viswidth;
