@@ -28,7 +28,9 @@ class PageWidget : public QWidget{
 public:
 
 	//Main constructor/destructor (create/destroy any interface items)
-	PageWidget(QWidget *parent) : QWidget(parent){}
+	PageWidget(QWidget *parent) : QWidget(parent){
+	  //this->setFocusPolicy(Qt::NoFocus);
+	}
 	~PageWidget(){}
 		
 	virtual bool needsScreenSelector(){ return false; } //change this to true for pages which load/set options on a per-screen basis
@@ -48,7 +50,7 @@ public slots:
 	virtual void updateIcons(){}
 
 	//Simplification function for widget connections
-	void settingChanged(){
+	virtual void settingChanged(){
 	  emit HasPendingChanges(true);
 	}
 };

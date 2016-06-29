@@ -13,6 +13,7 @@
 LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   //Take care of inputs
   this->setMouseTracking(true);
+  hascompositer = false; //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
@@ -42,7 +43,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
 
   this->setWindowTitle("LuminaPanel");
   this->setObjectName("LuminaPanelBackgroundWidget");
-  this->setStyleSheet("QToolButton::menu-indicator{ image: none; }");
+  this->setStyleSheet("QToolButton::menu-indicator{ image: none; } QWidget#LuminaPanelBackgroundWidget{ background: transparent; }");
   panelArea->setObjectName("LuminaPanelColor");
   layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setContentsMargins(0,0,0,0);
@@ -53,7 +54,11 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->show();
   LSession::handle()->XCB->SetAsPanel(this->winId());
   LSession::handle()->XCB->SetAsSticky(this->winId());
-  
+  if(hascompositer){ 
+    //qDebug() << "Enable Panel compositing";
+    this->setWindowOpacity(0.0); //fully transparent background for the main widget
+    panelArea->setWindowOpacity(0.0);
+  }
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
   //connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
 }
@@ -309,15 +314,17 @@ void LPanel::checkPanelFocus(){
 // PROTECTED
 //===========
 void LPanel::paintEvent(QPaintEvent *event){
-  QPainter *painter = new QPainter(this);
-  //qDebug() << "Paint Tray:";
-  //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
-  QRect rec = this->geometry(); //start with the global geometry of the panel
-  //Need to translate that rectangle to the background image coordinates
-  //qDebug() << " - Rec:" << rec << hidden << this->geometry();
-  rec.moveTo( rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y() );
-  //qDebug() << " - Adjusted Global Rec:" << rec;
-  painter->drawPixmap(QRect(0,0,this->width(), this->height()), bgWindow->grab(rec) );
+  if(!hascompositer){
+    QPainter *painter = new QPainter(this);
+    //qDebug() << "Paint Tray:";
+    //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
+    QRect rec = this->geometry(); //start with the global geometry of the panel
+    //Need to translate that rectangle to the background image coordinates
+    //qDebug() << " - Rec:" << rec << hidden << this->geometry();
+    rec.moveTo( rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y() );
+    //qDebug() << " - Adjusted Global Rec:" << rec;
+    painter->drawPixmap(QRect(0,0,this->width(), this->height()), bgWindow->grab(rec) );
+  }
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }
 

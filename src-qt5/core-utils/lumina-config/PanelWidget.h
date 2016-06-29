@@ -7,11 +7,8 @@
 #ifndef _LUMINA_CONFIG_PANEL_WIDGET_H
 #define _LUMINA_CONFIG_PANEL_WIDGET_H
 
-#include <QWidget>
-#include <QObject>
-#include <QSettings>
+#include "globals.h"
 
-//#include "mainUI.h"
 #include "LPlugins.h"
 
 //namespace for using the *.ui file
@@ -42,7 +39,8 @@ private:
 	int dnum, pnum;
 
 	void reloadColorSample();
-
+	XDGDesktop getSysApp(bool allowreset = false);
+	QString getColorStyle(QString current, bool allowTransparency = true);
 private slots:
 	void on_tool_rm_clicked();
 	void ItemChanged();
@@ -60,4 +58,3 @@ signals:
 };
 
 #endif
-

@@ -1,0 +1,164 @@
+//===========================================
+//  Lumina Desktop Source Code
+//  Copyright (c) 2016, Ken Moore
+//  Available under the 3-clause BSD license
+//  See the LICENSE file for full details
+//===========================================
+#include "page_interface_menu.h"
+#include "ui_page_interface_menu.h"
+#include "getPage.h"
+#include "../AppDialog.h"
+#include "../GetPluginDialog.h"
+
+//==========
+//    PUBLIC
+//==========
+page_interface_menu::page_interface_menu(QWidget *parent) : PageWidget(parent), ui(new Ui::page_interface_menu()){
+  ui->setupUi(this);
+  PINFO = new LPlugins();
+  connect(ui->tool_menu_add, SIGNAL(clicked()), this, SLOT(addmenuplugin()) );
+  connect(ui->tool_menu_rm, SIGNAL(clicked()), this, SLOT(rmmenuplugin()) );
+  connect(ui->tool_menu_up, SIGNAL(clicked()), this, SLOT(upmenuplugin()) );
+  connect(ui->tool_menu_dn, SIGNAL(clicked()), this, SLOT(downmenuplugin()) );
+  connect(ui->list_menu, SIGNAL(currentRowChanged(int)), this, SLOT(checkmenuicons()) );
+
+ updateIcons();
+}
+
+page_interface_menu::~page_interface_menu(){
+  delete PINFO;
+}
+
+//================
+//    PUBLIC SLOTS
+//================
+void page_interface_menu::SaveSettings(){
+  QSettings settings("lumina-desktop","desktopsettings");
+  QStringList items;
+  for(int i=0; i<ui->list_menu->count(); i++){
+    items << ui->list_menu->item(i)->whatsThis();
+  }
+  settings.setValue("menu/itemlist", items);
+  emit HasPendingChanges(false);
+}
+
+void page_interface_menu::LoadSettings(int){
+  emit HasPendingChanges(false);
+  emit ChangePageTitle( tr("Desktop Settings") );
+  QSettings settings("lumina-desktop","desktopsettings");
+
+QStringList items = settings.value("menu/itemlist", QStringList() ).toStringList();
+  if(items.isEmpty()){ items << "terminal" << "filemanager" << "applications" << "line" << "settings"; }
+  //qDebug() << "Menu Items:" << items;
+   ui->list_menu->clear();
+   for(int i=0; i<items.length(); i++){
+    LPI info = PINFO->menuPluginInfo(items[i]);
+    if(items[i].startsWith("app::::")){
+      bool ok = false;
+      XDGDesktop desk = LXDG::loadDesktopFile(items[i].section("::::",1,1), ok);
+      if(!ok){ continue; } //invalid application file (no longer installed?)
+      QListWidgetItem *item = new QListWidgetItem();
+        item->setWhatsThis( items[i] );
+        item->setIcon( LXDG::findIcon(desk.icon) );
+        item->setText( desk.name );
+        item->setToolTip( desk.comment );
+      ui->list_menu->addItem(item);
+      continue; //now go to the next item
+    }
+    if(info.ID.isEmpty()){ continue; } //invalid plugin
+    //qDebug() << "Add Menu Item:" << info.ID;
+    QListWidgetItem *item = new QListWidgetItem();
+      item->setWhatsThis( info.ID );
+      item->setIcon( LXDG::findIcon(info.icon,"") );
+      item->setText( info.name );
+      item->setToolTip( info.description );
+    ui->list_menu->addItem(item);
+   }
+  checkmenuicons(); //update buttons
+}
+
+void page_interface_menu::updateIcons(){
+  ui->tool_menu_add->setIcon( LXDG::findIcon("list-add","") );
+  ui->tool_menu_rm->setIcon( LXDG::findIcon("list-remove","") );
+  ui->tool_menu_up->setIcon( LXDG::findIcon("go-up","") );
+  ui->tool_menu_dn->setIcon( LXDG::findIcon("go-down","") );
+}
+
+//=================
+//         PRIVATE 
+//=================
+XDGDesktop page_interface_menu::getSysApp(bool allowreset){
+  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+    dlg.allowReset(allowreset);
+    dlg.exec();
+  XDGDesktop desk;
+  if(dlg.appreset && allowreset){
+    desk.filePath = "reset"; //special internal flag
+  }else{
+    desk = dlg.appselected;
+  }
+  return desk;
+}
+
+//=================
+//    PRIVATE SLOTS
+//=================
+void page_interface_menu::addmenuplugin(){
+  GetPluginDialog dlg(this);
+	dlg.LoadPlugins("menu", PINFO);
+	dlg.exec();
+  if(!dlg.selected){ return; } //cancelled
+  QString plug = dlg.plugID;
+  //Now add the item to the list
+  LPI info = PINFO->menuPluginInfo(plug);
+  QListWidgetItem *it;
+  if(info.ID=="app"){
+    //Need to prompt for the exact application to add to the menu
+    // Note: whatsThis() format: "app::::< *.desktop file path >"
+    XDGDesktop desk = getSysApp();
+    if(desk.filePath.isEmpty()){ return; }//nothing selected
+    //Create the item for the list
+    it = new QListWidgetItem(LXDG::findIcon(desk.icon,""), desk.name );
+      it->setWhatsThis(info.ID+"::::"+desk.filePath);
+      it->setToolTip( desk.comment );
+  }else{
+    it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name );
+    it->setWhatsThis(info.ID);
+    it->setToolTip( info.description );
+  }
+  ui->list_menu->addItem(it);
+  ui->list_menu->setCurrentRow(ui->list_menu->count()-1); //make sure it is auto-selected
+  settingChanged();
+}
+
+void page_interface_menu::rmmenuplugin(){
+  if(ui->list_menu->currentRow() < 0){ return; } //no selection
+  delete ui->list_menu->takeItem( ui->list_menu->currentRow() );
+  settingChanged();
+}
+
+void page_interface_menu::upmenuplugin(){
+  int row = ui->list_menu->currentRow();
+  if(row <= 0){ return; }
+  ui->list_menu->insertItem(row-1, ui->list_menu->takeItem(row));
+  ui->list_menu->setCurrentRow(row-1);
+
+  checkmenuicons();
+  settingChanged();
+}
+
+void page_interface_menu::downmenuplugin(){
+  int row = ui->list_menu->currentRow();
+  if(row < 0 || row >= (ui->list_menu->count()-1) ){ return; }
+  ui->list_menu->insertItem(row+1, ui->list_menu->takeItem(row));
+  ui->list_menu->setCurrentRow(row+1);
+
+  checkmenuicons();
+  settingChanged();
+}
+
+void page_interface_menu::checkmenuicons(){
+  ui->tool_menu_up->setEnabled( ui->list_menu->currentRow() > 0 );
+  ui->tool_menu_dn->setEnabled( ui->list_menu->currentRow() < (ui->list_menu->count()-1) );
+  ui->tool_menu_rm->setEnabled( ui->list_menu->currentRow() >=0 );
+}

@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QFile>
 
-#include "mainUI.h"
+
 #include "mainWindow.h"
 #include <LuminaOS.h>
 #include <LuminaUtils.h>
@@ -19,8 +19,7 @@ int main(int argc, char ** argv)
     
     LuminaThemeEngine theme(&a);
 
-    MainUI w;
-    //mainWindow w;
+    mainWindow w;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance()) );
     QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.show();

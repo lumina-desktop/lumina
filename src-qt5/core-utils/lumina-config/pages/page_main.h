@@ -26,8 +26,12 @@ public slots:
 
 private:
 	Ui::page_main *ui;
+	QList<PAGEINFO> INFO;
+
+	void UpdateItems(QString search);
 
 private slots:
-	
+	void itemTriggered(QTreeWidgetItem*);
+	void searchChanged(QString);
 };
 #endif

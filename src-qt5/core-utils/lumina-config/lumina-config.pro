@@ -11,7 +11,6 @@ target.path = $${L_BINDIR}
 TEMPLATE = app
 
 SOURCES += main.cpp \
-	   mainUI.cpp \
 	   mainWindow.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
@@ -19,19 +18,15 @@ SOURCES += main.cpp \
 	   GetPluginDialog.cpp \
 	   PanelWidget.cpp
 
-HEADERS  += mainUI.h \
-		mainWindow.h \
+HEADERS  += mainWindow.h \
 		LPlugins.h \
-		KeyCatch.h \
 		AppDialog.h \
 		ColorDialog.h \
 		ThemeDialog.h \
 		GetPluginDialog.h \
 		PanelWidget.h
 
-FORMS    += mainUI.ui \
-		mainWindow.ui \
-		KeyCatch.ui \
+FORMS    += mainWindow.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \
@@ -45,7 +40,7 @@ include("pages/pages.pri")
 LIBS += -lLuminaUtils
 
 
-DEPENDPATH	+= ../libLumina
+DEPENDPATH	+= ../../core/libLumina
 
 TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_ar.ts \

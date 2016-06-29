@@ -9,7 +9,7 @@
 #include <LuminaOS.h>
 
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
-  appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in PC-BSD)
+  appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in TrueOS)
   controlpanellink = LOS::ControlPanelShortcut(); //Default control panel
   APPS.clear();
   watcher = new QFileSystemWatcher(this);

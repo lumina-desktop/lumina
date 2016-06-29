@@ -20,7 +20,7 @@ Add network probing functionality (for lumina-fm mainly)
 	- Will need integration into LuminaOS and possible LuminaUtils
 	- Will need an OS-specific method of requesting that the system mount the network 
 	 drive on the system
-	- Use "avahi-browse" on PC-BSD?
+	- Use "avahi-browse" on TrueOS?
 	
 Add OS-specific suspend/resume functionality
 	- Will be integrated into lumina-screensaver primarily
@@ -48,7 +48,7 @@ New Frameworks:
 	- LuminaThemeEngine library for use by all Qt applications 
 	  (binary module/wrapper around the current theme engine functionality)
 
-PDF Viewing Capabilities (Extremely Low Priority: just created pc-pdfviewer for PC-BSD)
+PDF Viewing Capabilities (Extremely Low Priority: just created pc-pdfviewer for TrueOS)
 	- Could be a new utility, but would prefer the functionality be put into libLumina 
 	 so that lumina-fm can also use it.
 	- Great for quickly viewing/printing PDF files (since most PDF utilities appear to be DE-specific)

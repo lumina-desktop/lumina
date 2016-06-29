@@ -7,13 +7,8 @@
 #include "PanelWidget.h"
 #include "ui_PanelWidget.h"
 
-#include "LPlugins.h"
 #include "GetPluginDialog.h"
-#include "mainUI.h"
-#include <LuminaXDG.h>
-
-#include <QSettings>
-#include <QStringList>
+#include "AppDialog.h"
 
 
 PanelWidget::PanelWidget(QWidget *parent, QWidget *Main, LPlugins *Pinfo) : QWidget(parent), ui(new Ui::PanelWidget){
@@ -126,6 +121,39 @@ void PanelWidget::reloadColorSample(){
   ui->label_color_sample->setStyleSheet("background: "+ui->label_color_sample->whatsThis());
 }
 
+XDGDesktop PanelWidget::getSysApp(bool allowreset){
+  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+    dlg.allowReset(allowreset);
+    dlg.exec();
+  XDGDesktop desk;
+  if(dlg.appreset && allowreset){
+    desk.filePath = "reset"; //special internal flag
+  }else{
+    desk = dlg.appselected;
+  }
+  return desk;
+}
+
+QString PanelWidget::getColorStyle(QString current, bool allowTransparency){
+  QString out;
+  //Convert the current color string into a QColor
+  QStringList col = current.section(")",0,0).section("(",1,1).split(",");
+  if(col.length()!=4){ col.clear(); col << "255" << "255" << "255" << "255"; }
+  QColor ccol = QColor(col[0].toInt(), col[1].toInt(), col[2].toInt(), col[3].toInt()); //RGBA
+  QColor ncol;
+    if(allowTransparency){ ncol= QColorDialog::getColor(ccol, this, tr("Select Color"), QColorDialog::ShowAlphaChannel); }
+    else{ ncol= QColorDialog::getColor(ccol, this, tr("Select Color")); }
+  //Now convert the new color into a usable string and return
+  if(ncol.isValid()){ //if the dialog was not cancelled
+    if(allowTransparency){
+      out = "rgba("+QString::number(ncol.red())+","+QString::number(ncol.green())+","+QString::number(ncol.blue())+","+QString::number(ncol.alpha())+")";
+    }else{
+      out = "rgb("+QString::number(ncol.red())+","+QString::number(ncol.green())+","+QString::number(ncol.blue())+")";
+    }
+  }
+  return out;
+}
+
 void PanelWidget::on_tool_rm_clicked(){
   emit PanelRemoved(pnum);
 }
@@ -140,7 +168,7 @@ void PanelWidget::UseColorChanged(){
 }
 
 void PanelWidget::on_tool_selectcolor_clicked(){
-  QString color = static_cast<MainUI*>(mainui)->getColorStyle(ui->label_color_sample->whatsThis());
+  QString color = getColorStyle(ui->label_color_sample->whatsThis());
   if( color.isEmpty()){ return; }
   ui->label_color_sample->setWhatsThis(color);
   reloadColorSample();
@@ -155,7 +183,7 @@ void PanelWidget::on_tool_addplugin_clicked(){
   QString pan = dlg.plugID; //getNewPanelPlugin();
   if(pan == "applauncher"){
     //Prompt for the application to add
-    XDGDesktop app = static_cast<MainUI*>(mainui)->getSysApp();
+    XDGDesktop app =getSysApp();
     if(app.filePath.isEmpty()){ return; } //cancelled
     pan.append("::"+app.filePath);
     QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);

@@ -23,13 +23,13 @@ NOTE: Starting with version 0.8.4, you may also find packaged versions of the so
 
 Translations
 ----
-All the translation files for Lumina are available through the PC-BSD pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
+All the translation files for Lumina are available through the TrueOS pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
 
 Translation Website URL: http://translate.pcbsd.org/
 
 How to file bug reports or feature requests
 ----
-Please submit any bug reports or feature requests through the PC-BSD bug tracker, as this ensures that your submissions will be addressed in a timely manner (developers on GitHub may also create a ticket through the GitHub issues tracker, although it is not as feature-full as the PC-BSD bug tracker). If you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
+Please submit any bug reports or feature requests through the TrueOS bug tracker, as this ensures that your submissions will be addressed in a timely manner (developers on GitHub may also create a ticket through the GitHub issues tracker, although it is not as feature-full as the TrueOS bug tracker). If you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
 
 Bug Tracker: https://bugs.pcbsd.org/projects/pcbsd
 
@@ -48,12 +48,19 @@ How to build from source
 
 > Project MESSAGE: Build Settings Loaded: FreeBSD
 
- * Build Note: Compile-time options may be set at this time using qmake. The syntax for this is typically: `qmake CONFIG+="PREFIX=/some/prefix LIBPREFIX=/some/lib/prefix DESTDIR=/some/temporary/packaging/dir"`. This is typically not needed unless you are setting up Lumina for automated build/packaging. If the automatically-detected build settings for your particular OS are invalid or need adjustment, please update the "OS-detect.pri" file as needed and send in your changes.
+ * Build Note: Compile-time options may be set at this time using qmake. This is typically not needed unless you are setting up Lumina for automated build/packaging. If the automatically-detected build settings for your particular OS are invalid or need adjustment, please update the "OS-detect.pri" file as needed and send in your changes so that it can be corrected for future builds.
   * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
+	Example: `qmake PREFIX=/usr/local`
   * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
+	Example: `qmake LIBPREFIX=/usr/local/lib`
   * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
-  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the pcbsd/lumina-i18n repo instead.
-
+	Example: `qmake DESTDIR=/my/build/dir`
+  * DEFAULT_SETTINGS: An optional flag to install the default settings/wallpaper for some other operating system (Note: Make sure the OS name is capitalized appropriately!)
+	Example: `qmake DEFAULT_SETTINGS=TrueOS`
+  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the trueos/lumina-i18n repo instead.
+	Example: `qmake CONFIG+=WITH_I18N`
+  * debug: (not recommended for release builds) Do not strip all the debugging information out of the binaries (useful for performing backtraces on builds that crash or for other development tests)
+	Example: `qmake CONFIG+=debug`
 
 4) Run "make" to compile all the Lumina projects (can be done as user)
 

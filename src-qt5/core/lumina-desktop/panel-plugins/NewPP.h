@@ -50,7 +50,7 @@ public:
 	    plug = new LSysTray(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("desktopswitcher---")){
 	    plug = new LDesktopSwitcher(parent, plugin, horizontal);
-	  }else if(plugin.startsWith("battery---")){
+	  }else if(plugin.startsWith("battery---") && LOS::hasBattery()){
 	    plug = new LBattery(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("clock---")){
 	    plug = new LClock(parent, plugin, horizontal);
