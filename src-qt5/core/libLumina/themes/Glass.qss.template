@@ -473,6 +473,10 @@ QWidget#LuminaBootSplash{
   border-radius: 5px;
 }
 
+LDPlugin#applauncher{
+  background-color: transparent;
+  border: none;
+}
 LDPlugin#applauncher  QToolButton, LDPlugin, LDPlugin#desktopview QListWidget::item{
  background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 30), stop:1 rgba(229, 229, 229, 70));
  border-width: 3px;
