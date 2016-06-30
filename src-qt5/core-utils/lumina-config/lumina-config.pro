@@ -16,6 +16,7 @@ SOURCES += main.cpp \
 	   ColorDialog.cpp \
 	   ThemeDialog.cpp \
 	   GetPluginDialog.cpp \
+	   ScriptDialog.cpp \
 	   PanelWidget.cpp
 
 HEADERS  += mainWindow.h \
@@ -24,6 +25,7 @@ HEADERS  += mainWindow.h \
 		ColorDialog.h \
 		ThemeDialog.h \
 		GetPluginDialog.h \
+		ScriptDialog.h \
 		PanelWidget.h
 
 FORMS    += mainWindow.ui \
@@ -31,6 +33,7 @@ FORMS    += mainWindow.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \
 		GetPluginDialog.ui \
+		ScriptDialog.ui \
 		PanelWidget.ui
 
 include("pages/pages.pri")

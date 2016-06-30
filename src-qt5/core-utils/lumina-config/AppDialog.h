@@ -4,7 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-//  This is the dialog for catching keyboard events and converting them to X11 keycodes
+//  This is the dialog for selecting an installed application
 //===========================================
 #ifndef _LUMINA_FILE_MANAGER_APP_SELECT_DIALOG_H
 #define _LUMINA_FILE_MANAGER_APP_SELECT_DIALOG_H
@@ -40,7 +40,9 @@ public:
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
 	  if(parent!=0){
-	    QPoint center = parent->geometry().center();
+	    QWidget *top = parent;
+	    while(!top->isWindow()){ top = top->parentWidget(); }
+	    QPoint center = top->geometry().center();
 	    this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
 	  }
 	}

@@ -58,6 +58,7 @@ LPI LPlugins::colorInfo(QString item){
 //===================
 //             PLUGINS
 //===================
+//   PANEL PLUGINS
 void LPlugins::LoadPanelPlugins(){
   PANEL.clear();
   //User Button
@@ -167,6 +168,7 @@ void LPlugins::LoadPanelPlugins(){
   PANEL.insert(info.ID, info); 
 }
 
+// DESKTOP PLUGINS
 void LPlugins::LoadDesktopPlugins(){
   DESKTOP.clear();
   //Calendar Plugin
@@ -232,6 +234,7 @@ void LPlugins::LoadDesktopPlugins(){
   }*/
 }
 
+//    MENU PLUGINS
 void LPlugins::LoadMenuPlugins(){
   MENU.clear();
   //Terminal
@@ -282,6 +285,13 @@ void LPlugins::LoadMenuPlugins(){
     info.description = QObject::tr("Start a custom application");
     info.ID = "app";
     info.icon = "application-x-desktop";
+  MENU.insert(info.ID, info);
+  //Custom Apps
+  info = LPI(); //clear it
+    info.name = QObject::tr("Menu Script");
+    info.description = QObject::tr("Run an external script to generate a menu");
+    info.ID = "jsonmenu";
+    info.icon = "text-x-script";
   MENU.insert(info.ID, info);
 }
 
