@@ -157,6 +157,12 @@ void LTaskButton::UpdateMenus(){
     }
   }
   actMenu->addAction( LXDG::findIcon("window-close",""), tr("Close Window"), this, SLOT(closeWindow()) );
+  if(WINLIST.length()>1 && !winMenu->isVisible()){
+    actMenu->addSeparator();
+     actMenu->addAction( LXDG::findIcon("layer-visible-on",""), tr("Show All Windows"), this, SLOT(showAllWindows()) );
+     actMenu->addAction( LXDG::findIcon("layer-visible-off",""), tr("Minimize All Windows"), this, SLOT(hideAllWindows()) );
+     actMenu->addAction( LXDG::findIcon("window-close",""), tr("Close All Windows"), this, SLOT(closeAllWindows()) );
+  }
 }
 
 //=============
@@ -194,6 +200,29 @@ void LTaskButton::minimizeWindow(){
   LSession::handle()->XCB->MinimizeWindow(win.windowID());
   cWin = LWinInfo(); //clear the current 
   QTimer::singleShot(100, this, SLOT(UpdateButton()) ); //make sure to update this button if losing active status
+}
+
+void LTaskButton::showAllWindows(){
+  for(int i=WINLIST.length()-1; i>=0; i--){
+    if(WINLIST[i].status()==LXCB::INVISIBLE){
+      LSession::handle()->XCB->RestoreWindow(WINLIST[i].windowID());
+    }
+  }
+}
+
+void LTaskButton::hideAllWindows(){
+  for(int i=WINLIST.length()-1; i>=0; i--){
+    LXCB::WINDOWVISIBILITY state = WINLIST[i].status();
+    if(state==LXCB::VISIBLE || state==LXCB::ACTIVE){
+      LSession::handle()->XCB->MinimizeWindow(WINLIST[i].windowID());
+    }
+  }
+}
+
+void LTaskButton::closeAllWindows(){
+  for(int i=WINLIST.length()-1; i>=0; i--){
+    LSession::handle()->XCB->CloseWindow(WINLIST[i].windowID());
+  }
 }
 
 void LTaskButton::triggerWindow(){

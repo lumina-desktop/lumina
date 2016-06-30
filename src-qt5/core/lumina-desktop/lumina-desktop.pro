@@ -27,7 +27,7 @@ SOURCES += main.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \
 	BootSplash.cpp \
-	desktop-plugins/LDPlugin.cpp \
+	desktop-plugins/LDPlugin.cpp
 
 
 HEADERS  += Globals.h \
@@ -48,6 +48,7 @@ HEADERS  += Globals.h \
 	panel-plugins/LTBWidget.h \
 	desktop-plugins/LDPlugin.h \
 	desktop-plugins/NewDP.h \
+	JsonMenu.h
 
 FORMS    += SystemWindow.ui \
 	BootSplash.ui 

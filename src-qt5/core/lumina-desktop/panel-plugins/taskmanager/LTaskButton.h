@@ -60,6 +60,9 @@ private slots:
 	void closeWindow(); //send the signal to close a window
 	void maximizeWindow(); //send the signal to maximize/restore a window
 	void minimizeWindow(); //send the signal to minimize a window (iconify)
+	void showAllWindows();
+	void hideAllWindows();
+	void closeAllWindows();
 	void triggerWindow(); //change b/w visible and invisible
 	void winClicked(QAction*);
 	void openActionMenu();
