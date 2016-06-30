@@ -83,7 +83,7 @@ void ScriptDialog::checkItems(bool firstrun){
   if(name().isEmpty()){ good = false; ui->line_name->setStyleSheet("color: red;"); }
   else{ ui->line_name->setStyleSheet(""); }
   QString cmd = command().section(" ",0,0).simplified();
-  if( !LUtils::isValidBinary(cmd) || cmd.isEmpty() ){ good = false; ui->line_exec->setStyleSheet("color: red;"); }
+  if( cmd.isEmpty() || !LUtils::isValidBinary(cmd) ){ good = false; ui->line_exec->setStyleSheet("color: red;"); }
   else{ ui->line_exec->setStyleSheet(""); }
 
   ui->pushApply->setEnabled(good);
