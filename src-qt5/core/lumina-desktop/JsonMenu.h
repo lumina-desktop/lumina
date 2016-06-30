@@ -18,6 +18,7 @@
 
 #include <LuminaUtils.h>
 #include <LuminaXDG.h>
+#include "LSession.h"
 
 class JsonMenu : public QMenu{
 	Q_OBJECT
@@ -28,6 +29,7 @@ public:
 	JsonMenu(QString execpath, QWidget *parent = 0) : QMenu(parent){
 	  exec = execpath;
 	  connect(this, SIGNAL(aboutToShow()), this, SLOT(updateMenu()) );
+	  connect(this, SIGNAL(triggered(QAction*)), this, SLOT(itemTriggered(QAction*)) );
 	}
 
 private slots:
@@ -50,6 +52,7 @@ private slots:
 	    this->addMenu(menu);
 	  }
 	}
+
 	void updateMenu(){
           this->clear();
 	  QJsonDocument doc = QJsonDocument::fromJson( LUtils::getCmdOutput(exec).join(" ").toLocal8Bit() );
@@ -63,6 +66,14 @@ private slots:
 	      }
 	    }
 	  }
+	}
+
+	void itemTriggered(QAction *act){
+	  if(act->parent()!=this || act->whatsThis().isEmpty() ){ return; } //only handle direct child actions - needed for recursive nature of menu
+	  QString cmd = act->whatsThis();
+	  QString bin = cmd.section(" ",0,0);
+	  if( !LUtils::isValidBinary(bin) ){ cmd.prepend("lumina-open "); }
+	  LSession::handle()->LaunchApplication(cmd);
 	}
 };
 #endif

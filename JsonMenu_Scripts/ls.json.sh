@@ -13,7 +13,7 @@ do
   if [ -d "${DIR}/${name}" ] ; then
     OUT="${OUT} \"${name}\" : { \"type\" : \"jsonmenu\", \"exec\" : \"${0} ${DIR}/${name}\", \"icon\":\"folder\"}"
   else
-    OUT="${OUT} \"${name}\" : { \"type\" : \"item\", \"icon\":\"unknown\", \"action\" : \"${name}\"}"
+    OUT="${OUT} \"${name}\" : { \"type\" : \"item\", \"icon\":\"unknown\", \"action\" : \"xdg-open ${DIR}/${name}\"}"
   fi
 done < /tmp/.tmp.lines.$$
 rm /tmp/.tmp.lines.$$
