@@ -1,10 +1,20 @@
 #!/bin/sh
-cmd="ls $1"
-OUT=""
-for name in `${cmd}`; do
-  if [ "${OUT}" != "" ] ; then
+DIR=${1}
+if [ "$1" == "" ] ; then
+  DIR=`pwd`
+fi
+
+ls ${DIR} > /tmp/.tmp.lines.$$ 
+while read name
+do
+  if [ -n "${OUT}" ] ; then
     OUT="${OUT},"
   fi
-  OUT="${OUT} \"${name}\" : { \"type\" : \"item\", \"action\" : \"${name}\"}"
-done
+  if [ -d "${DIR}/${name}" ] ; then
+    OUT="${OUT} \"${name}\" : { \"type\" : \"jsonmenu\", \"exec\" : \"${0} ${DIR}/${name}\", \"icon\":\"folder\"}"
+  else
+    OUT="${OUT} \"${name}\" : { \"type\" : \"item\", \"icon\":\"unknown\", \"action\" : \"${name}\"}"
+  fi
+done < /tmp/.tmp.lines.$$
+rm /tmp/.tmp.lines.$$
 echo "{ ${OUT} }"
