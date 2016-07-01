@@ -86,6 +86,10 @@ void mainWindow::changePage(QString id){
     connect(page, SIGNAL(ChangePage(QString)), this, SLOT(page_change(QString)) );
     page->setFocus();
     ui->toolBar->setVisible( !cpage.isEmpty() );
+  }else{
+    //No change in page (some other refresh)
+    // just re-use the current widget
+    page = static_cast<PageWidget*>(this->centralWidget());
   }
   //Now load the new page
   page->LoadSettings(ui->actionMonitor->whatsThis().toInt()); //need to make this show the current screen as needed

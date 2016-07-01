@@ -11,29 +11,29 @@ target.path = $${L_BINDIR}
 TEMPLATE = app
 
 SOURCES += main.cpp \
-	   mainUI.cpp \
 	   mainWindow.cpp \
 	   LPlugins.cpp \
 	   ColorDialog.cpp \
 	   ThemeDialog.cpp \
 	   GetPluginDialog.cpp \
+	   ScriptDialog.cpp \
 	   PanelWidget.cpp
 
-HEADERS  += mainUI.h \
-		mainWindow.h \
+HEADERS  += mainWindow.h \
 		LPlugins.h \
 		AppDialog.h \
 		ColorDialog.h \
 		ThemeDialog.h \
 		GetPluginDialog.h \
+		ScriptDialog.h \
 		PanelWidget.h
 
-FORMS    += mainUI.ui \
-		mainWindow.ui \
+FORMS    += mainWindow.ui \
 		AppDialog.ui \
 		ColorDialog.ui \
 		ThemeDialog.ui \
 		GetPluginDialog.ui \
+		ScriptDialog.ui \
 		PanelWidget.ui
 
 include("pages/pages.pri")

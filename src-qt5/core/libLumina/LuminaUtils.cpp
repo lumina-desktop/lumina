@@ -34,22 +34,26 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
   proc.setProcessEnvironment(env);
   proc.setProcessChannelMode(QProcess::MergedChannels);
   if(args.isEmpty()){
-    proc.start(cmd);
+    proc.start(cmd, QIODevice::ReadOnly);
   }else{
-    proc.start(cmd,args);	  
+    proc.start(cmd,args ,QIODevice::ReadOnly);	  
   }
-  while(!proc.waitForFinished(500)){
+  QString info;
+  while(!proc.waitForFinished(1000)){
     if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
+    QString tmp = proc.readAllStandardOutput();
+    if(tmp.isEmpty()){ proc.terminate(); }
+    else{ info.append(tmp); }
   }
   out[0] = QString::number(proc.exitCode());
-  out[1] = QString(proc.readAllStandardOutput());
+  out[1] = info+QString(proc.readAllStandardOutput());
   return out;	
 }
 //=============
 //  LUtils Functions
 //=============
 QString LUtils::LuminaDesktopVersion(){ 
-  QString ver = "0.9.1-devel";
+  QString ver = "1.0.0-Devel";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif
@@ -1008,30 +1012,35 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
   //  since the window will be moved again the next time it is shown
   // The "-2" in the sizing below accounts for the menu margins
   QPoint gpos = this->mapToGlobal(ev->pos());
+  bool handled = false;
   switch(resizeSide){
     case TOP:
 	if(gpos.y() >= geom.bottom()-1){ break; }
 	geom.setTop(gpos.y());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
+	handled = true;
         break;	    
     case BOTTOM:
 	if(gpos.y() <= geom.top()+1){ break; }
 	geom.setBottom( gpos.y());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
+	handled = true;
         break;	    
     case LEFT:
 	if(gpos.x() >= geom.right()-1){ break; }
 	geom.setLeft(gpos.x());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
+	handled = true;
         break;	    
     case RIGHT:
 	if(gpos.x() <= geom.left()+1){ break; }
 	geom.setRight(gpos.x());
         this->setGeometry(geom);
-        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2)); }
+        if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
+	handled = true;
         break;
     default: //NONE
 	//qDebug() << " - Mouse At:" << ev->pos();
@@ -1042,7 +1051,7 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
         else if(ev->pos().y() >= this->height()-1 && ev->pos().y() <= this->height()+1){ this->setCursor(Qt::SizeVerCursor); }
 	else{ this->setCursor(Qt::ArrowCursor); }
   }
-  QMenu::mouseMoveEvent(ev);  //do normal processing as well
+  if(!handled){ QMenu::mouseMoveEvent(ev); }  //do normal processing as well
 }
 
 void ResizeMenu::mousePressEvent(QMouseEvent *ev){
@@ -1054,11 +1063,12 @@ void ResizeMenu::mousePressEvent(QMouseEvent *ev){
     else if(ev->pos().y()<=1 && ev->pos().y() >= -1){ resizeSide = TOP; used = true; }
     else if(ev->pos().y() >= this->height()-1 && ev->pos().y() <= this->height()+1){ resizeSide = BOTTOM; used = true; }
   }
-  if(used){ ev->accept(); }
+  if(used){ ev->accept(); this->grabMouse(); }
   else{ QMenu::mousePressEvent(ev); } //do normal processing
 }
 
 void ResizeMenu::mouseReleaseEvent(QMouseEvent *ev){
+  this->releaseMouse();
   if(ev->button() == Qt::LeftButton && resizeSide!=NONE ){
     //qDebug() << "Mouse Release Event:" <<  ev->pos() << resizeSide;
     resizeSide = NONE;

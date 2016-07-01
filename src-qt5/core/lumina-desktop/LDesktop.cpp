@@ -10,6 +10,7 @@
 #include <LuminaOS.h>
 #include <LuminaX11.h>
 #include "LWinInfo.h"
+#include "JsonMenu.h"
 
 #define DEBUG 0
 
@@ -291,6 +292,17 @@ void LDesktop::UpdateMenu(bool fast){
 	}else{
 	  qDebug() << "Could not load application file:" << file;
 	}
+    }else if(items[i].startsWith("jsonmenu::::")){
+      //Custom JSON menu system (populated on demand via external scripts/tools
+      QStringList info = items[i].split("::::"); //FORMAT:[ "jsonmenu",exec,name, icon(optional)]
+      if(info.length()>=3){
+        qDebug() << "Custom JSON Menu Loaded:" << info;
+        JsonMenu *tmp = new JsonMenu(info[1], deskMenu);
+        tmp->setTitle(info[2]);
+        connect(tmp, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
+        if(info.length()>=4){ tmp->setIcon( LXDG::findIcon(info[3],"") ); }
+        deskMenu->addMenu(tmp);
+      }
     }
   }
   //Now add the system quit options

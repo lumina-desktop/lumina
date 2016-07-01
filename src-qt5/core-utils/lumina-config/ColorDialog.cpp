@@ -27,8 +27,12 @@ ColorDialog::ColorDialog(QWidget *parent, LPlugins *plugs, QString colorFilePath
   //Now load the given file
   loadColors();
   //Now center the window on the parent
-  QPoint cen = parent->geometry().center();
-  this->move( cen.x() - (this->width()/2) , cen.y() - (this->height()/2) );
+if(parent!=0){
+    QWidget *top = parent;
+    while(!top->isWindow()){ top = top->parentWidget(); }
+    QPoint center = top->geometry().center();
+    this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
+  }
 }
 
 void ColorDialog::loadColors(){
@@ -139,4 +143,3 @@ void ColorDialog::on_tool_editcolor_clicked(){
   if(!ok || value.isEmpty()){ return; } //cancelled
   updateItem(it, value);
 }
-

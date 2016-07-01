@@ -47,8 +47,10 @@ OnTitlebar Mouse2 :Lower
 OnTitlebar Mouse3 :WindowMenu
 
 # alt-tab
-Mod1 Tab  :NextWindow {groups} (workspace=[current])  (workspace=[current]) !! FBCV13 !!
-Mod1 Shift Tab  :PrevWindow {groups} (workspace=[current])  (workspace=[current]) !! FBCV13 !!
+Mod1 Tab  :NextWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
+Mod1 Shift Tab  :PrevWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
+Control Tab :NextGroup (workspace=[current])  (workspace=[current])
+Control Shift Tab :PrevGroup (workspace=[current])  (workspace=[current])
 
 # cycle through tabs in the current window
 Mod4 Tab  :NextTab

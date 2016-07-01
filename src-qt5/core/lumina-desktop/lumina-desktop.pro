@@ -27,7 +27,7 @@ SOURCES += main.cpp \
 	SettingsMenu.cpp \
 	SystemWindow.cpp \
 	BootSplash.cpp \
-	desktop-plugins/LDPlugin.cpp \
+	desktop-plugins/LDPlugin.cpp
 
 
 HEADERS  += Globals.h \
@@ -48,6 +48,7 @@ HEADERS  += Globals.h \
 	panel-plugins/LTBWidget.h \
 	desktop-plugins/LDPlugin.h \
 	desktop-plugins/NewDP.h \
+	JsonMenu.h
 
 FORMS    += SystemWindow.ui \
 	BootSplash.ui 
@@ -87,12 +88,22 @@ defaults.path = $${L_SHAREDIR}/lumina-desktop/
 
 conf.path = $${L_ETCDIR}
 
-#Now do any TrueOS defaults (if set)
-PCBSD{
-  conf.extra = cp defaults/luminaDesktop.pcbsd.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
-  defaults.extra = cp defaults/desktop-background.pcbsd.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+#Now do any OS-specific defaults (if available)
+#First see if there is a known OS override first
+!isEmpty(DEFAULT_SETTINGS){ 
+  message("Installing defaults settings for OS: $${DEFAULT_SETTINGS}")
+  OS=$${DEFAULT_SETTINGS}
+}
+exists("defaults/luminaDesktop-$${OS}.conf"){
+  message(" -- Found OS-specific system config file: $${OS}");
+  conf.extra = cp defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
 }else{
   conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+}
+exists("defaults/desktop-background-$${OS}.jpg"){
+  message(" -- Found OS-specific background image: $${OS}");
+  defaults.extra = cp defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+}else{
   defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }
 

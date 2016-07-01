@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QFile>
 
-#include "mainUI.h"
+
 #include "mainWindow.h"
 #include <LuminaOS.h>
 #include <LuminaUtils.h>

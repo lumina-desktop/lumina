@@ -93,7 +93,7 @@ desktop.files=lumina-textedit.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
 link.path=$${L_BINDIR}
-link.extra=ln -sf $${L_BINDIR}/lumina-textedit $${L_BINDIR}/lte
+link.extra=ln -sf $${L_BINDIR}/lumina-textedit $(INSTALL_ROOT)$${L_BINDIR}/lte
 
 INSTALLS += target desktop link
 

@@ -13,8 +13,12 @@ GetPluginDialog::GetPluginDialog(QWidget *parent) : QDialog(parent), ui(new Ui::
   ui->setupUi(this);
   selected = false; //nothing selected by default
   //Now center the window on the parent
-  QPoint cen = parent->geometry().center();
-  this->move( cen.x() - (this->width()/2) , cen.y() - (this->height()/2) );
+  if(parent!=0){
+    QWidget *top = parent;
+    while(!top->isWindow()){ top = top->parentWidget(); }
+    QPoint center = top->geometry().center();
+    this->move(center.x()-(this->width()/2), center.y()-(this->height()/2) );
+  }
   //Load the icons
   ui->push_cancel->setIcon( LXDG::findIcon("dialog-cancel","") );
   ui->push_accept->setIcon( LXDG::findIcon("dialog-ok","") );
