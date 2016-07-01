@@ -5,10 +5,10 @@ TEMPLATE = subdirs
 CONFIG += recursive
 
 SUBDIRS+= libLumina \
-	 lumina-desktop \
-	 lumina-session \
-	 lumina-open \
-	 lumina-info
+	lumina-desktop \
+	lumina-session \
+	lumina-open \
+	lumina-info
 #	lumina-wm-INCOMPLETE \
 #	lumina-checkpass
 
@@ -18,3 +18,9 @@ lumina-desktop.depends = libLumina
 lumina-session.depends = libLumina
 lumina-open.depends = libLumina
 lumina-info.depends = libLumina
+
+#Also install any special menu scripts
+scripts.path = $${L_SHAREDIR}/lumina-desktop/menu-scripts
+scripts.files = menu-scripts/*
+
+INSTALLS+=scripts
