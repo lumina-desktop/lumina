@@ -70,7 +70,8 @@ void LSession::start(){
   //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
   //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
   //Compositing manager
-  if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+  if(LUtils::isValidBinary("compton")){ startProcess("compositing","compton"); }
+  else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
   //Desktop Next
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
