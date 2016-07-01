@@ -18,11 +18,9 @@ int main(int argc, char ** argv)
   //Read the input variables
   QString path = "";
   QString flag = "";
-  if (argc==2) {
-    path = QString::fromLocal8Bit(argv[1]);
-  }else if (argc==3) {
-    flag = QString::fromLocal8Bit(argv[1]);
-    path = QString::fromLocal8Bit(argv[2]);
+  for(int i=1; i<argc; i++){
+    if( QString(argv[i]).startsWith("-") ){ flag = QString(argv[i]); }
+    else{ path = QString(argv[i]); break; }
   }
   //Check the input variables
   // - path
@@ -35,11 +33,11 @@ int main(int argc, char ** argv)
       flag = "LINK"; //for internal use
     }else{
       //Invalid flag - clear the path as well
+      flag.clear();
       path.clear();
     }
   }
-  if(!path.isEmpty()){ 
-    //if(!QFile::exists(path)){ LUtils::writeFile(path,QStringList()); } //create an empty file
+  if(!path.isEmpty() || !flag.isEmpty()){ 
     MainUI w;
       QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(UpdateIcons()) );
     w.LoadFile(path, flag);
@@ -48,10 +46,8 @@ int main(int argc, char ** argv)
     return retCode;
   }else{
     //Show an error text and exit
-    QStringList msg;
-    msg << "ERROR: Invalid input arguments";
-    msg << "Usage: \"lumina-fileinfo [-application | -link] <file>";
-    qDebug() << msg.join("\n");
+    qDebug() << "ERROR: Invalid input arguments";
+    qDebug() << "Usage: \"lumina-fileinfo [-application | -link] [file]";
     return 1;
   }
 

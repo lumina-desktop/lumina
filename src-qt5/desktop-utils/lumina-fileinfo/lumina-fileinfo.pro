@@ -89,7 +89,10 @@ TRANSLATIONS =  i18n/lumina-fileinfo_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target
+desktop.files=lumina-fileinfo.desktop
+desktop.path=$${L_SHAREDIR}/applications/
+
+INSTALLS += target desktop
 
 WITH_I18N{
   INSTALLS += dotrans
