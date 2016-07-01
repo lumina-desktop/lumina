@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_file">
       <attribute name="title">
@@ -387,16 +387,28 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="push_save">
+      <widget class="QToolButton" name="push_save">
        <property name="text">
         <string>Save</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="push_close">
+      <widget class="QToolButton" name="push_close">
        <property name="text">
         <string>Close</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::DelayedPopup</enum>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
       </widget>
      </item>

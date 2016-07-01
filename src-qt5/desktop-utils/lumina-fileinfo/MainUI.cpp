@@ -32,12 +32,17 @@ MainUI::~MainUI(){
 //      PUBLIC
 //=============
 void MainUI::LoadFile(QString path, QString type){
+  
+  //Do the first file information tab
+  qDebug() << "Load File:" << path << type;
   INFO = LFileInfo(path);
   if(INFO.exists()){ canwrite = INFO.isWritable(); }
-  else{
+  else if(!INFO.filePath().isEmpty()){
     //See if the containing directory can be written
     QFileInfo chk(INFO.absolutePath());
     canwrite = (chk.isDir() && chk.isWritable());
+  }else{
+    canwrite = true; //no associated file yet
   }
   if(!INFO.exists() && !type.isEmpty()){
     //Set the proper type flag on the shortcut
@@ -46,40 +51,51 @@ void MainUI::LoadFile(QString path, QString type){
   }
 	  
   //First load the general file information
-  ui->label_file_name->setText( INFO.fileName() );
-  ui->label_file_mimetype->setText( INFO.mimetype() );
-  if(!INFO.isDir()){ ui->label_file_size->setText( LUtils::BytesToDisplaySize( INFO.size() ) ); }
-  else {
-    ui->label_file_size->setText(tr("---Calculating---"));
-    QtConcurrent::run(this, &MainUI::GetDirSize, INFO.absoluteFilePath());
-  }
-  ui->label_file_owner->setText(INFO.owner());
-  ui->label_file_group->setText(INFO.group());
-  ui->label_file_created->setText( INFO.created().toString(Qt::SystemLocaleLongDate) );
-  ui->label_file_modified->setText( INFO.lastModified().toString(Qt::SystemLocaleLongDate) );
-  //Get the file permissions
-  QString perms;
-  if(INFO.isReadable() && INFO.isWritable()){ perms = tr("Read/Write"); }
-  else if(INFO.isReadable()){ perms = tr("Read Only"); }
-  else if(INFO.isWritable()){ perms = tr("Write Only"); }
-  else{ perms = tr("No Access"); }
-  ui->label_file_perms->setText(perms);
-  //Now the special "type" for the file
-  QString ftype;
-  if(INFO.suffix().toLower()=="desktop"){ ftype = tr("XDG Shortcut"); }
-  else if(INFO.isDir()){ ftype = tr("Directory"); }
-  else if(INFO.isExecutable()){ ftype = tr("Binary"); }
-  else{ ftype = INFO.suffix().toUpper(); }
-  if(INFO.isHidden()){ ftype = QString(tr("Hidden %1")).arg(type); }
-  ui->label_file_type->setText(ftype);
-  //Now load the icon for the file
-  if(INFO.isImage()){
-    ui->label_file_icon->setPixmap( QPixmap(INFO.absoluteFilePath()).scaledToHeight(64) );
+  if(!INFO.filePath().isEmpty()){
+    ui->label_file_name->setText( INFO.fileName() );
+    ui->label_file_mimetype->setText( INFO.mimetype() );
+    if(!INFO.isDir()){ ui->label_file_size->setText( LUtils::BytesToDisplaySize( INFO.size() ) ); }
+    else {
+      ui->label_file_size->setText(tr("---Calculating---"));
+      QtConcurrent::run(this, &MainUI::GetDirSize, INFO.absoluteFilePath());
+    }
+    ui->label_file_owner->setText(INFO.owner());
+    ui->label_file_group->setText(INFO.group());
+    ui->label_file_created->setText( INFO.created().toString(Qt::SystemLocaleLongDate) );
+    ui->label_file_modified->setText( INFO.lastModified().toString(Qt::SystemLocaleLongDate) );
+    //Get the file permissions
+    QString perms;
+    if(INFO.isReadable() && INFO.isWritable()){ perms = tr("Read/Write"); }
+    else if(INFO.isReadable()){ perms = tr("Read Only"); }
+    else if(INFO.isWritable()){ perms = tr("Write Only"); }
+    else{ perms = tr("No Access"); }
+    ui->label_file_perms->setText(perms);
+    //Now the special "type" for the file
+    QString ftype;
+    if(INFO.suffix().toLower()=="desktop"){ ftype = tr("XDG Shortcut"); }
+    else if(INFO.isDir()){ ftype = tr("Directory"); }
+    else if(INFO.isExecutable()){ ftype = tr("Binary"); }
+    else{ ftype = INFO.suffix().toUpper(); }
+    if(INFO.isHidden()){ ftype = QString(tr("Hidden %1")).arg(type); }
+    ui->label_file_type->setText(ftype);
+    //Now load the icon for the file
+    if(INFO.isImage()){
+      ui->label_file_icon->setPixmap( QPixmap(INFO.absoluteFilePath()).scaledToHeight(64) );
+    }else{
+      ui->label_file_icon->setPixmap( LXDG::findIcon( INFO.iconfile(), "unknown").pixmap(QSize(64,64)) );
+    }
+    //Now verify the tab is available in the widget
+    if(ui->tabWidget->indexOf(ui->tab_file)<0){
+      ui->tabWidget->addTab(ui->tab_file, tr("File Information"));
+    }
   }else{
-    ui->label_file_icon->setPixmap( LXDG::findIcon( INFO.iconfile(), "unknown").pixmap(QSize(64,64)) );
+    if(ui->tabWidget->indexOf(ui->tab_file)>=0){
+      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_file) );
+    }
   }
   //Now load the special XDG desktop info
-  if(INFO.isDesktopFile()){
+  qDebug() << INFO.isDesktopFile() << type;
+  if(INFO.isDesktopFile() || !type.isEmpty()){
   
     if(INFO.XDG()->type == XDGDesktop::APP){
       ui->line_xdg_command->setText(INFO.XDG()->exec);
@@ -108,16 +124,22 @@ void MainUI::LoadFile(QString path, QString type){
     ReloadAppIcon();
     ui->push_save->setVisible(true);
     ui->push_save->setEnabled(false);
+    //Now ensure the xdg tab exists in the widget
+    if(ui->tabWidget->indexOf(ui->tab_deskedit)<0){
+      qDebug() << "Adding the deskedit tab";
+      ui->tabWidget->addTab(ui->tab_deskedit, tr("Edit Shortcut"));
+    }
   }else{
     xdgvaluechanged(); //just do the disables here
     //Also remove the xdg tab
-    if(ui->tabWidget->count()>1){ ui->tabWidget->removeTab(1); }
+    if(ui->tabWidget->indexOf(ui->tab_deskedit) >= 0){ 
+      qDebug() << "Removing the deskedit tab";
+      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_deskedit) );
+    }
   }
   //Setup the tab 
   if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
   else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
-  //Hide the tab bar (the autoHideTabBar setting was not added until Qt 5.4)
-  if(ui->tabWidget->count() < 2){ ui->tabWidget->tabBar()->hide(); }
 }
 
 void MainUI::UpdateIcons(){
@@ -207,8 +229,18 @@ void MainUI::on_push_close_clicked(){
 
 void MainUI::on_push_save_clicked(){
   //Save all the xdg values into the structure
-  if(!INFO.isDesktopFile() || !canwrite){ return; }
-  XDGDesktop XDG = *INFO.XDG();;
+  if( (!INFO.isDesktopFile() && !INFO.filePath().isEmpty()) || !canwrite){ return; }
+  if(INFO.filePath().isEmpty()){
+    //Need to prompt for where to save the file and what to call it
+    QString appdir = QString(getenv("XDG_DATA_HOME"))+"/applications/";
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), appdir, tr("Application Registrations (*.desktop)") );
+    if(filePath.isEmpty()){ return; }
+    if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
+    //Update the file paths in the data structure
+    INFO.setFile(filePath);
+    INFO.XDG()->filePath = filePath;
+  }
+  XDGDesktop XDG = *INFO.XDG();
   //Now change the structure
   XDG.name = ui->line_xdg_name->text();
   XDG.genericName = ui->line_xdg_name->text().toLower();
@@ -279,7 +311,7 @@ void MainUI::on_push_xdg_getIcon_clicked(){
 
 //XDG Value Changed
 void MainUI::xdgvaluechanged(){
-  if(INFO.isDesktopFile()){
+  if(INFO.isDesktopFile() || INFO.filePath().isEmpty()){
     ui->push_save->setVisible(true);
     //Compare the current UI values to the file values
     ui->push_save->setEnabled(canwrite); //assume changed at this point
