@@ -2,9 +2,9 @@
 # $FreeBSD$
 
 PORTNAME=	lumina
-PORTVERSION=	0.9.1
+PORTVERSION=	1.0.0
 DISTVERSIONPREFIX=	v
-DISTVERSIONSUFFIX=	-Release
+DISTVERSIONSUFFIX=	-Beta1
 PORTEPOCH=	1
 CATEGORIES=	x11
 
@@ -13,12 +13,11 @@ COMMENT=	Lumina Desktop Environment
 
 LICENSE=	BSD3CLAUSE
 
-RUN_DEPENDS=	xorg>=0:x11/xorg-minimal \
-		fluxbox>=0:x11-wm/fluxbox \
+RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
 		kde4-icons-oxygen>=0:x11-themes/kde4-icons-oxygen \
 		xscreensaver:x11/xscreensaver \
 		xbrightness:x11/xbrightness \
-		xcompmgr:x11-wm/xcompmgr \
+		compton:x11-wm/compton \
 		xrandr:x11/xrandr \
 		numlockx:x11/numlockx
 
@@ -47,9 +46,8 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 
 #Setup the qmake configuration options
-.if {PORT_OPTIONS:MTRUEOS}
-QMAKE_ARGS=	CONFIG+="configure" \
-		DEFAULT_SETTINGS=TrueOS
+.if ${PORT_OPTIONS:MTRUEOS}
+QMAKE_ARGS=	DEFAULT_SETTINGS=TrueOS
 .endif
 
 .include <bsd.port.mk>
