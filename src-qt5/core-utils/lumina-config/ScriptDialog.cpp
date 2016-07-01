@@ -54,7 +54,7 @@ void ScriptDialog::on_pushCancel_clicked(){
 }
 
 void ScriptDialog::on_tool_getexec_clicked(){
-  QString file = QFileDialog::getOpenFileName( this, tr("Select a menu script"), QDir::homePath() );
+  QString file = QFileDialog::getOpenFileName( this, tr("Select a menu script"), LOS::LuminaShare()+"/menu-scripts/" );
   if(file.isEmpty()){ return; } //cancelled
   ui->line_exec->setText(file);
   checkItems();
