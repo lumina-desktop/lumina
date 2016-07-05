@@ -24,8 +24,14 @@ public slots:
 	void LoadSettings(int screennum);
 	void updateIcons();
 
+	//Simplification function for widget connections
+	virtual void settingChanged(){
+	  if(!loading){ emit HasPendingChanges(true); }
+	}
+
 private:
 	Ui::page_fluxbox_keys *ui;
+	bool loading;
 
 	//Convert to/from fluxbox keyboard shortcuts
 	QString dispToFluxKeys(QString);
@@ -39,6 +45,7 @@ private slots:
 	void clearKeyBinding();
 	void applyKeyBinding();
 	void updateKeyConfig();
-
+	void switchEditor();
+	void togglesyntaxgroup();
 };
 #endif
