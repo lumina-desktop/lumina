@@ -63,15 +63,15 @@ void LPlugins::LoadPanelPlugins(){
   PANEL.clear();
   //User Button
   LPI info;
-    info.name = QObject::tr("User Button");
-    info.description = QObject::tr("This is the main system access button for the user (applications, directories, settings, log out).");
+    info.name = QObject::tr("User Menu");
+    info.description = QObject::tr("Start menu alternative focusing on the user's files, directories, and favorites.");
     info.ID = "userbutton";
     info.icon = "user-identity";
   PANEL.insert(info.ID, info);
    //Application Menu
   info = LPI(); //clear it
     info.name = QObject::tr("Application Menu");
-    info.description = QObject::tr("This provides instant-access to application that are installed on the system.");
+    info.description = QObject::tr("Start menu alternative which focuses on launching applications.");
     info.ID = "appmenu";
     info.icon = "format-list-unordered";
   PANEL.insert(info.ID, info);   
@@ -127,14 +127,14 @@ void LPlugins::LoadPanelPlugins(){
   //Task Manager
   info = LPI(); //clear it
     info.name = QObject::tr("Task Manager");
-    info.description = QObject::tr("View and control any running application windows (every application has a button)");
+    info.description = QObject::tr("View and control any running application windows (group similar windows under a single button).");
     info.ID = "taskmanager";
     info.icon = "preferences-system-windows";
   PANEL.insert(info.ID, info); 
   //Task Manager
   info = LPI(); //clear it
     info.name = QObject::tr("Task Manager (No Groups)");
-    info.description = QObject::tr("View and control any running application windows (every window has a button)");
+    info.description = QObject::tr("View and control any running application windows (every individual window has a button)");
     info.ID = "taskmanager-nogroups";
     info.icon = "preferences-system-windows";
   PANEL.insert(info.ID, info); 
@@ -188,7 +188,7 @@ void LPlugins::LoadDesktopPlugins(){
   //Desktop View Plugin
   info = LPI(); //clear it
     info.name = QObject::tr("Desktop Icons View");
-    info.description = QObject::tr("Area for automatically showing desktop icons");
+    info.description = QObject::tr("Configurable area for automatically showing desktop icons");
     info.ID = "desktopview";
     info.icon = "preferences-desktop-icons";
   DESKTOP.insert(info.ID, info);
@@ -246,7 +246,7 @@ void LPlugins::LoadMenuPlugins(){
   MENU.insert(info.ID, info);
   //File Manager
   info = LPI(); //clear it
-    info.name = QObject::tr("File Manager");
+    info.name = QObject::tr("Browse Files");
     info.description = QObject::tr("Browse the system with the default file manager.");
     info.ID = "filemanager";
     info.icon = "Insight-FileManager";
@@ -267,15 +267,15 @@ void LPlugins::LoadMenuPlugins(){
   MENU.insert(info.ID, info);
   //Settings
   info = LPI(); //clear it
-    info.name = QObject::tr("Settings");
+    info.name = QObject::tr("Preferences");
     info.description = QObject::tr("Show the desktop settings menu.");
     info.ID = "settings";
     info.icon = "configure";
   MENU.insert(info.ID, info);
   //Window List
   info = LPI(); //clear it
-    info.name = QObject::tr("Window List");
-    info.description = QObject::tr("List the open application windows");
+    info.name = QObject::tr("Task Manager");
+    info.description = QObject::tr("List the open, minimized, active, and urgent application windows");
     info.ID = "windowlist";
     info.icon = "preferences-system-windows";
   MENU.insert(info.ID, info);  
@@ -289,7 +289,7 @@ void LPlugins::LoadMenuPlugins(){
   //Custom Apps
   info = LPI(); //clear it
     info.name = QObject::tr("Menu Script");
-    info.description = QObject::tr("Run an external script to generate a menu");
+    info.description = QObject::tr("Run an external script to generate a user defined menu");
     info.ID = "jsonmenu";
     info.icon = "text-x-script";
   MENU.insert(info.ID, info);
