@@ -39,5 +39,6 @@ private slots:
 	}
 
 	void sessionthemechanged();
+	void switchEditor();
 };
 #endif
