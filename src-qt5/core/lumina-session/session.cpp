@@ -69,9 +69,25 @@ void LSession::start(){
   // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
   //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
   //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
+
   //Compositing manager
-  if(LUtils::isValidBinary("compton")){ startProcess("compositing","compton"); }
-  else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+  if(LUtils::isValidBinary("compton")){ 
+    QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
+    if(!QFile::exists(set)){
+      QStringList dirs = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+      for(int i=0; i<dirs.length(); i++){
+        if(QFile::exists(dirs[i]+"/compton.conf")){ QFile::copy(dirs[i]+"/compton.conf", set); break; }
+        else if(QFile::exists(dirs[i]+"/compton.conf.sample")){ QFile::copy(dirs[i]+"/compton.conf.sample", set); break; }
+      }
+    }
+    if(!QFile::exists(set)){
+      qDebug() << "Using default compton settings";
+      startProcess("compositing","compton");
+    }else{
+      startProcess("compositing","compton --config \""+set+"\"");
+    }
+  }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+
   //Desktop Next
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
