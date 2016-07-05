@@ -26,7 +26,7 @@ page_sample::~page_sample(){
 //================
 void page_sample::SaveSettings(){
 
-  emit HasPendingChanged(false);
+  emit HasPendingChanges(false);
 }
 
 void page_sample::LoadSettings(int){

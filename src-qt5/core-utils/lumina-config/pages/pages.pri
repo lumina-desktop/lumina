@@ -12,7 +12,8 @@ HEADERS	+= 	$${PWD}/getPage.h \
 		$${PWD}/page_interface_menu.h \
 		$${PWD}/page_interface_panels.h \
 		$${PWD}/page_session_locale.h \
-		$${PWD}/page_session_options.h 
+		$${PWD}/page_session_options.h \
+		$${PWD}/page_compton.h
 
 
 SOURCES	+=	$${PWD}/page_main.cpp \
@@ -26,7 +27,8 @@ SOURCES	+=	$${PWD}/page_main.cpp \
 		$${PWD}/page_interface_menu.cpp \
 		$${PWD}/page_interface_panels.cpp \
 		$${PWD}/page_session_locale.cpp \
-		$${PWD}/page_session_options.cpp 
+		$${PWD}/page_session_options.cpp \
+		$${PWD}/page_compton.cpp
 
 		
 FORMS	+=	$${PWD}/page_main.ui \
@@ -40,4 +42,5 @@ FORMS	+=	$${PWD}/page_main.ui \
 		$${PWD}/page_interface_menu.ui \
 		$${PWD}/page_interface_panels.ui \
 		$${PWD}/page_session_locale.ui \
-		$${PWD}/page_session_options.ui
+		$${PWD}/page_session_options.ui \
+		$${PWD}/page_compton.ui

@@ -28,10 +28,11 @@ static QList<PAGEINFO> KnownPages(){
   //Reminder: <ID>, <name>, <title>, <icon>, <comment>, <category>, <server subsytem list>, <search tags>
   list << PageInfo("wallpaper", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "image");
   list << PageInfo("theme", QObject::tr("Change Desktop Theme"), QObject::tr("Theme Settings"), "preferences-desktop-theme",QObject::tr("Change interface fonts and colors"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "theme" << "plugins");
+  list << PageInfo("compton", QObject::tr("Window Effects"), QObject::tr("Window Effects"), "window-duplicate",QObject::tr("Adjust transparency levels and window effects"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "transparency" << "windows" << "compositing");
   list << PageInfo("autostart", QObject::tr("Startup Services and Applications"), QObject::tr("Startup Settings"), "preferences-system-session-services",QObject::tr("Automatically start applications or services"), "session", QStringList(), QStringList() << "apps" << "autostart" << "services" << "xdg" << "startup" << "session");
   list << PageInfo("defaultapps", QObject::tr("Default Applications for File Type"), QObject::tr("Mimetype Settings"), "preferences-desktop-default-applications",QObject::tr("Change default applications"), "session", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
   list << PageInfo("fluxbox-keys", QObject::tr("Keyboard Shortcuts"), QObject::tr("Keyboard Shortcuts"), "preferences-desktop-keyboard",QObject::tr("Change keyboard shortcuts"), "session", QStringList(), QStringList() << "apps" << "fluxbox" << "keys" << "keyboard" << "session" << "launch");
-  list << PageInfo("fluxbox-settings", QObject::tr("Window Manager"), QObject::tr("Window Settings"), "preferences-system-windows",QObject::tr("Change window settings and appearances"), "appearance", QStringList(), QStringList() << "window" << "frame" << "border" << "workspace" << "theme" << "fluxbox" << "session");
+  list << PageInfo("fluxbox-settings", QObject::tr("Window Manager"), QObject::tr("Window Settings"), "preferences-system-windows-actions",QObject::tr("Change window settings and appearances"), "appearance", QStringList(), QStringList() << "window" << "frame" << "border" << "workspace" << "theme" << "fluxbox" << "session");
   list << PageInfo("interface-desktop", QObject::tr("Desktop Icons and Plugins"), QObject::tr("Desktop Plugins"), "preferences-desktop-icons",QObject::tr("Change what icons or tools are embedded on the desktop"), "interface", QStringList(), QStringList() << "desktop" << "plugins" << "embed" << "icons" << "utilities");
   list << PageInfo("interface-panel", QObject::tr("Floating Panels and Plugins"), QObject::tr("Panels and Plugins"), "configure-toolbars",QObject::tr("Change any floating panels and what they show"), "interface", QStringList(), QStringList() << "desktop" << "toolbar" << "panel" << "floating" << "plugins");
   list << PageInfo("interface-menu", QObject::tr("Context Menu and Plugins"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
@@ -53,6 +54,7 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_interface_menu.h"
 #include "page_session_locale.h"
 #include "page_session_options.h"
+#include "page_compton.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -67,6 +69,7 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="interface-menu"){ return new page_interface_menu(parent); }
   else if(id=="session-locale"){ return new page_session_locale(parent); }
   else if(id=="session-options"){ return new page_session_options(parent); }
+  else if(id=="compton"){ return new page_compton(parent); }
   //Return the main control_panel page as the fallback/default
   return new page_main(parent);
 }
