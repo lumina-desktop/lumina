@@ -29,6 +29,16 @@
    <item>
     <widget class="QPlainTextEdit" name="text_file"/>
    </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>NOTE: The desktop will need to be restarted before changes take effect</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
