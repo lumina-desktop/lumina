@@ -24,7 +24,7 @@ QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 
 //OS-specific application shortcuts (*.desktop files)
-QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
+QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/sysadm-client.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
 //OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
 QStringList LOS::RSSFeeds(){ 
@@ -64,11 +64,18 @@ QStringList LOS::ExternalDevicePaths(){
 
 //Read screen brightness information
 int LOS::ScreenBrightness(){
+  //First run a quick check to ensure this is not a VirtualBox VM (no brightness control)
+  static int goodsys = -1; //This will not change over time - only check/set once
+  if(goodsys<0){  
+      //Make sure we are not running in VirtualBox (does not work in a VM)
+      QStringList info = LUtils::getCmdOutput("pciconf -lv");
+      if( !info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ goodsys = 1; }
+      else{ goodsys = 0; } //not a good system
+  }
+  if(goodsys<=0){ return -1; } //not a good system
+
   //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
-  //Make sure we are not running in VirtualBox (does not work in a VM)
-  QStringList info = LUtils::getCmdOutput("pciconf -lv");
-  if( !info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ return -1; }
-  else if( !LUtils::isValidBinary("xbrightness") ){ return -1; } //incomplete install
+  if( !LUtils::isValidBinary("xbrightness") ){ return -1; } //incomplete install
   //Now perform the standard brightness checks
   if(screenbrightness==-1){ //memory value
     if(QFile::exists(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness")){ //saved file value
