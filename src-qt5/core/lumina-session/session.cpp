@@ -44,14 +44,14 @@ void LSession::procFinished(){
   }
 }
 
-void LSession::startProcess(QString ID, QString command){
+void LSession::startProcess(QString ID, QString command, QStringList watchfiles){
   QString dir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs";
   if(!QFile::exists(dir)){ QDir tmp(dir); tmp.mkpath(dir); }
   QString logfile = dir+"/"+ID+".log";
   if(QFile::exists(logfile+".old")){ QFile::remove(logfile+".old"); }
   if(QFile::exists(logfile)){ QFile::rename(logfile,logfile+".old"); }
 
-  QProcess *proc = new QProcess();
+  LProcess *proc = new LProcess(ID, watchfiles);
   proc->setProcessChannelMode(QProcess::MergedChannels);
   proc->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
   proc->setStandardOutputFile(logfile);
@@ -68,7 +68,7 @@ void LSession::start(){
   //Window Manager First
   // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
   //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
-  //startProcess("wm", "fluxbox -rc "+QDir::homePath()+"/.lumina/fluxbox-init -no-slit -no-toolbar");
+  //startProcess("wm", "fluxbox -rc "+QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init -no-slit -no-toolbar");
 
   //Compositing manager
   if(LUtils::isValidBinary("compton")){ 
@@ -84,7 +84,7 @@ void LSession::start(){
       qDebug() << "Using default compton settings";
       startProcess("compositing","compton");
     }else{
-      startProcess("compositing","compton --config \""+set+"\"");
+      startProcess("compositing","compton --config \""+set+"\"", QStringList() << set);
     }
   }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
 

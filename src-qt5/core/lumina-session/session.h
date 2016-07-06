@@ -6,6 +6,45 @@
 //===========================================
 #include <QObject>
 #include <QProcess>
+#include <QFileSystemWatcher>
+
+#include <sys/types.h>
+#include <signal.h>
+
+class LProcess : public QProcess{
+	Q_OBJECT
+private:
+	QFileSystemWatcher *watcher;
+	QString id;
+private slots:
+	void filechanged(QString path){
+	  if(watcher==0){ return; } //just in case
+	  if(this->state()==QProcess::Running){
+	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){ ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
+	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){ ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
+	  }
+	  //Now make sure this file/dir was not removed from the watcher
+	  QStringList watched; watched << watcher->files() << watcher->directories();
+	  if(!watched.contains(path)){ watcher->addPath(path); } //re-add it
+	}
+
+public:
+	LProcess(QString ID, QStringList watchfiles) : QProcess(){
+	  id=ID;
+	  watcher = 0;
+          if(watchfiles.isEmpty()){
+	    watcher = new QFileSystemWatcher(this);
+	    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(filechanged(QString)) );
+	    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(filechanged(QString)) );
+	    watcher->addPaths(watchfiles);
+	  }
+	}
+	~LProcess(){
+
+	}
+	QString ID(){ return id; }
+
+};
 
 class LSession : public QObject{
 	Q_OBJECT
@@ -18,7 +57,7 @@ private slots:
 
 	void procFinished();
 
-	void startProcess(QString ID, QString command);
+	void startProcess(QString ID, QString command, QStringList watchfiles = QStringList());
 
 public:
 	LSession(){
