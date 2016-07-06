@@ -27,7 +27,7 @@
 #include "SettingsMenu.h"
 #include "SystemWindow.h"
 #include "LDesktop.h"
-#include "WMProcess.h"
+//#include "WMProcess.h"
 //#include "BootSplash.h"
 
 #include <LuminaX11.h>
@@ -105,7 +105,7 @@ public:
 	void adjustWindowGeom(WId win, bool maximize = false);
 	
 private:
-	WMProcess *WM;
+	//WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
 	QTimer *screenTimer;
