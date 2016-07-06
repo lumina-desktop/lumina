@@ -49,8 +49,8 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   if(tmp>=0){ ui->combo_align->setCurrentIndex( tmp ); }
   tmp = ui->combo_edge->findData( settings->value(prefix+"location","top").toString().toLower() );
   if(tmp>=0){ ui->combo_edge->setCurrentIndex( tmp ); }
-  ui->spin_plength->setValue( settings->value( prefix+"lengthPercent",100).toInt() );
-  ui->spin_pxthick->setValue( settings->value( prefix+"height",30).toInt() );
+  ui->spin_plength->setValue( qRound(settings->value( prefix+"lengthPercent",100).toDouble()) );
+  ui->spin_pxthick->setValue( qRound(settings->value( prefix+"height",30).toDouble()) );
   ui->check_autohide->setChecked( settings->value(prefix+"hidepanel", false).toBool() );
   ui->group_customcolor->setChecked( settings->value(prefix+"customColor",false).toBool() );
   ui->label_color_sample->setWhatsThis( settings->value(prefix+"color","rgba(255,255,255,160)").toString());
