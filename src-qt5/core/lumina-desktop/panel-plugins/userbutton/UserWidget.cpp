@@ -49,7 +49,7 @@ UserWidget::~UserWidget(){
 //===========
 void UserWidget::ClearScrollArea(QScrollArea *area){
   QWidget *wgt = area->takeWidget();
-  delete wgt; //delete the widget and all children
+  wgt->deleteLater(); //delete the widget and all children
   area->setWidget( new QWidget() ); //create a new widget in the scroll area
   area->widget()->setContentsMargins(0,0,0,0);
     QVBoxLayout *layout = new QVBoxLayout;
@@ -320,13 +320,16 @@ void UserWidget::updateApps(){
 
 //Home Tab
 void UserWidget::updateHome(){
+  qDebug() << "Update Home";
   ClearScrollArea(ui->scroll_home);
+  qDebug() << " - dir:" << ui->label_home_dir->whatsThis();
   QDir homedir(ui->label_home_dir->whatsThis());
   QStringList items;
   if(QDir::homePath() == homedir.absolutePath()){
     ui->label_home_dir->setText(tr("Home"));
     ui->tool_home_gohome->setVisible(false);
   }else{
+    qDebug() << " - Show the back button";
     ui->tool_home_gohome->setVisible(true);
     ui->label_home_dir->setText( this->fontMetrics().elidedText(homedir.dirName(), Qt::ElideRight, ui->label_home_dir->width()));
     //Now make sure to put a "go back" button at the top of the list
@@ -335,21 +338,25 @@ void UserWidget::updateHome(){
     dir.chop( dir.section("/",-1).length() );
     items << dir;
   }
+  qDebug() << " - Load items";
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
   items << homedir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst); 
   QString type = "";
   if(homedir.absolutePath() == QDir::homePath()+"/Desktop"){ type.append("-home"); }//internal code
   for(int i=0; i<items.length(); i++){
-    //qDebug() << "New Home subdir:" << homedir.absoluteFilePath(items[i]);
+    qDebug() << " - New item:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;
     if(items[i].startsWith("/")){ it = new UserItemWidget(ui->scroll_home->widget(), items[i], "dir", true); } //go-back button
     else{ it = new UserItemWidget(ui->scroll_home->widget(), homedir.absoluteFilePath(items[i]), type, false); }
+    qDebug() << " - Add to layout";
     ui->scroll_home->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(slotGoToDir(QString)) );
     connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(updateFavItems()) );
+    qDebug() << " - process events";
     QApplication::processEvents(); //keep the UI snappy - may be a lot of these to load
   }
+  qDebug() << " - Done";
 }
 
 void UserWidget::slotGoToDir(QString dir){
