@@ -32,7 +32,7 @@ public:
 	LProcess(QString ID, QStringList watchfiles) : QProcess(){
 	  id=ID;
 	  watcher = 0;
-          if(watchfiles.isEmpty()){
+          if(!watchfiles.isEmpty()){
 	    watcher = new QFileSystemWatcher(this);
 	    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(filechanged(QString)) );
 	    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(filechanged(QString)) );
