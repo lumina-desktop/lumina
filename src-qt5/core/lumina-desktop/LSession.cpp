@@ -68,11 +68,11 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
 
 LSession::~LSession(){
  if(this->isPrimaryProcess()){
-  WM->stopWM();
+  //WM->stopWM();
   for(int i=0; i<DESKTOPS.length(); i++){
     delete DESKTOPS[i];
   }
-  delete WM;
+  //delete WM;
   delete settingsmenu;
   delete appmenu;
   delete currTranslator;
@@ -121,10 +121,10 @@ void LSession::setupSession(){
   startSystemTray();
 	
   //Launch Fluxbox
-    splash.showScreen("wm");
-  if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
-  WM = new WMProcess();
-    WM->startWM();
+    //splash.showScreen("wm");
+  //if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
+  //WM = new WMProcess();
+    //WM->startWM();
 	
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
@@ -208,7 +208,7 @@ void LSession::CleanupSession(){
   evFilter->StopEventHandling();
   //Stop the window manager
   qDebug() << " - Stopping the window manager";
-  WM->stopWM();
+  //WM->stopWM();
   //Now close down the desktop
   qDebug() << " - Closing down the desktop elements";
   for(int i=0; i<DESKTOPS.length(); i++){
@@ -320,8 +320,8 @@ void LSession::reloadIconTheme(){
 
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
-  if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
-  else if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
+  //if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
+  if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
   else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
   else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){ 
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
@@ -367,7 +367,7 @@ void LSession::checkUserFiles(){
 }
 
 void LSession::refreshWindowManager(){
-  WM->updateWM();
+  LUtils::runCmd("touch \""+QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init\"" );
 }
 
 void LSession::updateDesktops(){
@@ -419,7 +419,7 @@ void LSession::updateDesktops(){
   //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes in the middle of a session
     if(numchange && !firstrun) {
       qDebug() << "Update WM";
-      WM->updateWM();
+      refreshWindowManager();
     }
 
   //Make sure all the background windows are registered on the system as virtual roots
