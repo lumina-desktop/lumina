@@ -67,9 +67,22 @@ void LSession::start(){
   }
   //Window Manager First
   // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
-  //if(!QFile::exists(QDir::homePath()+"/.fluxbox")){ QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox"); }
-  //startProcess("wm", "fluxbox -rc "+QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init -no-slit -no-toolbar");
-
+  if( !LUtils::isValidBinary("fluxbox") ){
+    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue"; 
+  }else{
+    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
+    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
+    if(!QFile::exists(confDir+"/fluxbox-init")){
+      QFile::copy(":/fluxboxconf/fluxbox-init-rc",confDir+"/fluxbox-init");
+      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    }
+    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
+    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
+      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
+    }
+    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
+    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
+  }
   //Compositing manager
   if(LUtils::isValidBinary("compton")){ 
     QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
