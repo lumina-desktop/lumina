@@ -175,7 +175,7 @@ private slots:
 	  for(int i=0; i<ITEMS.length(); i++){
 	    if(ITEMS[i]->whatsThis()==ID){
 	      ITEMS[i]->Cleanup();
-	      delete ITEMS.takeAt(i);
+	      ITEMS.takeAt(i)->deleteLater();
 	      break;
 	    }
 	  }
