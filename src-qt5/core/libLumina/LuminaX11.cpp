@@ -393,7 +393,7 @@ QString LXCB::OldWindowName(WId win){ //WM_NAME (old standard)
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win);
   xcb_icccm_get_text_property_reply_t reply;
   if(1 == xcb_icccm_get_wm_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
-    QString name = QString::fromLocal8Bit(reply.name);
+    QString name = QString::fromLocal8Bit(reply.name, reply.name_len);
     xcb_icccm_get_text_property_reply_wipe(&reply);
     return name;
   }else{
@@ -408,7 +408,7 @@ QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win);
   xcb_icccm_get_text_property_reply_t reply;
   if(1 == xcb_icccm_get_wm_icon_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
-    QString name = QString::fromLocal8Bit(reply.name);
+    QString name = QString::fromLocal8Bit(reply.name, reply.name_len);
     xcb_icccm_get_text_property_reply_wipe(&reply);
     return name;
   }else{
