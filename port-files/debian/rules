@@ -17,7 +17,8 @@ override_dh_auto_configure:
 		L_ETCDIR=/etc \
 		QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
 		QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed" \
-		CONFIG+=nostrip
+		CONFIG+=nostrip \
+		CONFIG+=WITH_I18N
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -25,7 +26,7 @@ override_dh_auto_clean:
 
 override_dh_install:
 	dh_install --list-missing
-	mv $(CURDIR)/port-files/debian/lumina-desktop/usr/bin/lumina-desktop \
-		$(CURDIR)/port-files/debian/lumina-desktop/usr/bin/lumina-desktop.real
-	install -m755 $(CURDIR)/port-files/debian/lumina-desktop \
-		$(CURDIR)/port-files/debian/lumina-desktop/usr/bin/lumina-desktop
+	mv $(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop \
+		$(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop.real
+	install -m755 $(CURDIR)/debian/lumina-desktop.wrapper \
+		$(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop
