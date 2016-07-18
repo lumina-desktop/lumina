@@ -35,7 +35,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Quick-Access Menu</string>
+      <string>Context Menu Plugins</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
