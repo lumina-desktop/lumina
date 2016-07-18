@@ -20,9 +20,9 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libluminautils1 (= ${binary:Version
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
          lumina-xconfig, lumina-fileinfo, lxpolkit, lumina-data,
          lumina-textedit, fluxbox, numlockx, xbacklight, xscreensaver,
-         usbmount, alsa-utils, acpi, gstreamer1.0-plugins-base,
-         phonon4qt5-backend-gstreamer, pavucontrol, procps, sysstat
-Recommends: qt5-configuration-tool
+         alsa-utils, acpi, gstreamer1.0-plugins-base, procps, sysstat,
+         phonon4qt5-backend-gstreamer
+Recommends: qt5-configuration-tool, usbmount, xarchiver, pavucontrol
 Description: Lightweight Qt5-based desktop environment
  Metapackage depending on all other lumina packages.
 

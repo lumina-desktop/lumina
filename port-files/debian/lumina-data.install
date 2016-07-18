@@ -7,6 +7,7 @@ usr/share/lumina-desktop/fluxbox-init-rc
 usr/share/lumina-desktop/fluxbox-keys
 usr/share/lumina-desktop/Login.ogg
 usr/share/lumina-desktop/Logout.ogg
+usr/share/lumina-desktop/menu-scripts/ls.json.sh
 usr/share/lumina-desktop/luminaDesktop.conf
 usr/share/lumina-desktop/i18n/lumina-desktop*.qm
 usr/share/wallpapers/Lumina-DE/
