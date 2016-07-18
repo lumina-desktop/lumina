@@ -10,6 +10,7 @@
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QDebug>
+#include <QSettings>
 #include <LuminaUtils.h>
 #include <LuminaOS.h>
 
@@ -92,23 +93,25 @@ void LSession::start(){
     startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
   }
   //Compositing manager
-  if(LUtils::isValidBinary("compton")){ 
-    QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
-    if(!QFile::exists(set)){
-      QStringList dirs = QString(getenv("XDG_CONFIG_DIRS")).split(":");
-      for(int i=0; i<dirs.length(); i++){
-        if(QFile::exists(dirs[i]+"/compton.conf")){ QFile::copy(dirs[i]+"/compton.conf", set); break; }
-        else if(QFile::exists(dirs[i]+"/compton.conf.sample")){ QFile::copy(dirs[i]+"/compton.conf.sample", set); break; }
+  QSettings settings("lumina-desktop","sessionsettings");
+  if(settings.value("enableCompositing",true).toBool()){
+    if(LUtils::isValidBinary("compton")){ 
+      QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
+      if(!QFile::exists(set)){
+        QStringList dirs = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+        for(int i=0; i<dirs.length(); i++){
+          if(QFile::exists(dirs[i]+"/compton.conf")){ QFile::copy(dirs[i]+"/compton.conf", set); break; }
+          else if(QFile::exists(dirs[i]+"/compton.conf.sample")){ QFile::copy(dirs[i]+"/compton.conf.sample", set); break; }
+        }
       }
-    }
-    if(!QFile::exists(set)){
-      qDebug() << "Using default compton settings";
-      startProcess("compositing","compton");
-    }else{
-      startProcess("compositing","compton --config \""+set+"\"", QStringList() << set);
-    }
-  }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
-
+      if(!QFile::exists(set)){
+        qDebug() << "Using default compton settings";
+        startProcess("compositing","compton");
+      }else{
+        startProcess("compositing","compton --config \""+set+"\"", QStringList() << set);
+      }
+    }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+  }
   //Desktop Next
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
