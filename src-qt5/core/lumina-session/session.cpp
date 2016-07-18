@@ -11,7 +11,7 @@
 #include <QProcessEnvironment>
 #include <QDebug>
 #include <LuminaUtils.h>
-
+#include <LuminaOS.h>
 
 void LSession::stopall(){
   stopping = true;
@@ -73,9 +73,15 @@ void LSession::start(){
     QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
     if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
     if(!QFile::exists(confDir+"/fluxbox-init")){
-      QFile::copy(":/fluxboxconf/fluxbox-init-rc",confDir+"/fluxbox-init");
+      QFile::copy(LOS::LuminaShare()+"/fluxbox-init-rc",confDir+"/fluxbox-init");
       QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
     }
+    if(!QFile::exists(confDir+"/fluxbox-keys")){
+      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
+       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
+       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
+      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    }    
     // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
     if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
       QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
