@@ -235,14 +235,14 @@ void UserWidget::updateFavItems(bool newfilter){
   if(ui->tool_fav_apps->isChecked()){ 
     favitems = favs.filter("::::app::::");
     for(int i=0; i<homefiles.length(); i++){
-      if(homefiles[i].fileName().endsWith(".desktop")){
+      if(homefiles[i].fileName().endsWith(".desktop") && favitems.filter(homefiles[i].canonicalFilePath()).isEmpty() ){
         favitems << homefiles[i].fileName()+"::::app-home::::"+homefiles[i].absoluteFilePath();
       }
     }
   }else if(ui->tool_fav_dirs->isChecked()){ 
     favitems = favs.filter("::::dir::::");
     for(int i=0; i<homefiles.length(); i++){
-      if(homefiles[i].isDir()){
+      if(homefiles[i].isDir() && favitems.filter(homefiles[i].canonicalFilePath()).isEmpty() ){
         favitems << homefiles[i].fileName()+"::::dir-home::::"+homefiles[i].absoluteFilePath();
       }
     }
@@ -255,7 +255,7 @@ void UserWidget::updateFavItems(bool newfilter){
       }
     }
     for(int i=0; i<homefiles.length(); i++){
-      if(!homefiles[i].isDir() && !homefiles[i].fileName().endsWith(".desktop") ){
+      if(!homefiles[i].isDir() && !homefiles[i].fileName().endsWith(".desktop") && favitems.filter(homefiles[i].canonicalFilePath()).isEmpty() ){
         favitems << homefiles[i].fileName()+"::::"+LXDG::findAppMimeForFile(homefiles[i].fileName())+"-home::::"+homefiles[i].absoluteFilePath();
       }
     }
