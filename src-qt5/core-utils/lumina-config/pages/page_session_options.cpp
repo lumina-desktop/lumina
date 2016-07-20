@@ -13,7 +13,7 @@
 //==========
 page_session_options::page_session_options(QWidget *parent) : PageWidget(parent), ui(new Ui::page_session_options()){
   ui->setupUi(this);
-
+  loading = false;
   //Display formats for panel clock
   ui->combo_session_datetimeorder->clear();
   ui->combo_session_datetimeorder->addItem( tr("Time (Date as tooltip)"), "timeonly");
@@ -29,6 +29,9 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->line_session_time, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadTimeSample()) );
   connect(ui->line_session_date, SIGNAL(textChanged(QString)), this, SLOT(sessionLoadDateSample()) );
   connect(ui->combo_session_datetimeorder, SIGNAL(currentIndexChanged(int)), this, SLOT(settingChanged()) );
+  connect(ui->check_session_numlock, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
+  connect(ui->check_session_playloginaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
+  connect(ui->check_session_playlogoutaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
  updateIcons();
  
 }
@@ -54,6 +57,7 @@ void page_session_options::SaveSettings(){
 void page_session_options::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Desktop Settings") );
+  loading = true;
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   ui->check_session_numlock->setChecked( sessionsettings.value("EnableNumlock", true).toBool() );
   ui->check_session_playloginaudio->setChecked( sessionsettings.value("PlayStartupAudio",true).toBool() );
@@ -66,6 +70,8 @@ void page_session_options::LoadSettings(int){
 
   sessionLoadTimeSample();
   sessionLoadDateSample();
+  QApplication::processEvents(); //throw away any interaction events from loading
+  loading = false;
 }
 
 void page_session_options::updateIcons(){

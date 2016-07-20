@@ -24,8 +24,12 @@ public slots:
 	void LoadSettings(int screennum = -1);
 	void updateIcons();
 
+	virtual void settingChanged(){
+	  if(!loading){ emit HasPendingChanges(true); }
+	}
 private:
 	Ui::page_session_options *ui;
+	bool loading;
 
 private slots:
 	void sessionChangeUserIcon();
