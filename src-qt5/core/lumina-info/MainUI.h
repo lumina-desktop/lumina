@@ -35,5 +35,11 @@ private slots:
 	void showQtInfo();
 	void showSponsor(QListWidgetItem *item);
 	void LinkClicked(QString url);
+
+	//Simplification slots for the link buttons
+	void on_tool_bugs_clicked();
+	void on_tool_irc_clicked();
+	void on_tool_sources_clicked();
+	void on_tool_website_clicked();
 };
 #endif

@@ -32,13 +32,15 @@ void MainUI::updateUI(){
   //Load the UI from all the resources / library info
   this->setWindowIcon( LXDG::findIcon("lumina","") );
   ui->label_icon->setPixmap( QPixmap(":Images/Lumina-logo.png").scaledToHeight(ui->label_icon->height(), Qt::SmoothTransformation) );
+  ui->tool_bugs->setIcon( LXDG::findIcon("dialog-warning",""));
+  ui->tool_irc->setIcon( LXDG::findIcon("im-user",""));
+  ui->tool_sources->setIcon( LXDG::findIcon("documentation",""));
+  ui->tool_website->setIcon( LXDG::findIcon("go-home",""));
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
   //General Tab
   ui->label_version->setText( LUtils::LuminaDesktopVersion() );
   ui->label_OS->setText( LOS::OSName() );
   connect(ui->tool_aboutQt, SIGNAL(clicked()), this, SLOT(showQtInfo()) );
-  connect(ui->label_doc, SIGNAL(linkActivated(const QString&)), this, SLOT(LinkClicked(QString)) );
-  connect(ui->label_source, SIGNAL(linkActivated(const QString&)), this, SLOT(LinkClicked(QString)) );
   //License Tab
   ui->text_license->setPlainText( LUtils::readFile(":LICENSE").join("\n") );
   //Acknowledgements Tab
@@ -60,4 +62,19 @@ void MainUI::showSponsor(QListWidgetItem *item){
 
 void MainUI::LinkClicked(QString url){
   QProcess::startDetached("lumina-open \""+url+"\"");
+}
+void MainUI::on_tool_bugs_clicked(){ 
+  LinkClicked(ui->tool_bugs->whatsThis());
+}
+
+void MainUI::on_tool_irc_clicked(){
+  LinkClicked(ui->tool_irc->whatsThis()); 
+}
+
+void MainUI::on_tool_sources_clicked(){
+  LinkClicked(ui->tool_sources->whatsThis());
+}
+
+void MainUI::on_tool_website_clicked(){
+  LinkClicked(ui->tool_website->whatsThis());
 }
