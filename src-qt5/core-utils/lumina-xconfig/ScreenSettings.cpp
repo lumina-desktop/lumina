@@ -183,7 +183,7 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
     qDebug() << " -- Screen:" << i << screens[i].ID << screens[i].isactive << screens[i].order;
     if(screens[i].order <0 || !screens[i].isactive){ continue; } //skip this screen - non-active
     opts << "--output" << screens[i].ID << "--mode" << QString::number(screens[i].geom.width())+"x"+QString::number(screens[i].geom.height());
-    //opts << "--pos" << QString::number(screens[i].geom.x())+"x"+QString::number(screens[i].geom.y());
+    opts << "--pos" << QString::number(screens[i].geom.x())+"x"+QString::number(screens[i].geom.y());
     if(screens[i].isprimary){ opts << "--primary"; }
   }
   qDebug() << "Run command: xrandr" << opts;
