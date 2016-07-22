@@ -69,7 +69,7 @@ int LOS::ScreenBrightness(){
   if(goodsys<0){  
       //Make sure we are not running in VirtualBox (does not work in a VM)
       QStringList info = LUtils::getCmdOutput("pciconf -lv");
-      if( !info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ goodsys = 1; }
+      if( info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ goodsys = 1; }
       else{ goodsys = 0; } //not a good system
   }
   if(goodsys<=0){ return -1; } //not a good system
@@ -85,7 +85,6 @@ int LOS::ScreenBrightness(){
   }
   //If it gets to this point, then we have a valid (but new) installation
   if(screenbrightness<0){ screenbrightness = 100; } //default value for systems 
-  
   return screenbrightness;	
 }
 
