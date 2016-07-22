@@ -112,7 +112,7 @@ void LOS::setScreenBrightness(int percent){
    }
   }
   // - if hardware brightness does not work, use software brightness
-  if(!success){
+  if(!success && LUtils::isValidBinary("xbrightness") ){
     QString cmd = "xbrightness  %1";
     float pf = percent/100.0; //convert to a decimel
     cmd = cmd.arg( QString::number( int(65535*pf) ) );
