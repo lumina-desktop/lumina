@@ -82,6 +82,7 @@ wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
 
 
 defaults.files = defaults/luminaDesktop.conf \
+		defaults/compton.conf \
 		audiofiles/Logout.ogg \
 		audiofiles/Login.ogg
 defaults.path = $${L_SHAREDIR}/lumina-desktop/
