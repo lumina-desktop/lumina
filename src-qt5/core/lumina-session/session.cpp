@@ -98,10 +98,8 @@ void LSession::start(){
     if(LUtils::isValidBinary("compton")){ 
       QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
       if(!QFile::exists(set)){
-        QStringList dirs = QString(getenv("XDG_CONFIG_DIRS")).split(":");
-        for(int i=0; i<dirs.length(); i++){
-          if(QFile::exists(dirs[i]+"/compton.conf")){ QFile::copy(dirs[i]+"/compton.conf", set); break; }
-          else if(QFile::exists(dirs[i]+"/compton.conf.sample")){ QFile::copy(dirs[i]+"/compton.conf.sample", set); break; }
+        if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
+	  QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
         }
       }
       if(!QFile::exists(set)){
