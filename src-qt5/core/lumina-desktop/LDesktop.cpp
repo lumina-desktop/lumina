@@ -87,15 +87,11 @@ void LDesktop::UpdateGeometry(){
     //if(desktop->screenGeometry(desktopnumber)==bgWindow->geometry()){ return; }
     //Now update the screen
     // NOTE: This functionality is highly event-driven based on X changes - so we need to keep things in order (no signals/slots)
-    qDebug() << "Changing Desktop Geom:" << desktopnumber;
+    //qDebug() << "Changing Desktop Geom:" << desktopnumber;
     bgWindow->setGeometry(desktop->screenGeometry(desktopnumber));
-    qDebug() << " - Update Desktop Plugin Area";
+    //qDebug() << " - Update Desktop Plugin Area";
     UpdateDesktopPluginArea();
-    /*qDebug() << " - Update Panel Geometry";
-    for(int i=0; PANELS.length(); i++){
-      PANELS[i]->UpdatePanel(true); //only update geometry
-    }*/
-    qDebug() << " - Done With Desktop Geom Updates";
+    //qDebug() << " - Done With Desktop Geom Updates";
     QTimer::singleShot(0, this, SLOT(UpdatePanels()));
 }
 	
@@ -441,6 +437,7 @@ void LDesktop::UpdatePanels(){
 void LDesktop::UpdateDesktopPluginArea(){
   QRegion visReg( bgWindow->geometry() ); //visible region (not hidden behind a panel)
   QRect rawRect = visReg.boundingRect(); //initial value (screen size)
+  //qDebug() << "Update Desktop Plugin Area:" << bgWindow->geometry();
   for(int i=0; i<PANELS.length(); i++){
     QRegion shifted = visReg;
     QString loc = settings->value(PANELS[i]->prefix()+"location","top").toString().toLower();
@@ -462,10 +459,11 @@ void LDesktop::UpdateDesktopPluginArea(){
   }
   //Now make sure the desktop plugin area is only the visible area
   QRect rec = visReg.boundingRect();
+  //qDebug() << " - DPArea: Panel-Adjusted rectangle:" << rec;
   //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) desktopnumber, rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
   globalWorkRect = rec; //save this for later
-  rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y() ) );
+  rec.moveTopLeft( QPoint( rec.x()-desktop->screenGeometry(desktopnumber).x() , rec.y()-desktop->screenGeometry(desktopnumber).y() ) );
   //qDebug() << "DPlug Area:" << rec << bgDesktop->geometry() << LSession::handle()->desktop()->availableGeometry(bgDesktop);
   if(rec.size().isNull() || rec == bgDesktop->geometry()){return; } //nothing changed
   bgDesktop->setGeometry( rec );
