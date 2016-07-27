@@ -32,7 +32,6 @@ private:
 	Ui::page_interface_panels *ui;
 	bool loading;
 	int cscreen; //current monitor/screen number
-	int panelnumber; //current number of panels
 	QSettings *settings;
 	LPlugins *PINFO;
 	QList<PanelWidget*> PANELS;

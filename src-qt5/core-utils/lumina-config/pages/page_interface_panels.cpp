@@ -101,16 +101,16 @@ void page_interface_panels::updateIcons(){
 //    PRIVATE SLOTS
 //=================
 void page_interface_panels::panelValChanged(){
-  ui->tool_panels_add->setEnabled(panelnumber < 12);
+  ui->tool_panels_add->setEnabled(PANELS.length() < 12);
   if(!loading){ settingChanged(); }
 }
 
 void page_interface_panels::newPanel(){
-  if(panelnumber<0){ panelnumber=0; } //just in case
-  panelnumber++;
+  //if(panelnumber<0){ panelnumber=0; } //just in case
+  //panelnumber++;
   //Now create a new Panel widget with this number
   PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
-    tmp->LoadSettings(settings, cscreen, panelnumber-1);
+    tmp->LoadSettings(settings, cscreen, PANELS.length());
     PANELS << tmp;
     connect(tmp, SIGNAL(PanelChanged()), this, SLOT(panelValChanged()) );
     connect(tmp, SIGNAL(PanelRemoved(int)), this, SLOT(removePanel(int)) );
@@ -138,6 +138,5 @@ void page_interface_panels::removePanel(int pan){
     }
   }
   if(!changed){ return; } //nothing done
-  panelnumber--;
   panelValChanged();
 }
