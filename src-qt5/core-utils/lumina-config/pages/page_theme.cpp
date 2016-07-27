@@ -23,6 +23,7 @@ page_theme::page_theme(QWidget *parent) : PageWidget(parent), ui(new Ui::page_th
   connect(ui->font_session_theme, SIGNAL(currentIndexChanged(int)), this, SLOT(settingsChanged()) );
   connect(ui->tool_session_newcolor, SIGNAL(clicked()), this, SLOT(sessionEditColor()) );
   connect(ui->tool_session_newtheme, SIGNAL(clicked()), this, SLOT(sessionEditTheme()) );
+  connect(ui->combo_session_cursortheme, SIGNAL(currentIndexChanged(int)), this, SLOT(settingsChanged()) );
 
   updateIcons();
 }
