@@ -105,6 +105,7 @@ void LDeskBarPlugin::updateFiles(){
   QStringList favitems = LUtils::listFavorites();
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
     for(int i=0; i<homefiles.length(); i++){
+      if( !favitems.filter(homefiles[i].canonicalFilePath()).isEmpty() ){ continue; } //duplicate entry
       QString type;
       if(homefiles[i].isDir()){ type="dir"; }
       else if(homefiles[i].fileName().endsWith(".desktop")){ type="app"; }
