@@ -24,7 +24,7 @@ QString LOS::AppPrefix(){ return "/usr/local/"; } //Prefix for applications
 QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 
 //OS-specific application shortcuts (*.desktop files)
-QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/sysadm-client.desktop"; } //system control panel
+QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
 //OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
 QStringList LOS::RSSFeeds(){ 
