@@ -23,8 +23,12 @@ private slots:
 	  qDebug() << " - Program:" << this->program();
 	  if(watcher==0){ return; } //just in case
 	  if(this->state()==QProcess::Running){
-	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){ ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
-	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){ ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
+	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){ 
+              qDebug() << "Sending Fluxbox signal to reload configs..."; 
+              ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
+	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){ 
+              qDebug() << "Sending Compton signal to reload configs...";
+              ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
 	  }
 	  //Now make sure this file/dir was not removed from the watcher
 	  QStringList watched; watched << watcher->files() << watcher->directories();
