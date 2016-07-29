@@ -176,7 +176,7 @@ QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
     exec = term+" --working-directory=\""+dirpath+"\"";
   }else if(term=="xfce4-terminal"){
     exec = term+" --default-working-directory=\""+dirpath+"\"";
-  }else if(term=="konsole"){
+  }else if(term=="konsole" || term == "qterminal"){
     exec = term+" --workdir \""+dirpath+"\"";
   }else{
     //-e is the parameter for most of the terminal appliction to execute an external command. 
