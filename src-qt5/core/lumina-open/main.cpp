@@ -327,6 +327,14 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       cmd.append(" \""+inFile+"\"");
     }
   }
+
+  // Avoid sticking around and watching file if user overrides behaviour
+  QString watchFile;
+  watchFile = getenv("HOME");
+  watchFile = watchFile + "/.config/lumina-desktop/nowatch";
+  if (QFile::exists(watchFile))
+     watch = false;
+
   //qDebug() << "Found Command:" << cmd << "Extension:" << extension;
   //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
   if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
@@ -349,7 +357,7 @@ int main(int argc, char **argv){
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
   int retcode = 0;
-  
+
   if(!watch && path.isEmpty()){
       //Nothing special about this one - just start it detached (less overhead)
       QProcess::startDetached(cmd);
