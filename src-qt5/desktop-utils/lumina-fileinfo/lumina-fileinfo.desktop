@@ -5,6 +5,6 @@ Icon=unknown
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=System;
+Categories=Utility;
 Name=Lumina File Information
 Comment=View or edit file information including application links
