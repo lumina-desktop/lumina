@@ -349,7 +349,9 @@ int main(int argc, char **argv){
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
   int retcode = 0;
-  
+  //Provide an override file for never watching running processes.
+  if(watch){ watch = !QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch" ); }
+  //Do the slimmer run routine if no watching needed
   if(!watch && path.isEmpty()){
       //Nothing special about this one - just start it detached (less overhead)
       QProcess::startDetached(cmd);
