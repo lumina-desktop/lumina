@@ -48,7 +48,6 @@ void MainUI::updateUI(){
   connect(ui->list_sponsors, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(showSponsor(QListWidgetItem*)) );
   connect(ui->label_proj_lead, SIGNAL(linkActivated(const QString&)), this, SLOT(LinkClicked(QString)) );
   connect(ui->label_proj_contrib, SIGNAL(linkActivated(const QString&)), this, SLOT(LinkClicked(QString)) );
-	
 }
 
 void MainUI::showQtInfo(){
@@ -63,6 +62,7 @@ void MainUI::showSponsor(QListWidgetItem *item){
 void MainUI::LinkClicked(QString url){
   QProcess::startDetached("lumina-open \""+url+"\"");
 }
+
 void MainUI::on_tool_bugs_clicked(){ 
   LinkClicked(ui->tool_bugs->whatsThis());
 }

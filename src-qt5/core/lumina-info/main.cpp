@@ -23,7 +23,8 @@ int main(int argc, char ** argv)
     //Start the UI
     MainUI w;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance()) );
-    w.show();
+    //qDebug() << "Show Normal";
+    w.showNormal();
 
     int retCode = a.exec();
     return retCode;
