@@ -169,7 +169,7 @@ void UserWidget::UpdateMenu(bool forceall){
     ui->tool_fav_dirs->setChecked(false);
     ui->tool_fav_files->setChecked(false);
     cfav = 0; //favorite apps
-    updateFavItems();
+    FavChanged();
     QString cdir = ui->label_home_dir->whatsThis();
     if(cdir.isEmpty() || !QFile::exists(cdir)){ 
       //Directory deleted or nothing loaded yet
@@ -265,8 +265,9 @@ void UserWidget::updateFavItems(bool newfilter){
     favitems.sort(); //sort them alphabetically
     //qDebug() << " - Creating Items:" << favitems;
     for(int i=0; i<favitems.length(); i++){
+      if( !QFile::exists(favitems[i].section("::::",2,50)) ){ continue; } //file does not exist - just skip it
       UserItemWidget *it = new UserItemWidget(ui->scroll_fav->widget(), favitems[i].section("::::",2,50), favitems[i].section("::::",1,1) );
-      if(!it->gooditem){ continue; }
+      if(!it->gooditem){ it->deleteLater(); continue; }
       ui->scroll_fav->widget()->layout()->addWidget(it);
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       connect(it, SIGNAL(NewShortcut()), this, SLOT(updateFavItems()) );
