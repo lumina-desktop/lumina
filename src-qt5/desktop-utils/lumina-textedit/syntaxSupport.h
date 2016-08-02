@@ -12,6 +12,7 @@
 #include <QTextCharFormat>
 #include <QString>
 #include <QSettings>
+#include <QDebug>
 
 //Simple syntax rules
 struct SyntaxRule{
@@ -49,6 +50,7 @@ public:
 	}
 protected:
 	void highlightBlock(const QString &text){
+          //qDebug() << "Highlight Block:" << text;
 	  for(int i=0; i<rules.length(); i++){
 	    QRegExp patt(rules[i].pattern); //need a copy of the rule's pattern (will be changing it below)
 	    int index = patt.indexIn(text);
@@ -81,6 +83,7 @@ protected:
 	    } //end check for end match
 	    //Look for the start of any new split rule
 	    for(int i=0; i<splitrules.length() && splitactive<0; i++){
+              //qDebug() << "Look for start of split rule:" << splitrules[i].startPattern << splitactive;
 	      int newstart = splitrules[i].startPattern.indexIn(text,start);
 	      if(newstart>=start){
 		splitactive = i;

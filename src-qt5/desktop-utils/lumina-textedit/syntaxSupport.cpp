@@ -9,7 +9,7 @@
 QStringList Custom_Syntax::availableRules(){
   QStringList avail;
     avail << "C++";
-    avail << "Python";
+    //avail << "Python";
     avail << "reST";
   return avail;
 }
@@ -39,7 +39,7 @@ void Custom_Syntax::SetupDefaultColors(QSettings *settings){
 QString Custom_Syntax::ruleForFile(QString filename){
   QString suffix = filename.section(".",-1);
   if(suffix=="cpp" || suffix=="hpp" || suffix=="c" || suffix=="h"){ return "C++"; }
-  else if(suffix=="py" || suffix=="pyc"){ return "Python"; }
+  //else if(suffix=="py" || suffix=="pyc"){ return "Python"; }
   else if(suffix=="rst"){ return "reST"; }
   return "";
 }
@@ -141,32 +141,11 @@ void Custom_Syntax::loadRules(QString type){
     //splitrules << srule;
     
   }else if(type=="reST"){
-    //Keywords
-    QStringList keywords;
-	keywords << "emphasis" << "strong" << "literal" << "subscript" << "superscript" << "title-reference"; 
     SyntaxRule rule;
-	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
-	rule.format.setFontWeight(QFont::Bold);
-    for(int i=0; i<keywords.length(); i++){
-      rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
-      rules << rule;
-    }
-    //Directives
-    keywords.clear();
-    keywords << "image"  << "figure" << "contents" << "container" << "rubric" << "topic" << "sidebar"  \
-	  << "parsed-literal" << "epigraph" << "highlights" << "pull-quote" << "compound" << "table" << "csv-table" \
-	  << "list-table" << "raw" << "include"<< "class" << "meta" << "title" << "default-role" << "role";
-    rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
-    for(int i=0; i<keywords.length(); i++){
-      rule.pattern = QRegExp("\\b"+keywords[i]+"::\\b"); //turn each keyword into a QRegExp and insert the rule
-      rules << rule;
-    }
-    //Reset the font color
-    rule.format = QTextCharFormat();
-    // Strong Emphasis
+    // directives
+    rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
     rule.format.setFontItalic(false);
-    rule.format.setFontWeight(QFont::Bold);
-    rule.pattern = QRegExp("\\b[*]{2}[^*\n]+[*]{2}\\b");
+    rule.pattern = QRegExp("\\s[:].*[:]`.*`\\s");
     rules << rule;
     // Emphasis
     rule.format.setFontItalic(true);
@@ -190,13 +169,13 @@ void Custom_Syntax::loadRules(QString type){
     rules << rule;
     //Comment (single line)
     rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
-    rule.pattern = QRegExp("\\b[.]{2}[^\n]*");
+    rule.pattern = QRegExp("^(\\s*)\\.\\.\\s(?![\\w-_\\.]+::(\\s|$))");
     rules << rule;
     //Comment (multi-line)
-    //SyntaxRuleSplit srule;
-    //srule.format = rule.format; //re-use the single-line comment format
-    //srule.startPattern = QRegExp("/\\*");
-    //srule.endPattern = QRegExp("\\*/");
-    //splitrules << srule;
+    /*SyntaxRuleSplit srule;
+    srule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
+    srule.startPattern = QRegExp("^[..]\\s[^_]");
+    srule.endPattern = QRegExp("^[^\\s]");
+    splitrules << srule;*/
   }
 }
