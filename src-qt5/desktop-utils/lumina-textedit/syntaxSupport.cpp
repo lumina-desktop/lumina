@@ -163,19 +163,26 @@ void Custom_Syntax::loadRules(QString type){
     rule.format.setFontWeight(QFont::Normal);
     rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
     rules << rule;
-    //Functions
-    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
-    rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
+    //TODO
+    rule = SyntaxRule(); //reset rule
+    rule.format.setFontWeight( QFont::Bold );
+    rule.pattern = QRegExp("\\bTODO\\b");
     rules << rule;
-    //Comment (single line)
-    rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
-    rule.pattern = QRegExp("^(\\s*)\\.\\.\\s(?![\\w-_\\.]+::(\\s|$))");
+    //Functions
+    rule = SyntaxRule(); //reset rule
+    rule.format.setBackground( QColor(settings->value("colors/function").toString()) );
+    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)\\b_[a-zA-Z0-9]*:(\\s|$)");
+    rules << rule;
+    //figures and other statements
+    rule = SyntaxRule(); //reset rule
+    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
+    rule.pattern = QRegExp("^(\\s*)\\.\\.\\sfigure::\\s");
     rules << rule;
     //Comment (multi-line)
-    /*SyntaxRuleSplit srule;
+    SyntaxRuleSplit srule;
     srule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
-    srule.startPattern = QRegExp("^[..]\\s[^_]");
-    srule.endPattern = QRegExp("^[^\\s]");
-    splitrules << srule;*/
+    srule.startPattern = QRegExp("^(\\s*)\\.\\.\\s[^_](?![\\w-_\\.]+::(\\s|$))");
+    srule.endPattern = QRegExp("^(?=([^\\.\\s]|$))");
+    splitrules << srule;
   }
 }
