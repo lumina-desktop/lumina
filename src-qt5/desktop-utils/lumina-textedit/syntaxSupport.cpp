@@ -143,14 +143,14 @@ void Custom_Syntax::loadRules(QString type){
   }else if(type=="reST"){
     SyntaxRule rule;
     // directives
-    rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
+    rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
     rule.format.setFontItalic(false);
-    rule.pattern = QRegExp("\\s[:].*[:]`.*`\\s");
+    rule.pattern = QRegExp("(\\s|^):[a-zA-Z0-9 ]*:`[^`]*`(?=(\\s|$))");
     rules << rule;
-    // Emphasis
+    // hyperlinks
     rule.format.setFontItalic(true);
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("\\b[*][^*\n]+[*]\\b");
+    rule.pattern = QRegExp("`[^\\<]*\\<[^\\>]*\\>`_(\\s|$)");
     rules << rule;
     // Code Sample
     rule.format.setFontItalic(false);
@@ -166,23 +166,41 @@ void Custom_Syntax::loadRules(QString type){
     //TODO
     rule = SyntaxRule(); //reset rule
     rule.format.setFontWeight( QFont::Bold );
-    rule.pattern = QRegExp("\\bTODO\\b");
+    rule.pattern = QRegExp("^\\.\\.\\sTODO\\b");
+    rules << rule;
+    rule = SyntaxRule(); //reset rule
+    rule.format.setFontWeight( QFont::Bold );
+    rule.pattern = QRegExp("^\\.\\.\\s(note|warning|important)::\\s");
     rules << rule;
     //Functions
     rule = SyntaxRule(); //reset rule
-    rule.format.setBackground( QColor(settings->value("colors/function").toString()) );
-    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)\\b_[a-zA-Z0-9]*:(\\s|$)");
+    rule.format.setForeground( QColor(settings->value("colors/preprocessor").toString()) );
+    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)\\b_[a-zA-Z0-9 ]*:(\\s|$)");
     rules << rule;
-    //figures and other statements
+    //figures and other properties for them
     rule = SyntaxRule(); //reset rule
-    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
+    rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
     rule.pattern = QRegExp("^(\\s*)\\.\\.\\sfigure::\\s");
     rules << rule;
-    //Comment (multi-line)
+    rule = SyntaxRule(); //reset rule
+    rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
+    rule.pattern = QRegExp("^( ){3}:(.)*: ");
+    rules << rule;    
+
+    //Code Blocks
     SyntaxRuleSplit srule;
+    srule.format.setBackground( QColor("lightblue") );
+    srule.startPattern = QRegExp("\\:\\:$");
+    srule.endPattern = QRegExp("^(?=[^\\s])");
+    splitrules << srule;
+    srule.startPattern = QRegExp("^(\\s*)\\.\\.\\scode-block::\\s"); //alternate start string for the same rule
+    srule.endPattern = QRegExp("^(?=[^\\s])");
+    splitrules << srule;
+    //Comment (multi-line)
+    srule = SyntaxRuleSplit();
     srule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
     srule.startPattern = QRegExp("^(\\s*)\\.\\.\\s[^_](?![\\w-_\\.]+::(\\s|$))");
-    srule.endPattern = QRegExp("^(?=([^\\.\\s]|$))");
+    srule.endPattern = QRegExp("^(?=([^\\s]|$))");
     splitrules << srule;
   }
 }

@@ -51,15 +51,6 @@ public:
 protected:
 	void highlightBlock(const QString &text){
           //qDebug() << "Highlight Block:" << text;
-	  for(int i=0; i<rules.length(); i++){
-	    QRegExp patt(rules[i].pattern); //need a copy of the rule's pattern (will be changing it below)
-	    int index = patt.indexIn(text);
-	    while(index>=0){
-	      int len = patt.matchedLength();
-	      setFormat(index, len, rules[i].format);
-	      index = patt.indexIn(text, index+len); //go to the next match
-	    }
-	  }//end loop over normal (single-line) patterns
 	  //Now look for any multi-line patterns (starting/continuing/ending)
 	  int start = 0;
 	  int splitactive = previousBlockState();
@@ -70,11 +61,14 @@ protected:
 	      //Find the end of the current rule
 	      int end = splitrules[splitactive].endPattern.indexIn(text, start);
 	      if(end==-1){
+                //qDebug() << "Highlight to end of line:" << text << start;
 	        //rule did not finish - apply to all
-		setFormat(start, text.length()-start, splitrules[splitactive].format);
+                if(start>0){ setFormat(start-1, text.length()-start+1, splitrules[splitactive].format); }
+                else{ setFormat(start, text.length()-start, splitrules[splitactive].format); }
 		break; //stop looking for more multi-line patterns
 	      }else{
 		//Found end point
+                //qDebug() << "Highlight to particular point:" << text << start << end;
 		int len = end-start+splitrules[splitactive].endPattern.matchedLength();
 		setFormat(start, len , splitrules[splitactive].format);
 		start+=len; //move pointer to the end of handled range
@@ -86,13 +80,30 @@ protected:
               //qDebug() << "Look for start of split rule:" << splitrules[i].startPattern << splitactive;
 	      int newstart = splitrules[i].startPattern.indexIn(text,start);
 	      if(newstart>=start){
+                //qDebug() << "Got Start of split rule:" << start << newstart << text;
 		splitactive = i;
-		start = newstart;
+		start = newstart+1;
+                if(start>=text.length()-1){
+                  //qDebug() << "Special case: start now greater than line length";
+                  //Need to apply highlighting to this section too - start matches the end of the line
+                  setFormat(start-1, text.length()-start+1, splitrules[splitactive].format);
+                }
 	      }
 	    }
 	    if(splitactive<0){  break; } //no other rules found - go ahead and exit the loop
           }
 	  setCurrentBlockState(splitactive);
+          //Do all the single-line patterns
+	  for(int i=0; i<rules.length(); i++){
+	    QRegExp patt(rules[i].pattern); //need a copy of the rule's pattern (will be changing it below)
+	    int index = patt.indexIn(text);
+            if(splitactive>=0 && index>=start){ continue; } //skip this one - falls within a multi-line pattern above
+	    while(index>=0){
+	      int len = patt.matchedLength();
+	      setFormat(index, len, rules[i].format);
+	      index = patt.indexIn(text, index+len); //go to the next match
+	    }
+	  }//end loop over normal (single-line) patterns
 	}
 };
 #endif

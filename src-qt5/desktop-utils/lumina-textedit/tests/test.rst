@@ -6,7 +6,7 @@ breaks when justify left
 
 TODO
       
-.. code-block::JSON
+.. code-block:: JSON
    Everything in a code block is blue text
    
 .. testlink: will be blue text
@@ -21,6 +21,14 @@ directives :command:`test` from "`" to "`" is yellow text.
 
 .. figure:: images/lumina1e.png
    :scale: 50%
+
+::
+
+
+
+.. code-block:: python
+
+ 
 
 .. _gettingstarted:
 
