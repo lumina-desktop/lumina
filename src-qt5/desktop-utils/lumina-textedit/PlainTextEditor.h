@@ -11,6 +11,7 @@
 #include <QWidget>
 #include <QResizeEvent>
 #include <QPaintEvent>
+#include <QFileSystemWatcher>
 
 #include "syntaxSupport.h"
 
@@ -42,6 +43,7 @@ private:
 	bool showLNW;
 	QSettings *settings;
 	QString lastSaveContents;
+	QFileSystemWatcher *watcher;
 	//Syntax Highlighting class
 	Custom_Syntax *SYNTAX;
 
@@ -61,6 +63,8 @@ private slots:
 	void checkMatchChar();
 	//Functions for notifying the parent widget of changes
 	void textChanged();
+	//Function for prompting the user if the file changed externally
+        void fileChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
@@ -96,4 +100,3 @@ protected:
 	}
 };
 #endif
-

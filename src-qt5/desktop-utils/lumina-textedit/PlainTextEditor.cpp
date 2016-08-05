@@ -11,6 +11,7 @@
 #include <QTextBlock>
 #include <QFileDialog>
 #include <QDebug>
+#include <QApplication>
 
 #include <LuminaUtils.h>
 
@@ -21,6 +22,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   settings = set;
   LNW = new LNWidget(this);
   showLNW = true;
+  watcher = new QFileSystemWatcher(this);
   hasChanges = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
@@ -33,6 +35,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(LNW_update(const QRect&, int)) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(checkMatchChar()) );
   connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged()) );
   LNW_updateWidth();
   LNW_highlightLine();
 }
@@ -59,12 +62,26 @@ void PlainTextEditor::updateSyntaxColors(){
 
 //File loading/setting options
 void PlainTextEditor::LoadFile(QString filepath){
+  if( !watcher->files().isEmpty() ){  watcher->removePaths(watcher->files()); }
+  bool diffFile = (filepath != this->whatsThis());
   this->setWhatsThis(filepath);
   this->clear();
   SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
   lastSaveContents = LUtils::readFile(filepath).join("\n");
-  this->setPlainText( lastSaveContents );
+  if(diffFile){
+    this->setPlainText( lastSaveContents );
+  }else{
+    //Try to keep the mouse cursor/scroll in the same position
+    int curpos = this->textCursor().position();;
+    this->setPlainText( lastSaveContents );
+    QApplication::processEvents();
+    QTextCursor cur = this->textCursor();
+      cur.setPosition(curpos);
+    this->setTextCursor( cur );
+    this->centerCursor(); //scroll until cursor is centered (if possible)
+  }
   hasChanges = false;
+  watcher->addPath(filepath);
   emit FileLoaded(this->whatsThis());
 }
 
@@ -78,9 +95,11 @@ void PlainTextEditor::SaveFile(bool newname){
     SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
     SYNTAX->rehighlight();
   }
+  if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
+  watcher->addPath(currentFile());
   //qDebug() << " - Success:" << ok << hasChanges;
 }
 
@@ -256,6 +275,24 @@ void PlainTextEditor::textChanged(){
   hasChanges = changed; //save for reading later
   if(hasChanges){  emit UnsavedChanges( this->whatsThis() ); }
   else{ emit FileLoaded(this->whatsThis()); }
+}
+
+//Function for prompting the user if the file changed externally
+void PlainTextEditor::fileChanged(){
+  qDebug() << "File Changed:" << currentFile();
+  bool update = !hasChanges; //Go ahead and reload the file automatically - no custom changes in the editor
+  /*QString text = tr("The following file has been changed by some other utility. Do you want to re-load it?");
+  text.append("\n");
+  text.append( tr("(Note: You will lose all currently-unsaved changes)") );
+  text.append("\n\n%1");*/
+  
+  if(!update){
+    //update = (QMessageBox::Yes == QMessageBox::question(this->parent(), tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
+  }
+  //Now update the text in the editor as needed
+  if(update){
+    LoadFile( currentFile() );
+  }
 }
 
 //==================

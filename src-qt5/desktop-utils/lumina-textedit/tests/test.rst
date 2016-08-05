@@ -1,7 +1,7 @@
 .. comment grays out
    continues with same spacing
 breaks when justify left
-
+sample2
 .. TODO Black highlighting and brown/orange text for visibility on "TODO" with the rest greyed out like a comment.
 
 TODO
@@ -43,7 +43,7 @@ SysAdm™ files are currently available from the `github repository <https://git
 
 Building SysAdm™
 ----------------
-
+sample
 The following Qt Modules are required before attempting to build 
 SysAdm™: ::
 
