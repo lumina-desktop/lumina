@@ -59,14 +59,6 @@ if [ ! -d "$distdir" ] ; then
   mkdir -p ${distdir}
 fi
 
-echo "Sanity checking the repo..."
-OBJS=`find . | grep '\.o$'`
-if [ -n "$OBJS" ] ; then
-   echo "Found the following .o files, remove them first!"
-   echo $OBJS
-   exit 1
-fi
-
 # Get the GIT tag
 ghtag=`git log -n 1 . | grep '^commit ' | awk '{print $2}'`
 
