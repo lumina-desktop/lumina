@@ -76,7 +76,7 @@ rm ${distdir}/${dfile}-* 2>/dev/null
 if [ -d "${portsdir}/${port}" ] ; then
   rm -rf ${portsdir}/${port} 2>/dev/null
 fi
-cp -r port-files ${portsdir}/${port}
+cp -r port-files-master ${portsdir}/${port}
 
 # Set the version numbers
 sed -i '' "s|%%CHGVERSION%%|${verTag}|g" ${portsdir}/${port}/Makefile
