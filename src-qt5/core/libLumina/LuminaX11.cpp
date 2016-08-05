@@ -778,7 +778,7 @@ void LXCB::MoveResizeWindow(WId win, QRect geom){
 // ===== ResizeWindow() =====
 void LXCB::ResizeWindow(WId win, int width, int height){
   //Use the basic XCB functions instead of ewmh
-  uint32_t values[] = {width, height};
+  uint32_t values[] = { static_cast<unsigned int>(width), static_cast<unsigned int>(height) };
   xcb_configure_window(QX11Info::connection(), win, XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values);
 }
 
