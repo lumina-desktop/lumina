@@ -2,9 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	lumina
-PORTVERSION=	1.0.0
-DISTVERSIONPREFIX=	v
-DISTVERSIONSUFFIX=	-Beta1
+PORTVERSION=	%%CHGVERSION%%
 PORTEPOCH=	1
 CATEGORIES=	x11
 
@@ -36,14 +34,21 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:multimedia/gstreamer1-plugins-core
 
 MAKE_JOBS_UNSAFE=yes
 
+USE_GL=		gl
 USE_XORG=	x11 xdamage xcb
-USE_XCB=	x11extras wm ewmh util-wm
 USE_LDCONFIG=	yes
 USE_QT5=	core gui widgets network svg multimedia imageformats \
 		buildtools_build x11extras concurrent
 USES=		desktop-file-utils qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
+GH_TAGNAME=	%%GHTAG%%
+
+#Setup the XCB library dependencies (USE_XCB macro does not appear to exist anymore)
+LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
+		libxcb-icccm.so:x11/xcb-util-wm \
+		libxcb-image.so:x11/xcb-util-image \
+		libxcb-util.so:x11/xcb-util
 
 #Setup the qmake configuration options
 .if ${PORT_OPTIONS:MTRUEOS}
