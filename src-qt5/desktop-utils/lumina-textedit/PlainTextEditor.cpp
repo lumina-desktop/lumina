@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QApplication>
+#include <QMessageBox>
 
 #include <LuminaUtils.h>
 
@@ -281,13 +282,13 @@ void PlainTextEditor::textChanged(){
 void PlainTextEditor::fileChanged(){
   qDebug() << "File Changed:" << currentFile();
   bool update = !hasChanges; //Go ahead and reload the file automatically - no custom changes in the editor
-  /*QString text = tr("The following file has been changed by some other utility. Do you want to re-load it?");
+  QString text = tr("The following file has been changed by some other utility. Do you want to re-load it?");
   text.append("\n");
   text.append( tr("(Note: You will lose all currently-unsaved changes)") );
-  text.append("\n\n%1");*/
+  text.append("\n\n%1");
   
   if(!update){
-    //update = (QMessageBox::Yes == QMessageBox::question(this->parent(), tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
+    update = (QMessageBox::Yes == QMessageBox::question(this, tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
   }
   //Now update the text in the editor as needed
   if(update){
