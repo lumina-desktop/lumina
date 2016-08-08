@@ -1,0 +1,36 @@
+#!/bin/sh
+# Script to install preload.conf
+
+PREFIX=${PKG_PREFIX-/usr/local}
+
+if [ "$2" != "POST-INSTALL" ] ; then
+   exit 0
+fi
+
+# If this is during staging, we can skip for now
+echo $PREFIX | grep -q '/stage/'
+if [ $? -eq 0 ] ; then
+   exit 0
+fi
+
+# Copy over the rc.conf.trueos file
+install -m 644 ${PREFIX}/share/trueos/conf/rc.conf.trueos /etc/rc.conf.trueos
+if [ -e "/etc/default/trueos" -o -e "/etc/defaults/trueos-desktop" ] ; then
+  install -m 644 ${PREFIX}/share/trueos/conf/loader.conf.trueos /boot/loader.conf.trueos
+  install -m 644 ${PREFIX}/share/trueos/conf/brand-trueos.4th /boot/brand-trueos.4th
+else
+  install -m 644 ${PREFIX}/share/trueos/conf/loader.conf.trueos /boot/loader.conf.trueos
+  install -m 644 ${PREFIX}/share/trueos/conf/brand-trueos.4th /boot/brand-trueos.4th
+fi
+
+if [ ! -e "${PREFIX}/etc/trueos.conf" ] ; then
+  # Do the first-time setup
+  echo "Doing first-time bootstrap"
+  if [ -e "/etc/defaults/trueos-desktop" ] ; then
+    tar cvf - -C ${PREFIX}/share/trueos/desktop-defaults/ . 2>/dev/null | tar xvpf - -C / 2>/dev/null
+  else
+    tar cvf - -C ${PREFIX}/share/trueos/server-defaults/ . 2>/dev/null | tar xvpf - -C / 2>/dev/null
+  fi
+fi
+
+exit 0
