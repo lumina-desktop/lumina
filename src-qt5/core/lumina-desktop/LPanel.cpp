@@ -194,6 +194,9 @@ void LPanel::UpdatePanel(bool geomonly){
     }
   }
   if(DEBUG){ qDebug() << " - Done with panel geometry"; }
+  //Double check that the "sticky" bit is set on the window state
+  bool  needsticky = !LSession::handle()->XCB->WM_Get_Window_States(this->winId()).contains(LXCB::S_STICKY);
+  if(needsticky){ LSession::handle()->XCB->SetAsSticky(this->winId()); }
   if(geomonly){ return; }
   //Now update the appearance of the toolbar
   if(settings->value(PPREFIX+"customColor", false).toBool()){
