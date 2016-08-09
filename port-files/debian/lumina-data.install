@@ -1,5 +1,6 @@
 usr/share/applications/lumina-support.desktop
 usr/share/pixmaps/Lumina-DE.png
+usr/share/lumina-desktop/compton.conf
 usr/share/lumina-desktop/colors/
 usr/share/lumina-desktop/themes/
 usr/share/lumina-desktop/desktop-background.jpg

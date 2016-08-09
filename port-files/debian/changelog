@@ -1,3 +1,11 @@
+lumina-desktop (1.0.1~git1638-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * add Recommends for compton
+  * install default compton config into lumina-data package
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 09 Aug 2016 22:11:28 +0200
+
 lumina-desktop (1.0.0~beta2+git1581-1nano) unstable; urgency=low
 
   * New git snapshot
