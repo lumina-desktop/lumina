@@ -3,7 +3,7 @@
 
 PORTNAME=	lumina
 PORTVERSION=	%%CHGVERSION%%
-PORTEPOCH=	1
+PORTEPOCH=	2
 CATEGORIES=	x11
 
 MAINTAINER=	kmoore@FreeBSD.org
@@ -18,8 +18,12 @@ RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
 		compton:x11-wm/compton \
 		xrandr:x11/xrandr \
 		numlockx:x11/numlockx
+LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
+		libxcb-icccm.so:x11/xcb-util-wm \
+		libxcb-image.so:x11/xcb-util-image \
+		libxcb-util.so:x11/xcb-util
 
-CONFLICTS=      lumina-devel-0*
+CONFLICTS=	lumina-devel-0*
 
 OPTIONS_DEFINE=	MULTIMEDIA TRUEOS
 OPTIONS_DEFAULT=	MULTIMEDIA
@@ -43,12 +47,6 @@ USES=		desktop-file-utils qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_TAGNAME=	%%GHTAG%%
-
-#Setup the XCB library dependencies (USE_XCB macro does not appear to exist anymore)
-LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
-		libxcb-icccm.so:x11/xcb-util-wm \
-		libxcb-image.so:x11/xcb-util-image \
-		libxcb-util.so:x11/xcb-util
 
 #Setup the qmake configuration options
 .if ${PORT_OPTIONS:MTRUEOS}
