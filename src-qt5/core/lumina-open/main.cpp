@@ -347,6 +347,12 @@ int main(int argc, char **argv){
   //qDebug() << "Run CMD:" << cmd << args;
   //Now run the command (move to execvp() later?)
   if(cmd.isEmpty()){ return 0; } //no command to run (handled internally)
+  QString bin = cmd.section(" ",0,0);
+  if( !LUtils::isValidBinary(bin) ){
+    //invalid binary for some reason - open a dialog to warn the user instead
+    QMessageBox::warning(0, QObject::tr("Binary Missing"), QString(QObject::tr("Could not find \"%1\". Please ensure it is installed first.")).arg(bin)+"\n\n"+cmd);
+    return 1;
+  }
   qDebug() << "[lumina-open] Running Cmd:" << cmd;
   int retcode = 0;
   //Provide an override file for never watching running processes.
