@@ -40,6 +40,32 @@ void AppMenu::updateAppList(){
   this->clear();
   APPS.clear();
   XDGDesktopList *sysApps = LXDG:: systemAppsList();
+  //qDebug() << "New Apps List:";
+  if(LSession::handle()->sessionSettings()->value("AutomaticDesktopAppLinks",true).toBool() && !lastHashUpdate.isNull() ){
+    QString desktop = QDir::homePath()+"/"+tr("Desktop")+"/"; //translated desktop folder
+    if(!QFile::exists(desktop)){
+      desktop = QDir::homePath()+"/Desktop/"; //desktop folder
+      if(!QFile::exists(desktop)){
+        desktop = QDir::homePath()+"/desktop/"; //lowercase desktop folder
+        if(!QFile::exists(desktop)){ desktop.clear(); }
+      }
+    }
+    //qDebug() << "Update Desktop Folder:" << desktop << sysApps->removedApps << sysApps->newApps;
+    QStringList tmp = sysApps->removedApps;
+    for(int i=0; i<tmp.length() && !desktop.isEmpty(); i++){
+      //Remove any old symlinks first
+      QString filename = tmp[i].section("/",-1);
+      //qDebug() << "Check for symlink:" << filename;
+      if(QFile::exists(desktop+filename) && QFileInfo(desktop+filename).isSymLink() ){ QFile::remove(desktop+filename); }
+    }
+    tmp = sysApps->newApps;
+    for(int i=0; i<tmp.length() && !desktop.isEmpty(); i++){
+      //Create a new symlink for this file if one does not exist
+      QString filename = tmp[i].section("/",-1);
+      //qDebug() << "Check for symlink:" << filename;
+      if(!QFile::exists(desktop+filename) ){ QFile::link(tmp[i], desktop+filename); }
+    }
+  }
   QList<XDGDesktop> allfiles = sysApps->apps(false,false); //only valid, non-hidden apps
   APPS = LXDG::sortDesktopCats(allfiles);
   APPS.insert("All", LXDG::sortDesktopNames(allfiles));
