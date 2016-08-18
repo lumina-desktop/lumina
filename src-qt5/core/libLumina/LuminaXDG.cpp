@@ -14,6 +14,57 @@
 static QStringList mimeglobs;
 static qint64 mimechecktime;
 
+//====XDGDesktopList Functions ====
+void XDGDesktopList::updateList(){
+  //run the check routine
+  QStringList appDirs = LXDG::systemApplicationDirs(); //get all system directories
+  QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
+  QStringList oldkeys = files.keys();
+  QList<XDGDesktop> out;
+  bool ok; //for internal loop use only (to prevent re-initializing variable on every iteration)
+  QString path; //for internal loop use (to prevent re-initializing variable on every iteration)
+  for(int i=0; i<appDirs.length(); i++){
+    QDir dir(appDirs[i]);
+    QStringList apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
+    for(int a=0; a<apps.length(); a++){
+      QString path = dir.absoluteFilePath(apps[a]);
+      XDGDesktop dFile;
+      if(files.contains(path) && (files[path].lastRead>QFileInfo(path).lastModified()) ){ 
+        //Re-use previous data for this file (nothing changed)
+        dFile = files[path]; 
+        ok=true;
+      }else{
+      	ok=false;
+      	dFile = LXDG::loadDesktopFile(dir.absoluteFilePath(apps[a]),ok); //will change the "ok" variable as needed
+      }
+      if(ok && !found.contains(dFile.name)){
+        if(!files.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
+        files.insert(path, dFile);
+        found << dFile.name;
+        oldkeys.removeAll(path); //make sure this key does not get cleaned up later
+      }
+    } //end loop over apps
+  } //end loop over appDirs
+  //Now go through and cleanup any old keys where the associated file does not exist anymore
+  for(int i=0; i<oldkeys.length(); i++){
+    files.remove(oldkeys[i]);
+  }
+}
+
+QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
+  //showAll: include invalid files, showHidden: include NoShow/Hidden files
+  QStringList keys = files.keys();
+  QList<XDGDesktop> out;
+  for(int i=0; i<keys.length(); i++){
+    if( LXDG::checkValidity(files[keys[i]], showAll) ){
+      if( showHidden || !files[keys[i]].isHidden ){
+         out << files[keys[i]];
+      }
+    }
+  }
+  return out;
+}
+
 //==== LFileInfo Functions ====
 //Need some extra information not usually available by a QFileInfo
 void LFileInfo::loadExtraInfo(){
@@ -429,6 +480,8 @@ QStringList LXDG::systemApplicationDirs(){
 
 QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   //Returns a list of all the unique *.desktop files that were found
+  /*qDebug() << "Read System Apps:";
+  qDebug() << "Old Routine Start:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
   QStringList appDirs = LXDG::systemApplicationDirs();
   QStringList found; //for avoiding duplicate apps
   QList<XDGDesktop> out;
@@ -447,7 +500,14 @@ QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
       	}
       }
   }
-  return out;
+  qDebug() << "   End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
+  //return out; */
+  //qDebug() << "New Routine Start:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
+  static XDGDesktopList sysappslist;
+  sysappslist.updateList();
+  return sysappslist.apps(showAll, showHidden);
+  //qDebug() << "    End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
+  //return out;
 }
 
 QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){

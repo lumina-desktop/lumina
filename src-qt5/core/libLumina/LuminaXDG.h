@@ -70,6 +70,25 @@ public:
 };
 
 // ========================
+//  Data Structure for keeping track of known system applications
+// ========================
+class XDGDesktopList{
+public:
+	//Administration variables (not typically used directly)
+	QDateTime lastCheck;
+	QStringList newApps; //list of "new" apps found during the last check
+	QHash<QString, XDGDesktop> files; //<filepath>/<XDGDesktop structure>
+
+	//Functions
+	XDGDesktopList(){}
+	~XDGDesktopList(){}
+	//Main Interface functions
+	void updateList(); //run the check routine
+	QList<XDGDesktop> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
+
+};
+
+// ========================
 // File Information simplification class (combine QFileInfo with XDGDesktop)
 //  Need some extra information not usually available by a QFileInfo
 // ========================
@@ -165,4 +184,3 @@ public:
 };
 
 #endif
-
