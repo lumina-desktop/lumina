@@ -61,10 +61,12 @@ public:
 	//Check for user system permission (shutdown/restart)
 	static bool userHasShutdownAccess();
 	static bool systemPerformingUpdates();
+	static QString systemPendingUpdates(); //returns nothing if no updates waiting to install at shutdown
+
 	//System Shutdown
-	static void systemShutdown(); //start poweroff sequence
+	static void systemShutdown(bool skipupdates = false); //start poweroff sequence
 	//System Restart
-	static void systemRestart(); //start reboot sequence
+	static void systemRestart(bool skipupdates = false); //start reboot sequence
 	//Check for suspend support
 	static bool systemCanSuspend();
 	//Put the system into the suspend state

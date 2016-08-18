@@ -140,8 +140,8 @@ private:
 	
 public slots:
 	void StartLogout();
-	void StartShutdown();
-	void StartReboot();
+	void StartShutdown(bool skipupdates = false);
+	void StartReboot(bool skipupdates = false);
 
 	void reloadIconTheme();
 

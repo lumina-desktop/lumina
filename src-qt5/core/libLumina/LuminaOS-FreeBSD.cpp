@@ -210,14 +210,22 @@ bool LOS::systemPerformingUpdates(){
   return (QProcess::execute("pgrep -F /tmp/.updateInProgress")==0); //this is 0 if updating right now
 }
 
+//Return the details of any updates which are waiting to apply on shutdown
+QString LOS::systemPendingUpdates(){
+  if(QFile::exists("/tmp/.rebootRequired")){ return LUtils::readFile("/tmp/.rebootRequired").join("\n"); }
+  else{ return ""; }
+}
+
 //System Shutdown
-void LOS::systemShutdown(){ //start poweroff sequence
-  QProcess::startDetached("shutdown -p now");
+void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
+  if(skipupdates){QProcess::startDetached("shutdown -po now"); }
+  else{ QProcess::startDetached("shutdown -p now"); }
 }
 
 //System Restart
-void LOS::systemRestart(){ //start reboot sequence
-  QProcess::startDetached("shutdown -r now");
+void LOS::systemRestart(bool skipupdates){ //start reboot sequence
+  if(skipupdates){QProcess::startDetached("shutdown -ro now"); }
+  else{ QProcess::startDetached("shutdown -r now"); }
 }
 
 //Check for suspend support

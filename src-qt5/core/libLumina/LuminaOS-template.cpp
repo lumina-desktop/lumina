@@ -78,14 +78,18 @@ bool LOS::userHasShutdownAccess(){
 bool LOS::systemPerformingUpdates(){
   return false; //Not implemented yet
 }
+//Return the details of any updates which are waiting to apply on shutdown
+QString LOS::systemPendingUpdates(){
+  return "";
+}
 
 //System Shutdown
-void LOS::systemShutdown(){ //start poweroff sequence
+void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
   QProcess::startDetached("shutdown -p now");
 }
 
 //System Restart
-void LOS::systemRestart(){ //start reboot sequence
+void LOS::systemRestart(bool skipupdates){ //start reboot sequence
   QProcess::startDetached("shutdown -r now");
 }
 

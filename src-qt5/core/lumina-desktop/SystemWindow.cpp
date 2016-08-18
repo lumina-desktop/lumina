@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QDesktopWidget>
+#include <QMessageBox>
 
 SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   ui->setupUi(this); //load the designer file
@@ -49,22 +50,41 @@ void SystemWindow::updateWindow(){
   this->move(center.x() - this->width()/2, center.y() - this->height()/2);
 }
 
+bool SystemWindow::promptAboutUpdates(bool &skip){
+  QString pending = LOS::systemPendingUpdates();
+  if(pending.isEmpty()){ skip = false; } //continue without skip
+  else{
+    QMessageBox dlg(QMessageBox::Question, tr("Apply Updates?"), tr("You have system updates waiting to be applied! Do you wish to install them now?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
+      dlg.setDetailedText(pending);
+      dlg.setDefaultButton(QMessageBox::Yes);
+      dlg.show();
+    int ret = dlg.exec();
+    if(ret == QMessageBox::Cancel){ return false; } //do not continue
+    else{ skip = (ret==QMessageBox::No); }
+  }
+  return true;
+}
+
 void SystemWindow::sysLogout(){
-  this->hide();
+  this->close();
   LSession::processEvents();
   QTimer::singleShot(0, LSession::handle(), SLOT(StartLogout()) );
 }
 	
 void SystemWindow::sysRestart(){
-  this->hide();
+  bool skip = false;
+  if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
+  this->close();
   LSession::processEvents();
-  QTimer::singleShot(0, LSession::handle(), SLOT(StartReboot()) );
+  LSession::handle()->StartReboot(skip);
 }
 	
 void SystemWindow::sysShutdown(){
-  this->hide();
+  bool skip = false;
+  if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
+  this->close();
   LSession::processEvents();
-  QTimer::singleShot(0, LSession::handle(), SLOT(StartShutdown()) );
+  LSession::handle()->StartShutdown(skip);
 }
 
 void SystemWindow::sysSuspend(){

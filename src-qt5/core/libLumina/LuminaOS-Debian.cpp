@@ -152,15 +152,20 @@ bool LOS::systemPerformingUpdates(){
   return false; //Not implemented yet
 }
 
+//Return the details of any updates which are waiting to apply on shutdown
+QString LOS::systemPendingUpdates(){
+  return "";
+}
+
 //System Shutdown
-void LOS::systemShutdown(){ //start poweroff sequence
+void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
   QProcess::startDetached("dbus-send --system --print-reply \
   --dest=org.freedesktop.login1 /org/freedesktop/login1 \
   org.freedesktop.login1.Manager.PowerOff boolean:true");
 }
 
 //System Restart
-void LOS::systemRestart(){ //start reboot sequence
+void LOS::systemRestart(bool skipupdates){ //start reboot sequence
   QProcess::startDetached("dbus-send --system --print-reply \
   --dest=org.freedesktop.login1 /org/freedesktop/login1 \
   org.freedesktop.login1.Manager.Reboot boolean:true");

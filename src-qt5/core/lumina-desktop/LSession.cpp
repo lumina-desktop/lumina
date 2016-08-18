@@ -299,15 +299,15 @@ void LSession::StartLogout(){
   QCoreApplication::exit(0);
 }
 
-void LSession::StartShutdown(){
+void LSession::StartShutdown(bool skipupdates){
   CleanupSession();
-  LOS::systemShutdown();
+  LOS::systemShutdown(skipupdates);
   QCoreApplication::exit(0);		
 }
 
-void LSession::StartReboot(){
+void LSession::StartReboot(bool skipupdates){
   CleanupSession();
-  LOS::systemRestart();
+  LOS::systemRestart(skipupdates);
   QCoreApplication::exit(0);	
 }
 

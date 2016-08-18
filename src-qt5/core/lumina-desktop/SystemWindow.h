@@ -25,7 +25,8 @@ private:
 	Ui::SystemWindow *ui;
 
 	//void closeAllWindows();
-	
+	bool promptAboutUpdates(bool &skip); //main bool return: continue/cancel, skip: skip updates or not
+
 private slots:
 	void sysLogout();
 	
