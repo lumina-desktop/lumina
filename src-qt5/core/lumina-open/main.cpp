@@ -220,20 +220,25 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   }else{
     printUsageInfo();
   }
+
+
   //Make sure that it is a valid file/URL
   bool isFile=false; bool isUrl=false;
+  QString extension;
   //Quick check/replacement for the URL syntax of a file
   if(inFile.startsWith("file://")){ inFile.remove(0,7); }
+  //First make sure this is not a binary name first
+  QString bin = inFile.section(" ",0,0).simplified();
+  if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") ){isFile=true; extension="binary"; }
   //Now check what type of file this is
-  if(QFile::exists(inFile)){ isFile=true; }
+  else if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
   else if(inFile.startsWith("mailto:")){ isUrl= true; }
   else if(QUrl(inFile).isValid() && !inFile.startsWith("/") ){ isUrl=true; }
   if( !isFile && !isUrl ){ ShowErrorDialog( argc, argv, QString(QObject::tr("Invalid file or URL: %1")).arg(inFile) ); }
   //Determing the type of file (extension)
-  QString extension;
   //qDebug() << "File Type:" << isFile << isUrl;
-  if(isFile){
+  if(isFile && extension.isEmpty()){
     QFileInfo info(inFile);
     extension=info.suffix();
     //qDebug() << " - Extension:" << extension;
