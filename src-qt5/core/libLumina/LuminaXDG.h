@@ -18,6 +18,7 @@
 #define _LUMINA_LIBRARY_XDG_H
 
 #include <QFile>
+#include <QFileSystemWatcher>
 #include <QDir>
 #include <QFileInfo>
 #include <QStringList>
@@ -72,20 +73,27 @@ public:
 // ========================
 //  Data Structure for keeping track of known system applications
 // ========================
-class XDGDesktopList{
+class XDGDesktopList : public QObject{
+	Q_OBJECT
 public:
-	//Administration variables (not typically used directly)
-	QDateTime lastCheck;
-	QStringList newApps; //list of "new" apps found during the last check
-	QHash<QString, XDGDesktop> files; //<filepath>/<XDGDesktop structure>
-
 	//Functions
-	XDGDesktopList(){}
-	~XDGDesktopList(){}
+	XDGDesktopList(QObject *parent = 0, bool watchdirs = false);
+	~XDGDesktopList();
 	//Main Interface functions
-	void updateList(); //run the check routine
 	QList<XDGDesktop> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
 
+	//Administration variables (not typically used directly)
+	QDateTime lastCheck;
+	QStringList newApps, removedApps; //list of "new/removed" apps found during the last check
+	QHash<QString, XDGDesktop> files; //<filepath>/<XDGDesktop structure>
+
+public slots:
+	void updateList(); //run the check routine
+
+private:
+	QFileSystemWatcher *watcher;
+signals:
+	void appsUpdated();
 };
 
 // ========================

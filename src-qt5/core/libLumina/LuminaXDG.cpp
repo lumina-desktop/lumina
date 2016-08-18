@@ -15,20 +15,33 @@ static QStringList mimeglobs;
 static qint64 mimechecktime;
 
 //====XDGDesktopList Functions ====
+XDGDesktopList::XDGDesktopList(QObject *parent, bool watchdirs) : QObject(parent){
+  if(watchdirs){
+    watcher = new QFileSystemWatcher(this);
+    connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(updateList()) );
+    connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(updateList()) );
+  }else{
+    watcher = 0;
+  }
+}
+
+XDGDesktopList::~XDGDesktopList(){
+  //nothing special to do here
+}
+
 void XDGDesktopList::updateList(){
   //run the check routine
   QStringList appDirs = LXDG::systemApplicationDirs(); //get all system directories
   QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
   QStringList oldkeys = files.keys();
-  QList<XDGDesktop> out;
-  bool ok; //for internal loop use only (to prevent re-initializing variable on every iteration)
-  QString path; //for internal loop use (to prevent re-initializing variable on every iteration)
+  bool appschanged = false;
+  //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
+  bool ok; QString path; QDir dir;  QStringList apps; XDGDesktop dFile;
   for(int i=0; i<appDirs.length(); i++){
-    QDir dir(appDirs[i]);
-    QStringList apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
+    if( !dir.cd(appDirs[i]) ){ continue; } //could not open dir for some reason
+    apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
     for(int a=0; a<apps.length(); a++){
-      QString path = dir.absoluteFilePath(apps[a]);
-      XDGDesktop dFile;
+      path = dir.absoluteFilePath(apps[a]);
       if(files.contains(path) && (files[path].lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
         dFile = files[path]; 
@@ -36,6 +49,7 @@ void XDGDesktopList::updateList(){
       }else{
       	ok=false;
       	dFile = LXDG::loadDesktopFile(dir.absoluteFilePath(apps[a]),ok); //will change the "ok" variable as needed
+        appschanged = true; //flag that something changed - needed to load a file
       }
       if(ok && !found.contains(dFile.name)){
         if(!files.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
@@ -45,9 +59,18 @@ void XDGDesktopList::updateList(){
       }
     } //end loop over apps
   } //end loop over appDirs
+  //Save the extra info to the internal lists
+  removedApps = oldkeys; //files which were removed
+  newApps = newfiles; //files which were added
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
     files.remove(oldkeys[i]);
+  }
+  //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
+  if(watcher!=0){
+    watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
+    watcher->addPaths(appDirs);
+    if(appschanged){ emit appsUpdated(); }
   }
 }
 
