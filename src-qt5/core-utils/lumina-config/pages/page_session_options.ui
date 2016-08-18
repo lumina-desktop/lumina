@@ -50,6 +50,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="check_autoapplinks">
+       <property name="statusTip">
+        <string>Automatically create/remove desktop symlinks for applications that are installed/removed</string>
+       </property>
+       <property name="text">
+        <string>Manage desktop app links</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_14">
        <item>
         <widget class="QPushButton" name="push_session_setUserIcon">

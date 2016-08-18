@@ -32,6 +32,7 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->check_session_numlock, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_session_playloginaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
+  connect(ui->check_autoapplinks, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
  updateIcons();
  
 }
@@ -45,6 +46,7 @@ page_session_options::~page_session_options(){
 //================
 void page_session_options::SaveSettings(){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
+  sessionsettings.setValue("AutomaticDesktopAppLinks",  ui->check_autoapplinks->isChecked());
   sessionsettings.setValue("EnableNumlock", ui->check_session_numlock->isChecked());
   sessionsettings.setValue("PlayStartupAudio", ui->check_session_playloginaudio->isChecked());
   sessionsettings.setValue("PlayLogoutAudio", ui->check_session_playlogoutaudio->isChecked());
@@ -62,6 +64,7 @@ void page_session_options::LoadSettings(int){
   ui->check_session_numlock->setChecked( sessionsettings.value("EnableNumlock", true).toBool() );
   ui->check_session_playloginaudio->setChecked( sessionsettings.value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings.value("PlayLogoutAudio",true).toBool() );
+  ui->check_autoapplinks->setChecked( sessionsettings.value("AutomaticDesktopAppLinks",true).toBool() );
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings.value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings.value("DateFormat","").toString() );
