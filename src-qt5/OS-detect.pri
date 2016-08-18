@@ -31,7 +31,7 @@ isEmpty(OS){
   #Setup the default values for build settings (if not explicitly set previously)
   isEmpty(PREFIX){ PREFIX=/usr/local }
   isEmpty(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
-  message("General Settings: PREFIX=$${PREFIX}, LIBPREFIX=$${LIBPREFIX}")
+  #message("General Settings: PREFIX=$${PREFIX}, LIBPREFIX=$${LIBPREFIX}")
   #Now go through and setup any known OS build settings
   #  which are different from the defaults
   equals(QMAKE_HOST.os, "DragonFly"){
@@ -80,7 +80,7 @@ isEmpty(OS){
 
   # If the detailed install variables are not set - create them from the general vars
   isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
-  isEmpty(L_LIBDIR){ L_LIBDIR = $${PREFIX}/lib }
+  isEmpty(L_LIBDIR){ L_LIBDIR = $${LIBPREFIX} }
   isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/etc }
   isEmpty(L_SHAREDIR){ L_SHAREDIR = $${PREFIX}/share }
   isEmpty(L_INCLUDEDIR){ L_INCLUDEDIR = $${PREFIX}/include }
