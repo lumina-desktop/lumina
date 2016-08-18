@@ -12,8 +12,8 @@ AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in TrueOS)
   controlpanellink = LOS::ControlPanelShortcut(); //Default control panel
   APPS.clear();
-  watcher = new QFileSystemWatcher(this);
-    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
+  //watcher = new QFileSystemWatcher(this);
+    //connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
   //QTimer::singleShot(200, this, SLOT(start()) ); //Now start filling the menu
   start(); //do the initial run during session init so things are responsive immediately.
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(watcherUpdate()) );
@@ -32,14 +32,15 @@ QHash<QString, QList<XDGDesktop> >* AppMenu::currentAppHash(){
 //  PRIVATE
 //===========
 void AppMenu::updateAppList(){
-  watcher->removePaths(watcher->directories());
+  //watcher->removePaths(watcher->directories());
   //Make sure the title/icon are updated as well (in case of locale/icon change)
   this->setTitle(tr("Applications"));
   this->setIcon( LXDG::findIcon("system-run","") );
   //Now update the lists
   this->clear();
   APPS.clear();
-  QList<XDGDesktop> allfiles = LXDG::systemDesktopFiles();
+  XDGDesktopList *sysApps = LXDG:: systemAppsList();
+  QList<XDGDesktop> allfiles = sysApps->apps(false,false); //only valid, non-hidden apps
   APPS = LXDG::sortDesktopCats(allfiles);
   APPS.insert("All", LXDG::sortDesktopNames(allfiles));
   lastHashUpdate = QDateTime::currentDateTime();
@@ -112,7 +113,7 @@ void AppMenu::updateAppList(){
       }
       this->addMenu(menu);
     }
-    watcher->addPaths(LXDG::systemApplicationDirs());
+   // watcher->addPaths(LXDG::systemApplicationDirs());
     emit AppMenuUpdated();
 }
 
@@ -121,7 +122,7 @@ void AppMenu::updateAppList(){
 //=================
 void AppMenu::start(){
   //Setup the watcher
-  watcher->addPaths(LXDG::systemApplicationDirs());
+  connect(LXDG:: systemAppsList(), SIGNAL(appsUpdated()), this, SLOT(watcherUpdate()) );
   //Now fill the menu the first time
   updateAppList();
 }

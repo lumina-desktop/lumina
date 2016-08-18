@@ -35,7 +35,7 @@ public:
 	QDateTime lastHashUpdate;
 
 private:
-	QFileSystemWatcher *watcher;
+	//QFileSystemWatcher *watcher;
 	QString appstorelink, controlpanellink;
 	QList<QMenu> MLIST;
 	QHash<QString, QList<XDGDesktop> > APPS;
@@ -55,4 +55,3 @@ signals:
 };
 
 #endif
-

@@ -35,6 +35,7 @@ void XDGDesktopList::updateList(){
   QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
   QStringList oldkeys = files.keys();
   bool appschanged = false;
+  lastCheck = QDateTime::currentDateTime();
   //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
   bool ok; QString path; QDir dir;  QStringList apps; XDGDesktop dFile;
   for(int i=0; i<appDirs.length(); i++){
