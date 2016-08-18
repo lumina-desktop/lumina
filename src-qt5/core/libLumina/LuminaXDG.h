@@ -147,7 +147,8 @@ public:
 	//Get a list of all the directories where *.desktop files exist
 	static QStringList systemApplicationDirs();
 	//Get a list of all the *.desktop files available on the system
-	static QList<XDGDesktop> systemDesktopFiles(bool showAll = false, bool showHidden = false);
+        static XDGDesktopList* systemAppsList(); //return a pointer to the entire class
+	static QList<XDGDesktop> systemDesktopFiles(bool showAll = false, bool showHidden = false); //simplification for getting just the files
 	//Sort a list of Desktop files into the proper categories
 	static QHash< QString, QList<XDGDesktop> > sortDesktopCats(QList<XDGDesktop> apps);
 	//Return the icon to use for the given category

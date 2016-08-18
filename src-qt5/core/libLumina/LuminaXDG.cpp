@@ -501,6 +501,12 @@ QStringList LXDG::systemApplicationDirs(){
   return out;
 }
 
+XDGDesktopList* LXDG::systemAppsList(){
+  static XDGDesktopList sysapps(0,true); // = XDGDesktopList(0,true); //set this to automatically update as needed
+  if(sysapps.lastCheck.isNull()){ sysapps.updateList(); } //catch the first time the class was used, and prompt for an update right now
+  return &sysapps;
+}
+
 QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   //Returns a list of all the unique *.desktop files that were found
   /*qDebug() << "Read System Apps:";
@@ -526,9 +532,7 @@ QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   qDebug() << "   End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
   //return out; */
   //qDebug() << "New Routine Start:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
-  static XDGDesktopList sysappslist;
-  sysappslist.updateList();
-  return sysappslist.apps(showAll, showHidden);
+  return systemAppsList()->apps(showAll, showHidden); 
   //qDebug() << "    End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
   //return out;
 }
