@@ -15,8 +15,8 @@
 #	L_ETCDIR:		Directory to install/use global configs
 #	L_SHAREDIR:	Directory to install the general Lumina files
 #	L_INCLUDEDIR:	Directory to install include files
-#	L_SESSDIR:	Directory to place *.desktop file for starting the Lumina session
-#	LRELEASE:	binary path to the Qt lrelease utility (usually auto-set)
+#	L_SESSDIR:		Directory to place *.desktop file for starting the Lumina session
+#	LRELEASE:		binary path to the Qt lrelease utility (usually auto-set)
 # =============================================
 # Note: Make sure the OS variable matches the name of a libLumina/LuminaOS-<OS>.cpp file
 # =============================================
@@ -31,7 +31,7 @@ isEmpty(OS){
   #Setup the default values for build settings (if not explicitly set previously)
   isEmpty(PREFIX){ PREFIX=/usr/local }
   isEmpty(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
-
+  message("General Settings: PREFIX=$${PREFIX}, LIBPREFIX=$${LIBPREFIX}")
   #Now go through and setup any known OS build settings
   #  which are different from the defaults
   equals(QMAKE_HOST.os, "DragonFly"){
