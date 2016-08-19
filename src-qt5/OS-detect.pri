@@ -59,6 +59,7 @@ isEmpty(OS){
     OS=Linux
     LIBS += -L/usr/local/lib -L/usr/lib -L/lib
 
+    #Detect *which* distro this is
     exists(/bin/lsb_release){
       LINUX_DISTRO = $$system(lsb_release -si)
     } else:exists(/usr/bin/lsb_release){
@@ -66,7 +67,10 @@ isEmpty(OS){
     } else:exists(/etc/gentoo-release){
       LINUX_DISTRO = Gentoo
     }
-
+    #Apply any special rules for particular distros
+    equals(LINUX_DISTRO,"Fedora"){
+      isEmpty(L_ETCDIR){ L_ETCDIR=/etc }
+    }
   }else{
     OS="Unknown";
   }
