@@ -35,6 +35,7 @@ void XDGDesktopList::updateList(){
   QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
   QStringList oldkeys = files.keys();
   bool appschanged = false;
+  bool firstrun = lastCheck.isNull() || oldkeys.isEmpty();
   lastCheck = QDateTime::currentDateTime();
   //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
   bool ok; QString path; QDir dir;  QStringList apps; XDGDesktop dFile;
@@ -61,8 +62,8 @@ void XDGDesktopList::updateList(){
     } //end loop over apps
   } //end loop over appDirs
   //Save the extra info to the internal lists
-  removedApps = oldkeys; //files which were removed
-  newApps = newfiles; //files which were added
+  if(!firstrun){ removedApps = oldkeys; }//files which were removed
+  if(!firstrun){ newApps = newfiles; }//files which were added
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
     files.remove(oldkeys[i]);
