@@ -11,6 +11,7 @@
 #include <LuminaOS.h>
 #include "../../LSession.h"
 #include <QtConcurrent>
+#include <QMessageBox>
 
 #include "ItemWidget.h"
 //#define SSAVER QString("xscreensaver-demo")
@@ -257,6 +258,21 @@ void StartMenu::do_search(QString search, bool force){
     }
   }
   ui->stackedWidget->setCurrentWidget(ui->page_search);
+}
+
+bool StartMenu::promptAboutUpdates(bool &skip){
+  QString pending = LOS::systemPendingUpdates();
+  if(pending.isEmpty()){ skip = false; } //continue without skip
+  else{
+    QMessageBox dlg(QMessageBox::Question, tr("Apply Updates?"), tr("You have system updates waiting to be applied! Do you wish to install them now?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
+      dlg.setDetailedText(pending);
+      dlg.setDefaultButton(QMessageBox::Yes);
+      dlg.show();
+    int ret = dlg.exec();
+    if(ret == QMessageBox::Cancel){ return false; } //do not continue
+    else{ skip = (ret==QMessageBox::No); }
+  }
+  return true;
 }
 
 // ========================
@@ -571,12 +587,18 @@ void StartMenu::on_tool_logout_clicked(){
 
 void StartMenu::on_tool_restart_clicked(){
   emit CloseMenu();
-  LSession::handle()->StartReboot();
+  QCoreApplication::processEvents();
+  bool skipupdates =  false;
+  if( !promptAboutUpdates(skipupdates) ){ return; }
+  LSession::handle()->StartReboot(skipupdates);
 }
 
 void StartMenu::on_tool_shutdown_clicked(){
   emit CloseMenu();
-  LSession::handle()->StartShutdown();
+  QCoreApplication::processEvents();
+  bool skipupdates = false;
+  if( !promptAboutUpdates(skipupdates) ){ return; }
+  LSession::handle()->StartShutdown(skipupdates);
 }
 
 void StartMenu::on_tool_suspend_clicked(){

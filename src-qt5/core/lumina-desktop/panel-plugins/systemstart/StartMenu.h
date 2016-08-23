@@ -42,6 +42,8 @@ private:
 	void SortScrollArea(QScrollArea *area);
 	void do_search(QString search, bool force);	
 
+	bool promptAboutUpdates(bool &skip);
+
 private slots:
 	void LaunchItem(QString path, bool fix = true);
 
