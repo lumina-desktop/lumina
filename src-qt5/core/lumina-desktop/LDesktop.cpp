@@ -102,7 +102,7 @@ void LDesktop::SystemLogout(){
 void LDesktop::SystemTerminal(){
   LSession::handle()->sessionSettings()->sync(); //make sure it is up to date
   QString term = LXDG::findDefaultAppForMime("application/terminal"); //LSession::handle()->sessionSettings()->value("default-terminal","xterm").toString();
-  if(term.isEmpty() || !LUtils::isValidBinary(term)){ term = "xterm"; }
+  if(term.isEmpty() ||(!term.endsWith(".desktop") && !LUtils::isValidBinary(term)) ){ term = "xterm"; }
   LSession::LaunchApplication("lumina-open \""+term+"\"");
 }
 
