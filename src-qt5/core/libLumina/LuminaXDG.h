@@ -92,6 +92,8 @@ public slots:
 
 private:
 	QFileSystemWatcher *watcher;
+private slots:
+	void watcherChanged();
 signals:
 	void appsUpdated();
 };

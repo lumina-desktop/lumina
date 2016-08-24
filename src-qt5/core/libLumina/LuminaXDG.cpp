@@ -8,6 +8,7 @@
 #include "LuminaOS.h"
 #include "LuminaUtils.h"
 #include <QObject>
+#include <QTimer>
 #include <QMediaPlayer>
 #include <QSvgRenderer>
 
@@ -18,8 +19,8 @@ static qint64 mimechecktime;
 XDGDesktopList::XDGDesktopList(QObject *parent, bool watchdirs) : QObject(parent){
   if(watchdirs){
     watcher = new QFileSystemWatcher(this);
-    connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(updateList()) );
-    connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(updateList()) );
+    connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(watcherChanged()) );
+    connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(watcherChanged()) );
   }else{
     watcher = 0;
   }
@@ -29,6 +30,9 @@ XDGDesktopList::~XDGDesktopList(){
   //nothing special to do here
 }
 
+void XDGDesktopList::watcherChanged(){
+  QTimer::singleShot(1000, this, SLOT(updateList()) ); //1 second delay before check kicks off
+}
 void XDGDesktopList::updateList(){
   //run the check routine
   QStringList appDirs = LXDG::systemApplicationDirs(); //get all system directories
@@ -70,6 +74,7 @@ void XDGDesktopList::updateList(){
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
+    qDebug() << "App List Updated:" << lastCheck << appschanged << newfiles << oldkeys;
     watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }

@@ -56,10 +56,13 @@ void AppMenu::updateAppList(){
       //Remove any old symlinks first
       QString filename = tmp[i].section("/",-1);
       //qDebug() << "Check for symlink:" << filename;
-      if(QFile::exists(desktop+filename) && QFileInfo(desktop+filename).isSymLink() ){ QFile::remove(desktop+filename); }
+      if( QFileInfo(desktop+filename).isSymLink() ){ QFile::remove(desktop+filename); }
     }
     tmp = sysApps->newApps;
     for(int i=0; i<tmp.length() && !desktop.isEmpty(); i++){
+      XDGDesktop desk = sysApps->files.value(tmp[i]);
+      if(desk.isHidden || !LXDG::checkValidity(desk, false) ){ continue; } //skip this one
+      //qDebug() << "New App: " << tmp[i] << desk.filePath << "Hidden:" << desk.isHidden;
       //Create a new symlink for this file if one does not exist
       QString filename = tmp[i].section("/",-1);
       //qDebug() << "Check for symlink:" << filename;
