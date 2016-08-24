@@ -48,17 +48,17 @@ void XDGDesktopList::updateList(){
     apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
     for(int a=0; a<apps.length(); a++){
       path = dir.absoluteFilePath(apps[a]);
-      if(files.contains(path) && (files[path].lastRead>QFileInfo(path).lastModified()) ){ 
+      if(files.contains(path) && (files.value(path).lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
         dFile = files[path]; 
         ok=true;
       }else{
       	ok=false;
-      	dFile = LXDG::loadDesktopFile(dir.absoluteFilePath(apps[a]),ok); //will change the "ok" variable as needed
+      	dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
         appschanged = true; //flag that something changed - needed to load a file
       }
       if(ok && !found.contains(dFile.name)){
-        if(!files.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
+        if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
         files.insert(path, dFile);
         found << dFile.name;
         oldkeys.removeAll(path); //make sure this key does not get cleaned up later
