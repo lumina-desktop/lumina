@@ -229,7 +229,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if(inFile.startsWith("file://")){ inFile.remove(0,7); }
   //First make sure this is not a binary name first
   QString bin = inFile.section(" ",0,0).simplified();
-  if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") ){isFile=true; extension="binary"; }
+  if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") && !QFileInfo(inFile).isDir() ){isFile=true; extension="binary"; }
   //Now check what type of file this is
   else if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
