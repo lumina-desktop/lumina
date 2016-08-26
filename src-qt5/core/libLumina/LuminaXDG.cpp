@@ -1187,6 +1187,12 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
   QString upath = QString(getenv("XDG_CONFIG_HOME")).section(":",0,0);
   if(upath.isEmpty()){ upath = QDir::homePath()+"/.config/autostart/"; }
   else{ upath.append("/autostart/"); }
+  //Verify that the autostart directory exists
+  if(!QFile::exists(upath)){
+    QDir dir;
+    dir.mkpath(upath);
+  }
+
   //Quick check/finish for user-defined files which are getting disabled (just remove the file)
   if(app.filePath.startsWith(upath) && !autostart){
     return QFile::remove(app.filePath);
