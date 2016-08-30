@@ -180,6 +180,13 @@ bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString ic
 //Change the current Cursor Theme
 bool LTHEME::setCursorTheme(QString cursorname){
 //qDebug() << "Set Cursor Theme:" << cursorname;
+  if(cursorname=="default"){
+    //special case - this will cause a recursive inheritance loop - just remove the file instead
+    if(QFile::exists(QDir::homePath()+"/.icons/default/index.theme")){
+      return QFile::remove(QDir::homePath()+"/.icons/default/index.theme");
+    }
+    return true; //already does not exist
+  }
   QStringList info = LUtils::readFile(QDir::homePath()+"/.icons/default/index.theme");
     bool insection = false;
     bool changed = false;
