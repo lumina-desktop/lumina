@@ -17,7 +17,7 @@ Latest Stable Versions
 ----
 Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
 
-Qt5 - 0.9.0 (Beta): Use the qt5/0.9.0 branch of the source tree to fetch this version.
+Qt5 - 1.0.0 (Release): Use the qt5/1.0.0 branch of the source tree to fetch this version.
 
 The master branch is where all development is performed and tested before the next release version is branched off.
 
@@ -31,9 +31,8 @@ Translation Website URL: http://translate.pcbsd.org/
 
 How to file bug reports or feature requests
 ----
-Please submit any bug reports or feature requests through the TrueOS bug tracker, as this ensures that your submissions will be addressed in a timely manner (developers on GitHub may also create a ticket through the GitHub issues tracker, although it is not as feature-full as the TrueOS bug tracker). If you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
+Please create a ticket through the GitHub issues tracker on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
 
-Bug Tracker: https://bugs.pcbsd.org/projects/pcbsd
 
 How to build from source
 ----
