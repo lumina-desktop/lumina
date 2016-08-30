@@ -10,6 +10,7 @@
 #include <QString>
 #include <QList>
 #include <QRect>
+#include <QStringList>
 
 class ScreenInfo{
   public:	
