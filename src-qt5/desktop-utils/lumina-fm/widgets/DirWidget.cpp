@@ -78,6 +78,11 @@ DirWidget::~DirWidget(){
   stopload = true; //just in case another thread is still loading/running
 }
 
+void DirWidget::setFocusLineDir() {
+  line_dir->setFocus();
+  line_dir->selectAll();
+}
+
 void DirWidget::cleanup(){
   stopload = true; //just in case another thread is still loading/running
   if(thumbThread.isRunning()){ thumbThread.waitForFinished(); } //this will stop really quickly with the flag set

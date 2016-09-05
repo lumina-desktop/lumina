@@ -51,6 +51,7 @@ public:
 	void setDetails(QList<DETAILTYPES> list); //Which details to show and in which order (L->R)
 	void setThumbnailSize(int px);
 	void setShowCloseButton(bool show);
+	void setFocusLineDir();
 
     //Date format for show items
     QStringList getDateFormat();

@@ -88,7 +88,7 @@ private:
 	SlideshowWidget *SW;
 	
     QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort;
+    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
 	QCompleter *dirCompleter;
 
 	//Simplification Functions
@@ -141,6 +141,7 @@ private slots:
 
     //Other Shortcuts
     void togglehiddenfiles();
+	void focusDirWidget();
 
 	//Backend Info passing
 	void DirDataAvailable(QString, QString, LFileInfoList);
