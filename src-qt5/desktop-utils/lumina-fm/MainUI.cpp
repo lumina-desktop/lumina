@@ -95,6 +95,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
+  focusDirWidgetShort = new QShortcut( QKeySequence(tr("Ctrl+L")), this);
 
   //Finish loading the interface
   workThread->start();
@@ -252,6 +253,13 @@ void MainUI::setupConnections(){
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
+  connect(focusDirWidgetShort, SIGNAL(activated()), this, SLOT( focusDirWidget() ) );
+}
+
+void MainUI::focusDirWidget()
+{
+  DirWidget *dir = FindActiveBrowser();
+  if(dir != 0) { dir->setFocusLineDir(); }
 }
 
 void MainUI::togglehiddenfiles()
