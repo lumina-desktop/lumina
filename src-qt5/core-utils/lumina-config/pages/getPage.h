@@ -58,20 +58,23 @@ static QList<PAGEINFO> KnownPages(){
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
-  if(id=="wallpaper"){ return new page_wallpaper(parent); }
-  else if(id=="theme"){ return new page_theme(parent); }
-  else if(id=="autostart"){ return new page_autostart(parent); }
-  else if(id=="defaultapps"){ return new page_defaultapps(parent); }
-  else if(id=="fluxbox-keys"){ return new page_fluxbox_keys(parent); }
-  else if(id=="fluxbox-settings"){ return new page_fluxbox_settings(parent); }
-  else if(id=="interface-desktop"){ return new page_interface_desktop(parent); }
-  else if(id=="interface-panel"){ return new page_interface_panels(parent); }
-  else if(id=="interface-menu"){ return new page_interface_menu(parent); }
-  else if(id=="session-locale"){ return new page_session_locale(parent); }
-  else if(id=="session-options"){ return new page_session_options(parent); }
-  else if(id=="compton"){ return new page_compton(parent); }
+  PageWidget* page = 0;
+  if(id=="wallpaper"){ page = new page_wallpaper(parent); }
+  else if(id=="theme"){ page = new page_theme(parent); }
+  else if(id=="autostart"){ page = new page_autostart(parent); }
+  else if(id=="defaultapps"){ page = new page_defaultapps(parent); }
+  else if(id=="fluxbox-keys"){ page = new page_fluxbox_keys(parent); }
+  else if(id=="fluxbox-settings"){ page = new page_fluxbox_settings(parent); }
+  else if(id=="interface-desktop"){ page = new page_interface_desktop(parent); }
+  else if(id=="interface-panel"){ page = new page_interface_panels(parent); }
+  else if(id=="interface-menu"){ page = new page_interface_menu(parent); }
+  else if(id=="session-locale"){ page = new page_session_locale(parent); }
+  else if(id=="session-options"){ page = new page_session_options(parent); }
+  else if(id=="compton"){ page = new page_compton(parent); }
   //Return the main control_panel page as the fallback/default
-  return new page_main(parent);
+  if(page==0){ id.clear(); page = new page_main(parent); }
+  page->setWhatsThis(id);
+  return page;
 }
 
 #endif

@@ -19,6 +19,8 @@ public:
 	page_main(QWidget *parent);
 	~page_main();
 
+	virtual void setPreviousPage(QString id);
+
 public slots:
 	void SaveSettings();
 	void LoadSettings(int screennum);

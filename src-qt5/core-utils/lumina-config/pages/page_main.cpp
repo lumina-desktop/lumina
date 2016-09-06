@@ -24,6 +24,19 @@ page_main::~page_main(){
 
 }
 
+void page_main::setPreviousPage(QString id){
+  for(int i=0; i<ui->treeWidget->topLevelItemCount(); i++){
+    for(int j=0; j<ui->treeWidget->topLevelItem(i)->childCount(); j++){
+      if(ui->treeWidget->topLevelItem(i)->child(j)->whatsThis(0)==id){
+        ui->treeWidget->setCurrentItem(ui->treeWidget->topLevelItem(i)->child(j));
+        ui->treeWidget->scrollToItem(ui->treeWidget->topLevelItem(i)->child(j));
+        return; //found item - done
+      }
+    }
+  }
+  
+}
+
 void page_main::UpdateItems(QString search){
   ui->treeWidget->clear();
   //First create the categories

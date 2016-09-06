@@ -72,7 +72,8 @@ void mainWindow::loadMonitors(){
 //=============
 void mainWindow::changePage(QString id){
   PageWidget *page = 0;
-  if(id!=cpage){
+  QString oldpage = this->centralWidget()->whatsThis();
+  if(id!=cpage || cpage!=oldpage){
     page =  GetNewPage(id, this);
     if(page==0){ return; }
     qDebug() << "Changing page:" << id;
@@ -93,6 +94,7 @@ void mainWindow::changePage(QString id){
   }
   //Now load the new page
   page->LoadSettings(ui->actionMonitor->whatsThis().toInt()); //need to make this show the current screen as needed
+  page->setPreviousPage(oldpage);
   //Now update this UI a bit based on page settings
   ui->actionMonitor->setVisible( page->needsScreenSelector() && ui->actionMonitor->menu()->actions().length()>1 );
   
