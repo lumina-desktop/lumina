@@ -166,17 +166,18 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
   int tmpFromPos = fromPos;
   QString doc = this->toPlainText();
   while( nested>0 && tmpFromPos<doc.length() && ( (tmpFromPos>=fromPos && forward) || ( tmpFromPos<=fromPos && !forward ) ) ){
-    if(forward){ 
+    if(forward){
       QTextCursor cur = this->document()->find(ch, tmpFromPos);
       if(!cur.isNull()){
 	nested += doc.mid(tmpFromPos+1, cur.position()-tmpFromPos).count(startch) -1;
 	if(nested==0){ matchright = cur.position(); }
 	else{ tmpFromPos = cur.position(); }
       }else{ break; }
-    }else{ 
+    }else{
       QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
       if(!cur.isNull()){ 
-	nested += doc.mid(cur.position(), tmpFromPos-cur.position()).count(startch) -1;
+        QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position());
+	nested += mid.count(startch) - mid.count(ch);
 	if(nested==0){ matchleft = cur.position(); }
 	else{ tmpFromPos = cur.position()-1; }
       }else{ break; }

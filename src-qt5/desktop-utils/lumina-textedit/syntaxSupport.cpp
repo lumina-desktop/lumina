@@ -52,7 +52,7 @@ void Custom_Syntax::loadRules(QString type){
   if(type=="C++"){
     //Keywords (standard C/C++/Qt definitions)
     QStringList keywords;
-	keywords << "char" << "class" << "const" << "double" << "enum" << "explicit" << "extern" << "friend" << "inline" \
+	keywords << "char" << "class" << "const" << "double" << "enum" << "explicit" << "extern" << "float" << "friend" << "inline" \
 			<< "int" << "long" << "namespace" << "operator" << "private" << "protected" << "public" \
 			<< "short" << "signals" << "signed" << "slots" << "static" << "struct" << "template" \
 			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile" \
