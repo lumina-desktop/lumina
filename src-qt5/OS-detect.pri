@@ -60,12 +60,14 @@ isEmpty(OS){
     LIBS += -L/usr/local/lib -L/usr/lib -L/lib
 
     #Detect *which* distro this is
-    exists(/bin/lsb_release){
-      LINUX_DISTRO = $$system(lsb_release -si)
-    } else:exists(/usr/bin/lsb_release){
-      LINUX_DISTRO = $$system(lsb_release -si)
-    } else:exists(/etc/gentoo-release){
-      LINUX_DISTRO = Gentoo
+    isEmpty(LINUX_DISTRO){
+      exists(/bin/lsb_release){
+        LINUX_DISTRO = $$system(lsb_release -si)
+      } else:exists(/usr/bin/lsb_release){
+        LINUX_DISTRO = $$system(lsb_release -si)
+      } else:exists(/etc/gentoo-release){
+        LINUX_DISTRO = Gentoo
+      }
     }
     #Apply any special rules for particular distros
     equals(LINUX_DISTRO,"Fedora"){
