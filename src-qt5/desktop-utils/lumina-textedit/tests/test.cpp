@@ -9,5 +9,7 @@ some stuff // in-line comment
 
 some stuff /*multi
 line
-comment*/
+comment */
 stuff
+
+some /*single line comment with multi-line tags */
