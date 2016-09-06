@@ -67,7 +67,7 @@ void Custom_Syntax::loadRules(QString type){
     }
     //Alternate Keywords (built-in functions)
     keywords.clear();
-    keywords << "for" << "while" << "switch" << "case" << "if";
+    keywords << "for" << "while" << "switch" << "case" << "if" << "else" << "return" << "exit";
     rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
     for(int i=0; i<keywords.length(); i++){
       rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule

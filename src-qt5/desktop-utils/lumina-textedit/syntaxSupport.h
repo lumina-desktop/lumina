@@ -97,7 +97,7 @@ protected:
 	  for(int i=0; i<rules.length(); i++){
 	    QRegExp patt(rules[i].pattern); //need a copy of the rule's pattern (will be changing it below)
 	    int index = patt.indexIn(text);
-            if(splitactive>=0 && index>=start){ continue; } //skip this one - falls within a multi-line pattern above
+            if(splitactive>=0 || index<start){ continue; } //skip this one - falls within a multi-line pattern above
 	    while(index>=0){
 	      int len = patt.matchedLength();
 	      setFormat(index, len, rules[i].format);
