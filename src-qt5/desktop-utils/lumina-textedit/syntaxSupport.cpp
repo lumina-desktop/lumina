@@ -88,7 +88,7 @@ void Custom_Syntax::loadRules(QString type){
     rules << rule;
     //Proprocessor commands
     rule.format.setForeground( QColor(settings->value("colors/preprocessor").toString()) );
-    rule.pattern = QRegExp("^#[^\n]*");
+    rule.pattern = QRegExp("^[\\s]*#[^\n]*");
     rules << rule;    
     //Comment (single line)
     rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
