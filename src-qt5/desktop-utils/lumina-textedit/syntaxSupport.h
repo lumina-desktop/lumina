@@ -55,7 +55,7 @@ protected:
 	  int start = 0;
 	  int splitactive = previousBlockState();
 	  if(splitactive>splitrules.length()-1){ splitactive = -1; } //just in case
-	  while(start>=0 && start<text.length()-1){
+	  while(start>=0 && start<=text.length()-1){
 	    //qDebug() << "split check:" << start << splitactive;
 	    if(splitactive>=0){
 	      //Find the end of the current rule
