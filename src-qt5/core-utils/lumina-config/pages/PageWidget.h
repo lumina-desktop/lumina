@@ -35,6 +35,7 @@ public:
 		
 	virtual bool needsScreenSelector(){ return false; } //change this to true for pages which load/set options on a per-screen basis
 	virtual void setPreviousPage(QString){ } //re-implement this if the page needs knowledge of what the previous page was
+
 signals:
 	//emit this when the page has changes which are waiting to be saved
 	void HasPendingChanges(bool);
