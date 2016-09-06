@@ -52,7 +52,7 @@ void Custom_Syntax::loadRules(QString type){
   if(type=="C++"){
     //Keywords (standard C/C++/Qt definitions)
     QStringList keywords;
-	keywords << "char" << "class" << "const" << "double" << "enum" << "explicit" << "friend" << "inline" \
+	keywords << "char" << "class" << "const" << "double" << "enum" << "explicit" << "extern" << "friend" << "inline" \
 			<< "int" << "long" << "namespace" << "operator" << "private" << "protected" << "public" \
 			<< "short" << "signals" << "signed" << "slots" << "static" << "struct" << "template" \
 			<< "typedef" << "typename" << "union" << "unsigned" << "virtual" << "void" << "volatile" \
@@ -75,7 +75,7 @@ void Custom_Syntax::loadRules(QString type){
     }
     //Class Names
     rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
-    rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
+    rule.pattern = QRegExp("\\b[A-Za-z0-9_-\\.]+(?=::)\\b");
     rules << rule;
     //Quotes
     rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
