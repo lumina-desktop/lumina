@@ -164,6 +164,7 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
   
   int nested = 1; //always start within the first nest (the primary nest)
   int tmpFromPos = fromPos;
+  //if(!forward){ tmpFromPos++; } //need to include the initial location
   QString doc = this->toPlainText();
   while( nested>0 && tmpFromPos<doc.length() && ( (tmpFromPos>=fromPos && forward) || ( tmpFromPos<=fromPos && !forward ) ) ){
     if(forward){
@@ -176,8 +177,10 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
     }else{
       QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
       if(!cur.isNull()){ 
-        QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position());
-	nested += mid.count(startch) - mid.count(ch);
+        QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position()+1);
+        //qDebug() << "Found backwards match:" << nested << startch << ch << mid;
+        //qDebug() << doc.mid(cur.position(),1) << doc.mid(tmpFromPos,1);
+	nested += (mid.count(startch) - mid.count(ch));
 	if(nested==0){ matchleft = cur.position(); }
 	else{ tmpFromPos = cur.position()-1; }
       }else{ break; }
