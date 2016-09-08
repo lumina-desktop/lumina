@@ -17,6 +17,9 @@ static qint64 mimechecktime;
 
 //====XDGDesktopList Functions ====
 XDGDesktopList::XDGDesktopList(QObject *parent, bool watchdirs) : QObject(parent){
+  synctimer = new QTimer(this);
+    synctimer->setInterval(60000); //1 minute intervals. since the polling/update only takes a few ms, this is completely reasonable
+    connect(synctimer, SIGNAL(timeout()), this, SLOT(updateList()) );
   if(watchdirs){
     watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(watcherChanged()) );
@@ -33,8 +36,10 @@ XDGDesktopList::~XDGDesktopList(){
 void XDGDesktopList::watcherChanged(){
   QTimer::singleShot(1000, this, SLOT(updateList()) ); //1 second delay before check kicks off
 }
+
 void XDGDesktopList::updateList(){
   //run the check routine
+  if(synctimer->isActive()){ synctimer->stop(); }
   QStringList appDirs = LXDG::systemApplicationDirs(); //get all system directories
   QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
   QStringList oldkeys = files.keys();
@@ -79,6 +84,7 @@ void XDGDesktopList::updateList(){
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }
   }
+  synctimer->start();
 }
 
 QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
@@ -498,10 +504,6 @@ QStringList LXDG::systemApplicationDirs(){
       //Also check any subdirs within this directory 
       // (looking at you KDE - stick to the standards!!)
       out << LUtils::listSubDirectories(appDirs[i]+"/applications");
-      //QDir dir(appDirs[i]+"/applications");
-      //QStringList subs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-      //qDebug() << "Adding subdirectories:" << appDirs[i]+"/applications/["+subs.join(", ")+"]";
-      //for(int s=0; s<subs.length(); s++){ out << dir.absoluteFilePath(subs[s]); }
     }
   }
   //qDebug() << "System Application Dirs:" << out;
@@ -515,33 +517,8 @@ XDGDesktopList* LXDG::systemAppsList(){
 }
 
 QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
-  //Returns a list of all the unique *.desktop files that were found
-  /*qDebug() << "Read System Apps:";
-  qDebug() << "Old Routine Start:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
-  QStringList appDirs = LXDG::systemApplicationDirs();
-  QStringList found; //for avoiding duplicate apps
-  QList<XDGDesktop> out;
-  bool ok; //for internal use only
-  for(int i=0; i<appDirs.length(); i++){
-      QDir dir(appDirs[i]);
-      QStringList apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
-      for(int a=0; a<apps.length(); a++){
-      	ok=false;
-      	XDGDesktop dFile = LXDG::loadDesktopFile(dir.absoluteFilePath(apps[a]),ok);
-      	if( LXDG::checkValidity(dFile, showAll) ){
-      	  if( !found.contains(dFile.name) && (!dFile.isHidden || showHidden) ){
-      	    out << dFile;
-      	    found << dFile.name;
-      	  }
-      	}
-      }
-  }
-  qDebug() << "   End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
-  //return out; */
-  //qDebug() << "New Routine Start:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
+  //Quick overload for backwards compatibility which uses the static/global class for managing app entries
   return systemAppsList()->apps(showAll, showHidden); 
-  //qDebug() << "    End:" << QDateTime::currentDateTime().toString("hh.mm.ss.zzz");
-  //return out;
 }
 
 QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
@@ -633,7 +610,16 @@ QString LXDG::getDesktopExec(XDGDesktop app, QString ActionID){
   
   if(exec.isEmpty()){ return ""; }
   else if(app.useTerminal){
-    out = "xterm -lc -e "+exec;  
+    //Get the currently default terminal
+    QString term = findDefaultAppForMime("application/terminal");
+    if(!QFile::exists(term)){ term = "xterm -lc"; }
+    else if(term.endsWith(".desktop")){
+      bool ok = false;
+      XDGDesktop DF = LXDG::loadDesktopFile(term, ok);
+        if(ok){  term = LXDG::getDesktopExec(DF); }
+        else{ term = "xterm -lc"; }
+    }else if( !LUtils::isValidBinary(term)){ term = "xterm -lc"; }
+    out = term+" -e "+exec;  //-e is a nearly-universal flag for terminal emulators
   }else{
     out =exec;
   }

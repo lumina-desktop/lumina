@@ -92,6 +92,8 @@ public slots:
 
 private:
 	QFileSystemWatcher *watcher;
+	QTimer *synctimer;
+
 private slots:
 	void watcherChanged();
 signals:
