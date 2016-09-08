@@ -39,6 +39,7 @@ void printUsageInfo(){
   qDebug() << " \"-volume[up/down]\" Flag to increase/decrease audio volume by 5%";
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
   qDebug() << " \"-autostart-apps\" Flag to launch all the various apps which are registered with XDG autostart specification";
+  qDebug() << "\"-terminal\" Flag to open the terminal currently set as the user's default";
   exit(1);
 }
 
@@ -212,6 +213,9 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       }else if( (QString(argv[i]).simplified() =="-action") && (argc>(i+1)) ){
         ActionID = QString(argv[i+1]);
 	i++; //skip the next input
+      }else if(QString(argv[i]).simplified()=="-terminal"){
+        inFile = LXDG::findDefaultAppForMime("application/terminal");
+        break;
       }else{
         inFile = QString::fromLocal8Bit(argv[i]);
         break;
