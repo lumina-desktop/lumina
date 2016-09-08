@@ -53,6 +53,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_find_prev, SIGNAL(clicked()), this, SLOT(findPrev()) );
   connect(ui->tool_replace, SIGNAL(clicked()), this, SLOT(replaceOne()) );
   connect(ui->tool_replace_all, SIGNAL(clicked()), this, SLOT(replaceAll()) );
+  connect(ui->tool_hideReplaceGroup, SIGNAL(clicked()), this, SLOT(closeFindReplace()) );
   connect(ui->line_find, SIGNAL(returnPressed()), this, SLOT(findNext()) );
   connect(ui->line_replace, SIGNAL(returnPressed()), this, SLOT(replaceOne()) );
   connect(colorDLG, SIGNAL(colorsChanged()), this, SLOT(UpdateHighlighting()) );
@@ -96,6 +97,7 @@ void MainUI::updateIcons(){
   ui->tool_find_casesensitive->setIcon(LXDG::findIcon("format-text-italic"));
   ui->tool_replace->setIcon(LXDG::findIcon("arrow-down"));
   ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
+  ui->tool_hideReplaceGroup->setIcon(LXDG::findIcon("dialog-close",""));
   //ui->tool_find_next->setIcon(LXDG::findIcon(""));
 	
   QTimer::singleShot(0,colorDLG, SLOT(updateIcons()) );
