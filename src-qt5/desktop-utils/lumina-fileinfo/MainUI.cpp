@@ -233,6 +233,7 @@ void MainUI::on_push_save_clicked(){
   if(INFO.filePath().isEmpty()){
     //Need to prompt for where to save the file and what to call it
     QString appdir = QString(getenv("XDG_DATA_HOME"))+"/applications/";
+    if(!QFile::exists(appdir)){ QDir dir; dir.mkpath(appdir); }
     QString filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), appdir, tr("Application Registrations (*.desktop)") );
     if(filePath.isEmpty()){ return; }
     if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
