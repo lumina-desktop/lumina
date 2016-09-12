@@ -11,6 +11,7 @@
 #include <QStringList>
 #include <QSettings>
 #include <QShortcut>
+#include <QFontComboBox>
 
 #include "PlainTextEditor.h"
 #include "ColorDialog.h"
@@ -32,6 +33,7 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+	QFontComboBox *fontbox;
 	ColorDialog *colorDLG;
 	QSettings *settings;
 	QShortcut *closeFindS;
@@ -47,6 +49,7 @@ private slots:
 	void CloseFile(); //current file only
 	void SaveFile();
 	void SaveFileAs();
+	void fontChanged(const QFont &font);
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);

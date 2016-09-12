@@ -170,7 +170,7 @@ void Custom_Syntax::loadRules(QString type){
     rules << rule;
     rule = SyntaxRule(); //reset rule
     rule.format.setFontWeight( QFont::Bold );
-    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)([a-zA-Z0-9]+)::\\s");
+    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)([a-zA-Z0-9]+)::");
     rules << rule;
     //Functions
     rule = SyntaxRule(); //reset rule

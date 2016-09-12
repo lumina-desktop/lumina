@@ -19,11 +19,26 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
+  fontbox = new QFontComboBox(this);
+    fontbox->setFocusPolicy(Qt::NoFocus);
+  QWidget *spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  ui->toolBar->addWidget(spacer);
+  ui->toolBar->addWidget(fontbox);
+  //Load settings
   settings = new QSettings("lumina-desktop","lumina-textedit");
+  if(settings->contains("lastfont")){
+    QFont oldfont;
+    if(oldfont.fromString(settings->value("lastfont").toString() ) ){
+      fontbox->setCurrentFont( oldfont );
+      fontChanged(oldfont); //load it right now
+    }
+  }
   Custom_Syntax::SetupDefaultColors(settings); //pre-load any color settings as needed
   colorDLG = new ColorDialog(settings, this);
   this->setWindowTitle(tr("Text Editor"));
   ui->tabWidget->clear();
+  //Add keyboard shortcuts
   closeFindS = new QShortcut(QKeySequence(Qt::Key_Escape), this);
     connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
   ui->groupReplace->setVisible(false);
@@ -57,6 +72,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->line_find, SIGNAL(returnPressed()), this, SLOT(findNext()) );
   connect(ui->line_replace, SIGNAL(returnPressed()), this, SLOT(replaceOne()) );
   connect(colorDLG, SIGNAL(colorsChanged()), this, SLOT(UpdateHighlighting()) );
+  connect(fontbox, SIGNAL(currentFontChanged(const QFont&)), this, SLOT(fontChanged(const QFont&)) );
   updateIcons();
   //Now load the initial size of the window
   QSize lastSize = settings->value("lastSize",QSize()).toSize();
@@ -169,6 +185,13 @@ void MainUI::SaveFileAs(){
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   cur->SaveFile(true);	
+}
+
+void MainUI::fontChanged(const QFont &font){
+  //Save this font for later
+  settings->setValue("lastfont", font.toString());
+  //Now apply this font to all the open editors
+  QApplication::setFont(font, "PlainTextEditor");
 }
 
 void MainUI::UpdateHighlighting(QAction *act){
@@ -297,19 +320,10 @@ void MainUI::replaceOne(){
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   //See if the current selection matches the find field first
-  bool done = false;
   if(cur->textCursor().selectedText()==ui->line_find->text()){
     cur->insertPlainText(ui->line_replace->text());
-    //done = true;
-  }//else{
-    //Find/replace the next occurance of the string
-    bool found = cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
-    //if(found){ cur->insertPlainText(ui->line_replace->text()); done = true;}
-  //}
-  /*if(done){
-    //Re-highlight the newly-inserted text
-    cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
-  }*/
+  }
+  cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
 }
 
 void MainUI::replaceAll(){

@@ -61,14 +61,14 @@ protected:
 	      //Find the end of the current rule
 	      int end = splitrules[splitactive].endPattern.indexIn(text, start);
 	      if(end==-1){
-                qDebug() << "Highlight to end of line:" << text << start;
+                //qDebug() << "Highlight to end of line:" << text << start;
 	        //rule did not finish - apply to all
                 if(start>0){ setFormat(start-1, text.length()-start+1, splitrules[splitactive].format); }
                 else{ setFormat(start, text.length()-start, splitrules[splitactive].format); }
 		break; //stop looking for more multi-line patterns
 	      }else{
 		//Found end point within the same line
-                qDebug() << "Highlight to particular point:" << text << start << end;
+                //qDebug() << "Highlight to particular point:" << text << start << end;
 		int len = end-start+splitrules[splitactive].endPattern.matchedLength();
                 if(start>0){ start--; len++; } //need to include the first character as well
 		setFormat(start, len , splitrules[splitactive].format);
