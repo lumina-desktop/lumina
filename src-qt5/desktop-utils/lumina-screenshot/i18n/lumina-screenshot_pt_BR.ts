@@ -1,91 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR">
+<TS version="2.1" language="pt_BR">
+<context>
+    <name>ImageEditor</name>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/ImageEditor.cpp" line="14"/>
+        <source>Zoom In</source>
+        <translation>Ampliar</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/ImageEditor.cpp" line="15"/>
+        <source>Zoom Out</source>
+        <translation>Reduzir</translation>
+    </message>
+</context>
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="162"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="295"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Capturar imagem da tela</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="33"/>
-        <source>No Screenshot Yet</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="37"/>
+        <source>New Screenshot</source>
+        <translation>Nova captura de tela</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="43"/>
-        <source>New Screenshot Settings</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="43"/>
+        <source>Settings</source>
+        <translation>Configurações</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="55"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="124"/>
+        <source>Include Borders</source>
+        <translation>Incluir bordas</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="149"/>
         <source> Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation> Segundos</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="58"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="152"/>
         <source>Delay </source>
-        <translation type="unfinished"></translation>
+        <translation>Atraso </translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="68"/>
-        <source>Entire Screen</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="172"/>
+        <source>View/Edit</source>
+        <translation>Ver/Editar</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="75"/>
-        <location filename="../MainUI.cpp" line="63"/>
-        <source>Select Window</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="212"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="306"/>
+        <source>Save As</source>
+        <translation>Salvar como</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="100"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="222"/>
+        <source>Launch Editor</source>
+        <translation>Carregar o editor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="129"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="245"/>
+        <source>Crop</source>
+        <translation>Recortar</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="132"/>
-        <location filename="../MainUI.ui" line="135"/>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="255"/>
+        <source>Resize</source>
+        <translation>Redimensionar</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="282"/>
+        <source>File</source>
+        <translation>Arquivo</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="298"/>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="322"/>
+        <source>Close</source>
+        <translation>Fechar</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="325"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="67"/>
+        <source>Entire Session</source>
+        <translation>Sessão inteira</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="81"/>
+        <source>Single Window</source>
+        <translation>Somente janela</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="74"/>
+        <source>Single Screen</source>
+        <translation>Tela Única</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.cpp" line="78"/>
         <source>Save Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar captura de tela</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="309"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="143"/>
-        <location filename="../MainUI.ui" line="146"/>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="317"/>
+        <source>Quick Save</source>
+        <translation>Salvamento rápido</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="151"/>
-        <source>Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="154"/>
-        <source>Take new snapshot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.cpp" line="78"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="63"/>
-        <source>Window:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivos PNG (*.png);;Todos os arquivos (*)</translation>
     </message>
 </context>
 </TS>

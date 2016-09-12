@@ -1,92 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="cs_CZ">
+<TS version="2.1" language="cs">
+<context>
+    <name>ConfigUI</name>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.ui" line="14"/>
+        <source>Search Configuration</source>
+        <translation>Nastavení hledání</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.ui" line="20"/>
+        <source>Start Search:</source>
+        <translation>Začít hledání:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.ui" line="39"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.ui" line="48"/>
+        <source>Excluded Directories</source>
+        <translation>Vyloučené adresáře</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.ui" line="119"/>
+        <source>Save as Defaults</source>
+        <translation>Uložit jako výchozí</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.cpp" line="41"/>
+        <source>Select Search Directory</source>
+        <translation>Vyberte adresář pro hledání</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/ConfigUI.cpp" line="54"/>
+        <source>Exclude Directories</source>
+        <translation>Vyloučit adresáře</translation>
+    </message>
+</context>
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhledat</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="23"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="23"/>
         <source>Type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledejte psaním</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="30"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="30"/>
+        <source>Configure search parameters</source>
+        <translation>Konfigurace parametrů hledání</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavit aktivní hledání</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="44"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="54"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikace</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="54"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="64"/>
         <source>Files or Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubory nebo složky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="75"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="88"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="95"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit položku</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="106"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="119"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="109"/>
-        <location filename="../MainUI.ui" line="112"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="122"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit snímek obrazovky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="115"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="128"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="120"/>
-        <location filename="../MainUI.ui" line="123"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="133"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="136"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="141"/>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Přichytit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="131"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.ui" line="144"/>
         <source>Take new snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nový snímek</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.cpp" line="29"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.cpp" line="95"/>
+        <source>Search: %1 -- Smart: %2</source>
+        <translation>Hledat: %1 -- Chytrý: %2</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.cpp" line="98"/>
+        <source>Off</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/MainUI.cpp" line="98"/>
+        <source>On</source>
+        <translation>Zapnuto</translation>
     </message>
 </context>
 <context>
     <name>Worker</name>
     <message>
-        <location filename="../Worker.cpp" line="39"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/Worker.cpp" line="40"/>
         <source>Searching: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledám: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="59"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/Worker.cpp" line="61"/>
         <source>Starting Search: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spuštění hledání: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="100"/>
+        <location filename="../../lumina-git/src-qt5/core-utils/lumina-search/Worker.cpp" line="109"/>
         <source>Search Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledání dokončeno</translation>
     </message>
 </context>
 </TS>

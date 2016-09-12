@@ -1,166 +1,215 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.1" language="nl">
 <context>
-    <name>Dialog</name>
+    <name>MainUI</name>
     <message>
-        <location filename="../dialog.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="24"/>
         <source>File Information</source>
-        <translation>Bestand informatie</translation>
+        <translation>Bestandsinformatie</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="22"/>
-        <source>Working dir:</source>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="56"/>
+        <source>Owner:</source>
+        <translation>Eigenaar:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="73"/>
+        <source>Group:</source>
+        <translation>Groep:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="90"/>
+        <source>Permissions:</source>
+        <translation>Rechten:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="104"/>
+        <source>Created:</source>
+        <translation>Gecreëerd op:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="111"/>
+        <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
+        <translation>Let op: de creatietijd van een bestand kan recenter zijn dan de bewerktijd als de bestandsrechten onlangs gewijzigd zijn.</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="124"/>
+        <source>Last Modified:</source>
+        <translation>Laatst gewijzigd:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="131"/>
+        <source>Type:</source>
+        <translation>Soort:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="138"/>
+        <source>MimeType:</source>
+        <translation>Mimetype:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="185"/>
+        <source>File Size:</source>
+        <translation>Bestandsgrootte:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="216"/>
+        <source>Edit Shortcut</source>
+        <translation>Sneltoets bewerken</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="239"/>
+        <source>Working Dir:</source>
         <translation>Werkmap:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="56"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="246"/>
         <source>Use startup notification</source>
-        <translation>Gebruik opstart notificatie</translation>
+        <translation>Opstartmelding gebruiken</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="70"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="260"/>
         <source>Icon:</source>
-        <translation>Icoon:</translation>
+        <translation>Pictogram:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="77"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="267"/>
         <source>Command:</source>
-        <translation>Commando:</translation>
+        <translation>Opdracht:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="84"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="274"/>
         <source>Comment:</source>
-        <translation>Commentaar:</translation>
+        <translation>Opmerking:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="118"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="284"/>
         <source>Run in terminal</source>
-        <translation>Draaien in terminal</translation>
+        <translation>Uitvoeren in een terminalvenster</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="125"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="291"/>
         <source>Name:</source>
-        <translation>Naam</translation>
+        <translation>Naam:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="132"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="298"/>
         <source>Options</source>
         <translation>Opties</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="162"/>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="336"/>
+        <source>No Icon</source>
+        <translation>Geen pictogram</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="169"/>
-        <source>Apply</source>
-        <translation>Toepassen</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="392"/>
+        <source>Save</source>
+        <translation>Opslaan</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <location filename="../dialog.cpp" line="125"/>
-        <location filename="../dialog.cpp" line="160"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="399"/>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="53"/>
+        <source>---Calculating---</source>
+        <translation>---Bezig met berekenen---</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="62"/>
+        <source>Read/Write</source>
+        <translation>Lezen/Schrijven</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="63"/>
+        <source>Read Only</source>
+        <translation>Alleen-lezen</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="64"/>
+        <source>Write Only</source>
+        <translation>Alleen-schrijven</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="65"/>
+        <source>No Access</source>
+        <translation>Geen toegang</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="69"/>
+        <source>XDG Shortcut</source>
+        <translation>XDG-sneltoets</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="70"/>
+        <source>Directory</source>
+        <translation>Map</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="71"/>
+        <source>Binary</source>
+        <translation>Uitvoerbaar bestand</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="73"/>
+        <source>Hidden %1</source>
+        <translation>Verborgen %1</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="100"/>
+        <source>URL:</source>
+        <translation>URL:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="245"/>
+        <source>Select a binary</source>
+        <translation>Selecteer een uitvoerbaar bestand</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="248"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <source>Lumina-fileinfo requires inputs:</source>
-        <translation>Lumina-bestandinformatie vereist inputs:</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="248"/>
+        <source>Invalid selection: Not a valid executable</source>
+        <translation>Ongeldige selectie: ongeldig uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <source>Example: &quot;%1&quot;</source>
-        <translation>Voorbeeld:</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="260"/>
+        <source>Select a directory</source>
+        <translation>Selecteer een map</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="101"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="273"/>
+        <source>Select an icon</source>
+        <translation>Selecteer een pictogram</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="111"/>
-        <source>Working dir</source>
-        <translation>Werkmap</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="273"/>
+        <source>Images (%1);; All Files (*)</source>
+        <translation>Afbeeldingen (%1);; Alle bestanden (*)</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="125"/>
-        <source>The filename cannot start with a &quot;-&quot;.</source>
-        <translation>Bestandnaam kan niet beginnen met een &quot;-&quot;.</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="296"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source> Folders: </source>
+        <translation> Mappen: </translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="160"/>
-        <source>Problem to read the desktop file called:</source>
-        <translation>Fout tijdens lezen van bureaublad bestand genaamd:</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="296"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source>Files: </source>
+        <translation>Bestanden: </translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="182"/>
-        <source>There are some issues with this file !!!!</source>
-        <translation>Er zijn problemen met dit bestand !!!!</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="183"/>
-        <source>Either you correct this file your self with an editor, or you start from scratch using the link or app template.
-Please note that this process will update the file called:</source>
-        <translation>U kunt dit bestand zowel zelf aanpassen met een editor, of opnieuw beginnen vanaf scratch met het gebruik van de link of de applicatie blouwdruk.
-Opmerking: dit process zal de file aanpassen genaamd:</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="217"/>
-        <location filename="../dialog.cpp" line="323"/>
-        <source>Open command</source>
-        <translation>Open commando</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="217"/>
-        <source>All Files (*)</source>
-        <translation>Alle bestanden (*)</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="233"/>
-        <source>Working Directory</source>
-        <translation>Werkmap</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="285"/>
-        <location filename="../dialog.cpp" line="300"/>
-        <location filename="../dialog.cpp" line="309"/>
-        <source>Problem to write to disk</source>
-        <translation>Fout tijdens schrijven naar schijf</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="285"/>
-        <source>We have a problem to write the adapted desktop file to the disk. Can you re-try the modification after solving the issue with the disk ?</source>
-        <translation>Er is een probleem bij het schrijven van het aangepast bureaublad bestand naar de schijf. U kunt het opnieuw proberen na het verhelpen van het probleem met de schijf?</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="300"/>
-        <location filename="../dialog.cpp" line="309"/>
-        <source>We have a problem to execute the following command:</source>
-        <translation>Er is een probleem bij het uitvoeren van het volgende commando:</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="323"/>
-        <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation>Afbeelding bestanden (*.png *.jpg *.bmp)</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="334"/>
-        <location filename="../dialog.cpp" line="351"/>
-        <source>By modifying this value, you will loose all translated versions</source>
-        <translation>Bij het toevoegen van deze waarde zullen alle vertalingen hiervan verloren gaan</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="335"/>
-        <source>The field: Name is translated in several other languages. If you want to continue, you will loose all translated versions</source>
-        <translation>Dit veld: Naam is vertaald in verschillende andere talen. Als u wilt doorgaan zullen alle vertalingen hiervan verloren gaan</translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="352"/>
-        <source>The field: Comment is translated in several other languages. If you want to continue, you will loose all translated versions</source>
-        <translation>Dit veld: Commentaar is vertaald in verschillende andere talen. Als u wilt doorgaan zullen alle vertalingen hiervan verloren gaan</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source>  Calculating...</source>
+        <translation>  Bezig met berekenen...</translation>
     </message>
 </context>
 </TS>

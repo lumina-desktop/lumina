@@ -1,91 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="hu_HU">
+<TS version="2.1" language="hu">
+<context>
+    <name>ImageEditor</name>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/ImageEditor.cpp" line="14"/>
+        <source>Zoom In</source>
+        <translation>Nagyítás</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/ImageEditor.cpp" line="15"/>
+        <source>Zoom Out</source>
+        <translation>Kicsinyítés</translation>
+    </message>
+</context>
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="162"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="295"/>
         <source>Take Screenshot</source>
         <translation>Képernyőkép készítése</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="33"/>
-        <source>No Screenshot Yet</source>
-        <translation>Nincs képernyőkép</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="37"/>
+        <source>New Screenshot</source>
+        <translation>Új képernyőkép</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="43"/>
-        <source>New Screenshot Settings</source>
-        <translation>Új képernyőkép beállításai</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="43"/>
+        <source>Settings</source>
+        <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="55"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="124"/>
+        <source>Include Borders</source>
+        <translation>Keretekkel együtt</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="149"/>
         <source> Seconds</source>
         <translation> másodperc</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="58"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="152"/>
         <source>Delay </source>
         <translation>Késleltetés </translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="68"/>
-        <source>Entire Screen</source>
-        <translation>Teljes képernyő</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="172"/>
+        <source>View/Edit</source>
+        <translation>Nézet/Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="75"/>
-        <location filename="../MainUI.cpp" line="63"/>
-        <source>Select Window</source>
-        <translation>Ablak kiválasztása</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="212"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="306"/>
+        <source>Save As</source>
+        <translation>Mentés másként</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="100"/>
-        <source>toolBar</source>
-        <translation>Eszköztár</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="222"/>
+        <source>Launch Editor</source>
+        <translation>Szerkesztő indítása</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="129"/>
-        <source>Save</source>
-        <translation>Mentés</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="245"/>
+        <source>Crop</source>
+        <translation>Vágás</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="132"/>
-        <location filename="../MainUI.ui" line="135"/>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="255"/>
+        <source>Resize</source>
+        <translation>Átméretezés</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="282"/>
+        <source>File</source>
+        <translation>Fájl</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="298"/>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="322"/>
+        <source>Close</source>
+        <translation>Bezárás</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="325"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="67"/>
+        <source>Entire Session</source>
+        <translation>Teljes munkamenet</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="81"/>
+        <source>Single Window</source>
+        <translation>Egy ablak</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="74"/>
+        <source>Single Screen</source>
+        <translation>Egy képernyő</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.cpp" line="78"/>
         <source>Save Screenshot</source>
         <translation>Képernyőkép mentése</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="309"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="143"/>
-        <location filename="../MainUI.ui" line="146"/>
-        <source>Quit</source>
-        <translation>Kilépés</translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.ui" line="317"/>
+        <source>Quick Save</source>
+        <translation>Gyors mentés</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="151"/>
-        <source>Snap</source>
-        <translation>Képernyőkép</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="154"/>
-        <source>Take new snapshot</source>
-        <translation>Új képernyőkép készítése</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-screenshot/MainUI.cpp" line="78"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG fájlok (*.png);;Minden fájl (*)</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="63"/>
-        <source>Window:</source>
-        <translation>Ablak:</translation>
     </message>
 </context>
 </TS>

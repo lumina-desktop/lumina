@@ -1,165 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ja">
 <context>
-    <name>Dialog</name>
+    <name>MainUI</name>
     <message>
-        <location filename="../dialog.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="14"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="24"/>
         <source>File Information</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの情報</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="22"/>
-        <source>Working dir:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="56"/>
+        <source>Owner:</source>
+        <translation>所有者:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="56"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="73"/>
+        <source>Group:</source>
+        <translation>グループ:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="90"/>
+        <source>Permissions:</source>
+        <translation>パーミッション:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="104"/>
+        <source>Created:</source>
+        <translation>作成日時:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="111"/>
+        <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
+        <translation>注意: パーミッション設定のため、ファイル作成日時が更新時刻より新しいことがあります。</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="124"/>
+        <source>Last Modified:</source>
+        <translation>最終更新日時:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="131"/>
+        <source>Type:</source>
+        <translation>種類:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="138"/>
+        <source>MimeType:</source>
+        <translation>MIME タイプ:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="185"/>
+        <source>File Size:</source>
+        <translation>ファイルのサイズ:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="216"/>
+        <source>Edit Shortcut</source>
+        <translation>ショートカットを編集</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="239"/>
+        <source>Working Dir:</source>
+        <translation>作業ディレクトリー:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="246"/>
         <source>Use startup notification</source>
-        <translation type="unfinished"></translation>
+        <translation>起動通知を行う</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="70"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="260"/>
         <source>Icon:</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコン:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="77"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="267"/>
         <source>Command:</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="84"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="274"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>コメント:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="118"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="284"/>
         <source>Run in terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>ターミナルで実行する</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="125"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="291"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>名前:</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="132"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="298"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="162"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="336"/>
+        <source>No Icon</source>
+        <translation>アイコン無し</translation>
     </message>
     <message>
-        <location filename="../dialog.ui" line="169"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="392"/>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <location filename="../dialog.cpp" line="125"/>
-        <location filename="../dialog.cpp" line="160"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.ui" line="399"/>
+        <source>Close</source>
+        <translation>閉じる</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="53"/>
+        <source>---Calculating---</source>
+        <translation>---計算しています---</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="62"/>
+        <source>Read/Write</source>
+        <translation>読み込み/書き込み</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="63"/>
+        <source>Read Only</source>
+        <translation>読み込み専用</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="64"/>
+        <source>Write Only</source>
+        <translation>書き込み専用</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="65"/>
+        <source>No Access</source>
+        <translation>アクセス権無し</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="69"/>
+        <source>XDG Shortcut</source>
+        <translation>XDG ショートカット</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="70"/>
+        <source>Directory</source>
+        <translation>ディレクトリー</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="71"/>
+        <source>Binary</source>
+        <translation>バイナリー</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="73"/>
+        <source>Hidden %1</source>
+        <translatorcomment>%1 には &quot;Directory&quot;, &quot;File&quot;, &quot;Link&quot; などが入ると思われる。</translatorcomment>
+        <translation>隠し %1</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="100"/>
+        <source>URL:</source>
+        <translation>URL:</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="245"/>
+        <source>Select a binary</source>
+        <translatorcomment>ファイル選択ダイアログのタイトル</translatorcomment>
+        <translation>バイナリーを選択する</translation>
+    </message>
+    <message>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="248"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <source>Lumina-fileinfo requires inputs:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="248"/>
+        <source>Invalid selection: Not a valid executable</source>
+        <translation>無効な選択: 有効な実行ファイルではありません</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="84"/>
-        <source>Example: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="260"/>
+        <source>Select a directory</source>
+        <translation>ディレクトリーを選択</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="101"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="273"/>
+        <source>Select an icon</source>
+        <translation>アイコンを選択:</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="111"/>
-        <source>Working dir</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="273"/>
+        <source>Images (%1);; All Files (*)</source>
+        <translation>画像ファイル (%1);; 全ファイル (*)</translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="125"/>
-        <source>The filename cannot start with a &quot;-&quot;.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="296"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source> Folders: </source>
+        <translation> フォルダー: </translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="160"/>
-        <source>Problem to read the desktop file called:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="296"/>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source>Files: </source>
+        <translation>ファイル: </translation>
     </message>
     <message>
-        <location filename="../dialog.cpp" line="182"/>
-        <source>There are some issues with this file !!!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="183"/>
-        <source>Either you correct this file your self with an editor, or you start from scratch using the link or app template.
-Please note that this process will update the file called:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="217"/>
-        <location filename="../dialog.cpp" line="323"/>
-        <source>Open command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="217"/>
-        <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="233"/>
-        <source>Working Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="285"/>
-        <location filename="../dialog.cpp" line="300"/>
-        <location filename="../dialog.cpp" line="309"/>
-        <source>Problem to write to disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="285"/>
-        <source>We have a problem to write the adapted desktop file to the disk. Can you re-try the modification after solving the issue with the disk ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="300"/>
-        <location filename="../dialog.cpp" line="309"/>
-        <source>We have a problem to execute the following command:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="323"/>
-        <source>Image Files (*.png *.jpg *.bmp)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="334"/>
-        <location filename="../dialog.cpp" line="351"/>
-        <source>By modifying this value, you will loose all translated versions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="335"/>
-        <source>The field: Name is translated in several other languages. If you want to continue, you will loose all translated versions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialog.cpp" line="352"/>
-        <source>The field: Comment is translated in several other languages. If you want to continue, you will loose all translated versions</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../lumina-git/src-qt5/desktop-utils/lumina-fileinfo/MainUI.cpp" line="298"/>
+        <source>  Calculating...</source>
+        <translation>  計算中...</translation>
     </message>
 </context>
 </TS>
