@@ -145,12 +145,12 @@ void Custom_Syntax::loadRules(QString type){
     // directives
     rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
     rule.format.setFontItalic(false);
-    rule.pattern = QRegExp("(\\s|^):[a-zA-Z0-9 ]*:`[^`]*`(?=(\\s|$))");
+    rule.pattern = QRegExp("(\\s|^):[a-zA-Z0-9 ]*:`[^`]*`");
     rules << rule;
     // hyperlinks
     rule.format.setFontItalic(true);
     rule.format.setFontWeight(QFont::Normal);
-    rule.pattern = QRegExp("`[^\\<]*\\<[^\\>]*\\>`_(\\s|$)");
+    rule.pattern = QRegExp("`[^\\<]*\\<[^\\>]*\\>`_");
     rules << rule;
     // Code Sample
     rule.format.setFontItalic(false);
@@ -159,10 +159,10 @@ void Custom_Syntax::loadRules(QString type){
     rule.pattern = QRegExp("\\b`{2}.*`{2}\\b");
     rules << rule;
     //Quotes
-    rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
+    /*rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
     rule.format.setFontWeight(QFont::Normal);
     rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
-    rules << rule;
+    rules << rule;*/
     //TODO
     rule = SyntaxRule(); //reset rule
     rule.format.setFontWeight( QFont::Bold );
@@ -170,7 +170,7 @@ void Custom_Syntax::loadRules(QString type){
     rules << rule;
     rule = SyntaxRule(); //reset rule
     rule.format.setFontWeight( QFont::Bold );
-    rule.pattern = QRegExp("^\\.\\.\\s(note|warning|important)::\\s");
+    rule.pattern = QRegExp("^(\\s*)\\.\\.(\\s*)([a-zA-Z0-9]+)::\\s");
     rules << rule;
     //Functions
     rule = SyntaxRule(); //reset rule
