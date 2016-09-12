@@ -16,6 +16,7 @@
 #include <QDir>
 #include <QKeySequence>
 #include <QTimer>
+#include <QMessageBox>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -156,14 +157,23 @@ void MainUI::OpenFile(QString file){
     files << file;
   }
   for(int i=0; i<files.length(); i++){
-    PlainTextEditor *edit = new PlainTextEditor(settings, this);
+    PlainTextEditor *edit = 0;
+    //Try to see if this file is already opened first
+    for(int j=0; j<ui->tabWidget->count(); j++){
+      PlainTextEditor *tmp = static_cast<PlainTextEditor*>(ui->tabWidget->widget(j));
+      if(tmp->currentFile()==files[i]){ edit = tmp; break; }
+    }
+    if(edit ==0){
+      //New file - need to create a new editor for it
+      edit = new PlainTextEditor(settings, this);
       connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(statusTipChanged()), this, SLOT(updateStatusTip()) );
-    ui->tabWidget->addTab(edit, files[i].section("/",-1));
-    edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
-    edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-    edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
+      ui->tabWidget->addTab(edit, files[i].section("/",-1));
+      edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
+      edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+      edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
+    }
     ui->tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
     edit->setFocus();
@@ -270,7 +280,7 @@ void MainUI::tabClosed(int tab){
   if(edit==0){ return; } //should never happen
   if(edit->hasChange()){
     //Verify if the user wants to lose any unsaved changes
-	  
+    if(QMessageBox::Yes != QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("This file has unsaved changes.\nDo you want to close it anyway?\n\n%1")).arg(edit->currentFile()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ return; }
   }
   ui->tabWidget->removeTab(tab);
   edit->deleteLater();
@@ -351,4 +361,24 @@ PlainTextEditor *cur = currentEditor();
     //Re-highlight the newly-inserted text
     cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
   }
+}
+
+//=============
+//   PROTECTED
+//=============
+void MainUI::closeEvent(QCloseEvent *ev){
+  //See if any of the open editors have unsaved changes first
+  QStringList unsaved;
+  for(int i=0; i<ui->tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+    if(tmp->hasChange()){
+      unsaved << tmp->currentFile();
+    }
+  }
+  bool quitnow = unsaved.isEmpty();
+  if(!quitnow){
+    quitnow = (QMessageBox::Yes == QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("There are unsaved changes.\nDo you want to close the editor anyway?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
+  }
+  if(quitnow){ QMainWindow::closeEvent(ev); }
+  else{ ev->ignore(); }
 }

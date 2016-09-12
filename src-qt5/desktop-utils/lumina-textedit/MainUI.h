@@ -77,5 +77,6 @@ protected:
 	void resizeEvent(QResizeEvent *ev){
 	  settings->setValue("lastSize", ev->size());
 	}
+	void closeEvent(QCloseEvent *ev);
 };
 #endif
