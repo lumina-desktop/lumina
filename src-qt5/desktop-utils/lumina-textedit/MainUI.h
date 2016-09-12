@@ -50,6 +50,7 @@ private slots:
 	void SaveFile();
 	void SaveFileAs();
 	void fontChanged(const QFont &font);
+	void updateStatusTip();
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);

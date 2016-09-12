@@ -63,6 +63,7 @@ private slots:
 	void checkMatchChar();
 	//Functions for notifying the parent widget of changes
 	void textChanged();
+	void cursorMoved();
 	//Function for prompting the user if the file changed externally
         void fileChanged();
 
@@ -72,7 +73,7 @@ protected:
 signals:
 	void UnsavedChanges(QString); //filename
 	void FileLoaded(QString);
-	
+	void statusTipChanged();
 };
 
 //===========================================================

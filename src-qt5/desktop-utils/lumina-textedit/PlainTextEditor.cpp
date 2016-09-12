@@ -35,6 +35,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(LNW_highlightLine()) );
   connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(LNW_update(const QRect&, int)) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(checkMatchChar()) );
+  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMoved()) );
   connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()) );
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged()) );
   LNW_updateWidth();
@@ -280,6 +281,14 @@ void PlainTextEditor::textChanged(){
   hasChanges = changed; //save for reading later
   if(hasChanges){  emit UnsavedChanges( this->whatsThis() ); }
   else{ emit FileLoaded(this->whatsThis()); }
+}
+
+void PlainTextEditor::cursorMoved(){
+  //Update the status tip for the editor to show the row/column number for the cursor
+  QTextCursor cur = this->textCursor();
+  QString stat = tr("Row Number: %1, Column Number: %2");
+  this->setStatusTip(stat.arg(QString::number(cur.blockNumber()+1) , QString::number(cur.columnNumber()) ) );
+  emit statusTipChanged();
 }
 
 //Function for prompting the user if the file changed externally

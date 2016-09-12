@@ -159,6 +159,7 @@ void MainUI::OpenFile(QString file){
     PlainTextEditor *edit = new PlainTextEditor(settings, this);
       connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
+      connect(edit, SIGNAL(statusTipChanged()), this, SLOT(updateStatusTip()) );
     ui->tabWidget->addTab(edit, files[i].section("/",-1));
     edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
     edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
@@ -192,6 +193,12 @@ void MainUI::fontChanged(const QFont &font){
   settings->setValue("lastfont", font.toString());
   //Now apply this font to all the open editors
   QApplication::setFont(font, "PlainTextEditor");
+}
+
+void MainUI::updateStatusTip(){
+  QString msg = currentEditor()->statusTip();
+  //ui->statusbar->clearMessage();
+  ui->statusbar->showMessage(msg);
 }
 
 void MainUI::UpdateHighlighting(QAction *act){
