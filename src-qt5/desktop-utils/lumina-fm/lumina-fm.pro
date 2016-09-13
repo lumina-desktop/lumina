@@ -25,7 +25,8 @@ HEADERS  += MainUI.h \
 		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \
-		widgets/DirWidget.h
+		widgets/DirWidget.h \
+		gitCompat.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \

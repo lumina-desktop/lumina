@@ -114,14 +114,14 @@ private slots:
 	void on_actionNew_Window_triggered();
 	void on_actionNew_Tab_triggered();
 	void on_actionSearch_triggered();
-    void on_actionClose_Browser_triggered();
+	void on_actionClose_Browser_triggered();
 	void on_actionClose_triggered();
-    void on_actionRename_triggered();
-    void on_actionCut_Selection_triggered();
-    void on_actionCopy_Selection_triggered();
-    void on_actionPaste_triggered();
-    void on_actionDelete_Selection_triggered();
-    void on_actionRefresh_triggered();
+	void on_actionRename_triggered();
+	void on_actionCut_Selection_triggered();
+	void on_actionCopy_Selection_triggered();
+	void on_actionPaste_triggered();
+	void on_actionDelete_Selection_triggered();
+	void on_actionRefresh_triggered();
 	void on_actionView_Hidden_Files_triggered();
 	void on_actionShow_Action_Buttons_triggered();
 	void on_actionShow_Thumbnails_triggered();
@@ -132,15 +132,19 @@ private slots:
 	void on_actionLarger_Icons_triggered();
 	void on_actionSmaller_Icons_triggered();
 	void CreateBookMark();
-	
+	//Git Menu options
+	void on_menuGit_aboutToShow();
+	void on_actionRepo_Status_triggered();
+	void on_actionClone_Repository_triggered();	
+
 	//Tab interactions
-    void tabChanged(int tab = -1);
+	void tabChanged(int tab = -1);
 	void tabClosed(int tab = -1);
 	void nextTab(); //For keyboard shortcuts
 	void prevTab(); //For keyboard shortcuts
 
-    //Other Shortcuts
-    void togglehiddenfiles();
+	//Other Shortcuts
+	void togglehiddenfiles();
 	void focusDirWidget();
 
 	//Backend Info passing
