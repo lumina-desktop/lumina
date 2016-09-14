@@ -36,7 +36,7 @@
     <message>
         <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="199"></location>
         <source>Set this application as the default </source>
-        <translation>Aseta tämä sovellus oletukseksi</translation>
+        <translation>Aseta tämä sovellus oletukseksi </translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="221"></location>
