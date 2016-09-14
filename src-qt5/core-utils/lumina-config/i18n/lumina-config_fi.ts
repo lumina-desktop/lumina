@@ -139,7 +139,7 @@ Korvataanko se?</translation>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="138"></location>
         <source> pixel(s) thick</source>
-        <translation>…kuvapiste(ttä) leveä</translation>
+        <translation> kuvapiste(ttä) leveä</translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="157"></location>
