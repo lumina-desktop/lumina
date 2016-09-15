@@ -11,7 +11,8 @@
 
 #include <QWizard>
 #include <QString>
-#include <QProcess>
+
+#include "gitCompat.h"
 
 namespace Ui{
 	class GitWizard;
@@ -31,13 +32,16 @@ private:
 	QString inDir;
 
 	QString assembleURL();
-	void showDownload(QProcess *P);
+	void showDownload(GitProcess *P);
 
 private slots:
 	//Page Change slots
 	void pageChanged(int newpage); //called when the "next" button is clicked
 	void finished(int); //called when the "finish" button is clicked
 	
+	//Page validation slots
+	void validateRepo(); //for page_repo
+	void validateType(); //for page_type
 };
 
 #endif

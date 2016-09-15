@@ -16,6 +16,7 @@ SOURCES += main.cpp \
 		widgets/MultimediaWidget.cpp \
 		widgets/SlideshowWidget.cpp \
 		widgets/DirWidget.cpp \
+		gitCompat.cpp \
 		gitWizard.cpp
 
 HEADERS  += MainUI.h \

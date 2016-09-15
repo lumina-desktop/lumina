@@ -4,7 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-//  This is the backend classe for interacting with the "git" utility
+//  This is the backend class for interacting with the "git" utility
 //===========================================
 #ifndef _LUMINA_FM_GIT_COMPAT_H
 #define _LUMINA_FM_GIT_COMPAT_H
@@ -12,8 +12,34 @@
 #include <QProcess>
 #include <QString>
 #include <QProcessEnvironment>
-
+#include <QDebug>
+#include <QTemporaryFile>
 #include <LuminaUtils.h>
+
+#include <unistd.h>
+
+class GitProcess : public QProcess{
+	Q_OBJECT
+private:
+	QString log;
+	QFile tmpfile;
+public:
+	GitProcess();
+	~GitProcess();
+
+	//Optional Inputs
+	void setSSHPassword(QString pass);  //This is only used for SSH access
+
+private slots:
+	void cleanup();
+	void printoutput(){ qDebug() << "Proc Output:" << this->readAllStandardOutput(); }
+
+protected:
+	virtual void setupChildProcess(){
+	  //Need to disable the controlling terminal within this process
+	  setsid();  //Make current process new session leader - resulting in no controlling terminal for this session 
+	}
+};
 
 class GIT{
 public:
@@ -45,10 +71,9 @@ public:
 	}
 
 	//Setup a process for running the clone operation (so the calling process can hook up any watchers and start it when ready)
-	static QProcess* setupClone(QString indir, QString url, QString branch = "", int depth = -1){
+	static GitProcess* setupClone(QString indir, QString url, QString branch = "", int depth = -1){
 	  //NOTE: The returned QProcess needs to be cleaned up when finished
-          QProcess *P = new QProcess();
-	  P->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
+          GitProcess *P = new GitProcess();
 	  P->setWorkingDirectory(indir);
 	  P->setProgram("git");
           QStringList args;

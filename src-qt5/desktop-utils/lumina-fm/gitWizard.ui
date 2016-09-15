@@ -54,7 +54,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="line_repo_org"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_3">
@@ -64,7 +64,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <widget class="QLineEdit" name="line_repo_name"/>
        </item>
        <item row="2" column="1">
         <widget class="QCheckBox" name="check_privaterepo">
