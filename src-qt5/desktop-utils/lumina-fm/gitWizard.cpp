@@ -36,6 +36,8 @@ QString GitWizard::assembleURL(){
 
 void GitWizard::showDownload(QProcess *P){
 
+
+  P->deleteLater();
 }
 
 //================
@@ -68,8 +70,8 @@ void GitWizard::finished(int res){
   //qDebug() << "Got Finished:" << res;
   if(res == QDialog::Accepted){ 
     qDebug() << "Run git clone";
-    QString url  = assembleUrl();
-    QString branch; if(ui->check_brach->isChecked()){ branch = ui->line_branch->text(); }
+    QString url  = assembleURL();
+    QString branch; if(ui->check_branch->isChecked()){ branch = ui->line_branch->text(); }
     int depth = -1; if(ui->check_depth->isChecked()){ depth = ui->spin_depth->value(); }
     QProcess *proc = GIT::setupClone(inDir, url, branch, depth);
     if(proc!=0){
@@ -77,5 +79,5 @@ void GitWizard::finished(int res){
     }
   }
   
-  this->deleteLater();
+  //this->deleteLater();
 }
