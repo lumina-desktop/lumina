@@ -9,6 +9,7 @@
 
 #include <QFileInfo>
 #include "gitCompat.h"
+#include "gitWizard.h"
 
 #define DEBUG 0
 
@@ -626,7 +627,9 @@ void MainUI::on_actionRepo_Status_triggered(){
 }
 
 void MainUI::on_actionClone_Repository_triggered(){
-
+  GitWizard *dlg = new GitWizard(this);
+    dlg->setWorkingDir( FindActiveBrowser()->currentDir() );
+  dlg->show();
 }
 
 
