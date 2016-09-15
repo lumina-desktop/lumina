@@ -11,6 +11,7 @@
 
 #include <QWizard>
 #include <QString>
+#include <QMessageBox>
 
 #include "gitCompat.h"
 
@@ -30,18 +31,37 @@ public:
 private:
 	Ui::GitWizard *ui;
 	QString inDir;
+	GitProcess *proc;
 
 	QString assembleURL();
-	void showDownload(GitProcess *P);
+	//void showDownload(GitProcess *P);
 
 private slots:
 	//Page Change slots
 	void pageChanged(int newpage); //called when the "next" button is clicked
-	void finished(int); //called when the "finish" button is clicked
+	//void finished(int); //called when the "finish" button is clicked
 	
 	//Page validation slots
 	void validateRepo(); //for page_repo
 	void validateType(); //for page_type
+
+	//process output
+	void readProc();
+	void procFinished(int retcode);
+
+protected:
+	void closeEvent(QCloseEvent *ev){
+	  //Make sure the process is not running first
+	  if(proc!=0 && proc->state()!=QProcess::NotRunning){
+	    ev->ignore();
+	    if(QMessageBox::Yes == QMessageBox::question(this, tr("Stop Download?"), tr("Kill the current download?") ) ){
+	      proc->kill();
+	    } 
+	  }else{
+	    QWizard::closeEvent(ev);
+	    this->deleteLater(); //we need to clean this up completely
+	  }
+	}
 };
 
 #endif

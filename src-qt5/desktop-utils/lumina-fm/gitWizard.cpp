@@ -15,8 +15,9 @@
 
 GitWizard::GitWizard(QWidget *parent) : QWizard(parent), ui(new Ui::GitWizard){
   ui->setupUi(this); //load the designer form
+  proc = 0; //not initialized yet
   connect(this, SIGNAL(currentIdChanged(int)), this, SLOT(pageChanged(int)) );
-  connect(this, SIGNAL(finished(int)), this, SLOT(finished(int)) );
+  //connect(this, SIGNAL(finished(int)), this, SLOT(finished(int)) );
   connect(ui->line_repo_org, SIGNAL(textChanged(const QString&)), this, SLOT(validateRepo()) );
   connect(ui->line_repo_name, SIGNAL(textChanged(const QString&)), this, SLOT(validateRepo()) );
   connect(ui->line_ssh_pass, SIGNAL(textChanged(const QString&)), this, SLOT(validateType()) );
@@ -31,7 +32,7 @@ GitWizard::GitWizard(QWidget *parent) : QWizard(parent), ui(new Ui::GitWizard){
 }
 
 GitWizard::~GitWizard(){
-
+  if(proc!=0){ proc->deleteLater(); }
 }
 
 //Input values;
@@ -54,8 +55,8 @@ QString GitWizard::assembleURL(){
   return url;
 }
 
-void GitWizard::showDownload(GitProcess *P){
-  P->start(QIODevice::ReadOnly);
+/*void GitWizard::showDownload(GitProcess *P){
+  
   //P->closeWriteChannel();
   //P->closeReadChannel(GitProcess::StandardOutput);
   //P->closeReadChannel(GitProcess::StandardError);
@@ -64,7 +65,7 @@ void GitWizard::showDownload(GitProcess *P){
     QApplication::processEvents();
   }
   P->deleteLater();
-}
+}*/
 
 //================
 //   PRIVATE SLOTS
@@ -84,31 +85,22 @@ void GitWizard::pageChanged(int newpage){
     //Clear any of the UI as needed
     ui->line_user->clear(); ui->line_pass->clear(); ui->line_ssh_pass->clear();
     validateType();
-  }else{
-    //qDebug() << "Unknown page!" << newpage;
-  }
-}
-
-void GitWizard::finished(int res){
-   //called when the "finish" button is clicked:
-  // res==0: window closed (rejected state)
-  // res==1: "finish" clicked (accepted state)
-  //qDebug() << "Got Finished:" << res;
-  if(res == QDialog::Accepted){ 
+  }else if(this->page(newpage)==ui->page_download){
     qDebug() << "Run git clone";
     QString url  = assembleURL();
     QString branch; if(ui->check_branch->isChecked()){ branch = ui->line_branch->text(); }
     int depth = -1; if(ui->check_depth->isChecked()){ depth = ui->spin_depth->value(); }
-    GitProcess *proc = GIT::setupClone(inDir, url, branch, depth);
+    proc = GIT::setupClone(inDir, url, branch, depth);
     if(proc!=0){
+     connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(readProc()) );
+     connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished(int)) );
       if(ui->radio_type_ssh->isChecked()){ 
         proc->setSSHPassword(ui->line_ssh_pass->text());
       }
-      showDownload(proc);
+      proc->start(QIODevice::ReadOnly);
+      this->button(QWizard::FinishButton)->setEnabled(false);
     }
   }
-  
-  this->deleteLater();
 }
 
 //Page validation slots
@@ -133,5 +125,14 @@ void GitWizard::validateType(){
   ui->line_branch->setVisible(ui->check_branch->isChecked());
 
   //Update the button as needed 
-  this->button(QWizard::FinishButton)->setEnabled(ok);
+  this->button(QWizard::NextButton)->setEnabled(ok);
 }
+
+void GitWizard::readProc(){
+  ui->text_procOutput->append( proc->readAllStandardOutput() );
+}
+
+void GitWizard::procFinished(int retcode){
+  this->button(QWizard::FinishButton)->setEnabled(true);
+}
+

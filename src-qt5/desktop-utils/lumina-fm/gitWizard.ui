@@ -16,6 +16,9 @@
   <property name="wizardStyle">
    <enum>QWizard::ModernStyle</enum>
   </property>
+  <property name="options">
+   <set>QWizard::NoBackButtonOnLastPage|QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButtonOnLastPage</set>
+  </property>
   <widget class="QWizardPage" name="page_repo">
    <property name="title">
     <string>Welcome!</string>
@@ -226,7 +229,18 @@
        </font>
       </property>
       <property name="text">
-       <string>Click &quot;Finish&quot; to start downloading the repository</string>
+       <string>Click &quot;Next&quot; to start downloading the repository</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="page_download">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QTextEdit" name="text_procOutput">
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

@@ -32,7 +32,7 @@ public:
 
 private slots:
 	void cleanup();
-	void printoutput(){ qDebug() << "Proc Output:" << this->readAllStandardOutput(); }
+	//void printoutput(){ qDebug() << "Proc Output:" << this->readAllStandardOutput(); }
 
 protected:
 	virtual void setupChildProcess(){
@@ -77,7 +77,7 @@ public:
 	  P->setWorkingDirectory(indir);
 	  P->setProgram("git");
           QStringList args;
-	    args << "clone";
+	    args << "clone" << "--progress";
 	    if(!branch.isEmpty()){ args << "-b" << branch; }
 	    if(depth>0){ args << "--depth" << QString::number(depth); }
 	    args << url;
