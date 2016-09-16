@@ -15,7 +15,9 @@ SOURCES += main.cpp \
 		BMMDialog.cpp \
 		widgets/MultimediaWidget.cpp \
 		widgets/SlideshowWidget.cpp \
-		widgets/DirWidget.cpp
+		widgets/DirWidget.cpp \
+		gitCompat.cpp \
+		gitWizard.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -25,14 +27,17 @@ HEADERS  += MainUI.h \
 		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \
-		widgets/DirWidget.h
+		widgets/DirWidget.h \
+		gitCompat.h \
+		gitWizard.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
 		BMMDialog.ui \
 		widgets/MultimediaWidget.ui \
 		widgets/SlideshowWidget.ui \
-		widgets/DirWidget.ui
+		widgets/DirWidget.ui \
+		gitWizard.ui
 
 icons.files = Insight-FileManager.png
 icons.path = $${L_SHAREDIR}/pixmaps

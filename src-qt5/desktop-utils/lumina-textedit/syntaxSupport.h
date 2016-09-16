@@ -101,7 +101,7 @@ protected:
             if(splitactive>=0 || index<start){ continue; } //skip this one - falls within a multi-line pattern above
 	    while(index>=0){
 	      int len = patt.matchedLength();
-	      setFormat(index, len, rules[i].format);
+	      if(format(index)==currentBlock().charFormat()){ setFormat(index, len, rules[i].format); } //only apply highlighting if not within a section already
 	      index = patt.indexIn(text, index+len); //go to the next match
 	    }
 	  }//end loop over normal (single-line) patterns

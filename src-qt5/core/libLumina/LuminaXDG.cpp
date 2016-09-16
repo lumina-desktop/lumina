@@ -79,7 +79,7 @@ void XDGDesktopList::updateList(){
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
-    qDebug() << "App List Updated:" << lastCheck << appschanged << newfiles << oldkeys;
+    //qDebug() << "App List Updated:" << lastCheck << appschanged << newfiles << oldkeys;
     watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }
@@ -511,14 +511,15 @@ QStringList LXDG::systemApplicationDirs(){
 }
 
 XDGDesktopList* LXDG::systemAppsList(){
-  static XDGDesktopList sysapps(0,true); // = XDGDesktopList(0,true); //set this to automatically update as needed
-  if(sysapps.lastCheck.isNull()){ sysapps.updateList(); } //catch the first time the class was used, and prompt for an update right now
-  return &sysapps;
+  static XDGDesktopList *sysapps = new XDGDesktopList(0,true); //set this to automatically update as needed
+  if(sysapps->lastCheck.isNull()){ sysapps->updateList(); } //catch the first time the class was used, and prompt for an update right now
+  return sysapps;
 }
 
 QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   //Quick overload for backwards compatibility which uses the static/global class for managing app entries
-  return systemAppsList()->apps(showAll, showHidden); 
+  XDGDesktopList list(0, false);
+  return list.apps(showAll, showHidden); 
 }
 
 QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
