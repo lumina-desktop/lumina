@@ -4,7 +4,7 @@ if [ "$1" == "" ] ; then
   DIR=`pwd`
 fi
 
-OUT="${OUT} \"Open Directory\" : { \"type\" : \"item\", \"icon\":\"document-open\", \"action\" : \"xdg-open \\\"${DIR}\\\"\"}"
+OUT="${OUT} \"   Open Directory\" : { \"type\" : \"item\", \"icon\":\"document-open\", \"action\" : \"xdg-open \\\"${DIR}\\\"\"}"
 ls "${DIR}" > /tmp/.tmp.lines.$$ 
 while read name
 do
