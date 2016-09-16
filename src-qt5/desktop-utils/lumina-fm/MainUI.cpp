@@ -8,6 +8,8 @@
 #include "ui_MainUI.h"
 
 #include <QFileInfo>
+#include "gitCompat.h"
+#include "gitWizard.h"
 
 #define DEBUG 0
 
@@ -21,6 +23,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 	
 	
   ui->setupUi(this);
+  ui->menuGit->setVisible( GIT::isAvailable() );
   if(DEBUG){ qDebug() << "Initilization:"; }
   settings = new QSettings( QSettings::UserScope, "lumina-desktop", "lumina-fm", this);
 
@@ -229,6 +232,10 @@ void MainUI::setupIcons(){
   // Bookmarks menu
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
   ui->actionAdd_Bookmark->setIcon( LXDG::findIcon("bookmark-new","") );
+
+  //GIT menu
+  ui->actionRepo_Status->setIcon( LXDG::findIcon("git","document-edit-verify") );
+  ui->actionClone_Repository->setIcon( LXDG::findIcon("git","download") );
 
   // External Devices menu
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
@@ -605,6 +612,26 @@ void MainUI::CreateBookMark(){
   //Now rebuild the bookmarks menu
   RebuildBookmarksMenu();
 }
+
+//Git Menu options
+void MainUI::on_menuGit_aboutToShow(){
+  QString dir = FindActiveBrowser()->currentDir();
+  bool inrepo = GIT::isRepo(dir);
+  ui->actionRepo_Status->setEnabled( inrepo );
+  ui->actionClone_Repository->setEnabled( !inrepo );
+}
+
+void MainUI::on_actionRepo_Status_triggered(){
+  QString status = GIT::status( FindActiveBrowser()->currentDir() );
+  QMessageBox::information(this, tr("Git Repository Status"), status);
+}
+
+void MainUI::on_actionClone_Repository_triggered(){
+  GitWizard *dlg = new GitWizard(this);
+    dlg->setWorkingDir( FindActiveBrowser()->currentDir() );
+  dlg->show();
+}
+
 
 void MainUI::tabChanged(int tab){
   if(tab<0){ tab = tabBar->currentIndex(); }

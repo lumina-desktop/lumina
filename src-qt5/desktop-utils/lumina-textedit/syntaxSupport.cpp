@@ -10,6 +10,7 @@ QStringList Custom_Syntax::availableRules(){
   QStringList avail;
     avail << "C++";
     //avail << "Python";
+    avail << "Shell";
     avail << "reST";
   return avail;
 }
@@ -40,6 +41,7 @@ QString Custom_Syntax::ruleForFile(QString filename){
   QString suffix = filename.section(".",-1);
   if(suffix=="cpp" || suffix=="hpp" || suffix=="c" || suffix=="h"){ return "C++"; }
   //else if(suffix=="py" || suffix=="pyc"){ return "Python"; }
+  else if(suffix=="sh"){ return "Shell"; }
   else if(suffix=="rst"){ return "reST"; }
   return "";
 }
@@ -100,6 +102,66 @@ void Custom_Syntax::loadRules(QString type){
     srule.startPattern = QRegExp("/\\*");
     srule.endPattern = QRegExp("\\*/");
     splitrules << srule;
+    
+  }else if(type=="Shell"){
+    //Keywords (standard Shell definitions)
+    QStringList keywords;
+	keywords << "alias" << "alloc" << "bg" << "bind" << " bindkey" << "break" \
+     << "breaksw"<<"builtins"<<"case"<<"cd"<<"chdir"<<"command"<<"complete"<<"continue"<<"default" \
+     <<"dirs"<<"do"<<"done"<<"echo"<<"echotc"<<"elif"<<"else"<<"end"<<"endif"<<"endsw"<<"esac"<<"eval" \
+     <<"exec"<<"exit"<<"export"<<"false"<<"fc"<<"fg"<<"filetest"<<"fi"<<"for"<<"foreach"<<"getopts" \
+     <<"glob"<<"goto"<<"hash"<<"hashstat"<<"history"<<"hup"<<"if"<<"jobid"<<"jobs"<<"kill"<<"limit" \
+     <<"local"<<"log"<<"login"<<"logout"<<"ls-F"<<"nice"<<"nohup"<<"notify"<<"onintr"<<"popd" \
+     <<"printenv"<<"printf"<<"pushd"<<"pwd"<<"read"<<"readonly"<<"rehash"<<"repeat"<<"return" \
+     <<"sched"<<"set"<<"setenv"<<"settc"<<"setty"<<"setvar"<<"shift"<<"source"<<"stop"<<"suspend" \
+     <<"switch"<<"telltc"<<"test"<<"then"<<"time"<<"times"<<"trap"<<"true"<<"type"<<"ulimit"<<"umask" \
+     <<"unalias"<<"uncomplete"<<"unhash"<<"unlimit"<<"unset"<<"unsetenv"<<"until"<<"wait" \
+     <<"where"<<"which"<<"while";
+
+    SyntaxRule rule;
+	rule.format.setForeground( QColor(settings->value("colors/keyword").toString()) );
+	rule.format.setFontWeight(QFont::Bold);
+    for(int i=0; i<keywords.length(); i++){
+      rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
+      rules << rule;
+    }
+    //Alternate Keywords (built-in functions)
+    /*keywords.clear();
+    keywords << "for" << "while" << "switch" << "case" << "if" << "else" << "return" << "exit";
+    rule.format.setForeground( QColor(settings->value("colors/altkeyword").toString()) );
+    for(int i=0; i<keywords.length(); i++){
+      rule.pattern = QRegExp("\\b"+keywords[i]+"\\b"); //turn each keyword into a QRegExp and insert the rule
+      rules << rule;
+    }*/
+    //Variable Names
+    rule.format.setForeground( QColor(settings->value("colors/class").toString()) );
+    rule.pattern = QRegExp("\\$\\{[^\\n\\}]+\\}");
+    rules << rule;
+    rule.pattern = QRegExp("\\$[^\\s$]+(?=\\s|$)");
+    rules << rule;
+    //Quotes
+    rule.format.setForeground( QColor(settings->value("colors/text").toString()) );
+    rule.format.setFontWeight(QFont::Normal);
+    rule.pattern = QRegExp( "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'");
+    rules << rule;
+    //Functions
+    rule.format.setForeground( QColor(settings->value("colors/function").toString()) );
+    rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
+    rules << rule;
+    //Proprocessor commands
+    rule.format.setForeground( QColor(settings->value("colors/preprocessor").toString()) );
+    rule.pattern = QRegExp("^#![^\n]*");
+    rules << rule;    
+    //Comment (single line)
+    rule.format.setForeground( QColor(settings->value("colors/comment").toString()) );
+    rule.pattern = QRegExp("#[^\n]*");
+    rules << rule;
+    //Comment (multi-line)
+    //SyntaxRuleSplit srule;
+    //srule.format = rule.format; //re-use the single-line comment format
+    //srule.startPattern = QRegExp("/\\*");
+    //srule.endPattern = QRegExp("\\*/");
+    //splitrules << srule;
     
   }else if(type=="Python"){
     //Keywords

@@ -4,12 +4,11 @@ if [ "$1" == "" ] ; then
   DIR=`pwd`
 fi
 
+OUT="${OUT} \"   Open Directory\" : { \"type\" : \"item\", \"icon\":\"document-open\", \"action\" : \"xdg-open \\\"${DIR}\\\"\"}"
 ls "${DIR}" > /tmp/.tmp.lines.$$ 
 while read name
 do
-  if [ -n "${OUT}" ] ; then
-    OUT="${OUT},"
-  fi
+  OUT="${OUT},"
   if [ -d "${DIR}/${name}" ] ; then
     OUT="${OUT} \"${name}\" : { \"type\" : \"jsonmenu\", \"exec\" : \"${0} \\\"${DIR}/${name}\\\"\", \"icon\":\"folder\"}"
   else
