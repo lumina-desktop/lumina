@@ -13,3 +13,6 @@ comment */
 stuff
 
 some /*single line comment with multi-line tags */
+
+"some text"
+"some text with url: http://sample.com"
