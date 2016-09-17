@@ -129,22 +129,22 @@
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="114"></location>
         <source>Edge:</source>
-        <translation type="unfinished"></translation>
+        <translation>لبه:</translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="131"></location>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>اندازه:</translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="138"></location>
         <source> pixel(s) thick</source>
-        <translation type="unfinished"></translation>
+        <translation> پیکسل کلفت</translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="157"></location>
         <source>% length</source>
-        <translation type="unfinished"></translation>
+        <translation>% درازا</translation>
     </message>
     <message>
         <location filename="../../lumina-git/src-qt5/core-utils/lumina-config/PanelWidget.ui" line="183"></location>
