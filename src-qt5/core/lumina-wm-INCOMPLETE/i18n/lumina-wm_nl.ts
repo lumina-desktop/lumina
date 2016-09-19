@@ -9,39 +9,34 @@
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="111"/>
+        <location filename="../LLockScreen.ui" line="114"/>
         <source>Password</source>
         <translation>Wachtwoord</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="123"/>
+        <location filename="../LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
         <translation>Ontgrendel sessie</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="43"/>
+        <location filename="../LLockScreen.cpp" line="39"/>
         <source>Locked by: %1</source>
         <translation>Vergrendeld door: %1</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="125"/>
-        <source>Too Many Failures: Try again later.</source>
-        <translation>Te veel foutmeldingen: Probeer later nog eens.</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Too Many Failures</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="128"/>
-        <source>Password Expired: Contact System Admin</source>
-        <translation>Wachtwoord verlopen: Neem contact op met de systeem administrator</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Wait %1 Minutes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="132"/>
-        <source>Failure: %1 Attempts Remaining</source>
-        <translation>Fout: %1 Pogingen resterend</translation>
-    </message>
-    <message>
-        <location filename="../LLockScreen.cpp" line="133"/>
-        <source>Too Many Failures: Try again in 5 minutes</source>
-        <translation>Te veel foutmeldingen: Probeer over 5 minuten nog eens</translation>
+        <location filename="../LLockScreen.cpp" line="77"/>
+        <source>Failed Attempts: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
