@@ -9,39 +9,34 @@
         <translation>Экран блокировки</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="111"></location>
+        <location filename="../LLockScreen.ui" line="114"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="123"></location>
+        <location filename="../LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
         <translation>Разблокировать сессию</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="43"></location>
+        <location filename="../LLockScreen.cpp" line="39"/>
         <source>Locked by: %1</source>
         <translation>Заблокировано: %1</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="125"></location>
-        <source>Too Many Failures: Try again later.</source>
-        <translation>Слишком много ошибок: Попробуйте снова позже.</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Too Many Failures</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="128"></location>
-        <source>Password Expired: Contact System Admin</source>
-        <translation>Срок действия пароля истек: Свяжитесь с Вашим системным администратором</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Wait %1 Minutes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="132"></location>
-        <source>Failure: %1 Attempts Remaining</source>
-        <translation>Ошибка: %1 попыток осталось</translation>
-    </message>
-    <message>
-        <location filename="../LLockScreen.cpp" line="133"></location>
-        <source>Too Many Failures: Try again in 5 minutes</source>
-        <translation>Слишком много ошибок: Попробуйте снова через 5 минут</translation>
+        <location filename="../LLockScreen.cpp" line="77"/>
+        <source>Failed Attempts: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

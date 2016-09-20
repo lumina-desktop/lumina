@@ -4,132 +4,132 @@
 <context>
     <name>LFileDialog</name>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="14"/>
+        <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
         <translation>Abrir Com..</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="68"/>
+        <location filename="../LFileDialog.ui" line="68"/>
         <source>Preferred</source>
         <translation>Favoritos</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="75"/>
+        <location filename="../LFileDialog.ui" line="75"/>
         <source>Available</source>
         <translation>Disponíveis</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="82"/>
+        <location filename="../LFileDialog.ui" line="82"/>
         <source>Custom</source>
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="131"/>
+        <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
         <translation>Localização do Binário:</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="138"/>
+        <location filename="../LFileDialog.ui" line="138"/>
         <source>Find</source>
         <translation>Procurar</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="199"/>
+        <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
         <translation>Definir essa aplicação como padrão</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="221"/>
+        <location filename="../LFileDialog.ui" line="221"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.ui" line="235"/>
+        <location filename="../LFileDialog.ui" line="235"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="40"/>
+        <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
         <translation>(Link de E-mail)</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="41"/>
+        <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="114"/>
+        <location filename="../LFileDialog.cpp" line="114"/>
         <source>Audio</source>
         <translation>Áudio</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="115"/>
+        <location filename="../LFileDialog.cpp" line="115"/>
         <source>Video</source>
         <translation>Vídeo</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="116"/>
+        <location filename="../LFileDialog.cpp" line="116"/>
         <source>Multimedia</source>
         <translation>Multimédia</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="117"/>
+        <location filename="../LFileDialog.cpp" line="117"/>
         <source>Development</source>
         <translation>Desenvolvimento</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="118"/>
+        <location filename="../LFileDialog.cpp" line="118"/>
         <source>Education</source>
         <translation>Educação</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="119"/>
+        <location filename="../LFileDialog.cpp" line="119"/>
         <source>Game</source>
         <translation>Jogo</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="120"/>
+        <location filename="../LFileDialog.cpp" line="120"/>
         <source>Graphics</source>
         <translation>Gráficos</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="121"/>
+        <location filename="../LFileDialog.cpp" line="121"/>
         <source>Network</source>
         <translation>Rede</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="122"/>
+        <location filename="../LFileDialog.cpp" line="122"/>
         <source>Office</source>
         <translation>Escritório</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="123"/>
+        <location filename="../LFileDialog.cpp" line="123"/>
         <source>Science</source>
         <translation>Ciência</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="124"/>
+        <location filename="../LFileDialog.cpp" line="124"/>
         <source>Settings</source>
         <translation>Definições</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="125"/>
+        <location filename="../LFileDialog.cpp" line="125"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="126"/>
+        <location filename="../LFileDialog.cpp" line="126"/>
         <source>Utilities</source>
         <translation>Utilitários</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="127"/>
+        <location filename="../LFileDialog.cpp" line="127"/>
         <source>Other</source>
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="271"/>
         <source>Find Application Binary</source>
         <translation>Encontrar binário da aplicação</translation>
     </message>
@@ -137,69 +137,69 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="51"/>
+        <location filename="../main.cpp" line="51"/>
         <source>File Error</source>
         <translation>Erro no Arquivo</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="187"/>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="193"/>
+        <location filename="../main.cpp" line="187"/>
+        <location filename="../main.cpp" line="193"/>
         <source>Audio Volume %1%</source>
         <translation>Volume do Som %1%</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="201"/>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="210"/>
+        <location filename="../main.cpp" line="201"/>
+        <location filename="../main.cpp" line="210"/>
         <source>Screen Brightness %1%</source>
         <translation>Brilho da Tela %1%</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="242"/>
+        <location filename="../main.cpp" line="242"/>
         <source>Invalid file or URL: %1</source>
         <translation>Arquivo ou URL Inválidos: %1</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="264"/>
+        <location filename="../main.cpp" line="264"/>
         <source>File could not be opened: %1</source>
         <translation>O arquivo não pode ser aberto: %1</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="273"/>
+        <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>Está faltando a informação do lançamento do atalho do aplicativo  (atalho mal informado): 1%</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="284"/>
+        <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Está faltando a URL do atalhos da URL: %1 </translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="295"/>
+        <location filename="../main.cpp" line="295"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Está faltando o caminho para o diretório do atalho do diretório&quot; %1</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="300"/>
+        <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Tipo de atalho desconhecido: %1</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="362"/>
+        <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="362"/>
+        <location filename="../main.cpp" line="362"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="412"/>
+        <location filename="../main.cpp" line="412"/>
         <source>Application Error</source>
         <translation>Erro no Aplicativo</translation>
     </message>
     <message>
-        <location filename="../../lumina-git/src-qt5/core/lumina-open/main.cpp" line="412"/>
+        <location filename="../main.cpp" line="412"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>O seguinte aplicativo encontrou um erro e teve que ser fechado:</translation>
     </message>

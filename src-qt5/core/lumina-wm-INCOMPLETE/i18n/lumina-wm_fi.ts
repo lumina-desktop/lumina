@@ -9,39 +9,34 @@
         <translation>Lomake</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="111"></location>
+        <location filename="../LLockScreen.ui" line="114"/>
         <source>Password</source>
         <translation>Salasana</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="123"></location>
+        <location filename="../LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
         <translation>Poista istunnon lukitus</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="43"></location>
+        <location filename="../LLockScreen.cpp" line="39"/>
         <source>Locked by: %1</source>
         <translation>Lukinnut: %1</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="125"></location>
-        <source>Too Many Failures: Try again later.</source>
-        <translation>Liian monta virhettä: yritä myöhemmin uudelleen.</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Too Many Failures</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="128"></location>
-        <source>Password Expired: Contact System Admin</source>
-        <translation>Salasana on vanhentunut: ota yhteyttä järjestelmän ylläpitäjään</translation>
+        <location filename="../LLockScreen.cpp" line="76"/>
+        <source>Wait %1 Minutes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="132"></location>
-        <source>Failure: %1 Attempts Remaining</source>
-        <translation>Virhe: %1 yritystä jäljellä</translation>
-    </message>
-    <message>
-        <location filename="../LLockScreen.cpp" line="133"></location>
-        <source>Too Many Failures: Try again in 5 minutes</source>
-        <translation>Liian monta virhettä: yritä uudelleen 5 minuutin kuluttua</translation>
+        <location filename="../LLockScreen.cpp" line="77"/>
+        <source>Failed Attempts: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
