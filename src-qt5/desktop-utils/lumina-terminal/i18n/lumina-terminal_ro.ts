@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ro_RO">
 <context>
+    <name>TerminalWidget</name>
+    <message>
+        <location filename="../TerminalWidget.cpp" line="50"/>
+        <source>Copy Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TerminalWidget.cpp" line="51"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TrayIcon</name>
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
