@@ -15,7 +15,7 @@
 int  main(int argc, char *argv[]) {
    LTHEME::LoadCustomEnvSettings();
    QApplication a(argc, argv);
-   LUtils::LoadTranslation(&a, "lumina-textedit");
+   LUtils::LoadTranslation(&a, "l-te");
    //Now go ahead and setup the app
    LuminaThemeEngine theme(&a);
    QStringList args;

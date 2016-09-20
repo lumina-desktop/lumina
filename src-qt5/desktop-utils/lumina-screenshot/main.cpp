@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
     QApplication a(argc, argv);
     LuminaThemeEngine theme(&a);
     a.setApplicationName("Take Screenshot");
-    LUtils::LoadTranslation(&a, "lumina-screenshot");
+    LUtils::LoadTranslation(&a, "l-screenshot");
 
     MainUI w;
     QObject::connect(&theme,SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );

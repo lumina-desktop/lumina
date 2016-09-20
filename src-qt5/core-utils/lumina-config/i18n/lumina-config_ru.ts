@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ru">
 <context>
@@ -350,7 +350,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Альтернативное стартовое меню, сфокусированное на запуске приложений. </translation>
+        <translation>Альтернативное стартовое меню, сфокусированное на запуске приложений.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>

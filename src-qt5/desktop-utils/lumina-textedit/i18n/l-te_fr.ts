@@ -50,7 +50,7 @@
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation>Onglet 1</translation>
+        <translation>Onglet 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
@@ -140,7 +140,7 @@
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="147"/>
         <source>New File</source>
-        <translation>Nouveau fichier </translation>
+        <translation>Nouveau fichier </translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>

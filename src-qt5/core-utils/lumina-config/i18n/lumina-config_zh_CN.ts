@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation>像素(s) 宽</translation>
+        <translation> 像素宽</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>

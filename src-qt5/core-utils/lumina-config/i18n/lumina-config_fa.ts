@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="lumina-config_fa">
 <context>
     <name>AppDialog</name>
     <message>
         <location filename="../AppDialog.ui" line="14"/>
         <source>Select Application</source>
-        <translation type="unfinished"></translation>
+        <translation>کاربست برگزین</translation>
     </message>
 </context>
 <context>
@@ -14,80 +14,81 @@
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Color Scheme Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>ویرایشگرِ رنگ‌بندی</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="28"/>
         <source>Color Scheme:</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگ‌بندی:</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="51"/>
         <source>Set new color for selection</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگِ نو برای گزینش بِنِه</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="54"/>
         <location filename="../ColorDialog.ui" line="70"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="67"/>
         <source>Manually set value for selection</source>
-        <translation type="unfinished"></translation>
+        <translation>بشیوهٔ دستی برای گزینش ارزش بِنِه</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="95"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگ</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="100"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>ارزش</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="105"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>نمونه</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="115"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>بهم بزن</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="135"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>نگه‌دار</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>Color Exists</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگ هست</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>This color scheme already exists.
  Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>این رنگ‌بندی از پیش هست.
+نابودش کنم؟</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
         <location filename="../ColorDialog.cpp" line="122"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگ برگزین</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
         <source>Color Value</source>
-        <translation type="unfinished"></translation>
+        <translation>ارزشِ رنگ</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>رنگ:</translation>
     </message>
 </context>
 <context>
@@ -95,22 +96,22 @@
     <message>
         <location filename="../GetPluginDialog.ui" line="14"/>
         <source>Select Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>افزایه برگزین</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="26"/>
         <source>Select a Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>یک افزایه برگزین:</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="57"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>بهم بزن</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="77"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>برگزین</translation>
     </message>
 </context>
 <context>
@@ -118,32 +119,32 @@
     <message>
         <location filename="../PanelWidget.ui" line="32"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>ریخت</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="93"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>جا</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="114"/>
         <source>Edge:</source>
-        <translation type="unfinished"></translation>
+        <translation>لبه:</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="131"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>اندازه:</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation type="unfinished"></translation>
+        <translation> پیکسل کلفت</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>
         <source>% length</source>
-        <translation type="unfinished"></translation>
+        <translation>% درازا</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="183"/>
