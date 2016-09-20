@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fi">
 <context>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="45"/>
         <source>Desktop</source>
-        <translation type="unfinished">Työpöytä</translation>
+        <translation>Työpöytä</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="83"/>
@@ -1059,12 +1059,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Toteutetaanko päivitykset?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Jotkin järjestelmäpäivitykset odottavat toteuttamista! Haluatko asentaa ne nyt?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
@@ -1129,12 +1129,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Toteutetaanko päivitykset?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Joitakin järjestelmäpäivityksiä odottavat toteuttamista! Haluatko asentaa ne nyt?</translation>
     </message>
 </context>
 <context>

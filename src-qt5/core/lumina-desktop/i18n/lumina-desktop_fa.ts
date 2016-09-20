@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="lumina-desktop_fa">
 <context>
     <name>AppLaunchButtonPlugin</name>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="32"/>
         <source>Click to assign an application</source>
-        <translation type="unfinished"></translation>
+        <translation>تْلیک کنید تا یک کاربست بگمارید</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"/>
         <source>Launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 را راه بیانداز</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="45"/>
         <source>Open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 را باز کن</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
         <source>Select Application</source>
-        <translation type="unfinished"></translation>
+        <translation>کاربست برگزین</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
