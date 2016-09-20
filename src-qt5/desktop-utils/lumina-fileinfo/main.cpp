@@ -11,7 +11,7 @@ int main(int argc, char ** argv)
 {
   LTHEME::LoadCustomEnvSettings();
   QApplication a(argc, argv);
-  LUtils::LoadTranslation(&a, "lumina-fileinfo");
+  LUtils::LoadTranslation(&a, "l-fileinfo");
   LuminaThemeEngine theme(&a);
 
 
