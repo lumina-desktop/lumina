@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fi">
 <context>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
-        <translation>Aseta tämä sovellus oletukseksi</translation>
+        <translation>Aseta tämä sovellus oletukseksi </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"/>
@@ -186,7 +186,7 @@
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohjelmatiedosto puuttuu</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>

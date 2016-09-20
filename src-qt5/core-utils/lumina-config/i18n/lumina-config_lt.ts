@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="lt">
 <context>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Rodyti ir valdyti bet kokios vykdomos programos langus (kiekvienas atskiras langas turi mygtuką).</translation>
+        <translation>Rodyti ir valdyti bet kokios vykdomos programos langus (kiekvienas atskiras langas turi mygtuką)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ru">
 <context>
@@ -128,7 +128,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="110"/>
         <source>Unsorted</source>
-        <translation>Не классифицированные </translation>
+        <translation>Несортированный</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="37"/>
@@ -146,47 +146,47 @@
     <message>
         <location filename="../BootSplash.cpp" line="18"/>
         <source>Initializing Session …</source>
-        <translation>Инициализация сессии ...</translation>
+        <translation>Инициализация сессии …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="21"/>
         <source>Loading System Settings …</source>
-        <translation>Загрузка параметров системы ...</translation>
+        <translation>Загрузка параметров системы …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="24"/>
         <source>Loading User Preferences …</source>
-        <translation>Загрузка пользовательских настроек ...</translation>
+        <translation>Загрузка пользовательских настроек …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"/>
         <source>Preparing System Tray …</source>
-        <translation>Подготовка Системного лотка ...</translation>
+        <translation>Подготовка Системного лотка …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="30"/>
         <source>Starting Window Manager …</source>
-        <translation>Запуск Менеджера окон ...</translation>
+        <translation>Запуск Менеджера окон …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="33"/>
         <source>Detecting Applications …</source>
-        <translation>Обнаружение Приложений ...</translation>
+        <translation>Обнаружение Приложений …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="36"/>
         <source>Preparing Menus …</source>
-        <translation>Подготовка Меню ...</translation>
+        <translation>Подготовка Меню …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>Preparing Workspace …</source>
-        <translation>Подготовка Рабочей области ...</translation>
+        <translation>Подготовка Рабочей области …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="42"/>
         <source>Finalizing …</source>
-        <translation>Завершение ...</translation>
+        <translation>Завершение …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
@@ -903,7 +903,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation>Lumina Desktop RSS</translation>
+        <translation>RSS рабочего стола Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
@@ -1338,7 +1338,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
-        <translation>Не классифицированные </translation>
+        <translation>Несортированный</translation>
     </message>
 </context>
 </TS>

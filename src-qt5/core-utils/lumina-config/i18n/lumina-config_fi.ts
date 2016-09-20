@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fi">
 <context>
@@ -139,7 +139,7 @@ Korvataanko se?</translation>
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation>…kuvapiste(ttä) leveä</translation>
+        <translation> kuvapiste(ttä) leveä</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>
@@ -1048,7 +1048,7 @@ Korvataanko se?</translation>
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista koostamisen hallinta käytöstä (istunto on käynnistettävä uudelleen)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
@@ -1538,12 +1538,12 @@ Korvataanko se?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo/poista asennettujen/poistettujen sovellusten symboliset linkit työpöydälle/työpöydältä automaattisesti</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation type="unfinished"></translation>
+        <translation>Hallitse työpöydän sovelluslinkkejä</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="67"/>
