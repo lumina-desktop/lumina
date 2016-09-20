@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1" language="de">
 <context>
     <name>ColorDialog</name>
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Farben anpassen</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintragsart</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe auswählen</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
@@ -45,17 +45,17 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauptfenster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorherige Übereinstimmung suchen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -64,178 +64,178 @@
         <location filename="../MainUI.ui" line="161"/>
         <location filename="../MainUI.ui" line="173"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="94"/>
-        <source>Find the next match</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="104"/>
-        <source>Replace:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="123"/>
-        <source>Match case</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="145"/>
-        <source>Replace next match</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="158"/>
-        <source>Replace all matches (to end of document)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="170"/>
-        <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen:</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="94"/>
+        <source>Find the next match</source>
+        <translation>Nächste Übereinstimmung suchen</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="104"/>
+        <source>Replace:</source>
+        <translation>Ersetzen:</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="123"/>
+        <source>Match case</source>
+        <translation>Groß-/Kleinschreibung beachten</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="145"/>
+        <source>Replace next match</source>
+        <translation>Nächste Übereinstimmung ersetzen</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="158"/>
+        <source>Replace all matches (to end of document)</source>
+        <translation>Alle Übereinstimmungen ersetzen (zum Ende des Dokuments)</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="170"/>
+        <source>Hide the find/replace options</source>
+        <translation>Optionen Suchen/Ersetzen ausblenden</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntaxhervorhebung</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeilennummern anzeigen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="147"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Datei</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern unter</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei schließen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+W</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Farben anpassen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
         <source>Wrap Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeilen umbrechen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="365"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="368"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+F</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="376"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="379"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+R</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Open File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei(en) öffnen</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Textdateien (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -265,12 +265,12 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Textdatei (*.txt)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
@@ -280,17 +280,17 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die folgende Datei wurde von einem anderen Dienstprogramm geändert. Möchten Sie sie neu laden?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Hinweis: Sie werden alle momentan ungespeicherten Änderungen verlieren)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei geändert</translation>
     </message>
 </context>
 </TS>

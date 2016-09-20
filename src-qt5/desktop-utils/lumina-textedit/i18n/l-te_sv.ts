@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv_SE">
+<TS version="2.1" language="sv">
 <context>
     <name>ColorDialog</name>
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassa Färger</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekttyp</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Färg</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Exempel</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj färg</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkställ</translation>
     </message>
 </context>
 <context>
@@ -45,17 +45,17 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Huvudfönster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Flik 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation type="unfinished"></translation>
+        <translation>Hitta föregående träff</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -64,32 +64,37 @@
         <location filename="../MainUI.ui" line="161"/>
         <location filename="../MainUI.ui" line="173"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="183"/>
+        <source>Find:</source>
+        <translation>Hitta:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"/>
         <source>Find the next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Hitta nästa träff</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation>Matcha skiftläge</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt nästa träff</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="158"/>
         <source>Replace all matches (to end of document)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt alla träffar (till slut av dokument)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
@@ -97,145 +102,140 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="183"/>
-        <source>Find:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntaxmarkering</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktygsrad</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa radnummer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="147"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil som</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassa färger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
         <source>Wrap Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Radbryt linjer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="365"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="368"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="376"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="379"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Textredigerare</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Open File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna filer</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Text filer (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -265,12 +265,12 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Text fil (*)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
@@ -290,7 +290,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil modifierad</translation>
     </message>
 </context>
 </TS>

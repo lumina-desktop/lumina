@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="id_ID">
+<TS version="2.1" language="id">
 <context>
     <name>ColorDialog</name>
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Atur Warna</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Item Tipe</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Warna</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Contoh</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih Warna</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Terapkan</translation>
     </message>
 </context>
 <context>
@@ -45,17 +45,17 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>JendelaUtama</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari kecocokan sebelumnya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -64,32 +64,37 @@
         <location filename="../MainUI.ui" line="161"/>
         <location filename="../MainUI.ui" line="173"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="183"/>
+        <source>Find:</source>
+        <translation>Cari:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"/>
         <source>Find the next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari kecocokan selanjutnya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganti:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapitalisasi yang sama</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganti pertandingan berikutnya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="158"/>
         <source>Replace all matches (to end of document)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengganti semua pertandingan (untuk akhir dokumen)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
@@ -97,145 +102,140 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="183"/>
-        <source>Find:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilan</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Penyorotan Sintaks</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilah Alat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan Nomor Baris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nihil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="147"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas Baru</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Berkas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan File</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan Berkas Sebagai</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup Berkas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Warna Ubahan</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
         <source>Wrap Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Bungkus Garis</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="365"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="368"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="376"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganti</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="379"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor Teks</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Open File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Berkas</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas Teks (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -265,12 +265,12 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan File</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas Teks (*)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_HK">
+<TS version="2.1">
 <context>
     <name>ColorDialog</name>
     <message>
@@ -67,6 +67,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainUI.ui" line="183"/>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainUI.ui" line="94"/>
         <source>Find the next match</source>
         <translation type="unfinished"></translation>
@@ -94,11 +99,6 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="183"/>
-        <source>Find:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
