@@ -166,7 +166,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="30"></location>
         <source>Starting Window Manager …</source>
-        <translation>Iniciando gerenciador de janelas</translation>
+        <translation>Iniciando gerenciador de janelas …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="33"></location>
