@@ -89,7 +89,7 @@ void XDGDesktopList::updateList(){
     if(appschanged){ emit appsUpdated(); }
     synctimer->start();
   }
-  
+  files.squeeze(); //make sure this class uses as little memory as possible (should not be needed - but just in case...)
 }
 
 QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
