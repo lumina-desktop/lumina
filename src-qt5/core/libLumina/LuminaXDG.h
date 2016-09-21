@@ -68,6 +68,10 @@ public:
   //Constructor/destructor
   XDGDesktop(){}
   ~XDGDesktop(){}
+
+    friend bool operator==(const XDGDesktop lhs, const XDGDesktop rhs){
+        return lhs.filePath == rhs.filePath && lhs.lastRead == rhs.lastRead;
+    }
 };
 
 // ========================
