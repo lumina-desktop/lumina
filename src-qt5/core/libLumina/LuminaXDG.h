@@ -35,8 +35,8 @@
 // ======================
 // FreeDesktop Desktop Actions Framework (data structure)
 // ======================
-class XDGDesktopAction{
-public:
+struct XDGDesktopAction{
+//public:
   //Admin variables
   QString ID; //The ID name for this action (should correspond to an entry in the "actionList" for the XDGDesktop below)
   //General Variables
@@ -46,9 +46,10 @@ public:
 // ======================
 //  FreeDesktop Desktop Entry Framework (data structure)
 // ======================
-class XDGDesktop{
-public:
+struct XDGDesktop{
+//public:
   enum XDGDesktopType { BAD, APP, LINK, DIR };
+
   //Admin variables
   QString filePath; //which file this structure contains the information for (absolute path)
   QDateTime lastRead; //when this structure was created from the file
@@ -64,14 +65,15 @@ public:
   QList<XDGDesktopAction> actions;
   //Type 2 (LINK) variables
   QString url;
-  
+
   //Constructor/destructor
   XDGDesktop(){}
-  ~XDGDesktop(){}
-
-    friend bool operator==(const XDGDesktop lhs, const XDGDesktop rhs){
-        return lhs.filePath == rhs.filePath && lhs.lastRead == rhs.lastRead;
-    }
+  ~XDGDesktop(){
+    actions.clear();
+    showInList.clear(); notShowInList.clear(); actionList.clear(); mimeList.clear(); catList.clear(); keyList.clear();
+    name.clear(); genericName.clear(); comment.clear(); icon.clear();
+    exec.clear(); tryexec.clear(); path.clear(); startupWM.clear(); url.clear();
+  }
 };
 
 // ========================

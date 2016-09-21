@@ -48,7 +48,7 @@ void XDGDesktopList::updateList(){
   bool firstrun = lastCheck.isNull() || oldkeys.isEmpty();
   lastCheck = QDateTime::currentDateTime();
   //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
-  bool ok; QString path; QDir dir;  QStringList apps; XDGDesktop dFile;
+  bool ok; QString path; QDir dir;  QStringList apps;
   for(int i=0; i<appDirs.length(); i++){
     if( !dir.cd(appDirs[i]) ){ continue; } //could not open dir for some reason
     apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
@@ -60,10 +60,10 @@ void XDGDesktopList::updateList(){
         ok=true;
       }else{
       	ok=false;
-        if(files.contains(path)){ files.remove(path); }
-      	dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
-        appschanged = true; //flag that something changed - needed to load a file
-        if(ok && !found.contains(dFile.name)){
+        if(files.contains(path)){ appschanged = true; files.remove(path); }
+      	XDGDesktop dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
+        if(ok){
+          appschanged = true; //flag that something changed - needed to load a file
           if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
           files.insert(path, dFile);
           found << dFile.name;
@@ -79,6 +79,7 @@ void XDGDesktopList::updateList(){
   }
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
+    //qDebug() << "Removing file from internal map:" << oldkeys[i];
     files.remove(oldkeys[i]);
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
@@ -89,7 +90,6 @@ void XDGDesktopList::updateList(){
     if(appschanged){ emit appsUpdated(); }
     synctimer->start();
   }
-  files.squeeze(); //make sure this class uses as little memory as possible (should not be needed - but just in case...)
 }
 
 QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
@@ -97,8 +97,8 @@ QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
   QStringList keys = files.keys();
   QList<XDGDesktop> out;
   for(int i=0; i<keys.length(); i++){
-    if( LXDG::checkValidity(files[keys[i]], showAll) ){
-      if( showHidden || !files[keys[i]].isHidden ){
+    if( showHidden || !files[keys[i]].isHidden ){ //this is faster than the "checkValidity()" function below  - so always filter here first
+      if( LXDG::checkValidity(files[keys[i]], showAll) ){
          out << files[keys[i]];
       }
     }
@@ -239,7 +239,6 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
     QString val = line.section("=",1,50).simplified();
-    //if(filePath.contains("pcbsd")){ qDebug() << " -- " << var << val << loc; }
     //-------------------
     if(var=="Name"){ 
       if(insection){
@@ -300,17 +299,10 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       //hasType = true;
     }
   } //end reading file
-  //file.close();
+  file.clear(); //done with contents of file
   //If there are OnlyShowIn desktops listed, add them to the name
   if( !DF.showInList.isEmpty() && !DF.showInList.contains("Lumina", Qt::CaseInsensitive) ){
-    /*QStringList added;
-    //Need to be careful about case insensitivity here - the QList functions don't understand it
-    for(int i=0; i<DF.showInList.length(); i++){
-      if(DF.showInList[i].toLower()!="lumina"){ added << DF.showInList[i]; }
-    }*/
-    //if(!added.isEmpty()){ 
       DF.name.append(" ("+DF.showInList.join(", ")+")"); 
-    //}
   }
   //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
   if(DF.catList.isEmpty() && filePath.contains("/wine/")){
@@ -330,7 +322,6 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     }
   }
   //Return the structure
-  //if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
   ok = true; //was able to open/read the file - validity determined later
   return DF;
 }
