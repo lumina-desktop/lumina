@@ -65,6 +65,7 @@ void XDGDesktopList::updateList(){
       }
       if(ok && !found.contains(dFile.name)){
         if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
+        else{ files.remove(path); } //just to ensure that we don't get duplicates within the Hash
         files.insert(path, dFile);
         found << dFile.name;
         oldkeys.removeAll(path); //make sure this key does not get cleaned up later
