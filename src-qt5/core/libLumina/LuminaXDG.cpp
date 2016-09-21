@@ -56,32 +56,34 @@ void XDGDesktopList::updateList(){
       path = dir.absoluteFilePath(apps[a]);
       if(files.contains(path) && (files.value(path).lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
-        dFile = files[path]; 
+        found << files[path].name;  //keep track of which files were already found
         ok=true;
       }else{
       	ok=false;
+        if(files.contains(path)){ files.remove(path); }
       	dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
         appschanged = true; //flag that something changed - needed to load a file
+        if(ok && !found.contains(dFile.name)){
+          if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
+          files.insert(path, dFile);
+          found << dFile.name;
+        }
       }
-      if(ok && !found.contains(dFile.name)){
-        if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
-        else{ files.remove(path); } //just to ensure that we don't get duplicates within the Hash
-        files.insert(path, dFile);
-        found << dFile.name;
-        oldkeys.removeAll(path); //make sure this key does not get cleaned up later
-      }
+      oldkeys.removeAll(path); //make sure this key does not get cleaned up later
     } //end loop over apps
   } //end loop over appDirs
   //Save the extra info to the internal lists
-  if(!firstrun){ removedApps = oldkeys; }//files which were removed
-  if(!firstrun){ newApps = newfiles; }//files which were added
+  if(!firstrun){ 
+    removedApps = oldkeys;//files which were removed
+    newApps = newfiles; //files which were added
+  }
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
     files.remove(oldkeys[i]);
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
-    qDebug() << "Auto App List Update:" << lastCheck << "Changes:" <<  appschanged;// << newfiles << oldkeys;
+    qDebug() << "Auto App List Update:" << lastCheck << "Changes:" <<  appschanged << "Files:" << files.count();
     watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }
