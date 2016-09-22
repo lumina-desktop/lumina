@@ -20,6 +20,7 @@ XDGDesktopList::XDGDesktopList(QObject *parent, bool watchdirs) : QObject(parent
   synctimer = new QTimer(this);
     synctimer->setInterval(60000); //1 minute intervals. since the polling/update only takes a few ms, this is completely reasonable
     connect(synctimer, SIGNAL(timeout()), this, SLOT(updateList()) );
+  keepsynced = watchdirs;
   if(watchdirs){
     watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(watcherChanged()) );
@@ -47,7 +48,7 @@ void XDGDesktopList::updateList(){
   bool firstrun = lastCheck.isNull() || oldkeys.isEmpty();
   lastCheck = QDateTime::currentDateTime();
   //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
-  bool ok; QString path; QDir dir;  QStringList apps; XDGDesktop dFile;
+  bool ok; QString path; QDir dir;  QStringList apps;
   for(int i=0; i<appDirs.length(); i++){
     if( !dir.cd(appDirs[i]) ){ continue; } //could not open dir for some reason
     apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
@@ -55,36 +56,40 @@ void XDGDesktopList::updateList(){
       path = dir.absoluteFilePath(apps[a]);
       if(files.contains(path) && (files.value(path).lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
-        dFile = files[path]; 
+        found << files[path].name;  //keep track of which files were already found
         ok=true;
       }else{
       	ok=false;
-      	dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
-        appschanged = true; //flag that something changed - needed to load a file
+        if(files.contains(path)){ appschanged = true; files.remove(path); }
+      	XDGDesktop dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
+        if(ok){
+          appschanged = true; //flag that something changed - needed to load a file
+          if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
+          files.insert(path, dFile);
+          found << dFile.name;
+        }
       }
-      if(ok && !found.contains(dFile.name)){
-        if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
-        files.insert(path, dFile);
-        found << dFile.name;
-        oldkeys.removeAll(path); //make sure this key does not get cleaned up later
-      }
+      oldkeys.removeAll(path); //make sure this key does not get cleaned up later
     } //end loop over apps
   } //end loop over appDirs
   //Save the extra info to the internal lists
-  if(!firstrun){ removedApps = oldkeys; }//files which were removed
-  if(!firstrun){ newApps = newfiles; }//files which were added
+  if(!firstrun){ 
+    removedApps = oldkeys;//files which were removed
+    newApps = newfiles; //files which were added
+  }
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
+    //qDebug() << "Removing file from internal map:" << oldkeys[i];
     files.remove(oldkeys[i]);
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
-    //qDebug() << "App List Updated:" << lastCheck << appschanged << newfiles << oldkeys;
+    qDebug() << "Auto App List Update:" << lastCheck << "Changes:" <<  appschanged << "Files:" << files.count();
     watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }
+    synctimer->start();
   }
-  synctimer->start();
 }
 
 QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
@@ -92,8 +97,8 @@ QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
   QStringList keys = files.keys();
   QList<XDGDesktop> out;
   for(int i=0; i<keys.length(); i++){
-    if( LXDG::checkValidity(files[keys[i]], showAll) ){
-      if( showHidden || !files[keys[i]].isHidden ){
+    if( showHidden || !files[keys[i]].isHidden ){ //this is faster than the "checkValidity()" function below  - so always filter here first
+      if( LXDG::checkValidity(files[keys[i]], showAll) ){
          out << files[keys[i]];
       }
     }
@@ -234,7 +239,6 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
     QString val = line.section("=",1,50).simplified();
-    //if(filePath.contains("pcbsd")){ qDebug() << " -- " << var << val << loc; }
     //-------------------
     if(var=="Name"){ 
       if(insection){
@@ -295,17 +299,10 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       //hasType = true;
     }
   } //end reading file
-  //file.close();
+  file.clear(); //done with contents of file
   //If there are OnlyShowIn desktops listed, add them to the name
   if( !DF.showInList.isEmpty() && !DF.showInList.contains("Lumina", Qt::CaseInsensitive) ){
-    /*QStringList added;
-    //Need to be careful about case insensitivity here - the QList functions don't understand it
-    for(int i=0; i<DF.showInList.length(); i++){
-      if(DF.showInList[i].toLower()!="lumina"){ added << DF.showInList[i]; }
-    }*/
-    //if(!added.isEmpty()){ 
       DF.name.append(" ("+DF.showInList.join(", ")+")"); 
-    //}
   }
   //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
   if(DF.catList.isEmpty() && filePath.contains("/wine/")){
@@ -325,7 +322,6 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     }
   }
   //Return the structure
-  //if (hasName && hasType) ok = true; //without Name and Type, the structure cannot be a valid .desktop file
   ok = true; //was able to open/read the file - validity determined later
   return DF;
 }
@@ -511,15 +507,15 @@ QStringList LXDG::systemApplicationDirs(){
 }
 
 XDGDesktopList* LXDG::systemAppsList(){
-  static XDGDesktopList *sysapps = new XDGDesktopList(0,true); //set this to automatically update as needed
+  static XDGDesktopList *sysapps = 0;
+  if(sysapps == 0){ qDebug() << "Generating new apps list"; sysapps = new XDGDesktopList(0,true); }//set this to automatically update as needed
   if(sysapps->lastCheck.isNull()){ sysapps->updateList(); } //catch the first time the class was used, and prompt for an update right now
   return sysapps;
 }
 
 QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   //Quick overload for backwards compatibility which uses the static/global class for managing app entries
-  XDGDesktopList list(0, false);
-  return list.apps(showAll, showHidden); 
+  return systemAppsList()->apps(showAll, showHidden); 
 }
 
 QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
