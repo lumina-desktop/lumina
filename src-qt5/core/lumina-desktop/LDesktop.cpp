@@ -280,9 +280,8 @@ void LDesktop::UpdateMenu(bool fast){
     else if(items[i].startsWith("app::::") && items[i].endsWith(".desktop")){
       //Custom *.desktop application
       QString file = items[i].section("::::",1,1).simplified();
-      bool ok = false;
-      XDGDesktop xdgf = LXDG::loadDesktopFile(file, ok);
-      if(ok){
+      XDGDesktop xdgf(file);// = LXDG::loadDesktopFile(file, ok);
+      if(xdgf.type!=XDGDesktop::BAD){
         deskMenu->addAction( LXDG::findIcon(xdgf.icon,""), xdgf.name)->setWhatsThis(file);
 	}else{
 	  qDebug() << "Could not load application file:" << file;

@@ -39,7 +39,7 @@ private:
 	int dnum, pnum;
 
 	void reloadColorSample();
-	XDGDesktop getSysApp(bool allowreset = false);
+	QString getSysApp(bool allowreset = false);
 	QString getColorStyle(QString current, bool allowTransparency = true);
 private slots:
 	void on_tool_rm_clicked();

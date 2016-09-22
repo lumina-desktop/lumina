@@ -29,7 +29,7 @@ private:
 	Ui::page_interface_menu *ui;
 	LPlugins *PINFO;
 	//Get an application on the system
-	XDGDesktop getSysApp(bool allowreset = false);
+	QString getSysApp(bool allowreset = false);
 
 private slots:
 	void addmenuplugin();

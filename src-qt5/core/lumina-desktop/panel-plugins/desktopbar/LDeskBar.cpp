@@ -130,11 +130,9 @@ void LDeskBarPlugin::updateFiles(){
     if(type=="app"){
       //Add it to appM
       bool ok = false;
-      XDGDesktop df = LXDG::loadDesktopFile(path, ok);
-      if(ok){
-        if( LXDG::checkValidity(df) && !df.isHidden ){ 
+      XDGDesktop df(path);
+      if(df.isValid() && !df.isHidden){
 	  appM->addAction( newAction(df.filePath, df.name, LXDG::findIcon(df.icon, ":/images/default-application.png")) );
-	}
       }
     }else if(type=="dir"){
       //Add it to dirM

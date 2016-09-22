@@ -169,8 +169,8 @@ void MainUI::foundSearchItem(QString path){
   //Now setup the visuals
   if(path.simplified().endsWith(".desktop")){
     bool ok = false;
-    XDGDesktop desk = LXDG::loadDesktopFile(path,ok);
-    if( !ok  || !LXDG::checkValidity(desk) ){delete it; return; } //invalid file
+    XDGDesktop desk(path);
+    if( !desk.isValid() ){delete it; return; } //invalid file
     it->setText(desk.name);
     it->setIcon( LXDG::findIcon(desk.icon, "application-x-desktop") );
   }else{

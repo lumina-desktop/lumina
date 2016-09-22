@@ -62,23 +62,22 @@ void LAppMenuPlugin::LaunchItem(QAction* item){
 
 void LAppMenuPlugin::UpdateMenu(){
   mainmenu->clear();
-  QHash<QString, QList<XDGDesktop> > *HASH = LSession::handle()->applicationMenu()->currentAppHash();
+  QHash<QString, QList<XDGDesktop*> > *HASH = LSession::handle()->applicationMenu()->currentAppHash();
     //Now Re-create the menu (orignally copied from the AppMenu class)
-    bool ok; //for checking inputs
     //Add link to the file manager
     QAction *tmpact = mainmenu->addAction( LXDG::findIcon("user-home", ""), tr("Browse Files") );
       tmpact->setWhatsThis("\""+QDir::homePath()+"\"");
     //--Look for the app store
-    XDGDesktop store = LXDG::loadDesktopFile(LOS::AppStoreShortcut(), ok);
-    if(ok){
+    XDGDesktop store(LOS::AppStoreShortcut());
+    if(store.isValid()){
       tmpact = mainmenu->addAction( LXDG::findIcon(store.icon, ""), tr("Install Applications") ); 
       tmpact->setWhatsThis("\""+store.filePath+"\"");
     }
     //--Look for the control panel
-    store = LXDG::loadDesktopFile(LOS::ControlPanelShortcut(), ok);
-    if(ok){
-      tmpact = mainmenu->addAction( LXDG::findIcon(store.icon, ""), tr("Control Panel") ); 
-      tmpact->setWhatsThis("\""+store.filePath+"\"");
+    XDGDesktop controlp(LOS::ControlPanelShortcut());
+    if(controlp.isValid()){
+      tmpact = mainmenu->addAction( LXDG::findIcon(controlp.icon, ""), tr("Control Panel") ); 
+      tmpact->setWhatsThis("\""+controlp.filePath+"\"");
     }
     mainmenu->addSeparator();
     //--Now create the sub-menus
@@ -104,29 +103,29 @@ void LAppMenuPlugin::UpdateMenu(){
 
       QMenu *menu = new QMenu(name, this);
       menu->setIcon(LXDG::findIcon(icon,""));
-      QList<XDGDesktop> appL = HASH->value(cats[i]);
+      QList<XDGDesktop*> appL = HASH->value(cats[i]);
       for( int a=0; a<appL.length(); a++){
-	if(appL[a].actions.isEmpty()){
+	if(appL[a]->actions.isEmpty()){
 	  //Just a single entry point - no extra actions
-          QAction *act = new QAction(LXDG::findIcon(appL[a].icon, ""), appL[a].name, menu);
-          act->setToolTip(appL[a].comment);
-          act->setWhatsThis("\""+appL[a].filePath+"\"");
+          QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, menu);
+          act->setToolTip(appL[a]->comment);
+          act->setWhatsThis("\""+appL[a]->filePath+"\"");
           menu->addAction(act);
 	}else{
 	  //This app has additional actions - make this a sub menu
 	  // - first the main menu/action
-	  QMenu *submenu = new QMenu(appL[a].name, menu);
-	    submenu->setIcon( LXDG::findIcon(appL[a].icon,"") );
+	  QMenu *submenu = new QMenu(appL[a]->name, menu);
+	    submenu->setIcon( LXDG::findIcon(appL[a]->icon,"") );
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
-	      QAction *act = new QAction(LXDG::findIcon(appL[a].icon, ""), appL[a].name, submenu);
-              act->setToolTip(appL[a].comment);
-              act->setWhatsThis(appL[a].filePath);
+	      QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, submenu);
+              act->setToolTip(appL[a]->comment);
+              act->setWhatsThis(appL[a]->filePath);
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
-	    for(int sa=0; sa<appL[a].actions.length(); sa++){
-              QAction *sact = new QAction(LXDG::findIcon(appL[a].actions[sa].icon, appL[a].icon), appL[a].actions[sa].name, this);
-              sact->setToolTip(appL[a].comment);
-              sact->setWhatsThis("-action \""+appL[a].actions[sa].ID+"\" \""+appL[a].filePath+"\"");
+	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
+              QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, this);
+              sact->setToolTip(appL[a]->comment);
+              sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
               submenu->addAction(sact);		    
 	    }
 	  menu->addMenu(submenu);

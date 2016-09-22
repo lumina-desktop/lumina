@@ -53,9 +53,8 @@ QStringList items = settings.value("menu/itemlist", QStringList() ).toStringList
    ui->list_menu->clear();
    for(int i=0; i<items.length(); i++){
     if(items[i].startsWith("app::::")){
-      bool ok = false;
-      XDGDesktop desk = LXDG::loadDesktopFile(items[i].section("::::",1,1), ok);
-      if(!ok){ continue; } //invalid application file (no longer installed?)
+      XDGDesktop desk(items[i].section("::::",1,1));
+      if(desk.type == XDGDesktop::BAD){ continue; } //invalid application file (no longer installed?)
       QListWidgetItem *item = new QListWidgetItem();
         item->setWhatsThis( items[i] );
         item->setIcon( LXDG::findIcon(desk.icon) );
@@ -99,17 +98,15 @@ void page_interface_menu::updateIcons(){
 //=================
 //         PRIVATE 
 //=================
-XDGDesktop page_interface_menu::getSysApp(bool allowreset){
-  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+QString page_interface_menu::getSysApp(bool allowreset){
+  AppDialog dlg(this);
     dlg.allowReset(allowreset);
     dlg.exec();
-  XDGDesktop desk;
   if(dlg.appreset && allowreset){
-    desk.filePath = "reset"; //special internal flag
+    return "reset";
   }else{
-    desk = dlg.appselected;
+    return dlg.appselected;
   }
-  return desk;
 }
 
 //=================
@@ -127,9 +124,10 @@ void page_interface_menu::addmenuplugin(){
   if(info.ID=="app"){
     //Need to prompt for the exact application to add to the menu
     // Note: whatsThis() format: "app::::< *.desktop file path >"
-    XDGDesktop desk = getSysApp();
-    if(desk.filePath.isEmpty()){ return; }//nothing selected
+    QString app = getSysApp();
+    if(app.isEmpty()){ return; }//nothing selected
     //Create the item for the list
+    XDGDesktop desk(app);
     it = new QListWidgetItem(LXDG::findIcon(desk.icon,""), desk.name );
       it->setWhatsThis(info.ID+"::::"+desk.filePath);
       it->setToolTip( desk.comment );

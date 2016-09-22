@@ -31,9 +31,8 @@ void AppLaunchButtonPlugin::updateButtonVisuals(){
   QIcon icon;
   QString tooltip = tr("Click to assign an application");
   if(appfile.endsWith(".desktop")){
-    bool ok = false;
-    XDGDesktop desk = LXDG::loadDesktopFile(appfile,ok);
-    if(ok){
+    XDGDesktop desk(appfile);
+    if(desk.isValid()){
       icon = LXDG::findIcon(desk.icon, "unknown");
       tooltip = QString(tr("Launch %1")).arg(desk.name);
     }else{
@@ -56,13 +55,13 @@ void AppLaunchButtonPlugin::updateButtonVisuals(){
 void AppLaunchButtonPlugin::AppClicked(){
   if(appfile.isEmpty()){
     //No App File selected
-    QList<XDGDesktop> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All");
+    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All");
     QStringList names;
-    for(int i=0; i<apps.length(); i++){ names << apps[i].name; }
+    for(int i=0; i<apps.length(); i++){ names << apps[i]->name; }
     bool ok = false;
     QString app = QInputDialog::getItem(this, tr("Select Application"), tr("Name:"), names, 0, false, &ok);
     if(!ok || names.indexOf(app)<0){ return; } //cancelled
-    appfile = apps[ names.indexOf(app) ].filePath;
+    appfile = apps[ names.indexOf(app) ]->filePath;
     //Still need to find a way to set this value persistently
     // --- perhaps replace the plugin in the desktop settings file with the new path?
     // --- "applauncher::broken---<something>"  -> "applauncher::fixed---<something>" ?
@@ -71,4 +70,3 @@ void AppLaunchButtonPlugin::AppClicked(){
     LSession::LaunchApplication("lumina-open \""+appfile+"\"");
   }
 }
-

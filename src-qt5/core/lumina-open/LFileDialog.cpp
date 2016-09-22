@@ -158,17 +158,21 @@ void LFileDialog::updateUI(){
 
 void LFileDialog::generateAppList(bool shownetwork){
   //Now load the preferred applications
+  XDGDesktopList applist;
+    applist.updateList();
   PREFAPPS = getPreferredApplications();
+  //qDebug() << "Preferred Apps:" << PREFAPPS;
   ui->combo_rec->clear();
   //Now get the application mimetype for the file extension (if available)
   QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
+    mimetypes.removeDuplicates();
   //Now add all the detected applications
-  QHash< QString, QList<XDGDesktop> > hash = LXDG::sortDesktopCats( LXDG::systemDesktopFiles(false,true) );
+  QHash< QString, QList<XDGDesktop*> > hash = LXDG::sortDesktopCats( applist.apps(false,true) );
   QStringList cat = hash.keys();
   cat.sort(); //sort alphabetically
   ui->combo_apps->clear();
   for(int c=0; c<cat.length(); c++){
-    QList<XDGDesktop> app = hash[cat[c]];
+    QList<XDGDesktop*> app = hash[cat[c]];
     if(app.length()<1){ continue; }
     if(ui->combo_apps->count() >1){ ui->combo_apps->insertSeparator(ui->combo_apps->count()); }
     ui->combo_apps->addItem(translateCat(cat[c]));
@@ -176,17 +180,19 @@ void LFileDialog::generateAppList(bool shownetwork){
     for(int a=0; a<app.length(); a++){
       if(shownetwork && (cat[c].toLower()=="network" || cat[c].toLower()=="utility") ){ 
 	//Need to show preferred internet applications - look for ones that handle URL's
-	if(app[a].exec.contains("%u") || app[a].exec.contains("%U")){
-          PREFAPPS << app[a].filePath; 
+	if(app[a]->exec.contains("%u") || app[a]->exec.contains("%U")){
+          //qDebug() << "Add to Preferred Apps:" << app[a]->filePath;
+          PREFAPPS << app[a]->filePath; 
 	}
       }
-      ui->combo_apps->addItem(LXDG::findIcon(app[a].icon, "application-x-desktop"), app[a].name, app[a].filePath);
+      ui->combo_apps->addItem(LXDG::findIcon(app[a]->icon, "application-x-desktop"), app[a]->name, app[a]->filePath);
       //Check to see if this app matches the mime type
       if(!mimetypes.isEmpty()){
-        QStringList tmp = mimetypes; tmp << app[a].mimeList;
+        QStringList tmp = mimetypes; tmp << app[a]->mimeList;
         if(tmp.removeDuplicates() > 0 ){
           // also put this app in the preferred list
-	  PREFAPPS.append(app[a].filePath);	      
+          //qDebug() << "Mimetype match:" << mimetypes << app[a]->mimeList;
+	  PREFAPPS.append(app[a]->filePath);	      
 	  //If this is the first preferred app found - select this app initially
 	  if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(ui->combo_apps->count()-1); }
         }
@@ -197,9 +203,8 @@ void LFileDialog::generateAppList(bool shownetwork){
   //Now add all the preferred applications
   PREFAPPS.removeDuplicates();
   for(int i=0; i<PREFAPPS.length(); i++){
-    bool ok = false;
-    XDGDesktop dFile = LXDG::loadDesktopFile(PREFAPPS[i], ok);
-    if( LXDG::checkValidity(dFile) && ok ){
+    XDGDesktop dFile(PREFAPPS[i]);
+    if( dFile.isValid() ){
       ui->combo_rec->addItem( LXDG::findIcon(dFile.icon, "application-x-desktop"), dFile.name);
       if(i==0){ ui->combo_rec->setCurrentIndex(0); } //make sure the first item is selected
     }else{
@@ -242,19 +247,17 @@ void LFileDialog::on_tool_ok_clicked(){
     appExec = ui->line_bin->text();  
   }else if(ui->radio_rec->isChecked()){
     //application selected
-    bool ok = false;
-    XDGDesktop app = LXDG::loadDesktopFile(PREFAPPS[ui->combo_rec->currentIndex()], ok);
+    XDGDesktop app(PREFAPPS[ui->combo_rec->currentIndex()]);
     //Set the output variables
-    appExec =  LXDG::getDesktopExec(app);
+    appExec =  app.getDesktopExec();
     appPath = app.path;
     appFile = app.filePath;
     setPreferredApplication(app.filePath); //bump this to the top of the preferred list for next time
   }else{
     //application selected
-    bool ok = false;
-    XDGDesktop app = LXDG::loadDesktopFile(ui->combo_apps->currentData().toString(), ok);
+    XDGDesktop app(ui->combo_apps->currentData().toString());
     //Set the output variables
-    appExec = LXDG::getDesktopExec(app);
+    appExec = app.getDesktopExec();
     appPath = app.path;
     appFile = app.filePath;
     setPreferredApplication(app.filePath); //save this app to this extension as a recommendation

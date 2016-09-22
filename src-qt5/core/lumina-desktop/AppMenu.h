@@ -31,14 +31,15 @@ public:
 	AppMenu(QWidget *parent = 0);
 	~AppMenu();
 
-	QHash<QString, QList<XDGDesktop> > *currentAppHash();
+	QHash<QString, QList<XDGDesktop*> > *currentAppHash();
 	QDateTime lastHashUpdate;
 
 private:
 	//QFileSystemWatcher *watcher;
 	QString appstorelink, controlpanellink;
 	QList<QMenu> MLIST;
-	QHash<QString, QList<XDGDesktop> > APPS;
+	XDGDesktopList *sysApps;
+	QHash<QString, QList<XDGDesktop*> > APPS;
 
 	void updateAppList(); //completely update the menu lists
 

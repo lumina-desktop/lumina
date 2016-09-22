@@ -27,7 +27,9 @@ public slots:
 private:
 	Ui::page_defaultapps *ui;
 
-	XDGDesktop getSysApp(bool allowreset);
+	QString getSysApp(bool allowreset);
+
+	void updateDefaultButton(QToolButton *button, QString app);
 
 private slots:
 	//Simple defaults tab
