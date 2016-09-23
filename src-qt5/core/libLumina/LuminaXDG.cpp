@@ -1499,7 +1499,11 @@ QStringList LXDG::loadMimeFileGlobs2(){
         }
 	file.close();
       }
-    }    
+      if(i==dirs.length()-1 && mimeglobs.isEmpty()){
+        //Could not find the mimetype database on the system - use the fallback file distributed with Lumina
+        dirs << LOS::LuminaShare();
+      }
+    }//end loop over dirs
   }
   return mimeglobs;
 }
