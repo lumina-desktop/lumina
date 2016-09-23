@@ -112,7 +112,7 @@
     <message>
         <location filename="../MainUI.cpp" line="77"></location>
         <source>Save Screenshot</source>
-        <translation>Αποθήκευση Στιγμιοτύπου οθόνης</translation>
+        <translation>Αποθήκευση Στιγμιοτύπου Οθόνης</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="309"></location>
