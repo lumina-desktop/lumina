@@ -69,9 +69,8 @@ void page_interface_desktop::LoadSettings(int screennum){
       dplugs[i] = dplugs[i].section("---",0,0);
     }
     if(dplugs[i].startsWith("applauncher::")){
-      bool ok = false;
-      XDGDesktop app = LXDG::loadDesktopFile(dplugs[i].section("::",1,50), ok);
-      if(!ok){ continue; } //invalid for some reason
+      XDGDesktop app(dplugs[i].section("::",1,50));
+      if(app.type == XDGDesktop::BAD){ continue; } //invalid for some reason
       //Now fill the item with the necessary info
       it->setText(app.name);
       it->setIcon(LXDG::findIcon(app.icon,"") );
@@ -97,17 +96,15 @@ void page_interface_desktop::updateIcons(){
 //=================
 //         PRIVATE 
 //=================
-XDGDesktop page_interface_desktop::getSysApp(bool allowreset){
-  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+QString page_interface_desktop::getSysApp(bool allowreset){
+  AppDialog dlg(this);
     dlg.allowReset(allowreset);
     dlg.exec();
-  XDGDesktop desk;
   if(dlg.appreset && allowreset){
-    desk.filePath = "reset"; //special internal flag
+    return "reset";
   }else{
-    desk = dlg.appselected;
+    return dlg.appselected;
   }
-  return desk;
 }
 
 //=================
@@ -122,14 +119,15 @@ void page_interface_desktop::deskplugadded(){
   QListWidgetItem *it = new QListWidgetItem();
   if(newplug=="applauncher"){
     //Prompt for the application to add
-    XDGDesktop app = getSysApp();
-    if(app.filePath.isEmpty()){ return; } //cancelled
-    newplug.append("::"+app.filePath);
+    QString app = getSysApp();
+    if(app.isEmpty()){ return; } //cancelled
+    newplug.append("::"+app);
+    XDGDesktop desk(app);
     //Now fill the item with the necessary info
     it->setWhatsThis(newplug);
-    it->setText(app.name);
-    it->setIcon(LXDG::findIcon(app.icon,"") );
-    it->setToolTip(app.comment);
+    it->setText(desk.name);
+    it->setIcon(LXDG::findIcon(desk.icon,"") );
+    it->setToolTip(desk.comment);
   }else{
     //Load the info for this plugin
     LPI info = PINFO->desktopPluginInfo(newplug);

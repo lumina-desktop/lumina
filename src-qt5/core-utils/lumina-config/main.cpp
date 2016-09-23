@@ -10,6 +10,9 @@
 #include <LuminaUtils.h>
 #include <LuminaThemes.h>
 #include <LuminaSingleApplication.h>
+#include <LuminaXDG.h>
+
+XDGDesktopList *APPSLIST = 0;
 
 int main(int argc, char ** argv)
 {

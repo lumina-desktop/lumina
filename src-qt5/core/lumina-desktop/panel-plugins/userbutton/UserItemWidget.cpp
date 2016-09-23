@@ -15,12 +15,11 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
   bool inHome = type.endsWith("-home"); //internal code
   if(inHome){ type = type.remove("-home"); }
   if(itemPath.endsWith(".desktop") || type=="app"){
-    bool ok = false;
-    XDGDesktop item = LXDG::loadDesktopFile(itemPath, ok);
-    if(ok && LXDG::checkValidity(item) ){
+    XDGDesktop item(itemPath);
+    if( item.isValid() ){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) );
-      setupActions(item);
+      setupActions(&item);
     }else{
       gooditem = false;
       return;
@@ -63,22 +62,23 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
   setupButton(goback);
 }
 
-UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
+UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
+  if(item==0){ return; }
   createWidget();
   isDirectory = false;
-  if(LUtils::isFavorite(item.filePath)){
-    linkPath = item.filePath;
+  if(LUtils::isFavorite(item->filePath)){
+    linkPath = item->filePath;
     isShortcut=true;
-  }else if( item.filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+  }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
     isShortcut = true;
   }else{
     isShortcut = false;
   }
   //Now fill it appropriately
-  icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(32,32) );
-  name->setText( this->fontMetrics().elidedText(item.name, Qt::ElideRight, TEXTCUTOFF) ); 
+  icon->setPixmap( LXDG::findIcon(item->icon,"preferences-system-windows-actions").pixmap(32,32) );
+  name->setText( this->fontMetrics().elidedText(item->name, Qt::ElideRight, TEXTCUTOFF) ); 
   this->setWhatsThis(name->text());
-  icon->setWhatsThis(item.filePath);
+  icon->setWhatsThis(item->filePath);
   //Now setup the buttons appropriately
   setupButton();
   setupActions(item);
@@ -152,14 +152,14 @@ void UserItemWidget::setupButton(bool disable){
   }
 }
 
-void UserItemWidget::setupActions(XDGDesktop app){
-  if(app.actions.isEmpty()){ actButton->setVisible(false); return; }
+void UserItemWidget::setupActions(XDGDesktop *app){
+  if(app==0 || app->actions.isEmpty()){ actButton->setVisible(false); return; }
   //Actions Available - go ahead and list them all
   actButton->setMenu( new QMenu(this) );
-  for(int i=0; i<app.actions.length(); i++){
-    QAction *act = new QAction(LXDG::findIcon(app.actions[i].icon, app.icon), app.actions[i].name, this);
-	act->setToolTip(app.actions[i].ID);
-        act->setWhatsThis(app.actions[i].ID);
+  for(int i=0; i<app->actions.length(); i++){
+    QAction *act = new QAction(LXDG::findIcon(app->actions[i].icon, app->icon), app->actions[i].name, this);
+	act->setToolTip(app->actions[i].ID);
+        act->setWhatsThis(app->actions[i].ID);
         actButton->menu()->addAction(act);	
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );

@@ -59,9 +59,8 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   for(int i=0; i<plugs.length(); i++){
     QString pid = plugs[i].section("---",0,0);
       if(pid.startsWith("applauncher")){
-	bool ok = false;
-	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
-	if(ok){
+	XDGDesktop desk(pid.section("::",1,1));
+	if(desk.type!=XDGDesktop::BAD){ //still need to allow invalid apps
 	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
 	  ui->list_plugins->addItem(it);
@@ -121,17 +120,15 @@ void PanelWidget::reloadColorSample(){
   ui->label_color_sample->setStyleSheet("background: "+ui->label_color_sample->whatsThis());
 }
 
-XDGDesktop PanelWidget::getSysApp(bool allowreset){
-  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+QString PanelWidget::getSysApp(bool allowreset){
+  AppDialog dlg(this);
     dlg.allowReset(allowreset);
     dlg.exec();
-  XDGDesktop desk;
   if(dlg.appreset && allowreset){
-    desk.filePath = "reset"; //special internal flag
+    return "reset";
   }else{
-    desk = dlg.appselected;
+    return dlg.appselected;
   }
-  return desk;
 }
 
 QString PanelWidget::getColorStyle(QString current, bool allowTransparency){
@@ -183,10 +180,11 @@ void PanelWidget::on_tool_addplugin_clicked(){
   QString pan = dlg.plugID; //getNewPanelPlugin();
   if(pan == "applauncher"){
     //Prompt for the application to add
-    XDGDesktop app =getSysApp();
-    if(app.filePath.isEmpty()){ return; } //cancelled
-    pan.append("::"+app.filePath);
-    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+    QString app =getSysApp();
+    if(app.isEmpty()){ return; } //cancelled
+    pan.append("::"+app);
+    XDGDesktop desk(app);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name);
       it->setWhatsThis(pan);
     ui->list_plugins->addItem(it);
     ui->list_plugins->setCurrentItem(it);

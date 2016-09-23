@@ -23,7 +23,6 @@ StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
     searchTimer->setInterval(300); //~1/3 second
     searchTimer->setSingleShot(true);
   connect(searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()) );
-  sysapps = LSession::handle()->applicationMenu()->currentAppHash();
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
   //Need to load the last used setting of the application list
   QString state = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/systemstart/showcategories", "partial").toString();
@@ -72,9 +71,8 @@ void StartMenu::UpdateAll(){
   if(QFile::exists(tmp)){
     ui->tool_launch_controlpanel->setWhatsThis(tmp);
     //Now read the file to see which icon to use
-    bool ok = false;
-    XDGDesktop desk = LXDG::loadDesktopFile(tmp, ok);
-    if(ok && LXDG::checkValidity(desk)){
+    XDGDesktop desk(tmp);
+    if(desk.isValid()){
        ui->tool_launch_controlpanel->setIcon(LXDG::findIcon(desk.icon,"preferences-other"));
     }else{ ui->tool_launch_controlpanel->setVisible(false); }
   }else{ ui->tool_launch_controlpanel->setVisible(false); }
@@ -83,9 +81,8 @@ void StartMenu::UpdateAll(){
   if(QFile::exists(tmp)){
     ui->tool_launch_store->setWhatsThis(tmp);
     //Now read the file to see which icon to use
-    bool ok = false;
-    XDGDesktop desk = LXDG::loadDesktopFile(tmp, ok);
-    if(ok && LXDG::checkValidity(desk)){
+    XDGDesktop desk(tmp);
+    if(desk.isValid()){
        ui->tool_launch_store->setIcon(LXDG::findIcon(desk.icon,"utilities-file-archiver"));
     }else{ ui->tool_launch_store->setVisible(false); }
   }else{ ui->tool_launch_store->setVisible(false); }
@@ -158,8 +155,14 @@ void StartMenu::UpdateQuickLaunch(QString path, bool keep){
 // ==========================
 //        PRIVATE FUNCTIONS
 // ==========================
+void StartMenu::deleteChildren(QObject *obj){
+for(int i=0; i<obj->children().count(); i++){ obj->children().at(i)->deleteLater(); }
+}
+
 void StartMenu::ClearScrollArea(QScrollArea *area){
-  area->takeWidget()->deleteLater();
+  QWidget *old = area->takeWidget();
+    deleteChildren(old); //make sure we *fully* delete these items to save memory
+    old->deleteLater();
   area->setWidget( new QWidget() ); //create a new widget in the scroll area
   area->widget()->setContentsMargins(0,0,0,0);
     QVBoxLayout *layout = new QVBoxLayout;
@@ -216,18 +219,18 @@ void StartMenu::do_search(QString search, bool force){
   QStringList found; //syntax: [<sorter>::::<mimetype>::::<filepath>]
   QString tmp = search;
   if(LUtils::isValidBinary(tmp)){ found << "0::::application/x-executable::::"+tmp; }
-  QList<XDGDesktop> apps = sysapps->value("All");
+  QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All");
   for(int i=0; i<apps.length(); i++){
     int priority = -1;
-    if(apps[i].name.toLower()==search.toLower()){ priority = 10; }
-    else if(apps[i].name.startsWith(search, Qt::CaseInsensitive)){ priority = 15; }
-    else if(apps[i].name.contains(search, Qt::CaseInsensitive)){ priority = 19; }
-    else if(apps[i].genericName.contains(search, Qt::CaseInsensitive)){ priority = 20; }
-    else if(apps[i].comment.contains(search, Qt::CaseInsensitive)){ priority = 30; }
+    if(apps[i]->name.toLower()==search.toLower()){ priority = 10; }
+    else if(apps[i]->name.startsWith(search, Qt::CaseInsensitive)){ priority = 15; }
+    else if(apps[i]->name.contains(search, Qt::CaseInsensitive)){ priority = 19; }
+    else if(apps[i]->genericName.contains(search, Qt::CaseInsensitive)){ priority = 20; }
+    else if(apps[i]->comment.contains(search, Qt::CaseInsensitive)){ priority = 30; }
     //Can add other filters here later
 
     if(priority>0){
-      found << QString::number(priority)+"::::app::::"+apps[i].filePath;
+      found << QString::number(priority)+"::::app::::"+apps[i]->filePath;
     }
   }
   found.sort(Qt::CaseInsensitive); //sort by priority/type (lower numbers are higher on list)
@@ -238,10 +241,8 @@ void StartMenu::do_search(QString search, bool force){
     if(topsearch.isEmpty()){ topsearch = found[i].section("::::",2,-1); }
     ItemWidget *it = 0;
     if( found[i].section("::::",2,-1).endsWith(".desktop")){
-      bool ok = false;
-      XDGDesktop item = LXDG::loadDesktopFile(found[i].section("::::",2,-1), ok);
-      if(ok){ ok = LXDG::checkValidity(item); }
-      if(ok){ it = new ItemWidget(ui->scroll_favs->widget(), item); }
+      XDGDesktop item(found[i].section("::::",2,-1));
+      if(item.isValid()){ it = new ItemWidget(ui->scroll_favs->widget(), &item); }
     }else{
       it = new ItemWidget(ui->scroll_favs->widget(), found[i].section("::::",2,-1), found[i].section("::::",1,1) );
     }
@@ -308,11 +309,11 @@ void StartMenu::UpdateApps(){
     //qDebug() << " - Partially Checked";
     //Show a single page of apps, but still divided up by categories
     CCat.clear();
-    QStringList cats = sysapps->keys();
+    QStringList cats = LSession::handle()->applicationMenu()->currentAppHash()->keys();
     cats.sort();
     cats.removeAll("All");
     for(int c=0; c<cats.length(); c++){
-      QList<XDGDesktop> apps = sysapps->value(cats[c]);
+      QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value(cats[c]);
       if(apps.isEmpty()){ continue; }
       //Add the category label to the scroll
       QLabel *catlabel = new QLabel("<b>"+cats[c]+"</b>",ui->scroll_apps->widget());
@@ -335,7 +336,7 @@ void StartMenu::UpdateApps(){
     //Only show categories to start with - and have the user click-into a cat to see apps
     if(CCat.isEmpty()){
       //No cat selected yet - show cats only
-      QStringList cats = sysapps->keys();
+      QStringList cats = LSession::handle()->applicationMenu()->currentAppHash()->keys();
       cats.sort();
       cats.removeAll("All"); //This is not a "real" category
       for(int c=0; c<cats.length(); c++){
@@ -352,7 +353,7 @@ void StartMenu::UpdateApps(){
         ui->scroll_apps->widget()->layout()->addWidget(it);
         connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       //Show apps for this cat
-      QList<XDGDesktop> apps = sysapps->value(CCat); 
+      QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value(CCat); 
       for(int i=0; i<apps.length(); i++){
 	//qDebug() << " - App:" << apps[i].name;
         ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
@@ -368,7 +369,7 @@ void StartMenu::UpdateApps(){
   }else{
     //qDebug() << " - Not Checked";
     //No categories at all - just alphabetize all the apps
-    QList<XDGDesktop> apps = sysapps->value("All"); 
+    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All"); 
     CCat.clear();
     //Now add all the apps for this category
     for(int i=0; i<apps.length(); i++){
@@ -431,10 +432,8 @@ void StartMenu::UpdateFavs(){
       if( !QFile::exists(tmp[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
       ItemWidget *it = 0;
       if( tmp[i].section("::::",2,-1).endsWith(".desktop")){
-        bool ok = false;
-        XDGDesktop item = LXDG::loadDesktopFile(tmp[i].section("::::",2,-1), ok);
-        if(ok){ ok = LXDG::checkValidity(item); }
-	if(ok){ it = new ItemWidget(ui->scroll_favs->widget(), item); }
+        XDGDesktop item(tmp[i].section("::::",2,-1));
+	if(item.isValid()){ it = new ItemWidget(ui->scroll_favs->widget(), &item); }
       }else{
         it = new ItemWidget(ui->scroll_favs->widget(), tmp[i].section("::::",2,-1), tmp[i].section("::::",1,1) );
       }

@@ -15,6 +15,8 @@
 //=============
 mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   ui->setupUi(this);
+  APPSLIST = new XDGDesktopList(this, true); //keep this up to date while the app is open
+  QTimer::singleShot(100, APPSLIST, SLOT(updateList())); //don't let this hold up the initial application loading
   cpage = "somerandomjunktostartwith";
   //Need to insert a spacer action in the toolbar
   QWidget *tmp = new QWidget(this);

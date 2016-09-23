@@ -35,12 +35,12 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	bool canwrite;
-    bool terminate_thread; //flag for terminating the GetDirSize task
+	bool terminate_thread; //flag for terminating the GetDirSize task
 	void ReloadAppIcon();
-    void GetDirSize(const QString dirname) const; //function to get folder size
+	void GetDirSize(const QString dirname) const; //function to get folder size
 
 signals:
-    void folder_size_changed(quint64 size, quint64 files, quint64 folders, bool finished) const; //Signal for updating the folder size asynchronously
+	void folder_size_changed(quint64 size, quint64 files, quint64 folders, bool finished) const; //Signal for updating the folder size asynchronously
 
 private slots:
 	//Initialization functions
