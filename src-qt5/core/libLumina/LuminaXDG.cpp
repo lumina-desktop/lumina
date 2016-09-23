@@ -906,13 +906,13 @@ QStringList LXDG::systemApplicationDirs(){
   return sysapps;
 }*/
 
-QList<XDGDesktop*> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
+/*QList<XDGDesktop*> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
   //If this is going to be used regularly, it is better to use a custom instance of an XDGDesktopList() which self-updates instead.
   //  Since this function will need to re-read the entire system app registry every time.
   XDGDesktopList sysapps;
   sysapps.updateList();
   return sysapps.apps(showAll, showHidden); 
-}
+}*/
 
 QHash<QString,QList<XDGDesktop*> > LXDG::sortDesktopCats(QList<XDGDesktop*> apps){
   //Sort the list of applications into their different categories (main categories only)

@@ -126,7 +126,7 @@ void AppLauncherPlugin::buttonClicked(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path) ){
     //prompt for the user to select an application
-    QList<XDGDesktop*> apps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
+    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All"); //LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
     QStringList names;
     for(int i=0; i<apps.length(); i++){ names << apps[i]->name; }
     bool ok = false;
