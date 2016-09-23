@@ -58,7 +58,9 @@ void AppLauncherPlugin::loadButton(){
     if(info.isDir()){
 	button->setIcon( LXDG::findIcon("folder","") );
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
-      button->setIcon( QIcon(QPixmap(path).scaled(256,256)) ); //max size for thumbnails in memory	     
+      QPixmap pix;
+      if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  
+      else{ button->setIcon( LXDG::findIcon("dialog-cancel","") ); }
     }else{
       button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     }
@@ -68,7 +70,7 @@ void AppLauncherPlugin::loadButton(){
   }else{
     //InValid File
     button->setWhatsThis("");
-    button->setIcon( QIcon(LXDG::findIcon("quickopen","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+    button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
