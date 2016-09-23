@@ -100,12 +100,12 @@ public slots:
 	
 	void LocaleChange(){ 
 	  updateButtonVisuals();
-	  startmenu->UpdateAll();
+	  if(startmenu!=0){ startmenu->UpdateAll(); }
 	}
 	
 	void ThemeChange(){
 	  updateButtonVisuals();
-	  startmenu->UpdateAll();
+	  if(startmenu!=0){ startmenu->UpdateAll(); }
 	}
 };
 

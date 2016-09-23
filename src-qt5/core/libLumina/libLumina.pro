@@ -62,4 +62,7 @@ themes.files=themes/*.qss.template
 #quickplugins.path=$${L_SHAREDIR}/lumina-desktop/quickplugins/
 #quickplugins.files=quickplugins/*
 
-INSTALLS += target include colors themes
+globs.path=$${L_SHAREDIR}/lumina-desktop
+globs.files=xtrafiles/globs2
+
+INSTALLS += target include colors themes globs

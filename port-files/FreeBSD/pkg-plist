@@ -38,6 +38,7 @@ share/lumina-desktop/desktop-background.jpg
 share/lumina-desktop/luminaDesktop.conf
 share/lumina-desktop/fluxbox-init-rc
 share/lumina-desktop/fluxbox-keys
+share/lumina-desktop/globs2
 share/lumina-desktop/Login.ogg
 share/lumina-desktop/Logout.ogg
 share/lumina-desktop/colors/Black.qss.colors
