@@ -6,13 +6,13 @@
 
 Worker::Worker(QObject *parent) : QObject(parent){
   //Get the list of all applications and save them in an easily-searchable form
-  QList<XDGDesktop*> apps = LXDG::systemDesktopFiles();
+  XDGDesktopList APPS;
+  APPS.updateList();
+  QList<XDGDesktop*> apps = APPS.apps(false,false);
   for(int i=0; i<apps.length(); i++){
     applist << ":::1:::"+apps[i]->name+":::2:::"+apps[i]->genericName+":::3:::"+apps[i]->comment+":::4:::"+apps[i]->filePath;
   }
   stopsearch = false;
-  //Clean up all the apps structures
-  for(int i=0; i<apps.length(); i++){ apps[i]->deleteLater(); }
 }
 
 Worker::~Worker(){

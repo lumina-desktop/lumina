@@ -51,7 +51,7 @@ void LStartButtonPlugin::updateButtonVisuals(){
 void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
   //First clear any obsolete apps
   QStringList old;
-  qDebug() << "Update QuickLaunch Buttons";
+  //qDebug() << "Update QuickLaunch Buttons";
   for(int i=0; i<QUICKL.length(); i++){
     if( !apps.contains(QUICKL[i]->whatsThis()) ){
       //App was removed
@@ -82,13 +82,13 @@ void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
       connect(tmp, SIGNAL(Remove(QString)), this, SLOT(RemoveQuick(QString)) );
     }
   }
-  qDebug() << " - Done updateing QuickLaunch Buttons";
+  //qDebug() << " - Done updateing QuickLaunch Buttons";
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
 
 void LStartButtonPlugin::LaunchQuick(QString file){
   //Need to get which button was clicked
-  qDebug() << "Quick Launch triggered:" << file;
+  //qDebug() << "Quick Launch triggered:" << file;
   if(!file.isEmpty()){
     LSession::LaunchApplication("lumina-open \""+file+"\"");
     emit MenuClosed();
@@ -96,7 +96,7 @@ void LStartButtonPlugin::LaunchQuick(QString file){
 }
 
 void LStartButtonPlugin::RemoveQuick(QString file){
-  qDebug() << "Remove Quicklaunch Button:" << file;
+  //qDebug() << "Remove Quicklaunch Button:" << file;
   if(!file.isEmpty()){
     startmenu->UpdateQuickLaunch(file, false); //always a removal
     emit MenuClosed();
@@ -113,6 +113,14 @@ void LStartButtonPlugin::SaveMenuSize(QSize sz){
 // ========================
 void LStartButtonPlugin::openMenu(){
   if(menu->isVisible()){ return; } //don't re-show it - already open
+  //TESTING CODE TO SEE IF THIS MAKES IT RECOVER MEMORY
+  /*StartMenu *old = startmenu;
+  startmenu = new StartMenu(this);
+    connect(startmenu, SIGNAL(CloseMenu()), this, SLOT(closeMenu()) );
+    connect(startmenu, SIGNAL(UpdateQuickLaunch(QStringList)), this, SLOT(updateQuickLaunch(QStringList)));
+    menu->setContents(startmenu);
+  if(old!=0){ old->deleteLater(); }*/
+//--------
   startmenu->UpdateMenu();
   button->showMenu();
 }

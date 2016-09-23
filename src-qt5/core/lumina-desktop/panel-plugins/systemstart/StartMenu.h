@@ -37,7 +37,7 @@ private:
 	QTimer *searchTimer;        
 
 	//Simple utility functions
-	void deleteChildren(QObject *obj); //recursive function
+	//void deleteChildren(QWidget *obj); //recursive function
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
 	void do_search(QString search, bool force);	

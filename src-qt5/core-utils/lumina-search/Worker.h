@@ -30,7 +30,6 @@ private:
 	bool stopsearch;
 	QString sterm;
 	bool sapp;
-
 	bool searchDir(QString);
 
 private slots:
