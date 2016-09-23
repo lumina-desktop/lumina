@@ -24,7 +24,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation></translation>Επάνω Μέρος της Οθόνης</translation>
+        <translation>Επάνω Μέρος της Οθόνης</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
