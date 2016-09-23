@@ -155,22 +155,42 @@ void StartMenu::UpdateQuickLaunch(QString path, bool keep){
 // ==========================
 //        PRIVATE FUNCTIONS
 // ==========================
-void StartMenu::deleteChildren(QObject *obj){
-for(int i=0; i<obj->children().count(); i++){ obj->children().at(i)->deleteLater(); }
-}
+/*void StartMenu::deleteChildren(QWidget *obj){
+  if(obj->layout()==0){
+    for(int i=0; i<obj->children().count(); i++){ 
+      obj->children().at(i)->deleteLater(); 
+    }
+  }else{
+    
+  }
+}*/
 
 void StartMenu::ClearScrollArea(QScrollArea *area){
-  QWidget *old = area->takeWidget();
-    deleteChildren(old); //make sure we *fully* delete these items to save memory
-    old->deleteLater();
-  area->setWidget( new QWidget() ); //create a new widget in the scroll area
-  area->widget()->setContentsMargins(0,0,0,0);
-    QVBoxLayout *layout = new QVBoxLayout;
+  //QWidget *old = area->takeWidget();
+   //qDebug() << "Clear Scroll Area:";
+    //if(old->layout()!=0){ qDebug() << " - Number of items in layout:" << old->layout()->count(); }
+    //qDebug() << " - Number of Children:" << old->children().count();
+    //deleteChildren(old); //make sure we *fully* delete these items to save memory
+    //old->deleteLater();
+  if(area->widget()==0){ 
+    area->setWidget( new QWidget(area) ); //create a new widget in the scroll area
+  }
+  if(area->widget()->layout()==0){
+   QVBoxLayout *layout = new QVBoxLayout(area->widget());
     layout->setSpacing(2);
     layout->setContentsMargins(3,1,3,1);
     layout->setDirection(QBoxLayout::TopToBottom);
     layout->setAlignment(Qt::AlignTop);
+    area->widget()->setContentsMargins(0,0,0,0);
     area->widget()->setLayout(layout);
+  }
+  //Now clear the items in the layout
+  while( area->widget()->layout()->count() >0 ){
+    QLayoutItem *it = area->widget()->layout()->takeAt(0);
+    //Need to delete both the widget and the layout item
+    if(it->widget()!=0){ it->widget()->deleteLater(); }
+    delete it;
+  }
 }
 
 void StartMenu::SortScrollArea(QScrollArea *area){
@@ -303,8 +323,8 @@ void StartMenu::ChangeCategory(QString cat){
 //Listing Update routines
 void StartMenu::UpdateApps(){
   ClearScrollArea(ui->scroll_apps);
-  //Now assemble the apps list (note: this normally happens in the background - not when it is visible/open)
-  //qDebug() << "Update Apps:" << CCat << ui->check_apps_showcats->checkState();
+  //Now assemble the apps list
+  //qDebug() << "Update Apps:";// << CCat << ui->check_apps_showcats->checkState();
   if(ui->check_apps_showcats->checkState() == Qt::PartiallyChecked){
     //qDebug() << " - Partially Checked";
     //Show a single page of apps, but still divided up by categories
@@ -322,7 +342,7 @@ void StartMenu::UpdateApps(){
       //Now add all the apps for this category
       for(int i=0; i<apps.length(); i++){
         ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
-        if(!it->gooditem){ continue; } //invalid for some reason
+        if(!it->gooditem){ qDebug() << "Invalid Item:"; it->deleteLater(); continue; } //invalid for some reason
         ui->scroll_apps->widget()->layout()->addWidget(it);
         connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
         connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
@@ -341,7 +361,7 @@ void StartMenu::UpdateApps(){
       cats.removeAll("All"); //This is not a "real" category
       for(int c=0; c<cats.length(); c++){
 	ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), cats[c], "chcat::::"+cats[c] );
-        if(!it->gooditem){ continue; } //invalid for some reason
+        if(!it->gooditem){ qDebug() << "Invalid Item:";it->deleteLater(); continue; } //invalid for some reason
         ui->scroll_apps->widget()->layout()->addWidget(it);
         connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       }
@@ -357,7 +377,7 @@ void StartMenu::UpdateApps(){
       for(int i=0; i<apps.length(); i++){
 	//qDebug() << " - App:" << apps[i].name;
         ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
-        if(!it->gooditem){ continue; } //invalid for some reason
+        if(!it->gooditem){ qDebug() << "Invalid Item:"; it->deleteLater(); continue; } //invalid for some reason
         ui->scroll_apps->widget()->layout()->addWidget(it);
         connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
         connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
@@ -372,9 +392,9 @@ void StartMenu::UpdateApps(){
     QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All"); 
     CCat.clear();
     //Now add all the apps for this category
-    for(int i=0; i<apps.length(); i++){
+   for(int i=0; i<apps.length(); i++){
       ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
-      if(!it->gooditem){ continue; } //invalid for some reason
+      if(!it->gooditem){ it->deleteLater(); continue; } //invalid for some reason
       ui->scroll_apps->widget()->layout()->addWidget(it);
       connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
       connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );

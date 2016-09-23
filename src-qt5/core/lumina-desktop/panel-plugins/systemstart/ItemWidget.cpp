@@ -90,8 +90,8 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
 
 // - Application constructor
 ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
-  if(item==0){ return; }
   createWidget();
+  if(item==0){ gooditem = false; return; }
   isDirectory = false;
   if(LUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
@@ -118,7 +118,22 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
   setupActions(item);
 }
 
-ItemWidget::~ItemWidget(){ 
+ItemWidget::~ItemWidget(){
+  icon->setPixmap(QPixmap()); //make sure the pixmap is cleared from memory too
+  actButton->deleteLater();
+  contextMenu->clear();
+  contextMenu->deleteLater();
+  if(actButton->menu()!=0){ 
+    for(int i=0; i<actButton->menu()->actions().length(); i++){
+      actButton->menu()->actions().at(i)->deleteLater();
+    }
+    actButton->menu()->deleteLater(); 
+  }
+  actButton->deleteLater();
+  icon->deleteLater();
+  name->deleteLater();
+  menureset->deleteLater();
+  linkPath.clear(); iconPath.clear(); text.clear();
 }
 
 void ItemWidget::triggerItem(){
@@ -133,7 +148,7 @@ void ItemWidget::createWidget(){
     menureset->setSingleShot(true);
     menureset->setInterval(1000); //1 second	
   this->setContentsMargins(0,0,0,0);
-  contextMenu = new QMenu();
+  contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
     connect(contextMenu, SIGNAL(aboutToHide()), this, SLOT(actionMenuClosed()) );
   actButton = new QToolButton(this);
@@ -145,7 +160,7 @@ void ItemWidget::createWidget(){
     name->setTextFormat(Qt::RichText);
     name->setTextInteractionFlags(Qt::NoTextInteraction);
   //Add them to the layout
-  this->setLayout(new QHBoxLayout());
+  this->setLayout(new QHBoxLayout(this));
     this->layout()->setContentsMargins(1,1,1,1);
     this->layout()->addWidget(icon);
     this->layout()->addWidget(actButton);
@@ -202,19 +217,21 @@ void ItemWidget::updateItems(){
   for(int i=0; i<newname.length(); i++){ newname[i] = name->fontMetrics().elidedText(newname[i], Qt::ElideRight, name->width()); }
   name->setText( newname.join("<br>") );
   //Now reload the icon if necessary
-  if(icon->pixmap()->size().height() < (H-4) ){
-    if(iconPath.isEmpty()){
-      //Use item path (thumbnail or mimetype)
-      if(LUtils::imageExtensions().contains(icon->whatsThis().section("/",-1).section(".",-1).toLower()) ){
-        icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+  if(icon->pixmap()!=0){
+    if(icon->pixmap()->size().height() < (H-4) ){
+      if(iconPath.isEmpty()){
+        //Use item path (thumbnail or mimetype)
+        if(LUtils::imageExtensions().contains(icon->whatsThis().section("/",-1).section(".",-1).toLower()) ){
+          icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+        }else{
+          icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+        }
       }else{
-        icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+        icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
       }
-    }else{
-      icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+    }else if(icon->pixmap()->size().height() > (H-4) ){
+      icon->setPixmap( icon->pixmap()->scaled(H-4, H-4, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
     }
-  }else if(icon->pixmap()->size().height() > (H-4) ){
-    icon->setPixmap( icon->pixmap()->scaled(H-4, H-4, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
   }
 }
 
