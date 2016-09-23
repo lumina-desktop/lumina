@@ -172,6 +172,9 @@ void StartMenu::ClearScrollArea(QScrollArea *area){
     //qDebug() << " - Number of Children:" << old->children().count();
     //deleteChildren(old); //make sure we *fully* delete these items to save memory
     //old->deleteLater();
+  if(area == ui->scroll_favs){
+    area->takeWidget()->deleteLater();
+  }
   if(area->widget()==0){ 
     area->setWidget( new QWidget(area) ); //create a new widget in the scroll area
   }
@@ -421,10 +424,11 @@ void StartMenu::UpdateFavs(){
     else if(type==1){ tmp = favs.filter("::::dir::::"); } //dirs next
     else{ tmp = rest;  } //everything left over
     if(type==1){
+      SortScrollArea(ui->scroll_favs);
       //Need to run a special routine for sorting the apps (already in the widget)
       //qDebug() << "Sort App Widgets...";
       // Since each app actually might have a different name listed within the file
-      QLayout *lay = ui->scroll_favs->widget()->layout();
+      /*QLayout *lay = ui->scroll_favs->widget()->layout();
       QStringList items;
       for(int i=0; i<lay->count(); i++){
         items << lay->itemAt(i)->widget()->whatsThis().toLower();
@@ -444,7 +448,8 @@ void StartMenu::UpdateFavs(){
 	    break;
           }
         }
-      }
+      }*/
+      
     }//end of special app sorting routine
     tmp.sort(); //Sort alphabetically by name (dirs/files)
     for(int i=0; i<tmp.length(); i++){
@@ -467,6 +472,7 @@ void StartMenu::UpdateFavs(){
     }
     //QApplication::processEvents();
   } //end loop over types
+  ui->scroll_favs->update();
   //qDebug() << "End updateFavs";
 }
 
