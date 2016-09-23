@@ -42,7 +42,7 @@ public slots:
 
 private:
 	Ui::UserWidget *ui;
-	QHash<QString, QList<XDGDesktop> > *sysapps;
+	QHash<QString, QList<XDGDesktop*> > *sysapps;
 	QDateTime lastUpdate, lastHomeUpdate;
 	QStringList favs;
 	QFileInfoList homefiles;

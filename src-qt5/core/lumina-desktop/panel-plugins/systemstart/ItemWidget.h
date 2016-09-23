@@ -32,7 +32,7 @@ public:
 	// - Favorites (path/type)
 	ItemWidget(QWidget *parent=0, QString itemPath="", QString type="unknown", bool goback=false);
 	// - Generic Apps
-	ItemWidget(QWidget *parent=0, XDGDesktop item= XDGDesktop());
+	ItemWidget(QWidget *parent=0, XDGDesktop *item= 0);
 	// - Categories
 	//ItemWidget(QWidget *parent=0, QString cat="");
 
@@ -53,7 +53,7 @@ private:
 	void createWidget();
 	//void setupButton(bool disable = false);
 	void setupContextMenu();
-	void setupActions(XDGDesktop);
+	void setupActions(XDGDesktop*);
 
 	void updateItems(); //update the text/icon to match sizes
 

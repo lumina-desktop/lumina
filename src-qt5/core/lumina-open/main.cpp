@@ -80,17 +80,19 @@ void showOSD(int argc, char **argv, QString message){
 }
 
 void LaunchAutoStart(){
-  QList<XDGDesktop> xdgapps = LXDG::findAutoStartFiles();
+  QList<XDGDesktop*> xdgapps = LXDG::findAutoStartFiles();
   for(int i=0; i<xdgapps.length(); i++){
     //Generate command and clean up any stray "Exec" field codes (should not be any here)
-    QString cmd = LXDG::getDesktopExec(xdgapps[i]);
+    QString cmd = xdgapps[i]->getDesktopExec();
     if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
     //Now run the command
     if(!cmd.isEmpty()){ 
-      qDebug() << " - Auto-Starting File:" << xdgapps[i].filePath;
+      qDebug() << " - Auto-Starting File:" << xdgapps[i]->filePath;
       QProcess::startDetached(cmd); 
     }
   }
+  //make sure we clean up all the xdgapps structures
+  for(int i=0;  i<xdgapps.length(); i++){ xdgapps[i]->deleteLater(); }
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
@@ -109,11 +111,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     }else{ defApp = LFileDialog::getDefaultApp(extension); }
     //qDebug() << "extension:" << extension << "defApp:" << defApp;
     if( !defApp.isEmpty() && !showDLG ){
-      bool ok = false;
       if(defApp.endsWith(".desktop")){
-        XDGDesktop DF = LXDG::loadDesktopFile(defApp, ok);
-        if(ok){
-      	  QString exec = LXDG::getDesktopExec(DF);
+        XDGDesktop DF(defApp);
+        if(DF.isValid()){
+      	  QString exec = DF.getDesktopExec();
       	  if(!exec.isEmpty()){
       	    qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
             if(!DF.path.isEmpty()){ path = DF.path; }
@@ -258,15 +259,14 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   QString cmd;
   bool useInputFile = false;
   if(extension=="desktop" && !showDLG){
-    bool ok = false;
-    XDGDesktop DF = LXDG::loadDesktopFile(inFile, ok);
-    if(!ok){
+    XDGDesktop DF(inFile);
+    if(!DF.isValid()){
       ShowErrorDialog( argc, argv, QString(QObject::tr("File could not be opened: %1")).arg(inFile) );
     }
     switch(DF.type){
       case XDGDesktop::APP:
         if(!DF.exec.isEmpty()){
-          cmd = LXDG::getDesktopExec(DF,ActionID);
+          cmd = DF.getDesktopExec(ActionID);
           if(!DF.path.isEmpty()){ path = DF.path; }
 	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{

@@ -45,9 +45,8 @@ void SettingsMenu::UpdateMenu(){
   QString CONTROLPANEL = LOS::ControlPanelShortcut();
   if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
     //Now load the info
-    bool ok = false;
-    XDGDesktop cpan = LXDG::loadDesktopFile(CONTROLPANEL, ok);
-    if(ok){
+    XDGDesktop cpan(CONTROLPANEL);
+    if(cpan.isValid()){
       act = new QAction( LXDG::findIcon(cpan.icon,""), tr("Control Panel"), this);
 	act->setWhatsThis("lumina-open \""+CONTROLPANEL+"\"");
 	this->addAction(act);

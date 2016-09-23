@@ -9,34 +9,34 @@
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="114"/>
+        <location filename="../LLockScreen.ui" line="114"></location>
         <source>Password</source>
         <translation>Slaptažodis</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.ui" line="126"/>
+        <location filename="../LLockScreen.ui" line="126"></location>
         <source>Unlock Session</source>
         <translation>Atrakinti seansą</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="39"/>
+        <location filename="../LLockScreen.cpp" line="39"></location>
         <source>Locked by: %1</source>
         <translation>Užrakino: %1</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="76"/>
+        <location filename="../LLockScreen.cpp" line="76"></location>
         <source>Too Many Failures</source>
-        <translation type="unfinished"></translation>
+        <translation>Per daug nesėkmių</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="76"/>
+        <location filename="../LLockScreen.cpp" line="76"></location>
         <source>Wait %1 Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Palaukite %1 minutes</translation>
     </message>
     <message>
-        <location filename="../LLockScreen.cpp" line="77"/>
+        <location filename="../LLockScreen.cpp" line="77"></location>
         <source>Failed Attempts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavykusių bandymų: %1</translation>
     </message>
 </context>
 </TS>

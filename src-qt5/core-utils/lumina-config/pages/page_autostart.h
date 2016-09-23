@@ -27,7 +27,7 @@ public slots:
 private:
 	Ui::page_autostart *ui;
 
-	XDGDesktop getSysApp(bool allowreset);
+	QString getSysApp(bool allowreset);
 
 private slots:
 	void rmsessionstartitem();

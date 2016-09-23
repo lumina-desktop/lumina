@@ -38,8 +38,9 @@ void AppLauncherPlugin::loadButton(){
   button->setIconSize( QSize(icosize,icosize) );
   QString txt;
   if(path.endsWith(".desktop") && ok){
-    XDGDesktop file = LXDG::loadDesktopFile(path, ok);
-    if(path.isEmpty() || !QFile::exists(path) || !ok){
+    XDGDesktop file(path);
+    ok = file.isValid();
+    if(!ok){
       button->setWhatsThis("");
       button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = tr("Click to Set");
@@ -125,13 +126,13 @@ void AppLauncherPlugin::buttonClicked(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path) ){
     //prompt for the user to select an application
-    QList<XDGDesktop> apps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
+    QList<XDGDesktop*> apps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
     QStringList names;
-    for(int i=0; i<apps.length(); i++){ names << apps[i].name; }
+    for(int i=0; i<apps.length(); i++){ names << apps[i]->name; }
     bool ok = false;
     QString app = QInputDialog::getItem(this, tr("Select Application"), tr("Name:"), names, 0, false, &ok);
     if(!ok || names.indexOf(app)<0){ return; } //cancelled
-    this->saveSetting("applicationpath", apps[ names.indexOf(app) ].filePath);
+    this->saveSetting("applicationpath", apps[ names.indexOf(app) ]->filePath);
     QTimer::singleShot(0,this, SLOT(loadButton()));
   }else{
     LSession::LaunchApplication("lumina-open \""+path+"\"");

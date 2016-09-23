@@ -11,6 +11,7 @@
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in TrueOS)
   controlpanellink = LOS::ControlPanelShortcut(); //Default control panel
+  sysApps = new XDGDesktopList(this, true); //have this one automatically keep in sync
   APPS.clear();
   //watcher = new QFileSystemWatcher(this);
     //connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherUpdate()) );
@@ -24,7 +25,7 @@ AppMenu::~AppMenu(){
 
 }
 
-QHash<QString, QList<XDGDesktop> >* AppMenu::currentAppHash(){
+QHash<QString, QList<XDGDesktop*> >* AppMenu::currentAppHash(){
   return &APPS;
 }
 
@@ -38,8 +39,7 @@ void AppMenu::updateAppList(){
   this->setIcon( LXDG::findIcon("system-run","") );
   //Now update the lists
   this->clear();
-  APPS.clear();
-  XDGDesktopList *sysApps = LXDG:: systemAppsList();
+  APPS.clear(); //NOTE: Don't delete these pointers - the pointers are managed by the sysApps class and these are just references to them
   //qDebug() << "New Apps List:";
   if(LSession::handle()->sessionSettings()->value("AutomaticDesktopAppLinks",true).toBool() && !lastHashUpdate.isNull() ){
     QString desktop = QDir::homePath()+"/"+tr("Desktop")+"/"; //translated desktop folder
@@ -60,8 +60,8 @@ void AppMenu::updateAppList(){
     }
     tmp = sysApps->newApps;
     for(int i=0; i<tmp.length() && !desktop.isEmpty(); i++){
-      XDGDesktop desk = sysApps->files.value(tmp[i]);
-      if(desk.isHidden || !LXDG::checkValidity(desk, false) ){ continue; } //skip this one
+      XDGDesktop *desk = sysApps->files.value(tmp[i]);
+      if(desk->isHidden || !desk->isValid(false) ){ continue; } //skip this one
       //qDebug() << "New App: " << tmp[i] << desk.filePath << "Hidden:" << desk.isHidden;
       //Create a new symlink for this file if one does not exist
       QString filename = tmp[i].section("/",-1);
@@ -69,23 +69,22 @@ void AppMenu::updateAppList(){
       if(!QFile::exists(desktop+filename) ){ QFile::link(tmp[i], desktop+filename); }
     }
   }
-  QList<XDGDesktop> allfiles = sysApps->apps(false,false); //only valid, non-hidden apps
+  QList<XDGDesktop*> allfiles = sysApps->apps(false,false); //only valid, non-hidden apps
   APPS = LXDG::sortDesktopCats(allfiles);
   APPS.insert("All", LXDG::sortDesktopNames(allfiles));
   lastHashUpdate = QDateTime::currentDateTime();
   //Now fill the menu
-  bool ok; //for checking inputs
     //Add link to the file manager
     //this->addAction( LXDG::findIcon("user-home", ""), tr("Browse Files"), this, SLOT(launchFileManager()) );
     //--Look for the app store
-    XDGDesktop store = LXDG::loadDesktopFile(appstorelink, ok);
-    if(ok){
+    XDGDesktop store(appstorelink);
+    if(store.isValid()){
       this->addAction( LXDG::findIcon(store.icon, ""), tr("Manage Applications"), this, SLOT(launchStore()) );
     }
     //--Look for the control panel
-    store = LXDG::loadDesktopFile(controlpanellink, ok);
-    if(ok){
-      this->addAction( LXDG::findIcon(store.icon, ""), tr("Control Panel"), this, SLOT(launchControlPanel()) );
+    XDGDesktop controlp(controlpanellink);
+    if(controlp.isValid()){
+      this->addAction( LXDG::findIcon(controlp.icon, ""), tr("Control Panel"), this, SLOT(launchControlPanel()) );
     }
     this->addSeparator();
     //--Now create the sub-menus
@@ -112,29 +111,29 @@ void AppMenu::updateAppList(){
       QMenu *menu = new QMenu(name, this);
       menu->setIcon(LXDG::findIcon(icon,""));
       connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(launchApp(QAction*)) );
-      QList<XDGDesktop> appL = APPS.value(cats[i]);
+      QList<XDGDesktop*> appL = APPS.value(cats[i]);
       for( int a=0; a<appL.length(); a++){
-	if(appL[a].actions.isEmpty()){
+	if(appL[a]->actions.isEmpty()){
 	  //Just a single entry point - no extra actions
-          QAction *act = new QAction(LXDG::findIcon(appL[a].icon, ""), appL[a].name, this);
-          act->setToolTip(appL[a].comment);
-          act->setWhatsThis(appL[a].filePath);
+          QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, this);
+          act->setToolTip(appL[a]->comment);
+          act->setWhatsThis(appL[a]->filePath);
           menu->addAction(act);
 	}else{
 	  //This app has additional actions - make this a sub menu
 	  // - first the main menu/action
-	  QMenu *submenu = new QMenu(appL[a].name, this);
-	    submenu->setIcon( LXDG::findIcon(appL[a].icon,"") );
+	  QMenu *submenu = new QMenu(appL[a]->name, this);
+	    submenu->setIcon( LXDG::findIcon(appL[a]->icon,"") );
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
-	      QAction *act = new QAction(LXDG::findIcon(appL[a].icon, ""), appL[a].name, this);
-              act->setToolTip(appL[a].comment);
-              act->setWhatsThis(appL[a].filePath);
+	      QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, this);
+              act->setToolTip(appL[a]->comment);
+              act->setWhatsThis(appL[a]->filePath);
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
-	    for(int sa=0; sa<appL[a].actions.length(); sa++){
-              QAction *sact = new QAction(LXDG::findIcon(appL[a].actions[sa].icon, appL[a].icon), appL[a].actions[sa].name, this);
-              sact->setToolTip(appL[a].comment);
-              sact->setWhatsThis("-action \""+appL[a].actions[sa].ID+"\" \""+appL[a].filePath+"\"");
+	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
+              QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, this);
+              sact->setToolTip(appL[a]->comment);
+              sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
               submenu->addAction(sact);		    
 	    }
 	  menu->addMenu(submenu);
@@ -151,7 +150,8 @@ void AppMenu::updateAppList(){
 //=================
 void AppMenu::start(){
   //Setup the watcher
-  connect(LXDG:: systemAppsList(), SIGNAL(appsUpdated()), this, SLOT(watcherUpdate()) );
+  connect(sysApps, SIGNAL(appsUpdated()), this, SLOT(watcherUpdate()) );
+  sysApps->updateList();
   //Now fill the menu the first time
   updateAppList();
 }

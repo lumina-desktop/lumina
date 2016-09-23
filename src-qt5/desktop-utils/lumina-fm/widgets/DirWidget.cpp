@@ -94,7 +94,7 @@ void DirWidget::ChangeDir(QString dirpath){
 }
 
 void DirWidget::setDirCompleter(QCompleter *comp){
-  line_dir->setCompleter(comp);
+  //line_dir->setCompleter(comp);
 }
 
 QString DirWidget::id(){

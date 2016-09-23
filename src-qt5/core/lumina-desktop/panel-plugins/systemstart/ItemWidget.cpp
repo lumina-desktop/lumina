@@ -16,8 +16,8 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
   bool inHome = type.endsWith("-home"); //internal code
   if(inHome){ type = type.remove("-home"); }
   if(itemPath.endsWith(".desktop") || type=="app"){
-    XDGDesktop item = LXDG::loadDesktopFile(itemPath, gooditem);
-    if(gooditem){ gooditem = LXDG::checkValidity(item); }
+    XDGDesktop item(itemPath, this);
+    gooditem = item.isValid();
     //qDebug() << "Good Item:" << gooditem << itemPath;
     if(gooditem){
       icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
@@ -26,7 +26,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       if(!item.genericName.isEmpty() && item.name!=item.genericName){ text.append("<br><i> -- "+item.genericName+"</i>"); }
       name->setText(text);
       name->setToolTip(item.comment);
-      setupActions(item);
+      setupActions(&item);
     }else{
       return;
     }
@@ -89,13 +89,14 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
 }
 
 // - Application constructor
-ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
+ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
+  if(item==0){ return; }
   createWidget();
   isDirectory = false;
-  if(LUtils::isFavorite(item.filePath)){
-    linkPath = item.filePath;
+  if(LUtils::isFavorite(item->filePath)){
+    linkPath = item->filePath;
     isShortcut=true;
-  }else if( item.filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+  }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
     isShortcut = true;
   }else{
     isShortcut = false;
@@ -104,14 +105,14 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop item) : QFrame(parent){
     name->setToolTip(icon->whatsThis()); //also allow the user to see the full shortcut path
   }
   //Now fill it appropriately
-  icon->setPixmap( LXDG::findIcon(item.icon,"preferences-system-windows-actions").pixmap(64,64) );
-      text = item.name;
-      if(!item.genericName.isEmpty() && item.name!=item.genericName){ text.append("<br><i> -- "+item.genericName+"</i>"); }
+  icon->setPixmap( LXDG::findIcon(item->icon,"preferences-system-windows-actions").pixmap(64,64) );
+      text = item->name;
+      if(!item->genericName.isEmpty() && item->name!=item->genericName){ text.append("<br><i> -- "+item->genericName+"</i>"); }
       name->setText(text);
-      name->setToolTip(item.comment);
-  this->setWhatsThis(item.name);
-  icon->setWhatsThis(item.filePath);
-  iconPath = item.icon;
+      name->setToolTip(item->comment);
+  this->setWhatsThis(item->name);
+  icon->setWhatsThis(item->filePath);
+  iconPath = item->icon;
   //Now setup the buttons appropriately
   setupContextMenu();
   setupActions(item);
@@ -176,14 +177,14 @@ void ItemWidget::setupContextMenu(){
   }
 }
 
-void ItemWidget::setupActions(XDGDesktop app){
-  if(app.actions.isEmpty()){ actButton->setVisible(false); return; }
+void ItemWidget::setupActions(XDGDesktop *app){
+  if(app==0 || app->actions.isEmpty()){ actButton->setVisible(false); return; }
   //Actions Available - go ahead and list them all
   actButton->setMenu( new QMenu(this) );
-  for(int i=0; i<app.actions.length(); i++){
-    QAction *act = new QAction(LXDG::findIcon(app.actions[i].icon, app.icon), app.actions[i].name, this);
-	act->setToolTip(app.actions[i].ID);
-        act->setWhatsThis(app.actions[i].ID);
+  for(int i=0; i<app->actions.length(); i++){
+    QAction *act = new QAction(LXDG::findIcon(app->actions[i].icon, app->icon), app->actions[i].name, this);
+	act->setToolTip(app->actions[i].ID);
+        act->setWhatsThis(app->actions[i].ID);
         actButton->menu()->addAction(act);	
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );

@@ -15,10 +15,396 @@
 static QStringList mimeglobs;
 static qint64 mimechecktime;
 
+//=============================
+//  XDGDesktop CLASS
+//=============================
+XDGDesktop::XDGDesktop(QString file, QObject *parent) : QObject(parent){
+  isHidden=false;
+  useTerminal=false;
+  startupNotify=false;
+  type = XDGDesktop::BAD;
+  filePath = file;
+  exec = tryexec = "";   // just to make sure this is initialized
+  if(!filePath.isEmpty()){ sync(); } //if an input file is given - go ahead and sync now
+}
+
+void XDGDesktop::sync(){
+  //Reset internal vars
+  isHidden=false;
+  useTerminal=false;
+  startupNotify=false;
+  type = XDGDesktop::BAD;
+  exec = tryexec = "";
+  //Read in the File
+  if(!filePath.endsWith(".desktop")){ return; }
+  lastRead = QDateTime::currentDateTime();
+  QStringList file = LUtils::readFile(filePath);
+  if(file.isEmpty()){ return; } //done with init right here - nothing to load
+  //Get the current localization code
+  type = XDGDesktop::APP; //assume this initially if we read the file properly
+  QString lang = QLocale::system().name(); //lang code
+  QString slang = lang.section("_",0,0); //short lang code 
+  //Now start looping over the information
+  XDGDesktopAction CDA; //current desktop action
+  bool insection=false;
+  bool inaction=false;
+  for(int i=0; i<file.length(); i++){
+    QString line = file[i];
+    //if(filePath.contains("pcbsd")){ qDebug() << " - Check Line:" << line << inaction << insection; }
+    //Check if this is the end of a section
+    if(line.startsWith("[") && inaction){ 
+      insection=false; inaction=false;
+      //Add the current Action structure to the main desktop structure if appropriate
+      if(!CDA.ID.isEmpty()){ actions << CDA; CDA = XDGDesktopAction(); }
+    }else if(line.startsWith("[")){ insection=false; inaction = false; }
+    //Now check if this is the beginning of a section
+    if(line=="[Desktop Entry]"){ insection=true; continue; }
+    else if(line.startsWith("[Desktop Action ")){ 
+      //Grab the ID of the action out of the label
+      CDA.ID = line.section("]",0,0).section("Desktop Action",1,1).simplified();
+      inaction = true;
+      continue;
+    }else if( (!insection && !inaction) || line.startsWith("#")){ continue; }
+    //Now parse out the file
+    line = line.simplified();
+    QString var = line.section("=",0,0).simplified();
+    QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
+    var = var.section("[",0,0).simplified(); //remove the localization
+    QString val = line.section("=",1,50).simplified();
+    //-------------------
+    if(var=="Name"){ 
+      if(insection){
+        if(name.isEmpty() && loc.isEmpty()){ name = val; }
+	else if(name.isEmpty() && loc==slang){ name = val; } //short locale code
+        else if(loc == lang){ name = val; }
+      }else if(inaction){
+        if(CDA.name.isEmpty() && loc.isEmpty()){ CDA.name = val; }
+	else if(CDA.name.isEmpty() && loc==slang){ CDA.name = val; } //short locale code
+        else if(loc == lang){ CDA.name = val; }	      
+      }
+      //hasName = true;
+    }else if(var=="GenericName" && insection){ 
+      if(genericName.isEmpty() && loc.isEmpty()){ genericName = val; }
+      else if(genericName.isEmpty() && loc==slang){ genericName = val; } //short locale code
+      else if(loc == lang){ genericName = val; }
+    }else if(var=="Comment" && insection){ 
+      if(comment.isEmpty() && loc.isEmpty()){ comment = val; }
+      else if(comment.isEmpty() && loc==slang){ comment = val; } //short locale code
+      else if(loc == lang){ comment = val; }
+    }else if(var=="Icon"){ 
+      if(insection){
+        if(icon.isEmpty() && loc.isEmpty()){ icon = val; }
+	else if(icon.isEmpty() && loc==slang){ icon = val; } //short locale code
+        else if(loc == lang){ icon = val; }
+      }else if(inaction){
+	if(CDA.icon.isEmpty() && loc.isEmpty()){ CDA.icon = val; }
+	else if(CDA.icon.isEmpty() && loc==slang){ CDA.icon = val; } //short locale code
+        else if(loc == lang){ CDA.icon = val; }
+      }
+    }
+    else if( (var=="TryExec") && (tryexec.isEmpty()) && insection) { tryexec = val; }
+    else if(var=="Exec"){
+      if(insection && exec.isEmpty() ){ exec = val; }
+      else if(inaction && CDA.exec.isEmpty() ){ CDA.exec = val; }
+    }	    
+    else if( (var=="Path") && (path.isEmpty() ) && insection){ path = val; }
+    else if(var=="NoDisplay" && !isHidden && insection){ isHidden = (val.toLower()=="true"); }
+    else if(var=="Hidden" && !isHidden && insection){ isHidden = (val.toLower()=="true"); }
+    else if(var=="Categories" && insection){ catList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="OnlyShowIn" && insection){ showInList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="NotShowIn" && insection){ notShowInList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="Terminal" && insection){ useTerminal= (val.toLower()=="true"); }
+    else if(var=="Actions" && insection){ actionList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="MimeType" && insection){ mimeList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="Keywords" && insection){ 
+      if(keyList.isEmpty() && loc.isEmpty()){ keyList = val.split(";",QString::SkipEmptyParts); }
+      else if(loc == lang){ keyList = val.split(";",QString::SkipEmptyParts); }
+    }
+    else if(var=="StartupNotify" && insection){ startupNotify = (val.toLower()=="true"); }
+    else if(var=="StartupWMClass" && insection){ startupWM = val; }
+    else if(var=="URL" && insection){ url = val;}
+    else if(var=="Type" && insection){
+      if(val.toLower()=="application"){ type = XDGDesktop::APP; }
+      else if(val.toLower()=="link"){ type = XDGDesktop::LINK; }
+      else if(val.toLower()=="dir"){ type = XDGDesktop::DIR; }
+      else{ type = XDGDesktop::BAD; } //Unknown type
+      //hasType = true;
+    }
+  } //end reading file
+  file.clear(); //done with contents of file
+  //If there are OnlyShowIn desktops listed, add them to the name
+  if( !showInList.isEmpty() && !showInList.contains("Lumina", Qt::CaseInsensitive) ){
+      name.append(" ("+showInList.join(", ")+")"); 
+  }
+  //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
+  if(catList.isEmpty() && filePath.contains("/wine/")){
+    catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
+    //Also add a fix for the location of Wine icons
+    if( !icon.isEmpty() ){
+      QStringList sizes; sizes << "256x256" << "128x128" << "64x64" << "48x48" << "32x32" << "16x16";
+      QString upath = QDir::homePath()+"/.local/share/icons/hicolor/%1/apps/%2.png";
+      //qDebug() << "Wine App: Check icon" << upath;
+      for(int i=0; i<sizes.length(); i++){
+        if( QFile::exists(upath.arg(sizes[i],icon)) ){
+	  icon = upath.arg(sizes[i],icon);
+	  //qDebug() << " - Found Icon:" << icon;
+	  break;
+	}
+      }
+    }
+  }
+}
+
+
+bool XDGDesktop::isValid(bool showAll){
+  bool ok=true;
+  //bool DEBUG = false;
+  //if(DEBUG){ qDebug() << "[LXDG] Check File validity:" << dFile.name << dFile.filePath; }
+  switch (type){
+    case XDGDesktop::BAD:
+      ok=false; 
+      //if(DEBUG){ qDebug() << " - Bad file type"; }
+      break;
+    case XDGDesktop::APP:
+      if(!tryexec.isEmpty() && !LXDG::checkExec(tryexec)){ ok=false; }//if(DEBUG){ qDebug() << " - tryexec does not exist";} }
+      else if(exec.isEmpty() || name.isEmpty()){ ok=false; }//if(DEBUG){ qDebug() << " - exec or name is empty";} }
+      else if(!LXDG::checkExec(exec.section(" ",0,0,QString::SectionSkipEmpty)) ){ ok=false; }//if(DEBUG){ qDebug() << " - first exec binary does not exist";} }
+      break;
+    case XDGDesktop::LINK:
+      ok = !url.isEmpty();
+      //if(DEBUG && !ok){ qDebug() << " - Link with missing URL"; }
+      break;
+    case XDGDesktop::DIR:
+      ok = !path.isEmpty();
+      //if(DEBUG && !ok){ qDebug() << " - Dir with missing path"; }
+      break;
+    default:
+      ok=false;
+      //if(DEBUG){ qDebug() << " - Unknown file type"; } 
+  }
+  if(!showAll){
+    QString cdesk = getenv("XDG_CURRENT_DESKTOP");
+    if(cdesk.isEmpty()){ cdesk="Lumina"; }
+    if(!showInList.isEmpty()){ ok = showInList.contains(cdesk, Qt::CaseInsensitive); }
+    else if(!notShowInList.isEmpty()){ ok = !notShowInList.contains(cdesk,Qt::CaseInsensitive); }
+    else if(name.isEmpty()){ ok = false; }
+  }
+  return ok;
+}
+
+QString XDGDesktop::getDesktopExec(QString ActionID){
+  //Generate the executable line for the application
+  QString out = exec;
+  if( !ActionID.isEmpty() ){
+    //Go through and grab the proper exec for the listed action
+    for(int i=0; i<actions.length(); i++){
+      if(actions[i].ID == ActionID){
+        out = actions[i].exec;
+        break;
+      }
+    }
+  }
+  
+  if(out.isEmpty()){ return ""; }
+  else if(useTerminal){
+    //Get the currently default terminal
+    QString term = LXDG::findDefaultAppForMime("application/terminal");
+    if(!QFile::exists(term)){ term = "xterm -lc"; }
+    else if(term.endsWith(".desktop")){
+      XDGDesktop DF(term);
+        if(DF.isValid()){  term = DF.getDesktopExec(); }
+        else{ term = "xterm -lc"; }
+      //DF.deleteLater(); //done with this struct
+    }else if( !LUtils::isValidBinary(term)){ term = "xterm -lc"; }
+    out = term+" -e "+out;  //-e is a nearly-universal flag for terminal emulators
+  }
+  //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
+  if(out.contains("%i") && !icon.isEmpty() ){ out.replace("%i", "--icon \'"+icon+"\'"); }
+  if(out.contains("%c")){ 
+    if(!name.isEmpty()){ out.replace("%c", "\'"+name+"\'"); }
+    else if(!genericName.isEmpty()){ out.replace("%c", "\'"+genericName+"\'"); }
+    else{ out.replace("%c", "\'"+filePath.section("/",-1).section(".desktop",0,0)+"\'"); }
+  }
+  if(out.contains("%k")){ out.replace("%k", "\'"+filePath+"\'"); }
+  return out;
+}
+
+bool XDGDesktop::saveDesktopFile(bool merge){
+  qDebug() << "Save Desktop File:" << filePath << "Merge:" << merge;
+  bool autofile = filePath.contains("/autostart/"); //use the "Hidden" field instead of the "NoDisplay"
+  int insertloc = -1;
+  QStringList info;
+  if(QFile::exists(filePath) && merge){
+    //Load the existing file and merge in in any changes
+    info = LUtils::readFile(filePath);
+    //set a couple flags based on the contents before we start iterating through
+    // - determine if a translated field was changed (need to remove all the now-invalid translations)
+    bool clearName, clearComment, clearGName; 
+    QString tmp = "";
+    if(!info.filter("Name=").isEmpty()){ tmp = info.filter("Name=").first().section("=",1,50); }
+    clearName=(tmp!=name);
+    tmp.clear();
+    if(!info.filter("Comment=").isEmpty()){ tmp = info.filter("Comment=").first().section("=",1,50); }
+    clearComment=(tmp!=comment);
+    tmp.clear();
+    if(!info.filter("GenericName=").isEmpty()){ tmp = info.filter("GenericName=").first().section("=",1,50); }
+    clearGName=(tmp!=genericName);
+    //Now start iterating through the file and changing fields as necessary
+    bool insection = false;
+    for(int i=0; i<info.length(); i++){
+      if(info[i]=="[Desktop Entry]"){ 
+        insection = true; 
+	continue;
+      }else if(info[i].startsWith("[")){ 
+	if(insection){ insertloc = i; } //save this location for later insertions
+	insection = false; 
+	continue; 
+      }
+      if(!insection || info[i].isEmpty() || info[i].section("#",0,0).simplified().isEmpty()){ continue; }
+      QString var = info[i].section("=",0,0);
+      QString val = info[i].section("=",1,50).simplified();
+      //NOTE: Clear the dFile variable as it is found/set in the file (to keep track of what has been used already)
+      //    For boolian values, set them to false
+      // --LOCALIZED VALUES --
+      if(var.startsWith("Name")){
+        if(var.contains("[") && clearName){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+name; name.clear(); }
+      }else if(var.startsWith("GenericName")){
+        if(var.contains("[") && clearGName){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+genericName; genericName.clear(); }
+      }else if(var.startsWith("Comment")){
+        if(var.contains("[") && clearComment){ info.removeAt(i); i--; continue;}
+	else if(!var.contains("[")){ info[i] = var+"="+comment; comment.clear(); }
+
+      // --STRING/LIST VALUES--
+      }else if(var=="Exec"){ info[i] = var+"="+exec; exec.clear(); }
+      else if(var=="TryExec"){ info[i] = var+"="+tryexec; tryexec.clear(); }
+      else if(var=="Path"){ info[i] = var+"="+path; path.clear(); }
+      else if(var=="Icon"){ info[i] = var+"="+icon; icon.clear(); }
+      else if(var=="StartupWMClass"){ info[i] = var+"="+startupWM; startupWM.clear(); }
+      else if(var=="MimeType"){ info[i] = var+"="+mimeList.join(";"); mimeList.clear(); }
+      else if(var=="Categories"){ info[i] = var+"="+catList.join(";"); catList.clear(); }
+      else if(var=="Keywords"){ info[i] = var+"="+keyList.join(";"); keyList.clear(); }
+      else if(var=="Actions"){ info[i] = var+"="+actionList.join(";"); actionList.clear(); }
+      else if(var=="OnlyShowIn"){ info[i] = var+"="+showInList.join(";"); showInList.clear(); }
+      else if(var=="NotShowIn"){ info[i] = var+"="+notShowInList.join(";"); notShowInList.clear(); }
+      else if(var=="URL"){ info[i] = var+"="+url; url.clear(); }
+      
+      // --BOOLIAN VALUES--
+      else if(var=="Hidden"){ 
+	if(!autofile){ info.removeAt(i); i--; continue; }
+	else{ info[i] = var+"="+(isHidden ? "true": "false"); isHidden=false;}
+      }else if(var=="NoDisplay"){ 
+	if(autofile){ info.removeAt(i); i--; continue; }
+	else{ info[i] = var+"="+(isHidden ? "true": "false"); isHidden=false;}
+      }else if(var=="Terminal"){ 
+	info[i] = var+"="+(useTerminal ? "true": "false"); useTerminal=false;
+      }else if(var=="StartupNotify"){ 
+	info[i] = var+"="+(startupNotify ? "true": "false"); startupNotify=false;
+      }
+      // Remove any lines that have been un-set or removed from the file
+      if(info[i].section("=",1,50).simplified().isEmpty()){ info.removeAt(i); i--; }
+    }
+    
+  }else{
+    //Just write a new file and overwrite any old one 
+    // (pre-set some values here which are always required)
+    info << "[Desktop Entry]";
+    info << "Version=1.0";
+    if(type==XDGDesktop::APP){ info << "Type=Application"; }
+    else if(type==XDGDesktop::LINK){ info << "Type=Link"; }
+    else if(type==XDGDesktop::DIR){ info << "Type=Dir"; }
+  }
+  
+  if(insertloc<0){ insertloc = info.size(); }//put it at the end
+  //Now add in any items that did not exist in the original file
+    if( !exec.isEmpty() ){ info.insert(insertloc,"Exec="+exec); }
+    if( !tryexec.isEmpty() ){ info.insert(insertloc,"TryExec="+tryexec); }
+    if( !path.isEmpty() ){ info.insert(insertloc,"Path="+path); }
+    if( !icon.isEmpty() ){ info.insert(insertloc,"Icon="+icon); }
+    if( !name.isEmpty() ){ info.insert(insertloc,"Name="+name); }
+    if( !genericName.isEmpty() ){ info.insert(insertloc,"GenericName="+genericName); }
+    if( !comment.isEmpty() ){ info.insert(insertloc,"Comment="+comment); }
+    if( !startupWM.isEmpty() ){ info.insert(insertloc,"StartupWMClass="+startupWM); }
+    if( !mimeList.isEmpty() ){ info.insert(insertloc,"MimeType="+mimeList.join(";")); }
+    if( !catList.isEmpty() ){ info.insert(insertloc,"Categories="+catList.join(";")); }
+    if( !keyList.isEmpty() ){ info.insert(insertloc,"Keywords="+keyList.join(";")); }
+    if( !actionList.isEmpty() ){ info.insert(insertloc,"Actions="+actionList.join(";")); }
+    if( !showInList.isEmpty() ){ info.insert(insertloc,"OnlyShowIn="+showInList.join(";")); }
+    else if( !notShowInList.isEmpty() ){ info.insert(insertloc,"NotShowIn="+notShowInList.join(";")); }
+    if( !url.isEmpty() ){ info.insert(insertloc,"URL="+url); }
+    if( isHidden && autofile ){ info.insert(insertloc,"Hidden=true"); }
+    else if(isHidden){ info.insert(insertloc,"NoDisplay=true"); }
+    if( useTerminal){ info.insert(insertloc,"Terminal=true"); }
+    if( startupNotify ){ info.insert(insertloc,"StartupNotify=true"); }
+    
+  //Now save the file
+  return LUtils::writeFile(filePath, info, true);
+}
+
+bool XDGDesktop::setAutoStarted(bool autostart){
+  //First get the list of system directories to search (system first, user-provided files come later and overwrite sys files as needed)
+  QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
+  QString upath = QString(getenv("XDG_CONFIG_HOME")).section(":",0,0);
+  if(upath.isEmpty()){ upath = QDir::homePath()+"/.config/autostart/"; }
+  else{ upath.append("/autostart/"); }
+  //Verify that the autostart directory exists
+  if(!QFile::exists(upath)){
+    QDir dir;
+    dir.mkpath(upath);
+  }
+
+  //Quick check/finish for user-defined files which are getting disabled (just remove the file)
+  if(filePath.startsWith(upath) && !autostart){
+    return QFile::remove(filePath);
+  }
+  bool sysfile = false;
+  for(int i=0; i<paths.length(); i++){
+    if(filePath.startsWith(paths[i]+"/autostart/") ){
+      sysfile = true;
+      //Change it to the user-modifiable directory
+      filePath = filePath.replace(paths[i]+"/autostart/", upath);
+    }
+  }
+  //Make sure the user-autostart dir is specified, and clean the app structure as necessary
+  if( !filePath.startsWith(upath) && autostart){ 
+    //Some other non-override autostart file - set it up to open with lumina-open
+    if(!filePath.endsWith(".desktop")){
+      exec = "lumina-open \""+filePath+"\"";
+      tryexec = filePath; //make sure this file exists
+      if(name.isEmpty()){ name = filePath.section("/",-1); }
+      if(icon.isEmpty()){ icon = LXDG::findAppMimeForFile(filePath); icon.replace("/","-"); }
+      filePath = upath+filePath.section("/",-1)+".desktop";
+      type = XDGDesktop::APP;
+    }else{
+      //Some other *.desktop file on the system (keep almost all the existing settings/values)
+      // - setup a redirect to the other file
+      exec = "lumina-open \""+filePath+"\"";
+      tryexec = filePath; //make sure this file exists
+      // - Adjust the actual path where this file will get saved
+      filePath = upath+filePath.section("/",-1);
+    }
+  }
+  //Now save the "hidden" value into the file
+  isHidden = !autostart; //if hidden, it will not be autostarted
+  //Now save the file as necessary
+  bool saved = false;
+  //qDebug() << " - Saving AutoStart File:" << filePath << name << isHidden;
+  if(sysfile){
+    //Just an override file for the "hidden" field - nothing more
+    QStringList info;
+      info << "[Desktop Entry]" << "Type=Application" << QString("Hidden=")+ (isHidden ? QString("true"): QString("false"));
+    saved = LUtils::writeFile(filePath, info, true);
+  }else{
+    //Need to actually save the full file
+    saved = saveDesktopFile();
+  }
+  return saved;
+}
+
 //====XDGDesktopList Functions ====
 XDGDesktopList::XDGDesktopList(QObject *parent, bool watchdirs) : QObject(parent){
-  synctimer = new QTimer(this);
-    synctimer->setInterval(60000); //1 minute intervals. since the polling/update only takes a few ms, this is completely reasonable
+  synctimer = new QTimer(this); //interval set automatically based on changes/interactions
     connect(synctimer, SIGNAL(timeout()), this, SLOT(updateList()) );
   keepsynced = watchdirs;
   if(watchdirs){
@@ -35,7 +421,9 @@ XDGDesktopList::~XDGDesktopList(){
 }
 
 void XDGDesktopList::watcherChanged(){
-  QTimer::singleShot(1000, this, SLOT(updateList()) ); //1 second delay before check kicks off
+  if(synctimer->isActive()){ synctimer->stop(); }
+  synctimer->setInterval(1000); //1 second delay before check kicks off
+  synctimer->start();
 }
 
 void XDGDesktopList::updateList(){
@@ -54,19 +442,21 @@ void XDGDesktopList::updateList(){
     apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
     for(int a=0; a<apps.length(); a++){
       path = dir.absoluteFilePath(apps[a]);
-      if(files.contains(path) && (files.value(path).lastRead>QFileInfo(path).lastModified()) ){ 
+      if(files.contains(path) && (files.value(path)->lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
-        found << files[path].name;  //keep track of which files were already found
+        found << files[path]->name;  //keep track of which files were already found
         ok=true;
       }else{
       	ok=false;
-        if(files.contains(path)){ appschanged = true; files.remove(path); }
-      	XDGDesktop dFile = LXDG::loadDesktopFile(path,ok); //will change the "ok" variable as needed
-        if(ok){
+        if(files.contains(path)){ appschanged = true; files.take(path)->deleteLater(); } //files.remove(path); }
+      	XDGDesktop *dFile = new XDGDesktop(path, this); //will change the "ok" variable as needed
+        if(dFile->type!=XDGDesktop::BAD){
           appschanged = true; //flag that something changed - needed to load a file
           if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)
           files.insert(path, dFile);
-          found << dFile.name;
+          found << dFile->name;
+        }else{
+          dFile->deleteLater(); //bad file - discard it
         }
       }
       oldkeys.removeAll(path); //make sure this key does not get cleaned up later
@@ -80,25 +470,28 @@ void XDGDesktopList::updateList(){
   //Now go through and cleanup any old keys where the associated file does not exist anymore
   for(int i=0; i<oldkeys.length(); i++){
     //qDebug() << "Removing file from internal map:" << oldkeys[i];
-    files.remove(oldkeys[i]);
+    if(i==0){ appschanged = true; }
+    //files.remove(oldkeys[i]);
+    files.take(oldkeys[i])->deleteLater();
   }
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
-    qDebug() << "Auto App List Update:" << lastCheck << "Changes:" <<  appschanged << "Files:" << files.count();
+    if(appschanged){ qDebug() << "Auto App List Update:" << lastCheck  << "Files Found:" << files.count(); }
     watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
     watcher->addPaths(appDirs);
     if(appschanged){ emit appsUpdated(); }
+    synctimer->setInterval(60000); //Update in 1 minute if nothing changes before then
     synctimer->start();
   }
 }
 
-QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
+QList<XDGDesktop*> XDGDesktopList::apps(bool showAll, bool showHidden){
   //showAll: include invalid files, showHidden: include NoShow/Hidden files
   QStringList keys = files.keys();
-  QList<XDGDesktop> out;
+  QList<XDGDesktop*> out;
   for(int i=0; i<keys.length(); i++){
-    if( showHidden || !files[keys[i]].isHidden ){ //this is faster than the "checkValidity()" function below  - so always filter here first
-      if( LXDG::checkValidity(files[keys[i]], showAll) ){
+    if( showHidden || !files[keys[i]]->isHidden ){ //this is faster than the "checkValidity()" function below  - so always filter here first
+      if( files[keys[i]]->isValid(showAll) ){
          out << files[keys[i]];
       }
     }
@@ -109,6 +502,7 @@ QList<XDGDesktop> XDGDesktopList::apps(bool showAll, bool showHidden){
 //==== LFileInfo Functions ====
 //Need some extra information not usually available by a QFileInfo
 void LFileInfo::loadExtraInfo(){
+  desk = 0;
   //Now load the extra information
   if(this->isDir()){
     mime = "inode/directory";
@@ -127,11 +521,10 @@ void LFileInfo::loadExtraInfo(){
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
     icon = "application-x-desktop"; //default value
-    bool ok = false;
-    desk = LXDG::loadDesktopFile(this->absoluteFilePath(), ok);
-    if(ok){
+    desk = new XDGDesktop(this->absoluteFilePath(), 0);
+    if(desk->type!=XDGDesktop::BAD){
       //use the specific desktop file info (if possible)
-      if(!desk.icon.isEmpty()){ icon = desk.icon; }
+      if(!desk->icon.isEmpty()){ icon = desk->icon; }
     }
   }else{
     //Generic file, just determine the mimetype
@@ -172,12 +565,12 @@ QString LFileInfo::iconfile(){
 
 // -- Check if this is an XDG desktop file
 bool LFileInfo::isDesktopFile(){
-  return (!desk.filePath.isEmpty());	
+  return (!desk->filePath.isEmpty());	
 }
 
 // -- Allow access to the XDG desktop data structure
 XDGDesktop* LFileInfo::XDG(){
-  return &desk;
+  return desk;
 }
 
 // -- Check if this is a readable image file (for thumbnail support)
@@ -193,17 +586,17 @@ bool LFileInfo::isAVFile(){
 
 
 //==== LXDG Functions ====
-XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
+/*XDGDesktop *LXDG::loadDesktopFile(QString filePath, bool& ok, QObject *parent){
   //Create the outputs
   ok=false;
-  XDGDesktop DF;
-    DF.isHidden=false;
-    DF.useTerminal=false;
-    DF.startupNotify=false;
-    DF.type = XDGDesktop::APP;
-    DF.filePath = filePath;
-    DF.lastRead = QDateTime::currentDateTime();
-    DF.exec = DF.tryexec = "";   // just to make sure this is initialized
+  XDGDesktop *DF = new XDGDesktop(parent);
+    DF->isHidden=false;
+    DF->useTerminal=false;
+    DF->startupNotify=false;
+    DF->type = XDGDesktop::APP;
+    DF->filePath = filePath;
+    DF->lastRead = QDateTime::currentDateTime();
+    DF->exec = DF->tryexec = "";   // just to make sure this is initialized
 
   //Get the current localization code
   QString lang = QLocale::system().name(); //lang code
@@ -223,7 +616,7 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     if(line.startsWith("[") && inaction){ 
       insection=false; inaction=false;
       //Add the current Action structure to the main desktop structure if appropriate
-      if(!CDA.ID.isEmpty()){ DF.actions << CDA; CDA = XDGDesktopAction(); }
+      if(!CDA.ID.isEmpty()){ DF->actions << CDA; CDA = XDGDesktopAction(); }
     }else if(line.startsWith("[")){ insection=false; inaction = false; }
     //Now check if this is the beginning of a section
     if(line=="[Desktop Entry]"){ insection=true; continue; }
@@ -242,9 +635,9 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
     //-------------------
     if(var=="Name"){ 
       if(insection){
-        if(DF.name.isEmpty() && loc.isEmpty()){ DF.name = val; }
-	else if(DF.name.isEmpty() && loc==slang){ DF.name = val; } //short locale code
-        else if(loc == lang){ DF.name = val; }
+        if(DF->name.isEmpty() && loc.isEmpty()){ DF->name = val; }
+	else if(DF->name.isEmpty() && loc==slang){ DF->name = val; } //short locale code
+        else if(loc == lang){ DF->name = val; }
       }else if(inaction){
         if(CDA.name.isEmpty() && loc.isEmpty()){ CDA.name = val; }
 	else if(CDA.name.isEmpty() && loc==slang){ CDA.name = val; } //short locale code
@@ -252,70 +645,70 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
       }
       //hasName = true;
     }else if(var=="GenericName" && insection){ 
-      if(DF.genericName.isEmpty() && loc.isEmpty()){ DF.genericName = val; }
-      else if(DF.genericName.isEmpty() && loc==slang){ DF.genericName = val; } //short locale code
-      else if(loc == lang){ DF.genericName = val; }
+      if(DF->genericName.isEmpty() && loc.isEmpty()){ DF->genericName = val; }
+      else if(DF->genericName.isEmpty() && loc==slang){ DF->genericName = val; } //short locale code
+      else if(loc == lang){ DF->genericName = val; }
     }else if(var=="Comment" && insection){ 
-      if(DF.comment.isEmpty() && loc.isEmpty()){ DF.comment = val; }
-      else if(DF.comment.isEmpty() && loc==slang){ DF.comment = val; } //short locale code
-      else if(loc == lang){ DF.comment = val; }
+      if(DF->comment.isEmpty() && loc.isEmpty()){ DF->comment = val; }
+      else if(DF->comment.isEmpty() && loc==slang){ DF->comment = val; } //short locale code
+      else if(loc == lang){ DF->comment = val; }
     }else if(var=="Icon"){ 
       if(insection){
-        if(DF.icon.isEmpty() && loc.isEmpty()){ DF.icon = val; }
-	else if(DF.icon.isEmpty() && loc==slang){ DF.icon = val; } //short locale code
-        else if(loc == lang){ DF.icon = val; }
+        if(DF->icon.isEmpty() && loc.isEmpty()){ DF->icon = val; }
+	else if(DF->icon.isEmpty() && loc==slang){ DF->icon = val; } //short locale code
+        else if(loc == lang){ DF->icon = val; }
       }else if(inaction){
 	if(CDA.icon.isEmpty() && loc.isEmpty()){ CDA.icon = val; }
 	else if(CDA.icon.isEmpty() && loc==slang){ CDA.icon = val; } //short locale code
         else if(loc == lang){ CDA.icon = val; }
       }
     }
-    else if( (var=="TryExec") && (DF.tryexec.isEmpty()) && insection) { DF.tryexec = val; }
+    else if( (var=="TryExec") && (DF->tryexec.isEmpty()) && insection) { DF->tryexec = val; }
     else if(var=="Exec"){
-      if(insection && DF.exec.isEmpty() ){ DF.exec = val; }
+      if(insection && DF->exec.isEmpty() ){ DF->exec = val; }
       else if(inaction && CDA.exec.isEmpty() ){ CDA.exec = val; }
     }	    
-    else if( (var=="Path") && (DF.path.isEmpty() ) && insection){ DF.path = val; }
-    else if(var=="NoDisplay" && !DF.isHidden && insection){ DF.isHidden = (val.toLower()=="true"); }
-    else if(var=="Hidden" && !DF.isHidden && insection){ DF.isHidden = (val.toLower()=="true"); }
-    else if(var=="Categories" && insection){ DF.catList = val.split(";",QString::SkipEmptyParts); }
-    else if(var=="OnlyShowIn" && insection){ DF.showInList = val.split(";",QString::SkipEmptyParts); }
-    else if(var=="NotShowIn" && insection){ DF.notShowInList = val.split(";",QString::SkipEmptyParts); }
-    else if(var=="Terminal" && insection){ DF.useTerminal= (val.toLower()=="true"); }
-    else if(var=="Actions" && insection){ DF.actionList = val.split(";",QString::SkipEmptyParts); }
-    else if(var=="MimeType" && insection){ DF.mimeList = val.split(";",QString::SkipEmptyParts); }
+    else if( (var=="Path") && (DF->path.isEmpty() ) && insection){ DF->path = val; }
+    else if(var=="NoDisplay" && !DF->isHidden && insection){ DF->isHidden = (val.toLower()=="true"); }
+    else if(var=="Hidden" && !DF->isHidden && insection){ DF->isHidden = (val.toLower()=="true"); }
+    else if(var=="Categories" && insection){ DF->catList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="OnlyShowIn" && insection){ DF->showInList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="NotShowIn" && insection){ DF->notShowInList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="Terminal" && insection){ DF->useTerminal= (val.toLower()=="true"); }
+    else if(var=="Actions" && insection){ DF->actionList = val.split(";",QString::SkipEmptyParts); }
+    else if(var=="MimeType" && insection){ DF->mimeList = val.split(";",QString::SkipEmptyParts); }
     else if(var=="Keywords" && insection){ 
-      if(DF.keyList.isEmpty() && loc.isEmpty()){ DF.keyList = val.split(";",QString::SkipEmptyParts); }
-      else if(loc == lang){ DF.keyList = val.split(";",QString::SkipEmptyParts); }
+      if(DF->keyList.isEmpty() && loc.isEmpty()){ DF->keyList = val.split(";",QString::SkipEmptyParts); }
+      else if(loc == lang){ DF->keyList = val.split(";",QString::SkipEmptyParts); }
     }
-    else if(var=="StartupNotify" && insection){ DF.startupNotify = (val.toLower()=="true"); }
-    else if(var=="StartupWMClass" && insection){ DF.startupWM = val; }
-    else if(var=="URL" && insection){ DF.url = val;}
+    else if(var=="StartupNotify" && insection){ DF->startupNotify = (val.toLower()=="true"); }
+    else if(var=="StartupWMClass" && insection){ DF->startupWM = val; }
+    else if(var=="URL" && insection){ DF->url = val;}
     else if(var=="Type" && insection){
-      if(val.toLower()=="application"){ DF.type = XDGDesktop::APP; }
-      else if(val.toLower()=="link"){ DF.type = XDGDesktop::LINK; }
-      else if(val.toLower()=="dir"){ DF.type = XDGDesktop::DIR; }
-      else{ DF.type = XDGDesktop::BAD; } //Unknown type
+      if(val.toLower()=="application"){ DF->type = XDGDesktop::APP; }
+      else if(val.toLower()=="link"){ DF->type = XDGDesktop::LINK; }
+      else if(val.toLower()=="dir"){ DF->type = XDGDesktop::DIR; }
+      else{ DF->type = XDGDesktop::BAD; } //Unknown type
       //hasType = true;
     }
   } //end reading file
   file.clear(); //done with contents of file
   //If there are OnlyShowIn desktops listed, add them to the name
-  if( !DF.showInList.isEmpty() && !DF.showInList.contains("Lumina", Qt::CaseInsensitive) ){
-      DF.name.append(" ("+DF.showInList.join(", ")+")"); 
+  if( !DF->showInList.isEmpty() && !DF->showInList.contains("Lumina", Qt::CaseInsensitive) ){
+      DF->name.append(" ("+DF->showInList.join(", ")+")"); 
   }
   //Quick fix for showing "wine" applications (which quite often don't list a category, or have other differences)
-  if(DF.catList.isEmpty() && filePath.contains("/wine/")){
-    DF.catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
+  if(DF->catList.isEmpty() && filePath.contains("/wine/")){
+    DF->catList << "Wine"; //Internal Lumina category only (not in XDG specs as of 11/14/14)
     //Also add a fix for the location of Wine icons
-    if( !DF.icon.isEmpty() ){
+    if( !DF->icon.isEmpty() ){
       QStringList sizes; sizes << "256x256" << "128x128" << "64x64" << "48x48" << "32x32" << "16x16";
       QString upath = QDir::homePath()+"/.local/share/icons/hicolor/%1/apps/%2.png";
       //qDebug() << "Wine App: Check icon" << upath;
       for(int i=0; i<sizes.length(); i++){
-        if( QFile::exists(upath.arg(sizes[i],DF.icon)) ){
-	  DF.icon = upath.arg(sizes[i],DF.icon);
-	  //qDebug() << " - Found Icon:" << DF.icon;
+        if( QFile::exists(upath.arg(sizes[i],DF->icon)) ){
+	  DF->icon = upath.arg(sizes[i],DF->icon);
+	  //qDebug() << " - Found Icon:" << DF->icon;
 	  break;
 	}
       }
@@ -324,9 +717,9 @@ XDGDesktop LXDG::loadDesktopFile(QString filePath, bool& ok){
   //Return the structure
   ok = true; //was able to open/read the file - validity determined later
   return DF;
-}
+}*/
 
-bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
+/*bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
   qDebug() << "Save Desktop File:" << dFile.filePath << "Merge:" << merge;
   bool autofile = dFile.filePath.contains("/autostart/"); //use the "Hidden" field instead of the "NoDisplay"
   int insertloc = -1;
@@ -438,9 +831,9 @@ bool LXDG::saveDesktopFile(XDGDesktop dFile, bool merge){
   //Now save the file
   return LUtils::writeFile(dFile.filePath, info, true);
 
-}
+}*/
 
-bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
+/*bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
   bool ok=true;
   bool DEBUG = false;
   if(DEBUG){ qDebug() << "[LXDG] Check File validity:" << dFile.name << dFile.filePath; }
@@ -472,7 +865,7 @@ bool LXDG::checkValidity(XDGDesktop dFile, bool showAll){
     else if(dFile.name.isEmpty()){ ok = false; }
   }
   return ok;
-}
+}*/
 
 bool LXDG::checkExec(QString exec){
   //Return true(good) or false(bad)
@@ -506,40 +899,43 @@ QStringList LXDG::systemApplicationDirs(){
   return out;
 }
 
-XDGDesktopList* LXDG::systemAppsList(){
+/*XDGDesktopList* LXDG::systemAppsList(){
   static XDGDesktopList *sysapps = 0;
   if(sysapps == 0){ qDebug() << "Generating new apps list"; sysapps = new XDGDesktopList(0,true); }//set this to automatically update as needed
   if(sysapps->lastCheck.isNull()){ sysapps->updateList(); } //catch the first time the class was used, and prompt for an update right now
   return sysapps;
+}*/
+
+QList<XDGDesktop*> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
+  //If this is going to be used regularly, it is better to use a custom instance of an XDGDesktopList() which self-updates instead.
+  //  Since this function will need to re-read the entire system app registry every time.
+  XDGDesktopList sysapps;
+  sysapps.updateList();
+  return sysapps.apps(showAll, showHidden); 
 }
 
-QList<XDGDesktop> LXDG::systemDesktopFiles(bool showAll, bool showHidden){
-  //Quick overload for backwards compatibility which uses the static/global class for managing app entries
-  return systemAppsList()->apps(showAll, showHidden); 
-}
-
-QHash<QString,QList<XDGDesktop> > LXDG::sortDesktopCats(QList<XDGDesktop> apps){
+QHash<QString,QList<XDGDesktop*> > LXDG::sortDesktopCats(QList<XDGDesktop*> apps){
   //Sort the list of applications into their different categories (main categories only)
   //Create the category lists
-  QList<XDGDesktop> multimedia, dev, ed, game, graphics, network, office, science, settings, sys, utility, other, wine;
+  QList<XDGDesktop*> multimedia, dev, ed, game, graphics, network, office, science, settings, sys, utility, other, wine;
   //Sort the apps into the lists
   for(int i=0; i<apps.length(); i++){
-    if(apps[i].catList.contains("AudioVideo")){ multimedia << apps[i]; }
-    else if(apps[i].catList.contains("Development")){ dev << apps[i]; }
-    else if(apps[i].catList.contains("Education")){ ed << apps[i]; }
-    else if(apps[i].catList.contains("Game")){ game << apps[i]; }
-    else if(apps[i].catList.contains("Graphics")){ graphics << apps[i]; }
-    else if(apps[i].catList.contains("Network")){ network << apps[i]; }
-    else if(apps[i].catList.contains("Office")){ office << apps[i]; }
-    else if(apps[i].catList.contains("Science")){ science << apps[i]; }
-    else if(apps[i].catList.contains("Settings")){ settings << apps[i]; }
-    else if(apps[i].catList.contains("System")){ sys << apps[i]; }
-    else if(apps[i].catList.contains("Utility")){ utility << apps[i]; }
-    else if(apps[i].catList.contains("Wine")){ wine << apps[i]; }
+    if(apps[i]->catList.contains("AudioVideo")){ multimedia << apps[i]; }
+    else if(apps[i]->catList.contains("Development")){ dev << apps[i]; }
+    else if(apps[i]->catList.contains("Education")){ ed << apps[i]; }
+    else if(apps[i]->catList.contains("Game")){ game << apps[i]; }
+    else if(apps[i]->catList.contains("Graphics")){ graphics << apps[i]; }
+    else if(apps[i]->catList.contains("Network")){ network << apps[i]; }
+    else if(apps[i]->catList.contains("Office")){ office << apps[i]; }
+    else if(apps[i]->catList.contains("Science")){ science << apps[i]; }
+    else if(apps[i]->catList.contains("Settings")){ settings << apps[i]; }
+    else if(apps[i]->catList.contains("System")){ sys << apps[i]; }
+    else if(apps[i]->catList.contains("Utility")){ utility << apps[i]; }
+    else if(apps[i]->catList.contains("Wine")){ wine << apps[i]; }
     else{ other << apps[i]; }
   }
   //Now create the output hash
-  QHash<QString,QList<XDGDesktop> > out;
+  QHash<QString,QList<XDGDesktop*> > out;
   if(!multimedia.isEmpty()){ out.insert("Multimedia", LXDG::sortDesktopNames(multimedia)); }
   if(!dev.isEmpty()){ out.insert("Development", LXDG::sortDesktopNames(dev)); }
   if(!ed.isEmpty()){ out.insert("Education", LXDG::sortDesktopNames(ed)); }
@@ -575,23 +971,23 @@ QString LXDG::DesktopCatToIcon(QString cat){
   return icon;
 }
 
-QList<XDGDesktop> LXDG::sortDesktopNames(QList<XDGDesktop> apps){
+QList<XDGDesktop*> LXDG::sortDesktopNames(QList<XDGDesktop*> apps){
   //Sort the list by name of the application
-  QHash<QString, XDGDesktop> sorter;
+  QHash<QString, XDGDesktop*> sorter;
   for(int i=0; i<apps.length(); i++){
-    sorter.insert(apps[i].name.toLower(), apps[i]);	  
+    sorter.insert(apps[i]->name.toLower(), apps[i]);	  
   }
   QStringList keys = sorter.keys();
   keys.sort();
   //Re-assemble the output list
-  QList<XDGDesktop> out;
+  QList<XDGDesktop*> out;
   for(int i=0; i<keys.length(); i++){
     out << sorter[keys[i]];
   }
   return out;
 }
 
-QString LXDG::getDesktopExec(XDGDesktop app, QString ActionID){
+/*QString LXDG::getDesktopExec(XDGDesktop app, QString ActionID){
   //Generate the executable line for the application
   QString out;
   QString exec = app.exec;
@@ -629,7 +1025,7 @@ QString LXDG::getDesktopExec(XDGDesktop app, QString ActionID){
   }
   if(out.contains("%k")){ out.replace("%k", "\'"+app.filePath+"\'"); }
   return out;
-}
+}*/
 
 void LXDG::setEnvironmentVars(){
   //Set the default XDG environment variables if not already set
@@ -1109,13 +1505,13 @@ QStringList LXDG::loadMimeFileGlobs2(){
 }
 
 //Find all the autostart *.desktop files
-QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
+QList<XDGDesktop*> LXDG::findAutoStartFiles(bool includeInvalid){
 	
   //First get the list of directories to search (system first, user-provided files come later and overwrite sys files as needed)
   QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
   paths << QString(getenv("XDG_CONFIG_HOME")).split(":");
   //Now go through them and find any valid *.desktop files
-  QList<XDGDesktop> files;
+  QList<XDGDesktop*> files;
   QStringList filenames; //make it easy to see if this filename is an override
   QDir dir;
   for(int i=0;i<paths.length(); i++){
@@ -1123,23 +1519,23 @@ QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
     dir.cd(paths[i]+"/autostart");
     QStringList tmp = dir.entryList(QStringList() << "*.desktop", QDir::Files, QDir::Name);
     for(int t=0; t<tmp.length(); t++){
-      bool ok = false;
-      XDGDesktop desk = LXDG::loadDesktopFile(dir.absoluteFilePath(tmp[t]), ok);
-      if(!ok){ continue; } //could not read file
+      XDGDesktop *desk = new XDGDesktop(dir.absoluteFilePath(tmp[t]));
+      if(desk->type == XDGDesktop::BAD){ continue; } //could not read file
       //Now figure out what to do with it
       if(filenames.contains(tmp[t])){
 	//This is an overwrite of a lower-priority (system?) autostart file
 	// find the other file
 	int old = -1;
 	for(int o=0; o<files.length(); o++){
-	  if(files[o].filePath.endsWith("/"+tmp[t])){ old = o; break; } //found it
+	  if(files[o]->filePath.endsWith("/"+tmp[t])){ old = o; break; } //found it
 	}
-	if(LXDG::checkValidity(desk, false)){
+	if(desk->isValid(false)){
 	  //Full override of the lower-priority file (might be replacing exec/tryexec fields)
-	  files[old] = desk;
+          files.takeAt(old)->deleteLater();
+	  files.insert(old,desk);
 	}else{
 	  //Small override file (only the "Hidden" field listed in spec)
-	  files[old].isHidden = desk.isHidden; //replace this value with the override
+	  files[old]->isHidden = desk->isHidden; //replace this value with the override
 	  //files << desk; //still add this to the array (will be ignored/skipped later)
 	}
       }else{
@@ -1153,18 +1549,17 @@ QList<XDGDesktop> LXDG::findAutoStartFiles(bool includeInvalid){
   //Now filter the results by validity if desired
   if(!includeInvalid){
     for(int i=0; i<files.length(); i++){
-      if( !LXDG::checkValidity(files[i], false) || files[i].isHidden ){
+      if( !files[i]->isValid(false) || files[i]->isHidden ){
         //Invalid file - go ahead and remove it from the output list
-	files.removeAt(i);
+	files.takeAt(i)->deleteLater();
 	i--;
       }
     }
   }
-	
   return files;
 }
 
-bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
+/*bool LXDG::setAutoStarted(bool autostart, XDGDesktop *app){
   //First get the list of system directories to search (system first, user-provided files come later and overwrite sys files as needed)
   QStringList paths = QString(getenv("XDG_CONFIG_DIRS")).split(":");
   QString upath = QString(getenv("XDG_CONFIG_HOME")).section(":",0,0);
@@ -1177,12 +1572,12 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
   }
 
   //Quick check/finish for user-defined files which are getting disabled (just remove the file)
-  if(app.filePath.startsWith(upath) && !autostart){
-    return QFile::remove(app.filePath);
+  if(app->filePath.startsWith(upath) && !autostart){
+    return QFile::remove(app->filePath);
   }
   bool sysfile = false;
   for(int i=0; i<paths.length(); i++){
-    if(app.filePath.startsWith(paths[i]+"/autostart/") ){
+    if(app->filePath.startsWith(paths[i]+"/autostart/") ){
       sysfile = true;
       //Change it to the user-modifiable directory
       app.filePath = app.filePath.replace(paths[i]+"/autostart/", upath);
@@ -1222,18 +1617,18 @@ bool LXDG::setAutoStarted(bool autostart, XDGDesktop app){
     saved = LXDG::saveDesktopFile(app);
   }
   return saved;
-}
+}*/
 
 bool LXDG::setAutoStarted(bool autostart, QString filePath){
   //Convenience function for the auto-start setter
-  XDGDesktop desk;
-  if(filePath.endsWith(".desktop")){
-    bool ok = false;
-    desk = LXDG::loadDesktopFile(filePath, ok);
-    if(!ok){ return false; } //error reading input file
-  }else{
+  XDGDesktop desk(filePath);
+  if(!filePath.endsWith(".desktop")){
+    //bool ok = false;
+    //desk = LXDG::loadDesktopFile(filePath, ok);
+    //if(!ok){ return false; } //error reading input file
+  //}else{
     desk.filePath = filePath;
     desk.useTerminal = false;
   }
-  return LXDG::setAutoStarted(autostart, desk);
+  return desk.setAutoStarted(autostart);
 }

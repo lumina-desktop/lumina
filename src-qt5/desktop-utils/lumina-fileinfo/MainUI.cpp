@@ -241,27 +241,27 @@ void MainUI::on_push_save_clicked(){
     INFO.setFile(filePath);
     INFO.XDG()->filePath = filePath;
   }
-  XDGDesktop XDG = *INFO.XDG();
+  XDGDesktop *XDG = INFO.XDG();
   //Now change the structure
-  XDG.name = ui->line_xdg_name->text();
-  XDG.genericName = ui->line_xdg_name->text().toLower();
-  XDG.comment = ui->line_xdg_comment->text();
-  XDG.icon = ui->push_xdg_getIcon->whatsThis();
+  XDG->name = ui->line_xdg_name->text();
+  XDG->genericName = ui->line_xdg_name->text().toLower();
+  XDG->comment = ui->line_xdg_comment->text();
+  XDG->icon = ui->push_xdg_getIcon->whatsThis();
   //Now do the type-specific fields
-  if(XDG.type==XDGDesktop::APP){
-    XDG.exec = ui->line_xdg_command->text();
-    XDG.tryexec = ui->line_xdg_command->text().section(" ",0,0); //use the first word/binary for the existance check
-    XDG.path = ui->line_xdg_wdir->text(); //working dir/path
-    XDG.useTerminal = ui->check_xdg_useTerminal->isChecked();
-    XDG.startupNotify = ui->check_xdg_startupNotify->isChecked();
-  }else if(XDG.type==XDGDesktop::LINK){
-    XDG.url = ui->line_xdg_wdir->text(); //we re-used this field
+  if(XDG->type == XDGDesktop::APP){
+    XDG->exec = ui->line_xdg_command->text();
+    XDG->tryexec = ui->line_xdg_command->text().section(" ",0,0); //use the first word/binary for the existance check
+    XDG->path = ui->line_xdg_wdir->text(); //working dir/path
+    XDG->useTerminal = ui->check_xdg_useTerminal->isChecked();
+    XDG->startupNotify = ui->check_xdg_startupNotify->isChecked();
+  }else if(XDG->type==XDGDesktop::LINK){
+    XDG->url = ui->line_xdg_wdir->text(); //we re-used this field
   }
   //Clear any info which this utility does not support at the moment
-  XDG.actionList.clear();
-  XDG.actions.clear();
+  XDG->actionList.clear();
+  XDG->actions.clear();
   //Now save the structure to file
-  bool saved = LXDG::saveDesktopFile( XDG, true); //Try to merge the file/structure as necessary
+  bool saved = XDG->saveDesktopFile(true); //Try to merge the file/structure as necessary
   qDebug() << "File Saved:" << saved;
   ui->push_save->setEnabled( !saved );
   if(saved){
