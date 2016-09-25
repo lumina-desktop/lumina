@@ -59,11 +59,11 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
     connect(worker, SIGNAL(DirDataAvailable(QString, QString, LFileInfoList)), this, SLOT(DirDataAvailable(QString, QString, LFileInfoList)) );
     connect(worker, SIGNAL(SnapshotDataAvailable(QString, QString, QStringList)), this, SLOT(SnapshotDataAvailable(QString, QString, QStringList)) );
     worker->moveToThread(workThread);
-  if(DEBUG){ qDebug() << " - File System Model"; }
-  fsmod = new QFileSystemModel(this);
-    fsmod->setRootPath(QDir::homePath());
-  dirCompleter = new QCompleter(fsmod, this);
-    dirCompleter->setModelSorting( QCompleter::CaseInsensitivelySortedModel );
+  //if(DEBUG){ qDebug() << " - File System Model"; }
+  //fsmod = new QFileSystemModel(this);
+    //fsmod->setRootPath(QDir::homePath());
+  //dirCompleter = new QCompleter(fsmod, this);
+    //dirCompleter->setModelSorting( QCompleter::CaseInsensitivelySortedModel );
   if(DEBUG){ qDebug() << " - Context Menu"; }
   contextMenu = new QMenu(this);
   radio_view_details = new QRadioButton(tr("Detailed List"), this);
@@ -187,7 +187,7 @@ void MainUI::OpenDirs(QStringList dirs){
     DW->setDetails(details); //Which details to show and in which order (L->R)
     DW->setShowThumbnails(ui->actionShow_Thumbnails->isChecked());
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
-    DW->setDirCompleter(dirCompleter);
+    //DW->setDirCompleter(dirCompleter);
     DW->setShowCloseButton(!radio_view_tabs->isChecked());
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info

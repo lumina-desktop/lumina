@@ -77,7 +77,7 @@ private:
 	DirData *worker;
 	//Internal non-ui widgets
 	QTabBar *tabBar;
-	QFileSystemModel *fsmod;
+	//QFileSystemModel *fsmod;
 	QMenu *contextMenu;
 	QRadioButton *radio_view_details, *radio_view_list, *radio_view_tabs, *radio_view_cols;
 	QWidgetAction *detWA, *listWA, *tabsWA, *colsWA;
@@ -89,7 +89,7 @@ private:
 	
     QSettings *settings;
     QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
-	QCompleter *dirCompleter;
+	//QCompleter *dirCompleter;
 
 	//Simplification Functions
 	void setupConnections(); 	//used during initialization
