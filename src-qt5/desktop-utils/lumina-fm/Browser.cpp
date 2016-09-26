@@ -17,6 +17,8 @@ Browser::~Browser(){
   watcher->deleteLater();
 }
 
+QString Browser::currentDirectory(){ return currentDir; }
+
 void Browser::showHiddenFiles(bool show){
   if(show !=showHidden){
     showHidden = show;
@@ -24,7 +26,7 @@ void Browser::showHiddenFiles(bool show){
   }
 }
 bool Browser::showingHiddenFiles(){
-
+  return showHidden;
 }
 
 //   PRIVATE
@@ -45,12 +47,14 @@ void Browser::loadItem(QFileInfo info){
 }
 
 // PRIVATE SLOTS
-void Browser::fileChanged(QString){
-
+void Browser::fileChanged(QString file){
+  if(file.startsWith(currentDir+"/")){ emit itemUpdated(file); }
+  else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
 }
 
-void Browser::dirChanged(QString){
-
+void Browser::dirChanged(QString dir){
+  if(dir==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+  else if(dir.startsWith(currentDir)){ emit itemUpdated(dir); }
 }
 
 // PUBLIC SLOTS

@@ -26,7 +26,7 @@
 #define DEBUG 0
 
 
-const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
+const QString sessionsettings_config_file = QDir::homePath() + "/.config/lumina-desktop/sessionsettings.conf";
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file

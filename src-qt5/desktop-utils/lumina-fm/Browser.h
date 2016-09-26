@@ -15,6 +15,7 @@ public:
 	Browser(QObject *parent = 0);
 	~Browser();
 
+	QString currentDirectory();
 	void showHiddenFiles(bool);
 	bool showingHiddenFiles();
 
@@ -40,7 +41,6 @@ signals:
 
 	//Start/Stop signals for loading of data
 	void itemsLoading(int); //number of items which are getting loaded
-	void itemsDoneLoading(); //emitted when all items are done loading
 
 };
 
