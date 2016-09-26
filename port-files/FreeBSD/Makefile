@@ -56,7 +56,7 @@ QMAKE_ARGS=	DEFAULT_SETTINGS=TrueOS
 
 .if${PORT_OPTIONS:MI18N}
 USE_QT5+= linguist_build
-QMAKE_ARGS+=WITH_I18N
+QMAKE_ARGS+=CONFIG+=WITH_I18N
 .endif
 
 .include <bsd.port.mk>
