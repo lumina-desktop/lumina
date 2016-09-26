@@ -214,6 +214,7 @@ QString LUtils::PathToAbsolute(QString path){
   }
   return path;
 }
+
 QString LUtils::AppToAbsolute(QString path){
   if(path.startsWith("~/")){ path = path.replace("~/", QDir::homePath()+"/" ); }
   if(path.startsWith("/") || QFile::exists(path)){ return path; }
