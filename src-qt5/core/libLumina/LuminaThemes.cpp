@@ -15,6 +15,8 @@
 #include <QPainter>
 #include <QPen>
 
+#include "LuminaXDG.h"
+
 #include <unistd.h>
 
 //Stuff necesary for Qt Cursor Reloads
@@ -292,6 +294,8 @@ QStringList LTHEME::CustomEnvSettings(bool useronly){ //view all the key=value s
 }
 
 void LTHEME::LoadCustomEnvSettings(){
+  //Also ensure that the normal XDG_* environment variables are setup (will not overwrite them if already there)
+  LXDG::setEnvironmentVars();
   //will push the custom settings into the environment (recommended before loading the initial QApplication)
   QStringList info = LTHEME::CustomEnvSettings(false); //all settings
   if(info.isEmpty()){
