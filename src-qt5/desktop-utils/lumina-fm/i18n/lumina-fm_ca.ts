@@ -486,92 +486,92 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="46"></location>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres del repositori GitHub</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"></location>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>Organització / Usuari</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"></location>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom del repositori</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"></location>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>És un repositori privat</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"></location>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipus d'accés</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"></location>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa la meva clau SSH</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"></location>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Entra al servidor</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"></location>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom d'usuari</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"></location>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasenya</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"></location>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anònim (només repositoris públics)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"></location>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasenya SSH opcional</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"></location>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcions avançades</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"></location>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Profunditat personalitzada</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"></location>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Branca simple</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"></location>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>nom de la branca</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"></location>
         <source>Click "Next" to start downloading the repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliqueu a "Següent" per començar a baixar el repositori</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="57"></location>
         <source>Stop Download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voleu aturar la baixada?</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="57"></location>
         <source>Kill the current download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voleu avortar la baixada actual?</translation>
     </message>
 </context>
 <context>
@@ -629,7 +629,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="181"></location>
         <source>Git</source>
-        <translation type="unfinished"></translation>
+        <translation>Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="196"></location>
@@ -715,12 +715,12 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="439"></location>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estat del repositori</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="444"></location>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Clona el repositori</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"></location>
@@ -895,7 +895,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="626"></location>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estat del repositori Git</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="732"></location>
@@ -925,7 +925,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="101"></location>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="429"></location>
