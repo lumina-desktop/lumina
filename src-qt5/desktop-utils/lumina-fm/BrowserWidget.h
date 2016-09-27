@@ -19,29 +19,40 @@ class BrowserWidget : public QWidget{
 private:
 	Browser *BROWSER;
 	int numItems; //used for checking if all the items have loaded yet
-	bool details; //show details or not
+	QString ID;
+	QStringList date_format;
 
 	//The drag and drop brower widgets
 	DDListWidget *listWidget;
 	DDTreeWidget *treeWidget;
 
+	QString DTtoString(QDateTime dt);  //QDateTime to string simplification routine
+
 public:
 	BrowserWidget(QString objID, QWidget *parent = 0);
 	~BrowserWidget();
 
-	QString id(){ return this->whatsThis(); }
+	QString id(){ return ID; }
 
 	void changeDirectory(QString dir);
+	QString currentDirectory(){ return BROWSER->currentDirectory(); }
 
 	void showDetails(bool show);
 	bool hasDetails();
 
+	void setThumbnailSize(int px);
+
+	//Date format for show items
+	QStringList getDateFormat();
+	void readDateFormat();
+
 public slots:
+	void retranslate();
 
 private slots:
 	//Browser connections
 	void clearItems();
-	void itemUpdated(QString);
+	void itemRemoved(QString);
 	void itemDataAvailable(QIcon, LFileInfo);
 	void itemsLoading(int total);
 

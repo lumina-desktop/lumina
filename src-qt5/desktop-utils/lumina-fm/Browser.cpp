@@ -78,7 +78,7 @@ void Browser::dirChanged(QString dir){
 
 void Browser::futureFinished(QString name, QByteArray icon){
   //Note: this will be called once for every item that loads
-  qDebug() << "Future Finished" << name;
+  //qDebug() << "Future Finished" << name;
   //for(int i=0; i<fwatchers.length(); i++){
     //if(fwatchers[i]->isFinished()){
       //FileItem FI = fwatchers[i]->result();
@@ -96,7 +96,7 @@ void Browser::futureFinished(QString name, QByteArray icon){
       }
       if(ico.isNull()){ ico = LXDG::findIcon( info.mimetype(), "unknown" ); }
       this->emit itemDataAvailable( ico, info );
-      qDebug() << "- done";
+      //qDebug() << "- done";
       //i--;
       //return;
     //}
@@ -105,7 +105,7 @@ void Browser::futureFinished(QString name, QByteArray icon){
 
 // PUBLIC SLOTS
 void Browser::loadDirectory(QString dir){
-  qDebug() << "Load Directory" << dir;
+  //qDebug() << "Load Directory" << dir;
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   //clean up the watcher first
