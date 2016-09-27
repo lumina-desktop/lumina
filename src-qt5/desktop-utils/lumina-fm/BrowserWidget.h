@@ -8,14 +8,16 @@
 #ifndef _LUMINA_FM_BROWSE_FRONTEND_H
 #define _LUMINA_FM_BROWSE_FRONTEND_H
 
+#include <QString>
+#include <QWidget>
+
 #include "Browser.h"
 #include "widgets/DDListWidgets.h"
 
 class BrowserWidget : public QWidget{
 	Q_OBJECT
 private:
-	Browser *DIR:
-	QString ID;
+	Browser *BROWSER;
 	int numItems; //used for checking if all the items have loaded yet
 	bool details; //show details or not
 
@@ -27,7 +29,7 @@ public:
 	BrowserWidget(QString objID, QWidget *parent = 0);
 	~BrowserWidget();
 
-	QString id(){ return ID; }
+	QString id(){ return this->whatsThis(); }
 
 	void changeDirectory(QString dir);
 
@@ -37,7 +39,7 @@ public:
 public slots:
 
 private slots:
-	//Brower connections
+	//Browser connections
 	void clearItems();
 	void itemUpdated(QString);
 	void itemDataAvailable(QIcon, LFileInfo);
@@ -45,7 +47,7 @@ private slots:
 
 signals:
 	//void activated(QString); //current dir path
-	void dirChanged(QString); //current dir path
+	void dirChange(QString); //current dir path
 	
 };
 
@@ -56,7 +58,7 @@ signals:
  * On this class, we overwrite the function operator<.
  */
 
-class CQTreeWidgetItem : public QTreeWidgetItem {
+/*class CQTreeWidgetItem : public QTreeWidgetItem {
 public:
     CQTreeWidgetItem(int type = Type) : QTreeWidgetItem(type) {}
     CQTreeWidgetItem(const QStringList & strings, int type = Type) : QTreeWidgetItem(strings, type) {}
@@ -93,5 +95,5 @@ public:
       // In other cases, we trust base class implementation
       return QTreeWidgetItem::operator<(tmp);
     }
-};
+};*/
 #endif

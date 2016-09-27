@@ -17,7 +17,9 @@ SOURCES += main.cpp \
 		widgets/SlideshowWidget.cpp \
 		widgets/DirWidget.cpp \
 		gitCompat.cpp \
-		gitWizard.cpp
+		gitWizard.cpp \
+		Browser.cpp \
+		BrowserWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -29,7 +31,9 @@ HEADERS  += MainUI.h \
 		widgets/SlideshowWidget.h \
 		widgets/DirWidget.h \
 		gitCompat.h \
-		gitWizard.h
+		gitWizard.h \
+		Browser.h \
+		BrowserWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
