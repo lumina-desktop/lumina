@@ -45,7 +45,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"></location>
         <source>MainWindow</source>
-        <translation type="unfinished">Κύριο Παράθυρο</translation>
+        <translation type="unfinished">ΚύριοΠαράθυρο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"></location>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="183"></location>
         <source>Find:</source>
-        <translation>Βρές:</translation>
+        <translation>Βρείτε:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"></location>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="104"></location>
         <source>Replace:</source>
-        <translation>Αντικατέστησε:</translation>
+        <translation>Αντικαταστήστε:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"></location>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="158"></location>
         <source>Replace all matches (to end of document)</source>
-        <translation>Αντικατέστησε όλες τις ταυτίσεις (στο τέλος του εγγράφου)</translation>
+        <translation>Αντικαταστήστε όλες τις ταυτίσεις (στο τέλος του εγγράφου)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"></location>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="279"></location>
         <source>Show Line Numbers</source>
-        <translation>Εμφάνισε Αριθμούς Γραμμών</translation>
+        <translation>Εμφανίστε Αριθμούς Γραμμών</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"></location>
@@ -170,7 +170,7 @@
     <message>
         <location filename="../MainUI.ui" line="322"></location>
         <source>Save File As</source>
-        <translation>Αποθήκευση Αρχείου ως</translation>
+        <translation>Αποθήκευση Αρχείου Ως</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"></location>
