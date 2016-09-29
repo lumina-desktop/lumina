@@ -107,6 +107,7 @@ void LSession::start(){
         startProcess("compositing","compton");
       }else{
         //Auto-detect if GLX is available on the system and turn it on/off as needed
+       bool startcompton = true;
        if(LUtils::isValidBinary("glxinfo")){
          bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
          qDebug() << "Detected GPU Acceleration:" << hasAccel;
@@ -115,10 +116,11 @@ void LSession::start(){
            if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
          }
          LUtils::writeFile(set, info, true);
+         if( !hasAccel && settings.value("compositingWithGpuAccelOnly",false).toBool() ){ startcompton = false; }
        }
-        startProcess("compositing","compton --config \""+set+"\"", QStringList() << set);
+        if(startcompton){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
       }
-    }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",false).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
   //Desktop Next
   startProcess("runtime","lumina-desktop");
