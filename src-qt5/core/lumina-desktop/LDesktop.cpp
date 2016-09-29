@@ -209,6 +209,7 @@ void LDesktop::InitDesktop(){
     connect(QApplication::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
     connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(UpdateDesktop()) );
     connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChanged()) );
+    connect(QApplication::instance(), SIGNAL(WorkspaceChanged()), this, SLOT(UpdateBackground()) );
 
   if(DEBUG){ qDebug() << "Create bgWindow"; }
   bgWindow = new LDesktopBackground();
@@ -478,7 +479,9 @@ void LDesktop::UpdateBackground(){
   bgupdating = true;
   if(DEBUG){ qDebug() << " - Update Desktop Background for screen:" << desktopnumber; }
   //Get the list of background(s) to show
-  QStringList bgL = settings->value(DPREFIX+"background/filelist", QStringList()).toStringList();
+  QStringList bgL = settings->value(DPREFIX+"background/filelist-workspace-"+QString::number( LSession::handle()->XCB->CurrentWorkspace()), QStringList()).toStringList();
+  if(bgL.isEmpty()){ bgL = settings->value(DPREFIX+"background/filelist", QStringList()).toStringList(); }
+  
   //qDebug() << " - List:" << bgL << CBG;
     //Remove any invalid files
     for(int i=0; i<bgL.length(); i++){
@@ -495,11 +498,9 @@ void LDesktop::UpdateBackground(){
   }
   oldBGL = bgL; //save this for later
   //Determine which background to use next
-  int index;
-  if(CBG.isEmpty()){ index = ( qrand() % bgL.length() ); } //random first wallpaper
-  else{ 
+  int index ( qrand() % bgL.length() );
+  if(index== bgL.indexOf(CBG)){ //if the current wallpaper was selected by the randomization again
     //Go to the next in the list
-    index = bgL.indexOf(CBG); 
     if(index < 0 || index >= bgL.length()-1){ index = 0; } //if invalid or last item in the list - go to first
     else{ index++; } //go to next
   }
