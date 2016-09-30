@@ -185,28 +185,6 @@ void DirWidget::UpdateText(){
   if(RCBW!=0){ RCBW->retranslate(); }
 }
 
-
-//Keyboard Shortcuts triggered
-/*void DirWidget::TryRenameSelection(){
-  on_tool_act_rename_clicked();
-}
-
-void DirWidget::TryCutSelection(){
-  on_tool_act_cut_clicked();
-}
-
-void DirWidget::TryCopySelection(){
-  on_tool_act_copy_clicked();
-}
-
-void DirWidget::TryPasteSelection(){
-  on_tool_act_paste_clicked();
-}
-
-void DirWidget::TryDeleteSelection(){
-  on_tool_act_rm_clicked();
-}*/
-
 // =================
 //       PRIVATE
 // =================
@@ -403,7 +381,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
   connect(RCBW, SIGNAL(dirChange(QString)), this, SLOT(currentDirectoryChanged()) );
-  connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(itemsActivated()) );
+  connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(RCBW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(RCBW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
   connect(RCBW, SIGNAL(updateDirectoryStatus(QString)), this, SLOT(dirStatusChanged(QString)) );
