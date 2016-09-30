@@ -116,11 +116,11 @@ void LSession::start(){
            if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
          }
          LUtils::writeFile(set, info, true);
-         if( !hasAccel && settings.value("compositingWithGpuAccelOnly",false).toBool() ){ startcompton = false; }
+         if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
        }
         if(startcompton){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
       }
-    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",false).toBool() ){ startProcess("compositing","xcompmgr"); }
+    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
   //Desktop Next
   startProcess("runtime","lumina-desktop");
