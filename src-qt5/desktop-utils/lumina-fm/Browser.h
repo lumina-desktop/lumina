@@ -13,17 +13,17 @@
 #include <QString>
 #include <QFileSystemWatcher>
 #include <QIcon>
-#include <QFutureWatcher>
+//#include <QFutureWatcher>
 
 #include <LuminaXDG.h>
-class FileItem{
+/*class FileItem{
 public:
 	QString name;
 	QByteArray icon;
 
 	FileItem(){}
 	~FileItem(){};
-};
+};*/
 
 class Browser : public QObject{
 	Q_OBJECT
@@ -40,9 +40,8 @@ public:
 private:
 	QString currentDir;
 	QFileSystemWatcher *watcher;
-	QList< QFutureWatcher<FileItem>* > fwatchers;
 	bool showHidden;
-	QStringList imageFormats;
+	QStringList imageFormats, oldFiles;
 
 	void loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
 
@@ -57,7 +56,7 @@ public slots:
 
 signals:
 	//Main Signals
-	void itemUpdated(QString item); //emitted if a file changes after the initial scan
+	void itemRemoved(QString item); //emitted if a file was removed from the underlying
 	void clearItems(); //emitted when dirs change for example
 	void itemDataAvailable(QIcon, LFileInfo);
 

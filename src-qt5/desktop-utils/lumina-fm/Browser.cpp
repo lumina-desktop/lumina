@@ -67,25 +67,17 @@ void Browser::loadItem(QString info){
 
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
-  if(file.startsWith(currentDir+"/")){ emit itemUpdated(file); }
+  if(file.startsWith(currentDir+"/")){ QtConcurrent::run(this, &Browser::loadItem, file ); }
   else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
 }
 
 void Browser::dirChanged(QString dir){
   if(dir==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
-  else if(dir.startsWith(currentDir)){ emit itemUpdated(dir); }
+  else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir ); }
 }
 
 void Browser::futureFinished(QString name, QByteArray icon){
   //Note: this will be called once for every item that loads
-  //qDebug() << "Future Finished" << name;
-  //for(int i=0; i<fwatchers.length(); i++){
-    //if(fwatchers[i]->isFinished()){
-      //FileItem FI = fwatchers[i]->result();
-       //qDebug() << "Found finished:" << FI.name << i;
-      //disconnect(fwatchers[i]);
-      //fwatchers.takeAt(i)->deleteLater();
-      //fwatchers.removeAt(i);
       QIcon ico;
       LFileInfo info(name);
       if(!icon.isEmpty()){
@@ -94,13 +86,11 @@ void Browser::futureFinished(QString name, QByteArray icon){
       }else if(info.isDir()){
         ico = LXDG::findIcon("folder","inode/directory");
       }
-      if(ico.isNull()){ ico = LXDG::findIcon( info.mimetype(), "unknown" ); }
+      if(ico.isNull()){ 
+	//qDebug() << "MimeType:" << info.fileName() << info.mimetype();
+       ico = LXDG::findIcon( info.iconfile(), "unknown" ); 
+      }
       this->emit itemDataAvailable( ico, info );
-      //qDebug() << "- done";
-      //i--;
-      //return;
-    //}
-  //}
 }
 
 // PUBLIC SLOTS
@@ -108,22 +98,41 @@ void Browser::loadDirectory(QString dir){
   //qDebug() << "Load Directory" << dir;
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
+  if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
+    oldFiles.clear();
+    emit clearItems(); 
+  } 
+  currentDir = dir; //save this for later
   //clean up the watcher first
   QStringList watched; watched << watcher->files() << watcher->directories();
   if(!watched.isEmpty()){ watcher->removePaths(watched); }
-  emit clearItems(); //let the main widget know to clear all current items
+  QStringList old = oldFiles; //copy this over for the moment (both lists will change in a moment)
+  oldFiles.clear(); //get ready for re-creating this list
   // read the given directory
   QDir directory(dir);
   if(directory.exists()){
     QStringList files;
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
+    emit itemsLoading(files.length());
+    QCoreApplication::processEvents();
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));
       //qDebug() << "Future Starting:" << files[i];
       QString path = directory.absoluteFilePath(files[i]);
+      if(old.contains(path)){ old.removeAll(path); }
+      oldFiles << path; //add to list for next time
       QtConcurrent::run(this, &Browser::loadItem, path );
+      QCoreApplication::sendPostedEvents();
     }
     watcher->addPath(directory.absolutePath());
+    if(!old.isEmpty()){
+      old.removeAll(directory.absolutePath());
+      for(int i=0; i<old.length(); i++){
+        emit itemRemoved(old[i]);
+      }
+    }
+  }else{
+    emit itemsLoading(0); //nothing to load
   }
 }

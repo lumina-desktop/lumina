@@ -32,6 +32,7 @@ public:
 	QString dirpath; //directory this structure was reading
 	QString snapdir; //base snapshot directory (if one was requested/found)
 	bool hashidden;
+	QStringList mntpoints;
 
 	//Access Functions
 	LDirInfoList(QString path = ""){
@@ -39,6 +40,11 @@ public:
 	  list.clear();
 	  fileNames.clear();
 	  hashidden = false;
+	  //Generate the list of all mountpoints if possible
+	  if(LUtils::isValidBinary("zfs")){
+	    mntpoints = LUtils::getCmdOutput("zfs list -H -o mountpoint").filter("/");
+	    mntpoints.removeDuplicates();
+	  }
 	}
 	~LDirInfoList(){}
 
@@ -72,23 +78,21 @@ public:
 	}
 	
 	void findSnapDir(){
-	  //Search the filesystem 
+	  //Search the filesystem
 	  if(dirpath.contains(ZSNAPDIR)){
 	    snapdir = dirpath.section(ZSNAPDIR,0,0)+ZSNAPDIR; //no need to go looking for it
+	  }else if(mntpoints.isEmpty()){ 
+	    snapdir.clear(); //no zfs dirs available
 	  }else{
-	    //Need to backtrack 
-	    QDir dir(dirpath);
-	    bool found = false;
-	    while(dir.canonicalPath()!="/" && !found){
-	      //qDebug() << " -- Checking for snapshot dir:" << dir.canonicalPath();
-	      if(dir.exists(".zfs/snapshot")){
-		snapdir = dir.canonicalPath()+ZSNAPDIR;
-		found = true;
-	      }else{ 
-		dir.cdUp(); 
-	      }
-	    }//end loop 
-	  }
+	    //Only check the mountpoint associated with this directory
+	    QString mnt;
+	    for(int i=0; i<mntpoints.length(); i++){ 
+	      if(dirpath == mntpoints[i]){ mnt = mntpoints[i]; break; }
+	      else if(dirpath.startsWith(mntpoints[i]) && mntpoints[i].length()>mnt.length()){ mnt = mntpoints[i]; }
+	    }
+	    if(QFile::exists(mnt+ZSNAPDIR)){ snapdir = mnt+ZSNAPDIR; }
+	    else{ snapdir.clear(); } //none found
+	  }	  
 	}
 
 };
@@ -119,6 +123,7 @@ public:
 	
 public slots:
 	void GetDirData(QString ID, QString dirpath){ 
+          return;
 	  if(pauseData){ return; }
 	  if(DIR_DEBUG){ qDebug() << "GetDirData:" << ID << dirpath; }
 	  //The ID is used when returning the info in a moment
@@ -146,7 +151,7 @@ public slots:
 	  //Only check if ZFS is flagged as available
 	  if(zfsavailable){
 	    //First find if the hash already has an entry for this directory
-	    if(false){ //!HASH.contains(dirpath)){
+	    if(!HASH.contains(dirpath)){
 	      LDirInfoList info(dirpath);
 	      HASH.insert(dirpath,info);
 	    }
