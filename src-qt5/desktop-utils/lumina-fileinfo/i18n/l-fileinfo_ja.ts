@@ -201,7 +201,7 @@
     <message>
         <location filename="../MainUI.cpp" line="306"></location>
         <source>Select an icon</source>
-        <translation>アイコンを選択:</translation>
+        <translation>アイコンを選択</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="306"></location>
