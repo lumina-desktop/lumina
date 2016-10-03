@@ -410,13 +410,14 @@ QString LUtils::BytesToDisplaySize(qint64 ibytes){
   }else if(bytes>=10){
     //need 1 decimel place
     num = QString::number( (qRound(bytes*10)/10.0) );
-  }else if(bytes>1){
+  }else if(bytes>=1){
     //need 2 decimel places
     num = QString::number( (qRound(bytes*100)/100.0) );
   }else{
     //Fully decimel (3 places)
     num = "0."+QString::number(qRound(bytes*1000));
   }
+  //qDebug() << "Bytes to Human-readable:" << bytes << c << num << labs[c];
   return (num+labs[c]);
 }
 
