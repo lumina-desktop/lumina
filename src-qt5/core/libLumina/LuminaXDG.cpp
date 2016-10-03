@@ -531,6 +531,9 @@ void LFileInfo::loadExtraInfo(){
     mime = LXDG::findAppMimeForFile(this->fileName());
   }
 }
+LFileInfo::LFileInfo(){
+  desk = 0;
+}
 LFileInfo::LFileInfo(QString filepath){ //overloaded contructor
   this->setFile(filepath);
   loadExtraInfo();

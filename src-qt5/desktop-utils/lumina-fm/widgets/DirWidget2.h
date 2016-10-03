@@ -18,8 +18,8 @@
 #include <QTimer>
 #include <QFuture>
 
-#include "../DirData.h"
-#include "DDListWidgets.h"
+#include "../BrowserWidget.h"
+
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 
@@ -46,88 +46,60 @@ public:
 
 	//View Settings
 	void setShowDetails(bool show);
-	void setShowSidebar(bool show);
-	void setShowThumbnails(bool show);
-	void setDetails(QList<DETAILTYPES> list); //Which details to show and in which order (L->R)
+	void showHidden(bool show);
 	void setThumbnailSize(int px);
-	void setShowCloseButton(bool show);
 	void setFocusLineDir();
-
-    //Date format for show items
-    QStringList getDateFormat();
-    void setDateFormat();
 	
 public slots:
-	void LoadDir(QString dir, LFileInfoList list);
+	//void LoadDir(QString dir, LFileInfoList list);
 	void LoadSnaps(QString basedir, QStringList snaps);
 	
 	//Refresh options
 	void refresh(); //Refresh current directory
-	void refreshButtons(); //Refresh action buttons only
+	//void refreshButtons(); //Refresh action buttons only
 
 	//Theme change functions
 	void UpdateIcons();
 	void UpdateText();
 	
 	//Button updates
-	void UpdateButtons();
+	//void UpdateButtons();
 
 	//Keyboard Shortcuts triggered
-	void TryRenameSelection();
+	/*void TryRenameSelection();
 	void TryCutSelection();
 	void TryCopySelection();
 	void TryPasteSelection();
-	void TryDeleteSelection();
+	void TryDeleteSelection();*/
 
 private:
 	Ui::DirWidget *ui;
-	QString ID, CDIR; //unique ID assigned by the parent and the current dir path
-	LFileInfoList CLIST; //current item list (snap or not)
+	BrowserWidget *BW, *RCBW; //Main BrowserWidget and right-column browser widget
+	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
-	bool showDetails, showThumbs, canmodify, stopload; //which widget to use for showing items
-	QList<DETAILTYPES> listDetails;
-	QMenu *contextMenu;
-	QFuture<void> thumbThread;
+	bool canmodify;
+
 	//The Toolbar and associated items
 	QToolBar *toolbar;
 	QLineEdit *line_dir;
-	QStringList history;
-	//The drag and drop brower widgets
-	DDListWidget *listWidget;
-	DDTreeWidget *treeWidget;
 
-	//Keyboard Shortcuts
-	//QShortcut *copyFilesShort, *cutFilesShort, *pasteFilesShort, *deleteFilesShort;
-	//Watcher to determine when the dir changes
-	QFileSystemWatcher *watcher;
-	QTimer *synctimer;
+	//The context menu and associated items
+	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu;
 
 	//Functions for internal use
-	void setupConnections();
-	QStringList currentSelection();
-	QStringList date_format;
+	void createMenus(); //on init only
+
+	BrowserWidget* currentBrowser();
+	QStringList currentDirFiles(); //all the "files" available within the current dir/browser
 
 private slots:
-	//Internal loading of thumbnails
-	void startLoadThumbs();
-	void showThumb(QString file, QIcon ico);
-
 	//UI BUTTONS/Actions
-	// -- Left Action Buttons
-	void on_tool_act_copy_clicked();
-	void on_tool_act_cut_clicked();
-	void on_tool_act_fav_clicked();
-	void on_tool_act_paste_clicked();
-	void on_tool_act_rename_clicked();
-	void on_tool_act_rm_clicked();
-	void on_tool_act_run_clicked();
-	void on_tool_act_runwith_clicked();
+
 	// -- Bottom Action Buttons
-	void on_tool_goToImages_clicked();
-	void on_tool_goToPlayer_clicked();
-	void on_tool_new_file_clicked();
-	void on_tool_new_dir_clicked();
+	void on_tool_zoom_in_clicked();
+	void on_tool_zoom_out_clicked();	
+
 	// -- Top Snapshot Buttons
 	void on_tool_snap_newer_clicked();
 	void on_tool_snap_older_clicked();
@@ -138,10 +110,11 @@ private slots:
 	void on_actionBack_triggered();
 	void on_actionUp_triggered();
 	void on_actionHome_triggered();
-	void on_actionStopLoad_triggered();
 	void dir_changed(); //user manually changed the directory
-	void on_actionClose_Browser_triggered();
-	
+	void on_actionSingleColumn_triggered(bool);
+	void on_actionDualColumn_triggered(bool);
+	void on_actionMenu_triggered();
+
 	// - Other Actions without a specific button on the side
 	void fileCheckSums();
 	void fileProperties();
@@ -150,13 +123,36 @@ private slots:
 
 	//Browser Functions
 	void OpenContextMenu();
-	void SelectionChanged();
-	void startSync(const QString &file); //used internally to collect/pause before updating the dir
+	void UpdateContextMenu();
+	void currentDirectoryChanged(bool widgetonly = false);
+	void dirStatusChanged(QString);
+	void setCurrentBrowser(QString);
+  
+	//Context Menu Functions
+	// - DIRECTORY operations
+	void createNewFile();
+	void createNewDir();
+	void createNewXDGEntry();
+	//void createNewSymlink();
+
+	// - Selected FILE operations
+	void cutFiles();
+	void copyFiles();
+	void pasteFiles();
+	void renameFiles();
+	void favoriteFiles();
+	void removeFiles();
+	void runFiles();
+	void runWithFiles();
+	//void attachToNewEmail();	
+
+	// - Context-specific operations
+	void openInSlideshow();
+	void openMultimedia();
 
 signals:
 	//Directory loading/finding signals
 	void OpenDirectories(QStringList); //Directories to open in other tabs/columns
-	void LoadDirectory(QString, QString); //ID, dirpath (Directory to load here)
 	void findSnaps(QString, QString); //ID, dirpath (Request snapshot information for a directory)
 	void CloseBrowser(QString); //ID (Request that this browser be closed)
 	
@@ -172,9 +168,7 @@ signals:
 	void FavoriteFiles(QStringList); //file selection
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection
-	
-	//Internal thumbnail loading system (multi-threaded)
-	void ThumbLoaded(QString, QIcon);
+	void TabNameChanged(QString, QString); //objID, new tab name
 	
 protected:
 	void mouseReleaseEvent(QMouseEvent *);

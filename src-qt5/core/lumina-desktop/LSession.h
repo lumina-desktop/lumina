@@ -185,6 +185,7 @@ signals:
 	void DesktopConfigChanged();
 	void SessionConfigChanged();
 	void DesktopFilesChanged();
+	void WorkspaceChanged();
 	
 };
 

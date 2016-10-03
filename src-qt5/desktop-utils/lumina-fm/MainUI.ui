@@ -131,23 +131,11 @@
      </property>
      <addaction name="actionTabs"/>
     </widget>
-    <widget class="QMenu" name="menuGroup_Mode">
-     <property name="title">
-      <string>Group Mode</string>
-     </property>
-     <addaction name="actionTabs_2"/>
-    </widget>
     <addaction name="actionRefresh"/>
     <addaction name="separator"/>
-    <addaction name="actionShow_Thumbnails"/>
     <addaction name="actionView_Hidden_Files"/>
-    <addaction name="actionShow_Action_Buttons"/>
     <addaction name="separator"/>
     <addaction name="menuView_Mode"/>
-    <addaction name="menuGroup_Mode"/>
-    <addaction name="separator"/>
-    <addaction name="actionLarger_Icons"/>
-    <addaction name="actionSmaller_Icons"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
     <property name="title">
@@ -164,18 +152,6 @@
     <addaction name="actionScan"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionRename"/>
-    <addaction name="separator"/>
-    <addaction name="actionCut_Selection"/>
-    <addaction name="actionCopy_Selection"/>
-    <addaction name="actionPaste"/>
-    <addaction name="separator"/>
-    <addaction name="actionDelete_Selection"/>
-   </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
      <string>Git</string>
@@ -184,7 +160,6 @@
     <addaction name="actionClone_Repository"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuBookmarks"/>
    <addaction name="menuExternal_Devices"/>
@@ -193,7 +168,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew_Tab">
    <property name="text">
-    <string>New Browser</string>
+    <string>New Tab</string>
    </property>
    <property name="toolTip">
     <string>New Browser</string>
@@ -425,7 +400,7 @@
   </action>
   <action name="actionClose_Browser">
    <property name="text">
-    <string>Close Browser</string>
+    <string>Close Tab</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>

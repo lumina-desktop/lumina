@@ -15,9 +15,11 @@ SOURCES += main.cpp \
 		BMMDialog.cpp \
 		widgets/MultimediaWidget.cpp \
 		widgets/SlideshowWidget.cpp \
-		widgets/DirWidget.cpp \
+		widgets/DirWidget2.cpp \
 		gitCompat.cpp \
-		gitWizard.cpp
+		gitWizard.cpp \
+		Browser.cpp \
+		BrowserWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -27,16 +29,18 @@ HEADERS  += MainUI.h \
 		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \
-		widgets/DirWidget.h \
+		widgets/DirWidget2.h \
 		gitCompat.h \
-		gitWizard.h
+		gitWizard.h \
+		Browser.h \
+		BrowserWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
 		BMMDialog.ui \
 		widgets/MultimediaWidget.ui \
 		widgets/SlideshowWidget.ui \
-		widgets/DirWidget.ui \
+		widgets/DirWidget2.ui \
 		gitWizard.ui
 
 icons.files = Insight-FileManager.png
