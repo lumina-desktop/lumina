@@ -312,7 +312,7 @@
     <message>
         <location filename="../widgets/DirWidget.cpp" line="949"></location>
         <source>File Checksums:</source>
-        <translation>ファイルのチェックサム</translation>
+        <translation>ファイルのチェックサム:</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget.cpp" line="966"></location>
@@ -1049,7 +1049,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="69"></location>
         <source>Rotate this image file clockwise</source>
-        <translation>時計回りに画像ファイルを回転させます </translation>
+        <translation>時計回りに画像ファイルを回転させます</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="89"></location>
