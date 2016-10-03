@@ -146,17 +146,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="18"></location>
         <source>Initializing Session …</source>
-        <translation>Iniciando sesión ...</translation>
+        <translation>Iniciando Sesión …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="21"></location>
         <source>Loading System Settings …</source>
-        <translation>Cargando Configuración del Sistema...</translation>
+        <translation>Cargando Configuración del Sistema…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="24"></location>
         <source>Loading User Preferences …</source>
-        <translation>Cargando Preferencias de Usuario ...</translation>
+        <translation>Cargando Preferencias de Usuario …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"></location>

@@ -34,6 +34,8 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
+	LFileInfo *INFO;
+
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task
 	void ReloadAppIcon();
@@ -49,7 +51,8 @@ private slots:
 	//UI Buttons
 	void on_push_close_clicked();
 	void on_push_save_clicked();
-	void on_tool_xdg_getCommand_clicked(QString prev = "");
+	void getXdgCommand(QString prev = "");
+	//void on_tool_xdg_getCommand_clicked(QString prev = "");
 	void on_tool_xdg_getDir_clicked();
 	void on_push_xdg_getIcon_clicked();
 
