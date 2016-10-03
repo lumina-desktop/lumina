@@ -56,21 +56,11 @@ public slots:
 	
 	//Refresh options
 	void refresh(); //Refresh current directory
-	//void refreshButtons(); //Refresh action buttons only
 
 	//Theme change functions
 	void UpdateIcons();
 	void UpdateText();
-	
-	//Button updates
-	//void UpdateButtons();
 
-	//Keyboard Shortcuts triggered
-	/*void TryRenameSelection();
-	void TryCutSelection();
-	void TryCopySelection();
-	void TryPasteSelection();
-	void TryDeleteSelection();*/
 
 private:
 	Ui::DirWidget *ui;
@@ -87,7 +77,12 @@ private:
 	//The context menu and associated items
 	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu;
 
+	//The keyboard shortcuts for context menu items
+	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
+		*kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm;
+
 	//Functions for internal use
+	void createShortcuts(); //on init only
 	void createMenus(); //on init only
 
 	BrowserWidget* currentBrowser();
