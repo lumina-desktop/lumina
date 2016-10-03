@@ -26,7 +26,7 @@
 #define DEBUG 0
 
 
-const QString sessionsettings_config_file = QDir::homePath() + "/.lumina/LuminaDE/sessionsettings.conf";
+const QString sessionsettings_config_file = QDir::homePath() + "/.config/lumina-desktop/sessionsettings.conf";
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -181,7 +181,7 @@ QStringList DirWidget::getDateFormat() {
 void DirWidget::setDateFormat() {
   if(!date_format.isEmpty())
       date_format.clear();
-  QSettings settings("LuminaDE","sessionsettings");
+  QSettings settings("lumina-desktop","sessionsettings");
   // If value doesn't exist or is not setted, empty string is returned
   date_format << settings.value("DateFormat").toString();
   date_format << settings.value("TimeFormat").toString();

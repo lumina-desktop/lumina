@@ -125,6 +125,7 @@ private:
 	
 public:
 	//Couple overloaded contructors
+	LFileInfo();
 	LFileInfo(QString filepath);
 	LFileInfo(QFileInfo info);
 	~LFileInfo(){ 

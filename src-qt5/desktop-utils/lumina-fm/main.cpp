@@ -9,6 +9,8 @@
 #include <LuminaUtils.h>
 #include <LuminaSingleApplication.h>
 
+#include "BrowserWidget.h"
+
 int main(int argc, char ** argv)
 {
     LTHEME::LoadCustomEnvSettings();
@@ -27,6 +29,16 @@ int main(int argc, char ** argv)
     QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.OpenDirs(in);
     w.show();
+
+   // TESTING CODE FOR NEW BACKEND
+    /*QMainWindow W;
+      BrowserWidget B("",&W);
+      W.setCentralWidget( &B);
+      B.showDetails(false);
+      B.changeDirectory(in.first());
+    qDebug() << "Show Window";
+    W.show();
+  */
 
     int retCode = a.exec();
     return retCode;

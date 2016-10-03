@@ -1,227 +1,227 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="el_GR">
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.ui" line="14"></location>
+        <location filename="../MainUI.ui" line="24"></location>
+        <location filename="../MainUI.cpp" line="89"></location>
         <source>File Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Πληροφορίες Αρχείου</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="56"/>
+        <location filename="../MainUI.ui" line="56"></location>
         <source>Owner:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ιδιοκτήτης:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="73"/>
+        <location filename="../MainUI.ui" line="73"></location>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ομάδα:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="90"/>
+        <location filename="../MainUI.ui" line="90"></location>
         <source>Permissions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Δικαιώματα:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="104"/>
+        <location filename="../MainUI.ui" line="104"></location>
         <source>Created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργήθηκε:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="111"/>
+        <location filename="../MainUI.ui" line="111"></location>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημείωση: Ο χρόνος όπου ένα αρχείο δημιουργήθηκε μπορεί να είναι πιο πρόσφατος από τη στιγμή που τροποποιήθηκε, εφόσον οι άδειες αρχείων άλλαξαν πρόσφατα.</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="124"/>
+        <location filename="../MainUI.ui" line="124"></location>
         <source>Last Modified:</source>
-        <translation type="unfinished"></translation>
+        <translation>Τελευταία Τροποποίηση:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="131"/>
+        <location filename="../MainUI.ui" line="131"></location>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Τύπος:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../MainUI.ui" line="138"></location>
         <source>MimeType:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ΤύποςMime:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="185"/>
+        <location filename="../MainUI.ui" line="185"></location>
         <source>File Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέγεθος Αρχείου:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.ui" line="216"></location>
+        <location filename="../MainUI.cpp" line="130"></location>
         <source>Edit Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία Συντόμευσης</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="239"/>
+        <location filename="../MainUI.ui" line="239"></location>
         <source>Working Dir:</source>
-        <translation type="unfinished"></translation>
+        <translation>Τρέχων κατάλογος εργασίας:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="246"/>
+        <location filename="../MainUI.ui" line="246"></location>
         <source>Use startup notification</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε ειδοποίηση εκκίνησης</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="260"/>
+        <location filename="../MainUI.ui" line="260"></location>
         <source>Icon:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εικονίδιο:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="267"/>
+        <location filename="../MainUI.ui" line="267"></location>
         <source>Command:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eντολή:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="274"/>
+        <location filename="../MainUI.ui" line="274"></location>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Σχόλιο:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
+        <location filename="../MainUI.ui" line="284"></location>
         <source>Run in terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Τρέξτε το στην γραμμή εντολών</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="291"></location>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Όνομα:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="298"></location>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="336"/>
+        <location filename="../MainUI.ui" line="336"></location>
         <source>No Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Χωρίς Εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="392"/>
+        <location filename="../MainUI.ui" line="392"></location>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="405"/>
+        <location filename="../MainUI.ui" line="405"></location>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="59"></location>
         <source>---Calculating---</source>
-        <translation type="unfinished"></translation>
+        <translation>---Υπολογισμός---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="68"></location>
         <source>Read/Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάγνωση/Εγγραφή</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="69"></location>
         <source>Read Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Μόνο Ανάγνωση</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="70"></location>
         <source>Write Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Μόνο Εγγραφή</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="71"></location>
         <source>No Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Χωρίς Πρόσβαση</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="75"></location>
         <source>XDG Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>XDG Συντόμευση</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="76"></location>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάλογος</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="77"></location>
         <source>Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκτελέσιμο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="79"></location>
         <source>Hidden %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Κρυφό %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="116"></location>
         <source>URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="237"></location>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση Αρχείου Εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="237"></location>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Εγγραφές Εφαρμογής (* .desktop)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="278"></location>
         <source>Select a binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ένα εκτελέσιμο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="281"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="281"></location>
         <source>Invalid selection: Not a valid executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη επιλογή: Μη έγκυρο εκτελέσιμο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="293"></location>
         <source>Select a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε έναν κατάλογο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="306"></location>
         <source>Select an icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ένα εικονίδιο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="306"></location>
         <source>Images (%1);; All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Εικόνες (% 1) ;; ΌλαΤαΑρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="329"></location>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source> Folders: </source>
-        <translation type="unfinished"></translation>
+        <translation> Φάκελοι: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="329"></location>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source>Files: </source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχεία: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source>  Calculating...</source>
-        <translation type="unfinished"></translation>
+        <translation>  Υπολογισμός...</translation>
     </message>
 </context>
 </TS>
