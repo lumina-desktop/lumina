@@ -11,6 +11,8 @@
 #include <QProcessEnvironment>
 #include <QDebug>
 #include <QSettings>
+#include <QDir>
+
 #include <LuminaUtils.h>
 #include <LuminaOS.h>
 
@@ -56,6 +58,13 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
   proc->setProcessChannelMode(QProcess::MergedChannels);
   proc->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
   proc->setStandardOutputFile(logfile);
+  if(ID=="runtime"){
+    //Bypass for a hidden dbus requirement for Qt itself (Qt 5.5.1)
+    QDir tmp = QDir::temp();
+    if( tmp.entryList(QStringList() << "dbus-*").isEmpty() && LUtils::isValidBinary("dbus-launch")){
+      command.prepend("dbus-launch --exit-with-session ");
+    }
+  }
   proc->start(command, QIODevice::ReadOnly);
   connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished()) );
   PROCS << proc;
