@@ -38,7 +38,8 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
             } else {
                 mode = Qt::KeepAspectRatio;
             }
-            bgImage = bgImage.scaled(size(), mode);
+            if(bgImage.height() != this->height() && bgImage.width() != this->width() ){ bgImage = bgImage.scaled(size(), mode);  }
+            //bgImage = bgImage.scaled(size(), mode);
         }
 
         // Calculate the offset

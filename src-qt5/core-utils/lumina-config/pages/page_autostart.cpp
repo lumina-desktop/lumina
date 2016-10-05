@@ -32,7 +32,9 @@ page_autostart::~page_autostart(){
 //    PUBLIC SLOTS
 //================
 void page_autostart::SaveSettings(){
+  //qDebug() << "Load AutoStart Files for saving";
   QList<XDGDesktop*> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << " - done";
   //bool newstartapps = false;
   for(int i=0; i<ui->list_session_start->count(); i++){
     QString file = ui->list_session_start->item(i)->whatsThis();
@@ -57,17 +59,19 @@ void page_autostart::SaveSettings(){
     }
   } //end loop over GUI items
   //Now cleanup all the STARTAPPS data
-  for(int i=0; STARTAPPS.length(); i++){ STARTAPPS[i]->deleteLater(); }
+  for(int i=STARTAPPS.length()-1; i>=0; i--){ STARTAPPS[i]->deleteLater(); }
 }
 
 void page_autostart::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Startup Services") );
+  //qDebug() << "Load AutoStart Files";
   QList<XDGDesktop*> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << " - done:" << STARTAPPS.length();
   //qDebug() << "StartApps:";
   ui->list_session_start->clear();
   for(int i=0; i<STARTAPPS.length(); i++){
-  //qDebug() << STARTAPPS[i].filePath +" -> " +STARTAPPS[i].name << STARTAPPS[i].isHidden;
+  //qDebug() << STARTAPPS[i]->filePath +" -> " +STARTAPPS[i]->name << STARTAPPS[i]->isHidden;
     if( !STARTAPPS[i]->isValid() || !QFile::exists(STARTAPPS[i]->filePath) ){ continue; }
     QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(STARTAPPS[i]->icon,"application-x-executable"), STARTAPPS[i]->name );
 	it->setWhatsThis(STARTAPPS[i]->filePath); //keep the file location
@@ -77,7 +81,7 @@ void page_autostart::LoadSettings(int){
 	ui->list_session_start->addItem(it);
   }
   //Now cleanup all the STARTAPPS data
-  for(int i=0; STARTAPPS.length(); i++){ STARTAPPS[i]->deleteLater(); }
+  for(int i=STARTAPPS.length()-1; i>=0; i--){ STARTAPPS[i]->deleteLater(); }
 }
 
 void page_autostart::updateIcons(){

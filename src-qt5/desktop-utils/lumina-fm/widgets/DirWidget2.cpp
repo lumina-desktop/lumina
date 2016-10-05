@@ -66,6 +66,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
 
   UpdateIcons();
   UpdateText();	
+  createShortcuts();
   createMenus();
 }
 
@@ -188,34 +189,67 @@ void DirWidget::UpdateText(){
 // =================
 //       PRIVATE
 // =================
+void DirWidget::createShortcuts(){
+kZoomIn= new QShortcut(QKeySequence(QKeySequence::ZoomIn),this);
+kZoomOut= new QShortcut(QKeySequence(QKeySequence::ZoomOut),this);
+kNewFile= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_F),this);
+kNewDir= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N),this);
+kNewXDG= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_G),this);
+kCut= new QShortcut(QKeySequence(QKeySequence::Cut),this);
+kCopy= new QShortcut(QKeySequence(QKeySequence::Copy),this);
+kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
+kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
+kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
+kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
+kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
+kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
+kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
+
+connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
+connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
+connect(kNewFile, SIGNAL(activated()), this, SLOT(createNewFile()) );
+connect(kNewDir, SIGNAL(activated()), this, SLOT(createNewDir()) );
+connect(kNewXDG, SIGNAL(activated()), this, SLOT(createNewXDGEntry()) );
+connect(kCut, SIGNAL(activated()), this, SLOT(cutFiles()) );
+connect(kCopy, SIGNAL(activated()), this, SLOT(copyFiles()) );
+connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
+connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
+connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
+connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
+connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
+connect(kOpMM, SIGNAL(activated()), this, SLOT(openMultimedia()) );
+connect(kOpTerm, SIGNAL(activated()), this, SLOT(openTerminal()) );
+
+}
+
 void DirWidget::createMenus(){
   //Note: contextMenu already created - this is just for the sub-items
   if(cNewMenu==0){ cNewMenu = new QMenu(this); }
   else{ cNewMenu->clear(); }
   cNewMenu->setTitle(tr("Create...") );
   cNewMenu->setIcon( LXDG::findIcon("list-add","") );
-  cNewMenu->addAction(LXDG::findIcon("document-new",""), tr("File"), this, SLOT(createNewFile()) );
-  cNewMenu->addAction(LXDG::findIcon("folder-new",""), tr("Directory"), this, SLOT(createNewDir()) );
-  if(LUtils::isValidBinary("lumina-fileinfo")){ cNewMenu->addAction(LXDG::findIcon("system-run",""), tr("Application Launcher"), this, SLOT(createNewXDGEntry()) ); }
+  cNewMenu->addAction(LXDG::findIcon("document-new",""), tr("File"), this, SLOT(createNewFile()), kNewFile->key() );
+  cNewMenu->addAction(LXDG::findIcon("folder-new",""), tr("Directory"), this, SLOT(createNewDir()), kNewDir->key() );
+  if(LUtils::isValidBinary("lumina-fileinfo")){ cNewMenu->addAction(LXDG::findIcon("system-run",""), tr("Application Launcher"), this, SLOT(createNewXDGEntry()), kNewXDG->key() ); }
 
   if(cOpenMenu==0){ cOpenMenu = new QMenu(this); }
   else{ cOpenMenu->clear(); }
   cOpenMenu->setTitle(tr("Launch..."));
   cOpenMenu->setIcon( LXDG::findIcon("quickopen","") );
-  cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(openTerminal()));
-  cOpenMenu->addAction(LXDG::findIcon("view-preview",""), tr("SlideShow"), this, SLOT(openInSlideshow()));
-  cOpenMenu->addAction(LXDG::findIcon("view-media-lyrics","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()));
+  cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
+  cOpenMenu->addAction(LXDG::findIcon("view-preview",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
+  cOpenMenu->addAction(LXDG::findIcon("view-media-lyrics","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
 
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }
   else{ cFModMenu->clear(); }
   cFModMenu->setTitle(tr("Modify Files..."));
   cFModMenu->setIcon( LXDG::findIcon("document-edit","") );
-  cFModMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()) );
-  cFModMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()) );
+  cFModMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() );
+  cFModMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() );
   cFModMenu->addSeparator();
-  cFModMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()) );
+  cFModMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() );
   cFModMenu->addSeparator();
-  cFModMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()) );
+  cFModMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() );
 
   if(cFViewMenu==0){ cFViewMenu = new QMenu(this); }
   else{ cFViewMenu->clear(); }
@@ -456,7 +490,7 @@ void DirWidget::UpdateContextMenu(){
     cFModMenu->setEnabled(!sel.isEmpty() && canmodify);
   contextMenu->addMenu(cFViewMenu);
     cFViewMenu->setEnabled(!sel.isEmpty());
-  contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()) )->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && canmodify);
+  contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && canmodify);
   //Now add the general selection options
   contextMenu->addSection(LXDG::findIcon("folder","inode/directory"), tr("Directory Operations"));
   if(canmodify){
@@ -578,7 +612,7 @@ void DirWidget::createNewXDGEntry(){
 // - Selected FILE operations
 void DirWidget::cutFiles(){
   QStringList sel = currentBrowser()->currentSelection();
-  if(sel.isEmpty()){ return; }
+  if(sel.isEmpty() || !canmodify){ return; }
   emit CutFiles(sel);	
 }
 
@@ -589,12 +623,13 @@ void DirWidget::copyFiles(){
 }
 
 void DirWidget::pasteFiles(){
+  if( !canmodify ){ return; }
   emit PasteFiles(currentBrowser()->currentDirectory(), QStringList() );	
 }
 
 void DirWidget::renameFiles(){
   QStringList sel = currentBrowser()->currentSelection();
-  if(sel.isEmpty()){ return; }
+  if(sel.isEmpty() || !canmodify){ return; }
   qDebug() << "Deleting selected Items:" << sel;
   emit RenameFiles(sel);	
 }
@@ -607,7 +642,7 @@ void DirWidget::favoriteFiles(){
 
 void DirWidget::removeFiles(){
   QStringList sel = currentBrowser()->currentSelection();
-  if(sel.isEmpty()){ return; }
+  if(sel.isEmpty() || !canmodify){ return; }
   qDebug() << "Deleting selected Items:" << sel;
   emit RemoveFiles(sel);	
 }

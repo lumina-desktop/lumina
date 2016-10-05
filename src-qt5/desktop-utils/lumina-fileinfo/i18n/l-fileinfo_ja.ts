@@ -1,227 +1,227 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ja">
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.ui" line="14"></location>
+        <location filename="../MainUI.ui" line="24"></location>
+        <location filename="../MainUI.cpp" line="89"></location>
         <source>File Information</source>
         <translation>ファイルの情報</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="56"/>
+        <location filename="../MainUI.ui" line="56"></location>
         <source>Owner:</source>
         <translation>所有者:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="73"/>
+        <location filename="../MainUI.ui" line="73"></location>
         <source>Group:</source>
         <translation>グループ:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="90"/>
+        <location filename="../MainUI.ui" line="90"></location>
         <source>Permissions:</source>
         <translation>パーミッション:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="104"/>
+        <location filename="../MainUI.ui" line="104"></location>
         <source>Created:</source>
         <translation>作成日時:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="111"/>
+        <location filename="../MainUI.ui" line="111"></location>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
         <translation>注意: パーミッション設定のため、ファイル作成日時が更新時刻より新しいことがあります。</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="124"/>
+        <location filename="../MainUI.ui" line="124"></location>
         <source>Last Modified:</source>
         <translation>最終更新日時:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="131"/>
+        <location filename="../MainUI.ui" line="131"></location>
         <source>Type:</source>
         <translation>種類:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../MainUI.ui" line="138"></location>
         <source>MimeType:</source>
         <translation>MIME タイプ:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="185"/>
+        <location filename="../MainUI.ui" line="185"></location>
         <source>File Size:</source>
         <translation>ファイルのサイズ:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.ui" line="216"></location>
+        <location filename="../MainUI.cpp" line="130"></location>
         <source>Edit Shortcut</source>
         <translation>ショートカットを編集</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="239"/>
+        <location filename="../MainUI.ui" line="239"></location>
         <source>Working Dir:</source>
         <translation>作業ディレクトリー:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="246"/>
+        <location filename="../MainUI.ui" line="246"></location>
         <source>Use startup notification</source>
         <translation>起動通知を行う</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="260"/>
+        <location filename="../MainUI.ui" line="260"></location>
         <source>Icon:</source>
         <translation>アイコン:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="267"/>
+        <location filename="../MainUI.ui" line="267"></location>
         <source>Command:</source>
         <translation>コマンド:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="274"/>
+        <location filename="../MainUI.ui" line="274"></location>
         <source>Comment:</source>
         <translation>コメント:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
+        <location filename="../MainUI.ui" line="284"></location>
         <source>Run in terminal</source>
         <translation>ターミナルで実行する</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="291"></location>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="298"></location>
         <source>Options</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="336"/>
+        <location filename="../MainUI.ui" line="336"></location>
         <source>No Icon</source>
         <translation>アイコン無し</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="392"/>
+        <location filename="../MainUI.ui" line="392"></location>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="405"/>
+        <location filename="../MainUI.ui" line="405"></location>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="59"></location>
         <source>---Calculating---</source>
         <translation>---計算しています---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="68"></location>
         <source>Read/Write</source>
         <translation>読み込み/書き込み</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="69"></location>
         <source>Read Only</source>
         <translation>読み込み専用</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="70"></location>
         <source>Write Only</source>
         <translation>書き込み専用</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="71"></location>
         <source>No Access</source>
         <translation>アクセス権無し</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="75"></location>
         <source>XDG Shortcut</source>
         <translation>XDG ショートカット</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="76"></location>
         <source>Directory</source>
         <translation>ディレクトリー</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="77"></location>
         <source>Binary</source>
         <translation>バイナリー</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="79"></location>
         <source>Hidden %1</source>
-        <translatorcomment>%1 には &quot;Directory&quot;, &quot;File&quot;, &quot;Link&quot; などが入ると思われる。</translatorcomment>
+        <translatorcomment>%1 には "Directory", "File", "Link" などが入ると思われる。</translatorcomment>
         <translation>隠し %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="116"></location>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="237"></location>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションファイルを保存</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="237"></location>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション登録 (*.desktop)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="278"></location>
         <source>Select a binary</source>
         <translatorcomment>ファイル選択ダイアログのタイトル</translatorcomment>
         <translation>バイナリーを選択する</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="281"></location>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="281"></location>
         <source>Invalid selection: Not a valid executable</source>
         <translation>無効な選択: 有効な実行ファイルではありません</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="293"></location>
         <source>Select a directory</source>
         <translation>ディレクトリーを選択</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="306"></location>
         <source>Select an icon</source>
-        <translation>アイコンを選択:</translation>
+        <translation>アイコンを選択</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="306"></location>
         <source>Images (%1);; All Files (*)</source>
         <translation>画像ファイル (%1);; 全ファイル (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="329"></location>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source> Folders: </source>
         <translation> フォルダー: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="329"></location>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source>Files: </source>
         <translation>ファイル: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="331"></location>
         <source>  Calculating...</source>
         <translation>  計算中...</translation>
     </message>

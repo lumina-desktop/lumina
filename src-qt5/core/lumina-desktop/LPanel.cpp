@@ -6,6 +6,8 @@
 //===========================================
 #include "LPanel.h"
 #include "LSession.h"
+#include <QScreen>
+
 #include "panel-plugins/systemtray/LSysTray.h"
 
 #define DEBUG 0
@@ -26,7 +28,8 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   screennum = scr;
   panelnum = num; //save for later
   screen = LSession::desktop();
-  PPREFIX = "panel"+QString::number(screennum)+"."+QString::number(num)+"/";
+  QString screenID = QApplication::screens().at(screennum)->name();
+  PPREFIX = "panel_"+screenID+"."+QString::number(num)+"/";
   defaultpanel = (LSession::handle()->screenGeom(screennum).x()==0 && num==0);
   horizontal=true; //use this by default initially
   hidden = false; //use this by default

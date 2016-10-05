@@ -30,7 +30,8 @@ page_interface_panels::~page_interface_panels(){
 //    PUBLIC SLOTS
 //================
 void page_interface_panels::SaveSettings(){
-  QString DPrefix = "desktop-"+QString::number(cscreen)+"/";
+  QString screenID = QApplication::screens().at(cscreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
   settings->setValue(DPrefix+"panels", PANELS.length());
   for(int i=0; i<PANELS.length(); i++){
     PANELS[i]->SaveSettings(settings);
@@ -48,7 +49,8 @@ void page_interface_panels::LoadSettings(int screennum){
   loading = true;
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Desktop Settings") );
-  QString DPrefix = "desktop-"+QString::number(cscreen)+"/";
+  QString screenID = QApplication::screens().at(cscreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
   int panelnumber = settings->value(DPrefix+"panels",-1).toInt();
   
 //First clean any current panels
