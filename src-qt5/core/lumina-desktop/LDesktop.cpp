@@ -12,11 +12,13 @@
 #include "LWinInfo.h"
 #include "JsonMenu.h"
 
+#include <QScreen>
+
 #define DEBUG 0
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
-
-  DPREFIX = "desktop-"+QString::number(deskNum)+"/";
+  QString screenID = QApplication::screens().at(deskNum)->name();
+  DPREFIX = "desktop-"+screenID+"/";
   desktopnumber = deskNum;
   desktop = QApplication::desktop();
   defaultdesktop = setdefault; //(desktop->screenGeometry(desktopnumber).x()==0);

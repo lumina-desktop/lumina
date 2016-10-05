@@ -42,7 +42,8 @@ PanelWidget::~PanelWidget(){
 void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   pnum = Pnum; dnum = Dnum; //save these for later
   ui->label->setText( QString(tr("Panel %1")).arg(QString::number(Pnum+1) ) );
-  QString prefix = "panel"+QString::number(Dnum)+"."+QString::number(Pnum)+"/";
+  QString screenID = QApplication::screens().at(Dnum)->name();
+  QString prefix = "panel_"+screenID+"."+QString::number(Pnum)+"/";
   qDebug() << "Loading Panel Settings:" << prefix;
   //Now load the settings into the GUI
   int tmp = ui->combo_align->findData( settings->value(prefix+"pinLocation","center").toString().toLower() );
@@ -78,7 +79,8 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
 }
 
 void PanelWidget::SaveSettings(QSettings *settings){//save the current settings
-  QString prefix = "panel"+QString::number(dnum)+"."+QString::number(pnum)+"/";
+  QString screenID = QApplication::screens().at(dnum)->name();
+  QString prefix = "panel_"+screenID+"."+QString::number(pnum)+"/";
   qDebug() << "Saving panel settings:" << prefix;
   settings->setValue(prefix+"location", ui->combo_edge->currentData().toString() );
   settings->setValue(prefix+"pinLocation", ui->combo_align->currentData().toString() );
