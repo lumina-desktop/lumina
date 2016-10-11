@@ -70,11 +70,11 @@ LSession::~LSession(){
  if(this->isPrimaryProcess()){
   //WM->stopWM();
   for(int i=0; i<DESKTOPS.length(); i++){
-    delete DESKTOPS[i];
+    DESKTOPS[i]->deleteLater();
   }
   //delete WM;
-  delete settingsmenu;
-  delete appmenu;
+  settingsmenu->deleteLater();
+  appmenu->deleteLater();
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
  }
@@ -207,7 +207,7 @@ void LSession::CleanupSession(){
   }
   evFilter->StopEventHandling();
   //Stop the window manager
-  qDebug() << " - Stopping the window manager";
+  //qDebug() << " - Stopping the window manager";
   //WM->stopWM();
   //Now close down the desktop
   qDebug() << " - Closing down the desktop elements";
