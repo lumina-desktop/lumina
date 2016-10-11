@@ -557,7 +557,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="175"></location>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>Branch Name</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"></location>
@@ -630,7 +630,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="181"></location>
         <source>Git</source>
-        <translation type="unfinished"></translation>
+        <translation>Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="196"></location>
@@ -716,12 +716,12 @@ Neue Position: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="439"></location>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status des Repositorys</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="444"></location>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Repository klonen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"></location>
@@ -896,7 +896,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="626"></location>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status des Git Repositorys</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="732"></location>
