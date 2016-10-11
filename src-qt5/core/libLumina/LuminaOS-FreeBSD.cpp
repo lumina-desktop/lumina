@@ -292,8 +292,10 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
   static QStringList vars = QStringList();
   QStringList temps;
-  if(vars.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -i hw.").filter(".temperature:"); }
-  else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
+  if(vars.isEmpty()){ 
+    temps = LUtils::getCmdOutput("sysctl -i dev.cpu").filter(".temperature:");  //try direct readings first
+    if(temps.isEmpty()){ LUtils::getCmdOutput("sysctl -i hw.acpi").filter(".temperature:"); } // then try acpi values
+  }else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
   
     temps.sort();
     for(int i=0; i<temps.length(); i++){
