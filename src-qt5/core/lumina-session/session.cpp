@@ -36,7 +36,8 @@ void LSession::procFinished(){
       stopped++;
       if(!stopping){
         //See if this process is the main desktop binary
-        if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
+        if(PROCS[i]->objectName()=="runtime"){ stopall(); }
+        //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         break;
       }
@@ -58,6 +59,7 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
   proc->setProcessChannelMode(QProcess::MergedChannels);
   proc->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
   proc->setStandardOutputFile(logfile);
+  proc->setObjectName(ID);
   if(ID=="runtime"){
     //Bypass for a hidden dbus requirement for Qt itself (Qt 5.5.1)
     QDir tmp = QDir::temp();
