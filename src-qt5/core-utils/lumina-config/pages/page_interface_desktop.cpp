@@ -31,7 +31,8 @@ page_interface_desktop::~page_interface_desktop(){
 //================
 void page_interface_desktop::SaveSettings(){
   QSettings settings("lumina-desktop","desktopsettings");
-  QString DPrefix = "desktop-"+QString::number(cscreen)+"/";
+  QString screenID = QApplication::screens().at(cscreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
 
   settings.setValue(DPrefix+"generateDesktopIcons", ui->check_desktop_autolaunchers->isChecked() );
   QStringList plugs;
@@ -53,7 +54,8 @@ void page_interface_desktop::LoadSettings(int screennum){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Desktop Settings") );
   QSettings settings("lumina-desktop","desktopsettings");
-  QString DPrefix = "desktop-"+QString::number(cscreen)+"/";
+  QString screenID = QApplication::screens().at(cscreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
   ui->check_desktop_autolaunchers->setChecked(settings.value(DPrefix+"generateDesktopIcons",false).toBool() );
 
   QStringList dplugs = settings.value(DPrefix+"pluginlist",QStringList()).toStringList();

@@ -136,9 +136,9 @@ QStringList BrowserWidget::history(){
 }
 
 void BrowserWidget::setShowActive(bool show){
-  if(!show){ this->setStyleSheet("QAbstractScrollArea{ background-color: rgba(10,10,10,10); }"); }
+  if(!show){ this->setStyleSheet("QAbstractScrollArea{ background-color: rgba(10,10,10,10); } QHeaderView{ background-color: lightgrey; }"); }
   else{
-    this->setStyleSheet( "QAbstractScrollArea{ background-color: white; }");
+    this->setStyleSheet( "");
   }
 }
 

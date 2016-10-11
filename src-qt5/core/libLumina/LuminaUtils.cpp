@@ -17,6 +17,7 @@
 #include <QRegExp>
 #include <QFuture>
 #include <QtConcurrent>
+#include <QScreen>
 
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
@@ -897,50 +898,31 @@ bool LUtils::checkUserFiles(QString lastversion){
   if(newversion || newrelease){
     LUtils::upgradeFavorites(oldversion);	  
   }
-  //Convert any "userbutton" and "appmenu" panel plugins to the new "systemstart" plugin (0.8.7)
-  /*if(oldversion <= 8007 && (newversion || newrelease) && nversion < 8008){
-    QSettings dset(QSettings::UserScope, "LuminaDE","desktopsettings");
-    QStringList plugKeys = dset.allKeys().filter("panel").filter("/pluginlist");
-    for(int i=0; i<plugKeys.length(); i++){
-      QStringList plugs = dset.value(plugKeys[i],QStringList()).toStringList();
-      //Do the appmenu/userbutton -> systemstart conversion
-      plugs = plugs.join(";;;;").replace("userbutton","systemstart").replace("appmenu","systemstart").split(";;;;");
-      //Remove any system dashboard plugins
-      plugs.removeAll("systemdashboard");
-      //Now save that back to the file
-      dset.setValue(plugKeys[i], plugs);
-    }
-    //Also remove any "desktopview" desktop plugin and enable the automatic desktop icons instead
-    plugKeys = dset.allKeys().filter("desktop-").filter("/pluginlist");
-    for(int i=0; i<plugKeys.length(); i++){
-      QStringList plugs = dset.value(plugKeys[i], QStringList()).toStringList();
-      QStringList old = plugs.filter("desktopview");
-      bool found = !old.isEmpty();
-      for(int j=0; j<old.length(); j++){ plugs.removeAll(old[j]); }
-      if(found){
-        dset.setValue(plugKeys[i],plugs); //save the modified plugin list
-	//Also set the auto-generate flag on this desktop
-	dset.setValue(plugKeys[i].section("/",0,0)+"/generateDesktopIcons", true);
+  //Convert from the old desktop numbering system to the new one (change occured with 1.0.1)
+  if(oldversion<=1000001){
+    QStringList DS = LUtils::readFile(dset);
+    QList<QScreen*> screens = QApplication::screens();
+    for(int i=0; i<DS.length(); i++){
+      if(!DS[i].startsWith("[")){ continue; }
+      if(DS[i].startsWith("[desktop-")){
+        bool ok = false;
+        int num = DS[i].section("desktop-",-1).section("]",0,0).toInt(&ok);
+        if(num>=0 && ok && num< screens.length()){
+          //This one needs to be converted
+          DS[i] = "[desktop-"+screens[num]->name()+"]";
+        }
+      }else if(DS[i].startsWith("[panel")){
+        bool ok = false;
+        int num = DS[i].section("panel",-1).section(".",0,0).toInt(&ok);
+        if(num>=0 && ok && num< screens.length()){
+          //This one needs to be converted
+         QString rest = DS[i].section(".",1,-1); //everything after the desktop number in the current setting
+          DS[i] = "[panel_"+screens[num]->name()+"."+rest;
+        }
       }
     }
-    dset.sync();
-    //Due to the grid size change for desktop plugins, need to remove any old plugin geometries
-    if(QFile::exists(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf")){
-      QFile::remove(QDir::homePath()+"/.lumina/pluginsettings/desktopsettings.conf");
-    }
-  }*/
-  
-  //Convert to the XDG autostart spec as necessary (Change occured with 0.8.5)
-  /*if(QFile::exists(QDir::homePath()+"/.lumina/startapps") ){
-    QStringList cmds = LUtils::readFile(QDir::homePath()+"/.lumina/startapps");
-    for(int i=0; i<cmds.length(); i++){
-      cmds[i] = cmds[i].remove("lumina-open").simplified(); //remove the file opener
-      if(cmds[i].startsWith("#") || cmds[i].isEmpty()){ continue; } //invalid line
-      
-      LXDG::setAutoStarted(true, cmds[i]);
-    }
-    QFile::remove(QDir::homePath()+"/.lumina/startapps"); //delete the old file
-  }*/
+    LUtils::writeFile(dset, DS, true);
+  }
   
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";

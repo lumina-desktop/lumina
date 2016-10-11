@@ -183,6 +183,9 @@ private slots:
 	}
 
 protected:
+	void paintEvent(QPaintEvent*){
+	  //do nothing here - the main plugin area should *always* be invisible
+	}
 	//Need Drag and Drop functionality (internal movement)
 	void dragEnterEvent(QDragEnterEvent *ev){
 	  if(ev->mimeData()->hasFormat(MIMETYPE) ){
