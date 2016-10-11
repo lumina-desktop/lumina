@@ -16,7 +16,7 @@ int main(int argc, char ** argv)
     LSingleApplication a(argc, argv, "lumina-info"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     //qDebug() << "Set Application Name";
-    a.setApplicationName("About Lumina-DE");
+    a.setApplicationName("About Lumina");
     //qDebug() << "Load Theme Engine";
     LuminaThemeEngine themes(&a);
     //qDebug() << "Start the UI";
