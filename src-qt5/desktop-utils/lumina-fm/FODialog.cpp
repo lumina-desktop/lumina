@@ -295,16 +295,16 @@ void FOWorker::slotStartOperations(){
     if(isRM){ //only old files
       olist << subfiles(ofiles[i], false); //dirs need to be last for removals
     }else if(isCP || isRESTORE){
-      if(nfiles[i] == ofiles[i] && overwrite==1){
-	//Trying to copy a file/dir to itself - skip it
-	continue;
-      }
       if(QFile::exists(nfiles[i])){
 	if(overwrite!=1){
 	  qDebug() << " - Get New Filename:" << nfiles[i];
 	  nfiles[i] = newFileName(nfiles[i]); //prompt for new file name up front before anything starts
-	  qDebug() << " -- nfiles[i]";
+	  qDebug() << " -- " << nfiles[i];
 	}
+      }
+      if(nfiles[i] == ofiles[i] && overwrite==1){
+	//Trying to copy a file/dir to itself - skip it
+	continue;
       }
       QStringList subs = subfiles(ofiles[i], true); //dirs need to be first for additions
       for(int s=0; s<subs.length(); s++){

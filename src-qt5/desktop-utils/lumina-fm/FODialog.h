@@ -23,10 +23,6 @@
 #include <LuminaXDG.h>
 #include <LuminaUtils.h>
 
-namespace Ui{
-	class FODialog;
-};
-
 class FOWorker : public QObject{
 	Q_OBJECT
 public:
@@ -55,6 +51,10 @@ private:
 signals:
 	void startingItem(int, int, QString, QString); //current number, total number, Old File, New File (if appropriate)
 	void finished(QStringList); //errors returned
+};
+
+namespace Ui{
+	class FODialog;
 };
 
 class FODialog : public QDialog{

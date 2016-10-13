@@ -67,12 +67,14 @@ void Browser::loadItem(QString info){
 
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
-  if(file.startsWith(currentDir+"/")){ QtConcurrent::run(this, &Browser::loadItem, file ); }
-  else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+  if(file.startsWith(currentDir+"/") ){ 
+    if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file ); } //file modified but not removed
+    else{ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); } //file removed - need to update entire dir
+  }else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
 }
 
 void Browser::dirChanged(QString dir){
-  if(dir==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+  if(dir==currentDir){ QTimer::singleShot(500, this, SLOT(loadDirectory()) ); }
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir ); }
 }
 

@@ -105,6 +105,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   if(DEBUG){ qDebug() << " - Devices"; }
   RebuildDeviceMenu();
   //Make sure we start on the browser page
+  TRAY = new TrayUI(this);
   if(DEBUG){ qDebug() << " - Done with init"; }
 }
 
@@ -802,28 +803,30 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
 	newcopy<< dir+raw[i].section("::::",1,50).section("/",-1);
     }
   }
-  bool errs = false;
+  //bool errs = false;
   //Perform the copy/move operations
-  worker->pauseData = true; //pause any info requests
+  //worker->pauseData = true; //pause any info requests
   if(!copy.isEmpty()){ 
     qDebug() << "Paste Copy:" << copy << "->" << newcopy;
-    FODialog dlg(this);
+    TRAY->StartOperation( TrayUI::COPY, copy, newcopy);
+    /*FODialog dlg(this);
       if( !dlg.CopyFiles(copy, newcopy) ){ return; } //cancelled
       dlg.show();
       dlg.exec();
-      errs = errs || !dlg.noerrors;
+      errs = errs || !dlg.noerrors;*/
   }
   if(!cut.isEmpty()){
     qDebug() << "Paste Cut:" << cut << "->" << newcut;
-    FODialog dlg(this);
+    TRAY->StartOperation(TrayUI::MOVE, cut, newcut);
+    /*FODialog dlg(this);
       if(!dlg.MoveFiles(cut, newcut) ){ return; } //cancelled
       dlg.show();
       dlg.exec();
-      errs = errs || !dlg.noerrors;
+      errs = errs || !dlg.noerrors;*/
   }
-  worker->pauseData = false; //resume info requests
+  //worker->pauseData = false; //resume info requests
   //Modify the clipboard appropriately
-  if(!errs && !cut.isEmpty()){
+  if(!cut.isEmpty()){
     //Now clear the clipboard since those old file locations are now invalid
     QApplication::clipboard()->clear(); 
     if(!copy.isEmpty()){
@@ -876,11 +879,12 @@ void MainUI::RenameFiles(QStringList list){
     //Now perform the move
     //Don't pause the background worker for a simple rename - this operation is extremely fast
     qDebug() << "Rename:" << path+fname << "->" << path+nname;
-    FODialog dlg(this);
+    TRAY->StartOperation(TrayUI::MOVE, QStringList() << path+fname, QStringList() << path+nname);
+    /*FODialog dlg(this);
       dlg.setOverwrite(overwrite);
       dlg.MoveFiles(QStringList() << path+fname, QStringList() << path+nname);
       dlg.show();
-      dlg.exec();
+      dlg.exec();*/
   } //end loop over list of files
 }
 
@@ -901,11 +905,12 @@ void MainUI::RemoveFiles(QStringList list){
 
   //Now remove the file/dir
   qDebug() << " - Delete: "<<paths;
+  TRAY->StartOperation(TrayUI::DELETE, paths, QStringList());
   //worker->pauseData = true; //pause any info requests
-  FODialog dlg(this);
+  /*FODialog dlg(this);
     dlg.RemoveFiles(paths);
     dlg.show();
-    dlg.exec();
+    dlg.exec();*/
   //worker->pauseData = false; //resume info requests
   //for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->refresh(); }
 }
