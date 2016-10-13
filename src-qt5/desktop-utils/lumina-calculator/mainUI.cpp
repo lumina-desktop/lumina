@@ -8,6 +8,7 @@
 #include "ui_mainUI.h"
 
 #include <QDebug>
+#include <LuminaXDG.h>
 
 #define VALIDSYMBOLS QString("+-*x/.")
 
@@ -18,24 +19,25 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   ui->setupUi(this);
   connect(ui->tool_clear, SIGNAL(clicked()), this, SLOT(clear_calc()) );
   connect(ui->line_eq, SIGNAL(returnPressed()), this, SLOT(start_calc()) );
-  connect (ui->button_1, SIGNAL (clicked()), this, SLOT (captureButton1()));
-  connect (ui->button_2, SIGNAL (clicked()), this, SLOT (captureButton2()));
-  connect (ui->button_3, SIGNAL (clicked()), this, SLOT (captureButton3()));
-  connect (ui->button_4, SIGNAL (clicked()), this, SLOT (captureButton4()));
-  connect (ui->button_5, SIGNAL (clicked()), this, SLOT (captureButton5()));
-  connect (ui->button_6, SIGNAL (clicked()), this, SLOT (captureButton6()));
-  connect (ui->button_7, SIGNAL (clicked()), this, SLOT (captureButton7()));
-  connect (ui->button_8, SIGNAL (clicked()), this, SLOT (captureButton8()));
-  connect (ui->button_9, SIGNAL (clicked()), this, SLOT (captureButton9()));
-  connect (ui->button_0, SIGNAL (clicked()), this, SLOT (captureButton0()));
-  connect (ui->button_Subtract, SIGNAL (clicked()), this, SLOT (captureButtonSubtract()));
-  connect (ui->button_Add, SIGNAL (clicked()), this, SLOT (captureButtonAdd()));
-  connect (ui->button_Divide, SIGNAL (clicked()), this, SLOT (captureButtonDivide()));
-  connect (ui->button_Multiply, SIGNAL (clicked()), this, SLOT (captureButtonMultiply()));
-  connect (ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
-  connect (ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
+  connect(ui->button_1, SIGNAL (clicked()), this, SLOT (captureButton1()));
+  connect(ui->button_2, SIGNAL (clicked()), this, SLOT (captureButton2()));
+  connect(ui->button_3, SIGNAL (clicked()), this, SLOT (captureButton3()));
+  connect(ui->button_4, SIGNAL (clicked()), this, SLOT (captureButton4()));
+  connect(ui->button_5, SIGNAL (clicked()), this, SLOT (captureButton5()));
+  connect(ui->button_6, SIGNAL (clicked()), this, SLOT (captureButton6()));
+  connect(ui->button_7, SIGNAL (clicked()), this, SLOT (captureButton7()));
+  connect(ui->button_8, SIGNAL (clicked()), this, SLOT (captureButton8()));
+  connect(ui->button_9, SIGNAL (clicked()), this, SLOT (captureButton9()));
+  connect(ui->button_0, SIGNAL (clicked()), this, SLOT (captureButton0()));
+  connect(ui->button_Subtract, SIGNAL (clicked()), this, SLOT (captureButtonSubtract()));
+  connect(ui->button_Add, SIGNAL (clicked()), this, SLOT (captureButtonAdd()));
+  connect(ui->button_Divide, SIGNAL (clicked()), this, SLOT (captureButtonDivide()));
+  connect(ui->button_Multiply, SIGNAL (clicked()), this, SLOT (captureButtonMultiply()));
+  connect(ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
+  connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
 
-
+  this->setWindowTitle(tr("Calculator"));
+  this->setWindowIcon( LXDG::findIcon("accessories-calculator","") );
   ui->line_eq->setFocus();
 }
 
@@ -86,7 +88,7 @@ double mainUI::performOperation(double LHS, double RHS, QChar symbol){
 
 double mainUI::strToNumber(QString str){
   //Look for perentheses first
-  qDebug() << "String to Number: " << str;
+  //qDebug() << "String to Number: " << str;
   if(str.indexOf("(")>=0){
     //qDebug() << "Found Parenthesis";
     int start = str.indexOf("(");
