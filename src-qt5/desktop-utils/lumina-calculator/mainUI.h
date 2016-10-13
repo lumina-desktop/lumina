@@ -23,10 +23,27 @@ public:
 
 private slots:
 	void start_calc();
+    void clear_calc();
+    void captureButton1();
+    void captureButton2();
+    void captureButton3();
+    void captureButton4();
+    void captureButton5();
+    void captureButton6();
+    void captureButton7();
+    void captureButton8();
+    void captureButton9();
+    void captureButton0();
+    void captureButtonSubtract();
+    void captureButtonAdd();
+    void captureButtonDivide();
+    void captureButtonMultiply();
+//    void captureButtonEqual();
+    void captureButtonDecimal();
+
 
 private:
 	Ui::mainUI *ui;
-
 	double performOperation(double LHS, double RHS, QChar symbol);
 	double strToNumber(QString str); //this is highly-recursive
 };
