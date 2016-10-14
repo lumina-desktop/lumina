@@ -294,7 +294,7 @@ QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature o
   QStringList temps;
   if(vars.isEmpty()){ 
     temps = LUtils::getCmdOutput("sysctl -i dev.cpu").filter(".temperature:");  //try direct readings first
-    if(temps.isEmpty()){ LUtils::getCmdOutput("sysctl -i hw.acpi").filter(".temperature:"); } // then try acpi values
+    if(temps.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -i hw.acpi").filter(".temperature:"); } // then try acpi values
   }else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
   
     temps.sort();
