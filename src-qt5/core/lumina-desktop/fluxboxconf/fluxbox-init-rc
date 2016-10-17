@@ -55,7 +55,7 @@ session.screen0.menuDelay:	200
 session.screen0.clickRaises:	true
 session.screen0.focusSameHead:	true
 session.screen0.focusModel:	ClickFocus
-session.screen0.workspacewarping:	true
+session.screen0.workspacewarping:	false
 session.screen0.maxDisableResize:	false
 session.screen0.autoRaise:	false
 session.screen0.allowRemoteActions:	false
@@ -77,5 +77,5 @@ session.keyFile:	${XDG_CONFIG_HOME}/lumina-desktop/fluxbox-keys
 session.configVersion:	13
 session.autoRaiseDelay:	250
 session.cacheMax:	200
-session.imageDither:	True
-session.forcePseudoTransparency:	True
+session.imageDither:	false
+session.forcePseudoTransparency:	false
