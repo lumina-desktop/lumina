@@ -10,7 +10,7 @@
 #include <QDebug>
 #include <LuminaXDG.h>
 
-#define VALIDSYMBOLS QString("+-*x/.")
+//#define VALIDSYMBOLS QString("+-*x/.")
 
 #include <math.h>
 #define BADVALUE NAN
