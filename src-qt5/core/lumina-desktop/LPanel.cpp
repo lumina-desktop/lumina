@@ -324,12 +324,12 @@ void LPanel::paintEvent(QPaintEvent *event){
     QPainter *painter = new QPainter(this);
     //qDebug() << "Paint Panel:" << PPREFIX;
     //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
-    QRect rec = this->geometry(); //start with the global geometry of the panel
+    QRect rec = event->rect();//this->geometry(); //start with the global geometry of the panel
     //Need to translate that rectangle to the background image coordinates
-    //qDebug() << " - Rec:" << rec << hidden << this->geometry();
-    rec.moveTo( rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y()-LSession::handle()->screenGeom(screennum).y() );
-    //qDebug() << " - Adjusted Global Rec:" << rec;
-    painter->drawPixmap(QRect(0,0,this->width(), this->height()), bgWindow->grab(rec) );
+    //qDebug() << " - Rec:" << rec << hidden << this->geometry() << bgWindow->geometry();
+    rec.moveTo( bgWindow->mapFromGlobal( this->mapToGlobal(rec.topLeft()) ) ); //(rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y()-LSession::handle()->screenGeom(screennum).y() );
+    //qDebug() << " - Adjusted Window Rec:" << rec;
+    painter->drawPixmap(event->rect(), bgWindow->grab(rec) );
   }
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }

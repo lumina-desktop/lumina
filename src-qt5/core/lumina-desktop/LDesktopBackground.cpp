@@ -7,12 +7,13 @@
 #include "LDesktopBackground.h"
 
 #include <QPainter>
+#include <QPaintEvent>
 
-void LDesktopBackground::paintEvent(QPaintEvent *) {
+void LDesktopBackground::paintEvent(QPaintEvent *ev) {
     if (bgPixmap != NULL) {
         QPainter painter(this);
         painter.setBrush(*bgPixmap);
-        painter.drawRect(0, 0, width(), height());
+        painter.drawRect(ev->rect());
     }
 }
 
@@ -66,7 +67,7 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
         painter.setBrushOrigin(dx, dy);
         painter.drawRect(dx, dy, drawWidth, drawHeight);
     }
-    update();
+    this->repaint(this->geometry()); //make sure the entire thing gets repainted right away
     show();
 }
 
