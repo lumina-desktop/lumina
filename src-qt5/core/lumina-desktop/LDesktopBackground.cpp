@@ -8,13 +8,17 @@
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <QDebug>
 
 void LDesktopBackground::paintEvent(QPaintEvent *ev) {
     if (bgPixmap != NULL) {
+        //qDebug() << "Wallpaper paint Event:" << ev->rect();
         QPainter painter(this);
         painter.setBrush(*bgPixmap);
-        painter.drawRect(ev->rect());
-    }
+        painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
+    }else{
+      QWidget::paintEvent(ev);
+   }
 }
 
 void LDesktopBackground::setBackground(const QString& bgFile, const QString& format) {
@@ -67,7 +71,7 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
         painter.setBrushOrigin(dx, dy);
         painter.drawRect(dx, dy, drawWidth, drawHeight);
     }
-    this->repaint(this->geometry()); //make sure the entire thing gets repainted right away
+    this->repaint(); //make sure the entire thing gets repainted right away
     show();
 }
 
