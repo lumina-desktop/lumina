@@ -67,7 +67,7 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
         painter.setBrushOrigin(dx, dy);
         painter.drawRect(dx, dy, drawWidth, drawHeight);
     }
-    update();
+    this->repaint(this->geometry()); //make sure the entire thing gets repainted right away
     show();
 }
 
