@@ -19,7 +19,9 @@ SOURCES += main.cpp \
 		gitCompat.cpp \
 		gitWizard.cpp \
 		Browser.cpp \
-		BrowserWidget.cpp
+		BrowserWidget.cpp \
+		TrayUI.cpp \
+		OPWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -33,7 +35,9 @@ HEADERS  += MainUI.h \
 		gitCompat.h \
 		gitWizard.h \
 		Browser.h \
-		BrowserWidget.h
+		BrowserWidget.h \
+		TrayUI.h \
+		OPWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
@@ -41,7 +45,8 @@ FORMS    += MainUI.ui \
 		widgets/MultimediaWidget.ui \
 		widgets/SlideshowWidget.ui \
 		widgets/DirWidget2.ui \
-		gitWizard.ui
+		gitWizard.ui \
+		OPWidget.ui
 
 icons.files = Insight-FileManager.png
 icons.path = $${L_SHAREDIR}/pixmaps

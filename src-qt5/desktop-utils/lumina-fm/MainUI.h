@@ -49,7 +49,8 @@
 #include <LuminaOS.h>
 
 // Local includes
-#include "FODialog.h" //file operation dialog
+//#include "FODialog.h" //file operation dialog
+#include "TrayUI.h"
 #include "BMMDialog.h" //bookmark manager dialog
 
 #include "DirData.h"
@@ -86,7 +87,8 @@ private:
 	QList<DirWidget*> DWLIST;
 	MultimediaWidget *MW;
 	SlideshowWidget *SW;
-	
+	TrayUI *TRAY;
+
     QSettings *settings;
     QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
 	//QCompleter *dirCompleter;

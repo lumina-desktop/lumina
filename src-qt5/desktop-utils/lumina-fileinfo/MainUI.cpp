@@ -41,8 +41,8 @@ void MainUI::LoadFile(QString path, QString type){
   if(INFO->exists()){ canwrite = INFO->isWritable(); }
   else if(!INFO->filePath().isEmpty()){
     //See if the containing directory can be written
-    QFileInfo chk(INFO->absolutePath());
-    canwrite = (chk.isDir() && chk.isWritable());
+    //QFileInfo chk(INFO->absolutePath());
+    canwrite = (INFO->isDir() && INFO->isWritable());
   }else{
     canwrite = true; //no associated file yet
   }
@@ -82,21 +82,29 @@ void MainUI::LoadFile(QString path, QString type){
     ui->label_file_type->setText(ftype);
     //Now load the icon for the file
     if(INFO->isImage()){
-      ui->label_file_icon->setPixmap( QPixmap(INFO->absoluteFilePath()).scaledToHeight(64) );
+      //qDebug() << "Set Image:";
+      QPixmap pix(INFO->absoluteFilePath());
+      ui->label_file_icon->setPixmap( pix.scaledToHeight(64) );
+      ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
+      //qDebug() << "  - done with image";
     }else{
       ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
     }
     //Now verify the tab is available in the widget
+    //qDebug() << "Check tab widget";
     if(ui->tabWidget->indexOf(ui->tab_file)<0){
+      //qDebug() << "Add File Info Tab";
       ui->tabWidget->addTab(ui->tab_file, tr("File Information"));
     }
+    //qDebug() << "Done with Tab Check";
   }else{
     if(ui->tabWidget->indexOf(ui->tab_file)>=0){
       ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_file) );
     }
   }
   //Now load the special XDG desktop info
-  qDebug() << INFO->isDesktopFile() << type;
+  qDebug() << "Check XDG Info:" << type;
+  //qDebug() << INFO->isDesktopFile() << type;
   if(INFO->isDesktopFile() || !type.isEmpty()){
   
     if(INFO->XDG()->type == XDGDesktop::APP){
@@ -142,6 +150,7 @@ void MainUI::LoadFile(QString path, QString type){
   //Setup the tab 
   if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
   else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
+  qDebug() << "Done Loading File";
 }
 
 void MainUI::UpdateIcons(){

@@ -106,6 +106,7 @@ signals:
 	void OpenDesktopMenu();
 	void CloseDesktopMenu();
 	void PluginResized();
+	void PluginActivated();
 	
 	//Signals for communication with the desktop layout system (not generally used by hand)
 	void StartMoving(QString); //ID of plugin

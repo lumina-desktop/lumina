@@ -568,6 +568,7 @@ QString LFileInfo::iconfile(){
 
 // -- Check if this is an XDG desktop file
 bool LFileInfo::isDesktopFile(){
+  if(desk==0){ return false; }
   return (!desk->filePath.isEmpty());	
 }
 

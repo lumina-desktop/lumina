@@ -33,8 +33,10 @@ int main(int argc, char ** argv)
     QString disp = QString(getenv("DISPLAY")).simplified();
     if(disp.isEmpty()){
       //No X session found. Go ahead and re-init this binary within an xinit call
-      QStringList args; args << QCoreApplication::applicationFilePath();
-      if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
+      QString prog = QString(argv[0]).section("/",-1);
+      LUtils::isValidBinary(prog); //will adjust the path to be absolute
+      QStringList args; args << prog;
+      //if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
       return QProcess::execute("xinit", args);
     }
     //Setup any initialization values
