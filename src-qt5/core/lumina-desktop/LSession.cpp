@@ -427,11 +427,11 @@ void LSession::updateDesktops(){
 }
 
 void LSession::registerDesktopWindows(){
-  /*QList<WId> wins;
+  QList<WId> wins;
   for(int i=0; i<DESKTOPS.length(); i++){
     wins << DESKTOPS[i]->backgroundID();
   }
-  XCB->RegisterVirtualRoots(wins);*/
+  XCB->RegisterVirtualRoots(wins);
 }
 
 void LSession::adjustWindowGeom(WId win, bool maximize){
