@@ -504,7 +504,7 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
   QFileInfo info(cur);
   canmodify = info.isWritable();
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }
-  else{ ui->label_status->setText(tr("Loading...")); }
+  else if( !currentBrowser()->isEnabled() ){ ui->label_status->setText(tr("Loading...")); }
   //qDebug() << "Start search for snapshots";
   if(!cur.contains("/.zfs/snapshot") ){ 
     normalbasedir = cur;
