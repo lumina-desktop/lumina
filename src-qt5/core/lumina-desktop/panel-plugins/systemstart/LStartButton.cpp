@@ -132,6 +132,6 @@ void LStartButtonPlugin::closeMenu(){
 void LStartButtonPlugin::shortcutActivated(){
   if(LSession::handle()->registerStartButton(this->type())){
     if(menu->isVisible()){ closeMenu(); }
-    else{ openMenu(); }
+    else{ this->activateWindow(); openMenu(); }
   }
 }

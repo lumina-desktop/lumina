@@ -20,6 +20,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
   panelArea = new QWidget(this);
+    //panelArea->setAttribute(Qt::WA_TranslucentBackground);
   QBoxLayout *tmp = new QBoxLayout(QBoxLayout::LeftToRight);
 	tmp->setContentsMargins(0,0,0,0);
 	this->setLayout(tmp);
@@ -38,9 +39,12 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   this->setContentsMargins(0,0,0,0);
   this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   //panels cannot get keyboard focus otherwise it upsets the task manager window detection
-  this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
+  //this->setAttribute(Qt::WA_X11DoNotAcceptFocus);
   this->setAttribute(Qt::WA_X11NetWmWindowTypeDock);
   this->setAttribute(Qt::WA_AlwaysShowToolTips);
+  this->setAttribute(Qt::WA_TranslucentBackground);
+  //this->setAttribute(Qt::WA_NoSystemBackground);
+  this->setAutoFillBackground(false);
   this->setWindowFlags(Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
   //this->setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
 
@@ -59,8 +63,9 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
   LSession::handle()->XCB->SetAsSticky(this->winId());
   if(hascompositer){ 
     //qDebug() << "Enable Panel compositing";
-    this->setWindowOpacity(0.0); //fully transparent background for the main widget
-    panelArea->setWindowOpacity(0.0);
+    //this->setStyleSheet("QWidget#LuminaPanelBackgroundWidget{ background: transparent; }");
+    //this->setWindowOpacity(0.5); //fully transparent background for the main widget
+    //panelArea->setWindowOpacity(1.0); //fully opaque for the widget on top (apply stylesheet transparencies)
   }
   QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
   //connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
@@ -330,7 +335,8 @@ void LPanel::paintEvent(QPaintEvent *event){
     //qDebug() << " - Rec:" << rec << hidden << this->geometry() << bgWindow->geometry();
     rec.moveTo( bgWindow->mapFromGlobal( this->mapToGlobal(rec.topLeft()) ) ); //(rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y()-LSession::handle()->screenGeom(screennum).y() );
     //qDebug() << " - Adjusted Window Rec:" << rec;
-    painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec) );
+    painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec));
+    //painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), QApplication::screens().at(screennum)->grabWindow(QX11Info::appRootWindow(), rec.x(), rec.y(), rec.width(), rec.height()) );
   }
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }
@@ -342,7 +348,7 @@ void LPanel::enterEvent(QEvent *event){
     this->move(showpoint);
     this->update();
   }
-  this->activateWindow();
+  //this->activateWindow();
   event->accept(); //just to quiet the compile warning
 }
 
@@ -355,5 +361,6 @@ void LPanel::leaveEvent(QEvent *event){
   //qDebug() << "Mouse Point (local):" << pt.x() << pt.y();
   qDebug() << "Contained:" << this->geometry().contains(pt);*/
   checkPanelFocus();
-  event->accept(); //just to quiet the compile warning
+  QWidget::leaveEvent(event);
+  //event->accept(); //just to quiet the compile warning
 }

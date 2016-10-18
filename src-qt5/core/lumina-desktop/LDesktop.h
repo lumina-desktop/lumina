@@ -68,7 +68,7 @@ private:
 	QStringList oldBGL;
 	QList<LPanel*> PANELS;
 	LDesktopPluginSpace *bgDesktop; //desktop plugin area
-	LDesktopBackground *bgWindow; //full screen background
+	//QWidget *bgWindow; //full screen background
 	QMenu *deskMenu, *winMenu;
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;

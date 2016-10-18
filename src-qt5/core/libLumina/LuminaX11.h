@@ -133,6 +133,7 @@ public:
 	// - SubStructure simplifications (not commonly used)
 	void SelectInput(WId win, bool isEmbed = false); //XSelectInput replacement (to see window events)
 	uint GenerateDamageID(WId);
+	void paintRoot(QRect area, const QPixmap *pix);
 	
 	// - General Window Modifications
 	void SetAsSticky(WId); //Stick to all workspaces

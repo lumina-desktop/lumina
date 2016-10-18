@@ -25,7 +25,7 @@ void LSession::stopall(){
   for(int i=0; i<PROCS.length(); i++){
     if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->terminate(); }
   }
-  //QCoreApplication::exit(0);
+  QCoreApplication::exit(0);
 }
 
 void LSession::procFinished(){
