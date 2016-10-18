@@ -578,6 +578,7 @@ void LSession::systemWindow(){
 
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
+  if( !QFile::exists(filepath) ){ return; }
   //Setup the audio output systems for the desktop
   if(DEBUG){ qDebug() << "Play Audio File"; }
   if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }
