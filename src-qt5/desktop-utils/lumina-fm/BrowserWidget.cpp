@@ -44,7 +44,8 @@ void BrowserWidget::changeDirectory(QString dir){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
   }else{
     //Need to remove the zfs snapshot first and ensure that it is not the same dir (just a diff snapshot)
-    QString cleaned = dir.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
+    QString cleaned = dir;
+    cleaned = cleaned.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
   qDebug() << "History:" << historyList;
