@@ -16,10 +16,13 @@
 #include <math.h>
 #define BADVALUE NAN
 
+#define OPS QString("+-*/x^")
+
 mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   ui->setupUi(this);
   connect(ui->tool_clear, SIGNAL(clicked()), this, SLOT(clear_calc()) );
   connect(ui->line_eq, SIGNAL(returnPressed()), this, SLOT(start_calc()) );
+  connect(ui->line_eq, SIGNAL(textEdited(const QString&)), this, SLOT(checkInput(const QString&)) );
   connect(ui->button_1, SIGNAL (clicked()), this, SLOT (captureButton1()));
   connect(ui->button_2, SIGNAL (clicked()), this, SLOT (captureButton2()));
   connect(ui->button_3, SIGNAL (clicked()), this, SLOT (captureButton3()));
@@ -93,6 +96,16 @@ void mainUI::copy_to_clipboard(QListWidgetItem *it){
   QString txt = it->text();
   QApplication::clipboard()->setText(txt);
 }
+
+void mainUI::checkInput(const QString &str){
+  if(str.length()==1 && ui->list_results->count()>0){
+    if(OPS.contains(str)){ 
+      QString lastresult = ui->list_results->item( ui->list_results->count()-1)->text().section("=",0,0).simplified();
+      ui->line_eq->setText( lastresult+str);
+    }
+  }
+}
+
 // =====================
 //   PRIVATE FUNCTIONS
 // =====================

@@ -47,6 +47,7 @@ private slots:
 
 	void insert_history(QListWidgetItem *it);
 	void copy_to_clipboard(QListWidgetItem *it);
+	void checkInput(const QString&);
 
 private:
 	Ui::mainUI *ui;
