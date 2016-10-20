@@ -81,6 +81,7 @@ void mainUI::captureButtonMultiply(){ ui->line_eq->setText(ui->line_eq->text() +
 void mainUI::captureButtonDecimal(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Decimal->text()); }
 
 double mainUI::performOperation(double LHS, double RHS, QChar symbol){
+  qDebug() << "Perform Operation:" << LHS << symbol << RHS;
   if(symbol== '+'){ return (LHS+RHS); }
   else if(symbol== '-'){ return (LHS-RHS); }
   else if(symbol== '*' || symbol=='x'){ return (LHS*RHS); }
@@ -92,7 +93,7 @@ double mainUI::performOperation(double LHS, double RHS, QChar symbol){
 
 double mainUI::strToNumber(QString str){
   //Look for perentheses first
-  //qDebug() << "String to Number: " << str;
+  qDebug() << "String to Number: " << str;
   if(str.indexOf("(")>=0){
     //qDebug() << "Found Parenthesis";
     int start = str.indexOf("(");
@@ -116,9 +117,14 @@ double mainUI::strToNumber(QString str){
   //Now look for add/subtract
   int sym = -1;
   QStringList symbols; symbols << "+" << "-";
+  qDebug() << "Get operator:" << str;
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);
-    if(sym < tmp){ sym = tmp; }
+    while(tmp==0 || (tmp>0 && str[tmp-1].toLower()=='e') ){ tmp = str.indexOf(symbols[i], tmp+1); } //catch scientific notation
+    if(sym < tmp){ 
+      //qDebug() << " - found:" << tmp << sym;
+      sym = tmp;
+    }
   }
   if(sym>0){  return performOperation( strToNumber(str.left(sym)), strToNumber(str.right(str.length()-sym-1)), str[sym]); }
   if(sym==0){ return BADVALUE; }
@@ -132,6 +138,6 @@ double mainUI::strToNumber(QString str){
   if(sym==0){ return BADVALUE; }
 
   //Could not find any operations - must be a raw number
-  //qDebug() << "Found Number:" << str.toDouble();
+  qDebug() << " - Found Number:" << str << str.toDouble();
   return str.toDouble();
 }
