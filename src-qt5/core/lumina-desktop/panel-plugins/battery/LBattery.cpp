@@ -80,8 +80,8 @@ void LBattery::updateBattery(bool force){
       //Play some audio warning chime when 
       LSession::handle()->playAudioFile(LOS::LuminaShare()+"low-battery.ogg");
     }
-    if(icon==0){ label->setStyleSheet("background: red;"); }
-    else{ label->setStyleSheet("background: transparent;"); }
+    if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
+    else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
     iconOld = icon;
 
   }
