@@ -81,11 +81,12 @@ void mainUI::captureButtonMultiply(){ ui->line_eq->setText(ui->line_eq->text() +
 void mainUI::captureButtonDecimal(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Decimal->text()); }
 
 double mainUI::performOperation(double LHS, double RHS, QChar symbol){
-  qDebug() << "Perform Operation:" << LHS << symbol << RHS;
+  //qDebug() << "Perform Operation:" << LHS << symbol << RHS;
   if(symbol== '+'){ return (LHS+RHS); }
   else if(symbol== '-'){ return (LHS-RHS); }
   else if(symbol== '*' || symbol=='x'){ return (LHS*RHS); }
   else if(symbol== '/'){ return (LHS/RHS); }
+  else if(symbol== '^'){ return ::pow(LHS, RHS); }
   //else if(symbol== '%'){ return (LHS%RHS); }
   qDebug() << "Invalid Symbol:" << symbol;
   return BADVALUE;
@@ -93,7 +94,7 @@ double mainUI::performOperation(double LHS, double RHS, QChar symbol){
 
 double mainUI::strToNumber(QString str){
   //Look for perentheses first
-  qDebug() << "String to Number: " << str;
+  //qDebug() << "String to Number: " << str;
   if(str.indexOf("(")>=0){
     //qDebug() << "Found Parenthesis";
     int start = str.indexOf("(");
@@ -107,7 +108,9 @@ double mainUI::strToNumber(QString str){
     }
     if(end<start){ return BADVALUE; }
     //qDebug() << "Replace value:" << str << start << end << str.mid(start+1,end-start);
-    str.replace(start, end-start+1, QString::number( strToNumber( str.mid(start+1, end-start-1)) ) );
+    double tmp = strToNumber( str.mid(start+1, end-start-1));
+    if(tmp!=tmp){ return BADVALUE; } //not a number
+    str.replace(start, end-start+1, QString::number( tmp ) );
     //qDebug() << "Replaced:" << str;
   }
   //  -------------------------------------
@@ -117,7 +120,7 @@ double mainUI::strToNumber(QString str){
   //Now look for add/subtract
   int sym = -1;
   QStringList symbols; symbols << "+" << "-";
-  qDebug() << "Get operator:" << str;
+  //qDebug() << "Get operator:" << str;
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);
     while(tmp==0 || (tmp>0 && str[tmp-1].toLower()=='e') ){ tmp = str.indexOf(symbols[i], tmp+1); } //catch scientific notation
@@ -129,7 +132,7 @@ double mainUI::strToNumber(QString str){
   if(sym>0){  return performOperation( strToNumber(str.left(sym)), strToNumber(str.right(str.length()-sym-1)), str[sym]); }
   if(sym==0){ return BADVALUE; }
   //Now look for multiply/divide
-  symbols.clear(); symbols << "x" << "*" << "/";
+  symbols.clear(); symbols << "x" << "*" << "/" << "^" ;
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);
     if(sym < tmp){ sym = tmp; }
@@ -138,6 +141,6 @@ double mainUI::strToNumber(QString str){
   if(sym==0){ return BADVALUE; }
 
   //Could not find any operations - must be a raw number
-  qDebug() << " - Found Number:" << str << str.toDouble();
+  //qDebug() << " - Found Number:" << str << str.toDouble();
   return str.toDouble();
 }
