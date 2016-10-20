@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=lumina-calculator
+Icon=accessories-calculator
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+Name=Calculator
+Comment=Perform mathematical calculations
