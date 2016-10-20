@@ -8,6 +8,8 @@
 #include "ui_mainUI.h"
 
 #include <QDebug>
+#include <QClipboard>
+
 #include <LuminaXDG.h>
 #include "EqValidator.h"
 
@@ -35,6 +37,7 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
   connect(ui->list_results, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(insert_history(QListWidgetItem*)) );
+  //connect(ui->list_results, SIGNAL(itemRightClicked(QListWidgetItem*)), this, SLOT(copt_to_clipboard(QListWidgetItem*)) );
   this->setWindowTitle(tr("Calculator"));
   updateIcons();
   ui->line_eq->setFocus();
@@ -86,6 +89,10 @@ void mainUI::insert_history(QListWidgetItem *it){
   ui->line_eq->insert("("+txt+")");
 }
 
+void mainUI::copy_to_clipboard(QListWidgetItem *it){
+  QString txt = it->text();
+  QApplication::clipboard()->setText(txt);
+}
 // =====================
 //   PRIVATE FUNCTIONS
 // =====================

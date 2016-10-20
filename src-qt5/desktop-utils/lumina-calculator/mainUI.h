@@ -46,6 +46,7 @@ private slots:
 	void captureButtonDecimal();
 
 	void insert_history(QListWidgetItem *it);
+	void copy_to_clipboard(QListWidgetItem *it);
 
 private:
 	Ui::mainUI *ui;

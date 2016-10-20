@@ -6,4 +6,5 @@ Type=Application
 StartupNotify=true
 Categories=Utility;
 Name=Calculator
+GenericName=Scientific Calculator for Lumina
 Comment=Perform mathematical calculations
