@@ -391,8 +391,9 @@ void LSession::updateDesktops(){
 
   //First clean up any current desktops
   QList<int> dnums; //keep track of which screens are already managed
+  QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if (DESKTOPS[i]->Screen() >= sC) {
+    if (DESKTOPS[i]->Screen() >= sC || geoms.contains(DW->screenGeometry(DESKTOPS[i]->Screen())) ) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
@@ -404,15 +405,17 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
+	geoms << DW->screenGeometry(DESKTOPS[i]->Screen());
       }  
   }
   
   //Now add any new desktops
   for(int i=0; i<sC; i++){
-    if(!dnums.contains(i)){
+    if(!dnums.contains(i) && !geoms.contains(DW->screenGeometry(i)) ){
       //Start the desktop on this screen
       qDebug() << " - Start desktop on screen:" << i;
       DESKTOPS << new LDesktop(i);
+      geoms << DW->screenGeometry(i);
     }
   }
   
