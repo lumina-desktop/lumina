@@ -35,7 +35,7 @@
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="45"></location>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="71"></location>
         <source>Click to Set</source>
-        <translation>Klicken zum Bestimmen</translation>
+        <translation>Klicken zum Festlegen</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"></location>
@@ -186,7 +186,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="42"></location>
         <source>Finalizing …</source>
-        <translation>Finalisieren ...</translation>
+        <translation>Finalisieren …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"></location>
@@ -857,7 +857,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"></location>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Anstelle dieser Einstellungen können einige RSS-Feeds individualisierte Abgleichintervalle verlangen.</translation>
+        <translation>Anstelle dieser Einstellungen können einige RSS-Feeds individualisierte Abgleichintervalle verlangen</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"></location>
