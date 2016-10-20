@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="104"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Panel %1</translation>
     </message>
     <message>
+        <location filename="../PanelWidget.cpp" line="143"/>
         <location filename="../PanelWidget.cpp" line="144"/>
-        <location filename="../PanelWidget.cpp" line="145"/>
         <source>Select Color</source>
         <translation>Renk Seç</translation>
     </message>
@@ -965,12 +965,12 @@
         <translation>Yapılandırmak için monitör/masaüstü seç</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Kaydedilmemiş Değişiklikler</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Bu sayfada kaydedilmemiş değişiklikler bulunuyor, bunları şimdi kaydetmek ister misiniz?</translation>
     </message>
@@ -1003,37 +1003,37 @@
         <translation>Dosya</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"/>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Başlangıç Hizmetleri</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>İkili Seç</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Uygulama İkilileri (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Geçersiz İkili</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Seçili dosya çalıştırılabilir değil!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Dosya Seç</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Tüm Dosyalar (*)</translation>
     </message>
@@ -1140,34 +1140,31 @@
         <translation>Varsayılan Uygulamalar</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"/>
-        <location filename="../pages/page_defaultapps.cpp" line="84"/>
-        <location filename="../pages/page_defaultapps.cpp" line="106"/>
-        <location filename="../pages/page_defaultapps.cpp" line="128"/>
-        <location filename="../pages/page_defaultapps.cpp" line="242"/>
-        <location filename="../pages/page_defaultapps.cpp" line="274"/>
-        <location filename="../pages/page_defaultapps.cpp" line="307"/>
-        <location filename="../pages/page_defaultapps.cpp" line="339"/>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Ayarlamak için Tıkla</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"/>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"/>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>İkili Seç</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Geçersiz İkili</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Seçilen ikili çalıştırılabilir değil!</translation>
     </message>
@@ -1381,7 +1378,7 @@
         <translation>Masaüstü Klasörü İçeriğini Göster</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"/>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Masaüstü Ayarları</translation>
     </message>
@@ -1412,7 +1409,7 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"/>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Masaüstü Ayarları</translation>
     </message>
@@ -1866,120 +1863,120 @@
         <translation>Düzen:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"/>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Duvar Kağıdı Ayarları</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Sistem Varsayılanı</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"/>
-        <location filename="../pages/page_wallpaper.cpp" line="220"/>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Düz Renk: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"/>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Ekran Çözünürlüğü:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"/>
-        <location filename="../pages/page_wallpaper.cpp" line="99"/>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Renk Seç</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Dosya(lar)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Dizin (Tek)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Dizin (Yinelemeli)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Düz Renk</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Otomatik</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Tam ekran</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Ekrana sığdır</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Döşe</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Üst Sol</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Üst Sağ</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Alt Sol</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Alt Sağ</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Arka Plan Yok</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(sistem varsayılanını kullan)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"/>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Dosya mevcut değil</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"/>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Arka Plan İçin Resim(ler) Bul</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"/>
-        <location filename="../pages/page_wallpaper.cpp" line="257"/>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Arka Plan Resmi Dizinini Bul</translation>
     </message>

@@ -137,17 +137,17 @@
 <context>
     <name>Worker</name>
     <message>
-        <location filename="../Worker.cpp" line="40"/>
+        <location filename="../Worker.cpp" line="42"/>
         <source>Searching: %1</source>
         <translation>Sökning: %1 </translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="61"/>
+        <location filename="../Worker.cpp" line="63"/>
         <source>Starting Search: %1</source>
         <translation>Börjar sökning: %1 </translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="109"/>
+        <location filename="../Worker.cpp" line="111"/>
         <source>Search Finished</source>
         <translation>Sökning avslutad </translation>
     </message>

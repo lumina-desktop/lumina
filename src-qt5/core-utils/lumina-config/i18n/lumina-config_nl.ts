@@ -218,13 +218,13 @@ Wilt u het overschrijven?</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="104"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Paneel %1</translation>
     </message>
     <message>
+        <location filename="../PanelWidget.cpp" line="143"/>
         <location filename="../PanelWidget.cpp" line="144"/>
-        <location filename="../PanelWidget.cpp" line="145"/>
         <source>Select Color</source>
         <translation>Kies kleur</translation>
     </message>
@@ -964,12 +964,12 @@ Wilt u het overschrijven?</translation>
         <translation>Selecteer het in te stellen beeldscherm/bureaublad</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Niet-opgeslagen wijzigingen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Deze pagina bevat niet-opgeslagen wijzigingen. Wilt u deze nu opslaan?</translation>
     </message>
@@ -1002,37 +1002,37 @@ Wilt u het overschrijven?</translation>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"/>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Opstartdiensten</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>Uitvoerbaar bestand selecteren</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Applicatie uitvoerbare bestanden (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Ongeldig uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Het geselecteerde bestand is niet uitvoerbaar!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Bestand selecteren</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Alle bestanden (*)</translation>
     </message>
@@ -1139,34 +1139,31 @@ Wilt u het overschrijven?</translation>
         <translation>Standaardapplicaties</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"/>
-        <location filename="../pages/page_defaultapps.cpp" line="84"/>
-        <location filename="../pages/page_defaultapps.cpp" line="106"/>
-        <location filename="../pages/page_defaultapps.cpp" line="128"/>
-        <location filename="../pages/page_defaultapps.cpp" line="242"/>
-        <location filename="../pages/page_defaultapps.cpp" line="274"/>
-        <location filename="../pages/page_defaultapps.cpp" line="307"/>
-        <location filename="../pages/page_defaultapps.cpp" line="339"/>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Klik om in te stellen</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"/>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"/>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>Selecteer uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Ongeldig uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Het geselecteerde bestand is niet uitvoerbaar!</translation>
     </message>
@@ -1380,7 +1377,7 @@ Wilt u het overschrijven?</translation>
         <translation>Inhoud van bureaubladmap weergeven</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"/>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Bureaubladinstellingen</translation>
     </message>
@@ -1411,7 +1408,7 @@ Wilt u het overschrijven?</translation>
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"/>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Bureaubladinstellingen</translation>
     </message>
@@ -1865,120 +1862,120 @@ Wilt u het overschrijven?</translation>
         <translation>Indeling:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"/>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Bureaubladachtergrond-instellingen</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Systeemstandaard</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"/>
-        <location filename="../pages/page_wallpaper.cpp" line="220"/>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Vaste kleur: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"/>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Schermresolutie:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"/>
-        <location filename="../pages/page_wallpaper.cpp" line="99"/>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Selecteer kleur</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Bestand(en)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Map (enkel)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Map (inclusief submappen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Vaste kleur</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Automatisch</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Schermvullend</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Passend</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Tegels</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Centreren</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Linksboven</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Rechtsboven</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Linksonder</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Rechtsonder</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Geen achtergrond</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(systeemstandaard gebruiken)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"/>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Het bestand bestaat niet</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"/>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Achtergrondafbeelding(en) zoeken</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"/>
-        <location filename="../pages/page_wallpaper.cpp" line="257"/>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Achtergrondafbeeldingsmap zoeken</translation>
     </message>

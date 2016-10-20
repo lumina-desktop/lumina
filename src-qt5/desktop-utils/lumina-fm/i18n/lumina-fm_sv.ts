@@ -1,448 +1,459 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="sv">
 <context>
     <name>BMMDialog</name>
     <message>
-        <location filename="../BMMDialog.ui" line="14"></location>
+        <location filename="../BMMDialog.ui" line="14"/>
         <source>Manage Bookmarks</source>
         <translation>Hantera bokmärken</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="35"></location>
+        <location filename="../BMMDialog.ui" line="35"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="40"></location>
+        <location filename="../BMMDialog.ui" line="40"/>
         <source>Path</source>
         <translation>Sökväg</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="52"></location>
+        <location filename="../BMMDialog.ui" line="52"/>
         <source>Remove Bookmark</source>
         <translation>Ta bort bokmärke</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="65"></location>
+        <location filename="../BMMDialog.ui" line="65"/>
         <source>Rename BookMark</source>
         <translation>Byt namn på bokmärke</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="91"></location>
+        <location filename="../BMMDialog.ui" line="91"/>
         <source>Finished</source>
         <translation>Färdig</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="58"></location>
+        <location filename="../BMMDialog.cpp" line="58"/>
         <source>Rename Bookmark</source>
         <translation>Byt namn på bokmärke</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="58"></location>
+        <location filename="../BMMDialog.cpp" line="58"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="64"></location>
+        <location filename="../BMMDialog.cpp" line="64"/>
         <source>Invalid Name</source>
         <translation>Ogiltigt namn</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="64"></location>
+        <location filename="../BMMDialog.cpp" line="64"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Det här bokmärks namnet finns redan. Välj ett annat namn.</translation>
     </message>
 </context>
 <context>
+    <name>BrowserWidget</name>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="210"/>
+        <source>Name</source>
+        <translation type="unfinished">Namn</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="211"/>
+        <source>Size</source>
+        <translation type="unfinished">Storlek</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="212"/>
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="213"/>
+        <source>Date Modified</source>
+        <translation type="unfinished">Ändringsdatum</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="214"/>
+        <source>Date Created</source>
+        <translation type="unfinished">Datum skapad</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="316"/>
+        <source>Capacity: %1</source>
+        <translation type="unfinished">Kapacitet: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="342"/>
+        <source>Files: %1 (%2)</source>
+        <translation type="unfinished">Filer: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="344"/>
+        <source>Files: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="350"/>
+        <source>Dirs: %1</source>
+        <translation type="unfinished">Kataloger: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="362"/>
+        <source>No Directory Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DirWidget</name>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="20"></location>
+        <location filename="../widgets/DirWidget2.ui" line="20"/>
         <source>Form</source>
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="246"></location>
-        <location filename="../widgets/DirWidget.ui" line="249"></location>
-        <source>Open item</source>
-        <translation>Öppna objekt</translation>
+        <location filename="../widgets/DirWidget2.ui" line="145"/>
+        <source>Increase Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="271"></location>
-        <location filename="../widgets/DirWidget.ui" line="274"></location>
-        <source>Open item (select application)</source>
-        <translation>Öppna objekt (välj ett program)</translation>
+        <location filename="../widgets/DirWidget2.ui" line="161"/>
+        <source>Decrease Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="300"></location>
-        <location filename="../widgets/DirWidget.ui" line="303"></location>
-        <source>Add item to personal favorites</source>
-        <translation>Lägg till fil till dina personliga favoriter</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="322"></location>
-        <location filename="../widgets/DirWidget.ui" line="325"></location>
-        <source>Rename item</source>
-        <translation>Byt namn på objekt</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="351"></location>
-        <source>Cut items</source>
-        <translation>Klipp ut objekt</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="354"></location>
-        <source>Cut items (add to the clipboard)</source>
-        <translation>Klipp ut objekt (lägg till i Urklipp)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="373"></location>
-        <source>Copy items</source>
-        <translation>Kopiera objekt</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="376"></location>
-        <source>Copy items to the clipboard</source>
-        <translation>Kopiera objekt till Urklipp</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="395"></location>
-        <location filename="../widgets/DirWidget.ui" line="398"></location>
-        <source>Paste items from clipboard</source>
-        <translation>Klistra in objekt från urklipp</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="424"></location>
-        <location filename="../widgets/DirWidget.ui" line="427"></location>
-        <source>Delete Items</source>
-        <translation>Ta bort objekt</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="507"></location>
-        <source>Stop loading the directory</source>
-        <translation>Sluta laddandet av katalogen</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="90"></location>
-        <source>Add selected images to slideshow</source>
-        <translation>Lägg till valda bilder till bildspelet</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="77"></location>
-        <source>Create a new directory</source>
-        <translation>Skapa en ny katalog</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="80"></location>
-        <source>New Dir</source>
-        <translation>Ny Katalog</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="64"></location>
-        <source>Create a new file</source>
-        <translation>Skapa en ny fil</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="67"></location>
-        <source>New File</source>
-        <translation>Ny fil</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="93"></location>
-        <source>Slideshow</source>
-        <translation>Bildspel</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="109"></location>
-        <source>Enqueue selection in multimedia player</source>
-        <translation>Köa urval i multimediaspelaren</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="112"></location>
-        <source>Play</source>
-        <translation>Spela</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="465"></location>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Back</source>
         <translation>Bakåt</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="468"></location>
-        <location filename="../widgets/DirWidget.ui" line="471"></location>
+        <location filename="../widgets/DirWidget2.ui" line="182"/>
+        <location filename="../widgets/DirWidget2.ui" line="185"/>
         <source>Go back to previous directory</source>
         <translation>Gå tillbaka till förra katalogen</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="479"></location>
+        <location filename="../widgets/DirWidget2.ui" line="193"/>
         <source>Up</source>
         <translation>Upp</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="482"></location>
-        <location filename="../widgets/DirWidget.ui" line="485"></location>
+        <location filename="../widgets/DirWidget2.ui" line="196"/>
+        <location filename="../widgets/DirWidget2.ui" line="199"/>
         <source>Go to parent directory</source>
         <translation>Gå till föräldrakatalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="493"></location>
+        <location filename="../widgets/DirWidget2.ui" line="207"/>
         <source>Home</source>
         <translation>Hem</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="496"></location>
-        <location filename="../widgets/DirWidget.ui" line="499"></location>
+        <location filename="../widgets/DirWidget2.ui" line="210"/>
+        <location filename="../widgets/DirWidget2.ui" line="213"/>
         <source>Go to home directory</source>
         <translation>Gå till hemkatalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="518"></location>
-        <location filename="../widgets/DirWidget.ui" line="521"></location>
-        <source>Close this browser</source>
-        <translation>Stäng denna webbläsaren</translation>
+        <location filename="../widgets/DirWidget2.ui" line="218"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="136"></location>
-        <source>Name</source>
-        <translation>Namn</translation>
+        <location filename="../widgets/DirWidget2.ui" line="221"/>
+        <source>Select Action</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="140"></location>
-        <source>Size</source>
-        <translation>Storlek</translation>
+        <location filename="../widgets/DirWidget2.ui" line="229"/>
+        <source>SingleColumn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="143"></location>
-        <source>Type</source>
-        <translation>Typ</translation>
+        <location filename="../widgets/DirWidget2.ui" line="232"/>
+        <source>Single column view</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="147"></location>
-        <source>Date Modified</source>
-        <translation>Ändringsdatum</translation>
+        <location filename="../widgets/DirWidget2.ui" line="240"/>
+        <source>Dual Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="150"></location>
-        <source>Date Created</source>
-        <translation>Datum skapad</translation>
+        <location filename="../widgets/DirWidget2.ui" line="243"/>
+        <source>Dual Column View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="207"></location>
-        <location filename="../widgets/DirWidget.cpp" line="484"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="525"/>
         <source>(Limited Access) </source>
         <translation>(Begränsad tillgång) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="469"></location>
-        <source>Capacity: %1</source>
-        <translation>Kapacitet: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="474"></location>
-        <source>Files: %1 (%2)</source>
-        <translation>Filer: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="479"></location>
-        <source>Dirs: %1</source>
-        <translation>Kataloger: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>New Document</source>
         <translation>Nytt dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"></location>
-        <location filename="../widgets/DirWidget.cpp" line="802"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>Error Creating Document</source>
         <translation>Fel när dokument skulle skapas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Detta dokument kunde inte skapas. Se till att du har rätt behörigheter.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="802"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>New Directory</source>
         <translation>Ny katalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Invalid Name</source>
         <translation>Ogiltigt namn</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <source>File Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <source>Directory Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="507"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>En fil med samma namn finns redan. Använd ett annat namn.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>Error Creating Directory</source>
         <translation>Fel vid skapande av katalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Denna katalogen kunde inte skapas. Se till att du har rätt behörigheter att modifera den aktuella katalogen.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="839"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>Current</source>
         <translation>Aktuell</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="949"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <source>Create...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <source>File</source>
+        <translation type="unfinished">Fil</translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <source>Application Launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <source>Launch...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <source>Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <source>SlideShow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <source>Multimedia Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
+        <source>Modify Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <source>View Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <source>Checksums</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="448"/>
         <source>File Checksums:</source>
         <translation>Filkontrollsummor:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
         <source>Missing Utility</source>
         <translation>Saknar Verktyg </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"></location>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>"lumina-Fileinfo" verktyget kunde inte hittas på systemet. Installera det först.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>&quot;lumina-Fileinfo&quot; verktyget kunde inte hittas på systemet. Installera det först.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="984"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="485"/>
         <source>Open</source>
         <translation>Öppna</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="985"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="486"/>
         <source>Open With...</source>
         <translation>Öppna med...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="987"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="250"/>
         <source>Rename...</source>
         <translation>Byt namn...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="988"></location>
-        <source>View Checksums...</source>
-        <translation>Visa checksumma...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="999"></location>
-        <source>File Properties...</source>
-        <translation>Fil Egenskaper...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="992"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="247"/>
         <source>Cut Selection</source>
         <translation>Klipp markering</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="993"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="248"/>
         <source>Copy Selection</source>
         <translation>Kopiera markering</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="994"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Paste</source>
         <translation>Klistra in</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="996"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="252"/>
         <source>Delete Selection</source>
         <translation>Ta bort markering</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="1002"></location>
-        <source>Open Terminal here</source>
-        <translation>Öppna terminal här</translation>
     </message>
 </context>
 <context>
     <name>FODialog</name>
     <message>
-        <location filename="../FODialog.ui" line="14"></location>
+        <location filename="../FODialog.ui" line="14"/>
         <source>Performing File Operations</source>
         <translation>Utför Filoperationer</translation>
     </message>
     <message>
-        <location filename="../FODialog.ui" line="39"></location>
+        <location filename="../FODialog.ui" line="39"/>
         <source>%v/%m</source>
         <translation>%v/%m</translation>
     </message>
     <message>
-        <location filename="../FODialog.ui" line="74"></location>
+        <location filename="../FODialog.ui" line="74"/>
         <source>Stop</source>
         <translation>Stoppa</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="19"></location>
+        <location filename="../FODialog.cpp" line="19"/>
         <source>Calculating</source>
         <translation>Beräknar</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Overwrite Files?</source>
         <translation>Skriv över filer?</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Do you want to overwrite the existing files?</source>
         <translation>Vill du skriva över dessa filer?</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
         <translation>Obs: Det kommer bara lägga till ett nummer till filnamnet annars.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"></location>
+        <location filename="../FODialog.cpp" line="148"/>
         <source>Removing: %1</source>
         <translation>Tar bort:  %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"></location>
+        <location filename="../FODialog.cpp" line="149"/>
         <source>Copying: %1 to %2</source>
         <translation>Kopierar %1 to %2 </translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"></location>
+        <location filename="../FODialog.cpp" line="150"/>
         <source>Restoring: %1 as %2</source>
         <translation>Återställer %1 som %2 </translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"></location>
+        <location filename="../FODialog.cpp" line="151"/>
         <source>Moving: %1 to %2</source>
         <translation>Flyttar %1 till %2 </translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"></location>
+        <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
         <translation>Kunde inte ta bort de här filerna:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"></location>
+        <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
         <translation>Kunde inte kopiera dessa filer:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"></location>
+        <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
         <translation>Kinte inte återställa dessa filer:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"></location>
+        <location filename="../FODialog.cpp" line="167"/>
         <source>Could not move these files:</source>
         <translation>Kunde inte flytta dessa filer:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"></location>
+        <location filename="../FODialog.cpp" line="169"/>
         <source>File Errors</source>
         <translation>Filfel</translation>
     </message>
@@ -450,12 +461,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"></location>
+        <location filename="../FODialog.cpp" line="320"/>
         <source>Invalid Move</source>
         <translation>Ogiltigt drag</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"></location>
+        <location filename="../FODialog.cpp" line="320"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1
@@ -469,107 +480,107 @@ Ny Plats: %2</translation>
 <context>
     <name>GitWizard</name>
     <message>
-        <location filename="../gitWizard.ui" line="14"></location>
+        <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="24"></location>
+        <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
         <translation>Välkommen!</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="27"></location>
+        <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="46"></location>
+        <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="55"></location>
+        <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
         <translation>Organisation/Användare</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="65"></location>
+        <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="75"></location>
+        <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="89"></location>
+        <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
         <translation>Typ av Åtkomst</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="95"></location>
+        <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
         <translation>Använd min SSH nyckel</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="105"></location>
+        <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="114"></location>
+        <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
         <translation>Användarnamn</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="124"></location>
+        <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
         <translation>Lösenord</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="133"></location>
+        <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="143"></location>
+        <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
         <translation>Frivilligt SSH lösenord</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="153"></location>
+        <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
         <translation>Avancerade Inställningar</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="159"></location>
+        <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="166"></location>
+        <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="175"></location>
+        <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
         <translation>branch namn</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="232"></location>
-        <source>Click "Next" to start downloading the repository</source>
+        <location filename="../gitWizard.ui" line="232"/>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"></location>
+        <location filename="../gitWizard.h" line="57"/>
         <source>Stop Download?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"></location>
+        <location filename="../gitWizard.h" line="57"/>
         <source>Kill the current download?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -577,393 +588,372 @@ Ny Plats: %2</translation>
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"></location>
+        <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
         <translation>Insight </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"></location>
+        <location filename="../MainUI.cpp" line="90"/>
         <source>Shift+Left</source>
         <translation>Shift+Vänster</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"></location>
+        <location filename="../MainUI.cpp" line="91"/>
         <source>Shift+Right</source>
         <translation>Shift+Höger</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="114"></location>
+        <location filename="../MainUI.ui" line="114"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="126"></location>
+        <location filename="../MainUI.ui" line="126"/>
         <source>View</source>
         <translation>Visa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="130"></location>
+        <location filename="../MainUI.ui" line="130"/>
         <source>View Mode</source>
         <translation>Visningsläge</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="136"></location>
-        <source>Group Mode</source>
-        <translation>Gruppläge</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="154"></location>
+        <location filename="../MainUI.ui" line="142"/>
         <source>Bookmarks</source>
         <translation>Bokmärken</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="162"></location>
+        <location filename="../MainUI.ui" line="150"/>
         <source>External Devices</source>
         <translation>Externa enheter</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="169"></location>
-        <source>Edit</source>
-        <translation>Redigera</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="181"></location>
+        <location filename="../MainUI.ui" line="157"/>
         <source>Git</source>
         <translation>Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="196"></location>
-        <location filename="../MainUI.ui" line="199"></location>
+        <location filename="../MainUI.ui" line="171"/>
+        <source>New Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="174"/>
         <source>New Browser</source>
         <translation>Ny flik</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="275"></location>
+        <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
         <translation>Sök Katalog...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="308"></location>
+        <location filename="../MainUI.ui" line="283"/>
         <source>Increase Icon Size</source>
         <translation>Öka ikonstorlek</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="313"></location>
+        <location filename="../MainUI.ui" line="288"/>
         <source>Decrease Icon Size</source>
         <translation>Minska ikonstorlek</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="318"></location>
+        <location filename="../MainUI.ui" line="293"/>
         <source>Larger Icons</source>
         <translation>Stora ikoner</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"></location>
+        <location filename="../MainUI.ui" line="296"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"></location>
+        <location filename="../MainUI.ui" line="304"/>
         <source>Smaller Icons</source>
         <translation>Små ikoner</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="332"></location>
+        <location filename="../MainUI.ui" line="307"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"></location>
+        <location filename="../MainUI.ui" line="315"/>
         <source>New Window</source>
         <translation>Nytt fönster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="343"></location>
+        <location filename="../MainUI.ui" line="318"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="351"></location>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Add Bookmark</source>
         <translation>Lägg till bokmärke</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="354"></location>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="406"></location>
+        <location filename="../MainUI.ui" line="381"/>
         <source>Delete Selection</source>
         <translation>Ta bort markering</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"></location>
+        <location filename="../MainUI.ui" line="384"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"></location>
+        <location filename="../MainUI.ui" line="392"/>
         <source>Refresh</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="428"></location>
-        <source>Close Browser</source>
-        <translation>Stäng ett filbläddrar fönster </translation>
+        <location filename="../MainUI.ui" line="403"/>
+        <source>Close Tab</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="439"></location>
+        <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="444"></location>
+        <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="202"></location>
+        <location filename="../MainUI.ui" line="177"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="210"></location>
+        <location filename="../MainUI.ui" line="185"/>
         <source>Exit</source>
         <translation>Avsluta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"></location>
+        <location filename="../MainUI.ui" line="188"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"></location>
+        <location filename="../MainUI.ui" line="196"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Inställningar</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"></location>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Show Hidden Files</source>
         <translation>Visa dolda filer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"></location>
+        <location filename="../MainUI.ui" line="212"/>
         <source>Scan for Devices</source>
         <translation>Sök efter enheter</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"></location>
+        <location filename="../MainUI.ui" line="220"/>
         <source>Manage Bookmarks</source>
         <translation>Hantera bokmärken</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="259"></location>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Show Action Buttons</source>
         <translation>Visa aktiva knappar</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="270"></location>
+        <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
         <translation>Ladda Miniatyrbilder</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="278"></location>
+        <location filename="../MainUI.ui" line="253"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"></location>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>Detailed List</source>
         <translation>Detaljerad lista</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"></location>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Basic List</source>
         <translation>Grundläggande Lista</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="431"></location>
+        <location filename="../MainUI.ui" line="406"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"></location>
-        <source>Prefer Tabs</source>
-        <translation>Föredra flikar</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="72"></location>
-        <source>Prefer Columns</source>
-        <translation>Föredra kolumner</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="420"></location>
+        <location filename="../MainUI.ui" line="395"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="387"></location>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="362"></location>
+        <location filename="../MainUI.ui" line="337"/>
         <source>Rename...</source>
         <translation>Byt namn...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="365"></location>
+        <location filename="../MainUI.ui" line="340"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="373"></location>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Cut Selection</source>
         <translation>Klipp ut markering</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="384"></location>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Copy Selection</source>
         <translation>Kopiera markering</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"></location>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Paste</source>
         <translation>Klistra in</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="398"></location>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="376"></location>
+        <location filename="../MainUI.ui" line="351"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"></location>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>Invalid Directories</source>
         <translation>Ogiltiga kataloger</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"></location>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Följande kataloger är ogiltiga och kunde inte öppnas:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="342"></location>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>Root</source>
         <translation>Root</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="348"></location>
+        <location filename="../MainUI.cpp" line="335"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Typ: %2) </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="352"></location>
+        <location filename="../MainUI.cpp" line="339"/>
         <source>Filesystem: %1</source>
         <translation>Filsystem: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="573"></location>
-        <source>Browser</source>
-        <translation>Webbläsare</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="600"></location>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>New Bookmark</source>
         <translation>Nytt bokmärke</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"></location>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"></location>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>Invalid Name</source>
         <translation>Ogiltigt namn</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"></location>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Det här bokmärks namnet finns redan. Välj ett annat namn.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="626"></location>
+        <location filename="../MainUI.cpp" line="614"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="732"></location>
+        <location filename="../MainUI.cpp" line="704"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="750"></location>
+        <location filename="../MainUI.cpp" line="722"/>
         <source>Slideshow</source>
         <translation>Bildspel</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="927"></location>
+        <location filename="../MainUI.cpp" line="902"/>
         <source>Items to be removed:</source>
         <translation>Filer som ska bli borttagna:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"></location>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>Verify Quit</source>
         <translation>Verifera Avslut</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="100"></location>
+        <location filename="../MainUI.cpp" line="92"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"></location>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"></location>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Du har flera flikar öppna. Är du säker på att du vill avsluta?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Verify Removal</source>
         <translation>Verifiera Borttagande</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>VARNING: Detta kommer att permanent ta bort filerna från systemet!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Are you sure you want to continue?</source>
         <translation>Är du säker på att du vill fortsätta?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"></location>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>Rename File</source>
         <translation>Byt namn på fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"></location>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>New Name:</source>
         <translation>Nytt namn:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"></location>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>Overwrite File?</source>
         <translation>Skriv över fil?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"></location>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>En befintlig fil med samma namn kommer att ersättas. Är du säker på att du vill fortsätta?</translation>
     </message>
@@ -971,142 +961,204 @@ Ny Plats: %2</translation>
 <context>
     <name>MultimediaWidget</name>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="14"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="28"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="28"/>
         <source>Go To Next</source>
         <translation>Gå till nästa</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="107"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
         <translation>(Ingen körande Video)</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="124"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
         <source>Playing:</source>
         <translation>Spelar:</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="130"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="130"/>
         <source>Stopped</source>
         <translation>Stoppad</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="157"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
         <translation>Fel när filen: %1 skulle spelas</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="168"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
         <source>Finished</source>
         <translation>Färdigställd</translation>
     </message>
 </context>
 <context>
+    <name>OPWidget</name>
+    <message>
+        <location filename="../OPWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulär</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="44"/>
+        <location filename="../OPWidget.ui" line="51"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="60"/>
+        <source>Evaluating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="48"/>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="49"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="50"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>%1 Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>Errors Occured</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SlideshowWidget</name>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="14"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="36"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
         <translation>Ta bort denna bild fil</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="56"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="56"/>
         <source>Rotate this image file counter-clockwise</source>
         <translation>Rotera den här bildfilen moturs</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="69"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="69"/>
         <source>Rotate this image file clockwise</source>
         <translation>Rotera den här bildfilen medurs</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="89"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="92"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="89"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="92"/>
         <source>Zoom in</source>
         <translation>Zooma in</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="105"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="108"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="105"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="108"/>
         <source>Zoom out</source>
         <translation>Zooma ut</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="212"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="212"/>
         <source>Go to Beginning</source>
         <translation>Gå till början</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="215"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="231"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="304"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="320"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="215"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="231"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="304"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="320"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="218"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="218"/>
         <source>Shift+Left</source>
         <translation>Shift+Vänster</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="228"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="228"/>
         <source>Go to Previous</source>
         <translation>Gå till föregående </translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="234"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="234"/>
         <source>Left</source>
         <translation>Vänster</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="267"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="267"/>
         <source>File Name</source>
         <translation>Filnamn</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="301"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="301"/>
         <source>Go to Next</source>
         <translation>Gå till nästa</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="307"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="307"/>
         <source>Right</source>
         <translation>Höger</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="317"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="317"/>
         <source>Go to End</source>
         <translation>Gå till slutet</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="323"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="323"/>
         <source>Shift+Right</source>
         <translation>Shift+Höger</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>Verify Removal</source>
         <translation>Verifiera Borttagande</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>WARNING: This will permanently delete the file from the system!</source>
         <translation>VARNING: Detta kommer permanent ta bort filen från ditt system!</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>Are you sure you want to continue?</source>
         <translation>Är du säker på att du vill fortsätta?</translation>
+    </message>
+</context>
+<context>
+    <name>TrayUI</name>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Errors during operation. Click to view details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>No Errors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

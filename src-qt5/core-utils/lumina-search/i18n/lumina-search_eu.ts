@@ -137,17 +137,17 @@
 <context>
     <name>Worker</name>
     <message>
-        <location filename="../Worker.cpp" line="40"/>
+        <location filename="../Worker.cpp" line="42"/>
         <source>Searching: %1</source>
         <translation>Bilatzen: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="61"/>
+        <location filename="../Worker.cpp" line="63"/>
         <source>Starting Search: %1</source>
         <translation>Bilaketa hasten: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="109"/>
+        <location filename="../Worker.cpp" line="111"/>
         <source>Search Finished</source>
         <translation>Bilaketa amaituta</translation>
     </message>

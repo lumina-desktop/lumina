@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
         <translation>Tiedoston tiedot</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
         <translation>Muokkaa pikakuvaketta</translation>
     </message>
@@ -117,109 +117,109 @@
         <translation>Sulje</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
         <translation>––Lasketaan––</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
         <translation>Luku/kirjoitus</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="71"/>
         <source>Read Only</source>
         <translation>Vain luku</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="72"/>
         <source>Write Only</source>
         <translation>Vain kirjoitus</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="73"/>
         <source>No Access</source>
         <translation>Ei oikeuksia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
         <translation>XDG-pikakuvake</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
         <translation>Kansio</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
         <translation>Ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="81"/>
         <source>Hidden %1</source>
         <translation>Piilotettuja %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="126"/>
         <source>URL:</source>
         <translation>Verkko-osoite:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
         <translation>Tallenna sovellustiedosto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
         <translation>Sovelluksen rekisteröinnit (*.desktop)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
         <translation>Valitse ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Virheellinen valinta: Ei kelvollinen ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="305"/>
         <source>Select a directory</source>
         <translation>Valitse kansio</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
         <translation>Valitse kuvake</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Kuvat (%1);; Kaikki tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
         <translation> Kansiot: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
         <translation>Tiedostot: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
         <translation>  Lasketaan…</translation>
     </message>

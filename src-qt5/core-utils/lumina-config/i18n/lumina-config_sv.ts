@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="104"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Panel %1</translation>
     </message>
     <message>
+        <location filename="../PanelWidget.cpp" line="143"/>
         <location filename="../PanelWidget.cpp" line="144"/>
-        <location filename="../PanelWidget.cpp" line="145"/>
         <source>Select Color</source>
         <translation>Välj färg</translation>
     </message>
@@ -965,12 +965,12 @@
         <translation>Välj bildskärm/skrivbord att konfigurera</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Osparade ändringar</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Den här sidan har osparade ändringar, vill du spara dem nu?</translation>
     </message>
@@ -1003,37 +1003,37 @@
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"/>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Starttjänst</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>Välj binär</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Program binärer (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Ogiltig binär</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Den valda filen är inte körbar!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Välj fil</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Alla filer (*)</translation>
     </message>
@@ -1140,34 +1140,31 @@
         <translation>Standardprogram</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"/>
-        <location filename="../pages/page_defaultapps.cpp" line="84"/>
-        <location filename="../pages/page_defaultapps.cpp" line="106"/>
-        <location filename="../pages/page_defaultapps.cpp" line="128"/>
-        <location filename="../pages/page_defaultapps.cpp" line="242"/>
-        <location filename="../pages/page_defaultapps.cpp" line="274"/>
-        <location filename="../pages/page_defaultapps.cpp" line="307"/>
-        <location filename="../pages/page_defaultapps.cpp" line="339"/>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Klicka för att ställa in</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"/>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"/>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>Välj binär</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Ogiltig binär</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Den valda binären är inte körbar!</translation>
     </message>
@@ -1381,7 +1378,7 @@
         <translation>Visa skrivbordsmappens innehåll</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"/>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
     </message>
@@ -1412,7 +1409,7 @@
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"/>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
     </message>
@@ -1866,120 +1863,120 @@
         <translation>Layout:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"/>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Inställningar av skrivbordsunderlägg</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Systemstandard</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"/>
-        <location filename="../pages/page_wallpaper.cpp" line="220"/>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Solid färg: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"/>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Skärmupplösning:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"/>
-        <location filename="../pages/page_wallpaper.cpp" line="99"/>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Välj färg</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Fil(er)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Katalog (Singel)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Katalog (Rekursiv)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Solid färg</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Automatisk</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Fullskärm</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Anpassa till skärm</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Bricka</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Mittpunkt</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Övre vänster</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Övre höger</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Längst ner till vänster</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Längst ner till höger</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Ingen bakgrund</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(använd systemets standard)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"/>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Filen finns inte</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"/>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Hitta bakgrundsbild(er)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"/>
-        <location filename="../pages/page_wallpaper.cpp" line="257"/>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Hitta bakgrundsbilder i en katalog</translation>
     </message>
