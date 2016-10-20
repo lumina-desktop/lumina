@@ -12,6 +12,7 @@
 TrayUI::TrayUI(QObject *parent) : QSystemTrayIcon(parent){
   this->setContextMenu( new QMenu() );
   this->setIcon(LXDG::findIcon("Insight-FileManager",""));
+  connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(TrayActivated()));
 }
 
 TrayUI::~TrayUI(){
@@ -36,6 +37,10 @@ void TrayUI::createOP( FILEOP type, QStringList oldF, QStringList newF){
   connect(OP, SIGNAL(finished(QString)), this, SLOT(OperationFinished(QString)) );
   connect(OP, SIGNAL(closed(QString)), this, SLOT(OperationClosed(QString)) );
   QTimer::singleShot(0, OP, SLOT(startOperation()) );
+}
+
+void TrayUI::TrayActivated(){
+  this->contextMenu()->popup( this->geometry().center() );
 }
 
 //Operation Widget Responses
@@ -68,7 +73,7 @@ void TrayUI::OperationFinished(QString ID){
     //qDebug() << " -- Errors:" << err << "Duration:" << OPS[i]->duration();
     //Assemble the notification (if more than 1 second to perform operation)
     if(OPS[i]->duration()>1){
-      this->showMessage( tr("Finished"), err ? tr("Errors during operation. Click to view details") : tr("No Errors"), err ? QSystemTrayIcon::Warning : QSystemTrayIcon::Information);
+      this->showMessage( tr("Finished"), err ? tr("Errors during operation. Click to view details") : "", err ? QSystemTrayIcon::Warning : QSystemTrayIcon::Information);
     }
     //Close the widget if no errors
     if(!err){ OperationClosed(ID); }

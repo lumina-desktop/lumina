@@ -20,7 +20,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //just to silence/fix some Qt connect warnings in QtConcurrent
   //qRegisterMetaType< QVector<int> >("QVector<int>"); 
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
-	
+  waitingToClose = false;
 	
   ui->setupUi(this);
   ui->menuGit->setVisible( GIT::isAvailable() );
@@ -106,6 +106,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   RebuildDeviceMenu();
   //Make sure we start on the browser page
   TRAY = new TrayUI(this);
+  connect(TRAY, SIGNAL(JobsFinished()), this, SLOT(TrayJobsFinished()) );
   if(DEBUG){ qDebug() << " - Done with init"; }
 }
 
@@ -187,7 +188,7 @@ void MainUI::OpenDirs(QStringList dirs){
   //Double check that there is at least 1 dir loaded
   //qDebug() << "OpenDirs:" << DWLIST.length() << dirs << invalid << tabBar->currentIndex();
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
-  
+  waitingToClose = false;
 }
 
 void MainUI::setupIcons(){
@@ -943,4 +944,24 @@ void MainUI::TabNameChanged(QString id, QString name){
       return;
     }
   }
+}
+
+void MainUI::TrayJobsFinished(){
+  if(waitingToClose){ this->close(); }
+}
+
+//=============
+//  PROTECTED
+//=============
+void MainUI::closeEvent(QCloseEvent *ev){
+  //See if the tray is active or not first
+  if(TRAY!=0){
+    if(TRAY->isVisible() && !waitingToClose){ 
+      this->hide(); 
+      ev->ignore(); 
+      waitingToClose = true;
+      return; 
+    }
+  }
+  QMainWindow::closeEvent(ev); //continue normal close routine
 }

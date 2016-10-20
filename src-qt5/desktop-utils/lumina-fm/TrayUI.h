@@ -31,7 +31,8 @@ private:
 	void createOP( FILEOP, QStringList oldF, QStringList newF);
 
 private slots:
-	
+	void TrayActivated();
+
 	//Operation Widget Responses
 	void OperationClosed(QString ID);
 	void OperationStarted(QString ID);

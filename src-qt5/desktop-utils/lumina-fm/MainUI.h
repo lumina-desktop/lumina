@@ -88,9 +88,10 @@ private:
 	MultimediaWidget *MW;
 	SlideshowWidget *SW;
 	TrayUI *TRAY;
+	bool waitingToClose;
 
-    QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
+	QSettings *settings;
+	QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
 	//QCompleter *dirCompleter;
 
 	//Simplification Functions
@@ -169,6 +170,8 @@ private slots:
 	//file info in status bar
 	void DisplayStatusBar(QString);
 
+	void TrayJobsFinished();
+
 signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
@@ -178,6 +181,8 @@ protected:
 	  settings->setValue("preferences/MainWindowSize", ev->size());
 	  QMainWindow::resizeEvent(ev); //just in case the window needs to see the event too
 	}
+
+	void closeEvent(QCloseEvent *ev);
 
 };
 
