@@ -7,13 +7,20 @@
 #include <QApplication>
 #include <QDebug>
 
+#include <LuminaThemes.h>
+#include <LuminaUtils.h>
+
 #include "mainUI.h"
 
 int  main(int argc, char *argv[]) {
+   LTHEME::LoadCustomEnvSettings();
    QApplication a(argc, argv);
-
+   LUtils::LoadTranslation(&a, "l-calc");
+   //Now go ahead and setup the app
+   LuminaThemeEngine theme(&a);
    //Now start the window
    mainUI W;
+    QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
    W.show();
    return  a.exec();
 }

@@ -37,18 +37,22 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
 
   this->setWindowTitle(tr("Calculator"));
-  this->setWindowIcon( LXDG::findIcon("accessories-calculator","") );
+  updateIcons();
   ui->line_eq->setFocus();
 }
 
 mainUI::~mainUI(){
 }
 
+void mainUI::updateIcons(){
+  this->setWindowIcon( LXDG::findIcon("accessories-calculator","") );
+}
+
 void mainUI::start_calc(){
   if(ui->line_eq->text().isEmpty()){ return; } //nothing to do
   double result = strToNumber(ui->line_eq->text());
   if(result!=result){ return; } //bad calculation - NaN's values are special in that they don't equal itself
-  QString res = "%1 \t(%2)";
+  QString res = "%1 \t= [ %2 ]";
   ui->list_results->addItem(res.arg(QString::number(result), ui->line_eq->text()));
   ui->list_results->scrollToItem( ui->list_results->item( ui->list_results->count()-1) );
   ui->line_eq->clear();

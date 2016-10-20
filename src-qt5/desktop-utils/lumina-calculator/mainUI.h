@@ -21,25 +21,28 @@ public:
 	mainUI();
 	~mainUI();
 
+public slots:
+	void updateIcons();
+
 private slots:
 	void start_calc();
-    void clear_calc();
-    void captureButton1();
-    void captureButton2();
-    void captureButton3();
-    void captureButton4();
-    void captureButton5();
-    void captureButton6();
-    void captureButton7();
-    void captureButton8();
-    void captureButton9();
-    void captureButton0();
-    void captureButtonSubtract();
-    void captureButtonAdd();
-    void captureButtonDivide();
-    void captureButtonMultiply();
+	void clear_calc();
+	void captureButton1();
+	void captureButton2();
+	void captureButton3();
+	void captureButton4();
+	void captureButton5();
+	void captureButton6();
+	void captureButton7();
+	void captureButton8();
+	void captureButton9();
+	void captureButton0();
+	void captureButtonSubtract();
+	void captureButtonAdd();
+	void captureButtonDivide();
+	void captureButtonMultiply();
 //    void captureButtonEqual();
-    void captureButtonDecimal();
+	void captureButtonDecimal();
 
 
 private:
