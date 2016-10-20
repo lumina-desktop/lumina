@@ -10,6 +10,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QChar>
+#include <QListWidgetItem>
 
 namespace Ui{
 	class mainUI;
@@ -44,6 +45,7 @@ private slots:
 //    void captureButtonEqual();
 	void captureButtonDecimal();
 
+	void insert_history(QListWidgetItem *it);
 
 private:
 	Ui::mainUI *ui;

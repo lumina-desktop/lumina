@@ -9,8 +9,7 @@
 
 #include <QDebug>
 #include <LuminaXDG.h>
-
-//#define VALIDSYMBOLS QString("+-*x/.")
+#include "EqValidator.h"
 
 #include <math.h>
 #define BADVALUE NAN
@@ -35,10 +34,11 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Multiply, SIGNAL (clicked()), this, SLOT (captureButtonMultiply()));
   connect(ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
-
+  connect(ui->list_results, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(insert_history(QListWidgetItem*)) );
   this->setWindowTitle(tr("Calculator"));
   updateIcons();
   ui->line_eq->setFocus();
+  ui->line_eq->setValidator(new EqValidator(this) );
 }
 
 mainUI::~mainUI(){
@@ -46,6 +46,7 @@ mainUI::~mainUI(){
 
 void mainUI::updateIcons(){
   this->setWindowIcon( LXDG::findIcon("accessories-calculator","") );
+  ui->tool_clear->setIcon( LXDG::findIcon("edit-clear-locationbar-rtl","dialog-cancel") );
 }
 
 void mainUI::start_calc(){
@@ -63,23 +64,31 @@ void mainUI::clear_calc(){
       ui->line_eq->setFocus();
 }
 
-void mainUI::captureButton1(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_1->text()); }
-void mainUI::captureButton2(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_2->text()); }
-void mainUI::captureButton3(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_3->text()); }
-void mainUI::captureButton4(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_4->text()); }
-void mainUI::captureButton5(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_5->text()); }
-void mainUI::captureButton6(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_6->text()); }
-void mainUI::captureButton7(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_7->text()); }
-void mainUI::captureButton8(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_8->text()); }
-void mainUI::captureButton9(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_9->text()); }
-void mainUI::captureButton0(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_0->text()); }
-void mainUI::captureButtonSubtract(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Subtract->text()); }
-void mainUI::captureButtonAdd(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Add->text()); }
-void mainUI::captureButtonDivide(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Divide->text()); }
-void mainUI::captureButtonMultiply(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Multiply->text()); }
+void mainUI::captureButton1(){ ui->line_eq->insert(ui->button_1->text()); }
+void mainUI::captureButton2(){ ui->line_eq->insert(ui->button_2->text()); }
+void mainUI::captureButton3(){ ui->line_eq->insert(ui->button_3->text()); }
+void mainUI::captureButton4(){ui->line_eq->insert(ui->button_4->text()); }
+void mainUI::captureButton5(){ ui->line_eq->insert(ui->button_5->text()); }
+void mainUI::captureButton6(){ ui->line_eq->insert(ui->button_6->text()); }
+void mainUI::captureButton7(){ ui->line_eq->insert(ui->button_7->text()); }
+void mainUI::captureButton8(){ ui->line_eq->insert(ui->button_8->text()); }
+void mainUI::captureButton9(){ ui->line_eq->insert(ui->button_9->text()); }
+void mainUI::captureButton0(){ ui->line_eq->insert(ui->button_0->text()); }
+void mainUI::captureButtonSubtract(){ ui->line_eq->insert(ui->button_Subtract->text()); }
+void mainUI::captureButtonAdd(){ ui->line_eq->insert(ui->button_Add->text()); }
+void mainUI::captureButtonDivide(){ ui->line_eq->insert(ui->button_Divide->text()); }
+void mainUI::captureButtonMultiply(){ ui->line_eq->insert(ui->button_Multiply->text()); }
 //void mainUI::captureButtonEqual(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Equal->text()); }
-void mainUI::captureButtonDecimal(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Decimal->text()); }
+void mainUI::captureButtonDecimal(){ ui->line_eq->insert(ui->button_Decimal->text()); }
 
+void mainUI::insert_history(QListWidgetItem *it){
+  QString txt = it->text().section("[",1,-1).section("]",0,0).simplified();
+  ui->line_eq->insert("("+txt+")");
+}
+
+// =====================
+//   PRIVATE FUNCTIONS
+// =====================
 double mainUI::performOperation(double LHS, double RHS, QChar symbol){
   //qDebug() << "Perform Operation:" << LHS << symbol << RHS;
   if(symbol== '+'){ return (LHS+RHS); }
@@ -131,7 +140,7 @@ double mainUI::strToNumber(QString str){
   }
   if(sym>0){  return performOperation( strToNumber(str.left(sym)), strToNumber(str.right(str.length()-sym-1)), str[sym]); }
   if(sym==0){ return BADVALUE; }
-  //Now look for multiply/divide
+  //Now look for multiply/divide/power
   symbols.clear(); symbols << "x" << "*" << "/" << "^" ;
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);

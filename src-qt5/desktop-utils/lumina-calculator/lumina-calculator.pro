@@ -5,7 +5,8 @@ QT += core gui widgets
 TARGET  = lumina-calculator
 target.path = $${L_BINDIR}
 
-HEADERS	+= mainUI.h
+HEADERS	+= mainUI.h \
+		EqValidator.h
 		
 SOURCES	+= main.cpp \
 			mainUI.cpp 
