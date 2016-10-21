@@ -89,7 +89,8 @@ MainUI::~MainUI(){
 void MainUI::LoadArguments(QStringList args){ //CLI arguments
   for(int i=0; i<args.length(); i++){
     OpenFile( LUtils::PathToAbsolute(args[i]) );
-  ui->line_find->setFocus();	
+    if(ui->groupReplace->isVisible()){ ui->line_find->setFocus(); }
+    else{ currentEditor()->setFocus(); }
   }
 }
 
@@ -261,8 +262,9 @@ void MainUI::updateTab(QString file){
   bool changes = cur->hasChange();
   //qDebug() << "Update Tab:" << file << cur << changes;
   ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
+  ui->tabWidget->setTabToolTip(index, file);
   ui->actionSave_File->setEnabled(changes);
-  this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
+  this->setWindowTitle( (changes ? "*" : "") + file.section("/",-2) );
 }
 
 void MainUI::tabChanged(){
@@ -271,7 +273,8 @@ void MainUI::tabChanged(){
   if(cur==0){ return; } //should never happen though
   bool changes = cur->hasChange();
   ui->actionSave_File->setEnabled(changes);
-  this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
+  //this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
+  this->setWindowTitle( (changes ? "*" : "") + ui->tabWidget->tabToolTip( ui->tabWidget->currentIndex() ).section("/",-2) );
   if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ ui->tabWidget->currentWidget()->setFocus(); }
 }
 
