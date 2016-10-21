@@ -44,6 +44,7 @@ private slots:
 	void captureButtonMultiply();
 //    void captureButtonEqual();
 	void captureButtonDecimal();
+	void captureButtonPercent();
 
 	void insert_history(QListWidgetItem *it);
 	void copy_to_clipboard(QListWidgetItem *it);

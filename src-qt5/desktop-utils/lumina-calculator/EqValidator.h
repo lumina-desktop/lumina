@@ -7,8 +7,8 @@
 #ifndef _LUMINA_CALCULATOR_VALIDATOR_H
 #define _LUMINA_CALCULATOR_VALIDATOR_H
 
-#define VALIDCHARS QString("x*+-/^eE().0123456789")
-#define NOSTARTCHARS QString("x*/^)eE.")
+#define VALIDCHARS QString("x*+-/^%eE().0123456789")
+#define NOSTARTCHARS QString("x*/^%)eE.")
 #define NOENDCHARS QString("x*/^(eE.")
 #define NOCHANGE QString("().")
 

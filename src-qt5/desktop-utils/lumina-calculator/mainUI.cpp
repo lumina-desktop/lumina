@@ -16,7 +16,7 @@
 #include <math.h>
 #define BADVALUE NAN
 
-#define OPS QString("+-*/x^")
+#define OPS QString("+-*/x^%")
 
 mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   ui->setupUi(this);
@@ -38,6 +38,7 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Divide, SIGNAL (clicked()), this, SLOT (captureButtonDivide()));
   connect(ui->button_Multiply, SIGNAL (clicked()), this, SLOT (captureButtonMultiply()));
   connect(ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
+  connect(ui->button_Percent, SIGNAL(clicked()), this, SLOT(captureButtonPercent()) );
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
   connect(ui->list_results, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(insert_history(QListWidgetItem*)) );
   //connect(ui->list_results, SIGNAL(itemRightClicked(QListWidgetItem*)), this, SLOT(copt_to_clipboard(QListWidgetItem*)) );
@@ -57,7 +58,9 @@ void mainUI::updateIcons(){
 
 void mainUI::start_calc(){
   if(ui->line_eq->text().isEmpty()){ return; } //nothing to do
-  double result = strToNumber(ui->line_eq->text());
+  QString eq = ui->line_eq->text();
+    eq.replace("%","/(100)");
+  double result = strToNumber(eq);
   if(result!=result){ return; } //bad calculation - NaN's values are special in that they don't equal itself
   QString res = "%1 \t= [ %2 ]";
   ui->list_results->addItem(res.arg(QString::number(result), ui->line_eq->text()));
@@ -86,6 +89,7 @@ void mainUI::captureButtonDivide(){ ui->line_eq->insert(ui->button_Divide->text(
 void mainUI::captureButtonMultiply(){ ui->line_eq->insert(ui->button_Multiply->text()); }
 //void mainUI::captureButtonEqual(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Equal->text()); }
 void mainUI::captureButtonDecimal(){ ui->line_eq->insert(ui->button_Decimal->text()); }
+void mainUI::captureButtonPercent(){ ui->line_eq->insert(ui->button_Percent->text()); }
 
 void mainUI::insert_history(QListWidgetItem *it){
   QString txt = it->text().section("[",1,-1).section("]",0,0).simplified();
