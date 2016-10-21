@@ -40,7 +40,7 @@ void AppLauncherPlugin::loadButton(){
   QString txt;
   if(path.endsWith(".desktop") && ok){
     XDGDesktop file(path);
-    ok = file.isValid();
+    ok = !file.name.isEmpty();
     if(!ok){
       button->setWhatsThis("");
       button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
