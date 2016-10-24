@@ -570,7 +570,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="344"></location>
         <source>Locale</source>
-        <translation>Locale</translation>
+        <translation>Sprachumgebung</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="378"></location>
