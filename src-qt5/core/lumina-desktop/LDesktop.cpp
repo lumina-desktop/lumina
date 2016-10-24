@@ -230,6 +230,7 @@ void LDesktop::InitDesktop(){
       else if(grid<0){ grid = 100; }
       bgDesktop->SetIconSize( grid );
       bgDesktop->setContextMenuPolicy(Qt::CustomContextMenu);
+      //LSession::handle()->XCB->SetAsDesktop(bgDesktop->winId());
       connect(bgDesktop, SIGNAL(PluginRemovedByUser(QString)), this, SLOT(RemoveDeskPlugin(QString)) );
       connect(bgDesktop, SIGNAL(IncreaseIcons()), this, SLOT(IncreaseDesktopPluginIcons()) );
       connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
