@@ -58,7 +58,7 @@ How to build from source
 	Example: `qmake DESTDIR=/my/build/dir`
   * DEFAULT_SETTINGS: An optional flag to install the default settings/wallpaper for some other operating system (Note: Make sure the OS name is capitalized appropriately!)
 	Example: `qmake DEFAULT_SETTINGS=TrueOS`
-  * WITH_I18N: (not recommended) Generate/install the partially-localized translation files. This option is typically only used by developers who need to test the localization systems. If you wish to install the full localization/translation files, please use the trueos/lumina-i18n repo instead.
+  * WITH_I18N: Generate/install the translation files. (Note: For versions prior to 1.1.0, do *not* use this flag! The localization files for versions up through 1.0.0 are available in the lumina-i18n repository instead).
 	Example: `qmake CONFIG+=WITH_I18N`
   * debug: (not recommended for release builds) Do not strip all the debugging information out of the binaries (useful for performing backtraces on builds that crash or for other development tests)
 	Example: `qmake CONFIG+=debug`
