@@ -29,6 +29,7 @@ LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
   TopToBottom = true;
   GRIDSIZE = 100.0; //default value if not set
   plugsettings = LSession::handle()->DesktopPluginSettings();
+  LSession::handle()->XCB->SetAsDesktop(this->winId());
   //this->setWindowOpacity(0.0);
 }
 
