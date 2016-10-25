@@ -143,7 +143,7 @@ double mainUI::strToNumber(QString str){
     //qDebug() << "Replace value:" << str << start << end << str.mid(start+1,end-start);
     double tmp = strToNumber( str.mid(start+1, end-start-1));
     if(tmp!=tmp){ return BADVALUE; } //not a number
-    str.replace(start, end-start+1, QString::number( tmp ) );
+    str.replace(start, end-start+1, QString::number( tmp, 'e', 16) ); //need as high precision as possible here - internal only, never seen
     //qDebug() << "Replaced:" << str;
   }
   //  -------------------------------------
