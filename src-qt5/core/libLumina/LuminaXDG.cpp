@@ -22,6 +22,7 @@ XDGDesktop::XDGDesktop(QString file, QObject *parent) : QObject(parent){
   isHidden=false;
   useTerminal=false;
   startupNotify=false;
+  useVGL = false;
   type = XDGDesktop::BAD;
   filePath = file;
   exec = tryexec = "";   // just to make sure this is initialized

@@ -64,6 +64,9 @@ public:
   QStringList actionList, mimeList, catList, keyList;
   bool useTerminal, startupNotify;
   QList<XDGDesktopAction> actions;
+    //Type 1 Extensions for Lumina (Optional)
+    bool useVGL; //X-VGL
+
   //Type 2 (LINK) variables
   QString url;
 
