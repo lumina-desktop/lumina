@@ -100,7 +100,7 @@ QString DirWidget::id(){
 }
 
 QString DirWidget::currentDir(){
-  return currentBrowser()->currentDirectory();	
+  return currentBrowser()->currentDirectory();
 }
 
 void DirWidget::setShowDetails(bool show){
@@ -527,6 +527,7 @@ void DirWidget::dirStatusChanged(QString stat){
 }
 
 void DirWidget::setCurrentBrowser(QString id){
+  //qDebug() << "Set Current Browser:" << id;
   if(id==cBID){ return; } //no change
   cBID = id;
   currentDirectoryChanged(true); //update all the averarching widget elements (widget only)
@@ -547,7 +548,7 @@ void DirWidget::createNewFile(){
         &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || newdocument.isEmpty()){ return; }	
   //Create the empty file
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   //verify the new file does not already exist
   if(QFile::exists(full+newdocument)){
@@ -572,7 +573,7 @@ void DirWidget::createNewDir(){
 		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || newdir.isEmpty()){ return; }
   //Now create the new dir
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   QDir dir(full); //open the current dir
   full.append(newdir); //append the new name to the current dir
@@ -596,7 +597,7 @@ void DirWidget::createNewXDGEntry(){
   if(!ok || newdocument.isEmpty()){ return; }	
   if(!newdocument.endsWith(".desktop")){ newdocument.append(".desktop"); }
   //Create the empty file
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   //Verify the file does not already exist
   if(QFile::exists(full+newdocument)){
