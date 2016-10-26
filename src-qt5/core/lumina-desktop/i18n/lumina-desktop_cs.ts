@@ -161,7 +161,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="27"></location>
         <source>Preparing System Tray …</source>
-        <translation>Připravuje se oznamovací oblast panelu...</translation>
+        <translation>Připravuje se oznamovací oblast panelu…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="30"></location>
