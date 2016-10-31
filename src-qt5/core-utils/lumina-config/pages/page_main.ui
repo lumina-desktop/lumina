@@ -36,13 +36,22 @@
    <item>
     <widget class="QTreeWidget" name="treeWidget">
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::TabFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">QTreeWidget{background: transparent; }</string>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>true</bool>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectItems</enum>
      </property>
      <property name="iconSize">
       <size>

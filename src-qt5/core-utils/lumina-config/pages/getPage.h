@@ -26,19 +26,30 @@ static QList<PAGEINFO> KnownPages(){
   // Valid Groups: ["appearance", "interface", "session", "user"]
   QList<PAGEINFO> list;
   //Reminder: <ID>, <name>, <title>, <icon>, <comment>, <category>, <server subsytem list>, <search tags>
-  list << PageInfo("wallpaper", QObject::tr("Change Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "image");
-  list << PageInfo("theme", QObject::tr("Change Desktop Theme"), QObject::tr("Theme Settings"), "preferences-desktop-theme",QObject::tr("Change interface fonts and colors"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "theme" << "plugins");
+  list << PageInfo("wallpaper", QObject::tr("Wallpaper"), QObject::tr("Wallpaper Settings"), "preferences-desktop-wallpaper",QObject::tr("Change background image(s)"), "appearance", QStringList(), QStringList() << "background" << "wallpaper" << "color" << "image");
+  list << PageInfo("theme", QObject::tr("Theme"), QObject::tr("Theme Settings"), "preferences-desktop-theme",QObject::tr("Change interface fonts and colors"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "theme" << "plugins");
   list << PageInfo("compton", QObject::tr("Window Effects"), QObject::tr("Window Effects"), "window-duplicate",QObject::tr("Adjust transparency levels and window effects"), "appearance", QStringList(), QStringList() << "background" << "interface" << "color" << "transparency" << "windows" << "compositing");
-  list << PageInfo("autostart", QObject::tr("Startup Services and Applications"), QObject::tr("Startup Settings"), "preferences-system-session-services",QObject::tr("Automatically start applications or services"), "session", QStringList(), QStringList() << "apps" << "autostart" << "services" << "xdg" << "startup" << "session");
-  list << PageInfo("defaultapps", QObject::tr("Default Applications for File Type"), QObject::tr("Mimetype Settings"), "preferences-desktop-default-applications",QObject::tr("Change default applications"), "session", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
+  list << PageInfo("autostart", QObject::tr("Autostart"), QObject::tr("Startup Settings"), "preferences-system-session-services",QObject::tr("Automatically start applications or services"), "session", QStringList(), QStringList() << "apps" << "autostart" << "services" << "xdg" << "startup" << "session");
+  list << PageInfo("defaultapps", QObject::tr("Applications"), QObject::tr("Mimetype Settings"), "preferences-desktop-default-applications",QObject::tr("Change default applications"), "session", QStringList(), QStringList() << "apps" << "default" << "services" << "xdg" << "session");
   list << PageInfo("fluxbox-keys", QObject::tr("Keyboard Shortcuts"), QObject::tr("Keyboard Shortcuts"), "preferences-desktop-keyboard",QObject::tr("Change keyboard shortcuts"), "session", QStringList(), QStringList() << "apps" << "fluxbox" << "keys" << "keyboard" << "session" << "launch");
   list << PageInfo("fluxbox-settings", QObject::tr("Window Manager"), QObject::tr("Window Settings"), "preferences-system-windows-actions",QObject::tr("Change window settings and appearances"), "appearance", QStringList(), QStringList() << "window" << "frame" << "border" << "workspace" << "theme" << "fluxbox" << "session");
-  list << PageInfo("interface-desktop", QObject::tr("Desktop Icons and Plugins"), QObject::tr("Desktop Plugins"), "preferences-desktop-icons",QObject::tr("Change what icons or tools are embedded on the desktop"), "interface", QStringList(), QStringList() << "desktop" << "plugins" << "embed" << "icons" << "utilities");
-  list << PageInfo("interface-panel", QObject::tr("Floating Panels and Plugins"), QObject::tr("Panels and Plugins"), "configure-toolbars",QObject::tr("Change any floating panels and what they show"), "interface", QStringList(), QStringList() << "desktop" << "toolbar" << "panel" << "floating" << "plugins");
-  list << PageInfo("interface-menu", QObject::tr("Context Menu and Plugins"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
-  list << PageInfo("session-locale", QObject::tr("Localization Options"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
+  list << PageInfo("interface-desktop", QObject::tr("Desktop"), QObject::tr("Desktop Plugins"), "preferences-desktop-icons",QObject::tr("Change what icons or tools are embedded on the desktop"), "interface", QStringList(), QStringList() << "desktop" << "plugins" << "embed" << "icons" << "utilities");
+  list << PageInfo("interface-panel", QObject::tr("Panels"), QObject::tr("Panels and Plugins"), "configure-toolbars",QObject::tr("Change any floating panels and what they show"), "interface", QStringList(), QStringList() << "desktop" << "toolbar" << "panel" << "floating" << "plugins");
+  list << PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
+  list << PageInfo("session-locale", QObject::tr("Localization"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
   list << PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
-  return list;
+  
+  //Now sort the items according to the translated name
+  QStringList names;
+  for(int i=0; i<list.length(); i++){ names << list[i].name; }
+  names.sort(Qt::CaseInsensitive);
+  QList<PAGEINFO> sorted;
+  for(int i=0; i<names.length(); i++){
+    for(int j=0; j<list.length(); j++){
+      if(list[j].name==names[i]){ sorted << list.takeAt(j); break; }
+    }
+  }
+  return sorted;
 }
 
 //Add any sub-pages here
