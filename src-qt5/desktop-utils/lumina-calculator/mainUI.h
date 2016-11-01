@@ -50,9 +50,12 @@ private slots:
 	void copy_to_clipboard(QListWidgetItem *it);
 	void checkInput(const QString&);
 
+	void saveHistory();
+
 private:
 	Ui::mainUI *ui;
 	double performOperation(double LHS, double RHS, QChar symbol);
 	double strToNumber(QString str); //this is highly-recursive
+	QString getHistory(int number = -1);
 };
 #endif

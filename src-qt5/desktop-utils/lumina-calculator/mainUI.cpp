@@ -9,7 +9,9 @@
 
 #include <QDebug>
 #include <QClipboard>
+#include <QFileDialog>
 
+#include <LuminaUtils.h>
 #include <LuminaXDG.h>
 #include "EqValidator.h"
 
@@ -41,6 +43,8 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Percent, SIGNAL(clicked()), this, SLOT(captureButtonPercent()) );
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
   connect(ui->list_results, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(insert_history(QListWidgetItem*)) );
+  connect(ui->tool_history_clear, SIGNAL(clicked()), ui->list_results, SLOT(clear()) );
+  connect(ui->tool_history_save, SIGNAL(clicked()), this, SLOT(saveHistory()) );
   //connect(ui->list_results, SIGNAL(itemRightClicked(QListWidgetItem*)), this, SLOT(copt_to_clipboard(QListWidgetItem*)) );
   this->setWindowTitle(tr("Calculator"));
   updateIcons();
@@ -54,6 +58,8 @@ mainUI::~mainUI(){
 void mainUI::updateIcons(){
   this->setWindowIcon( LXDG::findIcon("accessories-calculator","") );
   ui->tool_clear->setIcon( LXDG::findIcon("edit-clear-locationbar-rtl","dialog-cancel") );
+  ui->tool_history_clear->setIcon( LXDG::findIcon("document-close","edit-clear-list") );
+  ui->tool_history_save->setIcon( LXDG::findIcon("document-save-as","edit-copy") );
 }
 
 void mainUI::start_calc(){
@@ -62,8 +68,8 @@ void mainUI::start_calc(){
     eq.replace("%","/(100)");
   double result = strToNumber(eq);
   if(result!=result){ return; } //bad calculation - NaN's values are special in that they don't equal itself
-  QString res = "%1 \t= [ %2 ]";
-  ui->list_results->addItem(res.arg(QString::number(result), ui->line_eq->text()));
+  QString res = "[#%1]  %2 \t= [ %3 ]";
+  ui->list_results->addItem(res.arg(QString::number(ui->list_results->count()+1), QString::number(result), ui->line_eq->text()));
   ui->list_results->scrollToItem( ui->list_results->item( ui->list_results->count()-1) );
   ui->line_eq->clear();
 }
@@ -92,7 +98,7 @@ void mainUI::captureButtonDecimal(){ ui->line_eq->insert(ui->button_Decimal->tex
 void mainUI::captureButtonPercent(){ ui->line_eq->insert(ui->button_Percent->text()); }
 
 void mainUI::insert_history(QListWidgetItem *it){
-  QString txt = it->text().section("[",1,-1).section("]",0,0).simplified();
+  QString txt = it->text().section("[",-1).section("]",0,0).simplified();
   ui->line_eq->insert("("+txt+")");
 }
 
@@ -104,10 +110,18 @@ void mainUI::copy_to_clipboard(QListWidgetItem *it){
 void mainUI::checkInput(const QString &str){
   if(str.length()==1 && ui->list_results->count()>0){
     if(OPS.contains(str)){ 
-      QString lastresult = ui->list_results->item( ui->list_results->count()-1)->text().section("=",0,0).simplified();
+      QString lastresult = ui->list_results->item( ui->list_results->count()-1)->text().section("]",0,0).section("[",-1).simplified();
       ui->line_eq->setText( lastresult+str);
     }
   }
+}
+
+void mainUI::saveHistory(){
+  QStringList history;
+  for(int i=0; i<ui->list_results->count(); i++){ history << ui->list_results->item(i)->text(); }
+  QString file = QFileDialog::getSaveFileName(this, tr("Save Calculator History"), QDir::homePath() );
+  if(file.section(".",-1).isEmpty()){ file.append(".txt"); }
+  LUtils::writeFile(file, history, true);
 }
 
 // =====================
@@ -126,6 +140,23 @@ double mainUI::performOperation(double LHS, double RHS, QChar symbol){
 }
 
 double mainUI::strToNumber(QString str){
+  //Look for history replacements first
+  while(str.contains("#")){
+    int index = str.indexOf("#");
+    int num = -1; //history number
+    for(int i=index+1; i<str.length(); i++){
+      if(!str[i].isNumber() ||  i==(str.length()-1) ){
+        if(!str[i].isNumber()){ i--; } //go back to the last valid char
+        //qDebug() << "Replace History:" << str << index << i << str.mid(index+1, i-index);
+        num = str.mid(index+1, i-index).toInt();
+        //qDebug() << " H number:" << num;
+        str.replace(index, i-index+1, getHistory(num));
+        //qDebug() << " After Replace:" << str;
+        break; //finished with this history item
+      }
+    }
+    if(num<1){ return BADVALUE; } //could not perform substitution
+  }
   //Look for perentheses first
   //qDebug() << "String to Number: " << str;
   if(str.indexOf("(")>=0){
@@ -176,4 +207,20 @@ double mainUI::strToNumber(QString str){
   //Could not find any operations - must be a raw number
   //qDebug() << " - Found Number:" << str << str.toDouble();
   return str.toDouble();
+}
+
+QString mainUI::getHistory(int number){
+  if(number <1 || number > ui->list_results->count()){
+    //use the last history item
+    number = ui->list_results->count();
+  }
+  QString ans = ui->list_results->item(number-1)->text().section("=",0,0).section("]",-1).simplified();
+  QString eq = ui->list_results->item(number-1)->text().section("[",-1).section("]",0,0).simplified();
+  //See if the text answer is accurate enough (does not look rounded)
+  if(ans.length()<7){ 
+    return ("("+ans+")"); //short enough answer that it was probably not rounded
+  }else{
+    //need to re-calculate the last equation instead for exact result
+    return ("("+eq+")");
+  }
 }
