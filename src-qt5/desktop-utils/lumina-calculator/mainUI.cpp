@@ -20,8 +20,12 @@
 
 #define OPS QString("+-*/x^%")
 
+
+const double PI = (::acos(1.0)+::acos(-1.0));
+
 mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   ui->setupUi(this);
+  advMenu = 0;
   connect(ui->tool_clear, SIGNAL(clicked()), this, SLOT(clear_calc()) );
   connect(ui->line_eq, SIGNAL(returnPressed()), this, SLOT(start_calc()) );
   connect(ui->line_eq, SIGNAL(textEdited(const QString&)), this, SLOT(checkInput(const QString&)) );
@@ -40,7 +44,6 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   connect(ui->button_Divide, SIGNAL (clicked()), this, SLOT (captureButtonDivide()));
   connect(ui->button_Multiply, SIGNAL (clicked()), this, SLOT (captureButtonMultiply()));
   connect(ui->button_Decimal, SIGNAL (clicked()), this, SLOT (captureButtonDecimal()));
-  connect(ui->button_Percent, SIGNAL(clicked()), this, SLOT(captureButtonPercent()) );
   connect(ui->button_Equal, SIGNAL (clicked()), this, SLOT (start_calc()));
   connect(ui->list_results, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(insert_history(QListWidgetItem*)) );
   connect(ui->tool_history_clear, SIGNAL(clicked()), ui->list_results, SLOT(clear()) );
@@ -48,6 +51,7 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   //connect(ui->list_results, SIGNAL(itemRightClicked(QListWidgetItem*)), this, SLOT(copt_to_clipboard(QListWidgetItem*)) );
   this->setWindowTitle(tr("Calculator"));
   updateIcons();
+  updateMenus();
   ui->line_eq->setFocus();
   ui->line_eq->setValidator(new EqValidator(this) );
 }
@@ -60,6 +64,53 @@ void mainUI::updateIcons(){
   ui->tool_clear->setIcon( LXDG::findIcon("edit-clear-locationbar-rtl","dialog-cancel") );
   ui->tool_history_clear->setIcon( LXDG::findIcon("document-close","edit-clear-list") );
   ui->tool_history_save->setIcon( LXDG::findIcon("document-save-as","edit-copy") );
+  ui->tool_adv->setIcon( LXDG::findIcon("formula","") );
+}
+
+void mainUI::updateMenus(){
+  if(advMenu==0){
+    advMenu = new QMenu(this);
+    ui->tool_adv->setMenu(advMenu);
+    connect(advMenu, SIGNAL(triggered(QAction*)), this, SLOT(advMenuTriggered(QAction*)) );
+  }
+  QAction *tmp = advMenu->addAction( QString(tr("Percentage %1")).arg("\t%") );
+    tmp->setWhatsThis("%");
+  tmp = advMenu->addAction( QString(tr("Power %1")).arg("\t^") );
+    tmp->setWhatsThis("^");
+  tmp = advMenu->addAction( QString(tr("Base-10 Exponential %1")).arg("\tE") );
+    tmp->setWhatsThis("E");
+  tmp = advMenu->addAction( QString(tr("Exponential %1")).arg("\te") );
+    tmp->setWhatsThis("e");
+  tmp = advMenu->addAction( QString(tr("Constant Pi %1")).arg("\t\u03C0") );
+    tmp->setWhatsThis("\u03C0");
+  advMenu->addSeparator();
+  tmp = advMenu->addAction( QString(tr("Square Root %1")).arg("\tsqrt(") );
+    tmp->setWhatsThis("sqrt(");
+  tmp = advMenu->addAction( QString(tr("Logarithm %1")).arg("\tlog(") );
+    tmp->setWhatsThis("log(");
+  tmp = advMenu->addAction( QString(tr("Natural Log %1")).arg("\tln(") );
+    tmp->setWhatsThis("ln(");
+  advMenu->addSeparator();
+  tmp = advMenu->addAction( QString(tr("Sine %1")).arg("\tsin(") );
+    tmp->setWhatsThis("sin(");
+  tmp = advMenu->addAction( QString(tr("Cosine %1")).arg("\tcos(") );
+    tmp->setWhatsThis("cos(");
+  tmp = advMenu->addAction( QString(tr("Tangent %1")).arg("\ttan(") );
+    tmp->setWhatsThis("tan(");
+  advMenu->addSeparator();
+  tmp = advMenu->addAction( QString(tr("Arc Sine %1")).arg("\tasin(") );
+    tmp->setWhatsThis("asin(");
+  tmp = advMenu->addAction( QString(tr("Arc Cosine %1")).arg("\tacos(") );
+    tmp->setWhatsThis("acos(");
+  tmp = advMenu->addAction( QString(tr("Arc Tangent %1")).arg("\tatan(") );
+    tmp->setWhatsThis("atan(");
+  advMenu->addSeparator();
+  tmp = advMenu->addAction( QString(tr("Hyperbolic Sine %1")).arg("\tsinh(") );
+    tmp->setWhatsThis("sinh(");
+  tmp = advMenu->addAction( QString(tr("Hyperbolic Cosine %1")).arg("\tcosh(") );
+    tmp->setWhatsThis("cosh(");
+  tmp = advMenu->addAction( QString(tr("Hyperbolic Tangent %1")).arg("\ttanh(") );
+    tmp->setWhatsThis("tanh(");
 }
 
 void mainUI::start_calc(){
@@ -69,7 +120,7 @@ void mainUI::start_calc(){
   double result = strToNumber(eq);
   if(result!=result){ return; } //bad calculation - NaN's values are special in that they don't equal itself
   QString res = "[#%1]  %2 \t= [ %3 ]";
-  ui->list_results->addItem(res.arg(QString::number(ui->list_results->count()+1), QString::number(result), ui->line_eq->text()));
+  ui->list_results->addItem(res.arg(QString::number(ui->list_results->count()+1), QString::number(result, 'G'), ui->line_eq->text()));
   ui->list_results->scrollToItem( ui->list_results->item( ui->list_results->count()-1) );
   ui->line_eq->clear();
 }
@@ -93,10 +144,12 @@ void mainUI::captureButtonSubtract(){ ui->line_eq->insert(ui->button_Subtract->t
 void mainUI::captureButtonAdd(){ ui->line_eq->insert(ui->button_Add->text()); }
 void mainUI::captureButtonDivide(){ ui->line_eq->insert(ui->button_Divide->text()); }
 void mainUI::captureButtonMultiply(){ ui->line_eq->insert(ui->button_Multiply->text()); }
-//void mainUI::captureButtonEqual(){ ui->line_eq->setText(ui->line_eq->text() += ui->button_Equal->text()); }
 void mainUI::captureButtonDecimal(){ ui->line_eq->insert(ui->button_Decimal->text()); }
-void mainUI::captureButtonPercent(){ ui->line_eq->insert(ui->button_Percent->text()); }
 
+void mainUI::advMenuTriggered(QAction *act){
+  if(act->whatsThis().isEmpty()){ return; }
+  ui->line_eq->insert(act->whatsThis());
+}
 void mainUI::insert_history(QListWidgetItem *it){
   QString txt = it->text().section("[",-1).section("]",0,0).simplified();
   ui->line_eq->insert("("+txt+")");
@@ -134,12 +187,42 @@ double mainUI::performOperation(double LHS, double RHS, QChar symbol){
   else if(symbol== '*' || symbol=='x'){ return (LHS*RHS); }
   else if(symbol== '/'){ return (LHS/RHS); }
   else if(symbol== '^'){ return ::pow(LHS, RHS); }
+  else if(symbol=='e'){ return (LHS * ::exp(RHS) ); }
   //else if(symbol== '%'){ return (LHS%RHS); }
   qDebug() << "Invalid Symbol:" << symbol;
   return BADVALUE;
 }
 
+double mainUI::performSciOperation(QString func, double arg){
+  //This function is for performing calculations of scientific functions "<function>(<arg>)"
+  //qDebug() << "Perform Sci Op:" << func << arg;
+  double res;
+  if(func=="ln"){ return ::log(arg); }
+  else if(func=="log"){ return ::log10(arg); }
+  else if(func=="sqrt"){ return ::sqrt(arg); }
+  else if(func=="sin"){ res = ::sin(arg); } //needs rounding check
+  else if(func=="cos"){ res = ::cos(arg); } //needs rounding check
+  else if(func=="tan"){ return ::tan(arg); }
+  else if(func=="asin"){ return ::asin(arg); }
+  else if(func=="acos"){ return ::acos(arg); }
+  else if(func=="atan"){ return ::atan(arg); }
+  else if(func=="sinh"){ return ::sinh(arg); }
+  else if(func=="cosh"){ return ::cosh(arg); }
+  else if(func=="tanh"){ return ::tanh(arg); }
+  else{ 
+    qDebug() << "Unknown Scientific Function:" << func; 
+    return BADVALUE;
+  }
+  //Special cases:
+  // Check for whether "PI" was input as an argument (in some form) and round off the answer as needed
+  //  since PI is itself a rounded number
+  if(res < 0.000000000000001){ return 0; }
+  return res;
+}
+
+
 double mainUI::strToNumber(QString str){
+  //qDebug() << "String To Number:" << str;
   //Look for history replacements first
   while(str.contains("#")){
     int index = str.indexOf("#");
@@ -174,7 +257,19 @@ double mainUI::strToNumber(QString str){
     //qDebug() << "Replace value:" << str << start << end << str.mid(start+1,end-start);
     double tmp = strToNumber( str.mid(start+1, end-start-1));
     if(tmp!=tmp){ return BADVALUE; } //not a number
-    str.replace(start, end-start+1, QString::number( tmp, 'e', 16) ); //need as high precision as possible here - internal only, never seen
+    //Now check really quick if this was an argument to a scientific operation
+    for(int i=start-1; i>=0; i-- ){
+      if( !str[i].isLower() || i==0 ){
+        if(!str[i].isLower()){ i++; }//don't need the invalid character
+        if(start-i<2){ continue; } //not long enough - 2+ chars for sci functions
+        //Got a scientific operation - run it through the routine
+        tmp = performSciOperation( str.mid(i, start-i), tmp);
+        if(tmp!=tmp){ return BADVALUE; } //got a bad value
+        start = i; //new start point for the replacement
+        break;
+      }
+    }
+    str.replace(start, end-start+1, QString::number( tmp, 'E', 16) ); //need as high precision as possible here - internal only, never seen
     //qDebug() << "Replaced:" << str;
   }
   //  -------------------------------------
@@ -196,7 +291,7 @@ double mainUI::strToNumber(QString str){
   if(sym>0){  return performOperation( strToNumber(str.left(sym)), strToNumber(str.right(str.length()-sym-1)), str[sym]); }
   if(sym==0){ return BADVALUE; }
   //Now look for multiply/divide/power
-  symbols.clear(); symbols << "x" << "*" << "/" << "^" ;
+  symbols.clear(); symbols << "x" << "*" << "/" << "^" << "e";
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);
     if(sym < tmp){ sym = tmp; }
@@ -205,7 +300,22 @@ double mainUI::strToNumber(QString str){
   if(sym==0){ return BADVALUE; }
 
   //Could not find any operations - must be a raw number
-  //qDebug() << " - Found Number:" << str << str.toDouble();
+  //qDebug() << " - Found Number:" << str;// << str.toDouble();
+  if(str=="\u03C0"){ return PI; }
+  //else if(str.endsWith("\u03C0")){
+     //return performOperation( strToNumber(str.section("\u03C0",0,-2)), PI, '*'); 
+  else if(str.contains("\u03C0")){
+     qDebug() << " Has Pi:" << str.count("\u03C0");
+    //Pi is mixed into the number - need to multiply it all out
+    double res = 1;
+    QStringList vals = str.split("\u03C0", QString::SkipEmptyParts);
+    for(int i=0; i<vals.length(); i++){ res = res * strToNumber(vals[i]); }
+    //Now multiply in the PI's
+    for(int i=0; i<str.count("\u03C0"); i++){
+      res = res * PI;
+    }
+    return res;
+  }
   return str.toDouble();
 }
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>204</width>
+    <width>255</width>
     <height>260</height>
    </rect>
   </property>
@@ -625,7 +625,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QPushButton" name="button_Percent">
+         <widget class="QToolButton" name="tool_adv">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -653,8 +653,14 @@
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>
+          <property name="toolTip">
+           <string>Advanced Operations</string>
+          </property>
           <property name="text">
-           <string>%</string>
+           <string notr="true">Adv</string>
+          </property>
+          <property name="popupMode">
+           <enum>QToolButton::InstantPopup</enum>
           </property>
          </widget>
         </item>

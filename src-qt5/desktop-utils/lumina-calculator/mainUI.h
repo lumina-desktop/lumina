@@ -24,6 +24,7 @@ public:
 
 public slots:
 	void updateIcons();
+	void updateMenus();
 
 private slots:
 	void start_calc();
@@ -42,9 +43,9 @@ private slots:
 	void captureButtonAdd();
 	void captureButtonDivide();
 	void captureButtonMultiply();
-//    void captureButtonEqual();
 	void captureButtonDecimal();
-	void captureButtonPercent();
+
+	void advMenuTriggered(QAction *act);
 
 	void insert_history(QListWidgetItem *it);
 	void copy_to_clipboard(QListWidgetItem *it);
@@ -54,7 +55,10 @@ private slots:
 
 private:
 	Ui::mainUI *ui;
+	QMenu *advMenu;
+
 	double performOperation(double LHS, double RHS, QChar symbol);
+	double performSciOperation(QString func, double arg);
 	double strToNumber(QString str); //this is highly-recursive
 	QString getHistory(int number = -1);
 };
