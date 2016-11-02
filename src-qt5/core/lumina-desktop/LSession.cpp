@@ -150,13 +150,17 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
     QString confdir = sessionsettings->fileName().section("/",0,-2);
-    watcher->addPath( sessionsettings->fileName() );
-    watcher->addPath( confdir+"/desktopsettings.conf" );
-    watcher->addPath( confdir+"/fluxbox-init" );
-    watcher->addPath( confdir+"/fluxbox-keys" );
+    watcherChange(sessionsettings->fileName() );
+    watcherChange( confdir+"/desktopsettings.conf" );
+    watcherChange( confdir+"/fluxbox-init" );
+    watcherChange( confdir+"/fluxbox-keys" );
+    //watcher->addPath( sessionsettings->fileName() );
+    //watcher->addPath( confdir+"/desktopsettings.conf" );
+    //watcher->addPath( confdir+"/fluxbox-init" );
+    //watcher->addPath( confdir+"/fluxbox-keys" );
     //Try to watch the localized desktop folder too
-    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcher->addPath( QDir::homePath()+"/"+tr("Desktop") ); }
-    watcher->addPath( QDir::homePath()+"/Desktop" );
+    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
+    watcherChange( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
   //connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
@@ -321,8 +325,17 @@ void LSession::reloadIconTheme(){
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   //if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
-  if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
-  else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
+  if(changed.endsWith("sessionsettings.conf") ){
+    sessionsettings->sync(); 
+    //qDebug() << "Session Settings Changed";
+    if(sessionsettings->contains("Qt5_theme_engine")){
+      QString engine = sessionsettings->value("Qt5_theme_engine","").toString();
+      //qDebug() << "Set Qt5 theme engine: " << engine;
+      if(engine.isEmpty()){ unsetenv("QT_QPA_PLATFORMTHEME"); }
+      else{ setenv("QT_QPA_PLATFORMTHEME", engine.toUtf8().data(),1); } 
+    }
+    emit SessionConfigChanged();
+  }else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
   else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){ 
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
