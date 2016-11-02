@@ -14,6 +14,7 @@
 //==========
 page_theme::page_theme(QWidget *parent) : PageWidget(parent), ui(new Ui::page_theme()){
   ui->setupUi(this);
+  findQt5Themes();
   loading = false;
   PINFO = new LPlugins(); //load the info class
   connect(ui->spin_session_fontsize, SIGNAL(valueChanged(int)), this, SLOT(settingsChanged()) );
@@ -24,7 +25,7 @@ page_theme::page_theme(QWidget *parent) : PageWidget(parent), ui(new Ui::page_th
   connect(ui->tool_session_newcolor, SIGNAL(clicked()), this, SLOT(sessionEditColor()) );
   connect(ui->tool_session_newtheme, SIGNAL(clicked()), this, SLOT(sessionEditTheme()) );
   connect(ui->combo_session_cursortheme, SIGNAL(currentIndexChanged(int)), this, SLOT(settingsChanged()) );
-
+  connect(ui->combo_qt5_theme, SIGNAL(currentIndexChanged(int)), this, SLOT(checkQt5Theme()) );
   updateIcons();
 }
 
@@ -41,6 +42,11 @@ void page_theme::SaveSettings(){
   QString iconset = ui->combo_session_icontheme->currentText();
   QString font = ui->font_session_theme->currentFont().family();
   QString fontsize = QString::number(ui->spin_session_fontsize->value())+"pt";
+  QString qt5theme = ui->combo_qt5_theme->currentData().toString();
+   if(qt5theme=="internal_custom"){ qt5theme = ui->line_qt5_custom_theme->text(); }
+   QSettings sessionsettings("lumina-desktop","sessionsettings");
+    sessionsettings.setValue("Qt5_theme_engine", qt5theme);
+
   //qDebug() << "Saving theme options:" << themefile << colorfile << iconset << font << fontsize;
   LTHEME::setCurrentSettings( themefile, colorfile, iconset, font, fontsize);
   LTHEME::setCursorTheme(ui->combo_session_cursortheme->currentText());
@@ -103,6 +109,15 @@ ui->combo_session_themefile->clear();
   int cur = ui->combo_session_cursortheme->findText( LTHEME::currentCursor() );
   if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
 
+   QSettings sessionsettings("lumina-desktop","sessionsettings");
+    QString qt5theme = sessionsettings.value("Qt5_theme_engine", "").toString();
+  int index = ui->combo_qt5_theme->findData(qt5theme);
+  if(index <0){ 
+    ui->line_qt5_custom_theme->setText(qt5theme);
+    index = ui->combo_qt5_theme->findData("internal_custom");
+  }
+  if(index>=0){ ui->combo_qt5_theme->setCurrentIndex(index); }
+
   QApplication::processEvents();
   loading = false;
 }
@@ -110,8 +125,34 @@ ui->combo_session_themefile->clear();
 void page_theme::updateIcons(){
   ui->tool_session_newtheme->setIcon( LXDG::findIcon("preferences-desktop-theme","") );
   ui->tool_session_newcolor->setIcon( LXDG::findIcon("preferences-desktop-color","") );
+  ui->tabWidget->setTabIcon(0, LXDG::findIcon("user-desktop","desktop") );
+  ui->tabWidget->setTabIcon(1, LXDG::findIcon("preferences-system-windows","") );
 }
 
+//=================
+//       PRIVATE 
+//=================
+void page_theme::findQt5Themes(){
+  ui->combo_qt5_theme->clear();
+  ui->combo_qt5_theme->addItem( tr("None"), "");
+  ui->combo_qt5_theme->addItem( tr("Manual Setting"), "internal_custom");
+  //Now probe the system and list any themes that are found
+  QStringList paths = QCoreApplication::libraryPaths();
+  qDebug() << "Known Library Paths:" << paths;
+  QStringList engines;
+  for(int i=0; i<paths.length(); i++){
+    if(QFile::exists(paths[i]+"/platformthemes")){
+      QDir dir(paths[i]+"/platformthemes");
+      QStringList libs = dir.entryList(QStringList("lib*.so*"), QDir::Files, QDir::NoSort) ;
+      for(int j=0; j<libs.length(); j++){ engines << libs[j].section("lib",1,-1).section(".",0,-2).simplified(); }
+    }
+  }
+  engines.sort();
+  for(int i=0; i<engines.length(); i++){
+    if(i==0){ ui->combo_qt5_theme->insertSeparator(2); }
+    ui->combo_qt5_theme->addItem( engines[i], engines[i] );
+  }
+}
 //=================
 //    PRIVATE SLOTS
 //=================
@@ -166,4 +207,9 @@ void page_theme::sessionEditTheme(){
     if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   emit HasPendingChanges(true);
+}
+
+void page_theme::checkQt5Theme(){
+  ui->line_qt5_custom_theme->setVisible( ui->combo_qt5_theme->currentData().toString()=="internal_custom");
+  settingsChanged();
 }
