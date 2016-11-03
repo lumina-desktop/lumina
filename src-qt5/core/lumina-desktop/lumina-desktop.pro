@@ -53,6 +53,9 @@ HEADERS  += Globals.h \
 FORMS    += SystemWindow.ui \
 	BootSplash.ui 
 
+#include all the special classes from the Lumina tree
+include(../libLumina/ResizeMenu.pri)
+
 #Now include all the files for the various plugins
 include(panel-plugins/panel-plugins.pri)
 include(desktop-plugins/desktop-plugins.pri)

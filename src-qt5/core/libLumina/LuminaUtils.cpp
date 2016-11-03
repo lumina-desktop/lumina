@@ -966,7 +966,7 @@ int LUtils::VersionStringToNumber(QString version){
 // =======================
 //      RESIZEMENU CLASS
 // =======================
-ResizeMenu::ResizeMenu(QWidget *parent) : QMenu(parent){
+/*ResizeMenu::ResizeMenu(QWidget *parent) : QMenu(parent){
   this->setContentsMargins(1,1,1,1);
   this->setMouseTracking(true);
   resizeSide = NONE;
@@ -1060,4 +1060,4 @@ void ResizeMenu::mouseReleaseEvent(QMouseEvent *ev){
   }else{
     QMenu::mouseReleaseEvent(ev);  //do normal processing
   }
-}
+}*/
