@@ -10,7 +10,8 @@
 #include <QString>
 
 #include "session.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 #include <LuminaXDG.h>
@@ -21,7 +22,7 @@ int main(int argc, char ** argv)
 {
     if (argc > 1) {
       if (QString(argv[1]) == QString("--version")){
-        qDebug() << LUtils::LuminaDesktopVersion();
+        qDebug() << LDesktopUtils::LuminaDesktopVersion();
         return 0;
       }
     }

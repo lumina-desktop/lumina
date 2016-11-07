@@ -1,7 +1,7 @@
 #include "ThemeDialog.h"
 #include "ui_ThemeDialog.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 ThemeDialog::ThemeDialog(QWidget *parent, LPlugins *plugs, QString themeFilePath) : QDialog(parent), ui(new Ui::ThemeDialog){
   ui->setupUi(this); //load the designer file

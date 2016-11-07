@@ -221,7 +221,7 @@ void UserWidget::updateFavItems(bool newfilter){
   if(updatingfavs){ return; }
   updatingfavs = true;
   //qDebug() << "Updating User Favorite Items";
-  QStringList newfavs = LUtils::listFavorites();
+  QStringList newfavs = LDesktopUtils::listFavorites();
   //qDebug() << "Favorites:" << newfavs;
   if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
     favs = newfavs;

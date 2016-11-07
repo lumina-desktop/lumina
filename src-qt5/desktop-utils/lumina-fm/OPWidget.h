@@ -11,6 +11,9 @@
 
 #include "FODialog.h"
 #include "ScrollDialog.h"
+
+#include <QWidgetAction>
+
 namespace Ui{
 	class OPWidget;
 };

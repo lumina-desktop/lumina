@@ -5,6 +5,12 @@ QT += core gui widgets
 TARGET  = lumina-textedit
 target.path = $${L_BINDIR}
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 HEADERS	+= MainUI.h \
 			PlainTextEditor.h \
 			syntaxSupport.h \
@@ -18,10 +24,6 @@ SOURCES	+= main.cpp \
 
 FORMS		+= MainUI.ui \
 			ColorDialog.ui
-LIBS += -lLuminaUtils
-
-
-DEPENDPATH	+= ../../libLumina
 
 TRANSLATIONS =  i18n/l-te_af.ts \
                 i18n/l-te_ar.ts \

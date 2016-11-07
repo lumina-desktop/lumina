@@ -14,7 +14,7 @@
 #include <QApplication>
 #include <QMessageBox>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 //==============
 //       PUBLIC

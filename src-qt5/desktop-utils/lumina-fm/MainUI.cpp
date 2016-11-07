@@ -7,9 +7,12 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include <QMenu>
 #include <QFileInfo>
 #include "gitCompat.h"
 #include "gitWizard.h"
+
+#include <LDesktopUtils.h>
 
 #define DEBUG 0
 
@@ -845,7 +848,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
 void MainUI::FavoriteFiles(QStringList list){
   qDebug() << "Favorite Files:" << list;
   for(int i=0; i<list.length(); i++){
-    LUtils::addFavorite(list[i]);
+    LDesktopUtils::addFavorite(list[i]);
   }
   //Might want to make this a "toggle" instead of an add later on...
 }

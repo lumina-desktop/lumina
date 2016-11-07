@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QDesktopWidget>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 TrayIcon::TrayIcon() : QSystemTrayIcon(){
   //Create the child widgets here

@@ -9,6 +9,9 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+include(../libLumina/LuminaXDG.pri)
+include(../libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 	   LFileDialog.cpp
 
@@ -17,10 +20,6 @@ HEADERS  += LFileDialog.h
 FORMS    += LFileDialog.ui
 
 RESOURCES+= lumina-open.qrc
-
-LIBS     += -lLuminaUtils
-
-DEPENDPATH	+= ../libLumina
 
 
 TRANSLATIONS =  i18n/lumina-open_af.ts \

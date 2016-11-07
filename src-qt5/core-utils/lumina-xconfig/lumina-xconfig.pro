@@ -8,6 +8,12 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 		mainUI.cpp \
 		ScreenSettings.cpp
@@ -17,12 +23,6 @@ HEADERS  += mainUI.h \
 
 FORMS    += mainUI.ui
 
-# RESOURCES+= lumina-config.qrc
-
-
-LIBS += -lLuminaUtils
-
-DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-xconfig_af.ts \
                 i18n/lumina-xconfig_ar.ts \

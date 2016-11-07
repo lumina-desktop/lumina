@@ -6,7 +6,7 @@
 #include "MainUI.h"
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaSingleApplication.h>
 
 #include "ScreenSettings.h"

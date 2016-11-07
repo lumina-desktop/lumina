@@ -5,6 +5,12 @@ QT += core gui widgets
 TARGET  = lumina-calculator
 target.path = $${L_BINDIR}
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 HEADERS	+= mainUI.h \
 		EqValidator.h
 		
@@ -12,10 +18,6 @@ SOURCES	+= main.cpp \
 			mainUI.cpp 
 
 FORMS		+= mainUI.ui 
-
-LIBS += -lLuminaUtils
-
-DEPENDPATH	+= ../../libLumina
 
 TRANSLATIONS =  i18n/l-calc_af.ts \
                 i18n/l-calc_ar.ts \

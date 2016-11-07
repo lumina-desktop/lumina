@@ -6,7 +6,7 @@
 //===========================================
 #include "LuminaXDG.h"
 #include "LuminaOS.h"
-#include "LuminaUtils.h"
+#include "LUtils.h"
 #include <QObject>
 #include <QTimer>
 #include <QMediaPlayer>

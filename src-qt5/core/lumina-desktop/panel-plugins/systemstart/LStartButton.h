@@ -24,7 +24,7 @@
 
 // libLumina includes
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <ResizeMenu.h>
 
 #include "StartMenu.h"

@@ -15,7 +15,7 @@
 
 //LibLumina X11 class
 #include <LuminaX11.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include <unistd.h> //for usleep() usage
 
@@ -29,7 +29,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
  if(this->isPrimaryProcess()){
   connect(this, SIGNAL(InputsAvailable(QStringList)), this, SLOT(NewCommunication(QStringList)) );
   this->setApplicationName("Lumina Desktop Environment");
-  this->setApplicationVersion( LUtils::LuminaDesktopVersion() );
+  this->setApplicationVersion( LDesktopUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enabled a few of the simple effects by default
@@ -372,7 +372,7 @@ void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
-  bool changed = LUtils::checkUserFiles(OVS);
+  bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());

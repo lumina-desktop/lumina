@@ -25,7 +25,7 @@
 #include "LFileDialog.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 

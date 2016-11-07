@@ -8,7 +8,7 @@
 #include "ui_MainUI.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include <QTimer>
 

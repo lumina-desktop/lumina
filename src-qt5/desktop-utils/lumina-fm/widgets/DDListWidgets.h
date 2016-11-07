@@ -24,7 +24,7 @@
 #include <QUrl>
 #include <QDir>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 //==============
 //  LIST WIDGET

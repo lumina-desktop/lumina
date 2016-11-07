@@ -9,7 +9,7 @@
 
 #include <LuminaXDG.h>
 #include "LSession.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <QDir>
 #include <QFileDialog>
 #include <QInputDialog>
