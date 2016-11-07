@@ -8,7 +8,7 @@
 #include <QDebug>
 
 #include <LuminaThemes.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include "MainUI.h"
 

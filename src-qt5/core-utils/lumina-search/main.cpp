@@ -6,7 +6,7 @@
 #include "MainUI.h"
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 //==== INPUT FORMAT ====
 //  lumina-search [-no-excludes] [-dir [directory]] [-search <term>]

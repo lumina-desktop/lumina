@@ -10,8 +10,9 @@
 #include <QDebug>
 #include <QClipboard>
 #include <QFileDialog>
+#include <QMenu>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaXDG.h>
 #include "EqValidator.h"
 

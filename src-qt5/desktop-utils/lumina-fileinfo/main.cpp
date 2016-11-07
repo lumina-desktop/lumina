@@ -4,7 +4,7 @@
 #include <QFile>
 
 #include "MainUI.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaThemes.h>
 
 int main(int argc, char ** argv)

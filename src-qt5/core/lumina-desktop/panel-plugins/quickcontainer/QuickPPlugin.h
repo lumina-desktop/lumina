@@ -13,7 +13,7 @@
 #include <QVBoxLayout>
 #include "../LPPlugin.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <QDebug>
 
 class QuickPPlugin : public LPPlugin{

@@ -2,7 +2,7 @@
 
 #include <QTimer>
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 Worker::Worker(QObject *parent) : QObject(parent){
   //Get the list of all applications and save them in an easily-searchable form

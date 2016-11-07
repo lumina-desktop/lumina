@@ -22,7 +22,8 @@
 #include <LuminaXDG.h> //from libLuminaUtils
 #include <LuminaThemes.h>
 #include <LuminaOS.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 
 #define DEBUG 0
 
@@ -58,7 +59,7 @@ int main(int argc, char ** argv)
 {
     if (argc > 1) {
       if (QString(argv[1]) == QString("--version")){
-        qDebug() << LUtils::LuminaDesktopVersion();
+        qDebug() << LDesktopUtils::LuminaDesktopVersion();
         return 0;
       }
     }

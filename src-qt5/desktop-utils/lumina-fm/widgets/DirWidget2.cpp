@@ -19,7 +19,7 @@
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include "../ScrollDialog.h"
 

@@ -10,6 +10,12 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 		MainUI.cpp \
 		Worker.cpp \
@@ -21,10 +27,6 @@ HEADERS  += MainUI.h \
 
 FORMS    += MainUI.ui \
 		ConfigUI.ui
-
-LIBS     += -lLuminaUtils
-
-DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-search_af.ts \
                 i18n/lumina-search_ar.ts \

@@ -9,6 +9,12 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LDesktopUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 		MainUI.cpp \
 		FODialog.cpp \
@@ -51,7 +57,6 @@ FORMS    += MainUI.ui \
 icons.files = Insight-FileManager.png
 icons.path = $${L_SHAREDIR}/pixmaps
 
-LIBS     += -lLuminaUtils
 
 TRANSLATIONS =  i18n/lumina-fm_af.ts \
                 i18n/lumina-fm_ar.ts \

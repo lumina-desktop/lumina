@@ -10,7 +10,7 @@
 #include "syntaxSupport.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include <QFileDialog>
 #include <QDir>

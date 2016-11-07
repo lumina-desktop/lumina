@@ -6,9 +6,9 @@ QT       = core widgets
 TARGET = start-lumina-desktop
 target.path = $${L_BINDIR}
 
-
-LIBS     += -lLuminaUtils
-DEPENDPATH	+= ../libLumina
+include(../libLumina/LDesktopUtils.pri)
+include(../libLumina/LuminaXDG.pri)
+include(../libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp \
 			session.cpp

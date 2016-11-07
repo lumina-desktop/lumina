@@ -7,7 +7,7 @@
 
 #include "mainWindow.h"
 #include <LuminaOS.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaThemes.h>
 #include <LuminaSingleApplication.h>
 #include <LuminaXDG.h>

@@ -22,7 +22,7 @@ apm -l
 apm -t
 	Zeigt die verbleibende Zeit in Sekunden 
 
-Aufruf Systemfunktionen: LuminaUtils.h
+Aufruf Systemfunktionen: LUtils.h
 
 mit der Methode:
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args)

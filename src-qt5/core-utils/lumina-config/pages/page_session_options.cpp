@@ -122,12 +122,12 @@ void page_session_options::sessionChangeUserIcon(){
 }
 
 void page_session_options::sessionResetSys(){
-  LUtils::LoadSystemDefaults();
+  LDesktopUtils::LoadSystemDefaults();
   QTimer::singleShot(500,this, SLOT(LoadSettings()) );
 }
 
 void page_session_options::sessionResetLumina(){
-  LUtils::LoadSystemDefaults(true); //skip OS customizations
+  LDesktopUtils::LoadSystemDefaults(true); //skip OS customizations
   QTimer::singleShot(500,this, SLOT(LoadSettings()) );	
 }
 

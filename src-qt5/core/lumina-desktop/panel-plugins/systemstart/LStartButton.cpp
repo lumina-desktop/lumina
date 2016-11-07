@@ -8,7 +8,7 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h> //This contains the "ResizeMenu" class
+#include <LUtils.h> //This contains the "ResizeMenu" class
 
 LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);

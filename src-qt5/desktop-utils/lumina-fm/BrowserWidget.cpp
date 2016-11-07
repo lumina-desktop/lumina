@@ -10,7 +10,7 @@
 #include <QTimer>
 #include <QSettings>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaOS.h>
 
 BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){

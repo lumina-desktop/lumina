@@ -4,23 +4,31 @@ include("../OS-detect.pri")
 TEMPLATE = subdirs
 CONFIG += recursive
 
-SUBDIRS+= libLumina \
-	lumina-desktop \
+SUBDIRS+= lumina-desktop \
 	lumina-session \
 	lumina-open \
 	lumina-info
 #	lumina-wm-INCOMPLETE \
 #	lumina-checkpass
 
-
-#Make sure to list libLumina as a requirement for the others (for parallellized builds)
-lumina-desktop.depends = libLumina
-lumina-session.depends = libLumina
-lumina-open.depends = libLumina
-lumina-info.depends = libLumina
-
 #Also install any special menu scripts
 scripts.path = $${L_SHAREDIR}/lumina-desktop/menu-scripts
 scripts.files = menu-scripts/*
 
-INSTALLS+=scripts
+#Color themes
+colors.path=$${L_SHAREDIR}/lumina-desktop/colors
+colors.files=colors/*.qss.colors
+
+#Theme templates
+themes.path=$${L_SHAREDIR}/lumina-desktop/themes/
+themes.files=themes/*.qss.template
+
+#QtQuick plugins
+#quickplugins.path=$${L_SHAREDIR}/lumina-desktop/quickplugins/
+#quickplugins.files=quickplugins/*
+
+#Mimetype globs
+globs.path=$${L_SHAREDIR}/lumina-desktop
+globs.files=xtrafiles/globs2
+
+INSTALLS+=scripts colors themes globs

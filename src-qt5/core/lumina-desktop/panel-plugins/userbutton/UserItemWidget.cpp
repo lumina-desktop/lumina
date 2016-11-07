@@ -5,7 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "UserItemWidget.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 #include <QMenu>
 
 #define TEXTCUTOFF 165
@@ -50,7 +51,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
   icon->setWhatsThis(itemPath);
   if(!goback){ this->setWhatsThis(name->text()); }
   isDirectory = (type=="dir"); //save this for later
-  if(LUtils::isFavorite(itemPath)){
+  if(LDesktopUtils::isFavorite(itemPath)){
     linkPath = itemPath;
     isShortcut=true;
   }else if( inHome ){//|| itemPath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
@@ -66,7 +67,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(paren
   if(item==0){ return; }
   createWidget();
   isDirectory = false;
-  if(LUtils::isFavorite(item->filePath)){
+  if(LDesktopUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
     isShortcut=true;
   }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
@@ -171,7 +172,7 @@ void UserItemWidget::setupActions(XDGDesktop *app){
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
   if(button->whatsThis()=="add"){ 
-    LUtils::addFavorite(icon->whatsThis());
+    LDesktopUtils::addFavorite(icon->whatsThis());
     //QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
     emit NewShortcut(); 
   }else if(button->whatsThis()=="remove"){ 
@@ -184,7 +185,7 @@ void UserItemWidget::buttonClicked(){
       } 
       //Don't emit the RemovedShortcut signal here - the automatic ~/Desktop watcher will see the change when finished
     }else{ 
-      LUtils::removeFavorite(icon->whatsThis()); //This is a favorite
+      LDesktopUtils::removeFavorite(icon->whatsThis()); //This is a favorite
       emit RemovedShortcut(); 
     }
   }

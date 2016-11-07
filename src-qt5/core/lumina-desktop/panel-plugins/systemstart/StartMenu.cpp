@@ -411,7 +411,7 @@ void StartMenu::UpdateApps(){
 
 void StartMenu::UpdateFavs(){
   //SYNTAX NOTE: (per-line) "<name>::::[dir/app/<mimetype>]::::<path>"
-  QStringList newfavs = LUtils::listFavorites();
+  QStringList newfavs = LDesktopUtils::listFavorites();
   if(favs == newfavs){ return; } //nothing to do - same as before
   favs = newfavs;
   ClearScrollArea(ui->scroll_favs);

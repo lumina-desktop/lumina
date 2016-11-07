@@ -14,7 +14,7 @@
 #include <QProcessEnvironment>
 #include <QDebug>
 #include <QTemporaryFile>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include <unistd.h>
 

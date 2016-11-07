@@ -20,7 +20,7 @@
 #include <QScreen>
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaX11.h>
 
 #include "ImageEditor.h"

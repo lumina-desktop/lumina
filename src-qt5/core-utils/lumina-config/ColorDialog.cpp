@@ -1,7 +1,7 @@
 #include "ColorDialog.h"
 #include "ui_ColorDialog.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 ColorDialog::ColorDialog(QWidget *parent, LPlugins *plugs, QString colorFilePath) : QDialog(parent), ui(new Ui::ColorDialog){
   ui->setupUi(this); //load the designer file

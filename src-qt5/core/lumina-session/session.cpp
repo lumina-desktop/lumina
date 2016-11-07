@@ -13,7 +13,7 @@
 #include <QSettings>
 #include <QDir>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaOS.h>
 
 void LSession::stopall(){

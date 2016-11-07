@@ -7,7 +7,8 @@
 #ifndef _LUMINA_DESKTOP_GLOBALS_H
 #define _LUMINA_DESKTOP_GLOBALS_H
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 //#include "../global.h"
 
 #include <unistd.h>

@@ -12,7 +12,7 @@
 #include <QString>
 #include <QLabel>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
 

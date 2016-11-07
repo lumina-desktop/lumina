@@ -6,7 +6,7 @@
 //===========================================
 #include "LPlugins.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 LPlugins::LPlugins(){
   LoadPanelPlugins();
