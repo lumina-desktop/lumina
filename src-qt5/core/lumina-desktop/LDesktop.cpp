@@ -474,6 +474,7 @@ void LDesktop::UpdateDesktopPluginArea(){
   bgDesktop->setGeometry(desktop->screenGeometry(desktopnumber));
   bgDesktop->setDesktopArea( rec );
   bgDesktop->UpdateGeom(); //just in case the plugin space itself needs to do anything
+  QTimer::singleShot(10, this, SLOT(UpdateBackground()) );
   //Re-paint the panels (just in case a plugin was underneath it and the panel is transparent)
   //for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
   //Make sure to re-disable any WM control flags
