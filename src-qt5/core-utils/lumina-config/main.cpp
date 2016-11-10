@@ -20,11 +20,11 @@ int main(int argc, char ** argv)
     LSingleApplication a(argc, argv, "lumina-config"); //loads translations inside constructor
     if(!a.isPrimaryProcess()){ return 0; }
     
-    LuminaThemeEngine theme(&a);
+    //LuminaThemeEngine theme(&a);
 
     mainWindow w;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance()) );
-    QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
+    //QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.show();
 
     int retCode = a.exec();

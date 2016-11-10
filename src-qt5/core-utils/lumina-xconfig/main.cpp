@@ -26,12 +26,12 @@ int main(int argc, char ** argv)
       if( !a.isPrimaryProcess()){ return 0; }
     //qDebug() << "Loaded QApplication";
     a.setApplicationName("Lumina Screen Configuration");
-    LuminaThemeEngine themes(&a);
+    //LuminaThemeEngine themes(&a);
 
     //Start the UI
     MainUI w;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance()) );
-    QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(loadIcons()) );
+    //QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(loadIcons()) );
     w.show();
 
     int retCode = a.exec();

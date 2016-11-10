@@ -20,13 +20,13 @@ int main(int argc, char ** argv)
     LTHEME::LoadCustomEnvSettings();
     QApplication a(argc, argv);
     //qDebug() << "Init Theme Engine...";
-    LuminaThemeEngine theme(&a);
+    //LuminaThemeEngine theme(&a);
     //qDebug() << "Load Translations...";
     a.setApplicationName("Search for...");
     LUtils::LoadTranslation(&a, "lumina-search");
 
     MainUI w;
-    QObject::connect(&theme,SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
+    //QObject::connect(&theme,SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
     w.show();
     if(argc>1){
       bool startsearch = false;
