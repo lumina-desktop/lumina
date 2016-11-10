@@ -60,6 +60,7 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     edit->setReadOnly(false);
     edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     vlay->addWidget(edit);
+    edit->setContextMenuPolicy(Qt::NoContextMenu);
 	
   //Now load the new file-based system for saving notes
   //qDebug() << "Saving a new setting";

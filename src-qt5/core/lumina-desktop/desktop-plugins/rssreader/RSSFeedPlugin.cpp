@@ -20,7 +20,7 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   //Load the global settings 
   setprefix = "rssreader/"; //this structure/prefix should be used for *all* plugins of this type
   RSS = new RSSReader(this, setprefix);
-
+  ui->text_feed->setContextMenuPolicy(Qt::NoContextMenu);
   //Create the options menu
   optionsMenu = new QMenu(this);
   ui->tool_options->setMenu(optionsMenu);
