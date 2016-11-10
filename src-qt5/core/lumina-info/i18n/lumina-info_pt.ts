@@ -51,7 +51,7 @@
     <message>
         <location filename="../MainUI.ui" line="233"></location>
         <source>View Information</source>
-        <translation>Visualizar Informação </translation>
+        <translation>Visualizar Informação</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="298"></location>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../MainUI.ui" line="315"></location>
         <source>Acknowledgements</source>
-        <translation>Reconhecimentos </translation>
+        <translation>Agradecimentos</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="333"></location>
