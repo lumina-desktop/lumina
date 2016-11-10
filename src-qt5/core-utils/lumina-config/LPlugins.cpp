@@ -166,6 +166,13 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "applauncher";
     info.icon = "quickopen";
   PANEL.insert(info.ID, info); 
+  //Audio Player Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("Audio Player");
+    info.description = QObject::tr("Play through lists of audio files");
+    info.ID = "audioplayer";
+    info.icon = "media-playback-start";
+  PANEL.insert(info.ID, info);
 }
 
 // DESKTOP PLUGINS
