@@ -17,10 +17,10 @@ int  main(int argc, char *argv[]) {
    QApplication a(argc, argv);
    LUtils::LoadTranslation(&a, "l-calc");
    //Now go ahead and setup the app
-   LuminaThemeEngine theme(&a);
+   //LuminaThemeEngine theme(&a);
    //Now start the window
    mainUI W;
-    QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
+    //QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
    W.show();
    return  a.exec();
 }

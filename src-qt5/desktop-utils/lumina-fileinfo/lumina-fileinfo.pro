@@ -12,7 +12,7 @@ target.path = $${L_BINDIR}
 #include all the special classes from the Lumina tree
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
-include(../../core/libLumina/LuminaSingleApplication.pri)
+#include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp\

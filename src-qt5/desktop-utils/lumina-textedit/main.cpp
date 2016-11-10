@@ -17,14 +17,14 @@ int  main(int argc, char *argv[]) {
    QApplication a(argc, argv);
    LUtils::LoadTranslation(&a, "l-te");
    //Now go ahead and setup the app
-   LuminaThemeEngine theme(&a);
+   //LuminaThemeEngine theme(&a);
    QStringList args;
    for(int i=1; i<argc; i++){
       args << QString(argv[i]);
    }
    //Now start the window
    MainUI W;
-    QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
+    //QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
     W.LoadArguments(args);
    W.show();
    return  a.exec();
