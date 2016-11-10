@@ -8,16 +8,19 @@
 #define _LUMINA_DESKTOP_GLOBALS_H
 
 #include <LUtils.h>
+#include <LuminaXDG.h>
+#include <LuminaOS.h>
 #include <LDesktopUtils.h>
-//#include "../global.h"
+
+#include <QWidgetAction>
+#include <QMenu>
+#include <QString>
+#include <QIcon>
+#include <QWidget>
+#include <QAction>
 
 #include <unistd.h>
 #include <stdio.h>
-
-/*#ifdef __linux
-  // Needed for BUFSIZ
-  #include <stdio.h>
-#endif // #ifdef __linux*/
 
 class Lumina{
 public:
