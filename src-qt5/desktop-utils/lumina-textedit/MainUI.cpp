@@ -92,6 +92,9 @@ void MainUI::LoadArguments(QStringList args){ //CLI arguments
     if(ui->groupReplace->isVisible()){ ui->line_find->setFocus(); }
     else{ currentEditor()->setFocus(); }
   }
+  if(ui->tabWidget->count()<1){
+    NewFile();
+  }
 }
 
 // =================
