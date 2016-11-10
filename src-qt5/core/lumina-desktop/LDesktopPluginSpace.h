@@ -188,6 +188,10 @@ private slots:
 	}
 
 protected:
+	void focusInEvent(QFocusEvent *ev){
+	  this->lower(); //make sure we stay on the bottom of the window stack
+	  QWidget::focusInEvent(ev); //do normal handling
+	}
 	void paintEvent(QPaintEvent*ev);
 
 	//Need Drag and Drop functionality (internal movement)
