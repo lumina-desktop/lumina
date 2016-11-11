@@ -20,7 +20,8 @@ SOURCES += $$PWD/userbutton/LUserButton.cpp \
 	$$PWD/systemstart/StartMenu.cpp \
 	$$PWD/systemstart/ItemWidget.cpp \
 	$$PWD/audioplayer/LPAudioPlayer.cpp \
-	$$PWD/audioplayer/PPlayerWidget.cpp
+	$$PWD/audioplayer/PPlayerWidget.cpp \
+	$$PWD/jsonmenu/PPJsonMenu.cpp
 	
 HEADERS += $$PWD/userbutton/LUserButton.h \
 	$$PWD/userbutton/UserWidget.h \
@@ -44,7 +45,8 @@ HEADERS += $$PWD/userbutton/LUserButton.h \
 	$$PWD/systemstart/StartMenu.h \
 	$$PWD/systemstart/ItemWidget.h \
 	$$PWD/audioplayer/LPAudioPlayer.h \
-	$$PWD/audioplayer/PPlayerWidget.h
+	$$PWD/audioplayer/PPlayerWidget.h \
+	$$PWD/jsonmenu/PPJsonMenu.h
 #	$$PWD/quickcontainer/QuickPPlugin.h
 
 FORMS +=	 $$PWD/userbutton/UserWidget.ui \

@@ -18,6 +18,7 @@
 #include <QIcon>
 #include <QWidget>
 #include <QAction>
+#include <QToolButton>
 
 #include <unistd.h>
 #include <stdio.h>
