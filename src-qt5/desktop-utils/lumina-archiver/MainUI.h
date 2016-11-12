@@ -31,7 +31,7 @@ private:
 	Backend *BACKEND;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
-	void cleanItems(QStringList list, QTreeWidgetItem *start = 0);
+	bool cleanItems(QStringList list, QTreeWidgetItem *start = 0); //returns true if anything gets cleaned
 
 	//Functions for setting the valid file extensions ("tar" limitations)
 	QString CreateFileTypes();
@@ -44,7 +44,7 @@ private slots:
 	void addDirs();
 	void remFiles();
 	void extractFiles();
-
+	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();
 
 	

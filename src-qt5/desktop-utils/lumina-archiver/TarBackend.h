@@ -35,6 +35,8 @@ public:
 	void startRemove(QStringList paths);
 	void startExtract(QString path, bool overwrite); //path to dir
 	
+	void startViewFile(QString path);
+
 public slots:
 
 private:

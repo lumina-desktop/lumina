@@ -34,6 +34,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionRemove_File, SIGNAL(triggered()), this, SLOT(remFiles()) );
   connect(ui->actionExtract_All, SIGNAL(triggered()), this, SLOT(extractFiles()) );
   connect(ui->actionAdd_Dirs, SIGNAL(triggered()), this, SLOT(addDirs()) );
+  connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->actionAdd_File->setEnabled(false);
@@ -85,22 +86,26 @@ QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
   return 0; //nothing found
 }
 
-void MainUI::cleanItems(QStringList list, QTreeWidgetItem *start){
+bool MainUI::cleanItems(QStringList list, QTreeWidgetItem *start){
+  bool changed = false;
   if(start==0){
     for(int i=0; i<ui->tree_contents->topLevelItemCount(); i++){
-      cleanItems(list, ui->tree_contents->topLevelItem(i));
+      changed = changed || cleanItems(list, ui->tree_contents->topLevelItem(i));
       if(!list.contains(ui->tree_contents->topLevelItem(i)->whatsThis(0)) ){
         delete ui->tree_contents->topLevelItem(i);
+        changed = true;
       }
     }
   }else{
     for(int i=0; i<start->childCount(); i++){
-      cleanItems(list, start->child(i));
+      changed = changed || cleanItems(list, start->child(i));
       if(!list.contains(start->child(i)->whatsThis(0)) ){
         delete start->child(i);
+        changed = true;
       }
     }
   }
+  return changed;
 }
 
 //Functions for setting the valid file extensions ("tar" limitations)
@@ -190,12 +195,17 @@ void MainUI::extractFiles(){
   BACKEND->startExtract(dir, true);
 }
 
+void MainUI::ViewFile(QTreeWidgetItem *it){
+  if(it->childCount()>0){ return; } //directory - not viewable
+  BACKEND->startViewFile(it->whatsThis(0));
+}
+
 void MainUI::UpdateTree(){
   ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size") << tr("Compressed")+" " );
   QStringList files = BACKEND->heirarchy();
   files.sort();
   //Remove any entries for file no longer in the archive
-  cleanItems(files);
+  bool changed = cleanItems(files);
   qDebug() << "Found Files:" << files;
   for(int i=0; i<files.length(); i++){
     if(0 != findItem(files[i]) ){ continue; } //already in the tree widget
@@ -217,10 +227,13 @@ void MainUI::UpdateTree(){
     }else{
       ui->tree_contents->addTopLevelItem(it);
     }
+    changed = true;
   }
   int wid = 0;
-  for(int i=3; i>0; i--){ui->tree_contents->resizeColumnToContents(i); wid+= ui->tree_contents->columnWidth(i); }
-  ui->tree_contents->setColumnWidth(0, ui->tree_contents->viewport()->width()-wid);
+  if(changed){
+    for(int i=3; i>0; i--){ui->tree_contents->resizeColumnToContents(i); wid+= ui->tree_contents->columnWidth(i); }
+    ui->tree_contents->setColumnWidth(0, ui->tree_contents->viewport()->width()-wid);
+  }
 }
 
 //Backend Handling

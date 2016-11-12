@@ -6,12 +6,13 @@
 //===========================================
 #include "TarBackend.h"
 #include <QFile>
+#include <QDir>
 #include <QDebug>
 
 Backend::Backend(QObject *parent) : QObject(parent){
   //Setup the backend process
   PROC.setProcessChannelMode(QProcess::MergedChannels);
-  PROC.setProgram("7z");
+  PROC.setProgram("tar");
   connect(&PROC, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished(int, QProcess::ExitStatus)) );
   connect(&PROC, SIGNAL(readyReadStandardOutput()), this, SLOT(processData()) );
   connect(&PROC, SIGNAL(started()), this, SIGNAL(ProcessStarting()) );
@@ -36,7 +37,7 @@ void Backend::loadFile(QString path){
 
 bool Backend::canModify(){
   static QStringList validEXT; 
-  if(validEXT.isEmpty()){ 
+  if( validEXT.isEmpty() ){ 
     validEXT << ".zip" << ".tar.gz" << ".tgz" << ".tar.xz" << ".txz" << ".tar.bz" << ".tbz" << ".tar.bz2" << ".tbz2" << ".tar" \
       << ".tar.lzma" << ".tlz" << ".cpio" << ".pax" << ".ar" << ".shar" << ".7z";
   }
@@ -120,6 +121,15 @@ void Backend::startExtract(QString path, bool overwrite){
   if(!overwrite){ args << "-k"; }
   args << flags << "-C" << path;
   STARTING=true;
+  //qDebug() << "Starting command:" << "tar" << args;
+  PROC.start("tar", args);
+}
+
+void Backend::startViewFile(QString path){
+  QStringList args;
+  args << "-x";
+  args << flags <<"--include" << path <<"--strip-components" << QString::number(path.count("/")) << "-C" << QDir::tempPath();
+  STARTING=true;
   qDebug() << "Starting command:" << "tar" << args;
   PROC.start("tar", args);
 }
@@ -175,7 +185,14 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
     QStringList args = PROC.arguments();
     if(args.contains("-x") && retcode==0){
        needupdate=false; 
-      QProcess::startDetached("xdg-open \""+ args.last()+"\""); //just extracted to a dir - open it now
+      if(args.contains("--include")){
+        //Need to find the full path to the extracted file
+        QString path = args.last() +"/"+ args[ args.indexOf("--include")+1].section("/",-1);
+        QFile::setPermissions(path, QFileDevice::ReadOwner);
+        QProcess::startDetached("xdg-open  \""+path+"\"");
+      }else{
+        QProcess::startDetached("xdg-open \""+ args.last()+"\""); //just extracted to a dir - open it now
+      }
     }else if(args.contains("-c") && QFile::exists(tmpfilepath)){
       if(retcode==0){
         QFile::remove(filepath);
