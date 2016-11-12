@@ -20,7 +20,8 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
 
   connect(this, SIGNAL(PluginActivated()), this, SLOT(buttonClicked()) ); //in case they use the context menu to launch it.
-  QTimer::singleShot(200,this, SLOT(loadButton()) );
+  loadButton();
+  //QTimer::singleShot(0,this, SLOT(loadButton()) );
 }
 	
 void AppLauncherPlugin::Cleanup(){

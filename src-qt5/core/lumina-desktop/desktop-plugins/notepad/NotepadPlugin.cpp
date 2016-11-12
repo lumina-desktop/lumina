@@ -66,7 +66,7 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
   //qDebug() << "Saving a new setting";
   this->saveSetting("customFile",""); //always clear this when the plugin is initialized (only maintained per-session)
   //qDebug() << "Loading Notes Dir";
-  QTimer::singleShot(2000, this, SLOT(notesDirChanged()));
+  QTimer::singleShot(10, this, SLOT(notesDirChanged()));
   //qDebug() << "Set Sizing";
   
   //qDebug() << "Connect Signals/slots";

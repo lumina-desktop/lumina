@@ -67,7 +67,7 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
     //this->setWindowOpacity(0.5); //fully transparent background for the main widget
     //panelArea->setWindowOpacity(1.0); //fully opaque for the widget on top (apply stylesheet transparencies)
   }
-  QTimer::singleShot(1,this, SLOT(UpdatePanel()) ); //start this in a new thread
+  QTimer::singleShot(1,this, SLOT(UpdatePanel()) );
   //connect(screen, SIGNAL(resized(int)), this, SLOT(UpdatePanel()) ); //in case the screen resolution changes
 }
 
@@ -246,7 +246,7 @@ void LPanel::UpdatePanel(bool geomonly){
 	//Make sure the plugin layout has the correct orientation
 	if(horizontal){PLUGINS[p]->layout()->setDirection(QBoxLayout::LeftToRight); }
 	else{ PLUGINS[p]->layout()->setDirection(QBoxLayout::TopToBottom); }
-	QTimer::singleShot(0,PLUGINS[p], SLOT( OrientationChange() ) );
+	PLUGINS[p]->OrientationChange();
 	//Now check the location of the plugin in the panel
 	if(p!=i){ //wrong place in the panel
 	  layout->takeAt(p); //remove the item from the current location

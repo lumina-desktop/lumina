@@ -120,12 +120,6 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
   startSystemTray();
 	
-  //Launch Fluxbox
-    //splash.showScreen("wm");
-  //if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
-  //WM = new WMProcess();
-    //WM->startWM();
-	
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
@@ -143,7 +137,8 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
   desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   updateDesktops();
-  
+  for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
+
   //Now setup the system watcher for changes
     splash.showScreen("final");
   qDebug() << " - Initialize file system watcher";
@@ -154,25 +149,18 @@ void LSession::setupSession(){
     watcherChange( confdir+"/desktopsettings.conf" );
     watcherChange( confdir+"/fluxbox-init" );
     watcherChange( confdir+"/fluxbox-keys" );
-    //watcher->addPath( sessionsettings->fileName() );
-    //watcher->addPath( confdir+"/desktopsettings.conf" );
-    //watcher->addPath( confdir+"/fluxbox-init" );
-    //watcher->addPath( confdir+"/fluxbox-keys" );
     //Try to watch the localized desktop folder too
     if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
     watcherChange( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
-  //connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
-  //connect(this->desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  QApplication::processEvents();
-  launchStartupApps();
-  //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
-  //QApplication::processEvents();
+  for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
+  //launchStartupApps();
+  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   splash.close(); 
 }
 
