@@ -36,7 +36,8 @@ private:
 
 //Static functions for overall management
 class LInput{
-  QList<LInputDevice*> listDevices(); //NOTE: Make sure you "free()" all the LInputDevice objects when finished
+  public:
+  static QList<LInputDevice*> listDevices(); //NOTE: Make sure you "free()" all the LInputDevice objects when finished
 
 };
 
