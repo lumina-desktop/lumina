@@ -38,7 +38,7 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
   list << PageInfo("session-locale", QObject::tr("Localization"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
   list << PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
-  
+  //list << PageInfo("mouse", QObject::tr("Mouse Settings"), QObject::tr("Mouse Settings"), "input-mouse",QObject::tr("Adjust mouse settings"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse");
   //Now sort the items according to the translated name
   QStringList names;
   for(int i=0; i<list.length(); i++){ names << list[i].name; }
@@ -66,6 +66,7 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_session_locale.h"
 #include "page_session_options.h"
 #include "page_compton.h"
+#include "page_mouse.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
@@ -82,6 +83,7 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="session-locale"){ page = new page_session_locale(parent); }
   else if(id=="session-options"){ page = new page_session_options(parent); }
   else if(id=="compton"){ page = new page_compton(parent); }
+  else if(id=="mouse"){ page = new page_mouse(parent); }
   //Return the main control_panel page as the fallback/default
   if(page==0){ id.clear(); page = new page_main(parent); }
   page->setWhatsThis(id);
