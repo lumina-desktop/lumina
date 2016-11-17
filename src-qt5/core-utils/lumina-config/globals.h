@@ -35,6 +35,8 @@
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
+#include "pages/PageWidget.h"
+
 #endif
 
 //Now the global class for available system applications

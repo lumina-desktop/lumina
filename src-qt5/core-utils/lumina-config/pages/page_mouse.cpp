@@ -14,11 +14,23 @@
 page_mouse::page_mouse(QWidget *parent) : PageWidget(parent), ui(new Ui::page_mouse()){
   ui->setupUi(this);
   connect(ui->slider_accel, SIGNAL(valueChanged(int)), this, SLOT(accelChanged(int)) );
- updateIcons();
+  updateIcons();
+    qDebug() << "List Devices:";
+   QList<LInputDevice*> devices = LInput::listDevices();
+    for(int i=0; i<devices.length(); i++){
+      if(!devices[i]->isPointer()){
+        ::free( devices.takeAt(i));
+        i--;
+      }else{
+        qDebug() << "Found Pointer:" << devices[i]->devNumber();
+        qDebug() << " - isExtension:" << devices[i]->isExtension();
+        devices[i]->listProperties();
+      }
+    }
 }
 
 page_mouse::~page_mouse(){
-
+  for(int i=0; i<devices.length(); i++){ ::free(devices[i]); }
 }
 
 //================

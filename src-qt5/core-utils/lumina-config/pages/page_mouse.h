@@ -9,6 +9,8 @@
 #include "../globals.h"
 #include "PageWidget.h"
 
+#include <LInputDevice.h>
+
 namespace Ui{
 	class page_mouse;
 };
@@ -26,6 +28,7 @@ public slots:
 
 private:
 	Ui::page_mouse *ui;
+	QList<LInputDevice*> devices;
 
 private slots:
 	void accelChanged(int val);

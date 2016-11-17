@@ -69,17 +69,17 @@ QList<LInputDevice*> LInput::listDevices(){
   xcb_input_list_input_devices_reply_t *reply = xcb_input_list_input_devices_reply(QX11Info::connection(), cookie, NULL);
   if(reply==0){ return devices; } //error - nothing returned
   //Use the iterator for going through the reply
+  //qDebug() << "Create iterator";
   xcb_input_device_info_iterator_t iter = xcb_input_list_input_devices_devices_iterator(reply);
   //xcb_str_iterator_t nameiter = xcb_input_list_input_devices_names_iterator(reply);
 
   //Now step through the reply
-  QStringList info;
   while(iter.data != 0 ){
     devices << new LInputDevice(iter.data->device_id, iter.data->device_use);
-    //qDebug() << "Input Device:" << iter.data->device_id;
+    //qDebug() << "Found Input Device:" << iter.data->device_id;
     //qDebug() << "  - num_class_info:" << iter.data->num_class_info;
-    xcb_input_device_info_next(&iter);
-    //xcb_input_device_name_next(&nameiter);
+    if(iter.rem>0){ xcb_input_device_info_next(&iter); }
+    else{ break; }
   }
   //Free the reply (done with it)
   ::free(reply);
