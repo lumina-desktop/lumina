@@ -29,6 +29,8 @@ public:
 	double size(QString file);
 	double csize(QString file);
 	bool isDir(QString file);
+	bool isLink(QString file);
+	QString linkTo(QString file);
 
 	//Modification routines
 	void startAdd(QStringList paths);
@@ -37,6 +39,7 @@ public:
 	
 	void startViewFile(QString path);
 
+	//Special process 
 public slots:
 
 private:
