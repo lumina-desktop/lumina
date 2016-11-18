@@ -18,7 +18,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   this->setWindowTitle(tr("Archive Manager"));
   BACKEND = new Backend(this);
   connect(BACKEND, SIGNAL(ProcessStarting()), this, SLOT(ProcStarting()) );
-  connect(BACKEND, SIGNAL(ProcessFinished()), this, SLOT(ProcFinished()) );
+  connect(BACKEND, SIGNAL(ProcessFinished(bool, QString)), this, SLOT(ProcFinished(bool, QString)) );
   connect(BACKEND, SIGNAL(ProgressUpdate(int, QString)), this, SLOT(ProcUpdate(int, QString)) );
 
   //Add a spacer between toolbar items
@@ -33,10 +33,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionAdd_File, SIGNAL(triggered()), this, SLOT(addFiles()) );
   connect(ui->actionRemove_File, SIGNAL(triggered()), this, SLOT(remFiles()) );
   connect(ui->actionExtract_All, SIGNAL(triggered()), this, SLOT(extractFiles()) );
+  connect(ui->actionExtract_Sel, SIGNAL(triggered()), this, SLOT(extractSelection()) );
   connect(ui->actionAdd_Dirs, SIGNAL(triggered()), this, SLOT(addDirs()) );
   connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
+  ui->label_progress_icon->setVisible(false);
   ui->actionAdd_File->setEnabled(false);
   ui->actionRemove_File->setEnabled(false);
   ui->actionExtract_All->setEnabled(false);
@@ -64,6 +66,7 @@ void MainUI::loadIcons(){
   ui->actionAdd_Dirs->setIcon( LXDG::findIcon("archive-insert-directory","") );
   ui->actionRemove_File->setIcon( LXDG::findIcon("archive-remove","") );
   ui->actionExtract_All->setIcon( LXDG::findIcon("archive-extract","") );
+  ui->actionExtract_Sel->setIcon( LXDG::findIcon("archive-extract","") );
 }
 
 //===================
@@ -158,24 +161,28 @@ void MainUI::NewArchive(){
   if(QFile::exists(file)){ 
     if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); } 
   }
+  ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
 }
 
 void MainUI::OpenArchive(){
   QString file = QFileDialog::getOpenFileName(this, tr("Open Archive"), QDir::homePath(), OpenFileTypes() );
   if(file.isEmpty()){ return; }
+  ui->label_progress->setText(tr("Opening Archive"));
   BACKEND->loadFile(file);
 }
 
 void MainUI::addFiles(){
   QStringList files = QFileDialog::getOpenFileNames(this, tr("Add to Archive"), QDir::homePath() );
   if(files.isEmpty()){ return; }
+  ui->label_progress->setText(tr("Adding Items"));
   BACKEND->startAdd(files);
 }
 
 void MainUI::addDirs(){
   QString dirs = QFileDialog::getExistingDirectory(this, tr("Add to Archive"), QDir::homePath() );
   if(dirs.isEmpty()){ return; }
+  ui->label_progress->setText(tr("Adding Items"));
   BACKEND->startAdd(QStringList() << dirs);
 }
 
@@ -186,17 +193,29 @@ void MainUI::remFiles(){
     items << sel[i]->whatsThis(0);
   }
   items.removeDuplicates();
+  ui->label_progress->setText(tr("Removing Items"));
   BACKEND->startRemove(items);
 }
 
 void MainUI::extractFiles(){
   QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
   if(dir.isEmpty()){ return; }
+  ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startExtract(dir, true);
+}
+
+void MainUI::extractSelection(){
+  if(ui->tree_contents->currentItem()==0){ return; }
+  QString sel = ui->tree_contents->currentItem()->whatsThis(0);
+  QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
+  if(dir.isEmpty()){ return; }
+  ui->label_progress->setText(tr("Extracting..."));
+  BACKEND->startExtract(dir, true, sel);
 }
 
 void MainUI::ViewFile(QTreeWidgetItem *it){
   if(it->childCount()>0){ return; } //directory - not viewable
+  ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startViewFile(it->whatsThis(0));
 }
 
@@ -242,16 +261,21 @@ void MainUI::ProcStarting(){
   ui->progressBar->setValue(0);
   ui->progressBar->setVisible(true);
   ui->label_progress->setVisible(true);
+  ui->label_progress_icon->setVisible(false);
   ui->tree_contents->setEnabled(false);
   ui->label_archive->setText(BACKEND->currentFile());
 }
 
-void MainUI::ProcFinished(){
+void MainUI::ProcFinished(bool success, QString msg){
   ui->progressBar->setRange(0,0);
   ui->progressBar->setValue(0);
   ui->progressBar->setVisible(false);
-  ui->label_progress->setVisible(false);
+  ui->label_progress->setText(msg);
+  ui->label_progress->setVisible(!msg.isEmpty());
   ui->tree_contents->setEnabled(true);
+  ui->label_progress_icon->setVisible(!msg.isEmpty());
+  if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-complete","").pixmap(32,32) );}
+  else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-attention","").pixmap(32,32) );}
   if(ui->label_archive->text()!=BACKEND->currentFile()){
     ui->label_archive->setText(BACKEND->currentFile());
     this->setWindowTitle(BACKEND->currentFile().section("/",-1));
