@@ -36,7 +36,6 @@ void page_compton::SaveSettings(){
 }
 
 void page_compton::LoadSettings(int){
-  emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Compositor Settings") );
   QSettings settings("lumina-desktop","sessionsettings");
     ui->check_disablecompton->setChecked( !settings.value("enableCompositing", true).toBool() );
@@ -44,6 +43,7 @@ void page_compton::LoadSettings(int){
   QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
   qDebug() << "Load Compton settings:" << set;
   ui->text_file->setPlainText( LUtils::readFile(set).join("\n") );
+  emit HasPendingChanges(false);
 }
 
 void page_compton::updateIcons(){
