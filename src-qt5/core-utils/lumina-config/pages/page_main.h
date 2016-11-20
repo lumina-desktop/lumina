@@ -20,7 +20,7 @@ public:
 	~page_main();
 
 	virtual void setPreviousPage(QString id);
-//	void clearlineEdit();
+	void clearlineEdit();
 
 public slots:
 	void SaveSettings();

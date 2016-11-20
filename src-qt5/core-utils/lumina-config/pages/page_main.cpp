@@ -121,9 +121,9 @@ void page_main::SaveSettings(){
 
 }
 
-//void page_main::clearlineEdit(){
-//  ui->lineEdit->clear();
-//}
+void page_main::clearlineEdit(){
+  ui->lineEdit->clear();
+}
 
 
 void page_main::LoadSettings(int){
