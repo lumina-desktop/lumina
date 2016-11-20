@@ -146,47 +146,47 @@
     <message>
         <location filename="../BootSplash.cpp" line="18"></location>
         <source>Initializing Session …</source>
-        <translation>Inicjowanie sesji ...</translation>
+        <translation>Inicjowanie sesji …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="21"></location>
         <source>Loading System Settings …</source>
-        <translation>Wczytywanie ustawień systemowych ...</translation>
+        <translation>Wczytywanie ustawień systemowych …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="24"></location>
         <source>Loading User Preferences …</source>
-        <translation>Wczytywanie ustawień użytkownika ...</translation>
+        <translation>Wczytywanie ustawień użytkownika …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"></location>
         <source>Preparing System Tray …</source>
-        <translation>Przygotowywanie zasobnika systemowego ...</translation>
+        <translation>Przygotowywanie zasobnika systemowego …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="30"></location>
         <source>Starting Window Manager …</source>
-        <translation>Uruchamianie menedżera okien ...</translation>
+        <translation>Uruchamianie menedżera okien …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="33"></location>
         <source>Detecting Applications …</source>
-        <translation>Wykrywanie aplikacji ...</translation>
+        <translation>Wykrywanie aplikacji …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="36"></location>
         <source>Preparing Menus …</source>
-        <translation>Przygotowywanie menu ...</translation>
+        <translation>Przygotowywanie menu …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"></location>
         <source>Preparing Workspace …</source>
-        <translation>Przygotowywanie obszaru roboczego ...</translation>
+        <translation>Przygotowywanie obszaru roboczego …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="42"></location>
         <source>Finalizing …</source>
-        <translation>Kończenie ...</translation>
+        <translation>Kończenie …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"></location>
@@ -984,7 +984,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="38"></location>
         <source>Type to search</source>
-        <translation>Wyszukiwanie…</translation>
+        <translation>Wyszukiwanie</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="171"></location>
@@ -1134,7 +1134,7 @@
     <message>
         <location filename="../SystemWindow.cpp" line="57"></location>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation>Masz oczekujące aktualizacje systemu do zastosowania! Czy chcesz je teraz zainstalować?</translation>
+        <translation>Masz oczekujące aktualizacje systemu gotowe do zastosowania! Czy chcesz je teraz zainstalować?</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"></location>
         <source>UserWidget</source>
-        <translation>UserWidget</translation>
+        <translation>WidżetUżytkownika</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"></location>
