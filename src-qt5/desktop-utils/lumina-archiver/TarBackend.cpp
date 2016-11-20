@@ -32,7 +32,7 @@ void Backend::loadFile(QString path){
   flags.clear();
   flags << "-f" << filepath; //add the actual archive path
   if(QFile::exists(path)){ startList(); }
-  else{ contents.clear(); emit ProcessFinished(); }
+  else{ contents.clear(); emit ProcessFinished(true, ""); }
 }
 
 bool Backend::canModify(){
@@ -75,6 +75,16 @@ bool Backend::isDir(QString file){
   return contents.value(file)[0].startsWith("d");
 }
 
+bool Backend::isLink(QString file){
+  if(!contents.contains(file)){ return false; }
+  return contents.value(file)[0].startsWith("l");
+}
+
+QString Backend::linkTo(QString file){
+  if(!contents.contains(file)){ return ""; }
+  return contents.value(file)[2];
+}
+
 //Modification routines
 void Backend::startAdd(QStringList paths){
   //NOTE: All the "paths" have to have the same parent directory
@@ -115,11 +125,13 @@ void Backend::startRemove(QStringList paths){
   PROC.start("tar", args);
 }
 
-void Backend::startExtract(QString path, bool overwrite){
+void Backend::startExtract(QString path, bool overwrite, QString file){
   QStringList args;
   args << "-x";
   if(!overwrite){ args << "-k"; }
-  args << flags << "-C" << path;
+  args << flags;
+  if(!file.isEmpty()){ args << "--include" << file << "--strip-components" << QString::number(file.count("/")); }
+  args << "-C" << path;
   STARTING=true;
   //qDebug() << "Starting command:" << "tar" << args;
   PROC.start("tar", args);
@@ -151,14 +163,23 @@ void Backend::parseLines(QStringList lines){
         QString file = info[1]; 
         QString perms = "";
          if(file.endsWith("/")){ perms = "d"; file.chop(1); }
-        contents.insert(file, QStringList() << perms << "-1" ); //Save the [perms, size ]
+        contents.insert(file, QStringList() << perms << "-1" <<""); //Save the [perms, size, linkto ]
       }
       else if(info.length()<9){ continue; } //invalid line
       //TAR Archive parsing
         while(info.length()>9){ info[8] = info[8]+" "+info[9]; info.removeAt(9); } //Filename has spaces in it
          QString file = info[8]; 
          if(file.endsWith("/")){ file.chop(1); }
-        contents.insert(file, QStringList() << info[0] << info[4] ); //Save the [perms, size ]
+         QString linkto;
+         //See if this file has the "link to" or "->"  notation
+         if(file.contains(" -> ")){ linkto = file.section(" -> ",1,-1); file = file.section(" -> ",0,0); }
+         else if(file.contains(" link to ")){
+            //Special case - alternate form of a link within a tar archive (not reflected in perms)
+           linkto = file.section(" link to ",1,-1);
+           file = file.section(" link to ",0,0);
+           if(info[0].startsWith("-")){ info[0].replace(0,1,"l"); }
+         }
+        contents.insert(file, QStringList() << info[0] << info[4] << linkto); //Save the [perms, size, linkto ]
   }
 }
 
@@ -174,17 +195,19 @@ void Backend::startList(){
 //  PRIVATE SLOTS
 //===============
 void Backend::procFinished(int retcode, QProcess::ExitStatus){
+  static QString result;
   processData();
-  qDebug() << "Process Finished:" << PROC.arguments() << retcode;
+  //qDebug() << "Process Finished:" << PROC.arguments() << retcode;
   LIST = STARTING = false;
   if(PROC.arguments().contains("-tv")){
     if(retcode!=0){ contents.clear(); } //could not read archive
-    emit ProcessFinished();
+    emit ProcessFinished(true,result);
+    result.clear();
   }else{
     bool needupdate = true;
     QStringList args = PROC.arguments();
     if(args.contains("-x") && retcode==0){
-       needupdate=false; 
+       needupdate=false;
       if(args.contains("--include")){
         //Need to find the full path to the extracted file
         QString path = args.last() +"/"+ args[ args.indexOf("--include")+1].section("/",-1);
@@ -201,8 +224,10 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
         QFile::remove(tmpfilepath);
       }
     }
+    if(args.contains("-x")){ result = tr("Extraction Finished"); }
+    else if(args.contains("-c")){ result = tr("Modification Finished"); }
     if(needupdate){ startList(); }
-    else{ emit ProcessFinished(); }
+    else{ emit ProcessFinished(retcode==0, result); result.clear(); }
   }
 }
 
@@ -213,7 +238,9 @@ void Backend::processData(){
   if(read.endsWith("\n")){ data.clear(); }
   else{ data = read.section("\n",-1); read = read.section("\n",0,-2); }
   QStringList lines =  read.split("\n",QString::SkipEmptyParts);
+  QString info;
   if(LIST){ parseLines(lines); }
+  else if(!lines.isEmpty()){ info = lines.last(); }
   //qDebug() << lines;
-  emit ProgressUpdate(-1, "");
+  emit ProgressUpdate(-1, info);
 }

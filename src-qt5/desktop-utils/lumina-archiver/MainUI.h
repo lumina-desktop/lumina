@@ -44,13 +44,14 @@ private slots:
 	void addDirs();
 	void remFiles();
 	void extractFiles();
+	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();
 
 	
 	//Backend Handling
 	void ProcStarting();
-	void ProcFinished();
+	void ProcFinished(bool, QString);
 	void ProcUpdate(int percent, QString txt);
 
 };
