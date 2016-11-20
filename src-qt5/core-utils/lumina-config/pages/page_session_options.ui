@@ -60,6 +60,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="check_watch_app_procs">
+       <property name="text">
+        <string>Show application crash data</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_14">
        <item>
         <widget class="QPushButton" name="push_session_setUserIcon">

@@ -173,6 +173,13 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "audioplayer";
     info.icon = "media-playback-start";
   PANEL.insert(info.ID, info);
+  //JSON Menu Scripts
+  info = LPI(); //clear it
+    info.name = QObject::tr("Menu Script");
+    info.description = QObject::tr("Run an external script to generate a user defined menu");
+    info.ID = "jsonmenu";
+    info.icon = "text-x-script";
+  PANEL.insert(info.ID, info);
 }
 
 // DESKTOP PLUGINS
@@ -293,7 +300,7 @@ void LPlugins::LoadMenuPlugins(){
     info.ID = "app";
     info.icon = "application-x-desktop";
   MENU.insert(info.ID, info);
-  //Custom Apps
+  //JSON Menu Scripts
   info = LPI(); //clear it
     info.name = QObject::tr("Menu Script");
     info.description = QObject::tr("Run an external script to generate a user defined menu");
