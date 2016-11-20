@@ -9,7 +9,7 @@
 
 #include "GetPluginDialog.h"
 #include "AppDialog.h"
-#include "ScriptDialog.h"
+
 
 PanelWidget::PanelWidget(QWidget *parent, QWidget *Main, LPlugins *Pinfo) : QWidget(parent), ui(new Ui::PanelWidget){
   ui->setupUi(this);
@@ -66,18 +66,6 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
 	  ui->list_plugins->addItem(it);
 	}
-
-      }else if(pid.startsWith("jsonmenu")){
-        LPI info = PINFO->panelPluginInfo( plugs[i].section("::::",0,0) );
-        if(info.ID.isEmpty()){ continue; } //invalid plugin type (no longer available?)
-        QString exec = plugs[i].section("::::",1,1);
-        QListWidgetItem *item = new QListWidgetItem();
-          item->setWhatsThis( plugs[i] );
-          item->setIcon( LXDG::findIcon(plugs[i].section("::::",3,3),info.icon) );
-          item->setText( plugs[i].section("::::",2,2) +" ("+info.name+")" );
-          item->setToolTip( info.description );
-        ui->list_plugins->addItem(item);
-
       }else{
         LPI info = PINFO->panelPluginInfo(pid);
         if(!info.ID.isEmpty()){
@@ -192,35 +180,23 @@ void PanelWidget::on_tool_addplugin_clicked(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
-  QListWidgetItem *it = 0;
   if(pan == "applauncher"){
     //Prompt for the application to add
     QString app =getSysApp();
     if(app.isEmpty()){ return; } //cancelled
     pan.append("::"+app);
     XDGDesktop desk(app);
-    it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name);
       it->setWhatsThis(pan);
-
-  }else if(pan=="jsonmenu"){
-    //Need to prompt for the script file, name, and icon to use
-    //new ID format: "jsonmenu"::::<exec to run>::::<name>::::<icon>
-    ScriptDialog SD(this);
-    SD.exec();
-    if(!SD.isValid()){ return; }
-    LPI info = PINFO->panelPluginInfo(pan);
-    it = new QListWidgetItem( LXDG::findIcon(SD.icon(),"text-x-script"), SD.name()+" ("+info.ID+")" );
-    it->setWhatsThis(info.ID+"::::"+SD.command()+"::::"+SD.name()+"::::"+SD.icon());
-    it->setToolTip( info.description );
+    ui->list_plugins->addItem(it);
+    ui->list_plugins->setCurrentItem(it);
+    ui->list_plugins->scrollToItem(it);
   }else{
     if(pan.isEmpty()){ return; } //nothing selected
     //Add the new plugin to the list
     LPI info = PINFO->panelPluginInfo(pan);
-    it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
       it->setWhatsThis(info.ID);
-  }
-  //Now add the new item to the list
-  if(it!=0){
     ui->list_plugins->addItem(it);
     ui->list_plugins->setCurrentItem(it);
     ui->list_plugins->scrollToItem(it);

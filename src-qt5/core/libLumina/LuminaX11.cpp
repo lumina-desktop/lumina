@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014-2016, Ken Moore
+//  Copyright (c) 2014-2015, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -1123,7 +1123,6 @@ WId LXCB::startSystemTray(int screen){
 void LXCB::closeSystemTray(WId trayID){
   xcb_destroy_window(QX11Info::connection(), trayID);
 }
-
 
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){

@@ -18,7 +18,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   this->setWindowTitle(tr("Archive Manager"));
   BACKEND = new Backend(this);
   connect(BACKEND, SIGNAL(ProcessStarting()), this, SLOT(ProcStarting()) );
-  connect(BACKEND, SIGNAL(ProcessFinished(bool, QString)), this, SLOT(ProcFinished(bool, QString)) );
+  connect(BACKEND, SIGNAL(ProcessFinished()), this, SLOT(ProcFinished()) );
   connect(BACKEND, SIGNAL(ProgressUpdate(int, QString)), this, SLOT(ProcUpdate(int, QString)) );
 
   //Add a spacer between toolbar items
@@ -33,18 +33,16 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionAdd_File, SIGNAL(triggered()), this, SLOT(addFiles()) );
   connect(ui->actionRemove_File, SIGNAL(triggered()), this, SLOT(remFiles()) );
   connect(ui->actionExtract_All, SIGNAL(triggered()), this, SLOT(extractFiles()) );
-  connect(ui->actionExtract_Sel, SIGNAL(triggered()), this, SLOT(extractSelection()) );
   connect(ui->actionAdd_Dirs, SIGNAL(triggered()), this, SLOT(addDirs()) );
   connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
-  ui->label_progress_icon->setVisible(false);
   ui->actionAdd_File->setEnabled(false);
   ui->actionRemove_File->setEnabled(false);
   ui->actionExtract_All->setEnabled(false);
   ui->actionAdd_Dirs->setEnabled(false);
   loadIcons();
-  ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size")+" " );
+  ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size") << tr("Compressed")+" " );
 }
 
 MainUI::~MainUI(){
@@ -53,11 +51,7 @@ MainUI::~MainUI(){
 
 void MainUI::LoadArguments(QStringList args){
   for(int i=0; i<args.length(); i++){
-    if(QFile::exists(args[i])){ 
-      ui->label_progress->setText(tr("Opening Archive..."));
-      BACKEND->loadFile(args[i]);  
-      break;
-    }
+    if(QFile::exists(args[i])){ BACKEND->loadFile(args[i]);  break;}
   }
 }
 
@@ -70,7 +64,6 @@ void MainUI::loadIcons(){
   ui->actionAdd_Dirs->setIcon( LXDG::findIcon("archive-insert-directory","") );
   ui->actionRemove_File->setIcon( LXDG::findIcon("archive-remove","") );
   ui->actionExtract_All->setIcon( LXDG::findIcon("archive-extract","") );
-  ui->actionExtract_Sel->setIcon( LXDG::findIcon("archive-extract","") );
 }
 
 //===================
@@ -79,16 +72,17 @@ void MainUI::loadIcons(){
 QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
   if(start==0){
     for(int i=0; i<ui->tree_contents->topLevelItemCount(); i++){
-      if(ui->tree_contents->topLevelItem(i)->whatsThis(0) == path){ return ui->tree_contents->topLevelItem(i); }
-      else if(path.startsWith(ui->tree_contents->topLevelItem(i)->whatsThis(0)+"/")){ return findItem(path, ui->tree_contents->topLevelItem(i)); }
+      QString itpath = ui->tree_contents->topLevelItem(i)->whatsThis(0);
+      if(itpath == path){ return ui->tree_contents->topLevelItem(i); }
+      else if(path.startsWith(itpath+"/")){ return findItem(path, ui->tree_contents->topLevelItem(i)); }
     }
   }else{
     for(int i=0; i<start->childCount(); i++){
-      if(start->child(i)->whatsThis(0) == path){ return start->child(i); }
-      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }      
+      QString itpath = start->child(i)->whatsThis(0);
+      if(itpath == path){ return start->child(i); }
+      else if(path.startsWith(itpath+"/")){ return findItem(path, start->child(i)); }      
     }
   }
-  //qDebug() << "Could not find item:" << path;
   return 0; //nothing found
 }
 
@@ -164,28 +158,24 @@ void MainUI::NewArchive(){
   if(QFile::exists(file)){ 
     if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); } 
   }
-  ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
 }
 
 void MainUI::OpenArchive(){
   QString file = QFileDialog::getOpenFileName(this, tr("Open Archive"), QDir::homePath(), OpenFileTypes() );
   if(file.isEmpty()){ return; }
-  ui->label_progress->setText(tr("Opening Archive..."));
   BACKEND->loadFile(file);
 }
 
 void MainUI::addFiles(){
   QStringList files = QFileDialog::getOpenFileNames(this, tr("Add to Archive"), QDir::homePath() );
   if(files.isEmpty()){ return; }
-  ui->label_progress->setText(tr("Adding Items..."));
   BACKEND->startAdd(files);
 }
 
 void MainUI::addDirs(){
   QString dirs = QFileDialog::getExistingDirectory(this, tr("Add to Archive"), QDir::homePath() );
   if(dirs.isEmpty()){ return; }
-  ui->label_progress->setText(tr("Adding Items..."));
   BACKEND->startAdd(QStringList() << dirs);
 }
 
@@ -196,57 +186,35 @@ void MainUI::remFiles(){
     items << sel[i]->whatsThis(0);
   }
   items.removeDuplicates();
-  ui->label_progress->setText(tr("Removing Items..."));
   BACKEND->startRemove(items);
 }
 
 void MainUI::extractFiles(){
   QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
   if(dir.isEmpty()){ return; }
-  ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startExtract(dir, true);
-}
-
-void MainUI::extractSelection(){
-  if(ui->tree_contents->currentItem()==0){ return; }
-  QString sel = ui->tree_contents->currentItem()->whatsThis(0);
-  QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
-  if(dir.isEmpty()){ return; }
-  ui->label_progress->setText(tr("Extracting..."));
-  BACKEND->startExtract(dir, true, sel);
 }
 
 void MainUI::ViewFile(QTreeWidgetItem *it){
   if(it->childCount()>0){ return; } //directory - not viewable
-  ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startViewFile(it->whatsThis(0));
 }
 
 void MainUI::UpdateTree(){
-  this->setEnabled(false);
-  ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size")+" " );
+  ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size") << tr("Compressed")+" " );
   QStringList files = BACKEND->heirarchy();
   files.sort();
   //Remove any entries for file no longer in the archive
   bool changed = cleanItems(files);
-  //qDebug() << "Found Files:" << files;
+  qDebug() << "Found Files:" << files;
   for(int i=0; i<files.length(); i++){
     if(0 != findItem(files[i]) ){ continue; } //already in the tree widget
     QString mime = LXDG::findAppMimeForFile(files[i].section("/",-1), false); //first match only
-    QTreeWidgetItem *it = new QTreeWidgetItem();
-      it->setText(0, files[i].section("/",-1) );
-      if(!BACKEND->isLink(files[i])){
-        it->setText(1, LXDG::findAppMimeForFile(files[i].section("/",-1), false) );
-        it->setText(2, LUtils::BytesToDisplaySize( BACKEND->size(files[i])) );
-      }else{
-        it->setText(1, QString(tr("Link To: %1")).arg(BACKEND->linkTo(files[i]) ) );
-      }
+    QTreeWidgetItem *it = new QTreeWidgetItem( QStringList() << files[i].section("/",-1) << mime << LUtils::BytesToDisplaySize( BACKEND->size(files[i])) << LUtils::BytesToDisplaySize(BACKEND->csize(files[i])) );
     it->setWhatsThis(0, files[i]);
     if(BACKEND->isDir(files[i])){
       it->setIcon(0, LXDG::findIcon("folder",""));
       it->setText(1,""); //clear the mimetype
-    }else if(BACKEND->isLink(files[i])){
-      it->setIcon(0, LXDG::findIcon("emblem-symbolic-link","") );
     }else{
       it->setIcon(0, LXDG::findMimeIcon(files[i].section("/",-1)) );
     }
@@ -258,23 +226,14 @@ void MainUI::UpdateTree(){
       else{ parent->addChild(it); }
     }else{
       ui->tree_contents->addTopLevelItem(it);
-      QApplication::processEvents();
     }
     changed = true;
   }
-
+  int wid = 0;
   if(changed){
-    int wid = ui->tree_contents->fontMetrics().width("W")*5;
-    ui->tree_contents->setColumnWidth(2, wid);
-    for(int i=1; i<2; i++){ui->tree_contents->resizeColumnToContents(i); QApplication::processEvents(); wid+= ui->tree_contents->columnWidth(i); }
-    //qDebug() << "Set column 0 width:" << wid << ui->tree_contents->viewport()->width();
+    for(int i=3; i>0; i--){ui->tree_contents->resizeColumnToContents(i); wid+= ui->tree_contents->columnWidth(i); }
     ui->tree_contents->setColumnWidth(0, ui->tree_contents->viewport()->width()-wid);
   }
-  ui->tree_contents->sortItems(0, Qt::AscendingOrder); //sort by name
-  ui->tree_contents->sortItems(1,Qt::AscendingOrder); //sort by mimetype (put dirs first - still organized by name)
-
-  this->setEnabled(true);
-  ui->tree_contents->setEnabled(true);
 }
 
 //Backend Handling
@@ -282,22 +241,17 @@ void MainUI::ProcStarting(){
   ui->progressBar->setRange(0,0);
   ui->progressBar->setValue(0);
   ui->progressBar->setVisible(true);
-  ui->label_progress->setVisible(!ui->label_progress->text().isEmpty());
-  ui->label_progress_icon->setVisible(false);
+  ui->label_progress->setVisible(true);
   ui->tree_contents->setEnabled(false);
   ui->label_archive->setText(BACKEND->currentFile());
 }
 
-void MainUI::ProcFinished(bool success, QString msg){
-  UpdateTree();
+void MainUI::ProcFinished(){
   ui->progressBar->setRange(0,0);
   ui->progressBar->setValue(0);
   ui->progressBar->setVisible(false);
-  ui->label_progress->setText(msg);
-  ui->label_progress->setVisible(!msg.isEmpty());
-  ui->label_progress_icon->setVisible(!msg.isEmpty());
-  if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-complete","").pixmap(32,32) );}
-  else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-attention","").pixmap(32,32) );}
+  ui->label_progress->setVisible(false);
+  ui->tree_contents->setEnabled(true);
   if(ui->label_archive->text()!=BACKEND->currentFile()){
     ui->label_archive->setText(BACKEND->currentFile());
     this->setWindowTitle(BACKEND->currentFile().section("/",-1));
@@ -311,6 +265,7 @@ void MainUI::ProcFinished(bool success, QString msg){
     ui->actionRemove_File->setEnabled(canmodify && info.exists());
     ui->actionExtract_All->setEnabled(info.exists());
     ui->actionAdd_Dirs->setEnabled(canmodify);
+  UpdateTree();
 }
 
 void MainUI::ProcUpdate(int percent, QString txt){

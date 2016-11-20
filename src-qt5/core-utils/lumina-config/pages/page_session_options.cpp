@@ -33,7 +33,6 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->check_session_playloginaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_session_playlogoutaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_autoapplinks, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
-  connect(ui->check_watch_app_procs, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
  updateIcons();
  
 }
@@ -54,14 +53,6 @@ void page_session_options::SaveSettings(){
   sessionsettings.setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings.setValue("DateFormat", ui->line_session_date->text());
   sessionsettings.setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
-
-  QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
-  if(QFile::exists(lopenWatchFile) && ui->check_watch_app_procs->isChecked()){
-    QFile::remove(lopenWatchFile);
-  }else if(!QFile::exists(lopenWatchFile) && !ui->check_watch_app_procs->isChecked()){
-    QFile file(lopenWatchFile);
-    if(file.open(QIODevice::WriteOnly) ){ file.close(); } //just need to touch it to create the file
-  }
   emit HasPendingChanges(false);
 }
 
@@ -79,9 +70,6 @@ void page_session_options::LoadSettings(int){
   ui->line_session_date->setText( sessionsettings.value("DateFormat","").toString() );
   int index = ui->combo_session_datetimeorder->findData( sessionsettings.value("DateTimeOrder","timeonly").toString() );
   ui->combo_session_datetimeorder->setCurrentIndex(index);
-
-  QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
-  ui->check_watch_app_procs->setChecked( !QFile::exists(lopenWatchFile) );
 
   sessionLoadTimeSample();
   sessionLoadDateSample();

@@ -34,13 +34,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="check_GPUverify">
-     <property name="text">
-      <string>Only use compositing with GPU acceleration </string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QPlainTextEdit" name="text_file"/>
    </item>
   </layout>

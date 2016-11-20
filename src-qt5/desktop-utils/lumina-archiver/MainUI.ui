@@ -57,31 +57,6 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_progress_icon">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QProgressBar" name="progressBar">
         <property name="value">
          <number>24</number>
@@ -92,9 +67,6 @@
        <widget class="QLabel" name="label_progress">
         <property name="text">
          <string notr="true"/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -129,7 +101,6 @@
     <addaction name="actionRemove_File"/>
     <addaction name="separator"/>
     <addaction name="actionExtract_All"/>
-    <addaction name="actionExtract_Sel"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -210,11 +181,6 @@
    </property>
    <property name="statusTip">
     <string>Add directory to archive</string>
-   </property>
-  </action>
-  <action name="actionExtract_Sel">
-   <property name="text">
-    <string>Extract Selection</string>
    </property>
   </action>
  </widget>
