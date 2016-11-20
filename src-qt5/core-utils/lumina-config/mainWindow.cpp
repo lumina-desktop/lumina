@@ -9,6 +9,7 @@
 #include "globals.h"
 
 #include "pages/getPage.h"
+#include "pages/page_main.h"
 
 //=============
 //      PUBLIC
@@ -133,7 +134,10 @@ void mainWindow::on_actionSave_triggered(){
 }
 
 void mainWindow::on_actionBack_triggered(){
-  if(cpage.isEmpty()){ this->close(); } //main menu - go ahead and close it
+  if(cpage.isEmpty()){ page_main::clearlineEdit(); } //since ESC doesnt close any other Lumina Appliction by default, I've 
+commented this out for 
+the 
+time being.
   else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
 }
 
