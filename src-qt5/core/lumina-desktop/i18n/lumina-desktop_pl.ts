@@ -6,7 +6,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="32"></location>
         <source>Click to assign an application</source>
-        <translation>Kliknij, aby przypisać aplikację.</translation>
+        <translation>Kliknij, aby przypisać aplikację</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"></location>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="45"></location>
         <source>Desktop</source>
-        <translation type="unfinished">Pulpit</translation>
+        <translation>Pulpit</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="83"></location>
@@ -1059,12 +1059,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"></location>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastosować aktualizacje?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"></location>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Masz oczekujące aktualizacje systemowe gotowe do zastosowania! Czy chcesz zainstalować je teraz?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"></location>
@@ -1129,12 +1129,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="57"></location>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastosować aktualizacje?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="57"></location>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Masz oczekujące aktualizacje systemu do zastosowania! Czy chcesz je teraz zainstalować?</translation>
     </message>
 </context>
 <context>
