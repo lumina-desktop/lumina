@@ -118,7 +118,10 @@ void page_main::UpdateItems(QString search){
 //    PUBLIC SLOTS
 //================
 void page_main::SaveSettings(){
+}
 
+void page_main::clearlineEdit(){
+  ui->lineEdit->clear();
 }
 
 void page_main::LoadSettings(int){
