@@ -30,12 +30,16 @@ void SettingsMenu::UpdateMenu(){
   QAction *act = new QAction(LXDG::findIcon("preferences-desktop-screensaver",""), tr("Screensaver"), this);
 	act->setWhatsThis("xscreensaver-demo");
 	this->addAction(act);
-  act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("Desktop"), this);
-	act->setWhatsThis("lumina-config");
+  act = new QAction( LXDG::findIcon("preferences-desktop-wallpaper",""), tr("Wallpaper"), this);
+	act->setWhatsThis("lumina-config --page wallpaper");
 	this->addAction(act);
    act = new QAction( LXDG::findIcon("preferences-other",""), tr("Display"), this);
 	act->setWhatsThis("lumina-xconfig");
 	this->addAction(act);
+  act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("All Desktop Settings"), this);
+	act->setWhatsThis("lumina-config");
+	this->addAction(act);
+  this->addSeparator();
   /*QString qtconfig = LOS::QtConfigShortcut();
   if(QFile::exists(qtconfig) && !qtconfig.isEmpty()){
     act = new QAction( LXDG::findIcon("preferences-desktop-theme",""), tr("Window Theme"), this);
@@ -52,7 +56,6 @@ void SettingsMenu::UpdateMenu(){
 	this->addAction(act);
     }
   }
-  this->addSeparator();
   act = new QAction( LXDG::findIcon("lumina",""), tr("About Lumina"), this);
 	act->setWhatsThis("lumina-info");
 	this->addAction(act);  
