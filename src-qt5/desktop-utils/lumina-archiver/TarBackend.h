@@ -29,14 +29,17 @@ public:
 	double size(QString file);
 	double csize(QString file);
 	bool isDir(QString file);
+	bool isLink(QString file);
+	QString linkTo(QString file);
 
 	//Modification routines
 	void startAdd(QStringList paths);
 	void startRemove(QStringList paths);
-	void startExtract(QString path, bool overwrite); //path to dir
+	void startExtract(QString path, bool overwrite, QString file=""); //path to dir, overwrite, optional file to extract (everything otherwise)
 	
 	void startViewFile(QString path);
 
+	//Special process 
 public slots:
 
 private:
@@ -58,7 +61,7 @@ signals:
 	void FileLoaded();
 	void ProcessStarting();
 	void ProgressUpdate(int, QString); //percentage, text
-	void ProcessFinished();
+	void ProcessFinished(bool, QString); //success, text
 };
 
 #endif

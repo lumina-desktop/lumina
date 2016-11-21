@@ -15,12 +15,17 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_atom.h>
 #include <xcb/xinput.h>
+#include <xcb/xproto.h>
 
-// LInputDevice Class
+//===================
+//    LInputDevice Class
+//===================
+// === PUBLIC ===
 LInputDevice::LInputDevice(unsigned int id, unsigned int type){
   devID = id;
   devType = type;
   //devName = name;
+  getProperties(); //need to populate the name/atom correlations for properties
 }
 
 LInputDevice::~LInputDevice(){
@@ -47,18 +52,37 @@ bool LInputDevice::isExtension(){
 	|| devType==XCB_INPUT_DEVICE_USE_IS_X_EXTENSION_POINTER);
 }
 
+// Property Management
 QStringList LInputDevice::listProperties(){
+  return devProps.keys();
+}
+
+QVariant LInputDevice::propertyValue(QString prop){
+  if(!devProps.contains(prop)){ return QVariant(); }
+  //Now generate the property request
+ // xcb_input_get_device_property_cookie_t cookie = xcb_input_get_device_property_unchecked( QX11Info::connection(), devProps.value(prop), \
+//		XCB_ATOM_ATOM, 0, 1000, devID, NULL);
+  QVariant result;
+  return result;
+}
+
+// === PRIVATE ===
+void LInputDevice::getProperties(){
+  devProps.clear();
   xcb_input_list_device_properties_cookie_t cookie = xcb_input_list_device_properties_unchecked(QX11Info::connection(), devID);
   xcb_input_list_device_properties_reply_t *reply = xcb_input_list_device_properties_reply(QX11Info::connection(), cookie, NULL);
-  qDebug() << "Property List:";
-  qDebug() << " - response_type:" << reply->response_type;
-  qDebug() << " - num atoms:" << reply->num_atoms;
-  qDebug() << " - length:" << reply->length;
-  qDebug() << " - sequence:" << reply->sequence;
+  //Get the atoms
+  xcb_atom_t *atoms = xcb_input_list_device_properties_atoms(reply);
+  //qDebug() << "Property Response Type:" << reply->response_type; //Always seems to be "1"
+  QList<xcb_get_atom_name_cookie_t> cookies;
+  for(int i=0; i<reply->num_atoms; i++){  cookies <<  xcb_get_atom_name(QX11Info::connection(), atoms[i]);  }
+  for(int i=0; i<reply->num_atoms; i++){
+    xcb_get_atom_name_reply_t *nr = xcb_get_atom_name_reply(QX11Info::connection(), cookies[i], NULL);
+    devProps.insert(QString::fromUtf8( xcb_get_atom_name_name(nr), xcb_get_atom_name_name_length(nr) ),atoms[i] );
+    ::free(nr);
+  }
   //Done with data structure
   ::free(reply);
-  //Return info
-  return QStringList();
 }
 //======================
 //  LInput Static Functions

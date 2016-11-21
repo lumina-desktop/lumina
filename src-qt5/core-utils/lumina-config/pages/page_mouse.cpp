@@ -24,7 +24,7 @@ page_mouse::page_mouse(QWidget *parent) : PageWidget(parent), ui(new Ui::page_mo
       }else{
         qDebug() << "Found Pointer:" << devices[i]->devNumber();
         qDebug() << " - isExtension:" << devices[i]->isExtension();
-        devices[i]->listProperties();
+        qDebug() << " - Properties:" << devices[i]->listProperties();
       }
     }
 }
