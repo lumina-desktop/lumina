@@ -50,6 +50,7 @@ public:
 	void UpdateGeometry();
 	
 public slots:
+	void SystemLock();
 	void SystemLogout();
 	void SystemTerminal();
 	void SystemFileManager();

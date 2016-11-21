@@ -307,6 +307,13 @@ void LPlugins::LoadMenuPlugins(){
     info.ID = "jsonmenu";
     info.icon = "text-x-script";
   MENU.insert(info.ID, info);
+  //Lock Screen item
+  info = LPI(); //clear it
+    info.name = QObject::tr("Lock Session");
+    info.description = QObject::tr("Lock the current desktop session");
+    info.ID = "lockdesktop";
+    info.icon = "system-lock-screen";
+  MENU.insert(info.ID, info);
 }
 
 void LPlugins::LoadColorItems(){
