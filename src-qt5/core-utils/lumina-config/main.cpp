@@ -21,10 +21,11 @@ int main(int argc, char ** argv)
     if(!a.isPrimaryProcess()){ return 0; }
     
     //LuminaThemeEngine theme(&a);
-
+    QStringList args;
+    for(int i=1; i<argc; i++){ args << QString(argv[i]); }
     mainWindow w;
-    QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance()) );
-    //QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
+    QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance(QStringList)) );
+    w.slotSingleInstance(args);
     w.show();
 
     int retCode = a.exec();

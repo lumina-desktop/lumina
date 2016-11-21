@@ -27,7 +27,7 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
     connect(backShortcut, SIGNAL(activated()), this, SLOT(on_actionBack_triggered()) );
   setupIcons();
   loadMonitors();
-  changePage(""); //load the default main page
+  //changePage(""); //load the default main page
 }
 
 mainWindow::~mainWindow(){
@@ -37,7 +37,14 @@ mainWindow::~mainWindow(){
 //==============
 //  PUBLIC SLOTS
 //==============
-void mainWindow::slotSingleInstance(){
+void mainWindow::slotSingleInstance(QStringList args){
+  for(int i=0; i<args.length(); i++){
+    if(args[i]=="--page" && i<args.length()-1){
+      i++;
+      changePage(args[i]);
+    }
+  }
+  if(cpage == "somerandomjunktostartwith"){ changePage(""); }
   this->showNormal(); //just in case it is hidden/minimized
 }
 
