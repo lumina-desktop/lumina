@@ -271,8 +271,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   // -- DESKTOP SETTINGS --
   QString deskID = QApplication::primaryScreen()->name();
   //(only works for the primary desktop at the moment)
-  tmp = sysDefaults.filter("desktop-"+deskID);
-  if(tmp.isEmpty()){ tmp = sysDefaults.filter("desktop."+deskID); }//for backwards compat
+  tmp = sysDefaults.filter("desktop_");
+  if(tmp.isEmpty()){ tmp = sysDefaults.filter("desktop."); }//for backwards compat
   if(!tmp.isEmpty()){deskset << "[desktop-"+deskID+"]"; }
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
@@ -294,9 +294,9 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   // -- PANEL SETTINGS --
   //(only works for the primary desktop at the moment)
   for(int i=1; i<11; i++){
-    QString panvar = "panel_"+deskID+"."+QString::number(i-1);
+    QString panvar = "panel"+QString::number(i);
     tmp = sysDefaults.filter(panvar);
-    if(!tmp.isEmpty()){deskset << "["+panvar+"]"; }
+    if(!tmp.isEmpty()){deskset << "[panel_"+deskID+"."+QString::number(i-1)+"]"; }
     for(int i=0; i<tmp.length(); i++){
       if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
       QString var = tmp[i].section("=",0,0).toLower().simplified();
