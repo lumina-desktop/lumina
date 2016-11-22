@@ -63,7 +63,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="88"></location>
         <source>Control Panel</source>
-        <translation>Kontrollleiste</translation>
+        <translation>Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="98"></location>
@@ -817,7 +817,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="172"></location>
         <source>Feed Information</source>
-        <translation>Feed Information</translation>
+        <translation type="unfinished">Feed Information</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="212"></location>
@@ -903,7 +903,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"></location>
         <source>Lumina Desktop RSS</source>
-        <translation>Lumina Desktop RSS</translation>
+        <translation type="unfinished">Lumina Desktop RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"></location>
@@ -966,7 +966,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="51"></location>
         <source>Control Panel</source>
-        <translation>Kontrollleiste</translation>
+        <translation>Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="57"></location>
@@ -999,7 +999,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"></location>
         <source>Control Panel</source>
-        <translation>Kontrollleiste</translation>
+        <translation>Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"></location>
@@ -1248,7 +1248,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"></location>
         <source>Control Panel</source>
-        <translation>Kontrollleiste</translation>
+        <translation>Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"></location>
