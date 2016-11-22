@@ -49,6 +49,9 @@ private:
 
 	//Image Editor widget
 	ImageEditor *IMG;
+	QDateTime lastScreenShot;
+
+	void showSaveError(QString path);
 
 private slots:
 	//Button Slots

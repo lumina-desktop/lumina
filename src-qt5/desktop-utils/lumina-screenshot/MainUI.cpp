@@ -8,6 +8,8 @@
 #include "ui_MainUI.h"
 
 #include <LuminaX11.h>
+#include <QMessageBox>
+
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
@@ -48,6 +50,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   this->show();
   IMG->setDefaultSize(ui->scrollArea->maximumViewportSize());
   IMG->LoadImage( QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()).toImage() ); //initial screenshot
+  lastScreenShot = QDateTime::currentDateTime();
   //ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
@@ -69,26 +72,36 @@ void MainUI::setupIcons(){
   //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
 }
 
+void MainUI::showSaveError(QString path){
+  QMessageBox::warning(this, tr("Could not save screenshot"), tr("The screenshot could not be saved. Please check directory permissions or pick a different directory")+"\n\n"+path);
+}
 //==============
 //  PRIVATE SLOTS
 //==============
 void MainUI::saveScreenshot(){
   if(mousegrabbed){ return; }
-  QString filepath = QFileDialog::getSaveFileName(this, tr("Save Screenshot"), ppath, tr("PNG Files (*.png);;AllFiles (*)") );
+  QString filepath = QFileDialog::getSaveFileName(this, tr("Save Screenshot"), ppath+"/"+QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss")), tr("PNG Files (*.png);;AllFiles (*)") );
   if(filepath.isEmpty()){ return; }
   if(!filepath.endsWith(".png")){ filepath.append(".png"); }
-  IMG->image().save(filepath, "png");
-  ppath = filepath;
+  if( !IMG->image().save(filepath, "png") ){
+    showSaveError(filepath);
+  }else{
+    ppath = filepath.section("/",0,-2); //just the directory
+  }
 }
+
 void MainUI::quicksave(){
   if(mousegrabbed){ return; }
     QString savedir = QDir::homePath()+"/";
     if(QFile::exists(savedir + "Pictures/")){ savedir.append("Pictures/"); }
     else if(QFile::exists(savedir + "Images/")){ savedir.append("Images/"); }
 
-    QString path = savedir + QString( "Screenshot-%1.png" ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") );
-    IMG->image().save(path, "png");
-    QProcess::startDetached("lumina-open \""+path+"\"");
+    QString path = savedir + QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss") );
+    if(IMG->image().save(path, "png") ){
+      QProcess::startDetached("lumina-open \""+path+"\"");
+    }else{
+      showSaveError(path);
+    }
 }
 
 void MainUI::startScreenshot(){
@@ -145,6 +158,7 @@ void MainUI::getPixmap(){
   this->show();
   this->setGeometry(lastgeom);
   ui->tabWidget->setCurrentWidget(ui->tab_view); //view it right now
+  lastScreenShot = QDateTime::currentDateTime();
   //Now display the pixmap on the label as well
   IMG->LoadImage( cpic.toImage() );
 }
