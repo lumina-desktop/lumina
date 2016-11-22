@@ -28,6 +28,8 @@ public:
 	bool hasSelection();
 	QImage image();
 
+	int getScalingValue();
+
 private:
 	QImage fullIMG, scaledIMG; //Note: the aspect ratio between the two images must be preserved!!
 	QSize defaultSize; //for loading new images
@@ -53,6 +55,7 @@ private slots:
 	void showMenu();
 
 public slots:
+	void setScaling(int perc); //10% <--> 200% range is valid
 	void scaleUp(int val = 10); //10% change by default
 	void scaleDown(int val = 10); //10% change by default
 
@@ -67,6 +70,6 @@ protected:
 
 signals:
 	void selectionChanged(bool); //true if there is a selection
-
+	void scaleFactorChanged(int);
 };
 #endif

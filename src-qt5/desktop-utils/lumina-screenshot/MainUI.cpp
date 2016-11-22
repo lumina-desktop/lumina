@@ -19,7 +19,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->scrollArea->setWidget(IMG);
   ui->tabWidget->setCurrentWidget(ui->tab_view);
   ppath = QDir::homePath();
-
+  ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().width("200%") );
   setupIcons();
   ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
   if(ui->spin_monitor->maximum()<2){
@@ -37,6 +37,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionTake_Screenshot, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
+  connect(IMG, SIGNAL(scaleFactorChanged(int)), this, SLOT(imgScalingChanged(int)) );
+  connect(ui->slider_zoom, SIGNAL(valueChanged(int)), this, SLOT(imgScalingChanged()) );
 
   settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
   if(settings->value("screenshot-target", "window").toString() == "window") {
@@ -115,6 +117,17 @@ void MainUI::startScreenshot(){
 void MainUI::imgselchanged(bool hassel){
   ui->tool_crop->setEnabled(hassel);
   ui->tool_resize->setEnabled(hassel);
+}
+
+void MainUI::imgScalingChanged(int percent){
+  //qDebug() << "Scale Changed:" << percent;
+  if(percent<0){
+    //Changed by user interaction
+    IMG->setScaling(ui->slider_zoom->value());
+  }else{
+    ui->slider_zoom->setValue(percent);
+  }
+  ui->label_zoom_percent->setText( QString::number(ui->slider_zoom->value())+"%");
 }
 
 bool MainUI::getWindow(){

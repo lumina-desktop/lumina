@@ -64,6 +64,8 @@ private slots:
 	void startScreenshot();
 
 	void imgselchanged(bool hassel);
+	void imgScalingChanged(int percent = -1);
+
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot
