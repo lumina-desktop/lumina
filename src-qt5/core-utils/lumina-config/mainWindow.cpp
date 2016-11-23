@@ -134,7 +134,7 @@ void mainWindow::on_actionSave_triggered(){
 }
 
 void mainWindow::on_actionBack_triggered(){
- if(cpage.isEmpty()){ clearlineEdit(); }
+ if(cpage.isEmpty()){ /* clearlineEdit(); */ }
   else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
 }
 
