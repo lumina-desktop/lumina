@@ -137,6 +137,10 @@ void page_main::updateIcons(){
   UpdateItems("");
 }
 
+void EscapePressed(){
+clearlineEdit();
+}
+
 //=================
 //    PRIVATE SLOTS
 //=================

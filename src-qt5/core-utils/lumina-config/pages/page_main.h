@@ -25,8 +25,8 @@ public slots:
 	void SaveSettings();
 	void LoadSettings(int screennum);
 	void updateIcons();
-	void clearlineEdit();
-
+    void clearlineEdit();
+    void EscapePressed();
 
 private:
 	Ui::page_main *ui;

@@ -7,6 +7,7 @@
 #ifndef _LUMINA_CONFIG_MAIN_WINDOW_H
 #define _LUMINA_CONFIG_MAIN_WINDOW_H
 #include "globals.h"
+#include "pages/page_main.h"
 
 namespace Ui{
 	class mainWindow;
