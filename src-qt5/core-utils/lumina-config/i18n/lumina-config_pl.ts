@@ -441,7 +441,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="219"></location>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitoruj Kanały RSS (Wymagane połączenie z internetem)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="242"></location>
@@ -691,12 +691,12 @@
     <message>
         <location filename="../pages/getPage.h" line="31"></location>
         <source>Adjust transparency levels and window effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Dostosuj poziomy przeźroczystości i efekty okien</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"></location>
         <source>Startup Services and Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Usługi i Aplikacje Startowe</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"></location>
@@ -706,22 +706,22 @@
     <message>
         <location filename="../pages/getPage.h" line="32"></location>
         <source>Automatically start applications or services</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie uruchom aplikacje lub usługi</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"></location>
         <source>Default Applications for File Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Domyślne Aplikacje dla Typów Plików</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"></location>
         <source>Mimetype Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia Mimetype</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"></location>
         <source>Change default applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień domyślne aplikacje</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="34"></location>
@@ -731,7 +731,7 @@
     <message>
         <location filename="../pages/getPage.h" line="34"></location>
         <source>Change keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień skróty klawiszowe</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="35"></location>
@@ -781,7 +781,7 @@
     <message>
         <location filename="../pages/getPage.h" line="38"></location>
         <source>Context Menu and Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu kontekstowe i Wtyczki</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"></location>
@@ -791,7 +791,7 @@
     <message>
         <location filename="../pages/getPage.h" line="38"></location>
         <source>Change what options are shown on the desktop context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień, które opcje są widoczne w menu kontekstowym pulpitu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"></location>
@@ -821,7 +821,7 @@
     <message>
         <location filename="../pages/getPage.h" line="40"></location>
         <source>Change basic user settings such as time/date formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień podstawowe ustawienia użytkownika, takie jak format daty/czasu</translation>
     </message>
 </context>
 <context>
@@ -972,7 +972,7 @@
     <message>
         <location filename="../mainWindow.cpp" line="119"></location>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta strona ma niezapisane zmiany, czy chcesz je teraz zapisać?</translation>
     </message>
 </context>
 <context>
@@ -985,7 +985,7 @@
     <message>
         <location filename="../pages/page_autostart.ui" line="39"></location>
         <source>Add New Startup Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj Nową Usługę Startową</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"></location>
@@ -1169,7 +1169,7 @@
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="411"></location>
         <source>The selected binary is not executable!</source>
-        <translation type="unfinished">Wybrany plik binarny nie jest wykonywalny!</translation>
+        <translation>Wybrany plik binarny nie jest wykonywalny!</translation>
     </message>
 </context>
 <context>
@@ -1182,7 +1182,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"></location>
         <source>Basic Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Podstawowy Edytor</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="44"></location>
@@ -1396,7 +1396,7 @@
     <message>
         <location filename="../pages/page_interface_menu.ui" line="38"></location>
         <source>Context Menu Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Wtyczki Menu Kontekstowego</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.cpp" line="47"></location>
@@ -1538,7 +1538,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="55"></location>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie stwórz/usuń skróty na pulpicie dla instalowanych/usuwanych aplikacji</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"></location>
