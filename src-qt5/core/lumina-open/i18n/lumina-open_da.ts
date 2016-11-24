@@ -36,7 +36,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"></location>
         <source>Set this application as the default </source>
-        <translation>Sæt dette program som standard</translation>
+        <translation>Sæt dette program som standard </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"></location>
