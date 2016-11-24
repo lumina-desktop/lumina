@@ -123,7 +123,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="109"></location>
         <source>Wine</source>
-        <translation>Wine</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="110"></location>
@@ -358,7 +358,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"></location>
         <source>Wine</source>
-        <translation>Wine</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="103"></location>
@@ -488,7 +488,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="274"></location>
         <source>Terminal</source>
-        <translation>Terminal</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="275"></location>
@@ -1333,7 +1333,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"></location>
         <source>Wine</source>
-        <translation>Wine</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"></location>
