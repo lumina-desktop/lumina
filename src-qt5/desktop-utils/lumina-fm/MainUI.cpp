@@ -179,6 +179,7 @@ void MainUI::OpenDirs(QStringList dirs){
     //Initialize the widget with the proper settings
     DW->setShowDetails(radio_view_details->isChecked()); 
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
+    DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
