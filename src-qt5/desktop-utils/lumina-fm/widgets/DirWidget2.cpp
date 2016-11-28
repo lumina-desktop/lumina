@@ -513,7 +513,8 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
     qDebug() << "Changed to directory:" << cur;
   }else{
     //Re-assemble the normalbasedir variable (in case moving around within a snapshot)
-    normalbasedir = cur.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
+    normalbasedir = cur;
+    normalbasedir.replace( QRegExp("\\/\\.zfs\\/snapshot/([^/]+)\\/"), "/" );
     qDebug() << "Changed to snapshot:" << cur << normalbasedir;
   }
   ui->actionBack->setEnabled( currentBrowser()->history().length()>1 );
