@@ -52,7 +52,8 @@ bool Worker::searchDir(QString dirpath){
   tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot , QDir::Name);
   for(int i=0; i<tmp.length(); i++){
     if(stopsearch){ return true; }
-    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) ){ continue; } //this dir is skipped
+    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) || tmp[i]=="proc" ){ continue; } //this dir is skipped
+       //Special case - skip the "proc" directory heirarchy (highly-recursive layout for *every* process which is running)
     if( searchDir(dir.absoluteFilePath(tmp[i])) ){ return true; }
   }
   return false;
