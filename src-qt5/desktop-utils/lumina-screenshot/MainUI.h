@@ -46,6 +46,7 @@ private:
 	WId cwin; //current window to screenshot
 	QSettings *settings;
 	LXCB *XCB; //Library access to window subsystems
+	QTimer *scaleTimer;
 
 	//Image Editor widget
 	ImageEditor *IMG;
@@ -65,6 +66,7 @@ private slots:
 
 	void imgselchanged(bool hassel);
 	void imgScalingChanged(int percent = -1);
+	void sliderChanged();
 
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate

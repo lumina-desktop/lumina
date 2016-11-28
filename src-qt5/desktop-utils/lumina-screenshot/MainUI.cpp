@@ -26,6 +26,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->spin_monitor->setEnabled(false);
     ui->radio_monitor->setEnabled(false);
   }	  
+  scaleTimer = new QTimer(this);
+    scaleTimer->setSingleShot(true);
+    scaleTimer->setInterval(200); //~1/5 second
 
   //Setup the connections
   connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(saveScreenshot()) );
@@ -38,7 +41,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
   connect(IMG, SIGNAL(scaleFactorChanged(int)), this, SLOT(imgScalingChanged(int)) );
-  connect(ui->slider_zoom, SIGNAL(valueChanged(int)), this, SLOT(imgScalingChanged()) );
+  connect(ui->slider_zoom, SIGNAL(valueChanged(int)),  this, SLOT(sliderChanged()) );
+  connect(scaleTimer, SIGNAL(timeout()), this, SLOT(imgScalingChanged()) );
 
   settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
   if(settings->value("screenshot-target", "window").toString() == "window") {
@@ -128,6 +132,11 @@ void MainUI::imgScalingChanged(int percent){
     ui->slider_zoom->setValue(percent);
   }
   ui->label_zoom_percent->setText( QString::number(ui->slider_zoom->value())+"%");
+}
+
+void MainUI::sliderChanged(){
+  ui->label_zoom_percent->setText( QString::number(ui->slider_zoom->value())+"%");
+  scaleTimer->start();
 }
 
 bool MainUI::getWindow(){
