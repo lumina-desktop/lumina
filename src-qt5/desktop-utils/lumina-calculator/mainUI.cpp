@@ -255,14 +255,16 @@ double mainUI::strToNumber(QString str){
       if(need==0){ end = i; }
     }
     if(end<start){ return BADVALUE; }
-    //qDebug() << "Replace value:" << str << start << end << str.mid(start+1,end-start);
+    //qDebug() << "Replace value:" << str << start << end << str.mid(start+1,end-start-1);
     double tmp = strToNumber( str.mid(start+1, end-start-1));
     if(tmp!=tmp){ return BADVALUE; } //not a number
     //Now check really quick if this was an argument to a scientific operation
+    //qDebug() << "Got Number:" << tmp;
     for(int i=start-1; i>=0; i-- ){
+      //qDebug() << "Check for function:" << start << i << str[i];
       if( !str[i].isLower() || i==0 ){
         if(!str[i].isLower()){ i++; }//don't need the invalid character
-        if(start-i<2){ continue; } //not long enough - 2+ chars for sci functions
+        if(start-i<2){ break; } //not long enough - 2+ chars for sci functions
         //Got a scientific operation - run it through the routine
         tmp = performSciOperation( str.mid(i, start-i), tmp);
         if(tmp!=tmp){ return BADVALUE; } //got a bad value
