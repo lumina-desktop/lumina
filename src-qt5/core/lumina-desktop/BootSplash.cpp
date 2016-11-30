@@ -2,6 +2,7 @@
 #include "ui_BootSplash.h"
 
 #include <LuminaXDG.h>
+#include <LUtils.h>
 
 BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus), ui(new Ui::BootSplash){
   ui->setupUi(this);
@@ -9,6 +10,11 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
   //Center the window on the primary screen
   QPoint ctr = QApplication::desktop()->screenGeometry().center();
   this->move( ctr.x()-(this->width()/2), ctr.y()-(this->height()/2) );
+  if(LUtils::isValidBinary("fortune")){
+    QString random = LUtils::getCmdOutput("fortune -s").join("\n").simplified();
+    if(random.endsWith("\n")){ random.chop(1); }
+    ui->label_welcome->setText( "\""+random+"\"" );
+  }
 }
 
 void BootSplash::showScreen(QString loading){ //update icon, text, and progress
@@ -40,7 +46,7 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
     icon = "preferences-desktop-wallpaper";	
   }else if(loading=="final"){
     txt = tr("Finalizing …"); per = 90;
-    icon = "pcbsd";	  
+    icon = "start-here-lumina";	  
   }else if(loading.startsWith("app::")){
     txt = QString(tr("Starting App: %1")).arg(loading.section("::",1,50)); per = -1;
   }
