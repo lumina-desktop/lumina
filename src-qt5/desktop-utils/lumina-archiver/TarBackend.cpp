@@ -127,7 +127,7 @@ void Backend::startRemove(QStringList paths){
 
 void Backend::startExtract(QString path, bool overwrite, QString file){
   QStringList args;
-  args << "-x";
+  args << "-x" << "--no-same-owner";
   if(!overwrite){ args << "-k"; }
   args << flags;
   if(!file.isEmpty()){ args << "--include" << file << "--strip-components" << QString::number(file.count("/")); }

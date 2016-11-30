@@ -5,6 +5,6 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Categories=Utility;
-MimeType=application/x-xz-compressed-tar;application/x-lzma-compressed-tar;application/x-bzip-compressed-tar;application/x-tar;application/x-compressed-tar;application/zip;
+MimeType=application/x-xz-compressed-tar;application/x-lzma-compressed-tar;application/x-bzip-compressed-tar;application/x-tar;application/x-compressed-tar;application/zip;application/gzip;application/bzip
 Name=Lumina Archiver
 Comment=Archive creator and viewer
