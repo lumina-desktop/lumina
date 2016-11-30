@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Susanne Jaeckel
+//  Copyright (c) 2014, Susanne Jaeckel, 2015-2016 Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -81,6 +81,7 @@ void LBattery::updateBattery(bool force){
       LSession::handle()->playAudioFile(LOS::LuminaShare()+"low-battery.ogg");
     }
     if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
+    else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
     else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
     iconOld = icon;
 
