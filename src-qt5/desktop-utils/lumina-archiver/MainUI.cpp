@@ -208,12 +208,16 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::extractSelection(){
-  if(ui->tree_contents->currentItem()==0){ return; }
-  QString sel = ui->tree_contents->currentItem()->whatsThis(0);
+  if(ui->tree_contents->currentItem()==0){ return; } //nothing selected
+  QList<QTreeWidgetItem*> sel = ui->tree_contents->selectedItems();
+  if(sel.isEmpty()){ sel << ui->tree_contents->currentItem(); }
+  QStringList selList;
+  for(int i=0; i<sel.length(); i++){ selList << sel[i]->whatsThis(0); }
+  selList.removeDuplicates();
   QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
   if(dir.isEmpty()){ return; }
   ui->label_progress->setText(tr("Extracting..."));
-  BACKEND->startExtract(dir, true, sel);
+  BACKEND->startExtract(dir, true, selList);
 }
 
 void MainUI::ViewFile(QTreeWidgetItem *it){

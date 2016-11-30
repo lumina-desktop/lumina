@@ -126,11 +126,17 @@ void Backend::startRemove(QStringList paths){
 }
 
 void Backend::startExtract(QString path, bool overwrite, QString file){
+  startExtract(path, overwrite, QStringList() << file); //overload for multi-file function
+}
+
+void Backend::startExtract(QString path, bool overwrite, QStringList files){
   QStringList args;
   args << "-x" << "--no-same-owner";
   if(!overwrite){ args << "-k"; }
   args << flags;
-  if(!file.isEmpty()){ args << "--include" << file << "--strip-components" << QString::number(file.count("/")); }
+  for(int i=0; i<files.length(); i++){
+    args << "--include" << files[i] << "--strip-components" << QString::number(files[i].count("/"));
+  }
   args << "-C" << path;
   STARTING=true;
   //qDebug() << "Starting command:" << "tar" << args;

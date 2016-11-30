@@ -36,6 +36,7 @@ public:
 	void startAdd(QStringList paths);
 	void startRemove(QStringList paths);
 	void startExtract(QString path, bool overwrite, QString file=""); //path to dir, overwrite, optional file to extract (everything otherwise)
+	void startExtract(QString path, bool overwrite, QStringList files);
 	
 	void startViewFile(QString path);
 
