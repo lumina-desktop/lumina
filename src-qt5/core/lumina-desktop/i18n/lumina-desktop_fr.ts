@@ -186,7 +186,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="42"></location>
         <source>Finalizing …</source>
-        <translation>Finalisation en cours ...</translation>
+        <translation>Finalisation en cours …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"></location>
