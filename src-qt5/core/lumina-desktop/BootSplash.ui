@@ -122,6 +122,22 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="label_version">
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string notr="true">Version</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

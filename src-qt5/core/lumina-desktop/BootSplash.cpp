@@ -3,6 +3,7 @@
 
 #include <LuminaXDG.h>
 #include <LUtils.h>
+#include <LDesktopUtils.h>
 
 BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus), ui(new Ui::BootSplash){
   ui->setupUi(this);
@@ -15,6 +16,7 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
     if(random.endsWith("\n")){ random.chop(1); }
     ui->label_welcome->setText( "\""+random+"\"" );
   }
+  ui->label_version->setText( QString(tr("Version %1")).arg(LDesktopUtils::LuminaDesktopVersion()) );
 }
 
 void BootSplash::showScreen(QString loading){ //update icon, text, and progress
