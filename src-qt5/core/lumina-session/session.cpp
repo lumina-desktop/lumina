@@ -61,11 +61,16 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
   proc->setStandardOutputFile(logfile);
   proc->setObjectName(ID);
   if(ID=="runtime"){
-    //Bypass for a hidden dbus requirement for Qt itself (Qt 5.5.1)
-    QDir tmp = QDir::temp();
-    if( tmp.entryList(QStringList() << "dbus-*").isEmpty() && LUtils::isValidBinary("dbus-launch")){
-      command.prepend("dbus-launch --exit-with-session ");
-    }
+    //Bypass for a hidden dbus file requirement for Qt itself (Qt 5.5.1+?)
+    if(!QFile::exists("/etc/machine-id") && !QFile::exists("/var/db/dbus/machine-id")){
+      if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure") ){ } //good - the UUID was created successfully
+      else if(LUtils::isValidBinary("dbus-launch")){ command.prepend("dbus-launch --exit-with-session "); }
+      else{ 
+        //create a simple DBUS UUID and put it in the universal-fallback location (OS-independent)
+        // TO-DO - root vs user level permissions issue?
+        qDebug() << "Could not find '/etc/machine-id' or '/var/db/dbus/machine-id': Qt will most likely crash. \nPlease run 'dbus-uuidgen --ensure' with root permissions to generate this file if Lumina does not start properly.";
+      }
+   }
   }
   proc->start(command, QIODevice::ReadOnly);
   connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished()) );
