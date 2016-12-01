@@ -135,6 +135,7 @@ void Backend::startExtract(QString path, bool overwrite, QStringList files){
   if(!overwrite){ args << "-k"; }
   args << flags;
   for(int i=0; i<files.length(); i++){
+    if(files[i].simplified().isEmpty()){ continue; }
     args << "--include" << files[i] << "--strip-components" << QString::number(files[i].count("/"));
   }
   args << "-C" << path;
