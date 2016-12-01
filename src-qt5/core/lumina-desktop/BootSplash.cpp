@@ -11,12 +11,30 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
   //Center the window on the primary screen
   QPoint ctr = QApplication::desktop()->screenGeometry().center();
   this->move( ctr.x()-(this->width()/2), ctr.y()-(this->height()/2) );
-  if(LUtils::isValidBinary("fortune")){
-    QString random = LUtils::getCmdOutput("fortune -s").join("\n").simplified();
-    if(random.endsWith("\n")){ random.chop(1); }
-    ui->label_welcome->setText( "\""+random+"\"" );
-  }
+  generateTipOfTheDay();
   ui->label_version->setText( QString(tr("Version %1")).arg(LDesktopUtils::LuminaDesktopVersion()) );
+}
+
+void BootSplash::generateTipOfTheDay(){
+  int index = qrand()%5; //Make sure this number matches the length of the case below (max value +1)
+  QString tip = "This desktop is generously sponsored by iXsystems\nwww.ixsystems.com"; //fallback message (just in case)
+  switch(index){
+    case 0:
+	tip = tr("This desktop is powered by coffee, coffee, and more coffee."); break;
+    case 1:
+	tip = tr("Keep up with desktop news!")+"\n\nwww.lumina-desktop.org"; break;
+    case 2:
+	tip = tr("There is a full handbook of information about the desktop available online.")+"\n\nwww.lumina-desktop.org/handbook"; break;
+    case 3:
+	tip = tr("Want to change the interface? Everything is customizable in the desktop configuration!"); break;
+    case 4:
+	tip = tr("Lumina can easily reproduce the interface from most other desktop environments."); break;
+    case 5:
+	tip = tr(""); break;
+    case 6:
+	tip = tr(""); break;
+  }
+  ui->label_welcome->setText( "\""+tip+"\"" );
 }
 
 void BootSplash::showScreen(QString loading){ //update icon, text, and progress
