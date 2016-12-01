@@ -214,12 +214,13 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
     QStringList args = PROC.arguments();
     if(args.contains("-x") && retcode==0){
        needupdate=false;
-      if(args.contains("--include")){
-        //Need to find the full path to the extracted file
+      if(args.count("--include")==1){
+        //Need to find the full path to the (single) extracted file
         QString path = args.last() +"/"+ args[ args.indexOf("--include")+1].section("/",-1);
         QFile::setPermissions(path, QFileDevice::ReadOwner);
         QProcess::startDetached("xdg-open  \""+path+"\"");
       }else{
+        //Multi-file extract - open the dir instead
         QProcess::startDetached("xdg-open \""+ args.last()+"\""); //just extracted to a dir - open it now
       }
     }else if(args.contains("-c") && QFile::exists(tmpfilepath)){
