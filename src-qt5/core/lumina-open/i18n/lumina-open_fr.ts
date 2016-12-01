@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"></location>
         <source>Binary Location</source>
-        <translation>Emplacement du binaire :</translation>
+        <translation>Emplacement de l'Exécutable</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"></location>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"></location>
         <source>Set this application as the default </source>
-        <translation>Mettre cette application par défaut</translation>
+        <translation>Définier ce programme par défaut </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"></location>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="271"></location>
         <source>Find Application Binary</source>
-        <translation>Rechcher les Applications binaires</translation>
+        <translation>Rechercher le Programme Exécutable</translation>
     </message>
 </context>
 <context>
@@ -145,48 +145,48 @@
         <location filename="../main.cpp" line="187"></location>
         <location filename="../main.cpp" line="193"></location>
         <source>Audio Volume %1%</source>
-        <translation>Volume audio %1%</translation>
+        <translation>Volume Audio %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="201"></location>
         <location filename="../main.cpp" line="210"></location>
         <source>Screen Brightness %1%</source>
-        <translation>Luminosité de l'écran %1%</translation>
+        <translation>Luminosité de l'Écran %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="242"></location>
         <source>Invalid file or URL: %1</source>
-        <translation>Fichier ou URL Invalide: %1</translation>
+        <translation>Fichier ou URL invalide : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="264"></location>
         <source>File could not be opened: %1</source>
-        <translation>Impossible d'ouvrir le fichier: %1</translation>
+        <translation>Impossible d'ouvrir le fichier : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"></location>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Information de lancement manquant (raccourci malformé): %1</translation>
+        <translation>Informations de lancement manquantes dans le raccourci du programme (raccourci invalide) : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="284"></location>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>Le raccourci URL est introuvable dans l'URL : %1</translation>
+        <translation>L'adresse est introuvable dans le raccourci URL : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"></location>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>Chemin vers le répertoire manquant dans le raccourci du répertoire: %1</translation>
+        <translation>Le chemin du dossier est vide dans le raccourci du dossier : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="300"></location>
         <source>Unknown type of shortcut : %1</source>
-        <translation>Type du raccourci inconnu: %1</translation>
+        <translation>Type du raccourci inconnu : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"></location>
         <source>Binary Missing</source>
-        <translation>Binaire Manquant</translation>
+        <translation>Exécutable Manquant</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"></location>
@@ -196,12 +196,12 @@
     <message>
         <location filename="../main.cpp" line="412"></location>
         <source>Application Error</source>
-        <translation>Erreur de l'application</translation>
+        <translation>Erreur du Programme</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"></location>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>L'application suivante a rencontré une erreur et doit être fermée:</translation>
+        <translation>Le programme suivant a provoqué une erreur et a dû être fermé :</translation>
     </message>
 </context>
 </TS>
