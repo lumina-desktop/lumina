@@ -24,6 +24,7 @@ StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
     searchTimer->setSingleShot(true);
   connect(searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()) );
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
+  connect(LSession::handle(), SIGNAL(FavoritesChanged()), this, SLOT(UpdateFavs()) );
   //Need to load the last used setting of the application list
   QString state = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/systemstart/showcategories", "partial").toString();
   if(state=="partial"){ui->check_apps_showcats->setCheckState(Qt::PartiallyChecked); }
@@ -128,7 +129,7 @@ void StartMenu::UpdateMenu(bool forceall){
   if(forceall){ UpdateAll(); }
   //Quick update routine before the menu is made visible
   //qDebug() << "update favs";
-  UpdateFavs();
+  //UpdateFavs();
   //qDebug() << "check page";
   if(ui->stackedWidget->currentWidget() != ui->page_main){
     ui->stackedWidget->setCurrentWidget(ui->page_main); //just show the main page

@@ -151,6 +151,7 @@ void LSession::setupSession(){
     watcherChange( confdir+"/desktopsettings.conf" );
     watcherChange( confdir+"/fluxbox-init" );
     watcherChange( confdir+"/fluxbox-keys" );
+    watcherChange( confdir+"/favorites.list" );
     //Try to watch the localized desktop folder too
     if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
     watcherChange( QDir::homePath()+"/Desktop" );
@@ -333,9 +334,13 @@ void LSession::watcherChange(QString changed){
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
-  }
+  }else if(changed.endsWith("favorites.list")){ emit FavoritesChanged(); }
   //Now ensure this file was not removed from the watcher
   if(!watcher->files().contains(changed) && !watcher->directories().contains(changed)){
+    if(!QFile::exists(changed)){
+      //Create the file really quick to ensure it can be watched
+      //TODO
+    }
     watcher->addPath(changed);
   }
 }
