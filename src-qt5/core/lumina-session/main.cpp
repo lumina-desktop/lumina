@@ -33,6 +33,7 @@ int main(int argc, char ** argv)
     //Start X11 if needed
     QString disp = QString(getenv("DISPLAY")).simplified();
     if(disp.isEmpty()){
+      qDebug() << "No X11 session detected: Lumina will try to start one...";
       //No X session found. Go ahead and re-init this binary within an xinit call
       QString prog = QString(argv[0]).section("/",-1);
       LUtils::isValidBinary(prog); //will adjust the path to be absolute
@@ -40,6 +41,7 @@ int main(int argc, char ** argv)
       //if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
       return QProcess::execute("xinit", args);
     }
+    qDebug() << "Starting the Lumina desktop on current X11 session:" << disp;
     //Setup any initialization values
     LTHEME::LoadCustomEnvSettings();
     LXDG::setEnvironmentVars();
@@ -52,8 +54,10 @@ int main(int argc, char ** argv)
 
     //Configure X11 monitors if needed
     if(LUtils::isValidBinary("lumina-xconfig")){ 
+      qDebug() << " - Resetting monitor configuration to last-used settings";
       QProcess::execute("lumina-xconfig --reset-monitors");
     }
+    qDebug() << " - Starting the session...";
     //Startup the session
     QCoreApplication a(argc, argv);
     LSession sess;
