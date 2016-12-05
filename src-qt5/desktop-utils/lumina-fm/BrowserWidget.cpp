@@ -29,7 +29,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   readDateFormat();
   freshload = true; //nothing loaded yet
   numItems = 0;
-
+  this->setMouseTracking(true);
 }
 
 BrowserWidget::~BrowserWidget(){
@@ -137,10 +137,9 @@ QStringList BrowserWidget::history(){
 }
 
 void BrowserWidget::setShowActive(bool show){
-  if(!show){ this->setStyleSheet("QAbstractScrollArea{ background-color: rgba(10,10,10,10); } QHeaderView{ background-color: lightgrey; }"); }
-  else{
-    this->setStyleSheet( "");
-  }
+  QString base = "";//"QListWidget::item,QTreeWidget::item{ border: 1px solid transparent; background-color: red; } QListWidget::item:hover,QTreeWidget::item:hover{ border: 1px solid black; background-color: blue; }";
+  if(!show){ base.prepend("QAbstractScrollArea{ background-color: rgba(10,10,10,10); } QHeaderView{ background-color: lightgrey; } "); }
+  this->setStyleSheet(base);
 }
 
 // This function is only called if user changes sessionsettings. By doing so, operations like sorting by date

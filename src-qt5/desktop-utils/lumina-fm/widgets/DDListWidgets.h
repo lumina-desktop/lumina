@@ -45,6 +45,7 @@ public:
 	  this->setWrapping(true);
 	  this->setMouseTracking(true);
 	  this->setSortingEnabled(true); //This sorts *only* by name - type is not preserved
+	  //this->setStyleSheet("QListWidget::item{ border: 1px solid transparent; border-radius: 5px; background-color: transparent;} QListWidget::item:hover{ border-color: black; } QListWidget::item:focus{ border-color: lightblue; }");
 	}
 	~DDListWidget(){}
 
@@ -85,7 +86,7 @@ protected:
 	    ev->acceptProposedAction(); //allow this to be dropped here
 	  }else{
 	    ev->ignore();
-	  }		  
+	  }
 	}
 	
 	void dragMoveEvent(QDragMoveEvent *ev){
@@ -93,12 +94,15 @@ protected:
 	    //Change the drop type depending on the data/dir
 	    QString home = QDir::homePath();
 	    //qDebug() << "Drag Move:" << home << this->whatsThis();
-	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); }
-	    else{ ev->setDropAction(Qt::CopyAction); }
+	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); this->setCursor(Qt::DragMoveCursor); }
+	    else{ ev->setDropAction(Qt::CopyAction); this->setCursor(Qt::DragCopyCursor);}
 	    ev->acceptProposedAction(); //allow this to be dropped here
+	    //this->setCursor(Qt::CrossCursor);
 	  }else{
+	    this->setCursor(Qt::ForbiddenCursor);
 	    ev->ignore();
 	  }
+	  this->update();
 	}
 	
 	void dropEvent(QDropEvent *ev){
@@ -127,6 +131,7 @@ protected:
 	  }
 	  //qDebug() << "Drop Event:" << dirpath << files;
 	  if(!files.isEmpty()){  emit DataDropped( dirpath, files ); }
+	  this->setCursor(Qt::ArrowCursor);
 	}
 	
 	void mouseReleaseEvent(QMouseEvent *ev){
