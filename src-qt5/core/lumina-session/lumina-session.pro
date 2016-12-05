@@ -1,6 +1,6 @@
 include($${PWD}/../../OS-detect.pri)
 
-QT       = core widgets
+QT       = core widgets x11extras
 
 
 TARGET = start-lumina-desktop
