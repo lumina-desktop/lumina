@@ -357,6 +357,8 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo info){
 
 void BrowserWidget::itemsLoading(int total){
   qDebug() << "Got number of items loading:" << total;
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   numItems = total; //save this for later
   if(total<1){
     emit updateDirectoryStatus( tr("No Directory Contents") );
