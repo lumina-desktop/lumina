@@ -30,7 +30,12 @@ private:
 	Ui::page_mouse *ui;
 	QList<LInputDevice*> devices;
 
+	void generateUI();
+	void populateDeviceTree(QTreeWidget *tree, LInputDevice *device);
+	void populateDeviceItemValue(QTreeWidget *tree, QTreeWidgetItem *it, QVariant value, QString id);
+
 private slots:
-	void accelChanged(int val);
+	void valueChanged();
+
 };
 #endif

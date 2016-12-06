@@ -10,4 +10,4 @@ HEADERS *= $${PWD}/LInputDevice.h
 INCLUDEPATH *= ${PWD}
 
 #include LUtils and LuminaOS
-#include(LUtils.pri)
+include(LUtils.pri)
