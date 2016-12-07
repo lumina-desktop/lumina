@@ -145,6 +145,7 @@ void TrayIcon::updateScreenMenu(){
     }
   }
   ScreenMenu->setVisible(!ScreenMenu->isEmpty());
+  ScreenMenu->setEnabled(!ScreenMenu->isEmpty());
 }
 
 void TrayIcon::TrayActivated(QSystemTrayIcon::ActivationReason reason){

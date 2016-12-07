@@ -471,6 +471,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){
   this->setFocus();
+  this->activateWindow();
   if(ev->button()==Qt::RightButton){
     QTextEdit::mousePressEvent(ev);	  
   }else if(ev->button()==Qt::MiddleButton){

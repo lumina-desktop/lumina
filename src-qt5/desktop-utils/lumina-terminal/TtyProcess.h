@@ -60,6 +60,7 @@ private:
 	int ttyfd;
 	QSocketNotifier *sn;
 	QByteArray fragBA; //fragment ByteArray
+	bool starting;
 	
 	//====================================
 	// C Library function for setting up the PTY

@@ -2,11 +2,13 @@
 
 #include <QDir>
 #include <QProcessEnvironment>
+#include <QTimer>
 
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
   sn = 0;
   ttyfd = 0;
+  starting = true;
 }
 
 TTYProcess::~TTYProcess(){
@@ -59,6 +61,12 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
 	connect(sn, SIGNAL(activated(int)), this, SLOT(checkStatus(int)) );
     ttyfd = FD;
     qDebug() << " - PTY:" << ptsname(FD);
+    //BUG BYPASS - 12/7/16
+    //If the PTY gets input fairly soon after starting, the PTY will re-print the initial line(s)
+    // So send the "newline" signal now to get things started
+    starting = true;
+    //writeTTY("\n"); //newline
+    //writeTTY(QByteArray("\x1b[2J") ); //clear display
     return true;
   }
 }
@@ -97,12 +105,21 @@ QByteArray TTYProcess::readTTY(){
   }
   bool bad = true;
   BA = CleanANSI(BA, bad);
-  if(bad){ 
+  if(bad){
     //incomplete fragent - read some more first
     fragBA = BA; 
     return readTTY();
   }else{
     //qDebug() << "Read Data:" << BA;
+    if(starting && !BA.contains("\n") ){
+      //qDebug() << "Starting phase 1:" << BA;
+       writeTTY("\n\b"); //newline + backspace
+      BA.clear();
+    }else if(starting){
+      //qDebug() << "Starting phase 2:" << BA;
+      BA.remove(0, BA.indexOf("\n")+1);
+      starting = false;
+    }
     return BA;
   }
 }

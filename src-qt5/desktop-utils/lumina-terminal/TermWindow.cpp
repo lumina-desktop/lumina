@@ -57,7 +57,7 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
   connect(closeS, SIGNAL(activated()), this, SLOT(CloseWindow()) );
   connect(prevTabS, SIGNAL(activated()), this, SLOT(Prev_Tab()) );
   connect(nextTabS, SIGNAL(activated()), this, SLOT(Next_Tab()) );
-  
+  connect(QApplication::instance(), SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(activeStatusChanged()) );
   //Now set the defaults
   screennum = 0; //default value
   setTopOfScreen(true); //default value
@@ -282,6 +282,14 @@ void TermWindow::AnimFinished(){
   animRunning = -1; //done
 }
  
+void TermWindow::activeStatusChanged(){
+  //Note: Qt 5.6.1 returns the opposite value for isActiveWindow() (12/7/16)
+ //qDebug() << "active status changed:" << this->isActiveWindow() << (this == QApplication::activeWindow());
+  if(animRunning>=0){ return; } //ignore this event - already changing
+  if(!this->isActiveWindow() && !this->isVisible()){ ShowWindow(); }
+  else if(this->isActiveWindow() && this->isVisible()){ HideWindow(); }
+}
+
 // ===================
 //        PROTECTED
 // ===================

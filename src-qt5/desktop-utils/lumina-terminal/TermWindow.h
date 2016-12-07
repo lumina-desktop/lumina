@@ -56,7 +56,9 @@ private slots:
 	void focusOnWidget();
 	//Animation finishing
 	void AnimFinished();
-	
+	//Window focus/active status changed
+	void activeStatusChanged();
+
 protected:
 	void mouseMoveEvent(QMouseEvent*);
 
