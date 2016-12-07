@@ -38,7 +38,7 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
   list << PageInfo("session-locale", QObject::tr("Localization"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
   list << PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
-  //list << PageInfo("mouse", QObject::tr("Input Device Settings"), QObject::tr("Input Device Settings"), "preferences-desktop-peripherals",QObject::tr("Adjust keyboard and mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse" << "keyboard");
+  list << PageInfo("input-devices", QObject::tr("Input Device Settings"), QObject::tr("Input Device Settings"), "preferences-desktop-peripherals",QObject::tr("Adjust keyboard and mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse" << "keyboard");
   //Now sort the items according to the translated name
   QStringList names;
   for(int i=0; i<list.length(); i++){ names << list[i].name; }
@@ -83,7 +83,7 @@ static PageWidget* GetNewPage(QString id, QWidget *parent){
   else if(id=="session-locale"){ page = new page_session_locale(parent); }
   else if(id=="session-options"){ page = new page_session_options(parent); }
   else if(id=="compton"){ page = new page_compton(parent); }
-  else if(id=="mouse"){ page = new page_mouse(parent); }
+  else if(id=="input-devices"){ page = new page_mouse(parent); }
   //Return the main control_panel page as the fallback/default
   if(page==0){ id.clear(); page = new page_main(parent); }
   page->setWhatsThis(id);

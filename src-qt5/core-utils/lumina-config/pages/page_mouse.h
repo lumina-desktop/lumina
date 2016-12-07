@@ -10,6 +10,7 @@
 #include "PageWidget.h"
 
 #include <LInputDevice.h>
+#include <QTreeWidgetItem>
 
 namespace Ui{
 	class page_mouse;
@@ -36,6 +37,7 @@ private:
 
 private slots:
 	void valueChanged();
+	void itemClicked(QTreeWidgetItem*, int);
 
 };
 #endif

@@ -75,6 +75,7 @@ void page_mouse::generateUI(){
       tree = new QTreeWidget(this);
       tree->setHeaderHidden(true);
       tree->setColumnCount(2);
+      connect(tree, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(itemClicked(QTreeWidgetItem*,int)) );
       if(devices[i]->isPointer()){ 
         int tab = ui->tabWidget->addTab(tree, LXDG::findIcon("input-mouse",""), QString(tr("Mouse #%1")).arg(QString::number(mouse)) ); 
         ui->tabWidget->setTabWhatsThis(tab, "mouse:"+QString::number(devices[i]->devNumber()));
@@ -110,6 +111,7 @@ void page_mouse::populateDeviceTree(QTreeWidget *tree, LInputDevice *device){
   //Now add all the child properties to this item
   QList<int> props = device->listProperties();
   for(int i=0; i<props.length(); i++){
+    if(device->propertyName(props[i]).toLower().contains("matrix")){ continue; } //skip this one - can not change from UI and most people will never want to anyway
     QTreeWidgetItem *tmp = new QTreeWidgetItem(top);
       tmp->setWhatsThis(0, QString::number(props[i]) );
       tmp->setText(0, device->propertyName(props[i]));
@@ -124,24 +126,27 @@ void page_mouse::populateDeviceTree(QTreeWidget *tree, LInputDevice *device){
 void page_mouse::populateDeviceItemValue(QTreeWidget *tree, QTreeWidgetItem *it, QVariant value, QString id){
   if(value.type()==QVariant::Int){
     //Could be a boolian - check the name for known "enable" states
-    if(it->text(0).toLower().contains("enable") || it->text(0).toLower().contains("emulation") ){
+    if(value.toInt() < 2 && (it->text(0).toLower().contains("enable") || it->text(0).toLower().contains("emulation") || it->text(0)==("XTEST Device") ) ){
       //Just use a checkable column within the item
       bool enabled = (value.toInt()==1);
       it->setText(1,"");
+      it->setWhatsThis(1, "bool:"+id);
       it->setCheckState(1, enabled ? Qt::Checked : Qt::Unchecked);
     }else{
       //Use a QSpinBox
       QSpinBox *box = new QSpinBox();
         box->setRange(0,100);
         box->setValue( value.toInt() );
+	box->setWhatsThis("int:"+id);
       tree->setItemWidget(it, 1, box);
       connect(box, SIGNAL(valueChanged(int)), this, SLOT(valueChanged()) );
     }
-  }else if(value.canConvert<double>()){
+  }else if(value.type()==QVariant::Double){
   //Use a QDoubleSpinBox
   QDoubleSpinBox *box = new QDoubleSpinBox();
-      box->setRange(0,100);
+      box->setRange(0,1000);
       box->setValue( value.toInt() );
+      box->setWhatsThis("double:"+id);
     tree->setItemWidget(it, 1, box);
     connect(box, SIGNAL(valueChanged(double)), this, SLOT(valueChanged()) );
 
@@ -151,6 +156,7 @@ void page_mouse::populateDeviceItemValue(QTreeWidget *tree, QTreeWidgetItem *it,
     QStringList txtList;
     for(int i=0; i<list.length(); i++){ txtList << list[i].toString(); }
     it->setText(1, txtList.join(", ") );
+    it->setToolTip(1, txtList.join(", "));
   }else if( value.canConvert<QString>() ){
     //Not Modifiable - just use the label in the item
     it->setText(1, value.toString());
@@ -160,24 +166,51 @@ void page_mouse::populateDeviceItemValue(QTreeWidget *tree, QTreeWidgetItem *it,
 //    PRIVATE SLOTS
 //=================
 void page_mouse::valueChanged(){
-  //WILL NOT WORK - the widgets within the tree item *do not* activate the item when clicked
-  //  - so the current item is NOT guaranteed to be the one which was modified
-  //Get the current Tab/TreeWidget
-  QTreeWidget *tree = static_cast<QTreeWidget*>(ui->tabWidget->widget( ui->tabWidget->currentIndex() ) );
-  if(tree==0){ return; }
-  //Now get the current item in the tree
-  QTreeWidgetItem *it = tree->currentItem();
-  if(it==0){ return; }
-  qDebug() << "Item Value Changed:" << it->text(0);
-  //Now read the value of the item and save that into the device
+  //Now get the currently focused widget
+   QWidget *foc = this->focusWidget();
+   if(foc==0){ return; }
+  //qDebug() << "Focus Widget:" << foc->whatsThis();
+  //Now pull out the value and device/property numbers
+  unsigned int dev = foc->whatsThis().section(":",1,1).toInt();
+  int prop = foc->whatsThis().section(":",2,2).toInt();
   QVariant value;
-  if(tree->itemWidget(it, 1)!=0){
-    //Got Item Widget
-    
-  }else if(it->text(1)==""){
-    //Checkbox
-    value = QVariant( (it->checkState(1)==Qt::Checked) ? 1 : 0 );
+  if(foc->whatsThis().startsWith("int:")){ value.setValue( static_cast<QSpinBox*>(foc)->value() ); }
+  else if(foc->whatsThis().startsWith("double:")){ value.setValue( static_cast<QDoubleSpinBox*>(foc)->value() ); }
+  //Now change the property for the device
+  qDebug() << " - Device:" <<dev << "prop:" << prop << "value:" << value;
+  for(int i=0; i<devices.length(); i++){
+    if(devices[i]->devNumber() == dev){
+      bool ok = devices[i]->setPropertyValue(prop, value);
+      if(ok){ foc->setStyleSheet(""); }
+      else{ foc->setStyleSheet("background: red"); }
+      //qDebug() << " - Changed property:" << (ok ? "success" : "failure");
+      break;
+    }
   }
+}
 
-
+void page_mouse::itemClicked(QTreeWidgetItem *it, int col){
+  if(col!=1){ return; } //only care about value changes
+  if(it->whatsThis(1).isEmpty()){ return; }//not a checkable item
+  qDebug() << "item Clicked:" << it->whatsThis(1) << it->text(0);
+  //Now pull out the value and device/property numbers
+  unsigned int dev = it->whatsThis(1).section(":",1,1).toInt();
+  int prop = it->whatsThis(1).section(":",2,2).toInt();
+  QVariant value( (it->checkState(1)==Qt::Checked) ? 1 : 0 );
+ //Now change the property for the device
+  qDebug() << " - Device:" <<dev << "prop:" << prop << "value:" << value;
+  for(int i=0; i<devices.length(); i++){
+    if(devices[i]->devNumber() == dev){
+      //Since this "clicked" signal can get sent out even if the value has not changed, go ahead and make sure we have a different value first
+      QVariant current = devices[i]->getPropertyValue(prop);
+      //qDebug() << " - Current Value:" << current;
+      if(value.toInt()!=current.toInt()){
+        bool ok = devices[i]->setPropertyValue(prop, value);
+        //if(ok){ foc->setStyleSheet(""); }
+        //else{ foc->setStyleSheet("background: red"); }
+        qDebug() << " - Changed property:" << (ok ? "success" : "failure");
+      }
+      break;
+    }
+  }
 }
