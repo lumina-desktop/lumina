@@ -70,7 +70,8 @@ void page_mouse::generateUI(){
   qDebug() << "Devices Found:" << devices.length();
   for(int i=0; i<devices.length(); i++){
     QTreeWidget *tree = 0;
-    if(!devices[i]->isExtension()){
+    if(!devices[i]->isExtension() || devices[i]->isPointer()){
+      if(devices[i]->isPointer() && devices[i]->listProperties().count() <4){ continue; } //filter out all the trivial/static mouse devices
       //Make a new tab for this device
       tree = new QTreeWidget(this);
       tree->setHeaderHidden(true);
