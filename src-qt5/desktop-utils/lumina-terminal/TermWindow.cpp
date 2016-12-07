@@ -286,8 +286,9 @@ void TermWindow::activeStatusChanged(){
   //Note: Qt 5.6.1 returns the opposite value for isActiveWindow() (12/7/16)
  //qDebug() << "active status changed:" << this->isActiveWindow() << (this == QApplication::activeWindow());
   if(animRunning>=0){ return; } //ignore this event - already changing
-  if(!this->isActiveWindow() && !this->isVisible()){ ShowWindow(); }
-  else if(this->isActiveWindow() && this->isVisible()){ HideWindow(); }
+  //if(!this->isActiveWindow() && !this->isVisible()){ ShowWindow(); }
+  //else if(this->isActiveWindow() this->isVisible()){ HideWindow(); }
+  //ReShowWindow();
 }
 
 // ===================
