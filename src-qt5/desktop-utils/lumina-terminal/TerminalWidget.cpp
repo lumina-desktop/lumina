@@ -120,10 +120,6 @@ void TerminalWidget::applyData(QByteArray data){
       i+=end; //move the final loop along - already handled these bytes
       
     }else if( data.at(i) != '\r' ){
-      //Special Check: if inserting text within a line, clear the rest of this line first
-      /*if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
-        applyANSI("[K");
-      }*/
       chars.append(data.at(i));
       //Plaintext character - just add it here
       //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
@@ -136,7 +132,7 @@ void TerminalWidget::applyData(QByteArray data){
 
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
-  qDebug() << "Handle ANSI:" << code;
+  //qDebug() << "Handle ANSI:" << code;
   if(code.length()==1){
     //KEYPAD MODES
     if(code.at(0)=='='){ altkeypad = true; }
@@ -419,7 +415,7 @@ void TerminalWidget::sendKeyPress(int key){
 	ba.append("\x1b[F");
         break;	    
   }
-   qDebug() << "Forward Input:" << ba;
+   //qDebug() << "Forward Input:" << ba;
   if(!ba.isEmpty()){ PROC->writeTTY(ba); }
 }
 
@@ -467,7 +463,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
       sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)
     }
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
-    qDebug() << "Forward Input:" << ba;
+    //qDebug() << "Forward Input:" << ba;
     PROC->writeTTY(ba);
   }
   

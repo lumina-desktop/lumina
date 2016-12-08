@@ -4,6 +4,8 @@
 #include <QProcessEnvironment>
 #include <QTimer>
 
+#define DEBUG 0
+
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
   sn = 0;
@@ -21,9 +23,9 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  setenv("TERM","vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
+  setenv("TERM","xterm",1); //"vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
   unsetenv("TERMCAP");
-  //setenv("TERMCAP","vt102-color",1);
+  setenv("TERMCAP","vt220-color",1);
   /*setenv("TERMCAP",":do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
 	:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
 	:ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m:\
@@ -60,12 +62,14 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
       cargs[i] = NULL;
     }
   }
-  qDebug() << "PTY Start:" << prog;
+  if(DEBUG){ qDebug() << "PTY Start:" << prog; }
   //Launch the process attached to a new PTY
   int FD = 0;
   pid_t tmp = LaunchProcess(FD, cprog, cargs);
-  qDebug() << " - PID:" << tmp;
-  qDebug() << " - FD:" << FD;
+  if(DEBUG){ 
+    qDebug() << " - PID:" << tmp; 
+    qDebug() << " - FD:" << FD; 
+  }
   if(tmp<0){ return false; } //error
   else{
     childProc = tmp;
@@ -76,7 +80,7 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
 	sn->setEnabled(true);
 	connect(sn, SIGNAL(activated(int)), this, SLOT(checkStatus(int)) );
     ttyfd = FD;
-    qDebug() << " - PTY:" << ptsname(FD);
+   if(DEBUG){ qDebug() << " - PTY:" << ptsname(FD); }
     starting = true;
     return true;
   }
@@ -98,7 +102,7 @@ void TTYProcess::closeTTY(){
 void TTYProcess::writeTTY(QByteArray output){
   //qDebug() << "Write:" << output;
   static QList<QByteArray> knownFixes;
-  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b"; }
+  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b" << "\x7F" << "\x08"; }
   fixReply = knownFixes.indexOf(output);
   ::write(ttyfd, output.data(), output.size());
 }
@@ -124,7 +128,7 @@ QByteArray TTYProcess::readTTY(){
     fragBA = BA; 
     return readTTY();
   }else{
-    qDebug() << "Read Data:" << BA;
+    if(DEBUG){ qDebug() << "Read Data:" << BA; }
     //BUG BYPASS - 12/7/16
     //If the PTY gets input fairly soon after starting, the PTY will re-print the initial line(s)
     if(starting && !BA.contains("\n") ){
@@ -136,9 +140,11 @@ QByteArray TTYProcess::readTTY(){
       BA.remove(0, BA.indexOf("\n")+1);
       starting = false;
     }
-    //Apply known fixes for replies to particular inputs (mostly related to cursor position *within* the current line
+    //Apply known fixes for replies to particular inputs (mostly related to cursor position *within* the current line)
+    // This appears to be primarily from the concept that the cursor position is always at the end of the line (old VT limitation?)
+    //  so almost all these fixes are for cursor positioning within the current line
     if(fixReply >= 0){
-      qDebug() << "Fix Reply:" <<fixReply <<  BA;
+      if(DEBUG){ qDebug() << "Fix Reply:" <<fixReply <<  BA; }
       switch(fixReply){
 	case 0: //Right arrow ("\x1b[C") - PTY reply re-prints the next character rather than moving the cursor
           if(BA.length()>0){
@@ -152,7 +158,9 @@ QByteArray TTYProcess::readTTY(){
             BA.prepend("\x1b[D"); //just move the cursor - don't send the "back" character (\b)
           }
 	  break;
-	case 2: //Backspace ("\b") - PTY works fine if on the end of the line, but when in the middle of a line it will backpace a number of times after clearing (same as left arrow issue)
+	case 2: //Backspace or delete - PTY works fine if on the end of the line, but when in the middle of a line it will backpace a number of times after clearing (same as left arrow issue)
+        case 3:
+	case 4:
           if(BA.contains("\x1b[K")){
 	    while(BA.indexOf("\x1b[K") < BA.lastIndexOf("\b") ){
               BA.replace( BA.lastIndexOf("\b"), 1, "\x1b[D"); //just move the cursor left - don't send the "back" character (\b)
@@ -161,7 +169,7 @@ QByteArray TTYProcess::readTTY(){
 	  break;
       }
       fixReply = -1; //done with the fix - resume normal operations
-      //qDebug() << " - Fixed:" << BA;
+      if(DEBUG){ qDebug() << " - Fixed:" << BA; }
     }
     return BA;
   }
