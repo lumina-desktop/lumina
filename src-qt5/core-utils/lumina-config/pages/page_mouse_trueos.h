@@ -36,7 +36,6 @@ public:
     QStringList mousedargs;
     QString deviceString;
 
-
 public slots:
 	void SaveSettings();
 	void LoadSettings(int screennum);
@@ -48,16 +47,7 @@ public slots:
     void terminateDrift();
     void updateMoused();
 
-
-
-
 private:
     Ui::page_mouse_trueos *ui;
-//	QList<LInputDevice*> devices;
-
-
-private slots:
-
-
 };
 #endif
