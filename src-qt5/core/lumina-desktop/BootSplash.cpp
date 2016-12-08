@@ -16,8 +16,8 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
 }
 
 void BootSplash::generateTipOfTheDay(){
-  int index = qrand()%5; //Make sure this number matches the length of the case below (max value +1)
-  QString tip = "This desktop is generously sponsored by iXsystems\nwww.ixsystems.com"; //fallback message (just in case)
+  int index = qrand()%7; //Make sure this number matches the length of the case below (max value +1)
+  QString tip;
   switch(index){
     case 0:
 	tip = tr("This desktop is powered by coffee, coffee, and more coffee."); break;
@@ -30,11 +30,11 @@ void BootSplash::generateTipOfTheDay(){
     case 4:
 	tip = tr("Lumina can easily reproduce the interface from most other desktop environments."); break;
     case 5:
-	tip = tr(""); break;
+	tip = tr("This desktop is generously sponsored by iXsystems")+"\n\nwww.ixsystems.com"; break;
     case 6:
-	tip = tr(""); break;
+	tip = "\""+tr("I have never been hurt by what I have not said")+"\"\n\n- Calvin Coolidge -"; break;
   }
-  ui->label_welcome->setText( "\""+tip+"\"" );
+  ui->label_welcome->setText( tip);
 }
 
 void BootSplash::showScreen(QString loading){ //update icon, text, and progress
