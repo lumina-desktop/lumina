@@ -13,14 +13,14 @@
 #include <QTreeWidgetItem>
 
 namespace Ui{
-	class page_mouse;
+    class page_mouse;
 };
 
 class page_mouse : public PageWidget{
 	Q_OBJECT
 public:
-	page_mouse(QWidget *parent);
-	~page_mouse();
+    page_mouse(QWidget *parent);
+    ~page_mouse();
 
 public slots:
 	void SaveSettings();
@@ -28,7 +28,7 @@ public slots:
 	void updateIcons();
 
 private:
-	Ui::page_mouse *ui;
+    Ui::page_mouse *ui;
 	QList<LInputDevice*> devices;
 
 	void generateUI();
