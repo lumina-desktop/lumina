@@ -98,7 +98,7 @@ void TTYProcess::closeTTY(){
 void TTYProcess::writeTTY(QByteArray output){
   //qDebug() << "Write:" << output;
   static QList<QByteArray> knownFixes;
-  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D"; }
+  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b"; }
   fixReply = knownFixes.indexOf(output);
   ::write(ttyfd, output.data(), output.size());
 }
@@ -136,20 +136,27 @@ QByteArray TTYProcess::readTTY(){
       BA.remove(0, BA.indexOf("\n")+1);
       starting = false;
     }
-    //Apply known fixes for replies to particular inputs
+    //Apply known fixes for replies to particular inputs (mostly related to cursor position *within* the current line
     if(fixReply >= 0){
       qDebug() << "Fix Reply:" <<fixReply <<  BA;
       switch(fixReply){
-	case 0: //Right arrow ("\x1b[C") - PTY reply clears the screen after printing only the first char (not everything)
+	case 0: //Right arrow ("\x1b[C") - PTY reply re-prints the next character rather than moving the cursor
           if(BA.length()>0){
             BA.remove(0,1);
             BA.prepend("\x1b[C"); //just move the cursor - don't re-print that 1 character
           }
 	  break;
-	case 1: //Right arrow ("\x1b[D") - PTY reply clears the screen after printing only the first char (not everything)
+	case 1: //Left arrow ("\x1b[D") - PTY erases the previous character instead of moving the cursor
           if(BA.startsWith("\b")){
             BA.remove(0,1);
             BA.prepend("\x1b[D"); //just move the cursor - don't send the "back" character (\b)
+          }
+	  break;
+	case 2: //Backspace ("\b") - PTY works fine if on the end of the line, but when in the middle of a line it will backpace a number of times after clearing (same as left arrow issue)
+          if(BA.contains("\x1b[K")){
+	    while(BA.indexOf("\x1b[K") < BA.lastIndexOf("\b") ){
+              BA.replace( BA.lastIndexOf("\b"), 1, "\x1b[D"); //just move the cursor left - don't send the "back" character (\b)
+            }
           }
 	  break;
       }
