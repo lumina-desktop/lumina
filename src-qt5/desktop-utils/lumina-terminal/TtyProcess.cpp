@@ -23,9 +23,10 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  setenv("TERM","xterm",1); //"vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
-  unsetenv("TERMCAP");
-  setenv("TERMCAP","vt220-color",1);
+  setenv("TERM","vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
+  //unsetenv("TERM");
+  //unsetenv("TERMCAP");
+  setenv("TERMCAP","xterm",1);
   /*setenv("TERMCAP",":do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
 	:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
 	:ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m:\
@@ -241,7 +242,22 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[/Z");
   }
-    
+//Terminal Status request
+  index = raw.indexOf("\x1b[5n");
+  while(index>=0){ 
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x1b[5n");
+    //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[c"); //everything ok
+   }
+//Terminal Identify request
+  index = raw.indexOf("\x1b[c");
+  while(index>=0){ 
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x1b[?1;7c");
+    //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[/Z");
+  }
   incomplete = false;
   return raw;
 }

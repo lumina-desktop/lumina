@@ -23,6 +23,7 @@ public:
 	TerminalWidget(QWidget *parent =0, QString dir="");
 	~TerminalWidget();
 
+	void setTerminalFont(QFont);
 	void aboutToClose();
 
 private:
