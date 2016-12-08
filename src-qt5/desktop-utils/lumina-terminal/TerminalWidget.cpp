@@ -93,10 +93,15 @@ void TerminalWidget::applyData(QByteArray data){
   //qDebug() << "Data:" << data;
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
-      //Flush current text buffer to widget
-      //Simple cursor backward 1 (NOT backspace in this context!! - this widget should be in "insert" mode instead)
-      InsertText(chars); chars.clear(); 
-      this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
+      //Backspace
+      if(!chars.isEmpty()){ chars.chop(1); }
+      else{ 
+        QTextCursor cur = this->textCursor();
+	  cur.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
+	  cur.removeSelectedText();
+        this->setTextCursor(cur);
+      }
+
     //}else if( data.at(i)=='\t' ){
        //chars.append("  ");
     }else if( data.at(i)=='\x1B' ){
@@ -116,9 +121,9 @@ void TerminalWidget::applyData(QByteArray data){
       
     }else if( data.at(i) != '\r' ){
       //Special Check: if inserting text within a line, clear the rest of this line first
-      if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
+      /*if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
         applyANSI("[K");
-      }
+      }*/
       chars.append(data.at(i));
       //Plaintext character - just add it here
       //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
@@ -462,7 +467,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
       sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)
     }
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
-    //qDebug() << "Forward Input:" << ba;
+    qDebug() << "Forward Input:" << ba;
     PROC->writeTTY(ba);
   }
   

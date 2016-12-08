@@ -61,6 +61,7 @@ private:
 	QSocketNotifier *sn;
 	QByteArray fragBA; //fragment ByteArray
 	bool starting;
+	int fixReply; //flag for detecting particular inputs and "fixing" the reply to it as needed
 	
 	//====================================
 	// C Library function for setting up the PTY
