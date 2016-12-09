@@ -17,7 +17,8 @@ RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
 		xbrightness:x11/xbrightness \
 		compton:x11-wm/compton \
 		xrandr:x11/xrandr \
-		numlockx:x11/numlockx
+		numlockx:x11/numlockx \
+		xinput:x11/xinput
 LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 		libxcb-icccm.so:x11/xcb-util-wm \
 		libxcb-image.so:x11/xcb-util-image \
