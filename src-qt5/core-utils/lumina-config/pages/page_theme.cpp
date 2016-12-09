@@ -117,7 +117,7 @@ ui->combo_session_themefile->clear();
     index = ui->combo_qt5_theme->findData("internal_custom");
   }
   if(index>=0){ ui->combo_qt5_theme->setCurrentIndex(index); }
-
+  checkQt5Theme(); //update item visibility
   QApplication::processEvents();
   loading = false;
 }
