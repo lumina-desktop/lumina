@@ -16,8 +16,24 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
 }
 
 void BootSplash::generateTipOfTheDay(){
-  int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
+  //Try to find a system-defined message of the day for lumina
+  QStringList dirs; dirs << LOS::AppPrefix()+"/etc/" << LOS::SysPrefix()+"/etc/" << L_ETCDIR+"/";
+  QString sysMOTD = "lumina-motd";
+  for(int i=0; i<dirs.length(); i++){
+    if(QFile::exists(dirs[i]+sysMOTD)){ sysMOTD.prepend(dirs[i]); break; }
+  }
+
   QString tip;
+  if(sysMOTD.contains("/") && LUtils::isValidBinary(sysMOTD)){
+    //is binary - run it to generate text
+    tip = LUtils::getCmdOutput(sysMOTD).join("\n");
+
+  }else if(QFile::exists(sysMOTD)){
+    //text file - read it to generate text
+    tip = LUtils::readFile(sysMOTD).join("\n");
+
+  }else{
+    int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
   switch(index){
     case 0:
 	tip = tr("This desktop is powered by coffee, coffee, and more coffee."); break;
@@ -111,7 +127,9 @@ void BootSplash::generateTipOfTheDay(){
 	tip = "\""+tr("The truth is more important than the facts.")+"\"\n\n- Frank Lloyd Wright -"; break;
     case 45:
 	tip = "\""+tr("Better to remain silent and be thought a fool than to speak out and remove all doubt.")+"\"\n\n- Abraham Lincoln -"; break;
-  }
+  } //end of switch for tips
+
+  } //end of fallback tip generation
   ui->label_welcome->setText( tip);
 }
 
