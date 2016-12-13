@@ -50,7 +50,7 @@ void page_mouse::SaveSettings(){
 
 void page_mouse::LoadSettings(int){
   emit HasPendingChanges(false);
-  emit ChangePageTitle( tr("Mouse Settings") );
+  emit ChangePageTitle( tr("Input Device Settings") );
 
 }
 
