@@ -14,7 +14,8 @@ HEADERS	+= 	$${PWD}/getPage.h \
 		$${PWD}/page_session_locale.h \
 		$${PWD}/page_session_options.h \
 		$${PWD}/page_compton.h \
-		$${PWD}/page_mouse.h
+		$${PWD}/page_mouse.h 
+//		$$PWD/page_mouse_trueos.h
 
 
 SOURCES	+=	$${PWD}/page_main.cpp \
@@ -30,7 +31,8 @@ SOURCES	+=	$${PWD}/page_main.cpp \
 		$${PWD}/page_session_locale.cpp \
 		$${PWD}/page_session_options.cpp \
 		$${PWD}/page_compton.cpp \
-		$${PWD}/page_mouse.cpp
+		$${PWD}/page_mouse.cpp 
+//		$$PWD/page_mouse_trueos.cpp
 
 		
 FORMS	+=	$${PWD}/page_main.ui \
@@ -47,3 +49,4 @@ FORMS	+=	$${PWD}/page_main.ui \
 		$${PWD}/page_session_options.ui \
 		$${PWD}/page_compton.ui \
 		$${PWD}/page_mouse.ui
+//		$$PWD/page_mouse_trueos.ui
