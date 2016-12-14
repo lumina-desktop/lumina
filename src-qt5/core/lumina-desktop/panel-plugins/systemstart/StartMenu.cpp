@@ -24,6 +24,7 @@ StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
     searchTimer->setSingleShot(true);
   connect(searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()) );
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateApps()) );
+  connect(LSession::handle(), SIGNAL(FavoritesChanged()), this, SLOT(UpdateFavs()) );
   //Need to load the last used setting of the application list
   QString state = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/systemstart/showcategories", "partial").toString();
   if(state=="partial"){ui->check_apps_showcats->setCheckState(Qt::PartiallyChecked); }
@@ -128,7 +129,7 @@ void StartMenu::UpdateMenu(bool forceall){
   if(forceall){ UpdateAll(); }
   //Quick update routine before the menu is made visible
   //qDebug() << "update favs";
-  UpdateFavs();
+  //UpdateFavs();
   //qDebug() << "check page";
   if(ui->stackedWidget->currentWidget() != ui->page_main){
     ui->stackedWidget->setCurrentWidget(ui->page_main); //just show the main page
@@ -411,7 +412,7 @@ void StartMenu::UpdateApps(){
 
 void StartMenu::UpdateFavs(){
   //SYNTAX NOTE: (per-line) "<name>::::[dir/app/<mimetype>]::::<path>"
-  QStringList newfavs = LUtils::listFavorites();
+  QStringList newfavs = LDesktopUtils::listFavorites();
   if(favs == newfavs){ return; } //nothing to do - same as before
   favs = newfavs;
   ClearScrollArea(ui->scroll_favs);
@@ -488,11 +489,10 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
       //Battery available - update the status button
       int charge = LOS::batteryCharge();
       QString TT, ICON;
-      if(charge < 10){ ICON="-low"; }
-      else if(charge<20){ ICON="-caution"; }
-      else if(charge<40){ ICON="-040"; }
-      else if(charge<60){ ICON="-060"; }
-      else if(charge<80){ ICON="-080"; }
+      if(charge<=5){ ICON="-caution"; }
+      else if(charge<=20){ ICON="-040"; }
+      else if(charge<=70){ ICON="-060"; }
+      else if(charge<=90){ ICON="-080"; }
       else{ ICON="-100"; }
       if(LOS::batteryIsCharging()){
 	if(charge>=80){ ICON.clear(); } //for charging, there is no suffix to the icon name over 80%

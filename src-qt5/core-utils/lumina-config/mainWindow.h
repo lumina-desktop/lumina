@@ -19,7 +19,7 @@ public:
 	~mainWindow();
 
 public slots:
-	void slotSingleInstance();
+	void slotSingleInstance(QStringList args);
 	void setupIcons();
 	void loadMonitors();
 

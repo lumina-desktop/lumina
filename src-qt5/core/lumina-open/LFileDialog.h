@@ -22,7 +22,7 @@
 #include <QAction>
 
 #include <LuminaXDG.h> //From libLuminaUtils
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 namespace Ui{
 	class LFileDialog;

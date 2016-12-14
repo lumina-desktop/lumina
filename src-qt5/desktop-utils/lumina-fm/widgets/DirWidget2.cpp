@@ -19,11 +19,11 @@
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include "../ScrollDialog.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
@@ -87,7 +87,7 @@ void DirWidget::cleanup(){
 void DirWidget::ChangeDir(QString dirpath){
   //stopload = true; //just in case it is still loading
   //emit LoadDirectory(ID, dirpath);
-  qDebug() << "ChangeDir:" << dirpath;
+  //qDebug() << "ChangeDir:" << dirpath;
   currentBrowser()->changeDirectory(dirpath);
 }
 
@@ -100,7 +100,7 @@ QString DirWidget::id(){
 }
 
 QString DirWidget::currentDir(){
-  return currentBrowser()->currentDirectory();	
+  return currentBrowser()->currentDirectory();
 }
 
 void DirWidget::setShowDetails(bool show){
@@ -126,7 +126,7 @@ void DirWidget::setThumbnailSize(int px){
 
 void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   //Save these value internally for use later
-  qDebug() << "ZFS Snapshots available:" << basedir << snaps;
+  //qDebug() << "ZFS Snapshots available:" << basedir << snaps;
   snapbasedir = basedir;
   snapshots = snaps;
   //if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
@@ -387,7 +387,7 @@ void DirWidget::dir_changed(){
   QString dir = line_dir->text().simplified();
   //Run the dir through the user-input checks
   dir = LUtils::PathToAbsolute(dir);
-  //qDebug() << "Dir:" << dir;
+  //qDebug() << "Dir Changed:" << dir;
   //Quick check to ensure the directory exists
   while(!QFile::exists(dir) && !dir.isEmpty()){
     dir = dir.section("/",0,-2); //back up one additional dir
@@ -477,7 +477,7 @@ void DirWidget::OpenContextMenu(){
 
 void DirWidget::UpdateContextMenu(){
   //First generate the context menu based on the selection
-  qDebug() << "Update context menu";
+  //qDebug() << "Update context menu";
   QStringList sel = currentBrowser()->currentSelection();
   contextMenu->clear();
 
@@ -504,15 +504,18 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
   QFileInfo info(cur);
   canmodify = info.isWritable();
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }
-  else{ ui->label_status->setText(tr("Loading...")); }
+  else if( !currentBrowser()->isEnabled() ){ ui->label_status->setText(tr("Loading...")); }
   //qDebug() << "Start search for snapshots";
-  if(!cur.contains("/.zfs/snapshot")){ 
+  if(!cur.contains("/.zfs/snapshot") ){ 
     normalbasedir = cur;
     ui->group_snaps->setVisible(false);
     emit findSnaps(ID, cur); 
+    qDebug() << "Changed to directory:" << cur;
   }else{
     //Re-assemble the normalbasedir variable (in case moving around within a snapshot)
-    normalbasedir = cur.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
+    normalbasedir = cur;
+    normalbasedir.replace( QRegExp("\\/\\.zfs\\/snapshot/([^/]+)\\/"), "/" );
+    qDebug() << "Changed to snapshot:" << cur << normalbasedir;
   }
   ui->actionBack->setEnabled( currentBrowser()->history().length()>1 );
   line_dir->setText(normalbasedir);
@@ -525,6 +528,7 @@ void DirWidget::dirStatusChanged(QString stat){
 }
 
 void DirWidget::setCurrentBrowser(QString id){
+  //qDebug() << "Set Current Browser:" << id;
   if(id==cBID){ return; } //no change
   cBID = id;
   currentDirectoryChanged(true); //update all the averarching widget elements (widget only)
@@ -545,7 +549,7 @@ void DirWidget::createNewFile(){
         &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || newdocument.isEmpty()){ return; }	
   //Create the empty file
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   //verify the new file does not already exist
   if(QFile::exists(full+newdocument)){
@@ -570,7 +574,7 @@ void DirWidget::createNewDir(){
 		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || newdir.isEmpty()){ return; }
   //Now create the new dir
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   QDir dir(full); //open the current dir
   full.append(newdir); //append the new name to the current dir
@@ -594,7 +598,7 @@ void DirWidget::createNewXDGEntry(){
   if(!ok || newdocument.isEmpty()){ return; }	
   if(!newdocument.endsWith(".desktop")){ newdocument.append(".desktop"); }
   //Create the empty file
-  QString full = BW->currentDirectory();
+  QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
   //Verify the file does not already exist
   if(QFile::exists(full+newdocument)){

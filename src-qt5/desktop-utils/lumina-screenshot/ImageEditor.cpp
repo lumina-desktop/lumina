@@ -27,6 +27,7 @@ void ImageEditor::LoadImage(QImage img){
   this->update(); //trigger paint event
   selRect = QRect();
   emit selectionChanged(false);
+  emit scaleFactorChanged(getScaleFactor()*100);
 }
 
 void ImageEditor::setDefaultSize(QSize sz){
@@ -53,24 +54,37 @@ QImage ImageEditor::image(){
   return fullIMG;
 }
 
+int ImageEditor::getScalingValue(){
+  return (getScaleFactor() *100);
+}
+
 // === PRIVATE SLOTS ===
 void ImageEditor::showMenu(){
   contextMenu->popup(QCursor::pos());
 }
 
 // === PUBLIC SLOTS ===
+void ImageEditor::setScaling(int perc){
+  qreal sf = ((qreal) perc)/100.0;
+  if(sf<0.05){ sf = 0.05; } //5% minimum
+  else if(sf>2){ sf = 2.0; } //200% maximum
+  rescaleImage(sf);
+}
+
 void ImageEditor::scaleUp(int val){
   qreal sf = getScaleFactor();
   sf+= ((qreal) val)/100.0;
   if(sf>2){ sf = 2.0; }
   rescaleImage(sf);
+  emit scaleFactorChanged(sf*100);
 }
 
 void ImageEditor::scaleDown(int val){
   qreal sf = getScaleFactor();
   sf-= ((qreal) val)/100.0;
-  if(sf<0.1){ sf = 0.1; }
+  if(sf<0.05){ sf = 0.05; }
   rescaleImage(sf);
+  emit scaleFactorChanged(sf*100);
 }
 
 void ImageEditor::cropImage(){
@@ -81,6 +95,7 @@ void ImageEditor::cropImage(){
   scaledIMG = fullIMG.scaled( defaultSize, Qt::KeepAspectRatio,Qt::SmoothTransformation);
   selRect = QRect();
   emit selectionChanged(false);
+  emit scaleFactorChanged(getScaleFactor()*100);
   this->update(); //trigger paint event
 }
 
@@ -94,28 +109,34 @@ void ImageEditor::resizeImage(){
 void ImageEditor::mousePressEvent(QMouseEvent *ev){
   selRect = QRect(); //reset it
   emit selectionChanged(false);
-  selPoint = ev->pos(); //widget-relative coords
+  if(scaledIMG.rect().contains(ev->pos())){
+    selPoint = ev->pos(); //widget-relative coords
+  }else{
+    selPoint = QPoint();
+  }
 }
 
 void ImageEditor::mouseMoveEvent(QMouseEvent *ev){
-  if( !this->geometry().contains(ev->pos()) ){ selRect = QRect(); }
+  if( selPoint.isNull() ){ return; }
   else if(selPoint.x() < ev->pos().x()){
     if(selPoint.y() < ev->pos().y()){
       //init point is upper-left corner
-      selRect = QRect(selPoint, ev->pos());
+      selRect = QRect(selPoint, ev->pos()).intersected(scaledIMG.rect());
     }else{
       //init point is lower-left corner
       selRect.setBottomLeft(selPoint);
       selRect.setTopRight(ev->pos());
+      selRect = selRect.intersected(scaledIMG.rect());
     }
   }else{
     if(selPoint.y() < ev->pos().y()){
       //init point is upper-right corner
       selRect.setBottomLeft(ev->pos());
       selRect.setTopRight(selPoint);
+      selRect = selRect.intersected(scaledIMG.rect());
     }else{
       //init point is lower-right corner
-	selRect = QRect(ev->pos(), selPoint);
+	selRect = QRect(ev->pos(), selPoint).intersected(scaledIMG.rect());
     }
   }
   this->update();

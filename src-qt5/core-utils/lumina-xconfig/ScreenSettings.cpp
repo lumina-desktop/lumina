@@ -5,7 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "ScreenSettings.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <QDebug>
 #include <QSettings>
 

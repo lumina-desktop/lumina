@@ -17,7 +17,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->tool_configure->setVisible(false); //app search initially set
 	
   livetime = new QTimer(this);
-    livetime->setInterval(300); //1/3 second for live searches
+    livetime->setInterval(500); //1/2 second for live searches
     livetime->setSingleShot(true);
     
   workthread = new QThread(this);
@@ -56,6 +56,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
+  searcher->StopSearch();
   workthread->quit();
   workthread->wait();	
 }
@@ -189,6 +190,7 @@ void MainUI::foundSearchItem(QString path){
   }
   //Now add it to the widget
   ui->listWidget->addItem(it);
+  if(ui->listWidget->count()>100){ searcher->StopSearch(); } //just in case
 }
 
 void MainUI::stopSearch(){

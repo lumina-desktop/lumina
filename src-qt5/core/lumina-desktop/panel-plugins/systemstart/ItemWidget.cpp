@@ -5,7 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "ItemWidget.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <QMenu>
 #include "../../LSession.h"
 
@@ -73,7 +73,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
   icon->setWhatsThis(itemPath);
   if(!goback){ this->setWhatsThis(name->text()); }
   isDirectory = (type=="dir"); //save this for later
-  if(LUtils::isFavorite(itemPath)){
+  if(LDesktopUtils::isFavorite(itemPath)){
     linkPath = itemPath;
     isShortcut=true;
   }else if( inHome ){//|| itemPath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
@@ -93,7 +93,7 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
   createWidget();
   if(item==0){ gooditem = false; return; }
   isDirectory = false;
-  if(LUtils::isFavorite(item->filePath)){
+  if(LDesktopUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
     isShortcut=true;
   }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
@@ -177,7 +177,7 @@ void ItemWidget::setupContextMenu(){
     contextMenu->addAction( LXDG::findIcon("preferences-desktop-icons",""), tr("Pin to Desktop"), this, SLOT(PinToDesktop()) );
   }
   //Favorite Item
-  if( LUtils::isFavorite(icon->whatsThis()) ){ //Favorite Item - can always remove this
+  if( LDesktopUtils::isFavorite(icon->whatsThis()) ){ //Favorite Item - can always remove this
     contextMenu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove from Favorites"), this, SLOT(RemoveFavorite()) );
   }else{
     //This file does not have a shortcut yet -- allow the user to add it
@@ -242,13 +242,13 @@ void ItemWidget::PinToDesktop(){
 }
 
 void ItemWidget::RemoveFavorite(){
-  LUtils::removeFavorite(icon->whatsThis());
+  LDesktopUtils::removeFavorite(icon->whatsThis());
   linkPath.clear();
   emit RemovedShortcut();
 }
 
 void ItemWidget::AddFavorite(){
-  if( LUtils::addFavorite(icon->whatsThis()) ){
+  if( LDesktopUtils::addFavorite(icon->whatsThis()) ){
     linkPath = icon->whatsThis();
     emit NewShortcut();	
   }

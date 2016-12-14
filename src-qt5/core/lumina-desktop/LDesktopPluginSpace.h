@@ -33,7 +33,7 @@ signals:
 	void HideDesktopMenu();
 	
 public:
-	LDesktopPluginSpace(QWidget *parent = 0);
+	LDesktopPluginSpace();
 	~LDesktopPluginSpace();
 
 	void LoadItems(QStringList plugs, QStringList files);
@@ -42,6 +42,9 @@ public:
 	void ArrangeTopToBottom(bool ttb); //if false, will arrange left->right
 	void cleanup();
 
+	void setBackground(QPixmap pix); //should already be sized appropriately for this widget
+	void setDesktopArea(QRect area);
+
 public slots:
 	void UpdateGeom(int oldgrid = -1);
 
@@ -49,6 +52,8 @@ private:
 	QSettings *plugsettings;
 	QStringList plugins, deskitems;	
 	QList<LDPlugin*> ITEMS;
+	QPixmap wallpaper;
+	QRect desktopRect;
 	bool TopToBottom;
 	float GRIDSIZE;
 
@@ -88,7 +93,7 @@ private:
 	  //This function incorporates the bottom/right edge matchins procedures (for incomplete last grid)
 	  QRect geom(grid.x()*GRIDSIZE, grid.y()*GRIDSIZE, grid.width()*GRIDSIZE, grid.height()*GRIDSIZE);
 	  //Now check the edge conditions (last right/bottom grid points might be smaller than GRIDSIZE)
-	  QSize areaSize = this->size(); //use the size of the area instead of the geometry - because we need this in child coordinates like "geom" above
+	  QSize areaSize = desktopRect.size(); //use the size of the area instead of the geometry - because we need this in child coordinates like "geom" above
 	  //qDebug() << "GridToGeom:" << grid << geom << "Area size:" << areaSize;
 	  if(geom.right() > areaSize.width() && (geom.right()-areaSize.width())<GRIDSIZE ){
 	    geom.setRight(areaSize.width()-1); //match up with the edge
@@ -120,15 +125,15 @@ private:
 	  //qDebug() << "Check Valid Grid:" << grid << RoundUp(this->width()/GRIDSIZE) << RoundUp(this->height()/GRIDSIZE);
 	  //This just checks that the grid coordinates are not out of bounds - should still run ValidGeometry() below with the actual pixel geom
 	  if(grid.x()<0 || grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
-	  else if( (grid.x()+grid.width()) > RoundUp(this->width()/GRIDSIZE) ){ return false; }
-	  else if( (grid.y()+grid.height()) > RoundUp(this->height()/GRIDSIZE) ){ return false; }
+	  else if( (grid.x()+grid.width()) > RoundUp(desktopRect.width()/GRIDSIZE) ){ return false; }
+	  else if( (grid.y()+grid.height()) > RoundUp(desktopRect.height()/GRIDSIZE) ){ return false; }
 	  return true;
 	}
 	
 	bool ValidGeometry(QString id, QRect geom){
 	  //First check that it is within the desktop area completely
 	  // Note that "this->geometry()" is not in the same coordinate space as the geometry inputs
-	  if(!QRect(0,0,this->width(), this->height()).contains(geom)){ return false; }
+	  if(!QRect(0,0,desktopRect.width(), desktopRect.height()).contains(geom)){ return false; }
 	  //Now check that it does not collide with any other items
 	  for(int i=0; i<ITEMS.length(); i++){
 	    if(ITEMS[i]->whatsThis()==id){ continue; }
@@ -183,9 +188,12 @@ private slots:
 	}
 
 protected:
-	void paintEvent(QPaintEvent*){
-	  //do nothing here - the main plugin area should *always* be invisible
+	void focusInEvent(QFocusEvent *ev){
+	  this->lower(); //make sure we stay on the bottom of the window stack
+	  QWidget::focusInEvent(ev); //do normal handling
 	}
+	void paintEvent(QPaintEvent*ev);
+
 	//Need Drag and Drop functionality (internal movement)
 	void dragEnterEvent(QDragEnterEvent *ev){
 	  if(ev->mimeData()->hasFormat(MIMETYPE) ){

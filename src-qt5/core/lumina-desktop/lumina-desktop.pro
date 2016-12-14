@@ -4,15 +4,22 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
 
 
+
 TARGET = lumina-desktop
 target.path = $${L_BINDIR}
 
+#include all the special classes from the Lumina tree
+include(../libLumina/ResizeMenu.pri)
+include(../libLumina/LDesktopUtils.pri) #includes LUtils and LOS
+include(../libLumina/LuminaXDG.pri)
+include(../libLumina/LuminaX11.pri)
+include(../libLumina/LuminaSingleApplication.pri)
+include(../libLumina/LuminaThemes.pri)
 
-LIBS     += -lLuminaUtils -lxcb -lxcb-damage
-DEPENDPATH	+= ../libLumina
+#LIBS     += -lLuminaUtils -lxcb -lxcb-damage
+#DEPENDPATH	+= ../libLumina
 
 TEMPLATE = app
-
 
 SOURCES += main.cpp \
 	WMProcess.cpp \
@@ -53,6 +60,7 @@ HEADERS  += Globals.h \
 FORMS    += SystemWindow.ui \
 	BootSplash.ui 
 
+
 #Now include all the files for the various plugins
 include(panel-plugins/panel-plugins.pri)
 include(desktop-plugins/desktop-plugins.pri)
@@ -84,7 +92,8 @@ wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
 defaults.files = defaults/luminaDesktop.conf \
 		defaults/compton.conf \
 		audiofiles/Logout.ogg \
-		audiofiles/Login.ogg
+		audiofiles/Login.ogg \
+		audiofiles/low-battery.ogg
 defaults.path = $${L_SHAREDIR}/lumina-desktop/
 
 conf.path = $${L_ETCDIR}

@@ -9,6 +9,13 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+include(../../core/libLumina/LuminaX11.pri)
+
 SOURCES += main.cpp \
 		MainUI.cpp \
 		ImageEditor.cpp
@@ -17,10 +24,6 @@ HEADERS  += MainUI.h \
 			ImageEditor.h
 
 FORMS    += MainUI.ui
-
-LIBS     += -lLuminaUtils
-
-DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/l-screenshot_af.ts \
                 i18n/l-screenshot_ar.ts \

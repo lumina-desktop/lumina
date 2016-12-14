@@ -7,25 +7,33 @@
 #include "LDesktopBackground.h"
 
 #include <QPainter>
+#include <QPaintEvent>
+#include <QDebug>
 
-void LDesktopBackground::paintEvent(QPaintEvent *) {
+#include "LSession.h"
+
+void LDesktopBackground::paintEvent(QPaintEvent *ev) {
+  //return; //do nothing - always invisible
     if (bgPixmap != NULL) {
-        QPainter painter(this);
-        painter.setBrush(*bgPixmap);
-        painter.drawRect(0, 0, width(), height());
-    }
+        //qDebug() << "Wallpaper paint Event:" << ev->rect();
+        //QPainter painter(this);
+        //painter.setBrush(*bgPixmap);
+        //painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
+    }else{
+      QWidget::paintEvent(ev);
+   }
 }
 
-void LDesktopBackground::setBackground(const QString& bgFile, const QString& format) {
-    if (bgPixmap != NULL) delete bgPixmap;
-    bgPixmap = new QPixmap(size());
+QPixmap LDesktopBackground::setBackground(const QString& bgFile, const QString& format, QRect geom) {
+    //if (bgPixmap != NULL) delete bgPixmap;
+    QPixmap bgPixmap(geom.size());// = new QPixmap(size());
 
     if (bgFile.startsWith("rgb(")) {
         QStringList colors = bgFile.section(")",0,0).section("(",1,1).split(",");
         QColor color = QColor(colors[0].toInt(), colors[1].toInt(), colors[2].toInt());
-        bgPixmap->fill(color);
+        bgPixmap.fill(color);
     } else {
-        bgPixmap->fill(Qt::black);
+        bgPixmap.fill(Qt::black);
 
         // Load the background file and scale
         QPixmap bgImage(bgFile);
@@ -38,7 +46,7 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
             } else {
                 mode = Qt::KeepAspectRatio;
             }
-            if(bgImage.height() != this->height() && bgImage.width() != this->width() ){ bgImage = bgImage.scaled(size(), mode);  }
+            if(bgImage.height() != geom.height() && bgImage.width() != geom.width() ){ bgImage = bgImage.scaled(geom.size(), mode);  }
             //bgImage = bgImage.scaled(size(), mode);
         }
 
@@ -46,32 +54,35 @@ void LDesktopBackground::setBackground(const QString& bgFile, const QString& for
         int dx = 0, dy = 0;
         int drawWidth = bgImage.width(), drawHeight = bgImage.height();
         if (format == "fit" || format == "center" || format == "full") {
-            dx = (width() - bgImage.width()) / 2;
-            dy = (height() - bgImage.height()) / 2;
+            dx = (geom.width() - bgImage.width()) / 2;
+            dy = (geom.height() - bgImage.height()) / 2;
         } else if (format == "tile") {
-            drawWidth = width();
-            drawHeight = height();
+            drawWidth = geom.width();
+            drawHeight = geom.height();
         } else {
             if (format.endsWith("right")) {
-                dx = width() - bgImage.width();
+                dx = geom.width() - bgImage.width();
             }
             if (format.startsWith("bottom")) {
-                dy = height() - bgImage.height();
+                dy = geom.height() - bgImage.height();
             }
         }
 
         // Draw the background image
-        QPainter painter(bgPixmap);
+        QPainter painter(&bgPixmap);
         painter.setBrush(bgImage);
         painter.setBrushOrigin(dx, dy);
         painter.drawRect(dx, dy, drawWidth, drawHeight);
     }
-    update();
-    show();
+    //this->repaint(); //make sure the entire thing gets repainted right away
+   //LSession::handle()->XCB->paintRoot(geom, &bgPixmap);
+    return bgPixmap;
+    //show();
 }
 
 LDesktopBackground::LDesktopBackground() : QWidget() {
     bgPixmap = NULL;
+    this->setWindowOpacity(0);
 }
 
 LDesktopBackground::~LDesktopBackground() {

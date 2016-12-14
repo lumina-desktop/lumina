@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fa_IR">
 <context>
     <name>LLockScreen</name>
     <message>
-        <location filename="../LLockScreen.ui" line="14"></location>
+        <location filename="../LLockScreen.ui" line="14"/>
         <source>Form</source>
         <translation>از</translation>
     </message>

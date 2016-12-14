@@ -52,7 +52,7 @@ public slots:
 
 	//Simplification function for widget connections
 	virtual void settingChanged(){
-	  emit HasPendingChanges(true);
+    emit HasPendingChanges(true);
 	}
 };
 

@@ -1,448 +1,459 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ca">
 <context>
     <name>BMMDialog</name>
     <message>
-        <location filename="../BMMDialog.ui" line="14"></location>
+        <location filename="../BMMDialog.ui" line="14"/>
         <source>Manage Bookmarks</source>
         <translation>Gestió dels marcadors</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="35"></location>
+        <location filename="../BMMDialog.ui" line="35"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="40"></location>
+        <location filename="../BMMDialog.ui" line="40"/>
         <source>Path</source>
         <translation>Camí</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="52"></location>
+        <location filename="../BMMDialog.ui" line="52"/>
         <source>Remove Bookmark</source>
         <translation>Suprimeix el marcador</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="65"></location>
+        <location filename="../BMMDialog.ui" line="65"/>
         <source>Rename BookMark</source>
         <translation>Canvia el nom del marcador</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.ui" line="91"></location>
+        <location filename="../BMMDialog.ui" line="91"/>
         <source>Finished</source>
         <translation>Acabat</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="58"></location>
+        <location filename="../BMMDialog.cpp" line="58"/>
         <source>Rename Bookmark</source>
         <translation>Canvia el nom del marcador</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="58"></location>
+        <location filename="../BMMDialog.cpp" line="58"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="64"></location>
+        <location filename="../BMMDialog.cpp" line="64"/>
         <source>Invalid Name</source>
         <translation>El nom no és vàlid</translation>
     </message>
     <message>
-        <location filename="../BMMDialog.cpp" line="64"></location>
+        <location filename="../BMMDialog.cpp" line="64"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Aquest nom de marcador ja existeix. Trieu-ne un altre.</translation>
     </message>
 </context>
 <context>
+    <name>BrowserWidget</name>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="210"/>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="211"/>
+        <source>Size</source>
+        <translation type="unfinished">Mida</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="212"/>
+        <source>Type</source>
+        <translation type="unfinished">Tipus</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="213"/>
+        <source>Date Modified</source>
+        <translation type="unfinished">Data de modificació</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="214"/>
+        <source>Date Created</source>
+        <translation type="unfinished">Data de creació:</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="316"/>
+        <source>Capacity: %1</source>
+        <translation type="unfinished">Capacitat: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="342"/>
+        <source>Files: %1 (%2)</source>
+        <translation type="unfinished">Fitxers: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="344"/>
+        <source>Files: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="350"/>
+        <source>Dirs: %1</source>
+        <translation type="unfinished">Directoris: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="362"/>
+        <source>No Directory Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DirWidget</name>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="20"></location>
+        <location filename="../widgets/DirWidget2.ui" line="20"/>
         <source>Form</source>
         <translation>Formulari</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="246"></location>
-        <location filename="../widgets/DirWidget.ui" line="249"></location>
-        <source>Open item</source>
-        <translation>Obre l'ítem</translation>
+        <location filename="../widgets/DirWidget2.ui" line="145"/>
+        <source>Increase Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="271"></location>
-        <location filename="../widgets/DirWidget.ui" line="274"></location>
-        <source>Open item (select application)</source>
-        <translation>Obre l'ítem (selecciona l'aplicació)</translation>
+        <location filename="../widgets/DirWidget2.ui" line="161"/>
+        <source>Decrease Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="300"></location>
-        <location filename="../widgets/DirWidget.ui" line="303"></location>
-        <source>Add item to personal favorites</source>
-        <translation>Afegeix l'ítem als preferits personals</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="322"></location>
-        <location filename="../widgets/DirWidget.ui" line="325"></location>
-        <source>Rename item</source>
-        <translation>Reanomena l'ítem</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="351"></location>
-        <source>Cut items</source>
-        <translation>Talla els ítems</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="354"></location>
-        <source>Cut items (add to the clipboard)</source>
-        <translation>Talla els ítems (afegeix-los al porta-retalls)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="373"></location>
-        <source>Copy items</source>
-        <translation>Copia els ítems</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="376"></location>
-        <source>Copy items to the clipboard</source>
-        <translation>Copia els ítems al porta-retalls</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="395"></location>
-        <location filename="../widgets/DirWidget.ui" line="398"></location>
-        <source>Paste items from clipboard</source>
-        <translation>Enganxa ítems des del porta-retalls</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="424"></location>
-        <location filename="../widgets/DirWidget.ui" line="427"></location>
-        <source>Delete Items</source>
-        <translation>Esborra els ítems</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="507"></location>
-        <source>Stop loading the directory</source>
-        <translation>Atura la càrrega del directori</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="90"></location>
-        <source>Add selected images to slideshow</source>
-        <translation>Afegeix les imatges seleccionades a la presentació</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="77"></location>
-        <source>Create a new directory</source>
-        <translation>Crea un directori nou</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="80"></location>
-        <source>New Dir</source>
-        <translation>Directori nou</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="64"></location>
-        <source>Create a new file</source>
-        <translation>Crea un fitxer nou</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="67"></location>
-        <source>New File</source>
-        <translation>Fitxer nou</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="93"></location>
-        <source>Slideshow</source>
-        <translation>Projecció de diapositives</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="109"></location>
-        <source>Enqueue selection in multimedia player</source>
-        <translation>Afegeix la selecció al reproductor multimèdia</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="112"></location>
-        <source>Play</source>
-        <translation>Reprodueix</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="465"></location>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Back</source>
         <translation>Enrere</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="468"></location>
-        <location filename="../widgets/DirWidget.ui" line="471"></location>
+        <location filename="../widgets/DirWidget2.ui" line="182"/>
+        <location filename="../widgets/DirWidget2.ui" line="185"/>
         <source>Go back to previous directory</source>
         <translation>Torna al directori anterior</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="479"></location>
+        <location filename="../widgets/DirWidget2.ui" line="193"/>
         <source>Up</source>
         <translation>Amunt</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="482"></location>
-        <location filename="../widgets/DirWidget.ui" line="485"></location>
+        <location filename="../widgets/DirWidget2.ui" line="196"/>
+        <location filename="../widgets/DirWidget2.ui" line="199"/>
         <source>Go to parent directory</source>
         <translation>Vés al directori principal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="493"></location>
+        <location filename="../widgets/DirWidget2.ui" line="207"/>
         <source>Home</source>
         <translation>Inici</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="496"></location>
-        <location filename="../widgets/DirWidget.ui" line="499"></location>
+        <location filename="../widgets/DirWidget2.ui" line="210"/>
+        <location filename="../widgets/DirWidget2.ui" line="213"/>
         <source>Go to home directory</source>
         <translation>Vés al directori principal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="518"></location>
-        <location filename="../widgets/DirWidget.ui" line="521"></location>
-        <source>Close this browser</source>
-        <translation>Tanca aquest navegador</translation>
+        <location filename="../widgets/DirWidget2.ui" line="218"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="136"></location>
-        <source>Name</source>
-        <translation>Nom</translation>
+        <location filename="../widgets/DirWidget2.ui" line="221"/>
+        <source>Select Action</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="140"></location>
-        <source>Size</source>
-        <translation>Mida</translation>
+        <location filename="../widgets/DirWidget2.ui" line="229"/>
+        <source>SingleColumn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="143"></location>
-        <source>Type</source>
-        <translation>Tipus</translation>
+        <location filename="../widgets/DirWidget2.ui" line="232"/>
+        <source>Single column view</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="147"></location>
-        <source>Date Modified</source>
-        <translation>Data de modificació</translation>
+        <location filename="../widgets/DirWidget2.ui" line="240"/>
+        <source>Dual Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="150"></location>
-        <source>Date Created</source>
-        <translation>Data de creació:</translation>
+        <location filename="../widgets/DirWidget2.ui" line="243"/>
+        <source>Dual Column View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="207"></location>
-        <location filename="../widgets/DirWidget.cpp" line="484"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="525"/>
         <source>(Limited Access) </source>
         <translation>(Accés limitat) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="469"></location>
-        <source>Capacity: %1</source>
-        <translation>Capacitat: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="474"></location>
-        <source>Files: %1 (%2)</source>
-        <translation>Fitxers: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="479"></location>
-        <source>Dirs: %1</source>
-        <translation>Directoris: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>New Document</source>
         <translation>Document nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"></location>
-        <location filename="../widgets/DirWidget.cpp" line="802"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>Error Creating Document</source>
         <translation>Error en crear el document</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>No s'ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
+        <translation>No s&apos;ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="802"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>New Directory</source>
         <translation>Directori nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Invalid Name</source>
         <translation>El nom no és vàlid</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <source>File Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <source>Directory Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="507"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Ja existeix un fitxer o un directori amb este mateix nom, utilitzeu-ne un altre.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>Error Creating Directory</source>
         <translation>Error en crear el directori</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>No s'ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
+        <translation>No s&apos;ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="839"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>Current</source>
         <translation>Actual</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="949"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <source>Create...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <source>File</source>
+        <translation type="unfinished">Fitxer</translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <source>Application Launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <source>Launch...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <source>Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <source>SlideShow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <source>Multimedia Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
+        <source>Modify Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <source>View Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <source>Checksums</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="448"/>
         <source>File Checksums:</source>
         <translation>Sumes de verificació del fitxer:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
         <source>Missing Utility</source>
         <translation>Utilitat no present</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"></location>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>No s'ha pogut trobar la utilitat "lumina-fileinfo" al sistema. Si us plau, instal·leu-la primer.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>No s&apos;ha pogut trobar la utilitat &quot;lumina-fileinfo&quot; al sistema. Si us plau, instal·leu-la primer.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="984"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="485"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="985"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="486"/>
         <source>Open With...</source>
         <translation>Obre amb...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="987"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="250"/>
         <source>Rename...</source>
         <translation>Reanomena...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="988"></location>
-        <source>View Checksums...</source>
-        <translation>Mostra'n les sumes de verificació...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="999"></location>
-        <source>File Properties...</source>
-        <translation>Propietats del fitxer...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="992"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="247"/>
         <source>Cut Selection</source>
         <translation>Talla la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="993"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="248"/>
         <source>Copy Selection</source>
         <translation>Copia la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="994"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="996"></location>
+        <location filename="../widgets/DirWidget2.cpp" line="252"/>
         <source>Delete Selection</source>
         <translation>Suprimeix la selecció</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="1002"></location>
-        <source>Open Terminal here</source>
-        <translation>Obre un terminal aquí</translation>
     </message>
 </context>
 <context>
     <name>FODialog</name>
     <message>
-        <location filename="../FODialog.ui" line="14"></location>
+        <location filename="../FODialog.ui" line="14"/>
         <source>Performing File Operations</source>
         <translation>Fent operacions de fitxers</translation>
     </message>
     <message>
-        <location filename="../FODialog.ui" line="39"></location>
+        <location filename="../FODialog.ui" line="39"/>
         <source>%v/%m</source>
         <translation>%v/%m</translation>
     </message>
     <message>
-        <location filename="../FODialog.ui" line="74"></location>
+        <location filename="../FODialog.ui" line="74"/>
         <source>Stop</source>
         <translation>Atura</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="19"></location>
+        <location filename="../FODialog.cpp" line="19"/>
         <source>Calculating</source>
         <translation>Calculant</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Overwrite Files?</source>
         <translation>Voleu sobreescriure els fitxers?</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Do you want to overwrite the existing files?</source>
         <translation>Voleu sobreescriure els fitxers existents?</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="131"></location>
+        <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Nota: si no, només s'afegirà un número al nom del fitxer.</translation>
+        <translation>Nota: si no, només s&apos;afegirà un número al nom del fitxer.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"></location>
+        <location filename="../FODialog.cpp" line="148"/>
         <source>Removing: %1</source>
         <translation>Suprimint: %s</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"></location>
+        <location filename="../FODialog.cpp" line="149"/>
         <source>Copying: %1 to %2</source>
         <translation>Copiant %1 a %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"></location>
+        <location filename="../FODialog.cpp" line="150"/>
         <source>Restoring: %1 as %2</source>
         <translation>Restaurant %1 com a %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"></location>
+        <location filename="../FODialog.cpp" line="151"/>
         <source>Moving: %1 to %2</source>
         <translation>Movent %1 a %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"></location>
+        <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
-        <translation>No s'han pogut suprimir aquests fitxers:</translation>
+        <translation>No s&apos;han pogut suprimir aquests fitxers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"></location>
+        <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
-        <translation>No s'han pogut copiar aquests fitxers:</translation>
+        <translation>No s&apos;han pogut copiar aquests fitxers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"></location>
+        <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
-        <translation>No s'han pogut restaurar aquests fitxers:</translation>
+        <translation>No s&apos;han pogut restaurar aquests fitxers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"></location>
+        <location filename="../FODialog.cpp" line="167"/>
         <source>Could not move these files:</source>
-        <translation>No s'han pogut moure aquests fitxers:</translation>
+        <translation>No s&apos;han pogut moure aquests fitxers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"></location>
+        <location filename="../FODialog.cpp" line="169"/>
         <source>File Errors</source>
         <translation>Errors del fitxer</translation>
     </message>
@@ -450,17 +461,17 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"></location>
+        <location filename="../FODialog.cpp" line="320"/>
         <source>Invalid Move</source>
         <translation>El moviment no és vàlid</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"></location>
+        <location filename="../FODialog.cpp" line="320"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1
 New Location: %2</source>
-        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d'això, feu-ne una còpia.
+        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d&apos;això, feu-ne una còpia.
 
 Localització antiga: %1
 Localització nova: %2</translation>
@@ -469,107 +480,107 @@ Localització nova: %2</translation>
 <context>
     <name>GitWizard</name>
     <message>
-        <location filename="../gitWizard.ui" line="14"></location>
+        <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
         <translation>Clona un repositori Git</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="24"></location>
+        <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
         <translation>Benvingut!</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="27"></location>
+        <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>Aquest assistent us guiarà a través del procés de baixada d'un repositori GIT des d'Internet.</translation>
+        <translation>Aquest assistent us guiarà a través del procés de baixada d&apos;un repositori GIT des d&apos;Internet.</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="46"></location>
+        <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
         <translation>Paràmetres del repositori GitHub</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="55"></location>
+        <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
         <translation>Organització / Usuari</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="65"></location>
+        <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
         <translation>Nom del repositori</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="75"></location>
+        <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
         <translation>És un repositori privat</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="89"></location>
+        <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation>Tipus d'accés</translation>
+        <translation>Tipus d&apos;accés</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="95"></location>
+        <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
         <translation>Usa la meva clau SSH</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="105"></location>
+        <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
         <translation>Entra al servidor</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="114"></location>
+        <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation>Nom d'usuari</translation>
+        <translation>Nom d&apos;usuari</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="124"></location>
+        <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
         <translation>Contrasenya</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="133"></location>
+        <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
         <translation>Anònim (només repositoris públics)</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="143"></location>
+        <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
         <translation>Contrasenya SSH opcional</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="153"></location>
+        <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
         <translation>Opcions avançades</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="159"></location>
+        <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
         <translation>Profunditat personalitzada</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="166"></location>
+        <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
         <translation>Branca simple</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="175"></location>
+        <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
         <translation>nom de la branca</translation>
     </message>
     <message>
-        <location filename="../gitWizard.ui" line="232"></location>
-        <source>Click "Next" to start downloading the repository</source>
-        <translation>Cliqueu a "Següent" per començar a baixar el repositori</translation>
+        <location filename="../gitWizard.ui" line="232"/>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <translation>Cliqueu a &quot;Següent&quot; per començar a baixar el repositori</translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"></location>
+        <location filename="../gitWizard.h" line="57"/>
         <source>Stop Download?</source>
         <translation>Voleu aturar la baixada?</translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"></location>
+        <location filename="../gitWizard.h" line="57"/>
         <source>Kill the current download?</source>
         <translation>Voleu avortar la baixada actual?</translation>
     </message>
@@ -577,393 +588,372 @@ Localització nova: %2</translation>
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"></location>
+        <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
         <translation>Comprensió</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"></location>
+        <location filename="../MainUI.cpp" line="90"/>
         <source>Shift+Left</source>
         <translation>Majúscules + Esquerra</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"></location>
+        <location filename="../MainUI.cpp" line="91"/>
         <source>Shift+Right</source>
         <translation>Majúscula + Dreta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="114"></location>
+        <location filename="../MainUI.ui" line="114"/>
         <source>File</source>
         <translation>Fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="126"></location>
+        <location filename="../MainUI.ui" line="126"/>
         <source>View</source>
         <translation>Visualització</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="130"></location>
+        <location filename="../MainUI.ui" line="130"/>
         <source>View Mode</source>
         <translation>Mode de visualització</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="136"></location>
-        <source>Group Mode</source>
-        <translation>Mode de grup</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="154"></location>
+        <location filename="../MainUI.ui" line="142"/>
         <source>Bookmarks</source>
-        <translation>Adreces d'interès</translation>
+        <translation>Adreces d&apos;interès</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="162"></location>
+        <location filename="../MainUI.ui" line="150"/>
         <source>External Devices</source>
         <translation>Dispositius externs</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="169"></location>
-        <source>Edit</source>
-        <translation>Edita</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="181"></location>
+        <location filename="../MainUI.ui" line="157"/>
         <source>Git</source>
         <translation>Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="196"></location>
-        <location filename="../MainUI.ui" line="199"></location>
+        <location filename="../MainUI.ui" line="171"/>
+        <source>New Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="174"/>
         <source>New Browser</source>
         <translation>Navegador nou</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="275"></location>
+        <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
         <translation>Directori de cerca...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="308"></location>
+        <location filename="../MainUI.ui" line="283"/>
         <source>Increase Icon Size</source>
         <translation>Augmenta la mida de les icones</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="313"></location>
+        <location filename="../MainUI.ui" line="288"/>
         <source>Decrease Icon Size</source>
         <translation>Redueix la mida de les icones</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="318"></location>
+        <location filename="../MainUI.ui" line="293"/>
         <source>Larger Icons</source>
         <translation>Icones més grosses</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"></location>
+        <location filename="../MainUI.ui" line="296"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"></location>
+        <location filename="../MainUI.ui" line="304"/>
         <source>Smaller Icons</source>
         <translation>Icones més petites</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="332"></location>
+        <location filename="../MainUI.ui" line="307"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"></location>
+        <location filename="../MainUI.ui" line="315"/>
         <source>New Window</source>
         <translation>Finestra nova</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="343"></location>
+        <location filename="../MainUI.ui" line="318"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="351"></location>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Add Bookmark</source>
-        <translation>Afegeix una adreça d'interès</translation>
+        <translation>Afegeix una adreça d&apos;interès</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="354"></location>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="406"></location>
+        <location filename="../MainUI.ui" line="381"/>
         <source>Delete Selection</source>
         <translation>Suprimeix la selecció</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"></location>
+        <location filename="../MainUI.ui" line="384"/>
         <source>Del</source>
         <translation>Supr</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"></location>
+        <location filename="../MainUI.ui" line="392"/>
         <source>Refresh</source>
         <translation>Actualitza</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="428"></location>
-        <source>Close Browser</source>
-        <translation>Tanca el navegador</translation>
+        <location filename="../MainUI.ui" line="403"/>
+        <source>Close Tab</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="439"></location>
+        <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
         <translation>Estat del repositori</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="444"></location>
+        <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
         <translation>Clona el repositori</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="202"></location>
+        <location filename="../MainUI.ui" line="177"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="210"></location>
+        <location filename="../MainUI.ui" line="185"/>
         <source>Exit</source>
         <translation>Surt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"></location>
+        <location filename="../MainUI.ui" line="188"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"></location>
+        <location filename="../MainUI.ui" line="196"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferències</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"></location>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Show Hidden Files</source>
         <translation>Mostra els fitxers ocults</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"></location>
+        <location filename="../MainUI.ui" line="212"/>
         <source>Scan for Devices</source>
         <translation>Explora si hi ha dispositius</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"></location>
+        <location filename="../MainUI.ui" line="220"/>
         <source>Manage Bookmarks</source>
-        <translation>Gestiona les adreces d'interès / marcadors</translation>
+        <translation>Gestiona les adreces d&apos;interès / marcadors</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="259"></location>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Show Action Buttons</source>
-        <translation>Mostra els botons d'acció</translation>
+        <translation>Mostra els botons d&apos;acció</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="270"></location>
+        <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
         <translation>Carrega les miniatures</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="278"></location>
+        <location filename="../MainUI.ui" line="253"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"></location>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>Detailed List</source>
         <translation>Llista detallada</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"></location>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Basic List</source>
         <translation>Llista bàsica</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="431"></location>
+        <location filename="../MainUI.ui" line="406"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"></location>
-        <source>Prefer Tabs</source>
-        <translation>Prefereix les pestanyes</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="72"></location>
-        <source>Prefer Columns</source>
-        <translation>Prefereix les columnes</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="420"></location>
+        <location filename="../MainUI.ui" line="395"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="387"></location>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="362"></location>
+        <location filename="../MainUI.ui" line="337"/>
         <source>Rename...</source>
         <translation>Reanomena...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="365"></location>
+        <location filename="../MainUI.ui" line="340"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="373"></location>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Cut Selection</source>
         <translation>Talla la selecció</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="384"></location>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Copy Selection</source>
         <translation>Copia la selecció</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"></location>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="398"></location>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="376"></location>
+        <location filename="../MainUI.ui" line="351"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"></location>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>Invalid Directories</source>
         <translation>Directoris no vàlids</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"></location>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>The following directories are invalid and could not be opened:</source>
-        <translation>Els directoris següents no són vàlids i no s'han pogut obrir:</translation>
+        <translation>Els directoris següents no són vàlids i no s&apos;han pogut obrir:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="342"></location>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>Root</source>
         <translation>Arrel</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="348"></location>
+        <location filename="../MainUI.cpp" line="335"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Tipus: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="352"></location>
+        <location filename="../MainUI.cpp" line="339"/>
         <source>Filesystem: %1</source>
         <translation>Sistema de fitxers: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="573"></location>
-        <source>Browser</source>
-        <translation>Navegador</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="600"></location>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>New Bookmark</source>
-        <translation>Adreça d'interès nova</translation>
+        <translation>Adreça d&apos;interès nova</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"></location>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"></location>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>Invalid Name</source>
         <translation>El nom no és vàlid</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"></location>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Aquest nom d'adreça d'interès ja existeix. Trieu-ne un altre.</translation>
+        <translation>Aquest nom d&apos;adreça d&apos;interès ja existeix. Trieu-ne un altre.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="626"></location>
+        <location filename="../MainUI.cpp" line="614"/>
         <source>Git Repository Status</source>
         <translation>Estat del repositori Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="732"></location>
+        <location filename="../MainUI.cpp" line="704"/>
         <source>Multimedia</source>
         <translation>Multimèdia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="750"></location>
+        <location filename="../MainUI.cpp" line="722"/>
         <source>Slideshow</source>
         <translation>Projecció de diapositives</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="927"></location>
+        <location filename="../MainUI.cpp" line="902"/>
         <source>Items to be removed:</source>
         <translation>Ítems per suprimir:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"></location>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>Verify Quit</source>
         <translation>Verifiqueu la sortida</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="100"></location>
+        <location filename="../MainUI.cpp" line="92"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"></location>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"></location>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Teniu diverses pestanyes obertes. Esteu segur que voleu sortir?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Verify Removal</source>
         <translation>Verificació de la supressió</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>AVÍS: això suprimirà permanentment el fitxer o fitxers del sistema!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"></location>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Are you sure you want to continue?</source>
         <translation>Esteu segur que voleu continuar?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"></location>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>Rename File</source>
         <translation>Reanomena el fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"></location>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>New Name:</source>
         <translation>Nom nou:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"></location>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>Overwrite File?</source>
         <translation>Voleu sobreescriure el fitxer?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"></location>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Se substituirà un fitxer existent amb el mateix nom. Esteu segur que voleu continuar?</translation>
     </message>
@@ -971,142 +961,204 @@ Localització nova: %2</translation>
 <context>
     <name>MultimediaWidget</name>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="14"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formulari</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="28"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="28"/>
         <source>Go To Next</source>
         <translation>Següent</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.ui" line="107"></location>
+        <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
         <translation>(No hi ha vídeo en execució)</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="124"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
         <source>Playing:</source>
         <translation>Reproduint:</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="130"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="130"/>
         <source>Stopped</source>
         <translation>Aturat</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="157"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
         <translation>Error en reproduir el fitxer: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/MultimediaWidget.cpp" line="168"></location>
+        <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
         <source>Finished</source>
         <translation>Acabat</translation>
     </message>
 </context>
 <context>
+    <name>OPWidget</name>
+    <message>
+        <location filename="../OPWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulari</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="44"/>
+        <location filename="../OPWidget.ui" line="51"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="60"/>
+        <source>Evaluating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="48"/>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="49"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="50"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>%1 Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>Errors Occured</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SlideshowWidget</name>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="14"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formulari</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="36"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Suprimeix aquest fitxer d'imatge</translation>
+        <translation>Suprimeix aquest fitxer d&apos;imatge</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="56"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="56"/>
         <source>Rotate this image file counter-clockwise</source>
-        <translation>Gira aquest fitxer d'imatge cap a l'esquerra</translation>
+        <translation>Gira aquest fitxer d&apos;imatge cap a l&apos;esquerra</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="69"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="69"/>
         <source>Rotate this image file clockwise</source>
-        <translation>Gira aquest fitxer d'imatge cap a la dreta</translation>
+        <translation>Gira aquest fitxer d&apos;imatge cap a la dreta</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="89"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="92"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="89"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="92"/>
         <source>Zoom in</source>
         <translation>Amplia</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="105"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="108"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="105"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="108"/>
         <source>Zoom out</source>
         <translation>Allunya</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="212"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="212"/>
         <source>Go to Beginning</source>
         <translation>Vés al començament</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="215"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="231"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="304"></location>
-        <location filename="../widgets/SlideshowWidget.ui" line="320"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="215"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="231"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="304"/>
+        <location filename="../widgets/SlideshowWidget.ui" line="320"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="218"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="218"/>
         <source>Shift+Left</source>
         <translation>Majúscules + Esquerra</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="228"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="228"/>
         <source>Go to Previous</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="234"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="234"/>
         <source>Left</source>
         <translation>Esquerra</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="267"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="267"/>
         <source>File Name</source>
         <translation>Nom del fitxer</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="301"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="301"/>
         <source>Go to Next</source>
         <translation>Següent</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="307"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="307"/>
         <source>Right</source>
         <translation>Dreta</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="317"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="317"/>
         <source>Go to End</source>
         <translation>Vés al final</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.ui" line="323"></location>
+        <location filename="../widgets/SlideshowWidget.ui" line="323"/>
         <source>Shift+Right</source>
         <translation>Majúscula + Dreta</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>Verify Removal</source>
         <translation>Verificació de la supressió</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>WARNING: This will permanently delete the file from the system!</source>
         <translation>AVÍS: això suprimirà permanentment el fitxer del sistema!</translation>
     </message>
     <message>
-        <location filename="../widgets/SlideshowWidget.cpp" line="125"></location>
+        <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>Are you sure you want to continue?</source>
         <translation>Esteu segur que voleu continuar?</translation>
+    </message>
+</context>
+<context>
+    <name>TrayUI</name>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Finished</source>
+        <translation type="unfinished">Acabat</translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Errors during operation. Click to view details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>No Errors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

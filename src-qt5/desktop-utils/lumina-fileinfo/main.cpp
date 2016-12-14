@@ -4,7 +4,7 @@
 #include <QFile>
 
 #include "MainUI.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaThemes.h>
 
 int main(int argc, char ** argv)
@@ -12,7 +12,7 @@ int main(int argc, char ** argv)
   LTHEME::LoadCustomEnvSettings();
   QApplication a(argc, argv);
   LUtils::LoadTranslation(&a, "l-fileinfo");
-  LuminaThemeEngine theme(&a);
+  //LuminaThemeEngine theme(&a);
 
 
   //Read the input variables
@@ -39,7 +39,7 @@ int main(int argc, char ** argv)
   }
   if(!path.isEmpty() || !flag.isEmpty()){ 
     MainUI w;
-      QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(UpdateIcons()) );
+      //QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(UpdateIcons()) );
     w.LoadFile(path, flag);
     w.show();
     int retCode = a.exec();

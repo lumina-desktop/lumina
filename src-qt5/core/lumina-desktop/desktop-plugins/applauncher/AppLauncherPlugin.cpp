@@ -20,7 +20,8 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
 
   connect(this, SIGNAL(PluginActivated()), this, SLOT(buttonClicked()) ); //in case they use the context menu to launch it.
-  QTimer::singleShot(200,this, SLOT(loadButton()) );
+  loadButton();
+  //QTimer::singleShot(0,this, SLOT(loadButton()) );
 }
 	
 void AppLauncherPlugin::Cleanup(){
@@ -40,7 +41,7 @@ void AppLauncherPlugin::loadButton(){
   QString txt;
   if(path.endsWith(".desktop") && ok){
     XDGDesktop file(path);
-    ok = file.isValid();
+    ok = !file.name.isEmpty();
     if(!ok){
       button->setWhatsThis("");
       button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );

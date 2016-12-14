@@ -102,7 +102,7 @@ void LDeskBarPlugin::filechanged(QString file){
 }
 void LDeskBarPlugin::updateFiles(){
   QFileInfoList homefiles = LSession::handle()->DesktopFiles();
-  QStringList favitems = LUtils::listFavorites();
+  QStringList favitems = LDesktopUtils::listFavorites();
   //Remember for format for favorites: <name>::::[app/dir/<mimetype>]::::<full path>
     for(int i=0; i<homefiles.length(); i++){
       if( !favitems.filter(homefiles[i].canonicalFilePath()).isEmpty() ){ continue; } //duplicate entry

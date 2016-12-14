@@ -21,7 +21,7 @@
 
 // libLumina includes
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 class FOWorker : public QObject{
 	Q_OBJECT

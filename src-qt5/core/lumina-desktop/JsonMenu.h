@@ -16,7 +16,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaXDG.h>
 #include "LSession.h"
 

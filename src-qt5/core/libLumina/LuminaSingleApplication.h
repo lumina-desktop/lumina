@@ -25,7 +25,7 @@
 #include <QLockFile>
 #include <QApplication>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 //NOTE: This application type will automatically load the proper translation file(s)
 //  if the application name is set properly

@@ -9,6 +9,7 @@
 #include "globals.h"
 
 #include "pages/getPage.h"
+#include "pages/page_main.h"
 
 //=============
 //      PUBLIC
@@ -26,7 +27,7 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
     connect(backShortcut, SIGNAL(activated()), this, SLOT(on_actionBack_triggered()) );
   setupIcons();
   loadMonitors();
-  changePage(""); //load the default main page
+  //changePage(""); //load the default main page
 }
 
 mainWindow::~mainWindow(){
@@ -36,7 +37,14 @@ mainWindow::~mainWindow(){
 //==============
 //  PUBLIC SLOTS
 //==============
-void mainWindow::slotSingleInstance(){
+void mainWindow::slotSingleInstance(QStringList args){
+  for(int i=0; i<args.length(); i++){
+    if(args[i]=="--page" && i<args.length()-1){
+      i++;
+      changePage(args[i]);
+    }
+  }
+  if(cpage == "somerandomjunktostartwith"){ changePage(""); }
   this->showNormal(); //just in case it is hidden/minimized
 }
 
@@ -133,7 +141,7 @@ void mainWindow::on_actionSave_triggered(){
 }
 
 void mainWindow::on_actionBack_triggered(){
-  if(cpage.isEmpty()){ this->close(); } //main menu - go ahead and close it
+  if(cpage.isEmpty()){ }// page_main::clearlineEdit(); } //since ESC doesnt close any other Lumina Appliction by default, I've commented this out for the time being.
   else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
 }
 

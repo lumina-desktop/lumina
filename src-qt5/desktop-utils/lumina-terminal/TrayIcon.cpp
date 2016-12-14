@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QDesktopWidget>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 TrayIcon::TrayIcon() : QSystemTrayIcon(){
   //Create the child widgets here
@@ -145,6 +145,7 @@ void TrayIcon::updateScreenMenu(){
     }
   }
   ScreenMenu->setVisible(!ScreenMenu->isEmpty());
+  ScreenMenu->setEnabled(!ScreenMenu->isEmpty());
 }
 
 void TrayIcon::TrayActivated(QSystemTrayIcon::ActivationReason reason){

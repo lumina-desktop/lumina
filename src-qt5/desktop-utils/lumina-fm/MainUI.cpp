@@ -7,9 +7,12 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include <QMenu>
 #include <QFileInfo>
 #include "gitCompat.h"
 #include "gitWizard.h"
+
+#include <LDesktopUtils.h>
 
 #define DEBUG 0
 
@@ -20,7 +23,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //just to silence/fix some Qt connect warnings in QtConcurrent
   //qRegisterMetaType< QVector<int> >("QVector<int>"); 
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
-	
+  waitingToClose = false;
 	
   ui->setupUi(this);
   ui->menuGit->setVisible( GIT::isAvailable() );
@@ -106,6 +109,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   RebuildDeviceMenu();
   //Make sure we start on the browser page
   TRAY = new TrayUI(this);
+  connect(TRAY, SIGNAL(JobsFinished()), this, SLOT(TrayJobsFinished()) );
   if(DEBUG){ qDebug() << " - Done with init"; }
 }
 
@@ -175,6 +179,7 @@ void MainUI::OpenDirs(QStringList dirs){
     //Initialize the widget with the proper settings
     DW->setShowDetails(radio_view_details->isChecked()); 
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
+    DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
@@ -187,7 +192,7 @@ void MainUI::OpenDirs(QStringList dirs){
   //Double check that there is at least 1 dir loaded
   //qDebug() << "OpenDirs:" << DWLIST.length() << dirs << invalid << tabBar->currentIndex();
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
-  
+  waitingToClose = false;
 }
 
 void MainUI::setupIcons(){
@@ -844,7 +849,7 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
 void MainUI::FavoriteFiles(QStringList list){
   qDebug() << "Favorite Files:" << list;
   for(int i=0; i<list.length(); i++){
-    LUtils::addFavorite(list[i]);
+    LDesktopUtils::addFavorite(list[i]);
   }
   //Might want to make this a "toggle" instead of an add later on...
 }
@@ -943,4 +948,24 @@ void MainUI::TabNameChanged(QString id, QString name){
       return;
     }
   }
+}
+
+void MainUI::TrayJobsFinished(){
+  if(waitingToClose){ this->close(); }
+}
+
+//=============
+//  PROTECTED
+//=============
+void MainUI::closeEvent(QCloseEvent *ev){
+  //See if the tray is active or not first
+  if(TRAY!=0){
+    if(TRAY->isVisible() && !waitingToClose){ 
+      this->hide(); 
+      ev->ignore(); 
+      waitingToClose = true;
+      return; 
+    }
+  }
+  QMainWindow::closeEvent(ev); //continue normal close routine
 }

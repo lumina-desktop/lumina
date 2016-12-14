@@ -12,6 +12,7 @@
 #include <QWizard>
 #include <QString>
 #include <QMessageBox>
+#include <QCloseEvent>
 
 #include "gitCompat.h"
 

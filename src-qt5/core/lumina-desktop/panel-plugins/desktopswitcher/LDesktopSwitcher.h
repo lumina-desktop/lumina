@@ -14,7 +14,7 @@
 #include <QMenu>
 #include <QToolButton>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaXDG.h>
 #include <LuminaX11.h>
 

@@ -10,6 +10,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QChar>
+#include <QListWidgetItem>
 
 namespace Ui{
 	class mainUI;
@@ -21,30 +22,44 @@ public:
 	mainUI();
 	~mainUI();
 
+public slots:
+	void updateIcons();
+	void updateMenus();
+
 private slots:
 	void start_calc();
-    void clear_calc();
-    void captureButton1();
-    void captureButton2();
-    void captureButton3();
-    void captureButton4();
-    void captureButton5();
-    void captureButton6();
-    void captureButton7();
-    void captureButton8();
-    void captureButton9();
-    void captureButton0();
-    void captureButtonSubtract();
-    void captureButtonAdd();
-    void captureButtonDivide();
-    void captureButtonMultiply();
-//    void captureButtonEqual();
-    void captureButtonDecimal();
+	void clear_calc();
+	void captureButton1();
+	void captureButton2();
+	void captureButton3();
+	void captureButton4();
+	void captureButton5();
+	void captureButton6();
+	void captureButton7();
+	void captureButton8();
+	void captureButton9();
+	void captureButton0();
+	void captureButtonSubtract();
+	void captureButtonAdd();
+	void captureButtonDivide();
+	void captureButtonMultiply();
+	void captureButtonDecimal();
 
+	void advMenuTriggered(QAction *act);
+
+	void insert_history(QListWidgetItem *it);
+	void copy_to_clipboard(QListWidgetItem *it);
+	void checkInput(const QString&);
+
+	void saveHistory();
 
 private:
 	Ui::mainUI *ui;
+	QMenu *advMenu;
+
 	double performOperation(double LHS, double RHS, QChar symbol);
+	double performSciOperation(QString func, double arg);
 	double strToNumber(QString str); //this is highly-recursive
+	QString getHistory(int number = -1);
 };
 #endif

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fi">
 <context>
@@ -218,13 +218,13 @@ Korvataanko se?</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="104"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Paneeli %1</translation>
     </message>
     <message>
+        <location filename="../PanelWidget.cpp" line="143"/>
         <location filename="../PanelWidget.cpp" line="144"/>
-        <location filename="../PanelWidget.cpp" line="145"/>
         <source>Select Color</source>
         <translation>Valitse väri</translation>
     </message>
@@ -965,12 +965,12 @@ Korvataanko se?</translation>
         <translation>Valitse asetettava näyttö tai työpöytä</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Tallentamattomia muutoksia</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Sivulla on yhä tallentamattomia muutoksia. Haluatko tallentaa ne nyt?</translation>
     </message>
@@ -1003,37 +1003,37 @@ Korvataanko se?</translation>
         <translation>Tiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"/>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Käynnistettävät palvelut</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>Valitse ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Ohjelmatiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Kelvoton ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Valittu tiedosto ei ole ohjelmatiedosto!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Valitse tiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Kaikki tiedostot (*)</translation>
     </message>
@@ -1140,34 +1140,31 @@ Korvataanko se?</translation>
         <translation>Oletussovellukset</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"/>
-        <location filename="../pages/page_defaultapps.cpp" line="84"/>
-        <location filename="../pages/page_defaultapps.cpp" line="106"/>
-        <location filename="../pages/page_defaultapps.cpp" line="128"/>
-        <location filename="../pages/page_defaultapps.cpp" line="242"/>
-        <location filename="../pages/page_defaultapps.cpp" line="274"/>
-        <location filename="../pages/page_defaultapps.cpp" line="307"/>
-        <location filename="../pages/page_defaultapps.cpp" line="339"/>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Aseta napsauttamalla</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"/>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"/>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>Valitse ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Kelvoton ohjelmatiedosto</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Valittu tiedosto ei ole suoritettava ohjelma!</translation>
     </message>
@@ -1381,7 +1378,7 @@ Korvataanko se?</translation>
         <translation>Näytä työpöytäkansion sisältö</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"/>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Työpöydän asetukset</translation>
     </message>
@@ -1412,7 +1409,7 @@ Korvataanko se?</translation>
         <translation>Lomake</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"/>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Työpöytäasetukset</translation>
     </message>
@@ -1866,120 +1863,120 @@ Korvataanko se?</translation>
         <translation>Asettelu:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"/>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Taustakuvan asetukset</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Järjestelmän oletus</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"/>
-        <location filename="../pages/page_wallpaper.cpp" line="220"/>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Yhtenäinen väri: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"/>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Näytön tarkkuus:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"/>
-        <location filename="../pages/page_wallpaper.cpp" line="99"/>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Valitse väri</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Tiedosto(a)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Kansio (yksittäinen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Kansio (alikansioineen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Yhtenäinen väri</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Automaattinen</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Koko näyttö</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Sovita näyttöön</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Laatoita</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Keskitä</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Ylävasen</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Yläoikea</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Alavasen</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Alaoikea</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Ei taustaa</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(käytä järjestelmän oletusta)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"/>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Tiedostoa ei ole olemassa</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"/>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Etsi taustakuvia</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"/>
-        <location filename="../pages/page_wallpaper.cpp" line="257"/>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Etsi taustakuvakansiota</translation>
     </message>

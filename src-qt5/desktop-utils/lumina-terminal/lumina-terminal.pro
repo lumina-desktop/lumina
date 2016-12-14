@@ -5,6 +5,12 @@ QT += core gui widgets network
 TARGET  = lumina-terminal
 target.path = $${L_BINDIR}
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 HEADERS	+= TrayIcon.h \
 		TermWindow.h \
 		TerminalWidget.h \
@@ -17,10 +23,8 @@ SOURCES	+= main.cpp \
 		TtyProcess.cpp
 
 
-LIBS += -lLuminaUtils -lncurses
+LIBS += -lncurses
 
-
-DEPENDPATH	+= ../../libLumina
 
 TRANSLATIONS =  i18n/l-terminal_af.ts \
                 i18n/l-terminal_ar.ts \

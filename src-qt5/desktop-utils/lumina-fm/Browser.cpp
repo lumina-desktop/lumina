@@ -11,7 +11,7 @@
 #include <QtConcurrent>
 #include <QDebug>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 Browser::Browser(QObject *parent) : QObject(parent){
   watcher = new QFileSystemWatcher(this);

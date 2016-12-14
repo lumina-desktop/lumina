@@ -8,7 +8,7 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h> //This contains the "ResizeMenu" class
+#include <LUtils.h> //This contains the "ResizeMenu" class
 
 LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
@@ -132,6 +132,6 @@ void LStartButtonPlugin::closeMenu(){
 void LStartButtonPlugin::shortcutActivated(){
   if(LSession::handle()->registerStartButton(this->type())){
     if(menu->isVisible()){ closeMenu(); }
-    else{ openMenu(); }
+    else{ this->activateWindow(); openMenu(); }
   }
 }

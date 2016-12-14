@@ -11,7 +11,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaOS.h>
 
 //LFileInfo INFO = LFileInfo("");

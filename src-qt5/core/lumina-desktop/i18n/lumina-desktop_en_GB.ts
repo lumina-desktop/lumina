@@ -9,22 +9,22 @@
         <translation>Klicken, um eine Anwendung zuzuweisen</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"></location>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Launch %1</source>
         <translation>Starte %1</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="45"></location>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="44"/>
         <source>Open %1</source>
         <translation>Open %1</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"></location>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
         <translation>Anwendung auswählen</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"></location>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="45"></location>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="71"></location>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="47"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="75"/>
         <source>Click to Set</source>
         <translation>Click to Set</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"></location>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Select Application</source>
         <translation>Anwendung auswählen</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"></location>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
@@ -56,82 +56,82 @@
         <translation>Desktop</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="83"></location>
+        <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
         <translation>Anwendungen verwalten</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="88"></location>
+        <location filename="../AppMenu.cpp" line="87"/>
         <source>Control Panel</source>
         <translation>Control Panel</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"></location>
+        <location filename="../AppMenu.cpp" line="97"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"></location>
+        <location filename="../AppMenu.cpp" line="98"/>
         <source>Development</source>
         <translation>Development</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"></location>
+        <location filename="../AppMenu.cpp" line="99"/>
         <source>Education</source>
         <translation>Education</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"></location>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Games</source>
         <translation>Games</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"></location>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Graphics</source>
         <translation>Graphics</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"></location>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Network</source>
         <translation>Network</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"></location>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Office</source>
         <translation>Office</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"></location>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Science</source>
         <translation>Science</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"></location>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"></location>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"></location>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Utility</source>
         <translation>Utility</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"></location>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="110"></location>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>Unsorted</source>
         <translation>Unsorted</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="37"></location>
+        <location filename="../AppMenu.cpp" line="38"/>
         <source>Applications</source>
         <translation>Applications</translation>
     </message>
@@ -240,27 +240,27 @@
         <translation>Go Back</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="161"></location>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
         <translation>Pin to Desktop</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="165"></location>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
         <source>Remove from Favorites</source>
         <translation>Remove from Favourites</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="168"></location>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
         <source>Add to Favorites</source>
         <translation>Add to Favourites</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="172"></location>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
         <translation>Remove from Quicklaunch</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="175"></location>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
         <translation>Add to Quicklaunch</translation>
     </message>
@@ -286,87 +286,87 @@
         <translation>Applications</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="69"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
         <translation>Browse Files</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="74"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
         <translation>Install Applications</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="80"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
         <translation>Control Panel</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
         <translation>Development</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
         <translation>Education</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
         <translation>Games</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
         <translation>Graphics</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
         <translation>Network</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
         <translation>Office</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
         <translation>Science</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
         <translation>Utility</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="103"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
         <translation>Unsorted</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="140"></location>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
         <translation>Leave</translation>
     </message>
@@ -374,12 +374,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="83"></location>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="91"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Charging)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="84"></location>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 Remaining)</translation>
     </message>
@@ -400,27 +400,32 @@
 <context>
     <name>LDPlugin</name>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="36"></location>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
+        <source>Launch Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
         <translation>Start Moving Item</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="37"></location>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
         <translation>Start Resizing Item</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="39"></location>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
         <translation>Increase Item Sizes</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="40"></location>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
         <translation>Decrease Item Sizes</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"></location>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
         <translation>Remove Item</translation>
     </message>
@@ -428,42 +433,42 @@
 <context>
     <name>LDeskBarPlugin</name>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
         <translation>Favourite Applications</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="196"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
         <translation>Favourite Folders</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
         <translation>Pictures</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
         <translation>Other Files</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="205"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
         <source>Documents</source>
         <translation>Documents</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="208"></location>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
         <translation>Favourite Files</translation>
     </message>
@@ -471,32 +476,32 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="198"></location>
+        <location filename="../LDesktop.cpp" line="200"/>
         <source>Window List</source>
         <translation>Window List</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="263"></location>
+        <location filename="../LDesktop.cpp" line="269"/>
         <source>Lumina Desktop</source>
         <translation>Lumina Desktop</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="264"></location>
+        <location filename="../LDesktop.cpp" line="270"/>
         <source>Workspace %1</source>
         <translation>Workspace %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="274"></location>
+        <location filename="../LDesktop.cpp" line="280"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="275"></location>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Browse Files</source>
         <translation>Browse Files</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="305"></location>
+        <location filename="../LDesktop.cpp" line="310"/>
         <source>Leave</source>
         <translation>Leave</translation>
     </message>
@@ -964,12 +969,12 @@
         <translation>Display</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="51"></location>
+        <location filename="../SettingsMenu.cpp" line="50"/>
         <source>Control Panel</source>
         <translation>Control Panel</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="57"></location>
+        <location filename="../SettingsMenu.cpp" line="56"/>
         <source>About Lumina</source>
         <translation>About Lumina</translation>
     </message>
@@ -1057,34 +1062,34 @@
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Apply Updates?</source>
         <translation>Apply Updates?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>You have system updates waiting to be applied! Do you wish to install them now?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (Plugged In)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 Estimated)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
         <translation>%1% Remaining</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"></location>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"></location>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"></location>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
         <source>Workspace %1/%2</source>
         <translation>Workspace %1/%2</translation>
     </message>
@@ -1140,7 +1145,7 @@
 <context>
     <name>UserItemWidget</name>
     <message>
-        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"></location>
+        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="32"/>
         <source>Go Back</source>
         <translation>Go Back</translation>
     </message>

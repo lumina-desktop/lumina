@@ -13,7 +13,7 @@
 #include <QVBoxLayout>
 #include "../LDPlugin.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 class QuickDPlugin : public LDPlugin{
 	Q_OBJECT

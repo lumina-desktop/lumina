@@ -25,7 +25,7 @@
 #include "LFileDialog.h"
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
@@ -261,7 +261,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if(extension=="desktop" && !showDLG){
     XDGDesktop DF(inFile);
     if(!DF.isValid()){
-      ShowErrorDialog( argc, argv, QString(QObject::tr("File could not be opened: %1")).arg(inFile) );
+      ShowErrorDialog( argc, argv, QString(QObject::tr("Application entry is invalid: %1")).arg(inFile) );
     }
     switch(DF.type){
       case XDGDesktop::APP:

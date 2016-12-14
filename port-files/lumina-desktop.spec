@@ -1,33 +1,25 @@
 # Enable hardened build by default
 %global _hardened_build 1
 
-# Enable pulling translations by default
-%bcond_without pull_translations
+%define release_version 1.1.0-p1
+%define rpm_version %(echo %{release_version} | tr - .)
 
 Summary:            A lightweight, portable desktop environment
 Name:               lumina-desktop
-Version:            0.8.8
+Version:            %{rpm_version}
 Release:            1%{?dist}
 License:            BSD
 Group:              User Interface/Desktops
-# Main source
-Source0:            https://github.com/pcbsd/lumina/archive/v%{version}-Release/lumina-%{version}-Release.tar.gz
-%if %{with pull_translations}
-# Translations
-Source1:            https://github.com/pcbsd/lumina-i18n/raw/master/dist/lumina-i18n.txz
-%endif
 URL:                http://lumina-desktop.org
+
+# Formatted so spectool can fetch the source.
+Source0:            https://github.com/trueos/lumina/archive/v%{release_version}.tar.gz#/lumina-%{release_version}.tar.gz
 
 # Exclude IBM ESA/390 and ESA System/z architectures
 ExcludeArch:        s390 s390x
 
 # Compiler requirements
 BuildRequires:      gcc, gcc-c++
-
-%if %{with pull_translations}
-# Translation installation requirements
-BuildRequires:      tar
-%endif
 
 # Qt requirements
 BuildRequires:      qt5-qttools, qt5-qttools-devel, qt5-linguist
@@ -56,6 +48,8 @@ Requires:           lumina-search = %{version}-%{release}
 Requires:           lumina-info = %{version}-%{release}
 Requires:           lumina-xconfig = %{version}-%{release}
 Requires:           lumina-fileinfo = %{version}-%{release}
+Requires:           lumina-textedit = %{version}-%{release}
+Requires:           lumina-calculator = %{version}-%{release}
 
 
 %description
@@ -170,32 +164,40 @@ Requires:           %{name}-libs = %{version}-%{release}
 This package provides lumina-fileinfo, which is an
 advanced desktop file (menu) editor.
 
+%package -n lumina-textedit
+Summary:            Text editor for Lumina Desktop
+Group:              User Interface/Desktops
+Requires:           %{name}-libs = %{version}-%{release}
+
+%description -n lumina-textedit
+This package provides lumina-textedit.
+
+%package -n lumina-calculator
+Summary:            Calculator for Lumina Desktop
+Group:              User Interface/Desktops
+Requires:           %{name}-libs = %{version}-%{release}
+
+%description -n lumina-calculator
+This package provides lumina-calculator
+
 
 %prep
-%setup -q -n lumina-%{version}-Release
+%setup -q -n lumina-%{release_version}
+
 
 %build
-%qmake_qt5 CONFIG+=configure PREFIX="%{_prefix}" LIBPREFIX="%{_libdir}" QT5LIBDIR="%{_qt5_prefix}"
+%qmake_qt5 CONFIG+="configure WITH_I18N" PREFIX="%{_prefix}" LIBPREFIX="%{_libdir}" QT5LIBDIR="%{_qt5_prefix}" L_LIBDIR=%{_libdir}
 make %{?_smp_mflags}
 
 %install
 # Install the desktop
 make INSTALL_ROOT=%{buildroot} install
 
-%if %{with pull_translations}
-# Install translations
-mkdir -p %{buildroot}%{_datadir}/Lumina-DE/i18n
-tar xvf %{SOURCE1} -C %{buildroot}%{_datadir}/Lumina-DE/i18n
-%endif
-
-# Move config folder to correct location
-mv %{buildroot}%{_prefix}%{_sysconfdir} %{buildroot}
-
 # Fix paths in desktop files
 find %{buildroot}/ -name *.desktop -exec sed -i "s:/usr/local/:/usr/:g" {} \;
 
 # Create proper config file
-cp %{buildroot}%{_datadir}/Lumina-DE/luminaDesktop.conf %{buildroot}%{_sysconfdir}/luminaDesktop.conf
+cp %{buildroot}%{_datadir}/lumina-desktop/luminaDesktop.conf %{buildroot}%{_sysconfdir}/luminaDesktop.conf
 sed -i "s:/usr/local/share/applications/firefox.desktop:firefox:g" %{buildroot}%{_sysconfdir}/luminaDesktop.conf
 sed -i "s:/usr/local/share/applications/thunderbird.desktop:thunderbird:g" %{buildroot}%{_sysconfdir}/luminaDesktop.conf
 
@@ -221,83 +223,112 @@ sed -i "s:/usr/local/share/applications/thunderbird.desktop:thunderbird:g" %{bui
 
 %files
 %license LICENSE
-%{_bindir}/Lumina-DE
+%{_bindir}/lumina-desktop
+%{_bindir}/start-lumina-desktop
 %config(noreplace) %{_sysconfdir}/luminaDesktop.conf
 %{_sysconfdir}/luminaDesktop.conf.dist
 %{_datadir}/pixmaps/Lumina-DE.png
 %{_datadir}/xsessions/Lumina-DE.desktop
-%{_datadir}/Lumina-DE/desktop-background.jpg
-%{_datadir}/Lumina-DE/luminaDesktop.conf
-%{_datadir}/Lumina-DE/fluxbox-init-rc
-%{_datadir}/Lumina-DE/fluxbox-keys
-%{_datadir}/Lumina-DE/Login.ogg
-%{_datadir}/Lumina-DE/Logout.ogg
-%{_datadir}/Lumina-DE/colors/Lumina-Red.qss.colors
-%{_datadir}/Lumina-DE/colors/Lumina-Green.qss.colors
-%{_datadir}/Lumina-DE/colors/Lumina-Purple.qss.colors
-%{_datadir}/Lumina-DE/colors/Lumina-Gold.qss.colors
-%{_datadir}/Lumina-DE/colors/Lumina-Glass.qss.colors
-%{_datadir}/Lumina-DE/colors/PCBSD10-Default.qss.colors
-%{_datadir}/Lumina-DE/themes/Lumina-default.qss.template
-%{_datadir}/Lumina-DE/themes/None.qss.template
-%{_datadir}/Lumina-DE/quickplugins/quick-sample.qml
-%{_datadir}/Lumina-DE/colors/Blue-Light.qss.colors
-%{_datadir}/Lumina-DE/colors/Grey-Dark.qss.colors
-%{_datadir}/Lumina-DE/colors/Solarized-Dark.qss.colors
-%{_datadir}/Lumina-DE/colors/Solarized-Light.qss.colors
+%{_datadir}/lumina-desktop/desktop-background.jpg
+%{_datadir}/lumina-desktop/luminaDesktop.conf
+%{_datadir}/lumina-desktop/compton.conf
+%{_datadir}/lumina-desktop/fluxbox-init-rc
+%{_datadir}/lumina-desktop/fluxbox-keys
+%{_datadir}/lumina-desktop/Login.ogg
+%{_datadir}/lumina-desktop/Logout.ogg
+%{_datadir}/lumina-desktop/low-battery.ogg
+%{_datadir}/lumina-desktop/colors/Lumina-Red.qss.colors
+%{_datadir}/lumina-desktop/colors/Lumina-Green.qss.colors
+%{_datadir}/lumina-desktop/colors/Lumina-Purple.qss.colors
+%{_datadir}/lumina-desktop/colors/Lumina-Gold.qss.colors
+%{_datadir}/lumina-desktop/colors/Lumina-Glass.qss.colors
+%{_datadir}/lumina-desktop/colors/PCBSD10-Default.qss.colors
+%{_datadir}/lumina-desktop/themes/Lumina-default.qss.template
+%{_datadir}/lumina-desktop/themes/None.qss.template
+%{_datadir}/lumina-desktop/themes/Glass.qss.template
+%{_datadir}/lumina-desktop/colors/Blue-Light.qss.colors
+%{_datadir}/lumina-desktop/colors/Grey-Dark.qss.colors
+%{_datadir}/lumina-desktop/colors/Solarized-Dark.qss.colors
+%{_datadir}/lumina-desktop/colors/Solarized-Light.qss.colors
+%{_datadir}/lumina-desktop/colors/Black.qss.colors
+%{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_blue-grey-zoom.jpg
+%{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_blue-grey.jpg
 %{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_gold.jpg
 %{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_green.jpg
+%{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_grey-blue-zoom.jpg
+%{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_grey-blue.jpg
 %{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_purple.jpg
 %{_datadir}/wallpapers/Lumina-DE/Lumina_Wispy_red.jpg
-%{_datadir}/Lumina-DE/i18n/lumina-desktop*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-desktop*.qm
+%{_datadir}/lumina-desktop/menu-scripts/ls.json.sh
+%{_datadir}/lumina-desktop/globs2
 
 %files -n lumina-open
 %license LICENSE
 %{_bindir}/lumina-open
-%{_datadir}/Lumina-DE/i18n/lumina-open*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-open*.qm
 
 %files -n lumina-config
 %license LICENSE
 %{_bindir}/lumina-config
-%{_datadir}/Lumina-DE/i18n/lumina-config*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-config*.qm
+%{_datadir}/applications/lumina-config.desktop
 
 %files -n lumina-fm
 %license LICENSE
 %{_bindir}/lumina-fm
-%{_datadir}/Lumina-DE/i18n/lumina-fm*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-fm*.qm
 %{_datadir}/pixmaps/Insight-FileManager.png
 %{_datadir}/applications/lumina-fm.desktop
 
 %files -n lumina-screenshot
 %license LICENSE
 %{_bindir}/lumina-screenshot
-%{_datadir}/Lumina-DE/i18n/lumina-screenshot*.qm
+%{_datadir}/lumina-desktop/i18n/l-screenshot*.qm
 %{_datadir}/applications/lumina-screenshot.desktop
 
 %files -n lumina-search
 %license LICENSE
 %{_bindir}/lumina-search
-%{_datadir}/Lumina-DE/i18n/lumina-search*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-search*.qm
 %{_datadir}/applications/lumina-search.desktop
 
 %files -n lumina-info
 %license LICENSE
 %{_bindir}/lumina-info
-%{_datadir}/Lumina-DE/i18n/lumina-info*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-info*.qm
 %{_datadir}/applications/lumina-info.desktop
+%{_datadir}/applications/lumina-support.desktop
 
 %files -n lumina-xconfig
 %license LICENSE
 %{_bindir}/lumina-xconfig
-%{_datadir}/Lumina-DE/i18n/lumina-xconfig*.qm
+%{_datadir}/lumina-desktop/i18n/lumina-xconfig*.qm
+%{_datadir}/applications/lumina-xconfig.desktop
 
 %files -n lumina-fileinfo
 %license LICENSE
 %{_bindir}/lumina-fileinfo
-%{_datadir}/Lumina-DE/i18n/lumina-fileinfo*.qm
+%{_datadir}/lumina-desktop/i18n/l-fileinfo*.qm
+%{_datadir}/applications/lumina-fileinfo.desktop
 
+%files -n lumina-textedit
+%license LICENSE
+%{_bindir}/lumina-textedit
+%{_bindir}/lte
+%{_datadir}/lumina-desktop/i18n/l-te*.qm
+%{_datadir}/applications/lumina-textedit.desktop
+
+%files -n lumina-calculator
+%license LICENSE
+%{_bindir}/lumina-calculator
+%{_datadir}/lumina-desktop/i18n/l-calc_*.qm
+%{_datadir}/applications/lumina-calculator.desktop
 
 %changelog
+* Tue Nov 22 2016 Craig Forbes <cforbes@gmail.com> - 1.1.0-p1
+- Updated to 1.1.0-p1
+
 * Wed Dec 23 2015 Neal Gompa <ngompa13@gmail.com>
 - Update to 0.8.8
 - Bring it closer to Fedora guidelines

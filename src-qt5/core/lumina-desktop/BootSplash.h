@@ -18,6 +18,8 @@ class BootSplash : public QWidget{
 private:
 	Ui::BootSplash *ui;
 
+	void generateTipOfTheDay();
+
 public:
 	BootSplash();
 	~BootSplash(){}

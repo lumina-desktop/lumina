@@ -20,7 +20,7 @@
 #include <QScreen>
 
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 #include <LuminaX11.h>
 
 #include "ImageEditor.h"
@@ -46,9 +46,13 @@ private:
 	WId cwin; //current window to screenshot
 	QSettings *settings;
 	LXCB *XCB; //Library access to window subsystems
+	QTimer *scaleTimer;
 
 	//Image Editor widget
 	ImageEditor *IMG;
+	QDateTime lastScreenShot;
+
+	void showSaveError(QString path);
 
 private slots:
 	//Button Slots
@@ -61,6 +65,9 @@ private slots:
 	void startScreenshot();
 
 	void imgselchanged(bool hassel);
+	void imgScalingChanged(int percent = -1);
+	void sliderChanged();
+
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot

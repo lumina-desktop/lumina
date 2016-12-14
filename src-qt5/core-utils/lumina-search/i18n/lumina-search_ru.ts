@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ru">
 <context>
@@ -137,17 +137,17 @@
 <context>
     <name>Worker</name>
     <message>
-        <location filename="../Worker.cpp" line="40"/>
+        <location filename="../Worker.cpp" line="42"/>
         <source>Searching: %1</source>
         <translation>Поиск: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="61"/>
+        <location filename="../Worker.cpp" line="63"/>
         <source>Starting Search: %1</source>
         <translation>Начало поиска: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="109"/>
+        <location filename="../Worker.cpp" line="111"/>
         <source>Search Finished</source>
         <translation>Поиск Окончен</translation>
     </message>

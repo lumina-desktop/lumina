@@ -10,6 +10,10 @@
 #define _LUMINA_FILE_MANAGER_FILE_OP_OPWIDGET_H
 
 #include "FODialog.h"
+#include "ScrollDialog.h"
+
+#include <QWidgetAction>
+
 namespace Ui{
 	class OPWidget;
 };
@@ -36,6 +40,7 @@ public slots:
 
 private:
 	Ui::OPWidget *ui;
+	ScrollDialog *dlg;
 	//Main Objects
 	QWidgetAction *WA;
 	FOWorker *worker;

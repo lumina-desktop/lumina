@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="104"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Panelis %1</translation>
     </message>
     <message>
+        <location filename="../PanelWidget.cpp" line="143"/>
         <location filename="../PanelWidget.cpp" line="144"/>
-        <location filename="../PanelWidget.cpp" line="145"/>
         <source>Select Color</source>
         <translation>Izvēlieties krāsu</translation>
     </message>
@@ -965,12 +965,12 @@
         <translation>Izvēlēties monitoru/darbvirsmu, ko konfigurēt</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Nesaglabātas izmaiņas</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"/>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Šajā lapā pašlaik ir nesaglabātas izmaiņas. Vai vēlaties saglabāt tās tagad?</translation>
     </message>
@@ -1003,37 +1003,37 @@
         <translation>Fails</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"/>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Starta servisi</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>Izvēlēties bināru failu</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"/>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Lietotnes binārie faili (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Nederīgs binārais fails</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"/>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Norādītais fails nav izpildāms!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Norādīt failu</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"/>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Visi faili (*)</translation>
     </message>
@@ -1140,34 +1140,31 @@
         <translation>Noklusējuma lietotnes</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"/>
-        <location filename="../pages/page_defaultapps.cpp" line="84"/>
-        <location filename="../pages/page_defaultapps.cpp" line="106"/>
-        <location filename="../pages/page_defaultapps.cpp" line="128"/>
-        <location filename="../pages/page_defaultapps.cpp" line="242"/>
-        <location filename="../pages/page_defaultapps.cpp" line="274"/>
-        <location filename="../pages/page_defaultapps.cpp" line="307"/>
-        <location filename="../pages/page_defaultapps.cpp" line="339"/>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Noklikšķināt, lai iestatītu</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"/>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"/>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>Izvēlēties bināru failu</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Nederīgs binārais fails</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"/>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Izvēlētais binārais fails nav izpildāms!</translation>
     </message>
@@ -1381,7 +1378,7 @@
         <translation>Parādīt darbvirsmas mapes saturu</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"/>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Darbvirsmas iestatījumi</translation>
     </message>
@@ -1412,7 +1409,7 @@
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"/>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Darbvirsmas iestatījumi</translation>
     </message>
@@ -1866,120 +1863,120 @@
         <translation>Izkārtojums:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"/>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Darbvirsmas fona iestatījumi</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Sistēmas noklusējums</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"/>
-        <location filename="../pages/page_wallpaper.cpp" line="220"/>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Tīrtoņa krāsa: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"/>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Ekrāna izšķirtspēja:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"/>
-        <location filename="../pages/page_wallpaper.cpp" line="99"/>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Izvēlieties krāsu</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Fails(i)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Katalogs (viens)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Katalogs (rekursīvi)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Tīrtoņa krāsa</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Automātiski</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Pilnekrāna režīms</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Pielāgot ekrānam</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Elements</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Vidū</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Augšā pa kreisi</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Augšā pa labi</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Apakšā pa kreisi</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Apakšā pa labi</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Bez fona</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(lietot sistēmas noklusējumu)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"/>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Fails neeksistē</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"/>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Atrast fona attēlu(s)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"/>
-        <location filename="../pages/page_wallpaper.cpp" line="257"/>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Atrast fona attēla katalogu</translation>
     </message>

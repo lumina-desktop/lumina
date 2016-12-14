@@ -16,16 +16,21 @@
 // ===================
 //      PUBLIC
 // ===================
-LDesktopPluginSpace::LDesktopPluginSpace(QWidget *parent) : QWidget(parent){
+LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
   this->setObjectName("LuminaDesktopPluginSpace");
+  this->setAttribute(Qt::WA_TranslucentBackground);
+  //this->setAttribute(Qt::WA_NoSystemBackground);
+  this->setAutoFillBackground(false);
   this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }"); 
+  this->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
   this->setAcceptDrops(true);
   this->setContextMenuPolicy(Qt::NoContextMenu);
   this->setMouseTracking(true);
   TopToBottom = true;
   GRIDSIZE = 100.0; //default value if not set
   plugsettings = LSession::handle()->DesktopPluginSettings();
-
+  LSession::handle()->XCB->SetAsDesktop(this->winId());
+  //this->setWindowOpacity(0.0);
 }
 
 LDesktopPluginSpace::~LDesktopPluginSpace(){
@@ -38,6 +43,7 @@ void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
   if(plugs != plugins){ plugins = plugs; changes = true; }
   if(files != deskitems){ deskitems = files; changes = true; }
   if(changes){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
+  this->show();
 }
 
 void LDesktopPluginSpace::SetIconSize(int size){
@@ -61,11 +67,21 @@ void LDesktopPluginSpace::cleanup(){
   deskitems.clear();
   this->hide();
 }
+
+void LDesktopPluginSpace::setBackground(QPixmap pix){
+  wallpaper = pix;
+  this->repaint();
+}
+
+void LDesktopPluginSpace::setDesktopArea(QRect area){
+  desktopRect = area;
+}
+
 // ===================
 //      PUBLIC SLOTS
 // ===================
 void LDesktopPluginSpace::UpdateGeom(int oldgrid){
-  if(DEBUG){ qDebug() << "Updated Desktop Geom:" << this->size() << GRIDSIZE << this->size()/GRIDSIZE; }
+  if(DEBUG){ qDebug() << "Updated Desktop Geom:" << desktopRect.size() << GRIDSIZE << desktopRect.size()/GRIDSIZE; }
   //Go through and check the locations/sizes of all items (particularly the ones on the bottom/right edges)
   //bool reload = false;
   for(int i=0; i<ITEMS.length(); i++){
@@ -105,6 +121,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   if(DEBUG){ qDebug() << "Adding Desktop Plugin:" << plugID; }
   LDPlugin *plug = NewDP::createPlugin(plugID, this);
     if(plug==0){ return; } //invalid plugin
+    //plug->setAttribute(Qt::WA_TranslucentBackground);
     plug->setWhatsThis(plugID);
   //Now get the geometry for the plugin
   QRect geom = plug->loadPluginGeometry(); //in pixel coords
@@ -149,8 +166,8 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
   if(col<0){ col = 0; } //just in case - since this can be recursively called
   bool found = false;
   int rowCount, colCount;
-  rowCount = RoundUp(this->height()/GRIDSIZE);
-  colCount = RoundUp(this->width()/GRIDSIZE);
+  rowCount = RoundUp(desktopRect.height()/GRIDSIZE);
+  colCount = RoundUp(desktopRect.width()/GRIDSIZE);
   if( (row+gridheight)>rowCount){ row = rowCount-gridheight; startRow = row; }
   if( (col+gridwidth)>colCount){ col = colCount-gridwidth; startCol = col; }
   QRect geom(0, 0, gridwidth*GRIDSIZE, gridheight*GRIDSIZE); //origin point will be adjusted in a moment
@@ -298,5 +315,19 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
   //Now load the desktop shortcuts (fill in the gaps as needed)
   for(int i=0; i<items.length(); i++){
     addDesktopItem(items[i]);
+  }
+}
+
+
+//=================
+//      PROTECTED
+//=================
+void LDesktopPluginSpace::paintEvent(QPaintEvent*ev){
+  if(!wallpaper.isNull()){
+    QPainter painter(this);
+    painter.setBrush(wallpaper);
+    painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
+  }else{
+    QWidget::paintEvent(ev);
   }
 }
