@@ -46,7 +46,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Delay </source>
-        <translation>Ritardo</translation>
+        <translation>Ritardo </translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="172"/>

@@ -36,6 +36,11 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
   ANIM = new QPropertyAnimation(this, "geometry", this);
     ANIM->setDuration(300); //1/3 second animation
   connect(ANIM, SIGNAL(finished()), this, SLOT(AnimFinished()) );
+  activeTimer = new QTimer(this);
+    activeTimer->setInterval(50);
+    activeTimer->setSingleShot(true);
+    connect(activeTimer, SIGNAL(timeout()), this, SLOT(activeStatusChanged()) );
+    connect(QApplication::instance(), SIGNAL(applicationStateChanged(Qt::ApplicationState)), activeTimer, SLOT(start()) );
   //Create the keyboard shortcuts
   //hideS = new QShortcut(QKeySequence(Qt::Key_Escape),this);
   closeS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q),this);
@@ -57,7 +62,6 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
   connect(closeS, SIGNAL(activated()), this, SLOT(CloseWindow()) );
   connect(prevTabS, SIGNAL(activated()), this, SLOT(Prev_Tab()) );
   connect(nextTabS, SIGNAL(activated()), this, SLOT(Next_Tab()) );
-  
   //Now set the defaults
   screennum = 0; //default value
   setTopOfScreen(true); //default value
@@ -282,6 +286,12 @@ void TermWindow::AnimFinished(){
   animRunning = -1; //done
 }
  
+void TermWindow::activeStatusChanged(){
+  if(animRunning>=0){ return; } //ignore this event - already changing
+  QWidget *active = QApplication::activeWindow();
+  if(active==0 && this->isVisible()){ HideWindow(); }
+}
+
 // ===================
 //        PROTECTED
 // ===================

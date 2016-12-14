@@ -35,11 +35,12 @@ private:
 	QString PPREFIX; //internal prefix for all settings
 	QDesktopWidget *screen;
 	QWidget *bgWindow, *panelArea;
+        //QRect hidegeom, showgeom; //for hidden panels
 	QPoint hidepoint, showpoint; //for hidden panels: locations when hidden/visible
 	bool defaultpanel, horizontal, hidden, hascompositer;
 	int screennum;
 	int panelnum;
-	int viswidth;
+	int viswidth, fullwidth;
 	QList<LPPlugin*> PLUGINS;
 
 public:
@@ -69,6 +70,7 @@ private slots:
 	void checkPanelFocus();
 
 protected:
+	void resizeEvent(QResizeEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);

@@ -129,7 +129,7 @@
         <translation>Annat </translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translation>Hitta Programmets Binär </translation>
     </message>
@@ -142,19 +142,19 @@
         <translation>Filfel</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>Ljudvolym %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>Skärmljusstyrka %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>Ogiltig fil eller URL %1</translation>
     </message>
@@ -186,12 +186,12 @@
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Binär saknas</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte hitta &quot;%1&quot;. Se till att du har detta programmet installerat först.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>

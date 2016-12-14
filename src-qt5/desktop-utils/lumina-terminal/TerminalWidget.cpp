@@ -19,7 +19,10 @@
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
   //Setup the text widget
   closing = false;
-  this->setStyleSheet("QTextEdit{ background: black; color: white; }");
+  QPalette P = this->palette();
+    P.setColor(QPalette::Base, Qt::black);
+    P.setColor(QPalette::Text, Qt::white);
+  this->setPalette(P);
   this->setLineWrapMode(QTextEdit::WidgetWidth);
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
@@ -37,14 +40,15 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   QFontDatabase FDB;
   QStringList fonts = FDB.families(QFontDatabase::Latin);
   for(int i=0; i<fonts.length(); i++){
-    if(FDB.isFixedPitch(fonts[i])){ this->setFont(QFont(fonts[i])); qDebug() << "Using Font:" << fonts[i]; break; }
+    if(FDB.isFixedPitch(fonts[i]) && FDB.isSmoothlyScalable(fonts[i]) ){ this->setFont(QFont(fonts[i])); qDebug() << "Using Font:" << fonts[i]; break; }
+    //if(FDB.isSmoothlyScalable(fonts[i]) ){ this->setFont(QFont(fonts[i])); qDebug() << "Using Font:" << fonts[i]; break; }
   }
   //Create/open the TTY port
   PROC = new TTYProcess(this);
-  qDebug() << "Open new TTY";
+  //qDebug() << "Open new TTY";
   //int fd;
   bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh"), QStringList(), dir);
-  qDebug() << " - opened:" << ok;
+  //qDebug() << " - opened:" << ok;
   this->setEnabled(PROC->isOpen());
   contextMenu = new QMenu(this);
     copyA = contextMenu->addAction(LXDG::findIcon("edit-copy"), tr("Copy Selection"), this, SLOT(copySelection()) );
@@ -59,10 +63,14 @@ TerminalWidget::~TerminalWidget(){
   aboutToClose();
 }
 
+void TerminalWidget::setTerminalFont(QFont font){
+  this->setFont(font);
+}
+
 void TerminalWidget::aboutToClose(){
   closing = true;
   if(PROC->isOpen()){ PROC->closeTTY(); } //TTY PORT
-  //delete PROC->
+  
 }
 
 // ==================
@@ -82,7 +90,7 @@ void TerminalWidget::InsertText(QString txt){
   sel.cursor = cur;
   sels << sel;
   this->setExtraSelections(sels);
-  //qDebug() << "New Text. Format:" << CFMT.foreground() << CFMT.font();
+  //qDebug() << "New Text Format:"<< txt << CFMT.foreground() << CFMT.font() << CFMT.fontWeight();
 }
 
 void TerminalWidget::applyData(QByteArray data){
@@ -93,10 +101,15 @@ void TerminalWidget::applyData(QByteArray data){
   //qDebug() << "Data:" << data;
   for(int i=0; i<data.size(); i++){
     if( data.at(i)=='\b' ){
-      //Flush current text buffer to widget
-      //Simple cursor backward 1 (NOT backspace in this context!! - this widget should be in "insert" mode instead)
-      InsertText(chars); chars.clear(); 
-      this->moveCursor(QTextCursor::Left, QTextCursor::MoveAnchor);
+      //Backspace
+      if(!chars.isEmpty()){ chars.chop(1); }
+      else{ 
+        QTextCursor cur = this->textCursor();
+	  cur.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
+	  cur.removeSelectedText();
+        this->setTextCursor(cur);
+      }
+
     //}else if( data.at(i)=='\t' ){
        //chars.append("  ");
     }else if( data.at(i)=='\x1B' ){
@@ -115,10 +128,6 @@ void TerminalWidget::applyData(QByteArray data){
       i+=end; //move the final loop along - already handled these bytes
       
     }else if( data.at(i) != '\r' ){
-      //Special Check: if inserting text within a line, clear the rest of this line first
-      if(i==0 && this->textCursor().position() < this->document()->characterCount()-1){
-        applyANSI("[K");
-      }
       chars.append(data.at(i));
       //Plaintext character - just add it here
       //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
@@ -131,7 +140,7 @@ void TerminalWidget::applyData(QByteArray data){
 
 void TerminalWidget::applyANSI(QByteArray code){
   //Note: the first byte is often the "[" character
-  qDebug() << "Handle ANSI:" << code;
+  //qDebug() << "Handle ANSI:" << code;
   if(code.length()==1){
     //KEYPAD MODES
     if(code.at(0)=='='){ altkeypad = true; }
@@ -139,6 +148,9 @@ void TerminalWidget::applyANSI(QByteArray code){
     else{
       qDebug() << "Unhandled ANSI Code:" << code;
     }
+  /*}else if(code.startsWith("[@") && code.length()==3){
+    //Strange VT220? code - just print the character after the @
+    InsertText( QString(code[2]) );*/
   }else if(code.startsWith("[")){
     // VT100 ESCAPE CODES
   //CURSOR MOVEMENT
@@ -414,7 +426,7 @@ void TerminalWidget::sendKeyPress(int key){
 	ba.append("\x1b[F");
         break;	    
   }
-   qDebug() << "Forward Input:" << ba;
+   //qDebug() << "Forward Input:" << ba;
   if(!ba.isEmpty()){ PROC->writeTTY(ba); }
 }
 
@@ -471,6 +483,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 
 void TerminalWidget::mousePressEvent(QMouseEvent *ev){
   this->setFocus();
+  this->activateWindow();
   if(ev->button()==Qt::RightButton){
     QTextEdit::mousePressEvent(ev);	  
   }else if(ev->button()==Qt::MiddleButton){
@@ -483,9 +496,11 @@ void TerminalWidget::mousePressEvent(QMouseEvent *ev){
 }
 
 void TerminalWidget::mouseMoveEvent(QMouseEvent *ev){
-  if(ev->button()==Qt::LeftButton){
+  //qDebug() << "MouseMove Event" << ev->button() << ev->buttons() << Qt::LeftButton;
+  if(ev->buttons().testFlag(Qt::LeftButton) ){
     selCursor.setPosition(this->cursorForPosition(ev->pos()).position(), QTextCursor::KeepAnchor);
     if(selCursor.hasSelection()){ this->setTextCursor(selCursor); }
+    //qDebug() << "Mouse Movement:" << selCursor.hasSelection();
   }else{
     QTextEdit::mouseMoveEvent(ev);
   }

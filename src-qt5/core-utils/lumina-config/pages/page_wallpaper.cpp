@@ -32,7 +32,8 @@ page_wallpaper::~page_wallpaper(){
 //================
 void page_wallpaper::SaveSettings(){
   QSettings settings("lumina-desktop","desktopsettings");
-  QString DPrefix = "desktop-"+QString::number(cScreen)+"/";
+  QString screenID = QApplication::screens().at(cScreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
   QStringList bgs; //get the list of backgrounds to use
       if(ui->radio_desk_multi->isChecked()){
         for(int i=0; i<ui->combo_desk_bg->count(); i++){
@@ -56,7 +57,8 @@ void page_wallpaper::LoadSettings(int screennum){
   cScreen = screennum; //save for later
   loading = true;
   QSettings settings("lumina-desktop","desktopsettings");
-  QString DPrefix = "desktop-"+QString::number(cScreen)+"/";
+  QString screenID = QApplication::screens().at(cScreen)->name();
+  QString DPrefix = "desktop-"+screenID+"/";
 
   QStringList bgs = settings.value(DPrefix+"background/filelist", QStringList()<<"default").toStringList();
   ui->combo_desk_bg->clear();

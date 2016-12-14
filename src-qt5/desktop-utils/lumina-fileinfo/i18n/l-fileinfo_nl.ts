@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
         <translation>Bestandsinformatie</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
         <translation>Sneltoets bewerken</translation>
     </message>
@@ -117,109 +117,109 @@
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
         <translation>---Bezig met berekenen---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
         <translation>Lezen/Schrijven</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="71"/>
         <source>Read Only</source>
         <translation>Alleen-lezen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="72"/>
         <source>Write Only</source>
         <translation>Alleen-schrijven</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="73"/>
         <source>No Access</source>
         <translation>Geen toegang</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
         <translation>XDG-sneltoets</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
         <translation>Map</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
         <translation>Uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="81"/>
         <source>Hidden %1</source>
         <translation>Verborgen %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="126"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
         <translation>Selecteer een uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Ongeldige selectie: ongeldig uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="305"/>
         <source>Select a directory</source>
         <translation>Selecteer een map</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
         <translation>Selecteer een pictogram</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Afbeeldingen (%1);; Alle bestanden (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
         <translation> Mappen: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
         <translation>Bestanden: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
         <translation>  Bezig met berekenen...</translation>
     </message>

@@ -18,7 +18,7 @@ public:
     virtual ~LDesktopBackground();
 
     virtual void paintEvent(QPaintEvent*);
-    void setBackground(const QString&, const QString&);
+    static QPixmap setBackground(const QString&, const QString&, QRect geom);
 
 private:
     QPixmap *bgPixmap;

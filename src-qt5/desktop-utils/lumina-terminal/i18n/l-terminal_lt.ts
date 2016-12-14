@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="50"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti žymėjimą</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="51"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Įdėti</translation>
     </message>
 </context>
 <context>
@@ -19,27 +19,27 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Perjungti terminalą</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrano viršuje</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Užverti terminalą</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti į monitorių</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitorius %1</translation>
     </message>
 </context>
 </TS>

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="l-te_el">
 <context>
     <name>ColorDialog</name>
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμόστε τα Χρώματα</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Τύπος Αντικειμένου</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Δείγμα</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή Χρώματος</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Εφαρμογή</translation>
     </message>
 </context>
 <context>
@@ -45,17 +45,17 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ΚύριοΠαράθυρο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Καρτέλα 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρείτε την προηγούμενη τάυτιση</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -64,138 +64,138 @@
         <location filename="../MainUI.ui" line="161"/>
         <location filename="../MainUI.ui" line="173"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρείτε:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"/>
         <source>Find the next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρείτε την επόμενη τάυτιση</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντικαταστήστε:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation>Περίπτωση τάυτισης</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντικατάσταση επόμενης τάυτισης</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="158"/>
         <source>Replace all matches (to end of document)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντικαταστήστε όλες τις ταυτίσεις (στο τέλος του εγγράφου)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποκρύψτε τις επιλογές έυρεσης/αντικατάστασης</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Προβολή</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Επισήμανση Σύνταξης</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Μπάρα Εργαλείων</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφανίστε Αριθμούς Γραμμών</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Κανένας</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="147"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Νέο Αρχείο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση Αρχείου</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση Αρχείου Ως</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο Αρχείου</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμογή Χρωμάτων</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
@@ -205,43 +205,43 @@
     <message>
         <location filename="../MainUI.ui" line="365"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρείτε</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="368"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="376"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντικατάσταση</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="379"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργαστής Κειμένου</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Open File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα Αρχείου(ων)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχεία Κειμένου (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
         <location filename="../MainUI.cpp" line="380"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιθυμείτε να χάσετε τις μη αποθηκευμένες αλλαγές;</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό το αρχείο έχει μη αποθηκευμένες αλλαγές.
+Θέλετε να το κλείσετε ούτως ή άλλως;
+
+% 1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="380"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές.
+Θέλετε να κλείσετε το πρόγραμμα επεξεργασίας ούτως ή άλλως;
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -265,32 +271,32 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση Αρχείου</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο Κειμένου (*)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Αριθμός σειράς: % 1, Αριθμός Στήλης: % 2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Το ακόλουθο αρχείο έχει τροποποιηθεί από κάποιο άλλο βοηθητικό πρόγραμμα. Θέλετε να το ξανά-φορτώσετε;</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Σημείωση: Θα χάσετε όλες τις επί του παρόντος - μη αποθηκευμένες αλλαγές)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Αρχείο Τροποποιήθηκε</translation>
     </message>
 </context>
 </TS>

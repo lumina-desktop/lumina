@@ -11,7 +11,9 @@
 #include <QProcessEnvironment>
 #include <QDebug>
 #include <QSettings>
-#include <LuminaUtils.h>
+#include <QDir>
+
+#include <LUtils.h>
 #include <LuminaOS.h>
 
 void LSession::stopall(){
@@ -23,7 +25,7 @@ void LSession::stopall(){
   for(int i=0; i<PROCS.length(); i++){
     if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->terminate(); }
   }
-  //QCoreApplication::exit(0);
+  QCoreApplication::exit(0);
 }
 
 void LSession::procFinished(){
@@ -34,7 +36,8 @@ void LSession::procFinished(){
       stopped++;
       if(!stopping){
         //See if this process is the main desktop binary
-        if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
+        if(PROCS[i]->objectName()=="runtime"){ stopall(); }
+        //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         break;
       }
@@ -56,6 +59,19 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
   proc->setProcessChannelMode(QProcess::MergedChannels);
   proc->setProcessEnvironment( QProcessEnvironment::systemEnvironment() );
   proc->setStandardOutputFile(logfile);
+  proc->setObjectName(ID);
+  if(ID=="runtime"){
+    //Bypass for a hidden dbus file requirement for Qt itself (Qt 5.5.1+?)
+    if(!QFile::exists("/etc/machine-id") && !QFile::exists("/var/db/dbus/machine-id")){
+      if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure") ){ } //good - the UUID was created successfully
+      else if(LUtils::isValidBinary("dbus-launch")){ command.prepend("dbus-launch --exit-with-session "); }
+      else{ 
+        //create a simple DBUS UUID and put it in the universal-fallback location (OS-independent)
+        // TO-DO - root vs user level permissions issue?
+        qDebug() << "Could not find '/etc/machine-id' or '/var/db/dbus/machine-id': Qt will most likely crash. \nPlease run 'dbus-uuidgen --ensure' with root permissions to generate this file if Lumina does not start properly.";
+      }
+   }
+  }
   proc->start(command, QIODevice::ReadOnly);
   connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished()) );
   PROCS << proc;
@@ -95,7 +111,7 @@ void LSession::start(){
   //Compositing manager
   QSettings settings("lumina-desktop","sessionsettings");
   if(settings.value("enableCompositing",true).toBool()){
-    if(LUtils::isValidBinary("compton")){ 
+    if(LUtils::isValidBinary("compton")){
       QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
       if(!QFile::exists(set)){
         if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
@@ -106,9 +122,21 @@ void LSession::start(){
         qDebug() << "Using default compton settings";
         startProcess("compositing","compton");
       }else{
-        startProcess("compositing","compton --config \""+set+"\"", QStringList() << set);
+        //Auto-detect if GLX is available on the system and turn it on/off as needed
+       bool startcompton = true;
+       if(LUtils::isValidBinary("glxinfo")){
+         bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
+         qDebug() << "Detected GPU Acceleration:" << hasAccel;
+         QStringList info = LUtils::readFile(set);
+         for(int i=0; i<info.length(); i++){ 
+           if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
+         }
+         LUtils::writeFile(set, info, true);
+         if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
+       }
+        if(startcompton){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
       }
-    }else if(LUtils::isValidBinary("xcompmgr")){ startProcess("compositing","xcompmgr"); }
+    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
   //Desktop Next
   startProcess("runtime","lumina-desktop");

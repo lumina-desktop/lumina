@@ -129,7 +129,7 @@
         <translation>기타</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translation>프로그램 실행 파일 찾기</translation>
     </message>
@@ -142,19 +142,19 @@
         <translation>파일 오류</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>오디오 볼륨 %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>화면 밝기 %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>잘못된 파일이나 URL: %1</translation>
     </message>

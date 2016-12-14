@@ -184,7 +184,9 @@ signals:
 	void IconThemeChanged();
 	void DesktopConfigChanged();
 	void SessionConfigChanged();
+	void FavoritesChanged();
 	void DesktopFilesChanged();
+	void WorkspaceChanged();
 	
 };
 

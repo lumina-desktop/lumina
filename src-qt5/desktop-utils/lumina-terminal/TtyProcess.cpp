@@ -2,11 +2,16 @@
 
 #include <QDir>
 #include <QProcessEnvironment>
+#include <QTimer>
+
+#define DEBUG 0
 
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
   sn = 0;
   ttyfd = 0;
+  starting = true;
+  fixReply = -1;
 }
 
 TTYProcess::~TTYProcess(){
@@ -18,10 +23,26 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  setenv("TERM","xterm",1);//"vt100",1); //vt100: VT100 emulation support
+  setenv("TERM","vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
+  //unsetenv("TERM");
   unsetenv("TERMCAP");
-  /*setenv("TERMCAP","mvterm|vv100|mvterm emulator with ANSI colors:\
-	:pa#64:Co#8:AF=\E[3%dm:AB=\E[4%dm:op=\E[100m:tc=vt102:",1); //see /etc/termcap as well*/
+  //setenv("TERMCAP","xterm",1);
+  /*setenv("TERMCAP",":do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
+	:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
+	:ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m:\
+	:md=2\E[1m:mr=2\E[7m:mb=2\E[5m:me=2\E[m:\
+	:is=\E>\E[?1;3;4;5l\E[?7;8h\E[1;24r\E[24;1H:\
+	:if=/usr/share/tabset/vt100:nw=2\EE:ho=\E[H:\
+	:as=2\E(0:ae=2\E(B:\
+	:ac=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||:\
+	:rs=\E>\E[?1;3;4;5l\E[?7;8h:ks=\E[?1h\E=:ke=\E[?1l\E>:\
+	:ku=\EOA:kd=\EOB:kr=\EOC:kl=\EOD:kb=\177:\
+	:k0=\EOy:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\EOt:\
+	:k6=\EOu:k7=\EOv:k8=\EOl:k9=\EOw:k;=\EOx:@8=\EOM:\
+	:K1=\EOq:K2=\EOr:K3=\EOs:K4=\EOp:K5=\EOn:pt:sr=2*\EM:xn:\
+	:sc=2\E7:rc=2\E8:cs=5\E[%i%d;%dr:UP=2\E[%dA:DO=2\E[%dB:RI=2\E[%dC:\
+	:LE=2\E[%dD:ct=2\E[3g:st=2\EH:ta=^I:ms:bl=^G:cr=^M:eo:it#8:\
+	:RA=\E[?7l:SA=\E[?7h:po=\E[5i:pf=\E[4i:",1); //see /etc/termcap as well */
   QStringList filter = env.keys().filter("XTERM");
   for(int i=0; i<filter.length(); i++){ unsetenv(filter[i].toLocal8Bit().data()); }
   //if(env.contains("TERM")){ unsetenv("TERM"); }
@@ -42,12 +63,14 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
       cargs[i] = NULL;
     }
   }
-  qDebug() << "PTY Start:" << prog;
+  if(DEBUG){ qDebug() << "PTY Start:" << prog; }
   //Launch the process attached to a new PTY
   int FD = 0;
   pid_t tmp = LaunchProcess(FD, cprog, cargs);
-  qDebug() << " - PID:" << tmp;
-  qDebug() << " - FD:" << FD;
+  if(DEBUG){ 
+    qDebug() << " - PID:" << tmp; 
+    qDebug() << " - FD:" << FD; 
+  }
   if(tmp<0){ return false; } //error
   else{
     childProc = tmp;
@@ -58,7 +81,8 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
 	sn->setEnabled(true);
 	connect(sn, SIGNAL(activated(int)), this, SLOT(checkStatus(int)) );
     ttyfd = FD;
-    qDebug() << " - PTY:" << ptsname(FD);
+   if(DEBUG){ qDebug() << " - PTY:" << ptsname(FD); }
+    starting = true;
     return true;
   }
 }
@@ -78,6 +102,9 @@ void TTYProcess::closeTTY(){
 
 void TTYProcess::writeTTY(QByteArray output){
   //qDebug() << "Write:" << output;
+  static QList<QByteArray> knownFixes;
+  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b" << "\x7F" << "\x08"; }
+  fixReply = knownFixes.indexOf(output);
   ::write(ttyfd, output.data(), output.size());
 }
 
@@ -97,12 +124,54 @@ QByteArray TTYProcess::readTTY(){
   }
   bool bad = true;
   BA = CleanANSI(BA, bad);
-  if(bad){ 
+  if(bad){
     //incomplete fragent - read some more first
     fragBA = BA; 
     return readTTY();
   }else{
-    //qDebug() << "Read Data:" << BA;
+    if(DEBUG){ qDebug() << "Read Data:" << BA; }
+    //BUG BYPASS - 12/7/16
+    //If the PTY gets input fairly soon after starting, the PTY will re-print the initial line(s)
+    if(starting && !BA.contains("\n") ){
+      //qDebug() << "Starting phase 1:" << BA;
+       writeTTY("\n\b"); //newline + backspace
+      BA.clear();
+    }else if(starting){
+      //qDebug() << "Starting phase 2:" << BA;
+      BA.remove(0, BA.indexOf("\n")+1);
+      starting = false;
+    }
+    //Apply known fixes for replies to particular inputs (mostly related to cursor position *within* the current line)
+    // This appears to be primarily from the concept that the cursor position is always at the end of the line (old VT limitation?)
+    //  so almost all these fixes are for cursor positioning within the current line
+    if(fixReply >= 0){
+      if(DEBUG){ qDebug() << "Fix Reply:" <<fixReply <<  BA; }
+      switch(fixReply){
+	case 0: //Right arrow ("\x1b[C") - PTY reply re-prints the next character rather than moving the cursor
+          if(BA.length()>0){
+            BA.remove(0,1);
+            BA.prepend("\x1b[C"); //just move the cursor - don't re-print that 1 character
+          }
+	  break;
+	case 1: //Left arrow ("\x1b[D") - PTY erases the previous character instead of moving the cursor
+          if(BA.startsWith("\b")){
+            BA.remove(0,1);
+            BA.prepend("\x1b[D"); //just move the cursor - don't send the "back" character (\b)
+          }
+	  break;
+	case 2: //Backspace or delete - PTY works fine if on the end of the line, but when in the middle of a line it will backpace a number of times after clearing (same as left arrow issue)
+        case 3:
+	case 4:
+          if(BA.contains("\x1b[K")){
+	    while(BA.indexOf("\x1b[K") < BA.lastIndexOf("\b") ){
+              BA.replace( BA.lastIndexOf("\b"), 1, "\x1b[D"); //just move the cursor left - don't send the "back" character (\b)
+            }
+          }
+	  break;
+      }
+      fixReply = -1; //done with the fix - resume normal operations
+      if(DEBUG){ qDebug() << " - Fixed:" << BA; }
+    }
     return BA;
   }
 }
@@ -164,6 +233,37 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index,1); 
     index = raw.indexOf("\x07");
   }
+  //VT220(?) print character code
+  index=raw.indexOf("\x1b[@");
+  while(index>=0){ 
+    raw = raw.remove(index,3); 
+    index = raw.indexOf("\x1b[@");
+  }
+
+  //VT102 Identify request
+  index = raw.indexOf("\x1b[Z");
+  while(index>=0){ 
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x1b[Z");
+    //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[/Z");
+  }
+ //Terminal Status request
+  index = raw.indexOf("\x1b[5n");
+  while(index>=0){ 
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x1b[5n");
+    //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[c"); //everything ok
+   }
+  //Terminal Identify request
+  index = raw.indexOf("\x1b[c");
+  while(index>=0){ 
+    raw = raw.remove(index,1); 
+    index = raw.indexOf("\x1b[c");
+    //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[/Z");
+  }
 
   incomplete = false;
   return raw;
@@ -190,7 +290,24 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     //Adjust the slave side mode to RAW
     struct termios TSET;
     rc = tcgetattr(fds, &TSET); //read the current settings
-    cfmakesane(&TSET); //set the RAW mode on the settings ( cfmakeraw(&TSET); )
+    cfmakesane(&TSET); //set the SANE mode on the settings ( cfmakeraw(&TSET); )
+    //Set Input Modes
+    TSET.c_iflag |= IGNPAR; //ignore parity errors
+    TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
+    //Set Local Modes
+    TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
+    TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
+    //Set Control Modes
+    TSET.c_cflag |= CLOCAL; //Local Terminal Connection (non-modem)
+    //TSET.c_lflag &= ~IEXTEN;
+    //TSET.c_cflag &= ~(CSIZE | PARENB);
+    //TSET.c_cflag |= CS8;
+    //tt.c_oflag &= ~OPOST; // disable special output processing
+    //Set Output Modes
+    TSET.c_oflag |= OPOST;
+    //TSET.c_oflag |= OXTABS;
+    TSET.c_cc[VTIME] = 0; // timeout
+    //Now apply the settings
     tcsetattr(fds, TCSANOW, &TSET); //apply the changed settings
 
     //Change the controlling terminal in child thread to the slave PTY

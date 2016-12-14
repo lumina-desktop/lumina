@@ -32,19 +32,21 @@ page_autostart::~page_autostart(){
 //    PUBLIC SLOTS
 //================
 void page_autostart::SaveSettings(){
-  QList<XDGDesktop> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << "Load AutoStart Files for saving";
+  QList<XDGDesktop*> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << " - done";
   //bool newstartapps = false;
   for(int i=0; i<ui->list_session_start->count(); i++){
     QString file = ui->list_session_start->item(i)->whatsThis();
     bool enabled = ui->list_session_start->item(i)->checkState()==Qt::Checked;
     bool found = false;
     for(int i=0; i<STARTAPPS.length(); i++){
-      if(STARTAPPS[i].filePath==file){
+      if(STARTAPPS[i]->filePath==file){
         found = true;
-	if(enabled != !STARTAPPS[i].isHidden){
+	if(enabled != !STARTAPPS[i]->isHidden){
 	  //value is different
-	  qDebug() << "Setting Autostart:" << enabled << STARTAPPS[i].filePath;
-	  LXDG::setAutoStarted(enabled, STARTAPPS[i]);
+	  qDebug() << "Setting Autostart:" << enabled << STARTAPPS[i]->filePath;
+	  STARTAPPS[i]->setAutoStarted(enabled);
 	}
 	break;
       }
@@ -55,25 +57,31 @@ void page_autostart::SaveSettings(){
       LXDG::setAutoStarted(enabled, file);
       //newstartapps = true;
     }
-  }
+  } //end loop over GUI items
+  //Now cleanup all the STARTAPPS data
+  for(int i=STARTAPPS.length()-1; i>=0; i--){ STARTAPPS[i]->deleteLater(); }
 }
 
 void page_autostart::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Startup Services") );
-  QList<XDGDesktop> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << "Load AutoStart Files";
+  QList<XDGDesktop*> STARTAPPS = LXDG::findAutoStartFiles(true); //also want invalid/disabled items
+  //qDebug() << " - done:" << STARTAPPS.length();
   //qDebug() << "StartApps:";
   ui->list_session_start->clear();
   for(int i=0; i<STARTAPPS.length(); i++){
-  //qDebug() << STARTAPPS[i].filePath +" -> " +STARTAPPS[i].name << STARTAPPS[i].isHidden;
-    if( !LXDG::checkValidity(STARTAPPS[i],false) || !QFile::exists(STARTAPPS[i].filePath) ){ continue; }
-    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(STARTAPPS[i].icon,"application-x-executable"), STARTAPPS[i].name );
-	it->setWhatsThis(STARTAPPS[i].filePath); //keep the file location
-        it->setToolTip(STARTAPPS[i].comment);
-	if(STARTAPPS[i].isHidden){ it->setCheckState( Qt::Unchecked); }
+  //qDebug() << STARTAPPS[i]->filePath +" -> " +STARTAPPS[i]->name << STARTAPPS[i]->isHidden;
+    if( !STARTAPPS[i]->isValid() || !QFile::exists(STARTAPPS[i]->filePath) ){ continue; }
+    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(STARTAPPS[i]->icon,"application-x-executable"), STARTAPPS[i]->name );
+	it->setWhatsThis(STARTAPPS[i]->filePath); //keep the file location
+        it->setToolTip(STARTAPPS[i]->comment);
+	if(STARTAPPS[i]->isHidden){ it->setCheckState( Qt::Unchecked); }
 	else{it->setCheckState( Qt::Checked); }
 	ui->list_session_start->addItem(it);
   }
+  //Now cleanup all the STARTAPPS data
+  for(int i=STARTAPPS.length()-1; i>=0; i--){ STARTAPPS[i]->deleteLater(); }
 }
 
 void page_autostart::updateIcons(){
@@ -85,17 +93,15 @@ void page_autostart::updateIcons(){
 //=================
 //         PRIVATE
 //=================
-XDGDesktop page_autostart::getSysApp(bool allowreset){
-  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+QString page_autostart::getSysApp(bool allowreset){
+  AppDialog dlg(this);
     dlg.allowReset(allowreset);
     dlg.exec();
-  XDGDesktop desk;
   if(dlg.appreset && allowreset){
-    desk.filePath = "reset"; //special internal flag
+    return "reset";
   }else{
-    desk = dlg.appselected;
+    return dlg.appselected;
   }
-  return desk;
 }
 
 //=================
@@ -109,8 +115,9 @@ void page_autostart::rmsessionstartitem(){
 
 void page_autostart::addsessionstartapp(){
   //Prompt for the application to start
-  XDGDesktop desk = getSysApp(false); //no reset
-  if(desk.filePath.isEmpty()){ return; } //cancelled
+  QString app = getSysApp(false); //no reset
+  if(app.isEmpty()){ return; } //cancelled
+  XDGDesktop desk(app);
   QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
     it->setWhatsThis(desk.filePath);
     it->setToolTip(desk.comment);

@@ -35,8 +35,8 @@
 // ======================
 // FreeDesktop Desktop Actions Framework (data structure)
 // ======================
-class XDGDesktopAction{
-public:
+struct XDGDesktopAction{
+//public:
   //Admin variables
   QString ID; //The ID name for this action (should correspond to an entry in the "actionList" for the XDGDesktop below)
   //General Variables
@@ -46,9 +46,11 @@ public:
 // ======================
 //  FreeDesktop Desktop Entry Framework (data structure)
 // ======================
-class XDGDesktop{
+class XDGDesktop : public QObject{
+	Q_OBJECT
 public:
   enum XDGDesktopType { BAD, APP, LINK, DIR };
+
   //Admin variables
   QString filePath; //which file this structure contains the information for (absolute path)
   QDateTime lastRead; //when this structure was created from the file
@@ -62,12 +64,24 @@ public:
   QStringList actionList, mimeList, catList, keyList;
   bool useTerminal, startupNotify;
   QList<XDGDesktopAction> actions;
+    //Type 1 Extensions for Lumina (Optional)
+    bool useVGL; //X-VGL
+
   //Type 2 (LINK) variables
   QString url;
-  
-  //Constructor/destructor
-  XDGDesktop(){}
-  ~XDGDesktop(){}
+
+	//Constructor/destructor
+	XDGDesktop(QString filePath="", QObject *parent = 0);
+	~XDGDesktop(){}
+
+	//Functions for using this structure in various ways
+	void sync(); //syncronize this structure with the backend file(as listed in the "filePath" variable)
+	bool isValid(bool showAll = true); //See if this is a valid .desktop entry (showAll: don't filter out based on DE exclude/include lists)
+
+	QString getDesktopExec(QString ActionID = "");
+	bool saveDesktopFile(bool merge = true); //This will use the "filePath" variable for where to save the file
+
+	bool setAutoStarted(bool autostart = true); 
 };
 
 // ========================
@@ -80,12 +94,12 @@ public:
 	XDGDesktopList(QObject *parent = 0, bool watchdirs = false);
 	~XDGDesktopList();
 	//Main Interface functions
-	QList<XDGDesktop> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
+	QList<XDGDesktop*> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
 
 	//Administration variables (not typically used directly)
 	QDateTime lastCheck;
 	QStringList newApps, removedApps; //list of "new/removed" apps found during the last check
-	QHash<QString, XDGDesktop> files; //<filepath>/<XDGDesktop structure>
+	QHash<QString, XDGDesktop*> files; //<filepath>/<XDGDesktop structure>
 
 public slots:
 	void updateList(); //run the check routine
@@ -93,6 +107,7 @@ public slots:
 private:
 	QFileSystemWatcher *watcher;
 	QTimer *synctimer;
+	bool keepsynced;
 
 private slots:
 	void watcherChanged();
@@ -107,15 +122,18 @@ signals:
 class LFileInfo : public QFileInfo{
 private:
 	QString mime, icon;
-	XDGDesktop desk;
+	XDGDesktop *desk;
 
 	void loadExtraInfo();
 	
 public:
 	//Couple overloaded contructors
+	LFileInfo();
 	LFileInfo(QString filepath);
 	LFileInfo(QFileInfo info);
-	~LFileInfo(){}
+	~LFileInfo(){ 
+	  desk->deleteLater(); 
+	}
 	
 	//Functions for accessing the extra information
 	// -- Return the mimetype for the file
@@ -142,25 +160,25 @@ typedef QList<LFileInfo> LFileInfoList;
 class LXDG{
 public:
 	//Read/write a *.desktop file
-	static XDGDesktop loadDesktopFile(QString filePath, bool& ok);
-	static bool saveDesktopFile(XDGDesktop dFile, bool merge = true);
+	//static XDGDesktop* loadDesktopFile(QString filepath, bool&ok, QObject *parent = 0);
+	//static bool saveDesktopFile(XDGDesktop *dFile, bool merge = true);
 	//Check a *.desktop file for validity (showAll skips the DE-exclusivity checks)
-	static bool checkValidity(XDGDesktop dFile, bool showAll = true); 
+	//static bool checkValidity(XDGDesktop *dFile, bool showAll = true); 
 	//Check for a valid executable
 	static bool checkExec(QString exec);
 	//Get a list of all the directories where *.desktop files exist
 	static QStringList systemApplicationDirs();
 	//Get a list of all the *.desktop files available on the system
-        static XDGDesktopList* systemAppsList(); //return a pointer to the entire class
-	static QList<XDGDesktop> systemDesktopFiles(bool showAll = false, bool showHidden = false); //simplification for getting just the files
+        //static XDGDesktopList* systemAppsList(); //return a pointer to the entire class
+	//static QList<XDGDesktop*> systemDesktopFiles(bool showAll = false, bool showHidden = false); //simplification for getting just the files
 	//Sort a list of Desktop files into the proper categories
-	static QHash< QString, QList<XDGDesktop> > sortDesktopCats(QList<XDGDesktop> apps);
+	static QHash< QString, QList<XDGDesktop*> > sortDesktopCats(QList<XDGDesktop*> apps);
 	//Return the icon to use for the given category
 	static QString DesktopCatToIcon(QString cat);
 	//Sort a list of Desktop files by name
-	static QList<XDGDesktop> sortDesktopNames(QList<XDGDesktop> apps);
+	static QList<XDGDesktop*> sortDesktopNames(QList<XDGDesktop*> apps);
 	//Get the executable line from a Desktop file
-	static QString getDesktopExec(XDGDesktop app, QString ActionID = "");
+	//static QString getDesktopExec(XDGDesktop *app, QString ActionID = "");
 	//Set all the default XDG Environment variables
 	static void setEnvironmentVars();
 	//Find an icon from the current/default theme
@@ -191,8 +209,8 @@ public:
 	static QStringList loadMimeFileGlobs2();
 	
 	//Find all the autostart *.desktop files
-	static QList<XDGDesktop> findAutoStartFiles(bool includeInvalid = false);
-	static bool setAutoStarted(bool autostart, XDGDesktop app);
+	static QList<XDGDesktop*> findAutoStartFiles(bool includeInvalid = false);
+	//static bool setAutoStarted(bool autostart, XDGDesktop *app);
 	static bool setAutoStarted(bool autostart, QString filePath); //for convenience
 };
 

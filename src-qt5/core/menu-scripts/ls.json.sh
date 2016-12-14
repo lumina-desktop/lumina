@@ -1,6 +1,6 @@
 #!/bin/sh
 DIR=${1}
-if [ "$1" == "" ] ; then
+if [ "$1" = "" ] ; then
   DIR=`pwd`
 fi
 

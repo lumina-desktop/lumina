@@ -129,7 +129,7 @@
         <translation>Otros</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translation>Buscar Binario de la Aplicación</translation>
     </message>
@@ -142,19 +142,19 @@
         <translation>Error de Archivo</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>Volúmen del Sonido %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>Brillo de Pantalla %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>Archivo o URL no válido(a): %1</translation>
     </message>

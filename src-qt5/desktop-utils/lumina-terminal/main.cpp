@@ -34,13 +34,13 @@ int  main(int argc, char *argv[]) {
    }
    
    //Now go ahead and setup the app
-   LuminaThemeEngine theme(&a);
+   //LuminaThemeEngine theme(&a);
      QApplication::setQuitOnLastWindowClosed(false);   
      
    //Now start the tray icon
    TrayIcon tray;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &tray, SLOT(slotSingleInstance(QStringList)) );
-    QObject::connect(&theme, SIGNAL(updateIcons()), &tray, SLOT(updateIcons()) );
+    //QObject::connect(&theme, SIGNAL(updateIcons()), &tray, SLOT(updateIcons()) );
     tray.parseInputs(a.inputlist);
    tray.show();
    return  a.exec();

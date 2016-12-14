@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="50"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera markering</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="51"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistra in</translation>
     </message>
 </context>
 <context>
@@ -29,17 +29,17 @@
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng terminal</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta till skärm</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärm %1</translation>
     </message>
 </context>
 </TS>

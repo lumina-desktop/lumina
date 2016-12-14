@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014-2015, Ken Moore
+//  Copyright (c) 2014-2016, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -531,6 +531,49 @@ uint LXCB::GenerateDamageID(WId win){
   return ( (uint) dmgID );		
 }
 
+// === paintRoot() ===
+void LXCB::paintRoot(QRect area, const QPixmap *pix){
+  //Generate a graphics context for this paint
+  xcb_gcontext_t gc = xcb_generate_id(QX11Info::connection());
+  xcb_screen_t *screen = xcb_setup_roots_iterator(xcb_get_setup(QX11Info::connection())).data;
+ uint32_t values[1];
+  values[0] = screen->black_pixel;
+
+    xcb_create_gc(QX11Info::connection(), 
+	gc,
+	screen->root,
+	XCB_GC_BACKGROUND,
+	values );
+  //Convert the QPixmap to a xcb_drawable_t
+  QImage qimage = pix->toImage().convertToFormat(QImage::Format_ARGB32); 
+  xcb_image_t *image = xcb_image_create(pix->width(), pix->height(), XCB_IMAGE_FORMAT_XY_PIXMAP,
+	32, qimage.depth(), 32, 32, XCB_IMAGE_ORDER_LSB_FIRST, XCB_IMAGE_ORDER_LSB_FIRST, 
+	0, qimage.byteCount(), qimage.bits()); 
+
+  
+  //Now paint on the root window
+  xcb_image_put(QX11Info::connection(),
+	screen->root, //where to put it
+	gc,
+	image,
+	area.x(),
+	area.y(),
+	0);
+  /*xcb_copy_area(QX11Info::connection(),
+	//static_cast<xcb_drawable_t>( pix.handle() ) , //image to copy
+	*image,
+	screen->root,  //where to put it
+	gc,  //graphics context for destination
+	0,  //x origin of picture
+	0,  // y origin of picture
+	area.x(),  //x origin of where to place it
+	area.y(),  //y origin of where to place it
+	area.width(), 
+	area.height() );*/
+  //Apply the change right now
+  xcb_flush(QX11Info::connection());
+  xcb_image_destroy(image);
+}
 
 // === SetAsSticky() ===
 void LXCB::SetAsSticky(WId win){
@@ -1080,6 +1123,7 @@ WId LXCB::startSystemTray(int screen){
 void LXCB::closeSystemTray(WId trayID){
   xcb_destroy_window(QX11Info::connection(), trayID);
 }
+
 
 // === SetScreenWorkArea() ===
 /*void LXCB::SetScreenWorkArea(unsigned int screen, QRect rect){

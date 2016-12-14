@@ -2,13 +2,15 @@
 
 #include <QTimer>
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 Worker::Worker(QObject *parent) : QObject(parent){
   //Get the list of all applications and save them in an easily-searchable form
-  QList<XDGDesktop> apps = LXDG::systemDesktopFiles();
+  XDGDesktopList APPS;
+  APPS.updateList();
+  QList<XDGDesktop*> apps = APPS.apps(false,false);
   for(int i=0; i<apps.length(); i++){
-    applist << ":::1:::"+apps[i].name+":::2:::"+apps[i].genericName+":::3:::"+apps[i].comment+":::4:::"+apps[i].filePath;
+    applist << ":::1:::"+apps[i]->name+":::2:::"+apps[i]->genericName+":::3:::"+apps[i]->comment+":::4:::"+apps[i]->filePath;
   }
   stopsearch = false;
 }
@@ -50,7 +52,8 @@ bool Worker::searchDir(QString dirpath){
   tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot , QDir::Name);
   for(int i=0; i<tmp.length(); i++){
     if(stopsearch){ return true; }
-    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) ){ continue; } //this dir is skipped
+    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) || tmp[i]=="proc" ){ continue; } //this dir is skipped
+       //Special case - skip the "proc" directory heirarchy (highly-recursive layout for *every* process which is running)
     if( searchDir(dir.absoluteFilePath(tmp[i])) ){ return true; }
   }
   return false;

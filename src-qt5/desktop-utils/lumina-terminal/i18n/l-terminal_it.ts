@@ -11,7 +11,7 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="51"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Incolla</translation>
     </message>
 </context>
 <context>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiudi terminale</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>

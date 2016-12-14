@@ -9,7 +9,7 @@
 
 #include "GetPluginDialog.h"
 #include "AppDialog.h"
-
+#include "ScriptDialog.h"
 
 PanelWidget::PanelWidget(QWidget *parent, QWidget *Main, LPlugins *Pinfo) : QWidget(parent), ui(new Ui::PanelWidget){
   ui->setupUi(this);
@@ -42,7 +42,8 @@ PanelWidget::~PanelWidget(){
 void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   pnum = Pnum; dnum = Dnum; //save these for later
   ui->label->setText( QString(tr("Panel %1")).arg(QString::number(Pnum+1) ) );
-  QString prefix = "panel"+QString::number(Dnum)+"."+QString::number(Pnum)+"/";
+  QString screenID = QApplication::screens().at(Dnum)->name();
+  QString prefix = "panel_"+screenID+"."+QString::number(Pnum)+"/";
   qDebug() << "Loading Panel Settings:" << prefix;
   //Now load the settings into the GUI
   int tmp = ui->combo_align->findData( settings->value(prefix+"pinLocation","center").toString().toLower() );
@@ -59,13 +60,24 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   for(int i=0; i<plugs.length(); i++){
     QString pid = plugs[i].section("---",0,0);
       if(pid.startsWith("applauncher")){
-	bool ok = false;
-	XDGDesktop desk = LXDG::loadDesktopFile(pid.section("::",1,1),ok);
-	if(ok){
+	XDGDesktop desk(pid.section("::",1,1));
+	if(desk.type!=XDGDesktop::BAD){ //still need to allow invalid apps
 	  QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name );
 	      it->setWhatsThis(plugs[i]); //make sure to preserve the entire plugin ID (is the unique version)
 	  ui->list_plugins->addItem(it);
 	}
+
+      }else if(pid.startsWith("jsonmenu")){
+        LPI info = PINFO->panelPluginInfo( plugs[i].section("::::",0,0) );
+        if(info.ID.isEmpty()){ continue; } //invalid plugin type (no longer available?)
+        QString exec = plugs[i].section("::::",1,1);
+        QListWidgetItem *item = new QListWidgetItem();
+          item->setWhatsThis( plugs[i] );
+          item->setIcon( LXDG::findIcon(plugs[i].section("::::",3,3),info.icon) );
+          item->setText( plugs[i].section("::::",2,2) +" ("+info.name+")" );
+          item->setToolTip( info.description );
+        ui->list_plugins->addItem(item);
+
       }else{
         LPI info = PINFO->panelPluginInfo(pid);
         if(!info.ID.isEmpty()){
@@ -79,7 +91,8 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
 }
 
 void PanelWidget::SaveSettings(QSettings *settings){//save the current settings
-  QString prefix = "panel"+QString::number(dnum)+"."+QString::number(pnum)+"/";
+  QString screenID = QApplication::screens().at(dnum)->name();
+  QString prefix = "panel_"+screenID+"."+QString::number(pnum)+"/";
   qDebug() << "Saving panel settings:" << prefix;
   settings->setValue(prefix+"location", ui->combo_edge->currentData().toString() );
   settings->setValue(prefix+"pinLocation", ui->combo_align->currentData().toString() );
@@ -121,17 +134,15 @@ void PanelWidget::reloadColorSample(){
   ui->label_color_sample->setStyleSheet("background: "+ui->label_color_sample->whatsThis());
 }
 
-XDGDesktop PanelWidget::getSysApp(bool allowreset){
-  AppDialog dlg(this, LXDG::sortDesktopNames( LXDG::systemDesktopFiles() ) );
+QString PanelWidget::getSysApp(bool allowreset){
+  AppDialog dlg(this);
     dlg.allowReset(allowreset);
     dlg.exec();
-  XDGDesktop desk;
   if(dlg.appreset && allowreset){
-    desk.filePath = "reset"; //special internal flag
+    return "reset";
   }else{
-    desk = dlg.appselected;
+    return dlg.appselected;
   }
-  return desk;
 }
 
 QString PanelWidget::getColorStyle(QString current, bool allowTransparency){
@@ -181,22 +192,35 @@ void PanelWidget::on_tool_addplugin_clicked(){
 	dlg.exec();
   if(!dlg.selected){ return; } //cancelled
   QString pan = dlg.plugID; //getNewPanelPlugin();
+  QListWidgetItem *it = 0;
   if(pan == "applauncher"){
     //Prompt for the application to add
-    XDGDesktop app =getSysApp();
-    if(app.filePath.isEmpty()){ return; } //cancelled
-    pan.append("::"+app.filePath);
-    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(app.icon,""), app.name);
+    QString app =getSysApp();
+    if(app.isEmpty()){ return; } //cancelled
+    pan.append("::"+app);
+    XDGDesktop desk(app);
+    it = new QListWidgetItem( LXDG::findIcon(desk.icon,""), desk.name);
       it->setWhatsThis(pan);
-    ui->list_plugins->addItem(it);
-    ui->list_plugins->setCurrentItem(it);
-    ui->list_plugins->scrollToItem(it);
+
+  }else if(pan=="jsonmenu"){
+    //Need to prompt for the script file, name, and icon to use
+    //new ID format: "jsonmenu"::::<exec to run>::::<name>::::<icon>
+    ScriptDialog SD(this);
+    SD.exec();
+    if(!SD.isValid()){ return; }
+    LPI info = PINFO->panelPluginInfo(pan);
+    it = new QListWidgetItem( LXDG::findIcon(SD.icon(),"text-x-script"), SD.name()+" ("+info.ID+")" );
+    it->setWhatsThis(info.ID+"::::"+SD.command()+"::::"+SD.name()+"::::"+SD.icon());
+    it->setToolTip( info.description );
   }else{
     if(pan.isEmpty()){ return; } //nothing selected
     //Add the new plugin to the list
     LPI info = PINFO->panelPluginInfo(pan);
-    QListWidgetItem *it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
+    it = new QListWidgetItem( LXDG::findIcon(info.icon,""), info.name);
       it->setWhatsThis(info.ID);
+  }
+  //Now add the new item to the list
+  if(it!=0){
     ui->list_plugins->addItem(it);
     ui->list_plugins->setCurrentItem(it);
     ui->list_plugins->scrollToItem(it);

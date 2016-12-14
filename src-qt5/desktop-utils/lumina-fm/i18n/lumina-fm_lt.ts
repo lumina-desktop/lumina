@@ -55,313 +55,324 @@
     </message>
 </context>
 <context>
+    <name>BrowserWidget</name>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="210"/>
+        <source>Name</source>
+        <translation type="unfinished">Pavadinimas</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="211"/>
+        <source>Size</source>
+        <translation type="unfinished">Dydis</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="212"/>
+        <source>Type</source>
+        <translation type="unfinished">Tipas</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="213"/>
+        <source>Date Modified</source>
+        <translation type="unfinished">Keitimo data</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="214"/>
+        <source>Date Created</source>
+        <translation type="unfinished">Sukūrimo data</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="316"/>
+        <source>Capacity: %1</source>
+        <translation type="unfinished">Talpa: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="342"/>
+        <source>Files: %1 (%2)</source>
+        <translation type="unfinished">Failai: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="344"/>
+        <source>Files: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="350"/>
+        <source>Dirs: %1</source>
+        <translation type="unfinished">Katalogai: %1</translation>
+    </message>
+    <message>
+        <location filename="../BrowserWidget.cpp" line="362"/>
+        <source>No Directory Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DirWidget</name>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="20"/>
+        <location filename="../widgets/DirWidget2.ui" line="20"/>
         <source>Form</source>
         <translation>Forma</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="246"/>
-        <location filename="../widgets/DirWidget.ui" line="249"/>
-        <source>Open item</source>
-        <translation>Atverti elementą</translation>
+        <location filename="../widgets/DirWidget2.ui" line="145"/>
+        <source>Increase Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="271"/>
-        <location filename="../widgets/DirWidget.ui" line="274"/>
-        <source>Open item (select application)</source>
-        <translation>Atverti elementą (pasirinkti programą)</translation>
+        <location filename="../widgets/DirWidget2.ui" line="161"/>
+        <source>Decrease Icon Sizes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="300"/>
-        <location filename="../widgets/DirWidget.ui" line="303"/>
-        <source>Add item to personal favorites</source>
-        <translation>Pridėti elementą į mėgstamus</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="322"/>
-        <location filename="../widgets/DirWidget.ui" line="325"/>
-        <source>Rename item</source>
-        <translation>Pervadinti elementą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="351"/>
-        <source>Cut items</source>
-        <translation>Iškirpti elementus</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="354"/>
-        <source>Cut items (add to the clipboard)</source>
-        <translation>Iškirpti elementus (pridėti į iškarpinę)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="373"/>
-        <source>Copy items</source>
-        <translation>Kopijuoti elementus</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="376"/>
-        <source>Copy items to the clipboard</source>
-        <translation>Kopijuoti elementus į iškarpinę</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="395"/>
-        <location filename="../widgets/DirWidget.ui" line="398"/>
-        <source>Paste items from clipboard</source>
-        <translation>Įdėti elementus iš iškarpinės</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="424"/>
-        <location filename="../widgets/DirWidget.ui" line="427"/>
-        <source>Delete Items</source>
-        <translation>Ištrinti elementus</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="507"/>
-        <source>Stop loading the directory</source>
-        <translation>Stabdyti katalogo įkėlimą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="90"/>
-        <source>Add selected images to slideshow</source>
-        <translation>Pridėti pažymėtus paveikslus į skaidrių rodymą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="77"/>
-        <source>Create a new directory</source>
-        <translation>Sukurti naują katalogą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="80"/>
-        <source>New Dir</source>
-        <translation>Naujas katalogas</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="64"/>
-        <source>Create a new file</source>
-        <translation>Sukurti naują failą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="67"/>
-        <source>New File</source>
-        <translation>Naujas failas</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="93"/>
-        <source>Slideshow</source>
-        <translation>Skaidrių rodymas</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="109"/>
-        <source>Enqueue selection in multimedia player</source>
-        <translation>Statyti žymėjimą į eilę multimedijos grotuve</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="112"/>
-        <source>Play</source>
-        <translation>Groti</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.ui" line="465"/>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Back</source>
         <translation>Atgal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="468"/>
-        <location filename="../widgets/DirWidget.ui" line="471"/>
+        <location filename="../widgets/DirWidget2.ui" line="182"/>
+        <location filename="../widgets/DirWidget2.ui" line="185"/>
         <source>Go back to previous directory</source>
         <translation>Grįžti į ankstesnį katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="479"/>
+        <location filename="../widgets/DirWidget2.ui" line="193"/>
         <source>Up</source>
         <translation>Aukštyn</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="482"/>
-        <location filename="../widgets/DirWidget.ui" line="485"/>
+        <location filename="../widgets/DirWidget2.ui" line="196"/>
+        <location filename="../widgets/DirWidget2.ui" line="199"/>
         <source>Go to parent directory</source>
         <translation>Pereiti į virškatalogį</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="493"/>
+        <location filename="../widgets/DirWidget2.ui" line="207"/>
         <source>Home</source>
         <translation>Namai</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="496"/>
-        <location filename="../widgets/DirWidget.ui" line="499"/>
+        <location filename="../widgets/DirWidget2.ui" line="210"/>
+        <location filename="../widgets/DirWidget2.ui" line="213"/>
         <source>Go to home directory</source>
         <translation>Pereiti į namų katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.ui" line="518"/>
-        <location filename="../widgets/DirWidget.ui" line="521"/>
-        <source>Close this browser</source>
-        <translation>Užverti šią naršyklę</translation>
+        <location filename="../widgets/DirWidget2.ui" line="218"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="136"/>
-        <source>Name</source>
-        <translation>Pavadinimas</translation>
+        <location filename="../widgets/DirWidget2.ui" line="221"/>
+        <source>Select Action</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="140"/>
-        <source>Size</source>
-        <translation>Dydis</translation>
+        <location filename="../widgets/DirWidget2.ui" line="229"/>
+        <source>SingleColumn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="143"/>
-        <source>Type</source>
-        <translation>Tipas</translation>
+        <location filename="../widgets/DirWidget2.ui" line="232"/>
+        <source>Single column view</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="147"/>
-        <source>Date Modified</source>
-        <translation>Keitimo data</translation>
+        <location filename="../widgets/DirWidget2.ui" line="240"/>
+        <source>Dual Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="150"/>
-        <source>Date Created</source>
-        <translation>Sukūrimo data</translation>
+        <location filename="../widgets/DirWidget2.ui" line="243"/>
+        <source>Dual Column View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="207"/>
-        <location filename="../widgets/DirWidget.cpp" line="484"/>
+        <location filename="../widgets/DirWidget2.cpp" line="525"/>
         <source>(Limited Access) </source>
         <translation>(Prieiga apribota) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="469"/>
-        <source>Capacity: %1</source>
-        <translation>Talpa: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="474"/>
-        <source>Files: %1 (%2)</source>
-        <translation>Failai: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="479"/>
-        <source>Dirs: %1</source>
-        <translation>Katalogai: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>New Document</source>
         <translation>Naujas dokumentas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="781"/>
-        <location filename="../widgets/DirWidget.cpp" line="802"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>Name:</source>
         <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>Error Creating Document</source>
         <translation>Klaida, kuriant dokumentą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="792"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Dokumento sukurti nepavyko. Įsitikinkite, kad turite tinkamus leidimus.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="802"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>New Directory</source>
         <translation>Naujas katalogas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Invalid Name</source>
         <translation>Netinkamas pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="812"/>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <source>File Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <source>Directory Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="507"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Failas ar katalogas tokiu pavadinimu jau yra! Prašome pasirinkti kitą pavadinimą.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"/>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>Error Creating Directory</source>
         <translation>Klaida, kuriant katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="816"/>
+        <location filename="../widgets/DirWidget2.cpp" line="585"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Katalogo sukurti nepavyko. Įsitikinkite, kad turite tinkamus leidimus tam, kad keistumėte esamą katalogą.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="839"/>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>Current</source>
         <translation>Esamas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="949"/>
+        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <source>Create...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <source>File</source>
+        <translation type="unfinished">Failas</translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <source>Application Launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <source>Launch...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <source>Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <source>SlideShow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <source>Multimedia Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
+        <source>Modify Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <source>View Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <source>Checksums</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="448"/>
         <source>File Checksums:</source>
         <translation>Failų kontrolinės sumos:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"/>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
         <source>Missing Utility</source>
         <translation>Trūksta paslaugų programos</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="966"/>
+        <location filename="../widgets/DirWidget2.cpp" line="460"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Sistemoje nepavyko rasti &quot;lumina-fileinfo&quot; paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="984"/>
+        <location filename="../widgets/DirWidget2.cpp" line="485"/>
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="985"/>
+        <location filename="../widgets/DirWidget2.cpp" line="486"/>
         <source>Open With...</source>
         <translation>Atverti naudojant...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="987"/>
+        <location filename="../widgets/DirWidget2.cpp" line="250"/>
         <source>Rename...</source>
         <translation>Pervadinti...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="988"/>
-        <source>View Checksums...</source>
-        <translation>Rodyti kontrolines sumas...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="999"/>
-        <source>File Properties...</source>
-        <translation>Failo savybės...</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="992"/>
+        <location filename="../widgets/DirWidget2.cpp" line="247"/>
         <source>Cut Selection</source>
         <translation>Iškirpti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="993"/>
+        <location filename="../widgets/DirWidget2.cpp" line="248"/>
         <source>Copy Selection</source>
         <translation>Kopijuoti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="994"/>
+        <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Paste</source>
         <translation>Įdėti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget.cpp" line="996"/>
+        <location filename="../widgets/DirWidget2.cpp" line="252"/>
         <source>Delete Selection</source>
         <translation>Ištrinti žymėjimą</translation>
-    </message>
-    <message>
-        <location filename="../widgets/DirWidget.cpp" line="1002"/>
-        <source>Open Terminal here</source>
-        <translation>Atverti čia terminalą</translation>
     </message>
 </context>
 <context>
@@ -471,107 +482,107 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klonuoti Git saugyklą</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sveiki atvykę!</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šis vediklis palydės jus per GIT saugyklos atsisiuntimo iš interneto procesą.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>GitHub saugyklos nustatymai</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizacija/Naudotojas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Saugyklos pavadinimas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Yra privati saugykla</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieigos tipas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudoti mano SSH raktą</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijungti prie serverio</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonimiškai (tik viešosios saugyklos)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebūtinas SSH slaptažodis</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Išplėstinės parinktys</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinkintas gylis</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Viena šaka</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>šakos pavadinimas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
         <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustelėkite &quot;Kitas&quot;, kad pradėtumėte saugyklos atsisiuntimą</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="57"/>
         <source>Stop Download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Stabdyti atsisiuntimą?</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="57"/>
         <source>Kill the current download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nutraukti esamą atsisiuntimą?</translation>
     </message>
 </context>
 <context>
@@ -582,12 +593,12 @@ Nauja vieta: %2</translation>
         <translation>Insight</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="90"/>
         <source>Shift+Left</source>
         <translation>Shift(Lyg2)+Kairėn</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="91"/>
         <source>Shift+Right</source>
         <translation>Shift(Lyg2)+Dešinėn</translation>
     </message>
@@ -607,363 +618,342 @@ Nauja vieta: %2</translation>
         <translation>Rodymo veiksena</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="136"/>
-        <source>Group Mode</source>
-        <translation>Grupavimo veiksena</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="154"/>
+        <location filename="../MainUI.ui" line="142"/>
         <source>Bookmarks</source>
         <translation>Žymelės</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="162"/>
+        <location filename="../MainUI.ui" line="150"/>
         <source>External Devices</source>
         <translation>Išoriniai įrenginiai</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="169"/>
-        <source>Edit</source>
-        <translation>Taisa</translation>
+        <location filename="../MainUI.ui" line="157"/>
+        <source>Git</source>
+        <translation>Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="181"/>
-        <source>Git</source>
+        <location filename="../MainUI.ui" line="171"/>
+        <source>New Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="196"/>
-        <location filename="../MainUI.ui" line="199"/>
+        <location filename="../MainUI.ui" line="174"/>
         <source>New Browser</source>
         <translation>Nauja naršyklė</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="275"/>
+        <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
         <translation>Ieškoti kataloge...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="308"/>
+        <location filename="../MainUI.ui" line="283"/>
         <source>Increase Icon Size</source>
         <translation>Padidinti piktogramų dydį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="313"/>
+        <location filename="../MainUI.ui" line="288"/>
         <source>Decrease Icon Size</source>
         <translation>Sumažinti piktogramų dydį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="318"/>
+        <location filename="../MainUI.ui" line="293"/>
         <source>Larger Icons</source>
         <translation>Didesnės piktogramos</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="296"/>
         <source>Ctrl++</source>
         <translation>Ctrl(Vald)++</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"/>
+        <location filename="../MainUI.ui" line="304"/>
         <source>Smaller Icons</source>
         <translation>Mažesnės piktogramos</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="332"/>
+        <location filename="../MainUI.ui" line="307"/>
         <source>Ctrl+-</source>
         <translation>Ctrl(Vald)+-</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"/>
+        <location filename="../MainUI.ui" line="315"/>
         <source>New Window</source>
         <translation>Naujas langas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="343"/>
+        <location filename="../MainUI.ui" line="318"/>
         <source>Ctrl+N</source>
         <translation>Ctrl(Vald)+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="351"/>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Add Bookmark</source>
         <translation>Pridėti žymelę</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="354"/>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Ctrl+D</source>
         <translation>Ctrl(Vald)+D</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="406"/>
+        <location filename="../MainUI.ui" line="381"/>
         <source>Delete Selection</source>
         <translation>Ištrinti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"/>
+        <location filename="../MainUI.ui" line="384"/>
         <source>Del</source>
         <translation>Del(Šal)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"/>
+        <location filename="../MainUI.ui" line="392"/>
         <source>Refresh</source>
         <translation>Įkelti iš naujo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="428"/>
-        <source>Close Browser</source>
-        <translation>Užverti naršyklę</translation>
+        <location filename="../MainUI.ui" line="403"/>
+        <source>Close Tab</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="439"/>
+        <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Saugyklos būsena</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="444"/>
+        <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klonuoti saugyklą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="202"/>
+        <location filename="../MainUI.ui" line="177"/>
         <source>Ctrl+T</source>
         <translation>Ctrl(Vald)+T</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="210"/>
+        <location filename="../MainUI.ui" line="185"/>
         <source>Exit</source>
         <translation>Išeiti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="188"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl(Vald)+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="196"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Nuostatos</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Show Hidden Files</source>
         <translation>Rodyti paslėptus failus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="212"/>
         <source>Scan for Devices</source>
         <translation>Ieškoti įrenginių</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="220"/>
         <source>Manage Bookmarks</source>
         <translation>Tvarkyti žymeles</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="259"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Show Action Buttons</source>
         <translation>Rodyti veiksmų mygtukus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="270"/>
+        <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
         <translation>Įkelti miniatiūras</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="278"/>
+        <location filename="../MainUI.ui" line="253"/>
         <source>Ctrl+F</source>
         <translation>Ctrl(Vald)+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>Detailed List</source>
         <translation>Išsamus sąrašas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Basic List</source>
         <translation>Paprastas sąrašas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="431"/>
+        <location filename="../MainUI.ui" line="406"/>
         <source>Ctrl+W</source>
         <translation>Ctrl(Vald)+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
-        <source>Prefer Tabs</source>
-        <translation>Teikti pirmenybę kortelėms</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="72"/>
-        <source>Prefer Columns</source>
-        <translation>Teikti pirmenybę stulpeliams</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="420"/>
+        <location filename="../MainUI.ui" line="395"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="387"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Ctrl+C</source>
         <translation>Ctrl(Vald)+C</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="362"/>
+        <location filename="../MainUI.ui" line="337"/>
         <source>Rename...</source>
         <translation>Pervadinti...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="365"/>
+        <location filename="../MainUI.ui" line="340"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="373"/>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Cut Selection</source>
         <translation>Iškirpti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="384"/>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Copy Selection</source>
         <translation>Kopijuoti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"/>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Paste</source>
         <translation>Įdėti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="398"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+V</source>
         <translation>Ctrl(Vald)+V</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="376"/>
+        <location filename="../MainUI.ui" line="351"/>
         <source>Ctrl+X</source>
         <translation>Ctrl(Vald)+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>Invalid Directories</source>
         <translation>Netinkami katalogai</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Šie katalogai yra netinkami ir jų nepavyko atverti:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="342"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>Root</source>
         <translation>Šaknis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="348"/>
+        <location filename="../MainUI.cpp" line="335"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Tipas: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="352"/>
+        <location filename="../MainUI.cpp" line="339"/>
         <source>Filesystem: %1</source>
         <translation>Failų sistema: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="573"/>
-        <source>Browser</source>
-        <translation>Naršyklė</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>New Bookmark</source>
         <translation>Nauja žymelė</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="588"/>
         <source>Name:</source>
         <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"/>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>Invalid Name</source>
         <translation>Netinkamas pavadinimas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="605"/>
+        <location filename="../MainUI.cpp" line="593"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Toks žymelės pavadinimas jau yra. Pasirinkite kitą.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="626"/>
+        <location filename="../MainUI.cpp" line="614"/>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Git saugyklos būsena</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="732"/>
+        <location filename="../MainUI.cpp" line="704"/>
         <source>Multimedia</source>
         <translation>Multimedija</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="750"/>
+        <location filename="../MainUI.cpp" line="722"/>
         <source>Slideshow</source>
         <translation>Skaidrių rodymas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="927"/>
+        <location filename="../MainUI.cpp" line="902"/>
         <source>Items to be removed:</source>
         <translation>Elementai, kurie bus pašalinti:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"/>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>Verify Quit</source>
         <translation>Patvirtinti baigimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="100"/>
+        <location filename="../MainUI.cpp" line="92"/>
         <source>Ctrl+H</source>
         <translation>Ctrl(Vald)+H</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Ctrl+L</source>
         <translation>Ctrl(Vald)+L</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="429"/>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Jūs esate atvėrę kelias korteles. Ar tikrai norite baigti programos darbą?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"/>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Verify Removal</source>
         <translation>Patvirtinti šalinimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"/>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>ĮSPĖJIMAS: Tai visiems laikams ištrins failą(-us) iš sistemos!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"/>
+        <location filename="../MainUI.cpp" line="901"/>
         <source>Are you sure you want to continue?</source>
         <translation>Ar tikrai norite tęsti?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"/>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>Rename File</source>
         <translation>Pervadinti failą</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="887"/>
+        <location filename="../MainUI.cpp" line="861"/>
         <source>New Name:</source>
         <translation>Naujas pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>Overwrite File?</source>
         <translation>Perrašyti failą?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="875"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Esamas failas tokiu pačiu pavadinimu bus pakeistas. Ar tikrai norite tęsti?</translation>
     </message>
@@ -1004,6 +994,50 @@ Nauja vieta: %2</translation>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
         <source>Finished</source>
         <translation>Užbaigta</translation>
+    </message>
+</context>
+<context>
+    <name>OPWidget</name>
+    <message>
+        <location filename="../OPWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Forma</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="44"/>
+        <location filename="../OPWidget.ui" line="51"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.ui" line="60"/>
+        <source>Evaluating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="48"/>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="49"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="50"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>%1 Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="99"/>
+        <source>Errors Occured</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1107,6 +1141,24 @@ Nauja vieta: %2</translation>
         <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>Are you sure you want to continue?</source>
         <translation>Ar tikrai norite tęsti?</translation>
+    </message>
+</context>
+<context>
+    <name>TrayUI</name>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Finished</source>
+        <translation type="unfinished">Užbaigta</translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>Errors during operation. Click to view details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="71"/>
+        <source>No Errors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

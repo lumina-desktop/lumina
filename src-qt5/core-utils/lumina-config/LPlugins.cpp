@@ -6,7 +6,7 @@
 //===========================================
 #include "LPlugins.h"
 
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 LPlugins::LPlugins(){
   LoadPanelPlugins();
@@ -166,6 +166,20 @@ void LPlugins::LoadPanelPlugins(){
     info.ID = "applauncher";
     info.icon = "quickopen";
   PANEL.insert(info.ID, info); 
+  //Audio Player Plugin
+  info = LPI(); //clear it
+    info.name = QObject::tr("Audio Player");
+    info.description = QObject::tr("Play through lists of audio files");
+    info.ID = "audioplayer";
+    info.icon = "media-playback-start";
+  PANEL.insert(info.ID, info);
+  //JSON Menu Scripts
+  info = LPI(); //clear it
+    info.name = QObject::tr("Menu Script");
+    info.description = QObject::tr("Run an external script to generate a user defined menu");
+    info.ID = "jsonmenu";
+    info.icon = "text-x-script";
+  PANEL.insert(info.ID, info);
 }
 
 // DESKTOP PLUGINS
@@ -286,12 +300,19 @@ void LPlugins::LoadMenuPlugins(){
     info.ID = "app";
     info.icon = "application-x-desktop";
   MENU.insert(info.ID, info);
-  //Custom Apps
+  //JSON Menu Scripts
   info = LPI(); //clear it
     info.name = QObject::tr("Menu Script");
     info.description = QObject::tr("Run an external script to generate a user defined menu");
     info.ID = "jsonmenu";
     info.icon = "text-x-script";
+  MENU.insert(info.ID, info);
+  //Lock Screen item
+  info = LPI(); //clear it
+    info.name = QObject::tr("Lock Session");
+    info.description = QObject::tr("Lock the current desktop session");
+    info.ID = "lockdesktop";
+    info.icon = "system-lock-screen";
   MENU.insert(info.ID, info);
 }
 

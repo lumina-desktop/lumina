@@ -30,6 +30,8 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
     ui->tool_add->setMenu(addMenu);
 	
   updatinglists = false; //start off as false
+
+  ui->combo_playlist->setContextMenuPolicy(Qt::NoContextMenu);
 	
   LoadIcons();
   playerStateChanged(); //update button visibility

@@ -17,7 +17,8 @@ RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
 		xbrightness:x11/xbrightness \
 		compton:x11-wm/compton \
 		xrandr:x11/xrandr \
-		numlockx:x11/numlockx
+		numlockx:x11/numlockx \
+		xinput:x11/xinput
 LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 		libxcb-icccm.so:x11/xcb-util-wm \
 		libxcb-image.so:x11/xcb-util-image \
@@ -25,10 +26,11 @@ LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 
 CONFLICTS=	lumina-devel-0*
 
-OPTIONS_DEFINE=	MULTIMEDIA TRUEOS
-OPTIONS_DEFAULT=	MULTIMEDIA
+OPTIONS_DEFINE=	MULTIMEDIA TRUEOS I18N
+OPTIONS_DEFAULT=	MULTIMEDIA I18N
 MULTIMEDIA_DESC=	Install multimedia support backend (gstreamer)
 TRUEOS_DESC=	Use the TrueOS system interface settings.
+I18N_DESC= Install localization files
 
 .include <bsd.port.options.mk>
 
@@ -51,6 +53,11 @@ GH_TAGNAME=	%%GHTAG%%
 #Setup the qmake configuration options
 .if ${PORT_OPTIONS:MTRUEOS}
 QMAKE_ARGS=	DEFAULT_SETTINGS=TrueOS
+.endif
+
+.if${PORT_OPTIONS:MI18N}
+USE_QT5+= linguist_build
+QMAKE_ARGS+=CONFIG+=WITH_I18N
 .endif
 
 .include <bsd.port.mk>

@@ -33,7 +33,7 @@ private:
 	LPlugins *PINFO;
 
 	//Get an application on the system
-	XDGDesktop getSysApp(bool allowreset = false);
+	QString getSysApp(bool allowreset = false);
 
 private slots:
 	void deskplugadded();

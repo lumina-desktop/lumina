@@ -149,9 +149,8 @@ void DesktopViewPlugin::updateContents(){
 	it->setIcon( LXDG::findIcon("folder","") );
 	txt = files[i].fileName();
     }else if(files[i].suffix() == "desktop" ){
-	bool ok = false;
-	XDGDesktop desk = LXDG::loadDesktopFile(files[i].absoluteFilePath(), ok);
-	if(ok){
+	XDGDesktop desk(files[i].absoluteFilePath());
+	if(desk.isValid()){
 	  it->setIcon( LXDG::findIcon(desk.icon,"unknown") );
 	  if(desk.name.isEmpty()){
 	    txt = files[i].fileName();

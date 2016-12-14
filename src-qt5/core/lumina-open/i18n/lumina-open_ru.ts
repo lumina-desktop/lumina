@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ru">
 <context>
@@ -129,7 +129,7 @@
         <translation>Разное</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translation>Найти Бинарное Приложение</translation>
     </message>
@@ -142,19 +142,19 @@
         <translation>Ошибка Файла</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>Громкость %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>Яркость Экрана %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>Неверный файл или URL-адрес: %1</translation>
     </message>
@@ -191,7 +191,7 @@
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Не найден &quot;%1&quot;. Пожалуйста, убедитесь, что он установлен в первую очередь. </translation>
+        <translation>Не найден &quot;%1&quot;. Пожалуйста, убедитесь, что он установлен в первую очередь.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>

@@ -32,12 +32,12 @@ public slots:
 
 private:
 	Ui::StartMenu *ui;
-	QHash<QString, QList<XDGDesktop> > *sysapps;
 	QStringList favs;
 	QString CCat, CSearch, topsearch; //current category/search
 	QTimer *searchTimer;        
 
 	//Simple utility functions
+	//void deleteChildren(QWidget *obj); //recursive function
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
 	void do_search(QString search, bool force);	

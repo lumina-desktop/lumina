@@ -26,8 +26,11 @@
 #include "appmenu/LAppMenuPlugin.h"
 #include "applauncher/AppLaunchButton.h"
 #include "systemstart/LStartButton.h"
+#include "audioplayer/LPAudioPlayer.h"
+#include "jsonmenu/PPJsonMenu.h"
 //#include "quickcontainer/QuickPPlugin.h"
 #include "systemtray/LSysTray.h" //must be last due to X11 compile issues
+
 
 class NewPP{
 public:
@@ -60,6 +63,10 @@ public:
 	    plug = new LAppMenuPlugin(parent, plugin, horizontal);
 	  }else if(plugin.startsWith("systemstart---")){
 	    plug = new LStartButtonPlugin(parent, plugin, horizontal);
+	  }else if(plugin.startsWith("audioplayer---")){
+	    plug = new LPAudioPlayer(parent, plugin, horizontal);
+	  }else if(plugin.section("::::",0,0)=="jsonmenu" && plugin.split("::::").length()>=3 ){
+	    plug = new LPJsonMenu(parent, plugin, horizontal);
 	  }else if(plugin.section("---",0,0).section("::",0,0)=="applauncher"){
 	    plug = new AppLaunchButtonPlugin(parent, plugin, horizontal);
 	  //}else if( plugin.section("---",0,0).startsWith("quick-") && LUtils::validQuickPlugin(plugin.section("---",0,0)) ){

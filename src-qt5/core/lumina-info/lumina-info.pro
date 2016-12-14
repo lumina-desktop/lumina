@@ -8,6 +8,12 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../libLumina/LDesktopUtils.pri) #includes LUtils
+include(../libLumina/LuminaXDG.pri)
+include(../libLumina/LuminaSingleApplication.pri)
+include(../libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 		MainUI.cpp
 
@@ -17,9 +23,9 @@ FORMS    += MainUI.ui
 
 RESOURCES+= lumina-info.qrc
 
-LIBS     += -lLuminaUtils
+#LIBS     += -lLuminaUtils
 
-DEPENDPATH	+= ../libLumina
+#DEPENDPATH	+= ../libLumina
 
 TRANSLATIONS =  i18n/lumina-info_af.ts \
                 i18n/lumina-info_ar.ts \

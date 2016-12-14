@@ -10,6 +10,13 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LDesktopUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+include(../../core/libLumina/LInputDevice.pri)
+
 SOURCES += main.cpp \
 	   mainWindow.cpp \
 	   LPlugins.cpp \
@@ -37,13 +44,6 @@ FORMS    += mainWindow.ui \
 		PanelWidget.ui
 
 include("pages/pages.pri")
-
-# RESOURCES+= lumina-config.qrc
-
-LIBS += -lLuminaUtils
-
-
-DEPENDPATH	+= ../../core/libLumina
 
 TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_ar.ts \

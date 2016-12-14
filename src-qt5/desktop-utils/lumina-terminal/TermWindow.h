@@ -41,6 +41,7 @@ private:
 	bool onTop, CLOSING;
 	QPropertyAnimation *ANIM;
 	int animRunning; //internal flag for what animation is currently running
+	QTimer *activeTimer;
 
 	//Calculate the window geometry necessary based on screen/location
 	void CalculateGeom();
@@ -56,7 +57,9 @@ private slots:
 	void focusOnWidget();
 	//Animation finishing
 	void AnimFinished();
-	
+	//Window focus/active status changed
+	void activeStatusChanged();
+
 protected:
 	void mouseMoveEvent(QMouseEvent*);
 

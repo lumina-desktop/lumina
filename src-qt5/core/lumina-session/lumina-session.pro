@@ -1,14 +1,14 @@
 include($${PWD}/../../OS-detect.pri)
 
-QT       = core widgets
+QT       = core widgets x11extras
 
 
 TARGET = start-lumina-desktop
 target.path = $${L_BINDIR}
 
-
-LIBS     += -lLuminaUtils
-DEPENDPATH	+= ../libLumina
+include(../libLumina/LDesktopUtils.pri)
+include(../libLumina/LuminaXDG.pri)
+include(../libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp \
 			session.cpp

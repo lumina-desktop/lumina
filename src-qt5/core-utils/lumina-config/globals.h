@@ -22,12 +22,22 @@
 #include <QMessageBox>
 #include <QShortcut>
 #include <QImageReader>
+#include <QDialog>
+#include <QPoint>
+#include <QCursor>
+#include <QMenu>
 
 //Now the Lumina Library classes
 #include <LuminaXDG.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 #include <LuminaX11.h>
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
+#include "pages/PageWidget.h"
+
 #endif
+
+//Now the global class for available system applications
+extern XDGDesktopList *APPSLIST;

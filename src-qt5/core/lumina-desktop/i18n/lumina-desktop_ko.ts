@@ -9,22 +9,22 @@
         <translation>프로그램을 지정하기 위해 누름</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Launch %1</source>
         <translation>%1 실행</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="45"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="44"/>
         <source>Open %1</source>
         <translation>%1 열기</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
         <translation>프로그램 선택</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Name:</source>
         <translation>이름:</translation>
     </message>
@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="45"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="71"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="47"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="75"/>
         <source>Click to Set</source>
         <translation>설정하기 위해 누름</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Select Application</source>
         <translation>프로그램 선택</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Name:</source>
         <translation>이름:</translation>
     </message>
@@ -56,82 +56,82 @@
         <translation type="unfinished">바탕 화면</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="83"/>
+        <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
         <translation type="unfinished">프로그램 관리</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="88"/>
+        <location filename="../AppMenu.cpp" line="87"/>
         <source>Control Panel</source>
         <translation>제어판</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"/>
+        <location filename="../AppMenu.cpp" line="97"/>
         <source>Multimedia</source>
         <translation>멀티미디어</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"/>
+        <location filename="../AppMenu.cpp" line="98"/>
         <source>Development</source>
         <translation>개발</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"/>
+        <location filename="../AppMenu.cpp" line="99"/>
         <source>Education</source>
         <translation>교육</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"/>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Games</source>
         <translation>게임</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"/>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Graphics</source>
         <translation>그래픽</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"/>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Network</source>
         <translation>네트워크</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"/>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Office</source>
         <translation>업무</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"/>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Science</source>
         <translation>과학</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"/>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Settings</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"/>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>System</source>
         <translation>시스템</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"/>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Utility</source>
         <translation>유틸리티</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"/>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
         <translation>와인</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="110"/>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>Unsorted</source>
         <translation>미분류</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="37"/>
+        <location filename="../AppMenu.cpp" line="38"/>
         <source>Applications</source>
         <translation>프로그램</translation>
     </message>
@@ -240,27 +240,27 @@
         <translation>뒤로 가기</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="161"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
         <translation>바탕 화면에 고정</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="165"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
         <source>Remove from Favorites</source>
         <translation>즐겨 찾기에서 제거</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="168"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
         <source>Add to Favorites</source>
         <translation>즐겨 찾기에 추가</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="172"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
         <translation>빠른 실행에서 제거</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="175"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
         <translation>빠른 실행에 추가</translation>
     </message>
@@ -286,87 +286,87 @@
         <translation type="unfinished">프로그램</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="69"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
         <translation type="unfinished">파일 둘러보기</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="74"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
         <translation type="unfinished">프로그램 설치</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="80"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
         <translation type="unfinished">제어판</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
         <translation type="unfinished">멀티미디어</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
         <translation type="unfinished">개발</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
         <translation type="unfinished">교육</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
         <translation type="unfinished">게임</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
         <translation type="unfinished">그래픽</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
         <translation type="unfinished">네트워크</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
         <translation type="unfinished">업무</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
         <translation type="unfinished">과학</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
         <translation type="unfinished">설정</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
         <translation type="unfinished">시스템</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
         <translation type="unfinished">유틸리티</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
         <translation type="unfinished">와인</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="103"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
         <translation type="unfinished">미분류</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="140"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
         <translation type="unfinished">떠나기</translation>
     </message>
@@ -374,12 +374,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="83"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="91"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (충전중)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="84"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 남음)</translation>
     </message>
@@ -400,27 +400,32 @@
 <context>
     <name>LDPlugin</name>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="36"/>
-        <source>Start Moving Item</source>
-        <translation>아이템 이동 시작</translation>
-    </message>
-    <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
-        <source>Start Resizing Item</source>
-        <translation>아이템 크기 조정 시작</translation>
-    </message>
-    <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="39"/>
-        <source>Increase Item Sizes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="40"/>
-        <source>Decrease Item Sizes</source>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
+        <source>Launch Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
+        <source>Start Moving Item</source>
+        <translation>아이템 이동 시작</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
+        <source>Start Resizing Item</source>
+        <translation>아이템 크기 조정 시작</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
+        <source>Increase Item Sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
+        <source>Decrease Item Sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
         <translation>아이템 제거</translation>
     </message>
@@ -428,42 +433,42 @@
 <context>
     <name>LDeskBarPlugin</name>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
         <translation>즐겨 쓰는 프로그램</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="196"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
         <translation>즐겨 찾는 폴더</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
         <source>Audio</source>
         <translation>오디오</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
         <source>Video</source>
         <translation>비디오</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
         <translation>그림</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
         <translation>기타 파일</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="205"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
         <source>Documents</source>
         <translation>문서</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="208"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
         <translation>즐겨 찾는 파일</translation>
     </message>
@@ -471,32 +476,32 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="198"/>
+        <location filename="../LDesktop.cpp" line="200"/>
         <source>Window List</source>
         <translation>창 목록</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="263"/>
+        <location filename="../LDesktop.cpp" line="269"/>
         <source>Lumina Desktop</source>
         <translation>루미나 데스크탑</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="264"/>
+        <location filename="../LDesktop.cpp" line="270"/>
         <source>Workspace %1</source>
         <translation>작업 공간 %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="274"/>
+        <location filename="../LDesktop.cpp" line="280"/>
         <source>Terminal</source>
         <translation>터미널</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="275"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Browse Files</source>
         <translation type="unfinished">파일 둘러보기</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="305"/>
+        <location filename="../LDesktop.cpp" line="310"/>
         <source>Leave</source>
         <translation type="unfinished">떠나기</translation>
     </message>
@@ -964,12 +969,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="51"/>
+        <location filename="../SettingsMenu.cpp" line="50"/>
         <source>Control Panel</source>
         <translation>제어판</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="57"/>
+        <location filename="../SettingsMenu.cpp" line="56"/>
         <source>About Lumina</source>
         <translation>루미나 안내</translation>
     </message>
@@ -1057,34 +1062,34 @@
         <translation>뒤로</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Apply Updates?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (연결됨)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 예상)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
         <translation>%1% 남음</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
         <source>Workspace %1/%2</source>
         <translation>작업 공간 %1/%2</translation>
     </message>
@@ -1140,7 +1145,7 @@
 <context>
     <name>UserItemWidget</name>
     <message>
-        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"/>
+        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="32"/>
         <source>Go Back</source>
         <translation>뒤로 가기</translation>
     </message>

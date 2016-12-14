@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="50"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat výběr</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="51"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit</translation>
     </message>
 </context>
 <context>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít terminál</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovka %1</translation>
     </message>
 </context>
 </TS>

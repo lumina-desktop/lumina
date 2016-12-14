@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaga les opcions de cerca / reemplaça</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="283"/>
         <location filename="../MainUI.cpp" line="380"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Es perden els canvis no desats?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquest fitxer té canvis no desats.
+El voleu tancar tanmateix?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="380"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hi ha canvis no desats.
+Voleu tancar l&apos;editor tanmateix?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,7 +281,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de fila: %1. Número de columna: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>

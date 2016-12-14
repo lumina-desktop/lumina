@@ -20,6 +20,7 @@ public:
 	~page_main();
 
 	virtual void setPreviousPage(QString id);
+	void clearlineEdit();
 
 public slots:
 	void SaveSettings();
@@ -29,11 +30,12 @@ public slots:
 private:
 	Ui::page_main *ui;
 	QList<PAGEINFO> INFO;
-
+	QShortcut *findShort;
 	void UpdateItems(QString search);
 
 private slots:
-	void itemTriggered(QTreeWidgetItem*);
+	void showFind();
+	void itemTriggered(QTreeWidgetItem*, int);
 	void searchChanged(QString);
 };
 #endif

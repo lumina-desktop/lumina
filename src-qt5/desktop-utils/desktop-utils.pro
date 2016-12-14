@@ -5,7 +5,9 @@ TEMPLATE = subdirs
 CONFIG += recursive
 
 SUBDIRS+= lumina-fm \
-	 lumina-screenshot \
-	 lumina-fileinfo \
-       lumina-textedit
+	lumina-screenshot \
+	lumina-fileinfo \
+	lumina-textedit \
+	lumina-calculator \
+	lumina-archiver
 #	lumina-terminal

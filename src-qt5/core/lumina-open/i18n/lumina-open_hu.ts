@@ -129,7 +129,7 @@
         <translation>Egyéb</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translation>Futtatható alkalmazás keresése</translation>
     </message>
@@ -142,19 +142,19 @@
         <translation>Fájl hiba</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>Hangerő: %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>Képernyő fényessége: %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>Érvénytelen fájl vagy URL: %1</translation>
     </message>
@@ -166,32 +166,32 @@
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>a program hivatkozásában hiányosak az indítási adatok : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>URL hivatkozás hiányos ebben: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvtár hivatkozás hiányos ebben az útvonalban: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen hivatkozás: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiányos binary</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem találom:  &quot;%1&quot;. Először győződj meg hogy telepítve van.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>

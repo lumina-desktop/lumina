@@ -31,6 +31,8 @@ private:
 	LPlugins *PINFO;
 	bool loading;
 
+	void findQt5Themes();
+
 private slots:
 	void settingsChanged(){
           //qDebug() << "Setting Changed:" << !loading;
@@ -38,5 +40,6 @@ private slots:
 	}
 	void sessionEditColor();
 	void sessionEditTheme();
+	void checkQt5Theme();
 };
 #endif

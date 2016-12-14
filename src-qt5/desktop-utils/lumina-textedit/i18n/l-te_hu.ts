@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejtsd el a keresés/csere opciót</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="283"/>
         <location filename="../MainUI.cpp" line="380"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaveszted a mentetlen változásokat ?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="283"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlnak mentettlen változásai vannak!
+Mindenképpen bezárod ?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="380"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentettlen változások vannak!
+Mindenképp bezárod ?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,22 +281,22 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sor száma: %1, Oszlop száma: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>A látható fájl egy másik program által megváltozott. Újratöltöd ?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Megjegyzés: Minden mentetlen változás odalesz!)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl Módosítva</translation>
     </message>
 </context>
 </TS>

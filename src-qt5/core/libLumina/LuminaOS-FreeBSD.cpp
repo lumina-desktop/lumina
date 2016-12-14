@@ -97,13 +97,14 @@ void LOS::setScreenBrightness(int percent){
   //Run the command(s)
   bool success = false;
   // - try hardware setting first (TrueOS || or intel_backlight)
-  if( LUtils::isValidBinary("pc-sysconfig") ){
+  bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
+  if( LUtils::isValidBinary("pc-sysconfig") && !remoteSession){
     //Use TrueOS tool (direct sysctl control)
     QString ret = LUtils::getCmdOutput("pc-sysconfig", QStringList() <<"setscreenbrightness "+QString::number(percent)).join("");
     success = ret.toLower().contains("success");
     qDebug() << "Set hardware brightness:" << percent << success;
   }
-  if( !success && LUtils::isValidBinary("intel_backlight")){
+  if( !success && LUtils::isValidBinary("intel_backlight") && !remoteSession){
     //Use the intel_backlight utility (only for Intel mobo/hardware?)
    if(0== LUtils::runCmd("intel_backlight", QStringList() <<QString::number(percent)) ){
      //This utility does not report success/failure - run it again to get the current value and ensure it was set properly
@@ -131,11 +132,17 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
     QString info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume").join("");
     if(!info.isEmpty()){ 
       out = info.simplified().toInt(); 
-      audiovolume = out; //unset this internal flag
+      audiovolume = out; //reset this internal flag
       return out; 
     }
   }
-  
+  bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
+  if(remoteSession){
+     QStringList info = LUtils::getCmdOutput("pactl list short sinks");
+     qDebug() << "Got PA sinks:" << info;
+     out = 50; //TEMPORARY - still need to write up the info parsing
+     audiovolume = out;
+  }else{
     //probe the system for the current volume (other utils could be changing it)
       QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
       if(!info.isEmpty()){
@@ -149,7 +156,7 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
 	}
 	audiovolume = out; 
       }
-
+  }
   return out;
 }
 
@@ -157,35 +164,45 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
 void LOS::setAudioVolume(int percent){
   if(percent<0){percent=0;}
   else if(percent>100){percent=100;}
-  QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
-  if(!info.isEmpty()){
-    int L = info.section(":",1,1).toInt();
-    int R = info.section(":",2,2).toInt();
-    int diff = L-R;
-    if((percent == L) && (L==R)){ return; } //already set to that volume
-    if(diff<0){ R=percent; L=percent+diff; } //R Greater
-    else{ L=percent; R=percent-diff; } //L Greater or equal
-    //Check bounds
-    if(L<0){L=0;}else if(L>100){L=100;}
-    if(R<0){R=0;}else if(R>100){R=100;}
-    //Run Command
-    audiovolume = percent; //save for checking later
-    LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
-    LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(percent), true);
-  }	
+  bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
+  if(remoteSession){
+    LUtils::runCmd(QString("pactl set-sink-volume @DEFAULT_SINK@ ")+QString::number(percent)+"%");
+  }else{
+    QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
+    if(!info.isEmpty()){
+      int L = info.section(":",1,1).toInt();
+      int R = info.section(":",2,2).toInt();
+      int diff = L-R;
+      if((percent == L) && (L==R)){ return; } //already set to that volume
+      if(diff<0){ R=percent; L=percent+diff; } //R Greater
+      else{ L=percent; R=percent-diff; } //L Greater or equal
+      //Check bounds
+      if(L<0){L=0;}else if(L>100){L=100;}
+      if(R<0){R=0;}else if(R>100){R=100;}
+      //Run Command
+      LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
+    }
+  }
+  audiovolume = percent; //save for checking later
+  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(percent), true);
 }
 
 //Change the current volume a set amount (+ or -)
 void LOS::changeAudioVolume(int percentdiff){
-  QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
-  if(!info.isEmpty()){
-    int L = info.section(":",1,1).toInt() + percentdiff;
-    int R = info.section(":",2,2).toInt() + percentdiff;
-    //Check bounds
-    if(L<0){L=0;}else if(L>100){L=100;}
-    if(R<0){R=0;}else if(R>100){R=100;}
-    //Run Command
-    LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
+  bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
+  if(remoteSession){
+    LUtils::runCmd(QString("pactl set-sink-volume @DEFAULT_SINK@ ")+((percentdiff>0)?"+" : "") + QString::number(percentdiff)+"%");
+  }else{
+    QString info = LUtils::getCmdOutput("mixer -S vol").join(":").simplified(); //ignores any other lines
+    if(!info.isEmpty()){
+      int L = info.section(":",1,1).toInt() + percentdiff;
+      int R = info.section(":",2,2).toInt() + percentdiff;
+      //Check bounds
+      if(L<0){L=0;}else if(L>100){L=100;}
+      if(R<0){R=0;}else if(R>100){R=100;}
+      //Run Command
+      LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
+    }
   }	
 }
 
@@ -292,8 +309,10 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
   static QStringList vars = QStringList();
   QStringList temps;
-  if(vars.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -i hw.").filter(".temperature:"); }
-  else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
+  if(vars.isEmpty()){ 
+    temps = LUtils::getCmdOutput("sysctl -i dev.cpu").filter(".temperature:");  //try direct readings first
+    if(temps.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -i hw.acpi").filter(".temperature:"); } // then try acpi values
+  }else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
   
     temps.sort();
     for(int i=0; i<temps.length(); i++){

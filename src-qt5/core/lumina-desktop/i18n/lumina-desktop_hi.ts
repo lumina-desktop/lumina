@@ -9,22 +9,22 @@
         <translation>एप्लीकेशन निर्धारित करने के लिए क्लिक करें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Launch %1</source>
         <translation>प्रारंभ %1</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="45"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="44"/>
         <source>Open %1</source>
         <translation>चालू %1</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
         <translation>एप्लीकेशन चुनें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Name:</source>
         <translation>नाम</translation>
     </message>
@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="45"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="71"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="47"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="75"/>
         <source>Click to Set</source>
         <translation>निश्चित करने के लिए क्लिक करे</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Select Application</source>
         <translation>एप्लीकेशन चुनें</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Name:</source>
         <translation>नाम</translation>
     </message>
@@ -56,82 +56,82 @@
         <translation type="unfinished">डेस्कटॉप</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="83"/>
+        <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
         <translation>एप्लीकेशन प्रबंधन</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="88"/>
+        <location filename="../AppMenu.cpp" line="87"/>
         <source>Control Panel</source>
         <translation>कंट्रोल पैनल</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"/>
+        <location filename="../AppMenu.cpp" line="97"/>
         <source>Multimedia</source>
         <translation>मल्टीमीडिया</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"/>
+        <location filename="../AppMenu.cpp" line="98"/>
         <source>Development</source>
         <translation>विकास</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"/>
+        <location filename="../AppMenu.cpp" line="99"/>
         <source>Education</source>
         <translation>पढाई</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"/>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Games</source>
         <translation>खेल</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"/>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Graphics</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"/>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Network</source>
         <translation>नेटवर्क</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"/>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Office</source>
         <translation>कार्यालय</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"/>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Science</source>
         <translation>विज्ञान</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"/>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Settings</source>
         <translation>सेटिंग</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"/>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>System</source>
         <translation>उपकरण</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"/>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Utility</source>
         <translation>सुविधाएँ</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"/>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
         <translation>शराब</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="110"/>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>Unsorted</source>
         <translation>अवर्गीकृत</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="37"/>
+        <location filename="../AppMenu.cpp" line="38"/>
         <source>Applications</source>
         <translation>एप्लीकेशन्स</translation>
     </message>
@@ -240,27 +240,27 @@
         <translation>वापस जाएँ</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="161"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
         <translation>डेस्कटॉप पर स्थापित करें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="165"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
         <source>Remove from Favorites</source>
         <translation>पसंदीदा सूचि से हटायें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="168"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
         <source>Add to Favorites</source>
         <translation>पसंदीदा सूचि में जोड़ें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="172"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
         <translation>क्विकलांच से हटायें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="175"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
         <translation>क्विकलांच में जोड़ें</translation>
     </message>
@@ -286,87 +286,87 @@
         <translation>एप्लीकेशन्स</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="69"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
         <translation>फाइल ढूंढे</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="74"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
         <translation>एप्लीकेशन इनस्टॉल करें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="80"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
         <translation>कण्ट्रोल पैनल</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
         <translation>मल्टीमीडिया</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
         <translation>विकास</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
         <translation>पढाई</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
         <translation>खेल</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
         <translation>नेटवर्क</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
         <translation>कार्यालय</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
         <translation>विज्ञान</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
         <translation>सेटिंग</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
         <translation>सिस्टम</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
         <translation>सुविधाएँ</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
         <translation>शराब</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="103"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
         <translation>अवर्गीकृत</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="140"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
         <translation>छोड़ें</translation>
     </message>
@@ -374,12 +374,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="83"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="91"/>
         <source>%1 % (Charging)</source>
         <translation>%1 %(चार्ज हो रहा है)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="84"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 %(%2 बचा है)</translation>
     </message>
@@ -400,27 +400,32 @@
 <context>
     <name>LDPlugin</name>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="36"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
+        <source>Launch Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
         <translation>वस्तु को हटाना शुरू करें</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
         <translation>वस्तु को पुनः आकार दें</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="39"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
         <translation>वस्तु का आकार बढाएं</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="40"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
         <translation>वस्तु का आकार घटाएँ</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
         <translation>वस्तु को हटायें</translation>
     </message>
@@ -428,42 +433,42 @@
 <context>
     <name>LDeskBarPlugin</name>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
         <translation>पसंदीदा एप्लीकेशन</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="196"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
         <translation>पसंदीदा फ़ोल्डर्स</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
         <source>Audio</source>
         <translation>ऑडियो</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
         <translation>तस्वीरें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
         <translation>अन्य फाइलें</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="205"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
         <source>Documents</source>
         <translation>दस्तावेज</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="208"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
         <translation>पसंदीदा फाइलें</translation>
     </message>
@@ -471,32 +476,32 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="198"/>
+        <location filename="../LDesktop.cpp" line="200"/>
         <source>Window List</source>
         <translation>विंडो सूचि</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="263"/>
+        <location filename="../LDesktop.cpp" line="269"/>
         <source>Lumina Desktop</source>
         <translation>लुमिना का डेस्कटॉप</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="264"/>
+        <location filename="../LDesktop.cpp" line="270"/>
         <source>Workspace %1</source>
         <translation>कार्यस्थल %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="274"/>
+        <location filename="../LDesktop.cpp" line="280"/>
         <source>Terminal</source>
         <translation>टर्मिनल</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="275"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Browse Files</source>
         <translation>फाइल खोजें</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="305"/>
+        <location filename="../LDesktop.cpp" line="310"/>
         <source>Leave</source>
         <translation>छोड़ें</translation>
     </message>
@@ -964,12 +969,12 @@
         <translation>प्रदर्शन</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="51"/>
+        <location filename="../SettingsMenu.cpp" line="50"/>
         <source>Control Panel</source>
         <translation>कण्ट्रोल पैनल</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="57"/>
+        <location filename="../SettingsMenu.cpp" line="56"/>
         <source>About Lumina</source>
         <translation>लूमिया के विषय में</translation>
     </message>
@@ -1057,34 +1062,34 @@
         <translation>वापस</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Apply Updates?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
         <translation>%1%(प्लग इन)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 लगभग)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
         <translation>%1% शेष</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
         <source>Workspace %1/%2</source>
         <translation>कार्यस्थल %1/%2</translation>
     </message>
@@ -1140,7 +1145,7 @@
 <context>
     <name>UserItemWidget</name>
     <message>
-        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"/>
+        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="32"/>
         <source>Go Back</source>
         <translation>वापस जाएँ</translation>
     </message>

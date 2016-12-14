@@ -15,7 +15,7 @@
 
 //LibLumina X11 class
 #include <LuminaX11.h>
-#include <LuminaUtils.h>
+#include <LUtils.h>
 
 #include <unistd.h> //for usleep() usage
 
@@ -29,7 +29,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
  if(this->isPrimaryProcess()){
   connect(this, SIGNAL(InputsAvailable(QStringList)), this, SLOT(NewCommunication(QStringList)) );
   this->setApplicationName("Lumina Desktop Environment");
-  this->setApplicationVersion( LUtils::LuminaDesktopVersion() );
+  this->setApplicationVersion( LDesktopUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enabled a few of the simple effects by default
@@ -70,25 +70,27 @@ LSession::~LSession(){
  if(this->isPrimaryProcess()){
   //WM->stopWM();
   for(int i=0; i<DESKTOPS.length(); i++){
-    delete DESKTOPS[i];
+    DESKTOPS[i]->deleteLater();
   }
   //delete WM;
-  delete settingsmenu;
-  delete appmenu;
+  settingsmenu->deleteLater();
+  appmenu->deleteLater();
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
  }
 }
 
 void LSession::setupSession(){
+  //Seed random number generator (if needed)
+  qsrand( QTime::currentTime().msec() );
+
   BootSplash splash;
     splash.showScreen("init");
   qDebug() << "Initializing Session";
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
-  if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
-  //Seed random number generator (if needed)
-  qsrand( QTime::currentTime().msec() );
+  //if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
+
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
@@ -120,12 +122,6 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
   startSystemTray();
 	
-  //Launch Fluxbox
-    //splash.showScreen("wm");
-  //if(DEBUG){ qDebug() << " - Init WM:" << timer->elapsed();}
-  //WM = new WMProcess();
-    //WM->startWM();
-	
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
@@ -143,33 +139,35 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
   desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   updateDesktops();
-  
+  for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
+
   //Now setup the system watcher for changes
     splash.showScreen("final");
   qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
     QString confdir = sessionsettings->fileName().section("/",0,-2);
-    watcher->addPath( sessionsettings->fileName() );
-    watcher->addPath( confdir+"/desktopsettings.conf" );
-    watcher->addPath( confdir+"/fluxbox-init" );
-    watcher->addPath( confdir+"/fluxbox-keys" );
+    watcherChange(sessionsettings->fileName() );
+    watcherChange( confdir+"/desktopsettings.conf" );
+    watcherChange( confdir+"/fluxbox-init" );
+    watcherChange( confdir+"/fluxbox-keys" );
+    watcherChange( confdir+"/favorites.list" );
     //Try to watch the localized desktop folder too
-    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcher->addPath( QDir::homePath()+"/"+tr("Desktop") ); }
-    watcher->addPath( QDir::homePath()+"/Desktop" );
+    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
+    watcherChange( QDir::homePath()+"/Desktop" );
 
   //connect internal signals/slots
-  //connect(this->desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(screensChanged()) );
-  //connect(this->desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  QApplication::processEvents();
-  launchStartupApps();
-  //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
-  //QApplication::processEvents();
+  for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
+  //launchStartupApps();
+  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  splash.hide();
+  LSession::processEvents();
   splash.close(); 
+  LSession::processEvents();
 }
 
 void LSession::CleanupSession(){
@@ -207,7 +205,7 @@ void LSession::CleanupSession(){
   }
   evFilter->StopEventHandling();
   //Stop the window manager
-  qDebug() << " - Stopping the window manager";
+  //qDebug() << " - Stopping the window manager";
   //WM->stopWM();
   //Now close down the desktop
   qDebug() << " - Closing down the desktop elements";
@@ -321,15 +319,28 @@ void LSession::reloadIconTheme(){
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   //if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
-  if(changed.endsWith("sessionsettings.conf") ){ sessionsettings->sync(); emit SessionConfigChanged(); }
-  else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
+  if(changed.endsWith("sessionsettings.conf") ){
+    sessionsettings->sync(); 
+    //qDebug() << "Session Settings Changed";
+    if(sessionsettings->contains("Qt5_theme_engine")){
+      QString engine = sessionsettings->value("Qt5_theme_engine","").toString();
+      //qDebug() << "Set Qt5 theme engine: " << engine;
+      if(engine.isEmpty()){ unsetenv("QT_QPA_PLATFORMTHEME"); }
+      else{ setenv("QT_QPA_PLATFORMTHEME", engine.toUtf8().data(),1); } 
+    }
+    emit SessionConfigChanged();
+  }else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
   else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){ 
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
-  }
+  }else if(changed.endsWith("favorites.list")){ emit FavoritesChanged(); }
   //Now ensure this file was not removed from the watcher
   if(!watcher->files().contains(changed) && !watcher->directories().contains(changed)){
+    if(!QFile::exists(changed)){
+      //Create the file really quick to ensure it can be watched
+      //TODO
+    }
     watcher->addPath(changed);
   }
 }
@@ -359,7 +370,7 @@ void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
-  bool changed = LUtils::checkUserFiles(OVS);
+  bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
     sessionsettings->setValue("DesktopVersion", this->applicationVersion());
@@ -391,8 +402,9 @@ void LSession::updateDesktops(){
 
   //First clean up any current desktops
   QList<int> dnums; //keep track of which screens are already managed
+  QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if (DESKTOPS[i]->Screen() >= sC) {
+    if (DESKTOPS[i]->Screen() >= sC || geoms.contains(DW->screenGeometry(DESKTOPS[i]->Screen())) ) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
@@ -404,15 +416,17 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
+	geoms << DW->screenGeometry(DESKTOPS[i]->Screen());
       }  
   }
   
   //Now add any new desktops
   for(int i=0; i<sC; i++){
-    if(!dnums.contains(i)){
+    if(!dnums.contains(i) && !geoms.contains(DW->screenGeometry(i)) ){
       //Start the desktop on this screen
       qDebug() << " - Start desktop on screen:" << i;
       DESKTOPS << new LDesktop(i);
+      geoms << DW->screenGeometry(i);
     }
   }
   
@@ -578,6 +592,7 @@ void LSession::systemWindow(){
 
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
+  if( !QFile::exists(filepath) ){ return; }
   //Setup the audio output systems for the desktop
   if(DEBUG){ qDebug() << "Play Audio File"; }
   if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }

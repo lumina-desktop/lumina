@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
         <translation>Informações do arquivo</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
         <translation>Editar atalho</translation>
     </message>
@@ -117,109 +117,109 @@
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
         <translation>---Calculando---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
         <translation>Leitura/Escrita</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="71"/>
         <source>Read Only</source>
         <translation>Somente leitura</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="72"/>
         <source>Write Only</source>
         <translation>Somente escrita</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="73"/>
         <source>No Access</source>
         <translation>Sem acesso</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
         <translation>Atalho XDG</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
         <translation>Diretório</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
         <translation>Binário</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="81"/>
         <source>Hidden %1</source>
         <translation>Ocultar %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="126"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
         <translation>Selecionar um binário</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Seleção inválida: Não é um executável válido</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="305"/>
         <source>Select a directory</source>
         <translation>Selecionar um diretório</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
         <translation>Selecionar um ícone</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Imagens (%1);; Todos os arquivos (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
         <translation> Pasta: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
         <translation>Arquivos: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
         <translation>  Calculando...</translation>
     </message>

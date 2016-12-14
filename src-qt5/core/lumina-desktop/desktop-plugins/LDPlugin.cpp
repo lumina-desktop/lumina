@@ -33,6 +33,12 @@ LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
 
 void LDPlugin::setupMenu(){
   menu->clear();
+  //SPECIAL CONTEXT MENU OPTIONS FOR PARTICULAR PLUGIN TYPES
+  if(PLUGID.startsWith("applauncher::")){
+    menu->addAction( LXDG::findIcon("quickopen",""), tr("Launch Item"), this, SIGNAL(PluginActivated()) );
+    menu->addSeparator();
+  }
+  //General Options
   menu->addAction( LXDG::findIcon("transform-move",""), tr("Start Moving Item"), this, SLOT(slotStartMove()) );
   menu->addAction( LXDG::findIcon("transform-scale",""), tr("Start Resizing Item"), this, SLOT(slotStartResize()) );
   menu->addSeparator();

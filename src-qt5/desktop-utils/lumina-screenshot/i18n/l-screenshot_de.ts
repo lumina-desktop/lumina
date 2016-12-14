@@ -97,17 +97,17 @@
     <message>
         <location filename="../MainUI.ui" line="67"/>
         <source>Entire Session</source>
-        <translation>vollständige Session</translation>
+        <translation>Vollständige Sitzung</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Single Window</source>
-        <translation>einzelnes Fenster</translation>
+        <translation>Einzelnes Fenster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="74"/>
         <source>Single Screen</source>
-        <translation>einzelner Bildschirm</translation>
+        <translation>Einzelner Bildschirm</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="77"/>

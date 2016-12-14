@@ -217,14 +217,14 @@ Přepsat je?</translation>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="44"></location>
-        <location filename="../PanelWidget.cpp" line="104"></location>
+        <location filename="../PanelWidget.cpp" line="44"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>Panel %1</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="144"></location>
-        <location filename="../PanelWidget.cpp" line="145"></location>
+        <location filename="../PanelWidget.cpp" line="143"/>
+        <location filename="../PanelWidget.cpp" line="144"/>
         <source>Select Color</source>
         <translation>Vybrat barvu</translation>
     </message>
@@ -965,12 +965,12 @@ Přepsat jej?</translation>
         <translation>Vybrat obrazovku/pracovní plochu k nastavení</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"></location>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation>Neuložené změny</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"></location>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Tato strana má teď neuložené změny. Chcete je nyní uložit?</translation>
     </message>
@@ -1003,37 +1003,37 @@ Přepsat jej?</translation>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"></location>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation>Služby při spuštění</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"></location>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation>Vybrat spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"></location>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation>Spustitelné soubory aplikací (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"></location>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation>Neplatný spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"></location>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation>Vybraný soubor není spustitelný!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"></location>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation>Vybrat soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"></location>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation>Všechny soubory (*)</translation>
     </message>
@@ -1140,34 +1140,31 @@ Přepsat jej?</translation>
         <translation>Výchozí aplikace</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="84"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="106"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="128"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="242"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="274"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="307"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="339"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation>Klepnutím nastavit</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation>Vybrat spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation>Neplatný spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation>Vybraný spustitelný soubor není spustitelný!</translation>
     </message>
@@ -1381,7 +1378,7 @@ Přepsat jej?</translation>
         <translation>Zobrazit obsah složky pracovní plochy</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"></location>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation>Nastavení pracovní plochy</translation>
     </message>
@@ -1412,7 +1409,7 @@ Přepsat jej?</translation>
         <translation>Formulář</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"></location>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation>Nastavení pracovní plochy</translation>
     </message>
@@ -1866,120 +1863,120 @@ Přepsat jej?</translation>
         <translation>Rozvržení:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation>Nastavení pozadí pracovní plochy</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation>Výchozí nastavení systému</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="220"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation>Jednolitá barva: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation>Rozlišení obrazovky:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="99"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Vybrat barvu</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation>Soubor(y)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation>Adresář (jeden)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation>Adresář (rekurzivní)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation>Jednolitá barva</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation>Automaticky</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation>Celá obrazovka</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation>Přizpůsobit obrazovce</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation>Dlaždice</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation>Na střed</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation>Nahoru doleva</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation>Nahoru doprava</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation>Dolů vlevo</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation>Dolů vpravo</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Žádné pozadí</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(Použít výchozí nastavení systému)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation>Soubor neexistuje</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation>Najít obrázek(y) pozadí</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="257"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation>Najít adresář s obrázky pozadí</translation>
     </message>

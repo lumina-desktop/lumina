@@ -49,13 +49,14 @@
 #include <LuminaOS.h>
 
 // Local includes
-#include "FODialog.h" //file operation dialog
+//#include "FODialog.h" //file operation dialog
+#include "TrayUI.h"
 #include "BMMDialog.h" //bookmark manager dialog
 
 #include "DirData.h"
 #include "widgets/MultimediaWidget.h"
 #include "widgets/SlideshowWidget.h"
-#include "widgets/DirWidget.h"
+#include "widgets/DirWidget2.h"
 
 namespace Ui{
 	class MainUI;
@@ -77,19 +78,21 @@ private:
 	DirData *worker;
 	//Internal non-ui widgets
 	QTabBar *tabBar;
-	QFileSystemModel *fsmod;
+	//QFileSystemModel *fsmod;
 	QMenu *contextMenu;
-	QRadioButton *radio_view_details, *radio_view_list, *radio_view_tabs, *radio_view_cols;
-	QWidgetAction *detWA, *listWA, *tabsWA, *colsWA;
+	QRadioButton *radio_view_details, *radio_view_list;//, *radio_view_tabs, *radio_view_cols;
+	QWidgetAction *detWA, *listWA;//, *tabsWA, *colsWA;
 
 	//UI Widgets
 	QList<DirWidget*> DWLIST;
 	MultimediaWidget *MW;
 	SlideshowWidget *SW;
-	
-    QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
-	QCompleter *dirCompleter;
+	TrayUI *TRAY;
+	bool waitingToClose;
+
+	QSettings *settings;
+	QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
+	//QCompleter *dirCompleter;
 
 	//Simplification Functions
 	void setupConnections(); 	//used during initialization
@@ -116,19 +119,19 @@ private slots:
 	void on_actionSearch_triggered();
 	void on_actionClose_Browser_triggered();
 	void on_actionClose_triggered();
-	void on_actionRename_triggered();
+	/*void on_actionRename_triggered();
 	void on_actionCut_Selection_triggered();
 	void on_actionCopy_Selection_triggered();
 	void on_actionPaste_triggered();
-	void on_actionDelete_Selection_triggered();
+	void on_actionDelete_Selection_triggered();*/
 	void on_actionRefresh_triggered();
 	void on_actionView_Hidden_Files_triggered();
-	void on_actionShow_Action_Buttons_triggered();
-	void on_actionShow_Thumbnails_triggered();
+	//void on_actionShow_Action_Buttons_triggered();
+	//void on_actionShow_Thumbnails_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);
-	void groupModeChanged(bool);
+	//void groupModeChanged(bool);
 	void on_actionLarger_Icons_triggered();
 	void on_actionSmaller_Icons_triggered();
 	void CreateBookMark();
@@ -148,7 +151,7 @@ private slots:
 	void focusDirWidget();
 
 	//Backend Info passing
-	void DirDataAvailable(QString, QString, LFileInfoList);
+	//void DirDataAvailable(QString, QString, LFileInfoList);
 	void SnapshotDataAvailable(QString, QString, QStringList);
 	
 	//Dir Browser Interactions
@@ -162,9 +165,12 @@ private slots:
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection
 	void CloseBrowser(QString); //ID
-	
+	void TabNameChanged(QString, QString); // ID/name
+
 	//file info in status bar
 	void DisplayStatusBar(QString);
+
+	void TrayJobsFinished();
 
 signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
@@ -175,6 +181,8 @@ protected:
 	  settings->setValue("preferences/MainWindowSize", ev->size());
 	  QMainWindow::resizeEvent(ev); //just in case the window needs to see the event too
 	}
+
+	void closeEvent(QCloseEvent *ev);
 
 };
 

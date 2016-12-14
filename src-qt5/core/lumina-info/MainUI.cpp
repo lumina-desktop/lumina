@@ -8,7 +8,8 @@
 #include "ui_MainUI.h"
 
 #include <LuminaOS.h>
-#include <LuminaUtils.h>
+#include <LDesktopUtils.h>
+#include <LUtils.h>
 #include <LuminaXDG.h>
 
 #include <QPixmap>
@@ -38,7 +39,7 @@ void MainUI::updateUI(){
   ui->tool_website->setIcon( LXDG::findIcon("go-home",""));
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
   //General Tab
-  ui->label_version->setText( LUtils::LuminaDesktopVersion() );
+  ui->label_version->setText( LDesktopUtils::LuminaDesktopVersion() );
   ui->label_OS->setText( LOS::OSName() );
   connect(ui->tool_aboutQt, SIGNAL(clicked()), this, SLOT(showQtInfo()) );
   //License Tab

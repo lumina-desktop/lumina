@@ -10,23 +10,23 @@
         <translation>クリックしてアプリケーションを指定します</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="38"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Launch %1</source>
         <translation>%1 を起動</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="45"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="44"/>
         <source>Open %1</source>
         <translation>%1 を開く</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
         <translatorcomment>ダイアログのタイトル</translatorcomment>
         <translation>アプリケーションを選択してください</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="63"/>
+        <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
@@ -34,19 +34,19 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="45"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="71"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="47"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="75"/>
         <source>Click to Set</source>
         <translatorcomment>テキスト表示欄のツールチップ。アプリケーション名が設定されると置き換えられる。</translatorcomment>
         <translation>クリックして設定してください</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Select Application</source>
         <translation>アプリケーションを選択してください</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
@@ -59,82 +59,82 @@
         <translation>デスクトップ</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="83"/>
+        <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
         <translation>アプリケーションの管理</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="88"/>
+        <location filename="../AppMenu.cpp" line="87"/>
         <source>Control Panel</source>
         <translation>コントロールパネル</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"/>
+        <location filename="../AppMenu.cpp" line="97"/>
         <source>Multimedia</source>
         <translation>マルチメディア</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"/>
+        <location filename="../AppMenu.cpp" line="98"/>
         <source>Development</source>
         <translation>開発</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"/>
+        <location filename="../AppMenu.cpp" line="99"/>
         <source>Education</source>
         <translation>教育</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"/>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Games</source>
         <translation>ゲーム</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"/>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Graphics</source>
         <translation>グラフィックス</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"/>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Network</source>
         <translation>ネットワーク</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"/>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Office</source>
         <translation>オフィス</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"/>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Science</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"/>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"/>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>System</source>
         <translation>システム</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"/>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Utility</source>
         <translation>ユーティリティー</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"/>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="110"/>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>Unsorted</source>
         <translation>未分類</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="37"/>
+        <location filename="../AppMenu.cpp" line="38"/>
         <source>Applications</source>
         <translation>アプリケーション</translation>
     </message>
@@ -244,27 +244,27 @@
         <translation>前に戻る</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="161"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
         <translation>デスクトップに付ける</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="165"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
         <source>Remove from Favorites</source>
         <translation>お気に入りから削除</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="168"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
         <source>Add to Favorites</source>
         <translation>お気に入りに追加</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="172"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
         <translation>クイック起動から削除</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="175"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
         <translation>クイック起動に追加</translation>
     </message>
@@ -290,87 +290,87 @@
         <translation>アプリケーション</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="69"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
         <translation>ファイルを探索</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="74"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
         <translation>アプリケーションをインストールします</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="80"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
         <translation>コントロールパネル</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
         <translation>マルチメディア</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
         <translation>開発</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
         <translation>教育</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
         <translation>ゲーム</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
         <translation>グラフィックス</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
         <translation>ネットワーク</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
         <translation>オフィス</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
         <translation>システム</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
         <translation>ユーティリティー</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="103"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
         <translation>未分類</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="140"/>
+        <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
         <translation>終了</translation>
     </message>
@@ -378,12 +378,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="83"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="91"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (充電中)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="84"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (残り %2 %)</translation>
     </message>
@@ -404,28 +404,33 @@
 <context>
     <name>LDPlugin</name>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="36"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
+        <source>Launch Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
         <translatorcomment>&quot;transform-move&quot; アイコンを使用する操作</translatorcomment>
         <translation>アイテムの移動を開始</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
         <translation>アイテムのサイズを変更</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="39"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
         <translation>アイテムを大きくする</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="40"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
         <translation>アイテムを小さくする</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
         <translation>アイテムを削除する</translation>
     </message>
@@ -433,42 +438,42 @@
 <context>
     <name>LDeskBarPlugin</name>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
         <translation>お気に入りのアプリケーション</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="196"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
         <translation>お気に入りフォルダー</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
         <source>Audio</source>
         <translation>オーディオ</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
         <source>Video</source>
         <translation>ビデオ</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
         <translation>画像</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
         <translation>その他のファイル</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="205"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
         <source>Documents</source>
         <translation>文書</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="208"/>
+        <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
         <translation>お気に入りのフォルダ</translation>
     </message>
@@ -476,32 +481,32 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="198"/>
+        <location filename="../LDesktop.cpp" line="200"/>
         <source>Window List</source>
         <translation>ウィンドウの一覧</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="263"/>
+        <location filename="../LDesktop.cpp" line="269"/>
         <source>Lumina Desktop</source>
         <translation>Lumina デスクトップ</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="264"/>
+        <location filename="../LDesktop.cpp" line="270"/>
         <source>Workspace %1</source>
         <translation>ワークスペース %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="274"/>
+        <location filename="../LDesktop.cpp" line="280"/>
         <source>Terminal</source>
         <translation>端末</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="275"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Browse Files</source>
         <translation>ファイルを探索</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="305"/>
+        <location filename="../LDesktop.cpp" line="310"/>
         <source>Leave</source>
         <translation>終了</translation>
     </message>
@@ -978,12 +983,12 @@
         <translation>ディスプレイ</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="51"/>
+        <location filename="../SettingsMenu.cpp" line="50"/>
         <source>Control Panel</source>
         <translation>コントロールパネル</translation>
     </message>
     <message>
-        <location filename="../SettingsMenu.cpp" line="57"/>
+        <location filename="../SettingsMenu.cpp" line="56"/>
         <source>About Lumina</source>
         <translation>Lumina について</translation>
     </message>
@@ -1074,34 +1079,34 @@
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished">更新を行いますか？</translation>
+        <translation>更新を行いますか?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="267"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished">システムが適用されるのを待っている更新があります！ 今それらをインストールしますか？</translation>
+        <translation>適用されていないシステムアップデートがあります。インストールしますか?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (電源接続中)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (推定残り時間: %2)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
         <translation>残り %1%</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
         <source>Workspace %1/%2</source>
         <translation>ワークスペース %1/%2</translation>
     </message>
@@ -1157,7 +1162,7 @@
 <context>
     <name>UserItemWidget</name>
     <message>
-        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"/>
+        <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="32"/>
         <source>Go Back</source>
         <translation>戻る</translation>
     </message>

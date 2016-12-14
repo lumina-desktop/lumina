@@ -9,15 +9,25 @@ target.path = $${L_BINDIR}
 
 TEMPLATE = app
 
+#include all the special classes from the Lumina tree
+include(../../core/libLumina/LDesktopUtils.pri) #includes LUtils
+include(../../core/libLumina/LuminaXDG.pri)
+include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LuminaThemes.pri)
+
 SOURCES += main.cpp \
 		MainUI.cpp \
 		FODialog.cpp \
 		BMMDialog.cpp \
 		widgets/MultimediaWidget.cpp \
 		widgets/SlideshowWidget.cpp \
-		widgets/DirWidget.cpp \
+		widgets/DirWidget2.cpp \
 		gitCompat.cpp \
-		gitWizard.cpp
+		gitWizard.cpp \
+		Browser.cpp \
+		BrowserWidget.cpp \
+		TrayUI.cpp \
+		OPWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -27,22 +37,26 @@ HEADERS  += MainUI.h \
 		widgets/DDListWidgets.h \
 		widgets/MultimediaWidget.h \
 		widgets/SlideshowWidget.h \
-		widgets/DirWidget.h \
+		widgets/DirWidget2.h \
 		gitCompat.h \
-		gitWizard.h
+		gitWizard.h \
+		Browser.h \
+		BrowserWidget.h \
+		TrayUI.h \
+		OPWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
 		BMMDialog.ui \
 		widgets/MultimediaWidget.ui \
 		widgets/SlideshowWidget.ui \
-		widgets/DirWidget.ui \
-		gitWizard.ui
+		widgets/DirWidget2.ui \
+		gitWizard.ui \
+		OPWidget.ui
 
 icons.files = Insight-FileManager.png
 icons.path = $${L_SHAREDIR}/pixmaps
 
-LIBS     += -lLuminaUtils
 
 TRANSLATIONS =  i18n/lumina-fm_af.ts \
                 i18n/lumina-fm_ar.ts \

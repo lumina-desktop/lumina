@@ -9,13 +9,7 @@
 #ifndef _LUMINA_FILE_MANAGER_APP_SELECT_DIALOG_H
 #define _LUMINA_FILE_MANAGER_APP_SELECT_DIALOG_H
 
-#include <QDialog>
-#include <QString>
-#include <QList>
-#include <QPoint>
-#include <QDesktopWidget>
-#include <QCursor>
-#include <LuminaXDG.h>
+#include "globals.h"
 
 #include "ui_AppDialog.h"
 
@@ -27,16 +21,15 @@ class AppDialog : public QDialog{
 	Q_OBJECT
 private:
 	Ui::AppDialog *ui;
-	QList<XDGDesktop> APPS;
 
 public:
-	AppDialog(QWidget *parent = 0, QList<XDGDesktop> applist = QList<XDGDesktop>()) : QDialog(parent), ui(new Ui::AppDialog){
+	AppDialog(QWidget *parent = 0) : QDialog(parent), ui(new Ui::AppDialog){
 	  ui->setupUi(this); //load the designer file
-	  APPS = applist; //save this for later
 	  appreset = false;
 	  ui->comboBox->clear();
+          QList<XDGDesktop*> APPS = LXDG::sortDesktopNames(APPSLIST->apps(false,false)); //Don't show all/hidden
 	  for(int i=0; i<APPS.length(); i++){
-	    ui->comboBox->addItem( LXDG::findIcon(APPS[i].icon,"application-x-executable"), APPS[i].name );
+	    ui->comboBox->addItem( LXDG::findIcon(APPS[i]->icon,"application-x-executable"), APPS[i]->name, APPS[i]->filePath);
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
 	  if(parent!=0){
@@ -56,13 +49,14 @@ public:
 	    ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	  }
 	}
-	XDGDesktop appselected; //selected application (empty template for cancelled/reset)
+
+	QString appselected; //selected application
 	bool appreset; //Did the user select to reset to defaults?
 	
 		
 private slots:
 	void on_buttonBox_accepted(){
-	  appselected = APPS[ ui->comboBox->currentIndex() ];
+	  appselected = ui->comboBox->currentData().toString();
 	  this->close();
 	}
 	void on_buttonBox_rejected(){

@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här filen har osparade ändringar.
+Vill du stänga den ändå ?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="380"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns osparade ändringar.
+Vill du stänga editorn ändå?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,7 +281,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad nummer: %1, Kolumn nummer: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
@@ -285,7 +291,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Notera: Du kommer förlora alla osparade ändringar)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>

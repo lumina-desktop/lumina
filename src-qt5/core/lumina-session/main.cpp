@@ -8,12 +8,17 @@
 #include <QCoreApplication>
 #include <QProcess>
 #include <QString>
+#include <QLockFile>
+#include <QX11Info>
 
 #include "session.h"
-#include <LuminaUtils.h>
+#include <LUtils.h>
+#include <LDesktopUtils.h>
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 #include <LuminaXDG.h>
+
+#include <unistd.h>
 
 #define DEBUG 0
 
@@ -21,7 +26,7 @@ int main(int argc, char ** argv)
 {
     if (argc > 1) {
       if (QString(argv[1]) == QString("--version")){
-        qDebug() << LUtils::LuminaDesktopVersion();
+        qDebug() << LDesktopUtils::LuminaDesktopVersion();
         return 0;
       }
     }
@@ -32,11 +37,15 @@ int main(int argc, char ** argv)
     //Start X11 if needed
     QString disp = QString(getenv("DISPLAY")).simplified();
     if(disp.isEmpty()){
+      qDebug() << "No X11 session detected: Lumina will try to start one...";
       //No X session found. Go ahead and re-init this binary within an xinit call
-      QStringList args; args << QCoreApplication::applicationFilePath();
-      if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
+      QString prog = QString(argv[0]).section("/",-1);
+      LUtils::isValidBinary(prog); //will adjust the path to be absolute
+      QStringList args; args << prog;
+      //if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
       return QProcess::execute("xinit", args);
     }
+    qDebug() << "Starting the Lumina desktop on current X11 session:" << disp;
     //Setup any initialization values
     LTHEME::LoadCustomEnvSettings();
     LXDG::setEnvironmentVars();
@@ -46,11 +55,26 @@ int main(int argc, char ** argv)
     //Check for any missing user config files
     
 
+    //Check for any stale desktop lock files and clean them up
+    QString cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
+    cfile = cfile.arg( QString(getlogin()), "lumina-desktop", QString::number(QX11Info::appScreen()) );
+    if(QFile::exists(cfile)){
+      qDebug() << "Found Desktop Lock for X session:" << disp;
+      qDebug() << " - Disabling Lock and starting new desktop session";
+      QLockFile lock(cfile+"-lock");
+      if(lock.isLocked()){ lock.unlock(); }
+      QFile::remove(cfile);
+    }
+    if(QFile::exists(QDir::tempPath()+"/.luminastopping")){
+      QFile::remove(QDir::tempPath()+"/.luminastopping");
+    }
 
     //Configure X11 monitors if needed
     if(LUtils::isValidBinary("lumina-xconfig")){ 
+      qDebug() << " - Resetting monitor configuration to last-used settings";
       QProcess::execute("lumina-xconfig --reset-monitors");
     }
+    qDebug() << " - Starting the session...";
     //Startup the session
     QCoreApplication a(argc, argv);
     LSession sess;

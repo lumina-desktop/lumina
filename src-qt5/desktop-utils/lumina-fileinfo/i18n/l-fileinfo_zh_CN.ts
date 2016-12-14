@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
         <translation>文件信息</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="130"/>
+        <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
         <translation>编辑快捷方式</translation>
     </message>
@@ -117,109 +117,109 @@
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="59"/>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
         <translation>---计算中---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="68"/>
+        <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
         <translation>读/写</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="71"/>
         <source>Read Only</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="72"/>
         <source>Write Only</source>
         <translation>只写</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="73"/>
         <source>No Access</source>
         <translation>无访问权</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
         <translation>XDG 快捷方式</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
         <translation>二进制文件</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="81"/>
         <source>Hidden %1</source>
         <translation>隐藏 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="116"/>
+        <location filename="../MainUI.cpp" line="126"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
         <translation>选择一个程序</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="281"/>
+        <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>无效选择: 不是可执行文件</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="305"/>
         <source>Select a directory</source>
         <translation>选择目录</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
         <translation>选择图标</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="306"/>
+        <location filename="../MainUI.cpp" line="318"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>图像 (%1);; 所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
         <translation>目录:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
         <translation>文件:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="331"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
         <translation>计算中...</translation>
     </message>

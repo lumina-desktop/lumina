@@ -19,7 +19,9 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   watcher = new QFileSystemWatcher(this);
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
 
-  QTimer::singleShot(200,this, SLOT(loadButton()) );
+  connect(this, SIGNAL(PluginActivated()), this, SLOT(buttonClicked()) ); //in case they use the context menu to launch it.
+  loadButton();
+  //QTimer::singleShot(0,this, SLOT(loadButton()) );
 }
 	
 void AppLauncherPlugin::Cleanup(){
@@ -38,8 +40,9 @@ void AppLauncherPlugin::loadButton(){
   button->setIconSize( QSize(icosize,icosize) );
   QString txt;
   if(path.endsWith(".desktop") && ok){
-    XDGDesktop file = LXDG::loadDesktopFile(path, ok);
-    if(path.isEmpty() || !QFile::exists(path) || !ok){
+    XDGDesktop file(path);
+    ok = !file.name.isEmpty();
+    if(!ok){
       button->setWhatsThis("");
       button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = tr("Click to Set");
@@ -57,7 +60,9 @@ void AppLauncherPlugin::loadButton(){
     if(info.isDir()){
 	button->setIcon( LXDG::findIcon("folder","") );
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
-      button->setIcon( QIcon(QPixmap(path).scaled(256,256)) ); //max size for thumbnails in memory	     
+      QPixmap pix;
+      if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  
+      else{ button->setIcon( LXDG::findIcon("dialog-cancel","") ); }
     }else{
       button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     }
@@ -67,7 +72,7 @@ void AppLauncherPlugin::loadButton(){
   }else{
     //InValid File
     button->setWhatsThis("");
-    button->setIcon( QIcon(LXDG::findIcon("quickopen","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+    button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
@@ -125,13 +130,13 @@ void AppLauncherPlugin::buttonClicked(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path) ){
     //prompt for the user to select an application
-    QList<XDGDesktop> apps = LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
+    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All"); //LXDG::sortDesktopNames( LXDG::systemDesktopFiles() );
     QStringList names;
-    for(int i=0; i<apps.length(); i++){ names << apps[i].name; }
+    for(int i=0; i<apps.length(); i++){ names << apps[i]->name; }
     bool ok = false;
     QString app = QInputDialog::getItem(this, tr("Select Application"), tr("Name:"), names, 0, false, &ok);
     if(!ok || names.indexOf(app)<0){ return; } //cancelled
-    this->saveSetting("applicationpath", apps[ names.indexOf(app) ].filePath);
+    this->saveSetting("applicationpath", apps[ names.indexOf(app) ]->filePath);
     QTimer::singleShot(0,this, SLOT(loadButton()));
   }else{
     LSession::LaunchApplication("lumina-open \""+path+"\"");

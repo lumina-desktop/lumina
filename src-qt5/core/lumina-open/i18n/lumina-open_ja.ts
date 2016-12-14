@@ -129,7 +129,7 @@
         <translation>その他</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
         <translatorcomment>&quot;Find&quot;とあるが、ファイル指定ダイアログのタイトル</translatorcomment>
         <translation>アプリケーションのバイナリーを指定</translation>
@@ -143,19 +143,19 @@
         <translation>ファイルエラー</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>音声ボリューム %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>画面の明るさ %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
         <translation>無効なファイルまたはURL: %1</translation>
     </message>
@@ -187,7 +187,7 @@
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>バイナリーがありません</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>

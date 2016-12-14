@@ -217,14 +217,14 @@
         <translation>Jobb</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="44"></location>
-        <location filename="../PanelWidget.cpp" line="104"></location>
+        <location filename="../PanelWidget.cpp" line="44"/>
+        <location filename="../PanelWidget.cpp" line="105"/>
         <source>Panel %1</source>
         <translation>%1 számú panel</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="144"></location>
-        <location filename="../PanelWidget.cpp" line="145"></location>
+        <location filename="../PanelWidget.cpp" line="143"/>
+        <location filename="../PanelWidget.cpp" line="144"/>
         <source>Select Color</source>
         <translation type="unfinished">Szín kiválasztása</translation>
     </message>
@@ -964,12 +964,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"></location>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="119"></location>
+        <location filename="../mainWindow.cpp" line="121"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1002,37 +1002,37 @@
         <translation type="unfinished">Fájl</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="63"></location>
+        <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"></location>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Select Binary</source>
         <translation type="unfinished">Bináris kiválasztása</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="127"></location>
+        <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
         <translation type="unfinished">Alkalmazás Binárisok</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"></location>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">Érvénytelen bináris</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="130"></location>
+        <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
         <translation type="unfinished">A kiválasztott fájl nem futtatható!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"></location>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
         <translation type="unfinished">Fájl kiválasztása</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="144"></location>
+        <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
         <translation type="unfinished">Minden fájl (*)</translation>
     </message>
@@ -1139,34 +1139,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="62"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="84"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="106"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="128"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="242"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="274"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="307"></location>
-        <location filename="../pages/page_defaultapps.cpp" line="339"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="61"/>
+        <location filename="../pages/page_defaultapps.cpp" line="82"/>
+        <location filename="../pages/page_defaultapps.cpp" line="103"/>
+        <location filename="../pages/page_defaultapps.cpp" line="124"/>
+        <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
         <translation type="unfinished">Kattintson a beállításhoz</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="162"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
         <translation type="unfinished">%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="404"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="330"/>
         <source>Select Binary</source>
         <translation type="unfinished">Bináris kiválasztása</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">Érvénytelen bináris</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="411"></location>
+        <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
         <translation type="unfinished">A kiválasztott bináris nem futtatható</translation>
     </message>
@@ -1378,7 +1375,7 @@
         <translation type="unfinished">Asztal mappa tartalmának mutatása</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="54"></location>
+        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1409,7 +1406,7 @@
         <translation type="unfinished">Űrlap</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="50"></location>
+        <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1863,120 +1860,120 @@
         <translation type="unfinished">Elrendezés:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="55"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="56"/>
         <source>Wallpaper Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="64"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <source>System Default</source>
         <translation type="unfinished">Rendszer alapértelmezés</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="65"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="220"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="67"/>
+        <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
         <translation type="unfinished">Homogén szín: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="76"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
         <translation type="unfinished">Képernyő felbontása:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="98"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="99"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="100"/>
+        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation type="unfinished">Szín kiválasztása</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="118"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="119"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Directory (Recursive)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="125"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
         <translation type="unfinished">Automatikus</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="126"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fullscreen</source>
         <translation type="unfinished">Teljes képernyő</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Fit screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
         <translation type="unfinished">Mozaik</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
         <translation type="unfinished">Középen</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
         <translation type="unfinished">Bal felső</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
         <translation type="unfinished">Jobb felső</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
         <translation type="unfinished">Bal alsó</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
         <translation type="unfinished">Jobb alsó</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation type="unfinished">Nincs háttér</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="141"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation type="unfinished">(rendszer alapértelmezésének használata)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="161"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
         <translation type="unfinished">A fájl nem létezik</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="201"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
         <translation type="unfinished">Háttérkép(ek) keresése</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="232"></location>
-        <location filename="../pages/page_wallpaper.cpp" line="257"></location>
+        <location filename="../pages/page_wallpaper.cpp" line="234"/>
+        <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
         <translation type="unfinished"></translation>
     </message>

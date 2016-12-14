@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Τοποθεσία Εφαρμογής</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -46,17 +46,17 @@
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
         <source>Cancel</source>
-        <translation>Άκυρο</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Σύνδεσμος Ηλεκτρονικού Ταχυδρομείου)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>(URL Διαδικτύου -  %1)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="114"/>
@@ -76,12 +76,12 @@
     <message>
         <location filename="../LFileDialog.cpp" line="117"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάπτυξη</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="118"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκπαίδευση</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="119"/>
@@ -96,42 +96,42 @@
     <message>
         <location filename="../LFileDialog.cpp" line="121"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Δίκτυο</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="122"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Σουΐτα Γραφείου</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="123"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιστήμη</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="124"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="125"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύστημα</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="126"/>
         <source>Utilities</source>
-        <translation type="unfinished"></translation>
+        <translation>Εργαλεία</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="127"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Άλλο</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="271"/>
+        <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρείτε Εκτελέσιμη Εφαρμογή</translation>
     </message>
 </context>
 <context>
@@ -139,69 +139,69 @@
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>File Error</source>
-        <translation>Σφάλμα αρχείου</translation>
+        <translation>Σφάλμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="187"/>
-        <location filename="../main.cpp" line="193"/>
+        <location filename="../main.cpp" line="188"/>
+        <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
         <translation>Ένταση ήχου %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="201"/>
-        <location filename="../main.cpp" line="210"/>
+        <location filename="../main.cpp" line="202"/>
+        <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
         <translation>Φωτεινότητα οθόνης %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="242"/>
+        <location filename="../main.cpp" line="243"/>
         <source>Invalid file or URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρο αρχείο ή URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>File could not be opened: %1</source>
-        <translation>Αδυναμία ανοίγματος αρχείου%1%</translation>
+        <translation>Αδυναμία ανοίγματος αρχείου: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι πληροφορίες εκτέλεσης λείπουν απο την συντόμευση της εφαρμογής (Δυσλειτουργία συντόμευσης): %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Απο την URL συντόμευση λείπει το URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Απο την συντόμευση του καταλόγου λείπει η διαδρομή προς τον κατάλογο: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Άγνωστος τύπος συντόμευσης: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Εκτελέσιμο λείπει</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αδυναμία έυρεσης &quot;%1&quot;.  Παρακαλώ βεβαιωθείτε ότι έχει ήδη εγκατασταθεί.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>
         <source>Application Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Πρόβλημα Εφαρμογής</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation type="unfinished"></translation>
+        <translation>Η παρακάτω εφαρμογή αντιμετώπισε ένα σφάλμα και πρέπει να τερματιστεί:</translation>
     </message>
 </context>
 </TS>

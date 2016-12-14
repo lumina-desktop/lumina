@@ -1,10 +1,11 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Susanne Jaeckel
+//  Copyright (c) 2014, Susanne Jaeckel, 2015-2016 Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 #include "LBattery.h"
+#include "LSession.h"
 
 LBattery::LBattery(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   iconOld = -1;
@@ -34,8 +35,8 @@ void LBattery::updateBattery(bool force){
   int icon = -1;
   if (charge > 90) { icon = 4; }
   else if (charge > 70) { icon = 3; }
-  else if (charge > 50) { icon = 2; }
-  else if (charge > 30) { icon = 1; }
+  else if (charge > 20) { icon = 2; }
+  else if (charge > 5) { icon = 1; }
   else if (charge > 0 ) { icon = 0; }
   if(LOS::batteryIsCharging()){ icon = icon+10; }
   //icon = icon + result.at(0).toInt() * 10;
@@ -75,7 +76,15 @@ void LBattery::updateBattery(bool force){
         label->setPixmap( LXDG::findIcon("battery-missing", "").pixmap(label->size()) );
         break;
     }
+    if(icon<iconOld && icon==0){
+      //Play some audio warning chime when 
+      LSession::handle()->playAudioFile(LOS::LuminaShare()+"low-battery.ogg");
+    }
+    if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
+    else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
+    else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
     iconOld = icon;
+
   }
   //Now update the display
   QString tt;

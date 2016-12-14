@@ -130,8 +130,8 @@ void UserWidget::UpdateAll(){
   QString APPSTORE = LOS::AppStoreShortcut();
   if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){
     //Now load the info
-    bool ok = false;
-    XDGDesktop store = LXDG::loadDesktopFile(APPSTORE, ok);
+    XDGDesktop store(APPSTORE);
+    bool ok = store.isValid();
     if(ok){
       ui->tool_app_store->setIcon( LXDG::findIcon(store.icon, "") );
       ui->tool_app_store->setText( store.name );
@@ -143,8 +143,8 @@ void UserWidget::UpdateAll(){
   QString CONTROLPANEL = LOS::ControlPanelShortcut();
   if(QFile::exists(CONTROLPANEL) && !CONTROLPANEL.isEmpty()){
     //Now load the info
-    bool ok = false;
-    XDGDesktop cpan = LXDG::loadDesktopFile(CONTROLPANEL, ok);
+    XDGDesktop cpan(CONTROLPANEL);
+    bool ok = cpan.isValid();
     if(ok){
       ui->tool_controlpanel->setIcon( LXDG::findIcon(cpan.icon, "") );
     }
@@ -221,7 +221,7 @@ void UserWidget::updateFavItems(bool newfilter){
   if(updatingfavs){ return; }
   updatingfavs = true;
   //qDebug() << "Updating User Favorite Items";
-  QStringList newfavs = LUtils::listFavorites();
+  QStringList newfavs = LDesktopUtils::listFavorites();
   //qDebug() << "Favorites:" << newfavs;
   if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
     favs = newfavs;
@@ -307,7 +307,7 @@ void UserWidget::updateAppCategories(){
 void UserWidget::updateApps(){
   if(ui->combo_app_cats->currentIndex() < 0){ return; } //no cat
   QString cat = ui->combo_app_cats->itemData( ui->combo_app_cats->currentIndex() ).toString();
-  QList<XDGDesktop> items = sysapps->value(cat);
+  QList<XDGDesktop*> items = sysapps->value(cat);
   ClearScrollArea(ui->scroll_apps);
   for(int i=0; i<items.length(); i++){
     UserItemWidget *it = new UserItemWidget(ui->scroll_apps->widget(), items[i]);
