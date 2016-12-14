@@ -50,7 +50,7 @@ void page_mouse::SaveSettings(){
 
 void page_mouse::LoadSettings(int){
   emit HasPendingChanges(false);
-  emit ChangePageTitle( tr("Mouse Settings") );
+  emit ChangePageTitle( tr("Input Device Settings") );
 
 }
 
@@ -151,7 +151,7 @@ void page_mouse::populateDeviceItemValue(QTreeWidget *tree, QTreeWidgetItem *it,
     tree->setItemWidget(it, 1, box);
     connect(box, SIGNAL(valueChanged(double)), this, SLOT(valueChanged()) );
 
-  }else if(value.canConvert<QList<QVariant>>()){
+  }else if(value.canConvert< QList<QVariant> >()){
     //Not Modifiable - just use the label in the item
     QList<QVariant> list = value.toList();
     QStringList txtList;
