@@ -148,6 +148,9 @@ void TerminalWidget::applyANSI(QByteArray code){
     else{
       qDebug() << "Unhandled ANSI Code:" << code;
     }
+  /*}else if(code.startsWith("[@") && code.length()==3){
+    //Strange VT220? code - just print the character after the @
+    InsertText( QString(code[2]) );*/
   }else if(code.startsWith("[")){
     // VT100 ESCAPE CODES
   //CURSOR MOVEMENT

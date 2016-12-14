@@ -25,8 +25,8 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   setenv("TERM","vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
   //unsetenv("TERM");
-  //unsetenv("TERMCAP");
-  setenv("TERMCAP","xterm",1);
+  unsetenv("TERMCAP");
+  //setenv("TERMCAP","xterm",1);
   /*setenv("TERMCAP",":do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
 	:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
 	:ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m:\
@@ -42,7 +42,7 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
 	:K1=\EOq:K2=\EOr:K3=\EOs:K4=\EOp:K5=\EOn:pt:sr=2*\EM:xn:\
 	:sc=2\E7:rc=2\E8:cs=5\E[%i%d;%dr:UP=2\E[%dA:DO=2\E[%dB:RI=2\E[%dC:\
 	:LE=2\E[%dD:ct=2\E[3g:st=2\EH:ta=^I:ms:bl=^G:cr=^M:eo:it#8:\
-	:RA=\E[?7l:SA=\E[?7h:po=\E[5i:pf=\E[4i:",1); //see /etc/termcap as well*/
+	:RA=\E[?7l:SA=\E[?7h:po=\E[5i:pf=\E[4i:",1); //see /etc/termcap as well */
   QStringList filter = env.keys().filter("XTERM");
   for(int i=0; i<filter.length(); i++){ unsetenv(filter[i].toLocal8Bit().data()); }
   //if(env.contains("TERM")){ unsetenv("TERM"); }
@@ -233,6 +233,12 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index,1); 
     index = raw.indexOf("\x07");
   }
+  //VT220(?) print character code
+  index=raw.indexOf("\x1b[@");
+  while(index>=0){ 
+    raw = raw.remove(index,3); 
+    index = raw.indexOf("\x1b[@");
+  }
 
   //VT102 Identify request
   index = raw.indexOf("\x1b[Z");
@@ -242,7 +248,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[/Z");
   }
-//Terminal Status request
+ //Terminal Status request
   index = raw.indexOf("\x1b[5n");
   while(index>=0){ 
     raw = raw.remove(index,1); 
@@ -250,14 +256,15 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[c"); //everything ok
    }
-//Terminal Identify request
+  //Terminal Identify request
   index = raw.indexOf("\x1b[c");
   while(index>=0){ 
     raw = raw.remove(index,1); 
-    index = raw.indexOf("\x1b[?1;7c");
+    index = raw.indexOf("\x1b[c");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[/Z");
   }
+
   incomplete = false;
   return raw;
 }
@@ -283,7 +290,24 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     //Adjust the slave side mode to RAW
     struct termios TSET;
     rc = tcgetattr(fds, &TSET); //read the current settings
-    cfmakesane(&TSET); //set the RAW mode on the settings ( cfmakeraw(&TSET); )
+    cfmakesane(&TSET); //set the SANE mode on the settings ( cfmakeraw(&TSET); )
+    //Set Input Modes
+    TSET.c_iflag |= IGNPAR; //ignore parity errors
+    TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
+    //Set Local Modes
+    TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
+    TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
+    //Set Control Modes
+    TSET.c_cflag |= CLOCAL; //Local Terminal Connection (non-modem)
+    //TSET.c_lflag &= ~IEXTEN;
+    //TSET.c_cflag &= ~(CSIZE | PARENB);
+    //TSET.c_cflag |= CS8;
+    //tt.c_oflag &= ~OPOST; // disable special output processing
+    //Set Output Modes
+    TSET.c_oflag |= OPOST;
+    //TSET.c_oflag |= OXTABS;
+    TSET.c_cc[VTIME] = 0; // timeout
+    //Now apply the settings
     tcsetattr(fds, TCSANOW, &TSET); //apply the changed settings
 
     //Change the controlling terminal in child thread to the slave PTY
