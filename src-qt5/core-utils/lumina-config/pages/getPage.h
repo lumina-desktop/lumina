@@ -69,6 +69,7 @@ static QList<PAGEINFO> KnownPages(){
 #include "page_compton.h"
 #include "page_mouse.h"
 // #include "page_mouse_trueos.h"
+// #include "page_bluetooth_trueos.h"
 
 static PageWidget* GetNewPage(QString id, QWidget *parent){
   //Find the page that matches this "id"
