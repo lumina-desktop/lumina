@@ -14,6 +14,8 @@
 
 #include <LuminaXDG.h>
 
+#define DEBUG 0
+
 //Special control code ending symbols (aside from letters)
 
 TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent){
@@ -30,6 +32,10 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
   //this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
+  resizeTimer = new QTimer(this);
+    resizeTimer->setInterval(20);
+    resizeTimer->setSingleShot(true);
+    connect(resizeTimer, SIGNAL(timeout()), this, SLOT(updateTermSize()) );
   DEFFMT = this->textCursor().charFormat(); //save the default structure for later
   DEFFMT.setForeground(Qt::white);
   CFMT = DEFFMT; //current format
@@ -49,7 +55,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   //int fd;
   bool ok = PROC->startTTY( QProcessEnvironment::systemEnvironment().value("SHELL","/bin/sh"), QStringList(), dir);
   //qDebug() << " - opened:" << ok;
-  this->setEnabled(PROC->isOpen());
+  this->setEnabled(false);
   contextMenu = new QMenu(this);
     copyA = contextMenu->addAction(LXDG::findIcon("edit-copy"), tr("Copy Selection"), this, SLOT(copySelection()) );
     pasteA = contextMenu->addAction(LXDG::findIcon("edit-paste"), tr("Paste"), this, SLOT(pasteSelection()) );
@@ -64,6 +70,7 @@ TerminalWidget::~TerminalWidget(){
 }
 
 void TerminalWidget::setTerminalFont(QFont font){
+  
   this->setFont(font);
 }
 
@@ -80,20 +87,26 @@ void TerminalWidget::InsertText(QString txt){
   if(txt.isEmpty()){ return; }
   //qDebug() << "Insert Text:" << txt << "Cursor Pos:" << this->textCursor().position() << "Column:" << this->textCursor().columnNumber();
  QTextCursor cur = this->textCursor();
+    cur.setCharFormat(CFMT);
+  this->setTextCursor(cur); //ensure the current cursor has the proper format
   this->insertPlainText(txt);
-  cur.setPosition( this->textCursor().position(), QTextCursor::KeepAnchor);
-  cur.setCharFormat(CFMT);
+  /*cur.setPosition( this->textCursor().position(), QTextCursor::KeepAnchor);
+  //cur.setCharFormat(CFMT);
   //Now make sure the new characters are the right color
   QList<QTextEdit::ExtraSelection> sels = this->extraSelections();	
   QTextEdit::ExtraSelection sel;
   sel.format = CFMT;
   sel.cursor = cur;
   sels << sel;
-  this->setExtraSelections(sels);
-  //qDebug() << "New Text Format:"<< txt << CFMT.foreground() << CFMT.font() << CFMT.fontWeight();
+  this->setExtraSelections(sels);*/
+  if(DEBUG){
+    qDebug() << "Insert Text:"<< txt << "Font Color:" << CFMT.foreground() << "Background Color:" << CFMT.background() << "Font Weight:" << CFMT.fontWeight();
+  }
 }
 
 void TerminalWidget::applyData(QByteArray data){
+  this->setEnabled(true);
+  if(DEBUG){ qDebug() << "Got Data: " << data; }
   //Make sure the current cursor is the right cursor
   if(this->textCursor()==selCursor){ this->setTextCursor(lastCursor); }
   //Iterate through the data and apply it when possible
@@ -127,12 +140,15 @@ void TerminalWidget::applyData(QByteArray data){
       //qDebug() << "Code:" << data.mid(i+1, end) << "Next Char:" << data[i+end+2];
       i+=end; //move the final loop along - already handled these bytes
       
-    }else if( data.at(i) != '\r' ){
-      chars.append(data.at(i));
-      //Plaintext character - just add it here
-      //qDebug() << "Insert Text:" << data.at(i) << CFMT.foreground().color() << CFMT.background().color();
-      //qDebug() << "  " << this->currentCharFormat().foreground().color() << this->currentCharFormat().background().color();
-      //this->textCursor().insertText( QChar(data.at(i)), CFMT );
+    }else if( data.at(i) == '\r' ){
+	//Move cursor to end of line
+      //qDebug() << "Got a return char";
+      QTextCursor cur = this->textCursor();
+	cur.movePosition(QTextCursor::EndOfLine, QTextCursor::MoveAnchor, 1);
+	cur.removeSelectedText();
+      this->setTextCursor(cur);
+    }else{
+      chars.append(data.at(i)); //Add the character to the buffer
     }
   } //end loop over data
   if(!chars.isEmpty()){ InsertText(chars); }
@@ -282,7 +298,18 @@ void TerminalWidget::applyANSI(QByteArray code){
 	cur.removeSelectedText();
       this->setTextCursor(cur);
     }
-    
+  }else if(code.endsWith("g")){
+    //Tab Clear codes (0 or 3 only)
+    int num = 0;
+    if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
+    if(num==0){ //clear current column (delete key analogue)
+      QTextCursor cur = this->textCursor();
+	cur.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 1);
+	cur.removeSelectedText();
+      this->setTextCursor(cur);
+    }else if(num==3){ //clear all
+      this->clear();
+    }
    //SCROLL MOVEMENT CODES 
   //}else if(code.endsWith("S")){ // SU - Scroll Up
     //qDebug() << "Scroll Up:" << code;
@@ -292,16 +319,22 @@ void TerminalWidget::applyANSI(QByteArray code){
   // GRAPHICS RENDERING
   }else if(code.endsWith("m")){
     //Format: "[<number>;<number>m" (no limit to sections separated by ";")
+    //qDebug() << "Got Graphics Code:" << code;
+    code.chop(1); //chop the "m" off the end
     int start = 1;
     int end = code.indexOf(";");
     while(end>start){
+      //qDebug() << "Color Code:" << code << start << end << code.mid(start, end-start);
       applyANSIColor(code.mid(start, end-start).toInt());
       //Now update the iterators and try again
       start = end;
-      end = code.indexOf(";",start+1); //go to the next one
+      end = code.indexOf(";",start); //go to the next one
+      //qDebug() << "Next end:" << end;
     }
     //Need the last section as well
-    end = code.size()-1;
+    end = code.size();
+    if(start>1){ start ++; }
+    //qDebug() << "Color Code:" << code << start << end << code.mid(start, end-start);
     if(end>start){ applyANSIColor(code.mid(start, end-start).toInt());}
     else{ applyANSIColor(0); }
     
@@ -356,11 +389,11 @@ void TerminalWidget::applyANSIColor(int code){
     else if(code==37){ color=QColor(Qt::white); }
     //48: Special extended color setting (unsupported)
     else if(code==39){ color= DEFFMT.foreground().color(); } //reset to default color
-QBrush brush = CFMT.background();
+    QBrush brush = CFMT.foreground();
     color.setAlpha(255); //fully opaque
     brush.setColor(color);
     CFMT.setForeground( brush );
-    this->setTextColor(color); //just in case the format is not used
+    //this->setTextColor(color); //just in case the format is not used
   }
   else if(code>=40 && code<=49){
     //Set the font color
@@ -388,6 +421,7 @@ QBrush brush = CFMT.background();
   else if(code==55){ CFMT.setFontOverline(false); } //disable overline
   //56-59: Reserved
   //60+: Not generally supported (special code for particular terminals such as aixterm)
+  else{ qDebug() << "Unknown Color Code:" << code; }
 }
 
 //Outgoing Data parsing
@@ -440,7 +474,6 @@ void TerminalWidget::UpdateText(){
   applyData(PROC->readTTY());
   //adjust the scrollbar as needed
   this->ensureCursorVisible();
-  //this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
 }
 
 void TerminalWidget::ShellClosed(){
@@ -461,6 +494,16 @@ void TerminalWidget::pasteSelection(){
   }
 }
 
+void TerminalWidget::updateTermSize(){
+ if(!PROC->isOpen()){ return; }
+  QSize pix = this->size(); //pixels
+  QSize chars; 
+    chars.setWidth( pix.width()/this->fontMetrics().width("W") );
+    chars.setHeight( pix.height()/this->fontMetrics().lineSpacing() );
+  
+  PROC->setTerminalSize(chars,pix);
+}
+
 // ==================
 //       PROTECTED
 // ==================
@@ -468,11 +511,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
 	
   if(ev->text().isEmpty() || ev->text()=="\b" ){
     sendKeyPress(ev->key());
-   //PROC->writeTTY( QByteArray::fromHex(ev->nativeVirtualKey()) );
   }else{
-    if( (ev->key()==Qt::Key_Enter || ev->key()==Qt::Key_Return) && !this->textCursor().atEnd() ){
-      sendKeyPress(Qt::Key_End); //just in case the cursor is not at the end (TTY will split lines and such - ugly)
-    }
     QByteArray ba; ba.append(ev->text()); //avoid any byte conversions
     //qDebug() << "Forward Input:" << ba;
     PROC->writeTTY(ba);
@@ -524,12 +563,6 @@ void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
 }
 
 void TerminalWidget::resizeEvent(QResizeEvent *ev){
-  if(!PROC->isOpen()){ return; }
-  QSize pix = ev->size(); //pixels
-  QSize chars; 
-    chars.setWidth( pix.width()/this->fontMetrics().width("W") );
-    chars.setHeight( pix.height()/this->fontMetrics().lineSpacing() );
-  
-  PROC->setTerminalSize(chars,pix);
+  resizeTimer->start();
   QTextEdit::resizeEvent(ev);
 }

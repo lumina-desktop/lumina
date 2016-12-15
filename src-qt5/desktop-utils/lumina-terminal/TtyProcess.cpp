@@ -24,10 +24,14 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   QDir::setCurrent(workdir);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   setenv("TERM","vt220-color",1);//"vt102-color",1); //vt100: VT100 emulation support (QTerminal sets "xterm" here)
-  //unsetenv("TERM");
-  unsetenv("TERMCAP");
-  //setenv("TERMCAP","xterm",1);
-  /*setenv("TERMCAP",":do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
+
+  //setenv("TERMINFO","/etc/termcap",0);
+  unsetenv("WINDOWID");
+  //unsetenv("TERMCAP");
+  //setenv("TERMCAP","/etc/termcap",1);
+  //setenv("TERMCAP","vt220-color",1);
+  //setenv("TERMCAP","vt102|vt220-color|dec vt102:' :do=^J:co#80:li#24:cl=50\E[;H\E[2J: :le=^H:bs:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A: :ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m: :md=2\E[1m:mr=2\E[7m:mb=2\E[5m:me=2\E[m:is=\E[1;24r\E[24;1H: :rs=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h:ks=\E[?1h\E=:ke=\E[?1l\E>: :ku=\EOA:kd=\EOB:kr=\EOC:kl=\EOD:kb=^H: :ho=\E[H:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:pt:sr=5\EM:vt#3: :sc=\E7:rc=\E8:cs=\E[%i%d;%dr:vs=\E[?7l:ve=\E[?7h: :mi:al=\E[L:dc=\E[P:dl=\E[M:ei=\E[4l:im=\E[4h:' vi $*",1);
+  /*setenv("TERMCAP","'vt220-color' :do=2\E[B:co#80:li#24:cl=50\E[H\E[J:sf=2*\ED:\
 	:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
 	:ce=3\E[K:cd=50\E[J:so=2\E[7m:se=2\E[m:us=2\E[4m:ue=2\E[m:\
 	:md=2\E[1m:mr=2\E[7m:mb=2\E[5m:me=2\E[m:\
@@ -134,7 +138,7 @@ QByteArray TTYProcess::readTTY(){
     //If the PTY gets input fairly soon after starting, the PTY will re-print the initial line(s)
     if(starting && !BA.contains("\n") ){
       //qDebug() << "Starting phase 1:" << BA;
-       writeTTY("\n\b"); //newline + backspace
+       writeTTY("tset\n"); //Terminal Setup utility (uses the TERM env variable)
       BA.clear();
     }else if(starting){
       //qDebug() << "Starting phase 2:" << BA;
@@ -178,7 +182,6 @@ QByteArray TTYProcess::readTTY(){
 
 void TTYProcess::setTerminalSize(QSize chars, QSize pixels){
   if(ttyfd==0){ return; }
-  
   struct winsize c_sz;
     c_sz.ws_row = chars.height();
     c_sz.ws_col = chars.width();
@@ -233,7 +236,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     raw = raw.remove(index,1); 
     index = raw.indexOf("\x07");
   }
-  //VT220(?) print character code
+  //VT220(?) print character code (cut out the code, leave the character)
   index=raw.indexOf("\x1b[@");
   while(index>=0){ 
     raw = raw.remove(index,3); 
@@ -243,7 +246,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
   //VT102 Identify request
   index = raw.indexOf("\x1b[Z");
   while(index>=0){ 
-    raw = raw.remove(index,1); 
+    raw = raw.remove(index,3); 
     index = raw.indexOf("\x1b[Z");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[/Z");
@@ -251,7 +254,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
  //Terminal Status request
   index = raw.indexOf("\x1b[5n");
   while(index>=0){ 
-    raw = raw.remove(index,1); 
+    raw = raw.remove(index,4); 
     index = raw.indexOf("\x1b[5n");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[c"); //everything ok
@@ -259,9 +262,18 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
   //Terminal Identify request
   index = raw.indexOf("\x1b[c");
   while(index>=0){ 
-    raw = raw.remove(index,1); 
+    raw = raw.remove(index,3); 
     index = raw.indexOf("\x1b[c");
     //Also send the proper reply to this identify request right away
+    writeTTY("\x1b[1c"); //VT220 reply code
+  }
+  //Terminal Identify request (xterm/termcap?)
+  index = raw.indexOf("\x1b[P");
+  while(index>=0){ 
+    raw = raw.remove(index,3); 
+    index = raw.indexOf("\x1b[P");
+    //Also send the proper reply to this identify request right away
+    qDebug() << " - Got XTERM/TERMCAP identify request ([P)";
     writeTTY("\x1b[/Z");
   }
 
@@ -272,28 +284,30 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
 // === PRIVATE ===
 pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   //Returns: -1 for errors, positive value (file descriptor) for the master side of the TTY to watch	
-
   //First open/setup a new pseudo-terminal file/device on the system (master side)
   fd = posix_openpt(O_RDWR | O_NOCTTY); //open read/write
   if(fd<0){ return -1; } //could not create pseudo-terminal
   int rc = grantpt(fd); //set permissions
   if(rc!=0){ return -1; }
   rc = unlockpt(fd); //unlock file (ready for use)
+  //rc = fchown(fd, getuid(), getgid());
   if(rc!=0){ return -1; }	
   //Now fork, return the Master device and setup the child
   pid_t PID = fork();
   if(PID==0){
     //SLAVE/child
     int fds = ::open(ptsname(fd), O_RDWR | O_NOCTTY); //open slave side read/write
-    ::close(fd); //close the master side from the slave thread
+    //rc = fchown(fds, getuid(), getgid());
+    //::close(fd); //close the master side from the slave thread
 	  
-    //Adjust the slave side mode to RAW
+    //Adjust the slave side mode to SANE
     struct termios TSET;
     rc = tcgetattr(fds, &TSET); //read the current settings
-    cfmakesane(&TSET); //set the SANE mode on the settings ( cfmakeraw(&TSET); )
+    //cfmakesane(&TSET); //set the SANE mode on the settings ( RAW: cfmakeraw(&TSET); )
     //Set Input Modes
     TSET.c_iflag |= IGNPAR; //ignore parity errors
     TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
+    //TSET.c_iflag &= IUTF8; //enable UTF-8 support
     //Set Local Modes
     TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
     TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
@@ -309,7 +323,6 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     TSET.c_cc[VTIME] = 0; // timeout
     //Now apply the settings
     tcsetattr(fds, TCSANOW, &TSET); //apply the changed settings
-
     //Change the controlling terminal in child thread to the slave PTY
     ::close(0); //close current terminal standard input
     ::close(1); //close current terminal standard output
@@ -322,6 +335,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     ioctl(0,TIOCSCTTY, 1); //Set the controlling terminal to the slave PTY
 	  
     //Execute the designated program
+    //rc = execvp("tset", NULL);
     rc = execvp(prog, child_args);
     ::close(fds); //no need to keep original file descriptor open any more
     exit(rc);
