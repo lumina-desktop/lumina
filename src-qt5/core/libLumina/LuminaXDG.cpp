@@ -868,16 +868,18 @@ QIcon LXDG::findMimeIcon(QString extension){
 
 QString LXDG::findAppMimeForFile(QString filename, bool multiple){
   QString out;
-  QString extension = filename.section(".",-1);
+  QString extension = filename.section(".",1,-1);
   if("."+extension == filename){ extension.clear(); } //hidden file without extension
   //qDebug() << "MIME SEARCH:" << filename << extension;
   QStringList mimefull = LXDG::loadMimeFileGlobs2();
   QStringList mimes;
-  //Just in case the extension/filename is a mimetype itself
+  //Just in case the filename is a mimetype itself
   if( mimefull.filter(":"+filename+":").length() == 1){
     return filename;
   }
-  else if(mimefull.filter(":"+extension+":").length() == 1){
+while(mimes.isEmpty()){
+  //Check for an exact mimetype match
+  if(mimefull.filter(":"+extension+":").length() == 1){
     return extension;
   }
   //Look for globs at the end of the filename
@@ -898,7 +900,12 @@ QString LXDG::findAppMimeForFile(QString filename, bool multiple){
     for(int i=0; i<mimes.length(); i++){
       if(!filename.startsWith( mimes[i].section(":",3,50,QString::SectionSkipEmpty).section("*",0,0), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
     }
-  } 
+  }
+    if(mimes.isEmpty()){
+      if(extension.contains(".")){ extension = extension.section(".",1,-1); }
+      else{ break; }
+    }
+  } //end of mimes while loop
   mimes.sort(); //this automatically puts them in weight order (100 on down)
   QStringList matches;
   //qDebug() << "Mimes:" << mimes;

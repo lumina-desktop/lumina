@@ -164,9 +164,10 @@ void TerminalWidget::applyANSI(QByteArray code){
     else{
       qDebug() << "Unhandled ANSI Code:" << code;
     }
-  /*}else if(code.startsWith("[@") && code.length()==3){
-    //Strange VT220? code - just print the character after the @
-    InsertText( QString(code[2]) );*/
+
+  }else if(code.startsWith("[") && code.contains("@")){
+    code = code.remove(0, code.indexOf("@")+1);
+    InsertText(code); //insert character (cursor position already accounted for with other systems)
   }else if(code.startsWith("[")){
     // VT100 ESCAPE CODES
   //CURSOR MOVEMENT
@@ -432,7 +433,7 @@ void TerminalWidget::sendKeyPress(int key){
   //Check for special keys
   switch(key){
     case Qt::Key_Delete:
-	ba.append("\x7F");
+	ba.append("\e[3~");
         break;
     case Qt::Key_Backspace:
 	ba.append("\x08");    
