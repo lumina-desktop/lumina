@@ -4,7 +4,7 @@
 #include <QProcessEnvironment>
 #include <QTimer>
 
-#define DEBUG 0
+#define DEBUG 1
 
 TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
   childProc = 0;
@@ -107,7 +107,7 @@ void TTYProcess::closeTTY(){
 void TTYProcess::writeTTY(QByteArray output){
   //qDebug() << "Write:" << output;
   static QList<QByteArray> knownFixes;
-  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b" << "\x7F" << "\x08"; }
+  if(knownFixes.isEmpty()){ knownFixes << "\x1b[C" << "\x1b[D" << "\b" << "\x7F" << "\x08"; }//<<"\x1b[H"<<"\x1b[F"; }
   fixReply = knownFixes.indexOf(output);
   ::write(ttyfd, output.data(), output.size());
 }
@@ -172,6 +172,12 @@ QByteArray TTYProcess::readTTY(){
             }
           }
 	  break;
+	case 5: //Home Key
+          BA = "\x1b[H";
+          break;
+	case 6: //End Key
+          BA = "\x1b[F";
+          break;
       }
       fixReply = -1; //done with the fix - resume normal operations
       if(DEBUG){ qDebug() << " - Fixed:" << BA; }
@@ -268,14 +274,14 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     writeTTY("\x1b[1c"); //VT220 reply code
   }
   //Terminal Identify request (xterm/termcap?)
-  index = raw.indexOf("\x1b[P");
+  /*index = raw.indexOf("\x1b[P");
   while(index>=0){ 
     raw = raw.remove(index,3); 
     index = raw.indexOf("\x1b[P");
     //Also send the proper reply to this identify request right away
     qDebug() << " - Got XTERM/TERMCAP identify request ([P)";
     writeTTY("\x1b[/Z");
-  }
+  }*/
 
   incomplete = false;
   return raw;
@@ -291,38 +297,18 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   if(rc!=0){ return -1; }
   rc = unlockpt(fd); //unlock file (ready for use)
   //rc = fchown(fd, getuid(), getgid());
+  setupTtyFd(fd);
   if(rc!=0){ return -1; }	
   //Now fork, return the Master device and setup the child
   pid_t PID = fork();
   if(PID==0){
     //SLAVE/child
     int fds = ::open(ptsname(fd), O_RDWR | O_NOCTTY); //open slave side read/write
-    //rc = fchown(fds, getuid(), getgid());
-    //::close(fd); //close the master side from the slave thread
+    rc = fchown(fds, getuid(), getgid());
+    ::close(fd); //close the master side from the slave thread
 	  
     //Adjust the slave side mode to SANE
-    struct termios TSET;
-    rc = tcgetattr(fds, &TSET); //read the current settings
-    //cfmakesane(&TSET); //set the SANE mode on the settings ( RAW: cfmakeraw(&TSET); )
-    //Set Input Modes
-    TSET.c_iflag |= IGNPAR; //ignore parity errors
-    TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
-    //TSET.c_iflag &= IUTF8; //enable UTF-8 support
-    //Set Local Modes
-    TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
-    TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
-    //Set Control Modes
-    TSET.c_cflag |= CLOCAL; //Local Terminal Connection (non-modem)
-    //TSET.c_lflag &= ~IEXTEN;
-    //TSET.c_cflag &= ~(CSIZE | PARENB);
-    //TSET.c_cflag |= CS8;
-    //tt.c_oflag &= ~OPOST; // disable special output processing
-    //Set Output Modes
-    TSET.c_oflag |= OPOST;
-    //TSET.c_oflag |= OXTABS;
-    TSET.c_cc[VTIME] = 0; // timeout
-    //Now apply the settings
-    tcsetattr(fds, TCSANOW, &TSET); //apply the changed settings
+    setupTtyFd(fds);
     //Change the controlling terminal in child thread to the slave PTY
     ::close(0); //close current terminal standard input
     ::close(1); //close current terminal standard output
@@ -342,6 +328,31 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   }
   //MASTER thread (or error)
   return PID;
+}
+
+void TTYProcess::setupTtyFd(int fd){
+  struct termios TSET;
+    tcgetattr(fd, &TSET); //read the current settings
+    cfmakesane(&TSET); //set the SANE mode on the settings ( RAW: cfmakeraw(&TSET); )
+    //Set Input Modes
+    //TSET.c_iflag |= IGNPAR; //ignore parity errors
+    //TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
+    //TSET.c_iflag &= IUTF8; //enable UTF-8 support
+    //Set Local Modes
+    //TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
+    //TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
+    //Set Control Modes
+    //TSET.c_cflag |= CLOCAL; //Local Terminal Connection (non-modem)
+    //TSET.c_lflag &= ~IEXTEN;
+    //TSET.c_cflag &= ~(CSIZE | PARENB);
+    //TSET.c_cflag |= CS8;
+    //tt.c_oflag &= ~OPOST; // disable special output processing
+    //Set Output Modes
+    //TSET.c_oflag |= OPOST;
+    //TSET.c_oflag |= OXTABS;
+    TSET.c_cc[VTIME] = 0; // timeout
+    //Now apply the settings
+    tcsetattr(fd, TCSANOW, &TSET); //apply the changed settings
 }
 
 // === PRIVATE SLOTS ===

@@ -73,8 +73,9 @@ private:
 	// Returns:
 	//    -1 for errors, child process PID (positive integer) if successful
 	//====================================
-	static pid_t LaunchProcess(int& fd, char *prog, char **child_args); 
-	
+	pid_t LaunchProcess(int& fd, char *prog, char **child_args); 
+	void setupTtyFd(pid_t fd);
+
 private slots:
 	void checkStatus(int);
 
