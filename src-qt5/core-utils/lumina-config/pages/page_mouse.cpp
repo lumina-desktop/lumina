@@ -76,7 +76,7 @@ void page_mouse::generateUI(){
       tree = new QTreeWidget(this);
       tree->setHeaderHidden(true);
       tree->setColumnCount(2);
-      connect(tree, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(itemClicked(QTreeWidgetItem*,int)) );
+      connect(tree, SIGNAL(itemActivated(QTreeWidgetItem*, int)), this, SLOT(itemClicked(QTreeWidgetItem*,int)) );
       if(devices[i]->isPointer()){ 
         int tab = ui->tabWidget->addTab(tree, LXDG::findIcon("input-mouse",""), QString(tr("Mouse #%1")).arg(QString::number(mouse)) ); 
         ui->tabWidget->setTabWhatsThis(tab, "mouse:"+QString::number(devices[i]->devNumber()));
