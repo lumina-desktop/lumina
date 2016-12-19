@@ -146,47 +146,47 @@
     <message>
         <location filename="../BootSplash.cpp" line="18"/>
         <source>Initializing Session …</source>
-        <translation>Iniciant la sessió...</translation>
+        <translation>Iniciant la sessió…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="21"/>
         <source>Loading System Settings …</source>
-        <translation>Carregant la configuració del sistema...</translation>
+        <translation>Carregant la configuració del sistema…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="24"/>
         <source>Loading User Preferences …</source>
-        <translation>Carregant les preferències de l'usuari...</translation>
+        <translation>Carregant les preferències de l'usuari…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"/>
         <source>Preparing System Tray …</source>
-        <translation>Preparant la safata de sistema...</translation>
+        <translation>Preparant la safata de sistema…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="30"/>
         <source>Starting Window Manager …</source>
-        <translation>Iniciant el gestor de finestres...</translation>
+        <translation>Iniciant el gestor de finestres…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="33"/>
         <source>Detecting Applications …</source>
-        <translation>Detectant les aplicacions...</translation>
+        <translation>Detectant les aplicacions…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="36"/>
         <source>Preparing Menus …</source>
-        <translation>Preparant els menús...</translation>
+        <translation>Preparant els menús…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>Preparing Workspace …</source>
-        <translation>Preparant l'espai de treball...</translation>
+        <translation>Preparant l'espai de treball…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="42"/>
         <source>Finalizing …</source>
-        <translation>Acabant...</translation>
+        <translation>Acabant…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>

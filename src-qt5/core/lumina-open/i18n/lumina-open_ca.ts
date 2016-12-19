@@ -36,12 +36,12 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
-        <translation>Fes que aquesta sigui l&apos;aplicació predeterminada</translation>
+        <translation>Fes que aquesta sigui l'aplicació predeterminada </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"/>
         <source>OK</source>
-        <translation>D&apos;acord</translation>
+        <translation>D'acord</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
-        <translation>(URL d&apos;Internet - %1)</translation>
+        <translation>(URL d'Internet - %1)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="114"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
-        <translation>Troba el binari de l&apos;aplicació</translation>
+        <translation>Troba el binari de l'aplicació</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
         <location filename="../main.cpp" line="188"/>
         <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
-        <translation>Volum de l&apos;àudio: %1%</translation>
+        <translation>Volum de l'àudio: %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="202"/>
@@ -161,17 +161,17 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>File could not be opened: %1</source>
-        <translation>No s&apos;ha pogut obrir el fitxer: %1</translation>
+        <translation>No s'ha pogut obrir el fitxer: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>La drecera de l&apos;aplicació no té la informació de llançament (drecera malformada): %1</translation>
+        <translation>La drecera de l'aplicació no té la informació de llançament (drecera malformada): %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>La drecera de l&apos;URL no té l&apos;URL: %1</translation>
+        <translation>La drecera de l'URL no té l'URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
@@ -190,18 +190,18 @@
     </message>
     <message>
         <location filename="../main.cpp" line="362"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>No s&apos;ha pogut trobar &quot;%1&quot;. Si us plau, assegureu-vos que estigui instal·lat.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>No s'ha pogut trobar "%1". Si us plau, assegureu-vos que estigui instal·lat.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>
         <source>Application Error</source>
-        <translation>Error de l&apos;aplicació</translation>
+        <translation>Error de l'aplicació</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="412"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>L&apos;aplicació següent ha tingut un error i s&apos;ha hagut de tancar:</translation>
+        <translation>L'aplicació següent ha tingut un error i s'ha hagut de tancar:</translation>
     </message>
 </context>
 </TS>
