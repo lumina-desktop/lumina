@@ -402,7 +402,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleisti elementą</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
