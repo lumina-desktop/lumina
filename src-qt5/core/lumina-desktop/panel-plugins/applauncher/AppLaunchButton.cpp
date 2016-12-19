@@ -8,13 +8,18 @@
 #include "../../LSession.h"
 
 #include <LuminaXDG.h>
+#include <LUtils.h>
 #include <QInputDialog>
 
 AppLaunchButtonPlugin::AppLaunchButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-  appfile = id.section("---",0,0).section("::",1,1);
+    appfile = id.section("---",0,0).section("::",1,1);
+    if(!QFile::exists(appfile) && appfile.endsWith(".desktop")){ 
+      //might be a relative path - try to find the file
+      appfile = LUtils::AppToAbsolute(appfile.section("/",-1) );
+    }
     if(!QFile::exists(appfile)){ appfile.clear(); }
     connect(button, SIGNAL(clicked()), this, SLOT(AppClicked()));
     this->layout()->setContentsMargins(0,0,0,0);
