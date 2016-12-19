@@ -1027,7 +1027,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="50"/>
         <source>Remove</source>
-        <translation>Elimina</translation>
+        <translation>Suprimeix</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="99"/>
