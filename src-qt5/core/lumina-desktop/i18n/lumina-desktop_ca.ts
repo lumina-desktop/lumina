@@ -21,7 +21,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l&apos;aplicació</translation>
+        <translation>Seleccioneu l'aplicació</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l&apos;aplicació</translation>
+        <translation>Seleccioneu l'aplicació</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
@@ -156,7 +156,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="24"/>
         <source>Loading User Preferences …</source>
-        <translation>Carregant les preferències de l&apos;usuari...</translation>
+        <translation>Carregant les preferències de l'usuari...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>Preparing Workspace …</source>
-        <translation>Preparant l&apos;espai de treball...</translation>
+        <translation>Preparant l'espai de treball...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="42"/>
@@ -191,7 +191,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Starting App: %1</source>
-        <translation>Iniciant l&apos;aplicació: %1</translation>
+        <translation>Iniciant l'aplicació: %1</translation>
     </message>
 </context>
 <context>
@@ -242,7 +242,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
-        <translation>Enganxa a l&apos;escriptori</translation>
+        <translation>Enganxa a l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
@@ -270,7 +270,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation>Error analitzant la sortida de l&apos;script: %1</translation>
+        <translation>Error analitzant la sortida de l'script: %1</translation>
     </message>
 </context>
 <context>
@@ -394,7 +394,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="143"/>
         <source>Use System Time</source>
-        <translation>Usa l&apos;hora del sistema</translation>
+        <translation>Usa l'hora del sistema</translation>
     </message>
 </context>
 <context>
@@ -402,17 +402,17 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Obre l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Inicia el trasllat de l&apos;ítem</translation>
+        <translation>Inicia el trasllat de l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Inicia el canvi de mida de l&apos;ítem</translation>
+        <translation>Inicia el canvi de mida de l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -427,7 +427,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Elimina l&apos;ítem</translation>
+        <translation>Elimina l'ítem</translation>
     </message>
 </context>
 <context>
@@ -555,7 +555,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Obre el Mesclador d&apos;àudio</translation>
+        <translation>Obre el Mesclador d'àudio</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
@@ -800,12 +800,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation>Mostra&apos;n les opcions</translation>
+        <translation>Mostra'n les opcions</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation>Obre&apos;n el lloc web</translation>
+        <translation>Obre'n el lloc web</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
@@ -837,7 +837,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>URL de l&apos;RSS</translation>
+        <translation>URL de l'RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
@@ -862,7 +862,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Alguns canals RSS poden sol·licitar intervals d&apos;actualització personalitzats en lloc d&apos;utilitzar aquest paràmetre.</translation>
+        <translation>Alguns canals RSS poden sol·licitar intervals d'actualització personalitzats en lloc d'utilitzar aquest paràmetre.</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
@@ -908,7 +908,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation>RSS de l&apos;escriptori Lumina</translation>
+        <translation>RSS de l'escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
@@ -933,7 +933,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation>Data de l&apos;última construcció: %1</translation>
+        <translation>Data de l'última construcció: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
@@ -1024,12 +1024,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Configura l&apos;escriptori</translation>
+        <translation>Configura l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Sortida de l&apos;usuari</translation>
+        <translation>Sortida de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Giny de l&apos;usuari</translation>
+        <translation>Giny de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1218,12 +1218,12 @@
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation>Carpeta de l&apos;usuari</translation>
+        <translation>Carpeta de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation>Directori de l&apos;usuari</translation>
+        <translation>Directori de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>
@@ -1233,7 +1233,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translation>Torna al directori de l&apos;usuari</translation>
+        <translation>Torna al directori de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
@@ -1248,7 +1248,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Preferències de l&apos;escriptori</translation>
+        <translation>Preferències de l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
@@ -1258,7 +1258,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Aparença de l&apos;escriptori / connectors</translation>
+        <translation>Aparença de l'escriptori / connectors</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
@@ -1268,12 +1268,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
         <source>Screensaver Settings</source>
-        <translation>Paràmetres de l&apos;estalvi de pantalla</translation>
+        <translation>Paràmetres de l'estalvi de pantalla</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Quant a l&apos;escriptori Lumina</translation>
+        <translation>Quant a l'escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
