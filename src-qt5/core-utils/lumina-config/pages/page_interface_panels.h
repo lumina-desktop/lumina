@@ -36,12 +36,14 @@ private:
 	LPlugins *PINFO;
 	QList<PanelWidget*> PANELS;
 
-	//Get an application on the system
-	//XDGDesktop getSysApp(bool allowreset = false);
+	void setupProfiles();
+	void setupImports();
 
 private slots:
 	void panelValChanged();
 	void newPanel();
 	void removePanel(int); //connected to a signal from the panel widget
+	void applyProfile(QAction*);
+	void applyImport(QAction*);
 };
 #endif
