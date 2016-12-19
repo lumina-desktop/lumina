@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation>Executa l&apos;ítem</translation>
+        <translation>Executa l'ítem</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="119"/>
@@ -126,12 +126,12 @@
     <message>
         <location filename="../MainUI.cpp" line="98"/>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Desactivat</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="98"/>
         <source>On</source>
-        <translation>On</translation>
+        <translation>Activat</translation>
     </message>
 </context>
 <context>
