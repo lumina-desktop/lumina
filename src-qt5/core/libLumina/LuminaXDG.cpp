@@ -890,6 +890,8 @@ while(mimes.isEmpty()){
     //Now ensure that the filter was accurate (*.<extention>.<something> will still be caught)
     for(int i=0; i<mimes.length(); i++){
       if(!filename.endsWith( mimes[i].section(":*",-1), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
+      else if(mimes[i].section(":",0,0).length()==2){ mimes[i].prepend("0"); } //ensure 3-character priority number
+      else if(mimes[i].section(":",0,0).length()==1){ mimes[i].prepend("00"); } //ensure 3-character priority number
     }
   }
   //Look for globs at the start of the filename
@@ -898,7 +900,7 @@ while(mimes.isEmpty()){
 	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
     //Now ensure that the filter was accurate
     for(int i=0; i<mimes.length(); i++){
-      if(!filename.startsWith( mimes[i].section(":",3,50,QString::SectionSkipEmpty).section("*",0,0), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
+      if(!filename.startsWith( mimes[i].section(":",3,-1,QString::SectionSkipEmpty).section("*",0,0), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
     }
   }
     if(mimes.isEmpty()){
@@ -906,10 +908,10 @@ while(mimes.isEmpty()){
       else{ break; }
     }
   } //end of mimes while loop
-  mimes.sort(); //this automatically puts them in weight order (100 on down)
+  mimes.sort(); //this automatically puts them in reverse weight order (100 on down)
   QStringList matches;
   //qDebug() << "Mimes:" << mimes;
-  for(int m=0; m<mimes.length(); m++){
+  for(int m=mimes.length()-1; m>=0; m--){
     QString mime = mimes[m].section(":",1,1,QString::SectionSkipEmpty);
     matches << mime;
   }
