@@ -23,7 +23,7 @@ SOURCES	+= main.cpp \
 		TtyProcess.cpp
 
 
-LIBS += -lncurses
+LIBS += -lutil
 
 
 TRANSLATIONS =  i18n/l-terminal_af.ts \
