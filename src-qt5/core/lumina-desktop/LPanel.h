@@ -38,13 +38,15 @@ private:
         //QRect hidegeom, showgeom; //for hidden panels
 	QPoint hidepoint, showpoint; //for hidden panels: locations when hidden/visible
 	bool defaultpanel, horizontal, hidden, hascompositer;
-	int screennum;
+	QString screenID;
 	int panelnum;
 	int viswidth, fullwidth;
 	QList<LPPlugin*> PLUGINS;
 
+	int Screen(); //Turn the screenID into the appropriate number
+
 public:
-	LPanel(QSettings *file, int scr = 0, int num =0, QWidget *parent=0); //settings file, screen number, panel number
+	LPanel(QSettings *file, QString scr = 0, int num =0, QWidget *parent=0); //settings file, screen number, panel number
 	~LPanel();
 
 	int number(){

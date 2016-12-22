@@ -63,6 +63,9 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Setup the event filter for Qt5
   evFilter =  new XCBEventFilter(this);
   this->installNativeEventFilter( evFilter );
+  connect(this, SIGNAL(screenAdded(QScreen*)), this, SLOT(screensChanged()) );
+  connect(this, SIGNAL(screenRemoved(QScreen*)), this, SLOT(screensChanged()) );
+  connect(this, SIGNAL(primaryScreenChanged(QScreen*)), this, SLOT(screensChanged()) );
  } //end check for primary process 
 }
 
@@ -404,7 +407,7 @@ void LSession::updateDesktops(){
   QList<int> dnums; //keep track of which screens are already managed
   QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if (DESKTOPS[i]->Screen() >= sC || geoms.contains(DW->screenGeometry(DESKTOPS[i]->Screen())) ) {
+    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(DW->screenGeometry(DESKTOPS[i]->Screen())) ) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
