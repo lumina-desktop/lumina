@@ -291,8 +291,18 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
 pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   //Returns: -1 for errors, positive value (file descriptor) for the master side of the TTY to watch	
   //First open/setup a new pseudo-terminal file/device on the system (master side)
-  fd = posix_openpt(O_RDWR | O_NOCTTY); //open read/write
-  if(fd<0){ return -1; } //could not create pseudo-terminal
+  //fd = posix_openpt(O_RDWR | O_NOCTTY); //open read/write
+  pid_t PID = forkpty( &fd, 0, 0, 0);
+  if(PID==0){
+    //Child process
+    int rc = execvp(prog, child_args);
+    //::close(fds); //no need to keep original file descriptor open any more
+    exit(rc);
+  }else{
+    //Master process
+    return PID; 
+  }
+  /*if(fd<0){ return -1; } //could not create pseudo-terminal
   int rc = grantpt(fd); //set permissions
   if(rc!=0){ return -1; }
   rc = unlockpt(fd); //unlock file (ready for use)
@@ -325,7 +335,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     rc = execvp(prog, child_args);
     ::close(fds); //no need to keep original file descriptor open any more
     exit(rc);
-  }
+  }*/
   //MASTER thread (or error)
   return PID;
 }
