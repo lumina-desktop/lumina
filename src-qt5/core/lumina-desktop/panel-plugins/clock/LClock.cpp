@@ -78,6 +78,8 @@ void LClock::updateTime(bool adjustformat){
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
     //different routine for vertical text (need newlines instead of spaces)
     label.replace(" ","\n");
+  }else if( this->size().height() < 2*this->fontMetrics().height() ){
+    label.replace("\n",", ");
   }
   if(adjustformat){
    //Check the font/spacing for the display and adjust as necessary
@@ -92,9 +94,9 @@ void LClock::updateTime(bool adjustformat){
     }else{
       button->setStyleSheet("font-weight: bold;");
     }*/
+    this->setFixedWidth( this->sizeHint().width() +6);
   }
   button->setText(label);
-
 }
 
 void LClock::updateFormats(){
@@ -113,7 +115,7 @@ void LClock::updateFormats(){
   //this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   updateTime(true);
   //Now fix the size of the widget with the new size hint
-  this->setFixedWidth( this->sizeHint().width() +6);
+  //this->setFixedWidth( this->sizeHint().width() +6);
 }
 
 void LClock::updateMenu(){
