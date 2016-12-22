@@ -78,17 +78,18 @@ public:
 	}
 	
 	void findSnapDir(){
+	  QString canonpath = QDir(dirpath).canonicalPath();
 	  //Search the filesystem
-	  if(dirpath.contains(ZSNAPDIR)){
-	    snapdir = dirpath.section(ZSNAPDIR,0,0)+ZSNAPDIR; //no need to go looking for it
+	  if(canonpath.contains(ZSNAPDIR)){
+	    snapdir =canonpath.section(ZSNAPDIR,0,0)+ZSNAPDIR; //no need to go looking for it
 	  }else if(mntpoints.isEmpty()){ 
 	    snapdir.clear(); //no zfs dirs available
 	  }else{
 	    //Only check the mountpoint associated with this directory
 	    QString mnt;
 	    for(int i=0; i<mntpoints.length(); i++){ 
-	      if(dirpath == mntpoints[i]){ mnt = mntpoints[i]; break; }
-	      else if(dirpath.startsWith(mntpoints[i]) && mntpoints[i].length()>mnt.length()){ mnt = mntpoints[i]; }
+	      if(canonpath == mntpoints[i]){ mnt = mntpoints[i]; break; }
+	      else if(canonpath.startsWith(mntpoints[i]) && mntpoints[i].length()>mnt.length()){ mnt = mntpoints[i]; }
 	    }
 	    if(QFile::exists(mnt+ZSNAPDIR)){ snapdir = mnt+ZSNAPDIR; }
 	    else{ snapdir.clear(); } //none found
