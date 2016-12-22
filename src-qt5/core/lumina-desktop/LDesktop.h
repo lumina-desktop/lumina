@@ -61,11 +61,11 @@ public slots:
 private:
 	QSettings *settings;
 	QTimer *bgtimer;
-	QDesktopWidget *desktop;
-	QString DPREFIX;
-	int desktopnumber;
+	//QDesktopWidget *desktop;
+	QString DPREFIX, screenID;
+	//int desktopnumber;
 	QRegion availDPArea;
-	bool defaultdesktop, desktoplocked, issyncing, usewinmenu, bgupdating;
+	bool defaultdesktop, issyncing, usewinmenu, bgupdating;
 	QStringList oldBGL;
 	QList<LPanel*> PANELS;
 	LDesktopPluginSpace *bgDesktop; //desktop plugin area

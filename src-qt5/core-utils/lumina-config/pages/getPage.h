@@ -35,12 +35,15 @@ static QList<PAGEINFO> KnownPages(){
   list << PageInfo("fluxbox-settings", QObject::tr("Window Manager"), QObject::tr("Window Settings"), "preferences-system-windows-actions",QObject::tr("Change window settings and appearances"), "appearance", QStringList(), QStringList() << "window" << "frame" << "border" << "workspace" << "theme" << "fluxbox" << "session");
   list << PageInfo("interface-desktop", QObject::tr("Desktop"), QObject::tr("Desktop Plugins"), "preferences-desktop-icons",QObject::tr("Change what icons or tools are embedded on the desktop"), "interface", QStringList(), QStringList() << "desktop" << "plugins" << "embed" << "icons" << "utilities");
   list << PageInfo("interface-panel", QObject::tr("Panels"), QObject::tr("Panels and Plugins"), "configure-toolbars",QObject::tr("Change any floating panels and what they show"), "interface", QStringList(), QStringList() << "desktop" << "toolbar" << "panel" << "floating" << "plugins");
-  list << PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "preferences-plugin",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
+  list << PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "format-list-unordered",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
   list << PageInfo("session-locale", QObject::tr("Localization"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
   list << PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
-  list << PageInfo("input-devices", QObject::tr("Input Device Settings"), QObject::tr("Input Device Settings"), "preferences-desktop-peripherals",QObject::tr("Adjust keyboard and mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse" << "keyboard");
-  // list << PageInfo("mouse-settings", QObject::tr("TrueOS Mouse Settings"), QObject::tr("TrueOS Mouse Settings"), "preferences-desktop-mouse",QObject::tr("Adjust mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse");
-  // list << PageInfo("bluetooth-settings", QObject::tr("TrueOS Bluetooth Settings"), QObject::tr("TrueOS Bluetooth Settings"), "preferences-desktop-bluetooth",QObject::tr("Setup Bluetooth devices"), "user", QStringList(), QStringList() << "user"<<"bluetooth"<<"audio");
+  if(LUtils::isValidBinary("xinput")){
+    list << PageInfo("input-devices", QObject::tr("Input Device Settings"), QObject::tr("Input Device Settings"), "preferences-desktop-peripherals",QObject::tr("Adjust keyboard and mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse" << "keyboard");
+  }
+ // list << PageInfo("mouse-settings", QObject::tr("TrueOS Mouse Settings"), QObject::tr("TrueOS Mouse Settings"), "preferences-desktop-mouse",QObject::tr("Adjust mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse");
+ // list << PageInfo("bluetooth-settings", QObject::tr("TrueOS Bluetooth Settings"), QObject::tr("TrueOS Bluetooth Settings"), "preferences-desktop-bluetooth",QObject::tr("Setup Bluetooth devices"), "user", QStringList(), QStringList() << "user"<<"bluetooth"<<"audio");
+
   //Now sort the items according to the translated name
   QStringList names;
   for(int i=0; i<list.length(); i++){ names << list[i].name; }

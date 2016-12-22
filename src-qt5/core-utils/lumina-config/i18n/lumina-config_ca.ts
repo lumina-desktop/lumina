@@ -72,7 +72,7 @@
         <source>This color scheme already exists.
  Overwrite it?</source>
         <translation>Aquest esquema de colors ja existeix.
-Voleu sobreescriure&apos;l?</translation>
+Voleu sobreescriure'l?</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
@@ -184,7 +184,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../PanelWidget.cpp" line="19"/>
         <source>Top/Left</source>
-        <translation>A dalt a l&apos;esquerra</translation>
+        <translation>A dalt a l'esquerra</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="20"/>
@@ -234,12 +234,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="80"/>
         <source>Desktop Bar</source>
-        <translation>Barra de l&apos;escriptori</translation>
+        <translation>Barra de l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="81"/>
         <source>This provides shortcuts to everything in the desktop folder - allowing easy access to all your favorite files/applications.</source>
-        <translation>Això proporciona dreceres a tot el que hi ha dins la carpeta de l&apos;escriptori. Permet un accés fàcil a tots els vostres fitxers / aplicacions.</translation>
+        <translation>Això proporciona dreceres a tot el que hi ha dins la carpeta de l'escriptori. Permet un accés fàcil a tots els vostres fitxers / aplicacions.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="87"/>
@@ -264,7 +264,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="109"/>
         <source>Keep track of your battery status.</source>
-        <translation>Feu un seguiment de l&apos;estat de la bateria.</translation>
+        <translation>Feu un seguiment de l'estat de la bateria.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="115"/>
@@ -274,7 +274,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="116"/>
         <source>View the current time and date.</source>
-        <translation>Mostra l&apos;hora i la data actuals.</translation>
+        <translation>Mostra l'hora i la data actuals.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="122"/>
@@ -284,7 +284,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation>Vegeu o canvieu els paràmetres del sistema (volum de l&apos;àudio, la brillantor, la vida de la bateria, els escriptoris virtuals).</translation>
+        <translation>Vegeu o canvieu els paràmetres del sistema (volum de l'àudio, la brillantor, la vida de la bateria, els escriptoris virtuals).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
@@ -305,17 +305,17 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation>Mostra l&apos;àrea per a aplicacions de sistema acoblables</translation>
+        <translation>Mostra l'àrea per a aplicacions de sistema acoblables</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translation>Amaga totes les finestres i mostra l&apos;escriptori</translation>
+        <translation>Amaga totes les finestres i mostra l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
         <source>Start Menu</source>
-        <translation>Menú d&apos;inici</translation>
+        <translation>Menú d'inici</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="176"/>
@@ -325,33 +325,33 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="177"/>
         <source>Display a calendar on the desktop</source>
-        <translation>Mostra un calendari a l&apos;escriptori</translation>
+        <translation>Mostra un calendari a l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
         <location filename="../LPlugins.cpp" line="183"/>
         <source>Application Launcher</source>
-        <translation>Llançador d&apos;aplicacions</translation>
+        <translation>Llançador d'aplicacions</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
         <source>User Menu</source>
-        <translation>Menú de l&apos;usuari</translation>
+        <translation>Menú de l'usuari</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
-        <translation>Inicia un menú alternatiu centrat en els fitxers, directoris i favorits de l&apos;usuari.</translation>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <translation>Inicia un menú alternatiu centrat en els fitxers, directoris i favorits de l'usuari.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
         <source>Application Menu</source>
-        <translation>Menú d&apos;aplicació</translation>
+        <translation>Menú d'aplicació</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Inicia un menú alternatiu centrat en el llançament d&apos;aplicacions.</translation>
+        <translation>Inicia un menú alternatiu centrat en el llançament d'aplicacions.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -366,42 +366,42 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
         <source>Workspace Switcher</source>
-        <translation>Canviador d&apos;espais de treball</translation>
+        <translation>Canviador d'espais de treball</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation>Mostra i controla qualsevol finestra d&apos;aplicació en execució (agrupa les finestres similars en un sol botó).</translation>
+        <translation>Mostra i controla qualsevol finestra d'aplicació en execució (agrupa les finestres similars en un sol botó).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Mostra i controla qualsevol finestra d&apos;aplicació en execució (cada finestra té un botó).</translation>
+        <translation>Mostra i controla qualsevol finestra d'aplicació en execució (cada finestra té un botó).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
         <source>Show Desktop</source>
-        <translation>Mostra l&apos;escriptori</translation>
+        <translation>Mostra l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="158"/>
         <source>Unified system access and application launch menu.</source>
-        <translation>Menú unificat de llançador d&apos;aplicacions i d&apos;accés al sistema.</translation>
+        <translation>Menú unificat de llançador d'aplicacions i d'accés al sistema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation>Enganxa la drecera d&apos;una aplicació directament al plafó</translation>
+        <translation>Enganxa la drecera d'una aplicació directament al plafó</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="184"/>
         <source>Desktop button for launching an application</source>
-        <translation>Botó d&apos;escriptori per iniciar una aplicació</translation>
+        <translation>Botó d'escriptori per iniciar una aplicació</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="190"/>
         <source>Desktop Icons View</source>
-        <translation>Vista d&apos;icones a l&apos;escriptori</translation>
+        <translation>Vista d'icones a l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="197"/>
@@ -411,17 +411,17 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation>Mantingueu notes de text senzilles a l&apos;escriptori</translation>
+        <translation>Mantingueu notes de text senzilles a l'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
         <source>Audio Player</source>
-        <translation>Reproductor d&apos;àudio</translation>
+        <translation>Reproductor d'àudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="205"/>
         <source>Play through lists of audio files</source>
-        <translation>Reprodueix llistes de fitxers d&apos;àudio</translation>
+        <translation>Reprodueix llistes de fitxers d'àudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="211"/>
@@ -431,7 +431,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation>Control de les estadístiques del sistema com ara l&apos;ús de la CPU i la mèmòria i les temperatures de la CPU.</translation>
+        <translation>Control de les estadístiques del sistema com ara l'ús de la CPU i la mèmòria i les temperatures de la CPU.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="218"/>
@@ -481,7 +481,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the desktop settings menu.</source>
-        <translation>Mostra el menú de paràmetres de l&apos;escriptori.</translation>
+        <translation>Mostra el menú de paràmetres de l'escriptori.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="284"/>
@@ -501,7 +501,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="191"/>
         <source>Configurable area for automatically showing desktop icons</source>
-        <translation>Àrea configurable per mostrar automàticament icones d&apos;escriptori</translation>
+        <translation>Àrea configurable per mostrar automàticament icones d'escriptori</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="249"/>
@@ -516,12 +516,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="278"/>
         <source>List the open, minimized, active, and urgent application windows</source>
-        <translation>Llista les finestres d&apos;aplicació obertes, minimitzades, actives i urgents.</translation>
+        <translation>Llista les finestres d'aplicació obertes, minimitzades, actives i urgents.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
         <source>Run an external script to generate a user defined menu</source>
-        <translation>Executa un script extern per generar un menú definit per l&apos;usuari.</translation>
+        <translation>Executa un script extern per generar un menú definit per l'usuari.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="302"/>
@@ -571,7 +571,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="327"/>
         <source>Main background color for widgets that list or display collections of items.</source>
-        <translation>Color de fons principal per a ginys que llisten o mostres col·leccions d&apos;ítems.</translation>
+        <translation>Color de fons principal per a ginys que llisten o mostres col·leccions d'ítems.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="332"/>
@@ -616,7 +616,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="356"/>
         <source>Accent Color</source>
-        <translation>Color d&apos;accentuació</translation>
+        <translation>Color d'accentuació</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="357"/>
@@ -626,7 +626,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="362"/>
         <source>Accent Color (Disabled)</source>
-        <translation>Color d&apos;accentuació (inhabilitat)</translation>
+        <translation>Color d'accentuació (inhabilitat)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="363"/>
@@ -671,7 +671,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Change Desktop Theme</source>
-        <translation>Canvia el tema de l&apos;escriptori</translation>
+        <translation>Canvia el tema de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
@@ -696,12 +696,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Startup Services and Applications</source>
-        <translation>Serveis i aplicacions de l&apos;inici</translation>
+        <translation>Serveis i aplicacions de l'inici</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Startup Settings</source>
-        <translation>Paràmetres de l&apos;inici</translation>
+        <translation>Paràmetres de l'inici</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
@@ -746,22 +746,22 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/getPage.h" line="35"/>
         <source>Change window settings and appearances</source>
-        <translation>Canvia els paràmetres i l&apos;aparença de les finestres</translation>
+        <translation>Canvia els paràmetres i l'aparença de les finestres</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop Icons and Plugins</source>
-        <translation>Icones i connectors de l&apos;escriptori</translation>
+        <translation>Icones i connectors de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop Plugins</source>
-        <translation>Connectors de l&apos;escriptori</translation>
+        <translation>Connectors de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Change what icons or tools are embedded on the desktop</source>
-        <translation>Canvia les icones o les eines encastades a l&apos;escriptori</translation>
+        <translation>Canvia les icones o les eines encastades a l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
@@ -791,7 +791,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Change what options are shown on the desktop context menu</source>
-        <translation>Canvia les opcions que es mostren al menú contextual de l&apos;escriptori</translation>
+        <translation>Canvia les opcions que es mostren al menú contextual de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
@@ -816,12 +816,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
         <source>User Settings</source>
-        <translation>Paràmetres de l&apos;usuari</translation>
+        <translation>Paràmetres de l'usuari</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
         <source>Change basic user settings such as time/date formats</source>
-        <translation>Canvieu els paràmetres d&apos;usuari bàsics com ara el format de l&apos;hora i la data</translation>
+        <translation>Canvieu els paràmetres d'usuari bàsics com ara el format de l'hora i la data</translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../ScriptDialog.cpp" line="64"/>
         <source>Select an icon file</source>
-        <translation>Seleccioneu un fitxer d&apos;icona</translation>
+        <translation>Seleccioneu un fitxer d'icona</translation>
     </message>
 </context>
 <context>
@@ -917,7 +917,7 @@ Voleu sobreescriure&apos;l?</translation>
         <source>This theme already exists.
  Overwrite it?</source>
         <translation>Aquest tema ja existeix.
-Voleu sobreescriure&apos;l?</translation>
+Voleu sobreescriure'l?</translation>
     </message>
 </context>
 <context>
@@ -930,7 +930,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../mainWindow.ui" line="23"/>
         <source>toolBar</source>
-        <translation>Barra d&apos;eines</translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
@@ -985,7 +985,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
         <source>Add New Startup Service</source>
-        <translation>Afegeix un servei nou a l&apos;inici</translation>
+        <translation>Afegeix un servei nou a l'inici</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
@@ -1005,7 +1005,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
-        <translation>Serveis de l&apos;inici</translation>
+        <translation>Serveis de l'inici</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
@@ -1015,7 +1015,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
-        <translation>Binaris d&apos;aplicacions (*)</translation>
+        <translation>Binaris d'aplicacions (*)</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="137"/>
@@ -1096,7 +1096,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="142"/>
         <source>Set App</source>
-        <translation>Estableix l&apos;aplicació</translation>
+        <translation>Estableix l'aplicació</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="152"/>
@@ -1219,7 +1219,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="184"/>
         <source>Note: Current key bindings need to be cleared and saved before they can be re-used.</source>
-        <translation>Nota: les associacions de tecles actuals s&apos;han de netejar i desar abans que es puguin reutilitzar.</translation>
+        <translation>Nota: les associacions de tecles actuals s'han de netejar i desar abans que es puguin reutilitzar.</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="220"/>
@@ -1228,12 +1228,12 @@ Voleu sobreescriure&apos;l?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	tecla Alt
-&quot;Mod4&quot;: 	tecla Windows/Mac
-&quot;Control&quot;:	tecla Ctrl</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	tecla Alt
+"Mod4": 	tecla Windows/Mac
+"Control":	tecla Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1243,12 +1243,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Up</source>
-        <translation>Volum de l&apos;àudio amunt</translation>
+        <translation>Volum de l'àudio amunt</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Audio Volume Down</source>
-        <translation>Volum de l&apos;àudio avall</translation>
+        <translation>Volum de l'àudio avall</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
@@ -1291,7 +1291,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="81"/>
         <source>Number of Workspaces</source>
-        <translation>Nombre d&apos;espais de treball</translation>
+        <translation>Nombre d'espais de treball</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="98"/>
@@ -1375,12 +1375,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="77"/>
         <source>Display Desktop Folder Contents</source>
-        <translation>Mostra els continguts de la carpeta de l&apos;escriptori</translation>
+        <translation>Mostra els continguts de la carpeta de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="55"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
 </context>
 <context>
@@ -1398,7 +1398,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_interface_menu.cpp" line="47"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
 </context>
 <context>
@@ -1411,7 +1411,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="51"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
 </context>
 <context>
@@ -1439,17 +1439,17 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_main.cpp" line="51"/>
         <source>Desktop Session Options</source>
-        <translation>Opcions de sessió d&apos;escriptori</translation>
+        <translation>Opcions de sessió d'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="54"/>
         <source>User Settings</source>
-        <translation>Paràmetres de l&apos;usuari</translation>
+        <translation>Paràmetres de l'usuari</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="98"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
 </context>
 <context>
@@ -1502,7 +1502,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_locale.cpp" line="48"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.cpp" line="92"/>
@@ -1520,7 +1520,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="34"/>
         <source>Enable numlock on startup</source>
-        <translation>Habilita el bloqueig numèric a l&apos;inici</translation>
+        <translation>Habilita el bloqueig numèric a l'inici</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="41"/>
@@ -1535,22 +1535,22 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation>Crea / elimina automàticament enllaços simbòlics per a les aplicacions instal·lades / eliminades.</translation>
+        <translation>Crea / suprimeix automàticament enllaços simbòlics per a les aplicacions instal·lades / eliminades.</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation>Gestió dels enllaços de les aplicacions d&apos;escriptori</translation>
+        <translation>Gestió dels enllaços de les aplicacions d'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="67"/>
         <source>Change User Icon</source>
-        <translation>Canvia la icona de l&apos;usuari</translation>
+        <translation>Canvia la icona de l'usuari</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="105"/>
         <source>Time Format:</source>
-        <translation>Format de l&apos;hora:</translation>
+        <translation>Format de l'hora:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="117"/>
@@ -1577,7 +1577,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="227"/>
         <source>Reset Desktop Settings</source>
-        <translation>Restableix els paràmetres de l&apos;escriptori</translation>
+        <translation>Restableix els paràmetres de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="246"/>
@@ -1602,17 +1602,17 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Time first then Date</source>
-        <translation>Primer l&apos;hora, després la data</translation>
+        <translation>Primer l'hora, després la data</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="22"/>
         <source>Date first then Time</source>
-        <translation>Primer la data, després l&apos;hora</translation>
+        <translation>Primer la data, després l'hora</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="61"/>
         <source>Desktop Settings</source>
-        <translation>Paràmetres de l&apos;escriptori</translation>
+        <translation>Paràmetres de l'escriptori</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="101"/>
@@ -1627,17 +1627,17 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="106"/>
         <source>Reset User Image</source>
-        <translation>Restableix la imatge de l&apos;usuari</translation>
+        <translation>Restableix la imatge de l'usuari</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="106"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation>Voleu restablir la imatge de l&apos;usuari a la predeterminada del sistema?</translation>
+        <translation>Voleu restablir la imatge de l'usuari a la predeterminada del sistema?</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="145"/>
         <source>Valid Time Codes:</source>
-        <translation>Codis d&apos;hora vàlids:</translation>
+        <translation>Codis d'hora vàlids:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="146"/>
@@ -1682,12 +1682,12 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="154"/>
         <source>Time Codes</source>
-        <translation>Codis d&apos;hora</translation>
+        <translation>Codis d'hora</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="168"/>
         <source>Valid Date Codes:</source>
-        <translation>Codis d&apos;hora vàlids:</translation>
+        <translation>Codis d'hora vàlids:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="169"/>
@@ -1801,7 +1801,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="128"/>
         <source>Icon Pack:</source>
-        <translation>Paquet d&apos;icones:</translation>
+        <translation>Paquet d'icones:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="138"/>
@@ -1840,7 +1840,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="90"/>
         <source>Single Background</source>
-        <translation>Fons d&apos;escriptori únic</translation>
+        <translation>Fons d'escriptori únic</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="100"/>
@@ -1937,7 +1937,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
-        <translation>Dalt a l&apos;esquerra</translation>
+        <translation>Dalt a l'esquerra</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="133"/>
@@ -1947,7 +1947,7 @@ Voleu sobreescriure&apos;l?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
-        <translation>A baix a l&apos;esquerra</translation>
+        <translation>A baix a l'esquerra</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="135"/>
@@ -1978,7 +1978,7 @@ Voleu sobreescriure&apos;l?</translation>
         <location filename="../pages/page_wallpaper.cpp" line="234"/>
         <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
-        <translation>Troba el directori d&apos;imatges de fons</translation>
+        <translation>Troba el directori d'imatges de fons</translation>
     </message>
 </context>
 </TS>

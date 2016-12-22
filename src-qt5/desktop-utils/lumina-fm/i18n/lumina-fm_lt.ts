@@ -59,52 +59,52 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Name</source>
-        <translation type="unfinished">Pavadinimas</translation>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Size</source>
-        <translation type="unfinished">Dydis</translation>
+        <translation>Dydis</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Type</source>
-        <translation type="unfinished">Tipas</translation>
+        <translation>Tipas</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Keitimo data</translation>
+        <translation>Keitimo data</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="214"/>
         <source>Date Created</source>
-        <translation type="unfinished">Sukūrimo data</translation>
+        <translation>Sukūrimo data</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="316"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Talpa: %1</translation>
+        <translation>Talpa: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="342"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Failai: %1 (%2)</translation>
+        <translation>Failai: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="344"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failai: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="350"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Katalogai: %1</translation>
+        <translation>Katalogai: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="362"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra katalogo turinio</translation>
     </message>
 </context>
 <context>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="145"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Padidinti piktogramų dydį</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="161"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumažinti piktogramų dydį</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="179"/>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="218"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Meniu</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
@@ -230,17 +230,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Failų operacijos</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="495"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogų operacijos</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="507"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Įkeliama...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="554"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="229"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="231"/>
@@ -317,12 +317,12 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="258"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinės sumos</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Savybės</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="448"/>
@@ -336,8 +336,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Sistemoje nepavyko rasti &quot;lumina-fileinfo&quot; paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Sistemoje nepavyko rasti "lumina-fileinfo" paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="485"/>
@@ -571,8 +571,8 @@ Nauja vieta: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Spustelėkite &quot;Kitas&quot;, kad pradėtumėte saugyklos atsisiuntimą</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Spustelėkite "Kitas", kad pradėtumėte saugyklos atsisiuntimą</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="57"/>
@@ -635,7 +635,7 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="171"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauja kortelė</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="174"/>
@@ -715,7 +715,7 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Užverti kortelę</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="414"/>
@@ -1001,13 +1001,13 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1017,17 +1017,17 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="48"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="49"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="50"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="99"/>
@@ -1148,17 +1148,17 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="71"/>
         <source>Finished</source>
-        <translation type="unfinished">Užbaigta</translation>
+        <translation>Užbaigta</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="71"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaidos operacijos metu. Spustelėkite, kad pamatytumėte išsamesnę informaciją</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="71"/>
         <source>No Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra klaidų</translation>
     </message>
 </context>
 </TS>

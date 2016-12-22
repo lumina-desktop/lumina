@@ -12,7 +12,7 @@
 
 #define DEBUG 0
 
-LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
+LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget(){
   //Take care of inputs
   this->setMouseTracking(true);
   hascompositer = false; //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
@@ -26,12 +26,12 @@ LPanel::LPanel(QSettings *file, int scr, int num, QWidget *parent) : QWidget(){
 	this->setLayout(tmp);
 	tmp->addWidget(panelArea);
   settings = file;
-  screennum = scr;
+  screenID = scr;
   panelnum = num; //save for later
   screen = LSession::desktop();
-  QString screenID = QApplication::screens().at(screennum)->name();
+  QString screenID = QApplication::screens().at(Screen())->name();
   PPREFIX = "panel_"+screenID+"."+QString::number(num)+"/";
-  defaultpanel = (LSession::handle()->screenGeom(screennum).x()==0 && num==0);
+  defaultpanel = (LSession::handle()->screenGeom(Screen()).x()==0 && num==0);
   horizontal=true; //use this by default initially
   hidden = false; //use this by default
   //Setup the panel
@@ -75,6 +75,15 @@ LPanel::~LPanel(){
 	
 }
 
+int LPanel::Screen(){
+  // Find the screen number associated with this ID
+  QList<QScreen*> scrns = QApplication::screens();
+  for(int i=0; i<scrns.length(); i++){
+    if(scrns[i]->name() == screenID){ return i; }
+  }
+  return -1;
+}
+
 void LPanel::prepareToClose(){
   //Go through and remove all the plugins
   for(int i=0; i<PLUGINS.length(); i++){
@@ -107,7 +116,7 @@ void LPanel::UpdatePanel(bool geomonly){
   //Create/Update the panel as designated in the Settings file
   settings->sync(); //make sure to catch external settings changes
   //First set the geometry of the panel and send the EWMH message to reserve that space
-  if(DEBUG){ qDebug() << "Update Panel: Geometry only=" << geomonly << "Screen Size:" << LSession::handle()->screenGeom(screennum); }
+  if(DEBUG){ qDebug() << "Update Panel: Geometry only=" << geomonly << "Screen Size:" << LSession::handle()->screenGeom(Screen()); }
   hidden = settings->value(PPREFIX+"hidepanel",false).toBool();
   QString loc = settings->value(PPREFIX+"location","").toString().toLower();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
@@ -129,10 +138,10 @@ void LPanel::UpdatePanel(bool geomonly){
   else{ viswidth = ht; }
   if(DEBUG){ qDebug() << "Hidden Panel size:" << hidesize << "pixels"; }
   //qDebug() << " - set Geometry";
-  int xwid = LSession::handle()->screenGeom(screennum).width();
-  int xhi = LSession::handle()->screenGeom(screennum).height();
-  int xloc = LSession::handle()->screenGeom(screennum).x();
-  int yloc = LSession::handle()->screenGeom(screennum).y();
+  int xwid = LSession::handle()->screenGeom(Screen()).width();
+  int xhi = LSession::handle()->screenGeom(Screen()).height();
+  int xloc = LSession::handle()->screenGeom(Screen()).x();
+  int yloc = LSession::handle()->screenGeom(Screen()).y();
   double panelPercent = settings->value(PPREFIX+"lengthPercent",100).toInt();
   if(panelPercent<1 || panelPercent>100){ panelPercent = 100; }
   panelPercent = panelPercent/100.0;
@@ -231,11 +240,11 @@ void LPanel::UpdatePanel(bool geomonly){
     //Ensure this plugin has a unique ID (NOTE: this numbering does not persist between sessions)
     if(!plugins[i].contains("---")){
       int num=1;
-      while( plugins.contains(plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num)) ){
+      while( plugins.contains(plugins[i]+"---"+QString::number(Screen())+"."+QString::number(this->number())+"."+QString::number(num)) ){
         num++;
       }
       
-      plugins[i] = plugins[i]+"---"+QString::number(screennum)+"."+QString::number(this->number())+"."+QString::number(num);
+      plugins[i] = plugins[i]+"---"+QString::number(Screen())+"."+QString::number(this->number())+"."+QString::number(num);
       //qDebug() << "Adjust Plugin ID:" << plugins[i];
     }
     //See if this plugin is already there or in a different spot
@@ -334,8 +343,7 @@ void LPanel::checkPanelFocus(){
       this->setMinimumSize(sz);
       this->setMaximumSize(sz);
       this->setGeometry( QRect(showpoint, sz) );
-  }
-  
+  }  
 }
 
 //===========
@@ -349,16 +357,16 @@ void LPanel::resizeEvent(QResizeEvent *event){
 void LPanel::paintEvent(QPaintEvent *event){
   if(!hascompositer){
     QPainter *painter = new QPainter(this);
-    qDebug() << "Paint Panel:" << PPREFIX;
+    //qDebug() << "Paint Panel:" << PPREFIX;
     //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow
     QRect rec = event->rect();//this->geometry(); //start with the global geometry of the panel
     rec.adjust(-1,-1,2,2); //add 1 more pixel on each side
     //Need to translate that rectangle to the background image coordinates
     //qDebug() << " - Rec:" << rec << hidden << this->geometry() << bgWindow->geometry();
-    rec.moveTo( bgWindow->mapFromGlobal( this->mapToGlobal(rec.topLeft()) ) ); //(rec.x()-LSession::handle()->screenGeom(screennum).x(), rec.y()-LSession::handle()->screenGeom(screennum).y() );
+    rec.moveTo( bgWindow->mapFromGlobal( this->mapToGlobal(rec.topLeft()) ) ); //(rec.x()-LSession::handle()->screenGeom(Screen()).x(), rec.y()-LSession::handle()->screenGeom(Screen()).y() );
     //qDebug() << " - Adjusted Window Rec:" << rec;
     painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec));
-    //painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), QApplication::screens().at(screennum)->grabWindow(QX11Info::appRootWindow(), rec.x(), rec.y(), rec.width(), rec.height()) );
+    //painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), QApplication::screens().at(Screen())->grabWindow(QX11Info::appRootWindow(), rec.x(), rec.y(), rec.width(), rec.height()) );
   }
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }

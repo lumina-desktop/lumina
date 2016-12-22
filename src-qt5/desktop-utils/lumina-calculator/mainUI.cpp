@@ -121,7 +121,7 @@ void mainUI::start_calc(){
   double result = strToNumber(eq);
   if(result!=result){ return; } //bad calculation - NaN's values are special in that they don't equal itself
   QString res = "[#%1]  %2 \t= [ %3 ]";
-  ui->list_results->addItem(res.arg(QString::number(ui->list_results->count()+1), QString::number(result, 'G'), ui->line_eq->text()));
+  ui->list_results->addItem(res.arg(QString::number(ui->list_results->count()+1), QString::number(result, 'G', 7), ui->line_eq->text()));
   ui->list_results->scrollToItem( ui->list_results->item( ui->list_results->count()-1) );
   ui->line_eq->clear();
 }

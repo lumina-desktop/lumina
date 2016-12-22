@@ -333,6 +333,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }else{
       //No field codes (or improper field codes given in the file - which is quite common)
       // - Just tack the input file on the end and let the app handle it as necessary
+      inFile.replace("%20"," "); //assume a local-file format rather than URL format
       cmd.append(" \""+inFile+"\"");
     }
   }

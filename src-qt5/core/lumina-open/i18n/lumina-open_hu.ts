@@ -36,7 +36,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
-        <translation>Alkalmazás beállítása alapértelmezettnek</translation>
+        <translation>Alkalmazás beállítása alapértelmezettnek </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"/>

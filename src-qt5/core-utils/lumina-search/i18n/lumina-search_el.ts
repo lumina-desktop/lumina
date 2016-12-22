@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.1" language="el">
 <context>
     <name>ConfigUI</name>
     <message>
-        <location filename="../ConfigUI.ui" line="14"/>
+        <location filename="../ConfigUI.ui" line="14"></location>
         <source>Search Configuration</source>
         <translation>Διαμόρφωση αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="20"/>
+        <location filename="../ConfigUI.ui" line="20"></location>
         <source>Start Search:</source>
         <translation>Έναρξη αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="39"/>
+        <location filename="../ConfigUI.ui" line="39"></location>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="48"/>
+        <location filename="../ConfigUI.ui" line="48"></location>
         <source>Excluded Directories</source>
         <translation>Κατάλογοι που εξαιρούνται</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="119"/>
+        <location filename="../ConfigUI.ui" line="119"></location>
         <source>Save as Defaults</source>
         <translation>Αποθήκευση ως προκαθορισμένα</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.cpp" line="41"/>
+        <location filename="../ConfigUI.cpp" line="41"></location>
         <source>Select Search Directory</source>
         <translation>Επιλογή Καταλόγου Αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.cpp" line="54"/>
+        <location filename="../ConfigUI.cpp" line="54"></location>
         <source>Exclude Directories</source>
         <translation>Εξαίρεση Καταλόγων</translation>
     </message>
@@ -42,96 +42,96 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
+        <location filename="../MainUI.ui" line="14"></location>
         <source>Search For...</source>
         <translation>Αναζήτηση για...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="23"/>
+        <location filename="../MainUI.ui" line="23"></location>
         <source>Type to search</source>
         <translation>Πληκτρολογήστε για αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="30"/>
+        <location filename="../MainUI.ui" line="30"></location>
         <source>Configure search parameters</source>
         <translation>Ρύθμιση παραμέτρων αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="40"/>
+        <location filename="../MainUI.ui" line="40"></location>
         <source>Stop Active Search</source>
         <translation>Τερματισμός τρέχουσας αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="54"/>
+        <location filename="../MainUI.ui" line="54"></location>
         <source>Applications</source>
         <translation>Εφαρμογές</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="64"/>
+        <location filename="../MainUI.ui" line="64"></location>
         <source>Files or Directories</source>
         <translation>Αρχεία ή κατάλογοι</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="88"/>
+        <location filename="../MainUI.ui" line="88"></location>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="108"/>
+        <location filename="../MainUI.ui" line="108"></location>
         <source>Launch Item</source>
         <translation>Εκτέλεση στοιχείου</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="119"/>
+        <location filename="../MainUI.ui" line="119"></location>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="122"/>
-        <location filename="../MainUI.ui" line="125"/>
+        <location filename="../MainUI.ui" line="122"></location>
+        <location filename="../MainUI.ui" line="125"></location>
         <source>Save Screenshot</source>
         <translation>Αποθήκευση στιγμιότυπου οθόνης</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="128"></location>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="133"/>
-        <location filename="../MainUI.ui" line="136"/>
+        <location filename="../MainUI.ui" line="133"></location>
+        <location filename="../MainUI.ui" line="136"></location>
         <source>Quit</source>
         <translation>Τερματισμός</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="141"/>
+        <location filename="../MainUI.ui" line="141"></location>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Στιγμιότυπο</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="144"/>
+        <location filename="../MainUI.ui" line="144"></location>
         <source>Take new snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Πάρτε νέο στιγμιότυπο</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"/>
+        <location filename="../MainUI.cpp" line="29"></location>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="95"></location>
         <source>Search: %1 -- Smart: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αναζήτηση: % 1 - Smart: % 2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="98"></location>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλειστό</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="98"></location>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιχτό</translation>
     </message>
 </context>
 <context>
@@ -139,12 +139,12 @@
     <message>
         <location filename="../Worker.cpp" line="42"/>
         <source>Searching: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση: %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="63"/>
         <source>Starting Search: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ξεκινώντας την αναζήτηση: %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="111"/>

@@ -26,7 +26,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   waitingToClose = false;
 	
   ui->setupUi(this);
-  ui->menuGit->setVisible( GIT::isAvailable() );
   if(DEBUG){ qDebug() << "Initilization:"; }
   settings = new QSettings( QSettings::UserScope, "lumina-desktop", "lumina-fm", this);
 
@@ -193,6 +192,7 @@ void MainUI::OpenDirs(QStringList dirs){
   //qDebug() << "OpenDirs:" << DWLIST.length() << dirs << invalid << tabBar->currentIndex();
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
   waitingToClose = false;
+  ui->menuGit->setVisible( GIT::isAvailable() );
 }
 
 void MainUI::setupIcons(){
