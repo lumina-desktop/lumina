@@ -62,6 +62,7 @@ public slots:
 	    this->setMaximumSize(10000, trayIcons.length()*this->width());
 	    sz = this->width()-2*frame->frameWidth();
 	  }
+	  if(sz>64){ sz = 64; } //many tray icons can't go larger than this anyway
 	  for(int i=0; i<trayIcons.length(); i++){
 	    trayIcons[i]->setSizeSquare(sz);
 	    trayIcons[i]->repaint();

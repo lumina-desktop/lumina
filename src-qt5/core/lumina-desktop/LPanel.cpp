@@ -367,6 +367,7 @@ void LPanel::paintEvent(QPaintEvent *event){
     //qDebug() << " - Adjusted Window Rec:" << rec;
     painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec));
     //painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), QApplication::screens().at(Screen())->grabWindow(QX11Info::appRootWindow(), rec.x(), rec.y(), rec.width(), rec.height()) );
+    delete(painter);
   }
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }

@@ -22,6 +22,8 @@
 
 #include "../LPPlugin.h"
 
+//#include "../RotateToolButton.h"
+
 class LClock : public LPPlugin{
 	Q_OBJECT
 public:
@@ -30,7 +32,7 @@ public:
 	
 private:
 	QTimer *timer;
-	QToolButton *button;
+	QToolButton *button; //RotateToolButton
 	QString timefmt, datefmt, datetimeorder;
 	bool deftime, defdate;
 	QMenu *TZMenu;

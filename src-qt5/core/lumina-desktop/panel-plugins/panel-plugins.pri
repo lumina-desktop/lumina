@@ -23,7 +23,8 @@ SOURCES += $$PWD/userbutton/LUserButton.cpp \
 	$$PWD/audioplayer/PPlayerWidget.cpp \
 	$$PWD/jsonmenu/PPJsonMenu.cpp
 	
-HEADERS += $$PWD/userbutton/LUserButton.h \
+HEADERS += $$PWD/RotateToolButton.h \
+	$$PWD/userbutton/LUserButton.h \
 	$$PWD/userbutton/UserWidget.h \
 	$$PWD/userbutton/UserItemWidget.h \
 	$$PWD/desktopbar/LDeskBar.h \

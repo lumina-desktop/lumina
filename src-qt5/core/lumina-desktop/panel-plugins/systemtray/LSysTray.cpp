@@ -117,10 +117,14 @@ void LSysTray::checkAll(){
       LI->addWidget(cont);
       //qDebug() << " - Update tray layout";
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
-        cont->setSizeSquare(this->height()-2-2*frame->frameWidth()); //horizontal tray
+        int sz = this->height()-2-2*frame->frameWidth();
+        if(sz>64){ sz = 64; }
+        cont->setSizeSquare(sz); //horizontal tray
 	this->setMaximumSize( trayIcons.length()*this->height(), 10000);
       }else{
-	cont->setSizeSquare(this->width()-2-2*frame->frameWidth()); //vertical tray
+        int sz = this->width()-2-2*frame->frameWidth();
+        if(sz>64){ sz = 64; }
+	cont->setSizeSquare(sz); //vertical tray
 	this->setMaximumSize(10000, trayIcons.length()*this->width());
       }
       //LSession::processEvents();
@@ -160,5 +164,4 @@ void LSysTray::UpdateTrayWindow(WId win){
   //qDebug() << "System Tray: Missing Window - check all";
   QTimer::singleShot(0,this, SLOT(checkAll()) );
 }
-
 
