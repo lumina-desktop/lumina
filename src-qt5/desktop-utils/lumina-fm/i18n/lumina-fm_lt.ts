@@ -170,22 +170,22 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
         <source>SingleColumn</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienas stulpelis</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="232"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Vieno stulpelio rodinys</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="240"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvigubas stulpelis</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="243"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvigubo stulpelio rodinys</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="525"/>
@@ -272,37 +272,37 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="231"/>
         <source>File</source>
-        <translation type="unfinished">Failas</translation>
+        <translation>Failą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="232"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Programos leistuką</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleisti...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="239"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminalą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="240"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaidrių rodymą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedijos grotuvą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="245"/>
@@ -1012,7 +1012,7 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Apskaičiuojama...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="48"/>
@@ -1032,12 +1032,12 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="99"/>
         <source>%1 Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 užbaigta</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="99"/>
         <source>Errors Occured</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsirado klaidų</translation>
     </message>
 </context>
 <context>
