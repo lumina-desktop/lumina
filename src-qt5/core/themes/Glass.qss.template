@@ -69,15 +69,11 @@ QMenuBar::item:disabled{
   color: %%TEXTDISABLECOLOR%%;
 }
 
-/*QMenu::item{ 
-  border: 2px solid #808080; 
-}*/
-
 QMenu::item{ 
   background: transparent; 
   border: 1px solid transparent; 
   color: %%TEXTCOLOR%%; 
-  padding: 4px 30px 4px 20px;
+  padding: 4px 2em 4px 1em;
   margin-left: 3px;
   margin-right: 3px;
 }
