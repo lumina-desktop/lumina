@@ -73,7 +73,7 @@ QMenu::item{
   background: transparent; 
   border: 1px solid transparent; 
   color: %%TEXTCOLOR%%; 
-  padding: 4px 2em 4px 1em;
+  padding: 4px 2em 4px 2em;
   margin-left: 3px;
   margin-right: 3px;
 }
