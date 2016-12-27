@@ -380,7 +380,7 @@ int main(int argc, char **argv){
       retcode = system(cmd.toLocal8Bit()); //need to run it through the "system" instead of QProcess
     }else if(cmd=="internalcrashtest"){
       log = "This is a sample crash log";
-      retcode = 2;
+      retcode = -1;
     }else{
       QProcess *p = new QProcess();
       p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
@@ -396,13 +396,13 @@ int main(int argc, char **argv){
         if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
       }
       retcode = p->exitCode();
-      if( (p->exitStatus()==QProcess::CrashExit) && retcode ==0){ retcode=1; } //so we catch it later
+      if( (p->exitStatus()==QProcess::CrashExit) && retcode ==0){ retcode=-1; } //so we catch it later
       log = QString(p->readAllStandardError());
       if(log.isEmpty()){ log = QString(p->readAllStandardOutput()); }
     }
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
     if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)
-    if( (retcode > 0) && watch && !(retcode==1 && cmd.startsWith("pc-su ")) ){ //pc-su returns 1 if the user cancelles the operation
+    if( (retcode < 0) && watch){ //-1 is used internally for crashed processes - most apps return >=0
       
       qDebug() << "[lumina-open] Application Error:" << retcode;
         //Setup the application
