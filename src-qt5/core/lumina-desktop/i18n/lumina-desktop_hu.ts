@@ -146,7 +146,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="18"/>
         <source>Initializing Session …</source>
-        <translation>Munkamenet indítása ...</translation>
+        <translation>Munkamenet indítása …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="21"/>
@@ -156,37 +156,37 @@
     <message>
         <location filename="../BootSplash.cpp" line="24"/>
         <source>Loading User Preferences …</source>
-        <translation>Felhasználói beállítások betöltése ...</translation>
+        <translation>Felhasználói beállítások betöltése …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="27"/>
         <source>Preparing System Tray …</source>
-        <translation>Rendszertálca előkészítése ...</translation>
+        <translation>Rendszertálca előkészítése …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="30"/>
         <source>Starting Window Manager …</source>
-        <translation>Ablakkezelő indítása ...</translation>
+        <translation>Ablakkezelő indítása …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="33"/>
         <source>Detecting Applications …</source>
-        <translation>Alkalmazások keresése ...</translation>
+        <translation>Alkalmazások keresése …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="36"/>
         <source>Preparing Menus …</source>
-        <translation>Menük előkészítése ...</translation>
+        <translation>Menük előkészítése …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>Preparing Workspace …</source>
-        <translation>Munkaterület előkészítése ...</translation>
+        <translation>Munkaterület előkészítése …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="42"/>
         <source>Finalizing …</source>
-        <translation>Befejezés ...</translation>
+        <translation>Befejezés …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
