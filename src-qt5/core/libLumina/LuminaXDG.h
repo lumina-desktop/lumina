@@ -78,7 +78,9 @@ public:
 	void sync(); //syncronize this structure with the backend file(as listed in the "filePath" variable)
 	bool isValid(bool showAll = true); //See if this is a valid .desktop entry (showAll: don't filter out based on DE exclude/include lists)
 
-	QString getDesktopExec(QString ActionID = "");
+	QString getDesktopExec(QString ActionID = ""); //Just return the exec field with minimal cleanup
+	QString generateExec(QStringList inputfiles = QStringList(), QString ActionID = "");  //Format the exec command to account for input files
+
 	bool saveDesktopFile(bool merge = true); //This will use the "filePath" variable for where to save the file
 
 	bool setAutoStarted(bool autostart = true); 

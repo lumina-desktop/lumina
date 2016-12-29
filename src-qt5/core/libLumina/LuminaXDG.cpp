@@ -230,6 +230,46 @@ QString XDGDesktop::getDesktopExec(QString ActionID){
   return out;
 }
 
+QString XDGDesktop::generateExec(QStringList inputfiles, QString ActionID){
+  QString exec = getDesktopExec(ActionID);
+  //Does the app need the input files in URL or File syntax?
+  bool URLsyntax = (exec.contains("%u") || exec.contains("%U"));
+  //Adjust the input file formats as needed
+  for(int i=0; i<inputfiles.length(); i++){
+    bool url = inputfiles[i].contains("://") || inputfiles[i].startsWith("www") || QUrl(inputfiles[i]).isValid();
+    //Run it through the QUrl class to catch/fix any URL syntax issues
+    if(URLsyntax){
+      if(inputfiles[i].startsWith("mailto:") ){} //don't touch this syntax - already formatted
+      else if(url){ inputfiles[i] = QUrl(inputfiles[i]).url(); }
+      else{ inputfiles[i] = QUrl::fromLocalFile(inputfiles[i]).url(); }
+    }else{
+      //if(inputfiles[i].startsWith("mailto:") ){} //don't touch this syntax - already formatted
+      if(url){ inputfiles[i] = QUrl(inputfiles[i]).toLocalFile(); }
+      else{ inputfiles[i] = QUrl::fromLocalFile(inputfiles[i]).toLocalFile(); }
+    }
+  }
+  //Now to the exec replacements as needed
+  if(exec.contains("%f")){ 
+    if(inputfiles.isEmpty()){ exec.replace("%f",""); }
+    else{ exec.replace("%f", "\""+inputfiles.first()+"\""); } //Note: can only take one input
+  }else if(exec.contains("%F")){ 
+    if(inputfiles.isEmpty()){ exec.replace("%F",""); }
+    else{ exec.replace("%F", "\""+inputfiles.join("\" \"")+"\""); }
+  }
+  if(exec.contains("%u")){ 
+    if(inputfiles.isEmpty()){ exec.replace("%u",""); }
+    else{ exec.replace("%u",  "\""+inputfiles.first()+"\""); } //Note: can only take one input
+  }else if(exec.contains("%U")){ 
+    if(inputfiles.isEmpty()){ exec.replace("%U",""); }
+    else{ exec.replace("%U", "\""+inputfiles.join("\" \"")+"\""); }
+  }
+  //Sanity check for known Local/URL syntax issues from some apps
+  if(!URLsyntax && exec.contains("%20")){ exec.replace("%20"," "); }
+  //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
+  if(exec.contains("%")){ exec = exec.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k"); }
+  return exec.simplified();
+}
+
 bool XDGDesktop::saveDesktopFile(bool merge){
   qDebug() << "Save Desktop File:" << filePath << "Merge:" << merge;
   bool autofile = filePath.contains("/autostart/"); //use the "Hidden" field instead of the "NoDisplay"
