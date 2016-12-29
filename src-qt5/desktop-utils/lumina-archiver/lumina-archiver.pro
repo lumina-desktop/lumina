@@ -11,13 +11,16 @@ include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
 HEADERS	+= MainUI.h \
-	TarBackend.h
+	TarBackend.h \
+	imgDialog.h
 		
 SOURCES	+= main.cpp \
 	MainUI.cpp \
-	TarBackend.cpp
+	TarBackend.cpp \
+	imgDialog.cpp
 
-FORMS		+= MainUI.ui
+FORMS		+= MainUI.ui \
+	imgDialog.ui
 
 TRANSLATIONS =  i18n/l-archiver_af.ts \
                 i18n/l-archiver_ar.ts \

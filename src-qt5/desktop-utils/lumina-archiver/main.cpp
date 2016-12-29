@@ -19,7 +19,8 @@ int  main(int argc, char *argv[]) {
    //Now go ahead and setup the app
    QStringList args;
    for(int i=1; i<argc; i++){
-      args << LUtils::PathToAbsolute( QString(argv[i]) );
+      if( QString(argv[i]).startsWith("--") ){ args << QString(argv[i]); }
+      else{ args << LUtils::PathToAbsolute( QString(argv[i]) ); }
    }
    //Now start the window
    MainUI W;

@@ -12,10 +12,15 @@
 #include <LuminaXDG.h>
 #include <LUtils.h>
 
-#define TAREXT (
+#include "imgDialog.h"
+
+#include <unistd.h>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
-  this->setWindowTitle(tr("Archive Manager"));
+  QString title = tr("Archive Manager");
+  if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
+  this->setWindowTitle(title);
   BACKEND = new Backend(this);
   connect(BACKEND, SIGNAL(ProcessStarting()), this, SLOT(ProcStarting()) );
   connect(BACKEND, SIGNAL(ProcessFinished(bool, QString)), this, SLOT(ProcFinished(bool, QString)) );
@@ -36,6 +41,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionExtract_Sel, SIGNAL(triggered()), this, SLOT(extractSelection()) );
   connect(ui->actionAdd_Dirs, SIGNAL(triggered()), this, SLOT(addDirs()) );
   connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
+  connect(ui->actionUSB_Image, SIGNAL(triggered()), this, SLOT(BurnImgToUSB()) );
+
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->label_progress_icon->setVisible(false);
@@ -43,6 +50,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->actionRemove_File->setEnabled(false);
   ui->actionExtract_All->setEnabled(false);
   ui->actionAdd_Dirs->setEnabled(false);
+  ui->actionUSB_Image->setEnabled(false);
   loadIcons();
   ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size")+" " );
 }
@@ -52,10 +60,14 @@ MainUI::~MainUI(){
 }
 
 void MainUI::LoadArguments(QStringList args){
+  bool burnIMG = false;
   for(int i=0; i<args.length(); i++){
+    if(args[i]=="--burn-img"){ burnIMG = true; continue; }
     if(QFile::exists(args[i])){ 
       ui->label_progress->setText(tr("Opening Archive..."));
       BACKEND->loadFile(args[i]);  
+      ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
+      if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
     }
   }
@@ -71,6 +83,7 @@ void MainUI::loadIcons(){
   ui->actionRemove_File->setIcon( LXDG::findIcon("archive-remove","") );
   ui->actionExtract_All->setIcon( LXDG::findIcon("archive-extract","") );
   ui->actionExtract_Sel->setIcon( LXDG::findIcon("archive-extract","") );
+  ui->actionUSB_Image->setIcon( LXDG::findIcon("drive-removable-media-usb-pendrive","drive-removable-media-usb") );
 }
 
 //===================
@@ -135,7 +148,7 @@ QString MainUI::CreateFileTypes(){
 
 QString MainUI::OpenFileTypes(){
   QStringList types;
-  types << QString(tr("All Types %1")).arg("(*.tar.gz *.tar.xz *.tar.bz *.tar.bz2 *.tar.lzma *.tar *.zip *.tgz *.txz *.tbz *.tbz2 *.tlz *.cpio *.pax *.ar *.shar *.7z *.iso *.xar *.jar *.rpm)");
+  types << QString(tr("All Types %1")).arg("(*.tar.gz *.tar.xz *.tar.bz *.tar.bz2 *.tar.lzma *.tar *.zip *.tgz *.txz *.tbz *.tbz2 *.tlz *.cpio *.pax *.ar *.shar *.7z *.iso *.img *.xar *.jar *.rpm)");
   types << tr("Uncompressed Archive (*.tar)");
   types << tr("GZip Compressed Archive (*.tar.gz *.tgz)");
   types << tr("BZip Compressed Archive (*.tar.bz *.tbz)");
@@ -148,7 +161,7 @@ QString MainUI::OpenFileTypes(){
   types << tr("SHAR Archive (*.shar)");
   types << tr("Zip Archive (*.zip)");
   types << tr("7-Zip Archive (*.7z)");
-  types << tr("READ-ONLY: ISO image (*.iso)");
+  types << tr("READ-ONLY: ISO image (*.iso *.img)");
   types << tr("READ-ONLY: XAR archive (*.xar)");
   types << tr("READ-ONLY: Java archive (*.jar)");
   types << tr("READ-ONLY: RedHat Package (*.rpm)");
@@ -166,6 +179,7 @@ void MainUI::NewArchive(){
   }
   ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
+  ui->actionUSB_Image->setEnabled(file.endsWith(".img"));
 }
 
 void MainUI::OpenArchive(){
@@ -173,6 +187,7 @@ void MainUI::OpenArchive(){
   if(file.isEmpty()){ return; }
   ui->label_progress->setText(tr("Opening Archive..."));
   BACKEND->loadFile(file);
+  ui->actionUSB_Image->setEnabled(file.endsWith(".img"));
 }
 
 void MainUI::addFiles(){
@@ -279,6 +294,12 @@ void MainUI::UpdateTree(){
 
   this->setEnabled(true);
   ui->tree_contents->setEnabled(true);
+}
+
+void MainUI::BurnImgToUSB(){
+  imgDialog dlg(this);
+  dlg.loadIMG(BACKEND->currentFile());
+  dlg.exec();
 }
 
 //Backend Handling

@@ -134,8 +134,15 @@
     <addaction name="actionExtract_All"/>
     <addaction name="actionExtract_Sel"/>
    </widget>
+   <widget class="QMenu" name="menuBurn_toDisk">
+    <property name="title">
+     <string>Burn to Disk</string>
+    </property>
+    <addaction name="actionUSB_Image"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuBurn_toDisk"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -218,6 +225,14 @@
   <action name="actionExtract_Sel">
    <property name="text">
     <string>Extract Selection</string>
+   </property>
+  </action>
+  <action name="actionUSB_Image">
+   <property name="text">
+    <string>USB Image</string>
+   </property>
+   <property name="statusTip">
+    <string>Copy an IMG to a USB device (may require admin permission)</string>
    </property>
   </action>
  </widget>

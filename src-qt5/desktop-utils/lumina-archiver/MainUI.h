@@ -1,5 +1,5 @@
 //===========================================
-//  Lumina-DE source code
+//  Lumina-Desktop source code
 //  Copyright (c) 2016, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
@@ -48,7 +48,8 @@ private slots:
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();
 
-	
+	void BurnImgToUSB();	
+
 	//Backend Handling
 	void ProcStarting();
 	void ProcFinished(bool, QString);
