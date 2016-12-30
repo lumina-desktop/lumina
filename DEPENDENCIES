@@ -54,8 +54,11 @@ Optional Tools
   pc-mixer		(sysutils/pcbsd-utils-qt5)
   
   
-  
-  
+=== Debian ===
+Required Tools
+  xinput
+  libxi-dev  
+
   
   
   
