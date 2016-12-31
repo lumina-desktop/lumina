@@ -43,6 +43,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
   connect(ui->actionUSB_Image, SIGNAL(triggered()), this, SLOT(BurnImgToUSB()) );
 
+  //Set Keyboard Shortcuts
+  ui->action_New->setShortcut(tr("CTRL+N"));
+  ui->action_Open->setShortcut(tr("CTRL+O"));
+  ui->action_Quit->setShortcut(tr("CTRL+Q"));
+  ui->actionExtract_All->setShortcut(tr("CTRL+E"));
+  
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->label_progress_icon->setVisible(false);
