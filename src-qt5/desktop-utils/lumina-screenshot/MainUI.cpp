@@ -17,7 +17,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   XCB = new LXCB();
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
-  ui->tabWidget->setCurrentWidget(ui->tab_view);
   ppath = QDir::homePath();
   ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().width("200%") );
   setupIcons();
@@ -64,8 +63,6 @@ MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  ui->tabWidget->setTabIcon(0, LXDG::findIcon("camera-web","") );
-  ui->tabWidget->setTabIcon(1, LXDG::findIcon("view-preview","") );
   ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
   ui->tool_quicksave->setIcon( LXDG::findIcon("document-edit","") );
   ui->actionSave_As->setIcon( LXDG::findIcon("document-save-as","") );
@@ -179,7 +176,6 @@ void MainUI::getPixmap(){
   }
   this->show();
   this->setGeometry(lastgeom);
-  ui->tabWidget->setCurrentWidget(ui->tab_view); //view it right now
   lastScreenShot = QDateTime::currentDateTime();
   //Now display the pixmap on the label as well
   IMG->LoadImage( cpic.toImage() );
