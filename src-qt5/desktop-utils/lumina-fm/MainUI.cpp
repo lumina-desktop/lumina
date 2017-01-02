@@ -227,7 +227,7 @@ void MainUI::setupIcons(){
   ui->actionClone_Repository->setIcon( LXDG::findIcon("git","download") );
 
   // External Devices menu
-  ui->actionScan->setIcon( LXDG::findIcon("system-search","") )
+  ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
   ui->actionScan->setShortcut(tr("CTRL+E"));
 }
 
