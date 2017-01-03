@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="105"/>
+        <location filename="../PanelWidget.cpp" line="117"/>
         <source>Panel %1</source>
         <translation>面板 %1</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="143"/>
-        <location filename="../PanelWidget.cpp" line="144"/>
+        <location filename="../PanelWidget.cpp" line="155"/>
+        <location filename="../PanelWidget.cpp" line="156"/>
         <source>Select Color</source>
         <translation>选择颜色</translation>
     </message>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
-        <location filename="../LPlugins.cpp" line="277"/>
+        <location filename="../LPlugins.cpp" line="291"/>
         <source>Task Manager</source>
         <translation>任务列表</translation>
     </message>
@@ -318,18 +318,18 @@
         <translation>开始菜单</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="176"/>
+        <location filename="../LPlugins.cpp" line="190"/>
         <source>Calendar</source>
         <translation>日历</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="177"/>
+        <location filename="../LPlugins.cpp" line="191"/>
         <source>Display a calendar on the desktop</source>
         <translation>显示日历在桌面</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
-        <location filename="../LPlugins.cpp" line="183"/>
+        <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
         <translation>程序启动器</translation>
     </message>
@@ -394,269 +394,279 @@
         <translation>将一个应用程序的快捷方式直接添加到面板</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="184"/>
+        <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
         <translation>用于启动程序的桌面按钮</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="190"/>
+        <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
         <translation>查看桌面图标</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="197"/>
+        <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
         <translation>记事本</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="198"/>
+        <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
         <translation>在屏幕上存放简单的笔记</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="204"/>
+        <location filename="../LPlugins.cpp" line="171"/>
+        <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
         <translation>音乐播放器</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="205"/>
+        <location filename="../LPlugins.cpp" line="172"/>
+        <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
         <translation>播放音乐文件列表</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="211"/>
+        <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
         <translation>系统监视器</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="212"/>
+        <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
         <translation>跟踪系统状态，例如 CPU/内存使用率以及 CPU 温度</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="218"/>
+        <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
         <translation>RSS 阅读器</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="219"/>
+        <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
         <translation>查看RSS订阅（需要网络连接）</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="242"/>
+        <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
         <translation>终端</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="243"/>
+        <location filename="../LPlugins.cpp" line="257"/>
         <source>Start the default system terminal.</source>
         <translation>启动系统的默认终端。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="250"/>
+        <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
         <translation>用默认文件浏览器来浏览系统。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="256"/>
+        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
         <translation>应用程序</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="257"/>
+        <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
         <translation>显示系统应用菜单。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="263"/>
+        <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
         <translation>分隔符</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="264"/>
+        <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
         <translation>固定的水平线。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="271"/>
+        <location filename="../LPlugins.cpp" line="285"/>
         <source>Show the desktop settings menu.</source>
         <translation>显示桌面设置菜单。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="284"/>
+        <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
         <translation>自定义应用程序</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="285"/>
+        <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
         <translation>开始一个自定义程序</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="291"/>
+        <location filename="../LPlugins.cpp" line="178"/>
+        <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
         <translation>菜单脚本</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="191"/>
+        <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
         <translation>可配置区域，自动显示桌面图标</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="249"/>
+        <location filename="../LPlugins.cpp" line="263"/>
         <source>Browse Files</source>
         <translation>浏览文件</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="278"/>
+        <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
         <translation>列出打开的、最小化的、活动的和紧急的应用程序窗口</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="292"/>
+        <location filename="../LPlugins.cpp" line="179"/>
+        <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
         <translation>运行一个外部的脚本用来生成一个用户自定义的菜单</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="302"/>
+        <location filename="../LPlugins.cpp" line="312"/>
+        <source>Lock Session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="313"/>
+        <source>Lock the current desktop session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="323"/>
         <source>Text</source>
         <translation>文本</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="303"/>
+        <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
         <translation>用于所有可见文字的颜色</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="308"/>
+        <location filename="../LPlugins.cpp" line="329"/>
         <source>Text (Disabled)</source>
         <translation>文字 (禁用的)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="309"/>
+        <location filename="../LPlugins.cpp" line="330"/>
         <source>Text color for disabled or inactive items.</source>
         <translation>禁用或非活动项目的文字颜色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="314"/>
+        <location filename="../LPlugins.cpp" line="335"/>
         <source>Text (Highlighted)</source>
         <translation>文字 (高亮)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="315"/>
+        <location filename="../LPlugins.cpp" line="336"/>
         <source>Text color when selection is highlighted.</source>
         <translation>选项高亮时的文字颜色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="320"/>
+        <location filename="../LPlugins.cpp" line="341"/>
         <source>Base Window Color</source>
         <translation>基础窗口颜色</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="321"/>
+        <location filename="../LPlugins.cpp" line="342"/>
         <source>Main background color for the window/dialog.</source>
         <translation>窗口/对话框的主要背景色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="326"/>
+        <location filename="../LPlugins.cpp" line="347"/>
         <source>Base Window Color (Alternate)</source>
         <translation>基础窗口颜色 (替代)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="327"/>
+        <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
         <translation>显示多个项目的控件的主要背景色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="332"/>
+        <location filename="../LPlugins.cpp" line="353"/>
         <source>Primary Color</source>
         <translation>主色彩</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="333"/>
+        <location filename="../LPlugins.cpp" line="354"/>
         <source>Dominant color for the theme.</source>
         <translation>主题的主色彩。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="338"/>
+        <location filename="../LPlugins.cpp" line="359"/>
         <source>Primary Color (Disabled)</source>
         <translation>主色彩 (禁用时)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="339"/>
+        <location filename="../LPlugins.cpp" line="360"/>
         <source>Dominant color for the theme (more subdued).</source>
         <translation>主题的主色彩 (更昏暗)。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="344"/>
+        <location filename="../LPlugins.cpp" line="365"/>
         <source>Secondary Color</source>
         <translation>次要颜色</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="345"/>
+        <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
         <translation>主题的替代颜色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="350"/>
+        <location filename="../LPlugins.cpp" line="371"/>
         <source>Secondary Color (Disabled)</source>
         <translation>次要颜色 (禁用的)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="351"/>
+        <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
         <translation>主题的次要颜色 (更黯淡的)。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="356"/>
+        <location filename="../LPlugins.cpp" line="377"/>
         <source>Accent Color</source>
         <translation>修饰颜色</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="357"/>
+        <location filename="../LPlugins.cpp" line="378"/>
         <source>Color used for borders or other accents.</source>
         <translation>用于边框及其他修饰的颜色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="362"/>
+        <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
         <translation>修饰颜色 (禁用的)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="363"/>
+        <location filename="../LPlugins.cpp" line="384"/>
         <source>Color used for borders or other accents (more subdued).</source>
         <translation>用于边框及其它修饰的颜色 (更黯淡的)。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="368"/>
+        <location filename="../LPlugins.cpp" line="389"/>
         <source>Highlight Color</source>
         <translation>高亮颜色</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="369"/>
+        <location filename="../LPlugins.cpp" line="390"/>
         <source>Color used for highlighting an item.</source>
         <translation>高亮一个项目时的颜色。</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="374"/>
+        <location filename="../LPlugins.cpp" line="395"/>
         <source>Highlight Color (Disabled)</source>
         <translation>高亮颜色 (禁用时)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="375"/>
+        <location filename="../LPlugins.cpp" line="396"/>
         <source>Color used for highlighting an item (more subdued).</source>
         <translation>高亮一个项目时的颜色 (更昏暗)。</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="29"/>
-        <source>Change Wallpaper</source>
-        <translation>更换壁纸</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="29"/>
@@ -667,11 +677,6 @@
         <location filename="../pages/getPage.h" line="29"/>
         <source>Change background image(s)</source>
         <translation>更改背景图像</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="30"/>
-        <source>Change Desktop Theme</source>
-        <translation>更换桌面主题</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
@@ -695,11 +700,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
-        <source>Startup Services and Applications</source>
-        <translation>启动的服务和程序</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="32"/>
         <source>Startup Settings</source>
         <translation>启动设置</translation>
     </message>
@@ -709,9 +709,19 @@
         <translation>自动启动程序或服务</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
-        <source>Default Applications for File Type</source>
-        <translation>文件默认打开方式(默认应用)</translation>
+        <location filename="../pages/getPage.h" line="29"/>
+        <source>Wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="30"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="32"/>
+        <source>Autostart</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -750,8 +760,28 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
-        <source>Desktop Icons and Plugins</source>
-        <translation>桌面图标和插件</translation>
+        <source>Desktop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="37"/>
+        <source>Panels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="38"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Adjust keyboard and mouse devices</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -765,11 +795,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
-        <source>Floating Panels and Plugins</source>
-        <translation>浮动面板和插件</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="37"/>
         <source>Panels and Plugins</source>
         <translation>面板和插件</translation>
     </message>
@@ -777,11 +802,6 @@
         <location filename="../pages/getPage.h" line="37"/>
         <source>Change any floating panels and what they show</source>
         <translation>更改浮动面板及其显示内容</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="38"/>
-        <source>Context Menu and Plugins</source>
-        <translation>上下文菜单和插件</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
@@ -795,11 +815,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
-        <source>Localization Options</source>
-        <translation>本地化选项</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="39"/>
         <source>Locale Settings</source>
         <translation>区域设置</translation>
     </message>
@@ -807,6 +822,11 @@
         <location filename="../pages/getPage.h" line="39"/>
         <source>Change the default locale settings for this user</source>
         <translation>为此用户更改默认的区域设置</translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="39"/>
+        <source>Localization</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -964,12 +984,12 @@
         <translation>选择要设置的显示器或桌面</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>Unsaved Changes</source>
         <translation>未保存的更改</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>此页面当前有未保存的更改，您希望保存吗?</translation>
     </message>
@@ -1050,6 +1070,11 @@
         <translation>禁用混成管理器 (需要重启会话)</translation>
     </message>
     <message>
+        <location filename="../pages/page_compton.ui" line="39"/>
+        <source>Only use compositing with GPU acceleration </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
         <translation>混成器设置</translation>
@@ -1063,73 +1088,73 @@
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="39"/>
+        <location filename="../pages/page_defaultapps.ui" line="166"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="62"/>
+        <location filename="../pages/page_defaultapps.ui" line="189"/>
         <source>Specific File Types</source>
         <translation>根据文件类型</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="99"/>
+        <location filename="../pages/page_defaultapps.ui" line="226"/>
         <source>Type/Group</source>
         <translation>类型/组</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="104"/>
+        <location filename="../pages/page_defaultapps.ui" line="231"/>
         <source>Default Application</source>
         <translation>默认应用程序</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="109"/>
+        <location filename="../pages/page_defaultapps.ui" line="236"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="119"/>
+        <location filename="../pages/page_defaultapps.ui" line="246"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="142"/>
+        <location filename="../pages/page_defaultapps.ui" line="269"/>
         <source>Set App</source>
         <translation>设置应用程序</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="152"/>
+        <location filename="../pages/page_defaultapps.ui" line="279"/>
         <source>Set Binary</source>
         <translation>设置可执行文件</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="168"/>
+        <location filename="../pages/page_defaultapps.ui" line="39"/>
         <source>Basic Settings</source>
         <translation>基本设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="187"/>
+        <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
         <translation>网页浏览器:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="210"/>
+        <location filename="../pages/page_defaultapps.ui" line="81"/>
         <source>E-Mail Client:</source>
         <translation>邮件客户端：</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="237"/>
+        <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
         <translation>文件管理器：</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="250"/>
+        <location filename="../pages/page_defaultapps.ui" line="121"/>
         <source>Virtual Terminal:</source>
         <translation>虚拟终端：</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="257"/>
-        <location filename="../pages/page_defaultapps.ui" line="267"/>
+        <location filename="../pages/page_defaultapps.ui" line="128"/>
+        <location filename="../pages/page_defaultapps.ui" line="138"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -1408,7 +1433,17 @@
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="51"/>
+        <location filename="../pages/page_interface_panels.ui" line="69"/>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.ui" line="82"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="52"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
     </message>
@@ -1426,29 +1461,62 @@
         <translation>查找…</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="45"/>
+        <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
         <translation>界面配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="48"/>
+        <location filename="../pages/page_main.cpp" line="57"/>
         <source>Appearance</source>
         <translation>外观</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="51"/>
-        <source>Desktop Session Options</source>
-        <translation>桌面会话选项</translation>
+        <location filename="../pages/page_main.cpp" line="61"/>
+        <source>Desktop Defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="54"/>
+        <location filename="../pages/page_main.cpp" line="65"/>
         <source>User Settings</source>
         <translation>用户设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="98"/>
+        <location filename="../pages/page_main.cpp" line="131"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
+    </message>
+</context>
+<context>
+    <name>page_mouse</name>
+    <message>
+        <location filename="../pages/page_mouse.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="53"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="81"/>
+        <source>Mouse #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="85"/>
+        <source>Keyboard #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="106"/>
+        <source>Extension Device #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="107"/>
+        <source>Master Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1542,49 +1610,54 @@
         <translation>管理桌面程序链接</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="67"/>
+        <location filename="../pages/page_session_options.ui" line="65"/>
+        <source>Show application crash data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="74"/>
         <source>Change User Icon</source>
         <translation>更改用户图标</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="105"/>
+        <location filename="../pages/page_session_options.ui" line="112"/>
         <source>Time Format:</source>
         <translation>时间格式：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="117"/>
-        <location filename="../pages/page_session_options.ui" line="161"/>
+        <location filename="../pages/page_session_options.ui" line="124"/>
+        <location filename="../pages/page_session_options.ui" line="168"/>
         <source>View format codes</source>
         <translation>查看可用的格式代码</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="132"/>
-        <location filename="../pages/page_session_options.ui" line="176"/>
+        <location filename="../pages/page_session_options.ui" line="139"/>
+        <location filename="../pages/page_session_options.ui" line="183"/>
         <source>Sample:</source>
         <translation>示例：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="149"/>
+        <location filename="../pages/page_session_options.ui" line="156"/>
         <source>Date Format:</source>
         <translation>日期格式：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="196"/>
+        <location filename="../pages/page_session_options.ui" line="203"/>
         <source>Display Format</source>
         <translation>显示格式</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="227"/>
+        <location filename="../pages/page_session_options.ui" line="234"/>
         <source>Reset Desktop Settings</source>
         <translation>重置桌面设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="246"/>
+        <location filename="../pages/page_session_options.ui" line="253"/>
         <source>Return to system defaults</source>
         <translation>重置为系统默认值</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="253"/>
+        <location filename="../pages/page_session_options.ui" line="260"/>
         <source>Return to Lumina defaults</source>
         <translation>重置为Lumina默认值</translation>
     </message>
@@ -1609,142 +1682,142 @@
         <translation>日期显示于时间之上</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="70"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="101"/>
+        <location filename="../pages/page_session_options.cpp" line="113"/>
         <source>Select an image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="102"/>
+        <location filename="../pages/page_session_options.cpp" line="114"/>
         <source>Images</source>
         <translation>图像</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Reset User Image</source>
         <translation>重置用户图标</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>您希望将用户图标重置为系统默认吗？</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="145"/>
+        <location filename="../pages/page_session_options.cpp" line="157"/>
         <source>Valid Time Codes:</source>
         <translation>可用的时间代码：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="146"/>
+        <location filename="../pages/page_session_options.cpp" line="158"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: 不带前导0的小时 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="147"/>
+        <location filename="../pages/page_session_options.cpp" line="159"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: 带前导0的小时 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="148"/>
+        <location filename="../pages/page_session_options.cpp" line="160"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: 不带前导0的分钟 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="149"/>
+        <location filename="../pages/page_session_options.cpp" line="161"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: 带前导0的分钟 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="150"/>
+        <location filename="../pages/page_session_options.cpp" line="162"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: 不带前导0的秒数 (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="151"/>
+        <location filename="../pages/page_session_options.cpp" line="163"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: 带前导0的秒数 (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="152"/>
+        <location filename="../pages/page_session_options.cpp" line="164"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: 上午/下午 (12小时) 时钟 (大写或小写)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="153"/>
+        <location filename="../pages/page_session_options.cpp" line="165"/>
         <source>%1: Timezone</source>
         <translation>%1: 时区</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="154"/>
+        <location filename="../pages/page_session_options.cpp" line="166"/>
         <source>Time Codes</source>
         <translation>时间代码</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="168"/>
+        <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Valid Date Codes:</source>
         <translation>可用的日期代码:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="181"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: 不包含前导0的日 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="182"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: 包含前导0的日 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="183"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: 缩略的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="184"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: 完整的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="185"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: 不带前导0的月份 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="186"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: 带前导0的月份 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="187"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: 缩略的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="188"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: 完整的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="189"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: 两位数年份 (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: 四位数年份 (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>可将文字包在单引号中来避免转义</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Date Codes</source>
         <translation>日期代码</translation>
     </message>
@@ -1757,76 +1830,101 @@
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="32"/>
+        <location filename="../pages/page_theme.ui" line="36"/>
+        <source>Desktop Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="42"/>
         <source>Font:</source>
         <translation>字体:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="46"/>
+        <location filename="../pages/page_theme.ui" line="56"/>
         <source>Font Size:</source>
         <translation>字体大小:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="53"/>
+        <location filename="../pages/page_theme.ui" line="63"/>
         <source> point</source>
         <translation> 点</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="60"/>
+        <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
         <translation>主题模板:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="76"/>
+        <location filename="../pages/page_theme.ui" line="86"/>
         <source>Create/Edit a theme template (Advanced)</source>
         <translation>创建/编辑主题模板 (高级)</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="82"/>
-        <location filename="../pages/page_theme.ui" line="116"/>
+        <location filename="../pages/page_theme.ui" line="92"/>
+        <location filename="../pages/page_theme.ui" line="126"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="94"/>
+        <location filename="../pages/page_theme.ui" line="104"/>
         <source>Color Scheme:</source>
         <translation>配色方案:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="110"/>
+        <location filename="../pages/page_theme.ui" line="120"/>
         <source>Create/Edit a color scheme</source>
         <translation>创建/编辑配色方案</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="128"/>
+        <location filename="../pages/page_theme.ui" line="138"/>
         <source>Icon Pack:</source>
         <translation>图标包:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="138"/>
+        <location filename="../pages/page_theme.ui" line="148"/>
         <source>Mouse Cursors:</source>
         <translation>鼠标指针:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="52"/>
+        <location filename="../pages/page_theme.ui" line="192"/>
+        <source>Application Themes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="198"/>
+        <source>Qt5 Theme Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="58"/>
         <source>Theme Settings</source>
         <translation>主题设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="67"/>
-        <location filename="../pages/page_theme.cpp" line="81"/>
-        <location filename="../pages/page_theme.cpp" line="132"/>
-        <location filename="../pages/page_theme.cpp" line="158"/>
+        <location filename="../pages/page_theme.cpp" line="73"/>
+        <location filename="../pages/page_theme.cpp" line="87"/>
+        <location filename="../pages/page_theme.cpp" line="173"/>
+        <location filename="../pages/page_theme.cpp" line="199"/>
         <source>Local</source>
         <translation>个人</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="74"/>
-        <location filename="../pages/page_theme.cpp" line="88"/>
-        <location filename="../pages/page_theme.cpp" line="139"/>
-        <location filename="../pages/page_theme.cpp" line="165"/>
+        <location filename="../pages/page_theme.cpp" line="80"/>
+        <location filename="../pages/page_theme.cpp" line="94"/>
+        <location filename="../pages/page_theme.cpp" line="180"/>
+        <location filename="../pages/page_theme.cpp" line="206"/>
         <source>System</source>
         <translation>系统</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="137"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="138"/>
+        <source>Manual Setting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

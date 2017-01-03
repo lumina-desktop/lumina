@@ -1,40 +1,40 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="it">
 <context>
     <name>ConfigUI</name>
     <message>
-        <location filename="../ConfigUI.ui" line="14"></location>
+        <location filename="../ConfigUI.ui" line="14"/>
         <source>Search Configuration</source>
         <translation>Cerca Configurazione</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="20"></location>
+        <location filename="../ConfigUI.ui" line="20"/>
         <source>Start Search:</source>
         <translation>Avvia la Ricerca:</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="39"></location>
+        <location filename="../ConfigUI.ui" line="39"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="48"></location>
+        <location filename="../ConfigUI.ui" line="48"/>
         <source>Excluded Directories</source>
         <translation>Directory Esclusi</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.ui" line="119"></location>
+        <location filename="../ConfigUI.ui" line="119"/>
         <source>Save as Defaults</source>
         <translation>Salva come Default</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.cpp" line="41"></location>
+        <location filename="../ConfigUI.cpp" line="41"/>
         <source>Select Search Directory</source>
         <translation>Scegli Directory di Ricerca</translation>
     </message>
     <message>
-        <location filename="../ConfigUI.cpp" line="54"></location>
+        <location filename="../ConfigUI.cpp" line="54"/>
         <source>Exclude Directories</source>
         <translation>Escludi Directory</translation>
     </message>
@@ -42,94 +42,94 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"></location>
+        <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
         <translation>Cerca ....</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="23"></location>
+        <location filename="../MainUI.ui" line="23"/>
         <source>Type to search</source>
         <translation>Tipo da Cercare</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="30"></location>
+        <location filename="../MainUI.ui" line="30"/>
         <source>Configure search parameters</source>
         <translation>Configura parametri ricerca</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="40"></location>
+        <location filename="../MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
         <translation>Ferma Ricerca Attiva</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="54"></location>
+        <location filename="../MainUI.ui" line="54"/>
         <source>Applications</source>
         <translation>Applicazioni</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="64"></location>
+        <location filename="../MainUI.ui" line="64"/>
         <source>Files or Directories</source>
         <translation>File e Directory</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="88"></location>
+        <location filename="../MainUI.ui" line="88"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="108"></location>
+        <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
         <translation>Avvia Elemento</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="119"></location>
+        <location filename="../MainUI.ui" line="119"/>
         <source>Save</source>
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="122"></location>
-        <location filename="../MainUI.ui" line="125"></location>
+        <location filename="../MainUI.ui" line="122"/>
+        <location filename="../MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
         <translation>Salva Schermata</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"></location>
+        <location filename="../MainUI.ui" line="128"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="133"></location>
-        <location filename="../MainUI.ui" line="136"></location>
+        <location filename="../MainUI.ui" line="133"/>
+        <location filename="../MainUI.ui" line="136"/>
         <source>Quit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="141"></location>
+        <location filename="../MainUI.ui" line="141"/>
         <source>Snap</source>
         <translation>Scatta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="144"></location>
+        <location filename="../MainUI.ui" line="144"/>
         <source>Take new snapshot</source>
         <translation>Fai nuova Foto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"></location>
+        <location filename="../MainUI.cpp" line="29"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"></location>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Cerca: %1 -- Sveglia: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"></location>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
         <translation>Spento</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"></location>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
         <translation>Acceso</translation>
     </message>
@@ -142,12 +142,12 @@
         <translation>Ricerca: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="63"/>
+        <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
         <translation>Inizio Ricerca: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="111"/>
+        <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
         <translation>Ricerca Finita</translation>
     </message>

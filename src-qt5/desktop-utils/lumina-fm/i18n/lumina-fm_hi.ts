@@ -57,52 +57,52 @@
 <context>
     <name>BrowserWidget</name>
     <message>
-        <location filename="../BrowserWidget.cpp" line="210"/>
+        <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
         <translation type="unfinished">नाम</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="211"/>
+        <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
         <translation type="unfinished">आकार</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="212"/>
+        <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
         <translation type="unfinished">प्रकार</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="213"/>
+        <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
         <translation type="unfinished">तारीख बदल दी गयी है</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="214"/>
+        <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
         <translation type="unfinished">तारीख तय कर दी गयी है</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="316"/>
+        <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
         <translation type="unfinished">क्षमता: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="342"/>
+        <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
         <translation type="unfinished">फाइलें: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="344"/>
+        <location filename="../BrowserWidget.cpp" line="343"/>
         <source>Files: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
         <translation type="unfinished">डायरेक्टरी:%1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="362"/>
+        <location filename="../BrowserWidget.cpp" line="363"/>
         <source>No Directory Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -188,42 +188,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="525"/>
+        <location filename="../widgets/DirWidget2.cpp" line="533"/>
         <source>(Limited Access) </source>
         <translation>(सीमित पहुँच)</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>New Document</source>
         <translation>न्य डॉक्यूमेंट</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
+        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Name:</source>
         <translation>नाम:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="572"/>
         <source>Error Creating Document</source>
         <translation>डॉक्यूमेंट बनाने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="572"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>डॉक्यूमेंट नहीं बनाया जा सकता</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="580"/>
         <source>New Directory</source>
         <translation>नई डायरेक्टरी</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
-        <location filename="../widgets/DirWidget2.cpp" line="581"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="612"/>
         <source>Invalid Name</source>
         <translation>अवैध नाम</translation>
     </message>
@@ -233,29 +233,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <location filename="../widgets/DirWidget2.cpp" line="502"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="507"/>
+        <location filename="../widgets/DirWidget2.cpp" line="514"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
-        <location filename="../widgets/DirWidget2.cpp" line="581"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="612"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>इस नाम की फाइल या डायरेक्टरी हले से ही मौजूद है|कृपया अलग नाम चुनें|</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="585"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>Error Creating Directory</source>
         <translation>डायरेक्टरी निर्माण में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="585"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>ये डायरेक्टरी नहीं बनाई जा सकती | कृपया पहले सुनिश्चित कर लीजिये कि आपको तत्कालीन डायरेक्टरी में बदलाव की अनुमति है या नहीं|</translation>
     </message>
@@ -305,11 +305,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="245"/>
-        <source>Modify Files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widgets/DirWidget2.cpp" line="256"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
@@ -350,27 +345,27 @@
         <translation>में खोलें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="250"/>
+        <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Rename...</source>
         <translation>नाम दोबारा तय...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="247"/>
+        <location filename="../widgets/DirWidget2.cpp" line="494"/>
         <source>Cut Selection</source>
         <translation>चुने हुए भाग को कट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="248"/>
+        <location filename="../widgets/DirWidget2.cpp" line="495"/>
         <source>Copy Selection</source>
         <translation>चुने हुए भाग को कॉपी करें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="493"/>
+        <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Paste</source>
         <translation>चिपकाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="252"/>
+        <location filename="../widgets/DirWidget2.cpp" line="498"/>
         <source>Delete Selection</source>
         <translation>चुने हुए भाग हो डिलीट करे</translation>
     </message>
@@ -572,12 +567,12 @@ New Location: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"/>
+        <location filename="../gitWizard.h" line="58"/>
         <source>Stop Download?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"/>
+        <location filename="../gitWizard.h" line="58"/>
         <source>Kill the current download?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -590,12 +585,12 @@ New Location: %2</source>
         <translation>निरीक्षण</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="90"/>
+        <location filename="../MainUI.cpp" line="92"/>
         <source>Shift+Left</source>
         <translation>शिफ्ट+लेफ्ट</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="91"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Right</source>
         <translation>शिफ्ट+राइट</translation>
     </message>
@@ -775,12 +770,12 @@ New Location: %2</source>
         <translation>कण्ट्रोल+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="63"/>
         <source>Detailed List</source>
         <translation>पूर्ण सूचि सहित</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Basic List</source>
         <translation>सामान्य सूचि</translation>
     </message>
@@ -835,122 +830,132 @@ New Location: %2</source>
         <translation>कण्ट्रोल+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>Invalid Directories</source>
         <translation>अवैध डायरेक्टरिज़</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>निम्नलिखित डायरेक्टरियाँ अवैध है और इन्हें नहीं खोला जा सकता:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
+        <location filename="../MainUI.cpp" line="222"/>
+        <source>CTRL+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="231"/>
+        <source>CTRL+E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="336"/>
         <source>Root</source>
         <translation>मुख्य</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="335"/>
+        <location filename="../MainUI.cpp" line="342"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (प्रकार: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
+        <location filename="../MainUI.cpp" line="346"/>
         <source>Filesystem: %1</source>
         <translation>फाइलसिस्टम:%1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="588"/>
+        <location filename="../MainUI.cpp" line="595"/>
         <source>New Bookmark</source>
         <translation>नया बुकमार्क</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="588"/>
+        <location filename="../MainUI.cpp" line="595"/>
         <source>Name:</source>
         <translation>नाम:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="593"/>
+        <location filename="../MainUI.cpp" line="600"/>
         <source>Invalid Name</source>
         <translation>अवैध नाम</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="593"/>
+        <location filename="../MainUI.cpp" line="600"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>ये बुकमार्क पहले से ही मौजूद है|कृपया कोई अन्य चुने|</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="614"/>
+        <location filename="../MainUI.cpp" line="621"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="704"/>
+        <location filename="../MainUI.cpp" line="711"/>
         <source>Multimedia</source>
         <translation>मल्टीमीडिया</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="722"/>
+        <location filename="../MainUI.cpp" line="729"/>
         <source>Slideshow</source>
         <translation>स्लाइड शो</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="902"/>
+        <location filename="../MainUI.cpp" line="909"/>
         <source>Items to be removed:</source>
         <translation>हटाए जाने वाले विषय</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="416"/>
+        <location filename="../MainUI.cpp" line="423"/>
         <source>Verify Quit</source>
         <translation>निकासी सुनिश्चित करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="416"/>
+        <location filename="../MainUI.cpp" line="423"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>आपने कई टैब्स खोली हुई है|क्या आप सचमुच बाहर निकलना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Verify Removal</source>
         <translation>हटाव सुनिश्चित करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>चेतावनी:ये आपकी फाइलों को हमेशा के लिए आपके उपकरण से नष्ट कर देगा!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Are you sure you want to continue?</source>
         <translation>क्या आप सचमुच ये प्रक्रिया जारी रखना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="861"/>
+        <location filename="../MainUI.cpp" line="868"/>
         <source>Rename File</source>
         <translation>फाइल का नाम दोबारा तय करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="861"/>
+        <location filename="../MainUI.cpp" line="868"/>
         <source>New Name:</source>
         <translation>नया नाम</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="875"/>
+        <location filename="../MainUI.cpp" line="882"/>
         <source>Overwrite File?</source>
         <translation>फाइल के ऊपर लिखे?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="875"/>
+        <location filename="../MainUI.cpp" line="882"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>इसी नाम की मौजूदा फाइल नई फाइल से बदल दी जाएगी| क्या आप सचमुच ऐसा करना चाहते हैं?</translation>
     </message>
@@ -1012,27 +1017,32 @@ New Location: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="48"/>
+        <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="49"/>
+        <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="50"/>
+        <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="99"/>
+        <location filename="../OPWidget.cpp" line="96"/>
+        <source>File Operation Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="99"/>
+        <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1143,18 +1153,13 @@ New Location: %2</source>
 <context>
     <name>TrayUI</name>
     <message>
-        <location filename="../TrayUI.cpp" line="71"/>
+        <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
         <translation type="unfinished">समाप्त</translation>
     </message>
     <message>
-        <location filename="../TrayUI.cpp" line="71"/>
+        <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../TrayUI.cpp" line="71"/>
-        <source>No Errors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

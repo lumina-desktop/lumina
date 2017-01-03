@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation>Executa l'ítem</translation>
+        <translation>Executa l&apos;ítem</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="119"/>
@@ -119,17 +119,17 @@
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Cerca: %1 -- Intel·ligent: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
         <translation>Desactivat</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
         <translation>Activat</translation>
     </message>
@@ -142,12 +142,12 @@
         <translation>Cercant: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="63"/>
+        <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
         <translation>Iniciant la cerca: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="111"/>
+        <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
         <translation>Cerca acabada</translation>
     </message>

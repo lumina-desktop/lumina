@@ -160,8 +160,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="264"/>
-        <source>File could not be opened: %1</source>
-        <translation>Не вдалося відкрити файл: %1</translation>
+        <source>Application entry is invalid: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -184,22 +184,22 @@
         <translation>Невідомий тип ярлику : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>Application Error</source>
         <translation>Помилка програми</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Наступна програма викликало помилку и має бути закрита:</translation>
     </message>

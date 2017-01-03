@@ -160,8 +160,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="264"/>
-        <source>File could not be opened: %1</source>
-        <translation>Nepavyko atverti failo: %1</translation>
+        <source>Application entry is invalid: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -184,22 +184,22 @@
         <translation>Nežinomas šaukinio tipas : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
         <translation>Trūksta dvejetainės</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>Nepavyko rasti &quot;%1&quot;. Iš pradžių, įsitikinkite ar ji įdiegta.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>Application Error</source>
         <translation>Programos klaida</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Ši programa susidūrė su klaida ir turėjo būti užverta:</translation>
     </message>

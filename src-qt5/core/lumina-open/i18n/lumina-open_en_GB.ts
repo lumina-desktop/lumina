@@ -160,8 +160,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="264"/>
-        <source>File could not be opened: %1</source>
-        <translation>File could not be opened: %1</translation>
+        <source>Application entry is invalid: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -184,22 +184,22 @@
         <translation>Unknown type of shortcut: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
         <translation>Binary Missing</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"/>
+        <location filename="../main.cpp" line="363"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>Could not find &quot;%1&quot;. Please ensure it is installed first.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>Application Error</source>
         <translation>Application Error</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"/>
+        <location filename="../main.cpp" line="413"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>The following application experienced an error and needed to close:</translation>
     </message>

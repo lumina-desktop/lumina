@@ -1,130 +1,130 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="cs">
 <context>
     <name>LFileDialog</name>
     <message>
-        <location filename="../LFileDialog.ui" line="14"></location>
+        <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
         <translation>Otevřít pomocí...</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="68"></location>
+        <location filename="../LFileDialog.ui" line="68"/>
         <source>Preferred</source>
         <translation>Preferované</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="75"></location>
+        <location filename="../LFileDialog.ui" line="75"/>
         <source>Available</source>
         <translation>K dispozici</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="82"></location>
+        <location filename="../LFileDialog.ui" line="82"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="131"></location>
+        <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
         <translation>Místo v binárním kódu</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="138"></location>
+        <location filename="../LFileDialog.ui" line="138"/>
         <source>Find</source>
         <translation>Najít</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="199"></location>
+        <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
         <translation>Nastavit tuto aplikaci jako výchozí </translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="221"></location>
+        <location filename="../LFileDialog.ui" line="221"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.ui" line="235"></location>
+        <location filename="../LFileDialog.ui" line="235"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="40"></location>
+        <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
         <translation>(Odkaz na e-mail)</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="41"></location>
+        <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
         <translation>(internetová adresa (URL) - %1)</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="114"></location>
+        <location filename="../LFileDialog.cpp" line="114"/>
         <source>Audio</source>
         <translation>Zvuk</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="115"></location>
+        <location filename="../LFileDialog.cpp" line="115"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="116"></location>
+        <location filename="../LFileDialog.cpp" line="116"/>
         <source>Multimedia</source>
         <translation>Multimédia</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="117"></location>
+        <location filename="../LFileDialog.cpp" line="117"/>
         <source>Development</source>
         <translation>Vývoj</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="118"></location>
+        <location filename="../LFileDialog.cpp" line="118"/>
         <source>Education</source>
         <translation>Výuka</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="119"></location>
+        <location filename="../LFileDialog.cpp" line="119"/>
         <source>Game</source>
         <translation>Hry</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="120"></location>
+        <location filename="../LFileDialog.cpp" line="120"/>
         <source>Graphics</source>
         <translation>Grafika</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="121"></location>
+        <location filename="../LFileDialog.cpp" line="121"/>
         <source>Network</source>
         <translation>Síť</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="122"></location>
+        <location filename="../LFileDialog.cpp" line="122"/>
         <source>Office</source>
         <translation>Kancelář</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="123"></location>
+        <location filename="../LFileDialog.cpp" line="123"/>
         <source>Science</source>
         <translation>Věda</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="124"></location>
+        <location filename="../LFileDialog.cpp" line="124"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="125"></location>
+        <location filename="../LFileDialog.cpp" line="125"/>
         <source>System</source>
         <translation>Systém</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="126"></location>
+        <location filename="../LFileDialog.cpp" line="126"/>
         <source>Utilities</source>
         <translation>Pomůcky</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="127"></location>
+        <location filename="../LFileDialog.cpp" line="127"/>
         <source>Other</source>
         <translation>Ostatní</translation>
     </message>
@@ -137,7 +137,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="51"></location>
+        <location filename="../main.cpp" line="51"/>
         <source>File Error</source>
         <translation>Chyba souboru</translation>
     </message>
@@ -159,47 +159,47 @@
         <translation>Neplatný soubor nebo URL: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="264"></location>
-        <source>File could not be opened: %1</source>
-        <translation>Soubor nelze otevřít: %1</translation>
+        <location filename="../main.cpp" line="264"/>
+        <source>Application entry is invalid: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="273"></location>
+        <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>Zástupci aplikace chybí informace o zahájení (chybné zkratky):% 1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"></location>
+        <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>URL zástupci chybí URL: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"></location>
+        <location filename="../main.cpp" line="295"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Zástupci složky chybí cesta do adresáře: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"></location>
+        <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Neznámý typ zkratky: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"></location>
+        <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
         <translation>Chybí spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="362"></location>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>Nepodařilo se najít "%1". Nejprve, prosím, zajistěte, aby byl nainstalován.</translation>
+        <location filename="../main.cpp" line="363"/>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>Nepodařilo se najít &quot;%1&quot;. Nejprve, prosím, zajistěte, aby byl nainstalován.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"></location>
+        <location filename="../main.cpp" line="413"/>
         <source>Application Error</source>
         <translation>Chyba aplikace</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="412"></location>
+        <location filename="../main.cpp" line="413"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Následující aplikace ohlašují chybu a musí být ukončeny:</translation>
     </message>

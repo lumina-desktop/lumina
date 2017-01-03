@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="105"/>
+        <location filename="../PanelWidget.cpp" line="117"/>
         <source>Panel %1</source>
         <translation>Panel %1</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="143"/>
-        <location filename="../PanelWidget.cpp" line="144"/>
+        <location filename="../PanelWidget.cpp" line="155"/>
+        <location filename="../PanelWidget.cpp" line="156"/>
         <source>Select Color</source>
         <translation>Renk Seç</translation>
     </message>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
-        <location filename="../LPlugins.cpp" line="277"/>
+        <location filename="../LPlugins.cpp" line="291"/>
         <source>Task Manager</source>
         <translation>Görev Yöneticisi</translation>
     </message>
@@ -318,18 +318,18 @@
         <translation>Başlat Menüsü</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="176"/>
+        <location filename="../LPlugins.cpp" line="190"/>
         <source>Calendar</source>
         <translation>Takvim</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="177"/>
+        <location filename="../LPlugins.cpp" line="191"/>
         <source>Display a calendar on the desktop</source>
         <translation>Masaüstünde bir takvim göster</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
-        <location filename="../LPlugins.cpp" line="183"/>
+        <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
         <translation>Uygulama Başlatıcı</translation>
     </message>
@@ -394,269 +394,279 @@
         <translation>Bir uygulama kısayolunu doğrudan panele sabitle</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="184"/>
+        <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
         <translation>Bir uygulama başlatmak için masaüstü düğmesi</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="190"/>
+        <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
         <translation>Masaüstü Simgeleri Görüntüleyici</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="197"/>
+        <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
         <translation>Not Defteri</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="198"/>
+        <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
         <translation>Masaüstünüzde basit metin notları tutun</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="204"/>
+        <location filename="../LPlugins.cpp" line="171"/>
+        <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
         <translation>Ses Oynatıcı</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="205"/>
+        <location filename="../LPlugins.cpp" line="172"/>
+        <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
         <translation>Ses dosyaları listelerinden ses oynat</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="211"/>
+        <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
         <translation>Sistem İzleme</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="212"/>
+        <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
         <translation>CPU/Bellek kullanımı ve CPU sıcaklıkları gibi sistem istatistiklerini izle.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="218"/>
+        <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
         <translation>RSS Okuyucu</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="219"/>
+        <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
         <translation>RSS Akışlarını İzle (İnternet bağlantısı gerektirir)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="242"/>
+        <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
         <translation>Uçbirim</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="243"/>
+        <location filename="../LPlugins.cpp" line="257"/>
         <source>Start the default system terminal.</source>
         <translation>Varsayılan sistem uçbirimini başlat.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="250"/>
+        <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
         <translation>Varsayılan dosya yöneticisi ile sisteme gözat.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="256"/>
+        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
         <translation>Uygulamalar</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="257"/>
+        <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
         <translation>Sistem uygulamaları menüsünü göster.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="263"/>
+        <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
         <translation>Ayırıcı</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="264"/>
+        <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
         <translation>Düz yatay çizgi.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="271"/>
+        <location filename="../LPlugins.cpp" line="285"/>
         <source>Show the desktop settings menu.</source>
         <translation>Masaüstü ayarları menüsünü göster.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="284"/>
+        <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
         <translation>Özel Uygulama</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="285"/>
+        <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
         <translation>Özel bir uygulama başlat</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="291"/>
+        <location filename="../LPlugins.cpp" line="178"/>
+        <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
         <translation>Menü Betiği</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="191"/>
+        <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
         <translation>Masaüstü simgelerini otomatik göstermek için, yapılandırılabilir alan</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="249"/>
+        <location filename="../LPlugins.cpp" line="263"/>
         <source>Browse Files</source>
         <translation>Dosyalara Gözat</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
         <translation>Tercihler</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="278"/>
+        <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
         <translation>Açık, küçültülmüş, etkin ve önemli pencereleri listele</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="292"/>
+        <location filename="../LPlugins.cpp" line="179"/>
+        <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
         <translation>Kullanıcı tanımlı bir menü oluşturmak için harici bir betik çalıştır</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="302"/>
+        <location filename="../LPlugins.cpp" line="312"/>
+        <source>Lock Session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="313"/>
+        <source>Lock the current desktop session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="323"/>
         <source>Text</source>
         <translation>Metin</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="303"/>
+        <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
         <translation>Tüm görünür metinler için kullanılacak renk.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="308"/>
+        <location filename="../LPlugins.cpp" line="329"/>
         <source>Text (Disabled)</source>
         <translation>Metin (Devre dışı)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="309"/>
+        <location filename="../LPlugins.cpp" line="330"/>
         <source>Text color for disabled or inactive items.</source>
         <translation>Devre dışı ya da etkin olmayan öğeler için metin rengi.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="314"/>
+        <location filename="../LPlugins.cpp" line="335"/>
         <source>Text (Highlighted)</source>
         <translation>Metin (Vurgulu)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="315"/>
+        <location filename="../LPlugins.cpp" line="336"/>
         <source>Text color when selection is highlighted.</source>
         <translation>Seçim vurgulandığında metin rengi.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="320"/>
+        <location filename="../LPlugins.cpp" line="341"/>
         <source>Base Window Color</source>
         <translation>Temel Pencere Rengi</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="321"/>
+        <location filename="../LPlugins.cpp" line="342"/>
         <source>Main background color for the window/dialog.</source>
         <translation>Pencere/iletişim kutusu için ana arka plan rengi.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="326"/>
+        <location filename="../LPlugins.cpp" line="347"/>
         <source>Base Window Color (Alternate)</source>
         <translation>Temel Pencere Rengi (Ardışık)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="327"/>
+        <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
         <translation>Öğe yığınları listeleyen ya da gösteren araçlar için ana arka plan rengi.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="332"/>
+        <location filename="../LPlugins.cpp" line="353"/>
         <source>Primary Color</source>
         <translation>Birincil Renk</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="333"/>
+        <location filename="../LPlugins.cpp" line="354"/>
         <source>Dominant color for the theme.</source>
         <translation>Tema için baskın renk.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="338"/>
+        <location filename="../LPlugins.cpp" line="359"/>
         <source>Primary Color (Disabled)</source>
         <translation>Birincil Renk (Devre dışı)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="339"/>
+        <location filename="../LPlugins.cpp" line="360"/>
         <source>Dominant color for the theme (more subdued).</source>
         <translation>Tema için baskın renk (daha yumuşak).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="344"/>
+        <location filename="../LPlugins.cpp" line="365"/>
         <source>Secondary Color</source>
         <translation>İkincil Renk</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="345"/>
+        <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
         <translation>Tema için ardışık renk.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="350"/>
+        <location filename="../LPlugins.cpp" line="371"/>
         <source>Secondary Color (Disabled)</source>
         <translation>İkincil Renk (Devre Dışı)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="351"/>
+        <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
         <translation>Tema için ardışık renk (daha yumuşak).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="356"/>
+        <location filename="../LPlugins.cpp" line="377"/>
         <source>Accent Color</source>
         <translation>Tonlama Rengi</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="357"/>
+        <location filename="../LPlugins.cpp" line="378"/>
         <source>Color used for borders or other accents.</source>
         <translation>Kenarlar ya da diğer tonlamalar için kullanılan renk.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="362"/>
+        <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
         <translation>Tonlama Rengi (Devre dışı)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="363"/>
+        <location filename="../LPlugins.cpp" line="384"/>
         <source>Color used for borders or other accents (more subdued).</source>
         <translation>Kenarlar ya da diğer tonlamalar için kullanılan renk (daha yumuşak).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="368"/>
+        <location filename="../LPlugins.cpp" line="389"/>
         <source>Highlight Color</source>
         <translation>Vurgu Rengi</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="369"/>
+        <location filename="../LPlugins.cpp" line="390"/>
         <source>Color used for highlighting an item.</source>
         <translation>Bir öğeyi vurgulamak için kullanılan renk.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="374"/>
+        <location filename="../LPlugins.cpp" line="395"/>
         <source>Highlight Color (Disabled)</source>
         <translation>Vurgu Rengi (Devre dışı)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="375"/>
+        <location filename="../LPlugins.cpp" line="396"/>
         <source>Color used for highlighting an item (more subdued).</source>
         <translation>Bir öğeyi vurgulamak için kullanılan renk (daha yumuşak).</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="29"/>
-        <source>Change Wallpaper</source>
-        <translation>Duvar Kağıdını Değiştir</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="29"/>
@@ -667,11 +677,6 @@
         <location filename="../pages/getPage.h" line="29"/>
         <source>Change background image(s)</source>
         <translation>Arka plan resim(ler)ini değiştir</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="30"/>
-        <source>Change Desktop Theme</source>
-        <translation>Masaüstü Temasını Değiştir</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
@@ -695,11 +700,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
-        <source>Startup Services and Applications</source>
-        <translation>Başlangıç Hizmetleri ve Uygulamaları</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="32"/>
         <source>Startup Settings</source>
         <translation>Başlangıç Ayarları</translation>
     </message>
@@ -709,9 +709,19 @@
         <translation>Uygulamaları ya da hizmetleri otomatik başlat</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
-        <source>Default Applications for File Type</source>
-        <translation>Dosya Türü için Varsayılan Uygulamalar</translation>
+        <location filename="../pages/getPage.h" line="29"/>
+        <source>Wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="30"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="32"/>
+        <source>Autostart</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -750,8 +760,28 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
-        <source>Desktop Icons and Plugins</source>
-        <translation>Masaüstü Simgeleri ve Eklentileri</translation>
+        <source>Desktop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="37"/>
+        <source>Panels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="38"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Adjust keyboard and mouse devices</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -765,11 +795,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
-        <source>Floating Panels and Plugins</source>
-        <translation>Yüzen Paneller ve Eklentiler</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="37"/>
         <source>Panels and Plugins</source>
         <translation>Paneller ve Eklentiler</translation>
     </message>
@@ -777,11 +802,6 @@
         <location filename="../pages/getPage.h" line="37"/>
         <source>Change any floating panels and what they show</source>
         <translation>Yüzen panelleri ve gösterdiklerini değiştir</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="38"/>
-        <source>Context Menu and Plugins</source>
-        <translation>Bağlam Menü ve Eklentiler</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
@@ -795,11 +815,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
-        <source>Localization Options</source>
-        <translation>Yerelleştirme Seçenekleri</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="39"/>
         <source>Locale Settings</source>
         <translation>Yerel Ayar Ayarları</translation>
     </message>
@@ -807,6 +822,11 @@
         <location filename="../pages/getPage.h" line="39"/>
         <source>Change the default locale settings for this user</source>
         <translation>Bu kullanıcı için varsayılan yerel ayar ayarlarını değiştir</translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="39"/>
+        <source>Localization</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -965,12 +985,12 @@
         <translation>Yapılandırmak için monitör/masaüstü seç</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>Unsaved Changes</source>
         <translation>Kaydedilmemiş Değişiklikler</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Bu sayfada kaydedilmemiş değişiklikler bulunuyor, bunları şimdi kaydetmek ister misiniz?</translation>
     </message>
@@ -1051,6 +1071,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../pages/page_compton.ui" line="39"/>
+        <source>Only use compositing with GPU acceleration </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
         <translation>Kompozitör Ayarları</translation>
@@ -1064,73 +1089,73 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="39"/>
+        <location filename="../pages/page_defaultapps.ui" line="166"/>
         <source>Advanced</source>
         <translation>Gelişmiş</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="62"/>
+        <location filename="../pages/page_defaultapps.ui" line="189"/>
         <source>Specific File Types</source>
         <translation>Belirli Dosya Türleri</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="99"/>
+        <location filename="../pages/page_defaultapps.ui" line="226"/>
         <source>Type/Group</source>
         <translation>Tür/Kategori</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="104"/>
+        <location filename="../pages/page_defaultapps.ui" line="231"/>
         <source>Default Application</source>
         <translation>Varsayılan Uygulama</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="109"/>
+        <location filename="../pages/page_defaultapps.ui" line="236"/>
         <source>Description</source>
         <translation>Açıklama</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="119"/>
+        <location filename="../pages/page_defaultapps.ui" line="246"/>
         <source>Clear</source>
         <translation>Temizle</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="142"/>
+        <location filename="../pages/page_defaultapps.ui" line="269"/>
         <source>Set App</source>
         <translation>Uygulama Ayarla</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="152"/>
+        <location filename="../pages/page_defaultapps.ui" line="279"/>
         <source>Set Binary</source>
         <translation>İkili Ayarla</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="168"/>
+        <location filename="../pages/page_defaultapps.ui" line="39"/>
         <source>Basic Settings</source>
         <translation>Temel Ayarlar</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="187"/>
+        <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
         <translation>Web Tarayıcısı:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="210"/>
+        <location filename="../pages/page_defaultapps.ui" line="81"/>
         <source>E-Mail Client:</source>
         <translation>E-Posta İstemcisi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="237"/>
+        <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
         <translation>Dosya Yöneticisi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="250"/>
+        <location filename="../pages/page_defaultapps.ui" line="121"/>
         <source>Virtual Terminal:</source>
         <translation>Sanal Uçbirim:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="257"/>
-        <location filename="../pages/page_defaultapps.ui" line="267"/>
+        <location filename="../pages/page_defaultapps.ui" line="128"/>
+        <location filename="../pages/page_defaultapps.ui" line="138"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -1409,7 +1434,17 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="51"/>
+        <location filename="../pages/page_interface_panels.ui" line="69"/>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.ui" line="82"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="52"/>
         <source>Desktop Settings</source>
         <translation>Masaüstü Ayarları</translation>
     </message>
@@ -1427,29 +1462,62 @@
         <translation>Ara....</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="45"/>
+        <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
         <translation>Arabirim Yapılandırması</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="48"/>
+        <location filename="../pages/page_main.cpp" line="57"/>
         <source>Appearance</source>
         <translation>Görünüm</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="51"/>
-        <source>Desktop Session Options</source>
-        <translation>Masaüstü Oturum Seçenekleri</translation>
+        <location filename="../pages/page_main.cpp" line="61"/>
+        <source>Desktop Defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="54"/>
+        <location filename="../pages/page_main.cpp" line="65"/>
         <source>User Settings</source>
         <translation>Kullanıcı Ayarları</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="98"/>
+        <location filename="../pages/page_main.cpp" line="131"/>
         <source>Desktop Settings</source>
         <translation>Masaüstü Ayarları</translation>
+    </message>
+</context>
+<context>
+    <name>page_mouse</name>
+    <message>
+        <location filename="../pages/page_mouse.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Form</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="53"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="81"/>
+        <source>Mouse #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="85"/>
+        <source>Keyboard #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="106"/>
+        <source>Extension Device #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="107"/>
+        <source>Master Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1543,49 +1611,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="67"/>
+        <location filename="../pages/page_session_options.ui" line="65"/>
+        <source>Show application crash data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="74"/>
         <source>Change User Icon</source>
         <translation>Kullanıcı Simgesini Değiştir</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="105"/>
+        <location filename="../pages/page_session_options.ui" line="112"/>
         <source>Time Format:</source>
         <translation>Saat Biçimi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="117"/>
-        <location filename="../pages/page_session_options.ui" line="161"/>
+        <location filename="../pages/page_session_options.ui" line="124"/>
+        <location filename="../pages/page_session_options.ui" line="168"/>
         <source>View format codes</source>
         <translation>Biçim kodlarını görüntüle</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="132"/>
-        <location filename="../pages/page_session_options.ui" line="176"/>
+        <location filename="../pages/page_session_options.ui" line="139"/>
+        <location filename="../pages/page_session_options.ui" line="183"/>
         <source>Sample:</source>
         <translation>Örnek:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="149"/>
+        <location filename="../pages/page_session_options.ui" line="156"/>
         <source>Date Format:</source>
         <translation>Tarih Biçimi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="196"/>
+        <location filename="../pages/page_session_options.ui" line="203"/>
         <source>Display Format</source>
         <translation>Görünüm Biçimi</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="227"/>
+        <location filename="../pages/page_session_options.ui" line="234"/>
         <source>Reset Desktop Settings</source>
         <translation>Masaüstü Ayarlarını Sıfırla</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="246"/>
+        <location filename="../pages/page_session_options.ui" line="253"/>
         <source>Return to system defaults</source>
         <translation>Sistem varsayılanlarına dön</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="253"/>
+        <location filename="../pages/page_session_options.ui" line="260"/>
         <source>Return to Lumina defaults</source>
         <translation>Lumina varsayılanlarına dön</translation>
     </message>
@@ -1610,142 +1683,142 @@
         <translation>Önce Tarih sonra Saat</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="70"/>
         <source>Desktop Settings</source>
         <translation>Masaüstü Ayarları</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="101"/>
+        <location filename="../pages/page_session_options.cpp" line="113"/>
         <source>Select an image</source>
         <translation>Bir resim seç</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="102"/>
+        <location filename="../pages/page_session_options.cpp" line="114"/>
         <source>Images</source>
         <translation>Resimler</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Reset User Image</source>
         <translation>Kullanıcı Resmini Sıfırla</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Kullanıcı resmini sistem varsayılanına sıfırlamak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="145"/>
+        <location filename="../pages/page_session_options.cpp" line="157"/>
         <source>Valid Time Codes:</source>
         <translation>Geçerli Zaman Kodları:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="146"/>
+        <location filename="../pages/page_session_options.cpp" line="158"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Ön sıfırsız saat (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="147"/>
+        <location filename="../pages/page_session_options.cpp" line="159"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Ön sıfırlı saat (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="148"/>
+        <location filename="../pages/page_session_options.cpp" line="160"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Ön sıfırsız dakika (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="149"/>
+        <location filename="../pages/page_session_options.cpp" line="161"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Ön sıfırlı dakika (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="150"/>
+        <location filename="../pages/page_session_options.cpp" line="162"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Ön sıfırsız saniye (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="151"/>
+        <location filename="../pages/page_session_options.cpp" line="163"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Ön sıfırlı saniye (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="152"/>
+        <location filename="../pages/page_session_options.cpp" line="164"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM (12 saat) biçimi (büyük ya da küçük harf)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="153"/>
+        <location filename="../pages/page_session_options.cpp" line="165"/>
         <source>%1: Timezone</source>
         <translation>%1: Zaman dilimi</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="154"/>
+        <location filename="../pages/page_session_options.cpp" line="166"/>
         <source>Time Codes</source>
         <translation>Zaman Kodları</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="168"/>
+        <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Valid Date Codes:</source>
         <translation>Geçerli Tarih Kodları:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="181"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Ön sıfırsız sayısal gün (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="182"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Ön sıfırlı sayısal gün (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="183"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Kısaltma şeklinde gün (yerelleştirilmiş)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="184"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Tam adıyla gün (yerelleştirilmiş)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="185"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Ön sıfırsız sayısal ay (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="186"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Ön sıfırlı sayısal ay (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="187"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Kısaltma şeklinde ay (yerelleştirilmiş)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="188"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Tam adıyla ay (yerelleştirilmiş)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="189"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: 2 haneli sayı şeklinde yıl (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: 4 haneli sayı şeklinde yıl (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Değiştirmeleri görmezden gelmek için metin tek tırnak içine alınabilir</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Date Codes</source>
         <translation>Tarih Kodları</translation>
     </message>
@@ -1758,76 +1831,101 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="32"/>
+        <location filename="../pages/page_theme.ui" line="36"/>
+        <source>Desktop Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="42"/>
         <source>Font:</source>
         <translation>Yazı tipi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="46"/>
+        <location filename="../pages/page_theme.ui" line="56"/>
         <source>Font Size:</source>
         <translation>Yazı Tipi Boyutu:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="53"/>
+        <location filename="../pages/page_theme.ui" line="63"/>
         <source> point</source>
         <translation> nokta</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="60"/>
+        <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
         <translation>Tema Şablonu:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="76"/>
+        <location filename="../pages/page_theme.ui" line="86"/>
         <source>Create/Edit a theme template (Advanced)</source>
         <translation>Bir tema şablonu oluştur/düzenle (Gelişmiş)</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="82"/>
-        <location filename="../pages/page_theme.ui" line="116"/>
+        <location filename="../pages/page_theme.ui" line="92"/>
+        <location filename="../pages/page_theme.ui" line="126"/>
         <source>Edit</source>
         <translation>Düzenle</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="94"/>
+        <location filename="../pages/page_theme.ui" line="104"/>
         <source>Color Scheme:</source>
         <translation>Renk Düzeni:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="110"/>
+        <location filename="../pages/page_theme.ui" line="120"/>
         <source>Create/Edit a color scheme</source>
         <translation>Bir renk düzeni oluştur/düzenle</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="128"/>
+        <location filename="../pages/page_theme.ui" line="138"/>
         <source>Icon Pack:</source>
         <translation>Simge Paketi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="138"/>
+        <location filename="../pages/page_theme.ui" line="148"/>
         <source>Mouse Cursors:</source>
         <translation>Fare İmleçleri:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="52"/>
+        <location filename="../pages/page_theme.ui" line="192"/>
+        <source>Application Themes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="198"/>
+        <source>Qt5 Theme Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="58"/>
         <source>Theme Settings</source>
         <translation>Tema Ayarları</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="67"/>
-        <location filename="../pages/page_theme.cpp" line="81"/>
-        <location filename="../pages/page_theme.cpp" line="132"/>
-        <location filename="../pages/page_theme.cpp" line="158"/>
+        <location filename="../pages/page_theme.cpp" line="73"/>
+        <location filename="../pages/page_theme.cpp" line="87"/>
+        <location filename="../pages/page_theme.cpp" line="173"/>
+        <location filename="../pages/page_theme.cpp" line="199"/>
         <source>Local</source>
         <translation>Yerel</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="74"/>
-        <location filename="../pages/page_theme.cpp" line="88"/>
-        <location filename="../pages/page_theme.cpp" line="139"/>
-        <location filename="../pages/page_theme.cpp" line="165"/>
+        <location filename="../pages/page_theme.cpp" line="80"/>
+        <location filename="../pages/page_theme.cpp" line="94"/>
+        <location filename="../pages/page_theme.cpp" line="180"/>
+        <location filename="../pages/page_theme.cpp" line="206"/>
         <source>System</source>
         <translation>Sistem</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="137"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="138"/>
+        <source>Manual Setting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
