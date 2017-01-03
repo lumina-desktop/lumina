@@ -138,7 +138,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
-        <location filename="../MainUI.cpp" line="147"/>
+        <location filename="../MainUI.cpp" line="151"/>
         <source>New File</source>
         <translatorcomment>これ、メニューだけじゃなくて、新しいファイル作ったときのタブ名にもなる。</translatorcomment>
         <translation>新しいファイル</translation>
@@ -230,23 +230,23 @@
         <translation>テキストエディター</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Open File(s)</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
         <translation>テキストファイル (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="289"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
         <translation>保存されていない変更を削除しますか?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
+        <location filename="../MainUI.cpp" line="289"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -257,7 +257,7 @@ Do you want to close it anyway?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

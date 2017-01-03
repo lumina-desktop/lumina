@@ -17,115 +17,113 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <location filename="../MainUI.ui" line="162"/>
-        <location filename="../MainUI.ui" line="295"/>
+        <location filename="../MainUI.ui" line="375"/>
         <source>Take Screenshot</source>
         <translation>Zachytit snímek obrazovky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="37"/>
-        <source>New Screenshot</source>
-        <translation>Nový snímek obrazovky</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="43"/>
-        <source>Settings</source>
-        <translation>Nastavení</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="124"/>
+        <location filename="../MainUI.ui" line="151"/>
         <source>Include Borders</source>
         <translation>Zahrnout rámečky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="149"/>
-        <source> Seconds</source>
-        <translation> Sekund</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="152"/>
-        <source>Delay </source>
-        <translation>Prodleva </translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="172"/>
-        <source>View/Edit</source>
-        <translation>Zobrazit/Upravit</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="212"/>
-        <location filename="../MainUI.ui" line="306"/>
+        <location filename="../MainUI.ui" line="196"/>
+        <location filename="../MainUI.ui" line="386"/>
         <source>Save As</source>
         <translation>Uložit jako</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="222"/>
-        <source>Launch Editor</source>
-        <translation>Zapnout Editor</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="244"/>
         <source>Crop</source>
         <translation>Oříznout</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="255"/>
+        <location filename="../MainUI.ui" line="228"/>
         <source>Resize</source>
         <translation>Změnit velikost</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="282"/>
+        <location filename="../MainUI.ui" line="20"/>
+        <source>Lumina Screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="70"/>
+        <source> Sec Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="183"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="212"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="362"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="378"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="322"/>
+        <location filename="../MainUI.ui" line="402"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="325"/>
+        <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="67"/>
+        <location filename="../MainUI.ui" line="57"/>
         <source>Entire Session</source>
         <translation>Celé sezení</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="81"/>
+        <location filename="../MainUI.ui" line="138"/>
         <source>Single Window</source>
         <translation>Jedno okno</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="74"/>
+        <location filename="../MainUI.ui" line="99"/>
         <source>Single Screen</source>
         <translation>Jedna obrazovka</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
+        <source>Could not save screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="79"/>
+        <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>Save Screenshot</source>
         <translation>Uložit snímek obrazovky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="309"/>
+        <location filename="../MainUI.ui" line="389"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="317"/>
+        <location filename="../MainUI.ui" line="397"/>
         <source>Quick Save</source>
         <translation>Rychle uložit</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG Soubory (*.png);;Všechny soubory (*)</translation>
     </message>

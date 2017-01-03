@@ -4,12 +4,12 @@
 <context>
     <name>TerminalWidget</name>
     <message>
-        <location filename="../TerminalWidget.cpp" line="50"/>
+        <location filename="../TerminalWidget.cpp" line="60"/>
         <source>Copy Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TerminalWidget.cpp" line="51"/>
+        <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>

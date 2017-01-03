@@ -218,13 +218,13 @@
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
-        <location filename="../PanelWidget.cpp" line="105"/>
+        <location filename="../PanelWidget.cpp" line="117"/>
         <source>Panel %1</source>
         <translation>Panel %1</translation>
     </message>
     <message>
-        <location filename="../PanelWidget.cpp" line="143"/>
-        <location filename="../PanelWidget.cpp" line="144"/>
+        <location filename="../PanelWidget.cpp" line="155"/>
+        <location filename="../PanelWidget.cpp" line="156"/>
         <source>Select Color</source>
         <translation>Välj färg</translation>
     </message>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
-        <location filename="../LPlugins.cpp" line="277"/>
+        <location filename="../LPlugins.cpp" line="291"/>
         <source>Task Manager</source>
         <translation>Aktivitetshanterare</translation>
     </message>
@@ -318,18 +318,18 @@
         <translation>Startmeny</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="176"/>
+        <location filename="../LPlugins.cpp" line="190"/>
         <source>Calendar</source>
         <translation>Kalender</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="177"/>
+        <location filename="../LPlugins.cpp" line="191"/>
         <source>Display a calendar on the desktop</source>
         <translation>Visa en kalender på skrivbordet</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
-        <location filename="../LPlugins.cpp" line="183"/>
+        <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
         <translation>Programstartare</translation>
     </message>
@@ -394,269 +394,279 @@
         <translation>Lägg en programgenväg direkt på panelen</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="184"/>
+        <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
         <translation>Skrivbords knapp för att starta ett program</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="190"/>
+        <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
         <translation>Skrivbordsikons visning</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="197"/>
+        <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
         <translation>Anteckningsblock</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="198"/>
+        <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
         <translation>Håll simpla text anteckningar på ditt skrivbord</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="204"/>
+        <location filename="../LPlugins.cpp" line="171"/>
+        <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
         <translation>Ljudspelare</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="205"/>
+        <location filename="../LPlugins.cpp" line="172"/>
+        <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
         <translation>Spelar igenom en lista av ljudfiler</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="211"/>
+        <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
         <translation>Systemövervakare</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="212"/>
+        <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
         <translation>Håller koll på din system statistik som tex CPU/minnes användning och CPU-temperatur.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="218"/>
+        <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
         <translation>RSS-läsare</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="219"/>
+        <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
         <translation>Övervaka RSS-flöden (Kräver internetuppkoppling)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="242"/>
+        <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="243"/>
+        <location filename="../LPlugins.cpp" line="257"/>
         <source>Start the default system terminal.</source>
         <translation>Starta standard systemterminalen.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="250"/>
+        <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
         <translation>Bläddra i filsystemet med standard filhanteraren.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="256"/>
+        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="257"/>
+        <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
         <translation>Visa systemets programmeny.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="263"/>
+        <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
         <translation>Avgränsare</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="264"/>
+        <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
         <translation>Statisk horisontell linje.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="271"/>
+        <location filename="../LPlugins.cpp" line="285"/>
         <source>Show the desktop settings menu.</source>
         <translation>Visa skrivbordsinställnings menyn.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="284"/>
+        <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
         <translation>Eget Program</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="285"/>
+        <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
         <translation>Starta ett eget program</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="291"/>
+        <location filename="../LPlugins.cpp" line="178"/>
+        <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
         <translation>Meny script</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="191"/>
+        <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
         <translation>Konfigurerbart område för att automatiskt visa skrivbordsikoner</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="249"/>
+        <location filename="../LPlugins.cpp" line="263"/>
         <source>Browse Files</source>
         <translation>Bläddra bland filer</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="270"/>
+        <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="278"/>
+        <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
         <translation>Lista de öppna, minimerade, aktiva, och brådskande programfönstren</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="292"/>
+        <location filename="../LPlugins.cpp" line="179"/>
+        <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
         <translation>Kör ett externt skript för att generera en användardefinierad meny</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="302"/>
+        <location filename="../LPlugins.cpp" line="312"/>
+        <source>Lock Session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="313"/>
+        <source>Lock the current desktop session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LPlugins.cpp" line="323"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="303"/>
+        <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
         <translation>Färg för all text som syns.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="308"/>
+        <location filename="../LPlugins.cpp" line="329"/>
         <source>Text (Disabled)</source>
         <translation>Text (avslaget)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="309"/>
+        <location filename="../LPlugins.cpp" line="330"/>
         <source>Text color for disabled or inactive items.</source>
         <translation>Text färg för avslagna eller inaktiva prylar.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="314"/>
+        <location filename="../LPlugins.cpp" line="335"/>
         <source>Text (Highlighted)</source>
         <translation>Text (Markerad)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="315"/>
+        <location filename="../LPlugins.cpp" line="336"/>
         <source>Text color when selection is highlighted.</source>
         <translation>Text färg då ett val är markerat.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="320"/>
+        <location filename="../LPlugins.cpp" line="341"/>
         <source>Base Window Color</source>
         <translation>Bas Fönsterfärg</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="321"/>
+        <location filename="../LPlugins.cpp" line="342"/>
         <source>Main background color for the window/dialog.</source>
         <translation>Huvudbakgrundsfärg för fönster/dialogrutor.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="326"/>
+        <location filename="../LPlugins.cpp" line="347"/>
         <source>Base Window Color (Alternate)</source>
         <translation>Huvud fönster färg (Alternativ)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="327"/>
+        <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
         <translation>Huvudbakgrundsfärg för widgets som lista eller visa samlingar av objekt.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="332"/>
+        <location filename="../LPlugins.cpp" line="353"/>
         <source>Primary Color</source>
         <translation>Primär färg</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="333"/>
+        <location filename="../LPlugins.cpp" line="354"/>
         <source>Dominant color for the theme.</source>
         <translation>Dominerande färgen för temat.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="338"/>
+        <location filename="../LPlugins.cpp" line="359"/>
         <source>Primary Color (Disabled)</source>
         <translation>Primär färg (avslagen)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="339"/>
+        <location filename="../LPlugins.cpp" line="360"/>
         <source>Dominant color for the theme (more subdued).</source>
         <translation>Dominerande färgen för temat (mer dämpad).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="344"/>
+        <location filename="../LPlugins.cpp" line="365"/>
         <source>Secondary Color</source>
         <translation>Sekundär färg</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="345"/>
+        <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
         <translation>Alternativ färg för temat.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="350"/>
+        <location filename="../LPlugins.cpp" line="371"/>
         <source>Secondary Color (Disabled)</source>
         <translation>Sekundär färg (avslagen)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="351"/>
+        <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
         <translation>Alternativ färg för temat (mer dämpad).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="356"/>
+        <location filename="../LPlugins.cpp" line="377"/>
         <source>Accent Color</source>
         <translation>Accent Färg</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="357"/>
+        <location filename="../LPlugins.cpp" line="378"/>
         <source>Color used for borders or other accents.</source>
         <translation>Färg som används för gränser eller andra accenter.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="362"/>
+        <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
         <translation>Accent färg (avslagen)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="363"/>
+        <location filename="../LPlugins.cpp" line="384"/>
         <source>Color used for borders or other accents (more subdued).</source>
         <translation>Färg som används för gränser eller andra accenter (mer dämpad).</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="368"/>
+        <location filename="../LPlugins.cpp" line="389"/>
         <source>Highlight Color</source>
         <translation>Markeringsfärg</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="369"/>
+        <location filename="../LPlugins.cpp" line="390"/>
         <source>Color used for highlighting an item.</source>
         <translation>Färg som används för att markera en pryl.</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="374"/>
+        <location filename="../LPlugins.cpp" line="395"/>
         <source>Highlight Color (Disabled)</source>
         <translation>Markeringsfärg (avslagen)</translation>
     </message>
     <message>
-        <location filename="../LPlugins.cpp" line="375"/>
+        <location filename="../LPlugins.cpp" line="396"/>
         <source>Color used for highlighting an item (more subdued).</source>
         <translation>Färg som används för att markera ett objekt (mer dämpad).</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="29"/>
-        <source>Change Wallpaper</source>
-        <translation>Ändra bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="29"/>
@@ -667,11 +677,6 @@
         <location filename="../pages/getPage.h" line="29"/>
         <source>Change background image(s)</source>
         <translation>Ändra bakgrundsbild(er)</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="30"/>
-        <source>Change Desktop Theme</source>
-        <translation>Ändra skrivbordstema</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
@@ -695,11 +700,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
-        <source>Startup Services and Applications</source>
-        <translation>Starttjänster och program</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="32"/>
         <source>Startup Settings</source>
         <translation>Uppstartsinställningar</translation>
     </message>
@@ -709,9 +709,19 @@
         <translation>Automatiskt starta program eller tjänster</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
-        <source>Default Applications for File Type</source>
-        <translation>Standardprogrammet för filtypen</translation>
+        <location filename="../pages/getPage.h" line="29"/>
+        <source>Wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="30"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="32"/>
+        <source>Autostart</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -750,8 +760,28 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
-        <source>Desktop Icons and Plugins</source>
-        <translation>Skrivbordsikoner och insticksmoduler</translation>
+        <source>Desktop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="37"/>
+        <source>Panels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="38"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="42"/>
+        <source>Adjust keyboard and mouse devices</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -765,11 +795,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
-        <source>Floating Panels and Plugins</source>
-        <translation>Flytande paneler och insticksmoduler</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="37"/>
         <source>Panels and Plugins</source>
         <translation>Paneler och insticksmoduler</translation>
     </message>
@@ -777,11 +802,6 @@
         <location filename="../pages/getPage.h" line="37"/>
         <source>Change any floating panels and what they show</source>
         <translation>Ändra flytande paneler och vad de visar</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="38"/>
-        <source>Context Menu and Plugins</source>
-        <translation>Innehållsmeny och insticksmoduler</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
@@ -795,11 +815,6 @@
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
-        <source>Localization Options</source>
-        <translation>Lokaliseringsalternativ</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="39"/>
         <source>Locale Settings</source>
         <translation>Lokala inställningar</translation>
     </message>
@@ -807,6 +822,11 @@
         <location filename="../pages/getPage.h" line="39"/>
         <source>Change the default locale settings for this user</source>
         <translation>Ändra standardlokalinställningar för den här användaren</translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.h" line="39"/>
+        <source>Localization</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -965,12 +985,12 @@
         <translation>Välj bildskärm/skrivbord att konfigurera</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>Unsaved Changes</source>
         <translation>Osparade ändringar</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="121"/>
+        <location filename="../mainWindow.cpp" line="129"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Den här sidan har osparade ändringar, vill du spara dem nu?</translation>
     </message>
@@ -1051,6 +1071,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../pages/page_compton.ui" line="39"/>
+        <source>Only use compositing with GPU acceleration </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
         <translation>Kompositionsinställningar</translation>
@@ -1064,73 +1089,73 @@
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="39"/>
+        <location filename="../pages/page_defaultapps.ui" line="166"/>
         <source>Advanced</source>
         <translation>Avancerat</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="62"/>
+        <location filename="../pages/page_defaultapps.ui" line="189"/>
         <source>Specific File Types</source>
         <translation>Specifika filtyper</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="99"/>
+        <location filename="../pages/page_defaultapps.ui" line="226"/>
         <source>Type/Group</source>
         <translation>Typ/Grupp</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="104"/>
+        <location filename="../pages/page_defaultapps.ui" line="231"/>
         <source>Default Application</source>
         <translation>Standardprogram</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="109"/>
+        <location filename="../pages/page_defaultapps.ui" line="236"/>
         <source>Description</source>
         <translation>Beskrivning</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="119"/>
+        <location filename="../pages/page_defaultapps.ui" line="246"/>
         <source>Clear</source>
         <translation>Töm</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="142"/>
+        <location filename="../pages/page_defaultapps.ui" line="269"/>
         <source>Set App</source>
         <translation>Välj program</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="152"/>
+        <location filename="../pages/page_defaultapps.ui" line="279"/>
         <source>Set Binary</source>
         <translation>Välj binär</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="168"/>
+        <location filename="../pages/page_defaultapps.ui" line="39"/>
         <source>Basic Settings</source>
         <translation>Grundinställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="187"/>
+        <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
         <translation>Webbläsare:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="210"/>
+        <location filename="../pages/page_defaultapps.ui" line="81"/>
         <source>E-Mail Client:</source>
         <translation>E-postklient:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="237"/>
+        <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
         <translation>Filhanterare:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="250"/>
+        <location filename="../pages/page_defaultapps.ui" line="121"/>
         <source>Virtual Terminal:</source>
         <translation>Virtuell Terminal:</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.ui" line="257"/>
-        <location filename="../pages/page_defaultapps.ui" line="267"/>
+        <location filename="../pages/page_defaultapps.ui" line="128"/>
+        <location filename="../pages/page_defaultapps.ui" line="138"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -1409,7 +1434,17 @@
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="51"/>
+        <location filename="../pages/page_interface_panels.ui" line="69"/>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.ui" line="82"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="52"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
     </message>
@@ -1427,29 +1462,62 @@
         <translation>Sök efter....</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="45"/>
+        <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
         <translation>Gränssnittsinställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="48"/>
+        <location filename="../pages/page_main.cpp" line="57"/>
         <source>Appearance</source>
         <translation>Utseende</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="51"/>
-        <source>Desktop Session Options</source>
-        <translation>Skrivbordssessionalternativ</translation>
+        <location filename="../pages/page_main.cpp" line="61"/>
+        <source>Desktop Defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="54"/>
+        <location filename="../pages/page_main.cpp" line="65"/>
         <source>User Settings</source>
         <translation>Användarinställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="98"/>
+        <location filename="../pages/page_main.cpp" line="131"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
+    </message>
+</context>
+<context>
+    <name>page_mouse</name>
+    <message>
+        <location filename="../pages/page_mouse.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulär</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="53"/>
+        <source>Input Device Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="81"/>
+        <source>Mouse #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="85"/>
+        <source>Keyboard #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="106"/>
+        <source>Extension Device #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_mouse.cpp" line="107"/>
+        <source>Master Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1543,49 +1611,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="67"/>
+        <location filename="../pages/page_session_options.ui" line="65"/>
+        <source>Show application crash data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="74"/>
         <source>Change User Icon</source>
         <translation>Ändra användarikon</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="105"/>
+        <location filename="../pages/page_session_options.ui" line="112"/>
         <source>Time Format:</source>
         <translation>Tidsformat:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="117"/>
-        <location filename="../pages/page_session_options.ui" line="161"/>
+        <location filename="../pages/page_session_options.ui" line="124"/>
+        <location filename="../pages/page_session_options.ui" line="168"/>
         <source>View format codes</source>
         <translation>Visa format koder</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="132"/>
-        <location filename="../pages/page_session_options.ui" line="176"/>
+        <location filename="../pages/page_session_options.ui" line="139"/>
+        <location filename="../pages/page_session_options.ui" line="183"/>
         <source>Sample:</source>
         <translation>Exempel:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="149"/>
+        <location filename="../pages/page_session_options.ui" line="156"/>
         <source>Date Format:</source>
         <translation>Datumformat:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="196"/>
+        <location filename="../pages/page_session_options.ui" line="203"/>
         <source>Display Format</source>
         <translation>Visningsformat</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="227"/>
+        <location filename="../pages/page_session_options.ui" line="234"/>
         <source>Reset Desktop Settings</source>
         <translation>Återställ Skrivbordsinställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="246"/>
+        <location filename="../pages/page_session_options.ui" line="253"/>
         <source>Return to system defaults</source>
         <translation>Återgå till standard systeminställningarna</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="253"/>
+        <location filename="../pages/page_session_options.ui" line="260"/>
         <source>Return to Lumina defaults</source>
         <translation>Återgå till Lumina standardinställningar</translation>
     </message>
@@ -1610,142 +1683,142 @@
         <translation>Datum först sen Tid</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="70"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="101"/>
+        <location filename="../pages/page_session_options.cpp" line="113"/>
         <source>Select an image</source>
         <translation>Välj en bild</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="102"/>
+        <location filename="../pages/page_session_options.cpp" line="114"/>
         <source>Images</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Reset User Image</source>
         <translation>Återställ användarbild</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="106"/>
+        <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Vill du återställa användar bilden till systemets standard?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="145"/>
+        <location filename="../pages/page_session_options.cpp" line="157"/>
         <source>Valid Time Codes:</source>
         <translation>Giltiga tidskoder:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="146"/>
+        <location filename="../pages/page_session_options.cpp" line="158"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Timme utan inledande nolla (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="147"/>
+        <location filename="../pages/page_session_options.cpp" line="159"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Timme med inledande nolla (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="148"/>
+        <location filename="../pages/page_session_options.cpp" line="160"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minuter utan inledande nolla (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="149"/>
+        <location filename="../pages/page_session_options.cpp" line="161"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minuter med inledande nolla (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="150"/>
+        <location filename="../pages/page_session_options.cpp" line="162"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Sekunder utan inledande nolla (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="151"/>
+        <location filename="../pages/page_session_options.cpp" line="163"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Sekunder med inledande nolla (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="152"/>
+        <location filename="../pages/page_session_options.cpp" line="164"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM (12-timmars) klocka (stora och små bokstäver)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="153"/>
+        <location filename="../pages/page_session_options.cpp" line="165"/>
         <source>%1: Timezone</source>
         <translation>%1: Tidszon</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="154"/>
+        <location filename="../pages/page_session_options.cpp" line="166"/>
         <source>Time Codes</source>
         <translation>Tidskoder</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="168"/>
+        <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Valid Date Codes:</source>
         <translation>Accepterade Datum koder:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="181"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Numerisk dag utan en inledande nolla (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="182"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Numerisk dag med inledande nolla (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="183"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Dag som förkortning (lokaliserad)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="184"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Dag som fullständigt namn (lokaliserad)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="185"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Numerisk månad utan inledande nolla (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="186"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Numerisk månad med inledande nolla (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="187"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Månad som förkortning (lokaliserad)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="188"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Månad som fullständigt namn (lokaliserad)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="189"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Året som 2-siffrigt nummer (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Året som 4-siffrigt nummer (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Text kan inrymmas i enkla citattecken att ignorera ersättare</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Date Codes</source>
         <translation>Datumkoder</translation>
     </message>
@@ -1758,76 +1831,101 @@
         <translation>Formulär</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="32"/>
+        <location filename="../pages/page_theme.ui" line="36"/>
+        <source>Desktop Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="42"/>
         <source>Font:</source>
         <translation>Typsnitt:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="46"/>
+        <location filename="../pages/page_theme.ui" line="56"/>
         <source>Font Size:</source>
         <translation>Teckenstorlek:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="53"/>
+        <location filename="../pages/page_theme.ui" line="63"/>
         <source> point</source>
         <translation> punkt</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="60"/>
+        <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
         <translation>Temamall:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="76"/>
+        <location filename="../pages/page_theme.ui" line="86"/>
         <source>Create/Edit a theme template (Advanced)</source>
         <translation>Skapa/Ändra en temamall (Avancerat)</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="82"/>
-        <location filename="../pages/page_theme.ui" line="116"/>
+        <location filename="../pages/page_theme.ui" line="92"/>
+        <location filename="../pages/page_theme.ui" line="126"/>
         <source>Edit</source>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="94"/>
+        <location filename="../pages/page_theme.ui" line="104"/>
         <source>Color Scheme:</source>
         <translation>Färgschema:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="110"/>
+        <location filename="../pages/page_theme.ui" line="120"/>
         <source>Create/Edit a color scheme</source>
         <translation>Skapa/Ändra ett färgschema</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="128"/>
+        <location filename="../pages/page_theme.ui" line="138"/>
         <source>Icon Pack:</source>
         <translation>Ikonpaket:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="138"/>
+        <location filename="../pages/page_theme.ui" line="148"/>
         <source>Mouse Cursors:</source>
         <translation>Muspekare:</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="52"/>
+        <location filename="../pages/page_theme.ui" line="192"/>
+        <source>Application Themes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.ui" line="198"/>
+        <source>Qt5 Theme Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="58"/>
         <source>Theme Settings</source>
         <translation>Temainställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="67"/>
-        <location filename="../pages/page_theme.cpp" line="81"/>
-        <location filename="../pages/page_theme.cpp" line="132"/>
-        <location filename="../pages/page_theme.cpp" line="158"/>
+        <location filename="../pages/page_theme.cpp" line="73"/>
+        <location filename="../pages/page_theme.cpp" line="87"/>
+        <location filename="../pages/page_theme.cpp" line="173"/>
+        <location filename="../pages/page_theme.cpp" line="199"/>
         <source>Local</source>
         <translation>Lokalt</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.cpp" line="74"/>
-        <location filename="../pages/page_theme.cpp" line="88"/>
-        <location filename="../pages/page_theme.cpp" line="139"/>
-        <location filename="../pages/page_theme.cpp" line="165"/>
+        <location filename="../pages/page_theme.cpp" line="80"/>
+        <location filename="../pages/page_theme.cpp" line="94"/>
+        <location filename="../pages/page_theme.cpp" line="180"/>
+        <location filename="../pages/page_theme.cpp" line="206"/>
         <source>System</source>
         <translation>System</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="137"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_theme.cpp" line="138"/>
+        <source>Manual Setting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

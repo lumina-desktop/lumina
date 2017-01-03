@@ -119,17 +119,17 @@
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Търсене: %1 -- Умно: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
         <translation>Изключено</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
         <translation>Включено</translation>
     </message>
@@ -142,12 +142,12 @@
         <translation>Търсене: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="63"/>
+        <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
         <translation>Начало на търсене: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="111"/>
+        <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
         <translation>Търсенето завърши</translation>
     </message>

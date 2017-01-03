@@ -119,17 +119,17 @@
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Meklē: %1 -- Viedā: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
         <translation>Izslēgta</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
         <translation>Ieslēgta</translation>
     </message>
@@ -142,12 +142,12 @@
         <translation>Meklē: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="63"/>
+        <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
         <translation>Sāk meklēt: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="111"/>
+        <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
         <translation>Meklēšana beigusies</translation>
     </message>

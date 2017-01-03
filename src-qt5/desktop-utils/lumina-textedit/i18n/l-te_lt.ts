@@ -138,7 +138,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
-        <location filename="../MainUI.cpp" line="147"/>
+        <location filename="../MainUI.cpp" line="151"/>
         <source>New File</source>
         <translation>Naujas failas</translation>
     </message>
@@ -228,23 +228,23 @@
         <translation>Tekstų redaktorius</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Open File(s)</source>
         <translation>Atverti failą(-us)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
         <translation>Tekstiniai failai (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="289"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Prarasti neįrašytus pakeitimus?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
+        <location filename="../MainUI.cpp" line="289"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -255,7 +255,7 @@ Ar vis tiek norite jį užverti?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

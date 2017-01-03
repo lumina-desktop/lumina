@@ -57,52 +57,52 @@
 <context>
     <name>BrowserWidget</name>
     <message>
-        <location filename="../BrowserWidget.cpp" line="210"/>
+        <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
         <translation type="unfinished">Name</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="211"/>
+        <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
         <translation type="unfinished">Größe</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="212"/>
+        <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
         <translation type="unfinished">Typ</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="213"/>
+        <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
         <translation type="unfinished">Änderungsdatum</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="214"/>
+        <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
         <translation type="unfinished">Erstellungsdatum</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="316"/>
+        <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
         <translation type="unfinished">Kapazität: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="342"/>
+        <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
         <translation type="unfinished">Dateien: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="344"/>
+        <location filename="../BrowserWidget.cpp" line="343"/>
         <source>Files: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
         <translation type="unfinished">Verzeichnisse: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="362"/>
+        <location filename="../BrowserWidget.cpp" line="363"/>
         <source>No Directory Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -189,42 +189,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="525"/>
+        <location filename="../widgets/DirWidget2.cpp" line="533"/>
         <source>(Limited Access) </source>
         <translation>(Beschränkter Zugriff) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>New Document</source>
         <translation>Neues Dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
+        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="572"/>
         <source>Error Creating Document</source>
         <translation>Fehler beim Erstellen des Dokuments</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="572"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Das Dokument konnte nicht erstellt werden. Bitte stelle sicher, dass du die korrekten Dateirechte hast.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="580"/>
         <source>New Directory</source>
         <translation>Neues Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
-        <location filename="../widgets/DirWidget2.cpp" line="581"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="612"/>
         <source>Invalid Name</source>
         <translation>Ungültiger Name</translation>
     </message>
@@ -234,29 +234,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <location filename="../widgets/DirWidget2.cpp" line="502"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="507"/>
+        <location filename="../widgets/DirWidget2.cpp" line="514"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
-        <location filename="../widgets/DirWidget2.cpp" line="581"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="563"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="612"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Eine Datei oder ein Ordner mit diesem Namen existiert bereits! Bitte einen neuen Namen auswählen.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="585"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>Error Creating Directory</source>
         <translation>Fehler beim Erstellen des Verzeichnisses</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="585"/>
+        <location filename="../widgets/DirWidget2.cpp" line="594"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Das Verzeichnis konnte nicht erstellt werden. Bitte sicherstellen, dass du die nötigen Rechte zum modifizieren des Verzeichnisses hast.</translation>
     </message>
@@ -306,11 +306,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="245"/>
-        <source>Modify Files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widgets/DirWidget2.cpp" line="256"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
@@ -351,27 +346,27 @@
         <translation>Öffnen mit...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="250"/>
+        <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Rename...</source>
         <translation>Umbenennen …</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="247"/>
+        <location filename="../widgets/DirWidget2.cpp" line="494"/>
         <source>Cut Selection</source>
         <translation>Auswahl ausschneiden</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="248"/>
+        <location filename="../widgets/DirWidget2.cpp" line="495"/>
         <source>Copy Selection</source>
         <translation>Auswahl kopieren</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="493"/>
+        <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="252"/>
+        <location filename="../widgets/DirWidget2.cpp" line="498"/>
         <source>Delete Selection</source>
         <translation>Auswahl löschen</translation>
     </message>
@@ -576,12 +571,12 @@ Neue Position: %2</translation>
         <translation>Auf &quot;Weiter&quot; klicken, um das Repository herunterzuladen</translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"/>
+        <location filename="../gitWizard.h" line="58"/>
         <source>Stop Download?</source>
         <translation>Download beenden?</translation>
     </message>
     <message>
-        <location filename="../gitWizard.h" line="57"/>
+        <location filename="../gitWizard.h" line="58"/>
         <source>Kill the current download?</source>
         <translation>Den aktuellen Download zwangsweise beenden?</translation>
     </message>
@@ -594,12 +589,12 @@ Neue Position: %2</translation>
         <translation>Einsicht</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="90"/>
+        <location filename="../MainUI.cpp" line="92"/>
         <source>Shift+Left</source>
         <translation>Umschalt+Links</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="91"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Right</source>
         <translation>Umschalt+Rechts</translation>
     </message>
@@ -779,12 +774,12 @@ Neue Position: %2</translation>
         <translation>Strg+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="63"/>
         <source>Detailed List</source>
         <translation>Detailansicht</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Basic List</source>
         <translation>Einfache Liste</translation>
     </message>
@@ -839,122 +834,132 @@ Neue Position: %2</translation>
         <translation>Strg+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>Invalid Directories</source>
         <translation>Ungültiges Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Die folgenden Verzeichnis sind ungültig und können nicht geöffnet werden:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="329"/>
+        <location filename="../MainUI.cpp" line="222"/>
+        <source>CTRL+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="231"/>
+        <source>CTRL+E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="336"/>
         <source>Root</source>
         <translation>Basisverzeichnis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="335"/>
+        <location filename="../MainUI.cpp" line="342"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Typ: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
+        <location filename="../MainUI.cpp" line="346"/>
         <source>Filesystem: %1</source>
         <translation>Dateisystem: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="588"/>
+        <location filename="../MainUI.cpp" line="595"/>
         <source>New Bookmark</source>
         <translation>Neues Lesezeichen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="588"/>
+        <location filename="../MainUI.cpp" line="595"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="593"/>
+        <location filename="../MainUI.cpp" line="600"/>
         <source>Invalid Name</source>
         <translation>Ungültiger Name</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="593"/>
+        <location filename="../MainUI.cpp" line="600"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Der Name des Lesezeichens ist bereits vorhanden. Bitte einen anderen Namen wählen.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="614"/>
+        <location filename="../MainUI.cpp" line="621"/>
         <source>Git Repository Status</source>
         <translation>Status des Git Repositorys</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="704"/>
+        <location filename="../MainUI.cpp" line="711"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="722"/>
+        <location filename="../MainUI.cpp" line="729"/>
         <source>Slideshow</source>
         <translation>Präsentation</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="902"/>
+        <location filename="../MainUI.cpp" line="909"/>
         <source>Items to be removed:</source>
         <translation>Elemente, welche entfernt werden sollen:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="416"/>
+        <location filename="../MainUI.cpp" line="423"/>
         <source>Verify Quit</source>
         <translation>Beenden bestätigen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Ctrl+H</source>
         <translation>Strg+H</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+L</source>
         <translation>Strg+L</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="416"/>
+        <location filename="../MainUI.cpp" line="423"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Es sind mehrere Reiter offen. Soll wirklich beendet werden?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Verify Removal</source>
         <translation>Entfernen überprüfen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>ACHTUNG: Dies wird die Datei(en) dauerhaft vom System entfernen!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="901"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Are you sure you want to continue?</source>
         <translation>Sind Sie sicher, dass Sie fortsetzen möchten?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="861"/>
+        <location filename="../MainUI.cpp" line="868"/>
         <source>Rename File</source>
         <translation>Datei umbenennen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="861"/>
+        <location filename="../MainUI.cpp" line="868"/>
         <source>New Name:</source>
         <translation>Neuer Name:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="875"/>
+        <location filename="../MainUI.cpp" line="882"/>
         <source>Overwrite File?</source>
         <translation>Datei überschreiben?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="875"/>
+        <location filename="../MainUI.cpp" line="882"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Eine vorhandene Datei mit dem gleichen Namen wird ersetzt. Fortfahren?</translation>
     </message>
@@ -1016,27 +1021,32 @@ Neue Position: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="48"/>
+        <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="49"/>
+        <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="50"/>
+        <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="99"/>
+        <location filename="../OPWidget.cpp" line="96"/>
+        <source>File Operation Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../OPWidget.cpp" line="99"/>
+        <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1147,18 +1157,13 @@ Neue Position: %2</translation>
 <context>
     <name>TrayUI</name>
     <message>
-        <location filename="../TrayUI.cpp" line="71"/>
+        <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
         <translation type="unfinished">Abgeschlossen</translation>
     </message>
     <message>
-        <location filename="../TrayUI.cpp" line="71"/>
+        <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../TrayUI.cpp" line="71"/>
-        <source>No Errors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

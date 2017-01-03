@@ -17,115 +17,113 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <location filename="../MainUI.ui" line="162"/>
-        <location filename="../MainUI.ui" line="295"/>
+        <location filename="../MainUI.ui" line="375"/>
         <source>Take Screenshot</source>
         <translation>Padaryti ekrano kopiją</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="37"/>
-        <source>New Screenshot</source>
-        <translation>Nauja ekrano kopija</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="43"/>
-        <source>Settings</source>
-        <translation>Nustatymai</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="124"/>
+        <location filename="../MainUI.ui" line="151"/>
         <source>Include Borders</source>
         <translation>Įtraukti rėmelį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="149"/>
-        <source> Seconds</source>
-        <translation> sekundžių</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="152"/>
-        <source>Delay </source>
-        <translation>Delsti </translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="172"/>
-        <source>View/Edit</source>
-        <translation>Rodyti/Redaguoti</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="212"/>
-        <location filename="../MainUI.ui" line="306"/>
+        <location filename="../MainUI.ui" line="196"/>
+        <location filename="../MainUI.ui" line="386"/>
         <source>Save As</source>
         <translation>Įrašyti kaip</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="222"/>
-        <source>Launch Editor</source>
-        <translation>Paleisti redaktorių</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="244"/>
         <source>Crop</source>
         <translation>Apkirpti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="255"/>
+        <location filename="../MainUI.ui" line="228"/>
         <source>Resize</source>
         <translation>Keisti dydį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="282"/>
+        <location filename="../MainUI.ui" line="20"/>
+        <source>Lumina Screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="70"/>
+        <source> Sec Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="183"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="212"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="362"/>
         <source>File</source>
         <translation>Failas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="378"/>
         <source>Ctrl+N</source>
         <translation>Ctrl(Vald)+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="322"/>
+        <location filename="../MainUI.ui" line="402"/>
         <source>Close</source>
         <translation>Užverti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="325"/>
+        <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
         <translation>Esc(Gr)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="67"/>
+        <location filename="../MainUI.ui" line="57"/>
         <source>Entire Session</source>
         <translation>Visas seansas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="81"/>
+        <location filename="../MainUI.ui" line="138"/>
         <source>Single Window</source>
         <translation>Vienas langas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="74"/>
+        <location filename="../MainUI.ui" line="99"/>
         <source>Single Screen</source>
         <translation>Vienas ekranas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="79"/>
+        <source>Could not save screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="79"/>
+        <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>Save Screenshot</source>
         <translation>Įrašyti ekrano kopiją</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="309"/>
+        <location filename="../MainUI.ui" line="389"/>
         <source>Ctrl+S</source>
         <translation>Ctrl(Vald)+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="317"/>
+        <location filename="../MainUI.ui" line="397"/>
         <source>Quick Save</source>
         <translation>Greitasis įrašymas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG failai (*.png);;Visi failai (*)</translation>
     </message>

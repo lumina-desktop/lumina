@@ -125,17 +125,17 @@
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>検索: %1 -- スマート検索: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
         <translation>オフ</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
         <translation>オン</translation>
     </message>
@@ -148,12 +148,12 @@
         <translation>検索しています: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="63"/>
+        <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
         <translation>検索を開始しています: %1</translation>
     </message>
     <message>
-        <location filename="../Worker.cpp" line="111"/>
+        <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
         <translation>検索完了</translation>
     </message>

@@ -138,7 +138,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
-        <location filename="../MainUI.cpp" line="147"/>
+        <location filename="../MainUI.cpp" line="151"/>
         <source>New File</source>
         <translation>Νέο Αρχείο</translation>
     </message>
@@ -228,23 +228,23 @@
         <translation>Επεξεργαστής Κειμένου</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Open File(s)</source>
         <translation>Άνοιγμα Αρχείου(ων)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
         <translation>Αρχεία Κειμένου (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="289"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Επιθυμείτε να χάσετε τις μη αποθηκευμένες αλλαγές;</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="283"/>
+        <location filename="../MainUI.cpp" line="289"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -255,7 +255,7 @@ Do you want to close it anyway?
 % 1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="380"/>
+        <location filename="../MainUI.cpp" line="386"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 
