@@ -133,7 +133,7 @@ void imgDialog::getProcStatus(){
   if(pidlist.isEmpty()){ return; }
   int pid = pidlist.first().simplified().toInt(); //just use the first pid - the pgrep should be detailed enough to only match one
   //qDebug() << "Sending signal to show status on PID:" << pid;
-#ifndef __Linux__
+#ifndef __linux__
   ::kill(pid, SIGINFO); //On BSD systems, the INFO signal is used to poke dd for status updates
 #else
   //LINUX systems do not even have a SIGINFO defined - need to block this off with defines...
