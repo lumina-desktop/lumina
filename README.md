@@ -44,6 +44,7 @@ Please create a ticket through the GitHub issues tracker on this repository. Sim
 How to build from source
 ----
 1) Checkout the source repo to your local box (GitHub gives a few methods for this)
+
 Examples:
 * To checkout the master branch of the repo, run `git clone https://github.com/trueos/lumina` to create a "lumina" directory with a local copy of the source tree.
 * To update an exising checkout of the Lumina repo, run "git pull" while within your local copy of the source tree. 
