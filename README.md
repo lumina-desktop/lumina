@@ -13,21 +13,28 @@ Description
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
-Latest Stable Versions
+Latest Versions
 ----
-Qt4 - 0.7.2 (Beta): Use the qt4/0.7.2 branch of the source tree to fetch this version.
+Click [HERE](https://github.com/trueos/lumina/releases) to see all the available releases for the Lumina Desktop.
 
-Qt5 - 1.0.0 (Release): Use the qt5/1.0.0 branch of the source tree to fetch this version.
+Click [HERE]() to see all the available branches of the Lumina Desktop source tree (includes development versions: *.*.(X > 0)).
+The master branch is where all development is performed and tested before the next version is tagged. Additionally, every version (development **and** release) of the project gets branched off of master at the time the version is tagged, so older versions may be fetched/patched/used as desired.
 
-The master branch is where all development is performed and tested before the next release version is branched off.
-
-NOTE: Starting with version 0.8.4, you may also find packaged versions of the source code for the individual releases of Lumina here on GitHub. Please go to the "Releases" page here on GitHub for additional information.
+Occasionally there may be patches committed for particular versions which are not included in the static "release" archives. On the release page these can be identified by a note stating the release is a number of commits behind it's corresponding branch. In this situation, it may be preferable to fetch/use the corresponding branch of the source tree rather than the static archive if the patch(es) which were committed impact your particular operating system.
 
 Translations
 ----
+**Version 1.0.0 and older**
+
 All the translation files for Lumina are available through the TrueOS pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
 
 Translation Website URL: http://translate.pcbsd.org/
+
+**Version 1.1.0+**
+
+All the translations for Lumina are contained within this repository directly (the i18n/ subdirectories within each project source tree). To include these translation files, the `WITH_I18N` build flag must be set at compilation time, in which case the translation files will automatically get synced/built alongside the corresponding binaries.
+
+To submit translations, please use the online [TrueOS Translation System](http://weblate.trueos.org/projects/lumina/). Anonymous users may submit translation suggestions, but a website account will be needed to created before you can submit/approve translations directly to the project. See the documentation/information on the site for full details.
 
 How to file bug reports or feature requests
 ----
@@ -37,7 +44,9 @@ Please create a ticket through the GitHub issues tracker on this repository. Sim
 How to build from source
 ----
 1) Checkout the source repo to your local box (GitHub gives a few methods for this)
-* To update an exising checkout of the Lumina repo, run "git pull" while within the source directory. 
+Examples:
+* To checkout the master branch of the repo, run `git clone https://github.com/trueos/lumina` to create a "lumina" directory with a local copy of the source tree.
+* To update an exising checkout of the Lumina repo, run "git pull" while within your local copy of the source tree. 
 
 2) In a terminal, change to the lumina repo directory (base dir, not one of the sub-projects)
 
