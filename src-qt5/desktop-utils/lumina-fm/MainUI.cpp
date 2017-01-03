@@ -219,6 +219,7 @@ void MainUI::setupIcons(){
 
   // Bookmarks menu
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
+  ui->actionManage_Bookmarks->setShortcut(tr("CTRL+B"));
   ui->actionAdd_Bookmark->setIcon( LXDG::findIcon("bookmark-new","") );
 
   //GIT menu
@@ -227,6 +228,7 @@ void MainUI::setupIcons(){
 
   // External Devices menu
   ui->actionScan->setIcon( LXDG::findIcon("system-search","") );
+  ui->actionScan->setShortcut(tr("CTRL+E"));
 }
 
 //==========
