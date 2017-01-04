@@ -1,0 +1,17 @@
+Most dependencies required to build Lumina are listed in the
+DEPENDENCIES file in the directory above this one. The following
+are dependencies specific to Lumina's window manager.
+
+
+FreeBSD/TrueOS
+=======================
+
+
+
+
+Linux (Debian/Ubuntu)
+=======================
+
+libxcb-screensaver0-dev
+
+
