@@ -15,9 +15,7 @@ include(../libLumina/LuminaXDG.pri)
 include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
-
-#LIBS     += -lLuminaUtils -lxcb -lxcb-damage
-#DEPENDPATH	+= ../libLumina
+include(../libLumina/ExternalProcess.pri)
 
 TEMPLATE = app
 
