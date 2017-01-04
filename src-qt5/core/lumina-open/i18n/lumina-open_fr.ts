@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Emplacement de l&apos;Exécutable</translation>
+        <translation>Emplacement de l'Exécutable</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -151,7 +151,7 @@
         <location filename="../main.cpp" line="202"/>
         <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
-        <translation>Luminosité de l&apos;Écran %1%</translation>
+        <translation>Luminosité de l'Écran %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="243"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Programme invalide : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>L&apos;adresse est introuvable dans le raccourci URL : %1</translation>
+        <translation>L'adresse est introuvable dans le raccourci URL : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
@@ -190,8 +190,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>&quot;%1&quot; non trouvé. Vérifiez qu&apos;il soit bien installé.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>"%1" non trouvé. Vérifiez qu'il soit bien installé.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>

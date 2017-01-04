@@ -215,12 +215,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Chargement des Préférences d&apos;Utilisateur …</translation>
+        <translation>Chargement des Préférences d'Utilisateur …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -421,7 +421,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="161"/>
         <source>Preparing Workspace …</source>
-        <translation>Préparation de l&apos;Espace de Travail …</translation>
+        <translation>Préparation de l'Espace de Travail …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="164"/>
@@ -510,7 +510,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation>Erreur dans l&apos;analyse de la sortie du script : %1</translation>
+        <translation>Erreur dans l'analyse de la sortie du script : %1</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
         <source>Use System Time</source>
-        <translation>Utiliser l&apos;Heure du Système</translation>
+        <translation>Utiliser l'Heure du Système</translation>
     </message>
 </context>
 <context>
@@ -647,12 +647,12 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Commencer à Déplacer l&apos;Élément</translation>
+        <translation>Commencer à Déplacer l'Élément</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Commencer à Redimensionner l&apos;Élément</translation>
+        <translation>Commencer à Redimensionner l'Élément</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Supprimer l&apos;Élément</translation>
+        <translation>Supprimer l'Élément</translation>
     </message>
 </context>
 <context>
@@ -805,7 +805,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
         <source>Screen Brightness</source>
-        <translation>Luminosité de l&apos;Écran</translation>
+        <translation>Luminosité de l'Écran</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="231"/>
@@ -982,57 +982,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Vider la Liste de Lecture</translation>
+        <translation>Vider la Liste de Lecture</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Mélanger la Liste de Lecture</translation>
+        <translation>Mélanger la Liste de Lecture</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Ajouter des Fichiers</translation>
+        <translation>Ajouter des Fichiers</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Ajouter un Dossier</translation>
+        <translation>Ajouter un Dossier</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Ajouter une URL</translation>
+        <translation>Ajouter une URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Fichiers Multimédia</translation>
+        <translation>Fichiers Multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Sélectionner les Fichiers Multimédia</translation>
+        <translation>Sélectionner les Fichiers Multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Sélectionner le Dossier Multimédia</translation>
+        <translation>Sélectionner le Dossier Multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Entrer une URL valide pour le fichier ou flux multimédia :</translation>
+        <translation>Entrer une URL valide pour le fichier ou flux multimédia :</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">URL Multimédia</translation>
+        <translation>URL Multimédia</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Certains flux RSS peuvent demander des intervalles différents au lieu d&apos;utiliser ce réglage</translation>
+        <translation>Certains flux RSS peuvent demander des intervalles différents au lieu d'utiliser ce réglage</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
@@ -1254,7 +1254,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation>Économiseur d&apos;Écran</translation>
+        <translation>Économiseur d'Écran</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
@@ -1337,7 +1337,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Déconnecter l&apos;Utilisateur</translation>
+        <translation>Déconnecter l'Utilisateur</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>

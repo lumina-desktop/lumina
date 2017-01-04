@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Type d&apos;article</translation>
+        <translation>Type d'article</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
@@ -140,7 +140,7 @@
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="151"/>
         <source>New File</source>
-        <translation>Nouveau fichier </translation>
+        <translation>Nouveau fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
