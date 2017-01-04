@@ -6,12 +6,12 @@
     <message>
         <location filename="../ConfigUI.ui" line="14"/>
         <source>Search Configuration</source>
-        <translation>Configuration de la recherche</translation>
+        <translation>Configuration de la Recherche</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="20"/>
         <source>Start Search:</source>
-        <translation>Démarrer la recherche:</translation>
+        <translation>Démarrer la Recherche :</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="39"/>
@@ -21,22 +21,22 @@
     <message>
         <location filename="../ConfigUI.ui" line="48"/>
         <source>Excluded Directories</source>
-        <translation>Répertoires Exclus</translation>
+        <translation>Dossiers Exclus</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="119"/>
         <source>Save as Defaults</source>
-        <translation>Enregistrer comme valeur par défaut</translation>
+        <translation>Enregistrer comme Valeurs par Défaut</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="41"/>
         <source>Select Search Directory</source>
-        <translation>Sélectionner le dossier de recherche</translation>
+        <translation>Sélectionner le Dossier de Recherche</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="54"/>
         <source>Exclude Directories</source>
-        <translation>Exclure des répertoires</translation>
+        <translation>Exclure des Dossiers</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
-        <translation>Arrêter la recherche en cours</translation>
+        <translation>Arrêter la Recherche en Cours</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="54"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="64"/>
         <source>Files or Directories</source>
-        <translation>Fichiers ou Répertoires</translation>
+        <translation>Fichiers ou Dossiers</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="88"/>
@@ -90,7 +90,7 @@
         <location filename="../MainUI.ui" line="122"/>
         <location filename="../MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
-        <translation>Enregistrer la capture d&apos;écran</translation>
+        <translation>Enregistrer la Capture d'Écran</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>
@@ -126,12 +126,12 @@
     <message>
         <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Non</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
-        <translation>Marche</translation>
+        <translation>Oui</translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
-        <translation>Démarrage de la Recherche: %1</translation>
+        <translation>Démarrage de la Recherche : %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="112"/>
