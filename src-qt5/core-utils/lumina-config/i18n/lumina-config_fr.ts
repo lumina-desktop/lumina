@@ -72,7 +72,7 @@
         <source>This color scheme already exists.
  Overwrite it?</source>
         <translation>Ce jeu de couleurs existe déjà.
-Voulez-vous l&apos;écraser ?</translation>
+Voulez-vous l'écraser ?</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
@@ -249,7 +249,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="88"/>
         <source>Invisible spacer to separate plugins.</source>
-        <translation>Élément d&apos;espacement invisible pour séparer les éléments.</translation>
+        <translation>Élément d'espacement invisible pour séparer les éléments.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
@@ -274,7 +274,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="116"/>
         <source>View the current time and date.</source>
-        <translation>Affiche l&apos;heure et la date actuelle.</translation>
+        <translation>Affiche l'heure et la date actuelle.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="122"/>
@@ -305,7 +305,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation>Zone d&apos;affichage pour les applications systèmes attachables</translation>
+        <translation>Zone d'affichage pour les applications systèmes attachables</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
@@ -331,7 +331,7 @@ Voulez-vous l&apos;écraser ?</translation>
         <location filename="../LPlugins.cpp" line="164"/>
         <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
-        <translation>Lanceur d&apos;applications</translation>
+        <translation>Lanceur d'applications</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
@@ -340,13 +340,13 @@ Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
         <source>Application Menu</source>
-        <translation>Menu de l&apos;application</translation>
+        <translation>Menu de l'application</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
@@ -366,7 +366,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
         <source>Workspace Switcher</source>
-        <translation>Sélecteur d&apos;espace de travail</translation>
+        <translation>Sélecteur d'espace de travail</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
@@ -386,7 +386,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="158"/>
         <source>Unified system access and application launch menu.</source>
-        <translation>Accès simplifié au serveur et Menu de lancement d&apos;application</translation>
+        <translation>Accès simplifié au serveur et Menu de lancement d'application</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
@@ -433,7 +433,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation>Suivre les statistiques système comme l&apos;utilisation CPU/Mémoire et les températures CPU.</translation>
+        <translation>Suivre les statistiques système comme l'utilisation CPU/Mémoire et les températures CPU.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
@@ -576,7 +576,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="342"/>
         <source>Main background color for the window/dialog.</source>
-        <translation>Couleur d&apos;arrière plan principale pour les fenêtres / dialogues.</translation>
+        <translation>Couleur d'arrière plan principale pour les fenêtres / dialogues.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="347"/>
@@ -586,7 +586,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
-        <translation>Couleur principale de fond pour les widgets qui liste ou affiche les collections d&apos;objets.</translation>
+        <translation>Couleur principale de fond pour les widgets qui liste ou affiche les collections d'objets.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="353"/>
@@ -626,12 +626,12 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
-        <translation>Alternée la couleur pour le thème (plus tamisé)</translation>
+        <translation>Couleur alternative pour le thème (plus tamisée).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="377"/>
         <source>Accent Color</source>
-        <translation>Couleur d&apos;Accent</translation>
+        <translation>Couleur d'Accent</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="378"/>
@@ -641,7 +641,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
-        <translation>Couleur d&apos;Accent (Désactivée)</translation>
+        <translation>Couleur d'Accent (Désactivée)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="384"/>
@@ -656,7 +656,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="390"/>
         <source>Color used for highlighting an item.</source>
-        <translation>Couleur utilisée pour la surbrillance d&apos;un élément.</translation>
+        <translation>Couleur utilisée pour la surbrillance d'un élément.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="395"/>
@@ -937,7 +937,7 @@ Voulez-vous l&apos;écraser ?</translation>
         <source>This theme already exists.
  Overwrite it?</source>
         <translation>Ce thème existe déjà.
- Voulez-vous l&apos;écraser ?</translation>
+ Voulez-vous l'écraser ?</translation>
     </message>
 </context>
 <context>
@@ -950,7 +950,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../mainWindow.ui" line="23"/>
         <source>toolBar</source>
-        <translation type="unfinished">Barre d&apos;outils</translation>
+        <translation type="unfinished">Barre d'outils</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
@@ -1035,7 +1035,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
-        <translation type="unfinished">Exécutables de L&apos;Application (*)</translation>
+        <translation type="unfinished">Exécutables de L'Application (*)</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="137"/>
@@ -1045,7 +1045,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="137"/>
         <source>The selected file is not executable!</source>
-        <translation type="unfinished">Le fichier sélectionné n&apos;est pas exécutable !</translation>
+        <translation type="unfinished">Le fichier sélectionné n'est pas exécutable !</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="151"/>
@@ -1191,7 +1191,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="337"/>
         <source>The selected binary is not executable!</source>
-        <translation type="unfinished">Le fichier sélectionné n&apos;est pas exécutable.</translation>
+        <translation type="unfinished">Le fichier sélectionné n'est pas exécutable.</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1239,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="161"/>
         <source>Change Key Binding:</source>
-        <translation type="unfinished">Changer l&apos;Affectation de Touche</translation>
+        <translation type="unfinished">Changer l'Affectation de Touche</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="184"/>
@@ -1253,9 +1253,9 @@ Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1276,12 +1276,12 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Up</source>
-        <translation type="unfinished">Luminosité de l&apos;écran +</translation>
+        <translation type="unfinished">Luminosité de l'écran +</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Screen Brightness Down</source>
-        <translation type="unfinished">Diminuer la Luminosité de l&apos;Écran</translation>
+        <translation type="unfinished">Diminuer la Luminosité de l'Écran</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
@@ -1291,7 +1291,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
         <source>Lock Screen</source>
-        <translation type="unfinished">Verrouiller l&apos;écran</translation>
+        <translation type="unfinished">Verrouiller l'écran</translation>
     </message>
 </context>
 <context>
@@ -1314,7 +1314,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="81"/>
         <source>Number of Workspaces</source>
-        <translation type="unfinished">Nombre d&apos;Espaces de Travail</translation>
+        <translation type="unfinished">Nombre d'Espaces de Travail</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="98"/>
@@ -1462,7 +1462,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
-        <translation type="unfinished">Configuration de l&apos;interface</translation>
+        <translation type="unfinished">Configuration de l'interface</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="57"/>
@@ -1616,12 +1616,12 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
         <source>Change User Icon</source>
-        <translation type="unfinished">Modifier l&apos;Icône Utilisateur</translation>
+        <translation type="unfinished">Modifier l'Icône Utilisateur</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="112"/>
         <source>Time Format:</source>
-        <translation type="unfinished">Format d&apos;Heure:</translation>
+        <translation type="unfinished">Format d'Heure:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="124"/>
@@ -1643,7 +1643,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="203"/>
         <source>Display Format</source>
-        <translation type="unfinished">Format d&apos;Affichage</translation>
+        <translation type="unfinished">Format d'Affichage</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="234"/>
@@ -1678,7 +1678,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="22"/>
         <source>Date first then Time</source>
-        <translation type="unfinished">Date avant l&apos;heure</translation>
+        <translation type="unfinished">Date avant l'heure</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="70"/>
@@ -1698,12 +1698,12 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Reset User Image</source>
-        <translation type="unfinished">Réinitialiser l&apos;image de l&apos;utilisateur</translation>
+        <translation type="unfinished">Réinitialiser l'image de l'utilisateur</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation type="unfinished">Voulez-vous réinitialiser l&apos;image de l&apos;utilisateur aux paramètres par défaut du système ?</translation>
+        <translation type="unfinished">Voulez-vous réinitialiser l'image de l'utilisateur aux paramètres par défaut du système ?</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="157"/>
@@ -1813,7 +1813,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation type="unfinished">Le texte peut être inclus dans des apostrophes afin d&apos;ignorer les substitutions</translation>
+        <translation type="unfinished">Le texte peut être inclus dans des apostrophes afin d'ignorer les substitutions</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="192"/>
@@ -1877,7 +1877,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="138"/>
         <source>Icon Pack:</source>
-        <translation type="unfinished">Pack d&apos;icônes:</translation>
+        <translation type="unfinished">Pack d'icônes:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="148"/>
@@ -1941,7 +1941,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="100"/>
         <source>Rotate Background</source>
-        <translation type="unfinished">Tourner l&apos;arrière-plan</translation>
+        <translation type="unfinished">Tourner l'arrière-plan</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="107"/>
@@ -2053,7 +2053,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
-        <translation type="unfinished">Pas d&apos;arrière-plan</translation>
+        <translation type="unfinished">Pas d'arrière-plan</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="143"/>
@@ -2063,18 +2063,18 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="163"/>
         <source>File does not exist</source>
-        <translation type="unfinished">Le fichier n&apos;existe pas</translation>
+        <translation type="unfinished">Le fichier n'existe pas</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="203"/>
         <source>Find Background Image(s)</source>
-        <translation type="unfinished">Recherche d&apos;image(s) pour l&apos;arrière plan</translation>
+        <translation type="unfinished">Recherche d'image(s) pour l'arrière plan</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="234"/>
         <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
-        <translation type="unfinished">Trouver le Répertoire d&apos;Image des Arrière-Plans</translation>
+        <translation type="unfinished">Trouver le Répertoire d'Image des Arrière-Plans</translation>
     </message>
 </context>
 </TS>
