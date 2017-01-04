@@ -16,6 +16,7 @@
 //LibLumina X11 class
 #include <LuminaX11.h>
 #include <LUtils.h>
+#include <ExternalProcess.h>
 
 #include <unistd.h> //for usleep() usage
 
@@ -276,8 +277,9 @@ void LSession::launchStartupApps(){
     LOS::setScreenBrightness( tmp );
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
-  QProcess::startDetached("nice lumina-open -autostart-apps");
-  
+  //QProcess::startDetached("nice lumina-open -autostart-apps");
+  ExternalProcess::launch("nice lumina-open -autostart-apps");
+
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
   qDebug() << " - Loading previous settings";
@@ -524,7 +526,8 @@ void LSession::SessionEnding(){
 //===============
 void LSession::LaunchApplication(QString cmd){
   LSession::setOverrideCursor(QCursor(Qt::BusyCursor));
-  QProcess::startDetached(cmd);
+  ExternalProcess::launch(cmd);
+  //QProcess::startDetached(cmd);
 }
 
 QFileInfoList LSession::DesktopFiles(){
