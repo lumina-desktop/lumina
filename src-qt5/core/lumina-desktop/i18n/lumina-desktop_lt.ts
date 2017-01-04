@@ -146,12 +146,12 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleidžiamas Lumina darbalaukis...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versija %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Norite pakeisti sąsają? Viskas yra tinkinama darbalaukio konfigūracijoje!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Šį darbalaukį dosniai remia iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
@@ -196,12 +196,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viskas turi savo grožį, tačiau ne visi tai mato.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš Dievą mes visi esame vienodai išmintingi - ir vienodai kvaili.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
@@ -215,13 +215,13 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <source>You can't know too much, but you can say too much.</source>
+        <translation>Negali per daug žinoti, tačiau gali per daug pasakyti.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
@@ -236,7 +236,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Niekada nepasitikėk kompiuteriu, kurio negali išmesti pro langą.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
@@ -256,7 +256,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėk ten, kur esi. Naudok tai, ką turi.  Daryk tai, ką gali.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
@@ -271,7 +271,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daryk tai, ką gali, ten, kur esi, tuo, ką turi.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
