@@ -316,7 +316,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Matematikas yra įrenginys, skirtas paversti kavą į teoremas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -336,7 +336,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Žinios kalba, tačiau išmintis klauso.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
@@ -366,7 +366,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puikiai atlikta yra geriau nei puikiai pasakyta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiesa yra svarbesnė nei faktai.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Užrakinti seansą</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -987,32 +987,32 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Išvalyti grojaraštį</translation>
+        <translation>Išvalyti grojaraštį</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Maišyti grojaraštį</translation>
+        <translation>Maišyti grojaraštį</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Pridėti failus</translation>
+        <translation>Pridėti failus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Pridėti katalogą</translation>
+        <translation>Pridėti katalogą</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Pridėti URL</translation>
+        <translation>Pridėti URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Multimedijos failai</translation>
+        <translation>Multimedijos failai</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbalaukio fonas</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi darbalaukio nustatymai</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
