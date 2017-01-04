@@ -13,17 +13,17 @@
     <message>
         <location filename="../MainUI.ui" line="56"/>
         <source>Owner:</source>
-        <translation>Propriétaire:</translation>
+        <translation>Propriétaire :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="73"/>
         <source>Group:</source>
-        <translation>Groupe:</translation>
+        <translation>Groupe :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Permissions:</source>
-        <translation>Permissions:</translation>
+        <translation>Permissions :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="104"/>
@@ -33,38 +33,38 @@
     <message>
         <location filename="../MainUI.ui" line="111"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation>Note: La date à laquelle un fichier est créé peut être plus récente que la date de modification si les permissions du fichier ont été modifiées récemment.</translation>
+        <translation>Note : La date de création peut être plus récente que la date de modification si les permissions du fichier ont été modifiées récemment.</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>Last Modified:</source>
-        <translation>Dernière modification:</translation>
+        <translation>Dernière Modification :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="131"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>MimeType:</source>
-        <translation>Type MIME:</translation>
+        <translation>Type MIME :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="185"/>
         <source>File Size:</source>
-        <translation>Taille du fichier:</translation>
+        <translation>Taille du Fichier :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
         <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
-        <translation>Modifier le racourci</translation>
+        <translation>Modifier le Raccourci</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
         <source>Working Dir:</source>
-        <translation>Répertoire de travail:</translation>
+        <translation>Dossier de Travail :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="246"/>
@@ -74,27 +74,27 @@
     <message>
         <location filename="../MainUI.ui" line="260"/>
         <source>Icon:</source>
-        <translation>Icone:</translation>
+        <translation>Icône :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="267"/>
         <source>Command:</source>
-        <translation>Commande:</translation>
+        <translation>Commande :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="274"/>
         <source>Comment:</source>
-        <translation>Commentaire:</translation>
+        <translation>Commentaire :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>Run in terminal</source>
-        <translation>Executer dans un terminal:</translation>
+        <translation>Exécuter dans un terminal</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="291"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="298"/>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../MainUI.ui" line="336"/>
         <source>No Icon</source>
-        <translation>Pas d&apos;icône</translation>
+        <translation>Pas d'Icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="392"/>
@@ -129,17 +129,17 @@
     <message>
         <location filename="../MainUI.cpp" line="71"/>
         <source>Read Only</source>
-        <translation>Lecture seule</translation>
+        <translation>Lecture Seule</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="72"/>
         <source>Write Only</source>
-        <translation>Ecriture seule</translation>
+        <translation>Ecriture Seule</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="73"/>
         <source>No Access</source>
-        <translation>Aucun accès</translation>
+        <translation>Aucun Accès</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="77"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
-        <translation>Répertoire</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
@@ -164,17 +164,17 @@
     <message>
         <location filename="../MainUI.cpp" line="126"/>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>URL :</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer le Fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanceurs de Programmes (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -189,12 +189,12 @@
     <message>
         <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation>Sélection invalide: Ce n&apos;est pas un exécutable valide</translation>
+        <translation>Sélection invalide : Ce n'est pas un exécutable valide</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="305"/>
         <source>Select a directory</source>
-        <translation>Sélectionner un répertoire</translation>
+        <translation>Sélectionner un dossier</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="318"/>
@@ -210,13 +210,13 @@
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
-        <translation> Répertoires: </translation>
+        <translation> Dossiers : </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
-        <translation>Fichiers:</translation>
+        <translation>Fichiers : </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="343"/>
