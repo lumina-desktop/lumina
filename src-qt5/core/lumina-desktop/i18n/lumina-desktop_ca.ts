@@ -21,7 +21,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l&apos;aplicació</translation>
+        <translation>Seleccioneu l'aplicació</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l&apos;aplicació</translation>
+        <translation>Seleccioneu l'aplicació</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
@@ -146,122 +146,122 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>S'inicia l'escriptori Lumina...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versió %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquest escriptori és alimentat per cafè, cafè i més cafè.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantingueu-vos al dia de les notícies de l'escriptori!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hi ha un manual ple d'informació de l'escriptori disponible en línia.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Voleu canviar-ne la interfície? Tot és personalitzable des de la configuració de l'escriptori!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>El Lumina pot reproduir fàcilment la interfície de la majoria d'altres entorns d'escriptori.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquest escriptori està generosament patrocinat per iXsystems.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Mai no m'ha fet mal el que no he dit.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>He de tenir més esquella!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tot té la seva bellesa, però no tothom ho veu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Davant Déu tots som igual de savis - i igual de ximples.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>No podem fer-ho tot alhora, però podem fer alguna cosa cada vegada.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un amb la llei és una majoria.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <translation>No espereu fer forts els febles enfonsant forts.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <source>You can't know too much, but you can say too much.</source>
+        <translation>No es pot saber massa, però es pot dir massa.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>El deure no és col·lectiu, és personal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualsevol societat que deixi de banda una mica de llibertat per guanyar una mica de seguretat no en mereixerà ni una ni l'altra i les perdrà totes dues.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mai no confieu en un ordinador que no pugueu llençar per una finestra.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Estudieu el passat si voleu definir el futur.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>La manera de començar és deixar de parlar i començar a fer-ho.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Demaneu i se us donarà; cerqueu i trobareu; truqueu i se us obrirà la porta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Comenceu on sou. Useu el que teniu. Feu el que pugueu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una persona que mai no ha comès un error mai no ha intentat res de nou.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Carregant les preferències de l&apos;usuari…</translation>
+        <translation>Carregant les preferències de l'usuari…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -421,7 +421,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="161"/>
         <source>Preparing Workspace …</source>
-        <translation>Preparant l&apos;espai de treball…</translation>
+        <translation>Preparant l'espai de treball…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="164"/>
@@ -431,7 +431,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="167"/>
         <source>Starting App: %1</source>
-        <translation>Iniciant l&apos;aplicació: %1</translation>
+        <translation>Iniciant l'aplicació: %1</translation>
     </message>
 </context>
 <context>
@@ -482,7 +482,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
         <source>Pin to Desktop</source>
-        <translation>Enganxa a l&apos;escriptori</translation>
+        <translation>Enganxa a l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
@@ -510,7 +510,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation>Error analitzant la sortida de l&apos;script: %1</translation>
+        <translation>Error analitzant la sortida de l'script: %1</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
         <source>Use System Time</source>
-        <translation>Usa l&apos;hora del sistema</translation>
+        <translation>Usa l'hora del sistema</translation>
     </message>
 </context>
 <context>
@@ -642,17 +642,17 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation>Obre l&apos;ítem</translation>
+        <translation>Obre l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Inicia el trasllat de l&apos;ítem</translation>
+        <translation>Inicia el trasllat de l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Inicia el canvi de mida de l&apos;ítem</translation>
+        <translation>Inicia el canvi de mida de l'ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Elimina l&apos;ítem</translation>
+        <translation>Elimina l'ítem</translation>
     </message>
 </context>
 <context>
@@ -800,7 +800,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Obre el Mesclador d&apos;àudio</translation>
+        <translation>Obre el Mesclador d'àudio</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
@@ -1103,12 +1103,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation>Mostra&apos;n les opcions</translation>
+        <translation>Mostra'n les opcions</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation>Obre&apos;n el lloc web</translation>
+        <translation>Obre'n el lloc web</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
@@ -1140,7 +1140,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>URL de l&apos;RSS</translation>
+        <translation>URL de l'RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Alguns canals RSS poden sol·licitar intervals d&apos;actualització personalitzats en lloc d&apos;utilitzar aquest paràmetre.</translation>
+        <translation>Alguns canals RSS poden sol·licitar intervals d'actualització personalitzats en lloc d'utilitzar aquest paràmetre.</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
@@ -1211,7 +1211,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation>RSS de l&apos;escriptori Lumina</translation>
+        <translation>RSS de l'escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
@@ -1236,7 +1236,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation>Data de l&apos;última construcció: %1</translation>
+        <translation>Data de l'última construcció: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
@@ -1332,12 +1332,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Configura l&apos;escriptori</translation>
+        <translation>Configura l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Sortida de l&apos;usuari</translation>
+        <translation>Sortida de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
@@ -1478,7 +1478,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Giny de l&apos;usuari</translation>
+        <translation>Giny de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1526,12 +1526,12 @@
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation>Carpeta de l&apos;usuari</translation>
+        <translation>Carpeta de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation>Directori de l&apos;usuari</translation>
+        <translation>Directori de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>
@@ -1541,7 +1541,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translation>Torna al directori de l&apos;usuari</translation>
+        <translation>Torna al directori de l'usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
@@ -1556,7 +1556,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Preferències de l&apos;escriptori</translation>
+        <translation>Preferències de l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
@@ -1566,7 +1566,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Aparença de l&apos;escriptori / connectors</translation>
+        <translation>Aparença de l'escriptori / connectors</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
@@ -1576,12 +1576,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
         <source>Screensaver Settings</source>
-        <translation>Paràmetres de l&apos;estalvi de pantalla</translation>
+        <translation>Paràmetres de l'estalvi de pantalla</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Quant a l&apos;escriptori Lumina</translation>
+        <translation>Quant a l'escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
