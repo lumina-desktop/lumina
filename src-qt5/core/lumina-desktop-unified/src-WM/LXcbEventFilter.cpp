@@ -1,6 +1,6 @@
 //===========================================
-//  Lumina-DE source code
-//  Copyright (c) 2015, Ken Moore
+//  Lumina-desktop source code
+//  Copyright (c) 2015-2017, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -8,15 +8,11 @@
 
 //==================================================
 // NOTE: All the XCB interactions and atoms are accessed via: 
-//    LWM::SYSTEM->EWMH.(atom name)
-//    LWM::SYSTEM->(do something)
-// (LWM::SYSTEM is the global XCB structure)
+//    Lumina::SYSTEM->EWMH.(atom name)
+//    Lumina::SYSTEM->(do something)
+// (Lumina::SYSTEM is the global XCB structure)
 //==================================================
-
-#include <LuminaX11.h>
-#include <QDebug>
-
-//#include <xcb/screensaver.h>
+#include "global-objects.h"
 
 #define DEBUG 1
 // Also keep the root window/screen around for use in the filters
@@ -38,14 +34,14 @@ void EventFilter::start(){
   if(DEBUG){ qDebug() << " - Install event filter..."; }
   QCoreApplication::instance()->installNativeEventFilter(EF);
    if(DEBUG){ qDebug() << " - Run request check..."; }
-   if(!LWM::SYSTEM->setupEventsForRoot()){
+   if(!Lumina::SYSTEM->setupEventsForRoot()){
      qCritical() << "[ERROR] Unable to setup WM event retrieval. Is another WM running?";
      exit(1);
    }
   if(DEBUG){ qDebug() << " - Create WM ID Window"; }
-  WMFlag = LWM::SYSTEM->WM_CreateWindow();
-      LWM::SYSTEM->setupEventsForRoot(WMFlag);
-      LWM::SYSTEM->WM_Set_Supporting_WM(WMFlag);
+  WMFlag = Lumina::SYSTEM->WM_CreateWindow();
+      Lumina::SYSTEM->setupEventsForRoot(WMFlag);
+      Lumina::SYSTEM->WM_Set_Supporting_WM(WMFlag);
   QCoreApplication::instance()->flush();
 }
 	
