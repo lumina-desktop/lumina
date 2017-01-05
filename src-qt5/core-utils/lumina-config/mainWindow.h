@@ -25,7 +25,7 @@ public slots:
 
 private:
 	Ui::mainWindow *ui;
-	QShortcut *backShortcut;
+	QShortcut *backShortcut, *quitShortcut;
 	QString cpage; //current page
 
 
@@ -40,6 +40,6 @@ private slots:
 	void on_actionSave_triggered();
 	void on_actionBack_triggered();
         void changeMonitor(QAction*);
-
+	void on_quitShortcut_Triggered();
 };
 #endif
