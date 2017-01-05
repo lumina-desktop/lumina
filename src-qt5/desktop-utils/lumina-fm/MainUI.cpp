@@ -192,7 +192,7 @@ void MainUI::OpenDirs(QStringList dirs){
   //qDebug() << "OpenDirs:" << DWLIST.length() << dirs << invalid << tabBar->currentIndex();
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
   waitingToClose = false;
-  ui->menuGit->setVisible( GIT::isAvailable() );
+  ui->menuGit->setEnabled( GIT::isAvailable() );
 }
 
 void MainUI::setupIcons(){
