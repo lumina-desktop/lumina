@@ -1,7 +1,7 @@
 # Enable hardened build by default
 %global _hardened_build 1
 
-%define release_version 1.1.0-p1
+%define release_version 1.2.0
 %define rpm_version %(echo %{release_version} | tr - .)
 
 Summary:            A lightweight, portable desktop environment
@@ -36,9 +36,6 @@ Requires:           xscreensaver, xbacklight, xterm
 Requires:           qt5-style-oxygen, plasma-oxygen 
 Requires:           fluxbox
 
-# Enforce the library subpackage version requirement
-Requires:           %{name}-libs = %{version}-%{release}
-
 # Desktop requirements
 Requires:           lumina-open = %{version}-%{release}
 Requires:           lumina-config = %{version}-%{release}
@@ -50,34 +47,16 @@ Requires:           lumina-xconfig = %{version}-%{release}
 Requires:           lumina-fileinfo = %{version}-%{release}
 Requires:           lumina-textedit = %{version}-%{release}
 Requires:           lumina-calculator = %{version}-%{release}
+Requires:           lumina-archiver = %{version}-%{release}
 
 
 %description
 The Lumina Desktop Environment is a lightweight system interface
 that is designed for use on any Unix-like operating system.
 
-%package libs
-Summary:            Libraries for Lumina Desktop
-Group:              System Environment/Libraries
-
-%description libs
-This package provides the libraries for the Lumina Desktop
-Environment.
-
-%package devel
-Summary:            Development libraries for Lumina Desktop
-Group:              Development/Libraries
-Requires:           %{name}-libs = %{version}-%{release}
-
-%description devel
-This package provides the files needed to develop plugins
-or extensions for the Lumina Desktop Environment, or
-to develop applications that use Lumina Desktop libraries.
-
 %package -n lumina-open
 Summary:            xdg-open style utility for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-open
 This package provides lumina-open, which handles opening of
@@ -88,7 +67,6 @@ is assigned with the given url or file type.
 %package -n lumina-config
 Summary:            Configuration utility for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-config
 This package provides lumina-config, which allows changing
@@ -99,7 +77,6 @@ applications, desktop menu and more.
 %package -n lumina-fm
 Summary:            File manager for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-fm
 This package provides lumina-fm, which is a simple file manager
@@ -110,7 +87,6 @@ including an integrated slideshow-based picture viewer.
 %package -n lumina-screenshot
 Summary:            Screenshot utility for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-screenshot
 This package provides lumina-screenshot, which is a simple
@@ -124,7 +100,6 @@ screenshot of a single window.
 %package -n lumina-search
 Summary:            Search utility for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-search
 This package provides lumina-search, which is a simple
@@ -136,7 +111,6 @@ or open them.
 %package -n lumina-info
 Summary:            Basic information utility for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-info
 This package provides lumina-info, which is a simple
@@ -147,7 +121,6 @@ installation, like paths, contributors, license or version.
 %package -n lumina-xconfig
 Summary:            X server display configuration tool for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-xconfig
 This package provides lumina-xconfig, which is a simple
@@ -158,7 +131,6 @@ the X server.
 %package -n lumina-fileinfo
 Summary:            Desktop file editor for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-fileinfo
 This package provides lumina-fileinfo, which is an
@@ -167,7 +139,6 @@ advanced desktop file (menu) editor.
 %package -n lumina-textedit
 Summary:            Text editor for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-textedit
 This package provides lumina-textedit.
@@ -175,18 +146,22 @@ This package provides lumina-textedit.
 %package -n lumina-calculator
 Summary:            Calculator for Lumina Desktop
 Group:              User Interface/Desktops
-Requires:           %{name}-libs = %{version}-%{release}
 
 %description -n lumina-calculator
 This package provides lumina-calculator
 
+%package -n lumina-archiver
+Summary:            Archiver for Lumina Desktop
+Group:              User Interface/Desktops
+
+%description -n lumina-archiver
+This package provides lumina-archiver
 
 %prep
 %setup -q -n lumina-%{release_version}
 
-
 %build
-%qmake_qt5 CONFIG+="configure WITH_I18N" PREFIX="%{_prefix}" LIBPREFIX="%{_libdir}" QT5LIBDIR="%{_qt5_prefix}" L_LIBDIR=%{_libdir}
+%qmake_qt5 QMAKE_CFLAGS_ISYSTEM= CONFIG+="configure" CONFIG+="WITH_I18N" PREFIX="%{_prefix}" LIBPREFIX="%{_libdir}" QT5LIBDIR="%{_qt5_prefix}" L_LIBDIR=%{_libdir}
 make %{?_smp_mflags}
 
 %install
@@ -201,25 +176,6 @@ cp %{buildroot}%{_datadir}/lumina-desktop/luminaDesktop.conf %{buildroot}%{_sysc
 sed -i "s:/usr/local/share/applications/firefox.desktop:firefox:g" %{buildroot}%{_sysconfdir}/luminaDesktop.conf
 sed -i "s:/usr/local/share/applications/thunderbird.desktop:thunderbird:g" %{buildroot}%{_sysconfdir}/luminaDesktop.conf
 
-
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
-
-%files libs
-%license LICENSE
-%{_libdir}/libLuminaUtils.so.1
-%{_libdir}/libLuminaUtils.so.1.0
-%{_libdir}/libLuminaUtils.so.1.0.0
-
-%files devel
-%license LICENSE
-%{_libdir}/libLuminaUtils.so
-%{_includedir}/LuminaXDG.h
-%{_includedir}/LuminaUtils.h
-%{_includedir}/LuminaX11.h
-%{_includedir}/LuminaThemes.h
-%{_includedir}/LuminaOS.h
-%{_includedir}/LuminaSingleApplication.h
 
 %files
 %license LICENSE
@@ -325,8 +281,20 @@ sed -i "s:/usr/local/share/applications/thunderbird.desktop:thunderbird:g" %{bui
 %{_datadir}/lumina-desktop/i18n/l-calc_*.qm
 %{_datadir}/applications/lumina-calculator.desktop
 
+%files -n lumina-archiver
+%license LICENSE
+%{_bindir}/lumina-archiver
+%{_datadir}/lumina-desktop/i18n/l-archiver_*.qm
+%{_datadir}/applications/lumina-archiver.desktop
+
 %changelog
-* Tue Nov 22 2016 Craig Forbes <cforbes@gmail.com> - 1.1.0-p1
+* Wed Jan  4 2017 Craig Forbes <cforbes@trustwave.com> - 1.2.0-1
+- Updated to 1.2.0
+- Removed devel and libs sub-packages
+- Added lumina-archiver
+- Fix qmake flags to work with gcc 6 (Fedora 25)
+
+* Tue Nov 22 2016 Craig Forbes <cforbes@gmail.com> - 1.1.0.p1-1
 - Updated to 1.1.0-p1
 
 * Wed Dec 23 2015 Neal Gompa <ngompa13@gmail.com>
