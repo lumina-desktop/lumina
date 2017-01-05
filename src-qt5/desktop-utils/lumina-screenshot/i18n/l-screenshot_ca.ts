@@ -40,27 +40,27 @@
     <message>
         <location filename="../MainUI.ui" line="228"/>
         <source>Resize</source>
-        <translation>Canvia&apos;n la mida</translation>
+        <translation>Canvia'n la mida</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura de pantalla del Lumina</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Retard en segons</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Edita</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>No s'ha pogut desar la captura.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
