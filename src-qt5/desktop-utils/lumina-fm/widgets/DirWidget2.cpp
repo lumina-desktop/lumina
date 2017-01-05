@@ -477,8 +477,9 @@ void DirWidget::OpenContextMenu(){
 
 void DirWidget::UpdateContextMenu(){
   //First generate the context menu based on the selection
-  //qDebug() << "Update context menu";
   QStringList sel = currentBrowser()->currentSelection();
+  //qDebug() << "Update context menu";
+  //qDebug() << "  Selection:" << sel;
   contextMenu->clear();
 
   if(!sel.isEmpty()){  
@@ -488,15 +489,22 @@ void DirWidget::UpdateContextMenu(){
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
  //   cFModMenu->setEnabled(!sel.isEmpty() && canmodify);
-  contextMenu->addMenu(cFViewMenu);
-    contextMenu->setEnabled(!sel.isEmpty());
-    contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() );
-    contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() );
-    contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() );
-    contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") && canmodify);
-    contextMenu->addSeparator();
-    contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() );
-    contextMenu->addSeparator();
+
+    if(!sel.isEmpty()){
+      contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
+      contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
+      contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
+    }
+    if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
+      contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
+    }
+    if(!sel.isEmpty()){
+      contextMenu->addSeparator();
+      contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() )->setEnabled(canmodify);
+      contextMenu->addSeparator();
+    }
+    contextMenu->addMenu(cFViewMenu);
+    cFViewMenu->setEnabled(!sel.isEmpty());
 
   //Now add the general selection options
   contextMenu->addSection(LXDG::findIcon("folder","inode/directory"), tr("Directory Operations"));
