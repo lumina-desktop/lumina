@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko įrašyti ekrano kopijos</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko įrašyti ekrano kopiją. Prašome patikrinti katalogo leidimus arba pasirinkti kitą katalogą</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
