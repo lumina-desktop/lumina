@@ -27,7 +27,3 @@ override_dh_auto_clean:
 
 override_dh_install:
 	dh_install --list-missing
-	mv $(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop \
-		$(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop.real
-	install -m755 $(CURDIR)/debian/lumina-desktop.wrapper \
-		$(CURDIR)/debian/lumina-desktop/usr/bin/lumina-desktop

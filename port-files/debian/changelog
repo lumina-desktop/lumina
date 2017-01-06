@@ -1,3 +1,12 @@
+lumina-desktop (1.2.0+git2198-2nano) unstable; urgency=low
+
+  * remove qt5-configuration-tool wrappers, as it's now officially
+    supported (and user-chooseable from `lumina-config')
+  * update default Debian desktop-background path from luminaDesktop.conf
+  * run xdg-user-dirs-update from luminaDesktop.conf
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 06 Jan 2017 22:25:15 +0100
+
 lumina-desktop (1.2.0+git2198-1nano) unstable; urgency=low
 
   * New upstream release
