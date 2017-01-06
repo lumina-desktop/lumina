@@ -18,11 +18,11 @@
 #include "global-includes.h"
 
 //Load the appropriate "EventFilter" class for the graphics subsystem
-#ifndef USE_WAYLAND
-#include "src-WM/LXcbEventFilter.h"
-#endif
+//#ifndef USE_WAYLAND
+#include <LXcbEventFilter.h>
+//#endif
 
-#include "src-WM/LScreenSaver.h"
+#include "<LScreenSaver.h>"
 #include "src-WM/LWindowManager.h"
 
 //Any special defines for settings/testing
@@ -34,12 +34,11 @@ namespace Lumina{
 	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
 	
 	//Data structures and objects
-	extern LXCB *SYSTEM; //Native graphic system interface
-	EventFilter *EFILTER; //Native Event Watcher
+	extern EventFilter *EFILTER; //Native Event Watcher
 	//ScreenSaver
-	LScreenSaver *SS;
+	extern LScreenSaver *SS;
 	//Window Manager
-	LWindowManager *WM;
+	//LWindowManager *WM;
 	
 	QThread *EVThread; //X Event thread
 

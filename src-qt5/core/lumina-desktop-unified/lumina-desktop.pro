@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent 
 
 
 
-TARGET = lumina-desktop
+TARGET = lumina-desktop-unified
 target.path = $${L_BINDIR}
 
 #include all the special classes from the Lumina tree
@@ -16,106 +16,30 @@ include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 
-#LIBS     += -lLuminaUtils -lxcb -lxcb-damage
-#DEPENDPATH	+= ../libLumina
-
 TEMPLATE = app
 
 SOURCES += main.cpp \
-	WMProcess.cpp \
-	LXcbEventFilter.cpp \
 	LSession.cpp \
-	LDesktop.cpp \
-	LDesktopBackground.cpp \
-	LDesktopPluginSpace.cpp \
-	LPanel.cpp \
-	LWinInfo.cpp \
-	AppMenu.cpp \
-	SettingsMenu.cpp \
-	SystemWindow.cpp \
-	BootSplash.cpp \
-	desktop-plugins/LDPlugin.cpp
+	BootSplash.cpp
 
-
-HEADERS  += Globals.h \
-	WMProcess.h \
-	LXcbEventFilter.h \
+HEADERS  += global-includes.h \
+	global-objects.h \
 	LSession.h \
-	LDesktop.h \
-	LDesktopBackground.h \
-	LDesktopPluginSpace.h \
-	LPanel.h \
-	LWinInfo.h \
-	AppMenu.h \
-	SettingsMenu.h \
-	SystemWindow.h \
-	BootSplash.h \
-	panel-plugins/LPPlugin.h \
-	panel-plugins/NewPP.h \
-	panel-plugins/LTBWidget.h \
-	desktop-plugins/LDPlugin.h \
-	desktop-plugins/NewDP.h \
-	JsonMenu.h
+	BootSplash.h
 
-FORMS    += SystemWindow.ui \
-	BootSplash.ui 
+FORMS    +=	BootSplash.ui 
 
+
+include(src-screensaver/screensaver.pri)
 
 #Now include all the files for the various plugins
-include(panel-plugins/panel-plugins.pri)
-include(desktop-plugins/desktop-plugins.pri)
+#include(panel-plugins/panel-plugins.pri)
+#include(desktop-plugins/desktop-plugins.pri)
 
-RESOURCES+= Lumina-DE.qrc
 
 desktop.path = $${L_SESSDIR}
-desktop.files = Lumina-DE.desktop
+desktop.files = lumina-desktop.desktop
 
-icons.files = Lumina-DE.png \
-		Insight-FileManager.png
-icons.path = $${L_SHAREDIR}/pixmaps
-
-fluxconf.files = fluxboxconf/fluxbox-init-rc \
-			fluxboxconf/fluxbox-keys
-fluxconf.path = $${L_SHAREDIR}/lumina-desktop/
-
-wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
-			wallpapers/Lumina_Wispy_green.jpg \
-			wallpapers/Lumina_Wispy_purple.jpg \
-			wallpapers/Lumina_Wispy_red.jpg \
-			wallpapers/Lumina_Wispy_blue-grey.jpg \
-			wallpapers/Lumina_Wispy_blue-grey-zoom.jpg \
-			wallpapers/Lumina_Wispy_grey-blue.jpg \
-			wallpapers/Lumina_Wispy_grey-blue-zoom.jpg 
-wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
-
-
-defaults.files = defaults/luminaDesktop.conf \
-		defaults/compton.conf \
-		audiofiles/Logout.ogg \
-		audiofiles/Login.ogg \
-		audiofiles/low-battery.ogg
-defaults.path = $${L_SHAREDIR}/lumina-desktop/
-
-conf.path = $${L_ETCDIR}
-
-#Now do any OS-specific defaults (if available)
-#First see if there is a known OS override first
-!isEmpty(DEFAULT_SETTINGS){ 
-  message("Installing defaults settings for OS: $${DEFAULT_SETTINGS}")
-  OS=$${DEFAULT_SETTINGS}
-}
-exists("defaults/luminaDesktop-$${OS}.conf"){
-  message(" -- Found OS-specific system config file: $${OS}");
-  conf.extra = cp defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
-}else{
-  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
-}
-exists("defaults/desktop-background-$${OS}.jpg"){
-  message(" -- Found OS-specific background image: $${OS}");
-  defaults.extra = cp defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
-}else{
-  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
-}
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
@@ -183,7 +107,7 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target desktop icons wallpapers defaults conf fluxconf
+INSTALLS += target desktop
 
 WITH_I18N{
   INSTALLS += dotrans
