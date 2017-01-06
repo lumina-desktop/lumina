@@ -18,7 +18,8 @@ override_dh_auto_configure:
 		QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
 		QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed" \
 		CONFIG+=nostrip \
-		CONFIG+=WITH_I18N
+		CONFIG+=WITH_I18N \
+		QMAKE_CFLAGS_ISYSTEM= \
 
 override_dh_auto_clean:
 	dh_auto_clean
