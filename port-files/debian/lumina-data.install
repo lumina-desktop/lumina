@@ -12,4 +12,6 @@ usr/share/lumina-desktop/menu-scripts/ls.json.sh
 usr/share/lumina-desktop/luminaDesktop.conf
 usr/share/lumina-desktop/i18n/lumina-desktop*.qm
 usr/share/wallpapers/Lumina-DE/
-usr/share/xsessions/Lumina-DE.desktop 
+usr/share/xsessions/Lumina-DE.desktop
+usr/share/lumina-desktop/globs2
+usr/share/lumina-desktop/low-battery.ogg
