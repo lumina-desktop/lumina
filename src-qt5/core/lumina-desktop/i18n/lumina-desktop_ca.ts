@@ -266,82 +266,82 @@
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>No importa la lentitud amb què aneu, sempre que no us atureu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Feu el que pugueu, on sigueu, amb el que tingueu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Recordeu que ningú us pot fer sentir inferiors sense el vostre consentiment.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>No són els anys de la vostra vida que compten, és la vida als vostres anys.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>O bé feu alguna cosa que pagui la pena de llegir o bé feu alguna cosa que pagui la pena escriure.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>L'única manera de fer una bona feina és que us agradi el que feu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>La correcció política és tirania amb educació.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
         <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <translation>Només hi ha dues coses infinites: l'univers i l'estupidesa humana, i no estic segur de la primera.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trobo que com més durament treballo, més sort sembla que tinc.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
         <source>Do, or do not. There is no 'try'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fes-ho o no. No hi ha un "intent".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un matemàtic és un dispositiu per convertir cafè en teoremes.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>La gent bona no necessita lleis que els diguin d'actuar responsablement, mentre que la mala gent trobarà una manera d'evitar les lleis.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Els forats negres són el lloc on déu va dividir per zero.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>It's kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>És bastant divertit fer l'impossible.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>El coneixement parla, però la saviesa escolta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una dita enginyosa no prova res.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
