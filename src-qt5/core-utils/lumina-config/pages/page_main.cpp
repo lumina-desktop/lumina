@@ -123,6 +123,9 @@ void page_main::SaveSettings(){
 
 void page_main::clearlineEdit(){
   ui->lineEdit->clear();
+  ui->treeWidget->sortItems(0, Qt::AscendingOrder);
+  ui->treeWidget->resizeColumnToContents(0);
+  ui->treeWidget->resizeColumnToContents(1);
 }
 
 
