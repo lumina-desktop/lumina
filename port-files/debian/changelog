@@ -4,6 +4,7 @@ lumina-desktop (1.2.0+git2198-2nano) unstable; urgency=low
     supported (and user-chooseable from `lumina-config')
   * update default Debian desktop-background path from luminaDesktop.conf
   * run xdg-user-dirs-update from luminaDesktop.conf
+  * a few comments in rules, regarding libxcb-xinput0 package
 
  -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 06 Jan 2017 22:25:15 +0100
 
