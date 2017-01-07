@@ -59,52 +59,52 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">Rozmiar</translation>
+        <translation>Rozmiar</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Data modyfikacji</translation>
+        <translation>Data modyfikacji</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
-        <translation type="unfinished">Data utworzenia</translation>
+        <translation>Data utworzenia</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Pojemność: %1</translation>
+        <translation>Pojemność: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Pliki: %1 (%2)</translation>
+        <translation>Pliki: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Katalogi : %1</translation>
+        <translation>Katalogi : %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak zawartości katalogu</translation>
     </message>
 </context>
 <context>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="145"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwiększ rozmiar ikon</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="161"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmniejsz rozmiar ikon</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="179"/>
@@ -160,32 +160,32 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="218"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz działanie</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
         <source>SingleColumn</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumna pojedyncza</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="232"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Widok kolumny pojedynczej</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="240"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumna podwójna</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="243"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>Widok kolumny podwójnej</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="533"/>
@@ -213,7 +213,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="572"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>Nie udało się utworzyć dokumentu. Proszę upewnij się czy masz właściwe uprawnienia.</translation>
+        <translation>Nie udało się utworzyć dokumentu. Upewnij się czy masz właściwe uprawnienia.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="580"/>
@@ -230,17 +230,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operacje na plikach</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="502"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operacje na katalogach</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="514"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wczytywanie...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="563"/>
@@ -267,57 +267,57 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="229"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="231"/>
         <source>File</source>
-        <translation type="unfinished">Plik</translation>
+        <translation>Plik</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="232"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikację</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchom...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="239"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="240"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaz slajdów</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtwarzacz multimedialny</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="256"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Podgląd...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="258"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Właściwości</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="448"/>
@@ -331,8 +331,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Nie udało się, w systemie, odnaleźć narzędzia &quot;lumina-fileinfo&quot;. Proszę je najpierw zainstalować</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Nie udało się w systemie odnaleźć narzędzia "lumina-fileinfo". Proszę je najpierw zainstalować.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="485"/>
@@ -477,107 +477,107 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klonuj repozytorium Git</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Witamy!</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten kreator poprowadzi Cię przez proces pobierania repozytorium GIT z internetu.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia repozytorium GitHub</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizacja/Użytkownik</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa repozytorium</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Repozytorium prywatne</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj dostępu</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Klucz SSH</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Login serwera</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Użytkownik</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasło</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonimowy (tylko repozytoria publiczne)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcjonalne hasło SSH</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcje zaawansowane</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Custom Depth</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Pojedyncza gałąź</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>nazwa gałęzi</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation type="unfinished"></translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Aby rozpocząć pobieranie repozytorium, kliknij "Dalej"</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Stop Download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatrzymać pobieranie?</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Kill the current download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Usunąć obecne pobieranie?</translation>
     </message>
 </context>
 <context>
@@ -585,7 +585,7 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
-        <translation>Insight</translation>
+        <translation type="unfinished">Insight</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
@@ -625,12 +625,12 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Git</source>
-        <translation type="unfinished"></translation>
+        <translation>Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="171"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowa zakładka</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="174"/>
@@ -640,7 +640,7 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
-        <translation>Przeszukaj katalog</translation>
+        <translation>Przeszukaj katalog...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="283"/>
@@ -710,17 +710,17 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamknij zakładkę</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Stan repozytorium</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klonuj repozytorium</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="177"/>
@@ -845,12 +845,12 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="222"/>
         <source>CTRL+B</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+B</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="336"/>
@@ -890,7 +890,7 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="621"/>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Stan repozytorium Git</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="711"/>
@@ -920,7 +920,7 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="423"/>
@@ -1006,48 +1006,48 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formularz</translation>
+        <translation>Formularz</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Szacowanie...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Przenieś</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
         <source>File Operation Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Błędy operacji na plikach</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Ukończono</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
-        <translation type="unfinished"></translation>
+        <translation>Błędy</translation>
     </message>
 </context>
 <context>
@@ -1158,12 +1158,12 @@ Nowa lokalizacja: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Zakończono</translation>
+        <translation>Zakończono</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
+        <translation>Błędy. Kliknij, aby zobaczyć szczegóły</translation>
     </message>
 </context>
 </TS>
