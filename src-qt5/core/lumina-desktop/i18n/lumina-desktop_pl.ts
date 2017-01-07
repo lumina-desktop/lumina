@@ -146,87 +146,87 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchamianie pulpitu Lumina...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wersja %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten pulpit zasilany jest przez kawę , kawę, i jeszcze raz kawę.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bądź na bieżącą z wiadomościami!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Podręcznik użytkownika pulpitu jest dostępny online.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcesz zmienić interfejs? Wszystkie konfigurowalne elementy znajdują się w konfiguracji pulpitu!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina potrafi w łatwy sposób odtworzyć interfejsy innych środowisk graficznych.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten pulpit jest szczodrze sponsorowany przez iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Nigdy nie zostałem zraniony przez to, czego nie wypowiedziałem</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>Gotta have more cowbell!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wszystko ma swoje piękno, ale nie każdy jest w stanie to piękno dostrzec.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przed Bogiem wszyscy jesteśmy równie mądrzy, co równie głupi.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie możemy robić wszystkiego naraz, ale możemy robić coś na raz.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten po którego stronie stoi prawo, ten jest większością.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <translation>Nie oczekuje wzmacniania słabych osłabianiem silnych.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <source>You can't know too much, but you can say too much.</source>
+        <translation>Nie możesz wiedzieć za dużo, ale możesz powiedzieć za dużo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obowiązek to nie kolektyw, to sprawa osobista.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
