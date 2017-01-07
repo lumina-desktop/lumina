@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ścieżka aplikacji jest błędna: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -186,12 +186,12 @@
     <message>
         <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak pliku binarnego</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Nie można znaleźć &quot;%1&quot;. Upewnij się, że jest zainstalowany.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Nie można znaleźć "%1". Upewnij się, że jest zainstalowany.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>
