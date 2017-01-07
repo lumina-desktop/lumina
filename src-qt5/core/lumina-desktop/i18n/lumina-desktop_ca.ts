@@ -346,42 +346,42 @@
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>L'èxit normalment arriba als que estan massa enfeinats per buscar-lo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un silenci al moment oportú té més eloqüència que un discurs.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mai he deixat que els meus estudis interfereixin en la meva educació.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>La millor manera de predir el futur és inventar-lo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ben fet és millor que ben dit.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunes vegades no n'hi ha prou amb fer-ho el millor que podem, hem de fer el que cal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>La veritat és més important que els fets.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>És millor romandre en silenci i ser pres per ximple que parlar i eliminar-ne tots els dubtes.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloqueja la sessió</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -982,57 +982,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulari</translation>
+        <translation>Formulari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Neteja la llista de reproducció</translation>
+        <translation>Neteja la llista de reproducció</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Ordena aleatòriament la llista de reproducció</translation>
+        <translation>Llista de reproducció aleatòria</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Afegeix fitxers</translation>
+        <translation>Afegeix fitxers</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Afegeix un directori</translation>
+        <translation>Afegeix un directori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Afegeix URL</translation>
+        <translation>Afegeix un URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Fitxers multimèdia</translation>
+        <translation>Fitxers multimèdia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Seleccioneu fitxers multimèdia</translation>
+        <translation>Seleccioneu fitxers multimèdia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Selecció del directori multimèdia</translation>
+        <translation>Seleccioneu un directori multimèdia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Introduïu un URL vàlid per a un fitxer multimèdia o reproducció en línia:</translation>
+        <translation>Escriviu un URL vàlid per a un fitxer multimèdia o reproducció en línia:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">URL multimèdia</translation>
+        <translation>URL multimèdia</translation>
     </message>
 </context>
 <context>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Fons de pantalla</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tots els paràmetres de l'escriptori</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
