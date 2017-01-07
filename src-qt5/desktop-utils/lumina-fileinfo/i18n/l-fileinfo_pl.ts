@@ -170,12 +170,12 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz plik aplikacji</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejestracje aplikacji (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
