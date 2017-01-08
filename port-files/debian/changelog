@@ -1,3 +1,9 @@
+lumina-desktop (1.2.0+git2198-3nano) unstable; urgency=low
+
+  * remove remaining artifacts for libluminautils1
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 08 Jan 2017 17:13:28 +0100
+
 lumina-desktop (1.2.0+git2198-2nano) unstable; urgency=low
 
   * remove qt5-configuration-tool wrappers, as it's now officially
