@@ -53,14 +53,37 @@ Optional Tools
   pc-sysconfig	(sysutils/pcbsd-utils-qt5 - Note that the pc-sysconfig service must also be running)
   pc-mixer		(sysutils/pcbsd-utils-qt5)
   
-  
+ =======================
+==== Distro Specific Required Tools =====
+ =======================
+ 
 === Debian ===
-Required Tools
   xinput
   libxi-dev  
 
+=== Fedora ===
+  libXi
+  libXi-devel
+
+=== Gentoo === 
+x11-apps/xinput
+x11-libs/libxcb
+
+=== ArchLinux === 
+xf86-input-libinput
+libxcb
+
+=== Slackware === 
+xinput
+libxcb-xinput-devel
+
+=== OpenSUSE === 
+libxcb
+libxcb-devel
   
-  
+Note: Distros like Fedora and Debian package xinput.h in $PREFIX/include/X11/extensions/ instead of $PREFIX/include/xcb/
+You will need to manually create a symlink or update the sources as necessary.
+Archlinux, Slackware, Gentoo, and OpenSUSE package xinput.h in $PREFIX/include/xcb/
   
 ====OLD INFO ABOUT LINUX DEPENDENCIES====
  This information needs to be checked for accuracy and added above as necessary
