@@ -126,12 +126,12 @@
     <message>
         <location filename="../MainUI.cpp" line="99"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljas</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="99"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Sees</translation>
     </message>
 </context>
 <context>

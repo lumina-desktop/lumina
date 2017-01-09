@@ -312,7 +312,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translatorcomment>&quot;Home Button&quot;の説明文</translatorcomment>
+        <translatorcomment>"Home Button"の説明文</translatorcomment>
         <translation>すべての開いているウィンドウを隠してデスクトップを表示します。</translation>
     </message>
     <message>
@@ -343,7 +343,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>ユーザーのファイル・ディレクトリーやお気に入りに特化した別の種類のスタートメニューです。</translation>
     </message>
     <message>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translatorcomment>もう一つの&quot;Application Launcher&quot;の説明</translatorcomment>
+        <translatorcomment>もう一つの"Application Launcher"の説明</translatorcomment>
         <translation>アプリケーションを起動するデスクトップボタン</translation>
     </message>
     <message>
@@ -536,12 +536,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>セッション画面をロック</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のデスクトップ画面をロックします</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -717,17 +717,17 @@
     <message>
         <location filename="../pages/getPage.h" line="29"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>自動起動</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -767,22 +767,22 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>パネル</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>メニュー</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>入力デバイスの設定</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
@@ -1086,7 +1086,7 @@
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
-        <translatorcomment>&quot;Window effects&quot; 乃設定画面のタイトル</translatorcomment>
+        <translatorcomment>"Window effects" 乃設定画面のタイトル</translatorcomment>
         <translation>画面効果の設定</translation>
     </message>
 </context>
@@ -1264,12 +1264,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt キー
-&quot;Mod4&quot;: 	Windows/Mac キー
-&quot;Control&quot;:	Ctrl キー</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt キー
+"Mod4": 	Windows/Mac キー
+"Control":	Ctrl キー</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>

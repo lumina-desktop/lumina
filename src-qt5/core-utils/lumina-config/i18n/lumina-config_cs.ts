@@ -340,7 +340,7 @@ Přepsat je?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Náhradní spouštěcí nabídka se zaměřením na uživatelovy soubory, adresáře a záložky (oblíbené).</translation>
     </message>
     <message>
@@ -531,12 +531,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzamknout sezení</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzamknout nynější sezení plochy</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -1253,12 +1253,12 @@ Přepsat jej?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	klávesa Windows/Mac
-&quot;Control&quot;:	klávesa Ctrl</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	klávesa Windows/Mac
+"Control":	klávesa Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
