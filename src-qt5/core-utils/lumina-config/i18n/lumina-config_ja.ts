@@ -787,7 +787,7 @@
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードとマウスの調整を行います</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
