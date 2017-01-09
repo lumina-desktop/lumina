@@ -47,22 +47,22 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina スクリーンショット</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> 秒後</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>キャプチャー</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -103,17 +103,17 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>スクリーンショットを保存できません</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>このスクリーンショットを保存できません。ディレクトリーのパーミッションを確認するか、他のディレクトリーを選択してください。</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
         <source>Save Screenshot</source>
-        <translatorcomment>&quot;Save&quot;ボタンのツールチップ</translatorcomment>
+        <translatorcomment>"Save"ボタンのツールチップ</translatorcomment>
         <translation>スクリーンショットの保存</translation>
     </message>
     <message>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="397"/>
         <source>Quick Save</source>
-        <translatorcomment>「快速保存」(zh)も捨てがたいが、&quot;Save As&quot;との対比なら「保存」であるべきだろう。</translatorcomment>
+        <translatorcomment>「快速保存」(zh)も捨てがたいが、"Save As"との対比なら「保存」であるべきだろう。</translatorcomment>
         <translation>保存</translation>
     </message>
     <message>
