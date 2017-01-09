@@ -45,7 +45,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation>検索</translation>
+        <translation>検索...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="23"/>
