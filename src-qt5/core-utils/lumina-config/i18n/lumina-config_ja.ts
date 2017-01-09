@@ -832,7 +832,7 @@
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカライズ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -1081,7 +1081,7 @@
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>GPU アクセラレーションが有効なときだけ使用する </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
@@ -1447,12 +1447,12 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>プロファイル</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>インポート</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="52"/>
