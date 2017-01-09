@@ -1,4 +1,3 @@
 usr/bin/lumina-desktop
 usr/bin/start-lumina-desktop
 debian/luminaDesktop.conf   /etc
-debian/lumina-qt5ct         /etc/default
