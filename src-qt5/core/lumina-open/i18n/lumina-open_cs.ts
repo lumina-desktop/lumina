@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[výchozí] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -195,8 +195,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="365"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Nepodařilo se najít &quot;%1&quot;. Nejprve, prosím, zajistěte, aby byl nainstalován.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Nepodařilo se najít "%1". Nejprve, prosím, zajistěte, aby byl nainstalován.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="415"/>
