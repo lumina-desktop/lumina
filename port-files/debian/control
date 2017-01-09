@@ -11,13 +11,13 @@ Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
                libxcb-composite0-dev, qtdeclarative5-dev, libqt5svg5-dev,
                libxcb-xinput0-dev
 Standards-Version: 3.9.6
-Homepage: https://github.com/pcbsd/lumina
+Homepage: https://github.com/trueos/lumina
 
 Package: lumina-desktop
 Architecture: any
 Replaces: lumina-core (<< 0.8.3.372)
 Depends: ${misc:Depends}, ${shlibs:Depends},
-         libluminautils1, lumina-config, lumina-fm, oxygen-icon-theme,
+         lumina-config, lumina-fm, oxygen-icon-theme,
          lumina-open, lumina-screenshot, lumina-search, lumina-info,
          lumina-xconfig, lumina-fileinfo, lxpolkit, lumina-data,
          lumina-textedit, lumina-archiver, lumina-calculator,
@@ -117,7 +117,7 @@ Description: Calculator for the lumina desktop environment
 
 Package: lumina-data
 Architecture: all
-Depends: ${misc:Depends}, libluminautils1
+Depends: ${misc:Depends}
 Replaces: lumina-core (<< 0.8.3.372)
 Description: Data files for the lumina Desktop environment
  This package provides
