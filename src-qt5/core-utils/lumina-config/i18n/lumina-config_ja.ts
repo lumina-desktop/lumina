@@ -536,7 +536,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation>セッション画面をロック</translation>
+        <translation>画面セッションをロック</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
