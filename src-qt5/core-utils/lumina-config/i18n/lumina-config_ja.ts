@@ -1485,7 +1485,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップのデフォルト設定</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="65"/>
@@ -1508,12 +1508,12 @@
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>入力デバイスの設定</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="81"/>
         <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>マウス #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="85"/>
