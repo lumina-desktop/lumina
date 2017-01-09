@@ -1,3 +1,42 @@
+lumina-desktop (1.2.0+git2198-3nano) unstable; urgency=low
+
+  * remove remaining artifacts for libluminautils1
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Sun, 08 Jan 2017 17:13:28 +0100
+
+lumina-desktop (1.2.0+git2198-2nano) unstable; urgency=low
+
+  * remove qt5-configuration-tool wrappers, as it's now officially
+    supported (and user-chooseable from `lumina-config')
+  * update default Debian desktop-background path from luminaDesktop.conf
+  * run xdg-user-dirs-update from luminaDesktop.conf
+  * a few comments in rules, regarding libxcb-xinput0 package
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 06 Jan 2017 22:25:15 +0100
+
+lumina-desktop (1.2.0+git2198-1nano) unstable; urgency=low
+
+  * New upstream release
+  * remove libluminautils1 package (now internal library)
+  * remove libluminautils1-dev package (now internal library)
+  * add lumina-archiver package
+  * add lumina-calculator package
+  * fix compilation with GCC 6
+  * add build-dependancy on libxcb-xinput0-dev
+    - this package is not part of Debian GNU/Linux
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Fri, 06 Jan 2017 19:32:39 +0100
+
+lumina-desktop (1.0.1~git1815-1nano) unstable; urgency=low
+
+  * New git snapshot
+  * install globs2 into lumina-data package
+  * update lumina-textedit.install
+  * update lumina-fileinfo.install
+  * update lumina-screenshot.install
+
+ -- Christopher Roy Bratusek <nano@jpberlin.de>  Tue, 27 Sep 2016 18:31:22 +0200
+
 lumina-desktop (1.0.1~git1638-1nano) unstable; urgency=low
 
   * New git snapshot

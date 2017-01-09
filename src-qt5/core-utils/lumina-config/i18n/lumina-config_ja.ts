@@ -312,7 +312,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translatorcomment>&quot;Home Button&quot;の説明文</translatorcomment>
+        <translatorcomment>"Home Button"の説明文</translatorcomment>
         <translation>すべての開いているウィンドウを隠してデスクトップを表示します。</translation>
     </message>
     <message>
@@ -343,7 +343,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>ユーザーのファイル・ディレクトリーやお気に入りに特化した別の種類のスタートメニューです。</translation>
     </message>
     <message>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translatorcomment>もう一つの&quot;Application Launcher&quot;の説明</translatorcomment>
+        <translatorcomment>もう一つの"Application Launcher"の説明</translatorcomment>
         <translation>アプリケーションを起動するデスクトップボタン</translation>
     </message>
     <message>
@@ -536,12 +536,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>画面セッションをロック</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のデスクトップ画面をロックします</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -717,17 +717,17 @@
     <message>
         <location filename="../pages/getPage.h" line="29"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>自動起動</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -767,27 +767,27 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>パネル</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>メニュー</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>入力デバイスの設定</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードとマウスの調整を行います</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -832,7 +832,7 @@
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカライズ</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -1081,12 +1081,12 @@
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>GPU アクセラレーションが有効なときだけ使用する </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
-        <translatorcomment>&quot;Window effects&quot; 乃設定画面のタイトル</translatorcomment>
+        <translatorcomment>"Window effects" 乃設定画面のタイトル</translatorcomment>
         <translation>画面効果の設定</translation>
     </message>
 </context>
@@ -1264,12 +1264,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt キー
-&quot;Mod4&quot;: 	Windows/Mac キー
-&quot;Control&quot;:	Ctrl キー</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt キー
+"Mod4": 	Windows/Mac キー
+"Control":	Ctrl キー</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1447,12 +1447,12 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>プロファイル</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>インポート</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="52"/>
@@ -1485,7 +1485,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップのデフォルト設定</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="65"/>
@@ -1508,27 +1508,27 @@
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>入力デバイスの設定</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="81"/>
         <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>マウス #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="85"/>
         <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="106"/>
         <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>拡張デバイス #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="107"/>
         <source>Master Device</source>
-        <translation type="unfinished"></translation>
+        <translation>マスターデバイス</translation>
     </message>
 </context>
 <context>
@@ -1624,7 +1624,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションのクラッシュデータを表示する</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1844,7 +1844,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップテーマ</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1900,12 +1900,12 @@
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションのテーマ</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
         <source>Qt5 Theme Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt5 テーマエンジン</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
@@ -1931,12 +1931,12 @@
     <message>
         <location filename="../pages/page_theme.cpp" line="137"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>無し</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="138"/>
         <source>Manual Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>マニュアル指定</translation>
     </message>
 </context>
 <context>

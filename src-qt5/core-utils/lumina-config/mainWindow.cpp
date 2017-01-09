@@ -143,8 +143,8 @@ void mainWindow::on_actionSave_triggered(){
 }
 
 void mainWindow::on_actionBack_triggered(){
-  if(cpage.isEmpty()){ }// page_main::clearlineEdit(); } //since ESC doesnt close any other Lumina Appliction by default, I've commented this out for the time being.
-  else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
+  if(cpage.isEmpty()){ static_cast<page_main*>( this->centralWidget() )->clearlineEdit(); }
+   else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
 }
 
 void mainWindow::on_quitShortcut_Triggered(){

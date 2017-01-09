@@ -79,64 +79,73 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
 
 void LSession::start(){
   //First check for a valid installation
-  if( !LUtils::isValidBinary("fluxbox") || !LUtils::isValidBinary("lumina-desktop") ){
+  if(!LUtils::isValidBinary("lumina-desktop") ){
     exit(1);
   }
+  QSettings sessionsettings("lumina-desktop","sessionsettings");
+  QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
   //Window Manager First
-  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
-  if( !LUtils::isValidBinary("fluxbox") ){
-    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue"; 
-  }else{
-    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
-    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
-    if(!QFile::exists(confDir+"/fluxbox-init")){
-      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-init-rc");
-       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
-       LUtils::writeFile(confDir+"/fluxbox-init", keys, true);
-      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    }    
-    if(!QFile::exists(confDir+"/fluxbox-keys")){
-      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
-       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
-       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
-      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    }    
-    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
-    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
-      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
-    }
-    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
-    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
-  }
-  //Compositing manager
-  QSettings settings("lumina-desktop","sessionsettings");
-  if(settings.value("enableCompositing",true).toBool()){
-    if(LUtils::isValidBinary("compton")){
-      QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
-      if(!QFile::exists(set)){
-        if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
-	  QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
-        }
-      }
-      if(!QFile::exists(set)){
-        qDebug() << "Using default compton settings";
-        startProcess("compositing","compton");
-      }else{
-        //Auto-detect if GLX is available on the system and turn it on/off as needed
-       bool startcompton = true;
-       if(LUtils::isValidBinary("glxinfo")){
-         bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
-         qDebug() << "Detected GPU Acceleration:" << hasAccel;
-         QStringList info = LUtils::readFile(set);
-         for(int i=0; i<info.length(); i++){ 
-           if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
-         }
-         LUtils::writeFile(set, info, true);
-         if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
-       }
-        if(startcompton){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
-      }
-    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
+  if(WM=="fluxbox"){
+	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
+	  if( !LUtils::isValidBinary("fluxbox") ){
+	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue"; 
+	  }else{
+	    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
+	    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
+	    if(!QFile::exists(confDir+"/fluxbox-init")){
+	      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-init-rc");
+	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
+	       LUtils::writeFile(confDir+"/fluxbox-init", keys, true);
+	      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+	    }    
+	    if(!QFile::exists(confDir+"/fluxbox-keys")){
+	      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
+	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
+	       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
+	      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+	    }    
+	    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
+	    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
+	      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
+	    }
+	    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
+	    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
+	  }
+	  //Compositing manager
+	  QSettings settings("lumina-desktop","sessionsettings");
+	  if(settings.value("enableCompositing",true).toBool()){
+	    if(LUtils::isValidBinary("compton")){
+	      QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
+	      if(!QFile::exists(set)){
+		if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
+		  QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
+		}
+	      }
+	      if(!QFile::exists(set)){
+		qDebug() << "Using default compton settings";
+		startProcess("compositing","compton");
+	      }else{
+		//Auto-detect if GLX is available on the system and turn it on/off as needed
+	       bool startcompton = true;
+	       if(LUtils::isValidBinary("glxinfo")){
+		 bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
+		 qDebug() << "Detected GPU Acceleration:" << hasAccel;
+		 QStringList info = LUtils::readFile(set);
+		 for(int i=0; i<info.length(); i++){ 
+		   if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
+		 }
+		 LUtils::writeFile(set, info, true);
+		 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
+	       }
+		if(startcompton){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
+	      }
+	    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
+	  }
+  } else {
+	if(!LUtils::isValidBinary(WM)){
+	  exit(1);
+	}	
+	startProcess("wm", WM);
   }
   //Desktop Next
   startProcess("runtime","lumina-desktop");

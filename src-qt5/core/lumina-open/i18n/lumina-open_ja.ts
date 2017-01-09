@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="274"/>
         <source>Find Application Binary</source>
-        <translatorcomment>&quot;Find&quot;とあるが、ファイル指定ダイアログのタイトル</translatorcomment>
+        <translatorcomment>"Find"とあるが、ファイル指定ダイアログのタイトル</translatorcomment>
         <translation>アプリケーションのバイナリーを指定</translation>
     </message>
 </context>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションエントリーが不正です: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -191,8 +191,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>&quot;%1&quot; が見つかりませんでした。まずそれがインストールされている事を確認してください。</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>"%1" が見つかりませんでした。まずそれがインストールされている事を確認してください。</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>

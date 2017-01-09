@@ -24,7 +24,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の最上部に表示</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>選択したモニターへ移動</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>

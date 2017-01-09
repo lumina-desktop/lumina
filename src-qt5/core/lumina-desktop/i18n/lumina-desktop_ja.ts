@@ -149,52 +149,52 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina デスクトップを起動しています...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>このデスクトップはコーヒーとコーヒーともう一杯のコーヒーで動いています。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップのニュースをチェックしよう!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップの情報はオンラインのハンドブックにあります。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>インターフェイスを変更したいですか? デスクトップ設定でいろいろ変更できます!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina は他のデスクトップ環境の設定を簡単に再現できます。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>このデスクトップは寛大なる iXsystems に支援されています</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>私が何も言わなければ誰かを傷つけることはない</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>Gotta have more cowbell!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
@@ -204,7 +204,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>神の前では我々は等しく賢く――等しく愚かでもある。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
@@ -218,12 +218,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -303,7 +303,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -333,7 +333,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -646,12 +646,12 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>アイテムを起動</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translatorcomment>&quot;transform-move&quot; アイコンを使用する操作</translatorcomment>
+        <translatorcomment>"transform-move" アイコンを使用する操作</translatorcomment>
         <translation>アイテムの移動を開始</translation>
     </message>
     <message>
@@ -743,7 +743,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>画面セッションをロック</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -997,52 +997,52 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">プレイリストを消去する</translation>
+        <translation>プレイリストを消去する</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">プレイリストをシャッフルする</translation>
+        <translation>プレイリストをシャッフルする</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">ファイルを追加</translation>
+        <translation>ファイルを追加</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">ディレクトリーを追加</translation>
+        <translation>ディレクトリーを追加</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">URL を追加</translation>
+        <translation>URL を追加</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">マルチメディアファイル</translation>
+        <translation>マルチメディアファイル</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">マルチメディアファイルを選択</translation>
+        <translation>マルチメディアファイルを選択</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">マルチメディアディレクトリーを選択</translation>
+        <translation>マルチメディアディレクトリーを選択</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">有効なマルチメディアファイルまたはストリームの URL を入力:</translation>
+        <translation>有効なマルチメディアファイルまたはストリームの URL を入力:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">マルチメディア URL</translation>
+        <translation>マルチメディア URL</translation>
     </message>
 </context>
 <context>
@@ -1278,7 +1278,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1288,7 +1288,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>すべてのデスクトップ設定</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
@@ -1563,13 +1563,13 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translatorcomment>なぜ&quot;back&quot;?</translatorcomment>
+        <translatorcomment>なぜ"back"?</translatorcomment>
         <translation>ホームディレクトリーに移動する</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
         <source>Open Directory</source>
-        <translatorcomment>&quot;Browse&quot;ボタンのツールチップ</translatorcomment>
+        <translatorcomment>"Browse"ボタンのツールチップ</translatorcomment>
         <translation>ディレクトリーを開く</translation>
     </message>
     <message>

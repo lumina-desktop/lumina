@@ -17,6 +17,11 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Initialize the global objects to null pointers
   mediaObj = 0; //private object used for playing login/logout chimes
   Lumina::SYSTEM = 0;
+  Lumina::EFILTER = 0;
+  Lumina::SS = 0;
+  Lumina::WM = 0;
+  Lumina::EVThread = 0;
+
  if(this->isPrimaryProcess()){
   //Setup the global registrations
   this->setApplicationName("Lumina Desktop Environment");
@@ -30,11 +35,16 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //this->setAttribute(Qt::AA_UseDesktopOpenGL);
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
-  //Now initialize the global objects which need instant usage/access
+  //Now initialize the global objects (but do not start them yet)
   Lumina::SYSTEM = new LXCB(); //need access to XCB data/functions right away
+  Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter 
+  Lumina::SS = new LScreenSaver();
+  Lumina::WM = new LWindowManager();
+  //Now put the Event Filter into it's own thread to keep things snappy
+  Lumina::EVThread = new QThread();
+    Lumina::EFILTER->moveToThread(Lumina::EVThread);
 
-  //Setup the event filter for Qt5
-  //this->installNativeEventFilter( new XCBEventFilter(this) );
+
  } //end check for primary process 
 }
 

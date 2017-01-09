@@ -33,7 +33,7 @@
     <message>
         <location filename="../MainUI.ui" line="111"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation>Uwaga: Jeśli uprawnienia pliku zostały ostatnio zmienione, to czasz utworzenia pliku oraz czas jego ostatniej modyfikacji mogą się różnić. </translation>
+        <translation>Uwaga: Jeśli uprawnienia pliku zostały ostatnio zmienione, wtedy czas utworzenia pliku oraz czas jego ostatniej modyfikacji mogą się różnić.</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -170,12 +170,12 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz plik aplikacji</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejestracje aplikacji (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
