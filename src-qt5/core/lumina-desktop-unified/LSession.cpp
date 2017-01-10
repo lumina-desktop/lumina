@@ -8,7 +8,6 @@
 #include "global-objects.h"
 
 #include "BootSplash.h"
-
 #ifndef DEBUG
 #define DEBUG 0
 #endif
@@ -18,6 +17,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   mediaObj = 0; //private object used for playing login/logout chimes
   Lumina::EFILTER = 0;
   Lumina::SS = 0;
+  Lumina::SETTINGS = 0;
   //Lumina::WM = 0;
   Lumina::EVThread = 0;
 
@@ -36,20 +36,26 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
 
   //Now initialize the global objects (but do not start them yet)
   Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter 
+  Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
   //Lumina::WM = new LWindowManager();
   //Now put the Event Filter into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
     Lumina::EFILTER->moveToThread(Lumina::EVThread);
-
+  Lumina::EVThread->start();
 
  } //end check for primary process 
 }
 
 LSession::~LSession(){
    //Clean up the global objects as needed
-
-
+  if(Lumina::EFILTER!=0){ Lumina::EFILTER->deleteLater(); }
+  if(Lumina::SS!=0){ Lumina::SS->deleteLater(); }
+  if(Lumina::EVThread!=0){
+    if(Lumina::EVThread->isRunning()){ Lumina::EVThread->quit(); }
+    Lumina::EVThread->deleteLater();
+  }
+  if(Lumina::SETTINGS!=0){ Lumina::SETTINGS->deleteLater(); }
 }
 
 void LSession::setupSession(){
@@ -66,6 +72,7 @@ void LSession::setupSession(){
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
+  Lumina::SETTINGS->start();
   /*sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
   DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
   //Load the proper translation files
@@ -154,30 +161,12 @@ void LSession::CleanupSession(){
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
   LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
-  bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
+  bool playaudio = Lumina::SETTINGS->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Stop the background system tray (detaching/closing apps as necessary)
   //stopSystemTray(!cleansession);
   //Now perform any other cleanup
-  if(cleansession){
-    //Close any open windows
-    //qDebug() << " - Closing any open windows";
-    /*QList<WId> WL = XCB->WindowList(true);
-    for(int i=0; i<WL.length(); i++){
-      qDebug() << " - Closing window:" << XCB->WindowClass(WL[i]) << WL[i];
-      XCB->CloseWindow(WL[i]);
-      LSession::processEvents();
-    }
-    //Now wait a moment for things to close down before quitting
-    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
-    //Kill any remaining windows
-    WL = XCB->WindowList(true); //all workspaces
-    for(int i=0; i<WL.length(); i++){
-      qDebug() << " - Window did not close, killing application:" << XCB->WindowClass(WL[i]) << WL[i];
-      XCB->KillClient(WL[i]);
-      LSession::processEvents();
-    }*/
-  }
+  Lumina::EFILTER->stop();
   //evFilter->StopEventHandling();
   //Now wait a moment for things to close down before quitting
   if(playaudio){

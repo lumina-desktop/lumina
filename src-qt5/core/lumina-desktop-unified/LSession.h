@@ -25,6 +25,8 @@ private:
 	QMediaObject *mediaObj;
 	void playAudioFile(QString filepath);
 
+	QTranslator *currTranslator;
+
 public slots:
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);

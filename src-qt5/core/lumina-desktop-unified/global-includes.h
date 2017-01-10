@@ -56,6 +56,9 @@
 #include <LuminaSingleApplication.h>
 #include <DesktopSettings.h>
 
+// Standard C includes
+#include <unistd.h>
+
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)
 namespace Lumina{
 	//Flags/enumerations

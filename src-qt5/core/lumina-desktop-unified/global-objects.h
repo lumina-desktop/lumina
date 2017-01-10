@@ -32,6 +32,7 @@
 namespace Lumina{	
 	//Data structures and objects
 	extern EventFilter *EFILTER; //Native Event Watcher
+	extern DesktopSettings *SETTINGS; //All Settings files
 	//ScreenSaver
 	extern LScreenSaver *SS;
 	//Window Manager
