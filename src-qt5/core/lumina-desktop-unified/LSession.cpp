@@ -16,10 +16,9 @@
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
   //Initialize the global objects to null pointers
   mediaObj = 0; //private object used for playing login/logout chimes
-  Lumina::SYSTEM = 0;
   Lumina::EFILTER = 0;
   Lumina::SS = 0;
-  Lumina::WM = 0;
+  //Lumina::WM = 0;
   Lumina::EVThread = 0;
 
  if(this->isPrimaryProcess()){
@@ -36,10 +35,9 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
   //Now initialize the global objects (but do not start them yet)
-  Lumina::SYSTEM = new LXCB(); //need access to XCB data/functions right away
   Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter 
   Lumina::SS = new LScreenSaver();
-  Lumina::WM = new LWindowManager();
+  //Lumina::WM = new LWindowManager();
   //Now put the Event Filter into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
     Lumina::EFILTER->moveToThread(Lumina::EVThread);
@@ -50,7 +48,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
 
 LSession::~LSession(){
    //Clean up the global objects as needed
-   if(Lumina::SYSTEM!=0){ Lumina::SYSTEM->deleteLater(); }
+
 
 }
 

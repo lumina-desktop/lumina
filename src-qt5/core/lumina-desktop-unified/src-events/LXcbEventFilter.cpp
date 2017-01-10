@@ -6,6 +6,9 @@
 //===========================================
 #include "LXcbEventFilter.h"
 
+#include <xcb/xcb_aux.h>
+#include <xcb/damage.h>
+
 //==================================================
 // NOTE: All the XCB interactions and atoms are accessed via: 
 //    obj->XCB->EWMH.(atom name)
@@ -49,17 +52,17 @@ void EventFilter::start(){
       XCB->setupEventsForRoot(WMFlag);
       XCB->WM_Set_Supporting_WM(WMFlag);
 
-  EF->startSystemTray();
+  static_cast<XCBEventFilter*>(EF)->startSystemTray();
 
   QCoreApplication::instance()->flush();
 }
 
 void EventFilter::stop(){
-  EF->stopSystemTray();
+  static_cast<XCBEventFilter*>(EF)->stopSystemTray();
 }
 
 QList<WId> EventFilter::currentTrayApps(){
-  return EF->trayApps();
+  return static_cast<XCBEventFilter*>(EF)->trayApps();
 }
 
 //=============================
@@ -93,19 +96,18 @@ void XCBEventFilter::InitAtoms(){
 				<< obj->XCB->EWMH._NET_ACTIVE_WINDOW \
 				<< obj->XCB->EWMH._NET_WM_ICON \
 				<< obj->XCB->EWMH._NET_WM_ICON_GEOMETRY;
-}
 
-bool XCBEventFilter::startSystemTray(){
-
-}
-
-bool XCBEventFilter::stopSystemTray(){
-
+  //_NET_SYSTEM_TRAY_OPCODE
+  xcb_intern_atom_cookie_t cookie = xcb_intern_atom(QX11Info::connection(), 0, 23,"_NET_SYSTEM_TRAY_OPCODE");
+    xcb_intern_atom_reply_t *r = xcb_intern_atom_reply(QX11Info::connection(), cookie, NULL);
+    if(r){ 
+      _NET_SYSTEM_TRAY_OPCODE = r->atom; 
+      free(r);
+    }
 }
 
 //This function format taken directly from the Qt5.3 documentation
-bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE
-{
+bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *){
 	//if(stopping){ return false; } //don't do any parsing
 	//qDebug() << "New Event";
 	bool stopevent = false;
@@ -175,7 +177,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
 		qDebug() << "Window Map Request Event";
-	        obj->emit ModifyWindow( ((xcb_map_request_event_t *) ev)->window, LWM::Show);
+	        obj->emit ModifyWindow( ((xcb_map_request_event_t *) ev)->window, Lumina::Show);
 		break;
 //==============================	    
 	    case XCB_CREATE_NOTIFY:
@@ -184,7 +186,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================
 	    case XCB_UNMAP_NOTIFY:
 		qDebug() << "Window Unmap Event";
-		obj->emit ModifyWindow( ((xcb_unmap_notify_event_t *)ev)->window, LWM::Hide);
+		obj->emit ModifyWindow( ((xcb_unmap_notify_event_t *)ev)->window, Lumina::Hide);
 		break;
 //==============================	    
 	    case XCB_DESTROY_NOTIFY:
@@ -263,7 +265,7 @@ QList<WId> XCBEventFilter::trayApps(){
 }
 
 bool XCBEventFilter::startSystemTray(){
-  if(SystemTrayID != 0){ return; } //already started
+  if(SystemTrayID != 0){ return true; } //already started
   RunningTrayApps.clear(); //nothing running yet
   SystemTrayID = obj->XCB->startSystemTray(0);
   if(SystemTrayID!=0){
@@ -276,7 +278,7 @@ bool XCBEventFilter::startSystemTray(){
 }
 
 bool XCBEventFilter::stopSystemTray(){
-  if(SystemTrayID==0){ return; } //already stopped
+  if(SystemTrayID==0){ return true; } //already stopped
   qDebug() << "Stopping system tray...";
   //Close all the running Tray Apps
   QList<WId> tmpApps = RunningTrayApps;
@@ -291,17 +293,18 @@ bool XCBEventFilter::stopSystemTray(){
  obj->XCB->closeSystemTray(SystemTrayID);
   SystemTrayID = 0;
   TrayDmgID = 0; 
+  return true;
 }
 
 //=========
 //  PRIVATE
 //=========
-bool XCBEventFilter::BlockInputEvent(WId win){
+bool XCBEventFilter::BlockInputEvent(WId){
   //Checks the current state of the WM and sets the stop flag as needed
   // - Always let the screensaver know about the event first (need to reset timers and such)
   obj->emit NewInputEvent();
   // - Check the state of the screensaver
-  if(SS->isLocked()){ qDebug() << "SS Locked"; return true; }
+  if(Lumina::SS->isLocked()){ qDebug() << "SS Locked"; return true; }
   // - Check the state of any fullscreen apps
   /*else if( win!=0 && !obj->FS_WINS.isEmpty()){
     if(!obj->FS_WINS.contains(win) ){
@@ -316,7 +319,7 @@ bool XCBEventFilter::BlockInputEvent(WId win){
 void XCBEventFilter::addTrayApp(WId win){
   if(SystemTrayID==0){ return; }
   if(RunningTrayApps.contains(win)){ return; } //already managed
-  qDebug() << "Session Tray: Window Added" << obj->XCB->windowClass(win);
+  qDebug() << "Session Tray: Window Added" << obj->XCB->WindowClass(win);
   RunningTrayApps << win;
   if(DEBUG){ qDebug() << "Tray List Changed"; }
   obj->emit Tray_AppAdded(win);
@@ -337,7 +340,7 @@ bool XCBEventFilter::rmTrayApp(WId win){
 }
 
 void XCBEventFilter::checkDamageID(WId id){
-  if(runningTrayApps.contains(id)){
+  if(RunningTrayApps.contains(id)){
     obj->emit Tray_AppUpdated(id);
   }else{
     //Could check for window damage ID's - but we should not need this

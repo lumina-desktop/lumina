@@ -9,7 +9,7 @@
 #ifndef _LUMINA_DESKTOP_SCREEN_SAVER_BASE_WIDGET_H
 #define _LUMINA_DESKTOP_SCREEN_SAVER_BASE_WIDGET_H
 
-#include "GlobalDefines.h"
+#include "global-includes.h"
 #include "animations/BaseAnimGroup.h"
 
 class SSBaseWidget : public QWidget{

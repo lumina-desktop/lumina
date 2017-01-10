@@ -15,6 +15,11 @@ include(../libLumina/LuminaXDG.pri)
 include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
+include(../libLumina/DesktopSettings.pri)
+
+#include  all the main individual source groups
+include(src-screensaver/screensaver.pri)
+include(src-events/events.pri)
 
 TEMPLATE = app
 
@@ -30,7 +35,6 @@ HEADERS  += global-includes.h \
 FORMS    +=	BootSplash.ui 
 
 
-include(src-screensaver/screensaver.pri)
 
 #Now include all the files for the various plugins
 #include(panel-plugins/panel-plugins.pri)

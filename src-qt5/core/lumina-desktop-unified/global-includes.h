@@ -43,6 +43,8 @@
 #include <QDesktopWidget>
 #include <QStyleOption>
 #include <QThread>
+#include <QMediaObject>
+#include <QMediaPlayer>
 
 // libLumina includes
 #include <LuminaX11.h>
@@ -52,12 +54,12 @@
 #include <LUtils.h>
 #include <LDesktopUtils.h>
 #include <LuminaSingleApplication.h>
+#include <DesktopSettings.h>
 
-//XCB Includes
-/*#include <xcb/xcb.h>
-#include <xcb/xproto.h>
-#include <xcb/damage.h>
-#include <xcb/xcb_atom.h>
-#include <xcb/xcb_aux.h> //included in libxcb-util.so*/
+//Setup any global defines (no classes or global objects: use "global-objects.h" for that)
+namespace Lumina{
+	//Flags/enumerations
+	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
+};
 
 #endif

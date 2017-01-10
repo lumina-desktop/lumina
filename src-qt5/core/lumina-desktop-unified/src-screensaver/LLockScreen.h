@@ -7,7 +7,7 @@
 #ifndef _LUMINA_DESKTOP_LOCK_SCREEN_WIDGET_H
 #define _LUMINA_DESKTOP_LOCK_SCREEN_WIDGET_H
 
-#include "GlobalDefines.h"
+#include "global-includes.h"
 
 namespace Ui{
 	class LLockScreen;

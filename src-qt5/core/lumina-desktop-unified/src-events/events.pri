@@ -1,6 +1,6 @@
-SOURCES *= $${PWD}/LXCBEventFilter.cpp
+SOURCES *= $${PWD}/LXcbEventFilter.cpp
 
-HEADERS *= $${PWD}/LXCBEventFilter.h
+HEADERS *= $${PWD}/LXcbEventFilter.h
 
-#update the includepath so we can just (#include <LXCBEventFilter.h>) as needed without paths
+#update the includepath so we can just (#include <LXcbEventFilter.h>) as needed without paths
 INCLUDEPATH *= ${PWD}

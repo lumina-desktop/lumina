@@ -7,7 +7,7 @@
 #ifndef _LUMINA_DESKTOP_SCREEN_SAVER_H
 #define _LUMINA_DESKTOP_SCREEN_SAVER_H
 
-#include "GlobalDefines.h"
+#include "global-includes.h"
 
 #include "SSBaseWidget.h"
 #include "LLockScreen.h"

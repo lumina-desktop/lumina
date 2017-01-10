@@ -9,7 +9,7 @@
 #ifndef _LUMINA_DESKTOP_XCB_FILTER_H
 #define _LUMINA_DESKTOP_XCB_FILTER_H
 
-#include "GlobalDefines.h"
+#include "global-includes.h"
 
 
 /*
@@ -67,7 +67,7 @@ signals:
 	void NewInputEvent();
 	void NewManagedWindow(WId);
 	void WindowClosed(WId);
-	void ModifyWindow(WId win, LWM::WindowAction);
+	void ModifyWindow(WId win, Lumina::WindowAction);
 
 	//System Tray Signals
 	void Tray_AppAdded(WId); //new tray app registered
@@ -90,6 +90,7 @@ public:
 private:
 	EventFilter *obj;
 	QList<xcb_atom_t> WinNotifyAtoms, SysNotifyAtoms;
+	xcb_atom_t _NET_SYSTEM_TRAY_OPCODE;
 	void InitAtoms();	
 
 	bool BlockInputEvent(WId win = 0); //Checks the current state of the system to see if the event should be stopped

@@ -9,7 +9,7 @@
 #ifndef _LUMINA_DESKTOP_SCREEN_SAVER_SAMPLE_ANIMATION_H
 #define _LUMINA_DESKTOP_SCREEN_SAVER_SAMPLE_ANIMATION_H
 
-#include "GlobalDefines.h"
+#include "global-includes.h"
 #include "BaseAnimGroup.h"
 
 class SampleAnimation : public BaseAnimGroup{

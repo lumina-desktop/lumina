@@ -19,20 +19,17 @@
 
 //Load the appropriate "EventFilter" class for the graphics subsystem
 //#ifndef USE_WAYLAND
-#include <LXcbEventFilter.h>
+#include "src-events/LXcbEventFilter.h"
 //#endif
 
-#include "<LScreenSaver.h>"
-#include "src-WM/LWindowManager.h"
+#include "src-screensaver/LScreenSaver.h"
+//#include "src-WM/LWindowManager.h"
 
 //Any special defines for settings/testing
 #define ANIMTIME 80 //animation time in milliseconds
 
 //Global flags/structures
-namespace Lumina{
-	//Flags/enumerations
-	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
-	
+namespace Lumina{	
 	//Data structures and objects
 	extern EventFilter *EFILTER; //Native Event Watcher
 	//ScreenSaver
@@ -41,7 +38,6 @@ namespace Lumina{
 	//LWindowManager *WM;
 	
 	QThread *EVThread; //X Event thread
-
 };
 
 

@@ -33,6 +33,9 @@ public:
 	  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished()) );
 	}
 	~ExternalProcess(){
+	  if(this->state() == QProcess::Running){
+	    this->detach(); //about to close down the QProcess - detach the other program so it can continue functioning normally.
+	  }
 	}
 
 	static void launch(QString program, QStringList args = QStringList()){
