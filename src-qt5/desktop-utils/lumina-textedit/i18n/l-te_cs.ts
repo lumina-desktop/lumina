@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt volby pro najít/nahradit</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="289"/>
         <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ztratit neuložené změny?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento soubor má neuložené změny.
+Přesto jej chcete zavřít?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="386"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jsou tu neuložené změny.
+Přesto chcete editor zavřít?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,7 +281,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Řádek číslo: %1, sloupec číslo: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
