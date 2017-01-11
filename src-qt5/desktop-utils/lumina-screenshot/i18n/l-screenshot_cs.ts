@@ -45,22 +45,22 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Snímek obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Zpoždění v sekundách</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Zachytit</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se uložit snímek obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se uložit snímek obrazovky. Prověřte, prosím, oprávnění k adresáři nebo zvolte jiný adresář</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
