@@ -376,7 +376,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Zobrazit a ovládat všechna běžící okna s programy (všechna jednotlivá okna mají tlačítko).</translation>
+        <translation>Zobrazit a ovládat všechna běžící okna s programy (všechna jednotlivá okna mají tlačítko)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -596,7 +596,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="354"/>
         <source>Dominant color for the theme.</source>
-        <translation>Převládající barva pro motiv.</translation>
+        <translation>Převládající barva pro vzhled.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="359"/>
@@ -606,7 +606,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="360"/>
         <source>Dominant color for the theme (more subdued).</source>
-        <translation>Převládající barva pro motiv (tlumenější).</translation>
+        <translation>Převládající barva pro vzhled (tlumenější).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="365"/>
@@ -616,7 +616,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
-        <translation>Náhradní barva pro motiv.</translation>
+        <translation>Náhradní barva pro vzhled.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="371"/>
@@ -626,7 +626,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
-        <translation>Náhradní barva pro motiv (tlumenější).</translation>
+        <translation>Náhradní barva pro vzhled (tlumenější).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="377"/>
@@ -681,7 +681,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme Settings</source>
-        <translation>Nastavení motivu</translation>
+        <translation>Nastavení vzhledu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
@@ -716,7 +716,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation>Motiv</translation>
+        <translation>Vzhled</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
@@ -898,12 +898,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../ThemeDialog.ui" line="14"/>
         <source>Theme Editor</source>
-        <translation>Editor motivů</translation>
+        <translation>Editor vzhledů</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="28"/>
         <source>Theme Name:</source>
-        <translation>Název motivu:</translation>
+        <translation>Název vzhledu:</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="51"/>
@@ -929,14 +929,14 @@ Přepsat je?</translation>
         <location filename="../ThemeDialog.cpp" line="65"/>
         <location filename="../ThemeDialog.cpp" line="82"/>
         <source>Theme Exists</source>
-        <translation>Motiv existuje</translation>
+        <translation>Vzhled existuje</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.cpp" line="65"/>
         <location filename="../ThemeDialog.cpp" line="82"/>
         <source>This theme already exists.
  Overwrite it?</source>
-        <translation>Tento motiv již existuje.
+        <translation>Tento vzhled již existuje.
 Přepsat jej?</translation>
     </message>
 </context>
@@ -1331,12 +1331,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="118"/>
         <source>Window Theme</source>
-        <translation>Motiv okna</translation>
+        <translation>Vzhled okna</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="136"/>
         <source>Window Theme Preview</source>
-        <translation>Náhled na motiv okna</translation>
+        <translation>Náhled na vzhled okna</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
@@ -1853,7 +1853,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
-        <translation>Šablony motivů:</translation>
+        <translation>Šablony vzhledů:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="86"/>
@@ -1899,7 +1899,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
         <source>Theme Settings</source>
-        <translation>Nastavení motivu</translation>
+        <translation>Nastavení vzhledu</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="73"/>
