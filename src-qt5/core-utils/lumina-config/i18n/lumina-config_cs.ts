@@ -711,17 +711,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.h" line="29"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozadí</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Motiv</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické spuštění</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -761,27 +761,27 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Plocha</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Panely</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Nabídka</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení vstupního zařízení</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Přizpůsobit zařízení klávesnice a myši</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -826,7 +826,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -1073,7 +1073,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>Použít pouze kompozici pomocí zrychlení přes grafický procesor </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
@@ -1436,12 +1436,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavedení</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="52"/>
@@ -1474,7 +1474,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí nastavení plochy</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="65"/>
@@ -1492,32 +1492,32 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_mouse.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení vstupního zařízení</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="81"/>
         <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Myš #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="85"/>
         <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesnice #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="106"/>
         <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozšiřující zařízení #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="107"/>
         <source>Master Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlavní zařízení</translation>
     </message>
 </context>
 <context>
@@ -1613,7 +1613,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat údaje o pádu programu</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1833,7 +1833,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzhled plochy</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1858,7 +1858,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="86"/>
         <source>Create/Edit a theme template (Advanced)</source>
-        <translation>Vytvořit/Upravit šablonu motivu (pokročilé)</translation>
+        <translation>Vytvořit/Upravit šablonu vzhledu (pokročilé)</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="92"/>
@@ -1889,12 +1889,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzhledy programů</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
         <source>Qt5 Theme Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Stroj vzhledu Qt5</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
@@ -1920,12 +1920,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.cpp" line="137"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="138"/>
         <source>Manual Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruční nastavení</translation>
     </message>
 </context>
 <context>
