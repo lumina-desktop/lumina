@@ -351,37 +351,37 @@
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dobře načasované ticho je výmluvnější než mluvení.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nikdy jsem nenechal vzdělávání plést se do mého vzdělání.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nejlepší cestou, jak předpovědět budoucnost, je ji vymyslet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pořádně uděláno je lepší než dobře řečeno.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Někdy není dost, že něco uděláme, jak nejlépe umíme. Musíme dělat, co se od nás žádá.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pravda je důležitější než skutečnost.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lépe zůstat potichu a být považován za hlupáka, než vyjádřit názor a odstranit veškerou pochybnost.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -391,12 +391,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="143"/>
         <source>Loading System Settings …</source>
-        <translation>Načítá se nastavení systému…</translation>
+        <translation>Nahrává se nastavení systému…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Načítá se uživatelské nastavení…</translation>
+        <translation>Nahrává se uživatelské nastavení…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -642,7 +642,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit položku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzamknout sezení</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -982,57 +982,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Vymazat seznam skladeb</translation>
+        <translation>Vyprázdnit seznam skladeb</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Promíchat seznam skladeb</translation>
+        <translation>Zamíchat seznam skladeb</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Přidat soubory</translation>
+        <translation>Přidat soubory</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Přidat složku</translation>
+        <translation>Přidat adresář</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Přidat adresu URL</translation>
+        <translation>Přidat adresu (URL)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Multimediální soubory</translation>
+        <translation>Multimediální soubory</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Zvolte soubory s médii</translation>
+        <translation>Vybere multimediální soubory</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Zvolte adresář s médii</translation>
+        <translation>Vyberte adresář s multimediálními soubory</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Vložte platnou adresu URL pro soubor s médii nebo stream:</translation>
+        <translation>Zadejte platnou adresu (URL) pro multimediální soubor nebo proud:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">URL adresa média</translation>
+        <translation>Adresa (URL) multimédia</translation>
     </message>
 </context>
 <context>
@@ -1045,12 +1045,12 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation>Vymazat seznam skladeb</translation>
+        <translation>Vyprázdnit seznam skladeb</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation>Promíchat seznam skladeb</translation>
+        <translation>Zamíchat seznam skladeb</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="72"/>
@@ -1060,12 +1060,12 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation>Přidat složku</translation>
+        <translation>Přidat adresář</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation>Přidat adresu URL</translation>
+        <translation>Přidat adresu (URL)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="102"/>
@@ -1075,22 +1075,22 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation>Zvolte soubory s médii</translation>
+        <translation>Vyberte multimediální soubory</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation>Zvolte adresář s médii</translation>
+        <translation>Zvolte adresář s multimédii</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Vložte platnou adresu URL pro soubor s médii nebo stream:</translation>
+        <translation>Zadejte platnou adresu (URL) pro multimediální soubor nebo proud:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation>URL adresa média</translation>
+        <translation>Adresa (URL) multimédia</translation>
     </message>
 </context>
 <context>
@@ -1108,7 +1108,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation>Otevřít webovou stránku</translation>
+        <translation>Otevřít internetovou stránku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozadí</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechna nastavení plochy</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
