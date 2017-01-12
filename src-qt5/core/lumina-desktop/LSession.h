@@ -186,6 +186,7 @@ signals:
 	void SessionConfigChanged();
 	void FavoritesChanged();
 	void DesktopFilesChanged();
+	void MediaFilesChanged();
 	void WorkspaceChanged();
 	
 };

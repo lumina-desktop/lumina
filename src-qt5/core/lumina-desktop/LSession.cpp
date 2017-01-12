@@ -159,6 +159,8 @@ void LSession::setupSession(){
     //Try to watch the localized desktop folder too
     if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
     watcherChange( QDir::homePath()+"/Desktop" );
+    //And watch the /media directory
+   if(QFile::exists("/media")){  watcherChange("/media"); }
 
   //connect internal signals/slots
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
@@ -339,6 +341,8 @@ void LSession::watcherChange(QString changed){
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
+  }else if(changed.toLower() == "/media"){
+    emit MediaFilesChanged();
   }else if(changed.endsWith("favorites.list")){ emit FavoritesChanged(); }
   //Now ensure this file was not removed from the watcher
   if(!watcher->files().contains(changed) && !watcher->directories().contains(changed)){

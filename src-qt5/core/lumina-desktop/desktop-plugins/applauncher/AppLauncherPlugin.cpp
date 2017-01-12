@@ -58,7 +58,11 @@ void AppLauncherPlugin::loadButton(){
     QFileInfo info(path);
     button->setWhatsThis(info.absoluteFilePath());
     if(info.isDir()){
-	button->setIcon( LXDG::findIcon("folder","") );
+	if(path.startsWith("/media/")){ 
+          //Could add device ID parsing here to determine what "type" of device it is - will be OS-specific though
+	  button->setIcon( LXDG::findIcon("drive-removable-media","") );
+	}
+        else{ button->setIcon( LXDG::findIcon("folder","") ); }
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
       QPixmap pix;
       if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  

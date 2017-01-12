@@ -221,6 +221,7 @@ void LDesktop::InitDesktop(){
 
     connect(QApplication::instance(), SIGNAL(DesktopConfigChanged()), this, SLOT(SettingsChanged()) );
     connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(UpdateDesktop()) );
+    connect(QApplication::instance(), SIGNAL(MediaFilesChanged()), this, SLOT(UpdateDesktop()) );
     connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(LocaleChanged()) );
     connect(QApplication::instance(), SIGNAL(WorkspaceChanged()), this, SLOT(UpdateBackground()) );
   //if(DEBUG){ qDebug() << "Create bgWindow"; }
@@ -373,6 +374,13 @@ void LDesktop::UpdateDesktop(){
 	filelist << files[i].absoluteFilePath();
     }
   }
+  //Also show anything available in the /media directory
+  QDir media("/media");
+    QStringList mediadirs = media.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    for(int i=0; i<mediadirs.length(); i++){ 
+      filelist << media.absoluteFilePath(mediadirs[i]);
+    }
+    qDebug() << "Found media Dirs:" << mediadirs;
   UpdateDesktopPluginArea();
   bgDesktop->LoadItems(plugins, filelist);
 }
