@@ -161,7 +161,8 @@ void LSession::setupSession(){
     watcherChange( QDir::homePath()+"/Desktop" );
     //And watch the /media directory
    if(QFile::exists("/media")){  watcherChange("/media"); }
-
+   if(!QFile::exists("/tmp/.autofs_change")){ system("touch /tmp/.autofs_change"); }
+   watcherChange("/tmp/.autofs_change");
   //connect internal signals/slots
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
@@ -341,7 +342,7 @@ void LSession::watcherChange(QString changed){
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged(); 
-  }else if(changed.toLower() == "/media"){
+  }else if(changed.toLower() == "/media" || changed == "/tmp/.autofs_change" ){
     emit MediaFilesChanged();
   }else if(changed.endsWith("favorites.list")){ emit FavoritesChanged(); }
   //Now ensure this file was not removed from the watcher
