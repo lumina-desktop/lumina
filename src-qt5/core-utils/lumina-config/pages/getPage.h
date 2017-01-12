@@ -46,17 +46,7 @@ static QList<PAGEINFO> KnownPages(){
  // list << PageInfo("mouse-settings", QObject::tr("TrueOS Mouse Settings"), QObject::tr("TrueOS Mouse Settings"), "preferences-desktop-mouse",QObject::tr("Adjust mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse");
  // list << PageInfo("bluetooth-settings", QObject::tr("TrueOS Bluetooth Settings"), QObject::tr("TrueOS Bluetooth Settings"), "preferences-desktop-bluetooth",QObject::tr("Setup Bluetooth devices"), "user", QStringList(), QStringList() << "user"<<"bluetooth"<<"audio");
 
-  //Now sort the items according to the translated name
-  QStringList names;
-  for(int i=0; i<list.length(); i++){ names << list[i].name; }
-  names.sort(Qt::CaseInsensitive);
-  QList<PAGEINFO> sorted;
-  for(int i=0; i<names.length(); i++){
-    for(int j=0; j<list.length(); j++){
-      if(list[j].name==names[i]){ sorted << list.takeAt(j); break; }
-    }
-  }
-  return sorted;
+  return list;
 }
 
 //Add any sub-pages here

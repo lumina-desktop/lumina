@@ -24,7 +24,7 @@ public:
 
 public slots:
 	void SaveSettings();
-	void LoadSettings(int screennum);
+	void LoadSettings(int screennum = -1);
 	void updateIcons();
 
 private:

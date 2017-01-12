@@ -8,6 +8,8 @@
 #include "ui_page_main.h"
 #include "getPage.h"
 
+extern XDGDesktopList* APPSLIST;
+
 //==========
 //    PUBLIC
 //==========
@@ -20,6 +22,7 @@ page_main::page_main(QWidget *parent) : PageWidget(parent), ui(new Ui::page_main
   connect(ui->treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)) );
 
   connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)) );
+  connect(APPSLIST, SIGNAL(appsUpdated()), this, SLOT(LoadSettings()) );
 }
 
 page_main::~page_main(){
@@ -64,6 +67,10 @@ void page_main::UpdateItems(QString search){
     user->setIcon(0, LXDG::findIcon("preferences-desktop-user",""));
     user->setText(0, tr("User Settings"));
     user->setFirstColumnSpanned(true);
+    QTreeWidgetItem *system = new QTreeWidgetItem();
+    system->setIcon(0, LXDG::findIcon("preferences-system",""));
+    system->setText(0, tr("System Settings"));
+    system->setFirstColumnSpanned(true);
   //Now go through and add in the known pages for each category
   QStringList SL = search.split(" "); //search list
   for(int i=0; i<INFO.length(); i++){
@@ -88,6 +95,8 @@ void page_main::UpdateItems(QString search){
       if( session->child( session->childCount()-1)->text(1).isEmpty() ){ lastIt = session->child(session->childCount()-1); }
     }else if(INFO[i].category=="user"  && user->childCount()>0 ){ 
       if( user->child( user->childCount()-1)->text(1).isEmpty() ){ lastIt = user->child(user->childCount()-1); }
+    }else if(INFO[i].category=="system"  && system->childCount()>0 ){ 
+      if( system->child( system->childCount()-1)->text(1).isEmpty() ){ lastIt = system->child(system->childCount()-1); }
     }
     if(lastIt==0){ lastIt = new QTreeWidgetItem();  col = 0;}
     else{ col = 1; }
@@ -101,6 +110,7 @@ void page_main::UpdateItems(QString search){
       else if(INFO[i].category=="appearance"){ appearance->addChild(lastIt); }
       else if(INFO[i].category=="session"){ session->addChild(lastIt); }
       else if(INFO[i].category=="user"){ user->addChild(lastIt); }
+      else if(INFO[i].category=="system"){ system->addChild(lastIt); }
       else{ ui->treeWidget->addTopLevelItem(lastIt); }
     }
   }
@@ -109,6 +119,7 @@ void page_main::UpdateItems(QString search){
   if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
   if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
   if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); }
+  if(system->childCount()>0){ ui->treeWidget->addTopLevelItem(system); system->setExpanded(true); }
   ui->treeWidget->sortItems(0, Qt::AscendingOrder);
   ui->treeWidget->resizeColumnToContents(0);
   ui->treeWidget->resizeColumnToContents(1);
@@ -134,7 +145,25 @@ void page_main::LoadSettings(int){
   emit ChangePageTitle( tr("Desktop Settings") );
   INFO.clear();
   INFO = KnownPages();
-  UpdateItems("");
+  //Also add known system setting applications to the INFO list
+  QList<XDGDesktop*> apps = APPSLIST->apps(false,false); //only valid, non-hidden files
+  qDebug() << "Found Apps:" << apps.length();
+  for(int i=0; i<apps.length(); i++){
+    if( !apps[i]->catList.contains("Settings") || apps[i]->filePath.endsWith("lumina-config.desktop") ){ continue; }
+    INFO << PageInfo(apps[i]->filePath, apps[i]->name, apps[i]->genericName, apps[i]->icon, apps[i]->comment, "system", QStringList(), apps[i]->keyList);
+  }
+  //Now sort the items according to the translated name
+  QStringList names;
+  for(int i=0; i<INFO.length(); i++){ names << INFO[i].name; }
+  names.sort(Qt::CaseInsensitive);
+  QList<PAGEINFO> sorted;
+  for(int i=0; i<names.length(); i++){
+    for(int j=0; j<INFO.length(); j++){
+      if(INFO[j].name==names[i]){ sorted << INFO.takeAt(j); break; }
+    }
+  }
+  INFO = sorted; //replace the internal list with the sorted version
+  UpdateItems(ui->lineEdit->text());
   ui->lineEdit->setFocus();
 }
 
@@ -155,7 +184,9 @@ void page_main::itemTriggered(QTreeWidgetItem *it, int col){
     it->setExpanded( !it->isExpanded() ); 
     it->setSelected(false);
   }else if(!it->whatsThis(col).isEmpty()){
-    emit ChangePage(it->whatsThis(col));
+    QString id = it->whatsThis(col);
+    if(id.endsWith(".desktop")){ QProcess::startDetached("lumina-open \""+id+"\""); } //external setting utility
+    else{ emit ChangePage(it->whatsThis(col)); } //internal page
   }else{
    it->setSelected(false);
   }
