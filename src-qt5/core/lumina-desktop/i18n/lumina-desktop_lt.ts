@@ -166,7 +166,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Internete yra prieinamas visas vadovėlis informacijos apie darbalaukį.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina gali lengvai atkartoti daugelio kitų darbalaukių aplinkų sąsają.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
@@ -231,7 +231,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bet kuri visuomenė, kuri paaukos truputį laisvės tam, kad įgautų truputį saugumo, nepelnys nei vieno ir praras abu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
@@ -251,7 +251,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prašykite, ir jums bus duota; ieškokite, ir rasite; belskite, ir jums bus atidaryta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
@@ -261,7 +261,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>Asmuo, kuris niekada neklydo, niekada nebandė kažką naujo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisiminkite, niekas negali jūsų priversti jaustis menkesniais, be jūsų pačių sutikimo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
@@ -286,7 +286,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arba parašykite ką nors apie ką verta skaityti, arba padarykite ką nors apie ką verta rašyti.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Politinis korektiškumas - tai tironija su manieromis.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
         <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tik du dalykai yra beribiai: visata ir žmogaus kvailumas; tačiau dėl visatos aš nesu tikras.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
