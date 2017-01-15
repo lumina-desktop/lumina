@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Приложение вывело ошибку: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -190,8 +190,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Не найден &quot;%1&quot;. Пожалуйста, убедитесь, что он установлен в первую очередь.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Не найден "%1". Пожалуйста, убедитесь, что он установлен в первую очередь.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>
