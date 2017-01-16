@@ -469,17 +469,17 @@
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar o menu de aplicações do sistema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separador</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha horizontal estática.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="285"/>
