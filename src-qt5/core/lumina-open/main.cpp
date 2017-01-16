@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012, Ken Moore
+//  Copyright (c) 2012-2017, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -234,7 +234,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   if(inFile.startsWith("file://")){ inFile.remove(0,7); }
   //First make sure this is not a binary name first
   QString bin = inFile.section(" ",0,0).simplified();
-  if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") && !QFileInfo(inFile).isDir() ){isFile=true; extension="binary"; }
+  if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") && !QFileInfo(inFile).isDir() ){isFile=true; }
   //Now check what type of file this is
   else if(QFile::exists(inFile)){ isFile=true; }
   else if(QFile::exists(QDir::currentPath()+"/"+inFile)){isFile=true; inFile = QDir::currentPath()+"/"+inFile;} //account for relative paths
@@ -248,7 +248,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     extension=info.suffix();
     //qDebug() << " - Extension:" << extension;
     if(info.isDir()){ extension="inode/directory"; }
-    else if(info.isExecutable() && extension.isEmpty()){ extension="binary"; }
+    else if(info.isExecutable() && (extension.isEmpty() || extension=="sh") ){ extension="binary"; }
     else if(extension!="desktop"){ extension="mimetype"; } //flag to check for mimetype default based on file
   }
   else if(isUrl && inFile.startsWith("mailto:")){ extension = "application/email"; }
