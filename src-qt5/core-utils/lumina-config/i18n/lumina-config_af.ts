@@ -401,70 +401,70 @@
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visão de ícones da área de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloco de Notas</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantenha notas de texto simples em seu desktop</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="171"/>
         <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitor de áudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="172"/>
         <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir através de listas de arquivos de áudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitor do sistema</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantenha o controle de estatísticas do sistema, como CPU/Uso de memória e temperaturas da CPU.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitor RSS</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitore canais RSS (Requer conexão com a Internet)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="257"/>
         <source>Start the default system terminal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicie o terminal padrão do sistema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegue pelo sistema com o gerenciador de arquivos padrão.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
         <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicações</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
