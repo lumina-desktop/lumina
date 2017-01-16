@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="60"/>
         <source>Copy Selection</source>
-        <translation>Kijelöltek Másolása</translation>
+        <translation>Kijelölés másolása</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Paste</source>
-        <translation>Beilleszt</translation>
+        <translation>Beillesztés</translation>
     </message>
 </context>
 <context>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation>Képernyő teteje</translation>
+        <translation>Képernyő tetejére</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation>Terminál Bezárása</translation>
+        <translation>Terminál bezárása</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation>%1. ik Montior</translation>
+        <translation>%1. monitor</translation>
     </message>
 </context>
 </TS>
