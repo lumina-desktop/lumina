@@ -41,7 +41,7 @@ bool Browser::showingHiddenFiles(){
 //   PRIVATE
 void Browser::loadItem(QString info){
   //qDebug() << "LoadItem:" << info;
-  ////FileItem item;
+  //FileItem item;
      //itemame = info;
   QByteArray bytes;
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
@@ -61,8 +61,7 @@ void Browser::loadItem(QString info){
   }
   if(item.icon.isNull()){ item.icon = LXDG::findIcon(item.info.mimetype(), "unknown"); }*/
   //qDebug() << " - done with item:" << info;
-  emit threadDone(info, bytes);
-  //return item;
+  this->emit threadDone(info, bytes);
 }
 
 // PRIVATE SLOTS
@@ -117,15 +116,21 @@ void Browser::loadDirectory(QString dir){
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
     emit itemsLoading(files.length());
-    QCoreApplication::processEvents();
+    //QCoreApplication::processEvents();
+    //QCoreApplication::sendPostedEvents();
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));
       //qDebug() << "Future Starting:" << files[i];
       QString path = directory.absoluteFilePath(files[i]);
       if(old.contains(path)){ old.removeAll(path); }
       oldFiles << path; //add to list for next time
-      QtConcurrent::run(this, &Browser::loadItem, path );
-      QCoreApplication::sendPostedEvents();
+      if(imageFormats.contains(path.section(".",-1).toLower()) || path.endsWith(".desktop")){
+        QtConcurrent::run(this, &Browser::loadItem, path );
+        //QCoreApplication::sendPostedEvents();
+      }else{
+        //No special icon loading - do it in-line here
+        loadItem(path);
+      }
     }
     watcher->addPath(directory.absolutePath());
     if(!old.isEmpty()){
