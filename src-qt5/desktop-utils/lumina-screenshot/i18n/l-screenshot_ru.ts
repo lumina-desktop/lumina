@@ -19,7 +19,7 @@
     <message>
         <location filename="../MainUI.ui" line="375"/>
         <source>Take Screenshot</source>
-        <translation>Снимок Экрана</translation>
+        <translation>Сделать снимок экрана</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="151"/>
@@ -45,22 +45,22 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina снимок экрана</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Задержка (сек)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Захват</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось сохранить снимок экрана</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Снимок экрана не может быть сохранен. Пожалуйста, проверьте права доступа для каталога или выберите другой каталог</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
