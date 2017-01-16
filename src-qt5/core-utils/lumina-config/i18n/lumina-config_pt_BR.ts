@@ -1795,7 +1795,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="187"/>
         <source>%1: Month as abbreviation (localized)</source>
-        <translation>% 1: Mês como abreviatura (localizada)</translation>
+        <translation>%1: Mês abreviado (localizado)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="188"/>
@@ -1810,7 +1810,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>%1: Year as 4-digit number (2015)</source>
-        <translation>% 1: Ano como número de 4 dígitos (2015)</translation>
+        <translation>%1: Ano com número de 4 dígitos (2015)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="191"/>
