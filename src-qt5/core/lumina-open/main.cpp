@@ -279,6 +279,8 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.url;
           cmd.clear();
           extension = inFile.section(":",0,0);
+	  if(extension=="file"){ extension = "http"; } //local file URL - Make sure we use the default browser for a LINK type
+          extension.prepend("x-scheme-handler/");
 	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
@@ -289,7 +291,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           //This is a directory link - adjust inputs
           inFile = DF.path;
           cmd.clear();
-          extension = "directory";
+          extension = "inode/directory";
 	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
 	  ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
