@@ -56,13 +56,19 @@ void Browser::loadItem(QString info){
       if(pix.height()>128){ pix = pix.scaled(128, 128, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation); }
       item.icon.addPixmap(pix);
     }*/
-  }/*else if(item.info.isDir()){
-    item.icon = LXDG::findIcon("folder","inode/directory");
   }
-  if(item.icon.isNull()){ item.icon = LXDG::findIcon(item.info.mimetype(), "unknown"); }*/
   //qDebug() << " - done with item:" << info;
   this->emit threadDone(info, bytes);
 }
+
+QIcon Browser::loadIcon(QString icon){
+  if(!mimeIcons.contains(icon)){ 
+    mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
+  }
+
+  return mimeIcons[icon];
+}
+
 
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
@@ -85,11 +91,13 @@ void Browser::futureFinished(QString name, QByteArray icon){
         QPixmap pix;
         if(pix.loadFromData(icon) ){ ico.addPixmap(pix); }
       }else if(info.isDir()){
-        ico = LXDG::findIcon("folder","inode/directory");
+        ico = loadIcon("folder"); 
+        //LXDG::findIcon("folder","inode/directory");
       }
       if(ico.isNull()){ 
 	//qDebug() << "MimeType:" << info.fileName() << info.mimetype();
-       ico = LXDG::findIcon( info.iconfile(), "unknown" ); 
+        ico = loadIcon(info.iconfile());
+       //ico = LXDG::findIcon( info.iconfile(), "unknown" ); 
       }
       this->emit itemDataAvailable( ico, info );
 }
