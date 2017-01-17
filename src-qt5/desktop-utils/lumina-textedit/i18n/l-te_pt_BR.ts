@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar as opções de localizar/substituir</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="289"/>
         <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Perder alterações não salvas?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Este arquivo tem alterações não salvas.
+Deseja fechar mesmo assim?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="386"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Há alterações não salvas.
+Deseja fechar o editor mesmo assim?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,7 +281,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Número da Fileira: %1, Número da Coluna: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
