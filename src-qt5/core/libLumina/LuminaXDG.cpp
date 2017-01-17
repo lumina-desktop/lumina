@@ -220,13 +220,13 @@ QString XDGDesktop::getDesktopExec(QString ActionID){
     out = term+" -e "+out;  //-e is a nearly-universal flag for terminal emulators
   }
   //Now perform any of the XDG flag substitutions as appropriate (9/2014 standards)
-  if(out.contains("%i") && !icon.isEmpty() ){ out.replace("%i", "--icon \'"+icon+"\'"); }
+  if(out.contains("%i") && !icon.isEmpty() ){ out.replace("%i", "--icon \""+icon+"\""); }
   if(out.contains("%c")){ 
-    if(!name.isEmpty()){ out.replace("%c", "\'"+name+"\'"); }
-    else if(!genericName.isEmpty()){ out.replace("%c", "\'"+genericName+"\'"); }
-    else{ out.replace("%c", "\'"+filePath.section("/",-1).section(".desktop",0,0)+"\'"); }
+    if(!name.isEmpty()){ out.replace("%c", "\""+name+"\""); }
+    else if(!genericName.isEmpty()){ out.replace("%c", "\""+genericName+"\""); }
+    else{ out.replace("%c", "\""+filePath.section("/",-1).section(".desktop",0,0)+"\""); }
   }
-  if(out.contains("%k")){ out.replace("%k", "\'"+filePath+"\'"); }
+  if(out.contains("%k")){ out.replace("%k", "\""+filePath+"\""); }
   return out;
 }
 
