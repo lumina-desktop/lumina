@@ -28,20 +28,29 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   scaleTimer = new QTimer(this);
     scaleTimer->setSingleShot(true);
     scaleTimer->setInterval(200); //~1/5 second
-
+  tabbar = new QTabBar(this);
+  ui->tabLayout->insertWidget(0,tabbar);
+    tabbar->addTab(LXDG::findIcon("view-preview",""), tr("View"));
+    tabbar->addTab(LXDG::findIcon("preferences-other",""), tr("Settings"));
+  ui->stackedWidget->setCurrentWidget(ui->page_current);
+  //Add a spacer in the Toolbar
+  QWidget *spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+  ui->toolBar->insertWidget(ui->actionClose, spacer);
   //Setup the connections
-  connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(saveScreenshot()) );
+  //connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(saveScreenshot()) );
   connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveScreenshot()) );
   connect(ui->tool_quicksave, SIGNAL(clicked()), this, SLOT(quicksave()) );
   connect(ui->actionQuick_Save, SIGNAL(triggered()), this, SLOT(quicksave()) );
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeApplication()) );
-  connect(ui->push_snap, SIGNAL(clicked()), this, SLOT(startScreenshot()) );
+  //connect(ui->push_snap, SIGNAL(clicked()), this, SLOT(startScreenshot()) );
   connect(ui->actionTake_Screenshot, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
   connect(IMG, SIGNAL(scaleFactorChanged(int)), this, SLOT(imgScalingChanged(int)) );
   connect(ui->slider_zoom, SIGNAL(valueChanged(int)),  this, SLOT(sliderChanged()) );
   connect(scaleTimer, SIGNAL(timeout()), this, SLOT(imgScalingChanged()) );
+  connect(tabbar, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
 
   settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
   if(settings->value("screenshot-target", "window").toString() == "window") {
@@ -63,16 +72,17 @@ MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
+  //ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
   ui->tool_quicksave->setIcon( LXDG::findIcon("document-edit","") );
   ui->actionSave_As->setIcon( LXDG::findIcon("document-save-as","") );
   ui->actionQuick_Save->setIcon( LXDG::findIcon("document-save","") );
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
-  ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
+  //ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
   ui->actionTake_Screenshot->setIcon( LXDG::findIcon("camera-web","") );
   ui->tool_crop->setIcon( LXDG::findIcon("transform-crop","") );
   ui->tool_resize->setIcon( LXDG::findIcon("transform-scale","") );
   //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
+  this->setWindowIcon( LXDG::findIcon("camera-web","") );
 }
 
 void MainUI::showSaveError(QString path){
@@ -134,6 +144,12 @@ void MainUI::imgScalingChanged(int percent){
 void MainUI::sliderChanged(){
   ui->label_zoom_percent->setText( QString::number(ui->slider_zoom->value())+"%");
   scaleTimer->start();
+}
+
+void MainUI::tabChanged(int tab){
+  if(tab==0){ ui->stackedWidget->setCurrentWidget(ui->page_current); }
+  else{ ui->stackedWidget->setCurrentWidget(ui->page_settings); }
+  ui->frame_modify->setVisible(tab==0);
 }
 
 bool MainUI::getWindow(){

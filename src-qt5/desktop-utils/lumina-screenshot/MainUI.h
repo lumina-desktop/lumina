@@ -18,6 +18,7 @@
 #include <QSettings>
 #include <QAction>
 #include <QScreen>
+#include <QTabBar>
 
 #include <LuminaXDG.h>
 #include <LUtils.h>
@@ -47,6 +48,7 @@ private:
 	QSettings *settings;
 	LXCB *XCB; //Library access to window subsystems
 	QTimer *scaleTimer;
+	QTabBar *tabbar;
 
 	//Image Editor widget
 	ImageEditor *IMG;
@@ -67,6 +69,8 @@ private slots:
 	void imgselchanged(bool hassel);
 	void imgScalingChanged(int percent = -1);
 	void sliderChanged();
+
+	void tabChanged(int);
 
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
