@@ -284,202 +284,202 @@
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualize ou altere as configurações do sistema (volume de áudio, brilho da tela, duração da bateria, área de trabalho virtuais).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
         <location filename="../LPlugins.cpp" line="291"/>
         <source>Task Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerenciador de tarefas</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="136"/>
         <source>Task Manager (No Groups)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerenciador de tarefas (sem grupos)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="143"/>
         <source>System Tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandeja do sistema</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Área de exibição para aplicativos do sistema acopláveis</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar todas as janelas abertas e mostrar a área de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
         <source>Start Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu Iniciar</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="190"/>
         <source>Calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Calendário</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="191"/>
         <source>Display a calendar on the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir um calendário na área de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
         <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciador de Aplicativos</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
         <source>User Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu do usuário</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar menu alternativo com foco nos arquivos do usuário, diretórios e favoritos.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
         <source>Application Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu de Aplicações</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativa do Menu Iniciar que se concentra no lançamento de aplicativos.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="95"/>
         <source>Simple line to provide visual separation between items.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha simples para fornecer a separação visual entre os itens.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
         <source>Workspace Switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternador do espaço de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualize e controle as janelas de aplicativos em execução (agrupe janelas semelhantes em um único botão).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizar e controlar as janelas de aplicativos em execução (cada janela individual tem um botão)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
         <source>Show Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar área de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="158"/>
         <source>Unified system access and application launch menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesso unificado ao sistema e menu de inicialização de aplicação.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocar um atalho de aplicação diretamente no painel</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Botão da área de trabalho para iniciar um aplicativo</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visão de ícones da área de trabalho</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloco de Notas</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantenha notas de texto simples em seu desktop</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="171"/>
         <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitor de áudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="172"/>
         <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir através de listas de arquivos de áudio</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitor do sistema</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantenha o controle de estatísticas do sistema, como CPU/Uso de memória e temperaturas da CPU.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitor RSS</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitore canais RSS (Requer conexão com a Internet)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="257"/>
         <source>Start the default system terminal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicie o terminal padrão do sistema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegue pelo sistema com o gerenciador de arquivos padrão.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
         <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicações</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar o menu de aplicações do sistema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separador</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha horizontal estática.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="285"/>

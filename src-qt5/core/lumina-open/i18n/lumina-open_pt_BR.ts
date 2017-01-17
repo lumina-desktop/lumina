@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A entrada do aplicativo é inválida: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
@@ -186,12 +186,12 @@
     <message>
         <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
-        <translation type="unfinished">Binário Faltando</translation>
+        <translation>Binário Faltando</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>&quot;%1&quot; não pode ser localizado. Por favor, verifique se está instalado.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>"%1" não pode ser localizado. Por favor, verifique se está instalado.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>
