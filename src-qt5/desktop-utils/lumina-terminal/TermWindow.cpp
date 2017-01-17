@@ -31,6 +31,7 @@ TermWindow::TermWindow(QSettings *set) : QWidget(0, Qt::Window | Qt::BypassWindo
     tabWidget->setTabsClosable(true);
     tabWidget->setMovable(true);
     tabWidget->setUsesScrollButtons(true);
+    tabWidget->setFocusPolicy(Qt::ClickFocus);
     this->layout()->addWidget(tabWidget);
   //Setup the animation
   ANIM = new QPropertyAnimation(this, "geometry", this);
@@ -99,7 +100,7 @@ void TermWindow::OpenDirs(QStringList dirs){
       page->setWhatsThis(ID);
     tabWidget->addTab(page, ID);
     tabWidget->setCurrentWidget(page);
-    page->setFocus();
+    QTimer::singleShot(500, this, SLOT(focusOnWidget()));//page->setFocus();
     qDebug() << "New Tab:" << ID << dirs[i];
     connect(page, SIGNAL(ProcessClosed(QString)), this, SLOT(Close_Tab(QString)) );
   }
@@ -255,6 +256,7 @@ void TermWindow::Prev_Tab(){
 
 void TermWindow::focusOnWidget(){
   if(tabWidget->currentWidget()!=0){
+    //qDebug() << "Focus on Widget";
     tabWidget->currentWidget()->setFocus();
   }
 }

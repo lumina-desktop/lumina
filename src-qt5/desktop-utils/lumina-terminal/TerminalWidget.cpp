@@ -30,6 +30,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
   this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
+  this->setTabChangesFocus(false);
   //this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   resizeTimer = new QTimer(this);
