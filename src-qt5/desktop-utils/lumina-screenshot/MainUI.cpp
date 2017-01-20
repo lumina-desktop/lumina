@@ -111,7 +111,7 @@ void MainUI::quicksave(){
 
     QString path = savedir + QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss") );
     if(IMG->image().save(path, "png") ){
-      QProcess::startDetached("lumina-open \""+path+"\"");
+      QProcess::startDetached("lumina-open -select \""+path+"\"");
     }else{
       showSaveError(path);
     }
