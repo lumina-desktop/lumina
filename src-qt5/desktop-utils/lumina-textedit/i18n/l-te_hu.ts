@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation>Rejtsd el a keresés/csere opciót</translation>
+        <translation>Keresés/csere opciók elrejtése</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
-        <translation>Szövegfájlok</translation>
+        <translation>Szövegfájlok (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -249,7 +249,7 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation>A fájlnak mentettlen változásai vannak!
+        <translation>A fájlnak mentetlen változásai vannak!
 Mindenképpen bezárod ?
 
 %1</translation>
@@ -260,7 +260,7 @@ Mindenképpen bezárod ?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation>Mentettlen változások vannak!
+        <translation>Mentetlen változások vannak!
 Mindenképp bezárod ?
 
 %1</translation>
@@ -286,17 +286,17 @@ Mindenképp bezárod ?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation>A látható fájl egy másik program által megváltozott. Újratöltöd ?</translation>
+        <translation>A fájl egy másik program által megváltozott. Újratöltöd ?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Megjegyzés: Minden mentetlen változás odalesz!)</translation>
+        <translation>(Megjegyzés: Minden mentetlen változás elveszik!)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation>Fájl Módosítva</translation>
+        <translation>Fájl módosítva</translation>
     </message>
 </context>
 </TS>
