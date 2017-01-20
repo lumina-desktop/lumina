@@ -6,7 +6,7 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="60"/>
         <source>Copy Selection</source>
-        <translation>Kijelölés másolása</translation>
+        <translation>Kijelöltés másolása</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation>%1. monitor</translation>
+        <translation>%1. montior</translation>
     </message>
 </context>
 </TS>
