@@ -6,7 +6,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation>Personnaliser des Couleurs</translation>
+        <translation>Personnaliser les Couleurs</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
@@ -21,13 +21,13 @@
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation>Échantillon</translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation>Choisir une couleur</translation>
+        <translation>Choisir une Couleur</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
@@ -55,7 +55,7 @@
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation>Trouver la précédente occurrence</translation>
+        <translation>Trouver l'occurrence précédente</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Find:</source>
-        <translation>Rechercher:</translation>
+        <translation>Rechercher :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation>Remplacer:</translation>
+        <translation>Remplacer :</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
@@ -89,12 +89,12 @@
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Replace next match</source>
-        <translation>Remplacer la prochaine correspondance</translation>
+        <translation>Remplacer la prochaine occurrence</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="158"/>
         <source>Replace all matches (to end of document)</source>
-        <translation>Remplacer tous les matchs (à la fin du document)</translation>
+        <translation>Remplacer toutes les occurrences (jusqu'à la fin du document)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
@@ -114,7 +114,7 @@
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation>Coloration syntaxique</translation>
+        <translation>Coloration Syntaxique</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation>Afficher les numéros de lignes</translation>
+        <translation>Afficher les Numéros de Lignes</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
@@ -150,7 +150,7 @@
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation>Ouvrir le fichier</translation>
+        <translation>Ouvrir le Fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation>Enregistrar lo fichièr</translation>
+        <translation>Enregistrer le Fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
@@ -170,7 +170,7 @@
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation>Enregistrer le fichier sous</translation>
+        <translation>Enregistrer le Fichier Sous</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation>Ferme le fichier</translation>
+        <translation>Fermer le Fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -195,12 +195,12 @@
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation>Personnaliser des Coleurs</translation>
+        <translation>Personnaliser les Couleurs</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
         <source>Wrap Lines</source>
-        <translation>Couper les lignes</translation>
+        <translation>Renvoyer à la Ligne</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="365"/>
@@ -225,17 +225,17 @@
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation>Éditeur de texte</translation>
+        <translation>Éditeur de Texte</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <source>Open File(s)</source>
-        <translation>Ouvrir fichiers</translation>
+        <translation>Ouvrir Fichier(s)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
-        <translation>Fichiers de texte (*)</translation>
+        <translation>Fichiers de Texte (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -271,12 +271,12 @@ Voulez-vous tout de même fermer l'éditeur ?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation>Enregistrar lo fichièr</translation>
+        <translation>Enregistrer le Fichier</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation>Fichier texte (*)</translation>
+        <translation>Fichier de Texte (*)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
