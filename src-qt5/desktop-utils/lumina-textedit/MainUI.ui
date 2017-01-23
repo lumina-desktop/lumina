@@ -236,6 +236,7 @@
     <addaction name="menuSyntax_Highlighting"/>
     <addaction name="actionLine_Numbers"/>
     <addaction name="actionWrap_Lines"/>
+    <addaction name="actionShow_Popups"/>
     <addaction name="separator"/>
     <addaction name="actionCustomize_Colors"/>
    </widget>
@@ -386,6 +387,23 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionShow_Popups">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Popup Warnings</string>
+   </property>
+   <property name="toolTip">
+    <string>Show warnings about unsaved changes</string>
+   </property>
+   <property name="statusTip">
+    <string>Show warnings about unsaved changes</string>
    </property>
   </action>
  </widget>

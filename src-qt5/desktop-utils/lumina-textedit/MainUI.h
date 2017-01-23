@@ -57,6 +57,7 @@ private slots:
 	void showLineNumbers(bool);
 	void wrapLines(bool);
 	void ModifyColors();
+	void showPopupWarnings(bool);
 
 	//Tab Interactions
 	void updateTab(QString);
