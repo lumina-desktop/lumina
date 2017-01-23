@@ -41,7 +41,7 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
-	bool mousegrabbed;
+	bool mousegrabbed, picSaved;
 	QRect lastgeom;
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot
@@ -71,6 +71,7 @@ private slots:
 	void sliderChanged();
 
 	void tabChanged(int);
+	void showPopupsChanged(bool);
 
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
@@ -79,6 +80,7 @@ private slots:
 protected:
 	void mouseReleaseEvent(QMouseEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
+	void closeEvent( QCloseEvent *ev);
 };
 
 #endif

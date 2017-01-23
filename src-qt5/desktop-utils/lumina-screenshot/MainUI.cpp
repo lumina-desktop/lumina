@@ -14,6 +14,7 @@
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
   mousegrabbed = false;
+  picSaved = false;
   XCB = new LXCB();
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
@@ -51,7 +52,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->slider_zoom, SIGNAL(valueChanged(int)),  this, SLOT(sliderChanged()) );
   connect(scaleTimer, SIGNAL(timeout()), this, SLOT(imgScalingChanged()) );
   connect(tabbar, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
-
+  connect(ui->check_show_popups, SIGNAL(toggled(bool)), this, SLOT(showPopupsChanged(bool)) );
   settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
   if(settings->value("screenshot-target", "window").toString() == "window") {
 	ui->radio_window->setChecked(true);
@@ -59,6 +60,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 	ui->radio_all->setChecked(true);
   }
   ui->spin_delay->setValue(settings->value("screenshot-delay", 0).toInt());
+  ui->check_show_popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
 
   ui->tool_resize->setVisible(false); //not implemented yet
   this->show();
@@ -99,6 +101,7 @@ void MainUI::saveScreenshot(){
   if( !IMG->image().save(filepath, "png") ){
     showSaveError(filepath);
   }else{
+    picSaved = true;
     ppath = filepath.section("/",0,-2); //just the directory
   }
 }
@@ -111,10 +114,12 @@ void MainUI::quicksave(){
 
     QString path = savedir + QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss") );
     if(IMG->image().save(path, "png") ){
+      picSaved = true;
       QProcess::startDetached("lumina-open -select \""+path+"\"");
     }else{
       showSaveError(path);
     }
+
 }
 
 void MainUI::startScreenshot(){
@@ -150,6 +155,10 @@ void MainUI::tabChanged(int tab){
   if(tab==0){ ui->stackedWidget->setCurrentWidget(ui->page_current); }
   else{ ui->stackedWidget->setCurrentWidget(ui->page_settings); }
   ui->frame_modify->setVisible(tab==0);
+}
+
+void MainUI::showPopupsChanged(bool show){
+  settings->setValue("showPopupWarnings", show);
 }
 
 bool MainUI::getWindow(){
@@ -194,6 +203,7 @@ void MainUI::getPixmap(){
   this->setGeometry(lastgeom);
   lastScreenShot = QDateTime::currentDateTime();
   //Now display the pixmap on the label as well
+  picSaved = false;
   IMG->LoadImage( cpic.toImage() );
 }
 
@@ -227,4 +237,17 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
 
 void MainUI::resizeEvent(QResizeEvent*){
   IMG->setDefaultSize( ui->scrollArea->maximumViewportSize() );
+}
+
+void MainUI::closeEvent(QCloseEvent *ev){
+  //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
+  if(ui->check_show_popups->isChecked() && !picSaved){
+    //Ask what to do about the unsaved changed
+    if(QMessageBox::Yes != QMessageBox::warning(this, tr("Unsaved Screenshot"), tr("The current screenshot has not been saved yet. Do you want to quit anyway?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+      //cancelled close of window
+      ev->ignore();
+      return;
+    }
+  }
+  QMainWindow::closeEvent(ev);
 }
