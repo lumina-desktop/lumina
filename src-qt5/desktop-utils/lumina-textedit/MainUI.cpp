@@ -50,6 +50,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   }
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
+  ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
+
   //Setup any connections
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->actionNew_File, SIGNAL(triggered()), this, SLOT(NewFile()) );
@@ -62,6 +64,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
+  connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
   connect(ui->actionCustomize_Colors, SIGNAL(triggered()), this, SLOT(ModifyColors()) );
   connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(openFind()) );
   connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(openReplace()) );
@@ -250,6 +253,10 @@ void MainUI::ModifyColors(){
   colorDLG->showNormal();
 }
 
+void MainUI::showPopupWarnings(bool show){
+  settings->setValue("showPopupWarnings",show);
+}
+
 void MainUI::updateTab(QString file){
   PlainTextEditor *cur = 0;
   int index = -1;
@@ -284,7 +291,7 @@ void MainUI::tabChanged(){
 void MainUI::tabClosed(int tab){
   PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(tab));
   if(edit==0){ return; } //should never happen
-  if(edit->hasChange()){
+  if(edit->hasChange() && ui->actionShow_Popups->isChecked() ){
     //Verify if the user wants to lose any unsaved changes
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("This file has unsaved changes.\nDo you want to close it anyway?\n\n%1")).arg(edit->currentFile()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ return; }
   }
@@ -382,6 +389,7 @@ void MainUI::closeEvent(QCloseEvent *ev){
     }
   }
   bool quitnow = unsaved.isEmpty();
+  if(!quitnow && !ui->actionShow_Popups->isChecked()){ quitnow = true; }
   if(!quitnow){
     quitnow = (QMessageBox::Yes == QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("There are unsaved changes.\nDo you want to close the editor anyway?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
   }
