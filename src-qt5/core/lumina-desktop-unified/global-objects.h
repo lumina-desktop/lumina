@@ -39,6 +39,8 @@ namespace Lumina{
 	extern RootWindow *ROOTWIN;
 	//Window Manager
 	//LWindowManager *WM;
+	//Application List
+	extern XDGDesktopList *APPLIST;
 	
 	extern QThread *EVThread; //X Event thread
 };

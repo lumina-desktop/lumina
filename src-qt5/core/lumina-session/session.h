@@ -73,6 +73,6 @@ public:
 	}
 	~LSession(){ }
 
-	void start();
+	void start(bool unified = false);
 	
 };

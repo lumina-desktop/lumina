@@ -9,7 +9,7 @@
 
 #include "BootSplash.h"
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 //Initialize all the global objects to null pointers
@@ -19,6 +19,7 @@ DesktopSettings* Lumina::SETTINGS = 0;
 //Lumina::WM = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
+XDGDesktopList* Lumina::APPLIST = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
   //Initialize the global objects to null pointers
@@ -46,7 +47,10 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
     Lumina::EFILTER->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
   Lumina::ROOTWIN = new RootWindow();
+  Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
 
+  //Setup the various connections between the global classes
+  connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
 
  } //end check for primary process 
 }
@@ -61,12 +65,13 @@ LSession::~LSession(){
   }
   if(Lumina::SETTINGS!=0){ Lumina::SETTINGS->deleteLater(); }
   if(Lumina::ROOTWIN!=0){ Lumina::ROOTWIN->deleteLater(); }
+  if(Lumina::APPLIST!=0){ Lumina::APPLIST->deleteLater(); }
 }
 
 void LSession::setupSession(){
   BootSplash splash;
     splash.showScreen("init");
-  qDebug() << "Initializing Session";
+  qDebug() << "Initializing Session:" << QDateTime::currentDateTime().toString( Qt::SystemLocaleShortDate);;
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
@@ -91,44 +96,51 @@ void LSession::setupSession(){
 				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
 				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
   }*/
+  if(DEBUG){ qDebug() << " - Load Localization Files:" << timer->elapsed();}  
   currTranslator = LUtils::LoadTranslation(this, "lumina-desktop"); 
+  if(DEBUG){ qDebug() << " - Start Event Filter:" << timer->elapsed(); }
+  Lumina::EFILTER->start();
 //use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
-  checkUserFiles(); //adds these files to the watcher as well
+  //checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
   //DESKTOPS.clear();
       
   //Start the background system tray
     splash.showScreen("systray");
-  if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
-  //startSystemTray();
 	
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
-  if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
+  if(DEBUG){ qDebug() << " - Populate App List:" << timer->elapsed();}
+  Lumina::APPLIST->updateList();
   //appmenu = new AppMenu();
   
     splash.showScreen("menus");
-  if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
+  //if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   //settingsmenu = new SettingsMenu();
-  if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
+  //if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
   //sysWindow = new SystemWindow();
   
   //Initialize the desktops
     splash.showScreen("desktop");
-  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
+  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed(); }
+  QList<QScreen*> scrns= QApplication::screens();
+  for(int i=0; i<scrns.length(); i++){
+    qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
+    Lumina::ROOTWIN->ChangeWallpaper(scrns[i]->name(), RootWindow::Stretch, LOS::LuminaShare()+"desktop-background.jpg");
+  }
+  Lumina::ROOTWIN->start();
   //desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   //updateDesktops();
   //for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
 
   //Now setup the system watcher for changes
     splash.showScreen("final");
-  qDebug() << " - Initialize file system watcher";
-  if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
+  //if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   /*watcher = new QFileSystemWatcher(this);
     QString confdir = sessionsettings->fileName().section("/",0,-2);
     watcherChange(sessionsettings->fileName() );
@@ -144,14 +156,19 @@ void LSession::setupSession(){
   //connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   //connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   //connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
+  if(DEBUG){ qDebug() << " - Start Screen Saver:" << timer->elapsed();}
+  Lumina::SS->start();
+
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
-  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   splash.hide();
   LSession::processEvents();
   splash.close(); 
   LSession::processEvents();
+  //DEBUG: Wait a bit then close down the session
+  QTimer::singleShot(15000, this, SLOT(StartLogout()) );
 }
 
 //================
@@ -168,11 +185,8 @@ void LSession::CleanupSession(){
   LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
   bool playaudio = Lumina::SETTINGS->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
-  //Stop the background system tray (detaching/closing apps as necessary)
-  //stopSystemTray(!cleansession);
   //Now perform any other cleanup
   Lumina::EFILTER->stop();
-  //evFilter->StopEventHandling();
   //Now wait a moment for things to close down before quitting
   if(playaudio){
     //wait a max of 5 seconds for audio to finish
@@ -226,11 +240,11 @@ void LSession::playAudioFile(QString filepath){
 void LSession::NewCommunication(QStringList list){
   if(DEBUG){ qDebug() << "New Communications:" << list; }
   for(int i=0; i<list.length(); i++){
-    /*if(list[i]=="--check-geoms"){
-      screensChanged();
-    }else if(list[i]=="--show-start"){ 
-      emit StartButtonActivated();
-    }*/
+    if(list[i]=="--logout"){
+      QTimer::singleShot(0, this, SLOT(StartLogout()) );
+    }else if(list[i]=="--lock-session"){ 
+      Lumina::SS->LockScreenNow();
+    }
   }  
 }
 

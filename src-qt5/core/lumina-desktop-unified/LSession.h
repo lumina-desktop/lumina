@@ -14,9 +14,6 @@ class LSession : public LSingleApplication{
 public:
 	LSession(int &argc, char **argv);
 	~LSession();
-	//Functions to be called during startup
-	void setupSession();
-
 
 private:
 	void CleanupSession();
@@ -28,6 +25,8 @@ private:
 	QTranslator *currTranslator;
 
 public slots:
+	void setupSession();  //called during startup only
+
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);
 	void StartReboot(bool skipupdates = false);

@@ -9,6 +9,7 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
   ui->setupUi(this);
   this->setObjectName("LuminaBootSplash"); //for theme styling
   //Center the window on the primary screen
+  this->show();
   QPoint ctr = QApplication::desktop()->screenGeometry().center();
   this->move( ctr.x()-(this->width()/2), ctr.y()-(this->height()/2) );
   generateTipOfTheDay();

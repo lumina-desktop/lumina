@@ -8,9 +8,11 @@
 
 #include <QDesktopWidget>
 #include <QScreen>
+#include <QDebug>
 
 // === PUBLIC ===
-RootWindow::RootWindow(){
+RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
+  qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
 }
 
@@ -19,6 +21,7 @@ RootWindow::~RootWindow(){
 }
 
 void RootWindow::start(){
+
   if(autoResizeTimer==0){
     autoResizeTimer = new QTimer(this);
       autoResizeTimer->setInterval(100); //1/10 second (collect all nearly-simultaneous signals and compress into a single update)
@@ -27,7 +30,9 @@ void RootWindow::start(){
     connect(QApplication::desktop(), SIGNAL(resized(int)), autoResizeTimer, SLOT(start()) );
     connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), autoResizeTimer, SLOT(start()) );
   }
-
+  this->show();
+  ResizeRoot();
+  emit RegisterVirtualRoot(this->winId());
 }
 
 // === PRIVATE ===
@@ -123,6 +128,7 @@ void RootWindow::ResizeRoot(){
     }
   }
   //Trigger a repaint and send out any signals
+  this->setGeometry(fullscreen);
   this->update();
   emit RootResized();
   if(!valid.isEmpty()){ emit NewScreens(valid); }
@@ -136,6 +142,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
       WALLPAPERS[i].scale = scale;
       WALLPAPERS[i].file = file;
       updateScreenPixmap(&WALLPAPERS[i]);
+      //qDebug() << "   --- Updated Wallpaper:" << WALLPAPERS[i].id << WALLPAPERS[i].file << WALLPAPERS[i].area;
       found = true;
     }
   }
@@ -150,6 +157,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
           info.scale = scale;
           info.area = scrns[i]->geometry();
          updateScreenPixmap(&info);
+         //qDebug() << "   --- Loaded Wallpaper:" << info.id << info.file << info.area;
         WALLPAPERS << info;
         break;
       }
@@ -162,6 +170,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
+  //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
   bool found = false;
   QPainter painter(this);
   for(int i=0; i<WALLPAPERS.length(); i++){

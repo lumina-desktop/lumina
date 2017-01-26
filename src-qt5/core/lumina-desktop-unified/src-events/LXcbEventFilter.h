@@ -62,6 +62,7 @@ public:
 	LXCB *XCB; //used to interact with the X11 graphics subsystem
 
 public slots:
+	void RegisterVirtualRoot(WId);
 
 signals:
 	void NewInputEvent();

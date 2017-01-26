@@ -54,6 +54,7 @@ protected:
 	void paintEvent(QPaintEvent *ev);
 
 signals:
+	void RegisterVirtualRoot(WId);
 	void RootResized();
 	void NewScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
 	void RemovedScreens(QStringList); // [screen_id_1, screen_id_2, etc..]

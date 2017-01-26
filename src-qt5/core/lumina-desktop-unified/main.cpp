@@ -37,7 +37,7 @@ int main(int argc, char ** argv)
     LuminaThemeEngine theme(&a);
     QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
-    a.setupSession();
+    QTimer::singleShot(0, &a, SLOT(setupSession()) );
     theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();

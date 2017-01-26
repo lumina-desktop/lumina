@@ -22,7 +22,7 @@
 #define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
 
-#define DEBUG 1
+#define DEBUG 0
 
 // Also keep the root window/screen around for use in the filters
 namespace L_XCB{
@@ -63,6 +63,10 @@ void EventFilter::stop(){
 
 QList<WId> EventFilter::currentTrayApps(){
   return static_cast<XCBEventFilter*>(EF)->trayApps();
+}
+// === PUBLIC SLOTS ===
+void EventFilter::RegisterVirtualRoot(WId id){
+  XCB->WM_Set_Virtual_Roots( QList<WId>() << id );
 }
 
 //=============================
@@ -121,19 +125,19 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================
 	    case XCB_KEY_PRESS:
 		//This is a keyboard key press
-	 	//qDebug() << "Key Press Event";
+	 	qDebug() << "Key Press Event";
 		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_key_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
 	    case XCB_KEY_RELEASE:
 		//This is a keyboard key release
-		//qDebug() << "Key Release Event";
+		qDebug() << "Key Release Event";
 		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_key_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
 	    case XCB_BUTTON_PRESS:
 		//This is a mouse button press
-		//qDebug() << "Button Press Event";
+		qDebug() << "Button Press Event";
 		obj->emit NewInputEvent();
 		stopevent = BlockInputEvent( ((xcb_button_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
 	        if(!stopevent){
@@ -145,7 +149,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break;
 	    case XCB_BUTTON_RELEASE:
 		//This is a mouse button release
-		//qDebug() << "Button Release Event";
+		qDebug() << "Button Release Event";
 	        //xcb_button_release_event_t *tmp = (xcb_button_release_event_t *)ev;
 		stopevent = BlockInputEvent( ((xcb_button_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
 		break;
@@ -157,19 +161,19 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        break;
 	    case XCB_ENTER_NOTIFY:
 		//This is a mouse movement event when mouse goes over a new window
-		//qDebug() << "Enter Notify Event";
+		qDebug() << "Enter Notify Event";
 		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_enter_notify_event_t *) ev)->root );
 	        break;
 	    case XCB_LEAVE_NOTIFY:
 		//This is a mouse movement event when mouse goes leaves a window
-		//qDebug() << "Leave Notify Event";
+		qDebug() << "Leave Notify Event";
 		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent();
 	        break;
 //==============================
 	    case XCB_EXPOSE:
-		//qDebug() << "Expose Notify Event:";
+		qDebug() << "Expose Notify Event:";
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
 		break;
 //==============================
@@ -205,12 +209,12 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break;
 //==============================
 	    case XCB_PROPERTY_NOTIFY:
-		//qDebug() << "Property Notify Event:";
+		qDebug() << "Property Notify Event:";
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
 		break;
 //==============================	    
 	    case XCB_CLIENT_MESSAGE:
-		//qDebug() << "Client Message Event";
+		qDebug() << "Client Message Event";
 		//qDebug() << " - Given Window:" << ((xcb_client_message_event_t*)ev)->window;
 		if( ((xcb_client_message_event_t*)ev)->type == _NET_SYSTEM_TRAY_OPCODE && ((xcb_client_message_event_t*)ev)->format == 32){
 		  //data32[0] is timestamp, [1] is opcode, [2] is  window handle

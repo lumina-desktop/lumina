@@ -77,11 +77,12 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
   PROCS << proc;
 }
 
-void LSession::start(){
+void LSession::start(bool unified){
   //First check for a valid installation
   if(!LUtils::isValidBinary("lumina-desktop") ){
     exit(1);
   }
+ if(!unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
   //Window Manager First
@@ -151,5 +152,8 @@ void LSession::start(){
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
-
+ }else{
+  //unified process
+  startProcess("runtime","lumina-desktop-unified");
+ }
 }
