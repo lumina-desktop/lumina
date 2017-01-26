@@ -16,6 +16,7 @@ include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 include(../libLumina/DesktopSettings.pri)
+include(../libLumina/RootWindow.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)

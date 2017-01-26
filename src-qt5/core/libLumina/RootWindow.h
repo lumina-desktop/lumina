@@ -10,28 +10,38 @@
 #ifndef _LUMINA_ROOT_WINDOW_H
 #define _LUMINA_ROOT_WINDOW_H
 
-
+#include <QWidget>
+#include <QRect>
+#include <QString>
+#include <QPixmap>
+#include <QPainter>
+#include <QTimer>
+#include <QApplication>
+#include <QPaintEvent>
 
 class RootWindow : public QWidget{
 	Q_OBJECT
 public:
-	enum ScaleType{ SingleColor, Stretch, Full, Fit, Center, Tile, BottomLeft, BottomRight, BottomCenter, \
+	enum ScaleType{ SolidColor, Stretch, Full, Fit, Center, Tile, BottomLeft, BottomRight, BottomCenter, \
 	  TopLeft, TopRight, TopCenter, CenterLeft, CenterRight};
 
 	RootWindow();
 	~RootWindow();
 	
+	void start();
+
 private:
 	struct screeninfo{
 	  QString id;
 	  QRect area;
 	  QString file;
 	  ScaleType scale;
-	  QPixmap wallpaper;
+	  QPixmap wallpaper; //Note: This pixmap will always be the same size as "area"
 	};
+	QTimer *autoResizeTimer;
 
 	QList<screeninfo> WALLPAPERS;
-	void updateScreenPixmap(ScreenInfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
+	void updateScreenPixmap(screeninfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
 
 public slots:
 	void ResizeRoot();

@@ -6,9 +6,12 @@
 //===========================================
 #include "RootWindow.h"
 
+#include <QDesktopWidget>
+#include <QScreen>
+
 // === PUBLIC ===
 RootWindow::RootWindow(){
-
+  autoResizeTimer = 0;
 }
 
 RootWindow::~RootWindow(){
@@ -16,16 +19,24 @@ RootWindow::~RootWindow(){
 }
 
 void RootWindow::start(){
+  if(autoResizeTimer==0){
+    autoResizeTimer = new QTimer(this);
+      autoResizeTimer->setInterval(100); //1/10 second (collect all nearly-simultaneous signals and compress into a single update)
+      autoResizeTimer->setSingleShot(true);
+    connect(autoResizeTimer, SIGNAL(timeout()), this, SLOT(ResizeRoot()) );
+    connect(QApplication::desktop(), SIGNAL(resized(int)), autoResizeTimer, SLOT(start()) );
+    connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), autoResizeTimer, SLOT(start()) );
+  }
 
 }
 
 // === PRIVATE ===
-void RootWindow::updateScreenPixmap(ScreenInfo *info){
+void RootWindow::updateScreenPixmap(screeninfo *info){
   QPixmap pix(info->area.size());
   if(info->scale == RootWindow::SolidColor){
     QColor color;
-    if(info->file.startsWith("rgb("))){
-      QStringList colors = bgFile.section(")",0,0).section("(",1,1).split(",");
+    if(info->file.startsWith("rgb(")){
+      QStringList colors = info->file.section(")",0,0).section("(",1,1).split(",");
       color = QColor(colors[0].toInt(), colors[1].toInt(), colors[2].toInt());
     }else{
       color = QColor(info->file);
@@ -39,7 +50,7 @@ void RootWindow::updateScreenPixmap(ScreenInfo *info){
        if(info->scale == RootWindow::Stretch ){  armode = Qt::IgnoreAspectRatio; }
       else if(info->scale == RootWindow::Full ){ armode = Qt::KeepAspectRatioByExpanding; }
       if(raw.height()!=info->area.height() && raw.width() !=info->area.width()){
-        raw = raw.scaled(info->area, armode);
+        raw = raw.scaled(info->area.size(), armode);
       }
     }
     //Now calculate offset and draw width/height
@@ -59,7 +70,7 @@ void RootWindow::updateScreenPixmap(ScreenInfo *info){
     }else if(info->scale == RootWindow::BottomRight ){
       drawRect.moveTo( (info->area.width() - raw.width()), (info->area.height() - raw.height()) );
     }else if(info->scale == RootWindow::BottomCenter ){
-      drawRect.moveTo( (info->area.width() - raw.width())/2, info->area.height() - raw.height()) );
+      drawRect.moveTo( (info->area.width() - raw.width())/2, info->area.height() - raw.height() );
     }else if(info->scale == RootWindow::TopLeft ){
       drawRect.moveTo( 0, 0 );
     }else if(info->scale == RootWindow::TopRight ){
@@ -74,27 +85,27 @@ void RootWindow::updateScreenPixmap(ScreenInfo *info){
 
   QPainter P(&pix);
     P.setBrush(raw);
-    P.setBrushOrigin(dx,dy);
-    P.drawRect(dx,dy,
+    P.setBrushOrigin( drawRect.x(), drawRect.y() );
+    P.drawRect( drawRect );
 } //end SolidColor Check
 
-  info.wallpaper = pix;
+  info->wallpaper = pix;
 }
 
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
   QList<QScreen*> scrns = QApplication::screens();
   //Update all the screen locations and ID's in the WALLPAPERS list
-  QRect fullScreen;
-  QStringList validids;
+  QRect fullscreen;
+  QStringList valid;
   //Update the size of the rootWindow itself
   for(int i=0; i<scrns.length(); i++){
     fullscreen = fullscreen.united(scrns[i]->geometry());
-    validids << scrns[i]->name();
+    valid << scrns[i]->name();
     for(int j=0; j<WALLPAPERS.length(); j++){
-      if(WALLPAPERS[j].id == scrn[i]->name()){
+      if(WALLPAPERS[j].id == scrns[i]->name()){
         QSize oldsize = WALLPAPERS[j].area.size();
-        WALLPAPERS[j].area = scrn[i]->geometry();
+        WALLPAPERS[j].area = scrns[i]->geometry();
         if(oldsize != WALLPAPERS[j].area.size()){ updateScreenPixmap(&WALLPAPERS[j]); }
         break;
       }
@@ -114,8 +125,8 @@ void RootWindow::ResizeRoot(){
   //Trigger a repaint and send out any signals
   this->update();
   emit RootResized();
-  if(!validids.isEmpty()){ emit NewScreens(valid); }
-  if(!invalid.isEmpty()){ emit RemoveScreens(invalid); }
+  if(!valid.isEmpty()){ emit NewScreens(valid); }
+  if(!invalid.isEmpty()){ emit RemovedScreens(invalid); }
 }
 
 void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file){
@@ -131,13 +142,13 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
   if(!found){
     //Need to create a new screeninfo structure
     QList<QScreen*> scrns = QApplication::screens();
-    for(int i=0; i<srcns.length(); i++){
-      if(scrns[i].name()==id){
+    for(int i=0; i<scrns.length(); i++){
+      if(scrns[i]->name()==id){
         screeninfo info;
           info.id = id;
 	  info.file = file;
           info.scale = scale;
-          info.area = srcns[i]->geometry();
+          info.area = scrns[i]->geometry();
          updateScreenPixmap(&info);
         WALLPAPERS << info;
         break;
@@ -151,12 +162,17 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
-  
-  if(!wallpaper.isNull()){
-    QPainter painter(this);
-    painter.setBrush(wallpaper);
-    painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
-  }else{
+  bool found = false;
+  QPainter painter(this);
+  for(int i=0; i<WALLPAPERS.length(); i++){
+    if(WALLPAPERS[i].area.intersects(ev->rect()) ){
+      found = true;
+      QRect intersect = WALLPAPERS[i].area.intersected(ev->rect());
+      painter.drawPixmap( intersect, WALLPAPERS[i].wallpaper, intersect.translated(-WALLPAPERS[i].area.x(), -WALLPAPERS[i].area.y()) );
+    }
+  }
+  painter.end();
+  if(!found){
     QWidget::paintEvent(ev);
   }
 }

@@ -22,7 +22,7 @@ private:
 	void CleanupSession();
 	
 	int VersionStringToNumber(QString version);
-	QMediaObject *mediaObj;
+	QMediaPlayer *mediaObj;
 	void playAudioFile(QString filepath);
 
 	QTranslator *currTranslator;

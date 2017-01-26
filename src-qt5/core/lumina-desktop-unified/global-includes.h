@@ -55,6 +55,7 @@
 #include <LDesktopUtils.h>
 #include <LuminaSingleApplication.h>
 #include <DesktopSettings.h>
+#include <RootWindow.h>
 
 // Standard C includes
 #include <unistd.h>

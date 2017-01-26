@@ -35,11 +35,12 @@ namespace Lumina{
 	extern DesktopSettings *SETTINGS; //All Settings files
 	//ScreenSaver
 	extern LScreenSaver *SS;
+	//Root Window
+	extern RootWindow *ROOTWIN;
 	//Window Manager
 	//LWindowManager *WM;
 	
-	QThread *EVThread; //X Event thread
+	extern QThread *EVThread; //X Event thread
 };
-
 
 #endif

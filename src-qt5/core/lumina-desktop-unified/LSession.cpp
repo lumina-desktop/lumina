@@ -12,15 +12,17 @@
 #define DEBUG 0
 #endif
 
+//Initialize all the global objects to null pointers
+EventFilter* Lumina::EFILTER = 0;
+LScreenSaver* Lumina::SS = 0;
+DesktopSettings* Lumina::SETTINGS = 0;
+//Lumina::WM = 0;
+QThread* Lumina::EVThread = 0;
+RootWindow* Lumina::ROOTWIN = 0;
+
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
   //Initialize the global objects to null pointers
   mediaObj = 0; //private object used for playing login/logout chimes
-  Lumina::EFILTER = 0;
-  Lumina::SS = 0;
-  Lumina::SETTINGS = 0;
-  //Lumina::WM = 0;
-  Lumina::EVThread = 0;
-
  if(this->isPrimaryProcess()){
   //Setup the global registrations
   this->setApplicationName("Lumina Desktop Environment");
@@ -43,6 +45,8 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::EVThread = new QThread();
     Lumina::EFILTER->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
+  Lumina::ROOTWIN = new RootWindow();
+
 
  } //end check for primary process 
 }
@@ -56,6 +60,7 @@ LSession::~LSession(){
     Lumina::EVThread->deleteLater();
   }
   if(Lumina::SETTINGS!=0){ Lumina::SETTINGS->deleteLater(); }
+  if(Lumina::ROOTWIN!=0){ Lumina::ROOTWIN->deleteLater(); }
 }
 
 void LSession::setupSession(){
@@ -235,7 +240,7 @@ void LSession::launchStartupApps(){
 
   //Enable Numlock
   if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
-    if(sessionsettings->value("EnableNumlock",false).toBool()){
+    if(Lumina::SETTINGS->value(DesktopSettings::System,"EnableNumlock",false).toBool()){
       QProcess::startDetached("numlockx on");
     }else{
       QProcess::startDetached("numlockx off");
@@ -256,7 +261,7 @@ void LSession::launchStartupApps(){
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
   
   //Now play the login music since we are finished
-  if(sessionsettings->value("PlayStartupAudio",true).toBool()){
+  if(Lumina::SETTINGS->value(DesktopSettings::System,"PlayStartupAudio",true).toBool()){
     //Make sure to re-set the system volume to the last-used value at outset
     int vol = LOS::audioVolume();
     if(vol>=0){ LOS::setAudioVolume(vol); }
@@ -268,11 +273,11 @@ void LSession::launchStartupApps(){
 void LSession::checkUserFiles(){
   //internal version conversion examples: 
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
+  QString OVS = Lumina::SETTINGS->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
-    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+    Lumina::SETTINGS->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
   }
 }
 
