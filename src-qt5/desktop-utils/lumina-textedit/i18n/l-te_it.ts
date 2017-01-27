@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Tipo Oggetto:</translation>
+        <translation>Tipo elemento</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation>Rimpiazza</translation>
+        <translation>Sostituisci:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
