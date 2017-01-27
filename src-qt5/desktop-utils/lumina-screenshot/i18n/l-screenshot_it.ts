@@ -45,22 +45,22 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Cattura schermo di Lumina</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Secondi di ritardo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Cattura</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -80,7 +80,7 @@
     <message>
         <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation>ESC</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="57"/>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile cattuare lo schermo</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>L'immagine dello schermo non può essere salvata. Si prega di verificare i permessi della cartella o scegliere una cartella differente</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
