@@ -174,7 +174,7 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished">Registrazioni delle Applicazioni (*.scrivania)</translation>
+        <translation>Registrazioni delle Applicazioni (*.scrivania)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
