@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Posizione _binario:</translation>
+        <translation type="unfinished">Posizione codice binario</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="116"/>
         <source>Multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimediale</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="117"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
-        <translation>Tipo di collegamento sconosciuto: %1 </translation>
+        <translation type="unfinished">Tipo di abbreviazione sconosciuto : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
