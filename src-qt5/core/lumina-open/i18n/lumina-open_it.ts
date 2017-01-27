@@ -161,17 +161,17 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicazione principale non valida: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Collegamento all&apos;applicazione senzai informazioni di lancio (scorciatoia malformata):: %1</translation>
+        <translation>Collegamento all'applicazione senzai informazioni di lancio (scorciatoia malformata):: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>Collegamento URL senza l&apos;URL: %1</translation>
+        <translation>Collegamento URL senza l'URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
@@ -186,12 +186,12 @@
     <message>
         <location filename="../main.cpp" line="363"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Manca codice Binario</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Impossibile trovare "% 1". Assicurarsi che sia installato per primo.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>
