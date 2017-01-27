@@ -6,37 +6,37 @@
     <message>
         <location filename="../LLockScreen.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <location filename="../LLockScreen.ui" line="114"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Parola chiave</translation>
     </message>
     <message>
         <location filename="../LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessione sbloccata</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="39"/>
         <source>Locked by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloccato da: %1</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
         <source>Too Many Failures</source>
-        <translation type="unfinished"></translation>
+        <translation>Troppi errori</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
         <source>Wait %1 Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspetta %1 minuti</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="77"/>
         <source>Failed Attempts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentativi non riusciti: %1</translation>
     </message>
 </context>
 </TS>
