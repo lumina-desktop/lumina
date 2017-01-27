@@ -48,7 +48,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>MimeType:</source>
-        <translation>Tipo Mime</translation>
+        <translation>Tipo Mime:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="185"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../MainUI.cpp" line="78"/>
         <source>Directory</source>
-        <translation>Directory</translation>
+        <translation>Cartella</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../MainUI.cpp" line="81"/>
         <source>Hidden %1</source>
-        <translation> %1 Nascosto</translation>
+        <translation>%1 Nascosto</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="126"/>
@@ -169,12 +169,12 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva il file dell'Applicazione</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazioni delle Applicazioni (*.scrivania)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -199,7 +199,7 @@
     <message>
         <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
-        <translation>Seleziona un&apos;icona</translation>
+        <translation>Seleziona un'icona</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="318"/>
@@ -210,7 +210,7 @@
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
-        <translation>_Cartelle:  </translation>
+        <translation> Cartelle: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
