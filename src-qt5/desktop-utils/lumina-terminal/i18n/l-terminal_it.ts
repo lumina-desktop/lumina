@@ -6,7 +6,7 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="60"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia selezione</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
@@ -19,12 +19,12 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Azione eseguita da terminale</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Alto dello schermo</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
@@ -34,12 +34,12 @@
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Spostarsi sullo schermo</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermo %1</translation>
     </message>
 </context>
 </TS>
