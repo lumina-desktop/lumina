@@ -20,6 +20,7 @@ DesktopSettings* Lumina::SETTINGS = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
 XDGDesktopList* Lumina::APPLIST = 0;
+LShortcutEvents* Lumina::SHORTCUTS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
   //Initialize the global objects to null pointers
@@ -48,6 +49,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::EVThread->start();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
+  Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
 
   //Setup the various connections between the global classes
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
@@ -160,6 +162,7 @@ void LSession::setupSession(){
   Lumina::SS->start();
 
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
+  Lumina::SHORTCUTS->start(); //Startup the shortcut handler now
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
   //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );

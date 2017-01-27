@@ -21,6 +21,7 @@
 #define SYSTEM_TRAY_BEGIN_MESSAGE 1
 #define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
+#include <xcb/xcb_keysyms.h>
 
 #define DEBUG 0
 
@@ -126,22 +127,22 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	    case XCB_KEY_PRESS:
 		//This is a keyboard key press
 	 	qDebug() << "Key Press Event";
-		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_key_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
+	        if(!stopevent){ obj->emit KeyPressed( InputWindow(((xcb_key_press_event_t *) ev)->root), ((xcb_key_press_event_t *) ev)->detail ); }
 		break;
 	    case XCB_KEY_RELEASE:
 		//This is a keyboard key release
 		qDebug() << "Key Release Event";
-		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_key_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
+	        if(!stopevent){ obj->emit KeyReleased( InputWindow(((xcb_key_release_event_t *) ev)->root), ((xcb_key_release_event_t *) ev)->detail ); }
 		break;
 	    case XCB_BUTTON_PRESS:
 		//This is a mouse button press
 		qDebug() << "Button Press Event";
-		obj->emit NewInputEvent();
 		stopevent = BlockInputEvent( ((xcb_button_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
 	        if(!stopevent){
 		  //Activate the window right now if needed
+	         obj->emit MousePressed( InputWindow(((xcb_button_press_event_t *) ev)->root), MouseKey(((xcb_key_press_event_t *) ev)->detail) );
 		  if(obj->XCB->WM_Get_Active_Window()!=((xcb_button_press_event_t *) ev)->root){
 		    obj->XCB->WM_Set_Active_Window( ((xcb_button_press_event_t *) ev)->root);
 		  }
@@ -152,23 +153,21 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		qDebug() << "Button Release Event";
 	        //xcb_button_release_event_t *tmp = (xcb_button_release_event_t *)ev;
 		stopevent = BlockInputEvent( ((xcb_button_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
+	        if(!stopevent){ obj->emit MouseReleased( InputWindow(((xcb_button_release_event_t *) ev)->root), MouseKey(((xcb_key_press_event_t *) ev)->detail) ); }
 		break;
 	    case XCB_MOTION_NOTIFY:
 		//This is a mouse movement event
 		//qDebug() << "Motion Notify Event";
-		obj->emit NewInputEvent();
 	        stopevent = BlockInputEvent( ((xcb_motion_notify_event_t *) ev)->root ); //use the main "root" window - not the child widget);
 	        break;
 	    case XCB_ENTER_NOTIFY:
 		//This is a mouse movement event when mouse goes over a new window
-		qDebug() << "Enter Notify Event";
-		obj->emit NewInputEvent();
+		//qDebug() << "Enter Notify Event";
 	        stopevent = BlockInputEvent( ((xcb_enter_notify_event_t *) ev)->root );
 	        break;
 	    case XCB_LEAVE_NOTIFY:
 		//This is a mouse movement event when mouse goes leaves a window
-		qDebug() << "Leave Notify Event";
-		obj->emit NewInputEvent();
+		//qDebug() << "Leave Notify Event";
 	        stopevent = BlockInputEvent();
 	        break;
 //==============================
@@ -317,6 +316,40 @@ bool XCBEventFilter::BlockInputEvent(WId){
     }
   }*/
   return false;
+}
+
+WId XCBEventFilter::InputWindow(WId win){
+  //check window and see if it is a desktop/root window (return 0) or an external app window
+  if(win == L_XCB::root){ return 0; }
+  QString cl = obj->XCB->WindowClass(win);
+  qDebug() << "Got Input Event on window:" << cl;
+  if(cl.toLower()=="lumina-desktop"){ return 0; }
+  return win; //external app window
+}
+
+Lumina::MouseButton XCBEventFilter::MouseKey(int keycode){
+  switch(keycode){
+    case 1:
+      return Lumina::LeftButton;
+    case 3:
+      return Lumina::RightButton;
+    case 2:
+      return Lumina::MidButton;
+    case 4:
+      return Lumina::WheelUp;
+    case 5:
+      return Lumina::WheelDown;
+    case 6:
+      return Lumina::WheelLeft;
+    case 7:
+      return Lumina::WheelRight;
+    case 8:
+      return Lumina::BackButton; //Not sure if this is correct yet (1/27/17)
+    case 9:
+      return Lumina::ForwardButton; //Not sure if this is correct yet (1/27/17)
+    default:
+      return Lumina::NoButton;
+  }
 }
 
 //System Tray functions

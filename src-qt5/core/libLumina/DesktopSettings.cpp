@@ -164,7 +164,7 @@ void DesktopSettings::locateFiles(){
   //run at start - finds the locations of the various files (based on RunMode)
   QString userdir;
   QStringList systemdirs;
-  userdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
+  userdir = QString(getenv("XDG_CONFIG_HOME"));
   systemdirs << QString(getenv("XDG_CONFIG_DIRS")).split(":") << QString(getenv("XDG_DATA_DIRS")).split(":");
   //Load all the user-level files for this run mode
   QList< DesktopSettings::File > tmp;

@@ -64,6 +64,7 @@
 namespace Lumina{
 	//Flags/enumerations
 	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
+	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
 };
 
 #endif

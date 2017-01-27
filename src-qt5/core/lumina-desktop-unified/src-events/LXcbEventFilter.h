@@ -70,10 +70,15 @@ signals:
 	void WindowClosed(WId);
 	void ModifyWindow(WId win, Lumina::WindowAction);
 
-	//System Tray Signals
+	// System Tray Signals
 	void Tray_AppAdded(WId); //new tray app registered
 	void Tray_AppClosed(WId); //tray app de-registered
 	void Tray_AppUpdated(WId); //tray app appearance changed (damage event)
+	// Shortcut Signals
+	void KeyPressed(WId, int);
+	void KeyReleased(WId, int);
+	void MousePressed(WId, Lumina::MouseButton);
+	void MouseReleased(WId, Lumina::MouseButton);
 };
 	
 class XCBEventFilter : public QAbstractNativeEventFilter{
@@ -95,6 +100,9 @@ private:
 	void InitAtoms();	
 
 	bool BlockInputEvent(WId win = 0); //Checks the current state of the system to see if the event should be stopped
+	WId InputWindow(WId win = 0); //Checks the window ID and determines if this is an external window or returns 0 (for desktop/root windows)
+	Lumina::MouseButton MouseKey(int keycode); //convert the keycode into the mouse button code
+
 
 	//System Tray Variables
 	WId SystemTrayID;

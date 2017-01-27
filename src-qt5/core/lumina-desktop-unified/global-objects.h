@@ -21,6 +21,7 @@
 //#ifndef USE_WAYLAND
 #include "src-events/LXcbEventFilter.h"
 //#endif
+#include "src-events/LShortcutEvents.h"
 
 #include "src-screensaver/LScreenSaver.h"
 //#include "src-WM/LWindowManager.h"
@@ -32,6 +33,7 @@
 namespace Lumina{	
 	//Data structures and objects
 	extern EventFilter *EFILTER; //Native Event Watcher
+	extern LShortcutEvents *SHORTCUTS; //Keyboard/mouse shortcut events
 	extern DesktopSettings *SETTINGS; //All Settings files
 	//ScreenSaver
 	extern LScreenSaver *SS;
