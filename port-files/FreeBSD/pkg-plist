@@ -825,6 +825,7 @@ share/applications/lumina-xconfig.desktop
 %%DATADIR%%-desktop/luminaDesktop.conf
 %%DATADIR%%-desktop/low-battery.ogg
 %%DATADIR%%-desktop/menu-scripts/ls.json.sh
+%%DATADIR%%-desktop/themes/DarkGlass.qss.template
 %%DATADIR%%-desktop/themes/Glass.qss.template
 %%DATADIR%%-desktop/themes/Lumina-default.qss.template
 %%DATADIR%%-desktop/themes/None.qss.template
