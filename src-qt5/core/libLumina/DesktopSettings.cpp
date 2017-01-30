@@ -222,6 +222,8 @@ QString DesktopSettings::rel_path(DesktopSettings::File file){
 	name="session"; break;
     case DesktopSettings::Desktop:
 	name="desktop"; break;
+    case DesktopSettings::ContextMenu:
+	name="contextmenu"; break;
     case DesktopSettings::Keys:
 	name="keys"; break;
     case DesktopSettings::Theme:

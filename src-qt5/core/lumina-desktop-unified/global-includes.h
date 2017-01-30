@@ -35,6 +35,7 @@
 #include <QParallelAnimationGroup>
 #include <QWindow>
 #include <QWidget>
+#include <QWidgetAction>
 #include <QBackingStore>
 #include <QPaintEvent>
 #include <QPainter>

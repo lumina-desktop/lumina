@@ -58,6 +58,9 @@ public:
 	//Public System Tray Functions
 	QList<WId> currentTrayApps();
 
+	//Public Session Interaction Functions
+	unsigned int currentWorkspace();
+	
 	//Variables/Functions needed by the XCBEventFilter class only (not really needed by anything else)
 	LXCB *XCB; //used to interact with the X11 graphics subsystem
 
@@ -69,6 +72,9 @@ signals:
 	void NewManagedWindow(WId);
 	void WindowClosed(WId);
 	void ModifyWindow(WId win, Lumina::WindowAction);
+	
+	// Session Signals
+	void WorkspaceChanged(unsigned int);
 
 	// System Tray Signals
 	void Tray_AppAdded(WId); //new tray app registered

@@ -21,6 +21,7 @@ include(../libLumina/RootWindow.pri)
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)
 include(src-events/events.pri)
+include(src-desktop/desktop.pri)
 
 TEMPLATE = app
 

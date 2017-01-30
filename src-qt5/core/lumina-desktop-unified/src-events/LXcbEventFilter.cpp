@@ -62,9 +62,15 @@ void EventFilter::stop(){
   static_cast<XCBEventFilter*>(EF)->stopSystemTray();
 }
 
+//Session Interaction/Information
 QList<WId> EventFilter::currentTrayApps(){
   return static_cast<XCBEventFilter*>(EF)->trayApps();
 }
+
+unsigned int EventFilter::currentWorkspace(){
+return XCB->CurrentWorkspace();
+}
+
 // === PUBLIC SLOTS ===
 void EventFilter::RegisterVirtualRoot(WId id){
   XCB->WM_Set_Virtual_Roots( QList<WId>() << id );
@@ -172,7 +178,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        break;
 //==============================
 	    case XCB_EXPOSE:
-		qDebug() << "Expose Notify Event:";
+		//qDebug() << "Expose Notify Event:";
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
 		break;
 //==============================
@@ -208,12 +214,12 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break;
 //==============================
 	    case XCB_PROPERTY_NOTIFY:
-		qDebug() << "Property Notify Event:";
+		//qDebug() << "Property Notify Event:";
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
 		break;
 //==============================	    
 	    case XCB_CLIENT_MESSAGE:
-		qDebug() << "Client Message Event";
+		//qDebug() << "Client Message Event";
 		//qDebug() << " - Given Window:" << ((xcb_client_message_event_t*)ev)->window;
 		if( ((xcb_client_message_event_t*)ev)->type == _NET_SYSTEM_TRAY_OPCODE && ((xcb_client_message_event_t*)ev)->format == 32){
 		  //data32[0] is timestamp, [1] is opcode, [2] is  window handle

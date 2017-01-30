@@ -7,6 +7,8 @@
 #include "LSession.h"
 #include "global-objects.h"
 
+#include "src-desktop/ContextMenu.h"
+
 #include "BootSplash.h"
 #ifndef DEBUG
 #define DEBUG 1
@@ -51,7 +53,12 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
 
+  //Setup the basic connections between the shortcuts class and the session itself
+  connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
   //Setup the various connections between the global classes
+  // NOTE: Most of these connections will only become "active" as the global objects get started during the setupSession routine
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
 
  } //end check for primary process 
@@ -136,6 +143,10 @@ void LSession::setupSession(){
     Lumina::ROOTWIN->ChangeWallpaper(scrns[i]->name(), RootWindow::Stretch, LOS::LuminaShare()+"desktop-background.jpg");
   }
   Lumina::ROOTWIN->start();
+  DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
+  connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
+  cmenu->start();
+
   //desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   //updateDesktops();
   //for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
@@ -171,7 +182,7 @@ void LSession::setupSession(){
   splash.close(); 
   LSession::processEvents();
   //DEBUG: Wait a bit then close down the session
-  QTimer::singleShot(15000, this, SLOT(StartLogout()) );
+  //QTimer::singleShot(15000, this, SLOT(StartLogout()) );
 }
 
 //================
