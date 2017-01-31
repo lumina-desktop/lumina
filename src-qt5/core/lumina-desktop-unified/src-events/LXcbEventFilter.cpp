@@ -132,13 +132,13 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================
 	    case XCB_KEY_PRESS:
 		//This is a keyboard key press
-	 	qDebug() << "Key Press Event";
+	 	//qDebug() << "Key Press Event";
 	        stopevent = BlockInputEvent( ((xcb_key_press_event_t *) ev)->root ); //use the main "root" window - not the child widget
 	        if(!stopevent){ obj->emit KeyPressed( InputWindow(((xcb_key_press_event_t *) ev)->root), ((xcb_key_press_event_t *) ev)->detail ); }
 		break;
 	    case XCB_KEY_RELEASE:
 		//This is a keyboard key release
-		qDebug() << "Key Release Event";
+		//qDebug() << "Key Release Event";
 	        stopevent = BlockInputEvent( ((xcb_key_release_event_t *) ev)->root ); //use the main "root" window - not the child widget
 	        if(!stopevent){ obj->emit KeyReleased( InputWindow(((xcb_key_release_event_t *) ev)->root), ((xcb_key_release_event_t *) ev)->detail ); }
 		break;
@@ -183,24 +183,27 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break;
 //==============================
 	    case XCB_MAP_NOTIFY:
+		qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
+		obj->emit WindowShown( ((xcb_map_notify_event_t *)ev)->window);
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
 		qDebug() << "Window Map Request Event";
-	        obj->emit ModifyWindow( ((xcb_map_request_event_t *) ev)->window, Lumina::Show);
+		SetupNewWindow( ((xcb_map_request_event_t *) ev) );
 		break;
 //==============================	    
 	    case XCB_CREATE_NOTIFY:
-		qDebug() << "Window Create Event";
+		//qDebug() << "Window Create Event";
 	        break;
 //==============================
 	    case XCB_UNMAP_NOTIFY:
-		qDebug() << "Window Unmap Event";
-		obj->emit ModifyWindow( ((xcb_unmap_notify_event_t *)ev)->window, Lumina::Hide);
+		qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
+		obj->emit WindowHidden( ((xcb_unmap_notify_event_t *)ev)->window);
 		break;
 //==============================	    
 	    case XCB_DESTROY_NOTIFY:
-		qDebug() << "Window Closed Event";
+		qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
 		if( !rmTrayApp( ((xcb_destroy_notify_event_t *) ev)->window ) ){
+		  qDebug() <<" - Non-tray window";
 		  obj->emit WindowClosed( ((xcb_destroy_notify_event_t *) ev)->window );
 		}
 	        break;
@@ -388,4 +391,28 @@ void XCBEventFilter::checkDamageID(WId id){
   }else{
     //Could check for window damage ID's - but we should not need this
   }
+}
+
+// WINDOW HANDLING FUNCTIONS
+void XCBEventFilter::SetupNewWindow(xcb_map_request_event_t  *ev){
+  WId win = ev->window;
+  
+  bool ok = obj->XCB->WM_ManageWindow(win, true);
+  //Quick check if this is a transient window if we could not manage it directly
+  if(!ok){
+    WId tran = obj->XCB->WM_ICCCM_GetTransientFor(win);
+    if(tran!=win && tran!=0){ 
+      win = tran; 
+      ok = obj->XCB->WM_ManageWindow(win); 
+    }
+  }
+  qDebug() << "New Window:" << win << obj->XCB->WM_ICCCM_GetClass(win) << " Managed:" << ok;
+  obj->XCB->WM_Set_Active_Window(win);
+  //Determing the requested geometry/location/management within the event, 
+  //  and forward that on to the graphical embedding side of the WM
+
+
+  obj->emit WindowCreated(win);
+  //TEMPORARY FOR DEBUGGING
+  //obj->XCB->WM_ShowWindow(win);
 }

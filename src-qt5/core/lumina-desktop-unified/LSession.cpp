@@ -41,7 +41,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
   //Now initialize the global objects (but do not start them yet)
-  Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter 
+  Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter first
   Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
   //Lumina::WM = new LWindowManager();
@@ -60,7 +60,10 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Setup the various connections between the global classes
   // NOTE: Most of these connections will only become "active" as the global objects get started during the setupSession routine
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
-
+  connect(Lumina::EFILTER, SIGNAL(WindowCreated(WId)), Lumina::ROOTWIN, SLOT(NewWindow(WId)) );
+  connect(Lumina::EFILTER, SIGNAL(WindowClosed(WId)), Lumina::ROOTWIN, SLOT(CloseWindow(WId)) );
+  connect(Lumina::EFILTER, SIGNAL(WindowHidden(WId)), Lumina::ROOTWIN, SLOT(HideWindow(WId)) );
+  connect(Lumina::EFILTER, SIGNAL(WindowShown(WId)), Lumina::ROOTWIN, SLOT(ShowWindow(WId)) );
  } //end check for primary process 
 }
 
@@ -176,7 +179,7 @@ void LSession::setupSession(){
   Lumina::SHORTCUTS->start(); //Startup the shortcut handler now
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
-  //QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
+  QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   splash.hide();
   LSession::processEvents();
   splash.close(); 
@@ -279,7 +282,7 @@ void LSession::launchStartupApps(){
     LOS::setScreenBrightness( tmp );
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
-  QProcess::startDetached("nice lumina-open -autostart-apps");
+  //ExternalProcess::launch("nice lumina-open -autostart-apps");
   
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way

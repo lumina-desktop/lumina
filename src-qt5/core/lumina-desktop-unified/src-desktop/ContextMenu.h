@@ -30,7 +30,6 @@ private slots:
 	void showMenu(const QPoint&);
 
 signals:
-	void LaunchApplication(QString); //cmd to run
 	void LockSession();
 	void showLeaveDialog();
 };

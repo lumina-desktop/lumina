@@ -1,7 +1,10 @@
 
 # Files
-SOURCES *= $${PWD}/RootWindow.cpp
-HEADERS *= $${PWD}/RootWindow.h
+SOURCES *= $${PWD}/RootWindow.cpp \
+		$${PWD}/RootSubWindow.cpp
+
+HEADERS *= $${PWD}/RootWindow.h \
+		$${PWD}/RootSubWindow.h
 
 INCLUDEPATH *= ${PWD}
 

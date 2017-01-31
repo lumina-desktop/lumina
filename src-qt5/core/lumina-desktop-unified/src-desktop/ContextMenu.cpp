@@ -24,7 +24,7 @@ void DesktopContextMenu::UpdateMenu(){
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ this->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"))->setWhatsThis("lumina-open -terminal"); }
     else if(items[i]=="lockdesktop"){ this->addAction(LXDG::findIcon("system-lock-screen",""), tr("Lock Session"), this, SIGNAL(LockSession()) ); }
-    else if(items[i]=="filemanager"){ this->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"))->setWhatsThis("lumina-open ~"); }
+    else if(items[i]=="filemanager"){ this->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"))->setWhatsThis("lumina-open \""+QDir::homePath()+"\""); }
     //else if(items[i]=="applications"){ this->addMenu( LSession::handle()->applicationMenu() ); }
     else if(items[i]=="line"){ this->addSeparator(); }
     //else if(items[i]=="settings"){ this->addMenu( LSession::handle()->settingsMenu() ); }
@@ -34,7 +34,7 @@ void DesktopContextMenu::UpdateMenu(){
       QString file = items[i].section("::::",1,1).simplified();
       XDGDesktop xdgf(file);// = LXDG::loadDesktopFile(file, ok);
       if(xdgf.type!=XDGDesktop::BAD){
-        this->addAction( LXDG::findIcon(xdgf.icon,""), xdgf.name)->setWhatsThis(file);
+        this->addAction( LXDG::findIcon(xdgf.icon,""), xdgf.name)->setWhatsThis("lumina-open \""+file+"\"");
 	}else{
 	  qDebug() << "Could not load application file:" << file;
 	}
@@ -86,8 +86,9 @@ void DesktopContextMenu::start(){
 // === PRIVATE SLOTS ===
 void DesktopContextMenu::LaunchAction(QAction *act){
   if(act->whatsThis().isEmpty() || act->parent()!=this ){ return; }
+  qDebug() << "Launch Menu Action:" << act->whatsThis();
   QString cmd = act->whatsThis();
-  emit LaunchApplication(cmd);
+  ExternalProcess::launch(cmd);
 }
 
 void DesktopContextMenu::showMenu(const QPoint &pt){

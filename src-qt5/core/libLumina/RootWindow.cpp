@@ -11,7 +11,7 @@
 #include <QDebug>
 
 // === PUBLIC ===
-RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
+RootWindow::RootWindow() : QMdiArea(0){ //QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
 }
@@ -166,13 +166,43 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 }
 
+void RootWindow::NewWindow(WId win, Qt::WindowFlags flags){
+  RootSubWindow *subwin = 0;
+  for(int i=0; i<WINDOWS.length() && subwin==0; i++){
+    if(WINDOWS[i]->id() == win){ subwin = WINDOWS[i]; } 
+  }
+  if(subwin==0){
+    subwin = new RootSubWindow(this, win, flags);
+    WINDOWS << subwin;
+  }
+  subwin->show();
+}
+
+void RootWindow::ShowWindow(WId win){
+  for(int i=0; i<WINDOWS.length(); i++){
+    if(WINDOWS[i]->id() == win){ WINDOWS[i]->clientShown(); break; } 
+  }
+}
+
+void RootWindow::HideWindow(WId win){
+  for(int i=0; i<WINDOWS.length(); i++){
+    if(WINDOWS[i]->id() == win){ WINDOWS[i]->clientHidden(); break; } 
+  }
+}
+
+void RootWindow::CloseWindow(WId win){
+  for(int i=0; i<WINDOWS.length(); i++){
+    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; } 
+  }
+}
+
 // === PRIVATE SLOTS ===
 
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
   bool found = false;
-  QPainter painter(this);
+  QPainter painter(this->viewport());
   for(int i=0; i<WALLPAPERS.length(); i++){
     if(WALLPAPERS[i].area.intersects(ev->rect()) ){
       found = true;

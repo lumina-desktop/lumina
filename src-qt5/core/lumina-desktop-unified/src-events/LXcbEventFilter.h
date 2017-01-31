@@ -69,7 +69,9 @@ public slots:
 
 signals:
 	void NewInputEvent();
-	void NewManagedWindow(WId);
+	void WindowCreated(WId);
+	void WindowShown(WId);
+	void WindowHidden(WId);
 	void WindowClosed(WId);
 	void ModifyWindow(WId win, Lumina::WindowAction);
 	
@@ -120,6 +122,7 @@ private:
 	void checkDamageID(WId);
 
 	//Longer Event handling functions
+	void SetupNewWindow(xcb_map_request_event_t  *ev);
 	//bool ParseKeyPressEvent();
 	//bool ParseKeyReleaseEvent();
 	//bool ParseButtonPressEvent();
