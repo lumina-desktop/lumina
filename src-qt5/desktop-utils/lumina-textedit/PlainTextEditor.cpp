@@ -83,7 +83,7 @@ void PlainTextEditor::LoadFile(QString filepath){
     this->centerCursor(); //scroll until cursor is centered (if possible)
   }
   hasChanges = false;
-  watcher->addPath(filepath);
+  if(QFile::exists(filepath)){ watcher->addPath(filepath); }
   emit FileLoaded(this->whatsThis());
 }
 
