@@ -16,34 +16,35 @@
 #include <QWidget>
 #include <QCloseEvent>
 
+#include <NativeWindow.h>
+
 class RootSubWindow : public QMdiSubWindow{
 	Q_OBJECT
 public:
-	RootSubWindow(QMdiArea *root, WId window, Qt::WindowFlags flags = Qt::WindowFlags());
+	RootSubWindow(QMdiArea *root, NativeWindow *win);
 	~RootSubWindow();
 
 	WId id();
 
 private:
-	WId CID; //client window ID
-	QWindow *WIN; //Embedded window container
+	NativeWindow *WIN;
 	QWidget *WinWidget;
 	bool closing;
+
+	void LoadProperties( QList< NativeWindow::Property> list);
+
 public slots:
 	void clientClosed();
-	void clientHidden();
-	void clientShown();
 	
 private slots:
+	void clientHidden();
+	void clientShown();
 	void aboutToActivate();
-	void adjustHeight(int);
-	void adjustWidth(int);
+	void propertyChanged(NativeWindow::Property, QVariant);
+
 
 protected:
 	void closeEvent(QCloseEvent*);
-
-signals:
-	void Activated(WId);
 
 };
 

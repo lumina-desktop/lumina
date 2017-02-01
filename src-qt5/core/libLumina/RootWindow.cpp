@@ -166,28 +166,17 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 }
 
-void RootWindow::NewWindow(WId win, Qt::WindowFlags flags){
+void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
   for(int i=0; i<WINDOWS.length() && subwin==0; i++){
-    if(WINDOWS[i]->id() == win){ subwin = WINDOWS[i]; } 
+    if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; } 
   }
   if(subwin==0){
-    subwin = new RootSubWindow(this, win, flags);
+    subwin = new RootSubWindow(this, win);
+    connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
     WINDOWS << subwin;
   }
-  subwin->show();
-}
-
-void RootWindow::ShowWindow(WId win){
-  for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS[i]->clientShown(); break; } 
-  }
-}
-
-void RootWindow::HideWindow(WId win){
-  for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS[i]->clientHidden(); break; } 
-  }
+  //subwin->show();
 }
 
 void RootWindow::CloseWindow(WId win){

@@ -8,30 +8,22 @@
 #include <QDebug>
 
 // === PUBLIC ===
-RootSubWindow::RootSubWindow(QMdiArea *root, WId window, Qt::WindowFlags flags) : \
-	QMdiSubWindow(0, flags){
+RootSubWindow::RootSubWindow(QMdiArea *root, NativeWindow *win) : QMdiSubWindow(0){
   this->setAttribute(Qt::WA_DeleteOnClose);
   //Create the QWindow and QWidget containers for the window
+  WIN = win;
   closing = false;
-  CID = window;
-  WIN = QWindow::fromWinId(CID);
-  WinWidget = QWidget::createWindowContainer( WIN, this);
+  WinWidget = QWidget::createWindowContainer( WIN->window(), this);
   this->setWidget(WinWidget);
+  LoadProperties( QList< NativeWindow::Property>() << NativeWindow::WindowFlags << NativeWindow::Title << NativeWindow::Icon  \
+			<< NativeWindow::MinSize << NativeWindow::MaxSize << NativeWindow::Size );
   //Hookup the signals/slots
   connect(this, SIGNAL(aboutToActivate()), this, SLOT(aboutToActivate()) );
-  connect(WIN, SIGNAL(windowTitleChanged(const QString&)), this, SLOT(setWindowTitle(const QString&)) );
-  connect(WIN, SIGNAL(heightChanged(int)), this, SLOT(adjustHeight(int) ));  
-  connect(WIN, SIGNAL(widthChanged(int)), this, SLOT(adjustWidth(int) ));
-
-  qDebug() << "Initial Window Geometry:" << WIN->geometry();
-  qDebug() << "Initial Widget Geometry:" << WinWidget->geometry();
-  qDebug() << "Minimums:";
-  qDebug() << " - Height:" << WIN->minimumHeight();
-  qDebug() << " - Width:" << WIN->minimumWidth();
-
-  //this->resize(WinWidget->size());
+  connect(WIN, SIGNAL(PropertyChanged(NativeWindow::Property, QVariant)), this, SLOT(propertyChanged(NativeWindow::Property, QVariant)));
   //Now add this window to the root QMdiArea
   root->addSubWindow(this); 
+  //Make sure the visibily property only gets loaded after it is added to the root area
+  propertyChanged(NativeWindow::Visible, WIN->property(NativeWindow::Visible));
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -39,10 +31,15 @@ RootSubWindow::~RootSubWindow(){
 }
 
 WId RootSubWindow::id(){
-  return CID;
+  return WIN->id();
 }
 
 // === PRIVATE ===
+void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
+  for(int i=0; i<list.length(); i++){
+    propertyChanged( list[i], WIN->property(list[i]) );
+  }
+}
 
 // === PUBLIC SLOTS ===
 void RootSubWindow::clientClosed(){
@@ -63,26 +60,48 @@ void RootSubWindow::clientShown(){
 
 // === PRIVATE SLOTS ===
 void RootSubWindow::aboutToActivate(){
-  emit Activated(CID); //need to activate the subwindow - not the frame
-  WIN->requestActivate();
+  WIN->emit RequestActivate(WIN->id());
 }
 
-void RootSubWindow::adjustHeight(int val){
-  qDebug() << "Adjust height:" << val;
-  WinWidget->resize(WinWidget->width(), val);
-}
-
-void RootSubWindow::adjustWidth(int val){
-  qDebug() << "Adjust Width:" << val;
-  WinWidget->resize(val, WinWidget->height());
+void RootSubWindow::propertyChanged(NativeWindow::Property prop, QVariant val){
+  if(val.isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
+  switch(prop){
+	case NativeWindow::Visible:
+		if(val.toBool()){ clientShown(); }
+		else{ clientHidden(); }
+		break;
+	case NativeWindow::Title:
+		this->setWindowTitle(val.toString());
+		break;
+	case NativeWindow::Icon:
+		this->setWindowIcon(val.value< QIcon>());
+		break;
+	case NativeWindow::Size:
+		this->resize(val.toSize());
+		break;
+	case NativeWindow::MinSize:
+		this->setMinimumSize(val.toSize());
+		break;
+	case NativeWindow::MaxSize:
+		this->setMaximumSize(val.toSize());
+		break;
+	case NativeWindow::Active:
+		if(val.toBool()){ this->mdiArea()->setActiveSubWindow(this); }
+		break;
+	case NativeWindow::WindowFlags:
+		this->setWindowFlags( val.value< Qt::WindowFlags >() );
+		break;
+	default:
+		qDebug() << "Window Property Unused:" << prop << val;
+  }
 }
 
 // === PROTECTED ===
 void RootSubWindow::closeEvent(QCloseEvent *ev){
   if(!closing){
-    qDebug() << "Close Window By Button:" << CID;
+    //qDebug() << "Close Window By Button:" << WIN->id();
     ev->ignore();
-    WIN->destroy();
+    WIN->emit RequestClose(WIN->id());
   }else{
     QMdiSubWindow::closeEvent(ev);
   }

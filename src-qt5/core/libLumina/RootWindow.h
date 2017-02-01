@@ -21,6 +21,7 @@
 #include <QMdiArea>
 
 #include "RootSubWindow.h"
+#include "NativeWindow.h"
 
 class RootWindow : public QMdiArea{
 	Q_OBJECT
@@ -54,10 +55,8 @@ public slots:
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);
 	    //Note: for "SingleColor" scaling the "file" variable should be "rgb(R,G,B)" or "#hexcode"
 
-	void NewWindow(WId win, Qt::WindowFlags flags = Qt::WindowFlags());
-	void ShowWindow(WId win);
-	void HideWindow(WId win);
-	void CloseWindow(WId win);
+	void NewWindow(NativeWindow*);
+	void CloseWindow(WId); //automatically connected for any new native window
 
 private slots:
 

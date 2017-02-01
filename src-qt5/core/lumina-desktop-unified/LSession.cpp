@@ -24,7 +24,7 @@ RootWindow* Lumina::ROOTWIN = 0;
 XDGDesktopList* Lumina::APPLIST = 0;
 LShortcutEvents* Lumina::SHORTCUTS = 0;
 
-LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
+LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop-unified"){
   //Initialize the global objects to null pointers
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){

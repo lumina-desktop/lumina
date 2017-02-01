@@ -8,5 +8,6 @@ HEADERS *= $${PWD}/RootWindow.h \
 
 INCLUDEPATH *= ${PWD}
 
-# include LUtils and LuminaX11
+# include other library dependencies
 include(LUtils.pri)
+include(NativeWindow.pri);
