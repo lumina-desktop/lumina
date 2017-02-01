@@ -30,6 +30,7 @@ public:
 		MaxSize, 	/*QSize*/
 		Size, 		/*int*/
 		Title, 		/*QString*/
+		ShortTitle,	/*QString*/
 		Icon, 		/*QIcon*/
 		Name, 		/*QString*/
 		Workspace,	/*int*/

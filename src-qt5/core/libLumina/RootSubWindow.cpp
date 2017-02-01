@@ -65,6 +65,7 @@ void RootSubWindow::aboutToActivate(){
 
 void RootSubWindow::propertyChanged(NativeWindow::Property prop, QVariant val){
   if(val.isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
+  qDebug() << "Set Window Property:" << prop << val;
   switch(prop){
 	case NativeWindow::Visible:
 		if(val.toBool()){ clientShown(); }

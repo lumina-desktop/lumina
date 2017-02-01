@@ -1609,7 +1609,20 @@ WId LXCB::WM_Get_Active_Window(){
 }
 
 void LXCB::WM_Set_Active_Window(WId win){
-  xcb_ewmh_set_active_window(&EWMH, QX11Info::appScreen(), win);	
+  xcb_ewmh_set_active_window(&EWMH, QX11Info::appScreen(), win);
+  //Also send the active window a message to take input focus
+  xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win; //window to activate
+    event.type = ATOMS[atoms.indexOf("WM_PROTOCOLS")];
+    event.data.data32[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")]; 
+    event.data.data32[1] = QX11Info::getTimestamp(); //current timestamp
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+  xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
 }
 
 // _NET_WORKAREA

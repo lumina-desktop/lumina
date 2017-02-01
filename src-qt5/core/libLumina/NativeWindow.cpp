@@ -14,7 +14,7 @@ NativeWindow::NativeWindow(WId id) : QObject(){
 
 NativeWindow::~NativeWindow(){
   hash.clear();
-  WIN->deleteLater();
+  //WIN->deleteLater(); //This class only deals with Native windows which were created outside the app - they need to be cleaned up outside the app too
 }
 
 WId NativeWindow::id(){

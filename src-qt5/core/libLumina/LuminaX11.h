@@ -67,6 +67,18 @@ public:
 	  || width_inc>=0 || height_inc>=0 || min_aspect_num>=0 || min_aspect_den>=0 || max_aspect_num>=0 || max_aspect_den>=0 \
 	  || base_width>=0 || base_height>=0 || win_gravity>0 );
   }
+  bool validMaxSize(){
+    return (max_width>0 && max_width>=min_width) && (max_height>0 && max_height>=min_height);
+  }
+  bool validMinSize(){
+    return (min_width>0 && min_height>0);
+  }
+  bool validBaseSize(){
+    return (base_width>0 && base_height>0);
+  }
+  bool validSize(){ //only check this if the base sizes are invalid (this is the old spec and should not be used any more)
+    return (x>0 && y>0);
+  }
 };
 
 //simple data structure for passing around the XRANDR information

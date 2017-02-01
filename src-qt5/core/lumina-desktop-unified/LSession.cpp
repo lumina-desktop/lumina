@@ -29,6 +29,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
   //Setup the global registrations
+  qsrand(QDateTime::currentMSecsSinceEpoch());
   this->setApplicationName("Lumina Desktop Environment");
   this->setApplicationVersion( LDesktopUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
@@ -60,10 +61,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Setup the various connections between the global classes
   // NOTE: Most of these connections will only become "active" as the global objects get started during the setupSession routine
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
-  connect(Lumina::EFILTER, SIGNAL(WindowCreated(WId)), Lumina::ROOTWIN, SLOT(NewWindow(WId)) );
-  connect(Lumina::EFILTER, SIGNAL(WindowClosed(WId)), Lumina::ROOTWIN, SLOT(CloseWindow(WId)) );
-  connect(Lumina::EFILTER, SIGNAL(WindowHidden(WId)), Lumina::ROOTWIN, SLOT(HideWindow(WId)) );
-  connect(Lumina::EFILTER, SIGNAL(WindowShown(WId)), Lumina::ROOTWIN, SLOT(ShowWindow(WId)) );
+  connect(Lumina::EFILTER, SIGNAL(WindowCreated(NativeWindow*)), Lumina::ROOTWIN, SLOT(NewWindow(NativeWindow*)) );
  } //end check for primary process 
 }
 

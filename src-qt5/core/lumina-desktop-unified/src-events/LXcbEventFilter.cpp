@@ -71,11 +71,22 @@ unsigned int EventFilter::currentWorkspace(){
 return XCB->CurrentWorkspace();
 }
 
+QList<NativeWindow*> EventFilter::currentWindows(){
+  return static_cast<XCBEventFilter*>(EF)->windowList();
+}
+
 // === PUBLIC SLOTS ===
 void EventFilter::RegisterVirtualRoot(WId id){
   XCB->WM_Set_Virtual_Roots( QList<WId>() << id );
 }
 
+void EventFilter::TryCloseWindow(WId id){
+  XCB->WM_CloseWindow(id, false); //do not force close
+}
+
+void EventFilter::TryActivateWindow(WId id){
+  XCB->WM_Set_Active_Window(id);
+}
 //=============================
 //  XCBEventFilter Class
 //=============================
@@ -183,11 +194,16 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		break;
 //==============================
 	    case XCB_MAP_NOTIFY:
-		qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
-		obj->emit WindowShown( ((xcb_map_notify_event_t *)ev)->window);
+		//qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
+		if(Lumina::SS->isLocked()){ waitingToShow << ((xcb_map_notify_event_t *)ev)->window ; }
+		else{
+		  for(int i=0; i<windows.length(); i++){
+		    if(windows[i]->id() == ((xcb_map_notify_event_t *)ev)->window){ windows[i]->setProperty(NativeWindow::Visible, true); break; }
+		  }
+		}
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
-		qDebug() << "Window Map Request Event";
+		//qDebug() << "Window Map Request Event";
 		SetupNewWindow( ((xcb_map_request_event_t *) ev) );
 		break;
 //==============================	    
@@ -196,15 +212,24 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        break;
 //==============================
 	    case XCB_UNMAP_NOTIFY:
-		qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
-		obj->emit WindowHidden( ((xcb_unmap_notify_event_t *)ev)->window);
+		//qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
+		if(waitingToShow.contains(((xcb_unmap_notify_event_t *)ev)->window)){ waitingToShow.removeAll(((xcb_unmap_notify_event_t *)ev)->window); }
+		for(int i=0; i<windows.length(); i++){
+		  if(windows[i]->id() == ((xcb_unmap_notify_event_t *)ev)->window){ windows[i]->setProperty(NativeWindow::Visible, false); break; }
+		}
 		break;
 //==============================	    
 	    case XCB_DESTROY_NOTIFY:
-		qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
+		//qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
 		if( !rmTrayApp( ((xcb_destroy_notify_event_t *) ev)->window ) ){
-		  qDebug() <<" - Non-tray window";
-		  obj->emit WindowClosed( ((xcb_destroy_notify_event_t *) ev)->window );
+		  //qDebug() <<" - Non-tray window";
+		  for(int i=0; i<windows.length(); i++){
+		    if(windows[i]->id() == ((xcb_destroy_notify_event_t *)ev)->window){ 
+		      windows[i]->emit WindowClosed(windows[i]->id()); 
+		      QTimer::singleShot(500, windows.takeAt(i), SLOT(deleteLater()) ); //give a few moments first, then clean up the object
+		      break; 
+		    }
+		  }
 		}
 	        break;
 //==============================
@@ -218,7 +243,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 //==============================
 	    case XCB_PROPERTY_NOTIFY:
 		//qDebug() << "Property Notify Event:";
-		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
+		ParsePropertyEvent((xcb_property_notify_event_t*)ev);
 		break;
 //==============================	    
 	    case XCB_CLIENT_MESSAGE:
@@ -306,6 +331,10 @@ bool XCBEventFilter::stopSystemTray(){
   SystemTrayID = 0;
   TrayDmgID = 0; 
   return true;
+}
+
+QList<NativeWindow*> XCBEventFilter::windowList(){
+  return windows;
 }
 
 //=========
@@ -409,10 +438,50 @@ void XCBEventFilter::SetupNewWindow(xcb_map_request_event_t  *ev){
   qDebug() << "New Window:" << win << obj->XCB->WM_ICCCM_GetClass(win) << " Managed:" << ok;
   obj->XCB->WM_Set_Active_Window(win);
   //Determing the requested geometry/location/management within the event, 
-  //  and forward that on to the graphical embedding side of the WM
+  NativeWindow *nwin = new NativeWindow(win);
+  QObject::connect(nwin, SIGNAL(RequestClose(WId)), obj, SLOT(TryCloseWindow(WId)) );
+  QObject::connect(nwin, SIGNAL(RequestActivate(WId)), obj, SLOT(TryActivateWindow(WId)) );
+  windows << nwin;
+  bool show_now = !Lumina::SS->isLocked();
+  if(!show_now){ waitingToShow << win; } //add to the list to get set visible later
+  //populate the native window settings as they are right now
+  nwin->setProperty(NativeWindow::Active, true);
+  nwin->setProperty(NativeWindow::Visible, show_now);
+  nwin->setProperty(NativeWindow::Workspace, obj->XCB->CurrentWorkspace());
+  icccm_size_hints hints = obj->XCB->WM_ICCCM_GetNormalHints(win);
+  if(!hints.isValid()){ hints = obj->XCB->WM_ICCCM_GetSizeHints(win); }
+  if(hints.validMinSize()){ nwin->setProperty(NativeWindow::MinSize, QSize(hints.min_width,hints.min_height)); }
+  if(hints.validMaxSize()){ nwin->setProperty(NativeWindow::MaxSize, QSize(hints.max_width,hints.max_height)); }
+  if(hints.validBaseSize()){ nwin->setProperty(NativeWindow::Size, QSize(hints.base_width,hints.base_height)); }
+  else if(hints.validSize()){ nwin->setProperty(NativeWindow::Size, QSize(hints.width, hints.height)); }
+  nwin->setProperty(NativeWindow::Icon, obj->XCB->WM_Get_Icon(win));
+  QString title = obj->XCB->WM_Get_Name(win);
+    if(title.isEmpty()){ title = obj->XCB->WM_Get_Visible_Name(win); }
+    if(title.isEmpty()){ title = obj->XCB->WM_ICCCM_GetName(win); }
+  nwin->setProperty(NativeWindow::Title, title);  
+    title = obj->XCB->WM_Get_Icon_Name(win);
+    if(title.isEmpty()){ title = obj->XCB->WM_Get_Visible_Icon_Name(win); }
+    if(title.isEmpty()){ title = obj->XCB->WM_ICCCM_GetIconName(win); }
+  nwin->setProperty(NativeWindow::ShortTitle, title);
 
+  obj->emit WindowCreated(nwin);
+}
 
-  obj->emit WindowCreated(win);
-  //TEMPORARY FOR DEBUGGING
-  //obj->XCB->WM_ShowWindow(win);
+void XCBEventFilter::ParsePropertyEvent(xcb_property_notify_event_t *ev){
+ //First find the NativeWindow associated with the event
+  NativeWindow *nwin = 0;
+  for(int i=0; i<windows.length() && nwin==0; i++){
+    if(windows[i]->id() == ev->window){ nwin = windows[i]; }
+  }
+  if(nwin==0){ return; } //unmanaged window - ignore this event
+  qDebug() << "Got Property Event:" << ev->window << ev->atom;
+  //Now determine which properties are getting changed, and update the native window as appropriate
+  if(ev->atom == obj->XCB->EWMH._NET_WM_NAME){
+    qDebug() << " - Found _NET_WM_NAME atom";
+    nwin->setProperty(NativeWindow::Title, obj->XCB->WM_Get_Name(nwin->id()));
+  }else if(ev->atom == obj->XCB->EWMH._NET_WM_ICON){
+    qDebug() << " - Found _NET_WM_ICON atom";
+    nwin->setProperty(NativeWindow::Icon, obj->XCB->WM_Get_Icon(nwin->id()));
+  }
+  
 }

@@ -58,6 +58,7 @@
 #include <DesktopSettings.h>
 #include <RootWindow.h>
 #include <ExternalProcess.h>
+#include <NativeWindow.h>
 
 // Standard C includes
 #include <unistd.h>
