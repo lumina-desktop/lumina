@@ -133,7 +133,7 @@ void LTaskButton::UpdateButton(){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
-    if(noicon || showText){ "("+QString::number(WINLIST.length())+") "+cname; }
+    if(noicon || showText){ this->setText("("+QString::number(WINLIST.length())+") "+cname); }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }
   this->setState(showstate); //Make sure this is after the button setup so that it properly sets the margins/etc
