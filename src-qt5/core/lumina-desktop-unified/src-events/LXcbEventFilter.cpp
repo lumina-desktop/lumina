@@ -53,6 +53,7 @@ void EventFilter::start(){
       XCB->setupEventsForRoot(WMFlag);
       XCB->WM_Set_Supporting_WM(WMFlag);
 
+  XCB->WM_Set_Root_Supported(); //announce all the various options that the WM supports
   static_cast<XCBEventFilter*>(EF)->startSystemTray();
 
   QCoreApplication::instance()->flush();
@@ -482,6 +483,18 @@ void XCBEventFilter::ParsePropertyEvent(xcb_property_notify_event_t *ev){
   }else if(ev->atom == obj->XCB->EWMH._NET_WM_ICON){
     qDebug() << " - Found _NET_WM_ICON atom";
     nwin->setProperty(NativeWindow::Icon, obj->XCB->WM_Get_Icon(nwin->id()));
+  }else if(ev->atom == obj->XCB->EWMH._NET_WM_ICON_NAME){
+    qDebug() << " - Found _NET_WM_ICON_NAME atom";
+    nwin->setProperty(NativeWindow::ShortTitle, obj->XCB->WM_Get_Icon_Name(nwin->id()));
+  }else if(ev->atom == obj->XCB->EWMH._NET_WM_DESKTOP){
+    qDebug() << " - Found _NET_WM_DESKTOP atom";
+    nwin->setProperty(NativeWindow::Workspace, obj->XCB->WM_Get_Desktop(nwin->id()));
+  }else if(ev->atom == obj->XCB->EWMH._NET_WM_WINDOW_TYPE ){
+    qDebug() << " - Found _NET_WM_WINDOW_TYPE atom";
+
+  }else if( ev->atom == obj->XCB->EWMH._NET_WM_STATE){
+    qDebug() << " - Found _NET_WM_STATE atom";
+    
   }
   
 }

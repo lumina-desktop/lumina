@@ -23,7 +23,6 @@
 #include <QObject>
 #include <QFlags>
 
-
 #include <xcb/xcb_ewmh.h>
 
 //SYSTEM TRAY STANDARD DEFINITIONS
