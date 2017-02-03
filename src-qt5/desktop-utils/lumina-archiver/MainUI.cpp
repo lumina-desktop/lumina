@@ -42,6 +42,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionAdd_Dirs, SIGNAL(triggered()), this, SLOT(addDirs()) );
   connect(ui->tree_contents, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(ViewFile(QTreeWidgetItem*)) );
   connect(ui->actionUSB_Image, SIGNAL(triggered()), this, SLOT(BurnImgToUSB()) );
+  connect(ui->tree_contents, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()) );
 
   //Set Keyboard Shortcuts
   ui->action_New->setShortcut(tr("CTRL+N"));
@@ -88,7 +89,7 @@ void MainUI::loadIcons(){
   ui->actionAdd_Dirs->setIcon( LXDG::findIcon("archive-insert-directory","") );
   ui->actionRemove_File->setIcon( LXDG::findIcon("archive-remove","") );
   ui->actionExtract_All->setIcon( LXDG::findIcon("archive-extract","") );
-  ui->actionExtract_Sel->setIcon( LXDG::findIcon("archive-extract","") );
+  ui->actionExtract_Sel->setIcon( LXDG::findIcon("edit-select-all","") );
   ui->actionUSB_Image->setIcon( LXDG::findIcon("drive-removable-media-usb-pendrive","drive-removable-media-usb") );
 }
 
@@ -112,6 +113,12 @@ QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
 }
 
 bool MainUI::cleanItems(QStringList list, QTreeWidgetItem *start){
+  //Quick detection for an empty list
+  if(list.isEmpty() && ui->tree_contents->topLevelItemCount()>0){
+    ui->tree_contents->clear();
+    return true;
+  }
+  //Recursive resolution of items
   bool changed = false;
   if(start==0){
     for(int i=0; i<ui->tree_contents->topLevelItemCount(); i++){
@@ -154,7 +161,7 @@ QString MainUI::CreateFileTypes(){
 
 QString MainUI::OpenFileTypes(){
   QStringList types;
-  types << QString(tr("All Types %1")).arg("(*.tar.gz *.tar.xz *.tar.bz *.tar.bz2 *.tar.lzma *.tar *.zip *.tgz *.txz *.tbz *.tbz2 *.tlz *.cpio *.pax *.ar *.shar *.7z *.iso *.img *.xar *.jar *.rpm)");
+  types << QString(tr("All Known Types %1")).arg("(*.tar.gz *.tar.xz *.tar.bz *.tar.bz2 *.tar.lzma *.tar *.zip *.tgz *.txz *.tbz *.tbz2 *.tlz *.cpio *.pax *.ar *.shar *.7z *.iso *.img *.xar *.jar *.rpm)");
   types << tr("Uncompressed Archive (*.tar)");
   types << tr("GZip Compressed Archive (*.tar.gz *.tgz)");
   types << tr("BZip Compressed Archive (*.tar.bz *.tbz)");
@@ -171,6 +178,7 @@ QString MainUI::OpenFileTypes(){
   types << tr("READ-ONLY: XAR archive (*.xar)");
   types << tr("READ-ONLY: Java archive (*.jar)");
   types << tr("READ-ONLY: RedHat Package (*.rpm)");
+  types << tr("Show All Files (*)");
   return types.join(";;");
 }
 
@@ -340,7 +348,8 @@ void MainUI::ProcFinished(bool success, QString msg){
     canmodify = canmodify && BACKEND->canModify(); //also include the file type limitations
     ui->actionAdd_File->setEnabled(canmodify);
     ui->actionRemove_File->setEnabled(canmodify && info.exists());
-    ui->actionExtract_All->setEnabled(info.exists());
+    ui->actionExtract_All->setEnabled(info.exists() && ui->tree_contents->topLevelItemCount()>0);
+    ui->actionExtract_Sel->setEnabled(info.exists() && !ui->tree_contents->selectedItems().isEmpty());
     ui->actionAdd_Dirs->setEnabled(canmodify);
 }
 
@@ -348,4 +357,8 @@ void MainUI::ProcUpdate(int percent, QString txt){
   ui->progressBar->setMaximum( percent<0 ? 0 : 100 );
   ui->progressBar->setValue(percent);
   if(!txt.isEmpty()){ ui->label_progress->setText(txt); }
+}
+
+void MainUI::selectionChanged(){
+  ui->actionExtract_Sel->setEnabled(!ui->tree_contents->selectedItems().isEmpty());
 }

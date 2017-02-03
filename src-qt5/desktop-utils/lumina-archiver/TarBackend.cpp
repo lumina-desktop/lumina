@@ -27,6 +27,7 @@ Backend::~Backend(){
 //        PUBLIC
 //===============
 void Backend::loadFile(QString path){
+  //qDebug() << "Loading Archive:" << path;
   filepath = path;
   tmpfilepath = filepath.section("/",0,-2)+"/"+".tmp_larchiver_"+filepath.section("/",-1);
   flags.clear();
@@ -149,7 +150,7 @@ void Backend::startViewFile(QString path){
   args << "-x";
   args << flags <<"--include" << path <<"--strip-components" << QString::number(path.count("/")) << "-C" << QDir::tempPath();
   STARTING=true;
-  qDebug() << "Starting command:" << "tar" << args;
+  //qDebug() << "Starting command:" << "tar" << args;
   PROC.start("tar", args);
 }
 
@@ -195,6 +196,7 @@ void Backend::startList(){
   QStringList args;
   args << "-tv";
   LIST = STARTING=true;
+  //qDebug() << "Starting List:" << "tar "+args.join(" ")+" "+flags.join(" ");
   PROC.start("tar", QStringList() << args << flags);
 }
 
@@ -203,12 +205,17 @@ void Backend::startList(){
 //===============
 void Backend::procFinished(int retcode, QProcess::ExitStatus){
   static QString result;
-  processData();
   //qDebug() << "Process Finished:" << PROC.arguments() << retcode;
+  processData();
   LIST = STARTING = false;
   if(PROC.arguments().contains("-tv")){
-    if(retcode!=0){ contents.clear(); } //could not read archive
-    emit ProcessFinished(true,result);
+    if(retcode!=0){  //could not read archive
+      contents.clear();
+      result = tr("Could not read archive");
+    }else if(result.isEmpty()){
+      result = tr("Archive Loaded");
+    }
+    emit ProcessFinished((retcode==0), result);
     result.clear();
   }else{
     bool needupdate = true;
