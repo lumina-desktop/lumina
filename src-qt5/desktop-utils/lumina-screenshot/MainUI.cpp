@@ -9,7 +9,7 @@
 
 #include <LuminaX11.h>
 #include <QMessageBox>
-
+#include <QClipboard>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
@@ -30,7 +30,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     scaleTimer->setSingleShot(true);
     scaleTimer->setInterval(200); //~1/5 second
   tabbar = new QTabBar(this);
-  ui->tabLayout->insertWidget(0,tabbar);
+    tabbar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+  ui->tabLayout->insertWidget(0,tabbar, Qt::AlignLeft | Qt::AlignBottom);
     tabbar->addTab(LXDG::findIcon("view-preview",""), tr("View"));
     tabbar->addTab(LXDG::findIcon("preferences-other",""), tr("Settings"));
   ui->stackedWidget->setCurrentWidget(ui->page_current);
@@ -47,6 +48,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //connect(ui->push_snap, SIGNAL(clicked()), this, SLOT(startScreenshot()) );
   connect(ui->actionTake_Screenshot, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
+  connect(ui->tool_copy_to_clipboard, SIGNAL(clicked()), this, SLOT(copyToClipboard()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
   connect(IMG, SIGNAL(scaleFactorChanged(int)), this, SLOT(imgScalingChanged(int)) );
   connect(ui->slider_zoom, SIGNAL(valueChanged(int)),  this, SLOT(sliderChanged()) );
@@ -74,16 +76,14 @@ MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  //ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
   ui->tool_quicksave->setIcon( LXDG::findIcon("document-edit","") );
   ui->actionSave_As->setIcon( LXDG::findIcon("document-save-as","") );
   ui->actionQuick_Save->setIcon( LXDG::findIcon("document-save","") );
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
-  //ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
+  ui->tool_copy_to_clipboard->setIcon( LXDG::findIcon("insert-image","") );
   ui->actionTake_Screenshot->setIcon( LXDG::findIcon("camera-web","") );
   ui->tool_crop->setIcon( LXDG::findIcon("transform-crop","") );
   ui->tool_resize->setIcon( LXDG::findIcon("transform-scale","") );
-  //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
   this->setWindowIcon( LXDG::findIcon("camera-web","") );
 }
 
@@ -120,6 +120,12 @@ void MainUI::quicksave(){
       showSaveError(path);
     }
 
+}
+void MainUI::copyToClipboard(){
+  qDebug() << "Copy Image to clipboard";
+  QClipboard *clipboard = QApplication::clipboard();
+  clipboard->setImage(IMG->image());
+  qDebug() << " - Success:" << !clipboard->image().isNull();
 }
 
 void MainUI::startScreenshot(){

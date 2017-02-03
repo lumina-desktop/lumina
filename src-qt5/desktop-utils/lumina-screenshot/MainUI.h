@@ -63,6 +63,7 @@ private slots:
 	}
 	void saveScreenshot();
 	void quicksave();
+	void copyToClipboard();
 
 	void startScreenshot();
 

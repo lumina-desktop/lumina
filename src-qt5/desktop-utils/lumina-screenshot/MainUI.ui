@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
-    <height>288</height>
+    <width>480</width>
+    <height>318</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -54,7 +54,7 @@
       <item>
        <widget class="QFrame" name="frame_modify">
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
@@ -83,11 +83,43 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="statusTip">
+            <string>Open screenshot with an application</string>
+           </property>
            <property name="text">
-            <string>Open With...</string>
+            <string>Open</string>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="tool_copy_to_clipboard">
+           <property name="statusTip">
+            <string>Copy screenshot to clipboard</string>
+           </property>
+           <property name="text">
+            <string>Copy</string>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+C</string>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
@@ -99,11 +131,17 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="statusTip">
+            <string>Resize screenshot to selection</string>
+           </property>
            <property name="text">
             <string>Resize</string>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -115,11 +153,17 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="statusTip">
+            <string>Crop screenshot to selection</string>
+           </property>
            <property name="text">
             <string>&amp;Crop</string>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -210,8 +254,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>344</width>
-               <height>216</height>
+               <width>439</width>
+               <height>230</height>
               </rect>
              </property>
             </widget>
@@ -466,6 +510,7 @@
    <addaction name="actionQuick_Save"/>
    <addaction name="actionClose"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionTake_Screenshot">
    <property name="text">
     <string>Capture</string>
