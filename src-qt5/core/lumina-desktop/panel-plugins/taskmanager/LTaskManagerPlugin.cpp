@@ -116,8 +116,10 @@ void LTaskManagerPlugin::UpdateButtons(){
         but->addWindow( winlist[i] );
 	if(this->layout()->direction()==QBoxLayout::LeftToRight){
 	    but->setIconSize(QSize(this->height(), this->height()));
+	    but->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	}else{
 	    but->setIconSize(QSize(this->width(), this->width()));
+	    but->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 	}
       this->layout()->addWidget(but);
       connect(but, SIGNAL(MenuClosed()), this, SIGNAL(MenuClosed()));

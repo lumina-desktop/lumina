@@ -16,7 +16,6 @@ LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent)
   winMenu = new QMenu(this);
   UpdateMenus();
   showText = !smallDisplay;
-  this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   this->setAutoRaise(false); //make sure these always look like buttons
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   this->setFocusPolicy(Qt::NoFocus);
@@ -126,16 +125,15 @@ void LTaskButton::UpdateButton(){
       QString txt = WINLIST[0].text();
       if(txt.length()>30){ txt.truncate(27); txt.append("..."); }
       else if(txt.length()<30){ txt = txt.leftJustified(30, ' '); }
-      this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText(txt);
-     }else if(noicon){ this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon); this->setText( cname ); }
-    else{ this->setToolButtonStyle(Qt::ToolButtonIconOnly); this->setText(""); }
+      this->setText(txt);
+     }else if(noicon){ this->setText( cname ); }
+    else{ this->setText(""); }
     this->setToolTip(WINLIST[0].text());
   }else if(WINLIST.length() > 1){
     //multiple windows
     this->setPopupMode(QToolButton::InstantPopup);
     this->setMenu(winMenu);
-    this->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    if(noicon || showText){ "("+QString::number(WINLIST.length())+") "+cname; }
+    if(noicon || showText){ this->setText("("+QString::number(WINLIST.length())+") "+cname); }
     else{ this->setText("("+QString::number(WINLIST.length())+")"); }
   }
   this->setState(showstate); //Make sure this is after the button setup so that it properly sets the margins/etc
