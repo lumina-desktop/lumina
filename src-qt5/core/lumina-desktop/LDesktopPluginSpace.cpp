@@ -325,8 +325,9 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
 void LDesktopPluginSpace::paintEvent(QPaintEvent*ev){
   if(!wallpaper.isNull()){
     QPainter painter(this);
-    painter.setBrush(wallpaper);
-    painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
+    //painter.setBrush(wallpaper);
+    //painter.drawRect(ev->rect().adjusted(-1,-1,2,2));
+    painter.drawPixmap(ev->rect(), wallpaper, ev->rect() );
   }else{
     QWidget::paintEvent(ev);
   }
