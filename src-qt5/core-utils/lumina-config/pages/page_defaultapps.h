@@ -26,8 +26,12 @@ public slots:
 
 private:
 	Ui::page_defaultapps *ui;
+  QString defaultBrowser;
+  QString defaultEmail;
+  QString defaultFileManager;
+  QString defaultTerminal;
 
-	QString getSysApp(bool allowreset);
+	QString getSysApp(bool allowreset, QString defaultPath = "");
 
 	void updateDefaultButton(QToolButton *button, QString app);
 

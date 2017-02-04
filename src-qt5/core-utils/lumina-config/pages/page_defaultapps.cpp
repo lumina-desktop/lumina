@@ -42,92 +42,23 @@ void page_defaultapps::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Default Applications") );
 
-//First load the lumina-open specific defaults
-    //  - Default File Manager
-  QString tmp = LXDG::findDefaultAppForMime("inode/directory"); 
-  if(tmp.isEmpty()){ tmp = "lumina-fm"; }
-  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
-  if(tmp.endsWith(".desktop")){
-    XDGDesktop file(tmp);
-    if(file.type == XDGDesktop::BAD){
-      //Might be a binary - just print out the raw "path"
-      ui->tool_default_filemanager->setText(tmp.section("/",-1));
-      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
-    }else{
-      ui->tool_default_filemanager->setText(file.name);
-      ui->tool_default_filemanager->setIcon(LXDG::findIcon(file.icon,"") );
-    }
-  }else if(tmp.isEmpty()){
-    ui->tool_default_filemanager->setText(tr("Click to Set"));
-    ui->tool_default_filemanager->setIcon( LXDG::findIcon("system-help","") );
-  }else{
-    //Might be a binary - just print out the raw "path"
-      ui->tool_default_filemanager->setText(tmp.section("/",-1));
-      ui->tool_default_filemanager->setIcon( LXDG::findIcon("application-x-executable","") );
-  }
+  //First load the lumina-open specific defaults
+  //  - Default File Manager
+  defaultFileManager = LXDG::findDefaultAppForMime("inode/directory"); 
+  if(defaultFileManager.isEmpty()){ defaultFileManager = "lumina-fm"; }
+  updateDefaultButton(ui->tool_default_filemanager, defaultFileManager);
+
   // - Default Terminal
-  tmp =LXDG::findDefaultAppForMime("application/terminal"); //sessionsettings->value("default-terminal", "xterm").toString();
-  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
-  if(tmp.endsWith(".desktop")){
-    XDGDesktop file(tmp);
-    if(file.type == XDGDesktop::BAD){
-      //Might be a binary - just print out the raw "path"
-      ui->tool_default_terminal->setText(tmp.section("/",-1));
-      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
-    }else{
-      ui->tool_default_terminal->setText(file.name);
-      ui->tool_default_terminal->setIcon(LXDG::findIcon(file.icon,"") );
-    }
-  }else if(tmp.isEmpty()){
-    ui->tool_default_terminal->setText(tr("Click to Set"));
-    ui->tool_default_terminal->setIcon( LXDG::findIcon("system-help","") );
-  }else{
-    //Might be a binary - just print out the raw "path"
-      ui->tool_default_terminal->setText(tmp.section("/",-1));
-      ui->tool_default_terminal->setIcon( LXDG::findIcon("application-x-executable","") );
-  }
+  defaultTerminal = LXDG::findDefaultAppForMime("application/terminal"); //sessionsettings->value("default-terminal", "xterm").toString();
+  updateDefaultButton(ui->tool_default_terminal, defaultTerminal);
+
   // - Default Web Browser
-  tmp = LXDG::findDefaultAppForMime("x-scheme-handler/http"); //appsettings->value("default/webbrowser", "").toString();
-  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
-  if(tmp.endsWith(".desktop")){
-    XDGDesktop file(tmp);
-    if(file.type == XDGDesktop::BAD){
-      //Might be a binary - just print out the raw "path"
-      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
-      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
-    }else{
-      ui->tool_default_webbrowser->setText(file.name);
-      ui->tool_default_webbrowser->setIcon(LXDG::findIcon(file.icon,"") );
-    }
-  }else if(tmp.isEmpty()){
-    ui->tool_default_webbrowser->setText(tr("Click to Set"));
-    ui->tool_default_webbrowser->setIcon( LXDG::findIcon("system-help","") );
-  }else{
-    //Might be a binary - just print out the raw "path"
-      ui->tool_default_webbrowser->setText(tmp.section("/",-1));
-      ui->tool_default_webbrowser->setIcon( LXDG::findIcon("application-x-executable","") );
-  }
+  defaultBrowser = LXDG::findDefaultAppForMime("x-scheme-handler/http"); //appsettings->value("default/webbrowser", "").toString();
+  updateDefaultButton(ui->tool_default_webbrowser, defaultBrowser);
+
   // - Default Email Client
-  tmp = LXDG::findDefaultAppForMime("application/email"); //appsettings->value("default/email", "").toString();
-  if( !QFile::exists(tmp) && !LUtils::isValidBinary(tmp) ){ qDebug() << "Invalid Settings:" << tmp; tmp.clear(); } //invalid settings
-  if(tmp.endsWith(".desktop")){
-    XDGDesktop file(tmp);
-    if(file.type == XDGDesktop::BAD){
-      //Might be a binary - just print out the raw "path"
-      ui->tool_default_email->setText(tmp.section("/",-1));
-      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
-    }else{
-      ui->tool_default_email->setText(file.name);
-      ui->tool_default_email->setIcon(LXDG::findIcon(file.icon,"") );
-    }
-  }else if(tmp.isEmpty()){
-    ui->tool_default_email->setText(tr("Click to Set"));
-    ui->tool_default_email->setIcon( LXDG::findIcon("system-help","") );
-  }else{
-    //Might be a binary - just print out the raw "path"
-      ui->tool_default_email->setText(tmp.section("/",-1));
-      ui->tool_default_email->setIcon( LXDG::findIcon("application-x-executable","") );
-  }
+  defaultEmail = LXDG::findDefaultAppForMime("application/email"); //appsettings->value("default/email", "").toString();
+  updateDefaultButton(ui->tool_default_email, defaultEmail);
   
   //Now load the XDG mime defaults
   ui->tree_defaults->clear();
@@ -146,36 +77,37 @@ void page_defaultapps::LoadSettings(int){
     QString comment = defMimeList[i].section("::::",3,50);
     //Now check if this is a new category
     if(ccat!=cat){
-	//New group
-	group = new QTreeWidgetItem(0);
+	    //New group
+	    group = new QTreeWidgetItem(0);
 	    group->setText(0, cat); //add translations for known/common groups later
-	ui->tree_defaults->addTopLevelItem(group);
-	ccat = cat;
+    	ui->tree_defaults->addTopLevelItem(group);
+    	ccat = cat;
     }
     //Now create the entry
     QTreeWidgetItem *it = new QTreeWidgetItem();
-      it->setWhatsThis(0,mime); // full mimetype
-      it->setText(0, QString(tr("%1 (%2)")).arg(mime.section("/",-1), extlist) );
-      it->setText(2,comment);
-      it->setToolTip(0, comment); it->setToolTip(1,comment);
-      //Now load the default (if there is one)
-      it->setWhatsThis(1,def); //save for later
-      if(def.endsWith(".desktop")){
-	XDGDesktop file(def);
-	if(file.type == XDGDesktop::BAD){
-	  //Might be a binary - just print out the raw "path"
-	  it->setText(1,def.section("/",-1));
-	  it->setIcon(1, LXDG::findIcon("application-x-executable","") );
-	}else{
-	  it->setText(1, file.name);
-	  it->setIcon(1, LXDG::findIcon(file.icon,"") );
-	}     
-      }else if(!def.isEmpty()){
-	//Binary/Other default
-	it->setText(1, def.section("/",-1));
-	it->setIcon(1, LXDG::findIcon("application-x-executable","") );
+    it->setWhatsThis(0,mime); // full mimetype
+    it->setText(0, QString(tr("%1 (%2)")).arg(mime.section("/",-1), extlist) );
+    it->setText(2,comment);
+    it->setToolTip(0, comment); it->setToolTip(1,comment);
+    //Now load the default (if there is one)
+    it->setWhatsThis(1,def); //save for later
+    it->setData(1, Qt::UserRole, def);
+    if(def.endsWith(".desktop")){
+      XDGDesktop file(def);
+      if(file.type == XDGDesktop::BAD){
+        //Might be a binary - just print out the raw "path"
+        it->setText(1, def.section("/",-1));
+        it->setIcon(1, LXDG::findIcon("application-x-executable","") );
+      }else{
+        it->setText(1, file.name);
+        it->setIcon(1, LXDG::findIcon(file.icon,"") );
       }
-      group->addChild(it);
+    }else if(!def.isEmpty()){
+      //Binary/Other default
+      it->setText(1, def.section("/",-1));
+      it->setIcon(1, LXDG::findIcon("application-x-executable","") );
+    }
+    group->addChild(it);
   }
   
   ui->tree_defaults->sortItems(0,Qt::AscendingOrder);
@@ -194,8 +126,8 @@ void page_defaultapps::updateIcons(){
 //=================
 //         PRIVATE
 //=================
-QString page_defaultapps::getSysApp(bool allowreset){
-  AppDialog dlg(this);
+QString page_defaultapps::getSysApp(bool allowreset, QString defaultPath){
+  AppDialog dlg(this, defaultPath);
     dlg.allowReset(allowreset);
     dlg.exec();
   if(dlg.appreset && allowreset){
@@ -206,6 +138,7 @@ QString page_defaultapps::getSysApp(bool allowreset){
 }
 
 void page_defaultapps::updateDefaultButton(QToolButton *button, QString app){
+  if( !QFile::exists(app) && !LUtils::isValidBinary(app) ){ qDebug() << "Invalid Settings:" << app; app.clear(); } //invalid settings
   if(app.endsWith(".desktop")){
     XDGDesktop file(app);
     if(file.type == XDGDesktop::BAD){
@@ -231,10 +164,11 @@ void page_defaultapps::updateDefaultButton(QToolButton *button, QString app){
 //=================
 void page_defaultapps::changeDefaultBrowser(){
   //Prompt for the new app
-  QString app = getSysApp(true);
-    if(app.isEmpty()){ return; }//nothing selected
-    if(app=="reset"){ app.clear(); }
+  QString app = getSysApp(true, defaultBrowser);
+  if(app.isEmpty()){ return; }//nothing selected
+  if(app=="reset"){ app.clear(); }
   //save the new app setting and adjust the button appearance
+  defaultBrowser = app;
   LXDG::setDefaultAppForMime("x-scheme-handler/http", app.section("/",-1));
   LXDG::setDefaultAppForMime("x-scheme-handler/https", app.section("/",-1));
   updateDefaultButton(ui->tool_default_webbrowser, app);
@@ -242,30 +176,33 @@ void page_defaultapps::changeDefaultBrowser(){
 
 void page_defaultapps::changeDefaultEmail(){
   //Prompt for the new app
-  QString app = getSysApp(true);
-    if(app.isEmpty()){ return; }//nothing selected
-    if(app=="reset"){ app.clear(); }
+  QString app = getSysApp(true, defaultEmail);
+  if(app.isEmpty()){ return; }//nothing selected
+  if(app=="reset"){ app.clear(); }
   //save the new app setting and adjust the button appearance
+  defaultEmail = app;
   LXDG::setDefaultAppForMime("application/email",app.section("/",-1));
   updateDefaultButton(ui->tool_default_email, app);
 }
 
 void page_defaultapps::changeDefaultFileManager(){
   //Prompt for the new app
-  QString app = getSysApp(true);
-    if(app.isEmpty()){ return; }//nothing selected
-    if(app=="reset"){ app = "lumina-fm"; }
+  QString app = getSysApp(true, defaultFileManager);
+  if(app.isEmpty()){ return; }//nothing selected
+  if(app=="reset"){ app = "lumina-fm"; }
   //save the new app setting and adjust the button appearance
+  defaultFileManager = app;
   LXDG::setDefaultAppForMime("inode/directory", app.section("/",-1));
   updateDefaultButton(ui->tool_default_filemanager, app);
 }
 
 void page_defaultapps::changeDefaultTerminal(){
   //Prompt for the new app
-  QString app = getSysApp(true);
-    if(app.isEmpty()){ return; }//nothing selected
-    if(app=="reset"){ app = "xterm"; }
+  QString app = getSysApp(true, defaultTerminal);
+  if(app.isEmpty()){ return; }//nothing selected
+  if(app=="reset"){ app = "xterm"; }
   //save the new app setting and adjust the button appearance
+  defaultTerminal = app;
   LXDG::setDefaultAppForMime("application/terminal", app.section("/",-1) );
   updateDefaultButton(ui->tool_default_terminal, app);
 }
@@ -292,14 +229,19 @@ void page_defaultapps::cleardefaultitem(){
 
 void page_defaultapps::setdefaultitem(){
   QTreeWidgetItem *it = ui->tree_defaults->currentItem();
+  QString path;
   if(it==0){ return; } //no item selected
   QList<QTreeWidgetItem*> list;
   for(int i=0; i<it->childCount(); i++){
     list << it->child(i);
   }
-  if(list.isEmpty()){ list << it; } //just do the current item
+  if(list.isEmpty()){
+    //just do the current item
+    list << it;
+    path = it->data(1, Qt::UserRole).toString();
+  }
   //Prompt for which application to use
-  QString app = getSysApp(false); //no "reset"  option
+  QString app = getSysApp(false, path); //no "reset"  option
     if(app.isEmpty()){ return; }//nothing selected
   //Now set the items
   for(int i=0; i<list.length(); i++){
@@ -310,6 +252,7 @@ void page_defaultapps::setdefaultitem(){
     list[i]->setWhatsThis(1,app); //app path
     list[i]->setIcon(1,LXDG::findIcon(desk.icon,"")); //reset the icon
     list[i]->setText(1,desk.name); //reset the name
+    list[i]->setData(1, Qt::UserRole, app);
   }
 
 }
