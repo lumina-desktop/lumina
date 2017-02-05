@@ -41,7 +41,7 @@ public slots:
 
 private:
 	Ui::MainUI *ui;
-	bool mousegrabbed, picSaved;
+	bool mousegrabbed, picSaved, closeOnSave;
 	QRect lastgeom;
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot

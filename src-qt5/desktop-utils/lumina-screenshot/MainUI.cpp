@@ -11,10 +11,13 @@
 #include <QMessageBox>
 #include <QClipboard>
 
-MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
+MainUI::MainUI()
+  : QMainWindow(), ui(new Ui::MainUI),
+    mousegrabbed(false),
+    picSaved(false),
+    closeOnSave(false)
+{
   ui->setupUi(this); //load the designer file
-  mousegrabbed = false;
-  picSaved = false;
   XCB = new LXCB();
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
@@ -96,13 +99,22 @@ void MainUI::showSaveError(QString path){
 void MainUI::saveScreenshot(){
   if(mousegrabbed){ return; }
   QString filepath = QFileDialog::getSaveFileName(this, tr("Save Screenshot"), ppath+"/"+QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss")), tr("PNG Files (*.png);;AllFiles (*)") );
-  if(filepath.isEmpty()){ return; }
+  if(filepath.isEmpty()){
+    closeOnSave = false;
+    return;
+  }
   if(!filepath.endsWith(".png")){ filepath.append(".png"); }
   if( !IMG->image().save(filepath, "png") ){
+    closeOnSave = false;
     showSaveError(filepath);
   }else{
     picSaved = true;
     ppath = filepath.section("/",0,-2); //just the directory
+    if (closeOnSave) {
+      // We came here from close, now we need to close *after* handling
+      // the current screen event.
+      QTimer::singleShot(0, this, SLOT(close()));
+    }
   }
 }
 
@@ -249,8 +261,18 @@ void MainUI::closeEvent(QCloseEvent *ev){
   //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
   if(ui->check_show_popups->isChecked() && !picSaved){
     //Ask what to do about the unsaved changed
-    if(QMessageBox::Yes != QMessageBox::warning(this, tr("Unsaved Screenshot"), tr("The current screenshot has not been saved yet. Do you want to quit anyway?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-      //cancelled close of window
+    const int messageRet = QMessageBox::warning(this, tr("Unsaved Screenshot"),
+				    tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
+				    QMessageBox::Discard | QMessageBox::Save |QMessageBox::Cancel, QMessageBox::Cancel);
+    switch (messageRet) {
+    case QMessageBox::Discard:
+      // Just close, we don't care about the file.
+      break;
+    case QMessageBox::Save:
+      closeOnSave = true;
+      saveScreenshot();
+      // fall through
+    case QMessageBox::Cancel:
       ev->ignore();
       return;
     }
