@@ -66,7 +66,7 @@ void page_defaultapps::LoadSettings(int){
   //qDebug() << "Mime List:\n" << defMimeList.join("\n");
   defMimeList.sort(); //sort by group/mime
   //Now fill the tree by group/mime
-  QTreeWidgetItem *group = new QTreeWidgetItem(0); //nothing at the moment
+  QTreeWidgetItem *group = nullptr;
   QString ccat;
   for(int i=0; i<defMimeList.length(); i++){
     //Get the info from this entry
@@ -76,7 +76,7 @@ void page_defaultapps::LoadSettings(int){
     QString def = defMimeList[i].section("::::",2,2);
     QString comment = defMimeList[i].section("::::",3,50);
     //Now check if this is a new category
-    if(ccat!=cat){
+    if(group == nullptr || ccat!=cat){
 	    //New group
 	    group = new QTreeWidgetItem(0);
 	    group->setText(0, cat); //add translations for known/common groups later
