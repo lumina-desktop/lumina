@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Solid">
+	<g>
+		<path fill="#757575" d="M7,5.005h10c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1H7c-0.552,0-1,0.448-1,1v2
+			C6,4.557,6.448,5.005,7,5.005z"/>
+		<path fill="#757575" d="M21.411,19.223L16,12.646V6.005h-2v1h-2v2h2v1h-3v2h3v1c0,0.232,0.081,0.457,0.228,0.635l2.771,3.365
+			H7.003l2.769-3.365C9.919,13.462,10,13.237,10,13.005v-7H8v6.642l-5.458,6.638c-0.644,0.92-0.721,2.11-0.203,3.106
+			C2.857,23.387,3.877,24.005,5,24.005h14c1.123,0,2.143-0.618,2.661-1.615C22.179,21.395,22.102,20.205,21.411,19.223z"/>
+	</g>
+</g>
+</svg>

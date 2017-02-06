@@ -265,7 +265,7 @@ void LDesktop::SettingsChanged(){
   UpdatePanels();
   UpdateMenu();
   issyncing = false;
-  QTimer::singleShot(100, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
+  QTimer::singleShot(50, this, SLOT(UnlockSettings()) ); //give it a few moments to settle before performing another sync
 }
 
 void LDesktop::LocaleChanged(){
@@ -456,7 +456,7 @@ void LDesktop::UpdatePanels(){
     }
   }
   //Give it a 1/2 second before ensuring that the visible desktop area is correct
-  QTimer::singleShot(500, this, SLOT(UpdateDesktopPluginArea()) );
+  QTimer::singleShot(1500, this, SLOT(UpdateDesktopPluginArea()) );
 }
 
 void LDesktop::UpdateDesktopPluginArea(){
@@ -484,7 +484,8 @@ void LDesktop::UpdateDesktopPluginArea(){
   }
   //Now make sure the desktop plugin area is only the visible area
   QRect rec = visReg.boundingRect();
-  //qDebug() << " - DPArea: Panel-Adjusted rectangle:" << rec;
+//  QRect rec = LSession::desktop()->availableGeometry(Screen());
+  qDebug() << " - DPArea: Panel-Adjusted rectangle:" << rec;
   //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) Screen(), rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
   globalWorkRect = rec; //save this for later
