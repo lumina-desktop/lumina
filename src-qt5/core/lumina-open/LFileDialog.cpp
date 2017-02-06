@@ -161,11 +161,13 @@ void LFileDialog::generateAppList(bool shownetwork){
   XDGDesktopList applist;
     applist.updateList();
   PREFAPPS = getPreferredApplications();
-  //qDebug() << "Preferred Apps:" << PREFAPPS;
+  qDebug() << "Preferred Apps:" << PREFAPPS;
   ui->combo_rec->clear();
   //Now get the application mimetype for the file extension (if available)
   QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
     mimetypes.removeDuplicates();
+  QString defapp = getDefaultApp(mimetypes.first()); //default application
+  if(!defapp.isEmpty() && !PREFAPPS.contains(defapp) ){ PREFAPPS << defapp; } //ensure this is listed in the preferred apps list
   //Now add all the detected applications
   QHash< QString, QList<XDGDesktop*> > hash = LXDG::sortDesktopCats( applist.apps(false,true) );
   QStringList cat = hash.keys();
@@ -205,7 +207,9 @@ void LFileDialog::generateAppList(bool shownetwork){
   for(int i=0; i<PREFAPPS.length(); i++){
     XDGDesktop dFile(PREFAPPS[i]);
     if( dFile.isValid() ){
-      ui->combo_rec->addItem( LXDG::findIcon(dFile.icon, "application-x-desktop"), dFile.name);
+      QString txt = dFile.name;
+      if(PREFAPPS[i] == defapp){ txt.prepend( tr("[default] ") ); }
+      ui->combo_rec->addItem( LXDG::findIcon(dFile.icon, "application-x-desktop"), txt);
       if(i==0){ ui->combo_rec->setCurrentIndex(0); } //make sure the first item is selected
     }else{
       PREFAPPS.removeAt(i); //invalid app
