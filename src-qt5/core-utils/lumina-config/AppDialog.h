@@ -23,18 +23,22 @@ private:
 	Ui::AppDialog *ui;
 
 public:
-	AppDialog(QWidget *parent = 0) : QDialog(parent), ui(new Ui::AppDialog){
+	AppDialog(QWidget *parent = 0, QString defaultPath = "") : QDialog(parent), ui(new Ui::AppDialog){
 	  ui->setupUi(this); //load the designer file
 	  appreset = false;
 	  ui->listApps->clear();
+    QListWidgetItem *defaultItem = nullptr;
           QList<XDGDesktop*> APPS = LXDG::sortDesktopNames(APPSLIST->apps(false,false)); //Don't show all/hidden
 	  for(int i=0; i<APPS.length(); i++){
 	    QListWidgetItem *app = new QListWidgetItem(LXDG::findIcon(APPS[i]->icon,"application-x-executable"), APPS[i]->name);
 	    app->setData(Qt::UserRole, APPS[i]->filePath);
 	    ui->listApps->addItem(app);
+      if(APPS[i]->filePath == defaultPath){
+        defaultItem = app;
+      }
 	  }
 	  if(ui->listApps->count()){
-	    ui->listApps->setCurrentItem(ui->listApps->item(0));
+	    ui->listApps->setCurrentItem(defaultItem != nullptr ? defaultItem : ui->listApps->item(0));
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
 	  if(parent!=0){
