@@ -507,7 +507,6 @@
    </attribute>
    <addaction name="actionTake_Screenshot"/>
    <addaction name="actionSave_As"/>
-   <addaction name="actionQuick_Save"/>
    <addaction name="actionClose"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
