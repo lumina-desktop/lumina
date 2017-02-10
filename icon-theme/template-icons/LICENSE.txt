@@ -1,0 +1,25 @@
+Information about the included Icon Sets is below.
+
+Google Material Design:
+License: Apache License Version 2.0
+Site: https://github.com/google/material-design-icons
+Direct Link: https://github.com/google/material-design-icons/archive/master.zip
+Archive.org Capture of License Declaration: http://web.archive.org/web/*/https://github.com/google/material-design-icons
+
+Templarian Material Design:
+License: SIL OPEN FONT LICENSE Version 1.1
+Site: https://github.com/Templarian/MaterialDesign
+Direct Link: https://github.com/Templarian/MaterialDesign/archive/master.zip
+Archive.org Capture of License Declaration: http://web.archive.org/web/20161227025826/https://github.com/Templarian/MaterialDesign
+
+Android L Pack:
+License: Attribution-NoDerivs 3.0 Unported (CC BY-ND 3.0)
+Site: https://icons8.com/android-icons/
+Direct Link: https://cdnd.icons8.com/download/android_l_icons_free.zip
+Archive.org Capture of License Declaration: http://web.archive.org/web/*/https://icons8.com/license/
+
+Nova Free Pack:
+License: CC0 1.0 Universal
+Site: http://www.webalys.com/nova/free-icons.html
+Direct Link: http://www.webalys.com/nova/free/Nova-Free-Pack.zip
+Archive.org Capture of License Declaration: http://web.archive.org/web/*/http://www.webalys.com/nova/free-icons.html

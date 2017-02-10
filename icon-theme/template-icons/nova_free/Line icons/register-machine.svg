@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Solid">
+	<g>
+		<path fill="#757575" d="M21,17h-0.105l-0.901-8.11C19.938,8.383,19.51,8,19,8h-2V7h2c0.552,0,1-0.448,1-1V3c0-0.552-0.448-1-1-1
+			h-6c-0.552,0-1,0.448-1,1v3c0,0.552,0.448,1,1,1h2v1h-4V4c0-0.347-0.18-0.668-0.474-0.85C10.23,2.967,9.863,2.951,9.553,3.106
+			L8,3.882L6.447,3.106C6.137,2.951,5.77,2.967,5.474,3.15C5.18,3.332,5,3.653,5,4v4C4.49,8,4.063,8.383,4.006,8.89L3.105,17H3
+			c-0.552,0-1,0.448-1,1v4c0,0.552,0.448,1,1,1h18c0.552,0,1-0.448,1-1v-4C22,17.448,21.552,17,21,17z M14,5V4h4v1H14z M7,5.619
+			l0.553,0.275c0.281,0.141,0.613,0.141,0.895,0L9,5.619V8H7V5.619z M5.895,10H6h12.105l0.778,7H5.117L5.895,10z M20,21H4v-2h16V21z
+			"/>
+		<rect x="7" y="11" fill="#757575" width="4" height="2"/>
+		<circle fill="#757575" cx="13" cy="12" r="1"/>
+		<circle fill="#757575" cx="16" cy="12" r="1"/>
+		<circle fill="#757575" cx="13" cy="15" r="1"/>
+		<circle fill="#757575" cx="16" cy="15" r="1"/>
+	</g>
+</g>
+</svg>

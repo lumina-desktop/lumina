@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Outline">
+	<g>
+		<polygon fill="#757575" points="8.999,9 6.999,9 6.999,13 9.999,13 9.999,11 8.999,11 		"/>
+		<polygon fill="#757575" points="13.999,9 11.999,9 11.999,13 14.999,13 14.999,11 13.999,11 		"/>
+		<path fill="#757575" d="M11.999,0c-4.962,0-9,4.038-9,9v14c0,0.404,0.244,0.769,0.617,0.924c0.373,0.154,0.803,0.069,1.09-0.217
+			l3.293-3.293l3.293,3.293c0.391,0.391,1.023,0.391,1.414,0l3.293-3.293l3.293,3.293C19.483,23.898,19.739,24,19.999,24
+			c0.129,0,0.259-0.024,0.383-0.076c0.374-0.155,0.617-0.52,0.617-0.924V9C20.999,4.038,16.961,0,11.999,0z M18.999,20.586
+			l-2.293-2.293c-0.391-0.391-1.023-0.391-1.414,0l-3.293,3.293l-3.293-3.293C8.511,18.098,8.255,18,7.999,18
+			s-0.512,0.098-0.707,0.293l-2.293,2.293V9c0-3.86,3.14-7,7-7s7,3.14,7,7V20.586z"/>
+	</g>
+</g>
+</svg>

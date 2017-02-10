@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Solid">
+	<g>
+		<polygon fill="#757575" points="10,15 16,12 10,9 		"/>
+		<path fill="#757575" d="M21,2H3C1.897,2,1,2.896,1,4v16c0,1.103,0.897,2,2,2h18c1.103,0,2-0.897,2-2V4C23,2.896,22.103,2,21,2z
+			 M3,20V4h18l0.001,16H3z"/>
+		<rect x="5" y="5" fill="#757575" width="2" height="2"/>
+		<rect x="9" y="5" fill="#757575" width="2" height="2"/>
+		<rect x="13" y="5" fill="#757575" width="2" height="2"/>
+		<rect x="17" y="5" fill="#757575" width="2" height="2"/>
+		<rect x="5" y="17" fill="#757575" width="2" height="2"/>
+		<rect x="9" y="17" fill="#757575" width="2" height="2"/>
+		<rect x="13" y="17" fill="#757575" width="2" height="2"/>
+		<rect x="17" y="17" fill="#757575" width="2" height="2"/>
+	</g>
+</g>
+</svg>

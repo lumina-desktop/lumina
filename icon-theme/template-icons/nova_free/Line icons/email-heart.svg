@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Outline">
+	<g>
+		<g>
+			<path fill="#757575" d="M20,22H4c-1.103,0-2-0.897-2-2v-9c0-0.388,0.225-0.741,0.576-0.905c0.35-0.165,0.766-0.111,1.064,0.137
+				L9.362,15h5.276l5.722-4.769c0.298-0.248,0.712-0.3,1.064-0.137C21.775,10.259,22,10.612,22,11v9C22,21.103,21.103,22,20,22z
+				 M4,13.135V20h16.001L20,13.135l-4.36,3.634C15.46,16.918,15.234,17,15,17H9c-0.234,0-0.46-0.082-0.64-0.231L4,13.135z"/>
+		</g>
+		<g>
+			<polygon fill="#757575" points="20,9 18,9 18,4 6,4 6,9 4,9 4,2 20,2 			"/>
+		</g>
+		<g>
+			<path fill="#757575" d="M12,13c0,0,4-2.909,4-5.064C16,5.889,12.889,5,12,7.688C11.111,5,8,5.889,8,7.936C8,10.091,12,13,12,13z"
+				/>
+		</g>
+	</g>
+</g>
+</svg>

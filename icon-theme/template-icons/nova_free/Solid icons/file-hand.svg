@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frames-24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Outline">
+	<g>
+		<path fill="#757575" d="M19,18h-8.586l0.293-0.293c0.391-0.39,0.391-1.023,0-1.414l-1-1C9.424,15.01,9,14.923,8.628,15.071
+			L5,16.522V23h11c0.265,0,0.52-0.105,0.707-0.293l3-3c0.286-0.286,0.372-0.715,0.217-1.089C19.769,18.244,19.404,18,19,18z"/>
+		<path fill="#757575" d="M3,15H1c-0.552,0-1,0.448-1,1v7c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-7C4,15.448,3.552,15,3,15z"/>
+		<path fill="#757575" d="M21,0h-7c-1.103,0-2,0.898-2,2v9c0,1.103,0.897,2,2,2h7c1.103,0,2-0.897,2-2V2C23,0.898,22.103,0,21,0z
+			 M14,3h4v1h-4V3z M20,10h-6V9h6V10z M20,7h-6V6h6V7z"/>
+	</g>
+</g>
+</svg>
