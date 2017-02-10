@@ -340,8 +340,8 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
-        <translation type="unfinished"></translation>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <translation>Alternatywny wygląd menu start, pokazujący pliki użytkownika, jego katalogi i ulubione elementy.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatywny wygląd menu start, ułatwiający szybkie uruchamianie aplikacji.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -371,12 +371,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation type="unfinished"></translation>
+        <translation>Pogląd i kontrola każdego okna uruchomionej aplikacji (grupowanie tych samych aplikacji).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pogląd i kontrola każdego okna uruchomionej aplikacji (nie grupuj aplikacji).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -500,12 +500,12 @@
         <location filename="../LPlugins.cpp" line="178"/>
         <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu Skrypt</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurowalny obszar do automatycznego pokazywania ikon pulpitu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="263"/>
@@ -520,23 +520,23 @@
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista otwartych, zminimalizowanych i aktywnych okien aplikacji</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="179"/>
         <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchom skrypt do generowania menu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Zablokuj sesję</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>Zablokuj sesję pulpitu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -711,17 +711,17 @@
     <message>
         <location filename="../pages/getPage.h" line="29"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapeta</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Motyw</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchamianie automatyczne</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -761,27 +761,27 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulpit</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Panele</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia urządzeń wejściowych</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Skonfiguruj klawiaturę oraz mysz</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -791,7 +791,7 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Change what icons or tools are embedded on the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikony lub narzędzia wyświetlane na pulpicie</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
@@ -801,12 +801,12 @@
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Change any floating panels and what they show</source>
-        <translation type="unfinished"></translation>
+        <translation>Panele i ich zawartość</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Wtyczki menu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
@@ -821,12 +821,12 @@
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Change the default locale settings for this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień ustawienia językowe tego użytkownika</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia językowe</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -849,7 +849,7 @@
     <message>
         <location filename="../ScriptDialog.ui" line="14"/>
         <source>Setup a JSON Menu Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw skrypt menu używając JSON</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="25"/>
@@ -885,7 +885,7 @@
     <message>
         <location filename="../ScriptDialog.cpp" line="57"/>
         <source>Select a menu script</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz skrypt menu</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.cpp" line="64"/>
@@ -945,7 +945,7 @@
     <message>
         <location filename="../mainWindow.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MainWindow</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="23"/>
@@ -1068,17 +1068,17 @@
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyłącz menedżera kompozycji (wymagany restart sesji)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>Menedżer kompozycji tylko z akceleracją GPU. </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Compositor Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia menedżera kompozycji</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1199,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
         <source>page_fluxbox_keys</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">page_fluxbox_keys</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
@@ -1249,16 +1249,16 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="220"/>
         <source>View Syntax Codes</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż składnię kodu</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1436,12 +1436,12 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="52"/>
