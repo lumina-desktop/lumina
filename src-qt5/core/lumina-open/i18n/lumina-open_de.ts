@@ -176,7 +176,7 @@
     <message>
         <location filename="../main.cpp" line="295"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>fehlender Pfad zum Verzeichnis der Verknüpfung: %1</translation>
+        <translation>Verzeichnisverknüpfung fehlt der Pfad zum Verzeichnis: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="300"/>
