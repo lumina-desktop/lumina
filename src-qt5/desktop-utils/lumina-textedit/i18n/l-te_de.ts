@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="289"/>
         <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht gespeicherte Änderungen verlieren?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Datei hat nicht gespeicherte Änderungen.
+Möchten Sie sie trotzdem schließen?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="386"/>
@@ -257,7 +260,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt nicht gespeicherte Änderungen.
+Möchten Sie den Editor trotzdem schließen?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -275,7 +281,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeilennummer: %1, Spaltennummer: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
