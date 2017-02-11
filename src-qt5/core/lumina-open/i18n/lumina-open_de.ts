@@ -171,7 +171,7 @@
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>fehlende URL für URL: %1</translation>
+        <translation>URL-Verknüpfung fehlt die URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../main.cpp" line="300"/>
         <source>Unknown type of shortcut : %1</source>
-        <translation>unbekannter Typ für Vernüpfung: %1</translation>
+        <translation>Unbekannter Typ für Vernüpfung: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
