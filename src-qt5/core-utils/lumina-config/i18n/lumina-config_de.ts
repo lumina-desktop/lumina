@@ -340,7 +340,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Startmenüalternative, die Benutzerdateien, Verzeichnisse und Lesezeichen fokussiert.</translation>
     </message>
     <message>
@@ -531,12 +531,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitzung sperren</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Arbeitsflächen-Sitzung sperren</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -711,17 +711,17 @@
     <message>
         <location filename="../pages/getPage.h" line="29"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundbild</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Thema</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="32"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Autostart</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -761,27 +761,27 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitsfläche</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="37"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Leisten</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabegeräteeinstellungen</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="42"/>
         <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur und Mausgeräte anpassen</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -826,7 +826,7 @@
     <message>
         <location filename="../pages/getPage.h" line="39"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalisierung</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -1073,7 +1073,7 @@
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>Compositing nur mit GPU-Beschleunigung verwenden </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
@@ -1253,12 +1253,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt-Taste
-&quot;Mod4&quot;: 	Windows/Mac-Taste
-&quot;Steuerung&quot;:	Strg-Taste</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt-Taste
+"Mod4": 	Windows/Mac-Taste
+"Steuerung":	Strg-Taste</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1436,12 +1436,12 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="52"/>
@@ -1474,7 +1474,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitsflächen-Standardeinstellungen</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="65"/>
@@ -1497,27 +1497,27 @@
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabegeräteeinstellungen</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="81"/>
         <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="85"/>
         <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="106"/>
         <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterungsgerät #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="107"/>
         <source>Master Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauptgerät</translation>
     </message>
 </context>
 <context>
@@ -1613,7 +1613,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwendungsabsturzdaten anzeigen</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1833,7 +1833,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitsflächenthema</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1889,7 +1889,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwendungsthemen</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
@@ -1920,12 +1920,12 @@
     <message>
         <location filename="../pages/page_theme.cpp" line="137"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="138"/>
         <source>Manual Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuelle Einstellung</translation>
     </message>
 </context>
 <context>
