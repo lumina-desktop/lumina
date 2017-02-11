@@ -291,7 +291,7 @@ Möchten Sie den Editor trotzdem schließen?
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Hinweis: Sie werden alle momentan ungespeicherten Änderungen verlieren)</translation>
+        <translation>(Hinweis: Sie werden alle momentan nicht gespeicherten Änderungen verlieren)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
