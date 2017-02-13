@@ -43,9 +43,10 @@ public:
 	~OutputDevice();
 
 	//Modification
-	void setAsPrimary();
-	void setEnabled(bool, QRect geom = QRect());
-	void setResolution(QSize);
+	bool setAsPrimary();
+	bool disable();
+	void enable(QRect geom = QRect()); //if no geom provided, will add as the right-most screen at optimal resolution
+	void changeResolution(QSize);
 	
 	//Now define a simple public_objects class so that each implementation 
 	//  has a storage container for placing private objects as needed
@@ -53,4 +54,17 @@ public:
 	p_objects* p_obj;
 };
 
+class OutputDeviceList : public QList<OutputDevice>{
+public:
+	OutputDeviceList();
+	~OutputDeviceList();
+
+	//Simplification functions for dealing with multiple monitors
+	void setPrimaryMonitor(QString id);
+	void disableMonitor(QString id);
+	//void enableMonitor(QString id, 
+
+private:
+
+};
 #endif
