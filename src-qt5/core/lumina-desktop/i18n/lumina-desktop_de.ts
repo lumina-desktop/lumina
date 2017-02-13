@@ -6,7 +6,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation>Klicke um Programm zuzuweisen</translation>
+        <translation>Klicken Sie, um eine Anwendung zuzuweisen</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="42"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="49"/>
         <source>Open %1</source>
-        <translation>Öffne %1</translation>
+        <translation>%1 öffnen</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
@@ -146,17 +146,17 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina-Arbeitsfläche wird gestartet...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Version %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Arbeitsfläche wird durch Kaffee, Kaffee und mehr Kaffee angetrieben.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
@@ -181,12 +181,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Arbeitsfläche wird großzügig von iXsystems gesponsert</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich bin niemals durch das verletzt worden, was ich nicht gesagt habe</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
@@ -196,17 +196,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles hat seine Schönheit, aber nicht jeder sieht es.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor Gott sind wir alle gleich weise - und gleich dumm.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wir können nicht alles auf einmal machen, aber wir können etwas auf einmal machen.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
@@ -215,13 +215,13 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <source>You can't know too much, but you can say too much.</source>
+        <translation>Sie können nicht zu viel wissen, aber Sie können zu viel sagen.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
@@ -236,12 +236,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trauen Sie niemals einem Computer, den Sie nicht aus einem Fenster werfen können.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Studieren Sie die Vergangenheit, wenn Sie die Zukunft bestimmen würden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
@@ -261,12 +261,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Person, die nie einen Fehler gemacht hat, hat nie etwas Neues versucht.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es spielt keine Rolle, wie langsam Sie gehen, solange Sie nicht aufhören.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
@@ -291,17 +291,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der einzige Weg großartige Arbeit zu verrichten, ist zu lieben, was Sie machen.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Politische Korrektheit ist Tyrannei mit Manieren.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <translation>Nur zwei Dinge sind unendlich, das Universum und die menschliche Dummheit, aber beim ersten bin ich mir nicht sicher.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
@@ -310,13 +310,13 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation type="unfinished"></translation>
+        <source>Do, or do not. There is no 'try'.</source>
+        <translation>Machen oder nicht machen. Es gibt kein "Versuchen".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Mathematiker ist ein Gerät, um Kaffee in Theoreme umzuwandeln.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -326,22 +326,22 @@
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarze Löcher sind, wo Gott durch Null geteilt hat.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <source>It's kind of fun to do the impossible.</source>
+        <translation>Es macht Spaß, das Unmögliche zu tun.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wissen spricht, aber Weisheit hört zu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein witziges Sprichwort beweist nichts.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitlich gut angesetzte Stille hat mehr Sprachfertigkeit als eine Rede.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
@@ -361,12 +361,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der beste Weg, die Zukunft vorauszusagen, ist, sie zu erfinden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gut gemacht ist besser als gut gesagt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Wahrheit ist wichtiger als die Fakten.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
@@ -642,7 +642,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Element starten</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitzung sperren</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -982,7 +982,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundbild</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Arbeitsflächeneinstellungen</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
