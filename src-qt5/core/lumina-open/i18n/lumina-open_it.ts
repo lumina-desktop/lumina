@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation type="unfinished">Posizione codice binario</translation>
+        <translation>Posizione codice binario</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
