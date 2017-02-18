@@ -647,12 +647,12 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Zacznij przesuwać element</translation>
+        <translation>Przesuń element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Zacznij zmieniać rozmiar elementu</translation>
+        <translation>Zmień rozmiar elementu</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
