@@ -70,6 +70,7 @@ isEmpty(OS){
       } else:exists(/etc/slackware-version){
 	LINUX_DISTRO = Slackware
       }
+   }
     #Apply any special rules for particular distros
     equals(LINUX_DISTRO,"Fedora"){
       isEmpty(L_ETCDIR){ L_ETCDIR=/etc }
