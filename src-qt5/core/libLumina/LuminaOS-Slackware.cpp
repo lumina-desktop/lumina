@@ -19,7 +19,7 @@ QString LOS::OSName(){ return "Slackware Linux"; }
 // NOTE: PREFIX, L_ETCDIR, L_SHAREDIR are defined in the OS-detect.pri project file and passed in
 QString LOS::LuminaShare(){ return (L_SHAREDIR+"/lumina-desktop/"); } //Install dir for Lumina share files
 QString LOS::AppPrefix(){ return "/usr/"; } //Prefix for applications
-QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
+QString LOS::SysPrefix(){ return "/etc/"; } //Prefix for system
 
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return ""; } //system control panel
