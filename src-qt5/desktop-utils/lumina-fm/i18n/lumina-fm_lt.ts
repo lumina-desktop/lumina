@@ -165,7 +165,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkti veiksmą</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="256"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti failų...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="258"/>
@@ -845,12 +845,12 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="222"/>
         <source>CTRL+B</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(VALD)+B</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(VALD)+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="336"/>
