@@ -982,7 +982,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
@@ -1017,17 +1017,17 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Pasirinkti multimedijos failus</translation>
+        <translation>Pasirinkti multimedijos failus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Pasirinkti multimedijos katalogą</translation>
+        <translation>Pasirinkti multimedijos katalogą</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Įveskite taisyklingą multimedijos failo ar srauto URL:</translation>
+        <translation>Įveskite taisyklingą multimedijos failo ar srauto URL:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
