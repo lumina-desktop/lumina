@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="l-te_da">
 <context>
     <name>ColorDialog</name>
     <message>
@@ -16,28 +16,28 @@
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farve</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Prøve</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg farve</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Anvend</translation>
     </message>
 </context>
 <context>
@@ -45,12 +45,12 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Hovedvindue</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="46"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Faneblad 1</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="81"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>Find:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="94"/>
@@ -79,12 +79,12 @@
     <message>
         <location filename="../MainUI.ui" line="104"/>
         <source>Replace:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstat:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="123"/>
         <source>Match case</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskel på store og små bogstaver</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
@@ -114,12 +114,12 @@
     <message>
         <location filename="../MainUI.ui" line="225"/>
         <source>Syntax Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntaksfremhævning</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
@@ -129,38 +129,38 @@
     <message>
         <location filename="../MainUI.ui" line="279"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis linjenumre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <location filename="../MainUI.cpp" line="151"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="292"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="300"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="303"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="311"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="314"/>
@@ -170,12 +170,12 @@
     <message>
         <location filename="../MainUI.ui" line="322"/>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem fil som</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../MainUI.ui" line="338"/>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -195,27 +195,27 @@
     <message>
         <location filename="../MainUI.ui" line="349"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpas farver</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="360"/>
         <source>Wrap Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Ombryd linjer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="365"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Find</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="368"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="376"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="379"/>
@@ -225,17 +225,17 @@
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstredigering</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <source>Open File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn fil(er)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstfiler (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -249,7 +249,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne fil har ugemte ændringer.
+Vil du lukke den alligevel?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="386"/>
@@ -265,17 +268,17 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem fil</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="94"/>
         <source>Text File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstfil (*)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Rækkenummer: %1, kolonnenummer: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
@@ -285,12 +288,12 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(bemærk: du vil miste alle nuværende ugemte ændringer)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil ændret</translation>
     </message>
 </context>
 </TS>
