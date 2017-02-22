@@ -190,7 +190,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="533"/>
         <source>(Limited Access) </source>
-        <translation>(Begrænset Adgang)</translation>
+        <translation>(begrænset adgang) </translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="555"/>
@@ -331,7 +331,7 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -458,7 +458,7 @@
     <message>
         <location filename="../FODialog.cpp" line="320"/>
         <source>Invalid Move</source>
-        <translation>Ugyldigt træk.</translation>
+        <translation>Ugyldigt træk</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="320"/>
@@ -566,7 +566,7 @@ Ny lokation: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
