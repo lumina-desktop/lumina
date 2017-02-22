@@ -19,12 +19,12 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Udløs terminal</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Øverst på skærmen</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
