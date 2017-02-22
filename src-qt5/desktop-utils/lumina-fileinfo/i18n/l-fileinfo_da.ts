@@ -169,12 +169,12 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem programfil</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Programregistreringer (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldigt valg: Ikke en eksekverbar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="305"/>
