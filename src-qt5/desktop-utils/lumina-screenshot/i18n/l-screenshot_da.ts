@@ -6,12 +6,12 @@
     <message>
         <location filename="../ImageEditor.cpp" line="14"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom ind</translation>
     </message>
     <message>
         <location filename="../ImageEditor.cpp" line="15"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom ud</translation>
     </message>
 </context>
 <context>
@@ -30,37 +30,37 @@
         <location filename="../MainUI.ui" line="196"/>
         <location filename="../MainUI.ui" line="386"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem som</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="244"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskær</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="228"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpas størrelse</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina-skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Sek. forsinkelse</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Fang</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigér</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -70,17 +70,17 @@
     <message>
         <location filename="../MainUI.ui" line="378"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="402"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esc</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="57"/>
@@ -100,7 +100,7 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke gemme skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
