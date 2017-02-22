@@ -48,7 +48,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>MimeType:</source>
-        <translation>MimeType:</translation>
+        <translation>MIME-type:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="185"/>
