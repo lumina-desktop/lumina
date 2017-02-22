@@ -14,7 +14,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Color Scheme Editor</source>
-        <translation>Redigér Farveskema</translation>
+        <translation>Redigér farveskema</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="28"/>
@@ -340,7 +340,7 @@ Skal den overskrives?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1252,9 +1252,9 @@ Skal den overskrives?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
