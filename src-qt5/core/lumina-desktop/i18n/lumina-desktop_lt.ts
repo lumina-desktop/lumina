@@ -156,12 +156,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šis darbalaukis veikia su kava, kava ir dar daugiau kavos.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekite darbalaukio naujienas!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>

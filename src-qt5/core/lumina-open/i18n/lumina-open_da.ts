@@ -41,7 +41,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="221"/>
         <source>OK</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation>Email henvisning</translation>
+        <translation>(e-maillink)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
@@ -151,7 +151,7 @@
         <location filename="../main.cpp" line="202"/>
         <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
-        <translation>skærm-lysstyrke %1%</translation>
+        <translation>Skærm-lysstyrke %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="243"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../main.cpp" line="284"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>URL genvej mangler URL&apos;en: %1</translation>
+        <translation>URL genvej mangler URL'en: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="295"/>
@@ -190,8 +190,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="363"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Kunne ikke finde &quot;%1&quot;. Sørg for at programmet er installeret først.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Kunne ikke finde "%1". Sørg for at programmet er installeret først.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="413"/>
