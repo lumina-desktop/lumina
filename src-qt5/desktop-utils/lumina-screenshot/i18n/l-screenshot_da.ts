@@ -65,7 +65,7 @@
     <message>
         <location filename="../MainUI.ui" line="362"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="378"/>
@@ -80,7 +80,7 @@
     <message>
         <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="57"/>
@@ -105,7 +105,7 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Skærmbilledet kunne ikke gemmes. Tjek venligst mappetilladelserne eller vælg en anden mappe</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
