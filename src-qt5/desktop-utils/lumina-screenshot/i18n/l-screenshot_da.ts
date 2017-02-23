@@ -60,7 +60,7 @@
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation>Redigér</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
@@ -125,7 +125,7 @@
     <message>
         <location filename="../MainUI.cpp" line="86"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
-        <translation>PNG Filer (*.png);;AllFiles (*)</translation>
+        <translation>PNG-filer (*.png);;Alle filer (*)</translation>
     </message>
 </context>
 </TS>
