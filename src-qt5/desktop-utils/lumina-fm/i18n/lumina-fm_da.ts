@@ -6,7 +6,7 @@
     <message>
         <location filename="../BMMDialog.ui" line="14"/>
         <source>Manage Bookmarks</source>
-        <translation>Administrér bogmærker</translation>
+        <translation>Håndter bogmærker</translation>
     </message>
     <message>
         <location filename="../BMMDialog.ui" line="35"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../BMMDialog.cpp" line="64"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Dette bogmærke navn findes allerede. Vælg venligst et andet navn.</translation>
+        <translation>Dette bogmærkenavn findes allerede. Vælg venligst et andet.</translation>
     </message>
 </context>
 <context>
@@ -127,13 +127,13 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Back</source>
-        <translation>Forrige</translation>
+        <translation>Tilbage</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="182"/>
         <location filename="../widgets/DirWidget2.ui" line="185"/>
         <source>Go back to previous directory</source>
-        <translation>Gå til forrige mappe</translation>
+        <translation>Gå tilbage til den forrige mappe</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="193"/>
@@ -170,7 +170,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
         <source>SingleColumn</source>
-        <translation>EnkelKolonne</translation>
+        <translation>Enkelkolonne</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="232"/>
@@ -466,7 +466,7 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>Det er ikke muligt at flytte en mappe ind i sig selv. Lav venligst en kopi af mappen istedet.
+        <translation>Det er ikke muligt at flytte en mappe ind i sig selv. Lav venligst en kopi af mappen i stedet.
 
 Gl. lokation: %1
 Ny lokation: %2</translation>
@@ -562,7 +562,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
-        <translation>Grennavn</translation>
+        <translation>grennavn</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
@@ -590,7 +590,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
         <source>Shift+Left</source>
-        <translation>Skift+venstre</translation>
+        <translation>Skift+Venstre</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="93"/>
@@ -1100,7 +1100,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="218"/>
         <source>Shift+Left</source>
-        <translation>Skift+venstre</translation>
+        <translation>Skift+Venstre</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="228"/>
