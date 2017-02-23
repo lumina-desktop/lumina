@@ -960,7 +960,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="882"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
-        <translation>En eksisterende fil med der samme navn vil blive erstattet. Er du sikkert på, at du vil fortsætte?</translation>
+        <translation>En eksisterende fil med der samme navn vil blive erstattet. Er du sikker på, at du vil fortsætte?</translation>
     </message>
 </context>
 <context>
