@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Posttype</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -180,7 +180,7 @@
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+A</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="349"/>
@@ -220,7 +220,7 @@
     <message>
         <location filename="../MainUI.ui" line="379"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
