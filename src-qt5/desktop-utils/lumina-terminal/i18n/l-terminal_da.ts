@@ -6,7 +6,7 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="60"/>
         <source>Copy Selection</source>
-        <translation>Kopiér markering</translation>
+        <translation>Kopiér valgte</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
