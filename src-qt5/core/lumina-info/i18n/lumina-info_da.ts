@@ -41,7 +41,7 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Qt Version:</source>
-        <translation>Qt Version:</translation>
+        <translation>Qt version:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../MainUI.ui" line="340"/>
         <source>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</source>
-        <translation>&lt;a href="https://github.com/beanpole135"&gt; Ken Moore&lt;/a&gt;</translation>
+        <translation>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="353"/>
