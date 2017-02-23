@@ -71,8 +71,8 @@
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>This color scheme already exists.
  Overwrite it?</source>
-        <translation>Denne farve eksisterer allerede. 
-Skal den overskrives?</translation>
+        <translation>Denne farve eksisterer allerede.
+ Skal den overskrives?</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
@@ -139,7 +139,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation>  pixel(s) tyk</translation>
+        <translation> pixel(s) tyk</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>
@@ -209,18 +209,18 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../PanelWidget.cpp" line="24"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Venstre</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="25"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Højre</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="44"/>
         <location filename="../PanelWidget.cpp" line="117"/>
         <source>Panel %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Panel %1</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="155"/>
@@ -234,7 +234,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="80"/>
         <source>Desktop Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivebordsbjælke</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="81"/>
@@ -244,12 +244,12 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="87"/>
         <source>Spacer</source>
-        <translation type="unfinished"></translation>
+        <translation>Afstandsstykke</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="88"/>
         <source>Invisible spacer to separate plugins.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usynlig afstandsstykke til separate plugins.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
@@ -300,7 +300,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="143"/>
         <source>System Tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Systembakke</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
@@ -315,28 +315,28 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
         <source>Start Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Startmenu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="190"/>
         <source>Calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalender</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="191"/>
         <source>Display a calendar on the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis en kalender på skrivebordet</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="164"/>
         <location filename="../LPlugins.cpp" line="197"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Programstarter</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
         <source>User Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Brugermenu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
@@ -346,7 +346,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
         <source>Application Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Programmenu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
@@ -356,7 +356,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="95"/>
@@ -366,7 +366,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
         <source>Workspace Switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbejdsområdeskifter</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
@@ -381,7 +381,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
         <source>Show Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis skrivebord</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="158"/>
@@ -406,7 +406,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="211"/>
         <source>Note Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Notesblok</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
@@ -417,7 +417,7 @@ Skal den overskrives?</translation>
         <location filename="../LPlugins.cpp" line="171"/>
         <location filename="../LPlugins.cpp" line="218"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydafspiller</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="172"/>
@@ -428,7 +428,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="225"/>
         <source>System Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemovervågning</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
@@ -438,17 +438,17 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
-        <translation type="unfinished"></translation>
+        <translation>RSS-læser</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation type="unfinished"></translation>
+        <translation>Overvåg RSS-feeds (kræver internetforbindelse)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Terminal</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="257"/>
@@ -464,7 +464,7 @@ Skal den overskrives?</translation>
         <location filename="../LPlugins.cpp" line="270"/>
         <location filename="../pages/getPage.h" line="33"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Programmer</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
@@ -474,12 +474,12 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="277"/>
         <source>Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separator</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="278"/>
         <source>Static horizontal line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Statisk vandret linje.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="285"/>
@@ -515,7 +515,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
@@ -531,7 +531,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås session</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
@@ -541,7 +541,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="324"/>
@@ -551,7 +551,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="329"/>
         <source>Text (Disabled)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst (deaktiveret)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="330"/>
@@ -561,7 +561,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="335"/>
         <source>Text (Highlighted)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst (fremhævet)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="336"/>
@@ -591,7 +591,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="353"/>
         <source>Primary Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Primær farve</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="354"/>
@@ -611,7 +611,7 @@ Skal den overskrives?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="365"/>
         <source>Secondary Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekundfær farve</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="366"/>
