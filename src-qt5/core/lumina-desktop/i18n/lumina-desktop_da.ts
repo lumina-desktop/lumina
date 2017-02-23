@@ -171,32 +171,32 @@
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vil du ændre brugerfladen? Alt kan tilpasses i skrivebordskonfigurationen!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina kan nemt efterligne brugerfladen fra de fleste andre skrivebordsmiljøer.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette skrivebord er generøst sponsoreret af iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg har aldrig taget skade af det jeg aldrig har sagt</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>Flere koklokker tak!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt har sin skønhed, men alle ser det ikke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
@@ -236,17 +236,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stol aldrig på en computer du ikke kan smide ud af et vindue.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lær fortiden af kende hvis du definere fremtiden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Måden at komme i gang, er at holde op med at snakke og begynde at gøre.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
@@ -1254,7 +1254,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation>Skærmskåner</translation>
+        <translation>Pauseskærm</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
