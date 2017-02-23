@@ -8,7 +8,7 @@
         <location filename="../MainUI.ui" line="24"/>
         <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
-        <translation>Filoplysninger</translation>
+        <translation>Filinformation</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="56"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
-        <translation>Læs/Skriv</translation>
+        <translation>Læs/skriv</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="71"/>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
-        <translation>XDG genvej</translation>
+        <translation>XDG-genvej</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="78"/>
