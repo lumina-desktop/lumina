@@ -55,7 +55,7 @@
     <message>
         <location filename="../MainUI.ui" line="81"/>
         <source>Find the previous match</source>
-        <translation type="unfinished"></translation>
+        <translation>Find det forrige match</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="84"/>
@@ -64,7 +64,7 @@
         <location filename="../MainUI.ui" line="161"/>
         <location filename="../MainUI.ui" line="173"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../MainUI.ui" line="94"/>
         <source>Find the next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Find det næste match</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="104"/>
@@ -89,27 +89,27 @@
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstat næste match</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="158"/>
         <source>Replace all matches (to end of document)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstat alle match (til slutningen af dokumentet)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul valgmulighederne find/erstat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="225"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>værktøjslinje</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../MainUI.ui" line="314"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="322"/>
@@ -180,7 +180,7 @@
     <message>
         <location filename="../MainUI.ui" line="330"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="338"/>
@@ -241,7 +241,7 @@
         <location filename="../MainUI.cpp" line="289"/>
         <location filename="../MainUI.cpp" line="386"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mist ugemte ændringer?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="289"/>
@@ -260,7 +260,10 @@ Vil du lukke den alligevel?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Der er ugemte ændringer.
+Vil du lukke redigeringsprogrammet alligevel?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -283,7 +286,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Den følgende fil er blevet ændret af et andet redskab. Vil du genindlæse den?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
