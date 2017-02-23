@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="264"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Programpost er ugyldig: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="273"/>
