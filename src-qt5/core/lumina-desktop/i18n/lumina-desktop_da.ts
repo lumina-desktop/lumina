@@ -201,37 +201,37 @@
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Før gud er vi alle lige kloge - og lige dumme.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi kan ikke gøre alt på samme tid, men vi kan gøre noget på en gang.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>En med loven er et flertal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
         <source>Don't expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
         <source>You can't know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan ikke vide hvor meget, men du kan sige for meget.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pligt er ikke kollektivt; det er personligt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Et samfund som ville opgive en smule frihed for at gå en smule sikkerhed vil ikke gøre sig fortjent til noget af det og miste begge.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
@@ -251,137 +251,137 @@
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spørg, og det vil blive givet til dig; søg, og du vil finde; bank på, og døren vil blive åbnet for dig.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start hvor du er. Brug hvad du har. Gør hvad du kan.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>En person der aldrig har lavet fejl, har aldrig prøvet noget nyt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det har ikke betydning hvor hurtigt du går, så længe du ikke stopper.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gør hvad du kan, der hvor du er, med det du har.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Husk, at ingen kan få dig til at føle dig underlegen, uden dit samtykke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er ikke årene i dit liv der tæller. Det er livet i dine år.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv enten noget som er værd at læse, eller noget som er værd at skrive.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den eneste måde at udføre godt arbejde, er ved at elske det du gør.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Politisk korrekthed er tyranni uden manerer.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
         <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det sidste.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg oplever at jo hårdere jeg arbejder, jo mere heldig ser jeg ud til at være.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
         <source>Do, or do not. There is no 'try'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gør, eller gør ikke. Der er ikke noget "prøv".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>En matematiker er en enhed som omdanner kaffe til matematiske sætninger.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gode mennesker behøver ikke love til at fortælle dem at de skal opføre sig ordentligt, mens dårlige mennesker vil finde en vej omkring lovene.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorte huller er når gud dividere med nul.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>It's kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viden taler, men klogskab lytter.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>En vittig udtalelse beviser intet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Succes kommer typisk til dem der ikke har travlt med at lede efter det.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Godt timet stilhed havde mere elokvens end tale.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg har aldrig ladet min skolegang blande sig i min uddannelse.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den bedste måde at forudse fremtiden er ved at opfinde den.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vel gjort eller bedre end vel sagt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nogen gange er det ikke nok at gøre vores bedst; vi må gøre hvad der er krævet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sandheden er vigtigere end fakta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bedre at forblive stille og blive tænkt som værende et fjols, end at tale og fjerne al tvivl.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -642,7 +642,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Start post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås session</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapet</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle skrivebordsindstillinger</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
