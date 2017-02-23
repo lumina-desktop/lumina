@@ -6,7 +6,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Customize Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpas farver</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
