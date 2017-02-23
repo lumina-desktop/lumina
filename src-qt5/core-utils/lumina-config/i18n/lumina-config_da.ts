@@ -154,7 +154,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="204"/>
         <source>Appearance</source>
-        <translation type="unfinished">Udseende</translation>
+        <translation>Udseende</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="222"/>
@@ -169,12 +169,12 @@
     <message>
         <location filename="../PanelWidget.ui" line="250"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="257"/>
         <source>Sample</source>
-        <translation type="unfinished">Eksempel</translation>
+        <translation>Prøve</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="287"/>
@@ -220,13 +220,13 @@
         <location filename="../PanelWidget.cpp" line="44"/>
         <location filename="../PanelWidget.cpp" line="117"/>
         <source>Panel %1</source>
-        <translation type="unfinished">Panel %1</translation>
+        <translation>Panel %1</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="155"/>
         <location filename="../PanelWidget.cpp" line="156"/>
         <source>Select Color</source>
-        <translation type="unfinished">Vælg farve</translation>
+        <translation>Vælg farve</translation>
     </message>
 </context>
 <context>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="122"/>
         <source>System Dashboard</source>
-        <translation type="unfinished">Instrumentbræt til skrivebordet</translation>
+        <translation>Systemets instrumentbræt</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
@@ -448,7 +448,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
         <source>Terminal</source>
-        <translation type="unfinished">Terminal</translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="257"/>
@@ -736,7 +736,7 @@
     <message>
         <location filename="../pages/getPage.h" line="34"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished">Tastaturgenveje</translation>
+        <translation>Tastaturgenveje</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="34"/>
@@ -831,7 +831,7 @@
     <message>
         <location filename="../pages/getPage.h" line="40"/>
         <source>General Options</source>
-        <translation type="unfinished">Generelle Instillinger</translation>
+        <translation>Generelle instillinger</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -870,7 +870,7 @@
         <location filename="../ScriptDialog.ui" line="54"/>
         <location filename="../ScriptDialog.ui" line="87"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="126"/>
@@ -913,12 +913,12 @@
     <message>
         <location filename="../ThemeDialog.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annullér</translation>
+        <translation>Annullér</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="94"/>
         <source>Save</source>
-        <translation type="unfinished">Gem</translation>
+        <translation>Gem</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="101"/>
@@ -949,12 +949,12 @@
     <message>
         <location filename="../mainWindow.ui" line="23"/>
         <source>toolBar</source>
-        <translation type="unfinished">Værktøjslinje</translation>
+        <translation>værktøjslinje</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
         <source>Save</source>
-        <translation type="unfinished">Gem</translation>
+        <translation>Gem</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="53"/>
@@ -964,7 +964,7 @@
     <message>
         <location filename="../mainWindow.ui" line="56"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="61"/>
@@ -999,7 +999,7 @@
     <message>
         <location filename="../pages/page_autostart.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
@@ -1009,17 +1009,17 @@
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
         <source>Application</source>
-        <translation type="unfinished">Program</translation>
+        <translation>Program</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="85"/>
         <source>Binary</source>
-        <translation type="unfinished">Binær</translation>
+        <translation>Binær</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="95"/>
         <source>File</source>
-        <translation type="unfinished">Fil</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="67"/>
@@ -1049,12 +1049,12 @@
     <message>
         <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>Select File</source>
-        <translation type="unfinished">Vælg fil</translation>
+        <translation>Vælg fil</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="151"/>
         <source>All Files (*)</source>
-        <translation type="unfinished">Alle filer (*)</translation>
+        <translation>Alle filer (*)</translation>
     </message>
 </context>
 <context>
@@ -1062,7 +1062,7 @@
     <message>
         <location filename="../pages/page_compton.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
@@ -1085,7 +1085,7 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="166"/>
@@ -1095,32 +1095,32 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="189"/>
         <source>Specific File Types</source>
-        <translation type="unfinished">Specifikke Filtyper</translation>
+        <translation>Specifikke filtyper</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="226"/>
         <source>Type/Group</source>
-        <translation type="unfinished">Type/Gruppe</translation>
+        <translation>Type/gruppe</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="231"/>
         <source>Default Application</source>
-        <translation type="unfinished">Standardprogram</translation>
+        <translation>Standardprogram</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="236"/>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="246"/>
         <source>Clear</source>
-        <translation type="unfinished">Ryd</translation>
+        <translation>Ryd</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="269"/>
         <source>Set App</source>
-        <translation type="unfinished">Sæt Prog</translation>
+        <translation>Sæt program</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="279"/>
@@ -1135,28 +1135,28 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
-        <translation type="unfinished">Webbrowser:</translation>
+        <translation>Webbrowser:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="81"/>
         <source>E-Mail Client:</source>
-        <translation type="unfinished">E-post Klient:</translation>
+        <translation>E-mailklient:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
-        <translation type="unfinished">Filhåndtering:</translation>
+        <translation>Filhåndtering:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="121"/>
         <source>Virtual Terminal:</source>
-        <translation type="unfinished">Virtuel Terminal:</translation>
+        <translation>Virtuel terminal:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="128"/>
         <location filename="../pages/page_defaultapps.ui" line="138"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="43"/>
@@ -1170,12 +1170,12 @@
         <location filename="../pages/page_defaultapps.cpp" line="124"/>
         <location filename="../pages/page_defaultapps.cpp" line="220"/>
         <source>Click to Set</source>
-        <translation type="unfinished">Klik for at vælge</translation>
+        <translation>Klik for at sætte</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="158"/>
         <source>%1 (%2)</source>
-        <translation type="unfinished">%1 (%2)</translation>
+        <translation>%1 (%2)</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="330"/>
@@ -1213,37 +1213,37 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="107"/>
         <source>Action</source>
-        <translation type="unfinished">Handling</translation>
+        <translation>Handling</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="112"/>
         <source>Keyboard Shortcut</source>
-        <translation type="unfinished">Tastaturgenvej</translation>
+        <translation>Tastaturgenvej</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="120"/>
         <source>Modify Shortcut</source>
-        <translation type="unfinished">Redigér genvej</translation>
+        <translation>Rediger genvej</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="141"/>
         <source>Clear Shortcut</source>
-        <translation type="unfinished">Fjern genvej</translation>
+        <translation>Ryd genvej</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="151"/>
         <source>Apply Change</source>
-        <translation type="unfinished">Udfør ændring</translation>
+        <translation>Anvend ændring</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="161"/>
         <source>Change Key Binding:</source>
-        <translation type="unfinished">Skift taste binding:</translation>
+        <translation>Skift tastebinding:</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="184"/>
         <source>Note: Current key bindings need to be cleared and saved before they can be re-used.</source>
-        <translation type="unfinished">Besked: Eksisterende taste genvej skal fjernes og gemmes før de kan blive genbrugt.</translation>
+        <translation>Bemærk: Eksisterende tastegenveje skal ryddes og gemmes inden de kan genbruges.</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="220"/>
@@ -1260,7 +1260,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished">Tastaturgenveje</translation>
+        <translation>Tastaturgenveje</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
@@ -1270,22 +1270,22 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Audio Volume Down</source>
-        <translation type="unfinished">Lydstyrke Ned</translation>
+        <translation>Lydstyrke ned</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Up</source>
-        <translation type="unfinished">Skærmlysstyrke Op</translation>
+        <translation>Skærmlysstyrke op</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Screen Brightness Down</source>
-        <translation type="unfinished">Skærmlysstyrke Ned</translation>
+        <translation>Skærmlysstyrke ned</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished">Tag skærmbillede</translation>
+        <translation>Tag skærmbillede</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
@@ -1298,7 +1298,7 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="34"/>
@@ -1313,33 +1313,33 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="81"/>
         <source>Number of Workspaces</source>
-        <translation type="unfinished">Antal af arbejdsområder</translation>
+        <translation>Antal arbejdsområder</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="98"/>
         <source>New Window Placement</source>
-        <translation type="unfinished">Ny vinduesplacering</translation>
+        <translation>Ny vinduesplacering</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="108"/>
         <source>Focus Policy</source>
-        <translation type="unfinished">Fokuspolitik</translation>
+        <translation>Fokuspolitik</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="118"/>
         <source>Window Theme</source>
-        <translation type="unfinished">Vinduestema</translation>
+        <translation>Vinduestema</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="136"/>
         <source>Window Theme Preview</source>
-        <translation type="unfinished">Vinduestema forhåndsvisning</translation>
+        <translation>Forhåndsvisning af vinduestema</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
         <location filename="../pages/page_fluxbox_settings.cpp" line="182"/>
         <source>No Preview Available</source>
-        <translation type="unfinished">Ingen forhåndsvisning tilgængelig</translation>
+        <translation>Ingen forhåndsvisning tilgængelig</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="71"/>
@@ -1349,37 +1349,37 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Click To Focus</source>
-        <translation type="unfinished">Klik for fokus</translation>
+        <translation>Klik for at fokusere</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Active Mouse Focus</source>
-        <translation type="unfinished">Aktiv mus fokus</translation>
+        <translation>Aktiv musefokus</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="78"/>
         <source>Strict Mouse Focus</source>
-        <translation type="unfinished">Streng mus fokus</translation>
+        <translation>Streng musefokus</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Row</source>
-        <translation type="unfinished">Tilpas i en række</translation>
+        <translation>Sæt på række</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Align in a Column</source>
-        <translation type="unfinished">Tilpas i en kolonne</translation>
+        <translation>Sæt på kolonne</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Cascade</source>
-        <translation type="unfinished">Kaskade</translation>
+        <translation>Kaskade</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="84"/>
         <source>Underneath Mouse</source>
-        <translation type="unfinished">Under mus</translation>
+        <translation>Under mus</translation>
     </message>
 </context>
 <context>
@@ -1387,7 +1387,7 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="26"/>
@@ -1410,7 +1410,7 @@
     <message>
         <location filename="../pages/page_interface_menu.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.ui" line="38"/>
@@ -1428,7 +1428,7 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="69"/>
@@ -1451,7 +1451,7 @@
     <message>
         <location filename="../pages/page_main.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_main.ui" line="32"/>
@@ -1461,12 +1461,12 @@
     <message>
         <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
-        <translation type="unfinished">Indstilling af grænseflade</translation>
+        <translation>Konfiguration af brugerflade</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="57"/>
         <source>Appearance</source>
-        <translation type="unfinished">Udseende</translation>
+        <translation>Udseende</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../pages/page_mouse.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
@@ -1522,7 +1522,7 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="32"/>
@@ -1532,32 +1532,32 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="39"/>
         <source>Language</source>
-        <translation type="unfinished">Sprog</translation>
+        <translation>Sprog</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="49"/>
         <source>Messages</source>
-        <translation type="unfinished">Beskeder</translation>
+        <translation>Meddelelser</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="59"/>
         <source>Time</source>
-        <translation type="unfinished">Tid</translation>
+        <translation>Tid</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="69"/>
         <source>Numeric</source>
-        <translation type="unfinished">Numerisk</translation>
+        <translation>Numerisk</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="79"/>
         <source>Monetary</source>
-        <translation type="unfinished">Monetære</translation>
+        <translation>Monetære</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="89"/>
         <source>Collate</source>
-        <translation type="unfinished">Saml</translation>
+        <translation>Saml</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="99"/>
@@ -1580,22 +1580,22 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="34"/>
         <source>Enable numlock on startup</source>
-        <translation type="unfinished">Aktivér numlock under opstart</translation>
+        <translation>Aktivér numlock under opstart</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="41"/>
         <source>Play chimes on startup</source>
-        <translation type="unfinished">Afspil lyde under opstart</translation>
+        <translation>Afspil lyde under opstart</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="48"/>
         <source>Play chimes on exit</source>
-        <translation type="unfinished">Afspil lyde under afslutning</translation>
+        <translation>Afspil lyde under afslutning</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
@@ -1615,29 +1615,29 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
         <source>Change User Icon</source>
-        <translation type="unfinished">Skift Bruger Ikon</translation>
+        <translation>Skift brugerikon</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="112"/>
         <source>Time Format:</source>
-        <translation type="unfinished">Tidsformat:</translation>
+        <translation>Tidsformat:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="124"/>
         <location filename="../pages/page_session_options.ui" line="168"/>
         <source>View format codes</source>
-        <translation type="unfinished">Vis format koder</translation>
+        <translation>Vis formatkoder</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="139"/>
         <location filename="../pages/page_session_options.ui" line="183"/>
         <source>Sample:</source>
-        <translation type="unfinished">Prøve:</translation>
+        <translation>Prøve:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="156"/>
         <source>Date Format:</source>
-        <translation type="unfinished">Datoformat:</translation>
+        <translation>Datoformat:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="203"/>
@@ -1662,7 +1662,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Time (Date as tooltip)</source>
-        <translation type="unfinished">Tid (Dato som værktøjstip)</translation>
+        <translation>Tid (dato som værktøjstip)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="20"/>
@@ -1687,27 +1687,27 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="113"/>
         <source>Select an image</source>
-        <translation type="unfinished">Vælg et billede</translation>
+        <translation>Vælg et billede</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="114"/>
         <source>Images</source>
-        <translation type="unfinished">Billeder</translation>
+        <translation>Billeder</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Reset User Image</source>
-        <translation type="unfinished">Nulstil Bruger billede</translation>
+        <translation>Nulstil brugerbillede</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation type="unfinished">Vil du gerne nulstille bruger billedet til system standard?</translation>
+        <translation>Vil du nulstille brugerbilledet til systemets standard?</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="157"/>
         <source>Valid Time Codes:</source>
-        <translation type="unfinished">Gyldig tids koder:</translation>
+        <translation>Gyldige tidskoder:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="158"/>
@@ -1825,7 +1825,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
@@ -1835,38 +1835,38 @@
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
         <source>Font:</source>
-        <translation type="unfinished">Skrifttype:</translation>
+        <translation>Skrifttype:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="56"/>
         <source>Font Size:</source>
-        <translation type="unfinished">Skriftstørrelse:</translation>
+        <translation>Skriftstørrelse:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="63"/>
         <source> point</source>
-        <translation type="unfinished"> point</translation>
+        <translation> punkt</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
-        <translation type="unfinished">Temaskabelon:</translation>
+        <translation>Temaskabelon:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="86"/>
         <source>Create/Edit a theme template (Advanced)</source>
-        <translation type="unfinished">Opret/Rediger en tema skabelon (Avanceret)</translation>
+        <translation>Opret/rediger en temaskabelon (avanceret)</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="92"/>
         <location filename="../pages/page_theme.ui" line="126"/>
         <source>Edit</source>
-        <translation type="unfinished">Redigér</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="104"/>
         <source>Color Scheme:</source>
-        <translation type="unfinished">Farveskema:</translation>
+        <translation>Farveskema:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="120"/>
@@ -1930,32 +1930,32 @@
     <message>
         <location filename="../pages/page_wallpaper.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="90"/>
         <source>Single Background</source>
-        <translation type="unfinished">Enlig Baggrund</translation>
+        <translation>Enkel baggrund</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="100"/>
         <source>Rotate Background</source>
-        <translation type="unfinished">Rotér Baggrund</translation>
+        <translation>Roter baggrund</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="107"/>
         <source> Minutes</source>
-        <translation type="unfinished"> Minutter</translation>
+        <translation> Minutter</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="110"/>
         <source>Every </source>
-        <translation type="unfinished">Hver </translation>
+        <translation>Hver </translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="133"/>
         <source>Layout:</source>
-        <translation type="unfinished">Layout:</translation>
+        <translation>Layout:</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="56"/>
@@ -1971,7 +1971,7 @@
         <location filename="../pages/page_wallpaper.cpp" line="67"/>
         <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
-        <translation type="unfinished">Ensfarvet farve: %1</translation>
+        <translation>Ensfarvet farve: %1</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="78"/>
@@ -1982,17 +1982,17 @@
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
         <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
-        <translation type="unfinished">Vælg farve</translation>
+        <translation>Vælg farve</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>File(s)</source>
-        <translation type="unfinished">Fil(er)</translation>
+        <translation>Fil(er)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Single)</source>
-        <translation type="unfinished">Mappe (Enkelt)</translation>
+        <translation>Mappe (enkel)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="122"/>
@@ -2007,7 +2007,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Automatic</source>
-        <translation type="unfinished">Automatisk</translation>
+        <translation>Automatisk</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="128"/>
@@ -2022,32 +2022,32 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Tile</source>
-        <translation type="unfinished">Flise</translation>
+        <translation>Fliselæg</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
-        <translation type="unfinished">Centrér</translation>
+        <translation>Centrér</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Left</source>
-        <translation type="unfinished">Øverst til venstre</translation>
+        <translation>Øverst til venstre</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Top Right</source>
-        <translation type="unfinished">Øverst til højre</translation>
+        <translation>Øverst til højre</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Left</source>
-        <translation type="unfinished">Nederst til venstre</translation>
+        <translation>Nederst til venstre</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="135"/>
         <source>Bottom Right</source>
-        <translation type="unfinished">Nederst til højre</translation>
+        <translation>Nederst til højre</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="143"/>
