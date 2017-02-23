@@ -191,7 +191,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation>Flere koklokker tak!</translation>
+        <translation>Mere koklokke tak!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
