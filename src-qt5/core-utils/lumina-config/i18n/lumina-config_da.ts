@@ -119,7 +119,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="32"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="93"/>
