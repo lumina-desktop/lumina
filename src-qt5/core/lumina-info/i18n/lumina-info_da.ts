@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Lumina Desktop Information</source>
-        <translation>Lumina Skrivebords Information</translation>
+        <translation>Lumina-skrivebordsinformation</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="60"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>Lumina Website</source>
-        <translation>Hjemmeside for Lumina</translation>
+        <translation>Lumina-websted</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../MainUI.ui" line="179"/>
         <source>Desktop Version:</source>
-        <translation>Skrivebords Version:</translation>
+        <translation>Skrivebordsversion:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../MainUI.ui" line="233"/>
         <source>View Information</source>
-        <translation>Se Information</translation>
+        <translation>Vis information</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="298"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Åben i en web browser&lt;a&gt;</translation>
+        <translation>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Åbn i en webbrowser&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>
