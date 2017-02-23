@@ -56,7 +56,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
-        <translation>(Internet URL - %1)</translation>
+        <translation>(Internet-URL - %1)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="114"/>
