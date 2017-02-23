@@ -59,37 +59,37 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">Størrelse</translation>
+        <translation>Størrelse</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Ændringsdato</translation>
+        <translation>Ændringsdato</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
-        <translation type="unfinished">Oprettelsesdato</translation>
+        <translation>Oprettelsesdato</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Kapacitet: %1</translation>
+        <translation>Kapacitet: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Filer: %1 (%2)</translation>
+        <translation>Filer: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
@@ -590,7 +590,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
         <source>Shift+Left</source>
-        <translation type="unfinished">Skift+venstre</translation>
+        <translation>Skift+venstre</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="93"/>
@@ -695,7 +695,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="381"/>
         <source>Delete Selection</source>
-        <translation type="unfinished">Slet valgte</translation>
+        <translation>Slet valgte</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="384"/>
@@ -810,17 +810,17 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="348"/>
         <source>Cut Selection</source>
-        <translation type="unfinished">Klip valgte</translation>
+        <translation>Klip valgte</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="359"/>
         <source>Copy Selection</source>
-        <translation type="unfinished">Kopiér valgte</translation>
+        <translation>Kopiér valgte</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="370"/>
         <source>Paste</source>
-        <translation type="unfinished">Indsæt</translation>
+        <translation>Indsæt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="373"/>
@@ -875,17 +875,17 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="595"/>
         <source>Name:</source>
-        <translation type="unfinished">Navn:</translation>
+        <translation>Navn:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="600"/>
         <source>Invalid Name</source>
-        <translation type="unfinished">Ugyldigt navn</translation>
+        <translation>Ugyldigt navn</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="600"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation type="unfinished">Dette bogmærke navn findes allerede. Vælg venligst et andet navn.</translation>
+        <translation>Dette bogmærkenavn findes allerede. Vælg venligst et andet.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="621"/>
@@ -900,7 +900,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="729"/>
         <source>Slideshow</source>
-        <translation type="unfinished">Slideshow</translation>
+        <translation>Diasshow</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="909"/>
@@ -968,7 +968,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="28"/>
@@ -998,7 +998,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
         <source>Finished</source>
-        <translation type="unfinished">Gennemført</translation>
+        <translation>Gennemført</translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1006,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
@@ -1055,7 +1055,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
@@ -1100,7 +1100,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="218"/>
         <source>Shift+Left</source>
-        <translation type="unfinished">Skift+venstre</translation>
+        <translation>Skift+venstre</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="228"/>
@@ -1158,7 +1158,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Gennemført</translation>
+        <translation>Gennemført</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
