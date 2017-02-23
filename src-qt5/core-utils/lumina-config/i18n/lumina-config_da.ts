@@ -239,7 +239,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="81"/>
         <source>This provides shortcuts to everything in the desktop folder - allowing easy access to all your favorite files/applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette giver genveje til alt i skrivebordsmappen - hvilket giver nem adgang til alle dine favoritfiler/-programmer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="87"/>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
         <source>Controls for switching between the various virtual desktops.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontroller til at skifte mellem de forskellige virtuelle skriveborde.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="108"/>
@@ -284,18 +284,18 @@
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis eller ændre systemindstillinger (lydstyrke, skærmlysstyrke, batteriliv, virtuelle skriveborde).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
         <location filename="../LPlugins.cpp" line="291"/>
         <source>Task Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Opgavehåndtering</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="136"/>
         <source>Task Manager (No Groups)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opgavehåndtering (ingen grupper)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="143"/>
@@ -305,12 +305,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis område til systemprogrammer som kan dokkes</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul alle åbne vinduer og vis skrivebordet</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
@@ -391,17 +391,17 @@
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fastgør en programgenvej direkte til panalet</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivebordsknap til at starte et program</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
         <source>Desktop Icons View</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivebordsikonvisning</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="211"/>
@@ -411,7 +411,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Hold simple tekstnoter på dit skrivebord</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="171"/>
@@ -423,7 +423,7 @@
         <location filename="../LPlugins.cpp" line="172"/>
         <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspil gennem listen af lydfiler</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="225"/>
