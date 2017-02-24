@@ -58,7 +58,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
-        <translation>Håndtér Programmer</translation>
+        <translation>Håndtér programmer</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="87"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Indlæser brugerindstillinger …</translation>
+        <translation>Indlæser brugerpræferencer …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -431,7 +431,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="167"/>
         <source>Starting App: %1</source>
-        <translation>Starter Progr: %1</translation>
+        <translation>Starter program: %1</translation>
     </message>
 </context>
 <context>
@@ -497,12 +497,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
-        <translation>Fjern fra Kvikbar</translation>
+        <translation>Fjern fra hurtigstart</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
-        <translation>Tilføj til Kvikbar</translation>
+        <translation>Føj til hurtigstart</translation>
     </message>
 </context>
 <context>
@@ -518,7 +518,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="37"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Hurtigt kør programmer eller åbne filer</translation>
+        <translation>Start hurtigt programmer eller åbne filer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="38"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
 </context>
 <context>
@@ -616,12 +616,12 @@
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (Charging)</source>
-        <translation>%1 % (Oplader)</translation>
+        <translation>%1 % (lader)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="93"/>
         <source>%1 % (%2 Remaining)</source>
-        <translation>%1 % (%2 Tilbage)</translation>
+        <translation>%1 % (%2 tilbage)</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
         <source>Use System Time</source>
-        <translation>Brug Systemtid</translation>
+        <translation>Brug systemtid</translation>
     </message>
 </context>
 <context>
@@ -675,7 +675,7 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
-        <translation>Farvoritprogrammer</translation>
+        <translation>Favoritprogrammer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
@@ -723,7 +723,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="280"/>
         <source>Lumina Desktop</source>
-        <translation>Lumina Skrivebord</translation>
+        <translation>Lumina-skrivebord</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="281"/>
@@ -748,7 +748,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="322"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
 </context>
 <context>
@@ -765,7 +765,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation>Fjern fra kvikstart</translation>
+        <translation>Fjern fra hurtigstart</translation>
     </message>
 </context>
 <context>
@@ -795,12 +795,12 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>System Volume</source>
-        <translation>Systemdrev</translation>
+        <translation>Systemlydstyrke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Kør Lyd Mixer</translation>
+        <translation>Start lydmikser</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
@@ -888,7 +888,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/LUserButton.cpp" line="41"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Hurtigt kør programmer eller åbne filer</translation>
+        <translation>Start hurtigt programmer eller åbne filer</translation>
     </message>
 </context>
 <context>
@@ -911,12 +911,12 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
         <source>CPU Usage:</source>
-        <translation>CPU brug:</translation>
+        <translation>CPU-forbrug:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
         <source>Mem Usage:</source>
-        <translation>Hukommelsesbrug:</translation>
+        <translation>Hukommelsesforbrug:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="85"/>
@@ -929,7 +929,7 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
         <source>Note Files (*.note)</source>
-        <translation>Note Filer (*.note)</translation>
+        <translation>Note-filer (*.note)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
@@ -949,17 +949,17 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation>Forkert Note Navn: Prøv Igen</translation>
+        <translation>Ugyldigt notenavn: Prøv igen</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="139"/>
         <source>Select a Note Name</source>
-        <translation>Vælg et Notenavn</translation>
+        <translation>Vælg et notenavn</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="166"/>
         <source>Open Text File</source>
-        <translation>Åbn Tekstfil</translation>
+        <translation>Åbn tekstfil</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="167"/>
@@ -1070,27 +1070,27 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation>Mediefiler</translation>
+        <translation>Multimediefiler</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation>Vælg mediefiler</translation>
+        <translation>Vælg multimediefiler</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation>Vælg Medie Mappe</translation>
+        <translation>Vælg multimediemappe</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Indtast en korrekt URL til mediefil eller stream:</translation>
+        <translation>Indtast en gyldig URL til en multimediefil eller strøm:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation>Medie URL</translation>
+        <translation>Multimedie-URL</translation>
     </message>
 </context>
 <context>
@@ -1135,12 +1135,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="263"/>
         <source>New Feed Subscription</source>
-        <translation>Abonner på nyt RSS-feed</translation>
+        <translation>Abonner på nyt feed</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>RSS URL</translation>
+        <translation>RSS-URL</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
@@ -1150,7 +1150,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
         <source>Add to Feeds</source>
-        <translation>Tilføj til RSS-feeds</translation>
+        <translation>Tilføj til feeds</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="409"/>
@@ -1160,7 +1160,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="430"/>
         <source>Manual Sync Only</source>
-        <translation>Udelukkende manuel synkronisering</translation>
+        <translation>Kun manuel synkronisering</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation>Standard synkroniseringsinterval</translation>
+        <translation>Standardsynkroniseringsinterval</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
@@ -1216,7 +1216,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
         <source>Feed URL: %1</source>
-        <translation>RSS-feed URL: %1</translation>
+        <translation>Feed-URL: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="144"/>
@@ -1259,7 +1259,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation>Indstillinger</translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
@@ -1269,7 +1269,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
         <source>Display</source>
-        <translation>Fremvis</translation>
+        <translation>Skærm</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
@@ -1307,7 +1307,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation>Gennemse Programmer</translation>
+        <translation>Gennemse programmer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
@@ -1317,12 +1317,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation>Håndtér Programmer</translation>
+        <translation>Håndtér programmer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
@@ -1332,12 +1332,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Indstil skrivebordsmiljø</translation>
+        <translation>Konfigurer skrivebord</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Log Bruger Ud</translation>
+        <translation>Log bruger ud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
@@ -1347,22 +1347,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
         <source>Preferences</source>
-        <translation>Indstillinger</translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off System</source>
-        <translation>Sluk System</translation>
+        <translation>Sluk system</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
         <source>(System Performing Updates)</source>
-        <translation>(System Udfører Opdateringer)</translation>
+        <translation>(systemet udfører opdateringer)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend System</source>
-        <translation>Systemdvale</translation>
+        <translation>Sæt system i hvile</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
@@ -1382,17 +1382,17 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
-        <translation>%1% (Indsat)</translation>
+        <translation>%1% (tilsluttet)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
-        <translation>%1% (%2 Estimeret)</translation>
+        <translation>%1% (%2 sstimeret)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
-        <translation>%1% Tilbage</translation>
+        <translation>%1% tilbage</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
@@ -1407,7 +1407,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="14"/>
         <source>System Options</source>
-        <translation>Systemindstillinger</translation>
+        <translation>Systemvalgmuligheder</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="55"/>
@@ -1427,7 +1427,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
         <source>Cancel</source>
-        <translation>Annullér</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="156"/>
@@ -1478,7 +1478,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Bruger Widget</translation>
+        <translation>Brugerwidget</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="65"/>
         <source>Favorite Applications</source>
-        <translation>Farvoritprogrammer</translation>
+        <translation>Favoritprogrammer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="68"/>
@@ -1556,7 +1556,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Skrivebordsindstillinger</translation>
+        <translation>Skrivebordspræferencer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
@@ -1566,12 +1566,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Skrivebord Udseende/Plugins</translation>
+        <translation>Skrivebord udseende/plugins</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
         <source>Screen Configuration</source>
-        <translation>Skærm Indstillinger</translation>
+        <translation>Skærmkonfiguration</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
@@ -1581,7 +1581,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Om Lumina Skrivebordet</translation>
+        <translation>Om Lumina-skrivebordet</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
@@ -1641,7 +1641,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="300"/>
         <source>Utilities</source>
-        <translation>Hjælpeværktøjer</translation>
+        <translation>Redskaber</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
