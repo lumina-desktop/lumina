@@ -901,7 +901,7 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="36"/>
         <source>Summary</source>
-        <translation>Oversigt</translation>
+        <translation>Sammendrag</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
