@@ -1474,7 +1474,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="61"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Domyślne ustawienia pulpitu</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="65"/>
@@ -1492,32 +1492,32 @@
     <message>
         <location filename="../pages/page_mouse.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formularz</translation>
+        <translation>Formularz</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="53"/>
         <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia urządzeń wejścia</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="81"/>
         <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mysz #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="85"/>
         <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klawiatura #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="106"/>
         <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie rozszerzeń #%1</translation>
     </message>
     <message>
         <location filename="../pages/page_mouse.cpp" line="107"/>
         <source>Master Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie główne</translation>
     </message>
 </context>
 <context>
@@ -1608,12 +1608,12 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarządzaj skrótami aplikacji pulpitu</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokazuj informacje o błędach aplikacji</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1833,7 +1833,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Motyw pulpitu</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1889,12 +1889,12 @@
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Motyw aplikacji</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
         <source>Qt5 Theme Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Silnik motywu Qt5</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
@@ -1920,12 +1920,12 @@
     <message>
         <location filename="../pages/page_theme.cpp" line="137"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Żaden</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="138"/>
         <source>Manual Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia manualne</translation>
     </message>
 </context>
 <context>
