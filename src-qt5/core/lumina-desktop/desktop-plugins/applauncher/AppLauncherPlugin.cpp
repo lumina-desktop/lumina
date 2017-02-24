@@ -92,7 +92,7 @@ void AppLauncherPlugin::loadButton(){
     button->setIcon( QIcon(QPixmap::fromImage(img)) );
   }
   //Now adjust the visible text as necessary based on font/grid sizing
-  if(button->tooltip().isEmpty()){ button->setToolTip(txt); }
+  if(button->toolTip().isEmpty()){ button->setToolTip(txt); }
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
     if(button->fontMetrics().width(txt) > (button->width()-OUTMARGIN) ){
       //Text too long, try to show it on two lines
