@@ -31,7 +31,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
         <source>Find</source>
-        <translation>Søg</translation>
+        <translation>Find</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
         <source>Cancel</source>
-        <translation>Annullér</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="126"/>
         <source>Utilities</source>
-        <translation>Værktøjer</translation>
+        <translation>Redskaber</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="127"/>
@@ -145,7 +145,7 @@
         <location filename="../main.cpp" line="188"/>
         <location filename="../main.cpp" line="194"/>
         <source>Audio Volume %1%</source>
-        <translation>Lyd Volume %1%</translation>
+        <translation>Lydstyrke %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="202"/>
