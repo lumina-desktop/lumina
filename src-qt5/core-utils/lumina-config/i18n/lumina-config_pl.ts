@@ -1256,9 +1256,9 @@
         <source>"Mod1":	Alt key
 "Mod4": 	Windows/Mac key
 "Control":	Ctrl key</source>
-        <translation>"Mod1":	Alt key
-"Mod4": 	Windows/Mac key
-"Control":	Ctrl key</translation>
+        <translation>"Mod1":	klawisz Alt
+"Mod4": 	klawisz Windows/Mac
+"Control":  klawisz Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
