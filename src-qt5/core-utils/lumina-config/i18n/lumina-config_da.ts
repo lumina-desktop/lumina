@@ -139,7 +139,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation> pixel(s) tyk</translation>
+        <translation> pixel(s) bred</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>
@@ -184,17 +184,17 @@
     <message>
         <location filename="../PanelWidget.cpp" line="19"/>
         <source>Top/Left</source>
-        <translation>Øverst/Venstre</translation>
+        <translation>Øverst/venstre</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="20"/>
         <source>Center</source>
-        <translation>Midt</translation>
+        <translation>I midten</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="21"/>
         <source>Bottom/Right</source>
-        <translation>Bund/Højre</translation>
+        <translation>Nederst/højre</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="22"/>
@@ -204,7 +204,7 @@
     <message>
         <location filename="../PanelWidget.cpp" line="23"/>
         <source>Bottom</source>
-        <translation>Bund</translation>
+        <translation>Nederst</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="24"/>
@@ -249,7 +249,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="88"/>
         <source>Invisible spacer to separate plugins.</source>
-        <translation>Usynlig afstandsstykke til separate plugins.</translation>
+        <translation>Usynlig afstandsstykke til at afskille plugins.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
@@ -1464,7 +1464,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="53"/>
         <source>Interface Configuration</source>
-        <translation>Konfiguration af brugerflade</translation>
+        <translation>Brugerfladekonfiguration</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="57"/>
@@ -1575,7 +1575,7 @@
     <message>
         <location filename="../pages/page_session_locale.cpp" line="92"/>
         <source>System Default</source>
-        <translation>Systemets standard</translation>
+        <translation>Systemstandard</translation>
     </message>
 </context>
 <context>
@@ -1655,7 +1655,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="253"/>
         <source>Return to system defaults</source>
-        <translation>Vend tilbage til systemets standarder</translation>
+        <translation>Vend tilbage til systemstandarder</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="260"/>
@@ -1705,7 +1705,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="118"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation>Vil du nulstille brugerbilledet til systemets standard?</translation>
+        <translation>Vil du nulstille brugerbilledet til systemstandarden?</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="157"/>
