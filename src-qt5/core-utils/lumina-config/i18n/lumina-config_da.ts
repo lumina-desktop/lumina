@@ -164,7 +164,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="229"/>
         <source>Use Custom Color</source>
-        <translation>Anvend brugervalgt farve</translation>
+        <translation>Brug brugerdefineret farve</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="250"/>
@@ -489,12 +489,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
-        <translation type="unfinished">Custom program</translation>
+        <translation>Brugerdefineret program</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
-        <translation type="unfinished">Start et custom program</translation>
+        <translation>Start et brugerdefineret program</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="178"/>
@@ -631,17 +631,17 @@
     <message>
         <location filename="../LPlugins.cpp" line="377"/>
         <source>Accent Color</source>
-        <translation type="unfinished">Accentfarve</translation>
+        <translation>Accentfarve</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="378"/>
         <source>Color used for borders or other accents.</source>
-        <translation type="unfinished">Farve som bruges til kanter og andre accents.</translation>
+        <translation>Farve som bruges til kanter og andre accenter.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
-        <translation type="unfinished">Accentfarve (deaktiveret)</translation>
+        <translation>Accentfarve (deaktiveret)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="384"/>
@@ -1199,7 +1199,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
         <source>page_fluxbox_keys</source>
-        <translation type="unfinished">page_fluxbox_keys</translation>
+        <translation>page_fluxbox_keys</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
@@ -1565,7 +1565,7 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="99"/>
         <source>CType</source>
-        <translation type="unfinished">CType</translation>
+        <translation>CType</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.cpp" line="48"/>
@@ -1907,7 +1907,7 @@
         <location filename="../pages/page_theme.cpp" line="173"/>
         <location filename="../pages/page_theme.cpp" line="199"/>
         <source>Local</source>
-        <translation type="unfinished">Lokal</translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="80"/>
