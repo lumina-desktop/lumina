@@ -127,9 +127,8 @@ void XDGDesktop::sync(){
     else if(var=="Type" && insection){
       if(val.toLower()=="application"){ type = XDGDesktop::APP; }
       else if(val.toLower()=="link"){ type = XDGDesktop::LINK; }
-      else if(val.toLower()=="dir"){ type = XDGDesktop::DIR; }
+      else if(val.toLower().startsWith("dir")){ type = XDGDesktop::DIR; } //older specs are "Dir", newer specs are "Directory"
       else{ type = XDGDesktop::BAD; } //Unknown type
-      //hasType = true;
     }
   } //end reading file
   file.clear(); //done with contents of file
@@ -176,7 +175,7 @@ bool XDGDesktop::isValid(bool showAll){
       //if(DEBUG && !ok){ qDebug() << " - Link with missing URL"; }
       break;
     case XDGDesktop::DIR:
-      ok = !path.isEmpty();
+      ok = !path.isEmpty() && QFile::exists(path);
       //if(DEBUG && !ok){ qDebug() << " - Dir with missing path"; }
       break;
     default:
