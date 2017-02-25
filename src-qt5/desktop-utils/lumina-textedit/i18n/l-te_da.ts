@@ -291,7 +291,7 @@ Vil du lukke redigeringsprogrammet alligevel?
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(bemærk: du vil miste alle nuværende ugemte ændringer)</translation>
+        <translation>(Bemærk: Du vil miste alle nuværende ugemte ændringer)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
