@@ -175,7 +175,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="232"/>
         <source>Single column view</source>
-        <translation>Enkelkolonne visning</translation>
+        <translation>Enkelkolonnevisning</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="240"/>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="243"/>
         <source>Dual Column View</source>
-        <translation>Dobbeltkolonne visning</translation>
+        <translation>Dobbeltkolonnevisning</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="533"/>
@@ -240,7 +240,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="514"/>
         <source>Loading...</source>
-        <translation>Indlæser...</translation>
+        <translation>Indlæser ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="563"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="229"/>
         <source>Create...</source>
-        <translation>Opret...</translation>
+        <translation>Opret ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="231"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Launch...</source>
-        <translation>Start...</translation>
+        <translation>Start ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="239"/>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="256"/>
         <source>View Files...</source>
-        <translation>Vis filer...</translation>
+        <translation>Vis filer ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="258"/>
@@ -342,12 +342,12 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="486"/>
         <source>Open With...</source>
-        <translation>Åbn med...</translation>
+        <translation>Åbn med ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="493"/>
         <source>Rename...</source>
-        <translation>Omdøb...</translation>
+        <translation>Omdøb ...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="494"/>
@@ -466,10 +466,10 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>Det er ikke muligt at flytte en mappe ind i sig selv. Lav venligst en kopi af mappen i stedet.
+        <translation>Det er ikke muligt at flytte en mappe ind i sig selv. Opret venligst en kopi af mappen i stedet.
 
-Gl. lokation: %1
-Ny lokation: %2</translation>
+Gammel placering: %1
+Ny placering: %2</translation>
     </message>
 </context>
 <context>
@@ -640,7 +640,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
-        <translation>Søg i bibliotek...</translation>
+        <translation>Søg i bibliotek ...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="283"/>
@@ -800,7 +800,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="337"/>
         <source>Rename...</source>
-        <translation>Omdøb...</translation>
+        <translation>Omdøb ...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
@@ -1017,7 +1017,7 @@ Ny lokation: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation>Evaluerer...</translation>
+        <translation>Evaluerer ...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
