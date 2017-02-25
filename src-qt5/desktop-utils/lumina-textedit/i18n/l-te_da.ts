@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="253"/>
         <source>toolBar</source>
-        <translation>værktøjslinje</translation>
+        <translation>værktøjsbjælke</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="279"/>
