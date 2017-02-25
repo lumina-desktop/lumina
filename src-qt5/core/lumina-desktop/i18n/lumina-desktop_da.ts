@@ -58,7 +58,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
-        <translation>Håndtér programmer</translation>
+        <translation>Håndter programmer</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="87"/>
@@ -146,7 +146,7 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation>Starter Lumina-skrivebordet...</translation>
+        <translation>Starter Lumina-skrivebordet ...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
@@ -647,27 +647,27 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Begynd at flytte element</translation>
+        <translation>Begynd at flytte post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Begynd at ændre størrelse på element</translation>
+        <translation>Begynd at ændre størrelse på post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
-        <translation>Forøg element størrelse</translation>
+        <translation>Forøg poststørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
-        <translation>Formindsk element størrelse</translation>
+        <translation>Formindsk poststørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Fjern element</translation>
+        <translation>Fjern post</translation>
     </message>
 </context>
 <context>
@@ -949,12 +949,12 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation>Ugyldigt notenavn: Prøv igen</translation>
+        <translation>Ugyldigt notesnavn: Prøv igen</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="139"/>
         <source>Select a Note Name</source>
-        <translation>Vælg et notenavn</translation>
+        <translation>Vælg et notesnavn</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="166"/>
@@ -1322,7 +1322,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation>Håndtér programmer</translation>
+        <translation>Håndter programmer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
