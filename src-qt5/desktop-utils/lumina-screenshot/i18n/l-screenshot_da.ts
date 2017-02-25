@@ -19,7 +19,7 @@
     <message>
         <location filename="../MainUI.ui" line="375"/>
         <source>Take Screenshot</source>
-        <translation>Gem skærmbillede</translation>
+        <translation>Tag skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="151"/>
