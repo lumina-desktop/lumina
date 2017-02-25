@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
-        <translation>Binær fil</translation>
+        <translation>Binær</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="81"/>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
-        <translation>Vælg en binær fil</translation>
+        <translation>Vælg en binær</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="293"/>
