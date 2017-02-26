@@ -14,7 +14,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="14"/>
         <source>Color Scheme Editor</source>
-        <translation>Redigér farveskema</translation>
+        <translation>Rediger farveskema</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="28"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../PanelWidget.ui" line="222"/>
         <source>Auto-hide Panel</source>
-        <translation>Auto-skjul Panel</translation>
+        <translation>Auto-skjul panel</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="229"/>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation>Startmenu alternativ som fokusere på brugerens filer, mapper og favoritter.</translation>
+        <translation>Alternativ startmenu som fokusere på brugerens filer, mapper og favoritter.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Startmenu alternativ som fokusere på startende programmer.</translation>
+        <translation>Alternativ startmenu som fokusere på start af programmer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation>Fastgør en programgenvej direkte til panalet</translation>
+        <translation>Fastgør en programgenvej direkte til panelet</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
@@ -520,7 +520,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
-        <translation>Vis de åbne, minimerede, aktive og vigtige programvinduer</translation>
+        <translation>Vis de åbne, minimerede, aktive og haster programvinduer</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="179"/>
@@ -611,7 +611,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="365"/>
         <source>Secondary Color</source>
-        <translation>Sekundfær farve</translation>
+        <translation>Sekundær farve</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="366"/>
@@ -831,7 +831,7 @@
     <message>
         <location filename="../pages/getPage.h" line="40"/>
         <source>General Options</source>
-        <translation>Generelle instillinger</translation>
+        <translation>Generelle valgmuligheder</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="40"/>
@@ -1035,7 +1035,7 @@
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
-        <translation>Programbinærer (*)</translation>
+        <translation>Programbinære (*)</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="137"/>
@@ -1068,7 +1068,7 @@
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation>Deaktivér kompositingshåndtering (kræver genstart af session)</translation>
+        <translation>Deaktivér kompositionshåndtering (kræver genstart af session)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
@@ -1459,7 +1459,7 @@
     <message>
         <location filename="../pages/page_main.ui" line="32"/>
         <source>Search for....</source>
-        <translation>Søg efter....</translation>
+        <translation>Søg efter ....</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="53"/>
@@ -1608,12 +1608,12 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation>Håndtér skrivebordsprogramlinks</translation>
+        <translation>Håndter skrivebordsprogramlinks</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation>Vis programnebrudsdata</translation>
+        <translation>Vis programnedbrudsdata</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1760,7 +1760,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Valid Date Codes:</source>
-        <translation>Gyldig datokodeks:</translation>
+        <translation>Gyldige datokoder:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="181"/>
@@ -1979,7 +1979,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="78"/>
         <source>Screen Resolution:</source>
-        <translation>Skræmopløsning:</translation>
+        <translation>Skærmopløsning:</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
@@ -2076,7 +2076,7 @@
         <location filename="../pages/page_wallpaper.cpp" line="234"/>
         <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
-        <translation>Find baggrudsbilledmappe</translation>
+        <translation>Find baggrundsbilledmappe</translation>
     </message>
 </context>
 </TS>
