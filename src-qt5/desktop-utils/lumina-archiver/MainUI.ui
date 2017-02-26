@@ -15,6 +15,15 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -111,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>403</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -168,6 +177,7 @@
    <addaction name="actionRemove_File"/>
    <addaction name="separator"/>
    <addaction name="actionExtract_All"/>
+   <addaction name="actionExtract_Sel"/>
   </widget>
   <action name="action_Open">
    <property name="text">
@@ -225,6 +235,9 @@
   <action name="actionExtract_Sel">
    <property name="text">
     <string>Extract Selection</string>
+   </property>
+   <property name="statusTip">
+    <string>Extract Selected Items</string>
    </property>
   </action>
   <action name="actionUSB_Image">

@@ -21,6 +21,13 @@ page_interface_panels::page_interface_panels(QWidget *parent) : PageWidget(paren
   connect(ui->tool_panels_add, SIGNAL(clicked()), this, SLOT(newPanel()) );
   updateIcons();
   setupProfiles();
+
+  //Create panels container
+  QHBoxLayout *panels_layout = new QHBoxLayout();
+  panels_layout->setContentsMargins(0,0,0,0);
+  panels_layout->setAlignment(Qt::AlignLeft);
+  panels_layout->addStretch();
+  ui->scroll_panels->widget()->setLayout(panels_layout);
 }
 
 page_interface_panels::~page_interface_panels(){
@@ -53,28 +60,30 @@ void page_interface_panels::LoadSettings(int screennum){
   QString screenID = QApplication::screens().at(cscreen)->name();
   QString DPrefix = "desktop-"+screenID+"/";
   int panelnumber = settings->value(DPrefix+"panels",-1).toInt();
+  QBoxLayout *panels_layout = static_cast<QHBoxLayout*>(ui->scroll_panels->widget()->layout());
   
-//First clean any current panels
-  for(int i=0; i<PANELS.length(); i++){ delete PANELS.takeAt(i); i--; }
-  //Now create new panels
-  if(ui->scroll_panels->widget()->layout()==0){ 
-    ui->scroll_panels->widget()->setLayout( new QHBoxLayout() ); 
-    ui->scroll_panels->widget()->layout()->setContentsMargins(0,0,0,0);
+  //Remove extra panels (if any)
+  for(int i=panelnumber; i<PANELS.length(); i++){
+    PanelWidget *tmp = PANELS.takeAt(i);
+    delete tmp;
+    i--;
   }
-  ui->scroll_panels->widget()->layout()->setAlignment(Qt::AlignLeft);
-  //Clear anything left over in the layout
-  for(int i=0; i<ui->scroll_panels->widget()->layout()->count(); i++){
-    delete ui->scroll_panels->widget()->layout()->takeAt(i);
+
+  int current_count = panels_layout->count()-1;
+
+  //Update current panels
+  for(int i=0; i<current_count; i++) {
+    PANELS[i]->LoadSettings(settings, cscreen, i);
   }
-  for(int i=0; i<panelnumber; i++){
+  //Create new panels
+  for(int i=current_count; i<panelnumber; i++){
     PanelWidget *tmp = new PanelWidget(ui->scroll_panels->widget(), this, PINFO);
     tmp->LoadSettings(settings, cscreen, i);
     PANELS << tmp;
     connect(tmp, SIGNAL(PanelChanged()), this, SLOT(panelValChanged()) );
     connect(tmp, SIGNAL(PanelRemoved(int)), this, SLOT(removePanel(int)) );
-    ui->scroll_panels->widget()->layout()->addWidget(tmp);
+    panels_layout->insertWidget(panels_layout->count()-1, tmp);
   }
-  static_cast<QHBoxLayout*>(ui->scroll_panels->widget()->layout())->addStretch();
 
   QApplication::processEvents();
   loading = false;

@@ -1470,7 +1470,17 @@ void LXCB::WM_ICCCM_SetProtocols(WId win, LXCB::ICCCM_PROTOCOLS flags){
 // _NET_SUPPORTED (Root)
 void LXCB::WM_Set_Root_Supported(){
   //NET_WM standards (ICCCM implied - no standard way to list those)
-  xcb_atom_t list[] = {};
+  xcb_atom_t list[] = {EWMH._NET_WM_NAME, 
+		EWMH._NET_WM_ICON, 
+		EWMH._NET_WM_ICON_NAME,
+		EWMH._NET_WM_DESKTOP,
+		/*_NET_WINDOW_TYPE (and all the various types)*/
+		EWMH._NET_WM_WINDOW_TYPE, EWMH._NET_WM_WINDOW_TYPE_DESKTOP, EWMH._NET_WM_WINDOW_TYPE_DOCK, 
+		EWMH._NET_WM_WINDOW_TYPE_TOOLBAR, EWMH._NET_WM_WINDOW_TYPE_MENU, EWMH._NET_WM_WINDOW_TYPE_UTILITY, 
+		EWMH._NET_WM_WINDOW_TYPE_SPLASH, EWMH._NET_WM_WINDOW_TYPE_DIALOG, EWMH._NET_WM_WINDOW_TYPE_NORMAL,
+		EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU, EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU, EWMH._NET_WM_WINDOW_TYPE_TOOLTIP,
+		EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION, EWMH._NET_WM_WINDOW_TYPE_COMBO, EWMH._NET_WM_WINDOW_TYPE_DND,
+		};
   xcb_ewmh_set_supported(&EWMH, QX11Info::appScreen(), 0,list);
 }
 
@@ -1609,7 +1619,23 @@ WId LXCB::WM_Get_Active_Window(){
 }
 
 void LXCB::WM_Set_Active_Window(WId win){
-  xcb_ewmh_set_active_window(&EWMH, QX11Info::appScreen(), win);	
+  xcb_ewmh_set_active_window(&EWMH, QX11Info::appScreen(), win);
+  //Also send the active window a message to take input focus
+  //Send the window a WM_TAKE_FOCUS message
+    if(atoms.isEmpty()){ createWMAtoms(); } //need these atoms
+    xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = ATOMS[atoms.indexOf("WM_PROTOCOLS")];
+    event.data.data32[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")];  
+    event.data.data32[1] = XCB_TIME_CURRENT_TIME; //CurrentTime;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+    xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+    xcb_flush(QX11Info::connection());
 }
 
 // _NET_WORKAREA

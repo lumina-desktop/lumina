@@ -16,11 +16,11 @@ include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
-NO_XINPUT{
+#NO_XINPUT{
   DEFINES+=NO_XINPUT
-}else{
-  include(../../core/libLumina/LInputDevice.pri)
-}
+#}else{
+#  include(../../core/libLumina/LInputDevice.pri)
+#}
 
 SOURCES += main.cpp \
 	   mainWindow.cpp \

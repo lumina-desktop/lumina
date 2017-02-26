@@ -38,6 +38,7 @@ void AppLauncherPlugin::loadButton(){
   int icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
   button->setIconSize( QSize(icosize,icosize) );
+  button->setToolTip("");
   QString txt;
   if(path.endsWith(".desktop") && ok){
     XDGDesktop file(path);
@@ -50,6 +51,7 @@ void AppLauncherPlugin::loadButton(){
     }else{
       button->setWhatsThis(file.filePath);
       button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+      if(!file.comment.isEmpty()){button->setWhatsThis(file.comment); }
       txt = file.name;
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
       watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
@@ -90,7 +92,7 @@ void AppLauncherPlugin::loadButton(){
     button->setIcon( QIcon(QPixmap::fromImage(img)) );
   }
   //Now adjust the visible text as necessary based on font/grid sizing
-  button->setToolTip(txt);
+  if(button->toolTip().isEmpty()){ button->setToolTip(txt); }
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
     if(button->fontMetrics().width(txt) > (button->width()-OUTMARGIN) ){
       //Text too long, try to show it on two lines

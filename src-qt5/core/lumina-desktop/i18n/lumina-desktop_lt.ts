@@ -156,12 +156,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šis darbalaukis veikia su kava, kava ir dar daugiau kavos.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekite darbalaukio naujienas!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
@@ -246,7 +246,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbo pradžios paslaptis yra nustoti kalbėti ir pradėti daryti.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
@@ -306,7 +306,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aš suprantu, kad kuo daugiau aš dirbu, tuo labiau man sekasi.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
@@ -331,7 +331,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>It's kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Smagu yra daryti tai, kas neįmanoma.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
@@ -346,7 +346,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sėkmė, dažniausiai, nusišypso tiems, kas yra pernelyg užsiėmę, kad jos ieškotų.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
@@ -361,7 +361,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geriausiai būdas išpranašauti ateitį yra ją išrasti.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
@@ -371,7 +371,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartais, mums nepakanka daryti tai, kas geriausia; privalome daryti tai, kas reikalinga.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
@@ -982,7 +982,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
@@ -1017,22 +1017,22 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Pasirinkti multimedijos failus</translation>
+        <translation>Pasirinkti multimedijos failus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Pasirinkti multimedijos katalogą</translation>
+        <translation>Pasirinkti multimedijos katalogą</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Įveskite taisyklingą multimedijos failo ar srauto URL:</translation>
+        <translation>Įveskite taisyklingą multimedijos failo ar srauto URL:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">Multimedijos URL</translation>
+        <translation>Multimedijos URL</translation>
     </message>
 </context>
 <context>

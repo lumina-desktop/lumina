@@ -221,7 +221,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
         <source>You can't know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non puoi sapere troppo, ma puoi dire troppo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>

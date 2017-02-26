@@ -9,12 +9,15 @@
 
 #include <LuminaX11.h>
 #include <QMessageBox>
+#include <QClipboard>
 
-
-MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
+MainUI::MainUI()
+  : QMainWindow(), ui(new Ui::MainUI),
+    mousegrabbed(false),
+    picSaved(false),
+    closeOnSave(false)
+{
   ui->setupUi(this); //load the designer file
-  mousegrabbed = false;
-  picSaved = false;
   XCB = new LXCB();
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
@@ -30,7 +33,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     scaleTimer->setSingleShot(true);
     scaleTimer->setInterval(200); //~1/5 second
   tabbar = new QTabBar(this);
-  ui->tabLayout->insertWidget(0,tabbar);
+    tabbar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+  ui->tabLayout->insertWidget(0,tabbar, Qt::AlignLeft | Qt::AlignBottom);
     tabbar->addTab(LXDG::findIcon("view-preview",""), tr("View"));
     tabbar->addTab(LXDG::findIcon("preferences-other",""), tr("Settings"));
   ui->stackedWidget->setCurrentWidget(ui->page_current);
@@ -47,6 +51,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //connect(ui->push_snap, SIGNAL(clicked()), this, SLOT(startScreenshot()) );
   connect(ui->actionTake_Screenshot, SIGNAL(triggered()), this, SLOT(startScreenshot()) );
   connect(ui->tool_crop, SIGNAL(clicked()), IMG, SLOT(cropImage()) );
+  connect(ui->tool_copy_to_clipboard, SIGNAL(clicked()), this, SLOT(copyToClipboard()) );
   connect(IMG, SIGNAL(selectionChanged(bool)), this, SLOT(imgselchanged(bool)) );
   connect(IMG, SIGNAL(scaleFactorChanged(int)), this, SLOT(imgScalingChanged(int)) );
   connect(ui->slider_zoom, SIGNAL(valueChanged(int)),  this, SLOT(sliderChanged()) );
@@ -74,16 +79,14 @@ MainUI::~MainUI(){}
 
 void MainUI::setupIcons(){
   //Setup the icons
-  //ui->tool_save->setIcon( LXDG::findIcon("document-save","") );
   ui->tool_quicksave->setIcon( LXDG::findIcon("document-edit","") );
   ui->actionSave_As->setIcon( LXDG::findIcon("document-save-as","") );
   ui->actionQuick_Save->setIcon( LXDG::findIcon("document-save","") );
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
-  //ui->push_snap->setIcon( LXDG::findIcon("camera-web","") );
+  ui->tool_copy_to_clipboard->setIcon( LXDG::findIcon("insert-image","") );
   ui->actionTake_Screenshot->setIcon( LXDG::findIcon("camera-web","") );
   ui->tool_crop->setIcon( LXDG::findIcon("transform-crop","") );
   ui->tool_resize->setIcon( LXDG::findIcon("transform-scale","") );
-  //ui->actionEdit->setIcon( LXDG::findIcon("applications-graphics","") );
   this->setWindowIcon( LXDG::findIcon("camera-web","") );
 }
 
@@ -96,13 +99,22 @@ void MainUI::showSaveError(QString path){
 void MainUI::saveScreenshot(){
   if(mousegrabbed){ return; }
   QString filepath = QFileDialog::getSaveFileName(this, tr("Save Screenshot"), ppath+"/"+QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss")), tr("PNG Files (*.png);;AllFiles (*)") );
-  if(filepath.isEmpty()){ return; }
+  if(filepath.isEmpty()){
+    closeOnSave = false;
+    return;
+  }
   if(!filepath.endsWith(".png")){ filepath.append(".png"); }
   if( !IMG->image().save(filepath, "png") ){
+    closeOnSave = false;
     showSaveError(filepath);
   }else{
     picSaved = true;
     ppath = filepath.section("/",0,-2); //just the directory
+    if (closeOnSave) {
+      // We came here from close, now we need to close *after* handling
+      // the current screen event.
+      QTimer::singleShot(0, this, SLOT(close()));
+    }
   }
 }
 
@@ -120,6 +132,12 @@ void MainUI::quicksave(){
       showSaveError(path);
     }
 
+}
+void MainUI::copyToClipboard(){
+  qDebug() << "Copy Image to clipboard";
+  QClipboard *clipboard = QApplication::clipboard();
+  clipboard->setImage(IMG->image());
+  qDebug() << " - Success:" << !clipboard->image().isNull();
 }
 
 void MainUI::startScreenshot(){
@@ -243,8 +261,18 @@ void MainUI::closeEvent(QCloseEvent *ev){
   //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
   if(ui->check_show_popups->isChecked() && !picSaved){
     //Ask what to do about the unsaved changed
-    if(QMessageBox::Yes != QMessageBox::warning(this, tr("Unsaved Screenshot"), tr("The current screenshot has not been saved yet. Do you want to quit anyway?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-      //cancelled close of window
+    const int messageRet = QMessageBox::warning(this, tr("Unsaved Screenshot"),
+				    tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
+				    QMessageBox::Discard | QMessageBox::Save |QMessageBox::Cancel, QMessageBox::Cancel);
+    switch (messageRet) {
+    case QMessageBox::Discard:
+      // Just close, we don't care about the file.
+      break;
+    case QMessageBox::Save:
+      closeOnSave = true;
+      saveScreenshot();
+      // fall through
+    case QMessageBox::Cancel:
       ev->ignore();
       return;
     }

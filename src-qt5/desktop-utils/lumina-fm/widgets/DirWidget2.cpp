@@ -7,6 +7,7 @@
 #include "DirWidget2.h"
 #include "ui_DirWidget2.h"
 
+#include <QActionGroup>
 #include <QMessageBox>
 #include <QCursor>
 #include <QClipboard>
@@ -44,9 +45,12 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   line_dir = new QLineEdit(this);
     toolbar->addWidget(line_dir);
     connect(line_dir, SIGNAL(returnPressed()), this, SLOT(dir_changed()) );
-  toolbar->addAction(ui->actionSingleColumn);
-  ui->actionSingleColumn->setChecked(true);
-  toolbar->addAction(ui->actionDualColumn);
+  QActionGroup *columnActionGroup = new QActionGroup(this);
+    toolbar->addAction(ui->actionSingleColumn);
+    ui->actionSingleColumn->setChecked(true);
+    columnActionGroup->addAction(ui->actionSingleColumn);
+    toolbar->addAction(ui->actionDualColumn);
+    columnActionGroup->addAction(ui->actionDualColumn);
   toolbar->addAction(ui->actionMenu);
   //Add the browser widgets
   RCBW = 0; //right column browser is unavailable initially
@@ -400,7 +404,6 @@ void DirWidget::dir_changed(){
 
 void DirWidget::on_actionSingleColumn_triggered(bool checked){
   if(!checked){ return; }
-  ui->actionDualColumn->setChecked(false);
   if(RCBW==0){ return; } //nothing to do
   ui->browser_layout->removeWidget(RCBW);
   RCBW->deleteLater();
@@ -410,7 +413,6 @@ void DirWidget::on_actionSingleColumn_triggered(bool checked){
 
 void DirWidget::on_actionDualColumn_triggered(bool checked){
    if(!checked){ return; }
-  ui->actionSingleColumn->setChecked(false);
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);

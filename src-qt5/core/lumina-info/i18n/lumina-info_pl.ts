@@ -16,7 +16,7 @@
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation>Repozytorium Żródłowe</translation>
+        <translation>Repozytorium źródłowe</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation>Zgłaszanie Błędów</translation>
+        <translation>Zgłaszanie błędów</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../MainUI.ui" line="276"/>
         <source>Ask the Community</source>
-        <translation type="unfinished">Zadaj Pytanie</translation>
+        <translation>Zapytaj Społeczność</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="233"/>
@@ -70,8 +70,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
-        <source>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</translation>
+        <source>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</source>
+        <translation>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="353"/>
@@ -85,8 +85,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
-        <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Otwórz w przeglądarce internetowej&lt;a&gt;</translation>
+        <source>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Open in web browser&lt;a&gt;</source>
+        <translation>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Otwórz w przeglądarce internetowej&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>

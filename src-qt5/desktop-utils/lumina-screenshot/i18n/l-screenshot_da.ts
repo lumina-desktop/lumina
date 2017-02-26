@@ -6,12 +6,12 @@
     <message>
         <location filename="../ImageEditor.cpp" line="14"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom ind</translation>
     </message>
     <message>
         <location filename="../ImageEditor.cpp" line="15"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom ud</translation>
     </message>
 </context>
 <context>
@@ -19,7 +19,7 @@
     <message>
         <location filename="../MainUI.ui" line="375"/>
         <source>Take Screenshot</source>
-        <translation>Gem skærmbillede</translation>
+        <translation>Tag skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="151"/>
@@ -30,57 +30,57 @@
         <location filename="../MainUI.ui" line="196"/>
         <location filename="../MainUI.ui" line="386"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem som</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="244"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskær</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="228"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpas størrelse</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina-skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="70"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> Sek. forsinkelse</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="183"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Fang</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="212"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="362"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="378"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="402"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="405"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="57"/>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke gemme skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Skærmbilledet kunne ikke gemmes. Tjek venligst mappetilladelserne eller vælg en anden mappe</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="86"/>
@@ -125,7 +125,7 @@
     <message>
         <location filename="../MainUI.cpp" line="86"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
-        <translation>PNG Filer (*.png);;AllFiles (*)</translation>
+        <translation>PNG-filer (*.png);;Alle filer (*)</translation>
     </message>
 </context>
 </TS>

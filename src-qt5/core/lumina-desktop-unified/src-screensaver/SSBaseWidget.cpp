@@ -19,6 +19,7 @@ SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
   this->setObjectName("LuminaBaseSSWidget");
   ANIM = 0;
   this->setMouseTracking(true);
+  plugType="none";
 }
 
 SSBaseWidget::~SSBaseWidget(){
@@ -51,7 +52,7 @@ void SSBaseWidget::startPainting(){
   //Now list all the various plugins and start them appropriately
   QString style;
   if(cplug=="none"){
-    style = "background: transparent;"; //show the underlying black parent widget
+    style = "background: black;"; //show the underlying black parent widget
   }else{
     style = "background: black;";
   }

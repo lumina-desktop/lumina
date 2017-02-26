@@ -60,18 +60,21 @@ public:
 
 	//Public Session Interaction Functions
 	unsigned int currentWorkspace();
+
+	//Public Window Management Lists
+	QList<NativeWindow*> currentWindows(); //always returned in creation-order (oldest first)
 	
 	//Variables/Functions needed by the XCBEventFilter class only (not really needed by anything else)
 	LXCB *XCB; //used to interact with the X11 graphics subsystem
 
 public slots:
 	void RegisterVirtualRoot(WId);
+	void TryCloseWindow(WId);
+	void TryActivateWindow(WId);
 
 signals:
 	void NewInputEvent();
-	void NewManagedWindow(WId);
-	void WindowClosed(WId);
-	void ModifyWindow(WId win, Lumina::WindowAction);
+	void WindowCreated(NativeWindow*);
 	
 	// Session Signals
 	void WorkspaceChanged(unsigned int);
@@ -99,6 +102,9 @@ public:
 	bool startSystemTray();
 	bool stopSystemTray();
 
+	//Window List Functions
+	QList<NativeWindow*> windowList();
+
 private:
 	EventFilter *obj;
 	QList<xcb_atom_t> WinNotifyAtoms, SysNotifyAtoms;
@@ -119,13 +125,19 @@ private:
 	bool rmTrayApp(WId); //returns "true" if the tray app was found and removed
 	void checkDamageID(WId);
 
+	//Window List Variables
+	QList<NativeWindow*> windows;
+	QList<WId> waitingToShow;
+
 	//Longer Event handling functions
+	void SetupNewWindow(xcb_map_request_event_t  *ev);
+
 	//bool ParseKeyPressEvent();
 	//bool ParseKeyReleaseEvent();
 	//bool ParseButtonPressEvent();
 	//bool ParseButtonReleaseEvent();
 	//bool ParseMotionEvent();
-	//bool ParsePropertyEvent();
+	void ParsePropertyEvent(xcb_property_notify_event_t *ev);
 	//bool ParseClientMessageEvent();
 	//bool ParseDestroyEvent();
 	//bool ParseConfigureEvent();

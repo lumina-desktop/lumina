@@ -23,13 +23,22 @@ private:
 	Ui::AppDialog *ui;
 
 public:
-	AppDialog(QWidget *parent = 0) : QDialog(parent), ui(new Ui::AppDialog){
+	AppDialog(QWidget *parent = 0, QString defaultPath = "") : QDialog(parent), ui(new Ui::AppDialog){
 	  ui->setupUi(this); //load the designer file
 	  appreset = false;
-	  ui->comboBox->clear();
+	  ui->listApps->clear();
+    QListWidgetItem *defaultItem = nullptr;
           QList<XDGDesktop*> APPS = LXDG::sortDesktopNames(APPSLIST->apps(false,false)); //Don't show all/hidden
 	  for(int i=0; i<APPS.length(); i++){
-	    ui->comboBox->addItem( LXDG::findIcon(APPS[i]->icon,"application-x-executable"), APPS[i]->name, APPS[i]->filePath);
+	    QListWidgetItem *app = new QListWidgetItem(LXDG::findIcon(APPS[i]->icon,"application-x-executable"), APPS[i]->name);
+	    app->setData(Qt::UserRole, APPS[i]->filePath);
+	    ui->listApps->addItem(app);
+      if(APPS[i]->filePath == defaultPath){
+        defaultItem = app;
+      }
+	  }
+	  if(ui->listApps->count()){
+	    ui->listApps->setCurrentItem(defaultItem != nullptr ? defaultItem : ui->listApps->item(0));
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
 	  if(parent!=0){
@@ -56,7 +65,10 @@ public:
 		
 private slots:
 	void on_buttonBox_accepted(){
-	  appselected = ui->comboBox->currentData().toString();
+	  QListWidgetItem *item = ui->listApps->currentItem();
+	  if(item != nullptr){
+	    appselected = item->data(Qt::UserRole).toString();
+	  }
 	  this->close();
 	}
 	void on_buttonBox_rejected(){
@@ -66,6 +78,26 @@ private slots:
 	  if(ui->buttonBox->standardButton(button) == QDialogButtonBox::RestoreDefaults){
 	    appreset = true;
 	    this->close();
+	  }
+	}
+	void on_listApps_itemDoubleClicked(QListWidgetItem *item){
+	  appselected = item->data(Qt::UserRole).toString();
+	  this->close();
+	}
+	void on_lineSearch_textChanged(const QString &term){
+	  QListWidgetItem *first_visible = nullptr;
+	  for(int i = 0; i < ui->listApps->count(); i++){
+	    QListWidgetItem *item = ui->listApps->item(i);
+	    bool visible = item->text().contains(term, Qt::CaseInsensitive);
+	    item->setHidden(!visible);
+	    if(visible && first_visible == nullptr){
+	      first_visible = item;
+	    }
+	  }
+	  //Select the first app
+	  ui->listApps->setCurrentItem(first_visible);
+	  if(first_visible != nullptr){
+	    ui->listApps->scrollToItem(first_visible);
 	  }
 	}
 };

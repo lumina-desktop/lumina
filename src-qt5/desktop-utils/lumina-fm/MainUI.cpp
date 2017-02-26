@@ -118,7 +118,7 @@ MainUI::~MainUI(){
   }
   workThread->quit();
   //Also ensure the work thread is stopped
-  workThread->wait();
+//  workThread->wait();
 }
 
 void MainUI::OpenDirs(QStringList dirs){

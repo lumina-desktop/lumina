@@ -51,9 +51,3 @@ FORMS	+=	$${PWD}/page_main.ui \
 		$${PWD}/page_compton.ui
 #		$${PWD}/page_bluetooth_trueos.ui 
 #   $${PWD}/page_mouse_trueos.ui 
-
-!NO_XINPUT{
-  HEADERS += $${PWD}/page_mouse.h
-  SOURCES += $${PWD}/page_mouse.cpp
-  FORMS += $${PWD}/page_mouse.ui
-}

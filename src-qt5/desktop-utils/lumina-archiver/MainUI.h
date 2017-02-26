@@ -55,6 +55,8 @@ private slots:
 	void ProcFinished(bool, QString);
 	void ProcUpdate(int percent, QString txt);
 
+	//UI Slots
+	void selectionChanged();
 };
 
 #endif

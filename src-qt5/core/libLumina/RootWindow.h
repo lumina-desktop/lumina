@@ -18,8 +18,12 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPaintEvent>
+#include <QMdiArea>
 
-class RootWindow : public QWidget{
+#include "RootSubWindow.h"
+#include "NativeWindow.h"
+
+class RootWindow : public QMdiArea{
 	Q_OBJECT
 public:
 	enum ScaleType{ SolidColor, Stretch, Full, Fit, Center, Tile, BottomLeft, BottomRight, BottomCenter, \
@@ -43,10 +47,16 @@ private:
 	QList<screeninfo> WALLPAPERS;
 	void updateScreenPixmap(screeninfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
 
+	//Window Management
+	QList<RootSubWindow*> WINDOWS;
+	
 public slots:
 	void ResizeRoot();
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);
 	    //Note: for "SingleColor" scaling the "file" variable should be "rgb(R,G,B)" or "#hexcode"
+
+	void NewWindow(NativeWindow*);
+	void CloseWindow(WId); //automatically connected for any new native window
 
 private slots:
 

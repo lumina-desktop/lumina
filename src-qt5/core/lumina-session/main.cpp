@@ -61,7 +61,9 @@ int main(int argc, char ** argv)
 
     //Check for any stale desktop lock files and clean them up
     QString cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
-    cfile = cfile.arg( QString(getlogin()), "lumina-desktop", QString::number(QX11Info::appScreen()) );
+    QString desk = "lumina-desktop";
+    if(unified){ desk.append("-unified"); }
+    cfile = cfile.arg( QString(getlogin()), desk, QString::number(QX11Info::appScreen()) );
     if(QFile::exists(cfile)){
       qDebug() << "Found Desktop Lock for X session:" << disp;
       qDebug() << " - Disabling Lock and starting new desktop session";
