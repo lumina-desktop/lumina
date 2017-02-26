@@ -59,7 +59,7 @@
         <location filename="../MainUI.ui" line="216"/>
         <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
-        <translation>Redigér genvej</translation>
+        <translation>Rediger genvej</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="298"/>
         <source>Options</source>
-        <translation>Indstillinger</translation>
+        <translation>Valgmuligheder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="336"/>
@@ -119,7 +119,7 @@
     <message>
         <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
-        <translation>---Beregner---</translation>
+        <translation>---Udregner---</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="70"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
-        <translation>  Beregner...</translation>
+        <translation>  Udregner ...</translation>
     </message>
 </context>
 </TS>
