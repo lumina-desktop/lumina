@@ -6,7 +6,6 @@
 //===========================================
 #include "page_wallpaper.h"
 #include "ui_page_wallpaper.h"
-#include "getPage.h"
 
 //==========
 //    PUBLIC

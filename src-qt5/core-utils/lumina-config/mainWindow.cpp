@@ -86,7 +86,7 @@ void mainWindow::changePage(QString id){
   PageWidget *page = 0;
   QString oldpage = this->centralWidget()->whatsThis();
   if(id!=cpage || cpage!=oldpage){
-    page =  GetNewPage(id, this);
+    page =  Pages::GetNewPage(id, this);
     if(page==0){ return; }
     qDebug() << "Changing page:" << id;
     cpage = id;

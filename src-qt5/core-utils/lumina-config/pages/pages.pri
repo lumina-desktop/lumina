@@ -18,7 +18,8 @@ HEADERS	+= 	$${PWD}/getPage.h \
 #		$${PWD}/page_mouse_trueos.h
 
 
-SOURCES	+=	$${PWD}/page_main.cpp \
+SOURCES	+=	$${PWD}/getPage.cpp \
+		$${PWD}/page_main.cpp \
 		$${PWD}/page_wallpaper.cpp \
 		$${PWD}/page_theme.cpp \
 		$${PWD}/page_autostart.cpp \

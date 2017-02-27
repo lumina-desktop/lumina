@@ -6,7 +6,6 @@
 //===========================================
 #include "page_session_locale.h"
 #include "ui_page_session_locale.h"
-#include "getPage.h"
 
 //==========
 //    PUBLIC

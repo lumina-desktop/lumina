@@ -6,7 +6,6 @@
 //===========================================
 #include "page_sample.h"
 #include "ui_page_sample.h"
-#include "getPage.h"
 
 //==========
 //    PUBLIC

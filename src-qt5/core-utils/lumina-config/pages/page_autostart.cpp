@@ -6,7 +6,6 @@
 //===========================================
 #include "page_autostart.h"
 #include "ui_page_autostart.h"
-#include "getPage.h"
 
 #include "../AppDialog.h"
 //==========

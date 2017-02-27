@@ -6,7 +6,6 @@
 //===========================================
 #include "page_compton.h"
 #include "ui_page_compton.h"
-#include "getPage.h"
 
 //==========
 //    PUBLIC

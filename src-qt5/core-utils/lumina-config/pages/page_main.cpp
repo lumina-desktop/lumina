@@ -144,13 +144,13 @@ void page_main::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Desktop Settings") );
   INFO.clear();
-  INFO = KnownPages();
+  INFO = Pages::KnownPages();
   //Also add known system setting applications to the INFO list
   QList<XDGDesktop*> apps = APPSLIST->apps(false,false); //only valid, non-hidden files
   qDebug() << "Found Apps:" << apps.length();
   for(int i=0; i<apps.length(); i++){
     if( !apps[i]->catList.contains("Settings") || apps[i]->filePath.endsWith("lumina-config.desktop") ){ continue; }
-    INFO << PageInfo(apps[i]->filePath, apps[i]->name, apps[i]->genericName, apps[i]->icon, apps[i]->comment, "system", QStringList(), apps[i]->keyList);
+    INFO << Pages::PageInfo(apps[i]->filePath, apps[i]->name, apps[i]->genericName, apps[i]->icon, apps[i]->comment, "system", QStringList(), apps[i]->keyList);
   }
   //Now sort the items according to the translated name
   QStringList names;
