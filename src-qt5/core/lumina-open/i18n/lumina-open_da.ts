@@ -6,7 +6,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
-        <translation>Åbn med...</translation>
+        <translation>Åbn med ...</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="68"/>
@@ -151,7 +151,7 @@
         <location filename="../main.cpp" line="202"/>
         <location filename="../main.cpp" line="211"/>
         <source>Screen Brightness %1%</source>
-        <translation>Skærm-lysstyrke %1%</translation>
+        <translation>Skærmlysstyrke %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="243"/>
