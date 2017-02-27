@@ -134,32 +134,9 @@ void LDesktopUtils::removeFavorite(QString path){
   if(changed){ LDesktopUtils::saveFavorites(fav); }
 }
 
-void LDesktopUtils::upgradeFavorites(int fromoldversionnumber){
-  /*if(fromoldversionnumber <= 8004){ // < pre-0.8.4>, sym-links in the ~/.lumina/favorites dir}
-    //Include 0.8.4-devel versions in this upgrade (need to distinguish b/w devel and release versions later somehow)
-    QDir favdir(QDir::homePath()+"/.lumina/favorites");
-    QFileInfoList symlinks = favdir.entryInfoList(QDir::Files | QDir::Dirs | QDir::System | QDir::NoDotAndDotDot);
-    QStringList favfile = LDesktopUtils::listFavorites(); //just in case some already exist
-    bool newentry = false;
-    for(int i=0; i<symlinks.length(); i++){
-      if(!symlinks[i].isSymLink()){ continue; } //not a symlink
-      QString path = symlinks[i].symLinkTarget();
-      QString name = symlinks[i].fileName(); //just use the name of the symlink from the old system
-      QString type;
-      if(symlinks[i].isDir()){ type = "dir"; }
-      else if(name.endsWith(".desktop")){ type = "app"; }
-      else{ type = LXDG::findAppMimeForFile(path); }
-      //Put the line into the file
-      favfile << name+"::::"+type+"::::"+path;
-      //Now remove the symlink - obsolete format
-      QFile::remove(symlinks[i].absoluteFilePath());
-      newentry = true;
-    }
-    if(newentry){
-      LDesktopUtils::saveFavorites(favfile);
-    }
-  }*/ //end check for version <= 0.8.4
-
+void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
+  //NOTE: Version number syntax: <major>*1000000 + <minor>*1000 + <revision>
+  // Example: 1.2.3 -> 1002003
 }  
 
 void LDesktopUtils::LoadSystemDefaults(bool skipOS){
