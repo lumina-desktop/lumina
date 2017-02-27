@@ -35,7 +35,7 @@
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
         <source>Click to Set</source>
-        <translation>Klik for at vælge</translation>
+        <translation>Klik for at sætte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="109"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
@@ -733,7 +733,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
         <source>Terminal</source>
-        <translation></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
@@ -782,7 +782,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/LSysDashboard.cpp" line="43"/>
         <source>System Dashboard</source>
-        <translation>Systemets instrumentpanel</translation>
+        <translation>Systemets instrumentbræt</translation>
     </message>
 </context>
 <context>
@@ -1387,7 +1387,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
-        <translation>%1% (%2 sstimeret)</translation>
+        <translation>%1% (%2 estimeret)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
@@ -1646,7 +1646,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>

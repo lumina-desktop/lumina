@@ -50,12 +50,12 @@
     <message>
         <location filename="../ColorDialog.ui" line="105"/>
         <source>Sample</source>
-        <translation>Eksempel</translation>
+        <translation>Prøve</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="115"/>
         <source>Cancel</source>
-        <translation>Annullér</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="135"/>
@@ -106,7 +106,7 @@
     <message>
         <location filename="../GetPluginDialog.ui" line="57"/>
         <source>Cancel</source>
-        <translation>Afbryd</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="77"/>
@@ -510,7 +510,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="263"/>
         <source>Browse Files</source>
-        <translation>Gennemgå filer</translation>
+        <translation>Gennemse filer</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="284"/>
@@ -913,7 +913,7 @@
     <message>
         <location filename="../ThemeDialog.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Annullér</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="94"/>
@@ -950,7 +950,7 @@
     <message>
         <location filename="../mainWindow.ui" line="23"/>
         <source>toolBar</source>
-        <translation>værktøjslinje</translation>
+        <translation>værktøjsbjælke</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
@@ -2030,7 +2030,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Center</source>
-        <translation>Centrér</translation>
+        <translation>I midten</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="132"/>
