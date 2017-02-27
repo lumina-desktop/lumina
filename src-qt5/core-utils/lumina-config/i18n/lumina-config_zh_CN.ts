@@ -8,6 +8,11 @@
         <source>Select Application</source>
         <translation>选择程序</translation>
     </message>
+    <message>
+        <location filename="../AppDialog.ui" line="20"/>
+        <source>Search for....</source>
+        <translation type="unfinished">查找…</translation>
+    </message>
 </context>
 <context>
     <name>ColorDialog</name>
@@ -774,16 +779,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop Plugins</source>
         <translation>桌面插件</translation>
@@ -984,12 +979,12 @@
         <translation>选择要设置的显示器或桌面</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>Unsaved Changes</source>
         <translation>未保存的更改</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>此页面当前有未保存的更改，您希望保存吗?</translation>
     </message>
@@ -1076,8 +1071,8 @@
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
-        <source>Compositor Settings</source>
-        <translation>混成器设置</translation>
+        <source>Window Effects</source>
+        <translation type="unfinished">窗口特效</translation>
     </message>
 </context>
 <context>
@@ -1164,31 +1159,27 @@
         <translation>默认应用程序</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="61"/>
-        <location filename="../pages/page_defaultapps.cpp" line="82"/>
-        <location filename="../pages/page_defaultapps.cpp" line="103"/>
-        <location filename="../pages/page_defaultapps.cpp" line="124"/>
-        <location filename="../pages/page_defaultapps.cpp" line="220"/>
+        <location filename="../pages/page_defaultapps.cpp" line="153"/>
         <source>Click to Set</source>
         <translation>单击以设定</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="158"/>
+        <location filename="../pages/page_defaultapps.cpp" line="89"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="330"/>
+        <location filename="../pages/page_defaultapps.cpp" line="273"/>
         <source>Select Binary</source>
         <translation>选择二进制程序</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>Invalid Binary</source>
         <translation>无效的二进制程序</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>The selected binary is not executable!</source>
         <translation>选中的二进制文件不可执行！</translation>
     </message>
@@ -1443,7 +1434,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="52"/>
+        <location filename="../pages/page_interface_panels.cpp" line="59"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
     </message>
@@ -1461,62 +1452,34 @@
         <translation>查找…</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="53"/>
+        <location filename="../pages/page_main.cpp" line="56"/>
         <source>Interface Configuration</source>
         <translation>界面配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="57"/>
+        <location filename="../pages/page_main.cpp" line="60"/>
         <source>Appearance</source>
         <translation>外观</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="61"/>
+        <location filename="../pages/page_main.cpp" line="64"/>
         <source>Desktop Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="65"/>
+        <location filename="../pages/page_main.cpp" line="68"/>
         <source>User Settings</source>
         <translation>用户设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="131"/>
+        <location filename="../pages/page_main.cpp" line="72"/>
+        <source>System Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_main.cpp" line="145"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
-    </message>
-</context>
-<context>
-    <name>page_mouse</name>
-    <message>
-        <location filename="../pages/page_mouse.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished">表单</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="53"/>
-        <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="81"/>
-        <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="85"/>
-        <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="106"/>
-        <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="107"/>
-        <source>Master Device</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1682,142 +1645,142 @@
         <translation>日期显示于时间之上</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="70"/>
+        <location filename="../pages/page_session_options.cpp" line="82"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="113"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Select an image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="114"/>
+        <location filename="../pages/page_session_options.cpp" line="126"/>
         <source>Images</source>
         <translation>图像</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Reset User Image</source>
         <translation>重置用户图标</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>您希望将用户图标重置为系统默认吗？</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="157"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>Valid Time Codes:</source>
         <translation>可用的时间代码：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="158"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: 不带前导0的小时 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="159"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: 带前导0的小时 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="160"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: 不带前导0的分钟 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="161"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: 带前导0的分钟 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="162"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: 不带前导0的秒数 (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="163"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: 带前导0的秒数 (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="164"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: 上午/下午 (12小时) 时钟 (大写或小写)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="165"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>%1: Timezone</source>
         <translation>%1: 时区</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="166"/>
+        <location filename="../pages/page_session_options.cpp" line="178"/>
         <source>Time Codes</source>
         <translation>时间代码</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Valid Date Codes:</source>
         <translation>可用的日期代码:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="181"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: 不包含前导0的日 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="182"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: 包含前导0的日 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="183"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: 缩略的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="184"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: 完整的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="185"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: 不带前导0的月份 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="186"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: 带前导0的月份 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="187"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: 缩略的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="188"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: 完整的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="189"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: 两位数年份 (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="190"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: 四位数年份 (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="191"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>可将文字包在单引号中来避免转义</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="204"/>
         <source>Date Codes</source>
         <translation>日期代码</translation>
     </message>

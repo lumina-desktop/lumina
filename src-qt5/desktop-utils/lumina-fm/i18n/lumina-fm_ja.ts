@@ -21,13 +21,13 @@
     <message>
         <location filename="../BMMDialog.ui" line="52"/>
         <source>Remove Bookmark</source>
-        <translatorcomment>"Remove"ボタンのツールチップ</translatorcomment>
+        <translatorcomment>&quot;Remove&quot;ボタンのツールチップ</translatorcomment>
         <translation>ブックマークを削除します</translation>
     </message>
     <message>
         <location filename="../BMMDialog.ui" line="65"/>
         <source>Rename BookMark</source>
-        <translatorcomment>"Rename"ボタンのツールチップ</translatorcomment>
+        <translatorcomment>&quot;Rename&quot;ボタンのツールチップ</translatorcomment>
         <translation>ブックマークの名前を変更します</translation>
     </message>
     <message>
@@ -191,185 +191,185 @@
         <translation>二列で表示</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="533"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>(Limited Access) </source>
         <translation>(アクセス制限あり) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>New Document</source>
         <translation>新しいドキュメント</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>Error Creating Document</source>
         <translation>ドキュメントの作成中にエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>ドキュメントを作成できません。パーミッション設定を確認してください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
         <source>New Directory</source>
         <translation>新しいディレクトリー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>Invalid Name</source>
         <translation>名前が無効です</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <location filename="../widgets/DirWidget2.cpp" line="491"/>
         <source>File Operations</source>
         <translation>ファイル操作</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="502"/>
+        <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
         <translation>ディレクトリー操作</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="514"/>
+        <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
         <translation>ロードしています...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>同名のファイルまたはディレクトリーが存在します。別の名前にしてください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>Error Creating Directory</source>
         <translation>ディレクトリーの作成時にエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>ディレクトリーを作成できません。現在作業中のディレクトリーの書き込みパーミッション設定を確認してください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="313"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Current</source>
         <translatorcomment>スナップショットが存在する場合にはスナップショット名が入る</translatorcomment>
         <translation>現行版</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
         <translation>作成...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
         <translation>ディレクトリー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Application Launcher</source>
         <translation>アプリケーションの起動</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
         <translation>起動...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <location filename="../widgets/DirWidget2.cpp" line="243"/>
         <source>Terminal</source>
         <translation>端末</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <location filename="../widgets/DirWidget2.cpp" line="244"/>
         <source>SlideShow</source>
         <translation>スライドショー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
         <source>Multimedia Player</source>
         <translation>マルチメディアプレイヤー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>View Files...</source>
         <translation>ファイルの情報を表示...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <location filename="../widgets/DirWidget2.cpp" line="262"/>
         <source>Checksums</source>
         <translation>チェックサム</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <location filename="../widgets/DirWidget2.cpp" line="264"/>
         <source>Properties</source>
         <translation>プロパティー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="448"/>
+        <location filename="../widgets/DirWidget2.cpp" line="450"/>
         <source>File Checksums:</source>
         <translation>ファイルのチェックサム:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
         <source>Missing Utility</source>
         <translation>ユーティリティーがありません</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>"lumina-fileinfo" ユーティリティーはシステムに存在しません。先にインストールしてください。</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>&quot;lumina-fileinfo&quot; ユーティリティーはシステムに存在しません。先にインストールしてください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="485"/>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="486"/>
+        <location filename="../widgets/DirWidget2.cpp" line="489"/>
         <source>Open With...</source>
         <translation>アプリケーションで開く...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="493"/>
+        <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Rename...</source>
         <translation>名前の変更...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="494"/>
+        <location filename="../widgets/DirWidget2.cpp" line="497"/>
         <source>Cut Selection</source>
         <translation>選択したアイテムを切り取る</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <location filename="../widgets/DirWidget2.cpp" line="498"/>
         <source>Copy Selection</source>
         <translation>選択したアイテムをコピー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="496"/>
+        <location filename="../widgets/DirWidget2.cpp" line="501"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="498"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>Delete Selection</source>
         <translation>選択したアイテムを削除</translation>
     </message>
@@ -572,7 +572,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation>「次へ」をクリックするとリポジトリーのダウンロードを開始します</translation>
     </message>
     <message>
@@ -1072,13 +1072,13 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translatorcomment>"..."ボタンのツールチップ</translatorcomment>
+        <translatorcomment>&quot;...&quot;ボタンのツールチップ</translatorcomment>
         <translation>この画像ファイルを削除します</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>
         <source>Rotate this image file counter-clockwise</source>
-        <translatorcomment>"..."ボタンのツールチップ</translatorcomment>
+        <translatorcomment>&quot;...&quot;ボタンのツールチップ</translatorcomment>
         <translation>反時計回りに画像ファイルを回転させます</translation>
     </message>
     <message>

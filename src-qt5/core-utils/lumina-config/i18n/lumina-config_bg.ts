@@ -8,6 +8,11 @@
         <source>Select Application</source>
         <translation>Избор на програма</translation>
     </message>
+    <message>
+        <location filename="../AppDialog.ui" line="20"/>
+        <source>Search for....</source>
+        <translation type="unfinished">Търсене на...</translation>
+    </message>
 </context>
 <context>
     <name>ColorDialog</name>
@@ -773,16 +778,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Adjust keyboard and mouse devices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop Plugins</source>
         <translation>Приставки на работния плот</translation>
@@ -983,12 +978,12 @@
         <translation>Избор на монитор/работен плот за настройка</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>Unsaved Changes</source>
         <translation>Незапазени промени</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Тази страница съдържа незапазени промени. Искате ли да ги запазите сега?</translation>
     </message>
@@ -1075,8 +1070,8 @@
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
-        <source>Compositor Settings</source>
-        <translation>Настройки на съставителя</translation>
+        <source>Window Effects</source>
+        <translation type="unfinished">Ефекти на прозорците</translation>
     </message>
 </context>
 <context>
@@ -1163,31 +1158,27 @@
         <translation>Стандартни програми</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="61"/>
-        <location filename="../pages/page_defaultapps.cpp" line="82"/>
-        <location filename="../pages/page_defaultapps.cpp" line="103"/>
-        <location filename="../pages/page_defaultapps.cpp" line="124"/>
-        <location filename="../pages/page_defaultapps.cpp" line="220"/>
+        <location filename="../pages/page_defaultapps.cpp" line="153"/>
         <source>Click to Set</source>
         <translation>Щракнете за да зададете</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="158"/>
+        <location filename="../pages/page_defaultapps.cpp" line="89"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="330"/>
+        <location filename="../pages/page_defaultapps.cpp" line="273"/>
         <source>Select Binary</source>
         <translation>Избор на двоичен файл</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>Invalid Binary</source>
         <translation>Невалиден двоичен файл</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>The selected binary is not executable!</source>
         <translation>Избраният двоичен файл не е изпълним!</translation>
     </message>
@@ -1442,7 +1433,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="52"/>
+        <location filename="../pages/page_interface_panels.cpp" line="59"/>
         <source>Desktop Settings</source>
         <translation>Настройки на работния плот</translation>
     </message>
@@ -1460,62 +1451,34 @@
         <translation>Търсене на...</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="53"/>
+        <location filename="../pages/page_main.cpp" line="56"/>
         <source>Interface Configuration</source>
         <translation>Настройка на интерфейса</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="57"/>
+        <location filename="../pages/page_main.cpp" line="60"/>
         <source>Appearance</source>
         <translation>Изглед</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="61"/>
+        <location filename="../pages/page_main.cpp" line="64"/>
         <source>Desktop Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="65"/>
+        <location filename="../pages/page_main.cpp" line="68"/>
         <source>User Settings</source>
         <translation>Потребителски настройки</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="131"/>
+        <location filename="../pages/page_main.cpp" line="72"/>
+        <source>System Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_main.cpp" line="145"/>
         <source>Desktop Settings</source>
         <translation>Настройки на работния плот</translation>
-    </message>
-</context>
-<context>
-    <name>page_mouse</name>
-    <message>
-        <location filename="../pages/page_mouse.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="53"/>
-        <source>Input Device Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="81"/>
-        <source>Mouse #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="85"/>
-        <source>Keyboard #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="106"/>
-        <source>Extension Device #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="107"/>
-        <source>Master Device</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1681,142 +1644,142 @@
         <translation>Първо деня, после часа</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="70"/>
+        <location filename="../pages/page_session_options.cpp" line="82"/>
         <source>Desktop Settings</source>
         <translation>Настройки на работния плот</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="113"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Select an image</source>
         <translation>Избор на изображение</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="114"/>
+        <location filename="../pages/page_session_options.cpp" line="126"/>
         <source>Images</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Reset User Image</source>
         <translation>Нулиране на изображението на потребителя</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Искате ли да нулирате изображението на потребителя до стандартното за системата?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="157"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>Valid Time Codes:</source>
         <translation>Валидни кодове за час:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="158"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Час без водеща нула (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="159"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Час с водеща нула (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="160"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Минути без водеща нула (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="161"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Минути с водеща нула (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="162"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Секунди без водеща нула (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="163"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Секунди с водеща нула (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="164"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: СП/ПП (12-часа) часовник (главни или малки букви)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="165"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>%1: Timezone</source>
         <translation>%1: Часова зона</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="166"/>
+        <location filename="../pages/page_session_options.cpp" line="178"/>
         <source>Time Codes</source>
         <translation>Часови кодове</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Valid Date Codes:</source>
         <translation>Валидни кодове за дата:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="181"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Числов ден без водеща нула (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="182"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Числов ден с водеща нула (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="183"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Ден като съкращение (локализирано)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="184"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Ден с пълното име (локализирано)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="185"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Числов месец без водеща нула (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="186"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Числов месец с водеща нула (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="187"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Месец като съкращение (локализирано)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="188"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Месец с пълното име (локализирано)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="189"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Година като двуцифрено число (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="190"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Година като четири цифрено число (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="191"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Текстът може да бъде ограден в единични кавички за да се игнорират заместванията</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="204"/>
         <source>Date Codes</source>
         <translation>Кодове за дата</translation>
     </message>

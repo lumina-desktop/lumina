@@ -188,184 +188,184 @@
         <translation>Vista colonna doppia</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="533"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>(Limited Access) </source>
         <translation>(Accesso Limitato) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>New Document</source>
         <translation>Nuovo Documento</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>Error Creating Document</source>
         <translation>Errore Creazione Documento</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Impossibile creare il documento. Verifica di avere i permessi giusti.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
         <source>New Directory</source>
         <translation>Nuova Directory</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>Invalid Name</source>
         <translation>Nome non valido</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <location filename="../widgets/DirWidget2.cpp" line="491"/>
         <source>File Operations</source>
         <translation>Operazioni su file</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="502"/>
+        <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
         <translation>Operazioni su Cartella</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="514"/>
+        <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
         <translation>Caricamento...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Un file o una directory con questo nome esiste già!  Per favore scegli un altro nome.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>Error Creating Directory</source>
         <translation>Errore Creazione Directory</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>La directory non può essere creata. Verifica di avere le autorizzazioni appropriate per modificare la directory corrente.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="313"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Current</source>
         <translation>Attuale</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
         <translation>Creando...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
         <translation>Cartella</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Application Launcher</source>
         <translation>Applicazione di Avvio</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
         <translation>Avviando...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <location filename="../widgets/DirWidget2.cpp" line="243"/>
         <source>Terminal</source>
         <translation>Terminale</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <location filename="../widgets/DirWidget2.cpp" line="244"/>
         <source>SlideShow</source>
         <translation>Presentazione</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
         <source>Multimedia Player</source>
         <translation>Riproduttore multimediale</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>View Files...</source>
         <translation>Vista Files...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <location filename="../widgets/DirWidget2.cpp" line="262"/>
         <source>Checksums</source>
         <translation>Controlli</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <location filename="../widgets/DirWidget2.cpp" line="264"/>
         <source>Properties</source>
         <translation>Proprietà</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="448"/>
+        <location filename="../widgets/DirWidget2.cpp" line="450"/>
         <source>File Checksums:</source>
         <translation>Controllo dei File:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
         <source>Missing Utility</source>
         <translation>Utilità mancante</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>L'utilità "lumina-fileinfo" non e' stata trovata sul sistema. Per favore installala.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>L&apos;utilità &quot;lumina-fileinfo&quot; non e&apos; stata trovata sul sistema. Per favore installala.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="485"/>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="486"/>
+        <location filename="../widgets/DirWidget2.cpp" line="489"/>
         <source>Open With...</source>
         <translation>Apri con...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="493"/>
+        <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Rename...</source>
         <translation>Rinomina...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="494"/>
+        <location filename="../widgets/DirWidget2.cpp" line="497"/>
         <source>Cut Selection</source>
         <translation>Taglia Selezione</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <location filename="../widgets/DirWidget2.cpp" line="498"/>
         <source>Copy Selection</source>
         <translation>Copia Selezione</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="496"/>
+        <location filename="../widgets/DirWidget2.cpp" line="501"/>
         <source>Paste</source>
         <translation>Incolla</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="498"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>Delete Selection</source>
         <translation>Elimina selezione</translation>
     </message>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Nota: altrimenti aggiungero' solo un numero al nome del file.</translation>
+        <translation>Nota: altrimenti aggiungero&apos; solo un numero al nome del file.</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="148"/>
@@ -566,8 +566,8 @@ Nuova posizione: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
-        <translation>Fai clic su "Avanti" per scaricare il repository</translation>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <translation>Fai clic su &quot;Avanti&quot; per scaricare il repository</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -760,7 +760,7 @@ Nuova posizione: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="234"/>
         <source>Show Action Buttons</source>
-        <translation>Mostra Pulsanti d'Azione</translation>
+        <translation>Mostra Pulsanti d&apos;Azione</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="245"/>
@@ -935,7 +935,7 @@ Nuova posizione: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="908"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
-        <translation>ATTENZIONE: Questo modo eliminara' definitivamente il/i file  dal sistema!</translation>
+        <translation>ATTENZIONE: Questo modo eliminara&apos; definitivamente il/i file  dal sistema!</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="908"/>
@@ -1060,7 +1060,7 @@ Nuova posizione: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Elimina questo file 'immagine</translation>
+        <translation>Elimina questo file &apos;immagine</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>
@@ -1087,7 +1087,7 @@ Nuova posizione: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="212"/>
         <source>Go to Beginning</source>
-        <translation>Salta all'Inizio</translation>
+        <translation>Salta all&apos;Inizio</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="215"/>
@@ -1145,7 +1145,7 @@ Nuova posizione: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.cpp" line="125"/>
         <source>WARNING: This will permanently delete the file from the system!</source>
-        <translation>ATTENZIONE: Questo eliminera' definitivamente il file dal sistema!</translation>
+        <translation>ATTENZIONE: Questo eliminera&apos; definitivamente il file dal sistema!</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.cpp" line="125"/>

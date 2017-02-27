@@ -169,7 +169,7 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation>Salva il file dell'Applicazione</translation>
+        <translation>Salva il file dell&apos;Applicazione</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
@@ -199,7 +199,7 @@
     <message>
         <location filename="../MainUI.cpp" line="318"/>
         <source>Select an icon</source>
-        <translation>Seleziona un'icona</translation>
+        <translation>Seleziona un&apos;icona</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="318"/>

@@ -129,9 +129,14 @@
         <translation>その他</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
-        <translatorcomment>"Find"とあるが、ファイル指定ダイアログのタイトル</translatorcomment>
+        <translatorcomment>&quot;Find&quot;とあるが、ファイル指定ダイアログのタイトル</translatorcomment>
         <translation>アプリケーションのバイナリーを指定</translation>
     </message>
 </context>
@@ -170,37 +175,37 @@
         <translation>アプリケーションショートカットの起動情報が失われています(無効なショートカット): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>URL ショートカットの URL が失われています: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>ディレクトリーショートカットのパス情報が失われています: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>種類が不明なショートカットです: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation>バイナリーがありません</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>"%1" が見つかりませんでした。まずそれがインストールされている事を確認してください。</translation>
+        <location filename="../main.cpp" line="365"/>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>&quot;%1&quot; が見つかりませんでした。まずそれがインストールされている事を確認してください。</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>アプリケーションエラー</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>このアプリケーションでエラーが発生したため、閉じる必要があります:</translation>
     </message>

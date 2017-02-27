@@ -188,184 +188,184 @@
         <translation>Pohled se dvěma sloupci</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="533"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>(Limited Access) </source>
         <translation>(Omezený přístup) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>New Document</source>
         <translation>Nový dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="555"/>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
-        <location filename="../widgets/DirWidget2.cpp" line="603"/>
+        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>Name:</source>
         <translation>Název:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>Error Creating Document</source>
         <translation>Chyba při vytváření dokumentu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Dokument se nepodařilo vytvořit. Ujistěte se, prosím, že máte náležitá oprávnění.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
         <source>New Directory</source>
         <translation>Nová složka</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>Invalid Name</source>
         <translation>Neplatný název</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="488"/>
+        <location filename="../widgets/DirWidget2.cpp" line="491"/>
         <source>File Operations</source>
         <translation>Operace se soubory</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="502"/>
+        <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
         <translation>Operace s adresáři</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="514"/>
+        <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
         <translation>Nahrává se...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="563"/>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
-        <location filename="../widgets/DirWidget2.cpp" line="612"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="600"/>
+        <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Soubor nebo složka se stejným jménem již existuje! Použijte prosím jiné jméno.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>Error Creating Directory</source>
         <translation>Chyba při vytváření složky</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="594"/>
+        <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Dokument se nepodařilo vytvořit. Ujistěte se, prosím, že máte náležitá oprávnění ke změně nynějšího adresáře.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="313"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Current</source>
         <translation>Nynější</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="229"/>
+        <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
         <translation>Vytvořit...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="231"/>
+        <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="232"/>
+        <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
         <translation>Adresář</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="233"/>
+        <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Application Launcher</source>
         <translation>Spouštěč programů</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="237"/>
+        <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
         <translation>Spustit...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="239"/>
+        <location filename="../widgets/DirWidget2.cpp" line="243"/>
         <source>Terminal</source>
         <translation>Terminál</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="240"/>
+        <location filename="../widgets/DirWidget2.cpp" line="244"/>
         <source>SlideShow</source>
         <translation>Promítání</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="241"/>
+        <location filename="../widgets/DirWidget2.cpp" line="245"/>
         <source>Multimedia Player</source>
         <translation>Přehrávač</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="256"/>
+        <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>View Files...</source>
         <translation>Zobrazit soubory...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="258"/>
+        <location filename="../widgets/DirWidget2.cpp" line="262"/>
         <source>Checksums</source>
         <translation>Kontrolní součty</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="260"/>
+        <location filename="../widgets/DirWidget2.cpp" line="264"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="448"/>
+        <location filename="../widgets/DirWidget2.cpp" line="450"/>
         <source>File Checksums:</source>
         <translation>Kontrolní součty souborů:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
         <source>Missing Utility</source>
         <translation>Chybějící nástroj</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="460"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="462"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>Nástroj &quot;lumina-fileinfo&quot; nebyl nalezen.Prosím nainstalujte ho první.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="485"/>
+        <location filename="../widgets/DirWidget2.cpp" line="488"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="486"/>
+        <location filename="../widgets/DirWidget2.cpp" line="489"/>
         <source>Open With...</source>
         <translation>Otevřít s…</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="493"/>
+        <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Rename...</source>
         <translation>Přejmenovat...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="494"/>
+        <location filename="../widgets/DirWidget2.cpp" line="497"/>
         <source>Cut Selection</source>
         <translation>Vyjmout výběr</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="495"/>
+        <location filename="../widgets/DirWidget2.cpp" line="498"/>
         <source>Copy Selection</source>
         <translation>Kopírovat výběr</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="496"/>
+        <location filename="../widgets/DirWidget2.cpp" line="501"/>
         <source>Paste</source>
         <translation>Vložit</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="498"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>Delete Selection</source>
         <translation>Smazat výběr</translation>
     </message>
@@ -566,7 +566,7 @@ Nové umístění: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation>Klepněte na Další pro započetí se stahováním úložiště</translation>
     </message>
     <message>

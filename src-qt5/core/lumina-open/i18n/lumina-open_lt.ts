@@ -129,7 +129,12 @@
         <translation>Kita</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
         <translation>Rasti programos dvejetainę</translation>
     </message>
@@ -169,37 +174,37 @@
         <translation>Programos šaukinyje trūksta paleidimo informacijos (netaisyklingas šaukinys): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>URL šaukinyje trūksta URL: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Katalogo šaukinyje trūksta kelio į katalogą: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Nežinomas šaukinio tipas : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation>Trūksta dvejetainės</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>Nepavyko rasti "%1". Iš pradžių, įsitikinkite ar ji įdiegta.</translation>
+        <location filename="../main.cpp" line="365"/>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>Nepavyko rasti &quot;%1&quot;. Iš pradžių, įsitikinkite ar ji įdiegta.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>Programos klaida</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Ši programa susidūrė su klaida ir turėjo būti užverta:</translation>
     </message>

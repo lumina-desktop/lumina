@@ -129,7 +129,12 @@
         <translation>Andre</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
         <translation>Find binær program fil</translation>
     </message>
@@ -169,37 +174,37 @@
         <translation>Program genvej mangler korrekt information (misdannet genvej): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>URL genvej mangler URL'en: %1</translation>
+        <translation>URL genvej mangler URL&apos;en: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Folder genvej mangler stien til folderen: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Ukendt type genvej : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation>Binær mangler</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>Kunne ikke finde "%1". Sørg for at programmet er installeret først.</translation>
+        <location filename="../main.cpp" line="365"/>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>Kunne ikke finde &quot;%1&quot;. Sørg for at programmet er installeret først.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>Programfejl</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Det følgende program oplevede en fejl og blev nødt til at afslutte:</translation>
     </message>

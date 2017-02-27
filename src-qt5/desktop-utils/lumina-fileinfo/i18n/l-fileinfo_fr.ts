@@ -104,7 +104,7 @@
     <message>
         <location filename="../MainUI.ui" line="336"/>
         <source>No Icon</source>
-        <translation>Pas d'Icône</translation>
+        <translation>Pas d&apos;Icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="392"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation>Sélection invalide : Ce n'est pas un exécutable valide</translation>
+        <translation>Sélection invalide : Ce n&apos;est pas un exécutable valide</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="305"/>

@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
         <translation>Kliknutím nastaviť </translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>Výber aplikácie</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>Meno:</translation>
     </message>
@@ -721,32 +721,32 @@
         <translation>Zoznam okien</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
         <translation>Prostredie Lumina </translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>Pracovná plocha %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Terminal</source>
         <translation>Terminál</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation type="unfinished">Prehliadať súbory</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
         <translation type="unfinished">Ponechať</translation>
     </message>
@@ -771,8 +771,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translation type="unfinished">Pracovná plocha</translation>
     </message>
@@ -843,42 +843,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>Aktívne okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>Minimalizovať okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>Obnoviť okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>Maximalizovať okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>Zatvoriť okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation type="unfinished"></translation>
     </message>

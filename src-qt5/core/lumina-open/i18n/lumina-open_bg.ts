@@ -129,7 +129,12 @@
         <translation>Други</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
         <translation>Намиране на изпълнимия файл на програма</translation>
     </message>
@@ -169,37 +174,37 @@
         <translation>Информацията за стартиране липсва от прекия път (повреден пряк път): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Адресът липсва от прекия път към отдалечен адрес: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Пътят към директорията липсва от прекия път към директорията: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Непознат тип пряк път : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>Грешка в програмата</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Възникна грешка в програмата и трябваше да бъде затворена:</translation>
     </message>

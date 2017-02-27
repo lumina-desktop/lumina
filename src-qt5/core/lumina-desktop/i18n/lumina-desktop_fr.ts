@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
         <translation>Cliquer pour Définir</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>Sélectionner un Programme</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>Nom :</translation>
     </message>
@@ -215,12 +215,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no 'try'.</source>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Chargement des Préférences d'Utilisateur …</translation>
+        <translation>Chargement des Préférences d&apos;Utilisateur …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -421,7 +421,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="161"/>
         <source>Preparing Workspace …</source>
-        <translation>Préparation de l'Espace de Travail …</translation>
+        <translation>Préparation de l&apos;Espace de Travail …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="164"/>
@@ -510,7 +510,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation>Erreur dans l'analyse de la sortie du script : %1</translation>
+        <translation>Erreur dans l&apos;analyse de la sortie du script : %1</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
         <source>Use System Time</source>
-        <translation>Utiliser l'Heure du Système</translation>
+        <translation>Utiliser l&apos;Heure du Système</translation>
     </message>
 </context>
 <context>
@@ -647,12 +647,12 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Commencer à Déplacer l'Élément</translation>
+        <translation>Commencer à Déplacer l&apos;Élément</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Commencer à Redimensionner l'Élément</translation>
+        <translation>Commencer à Redimensionner l&apos;Élément</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Supprimer l'Élément</translation>
+        <translation>Supprimer l&apos;Élément</translation>
     </message>
 </context>
 <context>
@@ -721,32 +721,32 @@
         <translation>Liste des Fenêtres</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
         <translation>Bureau Lumina</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>Espace de Travail %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation>Explorer les Fichiers</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
         <translation>Quitter</translation>
     </message>
@@ -771,8 +771,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translation>Bureau</translation>
     </message>
@@ -805,7 +805,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
         <source>Screen Brightness</source>
-        <translation>Luminosité de l'Écran</translation>
+        <translation>Luminosité de l&apos;Écran</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="231"/>
@@ -843,42 +843,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>Activer la Fenêtre</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>Réduire la Fenêtre</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>Restaurer la Fenêtre</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>Maximiser la Fenêtre</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>Fermer la Fenêtre</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation>Afficher Toutes les Fenêtres</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation>Minimiser Toutes les Fenêtres</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation>Fermer Toutes les Fenêtres</translation>
     </message>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Certains flux RSS peuvent demander des intervalles différents au lieu d'utiliser ce réglage</translation>
+        <translation>Certains flux RSS peuvent demander des intervalles différents au lieu d&apos;utiliser ce réglage</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
@@ -1254,7 +1254,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation>Économiseur d'Écran</translation>
+        <translation>Économiseur d&apos;Écran</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
@@ -1337,7 +1337,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Déconnecter l'Utilisateur</translation>
+        <translation>Déconnecter l&apos;Utilisateur</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>

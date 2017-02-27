@@ -129,7 +129,12 @@
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
         <translation>Encontrar binário da aplicação</translation>
     </message>
@@ -169,37 +174,37 @@
         <translation>Está faltando a informação do lançamento do atalho do aplicativo  (atalho mal informado): 1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Está faltando a URL do atalhos da URL: %1 </translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Está faltando o caminho para o diretório do atalho do diretório&quot; %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Tipo de atalho desconhecido: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>Erro no Aplicativo</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>O seguinte aplicativo encontrou um erro e teve que ser fechado:</translation>
     </message>

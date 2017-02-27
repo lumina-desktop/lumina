@@ -34,19 +34,19 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
         <translatorcomment>テキスト表示欄のツールチップ。アプリケーション名が設定されると置き換えられる。</translatorcomment>
         <translation>クリックして設定してください</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>アプリケーションを選択してください</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
@@ -218,12 +218,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -303,7 +303,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no 'try'.</source>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -333,7 +333,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -651,7 +651,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translatorcomment>"transform-move" アイコンを使用する操作</translatorcomment>
+        <translatorcomment>&quot;transform-move&quot; アイコンを使用する操作</translatorcomment>
         <translation>アイテムの移動を開始</translation>
     </message>
     <message>
@@ -726,32 +726,32 @@
         <translation>ウィンドウの一覧</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
         <translation>Lumina デスクトップ</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>ワークスペース %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Terminal</source>
         <translation>端末</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
         <translation>画面セッションをロック</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation>ファイルを探索</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
         <translation>終了</translation>
     </message>
@@ -776,8 +776,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translatorcomment>これ、ファイルパスなので、「デスクトップ」と訳したらまずい</translatorcomment>
         <translation>Desktop</translation>
@@ -850,42 +850,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>ウィンドウをアクティブ化します</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>ウィンドウを最小化します</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>ウィンドウを元のサイズに戻す</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>ウィンドウを最大化します</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>ウィンドウを閉じます</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation>すべてのウインドウを開く</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation>すべてのウインドウを最小化</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation>すべてのウィンドウを閉じる</translation>
     </message>
@@ -1563,13 +1563,13 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translatorcomment>なぜ"back"?</translatorcomment>
+        <translatorcomment>なぜ&quot;back&quot;?</translatorcomment>
         <translation>ホームディレクトリーに移動する</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
         <source>Open Directory</source>
-        <translatorcomment>"Browse"ボタンのツールチップ</translatorcomment>
+        <translatorcomment>&quot;Browse&quot;ボタンのツールチップ</translatorcomment>
         <translation>ディレクトリーを開く</translation>
     </message>
     <message>
