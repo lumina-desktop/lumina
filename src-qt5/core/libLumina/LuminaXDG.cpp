@@ -476,7 +476,7 @@ void XDGDesktopList::updateList(){
   bool firstrun = lastCheck.isNull() || oldkeys.isEmpty();
   lastCheck = QDateTime::currentDateTime();
   //Variables for internal loop use only (to prevent re-initializing variable on every iteration)
-  bool ok; QString path; QDir dir;  QStringList apps;
+  QString path; QDir dir;  QStringList apps;
   for(int i=0; i<appDirs.length(); i++){
     if( !dir.cd(appDirs[i]) ){ continue; } //could not open dir for some reason
     apps = dir.entryList(QStringList() << "*.desktop",QDir::Files, QDir::Name);
@@ -485,11 +485,9 @@ void XDGDesktopList::updateList(){
       if(files.contains(path) && (files.value(path)->lastRead>QFileInfo(path).lastModified()) ){ 
         //Re-use previous data for this file (nothing changed)
         found << files[path]->name;  //keep track of which files were already found
-        ok=true;
       }else{
-      	ok=false;
-        if(files.contains(path)){ appschanged = true; files.take(path)->deleteLater(); } //files.remove(path); }
-      	XDGDesktop *dFile = new XDGDesktop(path, this); //will change the "ok" variable as needed
+        if(files.contains(path)){ appschanged = true; files.take(path)->deleteLater(); }
+      	XDGDesktop *dFile = new XDGDesktop(path, this);
         if(dFile->type!=XDGDesktop::BAD){
           appschanged = true; //flag that something changed - needed to load a file
           if(!oldkeys.contains(path)){ newfiles << path; } //brand new file (not an update to a previously-read file)

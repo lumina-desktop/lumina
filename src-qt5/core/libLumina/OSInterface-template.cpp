@@ -51,7 +51,7 @@ QList<QVariant> OSInterface::status(OSInterface::Interface){
 }
 
 //Individual Interface interactions
-bool OSInterface::modify(OSInterface::Interface, QList<QVariant> args){ //returns: success/failure
+bool OSInterface::modify(OSInterface::Interface, QList<QVariant>){ //returns: success/failure
 	// ==== Interface modification argument lists ====
 	//  Battery: <NO MODIFICATION>
 	//  Volume: [int (set percent volume) ]
