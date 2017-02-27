@@ -150,12 +150,14 @@ QString LOS::systemPendingUpdates(){
 }
 
 //System Shutdown
-void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
+void LOS::systemShutdown(bool){ //start poweroff sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -P -h now");
 }
 
 //System Restart
-void LOS::systemRestart(bool skipupdates){ //start reboot sequence
+void LOS::systemRestart(bool){ //start reboot sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -r now");
 }
 
