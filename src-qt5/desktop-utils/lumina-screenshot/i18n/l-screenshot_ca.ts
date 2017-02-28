@@ -34,7 +34,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>Resize</source>
-        <translation>Canvia&apos;n la mida</translation>
+        <translation>Canvia'n la mida</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
@@ -44,47 +44,47 @@
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Obre una captura de pantalla amb una aplicació</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Obre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia la captura al porta-retalls</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Canvia la mida de la captura a la selecció</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Escapça la captura a la selecció</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Es&amp;capça</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres de les captures de pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -94,17 +94,17 @@
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres generals</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="455"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra avisos emergents sobre captures no desades</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="488"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="515"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="548"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanca l'aplicació</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="551"/>
@@ -149,22 +149,22 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
         <source>Could not save screenshot</source>
-        <translation>No s&apos;ha pogut desar la captura.</translation>
+        <translation>No s'ha pogut desar la captura.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation>No s&apos;ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre.</translation>
+        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="101"/>
@@ -174,12 +174,12 @@
     <message>
         <location filename="../MainUI.cpp" line="264"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura no desada</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="265"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>La captura actual encara no s'ha desat. Voleu desar o descartar els canvis?</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="532"/>
