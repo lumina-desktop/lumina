@@ -1831,6 +1831,7 @@ int LXCB::WM_Get_Desktop(WId win){
 
 void LXCB::WM_Set_Desktop(WId win, int num){
   //use -1 to set it for all desktops
+  if(num<0){ num = 0; } //TEMPORARY FIX - Fluxbox does not like negative numbers any more?
   xcb_ewmh_set_wm_desktop(&EWMH, win, (num<0 ? 0xFFFFFFFF : qAbs(num) ) );
 }
 

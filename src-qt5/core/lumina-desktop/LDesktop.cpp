@@ -486,20 +486,28 @@ void LDesktop::UpdateDesktopPluginArea(){
   QRect rec = visReg.boundingRect();
 //  QRect rec = LSession::desktop()->availableGeometry(Screen());
   qDebug() << " - DPArea: Panel-Adjusted rectangle:" << rec;
+  qDebug() << " - DPArea: Screen Geometry:" << LSession::desktop()->screenGeometry(Screen());
+  qDebug() << " - DPArea: Current Geometry:" << bgDesktop->geometry();
   //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) Screen(), rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
   globalWorkRect = rec; //save this for later
   rec.moveTopLeft( QPoint( rec.x()-LSession::desktop()->screenGeometry(Screen()).x() , rec.y()-LSession::desktop()->screenGeometry(Screen()).y() ) );
   //qDebug() << "DPlug Area:" << rec << bgDesktop->geometry() << LSession::handle()->desktop()->availableGeometry(bgDesktop);
   if(rec.size().isNull() || rec == bgDesktop->geometry()){return; } //nothing changed
+  //bgDesktop->show(); //make sure Fluxbox is aware of it *before* we start moving it
   bgDesktop->setGeometry( LSession::desktop()->screenGeometry(Screen()));
+  //bgDesktop->resize(LSession::desktop()->screenGeometry(Screen()).size());
+  //bgDesktop->move(LSession::desktop()->screenGeometry(Screen()).topLeft());
   bgDesktop->setDesktopArea( rec );
   bgDesktop->UpdateGeom(); //just in case the plugin space itself needs to do anything
   QTimer::singleShot(10, this, SLOT(UpdateBackground()) );
   //Re-paint the panels (just in case a plugin was underneath it and the panel is transparent)
   //for(int i=0; i<PANELS.length(); i++){ PANELS[i]->update(); }
-  //Make sure to re-disable any WM control flags
+  //Make sure to re-disable any WM control flags and reset geometry again
   LSession::handle()->XCB->SetDisableWMActions(bgDesktop->winId());
+  //bgDesktop->setGeometry( LSession::desktop()->screenGeometry(Screen()));
+  //qDebug() << "Desktop Geom:" << bgDesktop->geometry();
+  //qDebug() << "Screen Geom:" <<  LSession::desktop()->screenGeometry(Screen());
 }
 
 void LDesktop::UpdateBackground(){

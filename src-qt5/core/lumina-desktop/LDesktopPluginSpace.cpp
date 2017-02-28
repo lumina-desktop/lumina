@@ -18,7 +18,7 @@
 // ===================
 LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
   this->setObjectName("LuminaDesktopPluginSpace");
-  this->setAttribute(Qt::WA_TranslucentBackground);
+  //this->setAttribute(Qt::WA_TranslucentBackground);
   //this->setAttribute(Qt::WA_NoSystemBackground);
   this->setAutoFillBackground(false);
   this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }"); 
