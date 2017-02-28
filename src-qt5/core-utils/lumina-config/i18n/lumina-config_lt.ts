@@ -11,7 +11,7 @@
     <message>
         <location filename="../AppDialog.ui" line="20"/>
         <source>Search for....</source>
-        <translation type="unfinished">Ieškoti...</translation>
+        <translation>Ieškoti...</translation>
     </message>
 </context>
 <context>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Pradžios meniu alternatyva, susitelkianti ties naudotojo failais, katalogais ir kitais mėgstamais elementais.</translation>
     </message>
     <message>
@@ -541,7 +541,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation>Blocca l&apos;attuale sessione desktop</translation>
+        <translation>Blocca l'attuale sessione desktop</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -1073,7 +1073,7 @@
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Window Effects</source>
-        <translation type="unfinished">Langų efektai</translation>
+        <translation>Langų efektai</translation>
     </message>
 </context>
 <context>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt klavišas
-&quot;Mod4&quot;: 	Windows/Mac klavišas
-&quot;Control&quot;:	Ctrl (Vald) klavišas</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt klavišas
+"Mod4": 	Windows/Mac klavišas
+"Control":	Ctrl (Vald) klavišas</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1475,7 +1475,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistemos nustatymai</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="145"/>
