@@ -6,7 +6,6 @@
 //===========================================
 #include "page_mouse_trueos.h"
 #include "ui_page_mouse_trueos.h"
-#include "getPage.h"
 
 #include <QDebug>
 #include <QProcess>
@@ -107,4 +106,3 @@ void page_mouse_trueos::updateMoused(){
     QProcess *moused = new QProcess(this);
     moused->start(program, mousedargs);
 }
-

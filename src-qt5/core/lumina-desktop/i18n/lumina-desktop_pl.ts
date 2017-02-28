@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
         <translation>Kliknij by ustawić</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>Wybierz aplikację</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
@@ -215,12 +215,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation>Nie oczekuje wzmacniania słabych osłabianiem silnych.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation>Nie możesz wiedzieć za dużo, ale możesz powiedzieć za dużo.</translation>
     </message>
     <message>
@@ -231,157 +231,157 @@
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Never trust a computer you can’t throw out a window.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Study the past if you would define the future.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>The way to get started is to quit talking and begin doing.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start where you are. Use what you have.  Do what you can.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>A person who never made a mistake never tried anything new.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>It does not matter how slowly you go as long as you do not stop.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Do what you can, where you are, with what you have.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remember no one can make you feel inferior without your consent.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>It’s not the years in your life that count. It’s the life in your years.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Either write something worth reading or do something worth writing.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>The only way to do great work is to love what you do.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Political correctness is tyranny with manners.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <translation>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>I find that the harder I work, the more luck I seem to have.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no 'try'.</source>
-        <translation type="unfinished"></translation>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <translation>Do, or do not. There is no &apos;try&apos;.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>A mathematician is a device for turning coffee into theorems.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Black holes are where God divided by zero.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It's kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <source>It&apos;s kind of fun to do the impossible.</source>
+        <translation>It&apos;s kind of fun to do the impossible.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Knowledge speaks, but wisdom listens.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>A witty saying proves nothing.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Success usually comes to those who are too busy to be looking for it.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Well-timed silence hath more eloquence than speech.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>I have never let my schooling interfere with my education.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>The best way to predict the future is to invent it.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Well done is better than well said.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sometimes it is not enough that we do our best; we must do what is required.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>The truth is more important than the facts.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Better to remain silent and be thought a fool than to speak out and remove all doubt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -642,17 +642,17 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchom</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Zacznij przesuwać element</translation>
+        <translation>Przesuń element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Zacznij zmieniać rozmiar elementu</translation>
+        <translation>Zmień rozmiar elementu</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -721,32 +721,32 @@
         <translation>Lista Okien</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
         <translation>Pulpit Lumina</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>Przestrzeń robocza %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Zablokuj sesję</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation>Przeglądaj pliki</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
         <translation>Wyjdź</translation>
     </message>
@@ -771,8 +771,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translation>Pulpit</translation>
     </message>
@@ -843,42 +843,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>Aktywuj okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>Minimalizuj okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>Przywróć okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>Maksymalizuj okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>Zamknij Okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation>Pokaż wszystkie okna</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation>Minimalizuj wszystkie okna</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation>Zamknij wszystkie okna</translation>
     </message>
@@ -982,57 +982,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formularz</translation>
+        <translation>Formularz</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Wyczyść listę odtwarzania</translation>
+        <translation>Wyczyść listę odtwarzania</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Odtwarzanie losowe</translation>
+        <translation>Odtwarzanie losowe</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Dodaj pliki</translation>
+        <translation>Dodaj pliki</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Dodaj katalog</translation>
+        <translation>Dodaj katalog</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Dodaj URL</translation>
+        <translation>Dodaj URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Pliki multimedialne</translation>
+        <translation>Pliki multimedialne</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Wybierz pliki multimedialne</translation>
+        <translation>Wybierz pliki multimedialne</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Wybierz katalog z multimediami</translation>
+        <translation>Wybierz katalog z multimediami</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Podaj adres URL pliku lub strumienia multimedialnego:</translation>
+        <translation>Podaj adres URL pliku lub strumienia multimedialnego:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">Adres URL multimediów</translation>
+        <translation>Adres URL multimediów</translation>
     </message>
 </context>
 <context>
@@ -1264,7 +1264,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapeta</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia pulpitu</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>

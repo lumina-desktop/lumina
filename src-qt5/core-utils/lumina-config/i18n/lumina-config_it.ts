@@ -8,6 +8,11 @@
         <source>Select Application</source>
         <translation>Seleziona applicazione</translation>
     </message>
+    <message>
+        <location filename="../AppDialog.ui" line="20"/>
+        <source>Search for....</source>
+        <translation type="unfinished">Cerca...</translation>
+    </message>
 </context>
 <context>
     <name>ColorDialog</name>
@@ -336,12 +341,12 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
         <source>User Menu</source>
-        <translation>Menu dell'utente</translation>
+        <translation>Menu dell&apos;utente</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation>Avvia un menu alternativo focalizzato su file, cartelle e preferiti dell'utente.</translation>
+        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <translation>Avvia un menu alternativo focalizzato su file, cartelle e preferiti dell&apos;utente.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -396,7 +401,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translation>Pulsante su desktop per lanciare un'applicazione</translation>
+        <translation>Pulsante su desktop per lanciare un&apos;applicazione</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
@@ -526,7 +531,7 @@ Sovrascriverlo?</translation>
         <location filename="../LPlugins.cpp" line="179"/>
         <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
-        <translation>Esegui uno script esterno per generare un menu definito dall'utente</translation>
+        <translation>Esegui uno script esterno per generare un menu definito dall&apos;utente</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
@@ -566,7 +571,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="336"/>
         <source>Text color when selection is highlighted.</source>
-        <translation>Colore testo quando la selezione e' evidenziata.</translation>
+        <translation>Colore testo quando la selezione e&apos; evidenziata.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="341"/>
@@ -686,7 +691,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/getPage.h" line="30"/>
         <source>Change interface fonts and colors</source>
-        <translation>Cambia i font e i colori dell'interfacia</translation>
+        <translation>Cambia i font e i colori dell&apos;interfacia</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="31"/>
@@ -772,16 +777,6 @@ Sovrascriverlo?</translation>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu</source>
         <translation>Menu</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Input Device Settings</source>
-        <translation>Impostazioni periferica di input</translation>
-    </message>
-    <message>
-        <location filename="../pages/getPage.h" line="42"/>
-        <source>Adjust keyboard and mouse devices</source>
-        <translation>Correzione periferiche mouse e tastiera</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -890,7 +885,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../ScriptDialog.cpp" line="64"/>
         <source>Select an icon file</source>
-        <translation>Seleziona un file per l'icona</translation>
+        <translation>Seleziona un file per l&apos;icona</translation>
     </message>
 </context>
 <context>
@@ -985,12 +980,12 @@ Sovrascriverlo?</translation>
         <translation>Seleziona il monitor/desktop da configurare</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>Unsaved Changes</source>
         <translation>Modifiche non salvate</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="129"/>
+        <location filename="../mainWindow.cpp" line="131"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Questa pagina contiene modifiche non salvate, vuoi salvarle adesso?</translation>
     </message>
@@ -1005,7 +1000,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
         <source>Add New Startup Service</source>
-        <translation>Aggiungi un nuovo servizio da lanciare all'avvio</translation>
+        <translation>Aggiungi un nuovo servizio da lanciare all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
@@ -1025,7 +1020,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="67"/>
         <source>Startup Services</source>
-        <translation>Servizi da lanciare all'avvio</translation>
+        <translation>Servizi da lanciare all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
@@ -1035,7 +1030,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="134"/>
         <source>Application Binaries (*)</source>
-        <translation>Eseguibili dell'applicazione (*)</translation>
+        <translation>Eseguibili dell&apos;applicazione (*)</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="137"/>
@@ -1073,12 +1068,12 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation>Si può usare compositing solo con l'acceleratore grafico GPU </translation>
+        <translation>Si può usare compositing solo con l&apos;acceleratore grafico GPU </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
-        <source>Compositor Settings</source>
-        <translation>Impostazioni del compositor</translation>
+        <source>Window Effects</source>
+        <translation type="unfinished">Effetti delle finestre</translation>
     </message>
 </context>
 <context>
@@ -1165,31 +1160,27 @@ Sovrascriverlo?</translation>
         <translation>Applicazioni predefinite</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="61"/>
-        <location filename="../pages/page_defaultapps.cpp" line="82"/>
-        <location filename="../pages/page_defaultapps.cpp" line="103"/>
-        <location filename="../pages/page_defaultapps.cpp" line="124"/>
-        <location filename="../pages/page_defaultapps.cpp" line="220"/>
+        <location filename="../pages/page_defaultapps.cpp" line="153"/>
         <source>Click to Set</source>
         <translation>Clicca per impostare</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="158"/>
+        <location filename="../pages/page_defaultapps.cpp" line="89"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="330"/>
+        <location filename="../pages/page_defaultapps.cpp" line="273"/>
         <source>Select Binary</source>
         <translation>Scegli Eseguibile</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>Invalid Binary</source>
         <translation>Eseguibile non valido</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="337"/>
+        <location filename="../pages/page_defaultapps.cpp" line="280"/>
         <source>The selected binary is not executable!</source>
         <translation>Il file selezionato non è eseguibile!</translation>
     </message>
@@ -1253,12 +1244,12 @@ Sovrascriverlo?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>"Mod1":	Alt key
-"Mod4": 	Windows/Mac key
-"Control":	Ctrl key</source>
-        <translation>"Mod1":	Tasto Alt
- "Mod4": 	Tasto di Windows/Mac 
- "Control":	Tasto Ctrl</translation>
+        <source>&quot;Mod1&quot;:	Alt key
+&quot;Mod4&quot;: 	Windows/Mac key
+&quot;Control&quot;:	Ctrl key</source>
+        <translation>&quot;Mod1&quot;:	Tasto Alt
+ &quot;Mod4&quot;: 	Tasto di Windows/Mac 
+ &quot;Control&quot;:	Tasto Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1444,7 +1435,7 @@ Sovrascriverlo?</translation>
         <translation>Importa</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="52"/>
+        <location filename="../pages/page_interface_panels.cpp" line="59"/>
         <source>Desktop Settings</source>
         <translation>Impostazioni del desktop</translation>
     </message>
@@ -1462,62 +1453,34 @@ Sovrascriverlo?</translation>
         <translation>Cerca...</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="53"/>
+        <location filename="../pages/page_main.cpp" line="56"/>
         <source>Interface Configuration</source>
         <translation>Configurazione interfaccia</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="57"/>
+        <location filename="../pages/page_main.cpp" line="60"/>
         <source>Appearance</source>
         <translation>Aspetto</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="61"/>
+        <location filename="../pages/page_main.cpp" line="64"/>
         <source>Desktop Defaults</source>
         <translation>Desktop predefinito</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="65"/>
+        <location filename="../pages/page_main.cpp" line="68"/>
         <source>User Settings</source>
         <translation>Impostazioni utente</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="131"/>
+        <location filename="../pages/page_main.cpp" line="72"/>
+        <source>System Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_main.cpp" line="145"/>
         <source>Desktop Settings</source>
         <translation>Impostazioni del desktop</translation>
-    </message>
-</context>
-<context>
-    <name>page_mouse</name>
-    <message>
-        <location filename="../pages/page_mouse.ui" line="14"/>
-        <source>Form</source>
-        <translation>Modulo</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="53"/>
-        <source>Input Device Settings</source>
-        <translation>Impostazione periferica di input</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="81"/>
-        <source>Mouse #%1</source>
-        <translation>Mouse #%1</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="85"/>
-        <source>Keyboard #%1</source>
-        <translation>Tastiera #%1</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="106"/>
-        <source>Extension Device #%1</source>
-        <translation>Estensione Periferica #%1</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_mouse.cpp" line="107"/>
-        <source>Master Device</source>
-        <translation>Periferica principale</translation>
     </message>
 </context>
 <context>
@@ -1588,17 +1551,17 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="34"/>
         <source>Enable numlock on startup</source>
-        <translation>Abilita il blocco numerico all'avvio</translation>
+        <translation>Abilita il blocco numerico all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="41"/>
         <source>Play chimes on startup</source>
-        <translation>Riproduci suoni all'avvio</translation>
+        <translation>Riproduci suoni all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="48"/>
         <source>Play chimes on exit</source>
-        <translation>Riproduci suoni all'uscita</translation>
+        <translation>Riproduci suoni all&apos;uscita</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
@@ -1613,7 +1576,7 @@ Sovrascriverlo?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation>Mostrare i dati della chiusura improvvisa dell'applicazione</translation>
+        <translation>Mostrare i dati della chiusura improvvisa dell&apos;applicazione</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1683,142 +1646,142 @@ Sovrascriverlo?</translation>
         <translation>Prima data e poi orario</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="70"/>
+        <location filename="../pages/page_session_options.cpp" line="82"/>
         <source>Desktop Settings</source>
         <translation>Impostazioni del desktop</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="113"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Select an image</source>
-        <translation>Scegli un'immagine</translation>
+        <translation>Scegli un&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="114"/>
+        <location filename="../pages/page_session_options.cpp" line="126"/>
         <source>Images</source>
         <translation>Immagini</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Reset User Image</source>
         <translation>Reimposta immagine utente</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="118"/>
+        <location filename="../pages/page_session_options.cpp" line="130"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation>Vorresti reimpostare l'immagine utente al valore predefinito di sistema?</translation>
+        <translation>Vorresti reimpostare l&apos;immagine utente al valore predefinito di sistema?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="157"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>Valid Time Codes:</source>
         <translation>Codici orari validi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="158"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Ora senza zero iniziale (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="159"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Ora con zero iniziale (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="160"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minuti senza zero iniziale (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="161"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minuti con zero iniziale (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="162"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Secondi senza zero iniziale (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="163"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Secondi con zero iniziale (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="164"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>% 1:  Orologio AM/PM (12 ore) (maiuscole o minuscole)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="165"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>%1: Timezone</source>
         <translation>%1: Fuso orario</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="166"/>
+        <location filename="../pages/page_session_options.cpp" line="178"/>
         <source>Time Codes</source>
         <translation>Codici numerici temporali</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>Valid Date Codes:</source>
         <translation>Codici data validi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="181"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>% 1: Giorno numerico senza zero iniziale (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="182"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>% 1: Giorno numerico con zero iniziale (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="183"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>% 1: Giorno con abbreviazione (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="184"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Day as full name (localized)</source>
         <translation>% 1: Giorno con descrizione completa (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="185"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>% 1: Mese numerico senza zero iniziale (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="186"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>% 1: Mese numerico con zero iniziale (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="187"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Mese con abbreviazione (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="188"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Mese con descrizione completa (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="189"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Anno come numero di 2 cifre (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="190"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Anno come numero di 4 cifre (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="191"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation>Il testo può essere all'interno di apici singoli per ignorare le sostituzioni</translation>
+        <translation>Il testo può essere all&apos;interno di apici singoli per ignorare le sostituzioni</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="204"/>
         <source>Date Codes</source>
         <translation>Codici date</translation>
     </message>
@@ -2076,7 +2039,7 @@ Sovrascriverlo?</translation>
         <location filename="../pages/page_wallpaper.cpp" line="234"/>
         <location filename="../pages/page_wallpaper.cpp" line="259"/>
         <source>Find Background Image Directory</source>
-        <translation>Specifica cartella dell'immagine di sfondo</translation>
+        <translation>Specifica cartella dell&apos;immagine di sfondo</translation>
     </message>
 </context>
 </TS>

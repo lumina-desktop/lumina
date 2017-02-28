@@ -158,14 +158,16 @@ QString LOS::systemPendingUpdates(){
 }
 
 //System Shutdown
-void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
+void LOS::systemShutdown(bool){ //start poweroff sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("dbus-send --system --print-reply \
   --dest=org.freedesktop.login1 /org/freedesktop/login1 \
   org.freedesktop.login1.Manager.PowerOff boolean:true");
 }
 
 //System Restart
-void LOS::systemRestart(bool skipupdates){ //start reboot sequence
+void LOS::systemRestart(bool){ //start reboot sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("dbus-send --system --print-reply \
   --dest=org.freedesktop.login1 /org/freedesktop/login1 \
   org.freedesktop.login1.Manager.Reboot boolean:true");

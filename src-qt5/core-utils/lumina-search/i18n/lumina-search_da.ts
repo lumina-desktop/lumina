@@ -44,7 +44,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation>Søg efter...</translation>
+        <translation>Søg efter ...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="23"/>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../MainUI.ui" line="88"/>
         <source>Close</source>
-        <translation>Afslut</translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation>Startenhed</translation>
+        <translation>Start post</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="119"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
-        <translation>Søgning afsluttet</translation>
+        <translation>Søgning gennemført</translation>
     </message>
 </context>
 </TS>

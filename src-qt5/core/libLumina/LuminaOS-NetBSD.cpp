@@ -43,7 +43,7 @@ int LOS::ScreenBrightness(){
 }
 
 //Set screen brightness
-void LOS::setScreenBrightness(int percent){
+void LOS::setScreenBrightness(int){ //percent: 0-100
   //not implemented yet
 }
 
@@ -54,12 +54,12 @@ int LOS::audioVolume(){
 }
 
 //Set the current volume
-void LOS::setAudioVolume(int percent){
+void LOS::setAudioVolume(int){ //percent: 0-100
   //not implemented yet
 }
 
 //Change the current volume a set amount (+ or -)
-void LOS::changeAudioVolume(int percentdiff){
+void LOS::changeAudioVolume(int){ //percent difference (+ or -)
   //not implemented yet
 }
 
@@ -91,12 +91,14 @@ QString LOS::systemPendingUpdates(){
 }
 
 //System Shutdown
-void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
+void LOS::systemShutdown(bool){ //start poweroff sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -p now");
 }
 
 //System Restart
-void LOS::systemRestart(bool skipupdates){ //start reboot sequence
+void LOS::systemRestart(bool){ //start reboot sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -r now");
 }
 

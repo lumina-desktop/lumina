@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Lumina Desktop Information</source>
-        <translation>Lumina Skrivebords Information</translation>
+        <translation>Lumina-skrivebordsinformation</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="60"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>Lumina Website</source>
-        <translation>Hjemmeside for Lumina</translation>
+        <translation>Lumina-websted</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
@@ -31,17 +31,17 @@
     <message>
         <location filename="../MainUI.ui" line="179"/>
         <source>Desktop Version:</source>
-        <translation>Skrivebords Version:</translation>
+        <translation>Skrivebordsversion:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>OS Build:</source>
-        <translation></translation>
+        <translation>OS-byg:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Qt Version:</source>
-        <translation>Qt Version:</translation>
+        <translation>Qt version:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../MainUI.ui" line="233"/>
         <source>View Information</source>
-        <translation>Se Information</translation>
+        <translation>Vis information</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="298"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../MainUI.ui" line="340"/>
         <source>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt; Ken Moore&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="353"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Åben i en web browser&lt;a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Åbn i en webbrowser&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>

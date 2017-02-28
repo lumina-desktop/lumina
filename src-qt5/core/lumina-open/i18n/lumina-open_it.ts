@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation type="unfinished">Posizione codice binario</translation>
+        <translation>Posizione codice binario</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -129,7 +129,12 @@
         <translation>Altro</translation>
     </message>
     <message>
-        <location filename="../LFileDialog.cpp" line="274"/>
+        <location filename="../LFileDialog.cpp" line="211"/>
+        <source>[default] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
         <translation>Trova Binario Applicazione</translation>
     </message>
@@ -166,40 +171,40 @@
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Collegamento all'applicazione senzai informazioni di lancio (scorciatoia malformata):: %1</translation>
+        <translation>Collegamento all&apos;applicazione senzai informazioni di lancio (scorciatoia malformata):: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="284"/>
+        <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>Collegamento URL senza l'URL: %1</translation>
+        <translation>Collegamento URL senza l&apos;URL: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Collegamento Directory senza il percorso della directory:  %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Unknown type of shortcut : %1</source>
         <translation type="unfinished">Tipo di abbreviazione sconosciuto : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
+        <location filename="../main.cpp" line="365"/>
         <source>Binary Missing</source>
         <translation>Manca codice Binario</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="363"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>Impossibile trovare "% 1". Assicurarsi che sia installato per primo.</translation>
+        <location filename="../main.cpp" line="365"/>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>Impossibile trovare &quot;% 1&quot;. Assicurarsi che sia installato per primo.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>Application Error</source>
         <translation>Errore Applicazione</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="413"/>
+        <location filename="../main.cpp" line="415"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>La seguente applicazione ha avuto un errore e deve chiudere:</translation>
     </message>

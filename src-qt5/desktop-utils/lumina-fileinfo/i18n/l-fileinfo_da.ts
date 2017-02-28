@@ -8,7 +8,7 @@
         <location filename="../MainUI.ui" line="24"/>
         <location filename="../MainUI.cpp" line="97"/>
         <source>File Information</source>
-        <translation>Filoplysninger</translation>
+        <translation>Filinformation</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="56"/>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>MimeType:</source>
-        <translation>MimeType:</translation>
+        <translation>MIME-type:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="185"/>
@@ -59,7 +59,7 @@
         <location filename="../MainUI.ui" line="216"/>
         <location filename="../MainUI.cpp" line="140"/>
         <source>Edit Shortcut</source>
-        <translation>Redigér genvej</translation>
+        <translation>Rediger genvej</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="298"/>
         <source>Options</source>
-        <translation>Indstillinger</translation>
+        <translation>Valgmuligheder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="336"/>
@@ -119,12 +119,12 @@
     <message>
         <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
-        <translation>---Beregner---</translation>
+        <translation>---Udregner---</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="70"/>
         <source>Read/Write</source>
-        <translation>Læs/Skriv</translation>
+        <translation>Læs/skriv</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="71"/>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../MainUI.cpp" line="77"/>
         <source>XDG Shortcut</source>
-        <translation>XDG genvej</translation>
+        <translation>XDG-genvej</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="78"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <source>Binary</source>
-        <translation>Binær fil</translation>
+        <translation>Binær</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="81"/>
@@ -169,17 +169,17 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem programfil</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Programregistreringer (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
         <source>Select a binary</source>
-        <translation>Vælg en binær fil</translation>
+        <translation>Vælg en binær</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="293"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldigt valg: Ikke en eksekverbar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="305"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
-        <translation>  Beregner...</translation>
+        <translation>  Udregner ...</translation>
     </message>
 </context>
 </TS>

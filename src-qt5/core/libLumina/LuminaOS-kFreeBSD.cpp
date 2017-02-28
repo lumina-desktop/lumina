@@ -95,7 +95,7 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
 }
 
 //Set the current volume
-void LOS::setAudioVolume(int percent){
+void LOS::setAudioVolume(int){ //percent: 0-100
    return;
 }
 
@@ -137,12 +137,14 @@ QString LOS::systemPendingUpdates(){
 }
 
 //System Shutdown
-void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
+void LOS::systemShutdown(bool){ //start poweroff sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -h now");
 }
 
 //System Restart
-void LOS::systemRestart(bool skipupdates){ //start reboot sequence
+void LOS::systemRestart(bool){ //start reboot sequence
+  //INPUT: skip updates (true/false)
   QProcess::startDetached("shutdown -r now");
 }
 
@@ -177,12 +179,12 @@ int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
 }
 
 //File Checksums
-QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the input file
+QStringList LOS::Checksums(QStringList){ //Return: checksum of the input file
  return QStringList();
 }
 
 //file system capacity
-QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
+QString LOS::FileSystemCapacity(QString) { //Return: percentage capacity as give by the df command
   return QString();
 }
 
@@ -201,5 +203,4 @@ int LOS::MemoryUsagePercent(){
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
   return QStringList(); //not implemented yet
 }
-#endif
 #endif

@@ -16,7 +16,7 @@
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation>Repozytorium Żródłowe</translation>
+        <translation>Repozytorium źródłowe</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation>Zgłaszanie Błędów</translation>
+        <translation>Zgłaszanie błędów</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../MainUI.ui" line="276"/>
         <source>Ask the Community</source>
-        <translation type="unfinished">Zadaj Pytanie</translation>
+        <translation>Zapytaj Społeczność</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="233"/>

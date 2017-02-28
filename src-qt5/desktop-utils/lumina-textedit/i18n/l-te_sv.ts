@@ -43,184 +43,195 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
+        <location filename="../MainUI.ui" line="17"/>
         <source>MainWindow</source>
         <translation>Huvudfönster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="46"/>
+        <location filename="../MainUI.ui" line="49"/>
         <source>Tab 1</source>
         <translation>Flik 1</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="81"/>
+        <location filename="../MainUI.ui" line="84"/>
         <source>Find the previous match</source>
         <translation>Hitta föregående träff</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="84"/>
-        <location filename="../MainUI.ui" line="97"/>
-        <location filename="../MainUI.ui" line="148"/>
-        <location filename="../MainUI.ui" line="161"/>
-        <location filename="../MainUI.ui" line="173"/>
+        <location filename="../MainUI.ui" line="87"/>
+        <location filename="../MainUI.ui" line="100"/>
+        <location filename="../MainUI.ui" line="151"/>
+        <location filename="../MainUI.ui" line="164"/>
+        <location filename="../MainUI.ui" line="176"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="183"/>
+        <location filename="../MainUI.ui" line="186"/>
         <source>Find:</source>
         <translation>Hitta:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="94"/>
+        <location filename="../MainUI.ui" line="97"/>
         <source>Find the next match</source>
         <translation>Hitta nästa träff</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="104"/>
+        <location filename="../MainUI.ui" line="107"/>
         <source>Replace:</source>
         <translation>Ersätt:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="123"/>
+        <location filename="../MainUI.ui" line="126"/>
         <source>Match case</source>
         <translation>Matcha skiftläge</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="145"/>
+        <location filename="../MainUI.ui" line="148"/>
         <source>Replace next match</source>
         <translation>Ersätt nästa träff</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="158"/>
+        <location filename="../MainUI.ui" line="161"/>
         <source>Replace all matches (to end of document)</source>
         <translation>Ersätt alla träffar (till slut av dokument)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="170"/>
+        <location filename="../MainUI.ui" line="173"/>
         <source>Hide the find/replace options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="208"/>
+        <location filename="../MainUI.ui" line="214"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="227"/>
         <source>View</source>
         <translation>Visa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="225"/>
+        <location filename="../MainUI.ui" line="231"/>
         <source>Syntax Highlighting</source>
         <translation>Syntaxmarkering</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="238"/>
+        <location filename="../MainUI.ui" line="245"/>
         <source>Edit</source>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="253"/>
+        <location filename="../MainUI.ui" line="260"/>
         <source>toolBar</source>
         <translation>Verktygsrad</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="279"/>
+        <location filename="../MainUI.ui" line="286"/>
         <source>Show Line Numbers</source>
         <translation>Visa radnummer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
+        <location filename="../MainUI.ui" line="291"/>
         <source>None</source>
         <translation>Inget</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="289"/>
-        <location filename="../MainUI.cpp" line="151"/>
+        <location filename="../MainUI.ui" line="296"/>
+        <location filename="../MainUI.cpp" line="154"/>
         <source>New File</source>
         <translation>Ny fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="292"/>
+        <location filename="../MainUI.ui" line="299"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="300"/>
+        <location filename="../MainUI.ui" line="307"/>
         <source>Open File</source>
         <translation>Öppna fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="303"/>
+        <location filename="../MainUI.ui" line="310"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="311"/>
+        <location filename="../MainUI.ui" line="318"/>
         <source>Save File</source>
         <translation>Spara fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="314"/>
+        <location filename="../MainUI.ui" line="321"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="322"/>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Save File As</source>
         <translation>Spara fil som</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="327"/>
+        <location filename="../MainUI.ui" line="334"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="330"/>
+        <location filename="../MainUI.ui" line="337"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="338"/>
+        <location filename="../MainUI.ui" line="345"/>
         <source>Close File</source>
         <translation>Stäng fil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="341"/>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="349"/>
+        <location filename="../MainUI.ui" line="356"/>
         <source>Customize Colors</source>
         <translation>Anpassa färger</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="360"/>
+        <location filename="../MainUI.ui" line="367"/>
         <source>Wrap Lines</source>
         <translation>Radbryt linjer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="365"/>
+        <location filename="../MainUI.ui" line="372"/>
         <source>Find</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="368"/>
+        <location filename="../MainUI.ui" line="375"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="376"/>
+        <location filename="../MainUI.ui" line="383"/>
         <source>Replace</source>
         <translation>Ersätt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="379"/>
+        <location filename="../MainUI.ui" line="386"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="400"/>
+        <source>Show Popup Warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="403"/>
+        <location filename="../MainUI.ui" line="406"/>
+        <source>Show warnings about unsaved changes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -228,23 +239,23 @@
         <translation>Textredigerare</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="158"/>
+        <location filename="../MainUI.cpp" line="161"/>
         <source>Open File(s)</source>
         <translation>Öppna filer</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="158"/>
+        <location filename="../MainUI.cpp" line="161"/>
         <source>Text Files (*)</source>
         <translation>Text filer (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="289"/>
-        <location filename="../MainUI.cpp" line="386"/>
+        <location filename="../MainUI.cpp" line="296"/>
+        <location filename="../MainUI.cpp" line="394"/>
         <source>Lose Unsaved Changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="289"/>
+        <location filename="../MainUI.cpp" line="296"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -255,7 +266,7 @@ Vill du stänga den ändå ?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="386"/>
+        <location filename="../MainUI.cpp" line="394"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

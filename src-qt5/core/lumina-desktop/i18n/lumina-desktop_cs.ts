@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
         <translation>Klepnutím nastavit</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>Vybrat aplikaci</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>Název:</translation>
     </message>
@@ -215,12 +215,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation>Neočekávej, že povzbudíš slabé, tím že dolů stáhneš silné.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation>Nemůžeš vědět příliš mnoho, ale můžeš toho říct přespříliš.</translation>
     </message>
     <message>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation>Jen dvě věci jsou nekonečné, vesmír a lidská hloupost. A nejsem si jist, jak si mám vykládat to první.</translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no 'try'.</source>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation>Udělej to, nebo to nedělej vůbec. Nejde o to to jen zkoušet.</translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation>Dělat nemožné je zábava.</translation>
     </message>
     <message>
@@ -721,32 +721,32 @@
         <translation>Seznam oken</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
         <translation>Prostředí Lumina</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>Pracovní plocha %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Terminal</source>
         <translation>Terminál</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
         <translation>Uzamknout sezení</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation>Procházet soubory</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
         <translation>Opustit</translation>
     </message>
@@ -771,8 +771,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translation>Plocha</translation>
     </message>
@@ -843,42 +843,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>Aktivovat okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>Minimalizovat okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>Obnovit okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>Maximalizovat okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>Zavřít okno</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation>Ukázat všechna okna</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation>Minimalizovat všechna okna</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation>Zavřít všechna okna</translation>
     </message>

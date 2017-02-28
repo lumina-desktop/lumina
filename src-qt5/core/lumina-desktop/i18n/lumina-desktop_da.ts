@@ -32,18 +32,18 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="48"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="76"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
         <source>Click to Set</source>
-        <translation>Klik for at vælge</translation>
+        <translation>Klik for at sætte</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Select Application</source>
         <translation>Vælg program</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Name:</source>
         <translation>Navn:</translation>
     </message>
@@ -58,7 +58,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="82"/>
         <source>Manage Applications</source>
-        <translation>Håndtér Programmer</translation>
+        <translation>Håndter programmer</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="87"/>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="108"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="109"/>
@@ -146,242 +146,242 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Starter Lumina-skrivebordet ...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Version %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette skrivebord er drevet af kaffe, kaffe og mere kaffe.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hold dig opdateret med skrivebordsnyheder!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der er en hel håndbog af information om skrivebordet online.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vil du ændre brugerfladen? Alt kan tilpasses i skrivebordskonfigurationen!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina kan nemt efterligne brugerfladen fra de fleste andre skrivebordsmiljøer.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette skrivebord er generøst sponsoreret af iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg har aldrig taget skade af det jeg aldrig har sagt</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mere koklokke tak!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt har sin skønhed, men alle ser det ikke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Før gud er vi alle lige kloge - og lige dumme.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi kan ikke gøre alt på samme tid, men vi kan gøre noget på en gang.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>En med loven er et flertal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
         <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
         <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan ikke vide hvor meget, men du kan sige for meget.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pligt er ikke kollektivt; det er personligt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Et samfund som ville opgive en smule frihed for at gå en smule sikkerhed vil ikke gøre sig fortjent til noget af det og miste begge.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stol aldrig på en computer du ikke kan smide ud af et vindue.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lær fortiden af kende hvis du definere fremtiden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Måden at komme i gang, er at holde op med at snakke og begynde at gøre.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spørg, og det vil blive givet til dig; søg, og du vil finde; bank på, og døren vil blive åbnet for dig.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start hvor du er. Brug hvad du har. Gør hvad du kan.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>En person der aldrig har lavet fejl, har aldrig prøvet noget nyt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det har ikke betydning hvor hurtigt du går, så længe du ikke stopper.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gør hvad du kan, der hvor du er, med det du har.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Husk, at ingen kan få dig til at føle dig underlegen, uden dit samtykke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er ikke årene i dit liv der tæller. Det er livet i dine år.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv enten noget som er værd at læse, eller noget som er værd at skrive.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den eneste måde at udføre godt arbejde, er ved at elske det du gør.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Politisk korrekthed er tyranni uden manerer.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
         <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det sidste.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg oplever at jo hårdere jeg arbejder, jo mere heldig ser jeg ud til at være.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
         <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gør, eller gør ikke. Der er ikke noget &quot;prøv&quot;.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>En matematiker er en enhed som omdanner kaffe til matematiske sætninger.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gode mennesker behøver ikke love til at fortælle dem at de skal opføre sig ordentligt, mens dårlige mennesker vil finde en vej omkring lovene.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorte huller er når gud dividere med nul.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>It&apos;s kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viden taler, men klogskab lytter.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>En vittig udtalelse beviser intet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Succes kommer typisk til dem der ikke har travlt med at lede efter det.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Godt timet stilhed havde mere elokvens end tale.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeg har aldrig ladet min skolegang blande sig i min uddannelse.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den bedste måde at forudse fremtiden er ved at opfinde den.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vel gjort eller bedre end vel sagt.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nogen gange er det ikke nok at gøre vores bedst; vi må gøre hvad der er krævet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sandheden er vigtigere end fakta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bedre at forblive stille og blive tænkt som værende et fjols, end at tale og fjerne al tvivl.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="146"/>
         <source>Loading User Preferences …</source>
-        <translation>Indlæser brugerindstillinger …</translation>
+        <translation>Indlæser brugerpræferencer …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
@@ -431,7 +431,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="167"/>
         <source>Starting App: %1</source>
-        <translation>Starter Progr: %1</translation>
+        <translation>Starter program: %1</translation>
     </message>
 </context>
 <context>
@@ -497,12 +497,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
         <source>Remove from Quicklaunch</source>
-        <translation>Fjern fra Kvikbar</translation>
+        <translation>Fjern fra hurtigstart</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
         <source>Add to Quicklaunch</source>
-        <translation>Tilføj til Kvikbar</translation>
+        <translation>Føj til hurtigstart</translation>
     </message>
 </context>
 <context>
@@ -518,7 +518,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="37"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Hurtigt kør programmer eller åbne filer</translation>
+        <translation>Start hurtigt programmer eller åbne filer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="38"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
 </context>
 <context>
@@ -616,12 +616,12 @@
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
         <source>%1 % (Charging)</source>
-        <translation>%1 % (Oplader)</translation>
+        <translation>%1 % (lader)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="93"/>
         <source>%1 % (%2 Remaining)</source>
-        <translation>%1 % (%2 Tilbage)</translation>
+        <translation>%1 % (%2 tilbage)</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
         <source>Use System Time</source>
-        <translation>Brug Systemtid</translation>
+        <translation>Brug systemtid</translation>
     </message>
 </context>
 <context>
@@ -642,32 +642,32 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Start post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Begynd at flytte element</translation>
+        <translation>Begynd at flytte post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Begynd at ændre størrelse på element</translation>
+        <translation>Begynd at ændre størrelse på post</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
-        <translation>Forøg element størrelse</translation>
+        <translation>Forøg poststørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
-        <translation>Formindsk element størrelse</translation>
+        <translation>Formindsk poststørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Fjern element</translation>
+        <translation>Fjern post</translation>
     </message>
 </context>
 <context>
@@ -675,7 +675,7 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
-        <translation>Farvoritprogrammer</translation>
+        <translation>Favoritprogrammer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
@@ -721,34 +721,34 @@
         <translation>Vinduesliste</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="280"/>
+        <location filename="../LDesktop.cpp" line="281"/>
         <source>Lumina Desktop</source>
-        <translation>Lumina Skrivebord</translation>
+        <translation>Lumina-skrivebord</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="282"/>
         <source>Workspace %1</source>
         <translation>Arbejdsområde %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="291"/>
-        <source>Terminal</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../LDesktop.cpp" line="292"/>
-        <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <source>Terminal</source>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
+        <source>Lock Session</source>
+        <translation>Lås session</translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="294"/>
         <source>Browse Files</source>
         <translation>Gennemse filer</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="322"/>
+        <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
 </context>
 <context>
@@ -765,14 +765,14 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation>Fjern fra kvikstart</translation>
+        <translation>Fjern fra hurtigstart</translation>
     </message>
 </context>
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="159"/>
-        <location filename="../LSession.cpp" line="336"/>
+        <location filename="../LSession.cpp" line="160"/>
+        <location filename="../LSession.cpp" line="341"/>
         <source>Desktop</source>
         <translation>Skrivebord</translation>
     </message>
@@ -782,7 +782,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/LSysDashboard.cpp" line="43"/>
         <source>System Dashboard</source>
-        <translation>Systemets instrumentpanel</translation>
+        <translation>Systemets instrumentbræt</translation>
     </message>
 </context>
 <context>
@@ -795,12 +795,12 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>System Volume</source>
-        <translation>Systemdrev</translation>
+        <translation>Systemlydstyrke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Kør Lyd Mixer</translation>
+        <translation>Start lydmikser</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
@@ -843,42 +843,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
         <source>Activate Window</source>
         <translation>Aktivér vindue</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
         <source>Minimize Window</source>
         <translation>Minimér vindue</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Restore Window</source>
         <translation>Gendan vindue</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Maximize Window</source>
         <translation>Maksimér vindue</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
         <source>Close Window</source>
         <translation>Luk vindue</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
         <source>Show All Windows</source>
         <translation>Vis alle vinduer</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Minimize All Windows</source>
         <translation>Minimer alle vinduer</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Close All Windows</source>
         <translation>Luk alle vinduer</translation>
     </message>
@@ -888,7 +888,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/LUserButton.cpp" line="41"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Hurtigt kør programmer eller åbne filer</translation>
+        <translation>Start hurtigt programmer eller åbne filer</translation>
     </message>
 </context>
 <context>
@@ -901,7 +901,7 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="36"/>
         <source>Summary</source>
-        <translation>Oversigt</translation>
+        <translation>Sammendrag</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
@@ -911,12 +911,12 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
         <source>CPU Usage:</source>
-        <translation>CPU brug:</translation>
+        <translation>CPU-forbrug:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
         <source>Mem Usage:</source>
-        <translation>Hukommelsesbrug:</translation>
+        <translation>Hukommelsesforbrug:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="85"/>
@@ -929,7 +929,7 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
         <source>Note Files (*.note)</source>
-        <translation>Note Filer (*.note)</translation>
+        <translation>Note-filer (*.note)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
@@ -949,17 +949,17 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation>Forkert Note Navn: Prøv Igen</translation>
+        <translation>Ugyldigt notesnavn: Prøv igen</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="139"/>
         <source>Select a Note Name</source>
-        <translation>Vælg et Notenavn</translation>
+        <translation>Vælg et notesnavn</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="166"/>
         <source>Open Text File</source>
-        <translation>Åbn Tekstfil</translation>
+        <translation>Åbn tekstfil</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="167"/>
@@ -982,57 +982,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Ryd spilleliste</translation>
+        <translation>Ryd spilleliste</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Bland spilleliste</translation>
+        <translation>Bland spilleliste</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Tilføj filer</translation>
+        <translation>Tilføj filer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Tilføj mappe</translation>
+        <translation>Tilføj mappe</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Tilføj URL</translation>
+        <translation>Tilføj URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Mediefiler</translation>
+        <translation>Multimediefiler</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Vælg mediefiler</translation>
+        <translation>Vælg multimediefiler</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Vælg Medie Mappe</translation>
+        <translation>Vælg multimediemappe</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Indtast en korrekt URL til mediefil eller stream:</translation>
+        <translation>Indtast en gyldig URL til en multimediefil eller strøm:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">Medie URL</translation>
+        <translation>Multimedie-URL</translation>
     </message>
 </context>
 <context>
@@ -1070,27 +1070,27 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation>Mediefiler</translation>
+        <translation>Multimediefiler</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation>Vælg mediefiler</translation>
+        <translation>Vælg multimediefiler</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation>Vælg Medie Mappe</translation>
+        <translation>Vælg multimediemappe</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Indtast en korrekt URL til mediefil eller stream:</translation>
+        <translation>Indtast en gyldig URL til en multimediefil eller strøm:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation>Medie URL</translation>
+        <translation>Multimedie-URL</translation>
     </message>
 </context>
 <context>
@@ -1135,12 +1135,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="263"/>
         <source>New Feed Subscription</source>
-        <translation>Abonner på nyt RSS-feed</translation>
+        <translation>Abonner på nyt feed</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>RSS URL</translation>
+        <translation>RSS-URL</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
@@ -1150,7 +1150,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
         <source>Add to Feeds</source>
-        <translation>Tilføj til RSS-feeds</translation>
+        <translation>Tilføj til feeds</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="409"/>
@@ -1160,7 +1160,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="430"/>
         <source>Manual Sync Only</source>
-        <translation>Udelukkende manuel synkronisering</translation>
+        <translation>Kun manuel synkronisering</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation>Standard synkroniseringsinterval</translation>
+        <translation>Standardsynkroniseringsinterval</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
@@ -1216,7 +1216,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
         <source>Feed URL: %1</source>
-        <translation>RSS-feed URL: %1</translation>
+        <translation>Feed-URL: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="144"/>
@@ -1254,27 +1254,27 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation>Skærmskåner</translation>
+        <translation>Pauseskærm</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation>Indstillinger</translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapet</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
         <source>Display</source>
-        <translation>Fremvis</translation>
+        <translation>Skærm</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle skrivebordsindstillinger</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
@@ -1307,7 +1307,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation>Gennemse Programmer</translation>
+        <translation>Gennemse programmer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
@@ -1317,12 +1317,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation>Forlad</translation>
+        <translation>Ud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation>Håndtér Programmer</translation>
+        <translation>Håndter programmer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
@@ -1332,12 +1332,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Indstil skrivebordsmiljø</translation>
+        <translation>Konfigurer skrivebord</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Sign Out User</source>
-        <translation>Log Bruger Ud</translation>
+        <translation>Log bruger ud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
@@ -1347,22 +1347,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
         <source>Preferences</source>
-        <translation>Indstillinger</translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off System</source>
-        <translation>Sluk System</translation>
+        <translation>Sluk system</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
         <source>(System Performing Updates)</source>
-        <translation>(System Udfører Opdateringer)</translation>
+        <translation>(systemet udfører opdateringer)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend System</source>
-        <translation>Systemdvale</translation>
+        <translation>Sæt system i hvile</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
@@ -1382,17 +1382,17 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
         <source>%1% (Plugged In)</source>
-        <translation>%1% (Indsat)</translation>
+        <translation>%1% (tilsluttet)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
         <source>%1% (%2 Estimated)</source>
-        <translation>%1% (%2 Estimeret)</translation>
+        <translation>%1% (%2 estimeret)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% Remaining</source>
-        <translation>%1% Tilbage</translation>
+        <translation>%1% tilbage</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
@@ -1407,7 +1407,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="14"/>
         <source>System Options</source>
-        <translation>Systemindstillinger</translation>
+        <translation>Systemvalgmuligheder</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="55"/>
@@ -1427,7 +1427,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
         <source>Cancel</source>
-        <translation>Annullér</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="156"/>
@@ -1478,7 +1478,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Bruger Widget</translation>
+        <translation>Brugerwidget</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="65"/>
         <source>Favorite Applications</source>
-        <translation>Farvoritprogrammer</translation>
+        <translation>Favoritprogrammer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="68"/>
@@ -1556,7 +1556,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Skrivebordsindstillinger</translation>
+        <translation>Skrivebordspræferencer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
@@ -1566,12 +1566,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Skrivebord Udseende/Plugins</translation>
+        <translation>Skrivebord udseende/plugins</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
         <source>Screen Configuration</source>
-        <translation>Skærm Indstillinger</translation>
+        <translation>Skærmkonfiguration</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
@@ -1581,7 +1581,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Om Lumina Skrivebordet</translation>
+        <translation>Om Lumina-skrivebordet</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
@@ -1641,12 +1641,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="300"/>
         <source>Utilities</source>
-        <translation>Hjælpeværktøjer</translation>
+        <translation>Redskaber</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
         <source>Wine</source>
-        <translation></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>

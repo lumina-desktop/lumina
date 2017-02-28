@@ -6,7 +6,6 @@
 //===========================================
 #include "page_bluetooth_trueos.h"
 #include "ui_page_bluetooth_trueos.h"
-#include "getPage.h"
 
 //==========
 //    PUBLIC

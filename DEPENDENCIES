@@ -74,8 +74,7 @@ xf86-input-libinput
 libxcb
 
 === Slackware === 
-xinput
-libxcb-xinput-devel
+acpi (optional for battery monitor, available in SBo)
 
 === OpenSUSE === 
 libxcb

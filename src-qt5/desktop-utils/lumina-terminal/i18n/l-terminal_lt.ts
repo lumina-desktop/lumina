@@ -4,12 +4,12 @@
 <context>
     <name>TerminalWidget</name>
     <message>
-        <location filename="../TerminalWidget.cpp" line="60"/>
+        <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Copy Selection</source>
         <translation>Kopijuoti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../TerminalWidget.cpp" line="61"/>
+        <location filename="../TerminalWidget.cpp" line="62"/>
         <source>Paste</source>
         <translation>Įdėti</translation>
     </message>

@@ -4,12 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="235"/>
+        <location filename="../TarBackend.cpp" line="214"/>
+        <source>Could not read archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TarBackend.cpp" line="216"/>
+        <source>Archive Loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../TarBackend.cpp" line="242"/>
         <source>Extraction Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="236"/>
+        <location filename="../TarBackend.cpp" line="243"/>
         <source>Modification Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22,109 +32,114 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="29"/>
+        <location filename="../MainUI.ui" line="38"/>
         <source>Archive:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="119"/>
-        <location filename="../MainUI.cpp" line="61"/>
-        <location filename="../MainUI.cpp" line="252"/>
+        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.cpp" line="260"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="137"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="139"/>
+        <location filename="../MainUI.ui" line="148"/>
         <source>Burn to Disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="150"/>
+        <location filename="../MainUI.ui" line="159"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="174"/>
+        <location filename="../MainUI.ui" line="184"/>
         <source>&amp;Open Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="177"/>
+        <location filename="../MainUI.ui" line="187"/>
         <source>Open archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="182"/>
+        <location filename="../MainUI.ui" line="192"/>
         <source>&amp;New Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="185"/>
+        <location filename="../MainUI.ui" line="195"/>
         <source>New archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="190"/>
+        <location filename="../MainUI.ui" line="200"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="195"/>
+        <location filename="../MainUI.ui" line="205"/>
         <source>Add File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="198"/>
+        <location filename="../MainUI.ui" line="208"/>
         <source>Add files to archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="203"/>
+        <location filename="../MainUI.ui" line="213"/>
         <source>Remove File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="206"/>
+        <location filename="../MainUI.ui" line="216"/>
         <source>Remove selection from archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="211"/>
+        <location filename="../MainUI.ui" line="221"/>
         <source>Extract All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="214"/>
+        <location filename="../MainUI.ui" line="224"/>
         <source>Extract archive into a directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="219"/>
+        <location filename="../MainUI.ui" line="229"/>
         <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="222"/>
+        <location filename="../MainUI.ui" line="232"/>
         <source>Add directory to archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="227"/>
+        <location filename="../MainUI.ui" line="237"/>
         <source>Extract Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="240"/>
+        <source>Extract Selected Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="245"/>
         <source>USB Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="235"/>
+        <location filename="../MainUI.ui" line="248"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -139,193 +154,202 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="47"/>
+        <location filename="../MainUI.cpp" line="48"/>
         <source>CTRL+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="48"/>
+        <location filename="../MainUI.cpp" line="49"/>
         <source>CTRL+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="49"/>
+        <location filename="../MainUI.cpp" line="50"/>
         <source>CTRL+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="50"/>
+        <location filename="../MainUI.cpp" line="51"/>
         <source>CTRL+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
-        <location filename="../MainUI.cpp" line="252"/>
+        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.cpp" line="260"/>
         <source>MimeType</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
-        <location filename="../MainUI.cpp" line="252"/>
+        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.cpp" line="260"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="73"/>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="74"/>
+        <location filename="../MainUI.cpp" line="202"/>
         <source>Opening Archive...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="139"/>
-        <location filename="../MainUI.cpp" line="157"/>
-        <source>All Types %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="140"/>
-        <location filename="../MainUI.cpp" line="158"/>
-        <source>Uncompressed Archive (*.tar)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="141"/>
-        <location filename="../MainUI.cpp" line="159"/>
-        <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="142"/>
-        <location filename="../MainUI.cpp" line="160"/>
-        <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="143"/>
-        <location filename="../MainUI.cpp" line="161"/>
-        <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="144"/>
-        <location filename="../MainUI.cpp" line="163"/>
-        <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="145"/>
-        <location filename="../MainUI.cpp" line="162"/>
-        <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainUI.cpp" line="146"/>
-        <location filename="../MainUI.cpp" line="164"/>
-        <source>CPIO Archive (*.cpio)</source>
+        <source>All Types %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="147"/>
         <location filename="../MainUI.cpp" line="165"/>
-        <source>PAX Archive (*.pax)</source>
+        <source>Uncompressed Archive (*.tar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="148"/>
         <location filename="../MainUI.cpp" line="166"/>
-        <source>AR Archive (*.ar)</source>
+        <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="149"/>
         <location filename="../MainUI.cpp" line="167"/>
-        <source>SHAR Archive (*.shar)</source>
+        <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="150"/>
         <location filename="../MainUI.cpp" line="168"/>
-        <source>Zip Archive (*.zip)</source>
+        <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="151"/>
+        <location filename="../MainUI.cpp" line="170"/>
+        <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="152"/>
         <location filename="../MainUI.cpp" line="169"/>
+        <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="153"/>
+        <location filename="../MainUI.cpp" line="171"/>
+        <source>CPIO Archive (*.cpio)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="172"/>
+        <source>PAX Archive (*.pax)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="155"/>
+        <location filename="../MainUI.cpp" line="173"/>
+        <source>AR Archive (*.ar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="156"/>
+        <location filename="../MainUI.cpp" line="174"/>
+        <source>SHAR Archive (*.shar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="157"/>
+        <location filename="../MainUI.cpp" line="175"/>
+        <source>Zip Archive (*.zip)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="158"/>
+        <location filename="../MainUI.cpp" line="176"/>
         <source>7-Zip Archive (*.7z)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="170"/>
+        <location filename="../MainUI.cpp" line="164"/>
+        <source>All Known Types %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="177"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="171"/>
+        <location filename="../MainUI.cpp" line="178"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="172"/>
+        <location filename="../MainUI.cpp" line="179"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="173"/>
+        <location filename="../MainUI.cpp" line="180"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="181"/>
+        <source>Show All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>Create Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="192"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="192"/>
         <source>Could not overwrite file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="192"/>
+        <location filename="../MainUI.cpp" line="200"/>
         <source>Open Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="200"/>
-        <location filename="../MainUI.cpp" line="207"/>
+        <location filename="../MainUI.cpp" line="208"/>
+        <location filename="../MainUI.cpp" line="215"/>
         <source>Add to Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="202"/>
-        <location filename="../MainUI.cpp" line="209"/>
+        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="217"/>
         <source>Adding Items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="220"/>
+        <location filename="../MainUI.cpp" line="228"/>
         <source>Removing Items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="225"/>
-        <location filename="../MainUI.cpp" line="238"/>
+        <location filename="../MainUI.cpp" line="233"/>
+        <location filename="../MainUI.cpp" line="246"/>
         <source>Extract Into Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="227"/>
-        <location filename="../MainUI.cpp" line="240"/>
-        <location filename="../MainUI.cpp" line="246"/>
+        <location filename="../MainUI.cpp" line="235"/>
+        <location filename="../MainUI.cpp" line="248"/>
+        <location filename="../MainUI.cpp" line="254"/>
         <source>Extracting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="267"/>
+        <location filename="../MainUI.cpp" line="275"/>
         <source>Link To: %1</source>
         <translation type="unfinished"></translation>
     </message>
