@@ -44,47 +44,47 @@
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn skærmbillede med et program</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiér skærmbillede til udklipsholder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiér</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpas størrelsen af skærmbillede til markering</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskær skærmbillede til markering</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Beskær</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Skærmfangningsindstillinger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -94,17 +94,17 @@
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Generelle indstillinger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="455"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis pop op-advarsler om ugemte skærmbilleder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="488"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>værktøjsbjælke</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="515"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="548"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk program</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="551"/>
@@ -149,12 +149,12 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Indstillinger</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
@@ -174,12 +174,12 @@
     <message>
         <location filename="../MainUI.cpp" line="264"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugemt skærmbillede</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="265"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Det aktuelle skærmbillede er endnu ikke blevet gemt. Vil du gemme eller forkaste dine ændringer?</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="532"/>
