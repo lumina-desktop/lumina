@@ -225,13 +225,13 @@
     <message>
         <location filename="../MainUI.ui" line="400"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis pop op-advarsler</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <location filename="../MainUI.ui" line="406"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis advarsler om ugemte ændringer</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
