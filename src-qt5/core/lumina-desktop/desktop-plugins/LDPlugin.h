@@ -33,7 +33,7 @@ class LDPlugin : public QFrame{
 private:
 	QString PLUGID, prefix;
 	QSettings *settings;
-	QMenu *menu;
+	QMenu *menu, *contextM;
 	QTimer *dragTimer;
 
 	void setupMenu();
@@ -46,6 +46,10 @@ public:
 	QString ID(){
 	  return PLUGID;
 	}
+
+	void setContextMenu(QMenu *cmen){ contextM = cmen; }
+
+	QMenu* contextMenu(){ return contextM; }
 	
 	virtual QSize defaultPluginSize(){
 	  //This needs to be re-implemented in the subclassed plugin
@@ -97,10 +101,7 @@ public slots:
 	    //This is where all the visuals are set if using Theme-dependant icons.
 	  setupMenu();
 	}
-	void showPluginMenu(){
-	  emit CloseDesktopMenu();
-	  menu->popup( QCursor::pos() );
-	}
+	void showPluginMenu();
 	
 signals:
 	void OpenDesktopMenu();

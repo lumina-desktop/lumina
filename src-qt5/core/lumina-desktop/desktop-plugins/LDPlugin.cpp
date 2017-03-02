@@ -16,6 +16,7 @@ LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
   settings = LSession::handle()->DesktopPluginSettings();
   //Setup the plugin system control menu
   menu = new QMenu(this);
+  contextM = 0;
   setupMenu();
   //Setup the internal timer for when to start/stop drag events
   dragTimer = new QTimer(this);
@@ -33,11 +34,13 @@ LDPlugin::LDPlugin(QWidget *parent, QString id) : QFrame(parent){
 
 void LDPlugin::setupMenu(){
   menu->clear();
+  menu->setTitle(tr("Modify Item"));
+  menu->setIcon(LXDG::findIcon("preferences-desktop-icons","") );
   //SPECIAL CONTEXT MENU OPTIONS FOR PARTICULAR PLUGIN TYPES
-  if(PLUGID.startsWith("applauncher::")){
+  /*if(PLUGID.startsWith("applauncher::")){
     menu->addAction( LXDG::findIcon("quickopen",""), tr("Launch Item"), this, SIGNAL(PluginActivated()) );
     menu->addSeparator();
-  }
+  }*/
   //General Options
   menu->addAction( LXDG::findIcon("transform-move",""), tr("Start Moving Item"), this, SLOT(slotStartMove()) );
   menu->addAction( LXDG::findIcon("transform-scale",""), tr("Start Resizing Item"), this, SLOT(slotStartResize()) );
@@ -48,16 +51,17 @@ void LDPlugin::setupMenu(){
   menu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove Item"), this, SLOT(slotRemovePlugin()) );
 }
 
-/*void LDPlugin::setInitialSize(int width, int height){
-    //Note: Only run this in the plugin initization routine:
-    //  if the plugin is completely new (first time used), it will be this size
-    if(settings->allKeys().filter(prefix+"location").isEmpty()){
-	//Brand new plugin: set initial size
-	//qDebug() << "Setting Initial Size:" << PLUGID << width << height;
-	settings->setValue(prefix+"location/width",width);
-	settings->setValue(prefix+"location/height",height);
-	settings->sync();
+void LDPlugin::showPluginMenu(){
+  emit CloseDesktopMenu();
+  //Double check which menu should be shown
+  if(this->contextMenu()!=0){
+    //Got a special context menu for this plugin - need to layer them together
+    if(!this->contextMenu()->actions().contains(menu->menuAction())){
+      this->contextMenu()->addSeparator();
+      this->contextMenu()->addMenu(menu);
     }
-    //Now make sure the plugin is the saved size right away
-    this->resize( settings->value(prefix+"location/width").toInt(), settings->value(prefix+"location/height").toInt());
-}*/
+    this->contextMenu()->popup( QCursor::pos() );
+  }else{
+    menu->popup( QCursor::pos() );
+  }
+}

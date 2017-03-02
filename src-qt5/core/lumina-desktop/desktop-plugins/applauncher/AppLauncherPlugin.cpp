@@ -20,6 +20,9 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
 	connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT( loadButton()) );
 
   connect(this, SIGNAL(PluginActivated()), this, SLOT(buttonClicked()) ); //in case they use the context menu to launch it.
+  this->setContextMenu( new QMenu(this) );
+  connect(this->contextMenu(), SIGNAL(triggered(QAction*)), this, SLOT(actionTriggered(QAction*)) );
+
   loadButton();
   //QTimer::singleShot(0,this, SLOT(loadButton()) );
 }
@@ -32,6 +35,7 @@ void AppLauncherPlugin::Cleanup(){
 void AppLauncherPlugin::loadButton(){
   QString def = this->ID().section("::",1,50).section("---",0,0).simplified();
   QString path = this->readSetting("applicationpath",def).toString(); //use the default if necessary
+  this->contextMenu()->clear();
   //qDebug() << "Default Application Launcher:" << def << path;
   bool ok = QFile::exists(path);
   if(!ok){ emit RemovePlugin(this->ID()); return;}
@@ -53,6 +57,16 @@ void AppLauncherPlugin::loadButton(){
       button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       if(!file.comment.isEmpty()){button->setToolTip(file.comment); }
       txt = file.name;
+      //Put the simple Open action first (no open-with for .desktop files)
+      this->contextMenu()->addAction(button->icon(), QString(tr("Launch %1")).arg(file.name), this, SLOT(buttonClicked()) );
+      //See if there are any "actions" listed for this file, and put them in the context menu as needed.
+      if(!file.actions.isEmpty()){ 
+        for(int i=0; i<file.actions.length(); i++){
+          QAction *tmp = this->contextMenu()->addAction( file.actions[i].name );
+            tmp->setIcon( LXDG::findIcon(file.actions[i].icon,"quickopen-file") );
+            tmp->setWhatsThis( file.actions[i].ID );
+        }
+      }
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
       watcher->addPath(file.filePath); //make sure to update this shortcut if the file changes
     }
@@ -81,6 +95,16 @@ void AppLauncherPlugin::loadButton(){
     button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
+  }
+  //Now adjust the context menu for the button as needed
+  if(this->contextMenu()->isEmpty()){
+    this->contextMenu()->addAction(LXDG::findIcon("document-open",""), tr("Open"), this, SLOT(buttonClicked()) );
+    this->contextMenu()->addAction(LXDG::findIcon("document-preview",""), tr("Open With"), this, SLOT(openWith()) );
+  }
+  this->contextMenu()->addAction(LXDG::findIcon("document-properties",""), tr("Properties"), this, SLOT(fileProperties()) );
+  if(QFileInfo(path).isWritable()){
+    this->contextMenu()->addSeparator();
+    this->contextMenu()->addAction(LXDG::findIcon("document-close",""), tr("Delete File"), this, SLOT(fileDelete()) );
   }
   //If the file is a symlink, put the overlay on the icon
   if(QFileInfo(path).isSymLink()){
@@ -132,7 +156,7 @@ void AppLauncherPlugin::loadButton(){
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
 	
-void AppLauncherPlugin::buttonClicked(){
+void AppLauncherPlugin::buttonClicked(bool openwith){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path) ){
     //prompt for the user to select an application
@@ -144,8 +168,33 @@ void AppLauncherPlugin::buttonClicked(){
     if(!ok || names.indexOf(app)<0){ return; } //cancelled
     this->saveSetting("applicationpath", apps[ names.indexOf(app) ]->filePath);
     QTimer::singleShot(0,this, SLOT(loadButton()));
+  }else if(openwith){
+    LSession::LaunchApplication("lumina-open -select \""+path+"\"");
   }else{
     LSession::LaunchApplication("lumina-open \""+path+"\"");
   }
 	  
+}
+
+void AppLauncherPlugin::actionTriggered(QAction *act){
+  if(act->whatsThis().isEmpty()){ return; }
+  QString path = button->whatsThis();
+  if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
+  LSession::LaunchApplication("lumina-open -action \""+act->whatsThis()+"\" \""+path+"\"");
+}
+
+void AppLauncherPlugin::openWith(){
+  buttonClicked(true);
+}
+
+void AppLauncherPlugin::fileProperties(){
+  QString path = button->whatsThis();
+  if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
+  LSession::LaunchApplication("lumina-fileinfo \""+path+"\"");
+}
+
+void AppLauncherPlugin::fileDelete(){
+  QString path = button->whatsThis();
+  if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
+  QFile::remove(path);
 }

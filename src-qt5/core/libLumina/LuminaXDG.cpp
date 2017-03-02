@@ -59,7 +59,7 @@ void XDGDesktop::sync(){
       if(!CDA.ID.isEmpty()){ actions << CDA; CDA = XDGDesktopAction(); }
     }else if(line.startsWith("[")){ insection=false; inaction = false; }
     //Now check if this is the beginning of a section
-    if(line=="[Desktop Entry]"){ insection=true; continue; }
+    if(line=="[Desktop Entry]"){ insection=true;  continue; }
     else if(line.startsWith("[Desktop Action ")){ 
       //Grab the ID of the action out of the label
       CDA.ID = line.section("]",0,0).section("Desktop Action",1,1).simplified();
@@ -131,6 +131,8 @@ void XDGDesktop::sync(){
       else{ type = XDGDesktop::BAD; } //Unknown type
     }
   } //end reading file
+  if(!CDA.ID.isEmpty()){ actions << CDA; CDA = XDGDesktopAction(); } //if an action was still being read, add that to the list now
+
   file.clear(); //done with contents of file
   //If there are OnlyShowIn desktops listed, add them to the name
   if( !showInList.isEmpty() && !showInList.contains("Lumina", Qt::CaseInsensitive) ){
