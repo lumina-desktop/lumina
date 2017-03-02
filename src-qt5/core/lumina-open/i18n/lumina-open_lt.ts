@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[numatytoji] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -195,8 +195,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="365"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Nepavyko rasti &quot;%1&quot;. Iš pradžių, įsitikinkite ar ji įdiegta.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Nepavyko rasti "%1". Iš pradžių, įsitikinkite ar ji įdiegta.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="415"/>

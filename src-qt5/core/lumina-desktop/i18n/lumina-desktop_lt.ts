@@ -215,12 +215,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Negali per daug žinoti, tačiau gali per daug pasakyti.</translation>
     </message>
     <message>
@@ -300,7 +300,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Tik du dalykai yra beribiai: visata ir žmogaus kvailumas; tačiau dėl visatos aš nesu tikras.</translation>
     </message>
     <message>
@@ -310,7 +310,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -321,7 +321,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geriems žmonėms nereikia įstatymų, kad elgtųsi atsakingai, tuo tarpu blogi žmonės ras būdus kaip apeiti įstatymus.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
@@ -330,7 +330,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Smagu yra daryti tai, kas neįmanoma.</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Savalaikė tyla yra iškalbingesnė už kalbą.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geriau tylėti ir būti palaikytu kvailiu, negu prakalbėti ir išsklaidyti visas abejones.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
