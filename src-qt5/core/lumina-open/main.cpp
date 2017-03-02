@@ -32,9 +32,10 @@
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
   qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags.";
-  qDebug() << "Usage: lumina-open [-select] <absolute file path or URL>";
+  qDebug() << "Usage: lumina-open [-select] <absolute file path or URL> [-action <ActionID>]";
   qDebug() << "           lumina-open [-volumeup, -volumedown, -brightnessup, -brightnessdown]";
   qDebug() << "  [-select] (optional) flag to bypass any default application settings and show the application selector window";
+  qDebug() << "  [-action <ActionID>] (optional) Flag to run one of the alternate Actions listed in a .desktop registration file rather than the main command.";
   qDebug() << "Special Flags:";
   qDebug() << " \"-volume[up/down]\" Flag to increase/decrease audio volume by 5%";
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
