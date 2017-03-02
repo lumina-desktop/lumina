@@ -32,7 +32,7 @@
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
   qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags.";
-  qDebug() << "Usage: lumina-open [-select] <absolute file path or URL> [-action <ActionID>]";
+  qDebug() << "Usage: lumina-open [-select] [-action <ActionID>] <absolute file path or URL>";
   qDebug() << "           lumina-open [-volumeup, -volumedown, -brightnessup, -brightnessdown]";
   qDebug() << "  [-select] (optional) flag to bypass any default application settings and show the application selector window";
   qDebug() << "  [-action <ActionID>] (optional) Flag to run one of the alternate Actions listed in a .desktop registration file rather than the main command.";
@@ -266,8 +266,10 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }
     switch(DF.type){
       case XDGDesktop::APP:
+        qDebug() << "Found .desktop application:" << ActionID;
         if(!DF.exec.isEmpty()){
           cmd = DF.getDesktopExec(ActionID);
+          qDebug() << "Got command:" << cmd;
           if(!DF.path.isEmpty()){ path = DF.path; }
 	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
@@ -340,7 +342,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       cmd.append(" \""+inFile+"\"");
     }
   }
-  //qDebug() << "Found Command:" << cmd << "Extension:" << extension;
+  qDebug() << "Found Command:" << cmd << "Extension:" << extension;
   //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
   if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
   binary = cmd; //pass this string to the calling function

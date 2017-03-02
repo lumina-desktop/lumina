@@ -15,7 +15,7 @@ RootSubWindow::RootSubWindow(QMdiArea *root, NativeWindow *win) : QMdiSubWindow(
   closing = false;
   WinWidget = QWidget::createWindowContainer( WIN->window(), this);
   this->setWidget(WinWidget);
-  LoadProperties( QList< NativeWindow::Property>() << NativeWindow::WindowFlags << NativeWindow::Title << NativeWindow::Icon  \
+  LoadProperties( QList< NativeWindow::Property>()  << NativeWindow::Title << NativeWindow::Icon  \
 			<< NativeWindow::MinSize << NativeWindow::MaxSize << NativeWindow::Size );
   //Hookup the signals/slots
   connect(this, SIGNAL(aboutToActivate()), this, SLOT(aboutToActivate()) );
@@ -89,9 +89,9 @@ void RootSubWindow::propertyChanged(NativeWindow::Property prop, QVariant val){
 	case NativeWindow::Active:
 		if(val.toBool()){ this->mdiArea()->setActiveSubWindow(this); }
 		break;
-	case NativeWindow::WindowFlags:
+	/*case NativeWindow::WindowFlags:
 		this->setWindowFlags( val.value< Qt::WindowFlags >() );
-		break;
+		break;*/
 	default:
 		qDebug() << "Window Property Unused:" << prop << val;
   }

@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2014, Ken Moore
+//  Copyright (c) 2014-2017, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -38,12 +38,17 @@ private:
 
 private slots:
 	void loadButton();
-	void buttonClicked();
+	void buttonClicked(bool openwith = false);
 	//void openContextMenu();
 	
 	//void increaseIconSize();
 	//void decreaseIconSize();
 	//void deleteFile();
+
+	void actionTriggered(QAction *act);
+	void openWith();
+	void fileProperties();
+	void fileDelete();
 
 public slots:
 	void LocaleChange(){
