@@ -92,6 +92,7 @@ void LScreenSaver::LockScreenNow(){
 // ===========
 void LScreenSaver::ShowScreenSaver(){
   if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
+  //QApplication::setOverrideCursor(QCursor::BlankCursor);
   SSRunning = true;
   updating = true;
   //Now remove any current Base widgets (prevent any lingering painting between sessions)
@@ -141,6 +142,7 @@ void LScreenSaver::ShowLockScreen(){
 }
 
 void LScreenSaver::HideScreenSaver(){
+  //QApplication::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
   if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness

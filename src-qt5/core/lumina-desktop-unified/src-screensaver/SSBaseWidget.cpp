@@ -45,6 +45,7 @@ void SSBaseWidget::startPainting(){
   //If a random plugin - grab one of the known plugins
   if(cplug=="random"){ 
     QStringList valid = BaseAnimGroup::KnownAnimations();
+    valid.removeAll("none"); //they want a screensaver - remove the "none" option from the valid list
     if(valid.isEmpty()){ cplug = "none"; } //no known plugins
     else{ cplug = valid[ qrand()%valid.length() ]; } //grab a random plugin
   }
@@ -66,7 +67,6 @@ void SSBaseWidget::startPainting(){
   }
   //Now start the animation(s)
   if(ANIM!=0){
-    //if(DEBUG){ qDebug() << " - Starting SS Plugin:" << cplug << ANIM->animationCount() << ANIM->duration() << ANIM->loopCount(); }
     if(ANIM->animationCount()>0){ 
       if(DEBUG){ qDebug() << " - Starting SS Plugin:" << cplug << ANIM->animationCount() << ANIM->duration() << ANIM->loopCount(); }
       ANIM->start(); 
