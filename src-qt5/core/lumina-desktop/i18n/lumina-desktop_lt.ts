@@ -186,12 +186,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Man niekada nepakenkė tai, ko aš nesakiau</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>Reikia daugiau varpelių!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mes negalime visko daryti vienu metu, tačiau galime vienu metu daryti ką nors.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagrinėk praeitį, jeigu nori apibrėžti ateitį.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
