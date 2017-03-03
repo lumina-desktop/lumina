@@ -27,7 +27,7 @@ public:
 	  ui->setupUi(this); //load the designer file
 	  appreset = false;
 	  ui->listApps->clear();
-    QListWidgetItem *defaultItem = nullptr;
+    QListWidgetItem *defaultItem = 0;
           QList<XDGDesktop*> APPS = LXDG::sortDesktopNames(APPSLIST->apps(false,false)); //Don't show all/hidden
 	  for(int i=0; i<APPS.length(); i++){
 	    QListWidgetItem *app = new QListWidgetItem(LXDG::findIcon(APPS[i]->icon,"application-x-executable"), APPS[i]->name);
@@ -38,7 +38,7 @@ public:
       }
 	  }
 	  if(ui->listApps->count()){
-	    ui->listApps->setCurrentItem(defaultItem != nullptr ? defaultItem : ui->listApps->item(0));
+	    ui->listApps->setCurrentItem(defaultItem != 0 ? defaultItem : ui->listApps->item(0));
 	  }
 	  this->setWindowIcon( LXDG::findIcon("system-search","") );
 	  if(parent!=0){
@@ -66,7 +66,7 @@ public:
 private slots:
 	void on_buttonBox_accepted(){
 	  QListWidgetItem *item = ui->listApps->currentItem();
-	  if(item != nullptr){
+	  if(item != 0){
 	    appselected = item->data(Qt::UserRole).toString();
 	  }
 	  this->close();
@@ -85,18 +85,18 @@ private slots:
 	  this->close();
 	}
 	void on_lineSearch_textChanged(const QString &term){
-	  QListWidgetItem *first_visible = nullptr;
+	  QListWidgetItem *first_visible = 0;
 	  for(int i = 0; i < ui->listApps->count(); i++){
 	    QListWidgetItem *item = ui->listApps->item(i);
 	    bool visible = item->text().contains(term, Qt::CaseInsensitive);
 	    item->setHidden(!visible);
-	    if(visible && first_visible == nullptr){
+	    if(visible && first_visible == 0){
 	      first_visible = item;
 	    }
 	  }
 	  //Select the first app
 	  ui->listApps->setCurrentItem(first_visible);
-	  if(first_visible != nullptr){
+	  if(first_visible != 0){
 	    ui->listApps->scrollToItem(first_visible);
 	  }
 	}
