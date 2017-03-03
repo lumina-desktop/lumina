@@ -35,3 +35,8 @@ void NativeWindow::setProperty(NativeWindow::Property prop, QVariant val){
   hash.insert(prop, val);
   emit PropertyChanged(prop, val);
 }
+
+void NativeWindow::requestProperty(NativeWindow::Property prop, QVariant val){
+  if(prop == NativeWindow::None){ return; }
+  emit RequestPropertyChange(winid, prop, val);
+}

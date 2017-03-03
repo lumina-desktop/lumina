@@ -55,6 +55,7 @@ public:
 
 	QVariant property(NativeWindow::Property);
 	void setProperty(NativeWindow::Property, QVariant);
+	void requestProperty(NativeWindow::Property, QVariant);
 
 private:
 	QHash <NativeWindow::Property, QVariant> hash;
@@ -64,6 +65,7 @@ private:
 signals:
 	//General Notifications
 	void PropertyChanged(NativeWindow::Property, QVariant);
+	void RequestPropertyChange(WId, NativeWindow::Property, QVariant);
 	void WindowClosed(WId);
 
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
