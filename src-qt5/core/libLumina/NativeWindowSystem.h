@@ -42,6 +42,8 @@ private:
 	void UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props);
 
 public:
+	enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
+
 	NativeWindowSystem();
 	~NativeWindowSystem();
 

@@ -218,20 +218,27 @@ void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Pr
   
 }
 
-void NativeWindowSystem::RequestActivate(WId){
+void NativeWindowSystem::RequestClose(WId win){
+  //Send the window a WM_DELETE_WINDOW message
+    xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = obj->ATOMS.value("WM_PROTOCOLS");
+    event.data.data32[0] = obj->ATOMS.value("WM_DELETE_WINDOW");
+    event.data.data32[1] = XCB_TIME_CURRENT_TIME; //CurrentTime;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
 
+    xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+    xcb_flush(QX11Info::connection());
 }
-void NativeWindowSystem::RequestClose(WId){
 
+void NativeWindowSystem::RequestKill(WId win){
+  xcb_kill_client(QX11Info::connection(), win);
 }
 
-void NativeWindowSystem::RequestSetVisible(WId, bool){
-
-}
-void NativeWindowSystem::RequestSetGeometry(WId, QRect){
-
-}
-void NativeWindowSystem::RequestSetFrameExtents(WId, QList<int>){
-  //[Left,Top,Right,Bottom] in pixels
-
+void NativeWindowSystem::RequestPing(WId){
+  xcb_ewmh_send_wm_ping(QX11Info::connection(), win, XCB_CURRENT_TIME);
 }
