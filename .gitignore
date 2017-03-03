@@ -3,14 +3,17 @@ global.h
 Makefile.Debug
 Makefile.Release
 *.o
+*.qmake.stash
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
 src-qt5/core/lumina-desktop/lumina-desktop
 src-qt5/core/lumina-session/start-lumina-desktop
 src-qt5/core/lumina-wm*/lumina-wm
-src-qt5/core/libLumina/libLuminaUtils.so*
+src-qt5/core/libLumina/test/test
 src-qt5/core/lumina-info/lumina-info
+src-qt5/core/lumina-checkpass/lumina-checkpass
+src-qt5/core/lumina-desktop-unified/lumina-desktop-unified
 src-qt5/core/lumina-open/lumina-open
 src-qt5/core-utils/lumina-config/lumina-config
 src-qt5/core-utils/lumina-search/lumina-search
@@ -20,6 +23,8 @@ src-qt5/desktop-utils/lumina-fileinfo/lumina-fileinfo
 src-qt5/desktop-utils/lumina-screenshot/lumina-screenshot
 src-qt5/desktop-utils/lumina-terminal/lumina-terminal
 src-qt5/desktop-utils/lumina-textedit/lumina-textedit
+src-qt5/desktop-utils/lumina-archiver/lumina-archiver
+src-qt5/desktop-utils/lumina-calculator/lumina-calculator
 Makefile
 src-qt5/Makefile
 src-qt5/*/Makefile
