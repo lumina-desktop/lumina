@@ -66,7 +66,7 @@ public slots:
 	void startResizing();
 	
 private slots:
-	void propertyChanged(NativeWindow::Property, QVariant);
+	void propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
 
 protected:
 	void mousePressEvent(QMouseEvent*);

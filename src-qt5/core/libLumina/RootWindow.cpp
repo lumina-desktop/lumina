@@ -11,7 +11,7 @@
 #include <QDebug>
 
 // === PUBLIC ===
-RootWindow::RootWindow() : QMdiArea(0){ //QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
+RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
 }
@@ -191,7 +191,7 @@ void RootWindow::CloseWindow(WId win){
 void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
   bool found = false;
-  QPainter painter(this->viewport());
+  QPainter painter(this);
   for(int i=0; i<WALLPAPERS.length(); i++){
     if(WALLPAPERS[i].area.intersects(ev->rect()) ){
       found = true;

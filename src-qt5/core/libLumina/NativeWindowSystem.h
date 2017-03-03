@@ -33,7 +33,7 @@ private:
 	}
 
 	//Now define a simple private_objects class so that each implementation 
-	//  has a storage container for placing private objects as needed
+	//  has a storage container for defining/placing private objects as needed
 	class p_objects;
 	p_objects* obj;
 
@@ -51,6 +51,7 @@ public:
 
 	//General-purpose listing functions
 	QList<NativeWindow*> currentWindows(){ return NWindows; }
+	QList<NativeWindow*> currentTrayWindows(){ return TWindows; }
 
 public slots:
 	//These are the slots which are typically only used by the desktop system itself or the NativeWindowEventFilter
@@ -64,21 +65,21 @@ public slots:
 
 	//NativeWindowEventFilter interactions
 	void NewWindowDetected(WId); //will automatically create the new NativeWindow object
+	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
-	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
-	void NewKeyPress(int keycode);
-	void NewKeyRelease(int keycode);
-	void NewMousePress(int buttoncode);
-	void NewMouseRelease(int buttoncode);
+	void WindowPropertiesChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
+	void NewKeyPress(int keycode, WId win = 0);
+	void NewKeyRelease(int keycode, WId win = 0);
+	void NewMousePress(int buttoncode, WId win = 0);
+	void NewMouseRelease(int buttoncode, WId win = 0);
 	void CheckDamageID(WId);
 
 private slots:
 	//These are the slots which are built-in and automatically connected when a new NativeWindow is created
-	void RequestActivate(WId);
+	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void RequestClose(WId);
-	void RequestSetVisible(WId, bool);
-	void RequestSetGeometry(WId, QRect);
-	void RequestSetFrameExtents(WId, QList<int>); //[Left,Right,Top,Bottom] in pixels
+	void RequestKill(WId);
+	void RequestPing(WId);
 
 signals:
 	void NewWindowAvailable(NativeWindow*);

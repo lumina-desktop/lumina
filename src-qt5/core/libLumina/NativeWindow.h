@@ -42,10 +42,18 @@ public:
 		States,		/*QList<NativeWindow::State> : Current state of the window */
 		WinTypes,	/*QList<NativeWindow::Type> : Current type of window (typically does not change)*/
 		WinActions, /*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
+		FrameExtents, /*QList<int> : [Left, Right, Top, Bottom] in pixels */
 		Active, 		/*bool*/
 		Visible 		/*bool*/
 		};
 
+	static QList<NativeWindow::Property> allProperties(){
+	  //Return all the available properties (excluding "None")
+	  QList<NativeWindow::Property> props;
+	  props << MinSize << MaxSize << Size << GlobalPos << Title << ShortTitle << Icon << Name << Workspace \
+	    << States << WinTypes << WinActions << Active << Visible;
+	  return props;
+	};
 
 	NativeWindow(WId id);
 	~NativeWindow();
@@ -55,7 +63,14 @@ public:
 
 	QVariant property(NativeWindow::Property);
 	void setProperty(NativeWindow::Property, QVariant);
+	void setProperties(QList<NativeWindow::Property>, QList<QVariant>);
 	void requestProperty(NativeWindow::Property, QVariant);
+	void requestProperties(QList<NativeWindow::Property>, QList<QVariant>);
+
+public slots:
+	void requestClose(); //ask the app to close the window (may/not depending on activity)
+	void requestKill();	//ask the WM to kill the app associated with this window (harsh - only use if not responding)
+	void requestPing();	//ask the app if it is still active (a WindowNotResponding signal will get sent out if there is no reply);
 
 private:
 	QHash <NativeWindow::Property, QVariant> hash;
@@ -64,18 +79,17 @@ private:
 
 signals:
 	//General Notifications
-	void PropertyChanged(NativeWindow::Property, QVariant);
-	void RequestPropertyChange(WId, NativeWindow::Property, QVariant);
+	void PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
+	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void WindowClosed(WId);
+	void WindowNotResponding(WId); //will be sent out if a window does not respond to a ping request
 
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
 	//Note: "WId" should be the NativeWindow id()
-	void RequestActivate(WId);			//Activate the window
 	void RequestClose(WId);				//Close the window
-	void RequestSetVisible(WId, bool); 	//Minimize/restore visiblility
-	void RequestSetGeometry(WId, QRect); //Register the location/size of the window
-	void RequestSetFrameExtents(WId, QList<int>); //Register the size of the frame around the window [Left,Right, Top,Bottom] in pixels
-
+	void RequestKill(WId);				//Kill the window/app (usually from being unresponsive)
+	void RequestPing(WId);				//Verify that the window is still active (such as not closing after a request
+	
 	// System Tray Icon Embed/Unembed Requests
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);

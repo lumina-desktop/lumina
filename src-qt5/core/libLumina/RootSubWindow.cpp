@@ -21,12 +21,9 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   closing = false;
   WinWidget = QWidget::createWindowContainer( WIN->window(), this);
   initWindowFrame();
-  LoadProperties( QList< NativeWindow::Property>()  << NativeWindow::Title << NativeWindow::Icon  \
-			<< NativeWindow::MinSize << NativeWindow::MaxSize << NativeWindow::Size );
+  LoadProperties( NativeWindow::allProperties() );
   //Hookup the signals/slots
-  connect(WIN, SIGNAL(PropertyChanged(NativeWindow::Property, QVariant)), this, SLOT(propertyChanged(NativeWindow::Property, QVariant)));
-  //Make sure the visibily property only gets loaded after it is added to the root area
-  propertyChanged(NativeWindow::Visible, WIN->property(NativeWindow::Visible));
+  connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -167,9 +164,11 @@ void RootSubWindow::initWindowFrame(){
 }
 
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
+  QList<QVariant> vals;
   for(int i=0; i<list.length(); i++){
-    propertyChanged( list[i], WIN->property(list[i]) );
+    vals << WIN->property(list[i]);
   }
+  propertiesChanged(list, vals);
 }
 
 // === PUBLIC SLOTS ===
@@ -189,7 +188,7 @@ void RootSubWindow::toggleMaximize(){
 }
 
 void RootSubWindow::triggerClose(){
-  WIN->emit RequestClose(WIN->id());
+  WIN->requestClose();
 }
 
 void RootSubWindow::toggleSticky(){
@@ -197,7 +196,7 @@ void RootSubWindow::toggleSticky(){
 }
 
 void RootSubWindow::activate(){
-  WIN->emit RequestActivate(WIN->id());
+  WIN->requestProperty(NativeWindow::Active, true);
 }
 
 //Mouse Interactivity
@@ -223,37 +222,39 @@ void RootSubWindow::startResizing(){
 
 
 // === PRIVATE SLOTS ===
-void RootSubWindow::propertyChanged(NativeWindow::Property prop, QVariant val){
-  if(val.isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
-  qDebug() << "Set Window Property:" << prop << val;
-  switch(prop){
+void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList<QVariant> vals){
+  for(int i=0; i<props.length() && i<vals.length(); i++){
+    if(vals[i].isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
+    //qDebug() << "Set Window Property:" << props[i] << vals[i];
+    switch(props[i]){
 	case NativeWindow::Visible:
-		if(val.toBool()){ this->show(); }
+		if(vals[i].toBool()){ this->show(); }
 		else{ this->hide(); }
 		break;
 	case NativeWindow::Title:
-		titleLabel->setText(val.toString());
+		titleLabel->setText(vals[i].toString());
 		break;
 	case NativeWindow::Icon:
-		otherB->setIcon(val.value< QIcon>());
+		otherB->setIcon(vals[i].value< QIcon>());
 		break;
 	case NativeWindow::Size:
-		WinWidget->resize(val.toSize());
+		WinWidget->resize(vals[i].toSize());
 		break;
 	case NativeWindow::MinSize:
-		WinWidget->setMinimumSize(val.toSize());
+		WinWidget->setMinimumSize(vals[i].toSize());
 		break;
 	case NativeWindow::MaxSize:
-		WinWidget->setMaximumSize(val.toSize());
+		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		WinWidget->setFocus();
+		if(vals[i].toBool()){ WinWidget->setFocus(); }
 		break;
 	/*case NativeWindow::WindowFlags:
 		this->setWindowFlags( val.value< Qt::WindowFlags >() );
 		break;*/
 	default:
-		qDebug() << "Window Property Unused:" << prop << val;
+		qDebug() << "Window Property Unused:" << props[i] << vals[i];
+    }
   }
 }
 
@@ -358,7 +359,7 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
 
 void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   //Check for a right-click event
-  qDebug() << "Frame Mouse Release Event";
+  //qDebug() << "Frame Mouse Release Event";
   ev->accept();
   if( (activeState==Normal) && (titleBar->geometry().contains(ev->pos())) && (ev->button()==Qt::RightButton) ){
     otherM->popup(ev->globalPos());

@@ -152,8 +152,9 @@ bool NativeWindowSystem::start(){
     //Initialize all the extra atoms that the EWMH object does not have
     if( !obj->init_ATOMS() ){ return false; }
   } //Done with private object init
-
-  return true;
+  bool ok  = obj->register_wm();
+  if(ok){ ok = obj->startSystemTray(); }
+  return ok;
 }
 
 void NativeWindowSystem::stop(){
@@ -165,6 +166,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 
 }
 
+
 // === PUBLIC SLOTS ===
 //These are the slots which are only used by the desktop system itself or the NativeWindowEventFilter
 void NativeWindowSystem::RegisterVirtualRoot(WId){
@@ -173,6 +175,10 @@ void NativeWindowSystem::RegisterVirtualRoot(WId){
 
 //NativeWindowEventFilter interactions
 void NativeWindowSystem::NewWindowDetected(WId){
+
+}
+
+void NativeWindowSystem::NewTrayWindowDetected(WId){
 
 }
 
@@ -202,6 +208,16 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode){
 
 // === PRIVATE SLOTS ===
 //These are the slots which are built-in and automatically connected when a new NativeWindow is created
+void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Property> props, QList<QVariant> vals){
+  //Find the window object associated with this id
+  bool istraywin = false; //just in case we care later if it is a tray window or a regular window
+  NativeWindow *WIN = findWindow(win);
+  if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
+  if(WIN==0){ return; } //invalid window ID - no longer available
+  //Now make any changes as needed
+  
+}
+
 void NativeWindowSystem::RequestActivate(WId){
 
 }

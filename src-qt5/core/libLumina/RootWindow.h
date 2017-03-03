@@ -18,12 +18,12 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPaintEvent>
-#include <QMdiArea>
+//#include <QMdiArea>
 
 #include "RootSubWindow.h"
 #include "NativeWindow.h"
 
-class RootWindow : public QMdiArea{
+class RootWindow : public QWidget{
 	Q_OBJECT
 public:
 	enum ScaleType{ SolidColor, Stretch, Full, Fit, Center, Tile, BottomLeft, BottomRight, BottomCenter, \
