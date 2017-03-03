@@ -20,6 +20,7 @@
 #include <QMenu>
 #include <NativeWindow.h>
 
+
 class RootSubWindow : public QFrame{
 	Q_OBJECT
 public:
@@ -32,6 +33,7 @@ private:
 	//Window status 
 	enum ModState{Normal, Move, ResizeTop, ResizeTopRight, ResizeRight, ResizeBottomRight, ResizeBottom, ResizeBottomLeft, ResizeLeft, ResizeTopLeft};
 	ModState activeState;
+	ModState currentCursor;
 	QPoint offset; //needed for movement calculations (offset from mouse click to movement point)
 	//Functions for getting/setting state
 	ModState getStateAtPoint(QPoint pt, bool setoffset = false); //generally used for mouse location detection
@@ -42,7 +44,7 @@ private:
 	bool closing;
 	//Title bar objects
 	QBoxLayout *titleBar, *mainLayout;
-	QToolButton *closeB, *maxB, *minB;
+	QToolButton *closeB, *maxB, *minB, *otherB;
 	QLabel *titleLabel;
 	QMenu *otherM; //menu of other actions
 	void initWindowFrame();
@@ -64,13 +66,13 @@ public slots:
 	void startResizing();
 	
 private slots:
-	void aboutToActivate();
 	void propertyChanged(NativeWindow::Property, QVariant);
 
 protected:
 	void mousePressEvent(QMouseEvent*);
 	void mouseMoveEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent*);
+	void leaveEvent(QEvent *ev);
 
 };
 
