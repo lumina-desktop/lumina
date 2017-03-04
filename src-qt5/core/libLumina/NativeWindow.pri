@@ -1,8 +1,12 @@
 
 # Files
-SOURCES *= $${PWD}/NativeWindow.cpp 
+QT *= x11extras
+LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lXdamage 
 
-HEADERS *= $${PWD}/NativeWindow.h 
+SOURCES *= $${PWD}/NativeWindow.cpp \
+		$${PWD}/NativeWindowSystem.cpp
 
-INCLUDEPATH *= ${PWD}
+HEADERS *= $${PWD}/NativeWindow.h \
+		$${PWD}/NativeWindowSystem.h
 
+INCLUDEPATH *= $${PWD}

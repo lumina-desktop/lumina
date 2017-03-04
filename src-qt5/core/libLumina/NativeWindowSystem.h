@@ -24,12 +24,14 @@ private:
 	  for(int i=0; i<NWindows.length(); i++){ 
 	    if(id==NWindows[i]->id()){ return NWindows[i]; } 
 	  }
+	  return 0;
 	}
 
 	NativeWindow* findTrayWindow(WId id){
 	  for(int i=0; i<TWindows.length(); i++){ 
 	    if(id==TWindows[i]->id()){ return TWindows[i]; } 
 	  }
+	  return 0;
 	}
 
 	//Now define a simple private_objects class so that each implementation 
@@ -86,9 +88,10 @@ private slots:
 signals:
 	void NewWindowAvailable(NativeWindow*);
 	void NewInputEvent(); //a mouse or keypress was detected (lock-state independent);
-	void NewKeyPress(int); //only emitted if lockstate = false
-	void NewKeyRelease(int); //only emitted if lockstate = false
-	void NewMousePress(Qt::MouseButton); //only emitted if lockstate = false
+	void KeyPressDetected(Qt::Key, WId); //only emitted if lockstate = false
+	void KeyReleaseDetected(Qt::Key, WId); //only emitted if lockstate = false
+	void MousePressDetected(Qt::MouseButton, WId); //only emitted if lockstate = false
+	void MouseReleaseDetected(Qt::MouseButton, WId); //only emitted if lockstate = false
 
 };
 

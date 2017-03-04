@@ -13,9 +13,6 @@
 #include <QX11Info>
 #include <QDebug>
 
-//XCB Library functions
-#include <xcb/xcb_ewmh.h>
-
 //XCB Library includes
 #include <xcb/xcb.h>
 #include <xcb/xcb_atom.h>
@@ -60,7 +57,9 @@ public:
 	//Functions for setting up these objects as needed
 	bool init_ATOMS(){
 	  QStringList atoms;
-	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS" << "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION" << "_NET_SYSTEM_TRAY_VISUAL" << QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen()));
+	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS" 
+		<< "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION" 
+		<< "_NET_SYSTEM_TRAY_VISUAL" << QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen()));
 	    //Create all the requests for the atoms
 	    QList<xcb_intern_atom_reply_t*> reply;
 	    for(int i=0; i<atoms.length(); i++){
@@ -70,14 +69,14 @@ public:
 	    //Now evaluate all the requests and save the atoms
 	    for(int i=0; i<reply.length(); i++){ //NOTE: this will always be the same length as the "atoms" list
 	      if(reply[i]!=0){
-	        obj->ATOMS.insert(atoms[i], reply[i]->atom);
+	        ATOMS.insert(atoms[i], reply[i]->atom);
 	        free(reply[i]); //done with this reply
 	      }else{
 	        //Invalid atom - could not be created
 	        qDebug() << "Could not initialize XCB atom:" << atoms[i];
 	      }
 	    } //loop over reply
-	  return (obj->ATOMS.keys.length() == atoms.length());
+	  return (ATOMS.keys().length() == atoms.length());
 	}
 
 	bool register_wm(){
@@ -87,7 +86,7 @@ public:
 	  uint32_t params[] = {1};
 	  wm_window = xcb_generate_id(QX11Info::connection()); //need a new ID
 	  xcb_create_window(QX11Info::connection(), root_screen->root_depth, \
-		win, root_window, -1, -1, 1, 1, 0, \
+		wm_window, root_window, -1, -1, 1, 1, 0, \
 		XCB_WINDOW_CLASS_INPUT_OUTPUT, root_screen->root_visual, \
 		XCB_CW_OVERRIDE_REDIRECT, params);
 	  if(wm_window==0){ return false; }
@@ -101,12 +100,12 @@ public:
 	  return true;
 	}
 
-	bool startSystemTray{
-	  xcb_atom_t _NET_SYSTEM_TRAY_S = ATOMS.value(QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen())) );
+	bool start_system_tray(){
+	  xcb_atom_t _NET_SYSTEM_TRAY_S = ATOMS.value( QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen())) );
 	  //Make sure that there is no other system tray running
 	  xcb_get_selection_owner_reply_t *ownreply = xcb_get_selection_owner_reply(QX11Info::connection(), \
 						xcb_get_selection_owner_unchecked(QX11Info::connection(), _NET_SYSTEM_TRAY_S), NULL);
-	  if(ownreply==0){
+	  if(ownreply == 0){
 	    qWarning() << " - Could not get owner selection reply";
 	    return false;
 	  }else if(ownreply->owner != 0){
@@ -116,7 +115,52 @@ public:
 	  }
 	  free(ownreply);
 	  //Now create the window to use (just offscreen)
-	  //TODO
+	  tray_window = xcb_generate_id(QX11Info::connection()); //need a new ID
+	  uint32_t params[] = {1};
+	  xcb_create_window(QX11Info::connection(), root_screen->root_depth, \
+		tray_window, root_screen->root, -1, -1, 1, 1, 0, \
+		XCB_WINDOW_CLASS_INPUT_OUTPUT, root_screen->root_visual, \
+		XCB_CW_OVERRIDE_REDIRECT, params);
+	    //Now register this widget as the system tray
+	  xcb_set_selection_owner(QX11Info::connection(), tray_window, _NET_SYSTEM_TRAY_S, XCB_CURRENT_TIME);
+	  //Make sure that it was registered properly
+	  ownreply = xcb_get_selection_owner_reply(QX11Info::connection(), \
+						xcb_get_selection_owner_unchecked(QX11Info::connection(), _NET_SYSTEM_TRAY_S), NULL);
+	  if(ownreply==0 || ownreply->owner != tray_window){
+	    if(ownreply!=0){ free(ownreply); }
+	    qWarning() << " - Could not register the system tray";
+	    xcb_destroy_window(QX11Info::connection(), tray_window);
+	    return false;
+	  }
+	  free(ownreply); //done with structure
+	  //Now register the orientation of the system tray
+	  uint32_t orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+	   xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_REPLACE, tray_window, \
+			ATOMS.value("_NET_SYSTEM_TRAY_ORIENTATION"), XCB_ATOM_CARDINAL, 32, 1, &orient);
+
+	  //Now set the visual ID for the system tray (same as the root window, but TrueColor)
+	  xcb_visualtype_t *type = xcb_aux_find_visual_by_attrs(root_screen, XCB_VISUAL_CLASS_TRUE_COLOR, 32);
+	  if(type!=0){
+	    xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_REPLACE, tray_window, \
+		ATOMS.value("_NET_SYSTEM_TRAY_VISUAL"), XCB_ATOM_VISUALID, 32, 1, &type->visual_id);	    
+	  }else{
+	    qWarning() << " - Could not set TrueColor visual for system tray";
+	  }
+  
+	  //Finally, send out an X event letting others know that the system tray is up and running
+	   xcb_client_message_event_t event;
+	    event.response_type = XCB_CLIENT_MESSAGE;
+	    event.format = 32;
+	    event.window = root_screen->root;
+	    event.type = EWMH.MANAGER; //MANAGER atom
+	    event.data.data32[0] = XCB_TIME_CURRENT_TIME; //CurrentTime;  
+	    event.data.data32[1] = _NET_SYSTEM_TRAY_S; //_NET_SYSTEM_TRAY_S atom
+	    event.data.data32[2] = tray_window;
+	    event.data.data32[3] = 0;
+	    event.data.data32[4] = 0;
+
+	    xcb_send_event(QX11Info::connection(), 0, root_screen->root,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+	  return true;
 	}
 
 }; //end private objects class
@@ -131,15 +175,15 @@ NativeWindowSystem::NativeWindowSystem() : QObject(){
 }
 
 NativeWindowSystem::~NativeWindowSystem(){
-  xcb_ewmh_connection_wipe(obj->EWMH);
+  xcb_ewmh_connection_wipe(&(obj->EWMH));
   free(obj);
 }
 
 //Overarching start/stop functions
 bool NativeWindowSystem::start(){
   //Initialize the XCB/EWMH objects
-  if(obj==0){ 
-    obj = new p_objects(); } //instantiate the private objects
+  if(obj==0){
+    obj = new p_objects();  //instantiate the private objects
     obj->wm_window = 0;
     obj->tray_window = 0;
     xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &obj->EWMH);
@@ -153,7 +197,7 @@ bool NativeWindowSystem::start(){
     if( !obj->init_ATOMS() ){ return false; }
   } //Done with private object init
   bool ok  = obj->register_wm();
-  if(ok){ ok = obj->startSystemTray(); }
+  if(ok){ ok = obj->start_system_tray(); }
   return ok;
 }
 
@@ -186,24 +230,64 @@ void NativeWindowSystem::WindowCloseDetected(WId){
 
 }
 
-void NativeWindowSystem::WindowPropertyChanged(WId, NativeWindow::Property){
+void NativeWindowSystem::WindowPropertiesChanged(WId, NativeWindow::Property){
 
 }
 
-void NativeWindowSystem::NewKeyPress(int keycode){
-
+void NativeWindowSystem::NewKeyPress(int keycode, WId win){
+  emit NewInputEvent();
 }
 
-void NativeWindowSystem::NewKeyRelease(int keycode){
-
+void NativeWindowSystem::NewKeyRelease(int keycode, WId win){
+  emit NewInputEvent();
+  //Convert the native button code into a Qt keycode
+  //Qt::Key key = keycode; //TODO
+  //emit KeyReleaseDetected( key, win);
 }
 
-void NativeWindowSystem::NewMousePress(int buttoncode){
-
+void NativeWindowSystem::NewMousePress(int buttoncode, WId win){
+  emit NewInputEvent();
+  //Convert the native button code into a Qt mouse button code
+  Qt::MouseButton button;
+  switch(buttoncode){
+	case 1: 
+	  button = Qt::LeftButton ; break;
+	case 2: 
+	  button = Qt::MiddleButton ; break;
+	case 3: 
+	  button = Qt::RightButton ; break;
+/*	case 4: 
+	  button = Qt::LeftButton ; break;*/
+	default:
+	  return; //Unhandled button
+  }
+  emit MousePressDetected(button, win);
 }
 
-void NativeWindowSystem::NewMouseRelease(int buttoncode){
+void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
+  emit NewInputEvent();
+  //Convert the native button code into a Qt mouse button code
+  Qt::MouseButton button;
+  switch(buttoncode){
+	case 1: 
+	  button = Qt::LeftButton ; break;
+	case 2: 
+	  button = Qt::MiddleButton ; break;
+	case 3: 
+	  button = Qt::RightButton ; break;
+/*	case 4: 
+	  button = Qt::LeftButton ; break;*/
+	default:
+	  return; //Unhandled button
+  }
+  emit MouseReleaseDetected(button, win);
+}
 
+void NativeWindowSystem::CheckDamageID(WId win){
+  NativeWindow *WIN = findTrayWindow(win);
+  if(WIN!=0){
+    UpdateWindowProperties(WIN, QList<NativeWindow::Property>() << NativeWindow::Icon);
+  }
 }
 
 // === PRIVATE SLOTS ===
@@ -239,6 +323,6 @@ void NativeWindowSystem::RequestKill(WId win){
   xcb_kill_client(QX11Info::connection(), win);
 }
 
-void NativeWindowSystem::RequestPing(WId){
-  xcb_ewmh_send_wm_ping(QX11Info::connection(), win, XCB_CURRENT_TIME);
+void NativeWindowSystem::RequestPing(WId win){
+  xcb_ewmh_send_wm_ping(&obj->EWMH, win, XCB_CURRENT_TIME);
 }
