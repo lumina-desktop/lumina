@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Tipus d&apos;ítem</translation>
+        <translation>Tipus d'ítem</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="260"/>
         <source>toolBar</source>
-        <translation>Barra d&apos;eines</translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="286"/>
@@ -225,13 +225,13 @@
     <message>
         <location filename="../MainUI.ui" line="400"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra avisos emergents</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <location filename="../MainUI.ui" line="406"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra avisos de canvis no desats</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -272,7 +272,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Hi ha canvis no desats.
-Voleu tancar l&apos;editor tanmateix?
+Voleu tancar l'editor tanmateix?
 
 %1</translation>
     </message>
