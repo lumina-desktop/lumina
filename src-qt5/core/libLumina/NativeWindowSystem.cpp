@@ -413,6 +413,11 @@ void NativeWindowSystem::RegisterVirtualRoot(WId){
 void NativeWindowSystem::NewWindowDetected(WId id){
   //Make sure this can be managed first
   if(findWindow(id) != 0){ return; } //already managed
+  xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
+  xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
+  if(attr == 0){ return; } //could not get attributes of window
+  if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
+  free(attr);
   //Register for events from this window
   #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
                           XCB_EVENT_MASK_BUTTON_RELEASE | 	\
@@ -436,6 +441,11 @@ void NativeWindowSystem::NewWindowDetected(WId id){
 void NativeWindowSystem::NewTrayWindowDetected(WId id){
   //Make sure this can be managed first
   if(findTrayWindow(id) != 0){ return; } //already managed
+  xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
+  xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
+  if(attr == 0){ return; } //could not get attributes of window
+  if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
+  free(attr);
   //Register for events from this window
   #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
                           XCB_EVENT_MASK_BUTTON_RELEASE | 	\
