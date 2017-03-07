@@ -1391,7 +1391,6 @@ icccm_size_hints LXCB::WM_ICCCM_GetSizeHints(WId win){
 
 // -- WM_NORMAL_HINTS (newer property? - check for this before falling back on WM_SIZE_HINTS)
 icccm_size_hints LXCB::WM_ICCCM_GetNormalHints(WId win){
-//most values in structure are -1 if not set
   //most values in structure are -1 if not set
   icccm_size_hints hints;
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_normal_hints_unchecked(QX11Info::connection(), win);

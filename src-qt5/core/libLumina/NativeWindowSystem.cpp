@@ -349,7 +349,32 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     win->setProperty(NativeWindow::Icon, icon);
   } //end ICON property
 
-  
+  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize) 
+	|| props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
+    //Try the ICCCM "Normal Hints" structure first (newer spec?)
+    xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_normal_hints_unchecked(QX11Info::connection(), win->id());
+    xcb_size_hints_t reply;
+    bool ok = false;
+    if(1==xcb_icccm_get_wm_normal_hints_reply(QX11Info::connection(), cookie, &reply, NULL) ){  ok = true; }
+    else{
+      //Could not find normal hints, try the older "size hints" instead
+      cookie = xcb_icccm_get_wm_size_hints_unchecked(QX11Info::connection(), win->id(), XCB_ATOM_WM_SIZE_HINTS);
+      if(1==xcb_icccm_get_wm_size_hints_reply(QX11Info::connection(), cookie, &reply, NULL) ){ ok = true; }
+    }
+    if(ok){
+      bool initsize = win->property(NativeWindow::Size).isNull(); //initial window size
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_POSITION)==XCB_ICCCM_SIZE_HINT_US_POSITION ){ win->setProperty(NativeWindow::GlobalPos, QPoint(reply.x,reply.y)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_SIZE)==XCB_ICCCM_SIZE_HINT_US_SIZE ){ win->setProperty(NativeWindow::Size, QSize(reply.width, reply.height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_POSITION)==XCB_ICCCM_SIZE_HINT_P_POSITION ){ win->setProperty(NativeWindow::GlobalPos, QPoint(reply.x,reply.y)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_SIZE)==XCB_ICCCM_SIZE_HINT_P_SIZE ){ win->setProperty(NativeWindow::Size, QSize(reply.width, reply.height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MIN_SIZE)==XCB_ICCCM_SIZE_HINT_P_MIN_SIZE ){ win->setProperty(NativeWindow::MinSize, QSize(reply.min_width, reply.min_height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MAX_SIZE)==XCB_ICCCM_SIZE_HINT_P_MAX_SIZE ){ win->setProperty(NativeWindow::MaxSize, QSize(reply.max_width, reply.max_height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_BASE_SIZE)==XCB_ICCCM_SIZE_HINT_BASE_SIZE && initsize ){ win->setProperty(NativeWindow::Size, QSize(reply.base_width, reply.base_height)); }
+      //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_RESIZE_INC)==XCB_ICCCM_SIZE_HINT_P_RESIZE_INC ){ hints.width_inc=reply.width_inc; hints.height_inc=reply.height_inc; }
+      //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_ASPECT)==XCB_ICCCM_SIZE_HINT_P_ASPECT ){ hints.min_aspect_num=reply.min_aspect_num; hints.min_aspect_den=reply.min_aspect_den; hints.max_aspect_num=reply.max_aspect_num; hints.max_aspect_den=reply.max_aspect_den;}
+      //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY)==XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY ){ hints.win_gravity=reply.win_gravity; }
+    }
+  } //end of geometry properties
 
 }
 
