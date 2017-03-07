@@ -420,7 +420,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
   //Register for events from this window
-  #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
+  #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
                           XCB_EVENT_MASK_BUTTON_RELEASE | 	\
                           XCB_EVENT_MASK_POINTER_MOTION |	\
 			  XCB_EVENT_MASK_BUTTON_MOTION |	\
@@ -430,7 +430,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
 	
-  uint32_t value_list[1] = {FRAME_WIN_EVENT_MASK};
+  uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
   NativeWindow *win = new NativeWindow(id);
@@ -448,7 +448,7 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
   //Register for events from this window
-  #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
+  #define TRAY_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
                           XCB_EVENT_MASK_BUTTON_RELEASE | 	\
                           XCB_EVENT_MASK_POINTER_MOTION |	\
 			  XCB_EVENT_MASK_BUTTON_MOTION |	\
@@ -458,7 +458,7 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
 	
-  uint32_t value_list[1] = {FRAME_WIN_EVENT_MASK};
+  uint32_t value_list[1] = {TRAY_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
   NativeWindow *win = new NativeWindow(id);
