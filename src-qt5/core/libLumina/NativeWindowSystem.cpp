@@ -385,6 +385,20 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
       win->setProperty(NativeWindow::Name, ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) ));
       xcb_icccm_get_wm_class_reply_wipe(&reply);
     }
+  } //end NAME property
+
+  if(props.contains(NativeWindow::Workspace)){
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&obj->EWMH, win->id());
+    uint32_t num = 0;
+    int wkspace = -1;
+    if(1==xcb_ewmh_get_wm_desktop_reply(&obj->EWMH, cookie, &num, NULL) ){
+      if(num!=0xFFFFFFFF){ wkspace = num; }
+    }/*else{
+      //Error in fetching property (not set?)
+      // - put it on the current screen
+      out = WM_Get_Current_Desktop();
+    }*/
+    win->setProperty(NativeWindow::Workspace, wkspace);
   }
 }
 
