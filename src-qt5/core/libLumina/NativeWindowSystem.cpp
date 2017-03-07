@@ -376,6 +376,16 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     }
   } //end of geometry properties
 
+  if(props.contains(NativeWindow::Name)){
+    //Put the app/class name here (much more static than the "Title" properties
+    xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win->id());
+    xcb_icccm_get_wm_class_reply_t reply;
+    if(1 == xcb_icccm_get_wm_class_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+      //Returns: "<instance name>::::<class name>"
+      win->setProperty(NativeWindow::Name, ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) ));
+      xcb_icccm_get_wm_class_reply_wipe(&reply);
+    }
+  }
 }
 
 
