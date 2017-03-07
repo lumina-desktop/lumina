@@ -76,7 +76,7 @@ public slots:
 	void NewWindowDetected(WId); //will automatically create the new NativeWindow object
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
-	void WindowPropertiesChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
+	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
 /*	void NewKeyPress(int keycode, WId win = 0);
 	void NewKeyRelease(int keycode, WId win = 0);
 	void NewMousePress(int buttoncode, WId win = 0);
@@ -92,6 +92,7 @@ private slots:
 
 signals:
 	void NewWindowAvailable(NativeWindow*);
+	void NewTrayWindowAvailable(NativeWindow*);
 	void NewInputEvent(); //a mouse or keypress was detected (lock-state independent);
 	void KeyPressDetected(Qt::Key, WId); //only emitted if lockstate = false
 	void KeyReleaseDetected(Qt::Key, WId); //only emitted if lockstate = false

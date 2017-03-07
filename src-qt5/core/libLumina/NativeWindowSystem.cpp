@@ -410,20 +410,75 @@ void NativeWindowSystem::RegisterVirtualRoot(WId){
 }
 
 //NativeWindowEventFilter interactions
-void NativeWindowSystem::NewWindowDetected(WId){
-
+void NativeWindowSystem::NewWindowDetected(WId id){
+  //Make sure this can be managed first
+  if(findWindow(id) != 0){ return; } //already managed
+  //Register for events from this window
+  #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
+                          XCB_EVENT_MASK_BUTTON_RELEASE | 	\
+                          XCB_EVENT_MASK_POINTER_MOTION |	\
+			  XCB_EVENT_MASK_BUTTON_MOTION |	\
+                          XCB_EVENT_MASK_EXPOSURE |		\
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_ENTER_WINDOW)
+	
+  uint32_t value_list[1] = {FRAME_WIN_EVENT_MASK};
+  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
+  //Now go ahead and create/populate the container for this window
+  NativeWindow *win = new NativeWindow(id);
+  NWindows << win;
+  UpdateWindowProperties(win, NativeWindow::allProperties());
+  emit NewWindowAvailable(win);
 }
 
-void NativeWindowSystem::NewTrayWindowDetected(WId){
-
+void NativeWindowSystem::NewTrayWindowDetected(WId id){
+  //Make sure this can be managed first
+  if(findTrayWindow(id) != 0){ return; } //already managed
+  //Register for events from this window
+  #define FRAME_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
+                          XCB_EVENT_MASK_BUTTON_RELEASE | 	\
+                          XCB_EVENT_MASK_POINTER_MOTION |	\
+			  XCB_EVENT_MASK_BUTTON_MOTION |	\
+                          XCB_EVENT_MASK_EXPOSURE |		\
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
+                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+                          XCB_EVENT_MASK_ENTER_WINDOW)
+	
+  uint32_t value_list[1] = {FRAME_WIN_EVENT_MASK};
+  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
+  //Now go ahead and create/populate the container for this window
+  NativeWindow *win = new NativeWindow(id);
+  TWindows << win;
+  UpdateWindowProperties(win, NativeWindow::allProperties());
+  emit NewTrayWindowAvailable(win);
 }
 
-void NativeWindowSystem::WindowCloseDetected(WId){
-
+void NativeWindowSystem::WindowCloseDetected(WId id){
+  NativeWindow *win = findWindow(id);
+  if(win!=0){
+    NWindows.removeAll(win);
+    win->emit WindowClosed(id);
+    win->deleteLater();
+  }else{
+    win = findTrayWindow(id);
+    if(win!=0){
+      TWindows.removeAll(win);
+      win->emit WindowClosed(id);
+      win->deleteLater();      
+    }
+  }
 }
 
-void NativeWindowSystem::WindowPropertiesChanged(WId, NativeWindow::Property){
-
+void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop){
+  //NOTE: This is triggered by the NativeWindowEventFilter - not by changes to the NativeWindow objects themselves
+  NativeWindow *win = findWindow(id);
+  if(win==0){ win = findTrayWindow(id); }
+  if(win!=0){
+    UpdateWindowProperties(win, QList<NativeWindow::Property>() << prop);
+  }
 }
 
 /*void NativeWindowSystem::NewKeyPress(int keycode, WId win){
