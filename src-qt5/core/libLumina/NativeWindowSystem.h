@@ -12,6 +12,8 @@
 #define _LUMINA_NATIVE_WINDOW_SYSTEM_H
 
 #include "NativeWindow.h"
+#include <QDateTime>
+#include <QTimer>
 
 class NativeWindowSystem : public QObject{
 	Q_OBJECT
@@ -38,6 +40,23 @@ private:
 	//  has a storage container for defining/placing private objects as needed
 	class p_objects;
 	p_objects* obj;
+
+	//Internal timers/variables for managing pings
+	QTimer *pingTimer;
+	QHash<WId, QDateTime> waitingForPong;
+	void checkPings(){
+	  QDateTime cur = QDateTime::currentDateTime();
+	  QList<WId> waiting = waitingForPong.keys();
+	  for(int i=0; i<waiting.length(); i++){
+	    if(waitingForPong.value(waiting[i]) < cur){
+	      waitingForPong.remove(waiting[i]); //Timeout on this window
+	      if(waitingForPong.isEmpty() && pingTimer!=0){ pingTimer->stop(); }
+	      NativeWindow *win = findWindow(waiting[i]);
+	      if(win==0){ win = findTrayWindow(waiting[i]); }
+	      if(win!=0){ win->emit WindowNotResponding(waiting[i]); }
+	    }
+	  }
+	}
 
 	// Since some properties may be easier to update in bulk 
 	//   let the native system interaction do them in whatever logical groups are best
@@ -77,6 +96,8 @@ public slots:
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
 	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
+	void GotPong(WId);
+
 /*	void NewKeyPress(int keycode, WId win = 0);
 	void NewKeyRelease(int keycode, WId win = 0);
 	void NewMousePress(int buttoncode, WId win = 0);

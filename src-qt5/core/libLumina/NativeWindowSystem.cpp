@@ -173,7 +173,8 @@ public:
 
 // === PUBLIC ===
 NativeWindowSystem::NativeWindowSystem() : QObject(){
-  obj = 0; 
+  obj = 0;
+  pingTimer = 0;
 }
 
 NativeWindowSystem::~NativeWindowSystem(){
@@ -491,6 +492,13 @@ void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property pr
   }
 }
 
+void NativeWindowSystem::GotPong(WId id){
+  if(waitingForPong.contains(id)){
+    waitingForPong.remove(id);
+  }
+  if(waitingForPong.isEmpty() && pingTimer!=0){ pingTimer->stop(); }
+}
+
 /*void NativeWindowSystem::NewKeyPress(int keycode, WId win){
   emit NewInputEvent();
 }
@@ -581,5 +589,12 @@ void NativeWindowSystem::RequestKill(WId win){
 }
 
 void NativeWindowSystem::RequestPing(WId win){
+  waitingForPong.insert(win, QDateTime::currentDateTime().addSecs(5) );
   xcb_ewmh_send_wm_ping(&obj->EWMH, win, XCB_CURRENT_TIME);
+  if(pingTimer==0){
+    pingTimer = new QTimer(this);
+    pingTimer->setInterval(2000); //2seconds
+    connect(pingTimer, SIGNAL(timeout()), this, SLOT(checkPings()) );
+  }
+  pingTimer->start();
 }
