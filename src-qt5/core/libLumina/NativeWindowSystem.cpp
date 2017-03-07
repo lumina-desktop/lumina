@@ -12,6 +12,8 @@
 //Additional Qt includes
 #include <QX11Info>
 #include <QDebug>
+#include <QApplication>
+#include <QScreen>
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -205,8 +207,149 @@ void NativeWindowSystem::stop(){
 
 }
 
+//Small simplification functions
+Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
+  return Qt::Key_unknown;
+}
+
+NativeWindowSystem::MouseButton NativeWindowSystem::MouseToQt(int keycode){
+  switch(keycode){
+    case 1:
+      return NativeWindowSystem::LeftButton;
+    case 3:
+      return NativeWindowSystem::RightButton;
+    case 2:
+      return NativeWindowSystem::MidButton;
+    case 4:
+      return NativeWindowSystem::WheelUp;
+    case 5:
+      return NativeWindowSystem::WheelDown;
+    case 6:
+      return NativeWindowSystem::WheelLeft;
+    case 7:
+      return NativeWindowSystem::WheelRight;
+    case 8:
+      return NativeWindowSystem::BackButton; //Not sure if this is correct yet (1/27/17)
+    case 9:
+      return NativeWindowSystem::ForwardButton; //Not sure if this is correct yet (1/27/17)
+    default:
+      return NativeWindowSystem::NoButton;
+  }
+}
+
 // === PRIVATE ===
 void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props){
+  //Put the properties in logical groups as appropriate (some XCB calls return multiple properties)
+  if(props.contains(NativeWindow::Title)){
+    //Try the EWMH standards first
+    // _NET_WM_NAME
+    QString name;
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_name_unchecked(&obj->EWMH, win->id());
+    if(cookie.sequence != 0){
+      xcb_ewmh_get_utf8_strings_reply_t data;
+      if( 1 == xcb_ewmh_get_wm_name_reply(&obj->EWMH, cookie, &data, NULL) ){
+        name = QString::fromUtf8(data.strings, data.strings_len);
+      }
+    }
+    if(name.isEmpty()){
+      //_NET_WM_VISIBLE_NAME
+      xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&obj->EWMH, win->id());
+      if(cookie.sequence != 0){ 
+        xcb_ewmh_get_utf8_strings_reply_t data;
+        if( 1 == xcb_ewmh_get_wm_visible_name_reply(&obj->EWMH, cookie, &data, NULL) ){
+          name = QString::fromUtf8(data.strings, data.strings_len);
+        }
+      }
+    }
+    if(name.isEmpty()){
+      //Now try the ICCCM standard
+      xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_name_unchecked(QX11Info::connection(), win->id());
+      xcb_icccm_get_text_property_reply_t reply;
+      if(1 == xcb_icccm_get_wm_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+        name = QString::fromLocal8Bit(reply.name, reply.name_len);
+        xcb_icccm_get_text_property_reply_wipe(&reply);
+      }
+    }
+    win->setProperty(NativeWindow::Name, name);
+  } //end TITLE property
+
+  if(props.contains(NativeWindow::ShortTitle)){
+    //Try the EWMH standards first
+    // _NET_WM_ICON_NAME
+    QString name;
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_name_unchecked(&obj->EWMH, win->id());
+    if(cookie.sequence != 0){
+      xcb_ewmh_get_utf8_strings_reply_t data;
+      if( 1 == xcb_ewmh_get_wm_icon_name_reply(&obj->EWMH, cookie, &data, NULL) ){
+        name = QString::fromUtf8(data.strings, data.strings_len);
+      }
+    }
+    if(name.isEmpty()){
+      //_NET_WM_VISIBLE_ICON_NAME
+      xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&obj->EWMH, win->id());
+      if(cookie.sequence != 0){ 
+        xcb_ewmh_get_utf8_strings_reply_t data;
+        if( 1 == xcb_ewmh_get_wm_visible_icon_name_reply(&obj->EWMH, cookie, &data, NULL) ){
+          name = QString::fromUtf8(data.strings, data.strings_len);
+        }
+      }
+    }
+    if(name.isEmpty()){
+      //Now try the ICCCM standard
+      xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_icon_name_unchecked(QX11Info::connection(), win->id());
+      xcb_icccm_get_text_property_reply_t reply;
+      if(1 == xcb_icccm_get_wm_icon_name_reply(QX11Info::connection(), cookie, &reply, NULL) ){
+        name = QString::fromLocal8Bit(reply.name, reply.name_len);
+        xcb_icccm_get_text_property_reply_wipe(&reply);
+      }
+    }
+    win->setProperty(NativeWindow::ShortTitle, name);
+  } //end SHORTTITLE property
+
+  if(props.contains(NativeWindow::Icon)){
+    //See if this is a tray icon first (different routine - entire app window is the icon)
+    QIcon icon;
+    if(win == findTrayWindow(win->id())){
+      //Tray Icon Window
+      QPixmap pix;
+      //Get the current QScreen (for XCB->Qt conversion)
+      QList<QScreen*> scrnlist = QApplication::screens();
+      //Try to grab the given window directly with Qt
+      for(int i=0; i<scrnlist.length() && pix.isNull(); i++){
+        pix = scrnlist[i]->grabWindow(win->id());
+      }
+      icon.addPixmap(pix);
+    }else{
+      //Standard window
+      //Fetch the _NET_WM_ICON for the window and return it as a QIcon
+      xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_icon_unchecked(&obj->EWMH, win->id());
+      xcb_ewmh_get_wm_icon_reply_t reply;
+      if(1 == xcb_ewmh_get_wm_icon_reply(&obj->EWMH, cookie, &reply, NULL)){
+        xcb_ewmh_wm_icon_iterator_t iter = xcb_ewmh_get_wm_icon_iterator(&reply);
+        //Just use the first
+        bool done =false;
+        while(!done){
+          //Now convert the current data into a Qt image
+          // - first 2 elements are width and height (removed via XCB functions)
+          // - data in rows from left to right and top to bottom
+          QImage image(iter.width, iter.height, QImage::Format_ARGB32); //initial setup
+	    uint* dat = iter.data;
+	    //dat+=2; //remember the first 2 element offset
+	    for(int i=0; i<image.byteCount()/4; ++i, ++dat){
+	      ((uint*)image.bits())[i] = *dat; 
+	    }
+          icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
+          //Now see if there are any more icons available
+          done = (iter.rem<1); //number of icons remaining
+          if(!done){ xcb_ewmh_get_wm_icon_next(&iter); } //get the next icon data
+        }
+        xcb_ewmh_get_wm_icon_reply_wipe(&reply);
+      }
+    } //end type of window
+    win->setProperty(NativeWindow::Icon, icon);
+  } //end ICON property
+
+  
 
 }
 
@@ -234,7 +377,7 @@ void NativeWindowSystem::WindowPropertiesChanged(WId, NativeWindow::Property){
 
 }
 
-void NativeWindowSystem::NewKeyPress(int keycode, WId win){
+/*void NativeWindowSystem::NewKeyPress(int keycode, WId win){
   emit NewInputEvent();
 }
 
@@ -256,8 +399,8 @@ void NativeWindowSystem::NewMousePress(int buttoncode, WId win){
 	  button = Qt::MiddleButton ; break;
 	case 3: 
 	  button = Qt::RightButton ; break;
-/*	case 4: 
-	  button = Qt::LeftButton ; break;*/
+	case 4: 
+	  button = Qt::LeftButton ; break;
 	default:
 	  return; //Unhandled button
   }
@@ -275,13 +418,13 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
 	  button = Qt::MiddleButton ; break;
 	case 3: 
 	  button = Qt::RightButton ; break;
-/*	case 4: 
-	  button = Qt::LeftButton ; break;*/
+	case 4: 
+	  button = Qt::LeftButton ; break;
 	default:
 	  return; //Unhandled button
   }
   emit MouseReleaseDetected(button, win);
-}
+}*/
 
 void NativeWindowSystem::CheckDamageID(WId win){
   NativeWindow *WIN = findTrayWindow(win);

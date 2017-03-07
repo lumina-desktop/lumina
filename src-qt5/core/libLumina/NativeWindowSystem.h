@@ -45,6 +45,7 @@ private:
 
 public:
 	enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
+	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
 
 	NativeWindowSystem();
 	~NativeWindowSystem();
@@ -56,6 +57,10 @@ public:
 	//General-purpose listing functions
 	QList<NativeWindow*> currentWindows(){ return NWindows; }
 	QList<NativeWindow*> currentTrayWindows(){ return TWindows; }
+
+	//Small simplification functions
+	static Qt::Key KeycodeToQt(int keycode);
+	static NativeWindowSystem::MouseButton MouseToQt(int button);
 
 public slots:
 	//These are the slots which are typically only used by the desktop system itself or the NativeWindowEventFilter
@@ -72,10 +77,10 @@ public slots:
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
 	void WindowPropertiesChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
-	void NewKeyPress(int keycode, WId win = 0);
+/*	void NewKeyPress(int keycode, WId win = 0);
 	void NewKeyRelease(int keycode, WId win = 0);
 	void NewMousePress(int buttoncode, WId win = 0);
-	void NewMouseRelease(int buttoncode, WId win = 0);
+	void NewMouseRelease(int buttoncode, WId win = 0);*/
 	void CheckDamageID(WId);
 
 private slots:
