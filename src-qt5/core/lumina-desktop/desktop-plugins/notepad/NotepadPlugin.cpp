@@ -60,7 +60,9 @@ NotePadPlugin::NotePadPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     edit->setReadOnly(false);
     edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     vlay->addWidget(edit);
-    edit->setContextMenuPolicy(Qt::NoContextMenu);
+    edit->setContextMenuPolicy(Qt::CustomContextMenu); //Need to forward the context menu request to the plugin itself
+    connect(edit, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT( showContextMenuForEdit(const QPoint&)) );
+
 	
   //Now load the new file-based system for saving notes
   //qDebug() << "Saving a new setting";
@@ -327,4 +329,16 @@ void NotePadPlugin::loadIcons(){
   add->setIcon( LXDG::findIcon("document-new","") );
   rem->setIcon( LXDG::findIcon("document-close","") );*/
   config->setIcon( LXDG::findIcon("configure","") );
+}
+
+void NotePadPlugin::showContextMenuForEdit(const QPoint &pos){
+  this->setContextMenu( edit->createStandardContextMenu(pos) );
+  connect(this->contextMenu(), SIGNAL(aboutToHide()), this, SLOT(resetContextMenu()) );
+  this->showPluginMenu();
+}
+
+void NotePadPlugin::resetContextMenu(){
+  QMenu *menu = this->contextMenu();
+  this->setContextMenu(0);
+  menu->deleteLater();
 }

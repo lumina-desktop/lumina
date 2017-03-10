@@ -29,7 +29,7 @@ public:
 	}
 private:
 	QPlainTextEdit *edit;
-	QToolButton *config; //*open, *add, *rem;
+	QToolButton *config; // *open, *add, *rem;
 	QComboBox *cnote;
 	QFrame *frame;
 	QFileSystemWatcher *watcher;
@@ -53,6 +53,8 @@ private slots:
 	void noteChanged();
 
 	void loadIcons();
+	void showContextMenuForEdit(const QPoint &pos);
+	void resetContextMenu();
 
 public slots:
 	void LocaleChange(){
