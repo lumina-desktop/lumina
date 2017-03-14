@@ -21,10 +21,10 @@ int main(int argc, char ** argv)
     path = LUtils::PathToAbsolute( argv[i] );
     if(QFile::exists(path)){ break; } //already found a valid file 
   }
-if(path.isEmpty()){ return 1; }
+
   MainUI w;
       //QObject::connect(&theme, SIGNAL(updateIcons()), &w, SLOT(UpdateIcons()) );
-  w.loadFile(path);
+  if(!path.isEmpty()){  w.loadFile(path); }
   w.show();
   int retCode = a.exec();
   return retCode;

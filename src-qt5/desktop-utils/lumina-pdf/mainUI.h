@@ -7,12 +7,19 @@
 #ifndef _LUMINA_PDF_VIEWER_MAIN_WINDOW_H
 #define _LUMINA_PDF_VIEWER_MAIN_WINDOW_H
 
-#include <QPrintPreviewDialog>
+#include <QPrintPreviewWidget>
+#include <QPrintDialog>
 #include <QPrinter>
+#include <QMainWindow>
+#include <QProgressBar>
 
 #include <poppler-qt5.h>
 
-class MainUI : public QPrintPreviewDialog{
+namespace Ui{
+	class MainUI;
+};
+
+class MainUI : public QMainWindow{
 	Q_OBJECT
 public:
 	MainUI();
@@ -20,13 +27,23 @@ public:
 
 	void loadFile(QString path);
 
-	virtual void done(int);
 
 private:
 	Poppler::Document *DOC;
+	QPrintPreviewWidget *WIDGET;
+	Ui::MainUI *ui;
+	QPrinter* PRINTER;
+	QPrintDialog *PrintDLG;
+
+	QString lastdir;
+
+	//Other Interface elements
+	QProgressBar *progress;
 
 private slots:
 	void paintOnWidget(QPrinter *PRINTER);
+
+	//Button Slots
 	void OpenNewFile();
 
 };

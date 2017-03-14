@@ -5,21 +5,73 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "mainUI.h"
+#include "ui_mainUI.h"
+
 #include <QPainter>
 #include <QImage>
 #include <QSize>
-#include <QMessageBox>
+#include <QFileDialog>
 #include <QDebug>
 #include <QApplication>
 
 #include <LuminaXDG.h>
 
-MainUI::MainUI() : QPrintPreviewDialog(0, Qt::Window){
+MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
+  ui->setupUi(this);
 
-  //this->addStatusBar();
-  
-  connect(this, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
+  this->setWindowTitle(tr("Lumina PDF Viewer"));
+  this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
+
+  lastdir = QDir::homePath();
+  PRINTER = new QPrinter();
+  WIDGET = new QPrintPreviewWidget(PRINTER, this);
+  this->setCentralWidget(WIDGET);
+  connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
+
+  PrintDLG = new QPrintDialog(PRINTER,this);
+  connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) ); //Can change to PaintToPrinter() later
+
+  //Create the other interface widgets
+  progress = new QProgressBar(this);
+    progress->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    progress->setFormat("%v/%m (%p%)"); // [current]/[total]
+  ui->toolBar2->addWidget(progress);
+  ui->toolBar2->setVisible(false);
+
+  //Put the various actions into logical groups
+  QActionGroup *tmp = new QActionGroup(this);
+    tmp->setExclusive(true);
+    tmp->addAction(ui->actionFit_Width);
+    tmp->addAction(ui->actionFit_Page);
+  ui->actionFit_Page->setChecked(true);
+
+  tmp = new QActionGroup(this);
+    tmp->setExclusive(true);
+    tmp->addAction(ui->actionSingle_Page);
+    tmp->addAction(ui->actionDual_Pages);
+    tmp->addAction(ui->actionAll_Pages);
+  ui->actionSingle_Page->setChecked(true);
+
+  //Connect up the buttons
+  connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
+  connect(ui->actionPrint, SIGNAL(triggered()), PrintDLG, SLOT(open()) );
+  connect(ui->actionFit_Width, SIGNAL(triggered()), WIDGET, SLOT(fitToWidth()) );
+  connect(ui->actionFit_Page, SIGNAL(triggered()), WIDGET, SLOT(fitInView()) );
+  connect(ui->actionOpen_PDF, SIGNAL(triggered()), this, SLOT(OpenNewFile()) );
+  connect(ui->actionSingle_Page, SIGNAL(triggered()), WIDGET, SLOT(setSinglePageViewMode()) );
+  connect(ui->actionDual_Pages, SIGNAL(triggered()), WIDGET, SLOT(setFacingPagesViewMode()) );
+  connect(ui->actionAll_Pages, SIGNAL(triggered()), WIDGET, SLOT(setAllPagesViewMode()) );
+
+  //Setup all the icons
+  ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
+  ui->actionClose->setIcon( LXDG::findIcon("window-close",""));
+  ui->actionFit_Width->setIcon(LXDG::findIcon("zoom-fit-width",""));
+  ui->actionFit_Page->setIcon(LXDG::findIcon("zoom-fit-best",""));
+  ui->actionOpen_PDF->setIcon(LXDG::findIcon("document-open",""));
+  ui->actionSingle_Page->setIcon(LXDG::findIcon("view-preview",""));
+  ui->actionDual_Pages->setIcon(LXDG::findIcon("view-split-left-right",""));
+  ui->actionAll_Pages->setIcon(LXDG::findIcon("view-grid",""));
 }
 
 MainUI::~MainUI(){
@@ -30,35 +82,35 @@ void MainUI::loadFile(QString path){
   if(DOC!=0){
     //Clear out the old document first
     delete DOC;
+    DOC=0;
   }
-  if(!QFile::exists(path) || path.isEmpty() ){QApplication::exit(1); }
+  qDebug() << "Opening File:" << path;
+  if(!QFile::exists(path) || path.isEmpty() ){ return; }
   DOC = Poppler::Document::load(path);
   if(DOC!=0){ this->setWindowTitle(DOC->title()); }
   if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
-  this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
+
   //Setup the Document
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
-    this->printer()->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) ); 
+    lastdir = path.section("/",0,-2); //save this for later
+    PRINTER->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) ); 
     switch(PAGE->orientation()){
 	case Poppler::Page::Landscape:
-	  this->printer()->setOrientation(QPrinter::Landscape); break;
+	  PRINTER->setOrientation(QPrinter::Landscape); break;
 	default:
-	  this->printer()->setOrientation(QPrinter::Portrait);
+	  PRINTER->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
+    WIDGET->updatePreview(); //start loading the file preview
   }
 
-}
-
-void MainUI::done(int val){
-  //This is automatically called with value=1 when the "print()" function finishes
-  //Otherwise close down the application
-  if(val==0){ QApplication::exit(0); }
 }
 
 void MainUI::paintOnWidget(QPrinter *PRINTER){
   if(DOC==0){ return; }
+  this->show();
+  QApplication::processEvents();
   int pages = DOC->numPages();
   int firstpage = 0;
   //qDebug() << "Start Rendering PDF:" << PRINTER->fromPage() << PRINTER->toPage();
@@ -72,12 +124,10 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
   QSize DPI(PRINTER->resolution(),PRINTER->resolution());
   QPainter painter(PRINTER);
   Poppler::Page *PAGE = 0;
-  QMessageBox wait(QMessageBox::NoIcon, tr("Opening PDF..."), QString(tr("Preparing Document (%1 pages)")).arg(QString::number(pages)), QMessageBox::Abort, this);
-    wait.setInformativeText(" "); //Make sure the window is the right size before showing it
-    wait.setStandardButtons(QMessageBox::Abort); //make sure that no buttons are used
-    wait.show();
-    for(int i=firstpage; i<pages && wait.isVisible(); i++){
-      wait.setInformativeText( QString(tr("Loading Page: %1")).arg(i+1) );
+  progress->setRange(firstpage, pages-1);
+  ui->toolBar2->setVisible(true);
+    for(int i=firstpage; i<pages; i++){
+      progress->setValue(i);
       //qDebug() << "Loading Page:" << i;
       QApplication::processEvents();
       //Now paint this page on the printer
@@ -88,15 +138,16 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
       }else{
         painter.drawImage(0,0,QImage()); 
       }
-      QApplication::processEvents();
+      //QApplication::processEvents();
     }
   if(PAGE!=0){ delete PAGE; }
-  wait.close();
+  ui->toolBar2->setVisible(false);
 }
 
 void MainUI::OpenNewFile(){
   //Prompt for a file
-
+  QString path = QFileDialog::getOpenFileName(this, tr("Open PDF"), lastdir, tr("PDF Documents (*.pdf)"));
   //Now Open it
+  if(!path.isEmpty()){ loadFile(path); }
   
 }

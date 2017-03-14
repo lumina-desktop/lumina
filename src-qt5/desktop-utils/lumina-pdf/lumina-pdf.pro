@@ -20,6 +20,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainUI.h
 
+FORMS += mainUI.ui
+
 LIBS += -lpoppler-qt5
 INCLUDEPATH+= $${L_INCLUDEDIR}/poppler/qt5
 
