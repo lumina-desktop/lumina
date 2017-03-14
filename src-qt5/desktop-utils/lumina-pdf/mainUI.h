@@ -32,13 +32,14 @@ private:
 	Poppler::Document *DOC;
 	QPrintPreviewWidget *WIDGET;
 	Ui::MainUI *ui;
-	QPrinter* PRINTER;
+	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 
 	QString lastdir;
 
 	//Other Interface elements
 	QProgressBar *progress;
+	QAction *progAct; //action associated with the progressbar
 
 private slots:
 	void paintOnWidget(QPrinter *PRINTER);

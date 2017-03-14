@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>659</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -50,7 +50,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionFit_Page"/>
    <addaction name="actionFit_Width"/>
@@ -58,26 +58,6 @@
    <addaction name="actionSingle_Page"/>
    <addaction name="actionDual_Pages"/>
    <addaction name="actionAll_Pages"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar2">
-   <property name="windowTitle">
-    <string>toolBar_2</string>
-   </property>
-   <property name="movable">
-    <bool>false</bool>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::BottomToolBarArea</set>
-   </property>
-   <property name="floatable">
-    <bool>false</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>BottomToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <action name="actionOpen_PDF">
    <property name="text">
