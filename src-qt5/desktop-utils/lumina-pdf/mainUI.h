@@ -41,11 +41,17 @@ private:
 	QProgressBar *progress;
 	QAction *progAct; //action associated with the progressbar
 
+	
 private slots:
+	//void startPainting(QPrinter *PRINTER);
 	void paintOnWidget(QPrinter *PRINTER);
+	//void paintPage(QPrinter *PRINTER, QImage img, bool newpage);
 
 	//Button Slots
 	void OpenNewFile();
+
+signals:
+	//void pageLoaded(QPrinter*, QImage, bool);
 
 };
 #endif
