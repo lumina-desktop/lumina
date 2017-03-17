@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=lumina-mediaplayer %f
+Icon=audio-x-generic
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+MimeType=
+Name=Lumina Media Player
+Comment=Play Multimedia Content
