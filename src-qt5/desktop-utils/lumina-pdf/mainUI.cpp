@@ -11,8 +11,10 @@
 #include <QImage>
 #include <QSize>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QDebug>
 #include <QApplication>
+#include <QScreen>
 
 #include <LuminaXDG.h>
 
@@ -23,22 +25,21 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
 
   lastdir = QDir::homePath();
-  PRINTER = new QPrinter();
-  WIDGET = new QPrintPreviewWidget(PRINTER, this);
+  Printer = new QPrinter();
+  WIDGET = new QPrintPreviewWidget(Printer,this);
   this->setCentralWidget(WIDGET);
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
 
-  PrintDLG = new QPrintDialog(PRINTER,this);
+  PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) ); //Can change to PaintToPrinter() later
 
   //Create the other interface widgets
   progress = new QProgressBar(this);
     progress->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     progress->setFormat("%v/%m (%p%)"); // [current]/[total]
-  ui->toolBar2->addWidget(progress);
-  ui->toolBar2->setVisible(false);
-
+  progAct = ui->toolBar->addWidget(progress);
+  progAct->setVisible(false);
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
     tmp->setExclusive(true);
@@ -79,27 +80,43 @@ MainUI::~MainUI(){
 }
 
 void MainUI::loadFile(QString path){
+
+  if(!QFile::exists(path) || path.isEmpty() ){ return; }
+  Poppler::Document *TDOC = Poppler::Document::load(path);
+  if(TDOC==0){
+    qDebug() << "Could not open file:" << path;
+    return;
+  }else if(TDOC->isLocked()){
+    //Prompt for password to unlock the document
+    QString pass = "";
+    bool ok = true; //flag this to go into the loop the first time (if password prompt is cancelled - this becomes false)
+    while( (ok ? true : !TDOC->unlock(QByteArray(), pass.toLocal8Bit())) ){ //make sure the unlock function is only called when ok is true
+      pass = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
+    }
+    if(TDOC->isLocked()){ return; } //Cancelled - still locked
+  }
+
   if(DOC!=0){
     //Clear out the old document first
     delete DOC;
     DOC=0;
   }
+  DOC = TDOC; //Save this for later
   qDebug() << "Opening File:" << path;
-  if(!QFile::exists(path) || path.isEmpty() ){ return; }
-  DOC = Poppler::Document::load(path);
-  if(DOC!=0){ this->setWindowTitle(DOC->title()); }
+  this->setWindowTitle(DOC->title());
   if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
 
   //Setup the Document
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
-    PRINTER->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) ); 
+    Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) ); 
+    Printer->setPageMargins(QMarginsF(0,0,0,0), QPageLayout::Point);
     switch(PAGE->orientation()){
 	case Poppler::Page::Landscape:
-	  PRINTER->setOrientation(QPrinter::Landscape); break;
+	  Printer->setOrientation(QPrinter::Landscape); break;
 	default:
-	  PRINTER->setOrientation(QPrinter::Portrait);
+	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
     WIDGET->updatePreview(); //start loading the file preview
@@ -109,8 +126,8 @@ void MainUI::loadFile(QString path){
 
 void MainUI::paintOnWidget(QPrinter *PRINTER){
   if(DOC==0){ return; }
-  this->show();
-  QApplication::processEvents();
+  //this->show();
+  //QApplication::processEvents();
   int pages = DOC->numPages();
   int firstpage = 0;
   //qDebug() << "Start Rendering PDF:" << PRINTER->fromPage() << PRINTER->toPage();
@@ -122,26 +139,34 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
   //Now start painting all the pages onto the widget
   QRectF size = PRINTER->pageRect(QPrinter::DevicePixel);
   QSize DPI(PRINTER->resolution(),PRINTER->resolution());
+  //QScreen *scrn = QApplication::screens().first();
+  //QSize SDPI(scrn->logicalDotsPerInchX(), scrn->logicalDotsPerInchY());
   QPainter painter(PRINTER);
-  Poppler::Page *PAGE = 0;
-  progress->setRange(firstpage, pages-1);
-  ui->toolBar2->setVisible(true);
+  //qDebug() << "Set progress bar range:" << firstpage+1 << pages;
+  progress->setRange(firstpage+1,pages+1);
+  //progress->setValue(firstpage);
+  progAct->setVisible(true);
+    qDebug() << "Printer DPI:" << DPI;
+    //qDebug() << "Screen DPI:" << SDPI;
     for(int i=firstpage; i<pages; i++){
-      progress->setValue(i);
       //qDebug() << "Loading Page:" << i;
+      progress->setValue(i+1);
+      //qDebug() << " - ProcessEvents";
       QApplication::processEvents();
       //Now paint this page on the printer
-      if(PAGE!=0){ delete PAGE; PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      PAGE = DOC->page(i);
+      //qDebug() << " - Load Poppler Page";
+      if(i != firstpage){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
+      Poppler::Page *PAGE = DOC->page(i);
       if(PAGE!=0){
-        painter.drawImage(0,0,PAGE->renderToImage(DPI.width(), DPI.height()).scaled(size.width(), size.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+        painter.drawImage(0,0,PAGE->renderToImage(2*DPI.width(), 2*DPI.height()).scaled(size.width(), size.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
       }else{
         painter.drawImage(0,0,QImage()); 
       }
+      if(PAGE!=0){ delete PAGE; }
       //QApplication::processEvents();
     }
-  if(PAGE!=0){ delete PAGE; }
-  ui->toolBar2->setVisible(false);
+  //qDebug() << "Done Loading Pages";
+  progAct->setVisible(false);
 }
 
 void MainUI::OpenNewFile(){
