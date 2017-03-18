@@ -144,7 +144,7 @@
     <message>
         <location filename="../MainUI.ui" line="370"/>
         <source>Single Screen</source>
-        <translation>En enkel skærm</translation>
+        <translation>Én skærm</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="38"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.ui" line="540"/>
         <source>Quick Save</source>
-        <translation>Kvik gem</translation>
+        <translation>Kvikgem</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="101"/>
