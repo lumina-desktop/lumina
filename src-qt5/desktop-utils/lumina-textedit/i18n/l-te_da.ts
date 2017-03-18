@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Posttype</translation>
+        <translation>Elementtype</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="173"/>
         <source>Hide the find/replace options</source>
-        <translation>Skjul valgmulighederne find/erstat</translation>
+        <translation>Skjul valgmulighederne for find/erstat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="214"/>
@@ -297,7 +297,7 @@ Vil du lukke redigeringsprogrammet alligevel?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation>Den følgende fil er blevet ændret af et andet redskab. Vil du genindlæse den?</translation>
+        <translation>Den følgende fil er blevet ændret af et andet program. Vil du genindlæse den?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
