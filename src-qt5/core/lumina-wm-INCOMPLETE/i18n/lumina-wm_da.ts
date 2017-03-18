@@ -26,7 +26,7 @@
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
         <source>Too Many Failures</source>
-        <translation>For mange mislykkedes forsøg</translation>
+        <translation>For mange mislykkede forsøg</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
