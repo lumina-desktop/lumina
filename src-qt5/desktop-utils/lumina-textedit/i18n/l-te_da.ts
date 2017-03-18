@@ -231,7 +231,7 @@
         <location filename="../MainUI.ui" line="403"/>
         <location filename="../MainUI.ui" line="406"/>
         <source>Show warnings about unsaved changes</source>
-        <translation>Vis advarsler om ugemte ændringer</translation>
+        <translation>Vis advarsler om ændringer som ikke er gemt</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -252,7 +252,7 @@
         <location filename="../MainUI.cpp" line="296"/>
         <location filename="../MainUI.cpp" line="394"/>
         <source>Lose Unsaved Changes?</source>
-        <translation>Mist ugemte ændringer?</translation>
+        <translation>Mist ændringer som ikke er gemt?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="296"/>
@@ -260,7 +260,7 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation>Denne fil har ugemte ændringer.
+        <translation>Denne fil har ændringer som ikke er gemt.
 Vil du lukke den alligevel?
 
 %1</translation>
@@ -271,7 +271,7 @@ Vil du lukke den alligevel?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation>Der er ugemte ændringer.
+        <translation>Der er ændringer som ikke er gemt.
 Vil du lukke redigeringsprogrammet alligevel?
 
 %1</translation>
@@ -302,7 +302,7 @@ Vil du lukke redigeringsprogrammet alligevel?
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Bemærk: Du vil miste alle nuværende ugemte ændringer)</translation>
+        <translation>(Bemærk: Du vil miste alle nuværende ændringer som ikke er gemt)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
