@@ -44,47 +44,47 @@
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít snímek obrazovky v programu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat snímek obrazovky do schránky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit velikost snímku obrazovky na výběr</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout snímek obrazovky na výběr</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Oříznout</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení zachytávání obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -94,17 +94,17 @@
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecná nastavení</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="455"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat vyskakovací varování o neuložených snímcích obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="488"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Nástrojový pruh</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="515"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="548"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít program</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="551"/>
@@ -149,12 +149,12 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Pohled</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
@@ -174,12 +174,12 @@
     <message>
         <location filename="../MainUI.cpp" line="264"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuložené snímky obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="265"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nynější snímek obrazovky ještě nebyl uložen. Chcete své změny uložit nebo zahodit?</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="532"/>
