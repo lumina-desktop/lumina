@@ -982,12 +982,12 @@
     <message>
         <location filename="../mainWindow.cpp" line="131"/>
         <source>Unsaved Changes</source>
-        <translation>Ugemte ændringer</translation>
+        <translation>Ændringer som ikke er gemt</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="131"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
-        <translation>Denne side har ugemte ændringer. Vil du gemme dem nu?</translation>
+        <translation>Denne side har ændringer som ikke er gemt. Vil du gemme dem nu?</translation>
     </message>
 </context>
 <context>
