@@ -241,7 +241,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation>Lær fortiden at kende hvis du definere fremtiden.</translation>
+        <translation>Lær fortiden at kende hvis du vil definere fremtiden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation>Den eneste måde at udføre godt arbejde er ved at elske det du gør.</translation>
+        <translation>Den eneste måde at udføre godt arbejde er ved at elske det, du gør.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
@@ -454,12 +454,12 @@
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="33"/>
         <source>Increase Icons</source>
-        <translation>Forøg ikoner</translation>
+        <translation>Større ikoner</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="34"/>
         <source>Decrease Icons</source>
-        <translation>Formindsk ikoner</translation>
+        <translation>Mindre ikoner</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="36"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
 </context>
 <context>
@@ -657,12 +657,12 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
-        <translation>Forøg elementstørrelser</translation>
+        <translation>Større elementstørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
-        <translation>Formindsk elementstørrelser</translation>
+        <translation>Mindre elementstørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
@@ -748,7 +748,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1196,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
         <source>View Feed Details</source>
-        <translation>Vis detaljer for feed</translation>
+        <translation>Vis feed-detaljer</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="72"/>
@@ -1317,7 +1317,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
