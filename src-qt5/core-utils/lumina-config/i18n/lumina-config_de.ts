@@ -381,7 +381,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Betrachten und kontrollieren Sie jedes laufende Anwendungsfenster (jedes einzelne Fenster hat eine Schaltfläche)</translation>
+        <translation>Jedes laufende Anwendungsfenster betrachten und steuern (eine Schaltfläche pro Fenster)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
         <source>RSS Reader</source>
-        <translation>RSS Reader</translation>
+        <translation>RSS-Leseanwendung</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
@@ -601,7 +601,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="354"/>
         <source>Dominant color for the theme.</source>
-        <translation>Dominante Farbe für das Theme.</translation>
+        <translation>Dominante Farbe für das Thema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="359"/>
@@ -611,7 +611,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="360"/>
         <source>Dominant color for the theme (more subdued).</source>
-        <translation>Dominante Farben für das Theme (dezenter)</translation>
+        <translation>Dominante Farben für das Thema (dezenter).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="365"/>
@@ -621,7 +621,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
-        <translation>Alternative Farbe für das Theme.</translation>
+        <translation>Alternative Farbe für das Thema.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="371"/>
@@ -631,7 +631,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="372"/>
         <source>Alternate color for the theme (more subdued).</source>
-        <translation>Alternative Farbe für das Theme (dezenter)</translation>
+        <translation>Alternative Farbe für das Thema (dezenter).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="377"/>
@@ -932,7 +932,7 @@
         <source>This theme already exists.
  Overwrite it?</source>
         <translation>Das Thema existiert bereits.
-Überschrieben?</translation>
+ Überschrieben?</translation>
     </message>
 </context>
 <context>
@@ -1450,7 +1450,7 @@
     <message>
         <location filename="../pages/page_main.ui" line="32"/>
         <source>Search for....</source>
-        <translation>Nach ... suchen</translation>
+        <translation>Suchen nach ...</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="56"/>
