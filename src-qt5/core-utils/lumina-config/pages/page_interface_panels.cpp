@@ -59,7 +59,8 @@ void page_interface_panels::LoadSettings(int screennum){
   QString screenID = QApplication::screens().at(cscreen)->name();
   QString DPrefix = "desktop-"+screenID+"/";
   int panelnumber = settings->value(DPrefix+"panels",-1).toInt();
-  QBoxLayout *panels_layout = static_cast<QHBoxLayout*>(ui->scroll_panels->widget()->layout());
+  if(panelnumber<0){ panelnumber = 0; }
+  QHBoxLayout *panels_layout = static_cast<QHBoxLayout*>(ui->scroll_panels->widget()->layout());
   
   //Remove extra panels (if any)
   for(int i=panelnumber; i<PANELS.length(); i++){
