@@ -21,7 +21,7 @@
     <message>
         <location filename="../ConfigUI.ui" line="48"/>
         <source>Excluded Directories</source>
-        <translation>Udeladte mapper</translation>
+        <translation>Udelad mapper</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="119"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../ConfigUI.cpp" line="54"/>
         <source>Exclude Directories</source>
-        <translation>Udeladte mapper</translation>
+        <translation>Udelad mapper</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../MainUI.ui" line="30"/>
         <source>Configure search parameters</source>
-        <translation>Indstil søge parametre</translation>
+        <translation>Konfigurer søgeparametre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="40"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="64"/>
         <source>Files or Directories</source>
-        <translation>Filer og mapper</translation>
+        <translation>Filer eller mapper</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="88"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation>Start post</translation>
+        <translation>Start element</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="119"/>

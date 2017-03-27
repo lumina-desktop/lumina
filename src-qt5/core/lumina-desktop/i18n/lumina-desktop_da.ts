@@ -6,7 +6,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation>Klik for at tildele en applikation</translation>
+        <translation>Klik for at tildele et program</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="42"/>
@@ -196,7 +196,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation>Alt har sin skønhed, men alle ser det ikke.</translation>
+        <translation>Alt har sin skønhed, ikke alle ser det.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
@@ -215,13 +215,13 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation>Du kan ikke vide hvor meget, men du kan sige for meget.</translation>
+        <source>You can't know too much, but you can say too much.</source>
+        <translation>Du kan ikke vide for meget, men du kan sige for meget.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
@@ -231,7 +231,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation>Et samfund som ville opgive en smule frihed for at gå en smule sikkerhed vil ikke gøre sig fortjent til noget af det og miste begge.</translation>
+        <translation>Et samfund som ville opgive en smule frihed for at opnå en smule sikkerhed vil ikke gøre sig fortjent til noget af det og miste begge.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
@@ -241,12 +241,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation>Lær fortiden af kende hvis du definere fremtiden.</translation>
+        <translation>Lær fortiden at kende hvis du vil definere fremtiden.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation>Måden at komme i gang, er at holde op med at snakke og begynde at gøre.</translation>
+        <translation>Måden at komme i gang er at holde op med at snakke og begynde at gøre.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
@@ -266,7 +266,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation>Det har ikke betydning hvor hurtigt du går, så længe du ikke stopper.</translation>
+        <translation>Det har ikke betydning hvor langsom du er, så længe du ikke stopper.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
@@ -291,27 +291,27 @@
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation>Den eneste måde at udføre godt arbejde, er ved at elske det du gør.</translation>
+        <translation>Den eneste måde at udføre godt arbejde er ved at elske det, du gør.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation>Politisk korrekthed er tyranni uden manerer.</translation>
+        <translation>Politisk korrekthed er tyranni med manerer.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
-        <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det sidste.</translation>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det første.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation>Jeg oplever at jo hårdere jeg arbejder, jo mere heldig ser jeg ud til at være.</translation>
+        <translation>Jeg oplever at jo hårdere jeg arbejder, jo mere held lader jeg til at have.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation>Gør, eller gør ikke. Der er ikke noget &quot;prøv&quot;.</translation>
+        <source>Do, or do not. There is no 'try'.</source>
+        <translation>Gør eller lad være. Der er ikke noget "prøv".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
@@ -321,16 +321,16 @@
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation>Gode mennesker behøver ikke love til at fortælle dem at de skal opføre sig ordentligt, mens dårlige mennesker vil finde en vej omkring lovene.</translation>
+        <translation>Gode mennesker behøver ikke love til at fortælle dem at de skal opføre sig ordentligt, mens dårlige mennesker vil finde en vej uden om lovene.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation>Sorte huller er når gud dividere med nul.</translation>
+        <translation>Sorte huller er hvor gud dividere med nul.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
@@ -341,12 +341,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>A witty saying proves nothing.</source>
-        <translation>En vittig udtalelse beviser intet.</translation>
+        <translation>En vittig talemåde beviser intet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation>Succes kommer typisk til dem der ikke har travlt med at lede efter det.</translation>
+        <translation>Succes kommer typisk til dem der har for travlt til at lede efter den.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
@@ -356,7 +356,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation>Jeg har aldrig ladet min skolegang blande sig i min uddannelse.</translation>
+        <translation>Jeg har aldrig ladet min skolegang forstyrre min uddannelse.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation>Bedre at forblive stille og blive tænkt som værende et fjols, end at tale og fjerne al tvivl.</translation>
+        <translation>Bedre at forblive stille og blive anset for at være et fjols end at tale og fjerne al tvivl.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -401,7 +401,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="149"/>
         <source>Preparing System Tray …</source>
-        <translation>Forbereder systemskuffe …</translation>
+        <translation>Forbereder systembakke …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="152"/>
@@ -411,7 +411,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="155"/>
         <source>Detecting Applications …</source>
-        <translation>Undersøger programmer …</translation>
+        <translation>Finder programmer …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="158"/>
@@ -454,12 +454,12 @@
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="33"/>
         <source>Increase Icons</source>
-        <translation>Forøg ikoner</translation>
+        <translation>Større ikoner</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="34"/>
         <source>Decrease Icons</source>
-        <translation>Formindsk ikoner</translation>
+        <translation>Mindre ikoner</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="36"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
 </context>
 <context>
@@ -642,32 +642,32 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
         <source>Launch Item</source>
-        <translation>Start post</translation>
+        <translation>Start element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
         <source>Start Moving Item</source>
-        <translation>Begynd at flytte post</translation>
+        <translation>Begynd at flytte element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
         <source>Start Resizing Item</source>
-        <translation>Begynd at ændre størrelse på post</translation>
+        <translation>Begynd at ændre størrelse på element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Increase Item Sizes</source>
-        <translation>Forøg poststørrelser</translation>
+        <translation>Større elementstørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Decrease Item Sizes</source>
-        <translation>Formindsk poststørrelser</translation>
+        <translation>Mindre elementstørrelser</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Remove Item</source>
-        <translation>Fjern post</translation>
+        <translation>Fjern element</translation>
     </message>
 </context>
 <context>
@@ -748,7 +748,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="323"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
 </context>
 <context>
@@ -929,7 +929,7 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
         <source>Note Files (*.note)</source>
-        <translation>Note-filer (*.note)</translation>
+        <translation>Notesfiler (*.note)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
@@ -939,7 +939,7 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="99"/>
         <source>Open a note file</source>
-        <translation>Åbn en note fil</translation>
+        <translation>Åbn en notesfil</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="136"/>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation>Standardsynkroniseringsinterval</translation>
+        <translation>Standardinterval for synkronisering</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
@@ -1196,7 +1196,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
         <source>View Feed Details</source>
-        <translation>Vis detaljer for feed</translation>
+        <translation>Vis feed-detaljer</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="72"/>
@@ -1317,7 +1317,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation>Ud</translation>
+        <translation>Afslut</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
@@ -1566,7 +1566,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Skrivebord udseende/plugins</translation>
+        <translation>Skrivebordsudseende/-plugins</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
@@ -1641,7 +1641,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="300"/>
         <source>Utilities</source>
-        <translation>Redskaber</translation>
+        <translation>Hjælpeværktøjer</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>

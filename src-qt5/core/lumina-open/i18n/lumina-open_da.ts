@@ -171,17 +171,17 @@
     <message>
         <location filename="../main.cpp" line="273"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Program genvej mangler korrekt information (misdannet genvej): %1</translation>
+        <translation>Programgenvejen mangler korrekt opstartsinformation (forkert udformet genvej): %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="286"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>URL genvej mangler URL'en: %1</translation>
+        <translation>URL-genvejen mangler URL'en: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="297"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>Folder genvej mangler stien til folderen: %1</translation>
+        <translation>Mappegenvejen mangler stien til mappen: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="302"/>

@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Posttype</translation>
+        <translation>Elementtype</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="173"/>
         <source>Hide the find/replace options</source>
-        <translation>Skjul valgmulighederne find/erstat</translation>
+        <translation>Skjul valgmulighederne for find/erstat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="214"/>
@@ -231,7 +231,7 @@
         <location filename="../MainUI.ui" line="403"/>
         <location filename="../MainUI.ui" line="406"/>
         <source>Show warnings about unsaved changes</source>
-        <translation>Vis advarsler om ugemte ændringer</translation>
+        <translation>Vis advarsler om ændringer som ikke er gemt</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -252,7 +252,7 @@
         <location filename="../MainUI.cpp" line="296"/>
         <location filename="../MainUI.cpp" line="394"/>
         <source>Lose Unsaved Changes?</source>
-        <translation>Mist ugemte ændringer?</translation>
+        <translation>Mist ændringer som ikke er gemt?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="296"/>
@@ -260,7 +260,7 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation>Denne fil har ugemte ændringer.
+        <translation>Denne fil har ændringer som ikke er gemt.
 Vil du lukke den alligevel?
 
 %1</translation>
@@ -271,7 +271,7 @@ Vil du lukke den alligevel?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation>Der er ugemte ændringer.
+        <translation>Der er ændringer som ikke er gemt.
 Vil du lukke redigeringsprogrammet alligevel?
 
 %1</translation>
@@ -297,12 +297,12 @@ Vil du lukke redigeringsprogrammet alligevel?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation>Den følgende fil er blevet ændret af et andet redskab. Vil du genindlæse den?</translation>
+        <translation>Den følgende fil er blevet ændret af et andet program. Vil du genindlæse den?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Bemærk: Du vil miste alle nuværende ugemte ændringer)</translation>
+        <translation>(Bemærk: Du vil miste alle nuværende ændringer som ikke er gemt)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>

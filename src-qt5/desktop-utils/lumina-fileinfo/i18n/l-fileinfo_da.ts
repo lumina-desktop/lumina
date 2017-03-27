@@ -119,7 +119,7 @@
     <message>
         <location filename="../MainUI.cpp" line="61"/>
         <source>---Calculating---</source>
-        <translation>---Udregner---</translation>
+        <translation>---Beregner---</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="70"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
-        <translation>  Udregner ...</translation>
+        <translation>  Beregner ...</translation>
     </message>
 </context>
 </TS>

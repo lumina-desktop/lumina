@@ -41,7 +41,7 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Qt Version:</source>
-        <translation>Qt version:</translation>
+        <translation>Qt-version:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
@@ -66,12 +66,12 @@
     <message>
         <location filename="../MainUI.ui" line="333"/>
         <source>Project Lead:</source>
-        <translation>Projekt ledelse:</translation>
+        <translation>Projektledelse:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
-        <source>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</translation>
+        <source>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</source>
+        <translation>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="353"/>
@@ -85,8 +85,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
-        <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Åbn i en webbrowser&lt;a&gt;</translation>
+        <source>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Open in web browser&lt;a&gt;</source>
+        <translation>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Åbn i en webbrowser&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>

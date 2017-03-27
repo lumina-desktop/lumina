@@ -11,7 +11,7 @@
     <message>
         <location filename="../AppDialog.ui" line="20"/>
         <source>Search for....</source>
-        <translation type="unfinished">Hledat...</translation>
+        <translation>Hledat...</translation>
     </message>
 </context>
 <context>
@@ -345,7 +345,7 @@ Přepsat je?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Náhradní spouštěcí nabídka se zaměřením na uživatelovy soubory, adresáře a záložky (oblíbené).</translation>
     </message>
     <message>
@@ -1073,7 +1073,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_compton.cpp" line="38"/>
         <source>Window Effects</source>
-        <translation type="unfinished">Okenní efekty</translation>
+        <translation>Okenní efekty</translation>
     </message>
 </context>
 <context>
@@ -1244,12 +1244,12 @@ Přepsat jej?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	klávesa Windows/Mac
-&quot;Control&quot;:	klávesa Ctrl</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	klávesa Windows/Mac
+"Control":	klávesa Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
@@ -1475,7 +1475,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení systému</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="145"/>

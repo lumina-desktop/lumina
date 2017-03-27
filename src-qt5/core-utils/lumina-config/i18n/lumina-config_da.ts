@@ -70,14 +70,14 @@
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>Color Exists</source>
-        <translation>Farve eksisterer</translation>
+        <translation>Farve findes</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>This color scheme already exists.
  Overwrite it?</source>
-        <translation>Denne farve eksisterer allerede.
- Skal den overskrives?</translation>
+        <translation>Dette farveskame findes allerede.
+ Overskriv det?</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="88"/>
         <source>Invisible spacer to separate plugins.</source>
-        <translation>Usynlig afstandsstykke til at afskille plugins.</translation>
+        <translation>Usynligt afstandsstykke til at adskille plugins.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="109"/>
         <source>Keep track of your battery status.</source>
-        <translation>Følg din batteri status.</translation>
+        <translation>Følg dit batteris status.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="115"/>
@@ -346,7 +346,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation>Alternativ startmenu som fokusere på brugerens filer, mapper og favoritter.</translation>
+        <translation>Alternativ startmenu som fokuserer på brugerens filer, mapper og favoritter.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -356,7 +356,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Alternativ startmenu som fokusere på start af programmer.</translation>
+        <translation>Alternativ startmenu som fokuserer på start af programmer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -366,7 +366,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="95"/>
         <source>Simple line to provide visual separation between items.</source>
-        <translation>Simpel linje til at give visuel adskillelse mellem poster.</translation>
+        <translation>Simpel linje til at give visuel adskillelse mellem elementer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
@@ -376,12 +376,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation>Vis og kontrollér kørende programvinder (gruppér lignende vinduer under en enkelt knap).</translation>
+        <translation>Vis og kontrollér kørende programvinduer (gruppér lignende vinduer under en enkelt knap).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Vis og kontrollér kørende programvinder (hvert vindue har en knap)</translation>
+        <translation>Vis og kontrollér kørende programvinduer (hvert vindue har en knap)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -416,7 +416,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation>Hold simple tekstnoter på dit skrivebord</translation>
+        <translation>Hav simple tekstnoter på dit skrivebord</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="171"/>
@@ -428,7 +428,7 @@
         <location filename="../LPlugins.cpp" line="172"/>
         <location filename="../LPlugins.cpp" line="219"/>
         <source>Play through lists of audio files</source>
-        <translation>Afspil gennem listen af lydfiler</translation>
+        <translation>Afspil lister af lydfiler</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="225"/>
@@ -438,7 +438,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation>Hold styr på systemstatisk såsom CPU/hukommelsesforbrug og CPU-temperaturer.</translation>
+        <translation>Hold styr på systemstatistik såsom CPU/hukommelsesforbrug og CPU-temperaturer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
@@ -561,7 +561,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="330"/>
         <source>Text color for disabled or inactive items.</source>
-        <translation>Tekstfarve til deaktiverede eller inaktive poster.</translation>
+        <translation>Tekstfarve til deaktiverede eller inaktive elementer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="335"/>
@@ -591,7 +591,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
-        <translation>Hovedbaggrundsfarve til widgets som lister eller viser samlinger af poster.</translation>
+        <translation>Hovedbaggrundsfarve til widgets som lister eller viser samlinger af elementer.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="353"/>
@@ -651,7 +651,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="384"/>
         <source>Color used for borders or other accents (more subdued).</source>
-        <translation>Farve som bruges til kanter og andre accents (mere afdæmpet).</translation>
+        <translation>Farve som bruges til kanter og andre accenter (mere afdæmpet).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="389"/>
@@ -661,7 +661,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="390"/>
         <source>Color used for highlighting an item.</source>
-        <translation>Farve som skal bruges til fremhævning af en post.</translation>
+        <translation>Farve som skal bruges til fremhævning af en element.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="395"/>
@@ -671,7 +671,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="396"/>
         <source>Color used for highlighting an item (more subdued).</source>
-        <translation>Farve som skal bruges til fremhævning af post (mere afdæmpet).</translation>
+        <translation>Farve som skal bruges til fremhævning af element (mere afdæmpet).</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="29"/>
@@ -731,7 +731,7 @@
     <message>
         <location filename="../pages/getPage.h" line="33"/>
         <source>Mimetype Settings</source>
-        <translation>MIME-type-indstillinger</translation>
+        <translation>MIME-typeindstillinger</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="33"/>
@@ -781,7 +781,7 @@
     <message>
         <location filename="../pages/getPage.h" line="36"/>
         <source>Desktop Plugins</source>
-        <translation>Skrivebord-plugins</translation>
+        <translation>Skrivebordsplugins</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="36"/>
@@ -801,7 +801,7 @@
     <message>
         <location filename="../pages/getPage.h" line="38"/>
         <source>Menu Plugins</source>
-        <translation>Menu-plugins</translation>
+        <translation>Menuplugins</translation>
     </message>
     <message>
         <location filename="../pages/getPage.h" line="38"/>
@@ -971,7 +971,7 @@
         <location filename="../mainWindow.ui" line="64"/>
         <location filename="../mainWindow.ui" line="67"/>
         <source>Back to overall settings</source>
-        <translation>Tilbage til overordnet indstillinger</translation>
+        <translation>Tilbage til overordnede indstillinger</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="78"/>
@@ -982,12 +982,12 @@
     <message>
         <location filename="../mainWindow.cpp" line="131"/>
         <source>Unsaved Changes</source>
-        <translation>Ugemte ændringer</translation>
+        <translation>Ændringer som ikke er gemt</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="131"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
-        <translation>Denne side har ugemte ændringer. Vil du gemme dem nu?</translation>
+        <translation>Denne side har ændringer som ikke er gemt. Vil du gemme dem nu?</translation>
     </message>
 </context>
 <context>
@@ -1284,7 +1284,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
         <source>Lock Screen</source>
-        <translation>Lås session</translation>
+        <translation>Lås skærm</translation>
     </message>
 </context>
 <context>
@@ -1409,7 +1409,7 @@
     <message>
         <location filename="../pages/page_interface_menu.ui" line="38"/>
         <source>Context Menu Plugins</source>
-        <translation>Genvejsmenu-plugins</translation>
+        <translation>Genvejsmenuplugins</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.cpp" line="47"/>
@@ -1493,7 +1493,7 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="32"/>
         <source>System localization settings (restart required)</source>
-        <translation>System lokaliseringsindstillinger (kræver genstart)</translation>
+        <translation>Systemets lokaliseringsindstillinger (kræver genstart)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="39"/>
@@ -1566,7 +1566,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation>Opret/fjern automatisk skrivebords-symlinks til installerede/fjernede programmer</translation>
+        <translation>Opret/fjern automatisk desktop-symlinks til installerede/fjernede programmer</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
@@ -1728,12 +1728,12 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day without a leading zero (1)</source>
-        <translation>%1: Numerisk dag uden foranstillede nul (1)</translation>
+        <translation>%1: Numerisk dag uden foranstillet nul (1)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Numeric day with leading zero (01)</source>
-        <translation>%1: Numerisk dag med foranstillede nul (01)</translation>
+        <translation>%1: Numerisk dag med foranstillet nul (01)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="195"/>
@@ -1768,17 +1768,17 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 2-digit number (15)</source>
-        <translation>%1: År som 2-tegnstal (17)</translation>
+        <translation>%1: År som tal med 2 tegn (17)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>%1: Year as 4-digit number (2015)</source>
-        <translation>%1: År som 4-tegnstal (2017)</translation>
+        <translation>%1: År som tal med 4 tegn (2017)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation>Tekst må være inden i enkelte anførselstegn for at ignorer erstatninger</translation>
+        <translation>Tekst kan være inden i enkelte anførselstegn for at ignorere erstatninger</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="204"/>
@@ -1937,7 +1937,7 @@
         <location filename="../pages/page_wallpaper.cpp" line="67"/>
         <location filename="../pages/page_wallpaper.cpp" line="222"/>
         <source>Solid Color: %1</source>
-        <translation>Ensfarvet farve: %1</translation>
+        <translation>Ensfarvet: %1</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="78"/>
@@ -1968,7 +1968,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="123"/>
         <source>Solid Color</source>
-        <translation>Solid farve</translation>
+        <translation>Ensfarvet</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="127"/>

@@ -312,7 +312,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="262"/>
         <source>Checksums</source>
-        <translation>Tjeksumme</translation>
+        <translation>Tjeksummer</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="264"/>
@@ -322,17 +322,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="450"/>
         <source>File Checksums:</source>
-        <translation>Fil-tjeksumme:</translation>
+        <translation>Fil-tjeksummer:</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
         <source>Missing Utility</source>
-        <translation>Manglende redskaber</translation>
+        <translation>Manglende redskab</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Kunne ikke finde &quot;lumina-fileinfo&quot;-redskabet på systemet. Installér det venligst først.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Kunne ikke finde "lumina-fileinfo"-redskabet på systemet. Installér det venligst først.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -375,7 +375,7 @@
     <message>
         <location filename="../FODialog.ui" line="14"/>
         <source>Performing File Operations</source>
-        <translation>Udfører fil operationer</translation>
+        <translation>Udfører filhandlinger</translation>
     </message>
     <message>
         <location filename="../FODialog.ui" line="39"/>
@@ -458,7 +458,7 @@
     <message>
         <location filename="../FODialog.cpp" line="320"/>
         <source>Invalid Move</source>
-        <translation>Ugyldigt træk</translation>
+        <translation>Ugyldig flytning</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="320"/>
@@ -487,7 +487,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>Denne assistent vil guide den gennem processen til at downloade et GIT-arkiv fra internettet.</translation>
+        <translation>Denne assistent vil guide dig gennem processen med at downloade et GIT-arkiv fra internettet.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
@@ -547,7 +547,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation>Avanceret valgmuligheder</translation>
+        <translation>Avancerede valgmuligheder</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
@@ -566,8 +566,8 @@ Ny placering: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Klik på &quot;Næste&quot; for at starte download af arkivet</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Klik på "Næste" for at starte download af arkivet</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -645,7 +645,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="283"/>
         <source>Increase Icon Size</source>
-        <translation>Forøg ikonstørrelse</translation>
+        <translation>Større ikoner</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
@@ -890,7 +890,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="621"/>
         <source>Git Repository Status</source>
-        <translation>Git-arkiv status</translation>
+        <translation>Status for Git-arkiv</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="711"/>
@@ -905,7 +905,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="909"/>
         <source>Items to be removed:</source>
-        <translation>Poster som skal fjernes:</translation>
+        <translation>Elementer som skal fjernes:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="423"/>
@@ -1070,7 +1070,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="69"/>
         <source>Rotate this image file clockwise</source>
-        <translation>Roter denne billefil i urets retning</translation>
+        <translation>Roter denne billedfil i urets retning</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="89"/>
