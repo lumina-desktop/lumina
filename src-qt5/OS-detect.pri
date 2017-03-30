@@ -16,6 +16,7 @@
 #	L_SHAREDIR:	Directory to install the general Lumina files
 #	L_INCLUDEDIR:	Directory to install include files
 #	L_SESSDIR:		Directory to place *.desktop file for starting the Lumina session
+#	L_MANDIR:		Directory to place man files
 #	LRELEASE:		binary path to the Qt lrelease utility (usually auto-set)
 # =============================================
 # Note: Make sure the OS variable matches the name of a libLumina/LuminaOS-<OS>.cpp file
@@ -93,8 +94,9 @@ isEmpty(OS){
   isEmpty(L_SHAREDIR){ L_SHAREDIR = $${PREFIX}/share }
   isEmpty(L_INCLUDEDIR){ L_INCLUDEDIR = $${PREFIX}/include }
   isEmpty(L_SESSDIR){ L_SESSDIR = $${L_SHAREDIR}/xsessions }
+  isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/man }
   isEmpty(LRELEASE){ LRELEASE = $$[QT_INSTALL_BINS]/lrelease }
-
+  isEmpty(MAN_ZIP){ MAN_ZIP = "gzip -c" }
   !exists(LRELEASE){ NO_I18N=true } #translations unavailable
 
   #Now convert any of these install path variables into defines for C++ usage
@@ -110,5 +112,6 @@ isEmpty(OS){
     L_SHAREDIR = $$DESTDIR$${L_SHAREDIR}
     L_INCLUDEDIR = $$DESTDIR$${L_INCLUDEDIR}
     L_SESSDIR = $$DESTDIR$${L_SESSDIR}
+    L_MANDIR = $$DESTDIR$${L_MANDIR}
   }
 }

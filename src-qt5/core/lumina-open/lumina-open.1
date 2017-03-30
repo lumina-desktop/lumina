@@ -1,0 +1,114 @@
+.Dd March 29, 2017
+.Dt LUMINA-OPEN 1
+.Os Lumina Desktop Environment
+.\"-------------------------------------------------------------------
+.Sh NAME
+.Nm lumina-open
+.Nd Application launcher for the Lumina Desktop Environment.
+.\"-------------------------------------------------------------------
+.Sh SYNOPSIS
+.Nm
+.Pp
+.Nm
+.Cm [-select | -action <ActionID>] <file path or URL>
+.Pp
+.Nm
+.Cm [-volumeup | -volumedown | -brightnessup | -brightnessdown | 
+-autostart-apps | -terminal]
+.\"-------------------------------------------------------------------
+.Sh DESCRIPTION
+Given a file with an absolute pathway or URL, the
+.Nm
+utility finds the appropriate application which which to open the 
+file. If the file is a *.desktop application shortcut,
+.Nm
+starts the application automatically. Using the appropriate flags 
+allows
+.Nm
+to perform a few specific system operations. Here are the commands, 
+flags, and descriptions of their functionality:
+.Pp
+.Bl -tag -width indent
+.It Ic lumina-open
+Displays the description and usage for lumina-open.
+.It Ic lumina-open [-select | -action <ActionID>] <file path or URL>
+Opens the file using the appropriate application.
+.It Fl select
+Optional flag. Bypasses any default application settings to display 
+the application selector window.
+.It Fl action\ <ActionID>
+Optional flag. Runs the specified ActionID that is listed in 
+a .desktop registration file rather than the main command.
+.It Ic lumina-open [-volumeup | -volumedown | -brightnessup | 
+-brightnessdown | -autostart-apps | -terminal]
+.Pp
+This command is used to perform system operations, depending on the 
+specific flags.
+.It Fl volumeup
+Increase system audio volume by 5%.
+.It Fl volumedown
+Decrease system audio volume by 5%.
+.It Fl brightnessup
+Increase screen brightness by 5%.
+.It Fl brightnessdown
+Decrease screen brightness by 5%.
+.It Fl autostart-apps
+Launches all applications registered with the XDG autostart 
+application. Typically run by the desktop and not manually launched.
+.It Fl terminal
+Open the user's default terminal.
+.El
+.\"-------------------------------------------------------------------
+.Sh EXAMPLES
+.Bl -tag -width indent
+.It lumina-open -brightnessup
+Increase screen brightness.
+.Pp
+.It lumina-open sample.txt
+.Nm
+finds the default program for .txt files and opens sample.txt with 
+the appropriate application.
+.It lumina-open ~/Documents
+.Nm
+launches the default file manager, pointed to the current user's 
+Documents directory.
+.It lumina-open http://lumina-desktop.org
+Launches the default web browser pointed to the Lumina website.
+.El
+.\"-------------------------------------------------------------------
+.Sh FILES
+.Bl -tag -width indent
+.It Pa ${XDG_CONFIG_HOME}/mimeapps.list
+Default file that saves mimetype to application associations.
+.It Pa ${XDG_CONFIG_HOME}/${XDG_CURRENT_DESKTOP}-mimeapps.list
+Default file that saves mimetype to application associations for the 
+current desktop session. This file is used before the generic 
+associations file.
+.El
+.\"-------------------------------------------------------------------
+.Sh SEE ALSO
+.Xr XDG-OPEN(1)
+.\"-------------------------------------------------------------------
+.Sh REFERENCES
+For .desktop entry specifications and formatting, refer to these 
+websites:
+.Bl -tag -width indent
+.Pp
+.Cm https://specifications.freedesktop.org/desktop-entry-spec/latest/
+.Pp
+Specifications for .desktop files.
+.Pp
+.Cm https://specifications.freedesktop.org/mime-apps-spec/latest/
+.Pp
+Details how default applications are registered.
+.Pp
+.Cm https://specifications.freedesktop.org/autostart-spec/latest/
+.Pp
+Used in the -autostart-apps action. Determines which applications 
+are automatically started.
+.Pp
+.El
+.\"-------------------------------------------------------------------
+.Sh AUTHOR
+.An Tim Moore
+.Aq timmoore88@gmail.com

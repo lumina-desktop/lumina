@@ -286,7 +286,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de fila: %1, Número de columna: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>

@@ -88,7 +88,10 @@ TRANSLATIONS =  i18n/lumina-open_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} lumina-open.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-open.1.gz"
+
+INSTALLS += target manpage
 
 WITH_I18N{
   INSTALLS += dotrans
