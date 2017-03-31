@@ -143,8 +143,8 @@ void LOS::startMixerUtility(){
 //Check for user system permission (shutdown/restart)
 bool LOS::userHasShutdownAccess(){
   return QProcess::startDetached("dbus-send --system --print-reply=literal \
-  --type=method_call --dest=org.freedesktop.login1 \
-  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanPowerOff");
+  --type=method_call --dest=org.freedesktop.ConsoleKit \
+  /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.CanPowerOff");
 }
 
 //Check for whether the system is safe to power off (no updates being perfomed)
@@ -161,30 +161,30 @@ QString LOS::systemPendingUpdates(){
 void LOS::systemShutdown(bool){ //start poweroff sequence
   //INPUT: skip updates (true/false)
   QProcess::startDetached("dbus-send --system --print-reply \
-  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
-  org.freedesktop.login1.Manager.PowerOff boolean:true");
+  --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager \
+  org.freedesktop.ConsoleKit.Manager.PowerOff boolean:true");
 }
 
 //System Restart
 void LOS::systemRestart(bool){ //start reboot sequence
   //INPUT: skip updates (true/false)
   QProcess::startDetached("dbus-send --system --print-reply \
-  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
-  org.freedesktop.login1.Manager.Reboot boolean:true");
+  --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager \
+  org.freedesktop.ConsoleKit.Manager.Reboot boolean:true");
 }
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
   return QProcess::startDetached("dbus-send --system --print-reply=literal \
-  --type=method_call --dest=org.freedesktop.login1 \
-  /org/freedesktop/login1 org.freedesktop.login1.Manager.CanSuspend");
+  --type=method_call --dest=org.freedesktop.ConsoleKit \
+  /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.CanSuspend");
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
   QProcess::startDetached("dbus-send --system --print-reply \
-  --dest=org.freedesktop.login1 /org/freedesktop/login1 \
-  org.freedesktop.login1.Manager.Suspend boolean:true");
+  --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager \
+  org.freedesktop.ConsoleKit.Manager.Suspend boolean:true");
 }
 
 //Battery Availability
