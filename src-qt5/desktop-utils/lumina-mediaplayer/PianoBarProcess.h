@@ -13,7 +13,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QProcess>
-
+#include <QTimer>
 
 // #define PIANOBAR_FIFO QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/pianobar/ctl"
 // #define PIANOBAR_CONFIG QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/pianobar/config"
@@ -31,6 +31,9 @@ public:
 	//Interaction functions
 	bool isSetup(); //email/password already saved for use or not
 	void setLogin(QString email, QString pass);
+	QString email();
+	QString password();
+
 	void closePianoBar(); //"q"
 
 	QString currentStation(); //Re-direct for the "autostartStation()" function;
@@ -38,9 +41,9 @@ public:
 	void setCurrentStation(QString station);
 	
 	void deleteCurrentStation(); //"d"
-	void createNewStation(); //"c"
-	void createStationFromCurrentSong(); //"v"
-	void changeStation(); //"s"
+	//void createNewStation(); //"c"
+	void createStationFromCurrentSong(); //"v" -> "s"
+	void createStationFromCurrentArtist(); //"v" -> "a"
 
 	//Settings Manipulation
 	QString audioQuality(); 			// "audio_quality" = [low, medium, high]
@@ -52,52 +55,58 @@ public:
 	QString controlProxy();			//"control_proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
 	void setControlProxy(QString);
 
-public slots:
-	void play(); // "P"
-	void pause(); //"S" 
-
-	void volumeDown(); //"("
-	void volumeUp(); //")"
-
-	void skipSong(); //"n"	
-	void loveSong(); // "+"
-	void tiredSong(); // "t"
-	void banSong(); //"-"
-	void bookmarkSong(); //"b"
-
-	void explainSong(); //"e"
-
-	void requestHistory(); // "h"
-	void requestSongInfo(); //"i"
-	void requestUpcoming(); //"u"
-
-
 private:
 	//Process
-	QProcess PROC;
+	QProcess *PROC;
+	QStringList infoList;
 	void setupProcess();
+	void sendToProcess(QString);
 
 	//Settings file management
 	QStringList currentSettings; //cache of the settings file (file is really small);
 	QString settingsPath; //location of the settings file
+	QTimer *saveTimer;
 	void GenerateSettings();
-	void loadSettings();
+	bool loadSettings();
 	QString settingValue(QString);
 	void setSettingValue(QString,QString);
-	void saveSettingsFile();
+
 
 	//Cached Info
 	QString cstation; //current station
-        QStringList stationNames;
+	QStringList stationList;
+
+public slots:
+	void play(); // "P"
+	void pause(){ sendToProcess("S"); } //"S" 
+
+	void volumeDown(){ sendToProcess("("); } //"("
+	void volumeUp(){ sendToProcess(")"); } //")"
+
+	void skipSong(){ sendToProcess("n"); } //"n"	
+	void loveSong(){ sendToProcess("+"); } // "+"
+	void tiredSong(){ sendToProcess("t"); } // "t"
+	void banSong(){ sendToProcess("-"); } //"-"
+	void bookmarkSong(){ sendToProcess("b"); sendToProcess("s"); } //"b"->"s"
+	void bookmarkArtist(){ sendToProcess("b"); sendToProcess("a"); } //"b"->"a"
+
+	void explainSong(){ sendToProcess("e"); } //"e"
+
+	void requestHistory(){ sendToProcess("h"); } // "h"  NOTE: Long series of interactive prompts - better to avoid for now
+	void requestSongInfo(){ sendToProcess("i"); } //"i"  NOTE: This will re-print the current station/song information
+	void requestUpcoming(){ sendToProcess("u"); } //"u" NOTE: This will often return "(i) No songs in queue" - best to run this after a "Receiving new playlist" info message
 
 private slots:
 	void ProcUpdate();
-	
+	void saveSettingsFile();
 
 signals:
 	void NewInformation(QString); //random status updates/information
 	void NowPlayingStation(QString, QString); //[name, id]
 	void NowPlayingSong(bool, QString,QString,QString, QString, QString); //[isLoved, title, artist, album, detailsURL, fromStation]
 	void TimeUpdate(int, int); //[current secs, total secs];
+	void NewList(QStringList); //arranged in order: 0-end
+	void StationListChanged(QStringList);
+	void currentStateChanged(PianoBarProcess::State);
 };
 #endif

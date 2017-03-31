@@ -10,64 +10,114 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-
+#include <QApplication>
 #include <LUtils.h>
 
 PianoBarProcess::PianoBarProcess(QWidget *parent) : QObject(parent){
   setupProcess();
-
+  saveTimer = new QTimer(this);
+  saveTimer->setInterval(100); //1/10 second (just enough to change a few settings at once before dumping to disk)
+  saveTimer->setSingleShot(true);
+  connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveSettingsFile()) );
+  if( !loadSettings() ){ GenerateSettings(); }
 }
 
 PianoBarProcess::~PianoBarProcess(){
-
+  if(PROC->state()!=QProcess::NotRunning){
+    PROC->kill();
+  }
 }
 
 // ===== PUBLIC ======
 //Interaction functions
-bool PianoBarProcess::isSetup(); //email/password already saved for use or not
-void PianoBarProcess::setLogin(QString email, QString pass);
-void PianoBarProcess::closePianoBar(); //"q"
+bool PianoBarProcess::isSetup(){ //email/password already saved for use or not
+  return !(settingValue("user").isEmpty() || settingValue("password").isEmpty());
+}
 
-QString PianoBarProcess::currentStation(); //Re-direct for the "autostartStation()" function;
-QStringList PianoBarProcess::stations();
-void PianoBarProcess::setCurrentStation(QString station);
+void PianoBarProcess::setLogin(QString email, QString pass){
+  setSettingValue("user",email);
+  setSettingValue("password",pass);
+}
+
+QString PianoBarProcess::email(){
+  return settingValue("user");
+}
+
+QString PianoBarProcess::password(){
+  return settingValue("password");
+}
+
+void PianoBarProcess::closePianoBar(){ //"q"
+  sendToProcess("q");
+}
+
+QString PianoBarProcess::currentStation(){ return cstation; }
+QStringList PianoBarProcess::stations(){ return stationList; }
+void PianoBarProcess::setCurrentStation(QString station){
+  cstation = station;
+  sendToProcess("s");
+}
 	
-void PianoBarProcess::deleteCurrentStation(); //"d"
-void PianoBarProcess::createNewStation(); //"c"
-void PianoBarProcess::createStationFromCurrentSong(); //"v"
-void PianoBarProcess::changeStation(); //"s"
+void PianoBarProcess::deleteCurrentStation(){ //"d" -> "y"
+  if(cstation == "QuickMix" || cstation=="Thumbprint Radio"){ return; } //cannot delete these stations - provided by Pandora itself
+  sendToProcess("d"); //delete current station
+  sendToProcess("y"); //yes, we want to delete it
+  //Now need to automatically change to another station
+  setCurrentStation("QuickMix"); //this is always a valid station
+}
+
+//void PianoBarProcess::createNewStation(); //"c"
+void PianoBarProcess::createStationFromCurrentSong(){ //"v" -> "s"
+  sendToProcess("v");
+  sendToProcess("s");
+}
+
+void PianoBarProcess::createStationFromCurrentArtist(){ //"v" -> "a"
+  sendToProcess("v");
+  sendToProcess("a");
+}
 
 //Settings Manipulation
 QString PianoBarProcess::audioQuality(){			// "audio_quality" = [low, medium, high]
-  
+  return settingValue("audio_quality");
 }
 
-void PianoBarProcess::setAudioQuality(QString); 	// [low, medium, high]
-QString PianoBarProcess::autostartStation();		//"autostart_station" = ID
-void PianoBarProcess::setAutostartStation(QString);
-QString PianoBarProcess::proxy();					//"proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
-void PianoBarProcess::setProxy(QString);
-QString PianoBarProcess::controlProxy();			//"control_proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
-void PianoBarProcess::setControlProxy(QString);
+void PianoBarProcess::setAudioQuality(QString val){ 	// [low, medium, high]
+  setSettingValue("audio_quality",val);
+}
+
+QString PianoBarProcess::autostartStation(){		//"autostart_station" = ID
+  return settingValue("autostart_station");
+}
+
+void PianoBarProcess::setAutostartStation(QString id){
+  setSettingValue("autostart_station", id);
+}
+
+QString PianoBarProcess::proxy(){					//"proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
+  return settingValue("proxy");
+}
+
+void PianoBarProcess::setProxy(QString url){
+  setSettingValue("proxy",url);
+}
+
+QString PianoBarProcess::controlProxy(){			//"control_proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
+  return settingValue("control_proxy");
+}
+
+void PianoBarProcess::setControlProxy(QString url){
+  setSettingValue("control_proxy", url);
+}
 
 // ====== PUBLIC SLOTS ======
-void PianoBarProcess::play(); // "P"
-void PianoBarProcess::pause(); //"S" 
-
-void PianoBarProcess::volumeDown(); //"("
-void PianoBarProcess::volumeUp(); //")"
-
-void PianoBarProcess::skipSong(); //"n"	
-void PianoBarProcess::loveSong(); // "+"
-void PianoBarProcess::tiredSong(); // "t"
-void PianoBarProcess::banSong(); //"-"
-void PianoBarProcess::bookmarkSong(); //"b"
-
-void PianoBarProcess::explainSong(); //"e"
-
-void PianoBarProcess::requestHistory(); // "h"
-void PianoBarProcess::requestSongInfo(); //"i"
-void PianoBarProcess::requestUpcoming(); //"u"
+void PianoBarProcess::play(){ 
+  if(PROC->state() == QProcess::NotRunning){
+    PROC->start();
+  }else{
+    sendToProcess("P");
+  }
+}
 
 // ====== PRIVATE ======
 void PianoBarProcess::GenerateSettings(){
@@ -76,17 +126,20 @@ void PianoBarProcess::GenerateSettings(){
   currentSettings << "format_list_song = %r::::%t::::%a"; //[rating, title, artist]
   currentSettings << "format_nowplaying_song = %r::::%t::::%a::::%l::::%u::::%s"; // [rating, title, artist, album, details url, station (if not quickmix)]
   currentSettings << "format_nowplaying_station = %n::::%i"; //[name, id]
+  saveSettingsFile(); //save this to disk *now* - needed before starting the pianobar process
 }
 
-void PianoBarProcess::loadSettings(){
+bool PianoBarProcess::loadSettings(){
   currentSettings.clear();
-  QFile file(settingspath);
-  if(!file.exists()){ return; }
+  QFile file(settingsPath);
+  if(!file.exists()){ return false; }
   if(file.open(QIODevice::ReadOnly)){
     QTextStream in(&file);
     currentSettings = in.readAll().split("\n");
     file.close();
+    return true;
   }
+  return false;
 }
 
 QString PianoBarProcess::settingValue(QString var){
@@ -102,14 +155,15 @@ void PianoBarProcess::setSettingValue(QString var,QString val){
     if(currentSettings[i].startsWith(var+" = ")){ currentSettings[i] = var+" = "+val; changed = true; }
   }
   if(!changed){ currentSettings << var+" = "+val; }
+  saveTimer->start(); //save this to disk in a moment
 }
 
 void PianoBarProcess::saveSettingsFile(){
   //Ensure the parent directory exists first
-  QDir dir(settingspath.section("/",0,-2));
+  QDir dir(settingsPath.section("/",0,-2));
   if(!dir.exists()){ dir.mkpath(dir.absolutePath()); }
   //Now save the settings
-  QFile file(settingspath);
+  QFile file(settingsPath);
   if(file.open(QIODevice::WriteOnly | QIODevice::Truncate)){
     QTextStream out(&file);
     out << currentSettings.join("\n");
@@ -125,7 +179,7 @@ void PianoBarProcess::setupProcess(){
   else{ configdir.append("/lumina-desktop"); }
   QProcessEnvironment penv;
   penv.insert("XDG_CONFIG_HOME",configdir);
-  settingspath = configdir+"/pianobar/config";
+  settingsPath = configdir+"/pianobar/config";
   PROC->setProcessEnvironment(penv);
   //Now setup the rest of the process
   PROC->setProcessChannelMode(QProcess::MergedChannels);
@@ -135,18 +189,41 @@ void PianoBarProcess::setupProcess(){
   connect(PROC, SIGNAL(readyRead()), this, SLOT(ProcUpdate()) );
 }
 
+void PianoBarProcess::sendToProcess(QString txt){
+  if(PROC->state()==QProcess::Running){
+    PROC->write( QString(txt+"\r\n").toLocal8Bit() );
+  }
+}
+
 // ====== PRIVATE SLOTS ======
 void PianoBarProcess::ProcUpdate(){
-  QStringList info = QString(PROC->readAllStandardOutput()).split("\n");
+  QString tmp = QString(PROC->readAllStandardOutput()).replace("\r","\n").remove("\u001B[2K");
+  QStringList info = tmp.split("\n",QString::SkipEmptyParts);
+
   //NOTE: Need to have a cache of info lines which can carry over between updates as needed (for questions, etc)
-  qDebug() << "Got Update:" << info;
+  //qDebug() << "Got Update:" << info;
   for(int i=0; i<info.length(); i++){
+    //First handle any pending cache of listing lines
+    if((info[i].startsWith("\t")||info[i].startsWith(" ")) && info[i].contains(")")){
+      if(info[i].simplified().startsWith("0) ")){ infoList.clear(); }
+      infoList << info[i].section(") ",1,-1).simplified();
+      continue; //done handling this line
+    }else if(!info[i].startsWith("[?]") && !infoList.isEmpty()){
+      emit NewList(infoList);
+      infoList.clear();
+    }
+    //Now parse the lines for messages/etc
     if(info[i].startsWith("|>")){
       //Now playing line (station, or song)
       QStringList data = info[i].section(">",1,-1).simplified().split("::::"); //Make sure to chop the line prefix off first
       if(data.length()==2){ //station
         cstation = data[0]; //save the name for later
         emit NowPlayingStation(data[0], data[1]);
+        if(stationList.isEmpty()){
+          //Need to prompt to list all the available stations
+          sendToProcess("s");
+          sendToProcess(""); //empty line - canceles the prompt
+        }
         //Automatically save this station for autostart next time (make toggle-able later)
         if(data[1]!=autostartStation()){ setAutostartStation(data[1]); }
 
@@ -156,12 +233,18 @@ void PianoBarProcess::ProcUpdate(){
     }else if(info[i].startsWith("(i) ")){ //informational line
       emit NewInformation(info[i].section(" ",1,-1));
     }else if(info[i].startsWith("[?] ")){ //waiting for reply to question
-      if(info[i].contains("Select Station:"){
-        //Find the number before this line which corresponds to the cstation variable/name
-        for(j=i-1; j>=0; j--){
-          if(info[j].contains(")" && info[j].contains(cstation) ){
-            PROC->write(info[j].section(")",0,0).simplified() + "\r\n");
+      //qDebug() << "Got Question:" << info[i] << infoList;
+      if(info[i].contains("Select station:")){
+        stationList = infoList; //save this list for later
+        infoList.clear();
+        emit StationListChanged(stationList);
+        //Find the station number which corresponds to the cstation variable/name
+        for(int i=0; i<stationList.length(); i++){
+          if(stationList.endsWith(cstation) ){
+            sendToProcess(QString::number(i)); 
             break;
+          }else if(i==stationList.length()-1){
+            sendToProcess(QString::number(stationList.length()-1));
           }
         }
       }
@@ -169,9 +252,9 @@ void PianoBarProcess::ProcUpdate(){
     }else if(info[i].startsWith("#")){
       //Time Stamp
         QTime stamp = QTime::fromString(info[i].section("/",0,0).section("-",1,-1), "mm:ss");
-	int curS = 60*stamp.minutes() + stamp.seconds(); //time remaining
+	int curS = 60*stamp.minute() + stamp.second(); //time remaining
 	stamp = QTime::fromString(info[i].section("/",1,-1), "mm:ss");
-        int totS = 60*stamp.minutes() + stamp.sections(); //time total
+        int totS = 60*stamp.minute() + stamp.second(); //time total
         emit TimeUpdate(totS-curS, totS);
     }
   }
