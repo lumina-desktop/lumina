@@ -60,7 +60,7 @@ private:
 	QProcess *PROC;
 	QStringList infoList;
 	void setupProcess();
-	void sendToProcess(QString);
+	void sendToProcess(QString, bool withreturn = false);
 
 	//Settings file management
 	QStringList currentSettings; //cache of the settings file (file is really small);

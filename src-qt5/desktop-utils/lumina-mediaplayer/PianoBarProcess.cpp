@@ -61,7 +61,7 @@ void PianoBarProcess::setCurrentStation(QString station){
 void PianoBarProcess::deleteCurrentStation(){ //"d" -> "y"
   if(cstation == "QuickMix" || cstation=="Thumbprint Radio"){ return; } //cannot delete these stations - provided by Pandora itself
   sendToProcess("d"); //delete current station
-  sendToProcess("y"); //yes, we want to delete it
+  sendToProcess("y",true); //yes, we want to delete it
   //Now need to automatically change to another station
   setCurrentStation("QuickMix"); //this is always a valid station
 }
@@ -69,12 +69,12 @@ void PianoBarProcess::deleteCurrentStation(){ //"d" -> "y"
 //void PianoBarProcess::createNewStation(); //"c"
 void PianoBarProcess::createStationFromCurrentSong(){ //"v" -> "s"
   sendToProcess("v");
-  sendToProcess("s");
+  sendToProcess("s",true);
 }
 
 void PianoBarProcess::createStationFromCurrentArtist(){ //"v" -> "a"
   sendToProcess("v");
-  sendToProcess("a");
+  sendToProcess("a",true);
 }
 
 //Settings Manipulation
@@ -189,9 +189,10 @@ void PianoBarProcess::setupProcess(){
   connect(PROC, SIGNAL(readyRead()), this, SLOT(ProcUpdate()) );
 }
 
-void PianoBarProcess::sendToProcess(QString txt){
+void PianoBarProcess::sendToProcess(QString txt, bool withreturn){
   if(PROC->state()==QProcess::Running){
-    PROC->write( QString(txt+"\r\n").toLocal8Bit() );
+    if(withreturn){ PROC->write( QString(txt+"\r\n").toLocal8Bit() ); }
+    else{ PROC->write( QString(txt).toLocal8Bit() ); }
   }
 }
 
@@ -221,8 +222,8 @@ void PianoBarProcess::ProcUpdate(){
         emit NowPlayingStation(data[0], data[1]);
         if(stationList.isEmpty()){
           //Need to prompt to list all the available stations
-          sendToProcess("s");
-          sendToProcess(""); //empty line - canceles the prompt
+          sendToProcess("s",true);//line return cancels the prompt
+          //sendToProcess("",true); //empty line - cancels the prompt
         }
         //Automatically save this station for autostart next time (make toggle-able later)
         if(data[1]!=autostartStation()){ setAutostartStation(data[1]); }
@@ -233,18 +234,21 @@ void PianoBarProcess::ProcUpdate(){
     }else if(info[i].startsWith("(i) ")){ //informational line
       emit NewInformation(info[i].section(" ",1,-1));
     }else if(info[i].startsWith("[?] ")){ //waiting for reply to question
-      //qDebug() << "Got Question:" << info[i] << infoList;
+      qDebug() << "Got Question:" << info[i] << infoList;
       if(info[i].contains("Select station:")){
+        qDebug() << "Change to Station:" << cstation;
         stationList = infoList; //save this list for later
         infoList.clear();
         emit StationListChanged(stationList);
         //Find the station number which corresponds to the cstation variable/name
         for(int i=0; i<stationList.length(); i++){
-          if(stationList.endsWith(cstation) ){
-            sendToProcess(QString::number(i)); 
+          if(stationList[i].endsWith(cstation) ){
+            qDebug() << "Activate Station:" << stationList[i];
+            sendToProcess(QString::number(i), true); 
             break;
           }else if(i==stationList.length()-1){
-            sendToProcess(QString::number(stationList.length()-1));
+            qDebug() << "Activate Last Station:" << stationList[i];
+            sendToProcess(QString::number(stationList.length()-1), true);
           }
         }
       }

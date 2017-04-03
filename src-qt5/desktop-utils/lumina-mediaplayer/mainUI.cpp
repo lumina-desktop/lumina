@@ -64,6 +64,7 @@ void MainUI::setupConnections(){
   connect(ui->actionVolDown, SIGNAL(triggered()), this, SLOT(voldownToggled()) );
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->push_pandora_apply, SIGNAL(clicked()), this, SLOT(applyPandoraSettings()) );
+  connect(ui->combo_pandora_station, SIGNAL(activated(QString)), this, SLOT(changePandoraStation(QString)) );
 }
 
 
@@ -119,8 +120,8 @@ void MainUI::showPandoraSongInfo(){
 
 }
 
-void MainUI::changePandoraStation(QString){
-
+void MainUI::changePandoraStation(QString station){
+  PANDORA->setCurrentStation(station);
 }
 
 void MainUI::applyPandoraSettings(){
@@ -136,23 +137,43 @@ void MainUI::PandoraStateChanged(PianoBarProcess::State){
 }
 
 void MainUI::NewPandoraInfo(QString info){
-  qDebug() << "[INFO]" << info;
+  //qDebug() << "[INFO]" << info;
+  ui->statusbar->showMessage(info, 2000);
 }
 
 void MainUI::PandoraStationChanged(QString station){
-  qDebug() << "[STATION CHANGE]" << station;
+  //qDebug() << "[STATION CHANGE]" << station;
+   int index = ui->combo_pandora_station->findText( station );
+  if(index>=0){ ui->combo_pandora_station->setCurrentIndex(index); }
 }
 
 void MainUI::PandoraSongChanged(bool isLoved, QString title, QString artist, QString album, QString detailsURL, QString fromStation){
-  qDebug() << "[SONG CHANGE]" << isLoved << title << artist << album << detailsURL << fromStation;
+  //qDebug() << "[SONG CHANGE]" << isLoved << title << artist << album << detailsURL << fromStation;
+  ui->tool_pandora_info->setWhatsThis(detailsURL);
+  ui->tool_pandora_love->setChecked(isLoved);
+  ui->tool_pandora_love->setEnabled(!isLoved); //pianobar cannot "unlove" a song
+  ui->label_pandora_album->setText(album);
+  ui->label_pandora_artist->setText(artist);
+  ui->label_pandora_title->setText(title);
 }
 
 void MainUI::PandoraTimeUpdate(int curS, int totS){
-  qDebug() << "[TIME UPDATE]" << curS << "/" << totS;
+  //qDebug() << "[TIME UPDATE]" << curS << "/" << totS;
+  ui->progress_pandora->setRange(0, totS);
+  ui->progress_pandora->setValue(curS);
 }
 
 void MainUI::PandoraStationListChanged(QStringList list){
-  qDebug() << "[STATION LIST]" << list;
+  //qDebug() << "[STATION LIST]" << list;
+  ui->combo_pandora_station->clear();
+  for(int i=0; i<list.length(); i++){
+    list[i] =list[i].simplified();
+    if(list[i].startsWith("q ")){ list[i] = list[i].section("q ",1,-1); }
+    if(list[i].startsWith("Q ")){ list[i] = list[i].section("Q ",1,-1); }
+    ui->combo_pandora_station->addItem(list[i]);
+  }
+  int index = ui->combo_pandora_station->findText( PANDORA->currentStation() );
+  if(index>=0){ ui->combo_pandora_station->setCurrentIndex(index); }
 }
 
 void MainUI::PandoraListInfo(QStringList list){
