@@ -1,0 +1,34 @@
+.Dd March 29, 2017
+.Dt START-LUMINA-DESKTOP 1
+.Os Lumina Desktop Environment
+.\"-------------------------------------------------------------------
+.Sh NAME
+.Nm start-lumina-desktop
+.Nd Basic binary that starts a new Lumina session for the current 
+user.
+.\"-------------------------------------------------------------------
+.Sh SYNOPSIS
+.Nm
+.\"-------------------------------------------------------------------
+.Sh DESCRIPTION
+The
+.Nm
+utility checks for an existing X11 session, starting one if necessary.
+.Nm
+also starts auxiliary processes for the Lumina Desktop. A newly 
+created X11 session has simplified settings with no VNC or XDMCP 
+support. There are no options for this command.
+.\"-------------------------------------------------------------------
+.Sh EXAMPLES
+.Bl -tag -width indent
+.It start-lumina-desktop
+Start a new X11 session, if one does not exist already.
+.El
+.\"-------------------------------------------------------------------
+.Sh SEE ALSO
+.Xr lumina-desktop.8,
+.Xr lumina-open.1
+.\"-------------------------------------------------------------------
+.Sh AUTHOR
+.An Tim Moore
+.Aq timmoore88@gmail.com

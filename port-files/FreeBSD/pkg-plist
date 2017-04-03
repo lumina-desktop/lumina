@@ -831,6 +831,7 @@ share/applications/lumina-xconfig.desktop
 %%DATADIR%%-desktop/themes/None.qss.template
 man/man1/lumina-open.1.gz
 man/man8/lumina-desktop.8.gz
+man/man8/start-lumina-desktop.8.gz
 share/pixmaps/Insight-FileManager.png
 share/pixmaps/Lumina-DE.png
 share/wallpapers/Lumina-DE/Lumina_Wispy_blue-grey-zoom.jpg
