@@ -181,7 +181,10 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target desktop icons wallpapers defaults conf fluxconf
+manpage.path=$${L_MANDIR}/man8/
+manpage.extra="$${MAN_ZIP} lumina-desktop.8 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.8.gz"
+
+INSTALLS += target desktop icons wallpapers defaults conf fluxconf manpage
 
 WITH_I18N{
   INSTALLS += dotrans

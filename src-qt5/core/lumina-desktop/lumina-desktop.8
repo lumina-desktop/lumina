@@ -1,0 +1,61 @@
+.Dd March 29, 2017
+.Dt LUMINA-DESKTOP 8
+.Os Lumina Desktop Environment
+.\"-------------------------------------------------------------------
+.Sh NAME
+.Nm lumina-desktop
+.Nd Binary used to run or communicate with the desktop.
+.\"-------------------------------------------------------------------
+.Sh SYNOPSIS
+.Cm lumina-desktop
+.Pp
+.Cm lumina-desktop --check-geoms
+.Pp
+.Cm lumina-desktop --version
+.\"-------------------------------------------------------------------
+.Sh DESCRIPTION
+The
+.Nm
+utility starts or communicates with instances of the Lumina desktop. 
+NOTE: The start-lumina-desktop command is recommended over
+.Nm
+, refer to the SEE ALSO section.
+.Pp
+Here are the
+.Nm
+options:
+.Pp
+.Bl -tag -width indent
+.It Fl -check-geoms
+Prompts the desktop to verify and/or match current monitor settings.
+.It Fl -version
+Returns the currently installed version of Lumina.
+.El
+.\"-------------------------------------------------------------------
+.Sh EXAMPLES
+.Bl -tag -width indent
+.Pp
+.It lumina-desktop --version
+"1.2.1" (User's installed version of Lumina.)
+.El
+.\"-------------------------------------------------------------------
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-desktop
+Binary location.
+.It Pa /usr/local/share/lumina-desktop/
+Master directory containing sub-directories and auxiliary files 
+related to the Lumina runtime.
+.It Pa ${XDG_CONFIG_HOME}/lumina-desktop/
+Directory containing the user's configuration files. See
+https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html 
+for more information about the environment variable.
+.El
+.\"-------------------------------------------------------------------
+.Sh SEE ALSO
+.Xr lumina-open.1,
+.Xr start-lumina-desktop.8
+.\"-------------------------------------------------------------------
+.Sh AUTHOR
+.An Tim Moore
+.Aq timmoore88@gmail.com
