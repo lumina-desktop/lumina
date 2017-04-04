@@ -23,6 +23,8 @@ HEADERS  += mainUI.h \
 
 FORMS += mainUI.ui
 
+RESOURCES += extra/resources.qrc
+
 TRANSLATIONS =  i18n/l-mediap_af.ts \
                 i18n/l-mediap_ar.ts \
                 i18n/l-mediap_az.ts \

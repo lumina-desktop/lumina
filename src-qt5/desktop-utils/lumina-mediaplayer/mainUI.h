@@ -11,6 +11,8 @@
 #include <QAction>
 #include <QString>
 #include <QStringList>
+#include <QSystemTrayIcon>
+#include <QCloseEvent>
 
 #include "PianoBarProcess.h"
 
@@ -29,12 +31,18 @@ public:
 private:
 	Ui::MainUI *ui;
 	PianoBarProcess *PANDORA;
+	QSystemTrayIcon *SYSTRAY;
+	bool closing;
 
 	void setupPandora();
 	void setupConnections();
+	void setupIcons();
+	void setupTrayIcon();
+	void closeTrayIcon();
 
 private slots:
-	void PlayerTypeChanged();
+	void closeApplication();
+	void PlayerTypeChanged(bool active = true);
 
 	//Toolbar actions
 	void playToggled();
@@ -57,6 +65,13 @@ private slots:
 	void PandoraTimeUpdate(int,int); //current secs, total secs
 	void PandoraStationListChanged(QStringList);
 	void PandoraListInfo(QStringList);
+
+	//System Tray interactions
+	void toggleVisibility();
+	void trayClicked(QSystemTrayIcon::ActivationReason);
+
+protected:
+	void closeEvent(QCloseEvent *ev);
 	
 };
 #endif

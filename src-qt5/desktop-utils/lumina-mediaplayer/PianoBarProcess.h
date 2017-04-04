@@ -39,11 +39,6 @@ public:
 	QString currentStation(); //Re-direct for the "autostartStation()" function;
 	QStringList stations();
 	void setCurrentStation(QString station);
-	
-	void deleteCurrentStation(); //"d"
-	//void createNewStation(); //"c"
-	void createStationFromCurrentSong(); //"v" -> "s"
-	void createStationFromCurrentArtist(); //"v" -> "a"
 
 	//Settings Manipulation
 	QString audioQuality(); 			// "audio_quality" = [low, medium, high]
@@ -58,6 +53,7 @@ public:
 private:
 	//Process
 	QProcess *PROC;
+	PianoBarProcess::State cState;
 	QStringList infoList;
 	void setupProcess();
 	void sendToProcess(QString, bool withreturn = false);
@@ -78,17 +74,22 @@ private:
 
 public slots:
 	void play(); // "P"
-	void pause(){ sendToProcess("S"); } //"S" 
+	void pause(); //"S" 
 
 	void volumeDown(){ sendToProcess("("); } //"("
 	void volumeUp(){ sendToProcess(")"); } //")"
 
-	void skipSong(){ sendToProcess("n"); } //"n"	
+	void skipSong(); //"n"	
 	void loveSong(){ sendToProcess("+"); } // "+"
 	void tiredSong(){ sendToProcess("t"); } // "t"
 	void banSong(){ sendToProcess("-"); } //"-"
-	void bookmarkSong(){ sendToProcess("b"); sendToProcess("s"); } //"b"->"s"
-	void bookmarkArtist(){ sendToProcess("b"); sendToProcess("a"); } //"b"->"a"
+	void bookmarkSong(){ sendToProcess("b"); sendToProcess("s", true); } //"b"->"s"
+	void bookmarkArtist(){ sendToProcess("b"); sendToProcess("a",true); } //"b"->"a"
+
+	void deleteCurrentStation(); //"d"
+	//void createNewStation(); //"c"
+	void createStationFromCurrentSong(); //"v" -> "s"
+	void createStationFromCurrentArtist(); //"v" -> "a"
 
 	void explainSong(){ sendToProcess("e"); } //"e"
 
@@ -98,6 +99,7 @@ public slots:
 
 private slots:
 	void ProcUpdate();
+	void ProcStateChanged(QProcess::ProcessState);
 	void saveSettingsFile();
 
 signals:
