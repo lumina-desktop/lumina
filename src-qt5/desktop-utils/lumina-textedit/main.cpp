@@ -18,12 +18,14 @@ int  main(int argc, char *argv[]) {
    LUtils::LoadTranslation(&a, "l-te");
    //Now go ahead and setup the app
    //LuminaThemeEngine theme(&a);
-   QStringList args;
+   QStringList args;  //list<string> in c++11 stl container.
    for(int i=1; i<argc; i++){
+       // qDebug() << argv[i] << endl;
       args << QString(argv[i]);
    }
    //Now start the window
    MainUI W;
+
     //QObject::connect(&theme, SIGNAL(updateIcons()), &W, SLOT(updateIcons()) );
     W.LoadArguments(args);
    W.show();

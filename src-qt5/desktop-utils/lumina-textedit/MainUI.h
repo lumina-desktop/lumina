@@ -12,6 +12,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QFontComboBox>
+#include <QSpinBox>
 
 #include "PlainTextEditor.h"
 #include "ColorDialog.h"
@@ -37,6 +38,7 @@ private:
 	ColorDialog *colorDLG;
 	QSettings *settings;
 	QShortcut *closeFindS;
+    QSpinBox *fontSizes;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
@@ -51,6 +53,7 @@ private slots:
 	void SaveFileAs();
 	void fontChanged(const QFont &font);
 	void updateStatusTip();
+    void changeFontSize(int newFontSize);
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);

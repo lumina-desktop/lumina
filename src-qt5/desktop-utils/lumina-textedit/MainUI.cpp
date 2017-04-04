@@ -24,8 +24,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     fontbox->setFocusPolicy(Qt::NoFocus);
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  fontSizes = new QSpinBox(this);
+    fontSizes->setRange(5, 72);
+    fontSizes->setValue(9);
   ui->toolBar->addWidget(spacer);
   ui->toolBar->addWidget(fontbox);
+  ui->toolBar->addWidget(fontSizes);
   //Load settings
   settings = new QSettings("lumina-desktop","lumina-textedit");
   if(settings->contains("lastfont")){
@@ -77,6 +81,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->line_replace, SIGNAL(returnPressed()), this, SLOT(replaceOne()) );
   connect(colorDLG, SIGNAL(colorsChanged()), this, SLOT(UpdateHighlighting()) );
   connect(fontbox, SIGNAL(currentFontChanged(const QFont&)), this, SLOT(fontChanged(const QFont&)) );
+  connect(fontSizes, SIGNAL(valueChanged(int)), this, SLOT(changeFontSize(int)));
   updateIcons();
   //Now load the initial size of the window
   QSize lastSize = settings->value("lastSize",QSize()).toSize();
@@ -210,6 +215,12 @@ void MainUI::fontChanged(const QFont &font){
   settings->setValue("lastfont", font.toString());
   //Now apply this font to all the open editors
   QApplication::setFont(font, "PlainTextEditor");
+}
+
+void MainUI::changeFontSize(int newFontSize){
+    QFont currentFont = fontbox->currentFont();
+    currentFont.setPointSize(newFontSize);
+    QApplication::setFont(currentFont, "PlainTextEditor");
 }
 
 void MainUI::updateStatusTip(){
