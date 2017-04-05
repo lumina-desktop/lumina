@@ -170,9 +170,13 @@ QString PianoBarProcess::settingValue(QString var){
 void PianoBarProcess::setSettingValue(QString var,QString val){
   bool changed = false;
   for(int i=0; i<currentSettings.length() && !changed; i++){
-    if(currentSettings[i].startsWith(var+" = ")){ currentSettings[i] = var+" = "+val; changed = true; }
+    if(currentSettings[i].startsWith(var+" = ")){
+      if(val.isEmpty()){ currentSettings.removeAt(i); i--; }
+      else{ currentSettings[i] = var+" = "+val; }
+      changed = true;
+    }
   }
-  if(!changed){ currentSettings << var+" = "+val; }
+  if(!changed && !val.isEmpty()){ currentSettings << var+" = "+val; }
   saveTimer->start(); //save this to disk in a moment
 }
 
@@ -195,16 +199,16 @@ void PianoBarProcess::setupProcess(){
   QString configdir = getenv("XDG_CONFIG_HOME");
   if(configdir.isEmpty()){ configdir = QDir::homePath()+"/.config/lumina-desktop"; }
   else{ configdir.append("/lumina-desktop"); }
-  QProcessEnvironment penv;
+  QProcessEnvironment penv = QProcessEnvironment::systemEnvironment();
   penv.insert("XDG_CONFIG_HOME",configdir);
   settingsPath = configdir+"/pianobar/config";
   PROC->setProcessEnvironment(penv);
   //Now setup the rest of the process
-  PROC->setProcessChannelMode(QProcess::MergedChannels);
+  //PROC->setProcessChannelMode(QProcess::MergedChannels);
   QString bin = "pianobar";
   LUtils::isValidBinary(bin); //will change "bin" to the full path
   PROC->setProgram(bin);
-  connect(PROC, SIGNAL(readyRead()), this, SLOT(ProcUpdate()) );
+  connect(PROC, SIGNAL(readyReadStandardOutput()), this, SLOT(ProcUpdate()) );
   connect(PROC, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(ProcStateChanged(QProcess::ProcessState)) );
   cState = PianoBarProcess::Stopped;
 }
