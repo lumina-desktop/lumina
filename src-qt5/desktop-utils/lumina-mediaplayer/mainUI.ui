@@ -478,7 +478,7 @@
      <x>0</x>
      <y>0</y>
      <width>385</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -523,8 +523,8 @@
    <addaction name="actionStop"/>
    <addaction name="actionNext"/>
    <addaction name="actionBack"/>
-   <addaction name="actionVolUp"/>
    <addaction name="actionVolDown"/>
+   <addaction name="actionVolUp"/>
   </widget>
   <action name="actionPlay">
    <property name="text">
@@ -555,10 +555,16 @@
    <property name="text">
     <string>VolUp</string>
    </property>
+   <property name="statusTip">
+    <string>Raise audio volume</string>
+   </property>
   </action>
   <action name="actionVolDown">
    <property name="text">
     <string>VolDown</string>
+   </property>
+   <property name="statusTip">
+    <string>Lower audio volume</string>
    </property>
   </action>
   <action name="actionClose">

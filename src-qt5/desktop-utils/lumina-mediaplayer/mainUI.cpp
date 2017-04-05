@@ -9,6 +9,7 @@
 #include <QDebug>
 
 #include <LuminaXDG.h>
+#include <LUtils.h>
 #include <QDesktopServices>
 #include <QUrl>
 
@@ -18,7 +19,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Any special UI changes
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-  ui->toolBar->insertWidget(ui->actionVolUp, spacer);
+  ui->toolBar->insertWidget(ui->actionVolDown, spacer);
   //Setup an action group for the various modes/streams
   QButtonGroup *grp = new QButtonGroup(this);
     grp->addButton(ui->radio_local);
@@ -31,6 +32,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   setupIcons();
   PlayerTypeChanged();
   SYSTRAY->show();
+  checkPandoraSettings();
 }
 
 MainUI::~MainUI(){
@@ -44,6 +46,14 @@ void MainUI::loadArguments(QStringList){
 
 // ==== PRIVATE ====
 void MainUI::setupPandora(){
+  if(!LUtils::isValidBinary("pianobar")){
+    ui->radio_pandora->setEnabled(false);
+    ui->radio_local->setChecked(true);
+    ui->radio_pandora->setToolTip(tr("Please install the `pianobar` utility to enable this functionality"));
+    ui->radio_pandora->setStatusTip(ui->radio_pandora->toolTip());
+  }
+  ui->radio_pandora->setToolTip(tr("Stream music from the Pandora online radio service"));
+  ui->radio_pandora->setStatusTip(ui->radio_pandora->toolTip());
   PANDORA = new PianoBarProcess(this);
   connect(PANDORA, SIGNAL(currentStateChanged(PianoBarProcess::State)), this, SLOT(PandoraStateChanged(PianoBarProcess::State)) );
   connect(PANDORA, SIGNAL(NewInformation(QString)), this, SLOT(NewPandoraInfo(QString)) );
@@ -100,9 +110,15 @@ void MainUI::setupConnections(){
   connect(ui->tool_pandora_stationrm, SIGNAL(clicked()), PANDORA, SLOT(deleteCurrentStation()) );
   connect(ui->action_pandora_newstation_artist, SIGNAL(triggered()), PANDORA, SLOT(createStationFromCurrentArtist()) );
   connect(ui->action_pandora_newstation_song, SIGNAL(triggered()), PANDORA, SLOT(createStationFromCurrentSong()) );
+  connect(ui->line_pandora_email, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
+  connect(ui->line_pandora_pass, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
+  connect(ui->line_pandora_proxy, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
+  connect(ui->line_pandora_cproxy, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
+  connect(ui->combo_pandora_quality, SIGNAL(currentIndexChanged(int)), this, SLOT(checkPandoraSettings()) );
+
 
   connect(SYSTRAY, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayClicked(QSystemTrayIcon::ActivationReason)) );
-  connect(SYSTRAY, SIGNAL(messageClicked()), this, SLOT(showNormal()) );
+  connect(SYSTRAY, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()) );
 }
 
 void MainUI::setupIcons(){
@@ -112,6 +128,8 @@ void MainUI::setupIcons(){
   ui->actionStop->setIcon( LXDG::findIcon("media-playback-stop","") );
   ui->actionNext->setIcon( LXDG::findIcon("media-skip-forward","") );
   ui->actionBack->setIcon( LXDG::findIcon("media-skip-backward","") );
+  ui->actionVolUp->setIcon( LXDG::findIcon("audio-volume-high","") );
+  ui->actionVolDown->setIcon( LXDG::findIcon("audio-volume-low","") );
 
   //Pandora Pages
   ui->push_pandora_apply->setIcon( LXDG::findIcon("dialog-ok-apply","dialog-ok") );
@@ -203,15 +221,19 @@ void MainUI::nextToggled(){
 }
 
 void MainUI::backToggled(){
-
+  if(ui->radio_pandora->isChecked()){ return; }
 }
 
 void MainUI::volupToggled(){
-
+  if(ui->radio_pandora->isChecked()){
+    PANDORA->volumeUp();
+  }
 }
 
 void MainUI::voldownToggled(){
-
+  if(ui->radio_pandora->isChecked()){
+    PANDORA->volumeDown();
+  }
 }
 
 
@@ -222,8 +244,17 @@ void MainUI::showPandoraSongInfo(){
 
 void MainUI::changePandoraStation(QString station){
   if(station == PANDORA->currentStation()){ return; }
-  qDebug() << "[CHANGE STATION]" << station << "from:" << PANDORA->currentStation();
+  //qDebug() << "[CHANGE STATION]" << station << "from:" << PANDORA->currentStation();
   PANDORA->setCurrentStation(station);
+}
+
+void MainUI::checkPandoraSettings(){
+  bool changes = (PANDORA->email() != ui->line_pandora_email->text()) 
+	|| (PANDORA->password() != ui->line_pandora_pass->text())
+	|| (PANDORA->audioQuality() != ui->combo_pandora_quality->currentData().toString())
+	|| (PANDORA->proxy() != ui->line_pandora_proxy->text())
+	|| (PANDORA->controlProxy() != ui->line_pandora_cproxy->text());
+  ui->push_pandora_apply->setEnabled(changes);
 }
 
 void MainUI::applyPandoraSettings(){
@@ -231,6 +262,11 @@ void MainUI::applyPandoraSettings(){
   PANDORA->setAudioQuality(ui->combo_pandora_quality->currentData().toString());
   PANDORA->setProxy(ui->line_pandora_proxy->text());
   PANDORA->setControlProxy(ui->line_pandora_cproxy->text());
+  if(PANDORA->isSetup()){
+    //Go ahead and (re)start the Pandora process so it is aware of the new changes
+    if(PANDORA->currentState()!=PianoBarProcess::Stopped){ PANDORA->closePianoBar(); }
+    QTimer::singleShot(500, PANDORA, SLOT(play()) ); //give it a moment for the file to get written first
+  }
 }
 
 //Pandora Process Feedback
@@ -247,6 +283,8 @@ void MainUI::PandoraStateChanged(PianoBarProcess::State state){
   }else  if(state == PianoBarProcess::Running){
     ui->tabWidget_pandora->setCurrentWidget(ui->tab_pandora_playing);
   }
+  ui->actionVolUp->setVisible(false);//state != PianoBarProcess::Stopped);
+  ui->actionVolDown->setVisible(false); //state != PianoBarProcess::Stopped);
 }
 
 void MainUI::NewPandoraInfo(QString info){
@@ -255,14 +293,14 @@ void MainUI::NewPandoraInfo(QString info){
 }
 
 void MainUI::PandoraStationChanged(QString station){
-  qDebug() << "[STATION CHANGE]" << station;
+  //qDebug() << "[STATION CHANGE]" << station;
   int index = ui->combo_pandora_station->findText( station );
   if(index>=0){ 
-    qDebug() <<"   [FOUND]" << ui->combo_pandora_station->itemText(index);
+    //qDebug() <<"   [FOUND]" << ui->combo_pandora_station->itemText(index);
     ui->combo_pandora_station->setCurrentIndex(index); 
   }else{
     //Could not find the station in the current list - need to update that first
-    qDebug() <<"   [NOT FOUND]";
+    //qDebug() <<"   [NOT FOUND]";
     PandoraStationListChanged(PANDORA->stations());
   }
 }
@@ -278,9 +316,10 @@ void MainUI::PandoraSongChanged(bool isLoved, QString title, QString artist, QSt
   ui->progress_pandora->setRange(0,1);
   ui->progress_pandora->setValue(0);
   ui->progress_pandora->setFormat("");
+  QString msg = QString("%1\n%2\n%3").arg(title, artist, album);
+  SYSTRAY->setToolTip(msg);
   if(ui->action_showNotifications->isChecked()){
-    QString msg = QString(tr("%1\nBy %2 on %3")).arg(title, artist, album);
-    SYSTRAY->showMessage(tr("Now Playing"), msg, QSystemTrayIcon::NoIcon, 1500); //1.5 seconds
+    SYSTRAY->showMessage(tr("Now Playing"), msg, QSystemTrayIcon::NoIcon, 2000); //2 seconds
   }
 }
 
@@ -293,12 +332,12 @@ void MainUI::PandoraTimeUpdate(int curS, int totS){
 }
 
 void MainUI::PandoraStationListChanged(QStringList list){
-  qDebug() << "[STATION LIST]" << list;
+  //qDebug() << "[STATION LIST]" << list;
   ui->combo_pandora_station->clear();
   if(list.isEmpty()){ return; }
   ui->combo_pandora_station->addItems(list);
   int index = ui->combo_pandora_station->findText( PANDORA->currentStation() );
-  qDebug() << "[CURRENT STATION]" << PANDORA->currentStation() << index;
+  //qDebug() << "[CURRENT STATION]" << PANDORA->currentStation() << index;
   if(index>=0){ ui->combo_pandora_station->setCurrentIndex(index); }
 }
 
@@ -310,6 +349,12 @@ void MainUI::PandoraListInfo(QStringList list){
 void MainUI::toggleVisibility(){
   if(this->isVisible()){ this->hide(); }
   else{ this->showNormal(); }
+}
+
+void MainUI::trayMessageClicked(){
+  this->showNormal();
+  this->activateWindow();
+  this->raise();
 }
 
 void MainUI::trayClicked(QSystemTrayIcon::ActivationReason rsn){

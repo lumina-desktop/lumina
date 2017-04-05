@@ -56,6 +56,7 @@ private slots:
 	//Pandora Options
 	void showPandoraSongInfo();
 	void changePandoraStation(QString);
+	void checkPandoraSettings();
 	void applyPandoraSettings();
 	//Pandora Process Feedback
 	void PandoraStateChanged(PianoBarProcess::State);
@@ -68,6 +69,7 @@ private slots:
 
 	//System Tray interactions
 	void toggleVisibility();
+	void trayMessageClicked();
 	void trayClicked(QSystemTrayIcon::ActivationReason);
 
 protected:
