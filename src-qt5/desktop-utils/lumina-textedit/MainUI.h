@@ -28,9 +28,8 @@ public:
 	MainUI();
 	~MainUI();
 
-	void LoadArguments(QStringList args); //CLI arguments
-
 public slots:
+	void LoadArguments(QStringList args); //CLI arguments
 	void updateIcons();
 
 private:
@@ -69,6 +68,8 @@ private slots:
 	void updateTab(QString);
 	void tabChanged();
 	void tabClosed(int);
+	void tabDetached(int);
+	void tabDraggedOut(int, Qt::DropAction);
 
 	//Find/Replace functions
 	void closeFindReplace();

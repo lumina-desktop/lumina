@@ -85,6 +85,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->menuSyntax_Highlighting, SIGNAL(triggered(QAction*)), this, SLOT(UpdateHighlighting(QAction*)) );
   connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
   connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
+  connect(tabWidget->dndTabBar(), SIGNAL(DetachTab(int)), this, SLOT(tabDetached(int)) );
+  connect(tabWidget->dndTabBar(), SIGNAL(DroppedIn(QStringList)), this, SLOT(LoadArguments(QStringList)) );
+  connect(tabWidget->dndTabBar(), SIGNAL(DraggedOut(int, Qt::DropAction)), this, SLOT(tabDraggedOut(int, Qt::DropAction)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
@@ -101,6 +104,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(colorDLG, SIGNAL(colorsChanged()), this, SLOT(UpdateHighlighting()) );
   connect(fontbox, SIGNAL(currentFontChanged(const QFont&)), this, SLOT(fontChanged(const QFont&)) );
   connect(fontSizes, SIGNAL(valueChanged(int)), this, SLOT(changeFontSize(int)));
+
   updateIcons();
   //Now load the initial size of the window
   QSize lastSize = settings->value("lastSize",QSize()).toSize();
@@ -318,6 +322,7 @@ void MainUI::updateTab(QString file){
   //qDebug() << "Update Tab:" << file << cur << changes;
   tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
   tabWidget->setTabToolTip(index, file);
+  tabWidget->setTabWhatsThis(index, file); //needed for drag/drop functionality
   ui->actionSave_File->setEnabled(changes);
   this->setWindowTitle( (changes ? "*" : "") + file.section("/",-2) );
 }
@@ -343,6 +348,27 @@ void MainUI::tabClosed(int tab){
   }
   tabWidget->removeTab(tab);
   edit->deleteLater();
+}
+
+void MainUI::tabDetached(int tab){
+  PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(tab));
+  if(edit==0){ return; } //should never happen
+  if(edit->hasChange() && ui->actionShow_Popups->isChecked() ){
+    //Verify if the user wants to lose any unsaved changes
+    if(QMessageBox::Yes != QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("This file has unsaved changes.\nDo you want to close it anyway?\n\n%1")).arg(edit->currentFile()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ return; }
+  }
+  //Launch this file with a new LTE process
+  QProcess::startDetached("lumina-textedit \""+edit->currentFile()+"\"");
+  tabWidget->removeTab(tab);
+  edit->deleteLater();
+}
+
+void MainUI::tabDraggedOut(int tab, Qt::DropAction act){
+  qDebug() << "Tab Dragged Out:" << tab << act;
+  if(act == Qt::MoveAction){
+    tabClosed(tab);
+    if(tabWidget->count()==0){ this->close(); } //merging two windows together?
+  }
 }
 
 //Find/Replace functions
