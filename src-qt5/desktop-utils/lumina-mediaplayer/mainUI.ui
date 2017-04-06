@@ -81,9 +81,29 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="page_local"/>
+      <widget class="QWidget" name="page_local">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_local_playing">
+           <attribute name="title">
+            <string>Now Playing</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_local_playlist">
+           <attribute name="title">
+            <string>Playlist</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_pandora">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
