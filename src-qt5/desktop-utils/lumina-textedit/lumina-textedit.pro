@@ -14,7 +14,8 @@ include(../../core/libLumina/LuminaThemes.pri)
 HEADERS	+= MainUI.h \
 			PlainTextEditor.h \
 			syntaxSupport.h \
-			ColorDialog.h
+			ColorDialog.h \
+			DnDTabBar.h
 		
 SOURCES	+= main.cpp \
 			MainUI.cpp \

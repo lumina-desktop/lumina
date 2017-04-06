@@ -33,6 +33,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->toolBar->addWidget(spacer);
   ui->toolBar->addWidget(fontbox);
   ui->toolBar->addWidget(fontSizes);
+  //Load the special Drag and Drop QTabWidget
+  tabWidget = new DnDTabWidget(this);
+  static_cast<QVBoxLayout*>(ui->centralwidget->layout())->insertWidget(0,tabWidget, 1);
   //Setup the action group for the tab location options
   QActionGroup *agrp = new QActionGroup(this);
     agrp->setExclusive(true);
@@ -52,7 +55,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   Custom_Syntax::SetupDefaultColors(settings); //pre-load any color settings as needed
   colorDLG = new ColorDialog(settings, this);
   this->setWindowTitle(tr("Text Editor"));
-  ui->tabWidget->clear();
+  tabWidget->clear();
   //Add keyboard shortcuts
   closeFindS = new QShortcut(QKeySequence(Qt::Key_Escape), this);
     connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
@@ -66,10 +69,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
   QString tabLoc = settings->value("tabsLocation","top").toString().toLower();
-  if(tabLoc=="bottom"){ ui->action_tabsBottom->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::South);}
-  else if(tabLoc=="left"){ ui->action_tabsLeft->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::West);}
-  else if(tabLoc=="right"){ ui->action_tabsRight->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::East);}
-  else{ ui->action_tabsTop->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::North); }
+  if(tabLoc=="bottom"){ ui->action_tabsBottom->setChecked(true); tabWidget->setTabPosition(QTabWidget::South);}
+  else if(tabLoc=="left"){ ui->action_tabsLeft->setChecked(true); tabWidget->setTabPosition(QTabWidget::West);}
+  else if(tabLoc=="right"){ ui->action_tabsRight->setChecked(true); tabWidget->setTabPosition(QTabWidget::East);}
+  else{ ui->action_tabsTop->setChecked(true); tabWidget->setTabPosition(QTabWidget::North); }
 
   //Setup any connections
   connect(agrp, SIGNAL(triggered(QAction*)), this, SLOT(changeTabsLocation(QAction*)) );
@@ -80,8 +83,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionSave_File, SIGNAL(triggered()), this, SLOT(SaveFile()) );
   connect(ui->actionSave_File_As, SIGNAL(triggered()), this, SLOT(SaveFileAs()) );
   connect(ui->menuSyntax_Highlighting, SIGNAL(triggered(QAction*)), this, SLOT(UpdateHighlighting(QAction*)) );
-  connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
-  connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
+  connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
+  connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
@@ -116,7 +119,7 @@ void MainUI::LoadArguments(QStringList args){ //CLI arguments
     if(ui->groupReplace->isVisible()){ ui->line_find->setFocus(); }
     else{ currentEditor()->setFocus(); }
   }
-  if(ui->tabWidget->count()<1){
+  if(tabWidget->count()<1){
     NewFile();
   }
 }
@@ -153,8 +156,8 @@ void MainUI::updateIcons(){
 //          PRIVATE
 //=================
 PlainTextEditor* MainUI::currentEditor(){
-  if(ui->tabWidget->count()<1){ return 0; }
-  return static_cast<PlainTextEditor*>( ui->tabWidget->currentWidget() );
+  if(tabWidget->count()<1){ return 0; }
+  return static_cast<PlainTextEditor*>( tabWidget->currentWidget() );
 }
 
 QString MainUI::currentFileDir(){
@@ -173,7 +176,7 @@ QString MainUI::currentFileDir(){
 //=================
 //Main Actions
 void MainUI::NewFile(){
-  OpenFile(QString::number(ui->tabWidget->count()+1)+"/"+tr("New File"));
+  OpenFile(QString::number(tabWidget->count()+1)+"/"+tr("New File"));
 }
 
 void MainUI::OpenFile(QString file){
@@ -188,8 +191,8 @@ void MainUI::OpenFile(QString file){
   for(int i=0; i<files.length(); i++){
     PlainTextEditor *edit = 0;
     //Try to see if this file is already opened first
-    for(int j=0; j<ui->tabWidget->count(); j++){
-      PlainTextEditor *tmp = static_cast<PlainTextEditor*>(ui->tabWidget->widget(j));
+    for(int j=0; j<tabWidget->count(); j++){
+      PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(j));
       if(tmp->currentFile()==files[i]){ edit = tmp; break; }
     }
     if(edit ==0){
@@ -198,12 +201,12 @@ void MainUI::OpenFile(QString file){
       connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(statusTipChanged()), this, SLOT(updateStatusTip()) );
-      ui->tabWidget->addTab(edit, files[i].section("/",-1));
+      tabWidget->addTab(edit, files[i].section("/",-1));
       edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
       edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
       edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
     }
-    ui->tabWidget->setCurrentWidget(edit);
+    tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
     edit->setFocus();
     QApplication::processEvents(); //to catch the fileLoaded() signal
@@ -211,7 +214,7 @@ void MainUI::OpenFile(QString file){
 }
 
 void MainUI::CloseFile(){
-  int index = ui->tabWidget->currentIndex();
+  int index = tabWidget->currentIndex();
   if(index>=0){ tabClosed(index); }
 }
 
@@ -243,13 +246,13 @@ void MainUI::changeFontSize(int newFontSize){
 void MainUI::changeTabsLocation(QAction *act){
   QString set;
   if(act==ui->action_tabsTop){
-	set = "top"; ui->tabWidget->setTabPosition(QTabWidget::North);
+	set = "top"; tabWidget->setTabPosition(QTabWidget::North);
   }else if(act==ui->action_tabsBottom){
-	set = "bottom"; ui->tabWidget->setTabPosition(QTabWidget::South);
+	set = "bottom"; tabWidget->setTabPosition(QTabWidget::South);
   }else if(act==ui->action_tabsLeft){
-	set = "left"; ui->tabWidget->setTabPosition(QTabWidget::West);
+	set = "left"; tabWidget->setTabPosition(QTabWidget::West);
   }else if(act==ui->action_tabsRight){
-	set = "right"; ui->tabWidget->setTabPosition(QTabWidget::East);
+	set = "right"; tabWidget->setTabPosition(QTabWidget::East);
   }
   if(!set.isEmpty()){ settings->setValue("tabsLocation",set); }
 }
@@ -268,24 +271,24 @@ void MainUI::UpdateHighlighting(QAction *act){
     cur->LoadSyntaxRule(act->text());
   }else{
     //Have every editor reload the syntax rules (color changes)
-    for(int i=0; i<ui->tabWidget->count(); i++){
-      static_cast<PlainTextEditor*>(ui->tabWidget->widget(i))->updateSyntaxColors();
+    for(int i=0; i<tabWidget->count(); i++){
+      static_cast<PlainTextEditor*>(tabWidget->widget(i))->updateSyntaxColors();
     }
   }
 }
 
 void MainUI::showLineNumbers(bool show){
   settings->setValue("showLineNumbers",show);
-  for(int i=0; i<ui->tabWidget->count(); i++){
-    PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->showLineNumbers(show);
   }
 }
 
 void MainUI::wrapLines(bool wrap){
   settings->setValue("wrapLines",wrap);
-  for(int i=0; i<ui->tabWidget->count(); i++){
-    PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
   }	
 }
@@ -302,8 +305,8 @@ void MainUI::showPopupWarnings(bool show){
 void MainUI::updateTab(QString file){
   PlainTextEditor *cur = 0;
   int index = -1;
-  for(int i=0; i<ui->tabWidget->count(); i++){
-    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     if(tmp->currentFile()==file){
 	cur = tmp;
 	index = i;
@@ -313,31 +316,32 @@ void MainUI::updateTab(QString file){
   if(cur==0){ return; } //should never happen
   bool changes = cur->hasChange();
   //qDebug() << "Update Tab:" << file << cur << changes;
-  ui->tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
-  ui->tabWidget->setTabToolTip(index, file);
+  tabWidget->setTabText(index,(changes ? "*" : "") + file.section("/",-1));
+  tabWidget->setTabToolTip(index, file);
   ui->actionSave_File->setEnabled(changes);
   this->setWindowTitle( (changes ? "*" : "") + file.section("/",-2) );
 }
 
 void MainUI::tabChanged(){
+  if(tabWidget->count()<1){ return; }
   //update the buttons/menus based on the current widget
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; } //should never happen though
   bool changes = cur->hasChange();
   ui->actionSave_File->setEnabled(changes);
-  //this->setWindowTitle( ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) );
-  this->setWindowTitle( (changes ? "*" : "") + ui->tabWidget->tabToolTip( ui->tabWidget->currentIndex() ).section("/",-2) );
-  if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ ui->tabWidget->currentWidget()->setFocus(); }
+  //this->setWindowTitle( tabWidget->tabText( tabWidget->currentIndex() ) );
+  this->setWindowTitle( (changes ? "*" : "") + tabWidget->tabToolTip( tabWidget->currentIndex() ).section("/",-2) );
+  if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ tabWidget->currentWidget()->setFocus(); }
 }
 
 void MainUI::tabClosed(int tab){
-  PlainTextEditor *edit = static_cast<PlainTextEditor*>(ui->tabWidget->widget(tab));
+  PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(tab));
   if(edit==0){ return; } //should never happen
   if(edit->hasChange() && ui->actionShow_Popups->isChecked() ){
     //Verify if the user wants to lose any unsaved changes
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("This file has unsaved changes.\nDo you want to close it anyway?\n\n%1")).arg(edit->currentFile()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ return; }
   }
-  ui->tabWidget->removeTab(tab);
+  tabWidget->removeTab(tab);
   edit->deleteLater();
 }
 
@@ -424,8 +428,8 @@ PlainTextEditor *cur = currentEditor();
 void MainUI::closeEvent(QCloseEvent *ev){
   //See if any of the open editors have unsaved changes first
   QStringList unsaved;
-  for(int i=0; i<ui->tabWidget->count(); i++){
-    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(ui->tabWidget->widget(i));
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     if(tmp->hasChange()){
       unsaved << tmp->currentFile();
     }
