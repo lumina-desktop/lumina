@@ -38,6 +38,12 @@
       <property name="focusPolicy">
        <enum>Qt::NoFocus</enum>
       </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
       <property name="tabsClosable">
        <bool>true</bool>
       </property>
@@ -203,7 +209,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -233,7 +239,17 @@
      <addaction name="action_syntax_none"/>
      <addaction name="separator"/>
     </widget>
+    <widget class="QMenu" name="menuTabs_Location">
+     <property name="title">
+      <string>Tabs Location</string>
+     </property>
+     <addaction name="action_tabsTop"/>
+     <addaction name="action_tabsBottom"/>
+     <addaction name="action_tabsLeft"/>
+     <addaction name="action_tabsRight"/>
+    </widget>
     <addaction name="menuSyntax_Highlighting"/>
+    <addaction name="menuTabs_Location"/>
     <addaction name="actionLine_Numbers"/>
     <addaction name="actionWrap_Lines"/>
     <addaction name="actionShow_Popups"/>
@@ -404,6 +420,41 @@
    </property>
    <property name="statusTip">
     <string>Show warnings about unsaved changes</string>
+   </property>
+  </action>
+  <action name="action_tabsTop">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Top</string>
+   </property>
+  </action>
+  <action name="action_tabsBottom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bottom</string>
+   </property>
+  </action>
+  <action name="action_tabsLeft">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Left</string>
+   </property>
+  </action>
+  <action name="action_tabsRight">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Right</string>
    </property>
   </action>
  </widget>

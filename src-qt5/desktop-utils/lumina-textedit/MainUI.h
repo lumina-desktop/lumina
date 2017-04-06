@@ -38,7 +38,7 @@ private:
 	ColorDialog *colorDLG;
 	QSettings *settings;
 	QShortcut *closeFindS;
-    QSpinBox *fontSizes;
+	QSpinBox *fontSizes;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
@@ -53,7 +53,8 @@ private slots:
 	void SaveFileAs();
 	void fontChanged(const QFont &font);
 	void updateStatusTip();
-    void changeFontSize(int newFontSize);
+	void changeFontSize(int newFontSize);
+	void changeTabsLocation(QAction*);
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);

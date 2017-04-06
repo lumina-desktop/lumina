@@ -17,19 +17,29 @@
 #include <QKeySequence>
 #include <QTimer>
 #include <QMessageBox>
+#include <QActionGroup>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   fontbox = new QFontComboBox(this);
     fontbox->setFocusPolicy(Qt::NoFocus);
+    fontbox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   fontSizes = new QSpinBox(this);
     fontSizes->setRange(5, 72);
     fontSizes->setValue(9);
+    fontSizes->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   ui->toolBar->addWidget(spacer);
   ui->toolBar->addWidget(fontbox);
   ui->toolBar->addWidget(fontSizes);
+  //Setup the action group for the tab location options
+  QActionGroup *agrp = new QActionGroup(this);
+    agrp->setExclusive(true);
+    agrp->addAction(ui->action_tabsTop);
+    agrp->addAction(ui->action_tabsBottom);
+    agrp->addAction(ui->action_tabsLeft);
+    agrp->addAction(ui->action_tabsRight);
   //Load settings
   settings = new QSettings("lumina-desktop","lumina-textedit");
   if(settings->contains("lastfont")){
@@ -55,8 +65,14 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
+  QString tabLoc = settings->value("tabsLocation","top").toString().toLower();
+  if(tabLoc=="bottom"){ ui->action_tabsBottom->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::South);}
+  else if(tabLoc=="left"){ ui->action_tabsLeft->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::West);}
+  else if(tabLoc=="right"){ ui->action_tabsRight->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::East);}
+  else{ ui->action_tabsTop->setChecked(true); ui->tabWidget->setTabPosition(QTabWidget::North); }
 
   //Setup any connections
+  connect(agrp, SIGNAL(triggered(QAction*)), this, SLOT(changeTabsLocation(QAction*)) );
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->actionNew_File, SIGNAL(triggered()), this, SLOT(NewFile()) );
   connect(ui->actionOpen_File, SIGNAL(triggered()), this, SLOT(OpenFile()) );
@@ -120,6 +136,7 @@ void MainUI::updateIcons(){
   ui->actionReplace->setIcon(LXDG::findIcon("edit-find-replace") );
   ui->menuSyntax_Highlighting->setIcon( LXDG::findIcon("format-text-color") );
   ui->actionCustomize_Colors->setIcon( LXDG::findIcon("format-fill-color") );
+  ui->menuTabs_Location->setIcon( LXDG::findIcon("tab-detach") );
   //icons for the special find/replace groupbox
   ui->tool_find_next->setIcon(LXDG::findIcon("go-down-search"));
   ui->tool_find_prev->setIcon(LXDG::findIcon("go-up-search"));
@@ -221,6 +238,20 @@ void MainUI::changeFontSize(int newFontSize){
     QFont currentFont = fontbox->currentFont();
     currentFont.setPointSize(newFontSize);
     QApplication::setFont(currentFont, "PlainTextEditor");
+}
+
+void MainUI::changeTabsLocation(QAction *act){
+  QString set;
+  if(act==ui->action_tabsTop){
+	set = "top"; ui->tabWidget->setTabPosition(QTabWidget::North);
+  }else if(act==ui->action_tabsBottom){
+	set = "bottom"; ui->tabWidget->setTabPosition(QTabWidget::South);
+  }else if(act==ui->action_tabsLeft){
+	set = "left"; ui->tabWidget->setTabPosition(QTabWidget::West);
+  }else if(act==ui->action_tabsRight){
+	set = "right"; ui->tabWidget->setTabPosition(QTabWidget::East);
+  }
+  if(!set.isEmpty()){ settings->setValue("tabsLocation",set); }
 }
 
 void MainUI::updateStatusTip(){
