@@ -86,6 +86,8 @@ void TrayUI::checkJobs(){
     emit JobsFinished();
     this->hide();
   }else{
+    bool showNotify = !this->isVisible();
     this->show();
+    if(showNotify){ this->showMessage(tr("New Tasks Running"),"",QSystemTrayIcon::NoIcon, 2000); }
   }
 }
