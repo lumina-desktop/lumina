@@ -122,6 +122,8 @@ void MainUI::setupConnections(){
 }
 
 void MainUI::setupIcons(){
+  ui->radio_local->setIcon( LXDG::findIcon("audio-x-generic","") );
+
   ui->actionClose->setIcon( LXDG::findIcon("application-close","dialog-close") );
   ui->actionPlay->setIcon( LXDG::findIcon("media-playback-start","") );
   ui->actionPause->setIcon( LXDG::findIcon("media-playback-pause","") );
