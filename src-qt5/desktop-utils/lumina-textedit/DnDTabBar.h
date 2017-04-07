@@ -27,21 +27,20 @@ signals:
 
 private:
 	QMenu *tabMenu;
-	int selTab;
-	bool dragging;
+	QString selTab;
 
 private slots:
 	void slotDetachTab(){
 	  //qDebug() << "Detach Tab:" << selTab;
-	  if(selTab>=0){ emit DetachTab(selTab); }
+	  int tab = tabMenu->whatsThis().toInt();
+	  if(tab>=0){ emit DetachTab(tab); }
 	}
 public:
 	DnDTabBar(QWidget *parent) : QTabBar(parent){
 	  this->setAcceptDrops(true);
-	  selTab = -1;
+	  this->setMouseTracking(true);
 	  tabMenu = new QMenu(this);
 	  tabMenu->addAction(tr("Detach Tab"), this, SLOT(slotDetachTab()) );
-	  dragging = false;
 	}
 	~DnDTabBar(){
 
@@ -51,30 +50,43 @@ public:
 
 protected:
 	virtual void mousePressEvent(QMouseEvent *ev){
-	  if(ev->button() == Qt::RightButton){
-	    int tab = this->tabAt(ev->pos());
-	    if(tab>=0){
-	      selTab = tab;
-	     tabMenu->popup(ev->globalPos());
-	    }
-	    QTabBar::mousePressEvent(ev);
+	  int tab = this->tabAt(ev->pos());
+	  if(ev->button() == Qt::LeftButton && tab>=0){
+	    selTab = this->tabWhatsThis(tab);
+	  }
+	  QTabBar::mousePressEvent(ev);
+	}
 
-	  }else if(ev->button() == Qt::MiddleButton){
-	    int tab = this->tabAt(ev->pos());
-	    if(tab>=0){
-	      QDrag *drag = new QDrag(this);
+	virtual void mouseMoveEvent(QMouseEvent *ev){
+          //qDebug() << "Got Move Event:" << this->geometry() << ev->pos();
+	  if(selTab>=0 && !this->geometry().contains(ev->pos()) ){
+	    //qDebug() << "Starting Drag:" << this->geometry() << ev->pos();
+	    QString tab = selTab;
+            this->mouseReleaseEvent(new QMouseEvent(QEvent::MouseButtonRelease, ev->pos(), ev->button(), ev->buttons(), ev->modifiers()) ); //will reset selTab
+	    //this->update();
+	     QDrag *drag = new QDrag(this);
               QMimeData *mimeData = new QMimeData;
-              mimeData->setUrls(QList<QUrl>() << QUrl::fromLocalFile(this->tabWhatsThis(tab)));
+              mimeData->setUrls(QList<QUrl>() << QUrl::fromLocalFile(tab));
 	      //qDebug() << "Start Drag:" << this->tabWhatsThis(tab);
               drag->setMimeData(mimeData);
 	      Qt::DropAction dropAction = drag->exec(Qt::MoveAction);
-	      this->emit DraggedOut(tab, dropAction);
-	    }else{
-	      QTabBar::mousePressEvent(ev);
-	    }
-	  }else{
-	    QTabBar::mousePressEvent(ev);
+	      //Convert the tab->number and emit
+              for(int i=0; i<this->count(); i++){
+	        if(this->tabWhatsThis(i) == tab){ this->emit DraggedOut(i, dropAction); this->setCurrentIndex(i); break; }
+ 	      }
+	    return;
 	  }
+	  QTabBar::mouseMoveEvent(ev);
+	}
+
+	virtual void mouseReleaseEvent(QMouseEvent *ev){
+ 	  int tab = this->tabAt(ev->pos());
+	  if(ev->button() == Qt::RightButton && tab>=0){
+	    tabMenu->setWhatsThis(QString::number(tab));
+	    tabMenu->popup(ev->globalPos());
+	  }
+	  selTab.clear(); //reset this flag - not in a drag right now
+	  QTabBar::mouseReleaseEvent(ev);
 	}
 
 	virtual void dragEnterEvent(QDragEnterEvent *ev){
