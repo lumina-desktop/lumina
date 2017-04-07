@@ -21,6 +21,7 @@ MainUI::MainUI()
   XCB = new LXCB();
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
+  areaOverlay = 0;
   ppath = QDir::homePath();
   ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().width("200%") );
   setupIcons();
@@ -59,11 +60,10 @@ MainUI::MainUI()
   connect(tabbar, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
   connect(ui->check_show_popups, SIGNAL(toggled(bool)), this, SLOT(showPopupsChanged(bool)) );
   settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
-  if(settings->value("screenshot-target", "window").toString() == "window") {
-	ui->radio_window->setChecked(true);
-  }else{
-	ui->radio_all->setChecked(true);
-  }
+  QString opt = settings->value("screenshot-target", "window").toString();
+  if( opt == "window") {ui->radio_window->setChecked(true); }
+  else if(opt=="area"){ ui->radio_area->setChecked(true); }
+  else{ ui->radio_all->setChecked(true); }
   ui->spin_delay->setValue(settings->value("screenshot-delay", 0).toInt());
   ui->check_show_popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
 
@@ -75,7 +75,9 @@ MainUI::MainUI()
   //ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
-MainUI::~MainUI(){}
+MainUI::~MainUI(){
+  if(areaOverlay!=0){ areaOverlay->deleteLater(); }
+}
 
 void MainUI::setupIcons(){
   //Setup the icons
@@ -93,6 +95,16 @@ void MainUI::setupIcons(){
 void MainUI::showSaveError(QString path){
   QMessageBox::warning(this, tr("Could not save screenshot"), tr("The screenshot could not be saved. Please check directory permissions or pick a different directory")+"\n\n"+path);
 }
+
+QRect MainUI::pointsToRect(QPoint pt1, QPoint pt2){
+  QRect rec;
+  if(pt1.x() < pt2.x()){ rec.setLeft(pt1.x()); rec.setRight(pt2.x()); }
+  else{ rec.setLeft(pt2.x()); rec.setRight(pt1.x()); }
+  if(pt1.y() < pt2.y()){ rec.setTop(pt1.y()); rec.setBottom(pt2.y()); }
+  else{ rec.setTop(pt2.y()); rec.setBottom(pt1.y()); }
+  return rec;
+}
+
 //==============
 //  PRIVATE SLOTS
 //==============
@@ -182,10 +194,18 @@ void MainUI::showPopupsChanged(bool show){
 bool MainUI::getWindow(){
   //Use this function to set cwin
   cwin = 0;
+  snapArea = QRect(); //clear this too
   //Save all the current settings for later
   settings->setValue("screenshot-delay", ui->spin_delay->value());
   if(ui->radio_window->isChecked()){
     settings->setValue("screenshot-target", "window");
+    this->grabMouse( QCursor(Qt::CrossCursor) );
+    mousegrabbed = true;
+    this->centralWidget()->setEnabled(false);
+    //this->hide();
+    return false; //wait for the next click to continue
+  }else  if(ui->radio_area->isChecked()){
+    settings->setValue("screenshot-target", "area");
     this->grabMouse( QCursor(Qt::CrossCursor) );
     mousegrabbed = true;
     this->centralWidget()->setEnabled(false);
@@ -208,6 +228,9 @@ void MainUI::getPixmap(){
   }else if(cwin==0 && ui->radio_monitor->isChecked()){
     QRect geom = QApplication::desktop()->screenGeometry(ui->spin_monitor->value()-1);
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
+  }else if(cwin==0 && ui->radio_area->isChecked()){
+    //Grab the section of the screen which was selected
+    cpic = scrn->grabWindow(QApplication::desktop()->winId(), snapArea.x(), snapArea.y(), snapArea.width(), snapArea.height() );
   }else{
     //Grab just the designated window
     if(ui->check_frame->isChecked()){
@@ -223,6 +246,29 @@ void MainUI::getPixmap(){
   //Now display the pixmap on the label as well
   picSaved = false;
   IMG->LoadImage( cpic.toImage() );
+  tabbar->setCurrentIndex(0);
+}
+void MainUI::mousePressEvent(QMouseEvent *ev){
+  if(mousegrabbed && ui->radio_area->isChecked()){
+    pt_click = ev->globalPos();
+    if(areaOverlay == 0){
+      areaOverlay =  new QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
+      areaOverlay->setWindowOpacity(0.5);
+      areaOverlay->setStyleSheet("background-color: rgba(150,150,150,120)");
+    }
+  }
+  QMainWindow::mouseMoveEvent(ev);
+}
+
+void MainUI::mouseMoveEvent(QMouseEvent *ev){
+  if(mousegrabbed && ui->radio_area->isChecked()){
+    //Not used yet - do something to paint the area so the user can see which area is selected
+    QRect area = pointsToRect(pt_click, ev->globalPos());
+    areaOverlay->setGeometry(area);
+    areaOverlay->show();
+  }else{
+    QMainWindow::mouseMoveEvent(ev);
+  }
 }
 
 void MainUI::mouseReleaseEvent(QMouseEvent *ev){
@@ -230,24 +276,29 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
     mousegrabbed = false;
     this->centralWidget()->setEnabled(true);
     this->releaseMouse();
-    //In the middle of selecting a window to take a screenshot
-    //  Get the window underneath the mouse click and take the screenshot
-    QList<WId> wins = XCB->WindowList();
-    QList<WId> stack = XCB->WM_Get_Client_List(true);
-    cwin = 0;
-    //qDebug() << "Try to select window:" << ev->globalPos(); 
-    //for(int i=0; i<stack.length(); i++){
-    for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
-      if(!wins.contains(stack[i])){ continue; }
-      if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){ 
-        qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
-        cwin = stack[i]; 
+    if(ui->radio_area->isChecked()){
+      //Need to determind the rectange which covers the area selected
+      areaOverlay->hide();
+      snapArea = pointsToRect(pt_click, ev->globalPos());
+    }else{
+      //In the middle of selecting a window to take a screenshot
+      //  Get the window underneath the mouse click and take the screenshot
+      QList<WId> wins = XCB->WindowList();
+      QList<WId> stack = XCB->WM_Get_Client_List(true);
+      cwin = 0;
+      //qDebug() << "Try to select window:" << ev->globalPos(); 
+      for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
+        if(!wins.contains(stack[i])){ continue; }
+        if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){ 
+          //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
+          cwin = stack[i]; 
+        }
       }
+      //qDebug() << " - Got window:" << cwin;
+      if(cwin==this->winId()){  return; } //cancelled
     }
-    qDebug() << " - Got window:" << cwin;
-    if(cwin==this->winId()){  return; } //cancelled
     this->hide();
-    QTimer::singleShot(50+ui->spin_delay->value()*1000, this, SLOT(getPixmap()));
+    QTimer::singleShot(300+ui->spin_delay->value()*1000, this, SLOT(getPixmap()));
   }else{
     QMainWindow::mouseReleaseEvent(ev); //normal processing
   }

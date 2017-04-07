@@ -178,7 +178,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_current">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -420,6 +420,17 @@
                  </property>
                  <property name="text">
                   <string>Include Borders</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QRadioButton" name="radio_area">
+                 <property name="text">
+                  <string>Select Area</string>
                  </property>
                 </widget>
                </item>

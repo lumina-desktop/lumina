@@ -42,7 +42,9 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	bool mousegrabbed, picSaved, closeOnSave;
-	QRect lastgeom;
+	QRect lastgeom, snapArea;
+	QPoint pt_click; //used for area click/release mapping to a snapArea
+	QWidget *areaOverlay;
 	QString ppath; //previous file path
 	WId cwin; //current window to screenshot
 	QSettings *settings;
@@ -55,6 +57,8 @@ private:
 	QDateTime lastScreenShot;
 
 	void showSaveError(QString path);
+
+	QRect pointsToRect(QPoint pt1, QPoint pt2);
 
 private slots:
 	//Button Slots
@@ -79,6 +83,8 @@ private slots:
 	void getPixmap(); //set the "cpic" variable to the new screenshot
 
 protected:
+	void mousePressEvent(QMouseEvent *ev);
+	void mouseMoveEvent(QMouseEvent *ev);
 	void mouseReleaseEvent(QMouseEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
 	void closeEvent( QCloseEvent *ev);
