@@ -29,7 +29,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   fontSizes = new QSpinBox(this);
     fontSizes->setRange(5, 72);
     fontSizes->setValue(9);
-    fontSizes->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+   fontSizes->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+  //For some reason, the FontComboBox is always 2 pixels taller than the SpinBox - manually fix that here
+  fontbox->setFixedHeight(30);
+  fontSizes->setFixedHeight(32);
+
   ui->toolBar->addWidget(spacer);
   ui->toolBar->addWidget(fontbox);
   ui->toolBar->addWidget(fontSizes);
