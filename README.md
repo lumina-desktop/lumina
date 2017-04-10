@@ -9,7 +9,7 @@ For additional information about the project, please browse the official website
 
 **Lumina Project Info: Table of Contents**
 
-- [Description](#Description)
+- [Description](#description)
 	- [Latest Versions](#Latest Versions)
 	- [Translations](#Translations)
 	- [How to file bug reports or feature requests](#How to file bug reports or feature requests)
@@ -32,7 +32,7 @@ For additional information about the project, please browse the official website
 
 <!-- END GENERAL INFO TOC -->
 
-Description
+Description <a name="description"></a>
 =====
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
