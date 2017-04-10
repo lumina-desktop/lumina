@@ -9,26 +9,26 @@ For additional information about the project, please browse the official website
 
 **Lumina Project Info: Table of Contents**
 
-- [Description]
-	- [Latest Versions]
-	- [Translations]
-	- [How to file bug reports or feature requests]
-	- [How to build from source]
+- [Description](#Description)
+	- [Latest Versions](#Latest Versions)
+	- [Translations](#Translations)
+	- [How to file bug reports or feature requests](#How to file bug reports or feature requests)
+	- [How to build from source](#How to build from source)
 
 **General Project Information: Table of Contents**
 
-- [General TrueOS Information](#generalinfo)
-	- [TrueOS Project Documentation](#all-docs)
-		- [TrueOS Handbook](#trueos-docs)
-		- [Lumina Handbook](#lumina-docs)
-		- [SysAdm Handbooks](#sysadm-docs)
-	- [Filing Issues or Feature Requests](#bugreporting)
-	- [Community Channels](#chatchannels)
-		- [Discourse](#discourseforum)
-		- [Gitter](#gitterchat)
-		- [IRC](#irc)
-		- [Subreddit](#trueos-reddit)
-	- [Social Media](#trueos-social)
+- [General TrueOS Information](#General TrueOS Information)
+	- [TrueOS Project Documentation](#TrueOS Project Documentation)
+		- [TrueOS Handbook](#TrueOS Handbook)
+		- [Lumina Handbook](#Lumina Handbook)
+		- [SysAdm Handbooks](#SysAdm Handbooks)
+	- [Filing Issues or Feature Requests](#Filing Issues or Feature Requests)
+	- [Community Channels](#Community Channels)
+		- [Discourse](#Discourse)
+		- [Gitter](#Gitter)
+		- [IRC](#IRC)
+		- [Subreddit](#Subreddit)
+	- [Social Media](#Social Media)
 
 <!-- END GENERAL INFO TOC -->
 
