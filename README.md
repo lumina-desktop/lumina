@@ -10,25 +10,25 @@ For additional information about the project, please browse the official website
 **Lumina Project Info: Table of Contents**
 
 - [Description](#description)
-	- [Latest Versions](#Latest Versions)
-	- [Translations](#Translations)
-	- [How to file bug reports or feature requests](#How to file bug reports or feature requests)
-	- [How to build from source](#How to build from source)
+	- [Latest Versions](#latestversions)
+	- [Translations](#translations)
+	- [How to file bug reports or feature requests](#filebugs)
+	- [How to build from source](#buildfromsource)
 
 **General Project Information: Table of Contents**
 
-- [General TrueOS Information](#General TrueOS Information)
-	- [TrueOS Project Documentation](#TrueOS Project Documentation)
-		- [TrueOS Handbook](#TrueOS Handbook)
-		- [Lumina Handbook](#Lumina Handbook)
-		- [SysAdm Handbooks](#SysAdm Handbooks)
-	- [Filing Issues or Feature Requests](#Filing Issues or Feature Requests)
-	- [Community Channels](#Community Channels)
-		- [Discourse](#Discourse)
-		- [Gitter](#Gitter)
-		- [IRC](#IRC)
-		- [Subreddit](#Subreddit)
-	- [Social Media](#Social Media)
+- [General TrueOS Information](#gentrosinfo)
+	- [TrueOS Project Documentation](#docs)
+		- [TrueOS Handbook](#trueosdoc)
+		- [Lumina Handbook](#luminadoc)
+		- [SysAdm Handbooks](#sysadmdoc)
+	- [Filing Issues or Feature Requests](#fileissues)
+	- [Community Channels](#community)
+		- [Discourse](#discourse)
+		- [Gitter](#gitter)
+		- [IRC](#irc)
+		- [Subreddit](#subreddit)
+	- [Social Media](#socialmedia)
 
 <!-- END GENERAL INFO TOC -->
 
@@ -37,7 +37,7 @@ Description <a name="description"></a>
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
-Latest Versions
+Latest Versions <a name="latestversions"></a>
 ----
 Click [HERE](https://github.com/trueos/lumina/releases) to see all the available releases for the Lumina Desktop.
 
@@ -46,7 +46,7 @@ The master branch is where all development is performed and tested before the ne
 
 Occasionally there may be patches committed for particular versions which are not included in the static "release" archives. On the release page these can be identified by a note stating the release is a number of commits behind it's corresponding branch. In this situation, it may be preferable to fetch/use the corresponding branch of the source tree rather than the static archive if the patch(es) which were committed impact your particular operating system.
 
-Translations
+Translations <a name="translations"></a>
 ----
 **Version 1.0.0 and older**
 
@@ -60,12 +60,12 @@ All the translations for Lumina are contained within this repository directly (t
 
 To submit translations, please use the online [TrueOS Translation System](http://weblate.trueos.org/projects/lumina/). Anonymous users may submit translation suggestions, but a website account will be needed to created before you can submit/approve translations directly to the project. See the documentation/information on the site for full details.
 
-How to file bug reports or feature requests
+How to file bug reports or feature requests <a name="filebugs"></a>
 ----
 Please create a ticket through the GitHub issues tracker on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
 
 
-How to build from source
+How to build from source <a name="buildfromsource"></a>
 ----
 1) Checkout the source repo to your local box (GitHub gives a few methods for this)
 
@@ -103,26 +103,26 @@ Examples:
 
 6-optional) Run "make distclean" to clean up all the build files in the Lumina source tree. (go back to step 3 later)
 
-# General TrueOS Information
+# General TrueOS Information <a name="gentrosinfo"></a>
 
 This section describes where you can find more information about TrueOS and its related projects, file new issues on GitHub, and converse with other users or contributors to the project.
 
-## TrueOS Project Documentation
+## TrueOS Project Documentation <a name="docs"></a>
 
 A number of [Sphinx](http://www.sphinx-doc.org/en/stable/) generated reStructuredText handbooks are available to introduce you to the TrueOS, Lumina, and SysAdm projects. These handbooks are open source, and users are always encouraged to open GitHub issues or fix any errors they find in the documentation.
 
-### TrueOS Handbook
+### TrueOS Handbook <a name="trueosdoc"></a>
 
 TrueOS documentation is hosted on the [TrueOS website](https://www.trueos.org).
 The [TrueOS User Guide](https://www.trueos.org/handbook/trueos.html) is a comprehensive guide to install TrueOS, along with post-installation configuration help, recommendations for useful utilities and applications, and a help and support section containing solutions for common issues and links to community and development chat channels for uncommon issues. There is also a chapter describing the experimental TrueOS Pico project and links to the Lumina and SysAdm documentation.
 
-### Lumina Handbook
+### Lumina Handbook <a name="luminadoc"></a>
 
 The Lumina Desktop Environment has its own [handbook](https://lumina-desktop.org/handbook/), hosted on the [Lumina Website](https://lumina-desktop.org). This handbook contains brief installation instructions. However, due to the highly customizable nature of Lumina, the focus of the handbook lies mainly in documenting all user configurable settings. Each option is typically described in detail, with both text and screenshots. Finally, the suite of unique Qt5 utilities included with Lumina are also documented.
 
 TrueOS users are encouraged to review the Lumina documentation, as the Lumina Desktop Environment is installed by default with TrueOS.
 
-### SysAdm Handbooks
+### SysAdm Handbooks <a name="sysadmdoc"></a>
 
 Due to complexity of this project, SysAdm documentation is split into three different guides:
 
@@ -138,7 +138,7 @@ The SysAdm Client handbook documents all aspects of the SysAdm client, as well a
 
 The Server handbook is a basic installation guide, walking new users through the process of initializing SysAdm with a bridge and server connection.
 
-## Filing Issues or Feature Requests
+## Filing Issues or Feature Requests <a name="fileissues"></a>
 
 Due to the number of repositories under the TrueOS "umbrella", the TrueOS Project consolidates its issue trackers into a few repositories:
 
@@ -157,15 +157,15 @@ The TrueOS handbook has detailed instructions to help you report a bug (https://
 
 To request a feature, open a new issue in one of the related GitHub issue repositories and begin the title with *Feature Request:*.
 
-## Community Channels
+## Community Channels <a name="community"></a>
 
 The TrueOS community has a wide variety of chat channels and forum options available for users to interact with not only each other, but contributors to the project and the core development team too.
 
-### Discourse
+### Discourse <a name="discourse"></a>
 
 TrueOS  has a [Discourse channel](https://discourse.trueos.org/) managed concurrently with the TrueOS Subreddit. New users need to sign up with Discourse in order to create posts, but it is possible to view posts without an account.
 
-### Gitter
+### Gitter <a name="gitter"></a>
 
 The TrueOS Project uses Gitter to provide real-time chat and collaboration with TrueOS users and developers. Gitter does not require an application to use, but does require a login using either an existing GitHub or Twitter account.
 
@@ -173,18 +173,18 @@ To access the TrueOS Gitter community, point a web browser to https://gitter.im/
 
 Gitter also maintains a full archive of the chat history. This means lengthy conversations about hardware issues or workarounds are always available for reference. To access the Gitter archive, navigate to the desired TrueOS room’s archive. For example, here is the address of the TrueOS Lobby archive: https://gitter.im/trueos/Lobby/archives.
 
-### IRC
+### IRC <a name="irc"></a>
 
 Like many open source projects, TrueOS has an Internet Relay Chat (IRC) channel so users can chat and get help in real time. To get connected, use this information in your IRC client:
 
 * Server name: irc.freenode.net
 * Channel name: #trueos (note the # is required)
 
-### Subreddit
+### Subreddit <a name="subreddit"></a>
 
 The TrueOS Project also has a [Subreddit](https://www.reddit.com/r/TrueOS/) for users who prefer to use Reddit to ask questions and to search for or post how-tos. A Reddit account is not required in order to read the Subreddit, but it is necessary to create a login account to submit or comment on posts.
 
-## Social Media
+## Social Media <a name="socialmedia"></a>
 
 The TrueOS Project also maintains a number of social media accounts you can watch:
 
