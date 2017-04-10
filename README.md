@@ -7,6 +7,14 @@ This is the official source tree for the Lumina Desktop Environment.
 
 For additional information about the project, please browse the official website for documentation, screenshots, and more: www.lumina-desktop.org
 
+**Lumina Project Info: Table of Contents**
+
+- [Description]
+	- [Latest Versions]
+	- [Translations]
+	- [How to file bug reports or feature requests]
+	- [How to build from source]
+
 **General Project Information: Table of Contents**
 
 - [General TrueOS Information](#generalinfo)
