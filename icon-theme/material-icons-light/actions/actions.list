@@ -1,9 +1,7 @@
 address-book-new	 The icon used for the action to create a new address book.
 application-exit	 The icon used for exiting an application. Typically this is seen in the application's menus as File->Quit.
 appointment-new	 The icon used for the action to create a new appointment in a calendaring application.
-call-start	 The icon used for initiating or accepting a call. Should be similar to the standard cellular call pickup icon, a green handset with ear and mouth pieces facing upward.
-call-stop	 The icon used for stopping a current call. Should be similar to the standard cellular call hangup icon, a red handset with ear and mouth pieces facing downward.
-contact-new	 The icon used for the action to create a new contact in an address book application.
+
 
 document-new	 The icon used for the action to create a new document.
 document-open	 The icon used for the action to open a document.
@@ -17,23 +15,12 @@ document-save	 The icon for the save action. Should be an arrow pointing down an
 document-save-as	 The icon for the save as action.
 document-send	 The icon for the send action. Should be an arrow pointing up and away from a hard disk.
 
-edit-clear	 The icon for the clear action.
-edit-copy	 The icon for the copy action.
-edit-cut	 The icon for the cut action.
-edit-delete	 The icon for the delete action.
 edit-find	 The icon for the find action.
-edit-find-replace	 The icon for the find and replace action.
-edit-paste	 The icon for the paste action.
-edit-redo	 The icon for the redo action.
 edit-select-all	 The icon for the select all action.
-edit-undo	 The icon for the undo action.
-
-folder-new	 The icon for creating a new folder.
 
 
 go-bottom	 The icon for the go to bottom of a list action.
 go-down	 The icon for the go down in a list action.
-go-first	 The icon for the go to the first item in a list action.
 go-home	 The icon for the go to home location action.
 go-jump	 The icon for the jump to action.
 go-last	 The icon for the go to the last item in a list action.
@@ -42,9 +29,7 @@ go-previous	 The icon for the go to the previous item in a list action.
 go-top	 The icon for the go to the top of a list action.
 go-up	 The icon for the go up in a list action.
 
-help-about	 The icon for the About item in the Help menu.
 help-contents	 The icon for Contents item in the Help menu.
-help-faq	 The icon for the FAQ item in the Help menu.
 
 mail-forward	 The icon for the forward action of an electronic mail application.
 mail-mark-important	 The icon for the mark as important action of an electronic mail application.
@@ -82,7 +67,6 @@ system-search	 The icon used for the “Search” item in the desktop's panel ap
 system-reboot	 The icon used for the “Reboot” item in the desktop's panel application.
 system-shutdown	 The icon used for the “Shutdown” item in the desktop's panel application.
 
-tools-check-spelling	 The icon used for the “Check Spelling” item in the application's “Tools” menu.
 
 view-sort-ascending	 The icon used for the “Sort Ascending” item in the application's “View” menu, or in a button for changing the sort method for a list.
 view-sort-descending	 The icon used for the “Sort Descending” item in the application's “View” menu, or in a button for changing the sort method for a list.
