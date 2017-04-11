@@ -11,11 +11,11 @@
    height="48"
    viewBox="0 0 48 48"
    version="1.1"
-   id="svg6"
-   sodipodi:docname="go-top.svg"
+   id="svg4"
+   sodipodi:docname="object-flip-vertical.svg"
    inkscape:version="0.92.0 r15299">
   <metadata
-     id="metadata12">
+     id="metadata10">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -27,7 +27,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs10" />
+     id="defs8" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -39,7 +39,7 @@
      inkscape:pageshadow="2"
      inkscape:window-width="640"
      inkscape:window-height="480"
-     id="namedview8"
+     id="namedview6"
      showgrid="false"
      inkscape:zoom="4.9166667"
      inkscape:cx="24"
@@ -47,14 +47,9 @@
      inkscape:window-x="-1"
      inkscape:window-y="2"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg6" />
+     inkscape:current-layer="svg4" />
   <path
-     d="m 15.23,36.41 9.18,-9.18 9.18,9.18 2.82,-2.82 -12,-12 -12,12 z M 36.41,11.59 v 4 h -24 v -4 z"
+     d="m 6,30 v 4 h 4 v -4 z m 24,8 v 4 h 4 V 38 Z M 38,6 H 10 C 7.79,6 6,7.79 6,10 v 8 h 4 v -8 h 28 v 8 h 4 V 10 C 42,7.79 40.21,6 38,6 Z m 4,32 h -4 v 4 c 2.21,0 4,-1.79 4,-4 z M 2,22 v 4 h 44 v -4 z m 12,16 v 4 h 4 v -4 z m 24,-8 v 4 h 4 v -4 z m -16,8 v 4 h 4 V 38 Z M 6,38 c 0,2.21 1.79,4 4,4 v -4 z"
      id="path2"
      inkscape:connector-curvature="0" />
-  <path
-     d="M 0,48 V 0 h 48 v 48 z"
-     id="path4"
-     inkscape:connector-curvature="0"
-     style="fill:none" />
 </svg>

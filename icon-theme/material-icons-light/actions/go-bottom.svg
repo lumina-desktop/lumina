@@ -12,7 +12,7 @@
    viewBox="0 0 48 48"
    version="1.1"
    id="svg6"
-   sodipodi:docname="go-top.svg"
+   sodipodi:docname="go-bottom.svg"
    inkscape:version="0.92.0 r15299">
   <metadata
      id="metadata12">
@@ -49,11 +49,11 @@
      inkscape:window-maximized="0"
      inkscape:current-layer="svg6" />
   <path
-     d="m 15.23,36.41 9.18,-9.18 9.18,9.18 2.82,-2.82 -12,-12 -12,12 z M 36.41,11.59 v 4 h -24 v -4 z"
+     d="m 15.23,11.59 9.18,9.18 9.18,-9.18 2.82,2.82 -12,12 -12,-12 z m 21.18,24.82 v -4 h -24 v 4 z"
      id="path2"
      inkscape:connector-curvature="0" />
   <path
-     d="M 0,48 V 0 h 48 v 48 z"
+     d="M 0,0 V 48 H 48 V 0 Z"
      id="path4"
      inkscape:connector-curvature="0"
      style="fill:none" />
