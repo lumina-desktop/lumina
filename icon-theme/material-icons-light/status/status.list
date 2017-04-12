@@ -1,22 +1,7 @@
-appointment-missed	 The icon used when an appointment was missed.
-appointment-soon	 The icon used when an appointment will occur soon.
-
-dialog-error	 The icon used when a dialog is opened to explain an error condition to the user.
-dialog-information	 The icon used when a dialog is opened to give information to the user that may be pertinent to the requested action.
-dialog-password	 The icon used when a dialog requesting the authentication credentials for a user is opened.
-dialog-question	 The icon used when a dialog is opened to ask a simple question of the user.
-dialog-warning	 The icon used when a dialog is opened to warn the user of impending issues with the requested action.
-
-folder-drag-accept	 The icon used for a folder while an object is being dragged onto it, that is of a type that the directory can contain.
-folder-visiting	 The icon used for folders, while their contents are being displayed in another window. This icon would typically be used when using multiple windows to navigate the hierarchy, such as in Nautilus's spatial mode.
-
 
 mail-attachment	 The icon used for an electronic mail that contains attachments.
-mail-unread	 The icon used for an electronic mail that is unread.
-mail-read	 The icon used for an electronic mail that is read.
 mail-replied	 The icon used for an electronic mail that has been replied to.
 mail-signed	 The icon used for an electronic mail that contains a signature.
-mail-signed-verified	 The icon used for an electronic mail that contains a signature which has also been verified by the security system.
 
 network-error	 The icon used when an error occurs trying to intialize the network connection of the computing device. This icon should be two computers, one in the background, with the screens of both computers, colored black, and with the theme's style element for errors, overlayed on top of the icon.
 network-idle	 The icon used when no data is being transmitted or received, while the computing device is connected to a network. This icon should be two computers, one in the background, with the screens of both computers, colored black.
@@ -24,7 +9,4 @@ network-offline	 The icon used when the computing device is disconnected from th
 network-receive	 The icon used when data is being received, while the computing device is connected to a network. This icon should be two computers, one in the background, with its screen colored green, and the screen of the computer in the foreground, colored black.
 network-transmit	 The icon used when data is being transmitted, while the computing device is connected to a network. This icon should be two computers, one in the background, with its screen colored black, and the screen of the computer in the foreground, colored green.
 network-transmit-receive	 The icon used data is being both transmitted and received simultaneously, while the computing device is connected to a network. This icon should be two computers, one in the background, with the screens of both computers, colored green.
-
-software-update-available	 The icon used when an update is available for software installed on the computing device, through the system software update program.
-software-update-urgent	 The icon used when an urgent update is available through the system software update program.
 
