@@ -843,8 +843,12 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     }
   }
   //Use the fallback icon if necessary
-  if(ico.isNull() && !fallback.isEmpty()){
-    ico = LXDG::findIcon(fallback,"");	  
+  if(ico.isNull() ){
+    if(!fallback.isEmpty()){ ico = LXDG::findIcon(fallback,""); }
+    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){ 
+      //mimetype - try to use the generic type icon
+      ico = LXDG::findIcon(iconName.section("-x-",0,0)+"-x-generic", "");
+    }
   }
   if(ico.isNull()){
     qDebug() << "Could not find icon:" << iconName << fallback;
