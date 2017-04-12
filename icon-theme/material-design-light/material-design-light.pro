@@ -1,7 +1,10 @@
 #QMake project file for installing the material-icons-light theme.
 
 #Load all the OS-specific install paths
-#include(../../src-qt5/OS-Detect.pri)
+include(../../src-qt5/OS-detect.pri)
+
+#ensure QMake realizes that nothing is actually going to get compiled
+TEMPLATE = aux
 
 BASE_DIR = $${L_SHAREDIR}/icons/material-design-light
 
