@@ -241,7 +241,7 @@ void DirWidget::createMenus(){
   cOpenMenu->setTitle(tr("Launch..."));
   cOpenMenu->setIcon( LXDG::findIcon("quickopen","") );
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
-  cOpenMenu->addAction(LXDG::findIcon("view-preview",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
+  cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
 /*
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }

@@ -50,6 +50,9 @@
          <property name="checked">
           <bool>false</bool>
          </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
          <property name="autoRaise">
           <bool>true</bool>
          </property>
@@ -94,6 +97,73 @@
            <attribute name="title">
             <string>Now Playing</string>
            </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <layout class="QHBoxLayout" name="videoLayout_2">
+              <item>
+               <widget class="QLabel" name="label_player_novideo_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>13</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background: black; color: white;</string>
+                </property>
+                <property name="text">
+                 <string>(No Running Video)</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="videoControlLayout_2">
+              <item>
+               <widget class="QToolButton" name="toolButton">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="toolButton_2">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_player_runstats_2">
+                <property name="text">
+                 <string notr="true">?/?</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="playerSlider_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+           <zorder>label_player_novideo</zorder>
+           <zorder>layoutWidget</zorder>
+           <zorder>layoutWidget_2</zorder>
           </widget>
           <widget class="QWidget" name="tab_local_playlist">
            <attribute name="title">
@@ -498,7 +568,7 @@
      <x>0</x>
      <y>0</y>
      <width>385</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
