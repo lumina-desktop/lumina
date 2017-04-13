@@ -67,7 +67,7 @@ void BrowserWidget::showDetails(bool show){
     treeWidget->deleteLater();
     treeWidget = 0;
   }
-  qDebug() << "Create Widget: details:" << show;
+ // qDebug() << "Create Widget: details:" << show;
   //Now create any new widgets
   if(show && treeWidget == 0){
     treeWidget = new DDTreeWidget(this);
@@ -92,7 +92,7 @@ void BrowserWidget::showDetails(bool show){
     connect(listWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange(""); }
   }
-  qDebug() << "  Done making widget";
+  //qDebug() << "  Done making widget";
 }
 
 bool BrowserWidget::hasDetails(){

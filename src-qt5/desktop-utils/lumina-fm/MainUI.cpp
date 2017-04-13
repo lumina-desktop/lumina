@@ -726,7 +726,7 @@ void MainUI::OpenImages(LFileInfoList list){
   }
   if(tab<0){
     //Need to create a new tab
-    tab = tabBar->addTab(LXDG::findIcon("fileview-preview",""), tr("Slideshow"));
+    tab = tabBar->addTab(LXDG::findIcon("media-slideshow",""), tr("Slideshow"));
     tabBar->setTabWhatsThis(tab,"#SW");
     //Also clear the info in the viewer
     SW->ClearImages();

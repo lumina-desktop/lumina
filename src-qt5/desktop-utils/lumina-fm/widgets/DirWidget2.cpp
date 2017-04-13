@@ -175,7 +175,7 @@ void DirWidget::UpdateIcons(){
   ui->actionBack->setIcon( LXDG::findIcon("go-previous","") );
   ui->actionUp->setIcon( LXDG::findIcon("go-up","") );
   ui->actionHome->setIcon( LXDG::findIcon("go-home","") );
-  ui->actionMenu->setIcon( LXDG::findIcon("format-justify-fill","format-list-unordered") );
+  ui->actionMenu->setIcon( LXDG::findIcon("view-more-vertical","format-list-unordered") );
   ui->actionSingleColumn->setIcon(LXDG::findIcon("view-right-close","view-close") );
   ui->actionDualColumn->setIcon(LXDG::findIcon("view-right-new","view-split-left-right") );
   
@@ -242,7 +242,7 @@ void DirWidget::createMenus(){
   cOpenMenu->setIcon( LXDG::findIcon("quickopen","") );
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
   cOpenMenu->addAction(LXDG::findIcon("view-preview",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
-  cOpenMenu->addAction(LXDG::findIcon("view-media-lyrics","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
+  cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
 /*
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }
   else{ cFModMenu->clear(); }
@@ -485,8 +485,8 @@ void DirWidget::UpdateContextMenu(){
   contextMenu->clear();
 
   if(!sel.isEmpty()){  
-    contextMenu->addAction(LXDG::findIcon("run-build-file",""), tr("Open"), this, SLOT(runFiles()) );
-    contextMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
+    contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
