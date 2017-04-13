@@ -23,7 +23,7 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   initWindowFrame();
   LoadProperties( NativeWindow::allProperties() );
   //Hookup the signals/slots
-  connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
+  connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
 }
 
 RootSubWindow::~RootSubWindow(){

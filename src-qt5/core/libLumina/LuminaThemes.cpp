@@ -83,7 +83,8 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
        tmpthemes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
        for(int j=0; j<tmpthemes.length(); j++){
 	 if(tmpthemes[j].startsWith("default")){ continue; }
-         if(QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ){ themes << tmpthemes[j]; }
+         if(QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ||
+		QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.desktop")) ){ themes << tmpthemes[j]; }
        }
     }
   }
