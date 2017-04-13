@@ -7,7 +7,8 @@ CONFIG += recursive
 SUBDIRS+= lumina-desktop \
 	lumina-session \
 	lumina-open \
-	lumina-info
+	lumina-info \
+	$${PWD}/../../icon-theme
 #	lumina-wm-INCOMPLETE \
 #	lumina-checkpass
 

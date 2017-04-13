@@ -764,12 +764,12 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   //Get the currently-set theme
   QString cTheme = QIcon::themeName();
   if(cTheme.isEmpty()){ 
-    QIcon::setThemeName("oxygen"); 
-    cTheme = "oxygen";	  
+    QIcon::setThemeName("material-design-light"); 
+    cTheme = "material-design-light";	  
   }
   //Make sure the current search paths correspond to this theme
   if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){
-    //Need to reset search paths: setup the "icontheme" "oxygen" and "fallback" sets
+    //Need to reset search paths: setup the "icontheme" "material-design-light" and "fallback" sets
     // - Get all the base icon directories
     QStringList paths;
       paths << QDir::homePath()+"/.icons/"; //ordered by priority - local user dirs first
@@ -784,20 +784,20 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     for(int i=0; i<paths.length(); i++){
       theme << getChildIconDirs( paths[i]+cTheme);
       for(int j=0; j<themedeps.length(); j++){ theme << getChildIconDirs(paths[i]+themedeps[j]); }
-      oxy << getChildIconDirs(paths[i]+"oxygen"); //Lumina base icon set
+      oxy << getChildIconDirs(paths[i]+"material-design-light"); //Lumina base icon set
       fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
     }
     //Now load all the icon theme dependencies in order (Theme1 -> Theme2 -> Theme3 -> Fallback)
     
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
-    QDir::setSearchPaths("oxygen", oxy);
+    QDir::setSearchPaths("material-design-light", oxy);
     QDir::setSearchPaths("fallback", fall);
-    //qDebug() << "Setting Icon Search Paths:" << "\nicontheme:" << theme << "\noxygen:" << oxy << "\nfallback:" << fall;
+    //qDebug() << "Setting Icon Search Paths:" << "\nicontheme:" << theme << "\nmaterial-design-light:" << oxy << "\nfallback:" << fall;
   }
   //Find the icon in the search paths
   QIcon ico;
-  QStringList srch; srch << "icontheme" << "oxygen" << "fallback";
+  QStringList srch; srch << "icontheme" << "material-design-light" << "fallback";
   for(int i=0; i<srch.length() && ico.isNull(); i++){
     //Look for a svg first
     if(QFile::exists(srch[i]+":"+iconName+".svg") ){
@@ -847,8 +847,12 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     }
   }
   //Use the fallback icon if necessary
-  if(ico.isNull() && !fallback.isEmpty()){
-    ico = LXDG::findIcon(fallback,"");	  
+  if(ico.isNull() ){
+    if(!fallback.isEmpty()){ ico = LXDG::findIcon(fallback,""); }
+    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){ 
+      //mimetype - try to use the generic type icon
+      ico = LXDG::findIcon(iconName.section("-x-",0,0)+"-x-generic", "");
+    }
   }
   if(ico.isNull()){
     qDebug() << "Could not find icon:" << iconName << fallback;
