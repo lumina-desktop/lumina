@@ -225,7 +225,7 @@
     <message>
         <location filename="../MainUI.ui" line="400"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa Popup varningar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="403"/>

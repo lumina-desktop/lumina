@@ -49,7 +49,7 @@
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
@@ -59,12 +59,12 @@
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
@@ -149,17 +149,17 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte spara screenshot</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../MainUI.cpp" line="264"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Osparat Screenshot</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="265"/>

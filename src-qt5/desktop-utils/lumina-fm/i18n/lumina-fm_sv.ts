@@ -59,22 +59,22 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">Namn</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">Storlek</translation>
+        <translation>Storlek</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Ändringsdatum</translation>
+        <translation>Ändringsdatum</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
@@ -84,22 +84,22 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Kapacitet: %1</translation>
+        <translation>Kapacitet: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Filer: %1 (%2)</translation>
+        <translation>Filer: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Kataloger: %1</translation>
+        <translation>Kataloger: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="218"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Meny</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
@@ -230,17 +230,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="491"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil operationer</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog operationer</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laddar...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
@@ -267,17 +267,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapar...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
-        <translation type="unfinished">Fil</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
@@ -287,12 +287,12 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="243"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="244"/>
@@ -302,12 +302,12 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="245"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia spelare</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa filer...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="262"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="264"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="450"/>
@@ -331,8 +331,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>&quot;lumina-Fileinfo&quot; verktyget kunde inte hittas på systemet. Installera det först.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>"lumina-Fileinfo" verktyget kunde inte hittas på systemet. Installera det först.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -522,7 +522,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Logga in till en server</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
@@ -566,7 +566,7 @@ Ny Plats: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -630,7 +630,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="171"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny flik</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="174"/>
@@ -710,7 +710,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng flik</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="414"/>
@@ -845,12 +845,12 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="222"/>
         <source>CTRL+B</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+B</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="336"/>
@@ -1006,13 +1006,13 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulär</translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1022,17 +1022,17 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
@@ -1042,7 +1042,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Avklarad</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
@@ -1158,7 +1158,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Avklarad</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
