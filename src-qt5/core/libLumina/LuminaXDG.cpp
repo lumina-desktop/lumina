@@ -780,11 +780,15 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
         }
     //Now load all the dirs into the search paths
     QStringList theme, oxy, fall;
+    QStringList themedeps = getIconThemeDepChain(cTheme, paths);
     for(int i=0; i<paths.length(); i++){
       theme << getChildIconDirs( paths[i]+cTheme);
+      for(int j=0; j<themedeps.length(); j++){ theme << getChildIconDirs(paths[i]+themedeps[j]); }
       oxy << getChildIconDirs(paths[i]+"oxygen"); //Lumina base icon set
       fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
     }
+    //Now load all the icon theme dependencies in order (Theme1 -> Theme2 -> Theme3 -> Fallback)
+    
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
     QDir::setSearchPaths("oxygen", oxy);
@@ -878,6 +882,23 @@ QStringList LXDG::getChildIconDirs(QString parent){
     if(img.length() > 0){ out << img; }
   }
   return out;
+}
+
+QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
+  QStringList results;
+  for(int i=0; i<paths.length(); i++){
+    if( QFile::exists(paths[i]+theme+"/index.theme") ){
+      QStringList deps = LUtils::readFile(paths[i]+theme+"/index.theme").filter("Inherits=");
+      if(!deps.isEmpty()){
+        deps = deps.first().section("=",1,-1).split(";",QString::SkipEmptyParts);
+        for(int j=0; j<deps.length(); j++){
+          results << deps[j] << getIconThemeDepChain(deps[j],paths);
+        }
+      }
+      break; //found primary theme index file - stop here
+    }
+  }
+  return results;;
 }
 
 QStringList LXDG::systemMimeDirs(){

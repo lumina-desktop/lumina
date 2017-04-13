@@ -187,6 +187,7 @@ public:
 	static QIcon findIcon(QString iconName, QString fallback = "");
 	//Recursivly compile a list of child directories with *.png files in them
 	static QStringList getChildIconDirs(QString parent);
+	static QStringList getIconThemeDepChain(QString theme, QStringList paths);
 	//List all the mime-type directories
 	static QStringList systemMimeDirs();
 	//Find the mime-type icon for a particular file extension
