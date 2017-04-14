@@ -791,13 +791,13 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
-    QDir::setSearchPaths("material-design-light", oxy);
+    QDir::setSearchPaths("default", oxy);
     QDir::setSearchPaths("fallback", fall);
     //qDebug() << "Setting Icon Search Paths:" << "\nicontheme:" << theme << "\nmaterial-design-light:" << oxy << "\nfallback:" << fall;
   }
   //Find the icon in the search paths
   QIcon ico;
-  QStringList srch; srch << "icontheme" << "material-design-light" << "fallback";
+  QStringList srch; srch << "icontheme" << "default" << "fallback";
   for(int i=0; i<srch.length() && ico.isNull(); i++){
     //Look for a svg first
     if(QFile::exists(srch[i]+":"+iconName+".svg") ){

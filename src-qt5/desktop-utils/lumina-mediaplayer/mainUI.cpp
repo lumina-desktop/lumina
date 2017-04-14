@@ -122,7 +122,8 @@ void MainUI::setupConnections(){
 }
 
 void MainUI::setupIcons(){
-  ui->radio_local->setIcon( LXDG::findIcon("audio-x-generic","") );
+  ui->radio_local->setIcon( LXDG::findIcon("media-playlist-audio","audio-x-generic") );
+  ui->radio_pandora->setIcon( LXDG::findIcon("pandora",":pandora") );
 
   ui->actionClose->setIcon( LXDG::findIcon("application-close","dialog-close") );
   ui->actionPlay->setIcon( LXDG::findIcon("media-playback-start","") );
@@ -135,14 +136,14 @@ void MainUI::setupIcons(){
 
   //Pandora Pages
   ui->push_pandora_apply->setIcon( LXDG::findIcon("dialog-ok-apply","dialog-ok") );
-  ui->tool_pandora_ban->setIcon( LXDG::findIcon("dialog-cancel","") );
-  ui->tool_pandora_info->setIcon( LXDG::findIcon("help-about","") );
+  ui->tool_pandora_ban->setIcon( LXDG::findIcon("dialog-warning","") );
+  ui->tool_pandora_info->setIcon( LXDG::findIcon("dialog-information","") );
   ui->tool_pandora_love->setIcon( LXDG::findIcon("emblem-favorite","") );
-  ui->tool_pandora_tired->setIcon( LXDG::findIcon("flag-yellow","flag") );
+  ui->tool_pandora_tired->setIcon( LXDG::findIcon("media-playlist-close","flag") );
   ui->tool_pandora_stationrm->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_pandora_stationadd->setIcon( LXDG::findIcon("list-add","") );
-  ui->action_pandora_newstation_artist->setIcon( LXDG::findIcon("list-add-user","") );
-  ui->action_pandora_newstation_song->setIcon( LXDG::findIcon("audio-x-generic","") );
+  ui->action_pandora_newstation_artist->setIcon( LXDG::findIcon("preferences-desktop-user","") );
+  ui->action_pandora_newstation_song->setIcon( LXDG::findIcon("bookmark-audio","media-playlist-audio") );
 
 }
 
@@ -180,13 +181,15 @@ void MainUI::PlayerTypeChanged(bool active){
   if(ui->radio_pandora->isChecked()){ 
     ui->stackedWidget->setCurrentWidget(ui->page_pandora); 
     PandoraStateChanged(PANDORA->currentState());
-    SYSTRAY->setIcon( QIcon(":pandora") );
-    this->setWindowIcon( QIcon(":pandora") );
+    QIcon ico = LXDG::findIcon("pandora",":pandora");
+    SYSTRAY->setIcon( ico );
+    this->setWindowIcon( ico );
     this->setWindowTitle( tr("Pandora Radio") );
   }else{ 
     ui->stackedWidget->setCurrentWidget(ui->page_local);
-    SYSTRAY->setIcon( LXDG::findIcon("audio-x-generic","") );
-    this->setWindowIcon( LXDG::findIcon("audio-x-generic","") );
+    QIcon ico = LXDG::findIcon("media-playlist-audio","audio-x-generic");
+    SYSTRAY->setIcon( ico );
+    this->setWindowIcon( ico );
     this->setWindowTitle( tr("Media Player") );
   }
   //Now close down any currently running streams as needed
