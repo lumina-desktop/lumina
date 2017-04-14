@@ -13,6 +13,10 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+#include <QFileDialog>
+
+//#include "VideoWidget.h"
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   closing = false;
@@ -25,8 +29,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     grp->addButton(ui->radio_local);
     grp->addButton(ui->radio_pandora);
     grp->setExclusive(true);
-  setupPandora();
+
   ui->radio_pandora->setChecked(true);
+  setupPlayer();
+  setupPandora();
   setupTrayIcon();
   setupConnections();
   setupIcons();
@@ -45,6 +51,37 @@ void MainUI::loadArguments(QStringList){
 
 
 // ==== PRIVATE ====
+void MainUI::setupPlayer(){
+  PLAYER = new QMediaPlayer(this); //base multimedia object
+  VIDEO = new QVideoWidget(this); //output to this widget for video
+  PLAYLIST = new QMediaPlaylist(PLAYER); //pull from this playlist 
+  ui->videoLayout->addWidget(VIDEO);
+
+  //Now setup the interfaces between all these objects
+  PLAYER->setVideoOutput(VIDEO);
+  PLAYER->setPlaylist(PLAYLIST);
+  PLAYER->setVolume(100); //just maximize this - will be managed outside this app
+
+  //Setup the player connections
+  //connect(PLAYER, SIGNAL(audioAvailableChanged(bool)), this, SLOT(LocalAudioAvailable(bool)) );
+  connect(PLAYER, SIGNAL(currentMediaChanged(const QMediaContent&)), this, SLOT(LocalMediaChanged(const QMediaContent&)) );
+  connect(PLAYER, SIGNAL(durationChanged(qint64)), this, SLOT(LocalDurationChanged(qint64)) );
+  connect(PLAYER, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(LocalError(QMediaPlayer::Error)) );
+  connect(PLAYER, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(LocalMediaStatusChanged(QMediaPlayer::MediaStatus)) );
+  connect(PLAYER, SIGNAL(mutedChanged(bool)), this, SLOT(LocalNowMuted(bool)) );
+  connect(PLAYER, SIGNAL(positionChanged(qint64)), this, SLOT(LocalPositionChanged(qint64)) );
+  connect(PLAYER, SIGNAL(seekableChanged(bool)), this, SLOT(LocalIsSeekable(bool)) );
+  connect(PLAYER, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(LocalStateChanged(QMediaPlayer::State)) );
+  connect(PLAYER, SIGNAL(videoAvailableChanged(bool)), this, SLOT(LocalVideoAvailable(bool)) );
+  connect(PLAYER, SIGNAL(volumeChanged(int)), this, SLOT(LocalVolumeChanged(int)) );
+  //Setup the playlist connections
+  connect(PLAYLIST, SIGNAL(currentIndexChanged(int)), this, SLOT(LocalListIndexChanged(int)) );
+  connect(PLAYLIST, SIGNAL(mediaChanged(int,int)), this, SLOT(LocalListMediaChanged(int,int)) );
+  connect(PLAYLIST, SIGNAL(mediaInserted(int,int)), this, SLOT(LocalListMediaInserted(int,int)) );
+  connect(PLAYLIST, SIGNAL(mediaRemoved(int,int)), this, SLOT(LocalListMediaRemoved(int,int)) );
+
+}
+
 void MainUI::setupPandora(){
   if(!LUtils::isValidBinary("pianobar")){
     ui->radio_pandora->setEnabled(false);
@@ -101,6 +138,13 @@ void MainUI::setupConnections(){
   connect(ui->actionVolDown, SIGNAL(triggered()), this, SLOT(voldownToggled()) );
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(closeApplication()) );
 
+  connect(ui->slider_local, SIGNAL(sliderMoved(int)), this, SLOT(setLocalPosition(int)) );
+  connect(ui->tool_local_addFiles, SIGNAL(clicked()), this, SLOT(addLocalMedia()) );
+  connect(ui->tool_local_rm, SIGNAL(clicked()), this, SLOT(rmLocalMedia()) );
+  connect(ui->tool_local_shuffle, SIGNAL(clicked()), PLAYLIST, SLOT(shuffle()) );
+  connect(ui->tool_local_repeat, SIGNAL(toggled(bool)), this, SLOT(localPlaybackSettingsChanged()) );
+
+
   connect(ui->push_pandora_apply, SIGNAL(clicked()), this, SLOT(applyPandoraSettings()) );
   connect(ui->combo_pandora_station, SIGNAL(activated(QString)), this, SLOT(changePandoraStation(QString)) );
   connect(ui->tool_pandora_ban, SIGNAL(clicked()), PANDORA, SLOT(banSong()) );
@@ -133,6 +177,12 @@ void MainUI::setupIcons(){
   ui->actionBack->setIcon( LXDG::findIcon("media-skip-backward","") );
   ui->actionVolUp->setIcon( LXDG::findIcon("audio-volume-high","") );
   ui->actionVolDown->setIcon( LXDG::findIcon("audio-volume-low","") );
+
+  //Local Player Pages
+  ui->tool_local_addFiles->setIcon( LXDG::findIcon("list-add","") );
+  ui->tool_local_rm->setIcon( LXDG::findIcon("list-remove","") );
+  ui->tool_local_shuffle->setIcon( LXDG::findIcon("media-playlist-shuffle","") );
+  ui->tool_local_repeat->setIcon( LXDG::findIcon("media-playlist-repeat","") );
 
   //Pandora Pages
   ui->push_pandora_apply->setIcon( LXDG::findIcon("dialog-ok-apply","dialog-ok") );
@@ -185,18 +235,21 @@ void MainUI::PlayerTypeChanged(bool active){
     SYSTRAY->setIcon( ico );
     this->setWindowIcon( ico );
     this->setWindowTitle( tr("Pandora Radio") );
+    //Now hide/deactivate any toolbar buttons which are not used
+    ui->actionBack->setVisible(!ui->radio_pandora->isChecked());
   }else{ 
     ui->stackedWidget->setCurrentWidget(ui->page_local);
+    LocalStateChanged(QMediaPlayer::StoppedState);
     QIcon ico = LXDG::findIcon("media-playlist-audio","audio-x-generic");
     SYSTRAY->setIcon( ico );
     this->setWindowIcon( ico );
     this->setWindowTitle( tr("Media Player") );
+    localPlaybackSettingsChanged();
   }
   //Now close down any currently running streams as needed
   if(!ui->radio_pandora->isChecked() && PANDORA->currentState()!=PianoBarProcess::Stopped){ PANDORA->closePianoBar(); }
+  else if(!ui->radio_local->isChecked() && PLAYER->state()!=QMediaPlayer::StoppedState){ PLAYER->stop(); }
 
-  //Now hide/deactivate any toolbar buttons which are not used
-  ui->actionBack->setVisible(!ui->radio_pandora->isChecked());
 }
 
 
@@ -204,29 +257,44 @@ void MainUI::PlayerTypeChanged(bool active){
 void MainUI::playToggled(){
   if(ui->radio_pandora->isChecked()){
     PANDORA->play();
+  }else{
+    if( ui->list_local->selectedItems().count()==1){
+      PLAYLIST->setCurrentIndex( ui->list_local->row(ui->list_local->selectedItems().first()) );
+    }
+    PLAYER->play();
   }
+
 }
 
 void MainUI::pauseToggled(){
   if(ui->radio_pandora->isChecked()){
     PANDORA->pause();
-  }  
+  } else{
+    PLAYER->pause();
+  }
 }
 
 void MainUI::stopToggled(){
   if(ui->radio_pandora->isChecked()){
     PANDORA->closePianoBar();
+  }else{
+    PLAYER->stop();
   }
 }
 
 void MainUI::nextToggled(){
   if(ui->radio_pandora->isChecked()){
     PANDORA->skipSong();
+  }else{
+    PLAYLIST->next();
   }
 }
 
 void MainUI::backToggled(){
   if(ui->radio_pandora->isChecked()){ return; }
+  else{
+    PLAYLIST->previous();
+  }
 }
 
 void MainUI::volupToggled(){
@@ -239,6 +307,155 @@ void MainUI::voldownToggled(){
   if(ui->radio_pandora->isChecked()){
     PANDORA->volumeDown();
   }
+}
+
+//Player Options/Feedback
+void MainUI::addLocalMedia(){
+  QStringList paths = QFileDialog::getOpenFileNames(this, tr("Open Multimedia Files"), QDir::homePath() );
+  for(int i=0; i<paths.length(); i++){
+    PLAYLIST->addMedia( QUrl::fromLocalFile(paths[i]) );
+  }
+}
+
+void MainUI::rmLocalMedia(){
+  QList<QListWidgetItem*> sel = ui->list_local->selectedItems();
+  for(int i=0; i<sel.length(); i++){
+    PLAYLIST->removeMedia( ui->list_local->row(sel[i]) );
+  }
+}
+
+void MainUI::localPlaybackSettingsChanged(){
+  if(ui->tool_local_shuffle->isChecked()){ PLAYLIST->setPlaybackMode(QMediaPlaylist::Random); }
+  else if(ui->tool_local_repeat->isChecked()){ PLAYLIST->setPlaybackMode(QMediaPlaylist::Loop); }
+  else{ PLAYLIST->setPlaybackMode(QMediaPlaylist::Sequential); }
+}
+
+//Local Playlist Feedback
+void MainUI::LocalListIndexChanged(int current){
+  for(int i=0; i<ui->list_local->count(); i++){
+    if(i==current){
+      ui->list_local->item(i)->setIcon( LXDG::findIcon("media-playback-start","") );
+      ui->list_local->scrollToItem(ui->list_local->item(i));
+      ui->label_player_novideo->setText( tr("Now Playing:")+"\n\n"+ui->list_local->item(i)->text() );
+    }else if(!ui->list_local->item(i)->icon().isNull()){
+      ui->list_local->item(i)->setIcon( LXDG::findIcon("","") );
+    }
+  }
+}
+
+void MainUI::LocalListMediaChanged(int start, int end){
+  for(int i=start; i<end+1; i++){
+    QUrl url = PLAYLIST->media(i).canonicalUrl();
+    ui->list_local->item(i)->setText(url.toLocalFile().section("/",-1).simplified());
+  }
+}
+
+void MainUI::LocalListMediaInserted(int start, int end){
+  for(int i=start; i<end+1; i++){
+    QUrl url = PLAYLIST->media(i).canonicalUrl();
+    ui->list_local->insertItem(i, url.toLocalFile().section("/",-1).simplified());
+  }
+}
+
+void MainUI::LocalListMediaRemoved(int start, int end){
+  for(int i=end; i>=start; i--){
+    delete ui->list_local->takeItem(i);
+  }
+}
+
+
+
+/*void MainUI::LocalAudioAvailable(bool avail){
+  //qDebug() << "Local Audio Available:" << avail;
+  if(!avail && PLAYER->state()!=QMediaPlayer::StoppedState){
+    qDebug() << "WARNING: No Audio Output Available!!";
+  }
+}*/
+
+void MainUI::LocalVideoAvailable(bool avail){
+  //qDebug() << "Local VideoAvailable:" << avail;
+  //if(ui->tabWidget_local->currentWidget()==ui->tab_local_playing && avail){ 
+    VIDEO->setVisible(avail);
+  //}
+  ui->label_player_novideo->setVisible(!avail);
+}
+
+void MainUI::LocalIsSeekable(bool avail){
+  ui->slider_local->setEnabled(avail);
+}
+
+void MainUI::LocalNowMuted(bool mute){
+  qDebug() << "Local Player Muted:" << mute;
+}
+
+void MainUI::LocalError(QMediaPlayer::Error err){
+  if(err == QMediaPlayer::NoError){ return; };
+  QString errtext = QString(tr("[PLAYBACK ERROR]\n%1")).arg(PLAYER->errorString());
+  qDebug() << "Local Player Error:" << err << errtext;
+  ui->label_player_novideo->setText(errtext);
+  VIDEO->setVisible(false);
+  ui->label_player_novideo->setVisible(true);
+}
+
+void MainUI::LocalMediaChanged(const QMediaContent&){
+  //qDebug() << "Local Media Changed:" << content;
+
+}
+
+void MainUI::LocalMediaStatusChanged(QMediaPlayer::MediaStatus stat){
+  //qDebug() << "Local Media Status Changed:" << stat;
+  QString txt;
+  switch(stat){
+    case QMediaPlayer::LoadingMedia:
+	txt = tr("Media Loading..."); break;
+    case QMediaPlayer::StalledMedia:
+	txt = tr("Media Stalled..."); break;
+    case QMediaPlayer::BufferingMedia:
+	txt = tr("Media Buffering..."); break;
+    default:
+      txt.clear();
+  }
+  if(txt.isEmpty()){ ui->statusbar->clearMessage(); }
+  else{ ui->statusbar->showMessage(txt, 1500); }
+}
+
+void MainUI::LocalStateChanged(QMediaPlayer::State state){
+  //qDebug() << "Local Player State Changed:" << state;
+  ui->actionPlay->setVisible(state != QMediaPlayer::PlayingState);
+  ui->actionStop->setVisible(state != QMediaPlayer::StoppedState);
+  ui->actionPause->setVisible(state == QMediaPlayer::PlayingState);
+  ui->actionNext->setVisible(state == QMediaPlayer::PlayingState);
+  ui->actionBack->setVisible(state == QMediaPlayer::PlayingState);
+  if(state == QMediaPlayer::StoppedState){
+    ui->tabWidget_local->setCurrentWidget(ui->tab_local_playlist);
+    ui->tabWidget_local->setTabEnabled(0,false);
+  }else if(state == QMediaPlayer::PlayingState && !ui->tabWidget_local->isTabEnabled(0)){
+    ui->tabWidget_local->setTabEnabled(0,true);
+    ui->tabWidget_local->setCurrentWidget(ui->tab_local_playing);
+  }else if(PLAYER->mediaStatus()== QMediaPlayer::BufferingMedia || PLAYER->mediaStatus()==QMediaPlayer::BufferedMedia){
+    if(VIDEO->isVisible() != PLAYER->isVideoAvailable()){ VIDEO->setVisible(PLAYER->isVideoAvailable()); }
+  }
+
+}
+
+void MainUI::LocalDurationChanged(qint64 tot){
+    ui->slider_local->setRange(0,tot);
+    tot = qRound(tot/1000.0); //convert from ms to seconds
+    QString time = QTime(0, tot/60, tot%60,0).toString("m:ss") ;
+    //qDebug() << "Duration Update:" << tot << time;
+    ui->slider_local->setWhatsThis(time);
+}
+
+void MainUI::LocalPositionChanged(qint64 val){
+  ui->slider_local->setValue(val);
+  val = qRound(val/1000.0); //convert from ms to seconds
+  QString time = QTime(0, val/60, val%60,0).toString("m:ss");
+  //qDebug() << "Time Update:" << val << time;
+  ui->label_local_runstats->setText(time+ "/" + ui->slider_local->whatsThis());
+}
+
+void MainUI::LocalVolumeChanged(int vol){
+  qDebug() << "Local Volume Changed:" << vol;
 }
 
 

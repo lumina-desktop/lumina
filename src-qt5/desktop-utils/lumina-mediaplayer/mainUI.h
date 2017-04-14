@@ -14,6 +14,11 @@
 #include <QSystemTrayIcon>
 #include <QCloseEvent>
 
+//QMultimedia classes
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QVideoWidget>
+
 #include "PianoBarProcess.h"
 
 namespace Ui{
@@ -31,9 +36,13 @@ public:
 private:
 	Ui::MainUI *ui;
 	PianoBarProcess *PANDORA;
+	QMediaPlayer *PLAYER;
+	QVideoWidget *VIDEO;
+	QMediaPlaylist *PLAYLIST;
 	QSystemTrayIcon *SYSTRAY;
 	bool closing;
 
+	void setupPlayer();
 	void setupPandora();
 	void setupConnections();
 	void setupIcons();
@@ -52,6 +61,31 @@ private slots:
 	void backToggled();
 	void volupToggled();
 	void voldownToggled();
+
+	//Local Playback UI slots
+	void setLocalPosition(int pos){ PLAYER->setPosition(pos); }
+	void addLocalMedia();
+	void rmLocalMedia();
+	void localPlaybackSettingsChanged();
+
+	//Local Playlist Feedback
+	void LocalListIndexChanged(int); //item being played just changed
+	void LocalListMediaChanged(int,int);
+	void LocalListMediaInserted(int,int);
+	void LocalListMediaRemoved(int,int);
+
+	//Local Player Feedback
+	//void LocalAudioAvailable(bool);
+	void LocalVideoAvailable(bool);
+	void LocalIsSeekable(bool);
+	void LocalNowMuted(bool);
+	void LocalError(QMediaPlayer::Error);
+	void LocalMediaChanged(const QMediaContent&);
+	void LocalMediaStatusChanged(QMediaPlayer::MediaStatus);
+	void LocalStateChanged(QMediaPlayer::State);
+	void LocalDurationChanged(qint64);
+	void LocalPositionChanged(qint64);
+	void LocalVolumeChanged(int);
 
 	//Pandora Options
 	void showPandoraSongInfo();

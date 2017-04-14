@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>385</width>
-    <height>410</height>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
       <widget class="QWidget" name="page_local">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QTabWidget" name="tabWidget">
+         <widget class="QTabWidget" name="tabWidget_local">
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -99,9 +99,9 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <layout class="QHBoxLayout" name="videoLayout_2">
+             <layout class="QHBoxLayout" name="videoLayout">
               <item>
-               <widget class="QLabel" name="label_player_novideo_2">
+               <widget class="QLabel" name="label_player_novideo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -129,30 +129,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="videoControlLayout_2">
+             <layout class="QHBoxLayout" name="videoControlLayout">
               <item>
-               <widget class="QToolButton" name="toolButton">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="toolButton_2">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_player_runstats_2">
+               <widget class="QLabel" name="label_local_runstats">
                 <property name="text">
                  <string notr="true">?/?</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSlider" name="playerSlider_2">
+               <widget class="QSlider" name="slider_local">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -161,14 +147,103 @@
              </layout>
             </item>
            </layout>
-           <zorder>label_player_novideo</zorder>
-           <zorder>layoutWidget</zorder>
-           <zorder>layoutWidget_2</zorder>
           </widget>
           <widget class="QWidget" name="tab_local_playlist">
            <attribute name="title">
             <string>Playlist</string>
            </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QListWidget" name="list_local"/>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QToolButton" name="tool_local_addFiles">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string notr="true">add</string>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_local_rm">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string notr="true">rm</string>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_local_shuffle">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string notr="true">shfl</string>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="tool_local_repeat">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string notr="true">rpt</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -368,47 +443,67 @@
              </spacer>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Current Station</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="combo_pandora_station"/>
-              </item>
-              <item>
-               <widget class="QToolButton" name="tool_pandora_stationrm">
-                <property name="statusTip">
-                 <string>Delete current station</string>
-                </property>
-                <property name="text">
-                 <string>rm</string>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="tool_pandora_stationadd">
-                <property name="statusTip">
-                 <string>Create new station</string>
-                </property>
-                <property name="text">
-                 <string>add</string>
-                </property>
-                <property name="popupMode">
-                 <enum>QToolButton::InstantPopup</enum>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QGroupBox" name="groupBox_3">
+              <property name="title">
+               <string>Current Station</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="leftMargin">
+                <number>1</number>
+               </property>
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="rightMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="combo_pandora_station">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="sizeAdjustPolicy">
+                  <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="tool_pandora_stationrm">
+                 <property name="statusTip">
+                  <string>Delete current station</string>
+                 </property>
+                 <property name="text">
+                  <string>rm</string>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="tool_pandora_stationadd">
+                 <property name="statusTip">
+                  <string>Create new station</string>
+                 </property>
+                 <property name="text">
+                  <string>add</string>
+                 </property>
+                 <property name="popupMode">
+                  <enum>QToolButton::InstantPopup</enum>
+                 </property>
+                 <property name="autoRaise">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -568,7 +663,7 @@
      <x>0</x>
      <y>0</y>
      <width>385</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -611,8 +706,8 @@
    <addaction name="actionPlay"/>
    <addaction name="actionPause"/>
    <addaction name="actionStop"/>
-   <addaction name="actionNext"/>
    <addaction name="actionBack"/>
+   <addaction name="actionNext"/>
    <addaction name="actionVolDown"/>
    <addaction name="actionVolUp"/>
   </widget>
