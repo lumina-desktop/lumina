@@ -50,6 +50,11 @@ public:
 	QString controlProxy();			//"control_proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
 	void setControlProxy(QString);
 
+	//libao audio driver control
+	QString currentAudioDriver();
+	QStringList availableAudioDrivers();
+	void setAudioDriver(QString driver);
+
 private:
 	//Process
 	QProcess *PROC;

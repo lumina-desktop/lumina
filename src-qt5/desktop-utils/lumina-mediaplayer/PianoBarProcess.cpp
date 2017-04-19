@@ -116,6 +116,38 @@ void PianoBarProcess::setControlProxy(QString url){
   setSettingValue("control_proxy", url);
 }
 
+QString PianoBarProcess::currentAudioDriver(){
+  QString driver = "auto";
+  QStringList info = LUtils::readFile(QDir::homePath()+"/.libao").filter("default_driver");
+  if(!info.isEmpty()){
+    driver = info.last().section("=",-1).simplified();
+  }
+  return driver;
+}
+
+QStringList PianoBarProcess::availableAudioDrivers(){
+  QStringList known;
+  known << "pulse" << "alsa" << "sndio" << "oss" << "sun" << "roar" << "esd" << "nas";
+  known.sort();
+  known.prepend("auto"); //make sure this is always first
+  return known;
+}
+
+void PianoBarProcess::setAudioDriver(QString driver){
+  QStringList info = LUtils::readFile(QDir::homePath()+"/.libao");
+  bool found = false;
+  QString line = "default_driver="+driver;
+  if(driver=="auto"){ line.clear(); } //special bypass - nothing set
+  for(int i=0; i<info.length() && !found; i++){
+    if(info[i].section("=",0,0).simplified() == "default_driver"){
+      info[i] = line;
+      found = true;
+    }
+  }
+  if(!found && !line.isEmpty()){ info << line; }
+  //Now save the file
+  LUtils::writeFile(QDir::homePath()+"/.libao", info, true);
+}
 // ====== PUBLIC SLOTS ======
 void PianoBarProcess::play(){ 
   if(PROC->state() == QProcess::NotRunning){

@@ -104,10 +104,15 @@ void MainUI::setupPandora(){
   ui->combo_pandora_quality->addItem(tr("Low"),"low");
   ui->combo_pandora_quality->addItem(tr("Medium"), "medium");
   ui->combo_pandora_quality->addItem(tr("High"),"high");
+  ui->combo_pandora_driver->clear();
+  ui->combo_pandora_driver->addItems( PANDORA->availableAudioDrivers() );
   //Now load the current settings into the UI
   int qual =   ui->combo_pandora_quality->findData(PANDORA->audioQuality());
   if(qual>=0){ ui->combo_pandora_quality->setCurrentIndex(qual); }
   else{   ui->combo_pandora_quality->setCurrentIndex(1); } //medium quality by default
+  qual = ui->combo_pandora_driver->findText(PANDORA->currentAudioDriver());
+  if(qual>=0){ ui->combo_pandora_driver->setCurrentIndex(qual); }
+  else{ ui->combo_pandora_driver->setCurrentIndex(0); } //automatic (always first in list)
   ui->line_pandora_email->setText( PANDORA->email() );
   ui->line_pandora_pass->setText( PANDORA->password() );
   ui->line_pandora_proxy->setText( PANDORA->proxy() );
@@ -147,6 +152,7 @@ void MainUI::setupConnections(){
 
   connect(ui->push_pandora_apply, SIGNAL(clicked()), this, SLOT(applyPandoraSettings()) );
   connect(ui->combo_pandora_station, SIGNAL(activated(QString)), this, SLOT(changePandoraStation(QString)) );
+  connect(ui->combo_pandora_driver, SIGNAL(activated(QString)), this, SLOT(checkPandoraSettings()) );
   connect(ui->tool_pandora_ban, SIGNAL(clicked()), PANDORA, SLOT(banSong()) );
   connect(ui->tool_pandora_love, SIGNAL(clicked()), PANDORA, SLOT(loveSong()) );
   connect(ui->tool_pandora_tired, SIGNAL(clicked()), PANDORA, SLOT(tiredSong()) );
@@ -475,7 +481,8 @@ void MainUI::checkPandoraSettings(){
 	|| (PANDORA->password() != ui->line_pandora_pass->text())
 	|| (PANDORA->audioQuality() != ui->combo_pandora_quality->currentData().toString())
 	|| (PANDORA->proxy() != ui->line_pandora_proxy->text())
-	|| (PANDORA->controlProxy() != ui->line_pandora_cproxy->text());
+	|| (PANDORA->controlProxy() != ui->line_pandora_cproxy->text())
+	|| (PANDORA->currentAudioDriver() != ui->combo_pandora_driver->currentText());
   ui->push_pandora_apply->setEnabled(changes);
 }
 
@@ -484,6 +491,7 @@ void MainUI::applyPandoraSettings(){
   PANDORA->setAudioQuality(ui->combo_pandora_quality->currentData().toString());
   PANDORA->setProxy(ui->line_pandora_proxy->text());
   PANDORA->setControlProxy(ui->line_pandora_cproxy->text());
+  PANDORA->setAudioDriver(ui->combo_pandora_driver->currentText());
   if(PANDORA->isSetup()){
     //Go ahead and (re)start the Pandora process so it is aware of the new changes
     if(PANDORA->currentState()!=PianoBarProcess::Stopped){ PANDORA->closePianoBar(); }
