@@ -152,7 +152,8 @@ void MainUI::setupConnections(){
   connect(ui->tool_local_rm, SIGNAL(clicked()), this, SLOT(rmLocalMedia()) );
   connect(ui->tool_local_shuffle, SIGNAL(clicked()), PLAYLIST, SLOT(shuffle()) );
   connect(ui->tool_local_repeat, SIGNAL(toggled(bool)), this, SLOT(localPlaybackSettingsChanged()) );
-
+  connect(ui->tool_local_moveup, SIGNAL(clicked()), this, SLOT(upLocalMedia()) );
+  connect(ui->tool_local_movedown, SIGNAL(clicked()), this, SLOT(downLocalMedia()) );
 
   connect(ui->push_pandora_apply, SIGNAL(clicked()), this, SLOT(applyPandoraSettings()) );
   connect(ui->combo_pandora_station, SIGNAL(activated(QString)), this, SLOT(changePandoraStation(QString)) );
@@ -194,6 +195,8 @@ void MainUI::setupIcons(){
   ui->tool_local_rm->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_local_shuffle->setIcon( LXDG::findIcon("media-playlist-shuffle","") );
   ui->tool_local_repeat->setIcon( LXDG::findIcon("media-playlist-repeat","") );
+  ui->tool_local_moveup->setIcon( LXDG::findIcon("go-up", "arrow-up") );
+  ui->tool_local_movedown->setIcon( LXDG::findIcon("go-down", "arrow-down") );
 
   //Pandora Pages
   ui->push_pandora_apply->setIcon( LXDG::findIcon("dialog-ok-apply","dialog-ok") );
@@ -335,6 +338,28 @@ void MainUI::rmLocalMedia(){
   }
 }
 
+void MainUI::upLocalMedia(){
+  //NOTE: Only a single selection is possible at the present time
+  QList<QListWidgetItem*> sel = ui->list_local->selectedItems();
+  for(int i=0; i<sel.length(); i++){
+     int row = ui->list_local->row(sel[i]);
+    PLAYLIST->moveMedia(row, row-1 );
+    QApplication::processEvents(); //this runs the inserted/removed functions
+    ui->list_local->setCurrentRow(row-1);
+  }
+}
+
+void MainUI::downLocalMedia(){
+  //NOTE: Only a single selection is possible at the present time
+  QList<QListWidgetItem*> sel = ui->list_local->selectedItems();
+  for(int i=0; i<sel.length(); i++){
+     int row = ui->list_local->row(sel[i]);
+    PLAYLIST->moveMedia(row, row+1 );
+    QApplication::processEvents(); //this runs the inserted/removed functions
+    ui->list_local->setCurrentRow(row+1);
+  }
+}
+
 void MainUI::localPlaybackSettingsChanged(){
   if(ui->tool_local_shuffle->isChecked()){ PLAYLIST->setPlaybackMode(QMediaPlaylist::Random); }
   else if(ui->tool_local_repeat->isChecked()){ PLAYLIST->setPlaybackMode(QMediaPlaylist::Loop); }
@@ -355,13 +380,22 @@ void MainUI::LocalListIndexChanged(int current){
 }
 
 void MainUI::LocalListMediaChanged(int start, int end){
+  //qDebug() << "List Media Changed";
+  QList<QListWidgetItem*> sel = ui->list_local->selectedItems();
+  QString selItem;
+  if(!sel.isEmpty()){ sel.first()->text(); }
+
   for(int i=start; i<end+1; i++){
     QUrl url = PLAYLIST->media(i).canonicalUrl();
     ui->list_local->item(i)->setText(url.toLocalFile().section("/",-1).simplified());
+    if(ui->list_local->item(i)->text()==selItem){
+      ui->list_local->setCurrentItem(ui->list_local->item(i));
+    }
   }
 }
 
 void MainUI::LocalListMediaInserted(int start, int end){
+ // qDebug() << "Media Inserted";
   for(int i=start; i<end+1; i++){
     QUrl url = PLAYLIST->media(i).canonicalUrl();
     ui->list_local->insertItem(i, url.toLocalFile().section("/",-1).simplified());
@@ -369,6 +403,7 @@ void MainUI::LocalListMediaInserted(int start, int end){
 }
 
 void MainUI::LocalListMediaRemoved(int start, int end){
+  //qDebug() << "Media Removed";
   for(int i=end; i>=start; i--){
     delete ui->list_local->takeItem(i);
   }
@@ -547,7 +582,7 @@ void MainUI::PandoraStationChanged(QString station){
   }
 }
 
-void MainUI::PandoraSongChanged(bool isLoved, QString title, QString artist, QString album, QString detailsURL, QString fromStation){
+void MainUI::PandoraSongChanged(bool isLoved, QString title, QString artist, QString album, QString detailsURL, QString){ // fromStation){
   //qDebug() << "[SONG CHANGE]" << isLoved << title << artist << album << detailsURL << fromStation;
   ui->tool_pandora_info->setWhatsThis(detailsURL);
   ui->tool_pandora_love->setChecked(isLoved);

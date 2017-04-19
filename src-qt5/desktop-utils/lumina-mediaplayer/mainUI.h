@@ -66,6 +66,8 @@ private slots:
 	void setLocalPosition(int pos){ PLAYER->setPosition(pos); }
 	void addLocalMedia();
 	void rmLocalMedia();
+	void upLocalMedia();
+	void downLocalMedia();
 	void localPlaybackSettingsChanged();
 
 	//Local Playlist Feedback
