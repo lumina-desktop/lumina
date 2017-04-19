@@ -18,6 +18,7 @@ PianoBarProcess::PianoBarProcess(QWidget *parent) : QObject(parent){
   saveTimer = new QTimer(this);
   saveTimer->setInterval(100); //1/10 second (just enough to change a few settings at once before dumping to disk)
   saveTimer->setSingleShot(true);
+  makingStation = false;
   connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveSettingsFile()) );
   if( !loadSettings() ){ GenerateSettings(); }
 }
@@ -61,7 +62,19 @@ void PianoBarProcess::setCurrentStation(QString station){
   cstation = station;
   sendToProcess("s");
 }
-	
+
+void PianoBarProcess::answerQuestion(int selection){
+  QString sel;
+  if(selection>=0){ sel = QString::number(selection); }
+
+  if(makingStation && sel.isEmpty()){ makingStation = false; } //cancelled
+  sendToProcess(sel, true);
+  if(makingStation){ 
+    //Need to prompt to list all the available stations to switch over right away
+    sendToProcess("s");
+  }
+}
+
 void PianoBarProcess::deleteCurrentStation(){ //"d" -> "y"
   if(cstation == "QuickMix" || cstation=="Thumbprint Radio"){ return; } //cannot delete these stations - provided by Pandora itself
   sendToProcess("d"); //delete current station
@@ -70,17 +83,26 @@ void PianoBarProcess::deleteCurrentStation(){ //"d" -> "y"
   setCurrentStation("QuickMix"); //this is always a valid station
 }
 
-//void PianoBarProcess::createNewStation(); //"c"
+void PianoBarProcess::createNewStation(QString searchterm){ //"c" -> search term
+  sendToProcess("c");
+  sendToProcess(searchterm,true);
+  makingStation = true;
+}
+
 void PianoBarProcess::createStationFromCurrentSong(){ //"v" -> "s"
   sendToProcess("v");
   sendToProcess("s",true);
-  setCurrentStation("<NEW>"); //internal definition for auto-switching to a new station
+  makingStation = true;
+    //Need to prompt to list all the available stations to switch over right away
+    sendToProcess("s");
 }
 
 void PianoBarProcess::createStationFromCurrentArtist(){ //"v" -> "a"
   sendToProcess("v");
   sendToProcess("a",true);
-  setCurrentStation("<NEW>"); //internal definition for auto-switching to a new station
+  makingStation = true;
+    //Need to prompt to list all the available stations to switch over right away
+    sendToProcess("s");
 }
 
 //Settings Manipulation
@@ -266,7 +288,7 @@ void PianoBarProcess::ProcUpdate(){
       infoList << info[i].section(") ",1,-1).simplified();
       continue; //done handling this line
     }else if(!info[i].startsWith("[?]") && !infoList.isEmpty()){
-      emit NewList(infoList);
+      //emit NewList(infoList);
       infoList.clear();
     }
     //Now parse the lines for messages/etc
@@ -304,11 +326,12 @@ void PianoBarProcess::ProcUpdate(){
           if(infoList[j].startsWith("q ")){ infoList[j] = infoList[j].section("q ",1,-1); }
           if(infoList[j].startsWith("Q ")){ infoList[j] = infoList[j].section("Q ",1,-1); }
         }
-        if(cstation=="<NEW>"){
+        if(makingStation){
           //Compare the new list to the previous list and switch to the new one automatically
           for(int j=0; j<infoList.length(); j++){
             if(!stationList.contains(infoList[j])){ cstation = infoList[j]; break; }
           }
+          makingStation = false; //done changing the current station
         }
         stationList = infoList; //save this list for later
         infoList.clear();
@@ -324,7 +347,19 @@ void PianoBarProcess::ProcUpdate(){
             sendToProcess(QString::number(stationList.length()-1), true);
           }
         }
+      }else if( !infoList.isEmpty() ){
+        qDebug() << "Got Question with List:" << info[i] << infoList;
+        emit NewQuestion(info[i].section("[?]",1,-1).simplified(), infoList);
+      }else if(info[i].contains(" Select ") ){
+        qDebug() << "Got Question without List:" << info[i];
+        //Got a prompt without a list of answers - just cancel the prompt
+        sendToProcess("",true);
+        if(makingStation){
+          emit showError(tr("Could not find any matches. Please try a different search term"));
+          makingStation = false; //make sure this flag is reset
+        }
       }
+      infoList.clear(); //done with question - make sure this is cleared
 
     }else if(info[i].startsWith("#")){
       //Time Stamp

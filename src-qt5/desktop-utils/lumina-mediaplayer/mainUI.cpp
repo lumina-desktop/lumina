@@ -12,8 +12,9 @@
 #include <LUtils.h>
 #include <QDesktopServices>
 #include <QUrl>
-
+#include <QInputDialog>
 #include <QFileDialog>
+#include <QMessageBox>
 
 //#include "VideoWidget.h"
 
@@ -97,8 +98,9 @@ void MainUI::setupPandora(){
   connect(PANDORA, SIGNAL(NowPlayingStation(QString, QString)), this, SLOT(PandoraStationChanged(QString)) );
   connect(PANDORA, SIGNAL(NowPlayingSong(bool, QString,QString,QString, QString, QString)), this, SLOT(PandoraSongChanged(bool, QString, QString, QString, QString, QString)) );
   connect(PANDORA, SIGNAL(TimeUpdate(int, int)), this, SLOT(PandoraTimeUpdate(int,int)) );
-  connect(PANDORA, SIGNAL(NewList(QStringList)), this, SLOT(PandoraListInfo(QStringList)) );
+  connect(PANDORA, SIGNAL(NewQuestion(QString, QStringList)), this, SLOT(PandoraInteractivePrompt(QString, QStringList)) );
   connect(PANDORA, SIGNAL(StationListChanged(QStringList)), this, SLOT(PandoraStationListChanged(QStringList)) );
+  connect(PANDORA, SIGNAL(showError(QString)), this, SLOT(PandoraError(QString)) );
   //Setup a couple of the option lists
   ui->combo_pandora_quality->clear();
   ui->combo_pandora_quality->addItem(tr("Low"),"low");
@@ -126,6 +128,8 @@ void MainUI::setupPandora(){
   QMenu *tmp = new QMenu(this);
   tmp->addAction(ui->action_pandora_newstation_song);
   tmp->addAction(ui->action_pandora_newstation_artist);
+  tmp->addSeparator();
+  tmp->addAction(ui->action_pandora_newstation_search);
   ui->tool_pandora_stationadd->setMenu( tmp );
 
 }
@@ -160,6 +164,7 @@ void MainUI::setupConnections(){
   connect(ui->tool_pandora_stationrm, SIGNAL(clicked()), PANDORA, SLOT(deleteCurrentStation()) );
   connect(ui->action_pandora_newstation_artist, SIGNAL(triggered()), PANDORA, SLOT(createStationFromCurrentArtist()) );
   connect(ui->action_pandora_newstation_song, SIGNAL(triggered()), PANDORA, SLOT(createStationFromCurrentSong()) );
+  connect(ui->action_pandora_newstation_search, SIGNAL(triggered()), this, SLOT(createPandoraStation()) );
   connect(ui->line_pandora_email, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
   connect(ui->line_pandora_pass, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
   connect(ui->line_pandora_proxy, SIGNAL(textChanged(QString)), this, SLOT(checkPandoraSettings()) );
@@ -200,7 +205,7 @@ void MainUI::setupIcons(){
   ui->tool_pandora_stationadd->setIcon( LXDG::findIcon("list-add","") );
   ui->action_pandora_newstation_artist->setIcon( LXDG::findIcon("preferences-desktop-user","") );
   ui->action_pandora_newstation_song->setIcon( LXDG::findIcon("bookmark-audio","media-playlist-audio") );
-
+  ui->action_pandora_newstation_search->setIcon( LXDG::findIcon("edit-find", "document-find") );
 }
 
 void MainUI::setupTrayIcon(){
@@ -499,6 +504,13 @@ void MainUI::applyPandoraSettings(){
   }
 }
 
+void MainUI::createPandoraStation(){
+  //Prompt for a search string
+  QString srch = QInputDialog::getText(this, tr("Pandora: Create Station"),"", QLineEdit::Normal, tr("Search Term"));
+  if(srch.isEmpty()){ return; } //cancelled
+  PANDORA->createNewStation(srch); 
+}
+
 //Pandora Process Feedback
 void MainUI::PandoraStateChanged(PianoBarProcess::State state){
   //qDebug() << "[STATE CHANGE]" << state;
@@ -571,8 +583,13 @@ void MainUI::PandoraStationListChanged(QStringList list){
   if(index>=0){ ui->combo_pandora_station->setCurrentIndex(index); }
 }
 
-void MainUI::PandoraListInfo(QStringList list){
-  qDebug() << "[LIST INFO]" << list;
+void MainUI::PandoraInteractivePrompt(QString text, QStringList list){
+  QString sel = QInputDialog::getItem(this, tr("Pandora Question"), text, list, false);
+  PANDORA->answerQuestion( list.indexOf(sel) );
+}
+
+void MainUI::PandoraError(QString err){
+  QMessageBox::warning(this, tr("Pandora Error"), err);
 }
 
 //System Tray interactions

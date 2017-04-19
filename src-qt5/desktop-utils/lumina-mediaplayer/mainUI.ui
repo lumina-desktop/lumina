@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>385</width>
-    <height>416</height>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -673,7 +673,7 @@
      <x>0</x>
      <y>0</y>
      <width>385</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -809,6 +809,14 @@
    </property>
    <property name="text">
     <string>Show song notifications</string>
+   </property>
+  </action>
+  <action name="action_pandora_newstation_search">
+   <property name="text">
+    <string>Search...</string>
+   </property>
+   <property name="toolTip">
+    <string>Search for a new station</string>
    </property>
   </action>
  </widget>
