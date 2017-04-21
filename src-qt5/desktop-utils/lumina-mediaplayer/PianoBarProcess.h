@@ -40,6 +40,8 @@ public:
 	QStringList stations();
 	void setCurrentStation(QString station);
 
+	void answerQuestion(int selection = -1); //-1 = cancel
+
 	//Settings Manipulation
 	QString audioQuality(); 			// "audio_quality" = [low, medium, high]
 	void setAudioQuality(QString); 	// [low, medium, high]
@@ -49,6 +51,11 @@ public:
 	void setProxy(QString);
 	QString controlProxy();			//"control_proxy" = URL (example: "http://USER:PASSWORD@HOST:PORT/"  )
 	void setControlProxy(QString);
+
+	//libao audio driver control
+	QString currentAudioDriver();
+	QStringList availableAudioDrivers();
+	void setAudioDriver(QString driver);
 
 private:
 	//Process
@@ -71,6 +78,7 @@ private:
 	//Cached Info
 	QString cstation; //current station
 	QStringList stationList;
+	bool makingStation;
 
 public slots:
 	void play(); // "P"
@@ -87,7 +95,7 @@ public slots:
 	void bookmarkArtist(){ sendToProcess("b"); sendToProcess("a",true); } //"b"->"a"
 
 	void deleteCurrentStation(); //"d"
-	//void createNewStation(); //"c"
+	void createNewStation(QString searchterm); //"c"
 	void createStationFromCurrentSong(); //"v" -> "s"
 	void createStationFromCurrentArtist(); //"v" -> "a"
 
@@ -107,8 +115,9 @@ signals:
 	void NowPlayingStation(QString, QString); //[name, id]
 	void NowPlayingSong(bool, QString,QString,QString, QString, QString); //[isLoved, title, artist, album, detailsURL, fromStation]
 	void TimeUpdate(int, int); //[current secs, total secs];
-	void NewList(QStringList); //arranged in order: 0-end
+	void NewQuestion(QString, QStringList); //text, options arranged in order: 0-end
 	void StationListChanged(QStringList);
 	void currentStateChanged(PianoBarProcess::State);
+	void showError(QString); //important error message to show the user
 };
 #endif

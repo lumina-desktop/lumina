@@ -489,10 +489,10 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
       //Battery available - update the status button
       int charge = LOS::batteryCharge();
       QString TT, ICON;
-      if(charge<=5){ ICON="-caution"; }
-      else if(charge<=20){ ICON="-040"; }
-      else if(charge<=70){ ICON="-060"; }
-      else if(charge<=90){ ICON="-080"; }
+      if(charge<=5){ ICON="-20"; }
+      else if(charge<=20){ ICON="-40"; }
+      else if(charge<=70){ ICON="-60"; }
+      else if(charge<=90){ ICON="-80"; }
       else{ ICON="-100"; }
       if(LOS::batteryIsCharging()){
 	if(charge>=80){ ICON.clear(); } //for charging, there is no suffix to the icon name over 80%

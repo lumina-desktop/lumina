@@ -1,4 +1,0 @@
-special/file-zoom-in.svg
-special/file-zoom-out.svg
-special/image-zoom-in.svg
-special/image-zoom-out.svg

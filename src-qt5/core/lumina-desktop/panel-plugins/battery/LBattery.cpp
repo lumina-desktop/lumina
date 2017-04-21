@@ -43,37 +43,37 @@ void LBattery::updateBattery(bool force){
   if (icon != iconOld || force) {
     switch (icon) {
       case 0:
-        label->setPixmap( LXDG::findIcon("battery-caution", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-20","battery-caution").pixmap(label->size()) );
         break;
       case 1:
-        label->setPixmap( LXDG::findIcon("battery-040", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-40", "battery-040").pixmap(label->size()) );
         break;
       case 2:
-        label->setPixmap( LXDG::findIcon("battery-060", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-60", "battery-060").pixmap(label->size()) );
         break;
       case 3:
-        label->setPixmap( LXDG::findIcon("battery-080", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-80", "battery-080").pixmap(label->size()) );
         break;
       case 4:
-        label->setPixmap( LXDG::findIcon("battery-100", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-100", "battery").pixmap(label->size()) );
         break;
       case 10:
-        label->setPixmap( LXDG::findIcon("battery-charging-caution", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-20", "battery-charging-caution").pixmap(label->size()) );
         break;
       case 11:
-        label->setPixmap( LXDG::findIcon("battery-charging-040", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-040", "battery-charging-040").pixmap(label->size()) );
         break;
       case 12:
-        label->setPixmap( LXDG::findIcon("battery-charging-060", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-060", "battery-charging-060").pixmap(label->size()) );
         break;
       case 13:
-        label->setPixmap( LXDG::findIcon("battery-charging-080", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-080", "battery-charging-080").pixmap(label->size()) );
         break;
       case 14:
-        label->setPixmap( LXDG::findIcon("battery-charging", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-100", "battery-charging").pixmap(label->size()) );
         break;
       default:
-        label->setPixmap( LXDG::findIcon("battery-missing", "").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-unknown", "battery-missing").pixmap(label->size()) );
         break;
     }
     if(icon<iconOld && icon==0){
