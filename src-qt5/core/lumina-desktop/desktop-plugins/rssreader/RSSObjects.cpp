@@ -79,6 +79,7 @@ void RSSReader::removeUrl(QString ID){
 //    PUBLIC SLOTS
 //=================
 void RSSReader::syncNow(){
+  outstandingURLS.clear();
   QStringList urls = hash.keys();
   for(int i=0; i<urls.length(); i++){
     requestRSS(hash[urls[i]].originalURL);
@@ -245,11 +246,12 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     //RSS reply
     RSSchannel info = readRSS(data); //QNetworkReply can be used as QIODevice
     reply->deleteLater(); //clean up
-    //Validate the info and announce any changes
-    if(info.title.isEmpty() || info.link.isEmpty() || info.description.isEmpty()){ 
-      qDebug() << "Missing XML Information:" << url << info.title << info.link << info.description;
+    //Validate the info and announce any changes (4/21/17 - make the description optional even if RSS format requires it - Ken Moore)
+    if(info.title.isEmpty() || info.link.isEmpty() ){ 
+      qDebug() << "Missing XML Information:" << url << info.title << info.link;
       return; 
     } //bad info/read
+
     //Update the bookkeeping elements of the info
     if(info.timetolive<=0){ info.timetolive = LSession::handle()->DesktopPluginSettings()->value(setprefix+"default_interval_minutes", 60).toInt(); }
     if(info.timetolive <=0){ info.timetolive = 60; } //error in integer conversion from settings?
