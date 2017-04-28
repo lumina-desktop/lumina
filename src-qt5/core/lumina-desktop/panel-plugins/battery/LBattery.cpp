@@ -61,13 +61,13 @@ void LBattery::updateBattery(bool force){
         label->setPixmap( LXDG::findIcon("battery-charging-20", "battery-charging-caution").pixmap(label->size()) );
         break;
       case 11:
-        label->setPixmap( LXDG::findIcon("battery-charging-040", "battery-charging-040").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-40", "battery-charging-040").pixmap(label->size()) );
         break;
       case 12:
-        label->setPixmap( LXDG::findIcon("battery-charging-060", "battery-charging-060").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-60", "battery-charging-060").pixmap(label->size()) );
         break;
       case 13:
-        label->setPixmap( LXDG::findIcon("battery-charging-080", "battery-charging-080").pixmap(label->size()) );
+        label->setPixmap( LXDG::findIcon("battery-charging-80", "battery-charging-080").pixmap(label->size()) );
         break;
       case 14:
         label->setPixmap( LXDG::findIcon("battery-charging-100", "battery-charging").pixmap(label->size()) );
