@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>385</width>
-    <height>479</height>
+    <width>405</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,65 +31,17 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame_type">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
-        <number>1</number>
-       </property>
-       <item>
-        <widget class="QToolButton" name="radio_local">
-         <property name="text">
-          <string>Local Files</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextBesideIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="radio_pandora">
-         <property name="text">
-          <string>Pandora Radio</string>
-         </property>
-         <property name="icon">
-          <iconset resource="extra/resources.qrc">
-           <normaloff>:/pandora</normaloff>:/pandora</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextBesideIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_local">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <widget class="QTabWidget" name="tabWidget_local">
+          <property name="tabPosition">
+           <enum>QTabWidget::West</enum>
+          </property>
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -298,6 +250,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QTabWidget" name="tabWidget_pandora">
+          <property name="tabPosition">
+           <enum>QTabWidget::West</enum>
+          </property>
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -717,7 +672,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>385</width>
+     <width>405</width>
      <height>24</height>
     </rect>
    </property>
@@ -763,8 +718,8 @@
    <addaction name="actionStop"/>
    <addaction name="actionBack"/>
    <addaction name="actionNext"/>
-   <addaction name="actionVolDown"/>
-   <addaction name="actionVolUp"/>
+   <addaction name="radio_local"/>
+   <addaction name="radio_pandora"/>
   </widget>
   <action name="actionPlay">
    <property name="text">
@@ -862,6 +817,32 @@
    </property>
    <property name="toolTip">
     <string>Search for a new station</string>
+   </property>
+  </action>
+  <action name="radio_pandora">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="extra/resources.qrc">
+     <normaloff>:/pandora</normaloff>:/pandora</iconset>
+   </property>
+   <property name="text">
+    <string>Pandora Radio</string>
+   </property>
+   <property name="toolTip">
+    <string>Stream from Pandora Radio</string>
+   </property>
+  </action>
+  <action name="radio_local">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Local Files</string>
+   </property>
+   <property name="toolTip">
+    <string>Play Local Files</string>
    </property>
   </action>
  </widget>

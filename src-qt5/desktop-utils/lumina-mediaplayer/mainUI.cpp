@@ -21,14 +21,15 @@
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   closing = false;
+  DISABLE_VIDEO = true; //add a toggle in the UI for this later
   //Any special UI changes
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-  ui->toolBar->insertWidget(ui->actionVolDown, spacer);
+  ui->toolBar->insertWidget(ui->radio_local, spacer);
   //Setup an action group for the various modes/streams
-  QButtonGroup *grp = new QButtonGroup(this);
-    grp->addButton(ui->radio_local);
-    grp->addButton(ui->radio_pandora);
+  QActionGroup *grp = new QActionGroup(this);
+    grp->addAction(ui->radio_local);
+    grp->addAction(ui->radio_pandora);
     grp->setExclusive(true);
 
   ui->radio_pandora->setChecked(true);
@@ -59,7 +60,7 @@ void MainUI::setupPlayer(){
   ui->videoLayout->addWidget(VIDEO);
 
   //Now setup the interfaces between all these objects
-  PLAYER->setVideoOutput(VIDEO);
+  if(!DISABLE_VIDEO){ PLAYER->setVideoOutput(VIDEO); }
   PLAYER->setPlaylist(PLAYLIST);
   PLAYER->setVolume(100); //just maximize this - will be managed outside this app
 
@@ -419,7 +420,8 @@ void MainUI::LocalListMediaRemoved(int start, int end){
 }*/
 
 void MainUI::LocalVideoAvailable(bool avail){
-  //qDebug() << "Local VideoAvailable:" << avail;
+  qDebug() << "Local VideoAvailable:" << avail;
+  if(DISABLE_VIDEO){ avail = false; } //TEMPORARY DISABLE while working out gstreamer issues when video widget is hidden
   //if(ui->tabWidget_local->currentWidget()==ui->tab_local_playing && avail){ 
     VIDEO->setVisible(avail);
   //}
@@ -478,7 +480,7 @@ void MainUI::LocalStateChanged(QMediaPlayer::State state){
   }else if(state == QMediaPlayer::PlayingState && !ui->tabWidget_local->isTabEnabled(0)){
     ui->tabWidget_local->setTabEnabled(0,true);
     ui->tabWidget_local->setCurrentWidget(ui->tab_local_playing);
-  }else if(PLAYER->mediaStatus()== QMediaPlayer::BufferingMedia || PLAYER->mediaStatus()==QMediaPlayer::BufferedMedia){
+  }else if(!DISABLE_VIDEO && (PLAYER->mediaStatus()== QMediaPlayer::BufferingMedia || PLAYER->mediaStatus()==QMediaPlayer::BufferedMedia) ){
     if(VIDEO->isVisible() != PLAYER->isVideoAvailable()){ VIDEO->setVisible(PLAYER->isVideoAvailable()); }
   }
 

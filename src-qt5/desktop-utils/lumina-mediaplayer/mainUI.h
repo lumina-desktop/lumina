@@ -40,7 +40,7 @@ private:
 	QVideoWidget *VIDEO;
 	QMediaPlaylist *PLAYLIST;
 	QSystemTrayIcon *SYSTRAY;
-	bool closing;
+	bool closing, DISABLE_VIDEO;
 
 	void setupPlayer();
 	void setupPandora();
