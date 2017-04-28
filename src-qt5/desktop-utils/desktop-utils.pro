@@ -10,5 +10,6 @@ SUBDIRS+= lumina-fm \
 	lumina-textedit \
 	lumina-calculator \
 	lumina-archiver \
-	lumina-notify
+	lumina-notify \
+	lumina-mediaplayer
 #	lumina-terminal
