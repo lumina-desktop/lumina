@@ -20,6 +20,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
+  SETTINGS = new QSettings("lumina-desktop","lumina-mediaplayer");
   closing = false;
   DISABLE_VIDEO = true; //add a toggle in the UI for this later
   //Any special UI changes
@@ -32,7 +33,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     grp->addAction(ui->radio_pandora);
     grp->setExclusive(true);
 
-  ui->radio_pandora->setChecked(true);
+  //Load the previously-saved user settings
+  ui->action_closeToTray->setChecked( SETTINGS->value("CloseToTrayWhenActive",true).toBool() );
+  ui->action_showNotifications->setChecked( SETTINGS->value("ShowNotifications",true).toBool() );
+
+  ui->radio_local->setChecked(true); //default
   setupPlayer();
   setupPandora();
   setupTrayIcon();
@@ -138,6 +143,8 @@ void MainUI::setupPandora(){
 void MainUI::setupConnections(){
   connect(ui->radio_local, SIGNAL(toggled(bool)), this, SLOT(PlayerTypeChanged(bool)) );
   connect(ui->radio_pandora, SIGNAL(toggled(bool)), this, SLOT(PlayerTypeChanged(bool)) );
+  connect(ui->action_closeToTray, SIGNAL(toggled(bool)), this, SLOT(PlayerSettingsChanged()) );
+  connect(ui->action_showNotifications, SIGNAL(toggled(bool)), this, SLOT(PlayerSettingsChanged()) );
 
   connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(playToggled()) );
   connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pauseToggled()) );
@@ -265,6 +272,11 @@ void MainUI::PlayerTypeChanged(bool active){
   if(!ui->radio_pandora->isChecked() && PANDORA->currentState()!=PianoBarProcess::Stopped){ PANDORA->closePianoBar(); }
   else if(!ui->radio_local->isChecked() && PLAYER->state()!=QMediaPlayer::StoppedState){ PLAYER->stop(); }
 
+}
+
+void MainUI::PlayerSettingsChanged(){
+  SETTINGS->setValue("CloseToTrayWhenActive", ui->action_closeToTray->isChecked() );
+  SETTINGS->setValue("ShowNotifications", ui->action_showNotifications->isChecked() );
 }
 
 
