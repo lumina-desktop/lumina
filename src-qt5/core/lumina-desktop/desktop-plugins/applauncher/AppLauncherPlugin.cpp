@@ -109,7 +109,7 @@ void AppLauncherPlugin::loadButton(){
     this->contextMenu()->addAction(LXDG::findIcon("edit-rename","edit-new"), tr("Rename"), this, SLOT(fileRename()) );
   }
   this->contextMenu()->addAction(LXDG::findIcon("edit-copy",""), tr("Copy"), this, SLOT(fileCopy()) );
-  if(info.isWritable() || (info.isSymLink() && QFileInfo(info.canonicalPath()).isWritable() ) ){
+  if(info.isWritable() || (info.isSymLink() && QFileInfo(info.absolutePath()).isWritable() ) ){
     this->contextMenu()->addAction(LXDG::findIcon("edit-cut",""), tr("Cut"), this, SLOT(fileCut()) );
     this->contextMenu()->addAction(LXDG::findIcon("document-close",""), tr("Delete"), this, SLOT(fileDelete()) );
   }
