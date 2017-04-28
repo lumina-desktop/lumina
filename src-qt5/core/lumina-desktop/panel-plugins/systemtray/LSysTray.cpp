@@ -80,6 +80,7 @@ void LSysTray::checkAll(){
   if(!isRunning || stopping || checking){ pending = true; return; } //Don't check if not running at the moment
   checking = true;
   pending = false;
+  bool listChanged = false;
   //Make sure this tray should handle the windows (was not disabled in the backend)
   bool TrayRunning = LSession::handle()->registerVisualTray(this->winId());
   //qDebug() << "System Tray: Check tray apps";
@@ -94,6 +95,7 @@ void LSysTray::checkAll(){
       LI->removeWidget(cont);
       cont->deleteLater();
       i--; //List size changed
+      listChanged = true;
       //Re-adjust the maximum widget size to account for what is left
       if(this->layout()->direction()==QBoxLayout::LeftToRight){
         this->setMaximumSize( trayIcons.length()*this->height(), 10000);
@@ -103,7 +105,7 @@ void LSysTray::checkAll(){
     }else{
       //Tray Icon already exists
       //qDebug() << " - SysTray: Update Icon";
-      trayIcons[i]->update();
+      //trayIcons[i]->repaint();
       wins.removeAt(index); //Already found - remove from the list
     }
   }
@@ -139,13 +141,14 @@ void LSysTray::checkAll(){
 	continue;
       }
     LI->update(); //make sure there is no blank space in the layout
+    listChanged = true;
   }
-  /*if(listChanged){
+  if(listChanged){
     //Icons got moved around: be sure to re-draw all of them to fix visuals
     for(int i=0; i<trayIcons.length(); i++){
-      trayIcons[i]->update();
+      trayIcons[i]->repaint();
     }
-  }*/
+  }
   //qDebug() << " - System Tray: check done";
   checking = false;
   if(pending){ QTimer::singleShot(0,this, SLOT(checkAll()) ); }
@@ -164,4 +167,3 @@ void LSysTray::UpdateTrayWindow(WId win){
   //qDebug() << "System Tray: Missing Window - check all";
   QTimer::singleShot(0,this, SLOT(checkAll()) );
 }
-
