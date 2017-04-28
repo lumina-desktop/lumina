@@ -800,24 +800,24 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   QStringList srch; srch << "icontheme" << "default" << "fallback";
   for(int i=0; i<srch.length() && ico.isNull(); i++){
     //Look for a svg first
-    if(QFile::exists(srch[i]+":"+iconName+".svg") ){
+    if(QFile::exists(srch[i]+":"+iconName+".svg") && !iconName.contains("libreoffice") ){
         //Be careful about how an SVG is loaded - needs to render the image onto a paint device
-        QSvgRenderer svg;
+        /*QSvgRenderer svg;
         if( svg.load(srch[i]+":"+iconName+".svg") ){
 	  //Could be loaded - now check that it is version 1.1+ (Qt has issues with 1.0? (LibreOffice Icons) )
 	  float version = 1.1; //only downgrade files that explicitly set the version as older
 	  QString svginfo = LUtils::readFile(srch[i]+":"+iconName+".svg").join("\n").section("<svg",1,1).section(">",0,0);
 	  svginfo.replace("\t"," "); svginfo.replace("\n"," ");
 	  if(svginfo.contains(" version=")){ version = svginfo.section(" version=\"",1,1).section("\"",0,0).toFloat(); }
-	  if(version>=1.1){
+	  if(version>=1.1){*/
             ico.addFile(srch[i]+":"+iconName+".svg"); //could be loaded/parsed successfully
-	  }else{
+	  /*}else{
 	    //qDebug() << "Old SVG Version file:" << iconName+".svg  Theme:" << srch[i];
 	    //qDebug() << "SVGInfo:" << svginfo;
 	  }
         }else{
           qDebug() << "Found bad SVG file:" << iconName+".svg  Theme:" << srch[i];
-        }
+        }*/
     }
     if(QFile::exists(srch[i]+":"+iconName+".png")){
       //simple PNG image - load directly into the QIcon structure
