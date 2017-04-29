@@ -73,6 +73,7 @@ int main(int argc, char ** argv)
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
+    unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //causes pixel-specific scaling issues with the desktop - turn this on after-the-fact for other apps
     //Startup the session
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }

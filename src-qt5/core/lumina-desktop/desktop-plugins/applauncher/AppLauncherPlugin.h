@@ -35,6 +35,7 @@ private:
 	QToolButton *button;
 	QFileSystemWatcher *watcher;
 	//QMenu *menu;
+	QInputDialog *inputDLG;
 
 private slots:
 	void loadButton();
@@ -49,6 +50,10 @@ private slots:
 	void openWith();
 	void fileProperties();
 	void fileDelete();
+	void fileCut();
+	void fileCopy();
+	void fileRename();
+	void renameFinished(int result);
 
 public slots:
 	void LocaleChange(){

@@ -13,6 +13,7 @@
 #include <QStringList>
 #include <QSystemTrayIcon>
 #include <QCloseEvent>
+#include <QSettings>
 
 //QMultimedia classes
 #include <QMediaPlayer>
@@ -41,6 +42,7 @@ private:
 	QMediaPlaylist *PLAYLIST;
 	QSystemTrayIcon *SYSTRAY;
 	bool closing, DISABLE_VIDEO;
+	QSettings *SETTINGS;
 
 	void setupPlayer();
 	void setupPandora();
@@ -52,6 +54,7 @@ private:
 private slots:
 	void closeApplication();
 	void PlayerTypeChanged(bool active = true);
+	void PlayerSettingsChanged();
 
 	//Toolbar actions
 	void playToggled();
