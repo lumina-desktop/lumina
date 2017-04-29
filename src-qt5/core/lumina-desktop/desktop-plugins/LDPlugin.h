@@ -35,6 +35,7 @@ private:
 	QSettings *settings;
 	QMenu *menu, *contextM;
 	QTimer *dragTimer;
+	//QRect gridRect; //Current Geometry in grid coordinates.
 
 	void setupMenu();
 
@@ -90,6 +91,9 @@ public:
 	
 	}
 	
+	void setGridGeometry(QRect grid){ settings->setValue(prefix+"geometry/gridLocation", grid); }
+	QRect gridGeometry(){ return settings->value(prefix+"geometry/gridLocation",QRect()).toRect(); }
+
 public slots:
 	virtual void LocaleChange(){
 	  //This needs to be re-implemented in the subclassed plugin
