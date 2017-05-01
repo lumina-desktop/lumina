@@ -72,11 +72,22 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="check_desktop_autolaunchers">
-     <property name="text">
-      <string>Display Desktop Folder Contents</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="check_desktop_autolaunchers">
+       <property name="text">
+        <string>Display Desktop Folder Contents</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="check_media_icons">
+       <property name="text">
+        <string>Display Removable Media Icons</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
