@@ -15,6 +15,7 @@
 int  main(int argc, char *argv[]) {
    LTHEME::LoadCustomEnvSettings();
    QApplication a(argc, argv);
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps);   
    LUtils::LoadTranslation(&a, "l-calc");
    //Now go ahead and setup the app
    //LuminaThemeEngine theme(&a);
