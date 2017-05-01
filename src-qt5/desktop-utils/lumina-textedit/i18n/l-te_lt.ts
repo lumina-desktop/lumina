@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsegti kortelę</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../MainUI.ui" line="220"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Kortelių vieta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
@@ -244,22 +244,22 @@
     <message>
         <location filename="../MainUI.ui" line="409"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Viršus</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="417"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Apačia</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="425"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Kairė</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Dešinė</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="61"/>
