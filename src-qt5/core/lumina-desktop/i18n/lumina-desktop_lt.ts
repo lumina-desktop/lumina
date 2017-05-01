@@ -246,7 +246,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation>Viskas turi savo grožį, tačiau ne visi tai mato.</translation>
+        <translation>Viskas turi savo grožį, tačiau ne visi jį mato.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
@@ -692,7 +692,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifikuoti elementą</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
