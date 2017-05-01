@@ -471,7 +471,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Applications</source>
         <translation>アプリケーション</translation>
     </message>
@@ -679,168 +679,168 @@
         <translation>強調表示されたアイテムで使用される色 (より控えめな色)。</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper Settings</source>
         <translation>壁紙の設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Change background image(s)</source>
         <translatorcomment>画面下の説明文</translatorcomment>
         <translation>背景画像を変更する</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme Settings</source>
         <translation>テーマ設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change interface fonts and colors</source>
         <translation>インターフェイスのフォントや配色を変更する</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Window Effects</source>
         <translation>ウインドウの効果</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Adjust transparency levels and window effects</source>
         <translation>透過レベルとウインドウの表示高価を設定します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Startup Settings</source>
         <translation>起動時の設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Automatically start applications or services</source>
         <translation>自動で起動するアプリケーションやサービスの設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
         <translation>壁紙</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
         <translation>テーマ</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
         <translation>自動起動</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Mimetype Settings</source>
         <translation>MIME タイプの設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Change default applications</source>
         <translation>通常使用するアプリケーションを変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Keyboard Shortcuts</source>
         <translation>キーボードショートカット</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change keyboard shortcuts</source>
         <translation>キーボードショートカットを変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Manager</source>
         <translation>ウインドウマネージャー</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Settings</source>
         <translation>ウィンドウの設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change window settings and appearances</source>
         <translation>ウインドウの挙動や外見を変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
         <translation>デスクトップ</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
         <translation>パネル</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
         <translation>メニュー</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop Plugins</source>
         <translation>デスクトッププラグイン</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change what icons or tools are embedded on the desktop</source>
         <translation>デスクトップに組み込むアイコンやツールを変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels and Plugins</source>
         <translation>パネルとプラグイン</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change any floating panels and what they show</source>
         <translation>フローティングパネルとそこに表示する内容を変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu Plugins</source>
         <translation>メニュープラグイン</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change what options are shown on the desktop context menu</source>
         <translation>デスクトップのコンテキストメニューで表示するオプションを変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Locale Settings</source>
         <translation>ロケール設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change the default locale settings for this user</source>
         <translation>自分のロケール設定を変更します</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Localization</source>
         <translation>ローカライズ</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>General Options</source>
         <translation>一般設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>User Settings</source>
         <translation>ユーザー設定</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change basic user settings such as time/date formats</source>
         <translation>時刻/日付表示などのユーザー別の表示設定を変更します</translation>
     </message>
@@ -1026,37 +1026,37 @@
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="67"/>
+        <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
         <translation>自動起動するサービス</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Select Binary</source>
         <translation>プログラムを選択</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Application Binaries (*)</source>
         <translation>アプリケーションプログラム (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>Invalid Binary</source>
         <translation>無効なプログラムです</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
         <translation>選択されたファイルは実行可能ファイルではありません。</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>Select File</source>
         <translation>ファイルの選択</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>All Files (*)</source>
         <translation>すべてのファイル (*)</translation>
     </message>
@@ -1079,7 +1079,7 @@
         <translation>GPU アクセラレーションが有効なときだけ使用する </translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.cpp" line="38"/>
+        <location filename="../pages/page_compton.cpp" line="37"/>
         <source>Window Effects</source>
         <translation type="unfinished">ウインドウの効果</translation>
     </message>
@@ -1163,32 +1163,32 @@
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="43"/>
+        <location filename="../pages/page_defaultapps.cpp" line="42"/>
         <source>Default Applications</source>
         <translation>通常使用するアプリケーション</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="153"/>
+        <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
         <translation>クリックして設定</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="89"/>
+        <location filename="../pages/page_defaultapps.cpp" line="88"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="273"/>
+        <location filename="../pages/page_defaultapps.cpp" line="272"/>
         <source>Select Binary</source>
         <translation>プログラムを選択</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>Invalid Binary</source>
         <translation>無効なプログラムです</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
         <translation>選択したプログラムは実行可能ではありません。</translation>
     </message>
@@ -1262,37 +1262,37 @@
 &quot;Control&quot;:	Ctrl キー</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
         <source>Keyboard Shortcuts</source>
         <translation>キーボードショートカット</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
         <translation>音声ボリューム上昇</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
         <translation>音声ボリューム減少</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Screen Brightness Up</source>
         <translation>画面を明るくする</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Down</source>
         <translation>画面を暗くする</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
         <translation>スクリーンショットを撮る</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Lock Screen</source>
         <translation>画面のロック</translation>
     </message>
@@ -1341,47 +1341,47 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="182"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="181"/>
         <source>No Preview Available</source>
         <translation>プレビューは利用できません</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
         <source>Window Manager Settings</source>
         <translation>ウィンドウマネージャーの設定</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
         <translation>クリックでフォーカス</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
         <translation>マウスを操作してウィンドウ上に乗せるとフォーカス</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="78"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Strict Mouse Focus</source>
         <translation>マウスがウィンドウ上に乗っているとフォーカス</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
         <translation>横方向に開く</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
         <translation>縦方向に開く</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Cascade</source>
         <translation>前に開いたウインドウの下にカスケードさせる</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
         <translation>マウスの下で開く</translation>
     </message>
@@ -1399,12 +1399,17 @@
         <translation>内蔵ユーティリティー</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.ui" line="77"/>
+        <location filename="../pages/page_interface_desktop.ui" line="79"/>
         <source>Display Desktop Folder Contents</source>
         <translation>Desktop フォルダーの内容を表示する</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
+        <location filename="../pages/page_interface_desktop.ui" line="86"/>
+        <source>Display Removable Media Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_desktop.cpp" line="56"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>
@@ -1422,7 +1427,7 @@
         <translation>コンテキストメニュープラグイン</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_menu.cpp" line="47"/>
+        <location filename="../pages/page_interface_menu.cpp" line="46"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>
@@ -1445,7 +1450,7 @@
         <translation>インポート</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="59"/>
+        <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>
@@ -1541,12 +1546,12 @@
         <translation>ctype (文字判別処理)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="48"/>
+        <location filename="../pages/page_session_locale.cpp" line="47"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="92"/>
+        <location filename="../pages/page_session_locale.cpp" line="91"/>
         <source>System Default</source>
         <translation>システムのデフォルト</translation>
     </message>
@@ -1636,162 +1641,162 @@
         <translation>Lumina のデフォルト設定に戻す</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="19"/>
+        <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
         <translation>時刻 (日付はツールチップで表示)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="20"/>
+        <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
         <translation>日付 (時刻はツールチップで表示)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="21"/>
+        <location filename="../pages/page_session_options.cpp" line="20"/>
         <source>Time first then Date</source>
         <translation>時刻を日付より先に表示</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="22"/>
+        <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Date first then Time</source>
         <translation>日付を時刻より先に表示</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="82"/>
+        <location filename="../pages/page_session_options.cpp" line="81"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="125"/>
+        <location filename="../pages/page_session_options.cpp" line="124"/>
         <source>Select an image</source>
         <translation>画像ファイルを選択</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="126"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Images</source>
         <translation>画像</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Reset User Image</source>
         <translation>ユーザー画像のリセット</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>ユーザー画像をリセットしてシステムのデフォルトに戻しますか?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="168"/>
         <source>Valid Time Codes:</source>
         <translation>有効な時刻設定コード:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: 先頭の0が無い時間を表示する (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: 先頭に0を付けて時間を表示する (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: 先頭の0が無い分を表示する (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: 先頭に0を付けて分を表示する (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: 先頭の0が無い秒を表示する (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: 先頭に0を付けて秒を表示する (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: 午前/午後 (12時間表示になります) (大文字と小文字を区別します)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: Timezone</source>
         <translation>%1: タイムゾーン</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>Time Codes</source>
         <translation>時刻設定コード</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Valid Date Codes:</source>
         <translation>有効な日付設定コード:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="193"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: 先頭の0が無い日を表示する (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="194"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: 先頭に0を付けて日を表示する (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="195"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: 短縮した曜日を表示する (言語設定で変わる)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="196"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: 完全な曜日を表示する (言語設定で変わる)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="197"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: 数字で先頭の0が無い月を表示する (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="198"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: 数字で先頭に0を付けた日を表示する (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="199"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: 月の名前を短縮表示する (言語設定で変わる)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="200"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: 月の名前を完全表示する (言語設定で変わる)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="201"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: 2桁の年数を表示する (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="202"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: 4桁の年数を表示する (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="203"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>シングルクォートで囲まれた文字は日付への置き換え対象から外れます。</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="204"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Date Codes</source>
         <translation>日付設定コード</translation>
     </message>
@@ -1934,120 +1939,120 @@
         <translation>配置:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="56"/>
+        <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
         <translation>壁紙の設定</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="65"/>
         <source>System Default</source>
         <translation>システムのデフォルト</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="67"/>
-        <location filename="../pages/page_wallpaper.cpp" line="222"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="221"/>
         <source>Solid Color: %1</source>
         <translation>指定色: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="78"/>
+        <location filename="../pages/page_wallpaper.cpp" line="77"/>
         <source>Screen Resolution:</source>
         <translation>画面の解像度:</translation>
     </message>
     <message>
+        <location filename="../pages/page_wallpaper.cpp" line="99"/>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
-        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>色の選択</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="119"/>
         <source>File(s)</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
         <translation>ディレクトリー(直下のみ)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="122"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
         <translation>ディレクトリー(再帰)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="123"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Solid Color</source>
         <translation>指定色</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="126"/>
         <source>Automatic</source>
         <translation>自動配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Fullscreen</source>
         <translation>フルスクリーン</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fit screen</source>
         <translation>画面の大きさに合わせる</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Tile</source>
         <translation>タイル状に並べる</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Center</source>
         <translation>中央に寄せる</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Top Left</source>
         <translation>左上に配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Right</source>
         <translation>右上に配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="134"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Bottom Left</source>
         <translation>左下に配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="135"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Right</source>
         <translation>右下に配置</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>No Background</source>
         <translation>背景が設定されていません</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>(use system default)</source>
         <translation>(システムのデフォルトを使用します)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="163"/>
+        <location filename="../pages/page_wallpaper.cpp" line="162"/>
         <source>File does not exist</source>
         <translation>ファイルは存在しません</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="203"/>
+        <location filename="../pages/page_wallpaper.cpp" line="202"/>
         <source>Find Background Image(s)</source>
         <translation>背景画像を検索する</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="234"/>
-        <location filename="../pages/page_wallpaper.cpp" line="259"/>
+        <location filename="../pages/page_wallpaper.cpp" line="233"/>
+        <location filename="../pages/page_wallpaper.cpp" line="258"/>
         <source>Find Background Image Directory</source>
         <translation>壁紙入りディレクトリーを開く</translation>
     </message>

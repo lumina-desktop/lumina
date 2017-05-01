@@ -467,7 +467,7 @@ Menimpanya?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Applications</source>
         <translation>Aplikasi</translation>
     </message>
@@ -674,167 +674,167 @@ Menimpanya?</translation>
         <translation>Warna yang digunakan untuk menyoroti item (lebih tenang).</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Change background image(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change interface fonts and colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Adjust transparency levels and window effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Startup Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Automatically start applications or services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Mimetype Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Change default applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished">Pintasan Papan Tik</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change keyboard shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change window settings and appearances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change what icons or tools are embedded on the desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels and Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change any floating panels and what they show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change what options are shown on the desktop context menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Locale Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change the default locale settings for this user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Localization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>General Options</source>
         <translation type="unfinished">Opsi umum</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>User Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change basic user settings such as time/date formats</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1017,37 +1017,37 @@ Menimpanya?</translation>
         <translation type="unfinished">Berkas</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="67"/>
+        <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Select Binary</source>
         <translation type="unfinished">pilih binari</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Application Binaries (*)</source>
         <translation type="unfinished">Aplikasi Bineri (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">binari tak valid</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
         <translation type="unfinished">Berkas yang dipilih bukan merupakan dieksekusi!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>Select File</source>
         <translation type="unfinished">Pilih Berkas</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>All Files (*)</source>
         <translation type="unfinished">Semua Berkas (*)</translation>
     </message>
@@ -1070,7 +1070,7 @@ Menimpanya?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.cpp" line="38"/>
+        <location filename="../pages/page_compton.cpp" line="37"/>
         <source>Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1154,32 +1154,32 @@ Menimpanya?</translation>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="43"/>
+        <location filename="../pages/page_defaultapps.cpp" line="42"/>
         <source>Default Applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="153"/>
+        <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
         <translation type="unfinished">Klik untuk set</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="89"/>
+        <location filename="../pages/page_defaultapps.cpp" line="88"/>
         <source>%1 (%2)</source>
         <translation type="unfinished">%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="273"/>
+        <location filename="../pages/page_defaultapps.cpp" line="272"/>
         <source>Select Binary</source>
         <translation type="unfinished">pilih binari</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">binari tak valid</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
         <translation type="unfinished">Biner yang dipilih tidak dieksekusi!</translation>
     </message>
@@ -1249,37 +1249,37 @@ Menimpanya?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished">Pintasan Papan Tik</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
         <translation type="unfinished">audio volume atas</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
         <translation type="unfinished">Audio Volume Turun</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Screen Brightness Up</source>
         <translation type="unfinished">kecerahan layar naik</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Down</source>
         <translation type="unfinished">kecerahan layar turun</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
         <translation type="unfinished">Ambil Cuplikan</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Lock Screen</source>
         <translation type="unfinished">Kunci Layar</translation>
     </message>
@@ -1328,47 +1328,47 @@ Menimpanya?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="182"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="181"/>
         <source>No Preview Available</source>
         <translation type="unfinished">Tak ada pratilik yang tersedia.</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
         <source>Window Manager Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
         <translation type="unfinished">Klik untuk fokus</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
         <translation type="unfinished">fokus tikus aktif</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="78"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Strict Mouse Focus</source>
         <translation type="unfinished">Ketat mouse Fokus</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
         <translation type="unfinished">Menyelaraskan berturut-turut</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
         <translation type="unfinished">Sejajarkan dalam kolom</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Cascade</source>
         <translation type="unfinished">Cascade</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
         <translation type="unfinished">di bawah mouse</translation>
     </message>
@@ -1386,12 +1386,17 @@ Menimpanya?</translation>
         <translation type="unfinished">Utilitas Tertanam</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.ui" line="77"/>
+        <location filename="../pages/page_interface_desktop.ui" line="79"/>
         <source>Display Desktop Folder Contents</source>
         <translation type="unfinished">Tampilkan Isi Folder Desktop</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
+        <location filename="../pages/page_interface_desktop.ui" line="86"/>
+        <source>Display Removable Media Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_desktop.cpp" line="56"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1409,7 +1414,7 @@ Menimpanya?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_menu.cpp" line="47"/>
+        <location filename="../pages/page_interface_menu.cpp" line="46"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1432,7 +1437,7 @@ Menimpanya?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="59"/>
+        <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1528,12 +1533,12 @@ Menimpanya?</translation>
         <translation type="unfinished">CType</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="48"/>
+        <location filename="../pages/page_session_locale.cpp" line="47"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="92"/>
+        <location filename="../pages/page_session_locale.cpp" line="91"/>
         <source>System Default</source>
         <translation type="unfinished">Standar Sistem</translation>
     </message>
@@ -1623,162 +1628,162 @@ Menimpanya?</translation>
         <translation type="unfinished">Kembali ke default Lumina</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="19"/>
+        <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
         <translation type="unfinished"> Waktu (Tanggal sebagai tooltip)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="20"/>
+        <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
         <translation type="unfinished">Tanggal (waktu muncul)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="21"/>
+        <location filename="../pages/page_session_options.cpp" line="20"/>
         <source>Time first then Date</source>
         <translation type="unfinished">Waktu pertama kemudian Tanggal</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="22"/>
+        <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Date first then Time</source>
         <translation type="unfinished">Kencan pertama kemudian Waktu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="82"/>
+        <location filename="../pages/page_session_options.cpp" line="81"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="125"/>
+        <location filename="../pages/page_session_options.cpp" line="124"/>
         <source>Select an image</source>
         <translation type="unfinished">Pilih gambar</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="126"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Images</source>
         <translation type="unfinished">Gambar</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Reset User Image</source>
         <translation type="unfinished">mulai ulang gambar</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation type="unfinished">mulai ulang sistem to gambar sistem default?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="168"/>
         <source>Valid Time Codes:</source>
         <translation type="unfinished">Kode Waktu:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation type="unfinished">% 1: Jam tanpa nol (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation type="unfinished">%1: Jam dengan (leading) nol terkemuka (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation type="unfinished">%1: Menit tanpa (leading) nol (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation type="unfinished">%1: Menit dengan (leading) nol (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation type="unfinished">%1: detik tanpa (leading) nol (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation type="unfinished">%1: detik dengan (leading) nol (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation type="unfinished">%1: AM/PM (12-jam) jam dinding (atas atau bawah kasus)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: Timezone</source>
         <translation type="unfinished">%1: zona Waktu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>Time Codes</source>
         <translation type="unfinished">Kode waktu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Valid Date Codes:</source>
         <translation type="unfinished">Sah Tanggal Kode:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="193"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation type="unfinished">% 1: hari numerik tanpa nol (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="194"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation type="unfinished">%1: Numeric hari dengan nol (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="195"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation type="unfinished">%1: Hari sebagai singkatan (lokal)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="196"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as full name (localized)</source>
         <translation type="unfinished">%1: Hari nama lengkap (lokal)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="197"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation type="unfinished">%1: bulan numerik tanpa nol (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="198"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation type="unfinished">%1: bulan numerik dengan nol terkemuka (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="199"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation type="unfinished">%1: Bulan sebagai singkatan (lokal)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="200"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as full name (localized)</source>
         <translation type="unfinished">%1: Bulan nama lengkap (lokal)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="201"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation type="unfinished">%1: Tahun nomor 2 digit (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="202"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation type="unfinished">%1: Tahun empat digit angka (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="203"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation type="unfinished">Teks dapat terkandung dalam tanda kutip tunggal untuk mengabaikan pengganti</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="204"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Date Codes</source>
         <translation type="unfinished">Tanggal Kode</translation>
     </message>
@@ -1921,120 +1926,120 @@ Menimpanya?</translation>
         <translation type="unfinished">Tata Letak:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="56"/>
+        <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="65"/>
         <source>System Default</source>
         <translation type="unfinished">Standar Sistem</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="67"/>
-        <location filename="../pages/page_wallpaper.cpp" line="222"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="221"/>
         <source>Solid Color: %1</source>
         <translation type="unfinished">Warna Solid: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="78"/>
+        <location filename="../pages/page_wallpaper.cpp" line="77"/>
         <source>Screen Resolution:</source>
         <translation type="unfinished">Resolusi Layar:</translation>
     </message>
     <message>
+        <location filename="../pages/page_wallpaper.cpp" line="99"/>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
-        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation type="unfinished">Pilih Warna</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="119"/>
         <source>File(s)</source>
         <translation type="unfinished">Berkas</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
         <translation type="unfinished">Direktori (tunggal)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="122"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
         <translation type="unfinished">Direktori (Rekursif)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="123"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Solid Color</source>
         <translation type="unfinished">Warna Solid</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="126"/>
         <source>Automatic</source>
         <translation type="unfinished">Otomatis</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fit screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Tile</source>
         <translation type="unfinished">Ubin</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Center</source>
         <translation type="unfinished">Tengah</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Top Left</source>
         <translation type="unfinished">Kiri Atas</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Right</source>
         <translation type="unfinished">Kanan Atas</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="134"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Bottom Left</source>
         <translation type="unfinished">Kiri Bawah</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="135"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Right</source>
         <translation type="unfinished">Kanan Bawah</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>No Background</source>
         <translation type="unfinished">tidak ada latar belakang</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>(use system default)</source>
         <translation type="unfinished">(menggunakan sistem standar)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="163"/>
+        <location filename="../pages/page_wallpaper.cpp" line="162"/>
         <source>File does not exist</source>
         <translation type="unfinished">berkas tidak ada</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="203"/>
+        <location filename="../pages/page_wallpaper.cpp" line="202"/>
         <source>Find Background Image(s)</source>
         <translation type="unfinished">menemukan gambar latar belakang</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="234"/>
-        <location filename="../pages/page_wallpaper.cpp" line="259"/>
+        <location filename="../pages/page_wallpaper.cpp" line="233"/>
+        <location filename="../pages/page_wallpaper.cpp" line="258"/>
         <source>Find Background Image Directory</source>
         <translation type="unfinished">Cari direktori gambar latar belakang</translation>
     </message>

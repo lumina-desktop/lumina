@@ -1165,5 +1165,10 @@ Localització nova: %2</translation>
         <source>Errors during operation. Click to view details</source>
         <translation>Hi ha hagut errors durant l&apos;operació. Cliqueu aquí per veure&apos;n els detalls.</translation>
     </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

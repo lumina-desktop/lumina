@@ -142,69 +142,69 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="51"/>
+        <location filename="../main.cpp" line="52"/>
         <source>File Error</source>
         <translation>Faili viga</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="188"/>
-        <location filename="../main.cpp" line="194"/>
+        <location filename="../main.cpp" line="189"/>
+        <location filename="../main.cpp" line="195"/>
         <source>Audio Volume %1%</source>
         <translation>Helitugevus %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="202"/>
-        <location filename="../main.cpp" line="211"/>
+        <location filename="../main.cpp" line="203"/>
+        <location filename="../main.cpp" line="212"/>
         <source>Screen Brightness %1%</source>
         <translation>Ekraani heledus %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="243"/>
+        <location filename="../main.cpp" line="244"/>
         <source>Invalid file or URL: %1</source>
         <translation>Vigane fail või aadress: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="264"/>
+        <location filename="../main.cpp" line="265"/>
         <source>Application entry is invalid: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="273"/>
+        <location filename="../main.cpp" line="276"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>Rakenduse otseteel puudub käivitamise info (vigane otsetee): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="286"/>
+        <location filename="../main.cpp" line="289"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Aadressi otseteel puudub aadress: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="297"/>
+        <location filename="../main.cpp" line="300"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Kausta otseteel puudub kausta rada: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="302"/>
+        <location filename="../main.cpp" line="305"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Teadmata tüüpi otsetee: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="365"/>
+        <location filename="../main.cpp" line="368"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="365"/>
+        <location filename="../main.cpp" line="368"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="415"/>
+        <location filename="../main.cpp" line="418"/>
         <source>Application Error</source>
         <translation>Programmi viga</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="415"/>
+        <location filename="../main.cpp" line="418"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>See rakendus sulgus, kuna esines viga:</translation>
     </message>

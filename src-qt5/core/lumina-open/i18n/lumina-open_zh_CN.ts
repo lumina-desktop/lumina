@@ -142,69 +142,69 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="51"/>
+        <location filename="../main.cpp" line="52"/>
         <source>File Error</source>
         <translation>文件错误</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="188"/>
-        <location filename="../main.cpp" line="194"/>
+        <location filename="../main.cpp" line="189"/>
+        <location filename="../main.cpp" line="195"/>
         <source>Audio Volume %1%</source>
         <translation>音频音量 %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="202"/>
-        <location filename="../main.cpp" line="211"/>
+        <location filename="../main.cpp" line="203"/>
+        <location filename="../main.cpp" line="212"/>
         <source>Screen Brightness %1%</source>
         <translation>屏幕亮度 %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="243"/>
+        <location filename="../main.cpp" line="244"/>
         <source>Invalid file or URL: %1</source>
         <translation>无效的文件或网址：%1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="264"/>
+        <location filename="../main.cpp" line="265"/>
         <source>Application entry is invalid: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="273"/>
+        <location filename="../main.cpp" line="276"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>应用程序快捷方式缺少启动信息（错误的快捷方式）：%1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="286"/>
+        <location filename="../main.cpp" line="289"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>网址快捷方式缺少网址 : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="297"/>
+        <location filename="../main.cpp" line="300"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>目录的快捷方式是丢失目录的路径 : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="302"/>
+        <location filename="../main.cpp" line="305"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>未知类型的快捷方式：%1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="365"/>
+        <location filename="../main.cpp" line="368"/>
         <source>Binary Missing</source>
         <translation>二进制文件丢失</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="365"/>
+        <location filename="../main.cpp" line="368"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>无法找到 “%1”。请确认它已被安装。</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="415"/>
+        <location filename="../main.cpp" line="418"/>
         <source>Application Error</source>
         <translation>应用程序出错</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="415"/>
+        <location filename="../main.cpp" line="418"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>下面的应用程序遇到错误，需要关闭</translation>
     </message>

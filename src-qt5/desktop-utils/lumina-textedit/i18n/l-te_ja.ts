@@ -41,6 +41,14 @@
     </message>
 </context>
 <context>
+    <name>DnDTabBar</name>
+    <message>
+        <location filename="../DnDTabBar.h" line="43"/>
+        <source>Detach Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainUI</name>
     <message>
         <location filename="../MainUI.ui" line="17"/>
@@ -48,216 +56,238 @@
         <translation>メインウィンドウ</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="49"/>
-        <source>Tab 1</source>
-        <translation>タブ 1</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="84"/>
+        <location filename="../MainUI.ui" line="66"/>
         <source>Find the previous match</source>
         <translation>前を検索</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="87"/>
-        <location filename="../MainUI.ui" line="100"/>
-        <location filename="../MainUI.ui" line="151"/>
-        <location filename="../MainUI.ui" line="164"/>
-        <location filename="../MainUI.ui" line="176"/>
+        <location filename="../MainUI.ui" line="69"/>
+        <location filename="../MainUI.ui" line="82"/>
+        <location filename="../MainUI.ui" line="133"/>
+        <location filename="../MainUI.ui" line="146"/>
+        <location filename="../MainUI.ui" line="158"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="186"/>
+        <location filename="../MainUI.ui" line="168"/>
         <source>Find:</source>
         <translation>検索:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="97"/>
+        <location filename="../MainUI.ui" line="79"/>
         <source>Find the next match</source>
         <translation>次を検索</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="107"/>
+        <location filename="../MainUI.ui" line="89"/>
         <source>Replace:</source>
         <translation>置換:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="126"/>
+        <location filename="../MainUI.ui" line="108"/>
         <source>Match case</source>
         <translation>大文字と小文字を区別する</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="148"/>
+        <location filename="../MainUI.ui" line="130"/>
         <source>Replace next match</source>
         <translation>次に一致した文字列を置換する</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="161"/>
+        <location filename="../MainUI.ui" line="143"/>
         <source>Replace all matches (to end of document)</source>
         <translation>すべて置換(ドキュメントの末尾まで)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="173"/>
+        <location filename="../MainUI.ui" line="155"/>
         <source>Hide the find/replace options</source>
         <translation>検索/置換オプションを隠す</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="214"/>
+        <location filename="../MainUI.ui" line="196"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="227"/>
+        <location filename="../MainUI.ui" line="209"/>
         <source>View</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="231"/>
+        <location filename="../MainUI.ui" line="213"/>
         <source>Syntax Highlighting</source>
         <translation>構文強調表示</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="220"/>
+        <source>Tabs Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="237"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="260"/>
+        <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="286"/>
+        <location filename="../MainUI.ui" line="278"/>
         <source>Show Line Numbers</source>
         <translation>行番号を表示する</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="283"/>
         <source>None</source>
         <translation>なし</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="296"/>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.ui" line="288"/>
+        <location filename="../MainUI.cpp" line="187"/>
         <source>New File</source>
         <translatorcomment>これ、メニューだけじゃなくて、新しいファイル作ったときのタブ名にもなる。</translatorcomment>
         <translation>新しいファイル</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="299"/>
+        <location filename="../MainUI.ui" line="291"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="307"/>
+        <location filename="../MainUI.ui" line="299"/>
         <source>Open File</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="310"/>
+        <location filename="../MainUI.ui" line="302"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="318"/>
+        <location filename="../MainUI.ui" line="310"/>
         <source>Save File</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="313"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"/>
+        <location filename="../MainUI.ui" line="321"/>
         <source>Save File As</source>
         <translatorcomment>ダイアログが必ず開かれるため、&quot;...&quot;を追加。</translatorcomment>
         <translation>名前を付けて保存...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="334"/>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="337"/>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="345"/>
+        <location filename="../MainUI.ui" line="337"/>
         <source>Close File</source>
         <translation>ファイルを閉じる</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="348"/>
+        <location filename="../MainUI.ui" line="340"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="356"/>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Customize Colors</source>
         <translation>色付けの変更</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="367"/>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Wrap Lines</source>
         <translation>行を折り返す</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="372"/>
+        <location filename="../MainUI.ui" line="364"/>
         <source>Find</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="375"/>
+        <location filename="../MainUI.ui" line="367"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="383"/>
+        <location filename="../MainUI.ui" line="375"/>
         <source>Replace</source>
         <translation>置換</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="386"/>
+        <location filename="../MainUI.ui" line="378"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="400"/>
+        <location filename="../MainUI.ui" line="392"/>
         <source>Show Popup Warnings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="403"/>
-        <location filename="../MainUI.ui" line="406"/>
+        <location filename="../MainUI.ui" line="395"/>
+        <location filename="../MainUI.ui" line="398"/>
         <source>Show warnings about unsaved changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="40"/>
+        <location filename="../MainUI.ui" line="409"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="417"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="425"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="61"/>
         <source>Text Editor</source>
         <translation>テキストエディター</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="161"/>
+        <location filename="../MainUI.cpp" line="194"/>
         <source>Open File(s)</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="161"/>
+        <location filename="../MainUI.cpp" line="194"/>
         <source>Text Files (*)</source>
         <translation>テキストファイル (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="296"/>
-        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="351"/>
+        <location filename="../MainUI.cpp" line="362"/>
+        <location filename="../MainUI.cpp" line="470"/>
         <source>Lose Unsaved Changes?</source>
         <translation>保存されていない変更を削除しますか?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="296"/>
+        <location filename="../MainUI.cpp" line="351"/>
+        <location filename="../MainUI.cpp" line="362"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -268,7 +298,7 @@ Do you want to close it anyway?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="470"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

@@ -332,8 +332,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>Das "lumina-fileinfo" Dienstprogramm konnte nicht gefunden werden. Bitte erst installieren.</translation>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>Das &quot;lumina-fileinfo&quot; Dienstprogramm konnte nicht gefunden werden. Bitte erst installieren.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -553,7 +553,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation>Benutzerdefinierter Wert für "depth"</translation>
+        <translation>Benutzerdefinierter Wert für &quot;depth&quot;</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
@@ -567,8 +567,8 @@ Neue Position: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
-        <translation>Auf "Weiter" klicken, um das Repository herunterzuladen</translation>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <translation>Auf &quot;Weiter&quot; klicken, um das Repository herunterzuladen</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -1165,6 +1165,11 @@ Neue Position: %2</translation>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
         <translation>Fehler während des Vorgangs. Zum Anzeigen von Details klicken</translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -17,7 +17,7 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="518"/>
+        <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
         <translation>Cattura schermata</translation>
     </message>
@@ -27,7 +27,7 @@
         <translation>Includi il bordo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="529"/>
+        <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
         <translation>Salva Come</translation>
     </message>
@@ -92,42 +92,47 @@
         <translation> Secondi di ritardo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Select Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="455"/>
+        <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="488"/>
+        <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="515"/>
+        <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Cattura</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="521"/>
+        <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="545"/>
+        <location filename="../MainUI.ui" line="556"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="548"/>
+        <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="551"/>
+        <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
         <translation>ESC</translation>
     </message>
@@ -147,52 +152,52 @@
         <translation>Singola Finestra</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="39"/>
+        <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
         <translation>Impossibile cattuare lo schermo</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>L&apos;immagine dello schermo non può essere salvata. Si prega di verificare i permessi della cartella o scegliere una cartella differente</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>Save Screenshot</source>
         <translation>Salva schermata</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="264"/>
+        <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="532"/>
+        <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="540"/>
+        <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
         <translation>Salvataggio Rapido</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>File PNG (*.png);;AllFiles (*)</translation>
     </message>

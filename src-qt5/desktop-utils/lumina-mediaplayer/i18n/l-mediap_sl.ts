@@ -5,14 +5,14 @@
     <name>MainUI</name>
     <message>
         <location filename="../mainUI.ui" line="14"/>
-        <location filename="../mainUI.cpp" line="261"/>
+        <location filename="../mainUI.cpp" line="268"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
-        <location filename="../mainUI.cpp" line="601"/>
+        <location filename="../mainUI.cpp" line="613"/>
         <source>Now Playing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -263,7 +263,7 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
-        <location filename="../mainUI.cpp" line="252"/>
+        <location filename="../mainUI.cpp" line="259"/>
         <source>Pandora Radio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,78 +283,78 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="91"/>
+        <location filename="../mainUI.cpp" line="96"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="94"/>
+        <location filename="../mainUI.cpp" line="99"/>
         <source>Stream music from the Pandora online radio service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="107"/>
+        <location filename="../mainUI.cpp" line="112"/>
         <source>Low</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="108"/>
+        <location filename="../mainUI.cpp" line="113"/>
         <source>Medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="109"/>
+        <location filename="../mainUI.cpp" line="114"/>
         <source>High</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="329"/>
+        <location filename="../mainUI.cpp" line="341"/>
         <source>Open Multimedia Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="376"/>
+        <location filename="../mainUI.cpp" line="388"/>
         <source>Now Playing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="441"/>
+        <location filename="../mainUI.cpp" line="453"/>
         <source>[PLAYBACK ERROR]
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="458"/>
+        <location filename="../mainUI.cpp" line="470"/>
         <source>Media Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="460"/>
+        <location filename="../mainUI.cpp" line="472"/>
         <source>Media Stalled...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="462"/>
+        <location filename="../mainUI.cpp" line="474"/>
         <source>Media Buffering...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="546"/>
+        <location filename="../mainUI.cpp" line="558"/>
         <source>Pandora: Create Station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="546"/>
+        <location filename="../mainUI.cpp" line="558"/>
         <source>Search Term</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="624"/>
+        <location filename="../mainUI.cpp" line="636"/>
         <source>Pandora Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="629"/>
+        <location filename="../mainUI.cpp" line="641"/>
         <source>Pandora Error</source>
         <translation type="unfinished"></translation>
     </message>

@@ -467,7 +467,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Applications</source>
         <translation>Aplikacje</translation>
     </message>
@@ -674,167 +674,167 @@
         <translation>Kolor używany do podświetlania obiektów (przygaszony).</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper Settings</source>
         <translation>Ustawienia tapety</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Change background image(s)</source>
         <translation>Zmień obraz tła</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme Settings</source>
         <translation>Ustawienia motywu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change interface fonts and colors</source>
         <translation>Zmień czcionki i kolory interfejsu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Window Effects</source>
         <translation>Efekty okna</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Adjust transparency levels and window effects</source>
         <translation>Dostosuj poziomy przeźroczystości i efekty okien</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Startup Settings</source>
         <translation>Ustawienia uruchamiania</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Automatically start applications or services</source>
         <translation>Automatycznie uruchom aplikacje lub usługi</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
         <translation>Tapeta</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
         <translation>Motyw</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
         <translation>Uruchamianie automatyczne</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Mimetype Settings</source>
         <translation>Ustawienia Mimetype</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Change default applications</source>
         <translation>Zmień domyślne aplikacje</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Keyboard Shortcuts</source>
         <translation>Skróty klawiszowe</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change keyboard shortcuts</source>
         <translation>Zmień skróty klawiszowe</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Manager</source>
         <translation>Menedżer okien</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Settings</source>
         <translation>Ustawienia okna</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change window settings and appearances</source>
         <translation>Zmień ustawienia i wygląd okna</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
         <translation>Pulpit</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
         <translation>Panele</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
         <translation>Menu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop Plugins</source>
         <translation>Wtyczki pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change what icons or tools are embedded on the desktop</source>
         <translation>Ikony lub narzędzia wyświetlane na pulpicie</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels and Plugins</source>
         <translation>Panele i wtyczki</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change any floating panels and what they show</source>
         <translation>Panele i ich zawartość</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu Plugins</source>
         <translation>Wtyczki menu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change what options are shown on the desktop context menu</source>
         <translation>Zmień, które opcje są widoczne w menu kontekstowym pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Locale Settings</source>
         <translation>Ustawienia regionalne</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change the default locale settings for this user</source>
         <translation>Zmień ustawienia językowe tego użytkownika</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Localization</source>
         <translation>Ustawienia językowe</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>General Options</source>
         <translation>Ustawienia ogólne</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>User Settings</source>
         <translation>Ustawienia użytkownika</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change basic user settings such as time/date formats</source>
         <translation>Zmień podstawowe ustawienia użytkownika, takie jak format daty/czasu</translation>
     </message>
@@ -1018,37 +1018,37 @@
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="67"/>
+        <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
         <translation>Usługi uruchamiane podczas startu</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Select Binary</source>
         <translation>Wybierz plik binarny</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Application Binaries (*)</source>
         <translation>Pliki binarne aplikacji (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>Invalid Binary</source>
         <translation>Nieprawidłowy plik binarny</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
         <translation>Wybrany plik nie jest wykonywalny!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>Select File</source>
         <translation>Wybierz plik</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>All Files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
@@ -1071,7 +1071,7 @@
         <translation>Menedżer kompozycji tylko z akceleracją GPU. </translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.cpp" line="38"/>
+        <location filename="../pages/page_compton.cpp" line="37"/>
         <source>Window Effects</source>
         <translation type="unfinished">Efekty okna</translation>
     </message>
@@ -1155,32 +1155,32 @@
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="43"/>
+        <location filename="../pages/page_defaultapps.cpp" line="42"/>
         <source>Default Applications</source>
         <translation>Domyślne programy</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="153"/>
+        <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
         <translation>Kliknij by ustawić</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="89"/>
+        <location filename="../pages/page_defaultapps.cpp" line="88"/>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="273"/>
+        <location filename="../pages/page_defaultapps.cpp" line="272"/>
         <source>Select Binary</source>
         <translation>Wybierz plik binarny</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>Invalid Binary</source>
         <translation>Nieprawidłowy plik binarny</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
         <translation>Wybrany plik binarny nie jest wykonywalny!</translation>
     </message>
@@ -1252,37 +1252,37 @@
 &quot;Control&quot;:  klawisz Ctrl</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
         <source>Keyboard Shortcuts</source>
         <translation>Skróty klawiszowe</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
         <translation>Zwiększenie głośności</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
         <translation>Zmniejszenie głośności</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Screen Brightness Up</source>
         <translation>Rozjaśnienie ekranu</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Down</source>
         <translation>Przyciemnienie ekranu</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
         <translation>Zrzut ekranu</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Lock Screen</source>
         <translation>Blokada ekranu</translation>
     </message>
@@ -1331,47 +1331,47 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="182"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="181"/>
         <source>No Preview Available</source>
         <translation>Podgląd niedostępny</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
         <source>Window Manager Settings</source>
         <translation>Ustawienia menadżera okien</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
         <translation>Kliknij, by uaktywnić</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
         <translation>Przesuń, by uaktywnić</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="78"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Strict Mouse Focus</source>
         <translation type="unfinished">Ścisłe skupienie kursora myszki</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
         <translation>Ustaw w rzędzie</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
         <translation>Ustaw w kolumnie</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Cascade</source>
         <translation>Kaskada</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
         <translation>Pod kursorem myszy</translation>
     </message>
@@ -1389,12 +1389,17 @@
         <translation>Narzędzia osadzone</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.ui" line="77"/>
+        <location filename="../pages/page_interface_desktop.ui" line="79"/>
         <source>Display Desktop Folder Contents</source>
         <translation>Wyświetl zawartość folderu pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
+        <location filename="../pages/page_interface_desktop.ui" line="86"/>
+        <source>Display Removable Media Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_desktop.cpp" line="56"/>
         <source>Desktop Settings</source>
         <translation>Ustawienia pulpitu</translation>
     </message>
@@ -1412,7 +1417,7 @@
         <translation>Wtyczki Menu Kontekstowego</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_menu.cpp" line="47"/>
+        <location filename="../pages/page_interface_menu.cpp" line="46"/>
         <source>Desktop Settings</source>
         <translation>Ustawienia pulpitu</translation>
     </message>
@@ -1435,7 +1440,7 @@
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="59"/>
+        <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Ustawienia pulpitu</translation>
     </message>
@@ -1531,12 +1536,12 @@
         <translation>CType</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="48"/>
+        <location filename="../pages/page_session_locale.cpp" line="47"/>
         <source>Desktop Settings</source>
         <translation>Ustawienia pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="92"/>
+        <location filename="../pages/page_session_locale.cpp" line="91"/>
         <source>System Default</source>
         <translation>Domyśle ustawienia systemu</translation>
     </message>
@@ -1626,162 +1631,162 @@
         <translation>Przywróć domyślne ustawienia Lumina</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="19"/>
+        <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
         <translation>Godzina (data jako podpowiedź)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="20"/>
+        <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
         <translation>Data (godzina jako podpowiedź)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="21"/>
+        <location filename="../pages/page_session_options.cpp" line="20"/>
         <source>Time first then Date</source>
         <translation>Najpierw godzina, a następnie data</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="22"/>
+        <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Date first then Time</source>
         <translation>Najpierw data, a następnie godzina</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="82"/>
+        <location filename="../pages/page_session_options.cpp" line="81"/>
         <source>Desktop Settings</source>
         <translation>Ustawienia pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="125"/>
+        <location filename="../pages/page_session_options.cpp" line="124"/>
         <source>Select an image</source>
         <translation>Wybierz obraz</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="126"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Images</source>
         <translation>Obrazy</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Reset User Image</source>
         <translation>Zresetuj obraz użytkownika</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Chcesz przywrócić obraz użytkownika do systemowych ustawień domyślnych?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="168"/>
         <source>Valid Time Codes:</source>
         <translation>Poprawne kody czasu:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Godzina bez zera z przodu (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Godzina z zerem z przodu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minuty bez zera z przodu (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minuty z zerem z przodu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Sekundy bez zera z przodu (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Sekundy z zerem z przodu (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM zegar 12-godzinny (duża lub mała litera)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: Timezone</source>
         <translation>%1: Strefa czasowa</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>Time Codes</source>
         <translation>Kody czasu</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Valid Date Codes:</source>
         <translation>Poprawne formaty daty:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="193"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Data w formie numerycznej bez zera z przodu (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="194"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Data w formie numerycznej z zerem z przodu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="195"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Dzień w formie skróconej (zlokalizowany)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="196"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Pełna nazwa dnia (zlokalizowana)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="197"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Miesiąc w formie numerycznej bez zera z przodu (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="198"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Miesiąc w formie numerycznej z zerem z przodu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="199"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Miesiąc w formie skróconej (zlokalizowany)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="200"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Pełna nazwa miesiąca (zlokalizowana)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="201"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Rok w formie dwucyfrowej (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="202"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Rok w formie czterocyfrowej (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="203"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Tekst może być zamknięty w pojedynczym cudzysłowie by zignorować zamienniki</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="204"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Date Codes</source>
         <translation>Kody daty</translation>
     </message>
@@ -1924,120 +1929,120 @@
         <translation>Układ:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="56"/>
+        <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
         <translation>Ustawienia tapety</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="65"/>
         <source>System Default</source>
         <translation>Domyśle ustawienia systemu</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="67"/>
-        <location filename="../pages/page_wallpaper.cpp" line="222"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="221"/>
         <source>Solid Color: %1</source>
         <translation>Jednolity kolor: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="78"/>
+        <location filename="../pages/page_wallpaper.cpp" line="77"/>
         <source>Screen Resolution:</source>
         <translation>Rozdzielczość ekranu:</translation>
     </message>
     <message>
+        <location filename="../pages/page_wallpaper.cpp" line="99"/>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
-        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation>Wybierz kolor</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="119"/>
         <source>File(s)</source>
         <translation>Plik(i)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
         <translation>Katalog(pojedynczy)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="122"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
         <translation>Katalog(rekursywny)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="123"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Solid Color</source>
         <translation>Kolor jednolity</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="126"/>
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Fullscreen</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fit screen</source>
         <translation>Dopasuj do ekranu</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Tile</source>
         <translation>Kafelki</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Center</source>
         <translation>Środek</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Top Left</source>
         <translation>Lewy górny</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Right</source>
         <translation>Prawy górny</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="134"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Bottom Left</source>
         <translation>Lewy dolny</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="135"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Right</source>
         <translation>Prawy dolny</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>No Background</source>
         <translation>Brak tła</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>(use system default)</source>
         <translation>(użyj ustawień domyślnych)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="163"/>
+        <location filename="../pages/page_wallpaper.cpp" line="162"/>
         <source>File does not exist</source>
         <translation>Plik nie istnieje</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="203"/>
+        <location filename="../pages/page_wallpaper.cpp" line="202"/>
         <source>Find Background Image(s)</source>
         <translation>Znajdź obrazy tła pulpitu</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="234"/>
-        <location filename="../pages/page_wallpaper.cpp" line="259"/>
+        <location filename="../pages/page_wallpaper.cpp" line="233"/>
+        <location filename="../pages/page_wallpaper.cpp" line="258"/>
         <source>Find Background Image Directory</source>
         <translation>Znajdź katalog z obrazami tła</translation>
     </message>

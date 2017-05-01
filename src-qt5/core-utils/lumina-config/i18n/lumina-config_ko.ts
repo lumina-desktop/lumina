@@ -468,7 +468,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Applications</source>
         <translation>프로그램</translation>
     </message>
@@ -675,167 +675,167 @@
         <translation>아이템을 강조할 때 사용되는 색상 (좀 더 억제됨).</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Change background image(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change interface fonts and colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="31"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Adjust transparency levels and window effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Startup Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Automatically start applications or services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="29"/>
+        <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="30"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="32"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Mimetype Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="33"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Change default applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished">키보드 단축키</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="34"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change keyboard shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Window Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="35"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change window settings and appearances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="36"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change what icons or tools are embedded on the desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels and Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="37"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change any floating panels and what they show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="38"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change what options are shown on the desktop context menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Locale Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change the default locale settings for this user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="39"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Localization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>General Options</source>
         <translation type="unfinished">일반적인 설정</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>User Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/getPage.h" line="40"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change basic user settings such as time/date formats</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1019,37 +1019,37 @@
         <translation type="unfinished">파일</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="67"/>
+        <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Select Binary</source>
         <translation type="unfinished">실행 파일 선택</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="134"/>
+        <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Application Binaries (*)</source>
         <translation type="unfinished">프로그램 실행 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">잘못된 실행 파일</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="137"/>
+        <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
         <translation type="unfinished">선택한 파일은 실행할 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>Select File</source>
         <translation type="unfinished">파일 선택</translation>
     </message>
     <message>
-        <location filename="../pages/page_autostart.cpp" line="151"/>
+        <location filename="../pages/page_autostart.cpp" line="150"/>
         <source>All Files (*)</source>
         <translation type="unfinished">모든 파일 (*)</translation>
     </message>
@@ -1072,7 +1072,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.cpp" line="38"/>
+        <location filename="../pages/page_compton.cpp" line="37"/>
         <source>Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1156,32 +1156,32 @@
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="43"/>
+        <location filename="../pages/page_defaultapps.cpp" line="42"/>
         <source>Default Applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="153"/>
+        <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
         <translation type="unfinished">설정하기 위해 누름</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="89"/>
+        <location filename="../pages/page_defaultapps.cpp" line="88"/>
         <source>%1 (%2)</source>
         <translation type="unfinished">%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="273"/>
+        <location filename="../pages/page_defaultapps.cpp" line="272"/>
         <source>Select Binary</source>
         <translation type="unfinished">실행 파일 선택</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>Invalid Binary</source>
         <translation type="unfinished">잘못된 실행 파일</translation>
     </message>
     <message>
-        <location filename="../pages/page_defaultapps.cpp" line="280"/>
+        <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
         <translation type="unfinished">선택한 파일은 실행할 수 없습니다!</translation>
     </message>
@@ -1251,37 +1251,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished">키보드 단축키</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
         <translation type="unfinished">오디오 볼륨 올리기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
         <translation type="unfinished">오디오 볼륨 내리기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Screen Brightness Up</source>
         <translation type="unfinished">화면 밝기 올리기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Down</source>
         <translation type="unfinished">화면 밝기 내리기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
         <translation type="unfinished">스크린샷 찍기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_keys.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Lock Screen</source>
         <translation type="unfinished">화면 잠그기</translation>
     </message>
@@ -1330,47 +1330,47 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="182"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="181"/>
         <source>No Preview Available</source>
         <translation type="unfinished">미리 보기 없음</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="71"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
         <source>Window Manager Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
         <translation type="unfinished">활성화하기 위해 누름</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
         <translation type="unfinished">활성화된 마우스 초점</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="78"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Strict Mouse Focus</source>
         <translation type="unfinished">엄격한 마우스 초점</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
         <translation type="unfinished">열에 맞추기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
         <translation type="unfinished">행에 맞추기</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Cascade</source>
         <translation type="unfinished">계단식 배열</translation>
     </message>
     <message>
-        <location filename="../pages/page_fluxbox_settings.cpp" line="84"/>
+        <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
         <translation type="unfinished">마우스 아래</translation>
     </message>
@@ -1388,12 +1388,17 @@
         <translation type="unfinished">내장된 도구</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.ui" line="77"/>
+        <location filename="../pages/page_interface_desktop.ui" line="79"/>
         <source>Display Desktop Folder Contents</source>
         <translation type="unfinished">바탕 화면 폴더 내용 보기</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_desktop.cpp" line="55"/>
+        <location filename="../pages/page_interface_desktop.ui" line="86"/>
+        <source>Display Removable Media Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_desktop.cpp" line="56"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1411,7 +1416,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_menu.cpp" line="47"/>
+        <location filename="../pages/page_interface_menu.cpp" line="46"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1434,7 +1439,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="59"/>
+        <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1530,12 +1535,12 @@
         <translation type="unfinished">CType</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="48"/>
+        <location filename="../pages/page_session_locale.cpp" line="47"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_locale.cpp" line="92"/>
+        <location filename="../pages/page_session_locale.cpp" line="91"/>
         <source>System Default</source>
         <translation type="unfinished">시스템 기본값</translation>
     </message>
@@ -1625,162 +1630,162 @@
         <translation type="unfinished">루미나 기본값으로 돌아가기</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="19"/>
+        <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
         <translation type="unfinished">시간 (날짜는 툴팁으로)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="20"/>
+        <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
         <translation type="unfinished">날짜 (시간은 툴팁으로)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="21"/>
+        <location filename="../pages/page_session_options.cpp" line="20"/>
         <source>Time first then Date</source>
         <translation type="unfinished">시간 다음 날짜</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="22"/>
+        <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Date first then Time</source>
         <translation type="unfinished">날짜 다음 시간</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="82"/>
+        <location filename="../pages/page_session_options.cpp" line="81"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="125"/>
+        <location filename="../pages/page_session_options.cpp" line="124"/>
         <source>Select an image</source>
         <translation type="unfinished">그림 선택</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="126"/>
+        <location filename="../pages/page_session_options.cpp" line="125"/>
         <source>Images</source>
         <translation type="unfinished">그림</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Reset User Image</source>
         <translation type="unfinished">사용자 그림 재설정</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="130"/>
+        <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation type="unfinished">사용자 그림을 시스템 기본값으로 재설정 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="168"/>
         <source>Valid Time Codes:</source>
         <translation type="unfinished">유효한 시간 코드:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="169"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation type="unfinished">%1: 앞에 0이 없는 시 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="170"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation type="unfinished">%1: 앞에 0이 있는 시 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="171"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation type="unfinished">%1: 앞에 0이 없는 분 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="172"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation type="unfinished">%1: 앞에 0이 있는 분 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="173"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation type="unfinished">%1: 앞에 0이 없는 초 (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation type="unfinished">%1: 앞에 0이 있는 초 (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation type="unfinished">%1: 오전/오후 (12 시간) 시계</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>%1: Timezone</source>
         <translation type="unfinished">%1: 시간대</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="178"/>
+        <location filename="../pages/page_session_options.cpp" line="177"/>
         <source>Time Codes</source>
         <translation type="unfinished">시간 코드</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Valid Date Codes:</source>
         <translation type="unfinished">유효한 날짜 코드:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="193"/>
+        <location filename="../pages/page_session_options.cpp" line="192"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation type="unfinished">%1: 앞에 0이 없는 숫자화된 요일 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="194"/>
+        <location filename="../pages/page_session_options.cpp" line="193"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation type="unfinished">%1: 앞에 0이 있는 숫자화된 요일 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="195"/>
+        <location filename="../pages/page_session_options.cpp" line="194"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation type="unfinished">%1: 요일의 짧은 이름 (지역화됨)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="196"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as full name (localized)</source>
         <translation type="unfinished">%1: 요일의 긴 이름 (지역화됨)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="197"/>
+        <location filename="../pages/page_session_options.cpp" line="196"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation type="unfinished">%1: 앞에 0이 없는 숫자화된 달 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="198"/>
+        <location filename="../pages/page_session_options.cpp" line="197"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation type="unfinished">%1: 앞에 0이 있는 숫자화된 달 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="199"/>
+        <location filename="../pages/page_session_options.cpp" line="198"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation type="unfinished">%1: 달의 짧은 이름 (지역화됨)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="200"/>
+        <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as full name (localized)</source>
         <translation type="unfinished">%1: 달의 긴 이름 (지역화됨)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="201"/>
+        <location filename="../pages/page_session_options.cpp" line="200"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation type="unfinished">%1: 2자리 숫자로 된 해 (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="202"/>
+        <location filename="../pages/page_session_options.cpp" line="201"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation type="unfinished">%1: 4자리 숫자로 된 해 (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="203"/>
+        <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation type="unfinished">치환을 방지하기 위해 작은 따옴표 안에 문자를 사용할 수 있음</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="204"/>
+        <location filename="../pages/page_session_options.cpp" line="203"/>
         <source>Date Codes</source>
         <translation type="unfinished">날짜 코드</translation>
     </message>
@@ -1923,120 +1928,120 @@
         <translation type="unfinished">배치:</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="56"/>
+        <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="65"/>
         <source>System Default</source>
         <translation type="unfinished">시스템 기본값</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="67"/>
-        <location filename="../pages/page_wallpaper.cpp" line="222"/>
+        <location filename="../pages/page_wallpaper.cpp" line="66"/>
+        <location filename="../pages/page_wallpaper.cpp" line="221"/>
         <source>Solid Color: %1</source>
         <translation type="unfinished">단색: %1</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="78"/>
+        <location filename="../pages/page_wallpaper.cpp" line="77"/>
         <source>Screen Resolution:</source>
         <translation type="unfinished">화면 해상도:</translation>
     </message>
     <message>
+        <location filename="../pages/page_wallpaper.cpp" line="99"/>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
-        <location filename="../pages/page_wallpaper.cpp" line="101"/>
         <source>Select Color</source>
         <translation type="unfinished">색상 선택</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="120"/>
+        <location filename="../pages/page_wallpaper.cpp" line="119"/>
         <source>File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="121"/>
+        <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="122"/>
+        <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="123"/>
+        <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Solid Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="127"/>
+        <location filename="../pages/page_wallpaper.cpp" line="126"/>
         <source>Automatic</source>
         <translation type="unfinished">자동</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="128"/>
+        <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="129"/>
+        <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fit screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="130"/>
+        <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Tile</source>
         <translation type="unfinished">바둑판식</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="131"/>
+        <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Center</source>
         <translation type="unfinished">가운데</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="132"/>
+        <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Top Left</source>
         <translation type="unfinished">왼쪽 위</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="133"/>
+        <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Right</source>
         <translation type="unfinished">오른쪽 위</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="134"/>
+        <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Bottom Left</source>
         <translation type="unfinished">왼쪽 아래</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="135"/>
+        <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Right</source>
         <translation type="unfinished">오른쪽 아래</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>No Background</source>
         <translation type="unfinished">배경 없음</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="143"/>
+        <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>(use system default)</source>
         <translation type="unfinished">(시스템 기본값 사용)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="163"/>
+        <location filename="../pages/page_wallpaper.cpp" line="162"/>
         <source>File does not exist</source>
         <translation type="unfinished">파일이 없습니다</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="203"/>
+        <location filename="../pages/page_wallpaper.cpp" line="202"/>
         <source>Find Background Image(s)</source>
         <translation type="unfinished">배경 그림 찾기</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="234"/>
-        <location filename="../pages/page_wallpaper.cpp" line="259"/>
+        <location filename="../pages/page_wallpaper.cpp" line="233"/>
+        <location filename="../pages/page_wallpaper.cpp" line="258"/>
         <source>Find Background Image Directory</source>
         <translation type="unfinished"></translation>
     </message>

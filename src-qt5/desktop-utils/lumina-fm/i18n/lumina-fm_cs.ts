@@ -1165,5 +1165,10 @@ Nové umístění: %2</translation>
         <source>Errors during operation. Click to view details</source>
         <translation>Chyby během operace. Klepněte pro zobrazení podrobností</translation>
     </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

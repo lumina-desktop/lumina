@@ -1183,5 +1183,10 @@ New Location: %2</source>
         <source>Errors during operation. Click to view details</source>
         <translation>操作中にエラーが発生しました。詳細をクリックしてください</translation>
     </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

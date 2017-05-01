@@ -1165,5 +1165,10 @@ Nauja vieta: %2</translation>
         <source>Errors during operation. Click to view details</source>
         <translation>Klaidos operacijos metu. Spustelėkite, kad pamatytumėte išsamesnę informaciją</translation>
     </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
