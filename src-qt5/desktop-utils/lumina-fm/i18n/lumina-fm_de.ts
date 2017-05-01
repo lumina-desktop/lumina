@@ -59,37 +59,37 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">Größe</translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Änderungsdatum</translation>
+        <translation>Änderungsdatum</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
-        <translation type="unfinished">Erstellungsdatum</translation>
+        <translation>Erstellungsdatum</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Kapazität: %1</translation>
+        <translation>Kapazität: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Dateien: %1 (%2)</translation>
+        <translation>Dateien: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Verzeichnisse: %1</translation>
+        <translation>Verzeichnisse: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
@@ -273,7 +273,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="236"/>
@@ -332,8 +332,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Das &quot;lumina-fileinfo&quot; Dienstprogramm konnte nicht gefunden werden. Bitte erst installieren.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Das "lumina-fileinfo" Dienstprogramm konnte nicht gefunden werden. Bitte erst installieren.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -553,7 +553,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation>Benutzerdefinierter Wert für &quot;depth&quot;</translation>
+        <translation>Benutzerdefinierter Wert für "depth"</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
@@ -567,8 +567,8 @@ Neue Position: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Auf &quot;Weiter&quot; klicken, um das Repository herunterzuladen</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Auf "Weiter" klicken, um das Repository herunterzuladen</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -1013,7 +1013,7 @@ Neue Position: %2</translation>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1159,7 +1159,7 @@ Neue Position: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Abgeschlossen</translation>
+        <translation>Abgeschlossen</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>

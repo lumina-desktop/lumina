@@ -39,52 +39,52 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina Bildschirmfoto</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfoto mit einer Anwendung öffnen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfoto in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe des Bildschirmfotos auf Auswahl anpassen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfoto auf Auswahl zuschneiden</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zuschneiden</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmaufnahmeeinstellungen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeine Einstellungen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="455"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="548"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwendung schließen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="551"/>
@@ -149,12 +149,12 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
@@ -174,12 +174,12 @@
     <message>
         <location filename="../MainUI.cpp" line="264"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht gespeichertes Bildschirmfoto</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="265"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Das aktuelle Bildschirmfoto wurde noch nicht gespeichert. Möchten Sie Ihre Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="532"/>
