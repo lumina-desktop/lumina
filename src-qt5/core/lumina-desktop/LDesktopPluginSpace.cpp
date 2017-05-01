@@ -74,7 +74,9 @@ void LDesktopPluginSpace::setBackground(QPixmap pix){
 }
 
 void LDesktopPluginSpace::setDesktopArea(QRect area){
+  //qDebug() << "Setting Desktop Plugin Area:" << area;
   desktopRect = area;
+  
 }
 
 // ===================
@@ -85,7 +87,7 @@ void LDesktopPluginSpace::UpdateGeom(int oldgrid){
   //Go through and check the locations/sizes of all items (particularly the ones on the bottom/right edges)
   //bool reload = false;
   for(int i=0; i<ITEMS.length(); i++){
-    QRect grid = geomToGrid(ITEMS[i]->geometry(), oldgrid);
+    QRect grid = ITEMS[i]->gridGeometry(); //geomToGrid(ITEMS[i]->geometry(), oldgrid);
     if(DEBUG){ qDebug() << " - Check Plugin:" << ITEMS[i]->whatsThis() << grid; }
     if( !ValidGrid(grid) ){
       //This plugin is too far out of the screen - find new location for it
@@ -99,11 +101,8 @@ void LDesktopPluginSpace::UpdateGeom(int oldgrid){
       i--;
     }else{
       //NOTE: We are not doing the ValidGeometry() checks because we are only resizing existing plugin with pre-set & valid grid positions
-      grid = gridToGeom(grid); //convert to pixels before saving/sizing
-      MovePlugin(ITEMS[i], grid);
-      /*ITEMS[i]->setGeometry( grid );
-      ITEMS[i]->setFixedSize(grid.size());
-      ITEMS[i]->savePluginGeometry(grid);*/
+      ITEMS[i]->setGridGeometry(grid); //save the new grid position for later
+      MovePlugin(ITEMS[i], gridToGeom(grid)); //convert to pixels before saving/sizing (desktop canvas might have moved)
     }
   }
   //if(reload){ QTimer::singleShot(0,this, SLOT(reloadPlugins())); }
@@ -123,9 +122,13 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
     if(plug==0){ return; } //invalid plugin
     //plug->setAttribute(Qt::WA_TranslucentBackground);
     plug->setWhatsThis(plugID);
-  //Now get the geometry for the plugin
-  QRect geom = plug->loadPluginGeometry(); //in pixel coords
-  if(!geom.isNull()){ geom = geomToGrid(geom); } //convert to grid coordinates
+  //Now get the saved geometry for the plugin
+  QRect geom = plug->gridGeometry(); //grid coordinates
+  if(geom.isNull()){
+    geom = plug->loadPluginGeometry(); //in pixel coords
+    if(!geom.isNull()){ geom = geomToGrid(geom); } //convert to grid coordinates
+  }
+  //Now determine the position to put it
   if(geom.isNull()){
     //No previous location - need to calculate initial geom
     QSize sz = plug->defaultPluginSize(); //in grid coordinates
@@ -143,6 +146,7 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   }else{
     if(DEBUG){ qDebug() <<  " - New Plugin Geometry (grid):" << geom; }
     //Now place the item in the proper spot/size
+    plug->setGridGeometry(geom); //save for later
     MovePlugin(plug, gridToGeom(geom));
     //plug->setGeometry( gridToGeom(geom) );
     plug->show();
@@ -170,7 +174,8 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
   colCount = RoundUp(desktopRect.width()/GRIDSIZE);
   if( (row+gridheight)>rowCount){ row = rowCount-gridheight; startRow = row; }
   if( (col+gridwidth)>colCount){ col = colCount-gridwidth; startCol = col; }
-  QRect geom(0, 0, gridwidth*GRIDSIZE, gridheight*GRIDSIZE); //origin point will be adjusted in a moment
+  QRect geom = gridToGeom( QRect(startCol, startRow, gridwidth, gridheight) );
+  //qDebug() << "Find Open Space:" <<geom << QRect(startCol, startRow, gridwidth, gridheight);
   if(DEBUG){ qDebug() << "Search for plugin space:" << rowCount << colCount << gridheight << gridwidth << this->size(); }
   if(TopToBottom && reversed && (startRow>0 || startCol>0) ){
     //Arrange Top->Bottom (work backwards)
@@ -178,7 +183,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
     while(col>=0 && !found){
       while(row>=0 && !found){
         bool ok = true;
-        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+        geom.moveTo(  gridToPos(QPoint(col,row)) ); //col*GRIDSIZE+desktopRect.x(), row*GRIDSIZE+desktopRect.y());
 	//qDebug() << " - Check Geom:" << geom << col << row;
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
@@ -200,7 +205,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
     while(col<(colCount-gridwidth) && !found){
       while(row<(rowCount-gridheight) && !found){
         bool ok = true;
-        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+        geom.moveTo( gridToPos(QPoint(col,row)) ); //col*GRIDSIZE+desktopRect.x(), row*GRIDSIZE+desktopRect.y());
 	//qDebug() << " - Check Geom:" << geom << col << row;
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
@@ -221,7 +226,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
     while(row>=0 && !found){
       while(col>=0 && !found){
         bool ok = true;
-        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+        geom.moveTo( gridToPos(QPoint(col,row)) ); //col*GRIDSIZE, row*GRIDSIZE);
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
 	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict
@@ -241,7 +246,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
     while(row<(rowCount-gridheight) && !found){
       while(col<(colCount-gridwidth) && !found){
         bool ok = true;
-        geom.moveTo(col*GRIDSIZE, row*GRIDSIZE);
+        geom.moveTo( gridToPos(QPoint(col,row)) ); //col*GRIDSIZE, row*GRIDSIZE);
         //Check all the existing items to ensure no overlap
         for(int i=0; i<ITEMS.length() && ok; i++){
 	  if(ITEMS[i]->whatsThis()==plugID){ continue; } //same plugin - this is not a conflict

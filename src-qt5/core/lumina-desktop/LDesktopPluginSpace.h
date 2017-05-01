@@ -60,6 +60,7 @@ private:
 	int RoundUp(double num){
 	 int out = num; //This will truncate the number
 	 if(out < num){ out++; } //need to increase by 1
+	  //qDebug() << "Round Up:" << num << "->" << out;
 	 return out;
 	}
 
@@ -71,35 +72,42 @@ private:
 	QRect findOpenSpot(QRect grid, QString plugID, bool recursive = false);
 	
 	QPoint posToGrid(QPoint pos){
-	  //This assumes a point in widget-relative coordinates
-	  pos.setX( RoundUp(pos.x()/GRIDSIZE));
-	  pos.setY( RoundUp(pos.y()/GRIDSIZE));
+	  pos.setX( RoundUp((pos.x()-desktopRect.x())/GRIDSIZE));
+	  pos.setY( RoundUp((pos.y()-desktopRect.y())/GRIDSIZE));
 	  return pos;
+	}
+
+	QPoint gridToPos(QPoint grid){
+	  grid.setX( (grid.x()*GRIDSIZE)+desktopRect.x() );
+	  grid.setY( (grid.y()*GRIDSIZE)+desktopRect.y() );
+	  return grid;
 	}
 	
 	QRect geomToGrid(QRect geom, int grid = -1){
 	  if(grid<0){ 
 	    //use the current grid size
-	    return QRect( RoundUp(geom.x()/GRIDSIZE), RoundUp(geom.y()/GRIDSIZE), \
+	   return QRect( RoundUp((geom.x()-desktopRect.x())/GRIDSIZE), RoundUp((geom.y()-desktopRect.y())/GRIDSIZE), \
 			RoundUp(geom.width()/GRIDSIZE), RoundUp(geom.height()/GRIDSIZE) );
+	    //qDebug() << "Geom to Grid:" << geom << desktopRect << tmp << GRIDSIZE;
+	    //return tmp;
 	  }else{
 	    //use the input grid size
-	    return QRect( RoundUp(geom.x()/((double) grid)), RoundUp(geom.y()/((double) grid)), \
+	    return QRect( RoundUp((geom.x()-desktopRect.x())/((double) grid)), RoundUp((geom.y()-desktopRect.y())/((double) grid)), \
 			RoundUp(geom.width()/((double) grid)), RoundUp(geom.height()/((double) grid)) );
 	  }
 	}
 	
 	QRect gridToGeom(QRect grid){
 	  //This function incorporates the bottom/right edge matchins procedures (for incomplete last grid)
-	  QRect geom(grid.x()*GRIDSIZE, grid.y()*GRIDSIZE, grid.width()*GRIDSIZE, grid.height()*GRIDSIZE);
+	  QRect geom((grid.x()*GRIDSIZE)+desktopRect.x(), (grid.y()*GRIDSIZE)+desktopRect.y(), grid.width()*GRIDSIZE, grid.height()*GRIDSIZE);
 	  //Now check the edge conditions (last right/bottom grid points might be smaller than GRIDSIZE)
-	  QSize areaSize = desktopRect.size(); //use the size of the area instead of the geometry - because we need this in child coordinates like "geom" above
+	  //QSize areaSize = desktopRect.size();
 	  //qDebug() << "GridToGeom:" << grid << geom << "Area size:" << areaSize;
-	  if(geom.right() > areaSize.width() && (geom.right()-areaSize.width())<GRIDSIZE ){
-	    geom.setRight(areaSize.width()-1); //match up with the edge
+	  if(geom.right() > desktopRect.right() && (geom.right()-desktopRect.right())<GRIDSIZE ){
+	    geom.setRight(desktopRect.right()); //match up with the edge
 	  }
-	  if(geom.bottom() > areaSize.height() && (geom.bottom() -areaSize.height())<GRIDSIZE ){
-	    geom.setBottom(areaSize.height()-1); //match up with the edge
+	  if(geom.bottom() > desktopRect.bottom() && (geom.bottom() -desktopRect.bottom())<GRIDSIZE ){
+	    geom.setBottom(desktopRect.bottom()); //match up with the edge
 	  }
 	  //qDebug() << " - Adjusted:" << geom;
 	  return geom;
@@ -124,16 +132,18 @@ private:
 	bool ValidGrid(QRect grid){
 	  //qDebug() << "Check Valid Grid:" << grid << RoundUp(this->width()/GRIDSIZE) << RoundUp(this->height()/GRIDSIZE);
 	  //This just checks that the grid coordinates are not out of bounds - should still run ValidGeometry() below with the actual pixel geom
-	  if(grid.x()<0 || grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
+	  if(grid.x()<0|| grid.y()<0 || grid.width()<0 || grid.height()<0){ return false; }
 	  else if( (grid.x()+grid.width()) > RoundUp(desktopRect.width()/GRIDSIZE) ){ return false; }
 	  else if( (grid.y()+grid.height()) > RoundUp(desktopRect.height()/GRIDSIZE) ){ return false; }
+	  //Final Check - don't let 1x1 items occupy the last row/column (not full size)
+	  else if(grid.width()==1 && grid.height()==1 && (grid.x()==RoundUp(desktopRect.width()/GRIDSIZE) || grid.y()==RoundUp(desktopRect.height()/GRIDSIZE)) ){ return false; }
 	  return true;
 	}
 	
 	bool ValidGeometry(QString id, QRect geom){
 	  //First check that it is within the desktop area completely
 	  // Note that "this->geometry()" is not in the same coordinate space as the geometry inputs
-	  if(!QRect(0,0,desktopRect.width(), desktopRect.height()).contains(geom)){ return false; }
+	  if(!desktopRect.contains(geom)){ return false; }
 	  //Now check that it does not collide with any other items
 	  for(int i=0; i<ITEMS.length(); i++){
 	    if(ITEMS[i]->whatsThis()==id){ continue; }
@@ -150,9 +160,9 @@ private:
 	}
 	
 	void MovePlugin(LDPlugin* plug, QRect geom){
+	  plug->savePluginGeometry(geom);	//save the un-adjusted geometry
 	  plug->setGeometry( geom );
 	  plug->setFixedSize(geom.size()); //needed for some plugins
-	  plug->savePluginGeometry(geom);	
 	}
 	
 private slots:
