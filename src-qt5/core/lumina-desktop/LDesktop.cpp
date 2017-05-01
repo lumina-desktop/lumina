@@ -375,11 +375,13 @@ void LDesktop::UpdateDesktop(){
     }
   }
   //Also show anything available in the /media directory
-  QDir media("/media");
+  if(settings->value(DPREFIX+"generateMediaIcons",true).toBool()){
+    QDir media("/media");
     QStringList mediadirs = media.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     for(int i=0; i<mediadirs.length(); i++){ 
       filelist << media.absoluteFilePath(mediadirs[i]);
     }
+  }
     //qDebug() << "Found media Dirs:" << mediadirs;
   UpdateDesktopPluginArea();
   bgDesktop->LoadItems(plugins, filelist);
