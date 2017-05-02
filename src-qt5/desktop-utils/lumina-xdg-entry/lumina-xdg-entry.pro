@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = lumina-xdg-entry
 TEMPLATE = app
+target.path = $${L_BINDIR}
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -20,3 +21,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
+
+desktop.files=lumina-xdg-entry.desktop
+desktop.path=$${L_SHAREDIR}/applications/
+
