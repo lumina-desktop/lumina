@@ -99,7 +99,7 @@ commentfield = "Comment=" + comment;
 iconfield = "Icon=" + icon;
 terminalfield = "Terminal=" + terminal;
 execfield = "Exec=" + executable;
-categoriesfield = "Categories=" + categories + ";";
+categoriesfield = "Categories=" + categories;
 keywordfield = "Keywords=" + keywords;
 }
 
