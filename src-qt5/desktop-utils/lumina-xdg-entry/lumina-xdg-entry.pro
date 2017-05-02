@@ -22,7 +22,7 @@ HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
-desktop.files=Lumina-XDG-Entry.desktop
+desktop.files=lumina-xdg-entry.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
 INSTALLS += target desktop
