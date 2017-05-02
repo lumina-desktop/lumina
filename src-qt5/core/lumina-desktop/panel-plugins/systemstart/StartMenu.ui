@@ -143,7 +143,7 @@
             <x>0</x>
             <y>0</y>
             <width>179</width>
-            <height>177</height>
+            <height>208</height>
            </rect>
           </property>
          </widget>
@@ -439,7 +439,7 @@
             <x>0</x>
             <y>0</y>
             <width>179</width>
-            <height>284</height>
+            <height>299</height>
            </rect>
           </property>
          </widget>
@@ -921,7 +921,7 @@
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
-             <string>Suspend System</string>
+             <string>Suspend</string>
             </property>
             <property name="iconSize">
              <size>
@@ -986,7 +986,7 @@
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
-             <string>Restart System</string>
+             <string>Restart</string>
             </property>
             <property name="iconSize">
              <size>
@@ -1014,7 +1014,7 @@
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
-             <string>Power Off System</string>
+             <string>Power Off</string>
             </property>
             <property name="iconSize">
              <size>
@@ -1062,7 +1062,7 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
-          <string>Sign Out User</string>
+          <string>Log Out</string>
          </property>
          <property name="iconSize">
           <size>
@@ -1099,8 +1099,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>161</width>
-            <height>332</height>
+            <width>167</width>
+            <height>345</height>
            </rect>
           </property>
          </widget>

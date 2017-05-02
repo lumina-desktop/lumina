@@ -84,7 +84,7 @@
         <item>
          <widget class="QToolButton" name="tool_shutdown">
           <property name="text">
-           <string>Shutdown</string>
+           <string>Power Off</string>
           </property>
           <property name="iconSize">
            <size>
