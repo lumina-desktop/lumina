@@ -3,7 +3,7 @@
 #  Available under the MIT license
 #  See the LICENSE file for full details    
 #===========================================
-
+include("$${PWD}/../../OS-detect.pri")
 
 QT       += core gui
 
