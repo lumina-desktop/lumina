@@ -1,4 +1,4 @@
-{Desktop Entry]
+[Desktop Entry]
 Type=Application
 Version=1.0
 Name=Lumina-XDG-Entry
@@ -7,5 +7,5 @@ Comment=
 Icon=
 Terminal=false
 Exec=/usr/local/bin/lumina-xdg-entry
-Categories=Utility;;
+Categories=Utility;
 Keywords=
