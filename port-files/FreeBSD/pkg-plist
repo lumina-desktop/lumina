@@ -12,6 +12,7 @@ bin/lumina-screenshot
 bin/lumina-search
 bin/lumina-textedit
 bin/lumina-xconfig
+bin/lumina-xdg-entry
 bin/start-lumina-desktop
 %%ETCDIR%%Desktop.conf.dist
 man/man1/lumina-open.1.gz
