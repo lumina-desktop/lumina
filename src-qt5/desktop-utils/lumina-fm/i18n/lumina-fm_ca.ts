@@ -585,7 +585,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
-        <translation>Comprensió</translation>
+        <translation>Vista</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
