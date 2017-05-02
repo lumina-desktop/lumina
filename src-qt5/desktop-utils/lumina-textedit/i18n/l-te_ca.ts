@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Tipus d&apos;ítem</translation>
+        <translation>Tipus d'ítem</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Separa la pestanya</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../MainUI.ui" line="220"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubicació de les pestanyes</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>Barra d&apos;eines</translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
@@ -244,22 +244,22 @@
     <message>
         <location filename="../MainUI.ui" line="409"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>A dalt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="417"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>A baix</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="425"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>A l'esquerra</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>A la dreta</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="61"/>
@@ -302,7 +302,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Hi ha canvis no desats.
-Voleu tancar l&apos;editor tanmateix?
+Voleu tancar l'editor tanmateix?
 
 %1</translation>
     </message>
