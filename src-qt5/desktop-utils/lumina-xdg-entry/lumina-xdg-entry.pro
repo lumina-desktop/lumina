@@ -25,3 +25,4 @@ FORMS    += mainwindow.ui
 desktop.files=lumina-xdg-entry.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
+INSTALLS += target desktop
