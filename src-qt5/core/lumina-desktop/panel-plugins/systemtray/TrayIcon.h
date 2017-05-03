@@ -44,6 +44,7 @@ private:
 	WId IID, AID; //icon ID and app ID
 	int badpaints;
 	uint dmgID; 
+	int scalefactor;
 
 protected:
 	void paintEvent(QPaintEvent *event);

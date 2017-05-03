@@ -15,6 +15,9 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   IID = 0;
   dmgID = 0;
   badpaints = 0;
+  if("1" == QString(getenv("QT_AUTO_SCREEN_SCALE_FACTOR")) ){
+  scalefactor = 2; //Auto-adjust this later to the physicalDotsPerInch of the current screen
+  }else{ scalefactor = 1; }
   //this->setLayout(new QHBoxLayout);
   //this->layout()->setContentsMargins(0,0,0,0);
 }
@@ -79,8 +82,8 @@ void TrayIcon::updateIcon(){
   if(AID==0){ return; }
   //Make sure the icon is square
   QSize icosize = this->size();
-  LSession::handle()->XCB->ResizeWindow(AID,  icosize.width()*2, icosize.height()*2);
-  QTimer::singleShot(500, this, SLOT(update()) ); //make sure to re-draw the window in a moment
+  LSession::handle()->XCB->ResizeWindow(AID,  icosize.width()*scalefactor, icosize.height()*scalefactor);
+  QTimer::singleShot(500, this, SLOT(repaint()) ); //make sure to re-draw the window in a moment
 }
 
 // =============
@@ -103,7 +106,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
-	  if((this->size()*2) != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); }
+	  if((this->size()*scalefactor) != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 	  badpaints = 0; //good paint
 	}else{
