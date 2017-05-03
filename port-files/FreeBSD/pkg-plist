@@ -30,6 +30,7 @@ share/applications/lumina-search.desktop
 share/applications/lumina-support.desktop
 share/applications/lumina-textedit.desktop
 share/applications/lumina-xconfig.desktop
+share/applications/lumina-xdg-entry.desktop
 share/icons/material-design-dark/LICENSE
 share/icons/material-design-dark/index.theme
 share/icons/material-design-dark/scalable/actions/address-book-new.svg
