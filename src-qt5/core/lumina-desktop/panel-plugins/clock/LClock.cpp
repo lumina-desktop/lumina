@@ -89,23 +89,19 @@ void LClock::updateTime(bool adjustformat){
   }
   if(adjustformat){
    //Check the font/spacing for the display and adjust as necessary
-    /*double efflines = label.count("\n")+1; //effective lines (with wordwrap)
-    if( (button->fontMetrics().height()*efflines) > button->height() ){
-      //Force a pixel metric font size to fit everything
-      int szH = qRound( (button->height() - button->fontMetrics().lineSpacing() )/efflines );
-      //Need to supply a *width* pixel, not a height metric
-      int szW = qRound( (szH*button->fontMetrics().maxWidth())/( (double) button->fontMetrics().height()) );
-      qDebug() << "Change Clock font:" << button->height() << szH << szW << efflines << button->fontMetrics().height() << button->fontMetrics().lineSpacing();
-      button->setStyleSheet("font-weight: bold; font-size: "+QString::number(szW)+"px;");
-    }else{
-      button->setStyleSheet("font-weight: bold;");
-    }*/
+    QStringList lines = label.split("/n");
     if(this->layout()->direction()==QBoxLayout::LeftToRight){
       //horizontal layout
-     this->setFixedWidth( this->sizeHint().width() +6);
+      int wid = 0;
+      int lwid;
+      for(int i=0; i<lines.length(); i++){
+        int lwid = button->fontMetrics().width(lines[i]);
+        if(lwid>wid){ wid = lwid; }
+      }
+     this->setFixedWidth( wid );
     }else{
       //vertical layout
-      this->setMaximumWidth(100000);
+      this->setMaximumWidth(button->fontMetrics().lineSpacing() * lines.length());
     }
   }
   button->setText(label);

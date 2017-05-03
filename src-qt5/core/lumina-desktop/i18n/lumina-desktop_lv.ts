@@ -32,20 +32,70 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="49"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="82"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="56"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="98"/>
         <source>Click to Set</source>
         <translation>Klikšķiniet, lai iestatītu</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
+        <source>Launch %1</source>
+        <translation type="unfinished">Palaist %1</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="103"/>
+        <source>Open</source>
+        <translation type="unfinished">Atvērt</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
+        <source>Open With</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
+        <source>View Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
+        <source>File Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
+        <source>Copy</source>
+        <translation type="unfinished">Kopēt</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
+        <source>Cut</source>
+        <translation type="unfinished">Izgriezt</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
+        <source>Delete</source>
+        <translation type="unfinished">Dzēst</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
         <source>Select Application</source>
         <translation>Izvēlieties lietotni</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
         <source>Name:</source>
         <translation>Nosaukums:</translation>
+    </message>
+    <message>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
+        <source>New Filename</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -627,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="135"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="131"/>
         <source>Time Zone (%1)</source>
         <translation>Laika zona (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="157"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="153"/>
         <source>Use System Time</source>
         <translation>Izmantot sistēmas laiku</translation>
     </message>
@@ -640,32 +690,32 @@
 <context>
     <name>LDPlugin</name>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="38"/>
-        <source>Launch Item</source>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
+        <source>Modify Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="42"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Start Moving Item</source>
         <translation>Sākt pārvietot vienumu</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="43"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Start Resizing Item</source>
         <translation>Sākt izmēra maiņu vienumam</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Increase Item Sizes</source>
         <translation>Palielināt vienuma izmērus</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="49"/>
         <source>Decrease Item Sizes</source>
         <translation>Samazināt vienuma izmērus</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
+        <location filename="../desktop-plugins/LDPlugin.cpp" line="51"/>
         <source>Remove Item</source>
         <translation>Noņemt vienumu</translation>
     </message>
@@ -772,7 +822,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="160"/>
-        <location filename="../LSession.cpp" line="341"/>
+        <location filename="../LSession.cpp" line="342"/>
         <source>Desktop</source>
         <translation>Darbvirsma</translation>
     </message>
@@ -927,52 +977,52 @@
 <context>
     <name>NotePadPlugin</name>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Note Files (*.note)</source>
         <translation>Piezīmju faili (*.note)</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="98"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Text Files (*)</source>
         <translation>Teksta faili (*)</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="99"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="101"/>
         <source>Open a note file</source>
         <translation>Atvērt piezīmju failu</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Name:</source>
         <translation>Vārds:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="140"/>
         <source>Invalid Note Name: Try Again</source>
         <translation>Nederīgs piezīmes vārds: mēģiniet vēlreiz</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="141"/>
         <source>Select a Note Name</source>
         <translation>Izvēlieties piezīmes vārdu</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="166"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="168"/>
         <source>Open Text File</source>
         <translation>Atvērt teksta failu</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="167"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="169"/>
         <source>Create a Note</source>
         <translation>Izveidot piezīmi</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="170"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="172"/>
         <source>Rename Note</source>
         <translation>Pārsaukt piezīmi</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="171"/>
+        <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="173"/>
         <source>Delete Note</source>
         <translation>Dzēst piezīmi</translation>
     </message>

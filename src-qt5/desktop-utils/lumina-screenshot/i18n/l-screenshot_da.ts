@@ -17,7 +17,7 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="518"/>
+        <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
         <translation>Tag skærmbillede</translation>
     </message>
@@ -27,7 +27,7 @@
         <translation>Inkludér rammer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="529"/>
+        <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
         <translation>Gem som</translation>
     </message>
@@ -92,42 +92,47 @@
         <translation> Sek. forsinkelse</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Select Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
         <translation>Generelle indstillinger</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="455"/>
+        <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation>Vis pop op-advarsler om ugemte skærmbilleder</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="488"/>
+        <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
         <translation>værktøjsbjælke</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="515"/>
+        <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Fang</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="521"/>
+        <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="545"/>
+        <location filename="../MainUI.ui" line="556"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="548"/>
+        <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
         <translation>Luk program</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="551"/>
+        <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -147,52 +152,52 @@
         <translation>Én skærm</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
         <translation>Vis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="39"/>
+        <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
         <translation>Kunne ikke gemme skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>Skærmbilledet kunne ikke gemmes. Tjek venligst mappetilladelserne eller vælg en anden mappe</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>Save Screenshot</source>
         <translation>Gem skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="264"/>
+        <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
         <translation>Ugemt skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Det aktuelle skærmbillede er endnu ikke blevet gemt. Vil du gemme eller forkaste dine ændringer?</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="532"/>
+        <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="540"/>
+        <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
         <translation>Kvikgem</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG-filer (*.png);;Alle filer (*)</translation>
     </message>

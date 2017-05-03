@@ -17,7 +17,7 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="518"/>
+        <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
         <translatorcomment>アプリケーションの名前</translatorcomment>
         <translation>スクリーンショットの撮影</translation>
@@ -28,7 +28,7 @@
         <translation>ウィンドウの境界線を含める</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="529"/>
+        <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
         <translatorcomment>ボタンのキャプション</translatorcomment>
         <translation>名前を付けて保存</translation>
@@ -94,42 +94,47 @@
         <translation> 秒後</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Select Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="455"/>
+        <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="488"/>
+        <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="515"/>
+        <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>キャプチャー</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="521"/>
+        <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="545"/>
+        <location filename="../MainUI.ui" line="556"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="548"/>
+        <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="551"/>
+        <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -150,54 +155,54 @@
         <translation>ひとつの画面</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="39"/>
+        <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
         <translation>スクリーンショットを保存できません</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>このスクリーンショットを保存できません。ディレクトリーのパーミッションを確認するか、他のディレクトリーを選択してください。</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>Save Screenshot</source>
         <translatorcomment>&quot;Save&quot;ボタンのツールチップ</translatorcomment>
         <translation>スクリーンショットの保存</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="264"/>
+        <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="532"/>
+        <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="540"/>
+        <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
         <translatorcomment>「快速保存」(zh)も捨てがたいが、&quot;Save As&quot;との対比なら「保存」であるべきだろう。</translatorcomment>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG ファイル (*.png);;すべて (*)</translation>
     </message>

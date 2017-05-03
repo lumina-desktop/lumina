@@ -47,6 +47,7 @@ void printUsageInfo(){
 void ShowErrorDialog(int argc, char **argv, QString message){
     //Setup the application
     QApplication App(argc, argv);
+        App.setAttribute(Qt::AA_UseHighDpiPixmaps);
     LuminaThemeEngine theme(&App);
 	LUtils::LoadTranslation(&App,"lumina-open");
     QMessageBox dlg(QMessageBox::Critical, QObject::tr("File Error"), message );
@@ -58,7 +59,7 @@ void showOSD(int argc, char **argv, QString message){
   //Setup the application
   QApplication App(argc, argv);
     LUtils::LoadTranslation(&App,"lumina-open");
-
+    App.setAttribute(Qt::AA_UseHighDpiPixmaps);
   //Display the OSD
   QPixmap pix(":/icons/OSD.png");
   QLabel splash(0, Qt::Window | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
@@ -137,6 +138,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     //No default set -- Start up the application selection dialog
     LTHEME::LoadCustomEnvSettings();
     QApplication App(argc, argv);
+    App.setAttribute(Qt::AA_UseHighDpiPixmaps);
     LuminaThemeEngine theme(&App);
       LUtils::LoadTranslation(&App,"lumina-open");
 
@@ -412,6 +414,7 @@ int main(int argc, char **argv){
       qDebug() << "[lumina-open] Application Error:" << retcode;
         //Setup the application
         QApplication App(argc, argv);
+        App.setAttribute(Qt::AA_UseHighDpiPixmaps);
         LuminaThemeEngine theme(&App);
 	  LUtils::LoadTranslation(&App,"lumina-open");
 	//App.setApplicationName("LuminaOpen");

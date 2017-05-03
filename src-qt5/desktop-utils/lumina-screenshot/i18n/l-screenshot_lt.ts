@@ -17,7 +17,7 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="518"/>
+        <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
         <translation>Padaryti ekrano kopiją</translation>
     </message>
@@ -27,7 +27,7 @@
         <translation>Įtraukti rėmelį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="529"/>
+        <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
         <translation>Įrašyti kaip</translation>
     </message>
@@ -92,42 +92,47 @@
         <translation> sek. delsa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Select Area</source>
+        <translation>Žymėti sritį</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
         <translation>Bendri nustatymai</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="455"/>
+        <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation>Rodyti iškylančiuosius įspėjimus apie neįrašytas ekrano kopijas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="488"/>
+        <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
         <translation>Įrankių juosta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="515"/>
+        <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Fotografuoti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="521"/>
+        <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
         <translation>Ctrl(Vald)+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="545"/>
+        <location filename="../MainUI.ui" line="556"/>
         <source>Close</source>
         <translation>Užverti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="548"/>
+        <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
         <translation>Užverti programą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="551"/>
+        <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
         <translation>Esc(Gr)</translation>
     </message>
@@ -147,52 +152,52 @@
         <translation>Vienas ekranas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
         <translation>Rodinys</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="39"/>
+        <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
         <translation>Nustatymai</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
         <translation>Nepavyko įrašyti ekrano kopijos</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>Nepavyko įrašyti ekrano kopiją. Prašome patikrinti katalogo leidimus arba pasirinkti kitą katalogą</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>Save Screenshot</source>
         <translation>Įrašyti ekrano kopiją</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="264"/>
+        <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
         <translation>Neįrašyta ekrano kopija</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Esama ekrano kopija kol kas nebuvo neįrašyta. Norite įrašyti ar atmesti savo pakeitimus?</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="532"/>
+        <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl(Vald)+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="540"/>
+        <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
         <translation>Greitasis įrašymas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG failai (*.png);;Visi failai (*)</translation>
     </message>

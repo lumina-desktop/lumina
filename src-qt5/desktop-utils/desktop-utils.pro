@@ -11,5 +11,6 @@ SUBDIRS+= lumina-fm \
 	lumina-calculator \
 	lumina-archiver \
 	lumina-notify \
-	lumina-mediaplayer
+	lumina-mediaplayer \
+	lumina-xdg-entry
 #	lumina-terminal

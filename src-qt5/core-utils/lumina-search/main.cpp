@@ -23,6 +23,7 @@ int main(int argc, char ** argv)
     //LuminaThemeEngine theme(&a);
     //qDebug() << "Load Translations...";
     a.setApplicationName("Search for...");
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps);   
     LUtils::LoadTranslation(&a, "lumina-search");
 
     MainUI w;

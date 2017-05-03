@@ -17,7 +17,7 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="518"/>
+        <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
         <translation>Képernyőkép készítése</translation>
     </message>
@@ -27,7 +27,7 @@
         <translation>Keretekkel együtt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="529"/>
+        <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
         <translation>Mentés másként</translation>
     </message>
@@ -92,42 +92,47 @@
         <translation> mp késleltetés</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Select Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="455"/>
+        <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="488"/>
+        <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="515"/>
+        <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Felvétel</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="521"/>
+        <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="545"/>
+        <location filename="../MainUI.ui" line="556"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="548"/>
+        <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="551"/>
+        <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -147,52 +152,52 @@
         <translation>Egy képernyő</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="38"/>
+        <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="39"/>
+        <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
         <translation>A képernyőkép nem menthető</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>A képernyőkép nem menthető. Ellenőrizd a könytár jogait, vagy válassz másikat</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>Save Screenshot</source>
         <translation>Képernyőkép mentése</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="264"/>
+        <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="532"/>
+        <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="540"/>
+        <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
         <translation>Gyors mentés</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="113"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG fájlok (*.png);;Minden fájl (*)</translation>
     </message>

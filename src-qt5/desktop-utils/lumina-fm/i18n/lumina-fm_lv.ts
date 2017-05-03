@@ -1165,5 +1165,10 @@ Jaunā atrašanās vieta: %2</translation>
         <source>Errors during operation. Click to view details</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

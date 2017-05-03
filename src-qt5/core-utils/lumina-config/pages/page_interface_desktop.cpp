@@ -18,6 +18,7 @@ page_interface_desktop::page_interface_desktop(QWidget *parent) : PageWidget(par
   connect(ui->tool_desktop_addplugin, SIGNAL(clicked()), this, SLOT(deskplugadded()) );
   connect(ui->tool_desktop_rmplugin, SIGNAL(clicked()), this, SLOT(deskplugremoved()) );
   connect(ui->check_desktop_autolaunchers, SIGNAL(clicked()), this, SLOT(settingChanged()) );
+  connect(ui->check_media_icons, SIGNAL(clicked()), this, SLOT(settingChanged()) );
   updateIcons();
 }
 
@@ -34,6 +35,7 @@ void page_interface_desktop::SaveSettings(){
   QString DPrefix = "desktop-"+screenID+"/";
 
   settings.setValue(DPrefix+"generateDesktopIcons", ui->check_desktop_autolaunchers->isChecked() );
+  settings.setValue(DPrefix+"generateMediaIcons", ui->check_media_icons->isChecked() );
   QStringList plugs;
   for(int i=0; i<ui->list_desktop_plugins->count(); i++){
     plugs << ui->list_desktop_plugins->item(i)->whatsThis();
@@ -56,7 +58,7 @@ void page_interface_desktop::LoadSettings(int screennum){
   QString screenID = QApplication::screens().at(cscreen)->name();
   QString DPrefix = "desktop-"+screenID+"/";
   ui->check_desktop_autolaunchers->setChecked(settings.value(DPrefix+"generateDesktopIcons",false).toBool() );
-
+  ui->check_media_icons->setChecked(settings.value(DPrefix+"generateMediaIcons",true).toBool() );
   QStringList dplugs = settings.value(DPrefix+"pluginlist",QStringList()).toStringList();
   ui->list_desktop_plugins->clear();
   for(int i=0; i<dplugs.length(); i++){

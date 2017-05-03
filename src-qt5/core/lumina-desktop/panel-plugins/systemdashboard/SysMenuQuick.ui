@@ -47,7 +47,7 @@ font: bold;
    <item>
     <widget class="QGroupBox" name="group_volume">
      <property name="title">
-      <string>System Volume</string>
+      <string>Volume</string>
      </property>
      <property name="flat">
       <bool>false</bool>

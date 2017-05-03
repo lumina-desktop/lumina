@@ -39,7 +39,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
   //this->setAttribute(Qt::AA_UseDesktopOpenGL);
-  //this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
+  this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
   //Now initialize the global objects (but do not start them yet)
   Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter first

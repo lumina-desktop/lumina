@@ -59,37 +59,37 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">Größe</translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Änderungsdatum</translation>
+        <translation>Änderungsdatum</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
-        <translation type="unfinished">Erstellungsdatum</translation>
+        <translation>Erstellungsdatum</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Kapazität: %1</translation>
+        <translation>Kapazität: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Dateien: %1 (%2)</translation>
+        <translation>Dateien: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Verzeichnisse: %1</translation>
+        <translation>Verzeichnisse: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
@@ -273,7 +273,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="236"/>
@@ -1013,7 +1013,7 @@ Neue Position: %2</translation>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1159,12 +1159,17 @@ Neue Position: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Abgeschlossen</translation>
+        <translation>Abgeschlossen</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
         <translation>Fehler während des Vorgangs. Zum Anzeigen von Details klicken</translation>
+    </message>
+    <message>
+        <location filename="../TrayUI.cpp" line="91"/>
+        <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
