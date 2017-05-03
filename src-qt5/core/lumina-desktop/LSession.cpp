@@ -168,7 +168,6 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  setenv("QT_AUTO_SCREEN_SCALE_FACTOR","1",true); //Enable the automatic Qt5 DPI scaling for apps
   for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
@@ -449,6 +448,19 @@ void LSession::updateDesktops(){
 
   //Make sure all the background windows are registered on the system as virtual roots
   QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
+  //Determine if any High-DPI screens are available and enable auto-scaling as needed
+  QList<QScreen*> scrns = QApplication::screens();
+  for(int i=0; i<scrns.length(); i++){
+    qDebug() << "Check Screen DPI:" << scrns[i]->name();
+    qDebug() << " -- Physical DPI:" << scrns[i]->physicalDotsPerInchX() << "x" << scrns[i]->physicalDotsPerInchY();
+    qDebug() << " -- Logical DPI:" << scrns[i]->logicalDotsPerInchX() << "x" << scrns[i]->logicalDotsPerInchY();
+    if(scrns[i]->logicalDotsPerInchX() > 110 || scrns[i]->logicalDotsPerInchY()>110){ //4K is ~196, 3K is ~150
+      setenv("QT_AUTO_SCREEN_SCALE_FACTOR","1",true); //Enable the automatic Qt5 DPI scaling for apps
+      break;
+    }else if(i==(scrns.length()-1)){
+      unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR");
+    }
+  }
 }
 
 void LSession::registerDesktopWindows(){
