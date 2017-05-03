@@ -112,7 +112,7 @@ filename = path + "/" + name + ".desktop";
 QFile file(filename);
 file.open(QIODevice::WriteOnly | QIODevice::Text);
 QTextStream stream(&file);
-stream << "{Desktop Entry]" << endl;
+stream << "[Desktop Entry]" << endl;
 stream << "Type=Application" << endl;
 stream << "Version=1.0" << endl;
 stream << namefield << endl;
