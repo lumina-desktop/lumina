@@ -30,6 +30,7 @@ share/applications/lumina-search.desktop
 share/applications/lumina-support.desktop
 share/applications/lumina-textedit.desktop
 share/applications/lumina-xconfig.desktop
+share/applications/lumina-xdg-entry.desktop
 share/icons/material-design-dark/LICENSE
 share/icons/material-design-dark/index.theme
 share/icons/material-design-dark/scalable/actions/address-book-new.svg
@@ -1857,7 +1858,6 @@ share/icons/material-design-light/scalable/status/weather-windy.svg
 %%DATADIR%%-desktop/i18n/l-mediap_fi.qm
 %%DATADIR%%-desktop/i18n/l-mediap_fr.qm
 %%DATADIR%%-desktop/i18n/l-mediap_fr_CA.qm
-%%DATADIR%%-desktop/i18n/l-mediap_fur.qm
 %%DATADIR%%-desktop/i18n/l-mediap_gl.qm
 %%DATADIR%%-desktop/i18n/l-mediap_he.qm
 %%DATADIR%%-desktop/i18n/l-mediap_hi.qm
@@ -1876,7 +1876,6 @@ share/icons/material-design-light/scalable/status/weather-windy.svg
 %%DATADIR%%-desktop/i18n/l-mediap_ms.qm
 %%DATADIR%%-desktop/i18n/l-mediap_mt.qm
 %%DATADIR%%-desktop/i18n/l-mediap_nb.qm
-%%DATADIR%%-desktop/i18n/l-mediap_ne.qm
 %%DATADIR%%-desktop/i18n/l-mediap_nl.qm
 %%DATADIR%%-desktop/i18n/l-mediap_pa.qm
 %%DATADIR%%-desktop/i18n/l-mediap_pl.qm
@@ -1884,7 +1883,6 @@ share/icons/material-design-light/scalable/status/weather-windy.svg
 %%DATADIR%%-desktop/i18n/l-mediap_pt_BR.qm
 %%DATADIR%%-desktop/i18n/l-mediap_ro.qm
 %%DATADIR%%-desktop/i18n/l-mediap_ru.qm
-%%DATADIR%%-desktop/i18n/l-mediap_sa.qm
 %%DATADIR%%-desktop/i18n/l-mediap_sk.qm
 %%DATADIR%%-desktop/i18n/l-mediap_sl.qm
 %%DATADIR%%-desktop/i18n/l-mediap_sr.qm
@@ -1895,7 +1893,6 @@ share/icons/material-design-light/scalable/status/weather-windy.svg
 %%DATADIR%%-desktop/i18n/l-mediap_th.qm
 %%DATADIR%%-desktop/i18n/l-mediap_tr.qm
 %%DATADIR%%-desktop/i18n/l-mediap_uk.qm
-%%DATADIR%%-desktop/i18n/l-mediap_ur.qm
 %%DATADIR%%-desktop/i18n/l-mediap_uz.qm
 %%DATADIR%%-desktop/i18n/l-mediap_vi.qm
 %%DATADIR%%-desktop/i18n/l-mediap_zh_CN.qm
