@@ -246,7 +246,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation>Все имеет свою красоту, но не каждый видит еe.</translation>
+        <translation>Все имеет свою красоту, но не каждый видит ее.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
