@@ -536,12 +536,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>锁定会话</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>锁定当前桌面会话</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
