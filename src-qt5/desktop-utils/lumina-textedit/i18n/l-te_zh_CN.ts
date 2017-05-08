@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>分离标签</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../MainUI.ui" line="155"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏查找/替换选项</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="196"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../MainUI.ui" line="220"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>标签位置</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
@@ -233,33 +233,33 @@
     <message>
         <location filename="../MainUI.ui" line="392"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>显示弹出警告</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="395"/>
         <location filename="../MainUI.ui" line="398"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存变更时显示警告</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="409"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>顶部</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="417"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>底部</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="425"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左边</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右边</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="61"/>
@@ -281,7 +281,7 @@
         <location filename="../MainUI.cpp" line="362"/>
         <location filename="../MainUI.cpp" line="470"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>丢弃未保存的更改？</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="351"/>
@@ -290,7 +290,10 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>这个文件中有未保存的更改。
+是否仍要关闭它？
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="470"/>
@@ -298,7 +301,10 @@ Do you want to close it anyway?
 Do you want to close the editor anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>有未保存的更改。
+是否仍要关闭编辑器？
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -316,7 +322,7 @@ Do you want to close the editor anyway?
     <message>
         <location filename="../PlainTextEditor.cpp" line="289"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>行数: %1，列数: %2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
