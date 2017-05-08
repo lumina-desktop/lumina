@@ -11,7 +11,7 @@
     <message>
         <location filename="../AppDialog.ui" line="20"/>
         <source>Search for....</source>
-        <translation type="unfinished">查找…</translation>
+        <translation>查找…</translation>
     </message>
 </context>
 <context>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>开始菜单并关注于用户的文件、 目录和收藏夹。</translation>
     </message>
     <message>
@@ -716,17 +716,17 @@
     <message>
         <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>壁纸</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>自启动</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
@@ -766,17 +766,17 @@
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>桌面</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>面板</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>菜单</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
@@ -844,7 +844,7 @@
     <message>
         <location filename="../ScriptDialog.ui" line="14"/>
         <source>Setup a JSON Menu Script</source>
-        <translation type="unfinished"></translation>
+        <translation>设置一个 JSON 菜单脚本</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="25"/>
@@ -1243,12 +1243,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt 键
-&quot;Mod4&quot;: 	Windows/Mac 键
-&quot;Control&quot;:	Ctrl 键</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt 键
+"Mod4": 	Windows/Mac 键
+"Control":	Ctrl 键</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1395,7 +1395,7 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>显示可移动媒体图标</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
@@ -1436,7 +1436,7 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">导入</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
@@ -1479,7 +1479,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>系统设置</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="145"/>
@@ -1580,7 +1580,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>显示应用程序崩溃数据</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1800,7 +1800,7 @@
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>桌面主题</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1856,12 +1856,12 @@
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>应用主题</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
         <source>Qt5 Theme Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>QT5 主题引擎</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
