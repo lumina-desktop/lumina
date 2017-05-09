@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>调整所选屏幕截图的大小</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
