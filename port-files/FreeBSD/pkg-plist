@@ -146,6 +146,7 @@ share/icons/material-design-dark/scalable/actions/configure.svg
 share/icons/material-design-dark/scalable/actions/contact-mail.svg
 share/icons/material-design-dark/scalable/actions/contact-new.svg
 share/icons/material-design-dark/scalable/actions/contact-phone.svg
+share/icons/material-design-dark/scalable/actions/dashboard-show.svg
 share/icons/material-design-dark/scalable/actions/dialog-cancel.svg
 share/icons/material-design-dark/scalable/actions/dialog-close.svg
 share/icons/material-design-dark/scalable/actions/dialog-ok-apply.svg
@@ -160,6 +161,7 @@ share/icons/material-design-dark/scalable/actions/document-lock.svg
 share/icons/material-design-dark/scalable/actions/document-move.svg
 share/icons/material-design-dark/scalable/actions/document-multiple.svg
 share/icons/material-design-dark/scalable/actions/document-new.svg
+share/icons/material-design-dark/scalable/actions/document-open-folder.svg
 share/icons/material-design-dark/scalable/actions/document-open-recent.svg
 share/icons/material-design-dark/scalable/actions/document-open.svg
 share/icons/material-design-dark/scalable/actions/document-page-setup.svg
@@ -252,6 +254,7 @@ share/icons/material-design-dark/scalable/actions/help-contents.svg
 share/icons/material-design-dark/scalable/actions/help-faq.svg
 share/icons/material-design-dark/scalable/actions/import.svg
 share/icons/material-design-dark/scalable/actions/insert-cart.svg
+share/icons/material-design-dark/scalable/actions/insert-horizontal-rule.svg
 share/icons/material-design-dark/scalable/actions/insert-image.svg
 share/icons/material-design-dark/scalable/actions/insert-link.svg
 share/icons/material-design-dark/scalable/actions/insert-object.svg
@@ -465,11 +468,13 @@ share/icons/material-design-dark/scalable/applications/preferences-desktop-user.
 share/icons/material-design-dark/scalable/applications/preferences-desktop-wallpaper.svg
 share/icons/material-design-dark/scalable/applications/preferences-desktop.svg
 share/icons/material-design-dark/scalable/applications/preferences-other.svg
+share/icons/material-design-dark/scalable/applications/preferences-plugin.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-bluetooth.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-network.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-power-management.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-printers.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-session-services.svg
+share/icons/material-design-dark/scalable/applications/preferences-system-time.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-windows-actions.svg
 share/icons/material-design-dark/scalable/applications/preferences-system-windows.svg
 share/icons/material-design-dark/scalable/applications/preferences-system.svg
@@ -513,6 +518,7 @@ share/icons/material-design-dark/scalable/applications/wii.svg
 share/icons/material-design-dark/scalable/applications/wiiu.svg
 share/icons/material-design-dark/scalable/applications/wikipedia.svg
 share/icons/material-design-dark/scalable/applications/wordpress.svg
+share/icons/material-design-dark/scalable/applications/wine.svg
 share/icons/material-design-dark/scalable/applications/xbox.svg
 share/icons/material-design-dark/scalable/applications/xing.svg
 share/icons/material-design-dark/scalable/applications/yelp.svg
@@ -568,6 +574,7 @@ share/icons/material-design-dark/scalable/devices/camera-video-off.svg
 share/icons/material-design-dark/scalable/devices/camera-video.svg
 share/icons/material-design-dark/scalable/devices/camera-web.svg
 share/icons/material-design-dark/scalable/devices/computer.svg
+share/icons/material-design-dark/scalable/devices/cpu.svg
 share/icons/material-design-dark/scalable/devices/drive-harddisk.svg
 share/icons/material-design-dark/scalable/devices/drive-removable-media-usb.svg
 share/icons/material-design-dark/scalable/devices/drive-removable-media.svg
@@ -815,6 +822,7 @@ share/icons/material-design-dark/scalable/status/task-past-due.svg
 share/icons/material-design-dark/scalable/status/task-question.svg
 share/icons/material-design-dark/scalable/status/user-available.svg
 share/icons/material-design-dark/scalable/status/user-away.svg
+share/icons/material-design-dark/scalable/status/user-identity.svg
 share/icons/material-design-dark/scalable/status/user-idle.svg
 share/icons/material-design-dark/scalable/status/user-offline.svg
 share/icons/material-design-dark/scalable/status/weather-clear-night.svg
@@ -945,6 +953,7 @@ share/icons/material-design-light/scalable/actions/configure.svg
 share/icons/material-design-light/scalable/actions/contact-mail.svg
 share/icons/material-design-light/scalable/actions/contact-new.svg
 share/icons/material-design-light/scalable/actions/contact-phone.svg
+share/icons/material-design-light/scalable/actions/dashboard-show.svg
 share/icons/material-design-light/scalable/actions/dialog-cancel.svg
 share/icons/material-design-light/scalable/actions/dialog-close.svg
 share/icons/material-design-light/scalable/actions/dialog-ok-apply.svg
@@ -959,6 +968,7 @@ share/icons/material-design-light/scalable/actions/document-lock.svg
 share/icons/material-design-light/scalable/actions/document-move.svg
 share/icons/material-design-light/scalable/actions/document-multiple.svg
 share/icons/material-design-light/scalable/actions/document-new.svg
+share/icons/material-design-light/scalable/actions/document-open-folder.svg
 share/icons/material-design-light/scalable/actions/document-open-recent.svg
 share/icons/material-design-light/scalable/actions/document-open.svg
 share/icons/material-design-light/scalable/actions/document-page-setup.svg
@@ -1051,6 +1061,7 @@ share/icons/material-design-light/scalable/actions/help-contents.svg
 share/icons/material-design-light/scalable/actions/help-faq.svg
 share/icons/material-design-light/scalable/actions/import.svg
 share/icons/material-design-light/scalable/actions/insert-cart.svg
+share/icons/material-design-light/scalable/actions/insert-horizontal-rule.svg
 share/icons/material-design-light/scalable/actions/insert-image.svg
 share/icons/material-design-light/scalable/actions/insert-link.svg
 share/icons/material-design-light/scalable/actions/insert-object.svg
@@ -1264,10 +1275,12 @@ share/icons/material-design-light/scalable/applications/preferences-desktop-user
 share/icons/material-design-light/scalable/applications/preferences-desktop-wallpaper.svg
 share/icons/material-design-light/scalable/applications/preferences-desktop.svg
 share/icons/material-design-light/scalable/applications/preferences-other.svg
+share/icons/material-design-light/scalable/applications/preferences-plugin.svg
 share/icons/material-design-light/scalable/applications/preferences-system-bluetooth.svg
 share/icons/material-design-light/scalable/applications/preferences-system-network.svg
 share/icons/material-design-light/scalable/applications/preferences-system-power-management.svg
 share/icons/material-design-light/scalable/applications/preferences-system-printers.svg
+share/icons/material-design-light/scalable/applications/preferences-system-time.svg
 share/icons/material-design-light/scalable/applications/preferences-system-session-services.svg
 share/icons/material-design-light/scalable/applications/preferences-system-windows-actions.svg
 share/icons/material-design-light/scalable/applications/preferences-system-windows.svg
@@ -1312,6 +1325,7 @@ share/icons/material-design-light/scalable/applications/wii.svg
 share/icons/material-design-light/scalable/applications/wiiu.svg
 share/icons/material-design-light/scalable/applications/wikipedia.svg
 share/icons/material-design-light/scalable/applications/wordpress.svg
+share/icons/material-design-light/scalable/applications/wine.svg
 share/icons/material-design-light/scalable/applications/xbox.svg
 share/icons/material-design-light/scalable/applications/xing.svg
 share/icons/material-design-light/scalable/applications/yelp.svg
@@ -1367,6 +1381,7 @@ share/icons/material-design-light/scalable/devices/camera-video-off.svg
 share/icons/material-design-light/scalable/devices/camera-video.svg
 share/icons/material-design-light/scalable/devices/camera-web.svg
 share/icons/material-design-light/scalable/devices/computer.svg
+share/icons/material-design-light/scalable/devices/cpu.svg
 share/icons/material-design-light/scalable/devices/drive-harddisk.svg
 share/icons/material-design-light/scalable/devices/drive-removable-media-usb.svg
 share/icons/material-design-light/scalable/devices/drive-removable-media.svg
@@ -1614,6 +1629,7 @@ share/icons/material-design-light/scalable/status/task-past-due.svg
 share/icons/material-design-light/scalable/status/task-question.svg
 share/icons/material-design-light/scalable/status/user-available.svg
 share/icons/material-design-light/scalable/status/user-away.svg
+share/icons/material-design-light/scalable/status/user-identity.svg
 share/icons/material-design-light/scalable/status/user-idle.svg
 share/icons/material-design-light/scalable/status/user-offline.svg
 share/icons/material-design-light/scalable/status/weather-clear-night.svg
