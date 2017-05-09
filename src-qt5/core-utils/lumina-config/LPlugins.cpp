@@ -101,7 +101,7 @@ void LPlugins::LoadPanelPlugins(){
     info.name = QObject::tr("Workspace Switcher");
     info.description = QObject::tr("Controls for switching between the various virtual desktops.");
     info.ID = "desktopswitcher";
-    info.icon = "preferences-desktop-display-color";
+    info.icon = "format-view-carousel";
   PANEL.insert(info.ID, info);  	
   //Battery
   info = LPI(); //clear it
