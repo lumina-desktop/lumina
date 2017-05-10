@@ -821,7 +821,7 @@
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>区域</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
@@ -849,7 +849,7 @@
     <message>
         <location filename="../ScriptDialog.ui" line="25"/>
         <source>Visible Name:</source>
-        <translation type="unfinished">可见名称：</translation>
+        <translation>可见名称：</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="32"/>
@@ -1067,12 +1067,12 @@
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
+        <translation>仅使用 GPU 加速形式的混成 </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="37"/>
         <source>Window Effects</source>
-        <translation type="unfinished">窗口特效</translation>
+        <translation>窗口特效</translation>
     </message>
 </context>
 <context>
@@ -1204,7 +1204,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="107"/>
         <source>Action</source>
-        <translation type="unfinished">动作</translation>
+        <translation>动作</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="112"/>
