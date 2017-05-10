@@ -169,12 +169,12 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>保存应用程序文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>应用注册 (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -210,18 +210,18 @@
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
-        <translation>目录:</translation>
+        <translation> 目录: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
-        <translation>文件:</translation>
+        <translation>文件: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
-        <translation>计算中...</translation>
+        <translation>  计算中...</translation>
     </message>
 </context>
 </TS>
