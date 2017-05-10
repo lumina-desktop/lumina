@@ -74,12 +74,12 @@
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪所选截图</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪(&amp;C)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -119,7 +119,7 @@
     <message>
         <location filename="../MainUI.ui" line="532"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished">Ctrl+N</translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="556"/>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭应用程序</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="562"/>
@@ -154,22 +154,22 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>预览</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>不能保存截图</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>截图无法保存。 请检查目录权限或选择其他目录</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="113"/>
@@ -179,12 +179,12 @@
     <message>
         <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存截图</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>当前截图未保存。您要保存还是丢弃您的修改？</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>
