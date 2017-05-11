@@ -310,7 +310,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation>显示托盘化的应用程序。</translation>
+        <translation type="unfinished">显示托盘化系统程序的区域</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
