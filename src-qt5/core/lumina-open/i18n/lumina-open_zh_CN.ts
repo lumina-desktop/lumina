@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[默认] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -166,7 +166,7 @@
     <message>
         <location filename="../main.cpp" line="265"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>应用程序输入无效: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="276"/>
