@@ -50,17 +50,17 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>打开用</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>查看属性</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>文件操作</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
@@ -70,17 +70,17 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
         <source>Cut</source>
-        <translation type="unfinished">剪切</translation>
+        <translation>剪切</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
         <source>Delete</source>
-        <translation type="unfinished">删除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>新文件名</translation>
     </message>
 </context>
 <context>
@@ -196,12 +196,12 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在启动 Lumina 桌面...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>版本 %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>保持桌面最新！</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>想改变界面？桌面配置中的一切都是可定制的！</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
