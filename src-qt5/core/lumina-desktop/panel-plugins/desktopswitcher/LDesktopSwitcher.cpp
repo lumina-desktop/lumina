@@ -29,6 +29,9 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
 
   QTimer::singleShot(500, this, SLOT(createMenu()) ); //needs a delay to make sure it works right the first time
   QTimer::singleShot(0,this, SLOT(OrientationChange()) ); //adjust icon size
+
+  //Process the signal which is sent when the workspace is changed via keyboard-shortcuts
+  connect(QApplication::instance(), SIGNAL(WorkspaceChanged()), this, SLOT(updateWorkspaceMenu()));
 }
 
 LDesktopSwitcher::~LDesktopSwitcher(){
@@ -133,10 +136,13 @@ void LDesktopSwitcher::createMenu() {
     if(i == cur){ name.prepend("*"); name.append("*");} //identify which desktop this is currently
     menu->addAction(newAction(i, name));
   }
+  label->setToolTip(QString(tr("Workspace %1")).arg(QString::number(cur + 1)));
 }
 
 void LDesktopSwitcher::menuActionTriggered(QAction* act) {
   LSession::handle()->XCB->SetCurrentWorkspace(act->whatsThis().toInt());
-  label->setToolTip(QString(tr("Workspace %1")).arg(act->whatsThis().toInt() +1));
-  QTimer::singleShot(500, this, SLOT(createMenu()) ); //make sure the menu gets updated
+}
+
+void LDesktopSwitcher::updateWorkspaceMenu() {
+  createMenu();
 }

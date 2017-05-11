@@ -49,6 +49,7 @@ private slots:
 	void openMenu();
 	void createMenu();
 	void menuActionTriggered(QAction*);
+	void updateWorkspaceMenu();
 
 public slots:
 	void LocaleChange(){
