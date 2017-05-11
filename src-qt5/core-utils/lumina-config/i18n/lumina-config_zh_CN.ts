@@ -24,7 +24,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="28"/>
         <source>Color Scheme:</source>
-        <translation>配色方案</translation>
+        <translation>配色方案:</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="51"/>
@@ -106,7 +106,7 @@
     <message>
         <location filename="../GetPluginDialog.ui" line="26"/>
         <source>Select a Plugin:</source>
-        <translation>选择插件</translation>
+        <translation>选择插件:</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="57"/>
@@ -438,7 +438,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation>跟踪系统状态，例如 CPU/内存使用率以及 CPU 温度</translation>
+        <translation>跟踪系统状态，例如 CPU/内存使用率以及 CPU 温度。</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
@@ -551,7 +551,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
-        <translation>用于所有可见文字的颜色</translation>
+        <translation>用于所有可见文字的颜色。</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="329"/>
