@@ -55,17 +55,17 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis egenskaber</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Filhandlinger</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Omdøb</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyt filnavn</translation>
     </message>
 </context>
 <context>
