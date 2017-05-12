@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Alternativ startmenu som fokuserer på brugerens filer, mapper og favoritter.</translation>
     </message>
     <message>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt-tast
-&quot;Mod4&quot;: 	Windows-/Mac-tast
-&quot;Control&quot;:	Ctrl-tast</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt-tast
+"Mod4": 	Windows-/Mac-tast
+"Control":	Ctrl-tast</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1396,7 +1396,7 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis ikoner for flytbare medier</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
