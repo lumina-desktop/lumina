@@ -25,7 +25,6 @@ src-qt5/desktop-utils/lumina-terminal/lumina-terminal
 src-qt5/desktop-utils/lumina-textedit/lumina-textedit
 src-qt5/desktop-utils/lumina-archiver/lumina-archiver
 src-qt5/desktop-utils/lumina-calculator/lumina-calculator
-Makefile
 src-qt5/Makefile
 src-qt5/*/Makefile
 src-qt5/*/*/Makefile

@@ -3,8 +3,9 @@
 # from a checked out git repo
 
 # Set the port
-port="x11/lumina"
+#port="x11/lumina"
 dfile="lumina"
+VERSION="1.2.1"
 
 massage_subdir() {
   cd "$1"
@@ -66,30 +67,41 @@ ghtag=`git log -n 1 . | grep '^commit ' | awk '{print $2}'`
 if [ -e "version" ] ; then
   verTag=$(cat version)
 else
-  verTag=$(date '+%Y%m%d%H%M')
+  verTag=`git describe --always`
+  if [ "z${verTag}" != "z" ] ; then
+    verTag="${VERSION}.${verTag}"
+  else
+    verTag="${VERSION}"
+  fi
 fi
 
 # Cleanup old distfiles
 rm ${distdir}/${dfile}-* 2>/dev/null
 
 # Copy ports files
-if [ -d "${portsdir}/${port}" ] ; then
-  rm -rf ${portsdir}/${port} 2>/dev/null
-fi
-cp -r port-files/FreeBSD ${portsdir}/${port}
+orig_dir=`pwd`
+for port in `find port-files/FreeBSD | grep Makefile | cut -d / -f 3-4`
+do
+  cd ${orig_dir}
+  echo "Copying port: ${port}"
+  if [ -d "${portsdir}/${port}" ] ; then
+    rm -rf ${portsdir}/${port} 2>/dev/null
+  fi
+  cp -r port-files/FreeBSD/${port} ${portsdir}/${port}
 
-# Set the version numbers
-sed -i '' "s|%%CHGVERSION%%|${verTag}|g" ${portsdir}/${port}/Makefile
-sed -i '' "s|%%GHTAG%%|${ghtag}|g" ${portsdir}/${port}/Makefile
+  # Set the version numbers
+  sed -i '' "s|%%CHGVERSION%%|${verTag}|g" ${portsdir}/${port}/Makefile
+  sed -i '' "s|%%GHTAG%%|${ghtag}|g" ${portsdir}/${port}/Makefile
 
-# Create the makesums / distinfo file
-cd "${portsdir}/${port}"
-make makesum
-if [ $? -ne 0 ] ; then
-  echo "Failed makesum"
-  exit 1
-fi
+  # Create the makesums / distinfo file
+  cd "${portsdir}/${port}"
+  make makesum
+  if [ $? -ne 0 ] ; then
+    echo "Failed makesum"
+    exit 1
+  fi
 
-# Update port cat Makefile
-tcat=$(echo $port | cut -d '/' -f 1)
-massage_subdir ${portsdir}/${tcat}
+  # Update port cat Makefile
+  tcat=$(echo $port | cut -d '/' -f 1)
+  massage_subdir ${portsdir}/${tcat}
+done

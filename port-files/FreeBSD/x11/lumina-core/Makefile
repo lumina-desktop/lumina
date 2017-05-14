@@ -1,9 +1,8 @@
 # Created by: Ken Moore <ken@pcbsd.org>
 # $FreeBSD$
 
-PORTNAME=	lumina
+PORTNAME=	lumina-core
 PORTVERSION=	%%CHGVERSION%%
-PORTEPOCH=	2
 CATEGORIES=	x11
 
 MAINTAINER=	kmoore@FreeBSD.org
@@ -47,7 +46,9 @@ USE_QT5=	core gui widgets network svg multimedia imageformats \
 USES=		desktop-file-utils qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
+GH_PROJECT=	lumina
 GH_TAGNAME=	%%GHTAG%%
+WRKSRC_SUBDIR=	src-qt5/core
 
 #Setup the qmake configuration options
 .if ${PORT_OPTIONS:MTRUEOS}
