@@ -105,3 +105,5 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
+#export a variable for the auto-builder to know which port to build as the primary
+export bPort="x11/lumina"
