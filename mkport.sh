@@ -106,4 +106,4 @@ do
   massage_subdir ${portsdir}/${tcat}
 done
 #export a variable for the auto-builder to know which port to build as the primary
-export bPort="x11/lumina"
+export port="x11/lumina"
