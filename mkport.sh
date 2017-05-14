@@ -5,7 +5,7 @@
 # Set the port
 port="x11/lumina"
 dfile="lumina"
-VERSION="1.2.1"
+VERSION="1.2.2"
 
 massage_subdir() {
   cd "$1"

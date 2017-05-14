@@ -24,7 +24,7 @@ RUN_DEPENDS=	lumina-desktop>=0:x11/lumina-core \
 		lumina-textedit>=0:deskutils/lumina-textedit \
 		lumina-xdg-entry>=0:deskutils/lumina-xdg-entry
 
-CONFLICTS=	lumina-devel-0*
+CONFLICTS=	lumina-1.2.1
 
 USES=		metaport
 

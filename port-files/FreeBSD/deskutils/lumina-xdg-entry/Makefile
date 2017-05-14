@@ -11,7 +11,7 @@ COMMENT=	XDG desktop entry creator from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
 
-CONFLICTS=	lumina-devel-0*
+CONFLICTS=	lumina-1.2.1
 
 OPTIONS_DEFINE=	I18N
 OPTIONS_DEFAULT=	I18N
