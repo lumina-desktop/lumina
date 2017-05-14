@@ -3,6 +3,7 @@
 
 PORTNAME=	lumina-coreutils
 PORTVERSION=	%%CHGVERSION%%
+PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	x11
 
 MAINTAINER=	kmoore@FreeBSD.org
@@ -10,7 +11,7 @@ COMMENT=	Lumina Desktop Environment
 
 LICENSE=	BSD3CLAUSE
 
-RUN_DEPENDS=	xrandr:x11/xrandr 
+RUN_DEPENDS=	xrandr:x11/xrandr
 
 CONFLICTS=	lumina-devel-0*
 

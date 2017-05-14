@@ -3,13 +3,13 @@
 
 PORTNAME=	lumina
 PORTVERSION=	%%CHGVERSION%%
+PORTREVISION=	%%CHGREVISION%%
 PORTEPOCH=	3
 CATEGORIES=	x11
 
 MAINTAINER=	kmoore@FreeBSD.org
 COMMENT=	Lumina Desktop Environment (meta-port)
 
-USES=		metaport
 LICENSE=	BSD3CLAUSE
 
 RUN_DEPENDS=	lumina-desktop:x11/lumina-core \
@@ -22,8 +22,10 @@ RUN_DEPENDS=	lumina-desktop:x11/lumina-core \
 		lumina-notify:deskutils/lumina-notify \
 		lumina-screenshot:deskutils/lumina-screenshot \
 		lumina-textedit:deskutils/lumina-textedit \
-		lumina-xdg-entry:deskutils/lumina-xdg-entry \
+		lumina-xdg-entry:deskutils/lumina-xdg-entry
 
 CONFLICTS=	lumina-devel-0*
+
+USES=		metaport
 
 .include <bsd.port.mk>

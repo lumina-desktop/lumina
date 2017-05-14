@@ -3,6 +3,7 @@
 
 PORTNAME=	lumina-calculator
 PORTVERSION=	%%CHGVERSION%%
+PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	deskutils
 
 MAINTAINER=	kmoore@FreeBSD.org

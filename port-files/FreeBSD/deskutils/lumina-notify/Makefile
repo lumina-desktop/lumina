@@ -3,6 +3,7 @@
 
 PORTNAME=	lumina-notify
 PORTVERSION=	%%CHGVERSION%%
+PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	deskutils
 
 MAINTAINER=	kmoore@FreeBSD.org

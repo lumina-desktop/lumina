@@ -3,6 +3,7 @@
 
 PORTNAME=	lumina-fileinfo
 PORTVERSION=	%%CHGVERSION%%
+PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	deskutils
 
 MAINTAINER=	kmoore@FreeBSD.org

@@ -64,16 +64,9 @@ fi
 ghtag=`git log -n 1 . | grep '^commit ' | awk '{print $2}'`
 
 # Get the version
-if [ -e "version" ] ; then
-  verTag=$(cat version)
-else
-  verTag=`git describe --always`
-fi
-if [ "z${verTag}" != "z" ] ; then
-  verTag="${VERSION}.${verTag}"
-else
-  verTag="${VERSION}"
-fi
+verTag="${VERSION}"
+dateTag=$(date '+%Y%m%d%H%M')
+
 # Cleanup old distfiles
 rm ${distdir}/${dfile}-* 2>/dev/null
 
@@ -90,6 +83,7 @@ do
 
   # Set the version numbers
   sed -i '' "s|%%CHGVERSION%%|${verTag}|g" ${portsdir}/${port}/Makefile
+  sed -i '' "s|%%CHGREVISION%%|${dateTag}|g" ${portsdir}/${port}/Makefile
   sed -i '' "s|%%GHTAG%%|${ghtag}|g" ${portsdir}/${port}/Makefile
 
   # Create the makesums / distinfo file
