@@ -68,13 +68,12 @@ if [ -e "version" ] ; then
   verTag=$(cat version)
 else
   verTag=`git describe --always`
-  if [ "z${verTag}" != "z" ] ; then
-    verTag="${VERSION}.${verTag}"
-  else
-    verTag="${VERSION}"
-  fi
 fi
-
+if [ "z${verTag}" != "z" ] ; then
+  verTag="${VERSION}.${verTag}"
+else
+  verTag="${VERSION}"
+fi
 # Cleanup old distfiles
 rm ${distdir}/${dfile}-* 2>/dev/null
 
@@ -83,7 +82,7 @@ orig_dir=`pwd`
 for port in `find port-files/FreeBSD | grep Makefile | cut -d / -f 3-4`
 do
   cd ${orig_dir}
-  echo "Copying port: ${port}"
+  echo "Updating port: ${port}"
   if [ -d "${portsdir}/${port}" ] ; then
     rm -rf ${portsdir}/${port} 2>/dev/null
   fi
@@ -105,5 +104,5 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
-#export a variable for the auto-builder to know which port to build as the primary
-export port="x11/lumina"
+#Now make sure we end in the port directory of the primary port
+cd ${portsdir}/x11/lumina
