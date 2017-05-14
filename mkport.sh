@@ -3,7 +3,7 @@
 # from a checked out git repo
 
 # Set the port
-#port="x11/lumina"
+port="x11/lumina"
 dfile="lumina"
 VERSION="1.2.1"
 
@@ -104,5 +104,3 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
-#Now make sure we end in the port directory of the primary port
-cd ${portsdir}/x11/lumina
