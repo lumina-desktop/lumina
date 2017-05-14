@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Binärens Plats</translation>
+        <translation>Binärens plats</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation>(Email Länk)</translation>
+        <translation>(Emaillänk)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
-        <translation>Hitta Programmets Binär </translation>
+        <translation>Hitta programmets binär</translation>
     </message>
 </context>
 <context>
@@ -171,12 +171,12 @@
     <message>
         <location filename="../main.cpp" line="276"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Program genväg saknar startinformation (missbildad genväg): %1</translation>
+        <translation>Programgenväg saknar startinformation (missbildad genväg): %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="289"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>URL genväg saknas URL: %1</translation>
+        <translation>URL-genvägen saknar URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="300"/>
@@ -195,13 +195,13 @@
     </message>
     <message>
         <location filename="../main.cpp" line="368"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Kunde inte hitta &quot;%1&quot;. Se till att du har detta programmet installerat först.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Kunde inte hitta "%1". Se till att du har detta programmet installerat först.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="418"/>
         <source>Application Error</source>
-        <translation>Program fel</translation>
+        <translation>Programfel</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="418"/>
