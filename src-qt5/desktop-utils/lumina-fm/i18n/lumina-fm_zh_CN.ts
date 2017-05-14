@@ -61,52 +61,52 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="209"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="210"/>
         <source>Size</source>
-        <translation type="unfinished">大小</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="211"/>
         <source>Type</source>
-        <translation type="unfinished">类型</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="212"/>
         <source>Date Modified</source>
-        <translation type="unfinished">修改日期</translation>
+        <translation>修改日期</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="213"/>
         <source>Date Created</source>
-        <translation type="unfinished">建立日期</translation>
+        <translation>建立日期</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="315"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">容量: %1</translation>
+        <translation>容量: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="341"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">文件: %1 (%2)</translation>
+        <translation>文件: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="343"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>文件: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">目录: %1</translation>
+        <translation>目录: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>目录无内容</translation>
     </message>
 </context>
 <context>
@@ -119,12 +119,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="145"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>增加图标大小</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="161"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>减小图标大小</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="179"/>
@@ -162,32 +162,32 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="218"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>菜单</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>选择动作</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
         <source>SingleColumn</source>
-        <translation type="unfinished"></translation>
+        <translation>单列</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="232"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>单列视图</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="240"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>双列</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="243"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>双列视图</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="543"/>
@@ -232,17 +232,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="491"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>文件操作</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>目录操作</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>载入中...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
@@ -269,57 +269,57 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>创建...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="235"/>
         <source>File</source>
-        <translation type="unfinished">文件</translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>目录</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>应用程序启动器</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation>启动...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="243"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>终端</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="244"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>幻灯片</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="245"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>多媒体播放器</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="260"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>查看文件...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="262"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>校验</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="264"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>属性</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="450"/>
@@ -333,8 +333,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>无法在您的系统里找到 &quot;lumina-fileinfo&quot; 工具。请先安装它。</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>无法在您的系统里找到 "lumina-fileinfo" 工具。请先安装它。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -482,107 +482,107 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>克隆一个 Git 存储库</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>欢迎！</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>该向导将引导您完成从互联网下载 GIT 存储库的过程。</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>GitHub 存储库设置</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>组织/用户</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>存储库名称</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>私人存储库</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>访问类型</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>使用我的 SSH 密钥</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>登录到服务器</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>匿名（仅限公共资料库）</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>可选 SSH 密码</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>高级选项</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义深度</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>单分支</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>分支名称</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation type="unfinished"></translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>点击 “下一步” 开始下载存储库</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Stop Download?</source>
-        <translation type="unfinished"></translation>
+        <translation>停止下载？</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Kill the current download?</source>
-        <translation type="unfinished"></translation>
+        <translation>终止当前的下载？</translation>
     </message>
 </context>
 <context>
@@ -630,12 +630,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Git</source>
-        <translation type="unfinished"></translation>
+        <translation>Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="171"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>新标签</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="174"/>
@@ -715,17 +715,17 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="403"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭标签</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>回复状态</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>克隆存储库</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="177"/>
@@ -850,12 +850,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="222"/>
         <source>CTRL+B</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+B</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="336"/>
@@ -896,7 +896,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="621"/>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Git 存储库状态</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="711"/>
@@ -927,7 +927,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="423"/>
@@ -1003,7 +1003,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
-        <translation>播放文件出错: %1 </translation>
+        <translation>播放文件出错: %1</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
@@ -1022,42 +1022,42 @@ New Location: %2</source>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation type="unfinished"></translation>
+        <translation>评估...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>移动</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
         <source>File Operation Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>文件操作错误</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>％1 已完成</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
-        <translation type="unfinished"></translation>
+        <translation>发生错误</translation>
     </message>
 </context>
 <context>
@@ -1168,17 +1168,17 @@ New Location: %2</source>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
+        <translation>运行时发生错误。点击查看详细信息</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
-        <translation type="unfinished"></translation>
+        <translation>新任务运行中</translation>
     </message>
 </context>
 </TS>

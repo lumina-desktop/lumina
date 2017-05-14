@@ -95,9 +95,11 @@ void LClock::updateTime(bool adjustformat){
       int wid = 0;
       int lwid;
       for(int i=0; i<lines.length(); i++){
-        int lwid = button->fontMetrics().width(lines[i]);
+        lwid = button->fontMetrics().width(lines[i]);
         if(lwid>wid){ wid = lwid; }
       }
+     if(lines.length()==1){ wid+=6; } //need some extra margins for single-line 
+     else{ wid-=6; } // need to remove some margins for multi-line
      this->setFixedWidth( wid );
     }else{
       //vertical layout

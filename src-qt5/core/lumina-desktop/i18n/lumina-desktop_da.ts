@@ -50,22 +50,22 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn med</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis egenskaber</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Filhandlinger</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Omdøb</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyt filnavn</translation>
     </message>
 </context>
 <context>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Du kan ikke vide for meget, men du kan sige for meget.</translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det første.</translation>
     </message>
     <message>
@@ -360,8 +360,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation>Gør eller lad være. Der er ikke noget &quot;prøv&quot;.</translation>
+        <source>Do, or do not. There is no 'try'.</source>
+        <translation>Gør eller lad være. Der er ikke noget "prøv".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
@@ -692,7 +692,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>

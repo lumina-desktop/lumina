@@ -70,8 +70,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
-        <source>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/beanpole135&quot;&gt;Ken Moore&lt;/a&gt;</translation>
+        <source>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</source>
+        <translation>&lt;a href="https://github.com/beanpole135"&gt;Ken Moore&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="353"/>
@@ -81,12 +81,12 @@
     <message>
         <location filename="../MainUI.ui" line="366"/>
         <source>Sponsors:</source>
-        <translation>赞助者</translation>
+        <translation>赞助者：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
-        <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;打开网络浏览器&lt;a&gt;</translation>
+        <source>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;Open in web browser&lt;a&gt;</source>
+        <translation>&lt;a href="https://github.com/pcbsd/lumina/graphs/contributors"&gt;打开网络浏览器&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>

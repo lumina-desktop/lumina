@@ -40,47 +40,47 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
         <source>Launch %1</source>
-        <translation type="unfinished">启动 %1</translation>
+        <translation>启动 %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="103"/>
         <source>Open</source>
-        <translation type="unfinished">打开</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>打开用</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>查看属性</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>文件操作</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
         <source>Cut</source>
-        <translation type="unfinished">剪切</translation>
+        <translation>剪切</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
         <source>Delete</source>
-        <translation type="unfinished">删除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>新文件名</translation>
     </message>
 </context>
 <context>
@@ -196,12 +196,12 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在启动 Lumina 桌面...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="15"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>版本 %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="39"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>保持桌面最新！</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>想改变界面？桌面配置中的一切都是可定制的！</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
@@ -231,7 +231,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>这个桌面是由 iXsystems 慷慨赞助</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
@@ -246,31 +246,31 @@
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>万物皆有动人之处，然非众人皆能洞悉。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>在上帝面前，我们都同样聪明，同样愚蠢。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>我们不能马上做每件事，但我们可以马上做某事。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>谁拥有法律，谁就是大多数。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -286,62 +286,62 @@
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>永远不要信任那些你无法将其抛出窗外的电脑。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果你想定义未来，就请研究过去。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>开始的方法是放弃说，开始做。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>你们祈求，就给你们；寻找，就寻见；叩门，就给你开门。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>从哪跌倒，从哪爬起来，珍惜你所拥有的。做你能做的。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>从不犯错的人也从不尝试新的事物。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>无论你走得多慢，只要你不停止。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>无论身处何境,倾你所有,尽你所能。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>不要妄自菲薄。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>重要的不是你活了多久，而是怎么活。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>要么写一些值得读的，要么做一些值得写的。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>成大事的唯一途径就是做自己喜欢做的事情。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
@@ -350,18 +350,18 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <translation>有两件事是无限的，宇宙和人类的愚蠢，而我对前者不确定。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>我发现，我越是努力，就越发幸运。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation type="unfinished"></translation>
+        <source>Do, or do not. There is no 'try'.</source>
+        <translation>做，或不做。没有“尝试”。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
@@ -371,7 +371,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>好人不需要法律告知他们负起责任,恶人总是绕法律边缘而行。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
@@ -380,13 +380,13 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <source>It's kind of fun to do the impossible.</source>
+        <translation>乐在为不可为之事。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>知识是倾诉，但智慧是倾听。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>成功往往青睐那些努力为它奋斗的人们。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
@@ -411,17 +411,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>预测未来最好的方法就是发明未来。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>说的好不如做的好。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>仅仅做到我们的最好是不够的，有时候我们得达到要求。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
@@ -431,7 +431,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>做一个消除一切疑虑的出头鸟，还不如保持沉默被当成傻子。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="140"/>
@@ -692,7 +692,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>修改项目</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -788,7 +788,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>锁定会话</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="294"/>
@@ -1037,52 +1037,52 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">清除播放列表</translation>
+        <translation>清除播放列表</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">乱序播放列表</translation>
+        <translation>随机播放列表</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">添加文件</translation>
+        <translation>添加文件</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">添加目录</translation>
+        <translation>添加目录</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">添加 URL</translation>
+        <translation>添加 URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">多媒体文件</translation>
+        <translation>多媒体文件</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">选择媒体文件</translation>
+        <translation>选择媒体文件</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">选择多媒体目录</translation>
+        <translation>选择多媒体目录</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">输入一个有效的网址为一个多媒体文件或stream：</translation>
+        <translation>输入一个有效的网址为一个多媒体文件或 stream：</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">多媒体键网址</translation>
+        <translation>多媒体网址</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1286,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation type="unfinished">最后构建于: %1</translation>
+        <translation>最后构建日期: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
@@ -1314,7 +1314,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>壁纸</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
@@ -1324,7 +1324,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>所有桌面设置</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>

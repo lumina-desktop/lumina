@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg område</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>

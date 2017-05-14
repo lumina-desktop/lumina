@@ -39,82 +39,82 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina 截屏</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>使用应用程序打开截图</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>打开</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>复制截图到剪贴板</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>调整所选屏幕截图的大小</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪所选截图</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪(&amp;C)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕捕捉设置</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation> 秒延迟</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>选择区域</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>通用设置</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存截图时显示弹出警告</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>捕获</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="532"/>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭应用程序</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="562"/>
@@ -154,22 +154,22 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>预览</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="96"/>
         <source>Could not save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>不能保存截图</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="96"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation type="unfinished"></translation>
+        <translation>截图无法保存。 请检查目录权限或选择其他目录</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="113"/>
@@ -179,12 +179,12 @@
     <message>
         <location filename="../MainUI.cpp" line="315"/>
         <source>Unsaved Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存截图</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="316"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>当前截图未保存。您要保存还是丢弃您的修改？</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>

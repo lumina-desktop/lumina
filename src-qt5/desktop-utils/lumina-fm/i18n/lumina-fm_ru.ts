@@ -331,8 +331,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Утилита &quot;Lumina-FileInfo&quot; не может быть найдена в системе. Пожалуйста, установите ее в первую очередь.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Утилита "Lumina-FileInfo" не может быть найдена в системе. Пожалуйста, установите ее в первую очередь.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -565,8 +565,8 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Нажмите &quot;Далее&quot;, чтобы начать загрузку хранилища</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Нажмите "Далее", чтобы начать загрузку хранилища</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -1167,7 +1167,7 @@ New Location: %2</source>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнение новых задач</translation>
     </message>
 </context>
 </TS>

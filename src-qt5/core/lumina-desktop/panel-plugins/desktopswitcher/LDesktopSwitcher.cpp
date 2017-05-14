@@ -15,7 +15,7 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
   label->setPopupMode(QToolButton::DelayedPopup);
   label->setAutoRaise(true);
   label->setToolButtonStyle(Qt::ToolButtonIconOnly);
-  label->setIcon( LXDG::findIcon("preferences-desktop-display-color", "") );
+  label->setIcon( LXDG::findIcon("format-view-carousel", "preferences-desktop-display") );
   label->setToolTip(QString("Workspace 1"));
   connect(label, SIGNAL(clicked()), this, SLOT(openMenu()));
   menu = new QMenu(this);

@@ -36,7 +36,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
-        <translation>设置该应用程序为默认</translation>
+        <translation>设置该应用程序为默认 </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[默认] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -166,7 +166,7 @@
     <message>
         <location filename="../main.cpp" line="265"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>应用程序输入无效: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="276"/>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <location filename="../main.cpp" line="368"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
         <translation>无法找到 “%1”。请确认它已被安装。</translation>
     </message>
     <message>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../main.cpp" line="418"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>下面的应用程序遇到错误，需要关闭</translation>
+        <translation>下面的应用程序遇到错误，需要关闭:</translation>
     </message>
 </context>
 </TS>
