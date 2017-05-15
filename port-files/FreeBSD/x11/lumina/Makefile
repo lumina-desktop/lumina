@@ -19,7 +19,6 @@ RUN_DEPENDS=	lumina-desktop>=0:x11/lumina-core \
 		lumina-fileinfo>=0:deskutils/lumina-fileinfo \
 		lumina-fm>=0:deskutils/lumina-fm \
 		lumina-mediaplayer>=0:deskutils/lumina-mediaplayer \
-		lumina-notify>=0:deskutils/lumina-notify \
 		lumina-screenshot>=0:deskutils/lumina-screenshot \
 		lumina-textedit>=0:deskutils/lumina-textedit \
 		lumina-xdg-entry>=0:deskutils/lumina-xdg-entry
