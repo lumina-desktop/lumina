@@ -33,7 +33,7 @@
     <message>
         <location filename="../MainUI.ui" line="111"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation>Obs: Tiden en fil skapades kan vara nyare än den tid ändras om filrättigheterna ändrades nyligen.</translation>
+        <translation>Obs: Tiden en fil skapades kan vara nyare än den tid filen sist ändrades om filrättigheterna ändrades nyligen.</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation>Applikationregistreringarn (*.desktop)</translation>
+        <translation>Applikationsregistreringar (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.cpp" line="293"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation>Ogiltig val: Inte giltig körbar fil</translation>
+        <translation>Ogiltigt val: Inte giltig körbar fil</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="305"/>
@@ -204,13 +204,13 @@
     <message>
         <location filename="../MainUI.cpp" line="318"/>
         <source>Images (%1);; All Files (*)</source>
-        <translation>Bilder (%1);; Alla Filer (*)</translation>
+        <translation>Bilder (%1);; Alla filer (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
         <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
-        <translation> Mappar:</translation>
+        <translation> Mappar: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../MainUI.cpp" line="343"/>
         <source>  Calculating...</source>
-        <translation> Beräknar...</translation>
+        <translation>  Beräknar...</translation>
     </message>
 </context>
 </TS>
