@@ -1357,7 +1357,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation>Navega per les aplicacions</translation>
+        <translation>Navegueu per les aplicacions</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
@@ -1382,7 +1382,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Configura l'escriptori</translation>
+        <translation>Configureu l'escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
@@ -1402,7 +1402,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off System</source>
-        <translation>Apaga el sistema</translation>
+        <translation>Atura el sistema</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
