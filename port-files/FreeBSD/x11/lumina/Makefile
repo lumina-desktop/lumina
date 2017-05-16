@@ -12,8 +12,8 @@ COMMENT=	Lumina Desktop Environment (meta-port)
 
 LICENSE=	BSD3CLAUSE
 
-RUN_DEPENDS=	lumina-desktop>=0:x11/lumina-core \
-		lumina-config>=0:x11/lumina-coreutils \
+RUN_DEPENDS=	lumina-core>=0:x11/lumina-core \
+		lumina-coreutils>=0:x11/lumina-coreutils \
 		lumina-archiver>=0:deskutils/lumina-archiver \
 		lumina-calculator>=0:deskutils/lumina-calculator \
 		lumina-fileinfo>=0:deskutils/lumina-fileinfo \
