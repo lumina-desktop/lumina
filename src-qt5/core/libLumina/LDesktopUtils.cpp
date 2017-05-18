@@ -9,6 +9,7 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QScreen>
+#include <QSettings>
 
 #include "LuminaThemes.h"
 
@@ -525,4 +526,20 @@ int LDesktopUtils::VersionStringToNumber(QString version){
   //Now assemble the number
   //NOTE: This format allows numbers to be anywhere from 0->999 without conflict
   return (maj*1000000 + mid*1000 + min);
+}
+
+void LDesktopUtils::MigrateDesktopSettings(QSettings *settings, QString fromID, QString toID){
+  //desktop-ID
+  QStringList keys = settings->allKeys();
+  QStringList filter = keys.filter("desktop-"+fromID+"/");
+  for(int i=0; i<filter.length(); i++){
+    settings->setValue("desktop-"+toID+"/"+filter[i].section("/",1,-1), settings->value(filter[i]));
+    settings->remove(filter[i]);
+  }
+  //panel_ID.[number]
+  filter = keys.filter("panel_"+fromID+".");
+  for(int i=0; i<filter.length(); i++){
+    settings->setValue("panel_"+toID+"."+ filter[i].section("/",0,0).section(".",-1)+"/"+filter[i].section("/",1,-1), settings->value(filter[i]));
+    settings->remove(filter[i]);
+  }
 }

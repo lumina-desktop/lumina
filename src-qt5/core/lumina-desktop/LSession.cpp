@@ -403,6 +403,25 @@ void LSession::updateDesktops(){
 
   bool firstrun = (DESKTOPS.length()==0);
   bool numchange = DESKTOPS.length()!=sC;
+  QSettings dset("lumina-desktop", "desktopsettings");
+  if(firstrun && sC==1){
+    //Sanity check - ensure the monitor ID did not change between sessions for single-monitor setups
+    QString name = QApplication::screens().at(0)->name();
+    if(!dset.contains("desktop-"+name+"/screen/lastHeight")){
+      //Empty Screen - find the previous one and migrate the settings over
+      QStringList old = dset.allKeys().filter("desktop-").filter("/screen/lastHeight");
+	QStringList lastused = dset.value("last_used_screens").toStringList();
+      QString oldname;
+      for(int i=0; i<old.length(); i++){
+        QString tmp = old[i].section("/",0,0).section("-",1,-1); //old desktop ID
+        if(tmp=="default"){ continue; } //always skip this one
+        else if(lastused.contains(tmp)){
+          oldname = tmp; break; //use the first screen that was last used
+        }
+      }
+      if(!oldname.isEmpty()){ LDesktopUtils::MigrateDesktopSettings(&dset, oldname, name); }
+    }
+  }
 
   // If the screen count is changing on us
   if ( sC != DW->screenCount() ) {
@@ -431,7 +450,10 @@ void LSession::updateDesktops(){
   }
   
   //Now add any new desktops
+  QStringList allNames;
+  QList<QScreen*> scrns = QApplication::screens();
   for(int i=0; i<sC; i++){
+    allNames << scrns.at(i)->name();
     if(!dnums.contains(i) && !geoms.contains(DW->screenGeometry(i)) ){
       //Start the desktop on this screen
       qDebug() << " - Start desktop on screen:" << i;
@@ -439,7 +461,7 @@ void LSession::updateDesktops(){
       geoms << DW->screenGeometry(i);
     }
   }
-  
+  dset.setValue("last_used_screens", allNames);
   //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes in the middle of a session
     if(numchange && !firstrun) {
       qDebug() << "Update WM";
@@ -449,7 +471,6 @@ void LSession::updateDesktops(){
   //Make sure all the background windows are registered on the system as virtual roots
   QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
   //Determine if any High-DPI screens are available and enable auto-scaling as needed
-  QList<QScreen*> scrns = QApplication::screens();
   for(int i=0; i<scrns.length(); i++){
     qDebug() << "Check Screen DPI:" << scrns[i]->name();
     qDebug() << " -- Physical DPI:" << scrns[i]->physicalDotsPerInchX() << "x" << scrns[i]->physicalDotsPerInchY();

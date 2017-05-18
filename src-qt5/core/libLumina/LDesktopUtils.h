@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QDir>
 #include <QDateTime>
+#include <QSettings>
 
 //Other classes needed
 #include <LUtils.h>
@@ -44,6 +45,10 @@ public:
 	static void LoadSystemDefaults(bool skipOS = false);
 	static bool checkUserFiles(QString lastversion); //returns true if something changed
 	static int VersionStringToNumber(QString version); //convert the lumina version string to a number for comparisons
+
+	//Migrating desktop settings from one ID to another
+	static void MigrateDesktopSettings(QSettings *settings, QString fromID, QString toID);
+
 };
 
 #endif
