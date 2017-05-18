@@ -1,9 +1,0 @@
-[Desktop Entry]
-Exec=lumina-notify
-Icon=clock
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Utility;
-Name=Lumina Notify
-Comment=Alarm clock and notification system

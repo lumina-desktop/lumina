@@ -12,9 +12,6 @@ TARGET = lumina-notify
 target.path = $${L_BINDIR}
 TEMPLATE = app
 
-desktop.files=lumina-notify.desktop
-desktop.path=$${L_SHAREDIR}/applications/
-
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp
