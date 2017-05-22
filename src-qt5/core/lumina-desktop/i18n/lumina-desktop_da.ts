@@ -40,12 +40,12 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
         <source>Launch %1</source>
-        <translation type="unfinished">Start %1</translation>
+        <translation>Start %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="103"/>
         <source>Open</source>
-        <translation type="unfinished">Åbn</translation>
+        <translation>Åbn</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
@@ -70,17 +70,17 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopiér</translation>
+        <translation>Kopiér</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
         <source>Cut</source>
-        <translation type="unfinished">Klip</translation>
+        <translation>Klip</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
         <source>Delete</source>
-        <translation type="unfinished">Slet</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
