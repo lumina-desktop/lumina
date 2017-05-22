@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished">Løsriv faneblad</translation>
+        <translation>Løsriv faneblad</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../MainUI.ui" line="220"/>
         <source>Tabs Location</source>
-        <translation type="unfinished">Fanebladsplacering</translation>
+        <translation>Fanebladsplacering</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
