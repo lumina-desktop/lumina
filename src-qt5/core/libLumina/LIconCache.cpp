@@ -7,6 +7,9 @@
 #include "LIconCache.h"
 
 #include <LuminaOS.h>
+#include <LUtils.h>
+
+#include <QDir>
 
 LIconCache::LIconCache(QObject *parent = 0{
 
@@ -105,7 +108,7 @@ QString LIconCache::findFile(QString icon){
 }
 
 
-void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb = false){
+void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   //See if the icon has already been loaded into the HASH
   if(HASH.contains(icon)){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ button->setIcon( HASH[icon].thumbnail ); return; }
@@ -120,7 +123,7 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb = 
   QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
 }
 
-void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb = false){
+void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   //See if the icon has already been loaded into the HASH
   if(HASH.contains(icon)){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ button->setIcon( HASH[icon].thumbnail ); return; }
@@ -135,6 +138,34 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb = false){
   QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
 }
 
+void LIconCache::clearIconTheme(){
+   //use when the icon theme changes to refresh all requested icons
+  QStringList keys = HASH.keys();
+  for(int i=0; i<keys.length(); i++){
+    //remove all relative icons (
+    if(!keys.startsWith("/")){ HASH.remove(keys[i]); }
+  }
+}
+
+QIcon LIconCache::loadIcon(QString icon, bool noThumb){
+  if(HASH.contains(icon)){
+    if(!HASH[icon].icon.isNull()){ return HASH[icon].icon; }
+    else if(!HASH[icon].thumbnail.isNull() && !noThumb){ return HASH[icon].thumbnail; }
+  }
+  //Not loaded yet - need to load it right now
+  icon_data idat;
+  if(HASH.contains(icon)){ idat = HASH[icon]; }
+  else{ idat = createData(icon); }
+  idat.icon = QIcon(idat.fullpath);
+  //Now save into the hash and return
+  HASH.insert(icon, idat);
+  emit IconAvailable(icon);
+  return idat.icon;
+}
+
+void LIconCache::clearAll(){
+  HASH.clear();
+}
 
 // === PRIVATE ===
 icon_data LIconCache::createData(QString icon){
@@ -192,10 +223,33 @@ QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
 }
 
 void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
-
+  QByteArray *BA = new QByteArray();
+  QDateTime cdt = QDateTime::currentDateTime();
+  QFile file(path);
+  if(file.open(QIODevice::ReadOnly)){
+    BA->append(file.readAll());
+    file.close();
+  }
+  obj->emit InternalIconLoaded(id, cdt, BA);
 }
 
 // === PRIVATE SLOTS ===
 void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
-
+  QPixmap pix = QPixmap::fromRawData(data);
+   delete data; //no longer used - free this up
+  if(!HASH.contains(id)){ return; } //icon loading cancelled - just stop here
+  if(!pix.isValid()){ HASH.remove(id); }
+  else{
+    icon_data idat = HASH[id];
+    idat.lastsync = sync;
+    idat.icon.addPixmap(pix);
+    //Now throw this icon into any pending objects
+    for(int i=0; i<idat.pendingButtons.length(); i++){ idat.pendingButtons[i]->setIcon(idat.icon); }
+    idat.pendingButtons.clear();
+    for(int i=0; i<idat.pendingLabels.length(); i++){ idat.pendingLabels[i]->setPixmap(pix.scaled(idat.pendingLabels[i]->sizeHint(), Qt::KeepAspectRatio, Qt::SmoothTransformation); }
+    idat.pendingLabels.clear();
+    //Now update the hash and let the world know it is available now
+    HASH.insert(id, idat);
+    this->emit IconAvailable(id);
+  }
 }

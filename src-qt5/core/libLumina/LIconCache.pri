@@ -1,3 +1,5 @@
+QT *= concurrent
+
 HEADERS *= $${PWD}/LIconCache.h
 SOURCES *= $${PWD}/LIconCache.cpp
 
