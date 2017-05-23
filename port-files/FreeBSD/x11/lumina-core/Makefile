@@ -12,12 +12,12 @@ COMMENT=	Lumina Desktop Environment
 LICENSE=	BSD3CLAUSE
 
 RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
-		xscreensaver:x11/xscreensaver \
-		xbrightness:x11/xbrightness \
-		compton:x11-wm/compton \
-		xrandr:x11/xrandr \
-		numlockx:x11/numlockx \
-		xinput:x11/xinput
+		xscreensaver>=0:x11/xscreensaver \
+		xbrightness>=0:x11/xbrightness \
+		compton>=0:x11-wm/compton \
+		xrandr>=0:x11/xrandr \
+		numlockx>=0:x11/numlockx \
+		xinput>=0:x11/xinput
 LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 		libxcb-icccm.so:x11/xcb-util-wm \
 		libxcb-image.so:x11/xcb-util-image \
