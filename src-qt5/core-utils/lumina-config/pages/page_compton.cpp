@@ -36,7 +36,7 @@ void page_compton::SaveSettings(){
 void page_compton::LoadSettings(int){
   emit ChangePageTitle( tr("Window Effects") );
   QSettings settings("lumina-desktop","sessionsettings");
-    ui->check_disablecompton->setChecked( !settings.value("enableCompositing", true).toBool() );
+    ui->check_disablecompton->setChecked( !settings.value("enableCompositing", false).toBool() );
     ui->check_GPUverify->setChecked( settings.value("compositingWithGpuAccelOnly", true).toBool() );
   QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
   qDebug() << "Load Compton settings:" << set;
