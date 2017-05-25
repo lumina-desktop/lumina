@@ -203,7 +203,8 @@ void AppLauncherPlugin::fileProperties(){
 void AppLauncherPlugin::fileDelete(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
-  QFile::remove(path);
+  if(QFileInfo(path).isDir()){ QProcess::startDetached("rm -r \""+path+"\""); }
+  else{ QFile::remove(path); }
 }
 
 void AppLauncherPlugin::fileCut(){

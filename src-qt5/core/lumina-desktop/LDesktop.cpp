@@ -6,6 +6,8 @@
 //===========================================
 #include "LDesktop.h"
 #include "LSession.h"
+#include <QClipboard>
+#include <QMimeData>
 
 #include <LuminaOS.h>
 #include <LuminaX11.h>
@@ -19,13 +21,13 @@
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
   screenID = QApplication::screens().at(deskNum)->name();
   DPREFIX = "desktop-"+screenID+"/";
-  //desktopnumber = deskNum;
-  //desktop = QApplication::desktop();
+  i_dlg_folder = true;
+  inputDLG = 0;
   defaultdesktop = setdefault; //(desktop->screenGeometry(desktopnumber).x()==0);
   //desktoplocked = true;
   issyncing = bgupdating = false;
   usewinmenu=false;
-
+  desktopFolderActionMenu = 0;
   //Setup the internal variables
   settings = new QSettings(QSettings::UserScope, "lumina-desktop","desktopsettings", this);
   //qDebug() << " - Desktop Settings File:" << settings->fileName();
@@ -39,6 +41,7 @@ LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
 LDesktop::~LDesktop(){
   delete deskMenu;
   delete winMenu;
+  delete desktopFolderActionMenu;
   //delete bgWindow;
   delete workspacelabel;
   delete wkspaceact;
@@ -247,6 +250,13 @@ void LDesktop::InitDesktop(){
       connect(bgDesktop, SIGNAL(DecreaseIcons()), this, SLOT(DecreaseDesktopPluginIcons()) );
       connect(bgDesktop, SIGNAL(HideDesktopMenu()), deskMenu, SLOT(hide()));
       connect(bgDesktop, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );
+
+  desktopFolderActionMenu = new QMenu(0);
+    desktopFolderActionMenu->setTitle(tr("Desktop Actions"));
+    desktopFolderActionMenu->setIcon(LXDG::findIcon("user-desktop",""));
+    desktopFolderActionMenu->addAction(LXDG::findIcon("folder-new",""), tr("New Folder"), this, SLOT(NewDesktopFolder()) );
+    desktopFolderActionMenu->addAction(LXDG::findIcon("document-new",""), tr("New File"), this, SLOT(NewDesktopFile()) );
+    desktopFolderActionMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(PasteInDesktop()) );
   if(DEBUG){ qDebug() << " - Desktop Init Done:" << screenID; }
   //Start the update processes
   QTimer::singleShot(10,this, SLOT(UpdateMenu()) );
@@ -317,6 +327,11 @@ void LDesktop::UpdateMenu(bool fast){
         deskMenu->addMenu(tmp);
       }
     }
+  }
+  //Now add the desktop folder options (if desktop is icon-enabled)
+  if(settings->value(DPREFIX+"generateDesktopIcons",false).toBool()){
+    deskMenu->addSeparator();
+    deskMenu->addMenu(desktopFolderActionMenu);
   }
   //Now add the system quit options
   deskMenu->addSeparator();
@@ -569,4 +584,92 @@ void LDesktop::UpdateBackground(){
     PANELS[i]->show();
   }
   bgupdating=false;
+}
+
+//Desktop Folder Interactions
+void LDesktop::i_dlg_finished(int ret){
+  if(inputDLG==0){ return; }
+  QString name = inputDLG->textValue();
+  inputDLG->deleteLater();
+  inputDLG = 0;
+  if(name.isEmpty() || ret!=QDialog::Accepted){ return; } //do nothing
+  if(i_dlg_folder){ NewDesktopFolder(name); }
+  else{ NewDesktopFile(name); }
+}
+
+void LDesktop::NewDesktopFolder(QString name){
+  if(name.isEmpty()){
+    i_dlg_folder = true; //creating a new folder
+    if(inputDLG == 0){
+      inputDLG = new QInputDialog(0, Qt::Dialog | Qt::WindowStaysOnTopHint);
+      inputDLG->setInputMode(QInputDialog::TextInput);
+      inputDLG->setTextValue("");
+      inputDLG->setTextEchoMode(QLineEdit::Normal);
+      inputDLG->setLabelText( tr("New Folder") );
+      connect(inputDLG, SIGNAL(finished(int)), this, SLOT(i_dlg_finished(int)) );
+    }
+    inputDLG->showNormal();
+  }else{
+    QDir desktop(QDir::homePath());
+    if(desktop.exists(tr("Desktop"))){ desktop.cd(tr("Desktop")); } //translated folder
+    else{ desktop.cd("Desktop"); } //default/english folder
+    if(!desktop.exists(name)){ desktop.mkpath(name); }
+  }
+}
+
+void LDesktop::NewDesktopFile(QString name){
+  if(name.isEmpty()){
+    i_dlg_folder = false; //creating a new file
+    if(inputDLG == 0){
+      inputDLG = new QInputDialog(0, Qt::Dialog | Qt::WindowStaysOnTopHint);
+      inputDLG->setInputMode(QInputDialog::TextInput);
+      inputDLG->setTextValue("");
+      inputDLG->setTextEchoMode(QLineEdit::Normal);
+      inputDLG->setLabelText( tr("New File") );
+      connect(inputDLG, SIGNAL(finished(int)), this, SLOT(i_dlg_finished(int)) );
+    }
+    inputDLG->showNormal();
+  }else{
+    QDir desktop(QDir::homePath());
+    if(desktop.exists(tr("Desktop"))){ desktop.cd(tr("Desktop")); } //translated folder
+    else{ desktop.cd("Desktop"); } //default/english folder
+    if(!desktop.exists(name)){ 
+      QFile file(desktop.absoluteFilePath(name));
+      if(file.open(QIODevice::WriteOnly) ){ file.close(); }    
+    }
+  }
+}
+
+void LDesktop::PasteInDesktop(){
+  const QMimeData *mime = QApplication::clipboard()->mimeData();
+  QStringList files;
+  if(mime->hasFormat("x-special/lumina-copied-files")){
+    files = QString(mime->data("x-special/lumina-copied-files")).split("\n");
+  }else if(mime->hasUrls()){
+    QList<QUrl> urls = mime->urls();
+    for(int i=0; i<urls.length(); i++){
+      files << QString("copy::::")+urls[i].toLocalFile();
+    }
+  }
+  //Now go through and paste all the designated files
+  QString desktop = QDir::homePath()+"/"+tr("Desktop"); //translated form
+  if(!QFile::exists(desktop)){ desktop = QDir::homePath()+"/Desktop"; } //default/untranslated form
+  for(int i=0; i<files.length(); i++){
+    QString path = files[i].section("::::",1,-1);
+    if(!QFile::exists(path)){ continue; } //does not exist any more - move on to next
+    QString newpath = desktop+"/"+path.section("/",-1);
+    if(QFile::exists(newpath)){
+      //Need to change the filename a bit to make it unique
+      int n = 2;
+      newpath = desktop+"/"+QString::number(n)+"_"+path.section("/",-1);
+      while(QFile::exists(newpath)){ n++; newpath = desktop+"/"+QString::number(n)+"_"+path.section("/",-1); }
+    }
+    bool isdir = QFileInfo(path).isDir();
+    if(files[i].section("::::",0,0)=="cut"){
+      QFile::rename(path, newpath);
+    }else{ //copy
+      if(isdir){ QFile::link(path, newpath); } //symlink for directories - never do a full copy
+      else{ QFile::copy(path, newpath); }
+    }
+  }
 }
