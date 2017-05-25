@@ -687,9 +687,11 @@ void LSession::WindowPropertyEvent(WId win){
   if(RunningApps.contains(win)){
     if(DEBUG){ qDebug() << "Single-window property event"; }
     if( XCB->WindowClass(win).contains("VirtualBox")){
+      qDebug() << "Found VirtualBox Window:";
       QList<LXCB::WINDOWSTATE> states = XCB->WM_Get_Window_States(win);
       if(states.contains(LXCB::S_FULLSCREEN) && !states.contains(LXCB::S_HIDDEN)){
-        XCB->WM_Set_Window_Type(win, QList<LXCB::WINDOWTYPE>() << LXCB::T_NORMAL );
+       qDebug() << "Adjusting VirtualBox Window (fullscreen)";
+        XCB->WM_Set_Window_Type(win, QList<LXCB::WINDOWTYPE>() << LXCB::T_NORMAL << LXCB::T_UTILITY );
         XCB->RestoreWindow(win);
       }
     }
