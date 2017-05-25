@@ -21,6 +21,7 @@
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QRegion>
+#include <QInputDialog>
 
 
 #include <LuminaXDG.h>
@@ -70,13 +71,15 @@ private:
 	QList<LPanel*> PANELS;
 	LDesktopPluginSpace *bgDesktop; //desktop plugin area
 	//QWidget *bgWindow; //full screen background
-	QMenu *deskMenu, *winMenu;
+	QMenu *deskMenu, *winMenu, *desktopFolderActionMenu;
 	QLabel *workspacelabel;
 	QWidgetAction *wkspaceact;
 	QList<LDPlugin*> PLUGINS;
 	QString CBG; //current background
 	QRect globalWorkRect;
-	
+	bool i_dlg_folder; //folder/file switch
+	QInputDialog *inputDLG;	
+
 private slots:
 	void InitDesktop();
 	void SettingsChanged();
@@ -103,5 +106,12 @@ private slots:
 	void UpdateDesktopPluginArea(); //make sure the area is not underneath any panels
 
 	void UpdateBackground();
+
+	//Desktop Folder Interactions
+	void i_dlg_finished(int ret);
+	void NewDesktopFolder(QString name = "");
+	void NewDesktopFile(QString name = "");
+	void PasteInDesktop();
+	
 };
 #endif
