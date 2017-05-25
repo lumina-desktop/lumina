@@ -67,7 +67,7 @@ public:
 	//  (DO NOT USE MANUALLY)
 	void RootSizeChange();
 	void WindowPropertyEvent();
-        void WindowPropertyEvent(WId);
+	void WindowPropertyEvent(WId);
 	void SysTrayDockRequest(WId);
 	void WindowClosedEvent(WId);
 	void WindowConfigureEvent(WId);
