@@ -25,6 +25,7 @@ LIconCache::~LIconCache(){
 // === PUBLIC ===
 //Icon Checks
 bool LIconCache::exists(QString icon){
+  if(icon.isEmpty()){ return false; }
   if(HASH.contains(icon)){ return true; } //already
   else if(!icon.startsWith("/")){
     //relative path to file (from icon theme?)
@@ -38,6 +39,7 @@ bool LIconCache::exists(QString icon){
 }
 
 bool LIconCache::isLoaded(QString icon){
+  if(icon.isEmpty()){ return false; }
   if(HASH.contains(icon)){
     return !HASH[icon].icon.isNull();
   }
@@ -113,6 +115,7 @@ QString LIconCache::findFile(QString icon){
 
 
 void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
+  if(icon.isEmpty()){ return; }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -123,12 +126,13 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
   else { idata = createData(icon); }
-    idata.pendingButtons << button; //save this button for later
+    idata.pendingButtons << QPointer<QAbstractButton>(button); //save this button for later
   HASH.insert(icon, idata);
-  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
+  if(needload){ startReadFile(icon, idata.fullpath); }
 }
 
 void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
+  if(icon.isEmpty()){ return; }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -139,12 +143,13 @@ void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
   else { idata = createData(icon); }
-    idata.pendingActions << action; //save this button for later
+    idata.pendingActions << QPointer<QAction>(action); //save this button for later
   HASH.insert(icon, idata);
-  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
+  if(needload){ startReadFile(icon, idata.fullpath); }
 }
 
 void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
+  if(icon.isEmpty()){ return; }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -154,10 +159,12 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = createData(icon); }
-  idata.pendingLabels << label; //save this QLabel for later
+  else { idata = createData(icon); 
+    if(idata.fullpath.isEmpty()){ return; } //nothing to do
+  }
+  idata.pendingLabels << QPointer<QLabel>(label); //save this QLabel for later
   HASH.insert(icon, idata);
-  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
+  if(needload){ startReadFile(icon, idata.fullpath); }
 }
 
 void LIconCache::clearIconTheme(){
@@ -170,6 +177,7 @@ void LIconCache::clearIconTheme(){
 }
 
 QIcon LIconCache::loadIcon(QString icon, bool noThumb){
+  if(icon.isEmpty()){ return QIcon(); }
   if(HASH.contains(icon)){
     if(!HASH[icon].icon.isNull()){ return HASH[icon].icon; }
     else if(!HASH[icon].thumbnail.isNull() && !noThumb){ return HASH[icon].thumbnail; }
@@ -178,6 +186,7 @@ QIcon LIconCache::loadIcon(QString icon, bool noThumb){
   icon_data idat;
   if(HASH.contains(icon)){ idat = HASH[icon]; }
   else{ idat = createData(icon); }
+  if(idat.fullpath.isEmpty()){ return QIcon(); } //non-existant file
   idat.icon = QIcon(idat.fullpath);
   //Now save into the hash and return
   HASH.insert(icon, idat);
@@ -242,14 +251,36 @@ QStringList LIconCache::getIconThemeDepChain(QString theme, QStringList paths){
   return results;
 }
 
+void LIconCache::startReadFile(QString id, QString path){
+  if(path.endsWith(".svg")){
+    //Special handling - need to read QIcon directly to have the SVG icon scale up appropriately
+    icon_data idat = HASH[id];
+    idat.lastread = QDateTime::currentDateTime();
+    idat.icon = QIcon(path);
+    for(int i=0; i<idat.pendingButtons.length(); i++){ if(!idat.pendingButtons[i].isNull()){ idat.pendingButtons[i]->setIcon(idat.icon); } }
+    idat.pendingButtons.clear();
+    for(int i=0; i<idat.pendingLabels.length(); i++){ if(!idat.pendingLabels[i].isNull()){ idat.pendingLabels[i]->setPixmap(idat.icon.pixmap(idat.pendingLabels[i]->sizeHint())); } }
+    idat.pendingLabels.clear();
+    for(int i=0; i<idat.pendingActions.length(); i++){ if(!idat.pendingActions[i].isNull()){ idat.pendingActions[i]->setIcon(idat.icon); } }
+    idat.pendingActions.clear();
+    //Now update the hash and let the world know it is available now
+    HASH.insert(id, idat);
+    this->emit IconAvailable(id);
+  }else{
+    QtConcurrent::run(this, &LIconCache::ReadFile, this, id, path);
+  }
+}
+
 void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
   qDebug() << "Start Reading File:" << id << path;
   QByteArray *BA = new QByteArray();
   QDateTime cdt = QDateTime::currentDateTime();
-  QFile file(path);
-  if(file.open(QIODevice::ReadOnly)){
-    BA->append(file.readAll());
-    file.close();
+  if(!path.isEmpty()){
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly)){
+      BA->append(file.readAll());
+      file.close();
+    }
   }
   obj->emit InternalIconLoaded(id, cdt, BA);
 }
@@ -266,11 +297,14 @@ void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
     icon_data idat = HASH[id];
     idat.lastread = sync;
     idat.icon.addPixmap(pix);
+    if(pix.width() < 64){ idat.icon.addPixmap( pix.scaled( QSize(64,64), Qt::KeepAspectRatio, Qt::SmoothTransformation) ); } //also add a version which has been scaled up a bit
     //Now throw this icon into any pending objects
-    for(int i=0; i<idat.pendingButtons.length(); i++){ idat.pendingButtons[i]->setIcon(idat.icon); }
+    for(int i=0; i<idat.pendingButtons.length(); i++){ if(!idat.pendingButtons[i].isNull()){ idat.pendingButtons[i]->setIcon(idat.icon); } }
     idat.pendingButtons.clear();
-    for(int i=0; i<idat.pendingLabels.length(); i++){ idat.pendingLabels[i]->setPixmap(pix.scaled(idat.pendingLabels[i]->sizeHint(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
+    for(int i=0; i<idat.pendingLabels.length(); i++){ if(!idat.pendingLabels[i].isNull()){ idat.pendingLabels[i]->setPixmap(pix.scaled(idat.pendingLabels[i]->sizeHint(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); } }
     idat.pendingLabels.clear();
+    for(int i=0; i<idat.pendingActions.length(); i++){ if(!idat.pendingActions[i].isNull()){ idat.pendingActions[i]->setIcon(idat.icon); } }
+    idat.pendingActions.clear();
     //Now update the hash and let the world know it is available now
     HASH.insert(id, idat);
     this->emit IconAvailable(id);

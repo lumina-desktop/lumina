@@ -9,6 +9,9 @@
 #include <QMenu>
 #include "../../LSession.h"
 
+#include <LIconCache.h>
+
+extern LIconCache *ICONS;
 
 ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool goback) : QFrame(parent){
   createWidget();
@@ -20,7 +23,9 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     gooditem = item.isValid();
     //qDebug() << "Good Item:" << gooditem << itemPath;
     if(gooditem){
-      icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
+      //if(ICONS->exists(item.icon)){  ICONS->loadIcon(icon, item.icon); }
+      //else{   ICONS->loadIcon(icon, "preferences-system-windows-actions"); }
+      //icon->setPixmap( LXDG::findIcon(item.icon, "preferences-system-windows-actions").pixmap(32,32) );
       iconPath = item.icon;
       text = item.name;
       if(!item.genericName.isEmpty() && item.name!=item.genericName){ text.append("<br><i> -- "+item.genericName+"</i>"); }
@@ -34,12 +39,12 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     actButton->setVisible(false);
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(goback){
-      icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(64,64) );
+      //ICONS->loadIcon(icon, "go-previous"); //icon->setPixmap( LXDG::findIcon("go-previous","").pixmap(64,64) );
       iconPath = "go-previous";
       text = tr("Go Back");
       name->setText( text );
     }else{
-      icon->setPixmap( LXDG::findIcon("folder","").pixmap(64,64) );
+      //icon->setPixmap( LXDG::findIcon("folder","").pixmap(64,64) );
       iconPath = "folder";
       name->setText( itemPath.section("/",-1));
       text = itemPath.section("/",-1);
@@ -49,7 +54,7 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     actButton->setVisible(false);
     iconPath = LXDG::DesktopCatToIcon(type.section("::::",1,50));
     if(goback){ iconPath = "go-previous"; type = "chcat::::"; itemPath = "<B>("+itemPath+")</B>"; }
-    icon->setPixmap( LXDG::findIcon(iconPath,"applications-other").pixmap(64,64) );
+    //icon->setPixmap( LXDG::findIcon(iconPath,"applications-other").pixmap(64,64) );
     name->setText(itemPath);
     text = itemPath;
     icon->setWhatsThis(type);
@@ -59,17 +64,21 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
     if(itemPath.endsWith("/")){ itemPath.chop(1); }
     if(QFileInfo(itemPath).isDir()){
       type = "dir";
-      icon->setPixmap( LXDG::findIcon("folder","").pixmap(64,64) );
+      //icon->setPixmap( LXDG::findIcon("folder","").pixmap(64,64) );
       iconPath = "folder";
     }else if(LUtils::imageExtensions().contains(itemPath.section("/",-1).section(".",-1).toLower()) ){
-      icon->setPixmap( QIcon(itemPath).pixmap(64,64) );
+      iconPath = itemPath;
+      //icon->setPixmap( QIcon(itemPath).pixmap(64,64) );
     }else{
-      if( LUtils::isValidBinary(itemPath) ){  icon->setPixmap( LXDG::findIcon(type, "application-x-executable").pixmap(64,64) ); }
-      else{ icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(64,64) ); }
+      if( LUtils::isValidBinary(itemPath) ){  
+        if(ICONS->exists(type)){ iconPath = type; }
+        else{ iconPath = "application-x-executable"; }
+      }else{ iconPath = LXDG::findAppMimeForFile(itemPath.section("/",-1)).replace("/","-"); }
     }
     name->setText( itemPath.section("/",-1) ); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
     text = itemPath.section("/",-1) ;
   }
+  ICONS->loadIcon(icon, iconPath);
   icon->setWhatsThis(itemPath);
   if(!goback){ this->setWhatsThis(name->text()); }
   isDirectory = (type=="dir"); //save this for later
@@ -105,7 +114,7 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
     name->setToolTip(icon->whatsThis()); //also allow the user to see the full shortcut path
   }
   //Now fill it appropriately
-  icon->setPixmap( LXDG::findIcon(item->icon,"preferences-system-windows-actions").pixmap(64,64) );
+  //icon->setPixmap( LXDG::findIcon(item->icon,"preferences-system-windows-actions").pixmap(64,64) );
       text = item->name;
       if(!item->genericName.isEmpty() && item->name!=item->genericName){ text.append("<br><i> -- "+item->genericName+"</i>"); }
       name->setText(text);
@@ -113,26 +122,27 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
   this->setWhatsThis(item->name);
   icon->setWhatsThis(item->filePath);
   iconPath = item->icon;
+  ICONS->loadIcon(icon, iconPath);
   //Now setup the buttons appropriately
   setupContextMenu();
   setupActions(item);
 }
 
 ItemWidget::~ItemWidget(){
-  icon->setPixmap(QPixmap()); //make sure the pixmap is cleared from memory too
-  actButton->deleteLater();
+  //icon->setPixmap(QPixmap()); //make sure the pixmap is cleared from memory too
+  //actButton->deleteLater();
   contextMenu->clear();
-  contextMenu->deleteLater();
+  //contextMenu->deleteLater();
   if(actButton->menu()!=0){ 
     for(int i=0; i<actButton->menu()->actions().length(); i++){
       actButton->menu()->actions().at(i)->deleteLater();
     }
     actButton->menu()->deleteLater(); 
   }
-  actButton->deleteLater();
-  icon->deleteLater();
-  name->deleteLater();
-  menureset->deleteLater();
+  //actButton->deleteLater();
+  //icon->deleteLater();
+  //name->deleteLater();
+  //menureset->deleteLater();
   linkPath.clear(); iconPath.clear(); text.clear();
 }
 
@@ -155,6 +165,8 @@ void ItemWidget::createWidget(){
     actButton->setPopupMode(QToolButton::InstantPopup);
     actButton->setArrowType(Qt::DownArrow);
   icon = new QLabel(this);
+    int H = 64; //(2.3*this->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
+    icon->setFixedSize( QSize(H,H) );
   name = new QLabel(this);
     name->setWordWrap(true);
     name->setTextFormat(Qt::RichText);
@@ -172,23 +184,29 @@ void ItemWidget::createWidget(){
 void ItemWidget::setupContextMenu(){
   //Now refresh the context menu
   contextMenu->clear();
+  QAction *tmp = 0;
   if(!QFile::exists(QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1)) ){
     //Does not have a desktop link
-    contextMenu->addAction( LXDG::findIcon("preferences-desktop-icons",""), tr("Pin to Desktop"), this, SLOT(PinToDesktop()) );
+    tmp = contextMenu->addAction( tr("Pin to Desktop"), this, SLOT(PinToDesktop()) );
+    ICONS->loadIcon(tmp, "preferences-desktop-icons");
   }
   //Favorite Item
   if( LDesktopUtils::isFavorite(icon->whatsThis()) ){ //Favorite Item - can always remove this
-    contextMenu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove from Favorites"), this, SLOT(RemoveFavorite()) );
+    tmp = contextMenu->addAction(tr("Remove from Favorites"), this, SLOT(RemoveFavorite()) );
+    ICONS->loadIcon(tmp, "edit-delete");
   }else{
     //This file does not have a shortcut yet -- allow the user to add it
-    contextMenu->addAction( LXDG::findIcon("bookmark-toolbar",""), tr("Add to Favorites"), this, SLOT(AddFavorite()) );
+    tmp = contextMenu->addAction( tr("Add to Favorites"), this, SLOT(AddFavorite()) );
+    ICONS->loadIcon(tmp, "bookmark-toolbar");
   }
   //QuickLaunch Item
   if(LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList().contains(icon->whatsThis()) ){ //Favorite Item - can always remove this
-    contextMenu->addAction( LXDG::findIcon("edit-delete",""), tr("Remove from Quicklaunch"), this, SLOT(RemoveQL()) );
+    tmp = contextMenu->addAction( tr("Remove from Quicklaunch"), this, SLOT(RemoveQL()) );
+    ICONS->loadIcon(tmp, "edit-delete");
   }else{
     //This file does not have a shortcut yet -- allow the user to add it
-    contextMenu->addAction( LXDG::findIcon("quickopen",""), tr("Add to Quicklaunch"), this, SLOT(AddQL()) );
+    tmp = contextMenu->addAction( tr("Add to Quicklaunch"), this, SLOT(AddQL()) );
+    ICONS->loadIcon(tmp, "quickopen");
   }
 }
 
@@ -197,10 +215,12 @@ void ItemWidget::setupActions(XDGDesktop *app){
   //Actions Available - go ahead and list them all
   actButton->setMenu( new QMenu(this) );
   for(int i=0; i<app->actions.length(); i++){
-    QAction *act = new QAction(LXDG::findIcon(app->actions[i].icon, app->icon), app->actions[i].name, this);
-	act->setToolTip(app->actions[i].ID);
-        act->setWhatsThis(app->actions[i].ID);
-        actButton->menu()->addAction(act);	
+    QAction *act = new QAction(app->actions[i].name, this);
+      if(ICONS->exists(app->actions[i].icon)){ ICONS->loadIcon(act, app->actions[i].icon); }
+      else{ ICONS->loadIcon(act, app->icon); }
+      act->setToolTip(app->actions[i].ID);
+      act->setWhatsThis(app->actions[i].ID);
+      actButton->menu()->addAction(act);	
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
   connect(actButton->menu(), SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
@@ -210,9 +230,9 @@ void ItemWidget::setupActions(XDGDesktop *app){
 
 void ItemWidget::updateItems(){
   //update the text/icon to match sizes
-  int H = 2.3*name->fontMetrics().height(); //make sure the height is large enough for two lines
-  icon->setFixedSize(QSize(H-4, H-4));
-  actButton->setFixedSize( QSize( (H-4)/2, H-4) );
+  int H = 64; //(2.3*name->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
+  icon->setFixedSize(QSize(H, H));
+  actButton->setFixedSize( QSize( H/2, H) );
   QStringList newname = text.split("<br>");
   for(int i=0; i<newname.length(); i++){ newname[i] = name->fontMetrics().elidedText(newname[i], Qt::ElideRight, name->width()); }
   name->setText( newname.join("<br>") );
@@ -222,12 +242,16 @@ void ItemWidget::updateItems(){
       if(iconPath.isEmpty()){
         //Use item path (thumbnail or mimetype)
         if(LUtils::imageExtensions().contains(icon->whatsThis().section("/",-1).section(".",-1).toLower()) ){
-          icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+          ICONS->loadIcon(icon, icon->whatsThis());
+          //icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
         }else{
-          icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+          ICONS->loadIcon(icon, LXDG::findAppMimeForFile(icon->whatsThis()).replace("/","-") );
+          //icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
         }
       }else{
-        icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
+        if(ICONS->exists(iconPath)){ ICONS->loadIcon(icon, iconPath); }
+        else{ ICONS->loadIcon(icon, "preferences-system-windows-actions"); }
+        //icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
       }
     }else if(icon->pixmap()->size().height() > (H-4) ){
       icon->setPixmap( icon->pixmap()->scaled(H-4, H-4, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );

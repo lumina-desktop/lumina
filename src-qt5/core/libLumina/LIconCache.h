@@ -17,14 +17,15 @@
 #include <QAbstractButton>
 #include <QLabel>
 #include <QAction>
+#include <QPointer>
 
 //Data structure for saving the icon/information internally
 struct icon_data{
   QString fullpath;
   QDateTime lastread;
-  QList<QLabel*> pendingLabels;
-  QList<QAbstractButton*> pendingButtons;
-  QList<QAction*> pendingActions;
+  QList<QPointer<QLabel> > pendingLabels;
+  QList<QPointer<QAbstractButton> > pendingButtons;
+  QList<QPointer<QAction> > pendingActions;
   QIcon icon;
   QIcon thumbnail;
 };
@@ -57,6 +58,7 @@ private:
 	QStringList getChildIconDirs(QString path); //recursive function to find directories with icons in them
 	QStringList getIconThemeDepChain(QString theme, QStringList paths);
 
+	void startReadFile(QString id, QString path);
 	void ReadFile(LIconCache *obj, QString id, QString path);
 
 private slots:

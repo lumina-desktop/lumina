@@ -7,6 +7,9 @@
 #include "AppMenu.h"
 #include "LSession.h"
 #include <LuminaOS.h>
+#include <LIconCache.h>
+
+extern LIconCache *ICONS;
 
 AppMenu::AppMenu(QWidget* parent) : QMenu(parent){
   appstorelink = LOS::AppStoreShortcut(); //Default application "store" to display (AppCafe in TrueOS)
@@ -109,13 +112,15 @@ void AppMenu::updateAppList(){
       else{ name = tr("Unsorted"); icon = "applications-other"; }
 
       QMenu *menu = new QMenu(name, this);
-      menu->setIcon(LXDG::findIcon(icon,""));
+      menu->setIcon( ICONS->loadIcon(icon) );
+      //menu->setIcon(LXDG::findIcon(icon,""));
       connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(launchApp(QAction*)) );
       QList<XDGDesktop*> appL = APPS.value(cats[i]);
       for( int a=0; a<appL.length(); a++){
 	if(appL[a]->actions.isEmpty()){
 	  //Just a single entry point - no extra actions
-          QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, this);
+          QAction *act = new QAction(appL[a]->name, this);
+          ICONS->loadIcon(act, appL[a]->icon);
           act->setToolTip(appL[a]->comment);
           act->setWhatsThis(appL[a]->filePath);
           menu->addAction(act);
@@ -123,15 +128,18 @@ void AppMenu::updateAppList(){
 	  //This app has additional actions - make this a sub menu
 	  // - first the main menu/action
 	  QMenu *submenu = new QMenu(appL[a]->name, this);
-	    submenu->setIcon( LXDG::findIcon(appL[a]->icon,"") );
+	    submenu->setIcon( ICONS->loadIcon(appL[a]->icon ));
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
-	      QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, this);
+	      QAction *act = new QAction(appL[a]->name, this);
+               ICONS->loadIcon(act, appL[a]->icon);
               act->setToolTip(appL[a]->comment);
               act->setWhatsThis(appL[a]->filePath);
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
 	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
-              QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, this);
+              QAction *sact = new QAction( appL[a]->actions[sa].name, this);
+              if(ICONS->exists(appL[a]->actions[sa].icon)){ ICONS->loadIcon(sact, appL[a]->actions[sa].icon); }
+              else{ ICONS->loadIcon(sact, appL[a]->icon); }
               sact->setToolTip(appL[a]->comment);
               sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
               submenu->addAction(sact);		    
