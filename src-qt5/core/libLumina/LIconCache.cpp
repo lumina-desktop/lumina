@@ -272,7 +272,7 @@ void LIconCache::startReadFile(QString id, QString path){
 }
 
 void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
-  qDebug() << "Start Reading File:" << id << path;
+  //qDebug() << "Start Reading File:" << id << path;
   QByteArray *BA = new QByteArray();
   QDateTime cdt = QDateTime::currentDateTime();
   if(!path.isEmpty()){
@@ -287,7 +287,7 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
 
 // === PRIVATE SLOTS ===
 void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
-  qDebug() << "Icon Loaded:" << id << HASH.contains(id);
+  //qDebug() << "Icon Loaded:" << id << HASH.contains(id);
   QPixmap pix;
   bool ok = pix.loadFromData(*data);
    delete data; //no longer used - free this up
