@@ -16,6 +16,7 @@ include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 include(../libLumina/ExternalProcess.pri)
+include(../libLumina/LIconCache.pri)
 
 TEMPLATE = app
 
