@@ -8,10 +8,12 @@
 
 #include <LuminaOS.h>
 #include <LUtils.h>
+#include <LuminaXDG.h>
 
 #include <QDir>
+#include <QtConcurrent>
 
-LIconCache::LIconCache(QObject *parent = 0{
+LIconCache::LIconCache(QObject *parent) : QObject(parent){
 
 }
 
@@ -23,10 +25,10 @@ LIconCache::~LIconCache(){
 // === PUBLIC ===
 //Icon Checks
 bool LIconCache::exists(QString icon){
-  if(HASH.contains(icon){ return true; } //already
+  if(HASH.contains(icon)){ return true; } //already
   else if(!icon.startsWith("/")){
     //relative path to file (from icon theme?)
-    QString path = findFile(QString icon);
+    QString path = findFile(icon);
     if(!path.isEmpty() && QFile::exists(path)){ return true; }
   }else{
     //absolute path to file
@@ -36,7 +38,7 @@ bool LIconCache::exists(QString icon){
 }
 
 bool LIconCache::isLoaded(QString icon){
-  if(HASH.contains(icon){
+  if(HASH.contains(icon)){
     return !HASH[icon].icon.isNull();
   }
   return false;
@@ -62,7 +64,7 @@ QString LIconCache::findFile(QString icon){
         }
     //Now load all the dirs into the search paths
     QStringList theme, oxy, fall;
-    QStringList themedeps = getIconThemeDepChain(cTheme, paths);
+    QStringList themedeps = LXDG::getIconThemeDepChain(cTheme, paths);
     for(int i=0; i<paths.length(); i++){
       theme << getChildIconDirs( paths[i]+cTheme);
       for(int j=0; j<themedeps.length(); j++){ theme << getChildIconDirs(paths[i]+themedeps[j]); }
@@ -81,21 +83,21 @@ QString LIconCache::findFile(QString icon){
   QIcon ico;
   QStringList srch; srch << "icontheme" << "default" << "fallback";
   for(int i=0; i<srch.length() && ico.isNull(); i++){
-    if(QFile::exists(srch[i]+":"+iconName+".svg") && !iconName.contains("libreoffice") ){
-      return QFile(srch[i]+":"+iconName+".svg").absoluteFilePath();
-    }else if(QFile::exists(srch[i]+":"+iconName+".png")){
-      return QFile(srch[i]+":"+iconName+".png").absoluteFilePath();
+    if(QFile::exists(srch[i]+":"+icon+".svg") && !icon.contains("libreoffice") ){
+      return QFileInfo(srch[i]+":"+icon+".svg").absoluteFilePath();
+    }else if(QFile::exists(srch[i]+":"+icon+".png")){
+      return QFileInfo(srch[i]+":"+icon+".png").absoluteFilePath();
     }
   }
   //If still no icon found, look for any image format in the "pixmaps" directory
-  if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+iconName)){
-    return QFile(LOS::AppPrefix()+"share/pixmaps/"+iconName).absoluteFilePath();
+  if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+icon)){
+    return (LOS::AppPrefix()+"share/pixmaps/"+icon);
   }else{
     //Need to scan for any close match in the directory
     QDir pix(LOS::AppPrefix()+"share/pixmaps");
     QStringList formats = LUtils::imageExtensions();
-    QStringList found = pix.entryList(QStringList() << iconName, QDir::Files, QDir::Unsorted);
-    if(found.isEmpty()){ found = pix.entryList(QStringList() << iconName+"*", QDir::Files, QDir::Unsorted); }
+    QStringList found = pix.entryList(QStringList() << icon, QDir::Files, QDir::Unsorted);
+    if(found.isEmpty()){ found = pix.entryList(QStringList() << icon+"*", QDir::Files, QDir::Unsorted); }
     //qDebug() << "Found pixmaps:" << found << formats;
     //Use the first one found that is a valid format
     for(int i=0; i<found.length(); i++){
@@ -117,7 +119,7 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = icon_data createData(QString icon); }
+  else { idata = createData(icon); }
     idata.pendingButtons << button; //save this button for later
   HASH.insert(icon, idata);
   QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
@@ -126,13 +128,13 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
 void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   //See if the icon has already been loaded into the HASH
   if(HASH.contains(icon)){
-    if(!noThumb && !HASH[icon].thumbnail.isNull()){ button->setIcon( HASH[icon].thumbnail ); return; }
-    else if(!HASH[icon].icon.isNull()){ button->setIcon( HASH[icon].icon ); return; }
+    if(!noThumb && !HASH[icon].thumbnail.isNull()){ label->setPixmap( HASH[icon].thumbnail.pixmap(label->sizeHint()) ); return; }
+    else if(!HASH[icon].icon.isNull()){ label->setPixmap( HASH[icon].icon.pixmap(label->sizeHint()) ); return; }
   }
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = icon_data createData(QString icon); }
+  else { idata = createData(icon); }
   idata.pendingLabels << label; //save this QLabel for later
   HASH.insert(icon, idata);
   QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
@@ -172,15 +174,13 @@ icon_data LIconCache::createData(QString icon){
   icon_data idat;
   //Find the real path of the icon
   if(icon.startsWith("/")){ idat.fullpath = icon; } //already full path
-  else{
-    idat.fullpath = findFile(icon);
-  }
+  else{  idat.fullpath = findFile(icon); }
   return idat;
 }
 
 QStringList LIconCache::getChildIconDirs(QString path){
 //This is a recursive function that returns the absolute path(s) of directories with *.png files
-  QDir D(parent);
+  QDir D(path);
   QStringList out;
   QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
   if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){ 
@@ -205,7 +205,7 @@ QStringList LIconCache::getChildIconDirs(QString path){
   return out;
 }
 
-QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
+QStringList LIconCache::getIconThemeDepChain(QString theme, QStringList paths){
   QStringList results;
   for(int i=0; i<paths.length(); i++){
     if( QFile::exists(paths[i]+theme+"/index.theme") ){
@@ -235,18 +235,19 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
 
 // === PRIVATE SLOTS ===
 void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
-  QPixmap pix = QPixmap::fromRawData(data);
+  QPixmap pix;
+  bool ok = pix.loadFromData(*data);
    delete data; //no longer used - free this up
   if(!HASH.contains(id)){ return; } //icon loading cancelled - just stop here
-  if(!pix.isValid()){ HASH.remove(id); }
+  if(!ok){ HASH.remove(id); } //icon data corrupted or unreadable
   else{
     icon_data idat = HASH[id];
-    idat.lastsync = sync;
+    idat.lastread = sync;
     idat.icon.addPixmap(pix);
     //Now throw this icon into any pending objects
     for(int i=0; i<idat.pendingButtons.length(); i++){ idat.pendingButtons[i]->setIcon(idat.icon); }
     idat.pendingButtons.clear();
-    for(int i=0; i<idat.pendingLabels.length(); i++){ idat.pendingLabels[i]->setPixmap(pix.scaled(idat.pendingLabels[i]->sizeHint(), Qt::KeepAspectRatio, Qt::SmoothTransformation); }
+    for(int i=0; i<idat.pendingLabels.length(); i++){ idat.pendingLabels[i]->setPixmap(pix.scaled(idat.pendingLabels[i]->sizeHint(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
     idat.pendingLabels.clear();
     //Now update the hash and let the world know it is available now
     HASH.insert(id, idat);

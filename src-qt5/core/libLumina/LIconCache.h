@@ -14,6 +14,8 @@
 #include <QString>
 #include <QFile>
 #include <QDateTime>
+#include <QAbstractButton>
+#include <QLabel>
 
 //Data structure for saving the icon/information internally
 struct icon_data{
@@ -50,8 +52,9 @@ private:
 
 	icon_data createData(QString icon);
 	QStringList getChildIconDirs(QString path); //recursive function to find directories with icons in them
+	QStringList getIconThemeDepChain(QString theme, QStringList paths);
 
-	static void ReadFile(LIconCache *obj, QString id, QString path);
+	void ReadFile(LIconCache *obj, QString id, QString path);
 
 private slots:
 	void IconLoaded(QString id, QDateTime sync, QByteArray *data);
