@@ -36,10 +36,14 @@ private:
 	QFileSystemWatcher *watcher;
 	//QMenu *menu;
 	QInputDialog *inputDLG;
+	QString iconID;
+	int icosize;
 
 private slots:
 	void loadButton();
 	void buttonClicked(bool openwith = false);
+	void iconLoaded(QString);
+
 	//void openContextMenu();
 	
 	//void increaseIconSize();

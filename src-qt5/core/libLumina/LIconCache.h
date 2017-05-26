@@ -16,6 +16,7 @@
 #include <QDateTime>
 #include <QAbstractButton>
 #include <QLabel>
+#include <QAction>
 
 //Data structure for saving the icon/information internally
 struct icon_data{
@@ -23,6 +24,7 @@ struct icon_data{
   QDateTime lastread;
   QList<QLabel*> pendingLabels;
   QList<QAbstractButton*> pendingButtons;
+  QList<QAction*> pendingActions;
   QIcon icon;
   QIcon thumbnail;
 };
@@ -40,7 +42,8 @@ public:
 	//Special loading routines for QLabel and QAbstractButton (pushbutton, toolbutton, etc)
 	void loadIcon(QAbstractButton *button, QString icon, bool noThumb = false);
 	void loadIcon(QLabel *label, QString icon, bool noThumb = false);
-	
+	void loadIcon(QAction *action, QString icon, bool noThumb = false);
+
 	QIcon loadIcon(QString icon, bool noThumb = false); //generic loading routine - does not background the loading of icons when not in the cache
 
 	void clearIconTheme(); //use when the icon theme changes to refresh all requested icons

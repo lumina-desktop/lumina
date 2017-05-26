@@ -14,7 +14,7 @@
 #include <QtConcurrent>
 
 LIconCache::LIconCache(QObject *parent) : QObject(parent){
-
+  connect(this, SIGNAL(InternalIconLoaded(QString, QDateTime, QByteArray*)), this, SLOT(IconLoaded(QString, QDateTime, QByteArray*)) );
 }
 
 LIconCache::~LIconCache(){
@@ -45,7 +45,8 @@ bool LIconCache::isLoaded(QString icon){
 }
 
 QString LIconCache::findFile(QString icon){
-//Get the currently-set theme
+  if(icon.isEmpty()){ return ""; }
+  //Get the currently-set theme
   QString cTheme = QIcon::themeName();
   if(cTheme.isEmpty()){ 
     QIcon::setThemeName("material-design-light"); 
@@ -91,6 +92,7 @@ QString LIconCache::findFile(QString icon){
   }
   //If still no icon found, look for any image format in the "pixmaps" directory
   if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+icon)){
+    if(QFileInfo(LOS::AppPrefix()+"share/pixmaps/"+icon).isDir()){ return ""; }
     return (LOS::AppPrefix()+"share/pixmaps/"+icon);
   }else{
     //Need to scan for any close match in the directory
@@ -112,7 +114,8 @@ QString LIconCache::findFile(QString icon){
 
 void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   //See if the icon has already been loaded into the HASH
-  if(HASH.contains(icon)){
+  bool needload = !HASH.contains(icon);
+  if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ button->setIcon( HASH[icon].thumbnail ); return; }
     else if(!HASH[icon].icon.isNull()){ button->setIcon( HASH[icon].icon ); return; }
   }
@@ -122,12 +125,29 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   else { idata = createData(icon); }
     idata.pendingButtons << button; //save this button for later
   HASH.insert(icon, idata);
-  QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
+  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
+}
+
+void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
+  //See if the icon has already been loaded into the HASH
+  bool needload = !HASH.contains(icon);
+  if(!needload){
+    if(!noThumb && !HASH[icon].thumbnail.isNull()){ action->setIcon( HASH[icon].thumbnail ); return; }
+    else if(!HASH[icon].icon.isNull()){ action->setIcon( HASH[icon].icon ); return; }
+  }
+  //Need to load the icon
+  icon_data idata;
+  if(HASH.contains(icon)){ idata = HASH.value(icon); }
+  else { idata = createData(icon); }
+    idata.pendingActions << action; //save this button for later
+  HASH.insert(icon, idata);
+  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
 }
 
 void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   //See if the icon has already been loaded into the HASH
-  if(HASH.contains(icon)){
+  bool needload = !HASH.contains(icon);
+  if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ label->setPixmap( HASH[icon].thumbnail.pixmap(label->sizeHint()) ); return; }
     else if(!HASH[icon].icon.isNull()){ label->setPixmap( HASH[icon].icon.pixmap(label->sizeHint()) ); return; }
   }
@@ -137,7 +157,7 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   else { idata = createData(icon); }
   idata.pendingLabels << label; //save this QLabel for later
   HASH.insert(icon, idata);
-  QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath);
+  if(needload){ QtConcurrent::run(this, &LIconCache::ReadFile, this, icon, idata.fullpath); }
 }
 
 void LIconCache::clearIconTheme(){
@@ -223,6 +243,7 @@ QStringList LIconCache::getIconThemeDepChain(QString theme, QStringList paths){
 }
 
 void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
+  qDebug() << "Start Reading File:" << id << path;
   QByteArray *BA = new QByteArray();
   QDateTime cdt = QDateTime::currentDateTime();
   QFile file(path);
@@ -235,6 +256,7 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
 
 // === PRIVATE SLOTS ===
 void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
+  qDebug() << "Icon Loaded:" << id << HASH.contains(id);
   QPixmap pix;
   bool ok = pix.loadFromData(*data);
    delete data; //no longer used - free this up

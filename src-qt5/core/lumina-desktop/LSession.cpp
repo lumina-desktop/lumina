@@ -17,6 +17,7 @@
 #include <LuminaX11.h>
 #include <LUtils.h>
 #include <ExternalProcess.h>
+#include <LIconCache.h>
 
 #include <unistd.h> //for usleep() usage
 
@@ -25,6 +26,7 @@
 #endif
 
 XCBEventFilter *evFilter = 0;
+LIconCache *ICONS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
  if(this->isPrimaryProcess()){
@@ -47,6 +49,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   lastActiveWin = 0; 
   cleansession = true;
   TrayStopping = false;
+  ICONS = new LIconCache(this);
   screenTimer = new QTimer(this);
     screenTimer->setSingleShot(true);
     screenTimer->setInterval(50);

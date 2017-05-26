@@ -3,9 +3,13 @@
 #include "OutlineToolButton.h"
 #include <QClipboard>
 
+#include <LIconCache.h>
+
 #define OUTMARGIN 10 //special margin for fonts due to the outlining effect from the OutlineToolbutton
+extern LIconCache *ICONS;
 
 AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID){
+  connect(ICONS, SIGNAL(IconAvailable(QString)), this, SLOT(iconLoaded(QString)) );
   QVBoxLayout *lay = new QVBoxLayout();
   inputDLG = 0;
   this->setLayout(lay);
@@ -42,31 +46,38 @@ void AppLauncherPlugin::loadButton(){
   //qDebug() << "Default Application Launcher:" << def << path;
   bool ok = QFile::exists(path);
   if(!ok){ emit RemovePlugin(this->ID()); return;}
-  int icosize = this->height()-4 - 2.2*button->fontMetrics().height();
+  icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
   button->setIconSize( QSize(icosize,icosize) );
   button->setToolTip("");
   QString txt;
+  iconID.clear();
   if(path.endsWith(".desktop") && ok){
     XDGDesktop file(path);
     ok = !file.name.isEmpty();
     if(!ok){
       button->setWhatsThis("");
-      button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+      iconID = "quickopen-file";
+      //button->setIcon( QIcon(LXDG::findIcon("quickopen-file","").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       txt = tr("Click to Set");
       if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
     }else{
       button->setWhatsThis(file.filePath);
-      button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+      if(ICONS->exists(file.icon)){ iconID = file.icon; }
+      else{ iconID = "system-run"; }
+      //button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       if(!file.comment.isEmpty()){button->setToolTip(file.comment); }
       txt = file.name;
       //Put the simple Open action first (no open-with for .desktop files)
-      this->contextMenu()->addAction(button->icon(), QString(tr("Launch %1")).arg(file.name), this, SLOT(buttonClicked()) );
+      QAction *tmp = this->contextMenu()->addAction( QString(tr("Launch %1")).arg(file.name), this, SLOT(buttonClicked()) );
+      ICONS->loadIcon(tmp, file.icon);
       //See if there are any "actions" listed for this file, and put them in the context menu as needed.
       if(!file.actions.isEmpty()){ 
         for(int i=0; i<file.actions.length(); i++){
-          QAction *tmp = this->contextMenu()->addAction( file.actions[i].name );
-            tmp->setIcon( LXDG::findIcon(file.actions[i].icon,"quickopen-file") );
+          tmp = this->contextMenu()->addAction( file.actions[i].name );
+            if(ICONS->exists(file.actions[i].icon)){ ICONS->loadIcon(tmp, file.actions[i].icon); }
+            else{ ICONS->loadIcon(tmp, "quickopen-file"); }
+            //tmp->setIcon( LXDG::findIcon(file.actions[i].icon,"quickopen-file") );
             tmp->setWhatsThis( file.actions[i].ID );
         }
       }
@@ -75,53 +86,73 @@ void AppLauncherPlugin::loadButton(){
     }
   }else if(ok){
     button->setWhatsThis(info.absoluteFilePath());
+    QString iconame;
     if(info.isDir()){
 	if(path.startsWith("/media/")){ 
+           iconame = "drive-removable-media";
           //Could add device ID parsing here to determine what "type" of device it is - will be OS-specific though
-	  button->setIcon( LXDG::findIcon("drive-removable-media","") );
+	  //button->setIcon( LXDG::findIcon("drive-removable-media","") );
 	}
-        else{ button->setIcon( LXDG::findIcon("folder","") ); }
+        else{ iconame = "folder"; } //button->setIcon( LXDG::findIcon("folder","") ); 
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
-      QPixmap pix;
-      if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  
-      else{ button->setIcon( LXDG::findIcon("dialog-cancel","") ); }
+      iconame = info.absoluteFilePath();
+      //QPixmap pix;
+      //if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  
+      //else{ iconame = "dialog-cancel"; } //button->setIcon( LXDG::findIcon("dialog-cancel","") ); 
     }else{
-      button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+      iconame = LXDG::findAppMimeForFile(path).replace("/","-");
+      //button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     }
+    if(!iconame.isEmpty()){ iconID = iconame; }
     txt = info.fileName();
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
     watcher->addPath(path); //make sure to update this shortcut if the file changes
   }else{
     //InValid File
     button->setWhatsThis("");
-    button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
+    
+    iconID = "quickopen";
+    //button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
-  //Now adjust the context menu for the button as needed
-  if(this->contextMenu()->isEmpty()){
-    this->contextMenu()->addAction(LXDG::findIcon("document-open",""), tr("Open"), this, SLOT(buttonClicked()) );
-    this->contextMenu()->addAction(LXDG::findIcon("document-preview",""), tr("Open With"), this, SLOT(openWith()) );
+  if(!iconID.isEmpty()){ 
+    bool updatenow = ICONS->isLoaded(iconID);
+    ICONS->loadIcon(button, iconID); 
+    if(updatenow){ iconLoaded(iconID); } //will not get a signal - already loaded right now
   }
-  this->contextMenu()->addAction(LXDG::findIcon("document-properties",""), tr("View Properties"), this, SLOT(fileProperties()) );
+  //Now adjust the context menu for the button as needed
+  QAction *tmp = 0;
+  if(this->contextMenu()->isEmpty()){
+    tmp = this->contextMenu()->addAction( tr("Open"), this, SLOT(buttonClicked()) );
+    ICONS->loadIcon(tmp, "document-open");
+    this->contextMenu()->addAction( tr("Open With"), this, SLOT(openWith()) );
+    ICONS->loadIcon(tmp, "document-preview");
+  }
+  tmp = this->contextMenu()->addAction( tr("View Properties"), this, SLOT(fileProperties()) );
+  ICONS->loadIcon(tmp, "document-properties");
   this->contextMenu()->addSection(tr("File Operations"));
   if(!path.endsWith(".desktop")){
-    this->contextMenu()->addAction(LXDG::findIcon("edit-rename","edit-new"), tr("Rename"), this, SLOT(fileRename()) );
+    tmp = this->contextMenu()->addAction( tr("Rename"), this, SLOT(fileRename()) );
+    ICONS->loadIcon(tmp, "edit-rename");
   }
-  this->contextMenu()->addAction(LXDG::findIcon("edit-copy",""), tr("Copy"), this, SLOT(fileCopy()) );
+  tmp = this->contextMenu()->addAction( tr("Copy"), this, SLOT(fileCopy()) );
+  ICONS->loadIcon(tmp, "edit-copy");
   if(info.isWritable() || (info.isSymLink() && QFileInfo(info.absolutePath()).isWritable() ) ){
-    this->contextMenu()->addAction(LXDG::findIcon("edit-cut",""), tr("Cut"), this, SLOT(fileCut()) );
-    this->contextMenu()->addAction(LXDG::findIcon("document-close",""), tr("Delete"), this, SLOT(fileDelete()) );
+    tmp = this->contextMenu()->addAction( tr("Cut"), this, SLOT(fileCut()) );
+    ICONS->loadIcon(tmp, "edit-cut");
+    tmp = this->contextMenu()->addAction( tr("Delete"), this, SLOT(fileDelete()) );
+    ICONS->loadIcon(tmp, "document-close");
   }
   //If the file is a symlink, put the overlay on the icon
-  if(info.isSymLink()){
+  /*if(info.isSymLink()){
     QImage img = button->icon().pixmap(QSize(icosize,icosize)).toImage();
     int oSize = icosize/3; //overlay size
-    QPixmap overlay = LXDG::findIcon("emblem-symbolic-link").pixmap(oSize,oSize).scaled(oSize,oSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap overlay = ICONS->loadIcon("emblem-symbolic-link").pixmap(oSize,oSize).scaled(oSize,oSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QPainter painter(&img);
       painter.drawPixmap(icosize-oSize,icosize-oSize,overlay); //put it in the bottom-right corner
     button->setIcon( QIcon(QPixmap::fromImage(img)) );
-  }
+  }*/
   //Now adjust the visible text as necessary based on font/grid sizing
   if(button->toolTip().isEmpty()){ button->setToolTip(txt); }
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
@@ -181,6 +212,22 @@ void AppLauncherPlugin::buttonClicked(bool openwith){
     LSession::LaunchApplication("lumina-open \""+path+"\"");
   }
 	  
+}
+
+void AppLauncherPlugin::iconLoaded(QString ico){
+  if(ico == iconID){
+    //Reload/scale the icon as needed
+    QPixmap pix = button->icon().pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation);
+    if(QFileInfo(button->whatsThis()).isSymLink()){
+      QImage img = pix.toImage();
+      int oSize = icosize/3; //overlay size
+      QPixmap overlay = ICONS->loadIcon("emblem-symbolic-link").pixmap(oSize,oSize).scaled(oSize,oSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+      QPainter painter(&img);
+        painter.drawPixmap(icosize-oSize,icosize-oSize,overlay); //put it in the bottom-right corner
+      pix = QPixmap::fromImage(img);
+    }
+    button->setIcon( QIcon(pix) );
+  }
 }
 
 void AppLauncherPlugin::actionTriggered(QAction *act){
