@@ -165,7 +165,7 @@ void ItemWidget::createWidget(){
     actButton->setPopupMode(QToolButton::InstantPopup);
     actButton->setArrowType(Qt::DownArrow);
   icon = new QLabel(this);
-    int H = 64; //(2.3*this->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
+    int H = (2.5*this->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
     icon->setFixedSize( QSize(H,H) );
   name = new QLabel(this);
     name->setWordWrap(true);
@@ -230,7 +230,7 @@ void ItemWidget::setupActions(XDGDesktop *app){
 
 void ItemWidget::updateItems(){
   //update the text/icon to match sizes
-  int H = 64; //(2.3*name->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
+  int H = (2.5*name->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
   icon->setFixedSize(QSize(H, H));
   actButton->setFixedSize( QSize( H/2, H) );
   QStringList newname = text.split("<br>");
@@ -238,23 +238,20 @@ void ItemWidget::updateItems(){
   name->setText( newname.join("<br>") );
   //Now reload the icon if necessary
   if(icon->pixmap()!=0){
-    if(icon->pixmap()->size().height() < (H-4) ){
+    if(icon->pixmap()->size().height() < H ){
       if(iconPath.isEmpty()){
         //Use item path (thumbnail or mimetype)
         if(LUtils::imageExtensions().contains(icon->whatsThis().section("/",-1).section(".",-1).toLower()) ){
           ICONS->loadIcon(icon, icon->whatsThis());
-          //icon->setPixmap( QIcon(icon->whatsThis()).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
         }else{
           ICONS->loadIcon(icon, LXDG::findAppMimeForFile(icon->whatsThis()).replace("/","-") );
-          //icon->setPixmap( LXDG::findMimeIcon(icon->whatsThis().section("/",-1)).pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
         }
       }else{
         if(ICONS->exists(iconPath)){ ICONS->loadIcon(icon, iconPath); }
         else{ ICONS->loadIcon(icon, "preferences-system-windows-actions"); }
-        //icon->setPixmap( LXDG::findIcon(iconPath,"preferences-system-windows-actions").pixmap(H-4,H-4).scaledToHeight(H-4,Qt::SmoothTransformation) );
       }
-    }else if(icon->pixmap()->size().height() > (H-4) ){
-      icon->setPixmap( icon->pixmap()->scaled(H-4, H-4, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    }else if(icon->pixmap()->size().height() > H ){
+      icon->setPixmap( icon->pixmap()->scaled(H, H, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
     }
   }
 }

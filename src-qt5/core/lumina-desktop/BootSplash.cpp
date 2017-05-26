@@ -7,6 +7,8 @@
 
 BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus), ui(new Ui::BootSplash){
   ui->setupUi(this);
+  this->setMinimumHeight( this->fontMetrics().height() * 12);
+  this->setMinimumWidth( this->minimumHeight() * 1.5);
   this->setObjectName("LuminaBootSplash"); //for theme styling
   //Center the window on the primary screen
   QPoint ctr = QApplication::desktop()->screenGeometry().center();
