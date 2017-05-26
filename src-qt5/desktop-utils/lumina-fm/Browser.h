@@ -45,7 +45,7 @@ private:
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
 	
 
-	void loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
+	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
 	QIcon loadIcon(QString icon); //simplification for using/populating the mimIcons cache
 
 private slots:

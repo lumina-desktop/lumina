@@ -39,7 +39,7 @@ bool Browser::showingHiddenFiles(){
 }
 
 //   PRIVATE
-void Browser::loadItem(QString info){
+void Browser::loadItem(QString info, Browser *obj){
   //qDebug() << "LoadItem:" << info;
   //FileItem item;
      //itemame = info;
@@ -58,7 +58,7 @@ void Browser::loadItem(QString info){
     }*/
   }
   //qDebug() << " - done with item:" << info;
-  this->emit threadDone(info, bytes);
+  obj->emit threadDone(info, bytes);
 }
 
 QIcon Browser::loadIcon(QString icon){
@@ -73,14 +73,14 @@ QIcon Browser::loadIcon(QString icon){
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
   if(file.startsWith(currentDir+"/") ){ 
-    if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file ); } //file modified but not removed
+    if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file, this); } //file modified but not removed
     else{ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); } //file removed - need to update entire dir
   }else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
 }
 
 void Browser::dirChanged(QString dir){
   if(dir==currentDir){ QTimer::singleShot(500, this, SLOT(loadDirectory()) ); }
-  else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir ); }
+  else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
 void Browser::futureFinished(QString name, QByteArray icon){
@@ -133,11 +133,11 @@ void Browser::loadDirectory(QString dir){
       if(old.contains(path)){ old.removeAll(path); }
       oldFiles << path; //add to list for next time
       if(imageFormats.contains(path.section(".",-1).toLower()) || path.endsWith(".desktop")){
-        QtConcurrent::run(this, &Browser::loadItem, path );
+        QtConcurrent::run(this, &Browser::loadItem, path, this);
         //QCoreApplication::sendPostedEvents();
       }else{
         //No special icon loading - do it in-line here
-        loadItem(path);
+        loadItem(path, this);
       }
     }
     watcher->addPath(directory.absolutePath());
