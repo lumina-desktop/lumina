@@ -70,7 +70,16 @@ void MainUI::LoadArguments(QStringList args){
   bool burnIMG = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
-    if(QFile::exists(args[i])){ 
+/*
+    if(args[i]=="--ax"){i++; QString archivefile = args[i];
+        QFileInfo filename(args[i]);
+        QDir filedir = filename.canonicalPath();
+        QString newdir = filename.completeBaseName();
+        filedir.mkpath(newdir);
+        BACKEND->startExtract(newdir, true, archivefile);
+        qApp->exit();}
+*/
+    if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
       BACKEND->loadFile(args[i]);  
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
