@@ -193,6 +193,7 @@ void MainUI::OpenDirs(QStringList dirs){
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
   waitingToClose = false;
   ui->menuGit->setEnabled( GIT::isAvailable() );
+  this->showNormal(); //single-instance check - make sure the window is raised again if it was minimized
 }
 
 void MainUI::setupIcons(){
