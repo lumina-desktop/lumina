@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab ablösen</translation>
     </message>
 </context>
 <context>
@@ -249,17 +249,17 @@
     <message>
         <location filename="../MainUI.ui" line="417"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Unten</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="425"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="61"/>
