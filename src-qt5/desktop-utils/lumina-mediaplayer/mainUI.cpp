@@ -52,8 +52,16 @@ MainUI::~MainUI(){
 
 }
 
-void MainUI::loadArguments(QStringList){
-
+void MainUI::loadArguments(QStringList args){
+  //Parse out the arguments
+  for(int i=0; i<args.length(); i++){
+    if(args.startsWith("--")){ continue; } //skip this one - not a file to try loading
+    loadFile(args[i]);
+  }
+  //
+  if( (PLAYLIST->mediaCount() <=0 || args.contains("--pandora")) && ui->radio_pandora->isEnabled()){
+    ui->radio_pandora->toggle();
+  }
 }
 
 
@@ -236,6 +244,13 @@ void MainUI::closeTrayIcon(){
 
 }
 
+void MainUI::loadFile(QString file){
+  //See if the file is a known playlist first
+
+  //Load the file as-is
+  PLAYLIST->addMedia( QUrl::fromLocalFile(file));
+}
+
 // ==== PRIVATE SLOTS ====
 void MainUI::closeApplication(){
   closing = true;
@@ -340,7 +355,8 @@ void MainUI::voldownToggled(){
 void MainUI::addLocalMedia(){
   QStringList paths = QFileDialog::getOpenFileNames(this, tr("Open Multimedia Files"), QDir::homePath() );
   for(int i=0; i<paths.length(); i++){
-    PLAYLIST->addMedia( QUrl::fromLocalFile(paths[i]) );
+    loadFile(paths[i]);
+    //PLAYLIST->addMedia( QUrl::fromLocalFile(paths[i]) );
   }
 }
 
