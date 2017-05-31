@@ -42,6 +42,7 @@ private:
 	int panelnum;
 	int viswidth, fullwidth;
 	QList<LPPlugin*> PLUGINS;
+	QRect desiredGeom;
 
 	int Screen(); //Turn the screenID into the appropriate number
 
