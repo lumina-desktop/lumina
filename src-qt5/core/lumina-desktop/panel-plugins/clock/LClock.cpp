@@ -100,12 +100,12 @@ void LClock::updateTime(bool adjustformat){
       }
      if(lines.length()==1){ wid+=6; } //need some extra margins for single-line 
      else{ wid-=6; } // need to remove some margins for multi-line
-     this->setMinimumWidth( wid );
-     this->setMaximumWidth(wid+6);
+     this->setMinimumWidth( wid - (4*button->fontMetrics().width("O")) );
+     this->setMaximumWidth(wid + (4*button->fontMetrics().width("O")));
     }else{
       //vertical layout
       this->setMinimumHeight(button->fontMetrics().lineSpacing() * lines.length());
-      this->setMaximumHeight( 6*button->fontMetrics().height() );
+      this->setMaximumHeight( (lines.length()+4)*button->fontMetrics().height() );
     }
   }
   button->setText(label);
