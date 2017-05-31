@@ -161,6 +161,7 @@ private:
 	
 	void MovePlugin(LDPlugin* plug, QRect geom){
 	  plug->savePluginGeometry(geom);	//save the un-adjusted geometry
+	  plug->setGridGeometry(geomToGrid(geom)); //save the actual grid location
 	  plug->setGeometry( geom );
 	  plug->setFixedSize(geom.size()); //needed for some plugins
 	}
