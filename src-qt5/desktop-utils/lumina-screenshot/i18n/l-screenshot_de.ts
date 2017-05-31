@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich auswählen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>Popup-Warnungen über nicht gespeicherte Bildschirmfotos anzeigen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="499"/>
