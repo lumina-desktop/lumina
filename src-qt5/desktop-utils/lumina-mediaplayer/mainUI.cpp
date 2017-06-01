@@ -95,6 +95,7 @@ void MainUI::setupPandora(){
     ui->radio_local->setChecked(true);
     ui->radio_pandora->setToolTip(tr("Please install the `pianobar` utility to enable this functionality"));
     ui->radio_pandora->setStatusTip(ui->radio_pandora->toolTip());
+    return;
   }
   ui->radio_pandora->setToolTip(tr("Stream music from the Pandora online radio service"));
   ui->radio_pandora->setStatusTip(ui->radio_pandora->toolTip());
