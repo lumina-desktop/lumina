@@ -27,13 +27,17 @@ Backend::~Backend(){
 //        PUBLIC
 //===============
 void Backend::loadFile(QString path){
-  //qDebug() << "Loading Archive:" << path;
+  qDebug() << "void Backend::loadFile(QString path) has started";
+  qDebug() << "Loading Archive:" << path;
   filepath = path;
+  qDebug () << "BACKEND LOAD- " << "path = " << path;
+  qDebug () << "BACKEND LOAD- " << "filepath = " << filepath;
   tmpfilepath = filepath.section("/",0,-2)+"/"+".tmp_larchiver_"+filepath.section("/",-1);
   flags.clear();
   flags << "-f" << filepath; //add the actual archive path
-  if(QFile::exists(path)){ startList(); }
+  if(QFile::exists(path)){ startList(); qDebug () << "BACKEND LOAD startList has started";}
   else{ contents.clear(); emit ProcessFinished(true, ""); }
+  qDebug () << "BACKEND LOAD COMPLETE";
 }
 
 bool Backend::canModify(){
@@ -127,11 +131,18 @@ void Backend::startRemove(QStringList paths){
 }
 
 void Backend::startExtract(QString path, bool overwrite, QString file){
+  qDebug () << "BACKEND startExtract -" << "void Backend::startExtract(QString path, bool overwrite, QString file) has started";
+  qDebug () << "BACKEND startExtract -" << "path = " << path;
+  qDebug () << "BACKEND startExtract -" << "overwrite =" << overwrite ;
+  qDebug () << "BACKEND startExtract -" << "file =" << file;
   startExtract(path, overwrite, QStringList() << file); //overload for multi-file function
+
 }
 
 void Backend::startExtract(QString path, bool overwrite, QStringList files){
   QStringList args;
+  //remove --ax arg if its still lingering so its not passed to external process
+  for(int i=0; i<args.length(); i++){ if(args[i]=="--ax"){ args.removeAt(i);}}
   args << "-x" << "--no-same-owner";
   if(!overwrite){ args << "-k"; }
   args << flags;

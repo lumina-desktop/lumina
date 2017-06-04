@@ -24,7 +24,8 @@ public:
 	~MainUI();
 
 	void LoadArguments(QStringList);
-	void loadIcons();
+    void loadIcons();
+    QString newdir, dir;
 
 private:
 	Ui::MainUI *ui;
@@ -43,7 +44,8 @@ private slots:
 	void addFiles();
 	void addDirs();
 	void remFiles();
-	void extractFiles();
+    void extractFiles();
+    void autoextractFiles();
 	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();

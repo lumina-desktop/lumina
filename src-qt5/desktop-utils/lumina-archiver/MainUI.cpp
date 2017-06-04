@@ -16,6 +16,8 @@
 
 #include <unistd.h>
 
+#include <QDebug>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   QString title = tr("Archive Manager");
@@ -68,17 +70,35 @@ MainUI::~MainUI(){
 
 void MainUI::LoadArguments(QStringList args){
   bool burnIMG = false;
+  bool autoExtract = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
-/*
-    if(args[i]=="--ax"){i++; QString archivefile = args[i];
+    if(args[i]=="--ax"){ autoExtract = true; i++;
         QFileInfo filename(args[i]);
         QDir filedir = filename.canonicalPath();
         QString newdir = filename.completeBaseName();
         filedir.mkpath(newdir);
-        BACKEND->startExtract(newdir, true, archivefile);
-        qApp->exit();}
-*/
+        dir = newdir;
+        qDebug() << "MAINUI - archivefile = " << args[i];
+        qDebug() << "MAINUI - filedir = " << filedir;
+        qDebug() << "MAINUI - newdir = " << newdir;
+        qDebug() << "MAINUI - dir = " << dir;
+        BACKEND->loadFile(args[i]);
+        qDebug () << "MAINUI - File should have loaded";
+        //add in a delay in case i'm hitting a race condition
+        QTime waitTime= QTime::currentTime().addSecs(2);
+        while (QTime::currentTime() < waitTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        //things should have settled, now trigger extraction
+        if(autoExtract){
+            ui->label_progress->setText(tr("Extracting..."));
+            autoextractFiles();
+            qDebug () << "MAINUI - Extraction should have started";
+            }
+        //now quit
+        QCoreApplication::quit();
+        return;
+    }
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
       BACKEND->loadFile(args[i]);  
@@ -244,6 +264,19 @@ void MainUI::extractFiles(){
   ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startExtract(dir, true);
 }
+
+void MainUI::autoextractFiles(){
+//    QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
+//    if(dir.isEmpty()){ return; }
+    //add in a delay in case i'm hitting a race condition
+    qDebug() << "void MainUI::autoextractFiles() has started";
+    QTime waitTime= QTime::currentTime().addSecs(2);
+    while (QTime::currentTime() < waitTime)
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    ui->label_progress->setText(tr("Extracting..."));
+    BACKEND->startExtract(dir, true);
+//    QApplication::quit();
+  }
 
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected
