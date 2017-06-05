@@ -72,6 +72,13 @@ MainUI::MainUI()
   IMG->setDefaultSize(ui->scrollArea->maximumViewportSize());
   IMG->LoadImage( QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()).toImage() ); //initial screenshot
   lastScreenShot = QDateTime::currentDateTime();
+
+  // Shortcuts
+  quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
+  connect(quitShortcut, SIGNAL(activated()), this, SLOT(on_quitShortcut_Triggered()) );
+  openShortcut = new QShortcut(Qt::CTRL + Qt::Key_O, this);
+  connect(openShortcut, SIGNAL(activated()), this, SLOT(quicksave()) );
+
   //ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
@@ -329,4 +336,8 @@ void MainUI::closeEvent(QCloseEvent *ev){
     }
   }
   QMainWindow::closeEvent(ev);
+}
+
+void MainUI::on_quitShortcut_Triggered(){
+    QApplication::quit();
 }

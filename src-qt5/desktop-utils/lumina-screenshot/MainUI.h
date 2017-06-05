@@ -19,6 +19,7 @@
 #include <QAction>
 #include <QScreen>
 #include <QTabBar>
+#include <QShortcut>
 
 #include <LuminaXDG.h>
 #include <LUtils.h>
@@ -60,6 +61,8 @@ private:
 
 	QRect pointsToRect(QPoint pt1, QPoint pt2);
 
+    QShortcut *quitShortcut, *openShortcut;
+
 private slots:
 	//Button Slots
 	void closeApplication(){
@@ -81,6 +84,8 @@ private slots:
 	//Utility functions to perform a screenshot
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot
+
+    void on_quitShortcut_Triggered();
 
 protected:
 	void mousePressEvent(QMouseEvent *ev);
