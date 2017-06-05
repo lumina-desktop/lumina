@@ -102,10 +102,11 @@ void MainUI::LoadArguments(QStringList args){
     }*/
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
+      if(autoExtract){ connect(BACKEND, SIGNAL(fileLoaded()), this, SLOT(autoextractFiles()) ); }
       BACKEND->loadFile(args[i]);  
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
-      else if(autoExtract){ QTimer::singleShot(2000, this, SLOT(autoextractFiles())); }
+      //else if(autoExtract){ QTimer::singleShot(2000, this, SLOT(autoextractFiles())); }
       break;
     }
   }
@@ -268,6 +269,7 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
+    disconnect(BACKEND, SIGNAL(fileLoaded()), this, SLOT(autoextractFiles()) );
     QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
     //QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
     if(dir.isEmpty()){ return; }
