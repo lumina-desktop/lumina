@@ -11,6 +11,7 @@
 #include <QString>
 #include <QChar>
 #include <QListWidgetItem>
+#include <QShortcut>
 
 namespace Ui{
 	class mainUI;
@@ -53,6 +54,8 @@ private slots:
 
 	void saveHistory();
 
+    void on_quitShortcut_Triggered();
+
 private:
 	Ui::mainUI *ui;
 	QMenu *advMenu;
@@ -61,5 +64,8 @@ private:
 	double performSciOperation(QString func, double arg);
 	double strToNumber(QString str); //this is highly-recursive
 	QString getHistory(int number = -1);
+
+    QShortcut *quitShortcut, *escShortcut;
+
 };
 #endif

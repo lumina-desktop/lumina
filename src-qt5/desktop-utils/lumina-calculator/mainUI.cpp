@@ -55,6 +55,12 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   updateMenus();
   ui->line_eq->setFocus();
   ui->line_eq->setValidator(new EqValidator(this) );
+
+  // shortcuts
+  escShortcut = new QShortcut(Qt::Key_Escape, this);
+  connect(escShortcut, SIGNAL(activated()), this, SLOT(clear_calc()) );
+  quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
+  connect(quitShortcut, SIGNAL(activated()), this, SLOT(on_quitShortcut_Triggered()) );
 }
 
 mainUI::~mainUI(){
@@ -337,3 +343,8 @@ QString mainUI::getHistory(int number){
     return ("("+eq+")");
   }
 }
+
+void mainUI::on_quitShortcut_Triggered(){
+    QApplication::quit();
+}
+
