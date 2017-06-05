@@ -73,7 +73,8 @@ void MainUI::LoadArguments(QStringList args){
   bool autoExtract = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
-    if(args[i]=="--ax"){ autoExtract = true; i++;
+    if(args[i]=="--ax"){ autoExtract = true; continue; }
+  /*i++;
         QFileInfo filename(args[i]);
         QDir filedir = filename.canonicalPath();
         QString newdir = filename.completeBaseName();
@@ -96,14 +97,15 @@ void MainUI::LoadArguments(QStringList args){
             qDebug () << "MAINUI - Extraction should have started";
             }
         //now quit
-        QCoreApplication::quit();
+        //QCoreApplication::quit();
         return;
-    }
+    }*/
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
       BACKEND->loadFile(args[i]);  
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
+      else if(autoExtract){ QTimer::singleShot(2000, this, SLOT(autoextractFiles())); }
       break;
     }
   }
@@ -266,13 +268,14 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
-//    QString dir = QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
-//    if(dir.isEmpty()){ return; }
+    QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
+    //QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
+    if(dir.isEmpty()){ return; }
     //add in a delay in case i'm hitting a race condition
-    qDebug() << "void MainUI::autoextractFiles() has started";
+    /*qDebug() << "void MainUI::autoextractFiles() has started";
     QTime waitTime= QTime::currentTime().addSecs(2);
     while (QTime::currentTime() < waitTime)
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);*/
     ui->label_progress->setText(tr("Extracting..."));
     BACKEND->startExtract(dir, true);
 //    QApplication::quit();

@@ -25,7 +25,7 @@ public:
 
 	void LoadArguments(QStringList);
     void loadIcons();
-    QString newdir, dir;
+    //QString newdir, dir;
 
 private:
 	Ui::MainUI *ui;
