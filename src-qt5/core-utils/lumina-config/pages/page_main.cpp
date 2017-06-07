@@ -123,6 +123,19 @@ void page_main::UpdateItems(QString search){
   ui->treeWidget->sortItems(0, Qt::AscendingOrder);
   ui->treeWidget->resizeColumnToContents(0);
   ui->treeWidget->resizeColumnToContents(1);
+
+  //Now make sure the width of the tree widget is greater/equal to the recommended size
+  int wid = ui->treeWidget->indentation() + 10; 
+  for(int i=0; i<ui->treeWidget->columnCount(); i++){
+    wid += ui->treeWidget->columnWidth(i);
+  }
+  if(wid < ui->treeWidget->header()->width() ){ wid = ui->treeWidget->header()->width(); }
+  //qDebug() << "Current size:" << ui->treeWidget->size() << ui->treeWidget->header()->width() << wid;
+  if(ui->treeWidget->size().width() < wid ){
+    // ENABLE LATER  WITH LUMINA 2.0 - Fluxbox does not like it when a window gets resized near the init routine
+    //   and moves the window slightly-offscreen (titlebar hidden)
+    //ui->treeWidget->setMinimumWidth( wid );
+  }
 }
 
 //================

@@ -26,7 +26,7 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   backShortcut = new QShortcut(Qt::Key_Escape, this);
     connect(backShortcut, SIGNAL(activated()), this, SLOT(on_actionBack_triggered()) );
   quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
-    connect(quitShortcut, SIGNAL(activated()), this, SLOT(on_quitShortcut_Triggered()) );
+    connect(quitShortcut, SIGNAL(activated()), this, SLOT(quitShortcut_Triggered()) );
   setupIcons();
   loadMonitors();
   //changePage(""); //load the default main page
@@ -109,7 +109,6 @@ void mainWindow::changePage(QString id){
   page->setPreviousPage(oldpage);
   //Now update this UI a bit based on page settings
   ui->actionMonitor->setVisible( page->needsScreenSelector() && ui->actionMonitor->menu()->actions().length()>1 );
-  
   this->showNormal();
 }
 //================
@@ -147,7 +146,7 @@ void mainWindow::on_actionBack_triggered(){
    else{ page_change(""); } //Use the interactive wrapper (check for save state, etc).
 }
 
-void mainWindow::on_quitShortcut_Triggered(){
+void mainWindow::quitShortcut_Triggered(){
     QApplication::quit();
 }
 
