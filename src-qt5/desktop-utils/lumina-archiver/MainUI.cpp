@@ -20,6 +20,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
+  auto_extract_close = false;
   QString title = tr("Archive Manager");
   if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
   this->setWindowTitle(title);
@@ -102,11 +103,13 @@ void MainUI::LoadArguments(QStringList args){
     }*/
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
-      if(autoExtract){ connect(BACKEND, SIGNAL(fileLoaded()), this, SLOT(autoextractFiles()) ); }
+      if(autoExtract){ 
+        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) ); 
+        connect(BACKEND, SIGNAL(ExtractSuccessful()), this, SLOT(close()) );
+      }
       BACKEND->loadFile(args[i]);  
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
-      //else if(autoExtract){ QTimer::singleShot(2000, this, SLOT(autoextractFiles())); }
       break;
     }
   }
@@ -375,6 +378,11 @@ void MainUI::ProcStarting(){
 }
 
 void MainUI::ProcFinished(bool success, QString msg){
+  if(ui->label_archive->text()!=BACKEND->currentFile()){
+    ui->label_archive->setText(BACKEND->currentFile());
+    this->setWindowTitle(BACKEND->currentFile().section("/",-1));
+    ui->tree_contents->clear();
+  }
   UpdateTree();
   ui->progressBar->setRange(0,0);
   ui->progressBar->setValue(0);
@@ -384,11 +392,6 @@ void MainUI::ProcFinished(bool success, QString msg){
   ui->label_progress_icon->setVisible(!msg.isEmpty());
   if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-complete","").pixmap(32,32) );}
   else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-attention","").pixmap(32,32) );}
-  if(ui->label_archive->text()!=BACKEND->currentFile()){
-    ui->label_archive->setText(BACKEND->currentFile());
-    this->setWindowTitle(BACKEND->currentFile().section("/",-1));
-    ui->tree_contents->clear();
-  }
   QFileInfo info(BACKEND->currentFile());
     bool canmodify = info.isWritable();
     if(!info.exists()){ canmodify = QFileInfo(BACKEND->currentFile().section("/",0,-2)).isWritable(); }

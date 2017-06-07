@@ -60,6 +60,7 @@ private slots:
 
 signals:
 	void FileLoaded();
+	void ExtractSuccessful();
 	void ProcessStarting();
 	void ProgressUpdate(int, QString); //percentage, text
 	void ProcessFinished(bool, QString); //success, text

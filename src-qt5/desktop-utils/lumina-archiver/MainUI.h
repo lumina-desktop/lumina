@@ -25,11 +25,12 @@ public:
 
 	void LoadArguments(QStringList);
     void loadIcons();
-    //QString newdir, dir;
+
 
 private:
 	Ui::MainUI *ui;
 	Backend *BACKEND;
+	bool auto_extract_close;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
 	bool cleanItems(QStringList list, QTreeWidgetItem *start = 0); //returns true if anything gets cleaned
