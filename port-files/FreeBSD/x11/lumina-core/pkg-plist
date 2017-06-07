@@ -27,6 +27,11 @@ share/icons/material-design-dark/scalable/actions/appointment-range.svg
 share/icons/material-design-dark/scalable/actions/appointment-remove.svg
 share/icons/material-design-dark/scalable/actions/appointment-select.svg
 share/icons/material-design-dark/scalable/actions/appointment-text.svg
+share/icons/material-design-dark/scalable/actions/archive.svg
+share/icons/material-design-dark/scalable/actions/archive-extract.svg
+share/icons/material-design-dark/scalable/actions/archive-insert.svg
+share/icons/material-design-dark/scalable/actions/archive-insert-directory.svg
+share/icons/material-design-dark/scalable/actions/archive-remove.svg
 share/icons/material-design-dark/scalable/actions/arrow-all.svg
 share/icons/material-design-dark/scalable/actions/arrow-bottom-left.svg
 share/icons/material-design-dark/scalable/actions/arrow-bottom-right.svg
@@ -834,6 +839,11 @@ share/icons/material-design-light/scalable/actions/appointment-range.svg
 share/icons/material-design-light/scalable/actions/appointment-remove.svg
 share/icons/material-design-light/scalable/actions/appointment-select.svg
 share/icons/material-design-light/scalable/actions/appointment-text.svg
+share/icons/material-design-light/scalable/actions/archive.svg
+share/icons/material-design-light/scalable/actions/archive-extract.svg
+share/icons/material-design-light/scalable/actions/archive-insert.svg
+share/icons/material-design-light/scalable/actions/archive-insert-directory.svg
+share/icons/material-design-light/scalable/actions/archive-remove.svg
 share/icons/material-design-light/scalable/actions/arrow-all.svg
 share/icons/material-design-light/scalable/actions/arrow-bottom-left.svg
 share/icons/material-design-light/scalable/actions/arrow-bottom-right.svg
