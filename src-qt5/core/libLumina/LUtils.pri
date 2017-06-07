@@ -6,7 +6,9 @@ include("$${PWD}/../../OS-detect.pri")
 QT *= concurrent network
 
 #Setup any special defines (qmake -> C++)
-GIT_VERSION=$$system(git describe --always)
+isEmpty(GIT_VERSION){
+  GIT_VERSION=$$system(git describe --always)
+}
 !isEmpty(GIT_VERSION){
   DEFINES += GIT_VERSION='"\\\"$${GIT_VERSION}\\\""'
 }
