@@ -132,12 +132,12 @@ void Browser::loadDirectory(QString dir){
       QString path = directory.absoluteFilePath(files[i]);
       if(old.contains(path)){ old.removeAll(path); }
       oldFiles << path; //add to list for next time
-      if(imageFormats.contains(path.section(".",-1).toLower()) || path.endsWith(".desktop")){
+      if(imageFormats.contains(path.section(".",-1).toLower())){
         QtConcurrent::run(this, &Browser::loadItem, path, this);
         //QCoreApplication::sendPostedEvents();
       }else{
-        //No special icon loading - do it in-line here
-        loadItem(path, this);
+        //No special icon loading - just skip the file read step
+        futureFinished(path, QByteArray()); //loadItem(path, this);
       }
     }
     watcher->addPath(directory.absolutePath());
