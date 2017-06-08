@@ -20,7 +20,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
-  SETTINGS = new QSettings("lumina-desktop","lumina-mediaplayer");
+  SETTINGS = LUtils::openSettings("lumina-desktop","lumina-mediaplayer",this);
   closing = false;
   DISABLE_VIDEO = true; //add a toggle in the UI for this later
   //Any special UI changes

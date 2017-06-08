@@ -48,7 +48,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     agrp->addAction(ui->action_tabsLeft);
     agrp->addAction(ui->action_tabsRight);
   //Load settings
-  settings = new QSettings("lumina-desktop","lumina-textedit");
+  settings = LUtils::openSettings("lumina-desktop","lumina-textedit", this);
   if(settings->contains("lastfont")){
     QFont oldfont;
     if(oldfont.fromString(settings->value("lastfont").toString() ) ){
