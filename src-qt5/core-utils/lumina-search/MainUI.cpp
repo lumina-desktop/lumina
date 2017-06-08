@@ -46,7 +46,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(closeShort, SIGNAL(activated()), this, SLOT( close() ) );
   
   //Setup the settings file
-  settings = new QSettings("lumina-desktop", "lumina-search",this);
+  settings = LUtils::openSettings("lumina-desktop", "lumina-search",this);
   searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
   searcher->skipDirs = settings->value("SkipSearchDirs", QStringList()).toStringList();
   updateDefaultStatusTip();
