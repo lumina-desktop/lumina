@@ -12,6 +12,8 @@
 #include <QApplication>
 #include <QtConcurrent>
 
+#include <unistd.h>
+
 inline QStringList ProcessRun(QString cmd, QStringList args){
   //Assemble outputs
   QStringList out; out << "1" << ""; //error code, string output
@@ -125,6 +127,30 @@ bool LUtils::isValidBinary(QString& bin){
   bool good = (info.exists() && info.isExecutable());
   if(good){ bin = info.absoluteFilePath(); }
   return good;
+}
+
+QSettings* LUtils::openSettings(QString org, QString name, QObject *parent){
+  //Start with the base configuration directory
+  QString path = QString(getenv("XDG_CONFIG_HOME")).simplified();
+  if(path.isEmpty()){ path = QDir::homePath()+"/.config"; }
+  //Now add the organization directory
+  path = path+"/"+org;
+  QDir dir(path);
+  if(!dir.exists()){ dir.mkpath(path); }
+  //Now generate/check the name of the file
+  unsigned int user = getuid();
+  QString filepath = dir.absoluteFilePath(name+".conf");
+  if(user==0){
+    //special case - make sure we don't clobber the user-permissioned file
+    QString rootfilepath = dir.absoluteFilePath(name+"_root.conf");
+    if(!QFileInfo::exists(rootfilepath) && QFileInfo::exists(filepath)){
+      QFile::copy(filepath, rootfilepath); //make a copy of the user settings before they start to diverge
+    }
+    return (new QSettings(rootfilepath, QSettings::IniFormat, parent));
+  }else{
+    return (new QSettings(filepath, QSettings::IniFormat, parent));
+  }
+  
 }
 
 QStringList LUtils::systemApplicationDirs(){
