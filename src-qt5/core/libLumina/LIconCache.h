@@ -35,6 +35,12 @@ class LIconCache : public QObject{
 public:
 	LIconCache(QObject *parent = 0);
 	~LIconCache();
+
+	//Static method for using this class (DO NOT MIX WITH GLOBAL OBJECT METHOD)
+	// Either use this the entire time, or use a saved/global object - pick one and stick with it
+	//  otherwise you may end up with multiple icon cache's running for your application
+	static LIconCache* instance();
+
 	//Icon Checks
 	bool exists(QString icon);
 	bool isLoaded(QString icon);

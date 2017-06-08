@@ -22,6 +22,11 @@ LIconCache::~LIconCache(){
 
 }
 
+LIconCache* LIconCache::instance(){
+  static LIconCache cache;
+  return &cache;
+}
+
 // === PUBLIC ===
 //Icon Checks
 bool LIconCache::exists(QString icon){
