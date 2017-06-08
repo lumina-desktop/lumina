@@ -988,12 +988,12 @@
         <translation>設定するモニター/デスクトップを選択</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>保存されていない変更</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>このページには保存されていない設定変更があります。保存しますか?</translation>
     </message>
@@ -1493,7 +1493,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>デスクトップ設定</translation>
     </message>

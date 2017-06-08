@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
         <translation>Startmenüalternative, die Benutzerdateien, Verzeichnisse und Lesezeichen fokussiert.</translation>
     </message>
     <message>
@@ -980,12 +980,12 @@
         <translation>Monitor/Arbeitsfläche zum Konfigurieren auswählen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Ungespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Diese Seite enthält ungespeicherte Änderungen, möchten Sie diese jetzt speichern?</translation>
     </message>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>"Mod1":	Alt key
-"Mod4": 	Windows/Mac key
-"Control":	Ctrl key</source>
-        <translation>"Mod1":	Alt-Taste
-"Mod4": 	Windows/Mac-Taste
-"Steuerung":	Strg-Taste</translation>
+        <source>&quot;Mod1&quot;:	Alt key
+&quot;Mod4&quot;: 	Windows/Mac key
+&quot;Control&quot;:	Ctrl key</source>
+        <translation>&quot;Mod1&quot;:	Alt-Taste
+&quot;Mod4&quot;: 	Windows/Mac-Taste
+&quot;Steuerung&quot;:	Strg-Taste</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1483,7 +1483,7 @@
         <translation>Systemeinstellungen</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Arbeitsflächeneinstellungen</translation>
     </message>

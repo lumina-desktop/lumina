@@ -980,12 +980,12 @@
         <translation>Välj bildskärm/skrivbord att konfigurera</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Osparade ändringar</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Den här sidan har osparade ändringar, vill du spara dem nu?</translation>
     </message>
@@ -1483,7 +1483,7 @@
         <translation>System inställningar</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Skrivbordsinställningar</translation>
     </message>

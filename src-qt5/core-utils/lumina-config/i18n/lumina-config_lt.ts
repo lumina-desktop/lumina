@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
         <translation>Pradžios meniu alternatyva, susitelkianti ties naudotojo failais, katalogais ir kitais mėgstamais elementais.</translation>
     </message>
     <message>
@@ -541,7 +541,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation>Blocca l'attuale sessione desktop</translation>
+        <translation>Blocca l&apos;attuale sessione desktop</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -980,12 +980,12 @@
         <translation>Pasirinkite monitorių/darbalaukį, kurį konfigūruoti</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Neįrašyti pakeitimai</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Šiuo metu šiame puslapyje yra neįrašytų pakeitimų, ar norite juos dabar įrašyti?</translation>
     </message>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>"Mod1":	Alt key
-"Mod4": 	Windows/Mac key
-"Control":	Ctrl key</source>
-        <translation>"Mod1":	Alt klavišas
-"Mod4": 	Windows/Mac klavišas
-"Control":	Ctrl (Vald) klavišas</translation>
+        <source>&quot;Mod1&quot;:	Alt key
+&quot;Mod4&quot;: 	Windows/Mac key
+&quot;Control&quot;:	Ctrl key</source>
+        <translation>&quot;Mod1&quot;:	Alt klavišas
+&quot;Mod4&quot;: 	Windows/Mac klavišas
+&quot;Control&quot;:	Ctrl (Vald) klavišas</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1483,7 +1483,7 @@
         <translation>Sistemos nustatymai</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Darbalaukio nustatymai</translation>
     </message>

@@ -32,68 +32,68 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="56"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="98"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="62"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="116"/>
         <source>Click to Set</source>
         <translation>Klicka för att tilldela</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
         <source>Launch %1</source>
         <translation type="unfinished">Starta %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="103"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
         <source>Open</source>
         <translation type="unfinished">Öppna</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
         <source>Open With</source>
         <translation>Öppna med</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
         <source>View Properties</source>
         <translation>Visa egenskaper</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Rename</source>
         <translation>Döp om</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>Copy</source>
         <translation type="unfinished">Kopiera</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>Cut</source>
         <translation type="unfinished">Klipp ut</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Delete</source>
         <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
         <source>Select Application</source>
         <translation>Välj program</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
         <source>New Filename</source>
         <translation>Nytt filnamn</translation>
     </message>
@@ -101,87 +101,87 @@
 <context>
     <name>AppMenu</name>
     <message>
-        <location filename="../AppMenu.cpp" line="45"/>
+        <location filename="../AppMenu.cpp" line="48"/>
         <source>Desktop</source>
         <translation>Skrivbord</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="82"/>
+        <location filename="../AppMenu.cpp" line="85"/>
         <source>Manage Applications</source>
         <translation>Hantera program</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="87"/>
+        <location filename="../AppMenu.cpp" line="90"/>
         <source>Control Panel</source>
         <translation>Kontrollpanel</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="97"/>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"/>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Development</source>
         <translation>Utveckling</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"/>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Education</source>
         <translation>Utbildning</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"/>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Games</source>
         <translation>Spel</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"/>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Graphics</source>
         <translation>Grafik</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"/>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Network</source>
         <translation>Nätverk</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"/>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>Office</source>
         <translation>Kontorsprogram</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"/>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Science</source>
         <translation>Vetenskap</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"/>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"/>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>System</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"/>
+        <location filename="../AppMenu.cpp" line="110"/>
         <source>Utility</source>
         <translation>Verktyg</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"/>
+        <location filename="../AppMenu.cpp" line="111"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"/>
+        <location filename="../AppMenu.cpp" line="112"/>
         <source>Unsorted</source>
         <translation>Osorterade</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="38"/>
+        <location filename="../AppMenu.cpp" line="41"/>
         <source>Applications</source>
         <translation>Program</translation>
     </message>
@@ -199,287 +199,287 @@
         <translation>Startar Lumina-skrivbordet...</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="15"/>
+        <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
         <translation>Version %1</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="39"/>
+        <location filename="../BootSplash.cpp" line="41"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
         <translation>Detta skrivbord drivs av kaffe, kaffe och mer kaffe.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="41"/>
+        <location filename="../BootSplash.cpp" line="43"/>
         <source>Keep up with desktop news!</source>
         <translation>Håll dig uppdaterad med skrivbordsnyheterna!</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="43"/>
+        <location filename="../BootSplash.cpp" line="45"/>
         <source>There is a full handbook of information about the desktop available online.</source>
         <translation>Det finns en handbok full av information om skrivbordet tillgängligt online.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="45"/>
+        <location filename="../BootSplash.cpp" line="47"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="47"/>
+        <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="49"/>
+        <location filename="../BootSplash.cpp" line="51"/>
         <source>This desktop is generously sponsored by iXsystems</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="51"/>
+        <location filename="../BootSplash.cpp" line="53"/>
         <source>I have never been hurt by what I have not said</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="53"/>
+        <location filename="../BootSplash.cpp" line="55"/>
         <source>Gotta have more cowbell!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="55"/>
+        <location filename="../BootSplash.cpp" line="57"/>
         <source>Everything has its beauty but not everyone sees it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="57"/>
+        <location filename="../BootSplash.cpp" line="59"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="59"/>
+        <location filename="../BootSplash.cpp" line="61"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="61"/>
+        <location filename="../BootSplash.cpp" line="63"/>
         <source>One with the law is a majority.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="63"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>Duty is not collective; it is personal.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
-        <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
+        <source>Duty is not collective; it is personal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
-        <source>Never trust a computer you can’t throw out a window.</source>
+        <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
-        <source>Study the past if you would define the future.</source>
+        <source>Never trust a computer you can’t throw out a window.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
-        <source>The way to get started is to quit talking and begin doing.</source>
+        <source>Study the past if you would define the future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
-        <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
+        <source>The way to get started is to quit talking and begin doing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
-        <source>Start where you are. Use what you have.  Do what you can.</source>
+        <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
-        <source>A person who never made a mistake never tried anything new.</source>
+        <source>Start where you are. Use what you have.  Do what you can.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
-        <source>It does not matter how slowly you go as long as you do not stop.</source>
+        <source>A person who never made a mistake never tried anything new.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
-        <source>Do what you can, where you are, with what you have.</source>
+        <source>It does not matter how slowly you go as long as you do not stop.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
-        <source>Remember no one can make you feel inferior without your consent.</source>
+        <source>Do what you can, where you are, with what you have.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
-        <source>It’s not the years in your life that count. It’s the life in your years.</source>
+        <source>Remember no one can make you feel inferior without your consent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
-        <source>Either write something worth reading or do something worth writing.</source>
+        <source>It’s not the years in your life that count. It’s the life in your years.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
-        <source>The only way to do great work is to love what you do.</source>
+        <source>Either write something worth reading or do something worth writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
-        <source>Political correctness is tyranny with manners.</source>
+        <source>The only way to do great work is to love what you do.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Political correctness is tyranny with manners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>I find that the harder I work, the more luck I seem to have.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
-        <source>Do, or do not. There is no 'try'.</source>
+        <source>I find that the harder I work, the more luck I seem to have.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>A mathematician is a device for turning coffee into theorems.</source>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
-        <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
+        <source>A mathematician is a device for turning coffee into theorems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
-        <source>Black holes are where God divided by zero.</source>
+        <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>Black holes are where God divided by zero.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>Knowledge speaks, but wisdom listens.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
-        <source>A witty saying proves nothing.</source>
+        <source>Knowledge speaks, but wisdom listens.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
-        <source>Success usually comes to those who are too busy to be looking for it.</source>
+        <source>A witty saying proves nothing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
-        <source>Well-timed silence hath more eloquence than speech.</source>
+        <source>Success usually comes to those who are too busy to be looking for it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
-        <source>I have never let my schooling interfere with my education.</source>
+        <source>Well-timed silence hath more eloquence than speech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
-        <source>The best way to predict the future is to invent it.</source>
+        <source>I have never let my schooling interfere with my education.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
-        <source>Well done is better than well said.</source>
+        <source>The best way to predict the future is to invent it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
-        <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
+        <source>Well done is better than well said.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
-        <source>The truth is more important than the facts.</source>
+        <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
+        <source>The truth is more important than the facts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../BootSplash.cpp" line="131"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="140"/>
+        <location filename="../BootSplash.cpp" line="142"/>
         <source>Initializing Session …</source>
         <translation>Initierar session …</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="143"/>
+        <location filename="../BootSplash.cpp" line="145"/>
         <source>Loading System Settings …</source>
         <translation>Laddar systeminställningar ...</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="146"/>
+        <location filename="../BootSplash.cpp" line="148"/>
         <source>Loading User Preferences …</source>
         <translation>Laddar användarinställningar …</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="149"/>
+        <location filename="../BootSplash.cpp" line="151"/>
         <source>Preparing System Tray …</source>
         <translation>Förbereder System bricka…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="152"/>
+        <location filename="../BootSplash.cpp" line="154"/>
         <source>Starting Window Manager …</source>
         <translation>Startar fönsterhanterare …</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="155"/>
+        <location filename="../BootSplash.cpp" line="157"/>
         <source>Detecting Applications …</source>
         <translation>Upptäcker program…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="158"/>
+        <location filename="../BootSplash.cpp" line="160"/>
         <source>Preparing Menus …</source>
         <translation>Förbereder menyer…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="161"/>
+        <location filename="../BootSplash.cpp" line="163"/>
         <source>Preparing Workspace …</source>
         <translation>Förbereder arbetsytor…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="164"/>
+        <location filename="../BootSplash.cpp" line="166"/>
         <source>Finalizing …</source>
         <translation>Slutför…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="167"/>
+        <location filename="../BootSplash.cpp" line="169"/>
         <source>Starting App: %1</source>
         <translation>Startar program: %1</translation>
     </message>
@@ -525,32 +525,32 @@
 <context>
     <name>ItemWidget</name>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="39"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="44"/>
         <source>Go Back</source>
         <translation>Gå bakåt</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
         <source>Pin to Desktop</source>
         <translation>Fäst på skrivbordet</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="195"/>
         <source>Remove from Favorites</source>
         <translation>Ta bort från favoriter</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="199"/>
         <source>Add to Favorites</source>
         <translation>Lägg till i favoriter</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="204"/>
         <source>Remove from Quicklaunch</source>
         <translation>Ta bort från Snabbstart</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="208"/>
         <source>Add to Quicklaunch</source>
         <translation>Lägg till i Snabbstart</translation>
     </message>
@@ -677,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="131"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="137"/>
         <source>Time Zone (%1)</source>
         <translation>Tidszon (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="153"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
         <source>Use System Time</source>
         <translation>Använd systemtid</translation>
     </message>
@@ -766,46 +766,75 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="211"/>
+        <location filename="../LDesktop.cpp" line="214"/>
         <source>Window List</source>
         <translation>Fönsterlista</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="255"/>
+        <source>Desktop Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="257"/>
+        <location filename="../LDesktop.cpp" line="608"/>
+        <source>New Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="258"/>
+        <location filename="../LDesktop.cpp" line="628"/>
+        <source>New File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="259"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="291"/>
         <source>Lumina Desktop</source>
         <translation>Lumina Skrivbordet</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="282"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Workspace %1</source>
         <translation>Arbetsyta %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="302"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="303"/>
         <source>Lock Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="294"/>
+        <location filename="../LDesktop.cpp" line="304"/>
         <source>Browse Files</source>
         <translation>Bläddra bland filer</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="323"/>
+        <location filename="../LDesktop.cpp" line="338"/>
         <source>Leave</source>
         <translation>Lämna</translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="614"/>
+        <location filename="../LDesktop.cpp" line="634"/>
+        <location filename="../LDesktop.cpp" line="655"/>
+        <source>Desktop</source>
+        <translation type="unfinished">Skrivbord</translation>
     </message>
 </context>
 <context>
     <name>LDesktopSwitcher</name>
     <message>
-        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="132"/>
-        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="140"/>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
         <translation>Arbetsyta %1</translation>
     </message>
@@ -821,8 +850,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="160"/>
-        <location filename="../LSession.cpp" line="342"/>
+        <location filename="../LSession.cpp" line="163"/>
+        <location filename="../LSession.cpp" line="344"/>
         <source>Desktop</source>
         <translation>Skrivbord</translation>
     </message>
@@ -844,8 +873,8 @@
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
-        <source>System Volume</source>
-        <translation>Systemvolym</translation>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1385,14 +1414,24 @@
         <translation>Anpassa skrivbordet</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
-        <source>Sign Out User</source>
-        <translation>Logga ut användare</translation>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
+        <source>Suspend</source>
+        <translation type="unfinished">Vänteläge</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
-        <source>Restart System</source>
-        <translation>Starta om systemet</translation>
+        <source>Restart</source>
+        <translation type="unfinished">Starta om</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
+        <source>Log Out</source>
+        <translation type="unfinished">Logga ut</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1400,19 +1439,9 @@
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
-        <source>Power Off System</source>
-        <translation>Stäng av systemet</translation>
-    </message>
-    <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
         <source>(System Performing Updates)</source>
         <translation>(Systemet utför uppdateringar)</translation>
-    </message>
-    <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
-        <source>Suspend System</source>
-        <translation>Vänteläge</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
@@ -1471,8 +1500,8 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
-        <source>Shutdown</source>
-        <translation>Stäng av</translation>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>

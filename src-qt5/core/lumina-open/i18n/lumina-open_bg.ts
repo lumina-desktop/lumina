@@ -142,69 +142,69 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="52"/>
+        <location filename="../main.cpp" line="53"/>
         <source>File Error</source>
         <translation>Грешка във файла</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="189"/>
-        <location filename="../main.cpp" line="195"/>
+        <location filename="../main.cpp" line="191"/>
+        <location filename="../main.cpp" line="197"/>
         <source>Audio Volume %1%</source>
         <translation>Сила на звука %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="203"/>
-        <location filename="../main.cpp" line="212"/>
+        <location filename="../main.cpp" line="205"/>
+        <location filename="../main.cpp" line="214"/>
         <source>Screen Brightness %1%</source>
         <translation>Яркост на екрана %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="244"/>
+        <location filename="../main.cpp" line="246"/>
         <source>Invalid file or URL: %1</source>
         <translation>Невалиден файл или адрес: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="267"/>
         <source>Application entry is invalid: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="276"/>
+        <location filename="../main.cpp" line="278"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>Информацията за стартиране липсва от прекия път (повреден пряк път): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="289"/>
+        <location filename="../main.cpp" line="291"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Адресът липсва от прекия път към отдалечен адрес: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="300"/>
+        <location filename="../main.cpp" line="302"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Пътят към директорията липсва от прекия път към директорията: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="305"/>
+        <location filename="../main.cpp" line="307"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Непознат тип пряк път : %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="368"/>
+        <location filename="../main.cpp" line="370"/>
         <source>Binary Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="368"/>
+        <location filename="../main.cpp" line="370"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="418"/>
+        <location filename="../main.cpp" line="421"/>
         <source>Application Error</source>
         <translation>Грешка в програмата</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="418"/>
+        <location filename="../main.cpp" line="421"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Възникна грешка в програмата и трябваше да бъде затворена:</translation>
     </message>
