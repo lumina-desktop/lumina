@@ -64,6 +64,7 @@ void AppLauncherPlugin::loadButton(){
     }else{
       button->setWhatsThis(file.filePath);
       if(ICONS->exists(file.icon)){ iconID = file.icon; }
+      else if(ICONS->exists(file.icon.section("-",0,-2)) ){ iconID = file.icon.section("-",0,-2); } //some icons get very specific with "-" delimiters, look for a more generic icon if possible
       else{ iconID = "system-run"; }
       //button->setIcon( QIcon(LXDG::findIcon(file.icon,"system-run").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
       if(!file.comment.isEmpty()){button->setToolTip(file.comment); }
