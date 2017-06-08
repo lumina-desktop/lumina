@@ -6,12 +6,12 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation>Klicken, um eine Anwendung zuzuweisen</translation>
+        <translation>Click to assign an application</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="42"/>
         <source>Launch %1</source>
-        <translation>Starte %1</translation>
+        <translation>Launch %1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="49"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
         <source>Select Application</source>
-        <translation>Anwendung auswählen</translation>
+        <translation>Select Application</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
         <source>Select Application</source>
-        <translation>Anwendung auswählen</translation>
+        <translation>Select Application</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
@@ -108,7 +108,7 @@
     <message>
         <location filename="../AppMenu.cpp" line="85"/>
         <source>Manage Applications</source>
-        <translation>Anwendungen verwalten</translation>
+        <translation>Manage Applications</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="90"/>
