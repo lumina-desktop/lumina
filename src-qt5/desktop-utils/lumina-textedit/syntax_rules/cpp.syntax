@@ -1,0 +1,67 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  C++ language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+  "meta" : {
+    "name" : "C++",
+    "file_suffix" : ["cpp","hpp","c", "h" ]
+  },
+  "format" : {
+    "columns_per_line" : -1,
+    "font_type" : "fixed-width",
+    "line_wrap" : false
+  },
+  "rules" : {
+    "1" : {
+      "name" : "multi-line comment",
+      "regex_start" : "/\\*",
+      "regex_end" : "\\*/",
+      "foreground" : "colors/comment"
+    },
+    "2" : {
+      "name" : "single-line comment",
+      "regex" : "//[^\n]*",
+      "foreground" : "colors/comment",
+    },
+    "3" : {
+      "name" : "keywords",
+      "words" : ["char", "class", "const", "double", "enum", "explicit", "extern", "float", "friend", "inline", "int", "long", "namespace", "operator", "private", "protected", "public" , "short", "signals", "signed", "slots", "static", "struct", "template", "typedef", "typename", "union", "unsigned", "virtual", "void", "volatile", "true", "false", "bool"],
+      "foreground" : "colors/keyword",
+      "background" : "none",
+      "font_weight" : "bold"
+    },
+    "4" : {
+      "name" : "alternate keywords",
+      "words" : ["for", "while", "switch", "case", "continue", "break", "if", "else", "return", "exit"],
+      "foreground" : "colors/altkeyword",
+      "background" : "none",
+      "font_weight" : "bold"
+    },
+    "5" : {
+      "name" : "class names",
+      "regex" : "\\b[A-Za-z0-9_-\\.]+(?=::)\\b",
+      "foreground" : "colors/class",
+      "font_weight" : "bold"
+    },
+    "6" : {
+      "name" : "function names",
+      "regex" : "\\b[A-Za-z0-9_]+(?=\\()",
+      "foreground" : "colors/function"
+    },
+    "7" : {
+      "name" : "text",
+      "regex" : "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+      "foreground" : "colors/text"
+    },
+    "8" : {
+      "name" : "preprocessor",
+      "regex" : "^[\\s]*#[^\n]*",
+      "foreground" : "colors/preprocessor"
+    }
+
+  }
+}
