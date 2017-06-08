@@ -9,6 +9,8 @@
 
 #include "ConfigUI.h"
 
+#include <LUtils.h>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer file
   //setupIcons();
