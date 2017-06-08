@@ -46,6 +46,8 @@ public:
 	void showHiddenFiles(bool show);
 	bool hasHiddenFiles();
 
+	void showThumbnails(bool show);
+	bool hasThumbnails();
 	void setThumbnailSize(int px);
 	int thumbnailSize();
 

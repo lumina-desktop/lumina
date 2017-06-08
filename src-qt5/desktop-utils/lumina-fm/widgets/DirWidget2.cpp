@@ -117,6 +117,11 @@ void DirWidget::showHidden(bool show){
   if(RCBW!=0){ RCBW->showHiddenFiles(show); }
 }
 
+void DirWidget::showThumbnails(bool show){
+  BW->showThumbnails(show);
+  if(RCBW!=0){ RCBW->showThumbnails(show); }
+}
+
 void DirWidget::setThumbnailSize(int px){
   BW->setThumbnailSize(px);
   if(RCBW!=0){ RCBW->setThumbnailSize(px); }

@@ -180,6 +180,7 @@ void MainUI::OpenDirs(QStringList dirs){
     DW->setShowDetails(radio_view_details->isChecked()); 
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
+    DW->showThumbnails( ui->actionShow_Thumbnails->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
@@ -274,6 +275,8 @@ void MainUI::loadSettings(){
   // but before the first directory gets loaded
   ui->actionView_Hidden_Files->setChecked( settings->value("showhidden", false).toBool() );
     on_actionView_Hidden_Files_triggered(); //make sure to update the models too
+  ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails",true).toBool());
+    on_actionShow_Thumbnails_triggered(); //make sure to update models too
   //ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
     //on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
   //ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
@@ -479,12 +482,12 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
   //for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->setShowSidebar(show); }
 }*/
 
-/*void MainUI::on_actionShow_Thumbnails_triggered(){
+void MainUI::on_actionShow_Thumbnails_triggered(){
   //Now save this setting for later
   bool show = ui->actionShow_Thumbnails->isChecked();
   settings->setValue("showthumbnails", show);
-  //for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->setShowThumbnails(show); }
-}*/
+  for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->showThumbnails(show); }
+}
 
 void MainUI::goToBookmark(QAction *act){
   if(act==ui->actionManage_Bookmarks){

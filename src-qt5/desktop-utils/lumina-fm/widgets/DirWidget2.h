@@ -47,6 +47,7 @@ public:
 	//View Settings
 	void setShowDetails(bool show);
 	void showHidden(bool show);
+	void showThumbnails(bool show);
 	void setThumbnailSize(int px);
 	void setFocusLineDir();
 	

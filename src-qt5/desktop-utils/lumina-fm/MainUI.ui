@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>371</height>
+             <height>367</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -135,6 +135,7 @@
     <addaction name="separator"/>
     <addaction name="actionView_Hidden_Files"/>
     <addaction name="separator"/>
+    <addaction name="actionShow_Thumbnails"/>
     <addaction name="menuView_Mode"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
@@ -242,7 +243,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Load Thumbnails</string>
+    <string>Show Image Previews</string>
    </property>
   </action>
   <action name="actionSearch">
