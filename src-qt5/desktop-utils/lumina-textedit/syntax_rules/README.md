@@ -12,15 +12,17 @@ A small comment section may be placed at the top of the file where every line st
    2. "file_suffix" : An array of suffixes for identifying which files this rule set supports.
 2. A "format" object containing the following variables (file-wide formatting):
    1. "columns_per_line" : (integer, optional) For file formats with line-length restrictions, this will automatically highlight/flag any "overage" of the designated limit.
-   2. "font_type" : One of the following ["fixed-width", "all", "monospace"]. This is for assisting with file formats that need characters to line up within the file (all columns are in the same place per line, etc).
-   3. "line_wrap" : (boolian, optional) Automatically enable/disable line wrapping for this type of file
-3. A "rules" object containing each of the individual rules, with the name of the rules objects being a number which corresponds to when the rule should be applied (lower numbers are applied before higher numbers). The required fields are:
-   1. "name" : Not directly used by LTE (yet) - but is useful for noting what each rule is for
-   2. Exactly **one** of the following fields must also be included:
+   2. "highlight_whitespace_eol" : (boolian, optional) Highlight any excess whitespace at the end of a line.
+   3. "font_type" : (optional) One of the following ["all", "monospace"]. This is for assisting with file formats that need characters to line up within the file (all columns are in the same place per line, etc).
+   4. "line_wrap" : (boolian) Automatically enable/disable line wrapping for this type of file
+   5. "tab_width" : (integer - 8 by default) Have tabs automatically take up this many characters.
+3. A "rules" array containing each of the individual rules (earlier rules are applied before later ones). The required fields for a rule are:
+   1. "name" : Not directly used by LTE (yet) - but is useful for noting the purpose of each rule
+   2. Exactly **one** of the following options must also be included:
       1. "words" : Array of exact words/text which should be matched (automatically converted to a regular expression with a break on either side of the word)
       2. "regex" : single-line regular expression to be used for finding matching text
       3. "regex_start" **and** "regex_end" : multi-line regular expression. Everything between the start/end matches will be highlighted.
-   3. At least **one** of the following fields should also be supplied (format of any text matches)
+   3. At least **one** of the following fields should also be supplied:
       1. "foreground" : Font color of the matching text (see the Colors section for additional information)
       2. "background" : Highlighting color of the matching text (see the Colors section for additional information)
       3. "font-weight" : One of the following ["bold","normal", "light"]. Changes the thickness of the font for the matching text
@@ -30,9 +32,9 @@ There are a number of built-in colors which may be defined by the user, and thes
 `"colors/[name of color]"`
 The currently-valid colors are: ["keyword", "altkeyword", "class", "text", "function", "comment", "bracket-found", "bracket-missing"].
 
-Alternatively, an RGB (0-255)or Hex color code may be used instead (please limit this though - it can conflict with the user's preferred color scheme quite badly)
+Alternatively, an RGB (0-255) or Hex color code may be used instead (please limit this though - it can conflict with the user's preferred color scheme quite badly)
 
 Examples:
- `"foreground" : "rgb(10,10,15)"`
+ `"foreground" : "rgb(10,10,255)"`
  `"background" : "colors/text"`
  `"foreground" : "#0F0F0F"`

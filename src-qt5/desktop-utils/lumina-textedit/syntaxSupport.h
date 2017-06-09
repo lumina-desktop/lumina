@@ -13,16 +13,47 @@
 #include <QString>
 #include <QSettings>
 #include <QDebug>
+#include <QDateTime>
+#include <QJsonObject>
+#include <QPlainTextEdit>
+
 
 //Simple syntax rules
 struct SyntaxRule{
-  QRegExp pattern;
+  QRegExp pattern;  //single-line rule
+  QRegExp startPattern, endPattern;  //multi-line rules
   QTextCharFormat format;
 };
 //Complicated/multi-line rules
 struct SyntaxRuleSplit{
   QRegExp startPattern, endPattern;
   QTextCharFormat format;
+};
+
+class SyntaxFile{
+private:
+	QJsonObject metaObj;
+	QJsonObject formatObj;
+
+	QColor colorFromOption(QString opt, QSettings *settings);
+
+public:
+	QVector<SyntaxRule> rules;
+	QDateTime lastLoaded;
+	QString fileLoaded;
+
+	SyntaxFile(){}
+
+	QString name();
+	int char_limit();
+	bool highlight_excess_whitespace();	
+
+	void SetupDocument(QPlainTextEdit *editor);
+	bool supportsFile(QString file); //does this syntax set support the file?
+
+	//Main Loading routine (run this before other functions)
+	bool LoadFile(QString file, QSettings *settings);
+	
 };
 
 class Custom_Syntax : public QSyntaxHighlighter{

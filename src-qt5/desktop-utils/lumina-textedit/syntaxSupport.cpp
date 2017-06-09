@@ -6,6 +6,123 @@
 //===========================================
 #include "syntaxSupport.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFontDatabase>
+#include <QFont>
+
+#include <LUtils.h>
+
+// ================
+//  SYNTAX FILE CLASS
+// ================
+QColor SyntaxFile::colorFromOption(QString opt, QSettings *settings){
+  opt = opt.simplified();
+  if(opt.startsWith("rgb(")){
+    QStringList opts = opt.section("(",1,-1).section(")",0,0).split(",");
+    if(opts.length()!=3){ return QColor(); }
+    return QColor( opts[0].simplified().toInt(), opts[1].simplified().toInt(), opts[2].simplified().toInt() );
+  }else if(opt.startsWith("#")){
+    return QColor(opt);
+  }else if(opt.startsWith("colors/")){
+    return QColor(settings->value(opt,"").toString());
+  }
+  return QColor();
+}
+
+QString SyntaxFile::name(){
+  if(!metaObj.contains("name")){ return ""; }
+  return metaObj.value("name").toString();
+}
+
+int SyntaxFile::char_limit(){
+  if(!formatObj.contains("columns_per_line")){ return -1; }
+  int num = formatObj.value("columns_per_line").toInt();
+  return num;
+}
+
+bool SyntaxFile::highlight_excess_whitespace(){
+  if(!formatObj.contains("highlight_whitespace_eol")){ return false; }
+  return formatObj.value("highlight_whitespace_eol").toBool();
+}
+
+void SyntaxFile::SetupDocument(QPlainTextEdit* editor){
+  if(formatObj.contains("line_wrap")){
+    editor->setLineWrapMode( formatObj.value("line_wrap").toBool() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+  }
+  if(formatObj.contains("font_type")){
+    QString type = formatObj.value("font_type").toString();
+    QFont font = editor->document()->defaultFont(); // current font
+    if(type=="monospace"){
+      font = QFontDatabase::systemFont(QFontDatabase::FixedFont); //get the default fixed-size font for the system
+    }
+    font.setStyle(QFont::StyleNormal);
+    font.setStyleStrategy(QFont::PreferAntialias);
+    editor->document()->setDefaultFont(font);
+  }
+  if(formatObj.contains("tab_width")){
+    int num = formatObj.value("tab_width").toInt();
+    if(num<=0){ num = 8; } //UNIX Standard of 8 characters per tab
+    editor->setTabStopWidth( num * QFontMetrics(editor->document()->defaultFont()).width(" ") );
+  }
+}
+
+bool SyntaxFile::supportsFile(QString file){
+  if(metaObj.contains("file_suffix")){
+    return metaObj.value("file_suffix").toArray().contains( file.section("/",-1).section(".",-1) );
+  }
+  return false;
+}
+	
+bool SyntaxFile::LoadFile(QString file, QSettings *settings){
+  QStringList contents = LUtils::readFile(file);
+  //Now trim the extra non-JSON off the beginning of the file
+  while(!contents.isEmpty()){
+    if(contents[0].startsWith("{")){ break; } //stop here
+    else{ contents.removeAt(0); }
+  }
+  QJsonObject obj = QJsonDocument::fromJson(contents.join("\n").simplified().toLocal8Bit()).object();
+  if(!obj.contains("meta") || !obj.contains("format") || !obj.contains("rules")){ return false; } //could not get any info
+  //Save the raw meta/format objects for later
+  fileLoaded = file;
+  metaObj = obj.value("meta").toObject();
+  formatObj = obj.value("format").toObject();
+  //Now read/save the rules structure
+  QJsonArray rulesArray = obj.value("rules").toArray();
+  rules.clear();
+  //Create the blank/generic text format
+  for(int i=0; i<rulesArray.count(); i++){
+    QJsonObject rule = rulesArray[i].toObject();
+    SyntaxRule tmp;
+    //First load the rule
+    if(rule.contains("words")){} //valid option - handled at the end though
+    else if(rule.contains("regex")){ 
+      tmp.pattern = QRegExp(rule.value("regex").toString());
+    }else if(rule.contains("regex_start") && rule.contains("regex_stop")){
+
+    }else{ continue; } //bad rule - missing the actual detection logic
+    //Now load the appearance logic
+    if(rule.contains("foreground")){ tmp.format.setForeground( colorFromOption(rule.value("foreground").toString(), settings) ); }
+    if(rule.contains("background")){ tmp.format.setBackground( colorFromOption(rule.value("background").toString(), settings) ); }
+    if(rule.contains("font-weight")){
+      QString wgt = rule.value("font-weight").toString();
+      if(wgt =="bold"){ tmp.format.setFontWeight(QFont::Bold); }
+      if(wgt =="light"){ tmp.format.setFontWeight(QFont::Light); }
+      else{ tmp.format.setFontWeight(QFont::Normal); }
+    }
+    //Now save the rule(s) to the list
+    if(rule.contains("words")){
+      //special logic - this generates a bunch of rules all at once (one per word)
+      QJsonArray tmpArr = rule.value("words").toArray();
+      for(int a=0; a<tmpArr.count(); a++){
+        tmp.pattern = QRegExp("\\b"+tmpArr[a].toString()+"\\b"); //turn each keyword into a QRegExp and insert the rule
+        rules << tmp;
+      }
+    }else{ rules << tmp; } //just a single rule
+  }
+  return true;
+}
+
 QStringList Custom_Syntax::availableRules(){
   QStringList avail;
     avail << "C++";
