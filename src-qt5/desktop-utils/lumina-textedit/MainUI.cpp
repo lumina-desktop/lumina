@@ -65,7 +65,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
   ui->groupReplace->setVisible(false);
   //Update the menu of available syntax highlighting modes
-  QStringList smodes = Custom_Syntax::availableRules();
+  QStringList smodes = Custom_Syntax::availableRules(settings);
   for(int i=0; i<smodes.length(); i++){
     ui->menuSyntax_Highlighting->addAction(smodes[i]);
   }
@@ -242,13 +242,13 @@ void MainUI::fontChanged(const QFont &font){
   //Save this font for later
   settings->setValue("lastfont", font.toString());
   //Now apply this font to all the open editors
-  QApplication::setFont(font, "PlainTextEditor");
+  //QApplication::setFont(font, "PlainTextEditor");
 }
 
 void MainUI::changeFontSize(int newFontSize){
     QFont currentFont = fontbox->currentFont();
     currentFont.setPointSize(newFontSize);
-    QApplication::setFont(currentFont, "PlainTextEditor");
+    //QApplication::setFont(currentFont, "PlainTextEditor");
 }
 
 void MainUI::changeTabsLocation(QAction *act){

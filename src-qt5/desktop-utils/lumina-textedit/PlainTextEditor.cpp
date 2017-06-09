@@ -68,7 +68,15 @@ void PlainTextEditor::LoadFile(QString filepath){
   bool diffFile = (filepath != this->whatsThis());
   this->setWhatsThis(filepath);
   this->clear();
-  SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
+  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  for(int i=0; i<files.length(); i++){
+    if(files[i].supportsFile(filepath) ){ 
+      files[i].SetupDocument(this);
+      SYNTAX->loadRules(files[i]);
+      break;
+    }
+  }
+  //SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1), settings) );
   lastSaveContents = LUtils::readFile(filepath).join("\n");
   if(diffFile){
     this->setPlainText( lastSaveContents );
@@ -94,7 +102,7 @@ void PlainTextEditor::SaveFile(bool newname){
     QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
     if(file.isEmpty()){ return; }
     this->setWhatsThis(file);
-    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
+    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
     SYNTAX->rehighlight();
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
