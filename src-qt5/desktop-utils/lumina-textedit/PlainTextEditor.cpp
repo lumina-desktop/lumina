@@ -53,7 +53,14 @@ void PlainTextEditor::showLineNumbers(bool show){
 }
 
 void PlainTextEditor::LoadSyntaxRule(QString type){
-  SYNTAX->loadRules(type);
+  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  for(int i=0; i<files.length(); i++){
+    if(files[i].name() == type){
+      files[i].SetupDocument(this);
+      SYNTAX->loadRules(files[i]);
+      break;
+    }
+  }
   SYNTAX->rehighlight();
 }
 

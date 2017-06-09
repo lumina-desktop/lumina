@@ -347,6 +347,10 @@ void MainUI::tabChanged(){
   //this->setWindowTitle( tabWidget->tabText( tabWidget->currentIndex() ) );
   this->setWindowTitle( (changes ? "*" : "") + tabWidget->tabToolTip( tabWidget->currentIndex() ).section("/",-2) );
   if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ tabWidget->currentWidget()->setFocus(); }
+  QFont font = cur->document()->defaultFont();
+  //Update the font/size widgets to reflect what is set on this tab
+  fontbox->setCurrentFont(font);
+  fontSizes->setValue( font.pointSize() );
 }
 
 void MainUI::tabClosed(int tab){
