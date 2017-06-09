@@ -61,8 +61,7 @@ void SyntaxFile::SetupDocument(QPlainTextEdit* editor){
     QString type = formatObj.value("font_type").toString();
     QFont font = editor->document()->defaultFont(); // current font
     if(type=="monospace"){
-      font = QFont("monospace");
-      //font = QFontDatabase::systemFont(QFontDatabase::FixedFont); //get the default fixed-size font for the system
+      font.setFamily("monospace"); //Make sure we don't change other properties of the font like size
     }
     font.setStyle(QFont::StyleNormal);
     font.setStyleStrategy(QFont::PreferAntialias);

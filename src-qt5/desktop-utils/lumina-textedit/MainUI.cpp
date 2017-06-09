@@ -213,6 +213,9 @@ void MainUI::OpenFile(QString file){
       edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
       edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
       edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
+      QFont font = fontbox->currentFont();
+      font.setPointSize( fontSizes->value() );
+      edit->document()->setDefaultFont(font);
     }
     tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
@@ -238,17 +241,20 @@ void MainUI::SaveFileAs(){
   cur->SaveFile(true);	
 }
 
-void MainUI::fontChanged(const QFont &font){
+void MainUI::fontChanged(const QFont&){
+  if(currentEditor()==0){ return; }
   //Save this font for later
+  QFont font = fontbox->currentFont();
+  font.setPointSize( fontSizes->value() );
   settings->setValue("lastfont", font.toString());
-  //Now apply this font to all the open editors
-  //QApplication::setFont(font, "PlainTextEditor");
+   currentEditor()->document()->setDefaultFont(font);
 }
 
 void MainUI::changeFontSize(int newFontSize){
-    QFont currentFont = fontbox->currentFont();
+  if(currentEditor()==0){ return; }
+    QFont currentFont = currentEditor()->document()->defaultFont();
     currentFont.setPointSize(newFontSize);
-    //QApplication::setFont(currentFont, "PlainTextEditor");
+    currentEditor()->document()->setDefaultFont(currentFont);
 }
 
 void MainUI::changeTabsLocation(QAction *act){
