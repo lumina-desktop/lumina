@@ -123,6 +123,33 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
   return true;
 }
 
+//Main function for finding/loading all syntax files
+QList<SyntaxFile> SyntaxFile::availableFiles(QSettings *settings){
+  static QList<SyntaxFile> list; //keep this list around between calls - prevent re-reading all the files
+  //Remove/update any files from the list as needed
+  QStringList found;
+  for(int i=0; i<list.length(); i++){
+    if( !QFileInfo::exists(list[i].fileLoaded) ){ list.removeAt(i); i--; continue; } //obsolete file
+    else if(QFileInfo(list[i].fileLoaded).lastModified() > list[i].lastLoaded){ list[i].LoadFile(list[i].fileLoaded, settings); } //out-of-date file
+    found << list[i].fileLoaded; //save for later
+  }
+  //Now scan for any new files
+  QStringList paths;
+  paths << QString(getenv("XDG_DATA_HOME")) << QString(getenv("XDG_DATA_DIRS")).split(":");
+  for(int i=0; i<paths.length(); i++){
+    QDir dir(paths[i]+"/lumina-desktop/syntax_rules");
+    if(!dir.exists()){ continue; }
+    QFileInfoList files = dir.entryInfoList(QStringList() << "*.syntax", QDir::Files, QDir::Name);
+    for(int f=0; f<files.length(); f++){
+      if(paths.contains(files[f].absoluteFilePath()) ){ continue; } //already handled
+      //New Syntax File found
+      SyntaxFile nfile;
+      if( nfile.LoadFile(files[f].absoluteFilePath(), settings) ){ list << nfile; }
+    }
+  }
+  return list;
+}
+
 QStringList Custom_Syntax::availableRules(){
   QStringList avail;
     avail << "C++";

@@ -53,7 +53,9 @@ public:
 
 	//Main Loading routine (run this before other functions)
 	bool LoadFile(QString file, QSettings *settings);
-	
+
+	//Main function for finding/loading all syntax files
+	static QList<SyntaxFile> availableFiles(QSettings *settings);
 };
 
 class Custom_Syntax : public QSyntaxHighlighter{
