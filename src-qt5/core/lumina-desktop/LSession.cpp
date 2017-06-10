@@ -188,7 +188,8 @@ void LSession::CleanupSession(){
   //Create a temporary flag to prevent crash dialogs from opening during cleanup
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
-  LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
+  int vol = LOS::audioVolume();
+  if(vol>=0){ sessionsettings->setValue("last_session_state/audio_volume", vol); }
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Stop the background system tray (detaching/closing apps as necessary)
@@ -289,7 +290,7 @@ void LSession::launchStartupApps(){
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
   qDebug() << " - Loading previous settings";
-  tmp = LOS::audioVolume();
+  tmp = sessionsettings->value("last_session_state/audio_volume",50).toInt();
   if(tmp>=0){ LOS::setAudioVolume(tmp); }
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
 
