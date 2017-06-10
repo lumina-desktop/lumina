@@ -118,11 +118,14 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
     //Now load the appearance logic
     if(rule.contains("foreground")){ tmp.format.setForeground( colorFromOption(rule.value("foreground").toString(), settings) ); }
     if(rule.contains("background")){ tmp.format.setBackground( colorFromOption(rule.value("background").toString(), settings) ); }
-    if(rule.contains("font-weight")){
-      QString wgt = rule.value("font-weight").toString();
+    if(rule.contains("font_weight")){
+      QString wgt = rule.value("font_weight").toString();
       if(wgt =="bold"){ tmp.format.setFontWeight(QFont::Bold); }
       if(wgt =="light"){ tmp.format.setFontWeight(QFont::Light); }
       else{ tmp.format.setFontWeight(QFont::Normal); }
+    }
+    if(rule.contains("font_style")){
+      if(rule.value("font_style").toString()=="italic"){ tmp.format.setFontItalic(true); }
     }
     //Now save the rule(s) to the list
     if(rule.contains("words")){

@@ -1,0 +1,62 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Bourne Shell language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Shell",
+		"file_suffix": ["sh"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol": false
+	},
+	"rules": [{
+			"name": "preprocessor",
+			"regex": "^#![^\n]*",
+			"foreground": "colors/preprocessor"
+		},
+		{
+			"name": "single-line comment",
+			"regex": "#[^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "keywords",
+			"words": ["alias" , "alloc" , "bg" , "bind" , " bindkey" , "break" , "breaksw","builtins","case","cd","chdir","command","complete","continue","default" ,"dirs","do","done","echo","echotc","elif","else","end","endif","endsw","esac","eval" ,"exec","exit","export","false","fc","fg","filetest","fi","for","foreach","getopts" ,"glob","goto","hash","hashstat","history","hup","if","in","jobid","jobs","kill","limit" ,"local","log","login","logout","ls-F","nice","nohup","notify","onintr","popd" ,"printenv","printf","pushd","pwd","read","readonly","rehash","repeat","return" ,"sched","set","setenv","settc","setty","setvar","shift","source","stop","suspend" ,"switch","telltc","test","then","time","times","trap","true","type","ulimit","umask" ,"unalias","uncomplete","unhash","unlimit","unset","unsetenv","until","wait" ,"where","which","while"],
+			"foreground": "colors/keyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "class names",
+			"regex": "\\b[A-Za-z0-9_-\\.]+(?=::)\\b",
+			"foreground": "colors/class",
+			"font_weight": "bold"
+		},
+		{
+			"name": "variable expansions",
+			"regex": "\\$[A-Za-z0-9_-\\.]+\\b",
+			"foreground": "colors/altkeyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "variable expansions",
+			"regex": "\\$\\{[A-Za-z0-9_-\\.]+\\}",
+			"foreground": "colors/altkeyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/function"
+		},
+		{
+			"name": "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground": "colors/text"
+		}
+	]
+}

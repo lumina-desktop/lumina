@@ -8,3 +8,4 @@ done
 
 variable$variable sdfgbuj
 variable${variable}satoibnsoin
+some$variable

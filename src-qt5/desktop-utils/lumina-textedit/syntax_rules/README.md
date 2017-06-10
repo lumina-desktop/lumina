@@ -25,7 +25,8 @@ A small comment section may be placed at the top of the file where every line st
    3. At least **one** of the following fields should also be supplied:
       1. "foreground" : Font color of the matching text (see the Colors section for additional information)
       2. "background" : Highlighting color of the matching text (see the Colors section for additional information)
-      3. "font-weight" : One of the following ["bold","normal", "light"]. Changes the thickness of the font for the matching text
+      3. "font_weight" : One of the following ["bold","normal", "light"]. Changes the thickness of the font for the matching text
+      4. "font_style" : One of the following ["italic", "normal"]. Change the style of the font fo the matching text.
 
 # Colors
 There are a number of built-in colors which may be defined by the user, and these can be used by passing in the following:

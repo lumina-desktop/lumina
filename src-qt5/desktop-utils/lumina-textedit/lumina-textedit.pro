@@ -98,7 +98,10 @@ desktop.path=$${L_SHAREDIR}/applications/
 link.path=$${L_BINDIR}
 link.extra=ln -sf lumina-textedit $(INSTALL_ROOT)$${L_BINDIR}/lte
 
-INSTALLS += target desktop link
+syntax.path=$${L_SHAREDIR}/lumina-desktop/syntax_rules
+syntax.files=syntax_rules/*
+
+INSTALLS += target desktop link syntax
 
 WITH_I18N{
   INSTALLS += dotrans

@@ -1,0 +1,78 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  ReStructured Text language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "ReST",
+		"file_suffix": ["rst"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : true,
+		"columns_per_line" : 72,
+		"font_type" : "monospace"
+	},
+	"rules": [{
+			"name": "directives",
+			"regex": "(\\s|^):[a-zA-Z0-9 ]*:`[^`]*`",
+			"foreground": "colors/class",
+			"font_weight": "bold"
+		},
+		{
+			"name": "hyperlinks",
+			"regex": "`[^\\<]*\\<[^\\>]*\\>`_",
+			"foreground": "colors/class",
+			"font_style": "italic"
+		},
+		{
+			"name": "code sample",
+			"regex": "\\b`{2}.*`{2}\\b",
+			"font_weight": "light"
+		},
+		{
+			"regex": "^\\.\\.\\sTODO\\b",
+			"font_weight" : "bold"
+		},
+		{
+			"regex": "^(\\s*)\\.\\.(\\s*)([a-zA-Z0-9]+)::",
+			"font_weight" : "bold"
+		},
+		{
+			"name" : "functions",
+			"regex" : "^(\\s*)\\.\\.(\\s*)\\b_[a-zA-Z0-9 ]*:(\\s|$)",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "figures",
+			"regex" : "^(\\s*)\\.\\.\\sfigure::\\s",
+			"foreground" : "colors/keyword"
+		},
+		{
+			"name" : "properties",
+			"regex" : "^( ){3}:(.)*: ",
+			"foreground" : "colors/altkeyword"
+		},
+		{
+			"name" : "code block type 1",
+			"regex_start" : "\\:\\:$",
+			"regex_end" : "^(?=[^\\s])",
+			"foreground" : "colors/text"
+		},
+		{
+			"name" : "code block type 2",
+			"regex_start" : "^(\\s*)\\.\\.\\scode-block::\\s",
+			"regex_end" : "^(?=[^\\s])",
+			"foreground" : "colors/text"
+		},
+		{
+			"name" : "comment",
+			"regex_start" : "^(\\s*)\\.\\.\\s[^_](?![\\w-_\\.]+::(\\s|$))",
+			"regex_end" : "^(?=([^\\s]|$))",
+			"foreground" : "colors/comment"
+		}
+	]
+}

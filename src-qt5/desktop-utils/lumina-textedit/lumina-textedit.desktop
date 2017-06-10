@@ -5,6 +5,6 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Categories=Utility;
-MimeType=text/plain;text/x-log;
+MimeType=text/plain;text/x-log;text/*;
 Name=Lumina Text Editor
 Comment=Plaintext editor with syntax highlighting
