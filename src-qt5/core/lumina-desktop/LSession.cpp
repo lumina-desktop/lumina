@@ -46,7 +46,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   sysWindow = 0;
   TrayDmgEvent = 0;
   TrayDmgError = 0;
-  lastActiveWin = 0; 
+  lastActiveWin = 0;
   cleansession = true;
   TrayStopping = false;
   ICONS = new LIconCache(this);
@@ -70,7 +70,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   connect(this, SIGNAL(screenAdded(QScreen*)), this, SLOT(screensChanged()) );
   connect(this, SIGNAL(screenRemoved(QScreen*)), this, SLOT(screensChanged()) );
   connect(this, SIGNAL(primaryScreenChanged(QScreen*)), this, SLOT(screensChanged()) );
- } //end check for primary process 
+ } //end check for primary process
 }
 
 LSession::~LSession(){
@@ -114,33 +114,33 @@ void LSession::setupSession(){
 				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
 				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
   }
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop"); 
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
 //use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
-  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
+  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
   DESKTOPS.clear();
-      
+
   //Start the background system tray
     splash.showScreen("systray");
   if(DEBUG){ qDebug() << " - Init System Tray:" << timer->elapsed();}
   startSystemTray();
-	
+
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
   if(DEBUG){ qDebug() << " - Init AppMenu:" << timer->elapsed();}
   appmenu = new AppMenu();
-  
+
     splash.showScreen("menus");
   if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   settingsmenu = new SettingsMenu();
   if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
   sysWindow = new SystemWindow();
-  
+
   //Initialize the desktops
     splash.showScreen("desktop");
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
@@ -176,7 +176,7 @@ void LSession::setupSession(){
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   splash.hide();
   LSession::processEvents();
-  splash.close(); 
+  splash.close();
   LSession::processEvents();
 }
 
@@ -220,7 +220,7 @@ void LSession::CleanupSession(){
   //Now close down the desktop
   qDebug() << " - Closing down the desktop elements";
   for(int i=0; i<DESKTOPS.length(); i++){
-    DESKTOPS[i]->prepareToClose(); 
+    DESKTOPS[i]->prepareToClose();
     //don't actually close them yet - that will happen when the session exits
     // this will leave the wallpapers up for a few moments (preventing black screens)
   }
@@ -244,7 +244,7 @@ void LSession::CleanupSession(){
 int LSession::VersionStringToNumber(QString version){
   version = version.section("-",0,0); //trim any extra labels off the end
   int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
-  maj = mid = min = 0; 
+  maj = mid = min = 0;
   bool ok = true;
   maj = version.section(".",0,0).toInt(&ok);
   if(ok){ mid = version.section(".",1,1).toInt(&ok); }else{ maj = 0; }
@@ -260,10 +260,10 @@ void LSession::NewCommunication(QStringList list){
   for(int i=0; i<list.length(); i++){
     if(list[i]=="--check-geoms"){
       screensChanged();
-    }else if(list[i]=="--show-start"){ 
+    }else if(list[i]=="--show-start"){
       emit StartButtonActivated();
     }
-  }	  
+  }
 }
 
 void LSession::launchStartupApps(){
@@ -279,7 +279,7 @@ void LSession::launchStartupApps(){
     }
   }
   int tmp = LOS::ScreenBrightness();
-  if(tmp>0){ 
+  if(tmp>0){
     LOS::setScreenBrightness( tmp );
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
@@ -290,17 +290,14 @@ void LSession::launchStartupApps(){
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
   qDebug() << " - Loading previous settings";
   tmp = LOS::audioVolume();
-  LOS::setAudioVolume(tmp);
+  if(tmp>=0){ LOS::setAudioVolume(tmp); }
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
-  
+
   //Now play the login music since we are finished
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    //Make sure to re-set the system volume to the last-used value at outset
-    int vol = LOS::audioVolume();
-    if(vol>=0){ LOS::setAudioVolume(vol); }
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
-  qDebug() << " - Finished with startup routines";
+  qDebug() << "[DESKTOP INIT FINISHED]";
 }
 
 void LSession::StartLogout(){
@@ -311,40 +308,40 @@ void LSession::StartLogout(){
 void LSession::StartShutdown(bool skipupdates){
   CleanupSession();
   LOS::systemShutdown(skipupdates);
-  QCoreApplication::exit(0);		
+  QCoreApplication::exit(0);
 }
 
 void LSession::StartReboot(bool skipupdates){
   CleanupSession();
   LOS::systemRestart(skipupdates);
-  QCoreApplication::exit(0);	
+  QCoreApplication::exit(0);
 }
 
 void LSession::reloadIconTheme(){
   //Wait a moment for things to settle before sending out the signal to the interfaces
   QApplication::processEvents();
   QApplication::processEvents();
-  emit IconThemeChanged();	
+  emit IconThemeChanged();
 }
 
 void LSession::watcherChange(QString changed){
   if(DEBUG){ qDebug() << "Session Watcher Change:" << changed; }
   //if(changed.endsWith("fluxbox-init") || changed.endsWith("fluxbox-keys")){ refreshWindowManager(); }
   if(changed.endsWith("sessionsettings.conf") ){
-    sessionsettings->sync(); 
+    sessionsettings->sync();
     //qDebug() << "Session Settings Changed";
     if(sessionsettings->contains("Qt5_theme_engine")){
       QString engine = sessionsettings->value("Qt5_theme_engine","").toString();
       //qDebug() << "Set Qt5 theme engine: " << engine;
       if(engine.isEmpty()){ unsetenv("QT_QPA_PLATFORMTHEME"); }
-      else{ setenv("QT_QPA_PLATFORMTHEME", engine.toUtf8().data(),1); } 
+      else{ setenv("QT_QPA_PLATFORMTHEME", engine.toUtf8().data(),1); }
     }
     emit SessionConfigChanged();
   }else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
-  else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){ 
+  else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
-    emit DesktopFilesChanged(); 
+    emit DesktopFilesChanged();
   }else if(changed.toLower() == "/media" || changed == "/tmp/.autofs_change" ){
     emit MediaFilesChanged();
   }else if(changed.endsWith("favorites.list")){ emit FavoritesChanged(); }
@@ -366,8 +363,8 @@ void LSession::screensChanged(){
 
 void LSession::screenResized(int scrn){
   qDebug() << "Screen Resized:" << scrn;
-  if(screenTimer->isActive()){ screenTimer->stop(); }  
-  screenTimer->start();	
+  if(screenTimer->isActive()){ screenTimer->stop(); }
+  screenTimer->start();
 }
 
 void LSession::checkWindowGeoms(){
@@ -380,7 +377,7 @@ void LSession::checkWindowGeoms(){
 }
 
 void LSession::checkUserFiles(){
-  //internal version conversion examples: 
+  //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
@@ -449,9 +446,9 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
 	geoms << DW->screenGeometry(DESKTOPS[i]->Screen());
-      }  
+      }
   }
-  
+
   //Now add any new desktops
   QStringList allNames;
   QList<QScreen*> scrns = QApplication::screens();
@@ -506,7 +503,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   QList<int> frame = XCB->WindowFrameGeometry(win); //[top,bottom,left,right] sizes of the frame
   //Calculate the full geometry (window + frame)
   QRect fgeom = QRect(geom.x()-frame[2], geom.y()-frame[0], geom.width()+frame[2]+frame[3], geom.height()+frame[0]+frame[1]);
-  if(DEBUG){ 
+  if(DEBUG){
     qDebug() << "Check Window Geometry:" << XCB->WindowClass(win) << !geom.isNull() << geom << fgeom;
   }
   if(geom.isNull()){ return; } //Could not get geometry for some reason
@@ -528,21 +525,21 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
     geom = desk; //Use the full screen
     XCB->MoveResizeWindow(win, geom);
     XCB->MaximizeWindow(win, true); //directly set the appropriate "maximized" flags (bypassing WM)
-	  
+
   }else if(!desk.contains(fgeom) ){
     //Adjust origin point for left/top margins
     if(fgeom.y() < desk.y()){ geom.moveTop(desk.y()+frame[0]); fgeom.moveTop(desk.y()); } //move down to the edge (top panel)
     if(fgeom.x() < desk.x()){ geom.moveLeft(desk.x()+frame[2]); fgeom.moveLeft(desk.x()); } //move right to the edge (left panel)
     //Adjust size for bottom margins (within reason, since window titles are on top normally)
    // if(geom.right() > desk.right() && (geom.width() > 100)){ geom.setRight(desk.right()); }
-    if(fgeom.bottom() > desk.bottom() && geom.height() > 10){ 
+    if(fgeom.bottom() > desk.bottom() && geom.height() > 10){
       if(DEBUG){ qDebug() << "Adjust Y:" << fgeom << geom << desk; }
       int diff = fgeom.bottom()-desk.bottom(); //amount of overlap
       if(DEBUG){ qDebug() << "Y-Diff:" << diff; }
       if(diff < 0){ diff = -diff; } //need a positive value
       if( (fgeom.height()+ diff)< desk.height()){
         //just move the window - there is room for it above
-	geom.setBottom(desk.bottom()-frame[1]); 
+	geom.setBottom(desk.bottom()-frame[1]);
 	fgeom.setBottom(desk.bottom());
       }else if(geom.height() > diff){ //window bigger than the difference
 	//Need to resize the window - keeping the origin point the same
@@ -551,12 +548,12 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
       }
     }
     //Now move/resize the window
-    if(DEBUG){ 
-      qDebug() << " - New Geom:" << geom << fgeom; 
+    if(DEBUG){
+      qDebug() << " - New Geom:" << geom << fgeom;
     }
     XCB->WM_Request_MoveResize_Window(win, geom);
   }
-  
+
 }
 
 void LSession::SessionEnding(){
@@ -573,7 +570,7 @@ void LSession::LaunchApplication(QString cmd){
 }
 
 QFileInfoList LSession::DesktopFiles(){
-  return desktopFiles;	
+  return desktopFiles;
 }
 
 QRect LSession::screenGeom(int num){
@@ -624,8 +621,8 @@ WId LSession::activeWindow(){
 
 //Temporarily change the session locale (nothing saved between sessions)
 void LSession::switchLocale(QString localeCode){
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator); 
-  if(currTranslator!=0 || localeCode=="en_US"){ 
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator);
+  if(currTranslator!=0 || localeCode=="en_US"){
     LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
   }
   emit LocaleChanged();
@@ -671,15 +668,15 @@ void LSession::WindowPropertyEvent(){
     LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
-      if(!RunningApps.contains(newapps[i])){ 
-        checkWin << newapps[i]; 
+      if(!RunningApps.contains(newapps[i])){
+        checkWin << newapps[i];
 	XCB->SelectInput(newapps[i]); //make sure we get property/focus events for this window
 	if(DEBUG){ qDebug() << "New Window - check geom in a moment:" << XCB->WindowClass(newapps[i]); }
 	QTimer::singleShot(50, this, SLOT(checkWindowGeoms()) );
       }
     }
   }
-  
+
   //Now save the list and send out the event
   RunningApps = newapps;
   emit WindowListEvent();
@@ -716,7 +713,7 @@ void LSession::WindowClosedEvent(WId win){
 }
 
 void LSession::WindowConfigureEvent(WId win){
-  if(TrayStopping){ return; } 
+  if(TrayStopping){ return; }
     if(RunningTrayApps.contains(win)){
       if(DEBUG){ qDebug() << "SysTray: Configure Event"; }
       emit TrayIconChanged(win); //trigger a repaint event
@@ -754,9 +751,9 @@ bool LSession::registerVisualTray(WId visualTray){
 }
 
 void LSession::unregisterVisualTray(WId visualTray){
-  if(VisualTrayID==visualTray){ 
+  if(VisualTrayID==visualTray){
     qDebug() << "Unregistered Visual Tray";
-    VisualTrayID=0; 
+    VisualTrayID=0;
     if(!TrayStopping){ emit VisualTrayAvailable(); }
   }
 }
@@ -802,12 +799,12 @@ void LSession::stopSystemTray(bool detachall){
       //Tray apps are special and closing the window does not close the app
       XCB->KillClient(tmpApps[i]);
       LSession::processEvents();
-    }  
+    }
   }
   //Now close down the tray backend
  XCB->closeSystemTray(SystemTrayID);
   SystemTrayID = 0;
-  TrayDmgEvent = 0; 
+  TrayDmgEvent = 0;
   TrayDmgError = 0;
   evFilter->setTrayDamageFlag(0); //turn off tray event handling
   emit TrayListChanged();
@@ -828,13 +825,13 @@ void LSession::attachTrayWindow(WId win){
 void LSession::removeTrayWindow(WId win){
   if(SystemTrayID==0){ return; }
   for(int i=0; i<RunningTrayApps.length(); i++){
-    if(win==RunningTrayApps[i]){ 
+    if(win==RunningTrayApps[i]){
       qDebug() << "Session Tray: Window Removed";
-      RunningTrayApps.removeAt(i); 
+      RunningTrayApps.removeAt(i);
       emit TrayListChanged();
-      break;	    
+      break;
     }
-  }	
+  }
 }
 //=========================
 //  START MENU FUNCTIONS
