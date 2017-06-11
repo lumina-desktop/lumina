@@ -175,10 +175,6 @@ QStringList Custom_Syntax::availableRules(QSettings *settings){
   QStringList avail;
   QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){ avail << files[i].name(); }
-    /*avail << "C++";
-    //avail << "Python";
-    avail << "Shell";
-    avail << "reST";*/
   return avail;
 }
 

@@ -24,11 +24,6 @@ struct SyntaxRule{
   QRegExp startPattern, endPattern;  //multi-line rules
   QTextCharFormat format;
 };
-//Complicated/multi-line rules
-struct SyntaxRuleSplit{
-  QRegExp startPattern, endPattern;
-  QTextCharFormat format;
-};
 
 class SyntaxFile{
 private:
@@ -63,10 +58,7 @@ class Custom_Syntax : public QSyntaxHighlighter{
 	Q_OBJECT
 private:
 	QSettings *settings;
-	//QString lasttype;
         SyntaxFile syntax;
-	//QVector<SyntaxRule> rules;
-	//QVector<SyntaxRuleSplit> splitrules;
 
 public:
 	Custom_Syntax(QSettings *set, QTextDocument *parent = 0) : QSyntaxHighlighter(parent){
