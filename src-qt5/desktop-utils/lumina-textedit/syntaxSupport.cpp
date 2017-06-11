@@ -77,10 +77,12 @@ void SyntaxFile::SetupDocument(QPlainTextEdit* editor){
 bool SyntaxFile::supportsFile(QString file){
   if(metaObj.contains("file_suffix")){
     return metaObj.value("file_suffix").toArray().contains( file.section("/",-1).section(".",-1) );
+  }else if(metaObj.contains("file_regex")){
+    return (QRegExp( metaObj.value("file_regex").toString() ).indexIn(file.section("/",-1) ) >=0 );
   }
   return false;
 }
-	
+
 bool SyntaxFile::LoadFile(QString file, QSettings *settings){
   QStringList contents = LUtils::readFile(file);
   //Now trim the extra non-JSON off the beginning of the file
@@ -108,7 +110,7 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
     //First load the rule
     //qDebug() << "Load Rule:" << rule.keys();
     if(rule.contains("words")){} //valid option - handled at the end though
-    else if(rule.contains("regex")){ 
+    else if(rule.contains("regex")){
       tmp.pattern = QRegExp(rule.value("regex").toString());
     }else if(rule.contains("regex_start") && rule.contains("regex_end")){
       tmp.startPattern = QRegExp(rule.value("regex_start").toString());

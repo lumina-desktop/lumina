@@ -46,7 +46,7 @@ public:
 
 	QString name();
 	int char_limit();
-	bool highlight_excess_whitespace();	
+	bool highlight_excess_whitespace();
 	int tab_length();
 
 	void SetupDocument(QPlainTextEdit *editor);
@@ -73,14 +73,14 @@ public:
 	  settings = set;
 	}
 	~Custom_Syntax(){}
-		
+
 	static QStringList availableRules(QSettings *settings);
 	static QStringList knownColors();
 	static void SetupDefaultColors(QSettings *settings);
 	static QString ruleForFile(QString filename, QSettings *settings);
 	void loadRules(QString type);
 	void loadRules(SyntaxFile sfile);
-		
+
 	void reloadRules(){
 	  loadRules( syntax.name() );
 	}
@@ -92,7 +92,7 @@ protected:
 	  int start = 0;
 	  int splitactive = previousBlockState();
 	  if(splitactive>syntax.rules.length()-1){ splitactive = -1; } //just in case
-          
+
 	  while(start>=0 && start<=text.length()-1){
 	    //qDebug() << "split check:" << start << splitactive;
 	    if(splitactive>=0){
