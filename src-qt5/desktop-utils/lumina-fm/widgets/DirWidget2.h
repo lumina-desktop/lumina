@@ -15,6 +15,7 @@
 #include <QLineEdit>
 #include <QShortcut>
 #include <QFileSystemWatcher>
+#include <QFileSystemModel>
 #include <QTimer>
 #include <QFuture>
 
@@ -43,6 +44,7 @@ public:
 	//Information
 	QString id();
 	QString currentDir();
+    QFileSystemModel dirtreeModel;
 
 	//View Settings
 	void setShowDetails(bool show);
@@ -61,6 +63,8 @@ public slots:
 	//Theme change functions
 	void UpdateIcons();
 	void UpdateText();
+    void showFolderPane();
+    void hideFolderPane();
 
 
 private:
@@ -80,7 +84,7 @@ private:
 
 	//The keyboard shortcuts for context menu items
 	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
-		*kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm;
+        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm;
 
 	//Functions for internal use
 	void createShortcuts(); //on init only
