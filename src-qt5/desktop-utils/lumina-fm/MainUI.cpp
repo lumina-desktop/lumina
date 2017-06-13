@@ -181,6 +181,7 @@ void MainUI::OpenDirs(QStringList dirs){
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
     DW->showThumbnails( ui->actionShow_Thumbnails->isChecked() );
+    DW->showHidden( ui->actionView_showDirTreePane->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
@@ -254,6 +255,8 @@ void MainUI::setupConnections(){
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
   connect(focusDirWidgetShort, SIGNAL(activated()), this, SLOT( focusDirWidget() ) );
+  connect(toggledirtreepanelShort, SIGNAL(activated()), this, SLOT( toggleDirTreePane() ) );
+
 }
 
 void MainUI::focusDirWidget()
@@ -268,6 +271,14 @@ void MainUI::togglehiddenfiles()
     ui->actionView_Hidden_Files->setChecked( !settings->value("showhidden", true).toBool() );
     // then trigger function
     on_actionView_Hidden_Files_triggered();
+}
+
+void MainUI::toggleDirTreePane()
+{
+    //change setChecked to inverse value
+    ui->actionView_Hidden_Files->setChecked( !settings->value("showhidden", true).toBool() );
+    // then trigger function
+    on_showDirTreePane_triggered();
 }
 
 void MainUI::loadSettings(){

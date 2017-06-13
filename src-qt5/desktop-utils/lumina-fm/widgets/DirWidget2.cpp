@@ -223,7 +223,7 @@
     kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
     kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
     kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
-    kTreePane= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_),this);
+//    kTreePane = new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_P),this);
 
     connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
     connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
@@ -754,12 +754,15 @@
     //         Folder Pane
     //====================
 
-    void DirWidget::showFolderPane(){
-    //ui->folderViewPane->setVisible(true);
-    }
+    void DirWidget::showDirTreePane(bool showdirtree){
+        if(showdirtree !=showHidden){
+          showHidden = showdirtree;
+          if(!currentDir.isEmpty()){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+        }
+      }
 
-    void DirWidget::hideFolderPane(){
-    //ui->folderViewPane->setVisible(false);
+    bool DirWidget::showingDirTreePane(){
+        return showHidden;
     }
 
 

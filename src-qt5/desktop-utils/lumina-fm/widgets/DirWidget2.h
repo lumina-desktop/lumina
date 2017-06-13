@@ -63,8 +63,8 @@ public slots:
 	//Theme change functions
 	void UpdateIcons();
 	void UpdateText();
-    void showFolderPane();
-    void hideFolderPane();
+    void showDirTreePane(bool);
+    bool showingDirTreePane();
 
 
 private:
