@@ -91,7 +91,7 @@ private:
 	bool waitingToClose;
 
 	QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort, *toggledirtreepanelShort;
+    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort, *toggledirtreepaneShort;
 	//QCompleter *dirCompleter;
 
 	//Simplification Functions
@@ -128,7 +128,7 @@ private slots:
 	void on_actionView_Hidden_Files_triggered();
     void on_actionView_showDirTreePane_triggered();
 	//void on_actionShow_Action_Buttons_triggered();
-    void on_showDirTreePane_triggered();
+    void on_actionShow_Thumbnails_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);

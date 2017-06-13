@@ -94,6 +94,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
   focusDirWidgetShort = new QShortcut( QKeySequence(tr("Ctrl+L")), this);
+  toggledirtreepaneShort = new QShortcut( QKeySequence(tr("Ctrl+P")), this);
 
   //Finish loading the interface
   workThread->start();
@@ -181,7 +182,7 @@ void MainUI::OpenDirs(QStringList dirs){
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
     DW->showThumbnails( ui->actionShow_Thumbnails->isChecked() );
-    DW->showHidden( ui->actionView_showDirTreePane->isChecked() );
+    DW->showDirTreePane( ui->actionView_showDirTreePane->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
@@ -255,7 +256,7 @@ void MainUI::setupConnections(){
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
   connect(focusDirWidgetShort, SIGNAL(activated()), this, SLOT( focusDirWidget() ) );
-  connect(toggledirtreepanelShort, SIGNAL(activated()), this, SLOT( toggleDirTreePane() ) );
+  connect(toggledirtreepaneShort, SIGNAL(activated()), this, SLOT( toggleDirTreePane() ) );
 
 }
 
@@ -276,9 +277,9 @@ void MainUI::togglehiddenfiles()
 void MainUI::toggleDirTreePane()
 {
     //change setChecked to inverse value
-    ui->actionView_Hidden_Files->setChecked( !settings->value("showhidden", true).toBool() );
+    ui->actionView_Hidden_Files->setChecked( !settings->value("showdirtree", true).toBool() );
     // then trigger function
-    on_showDirTreePane_triggered();
+    on_actionView_showDirTreePane_triggered();
 }
 
 void MainUI::loadSettings(){
@@ -288,6 +289,9 @@ void MainUI::loadSettings(){
     on_actionView_Hidden_Files_triggered(); //make sure to update the models too
   ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails",true).toBool());
     on_actionShow_Thumbnails_triggered(); //make sure to update models too
+    ui->actionView_showDirTreePane->setChecked( settings->value("showdirtree", false).toBool());
+    on_actionView_showDirTreePane_triggered(); //make sure to update the models too
+
   //ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
     //on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
   //ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
@@ -486,6 +490,14 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
   for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->showHidden( ui->actionView_Hidden_Files->isChecked() ); }//DWLIST[i]->refresh(); }
 
 }
+
+void MainUI::on_actionView_showDirTreePane_triggered(){
+  //worker->showdirtree = ui->actionView_showDirTreePane->isChecked();
+  settings->setValue("showdirtree", ui->actionView_showDirTreePane->isChecked());
+//Re-load the current browsers
+
+}
+
 
 /*void MainUI::on_actionShow_Action_Buttons_triggered(){
   bool show = ui->actionShow_Action_Buttons->isChecked();

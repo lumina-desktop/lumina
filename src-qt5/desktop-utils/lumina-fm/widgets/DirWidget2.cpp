@@ -70,7 +70,6 @@
       dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);      // remove extraneous dirs
       dirtreeModel->setRootPath(folderTreePath);
       //ui->folderViewPane->setModel(dirtreeModel)
-      //ui->folderViewPane->setVisible(false);  // set hidden initially to preserve legacy appearance of lumina-fm
 
       //Now update the rest of the UI
       canmodify = false; //initial value
@@ -138,6 +137,21 @@
       ui->tool_zoom_in->setEnabled(px < 256); //upper limit on image sizes
       ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
     }
+
+    //====================
+    //         Folder Pane
+    //====================
+
+    void DirWidget::showDirTreePane(bool show){
+        if(show !=showdirtree){
+          showdirtree = show;
+      }
+    }
+
+    bool DirWidget::showingDirTreePane(){
+        return showdirtree;
+    }
+
 
     // ================
     //    PUBLIC SLOTS
@@ -223,7 +237,6 @@
     kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
     kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
     kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
-//    kTreePane = new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_P),this);
 
     connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
     connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
@@ -748,21 +761,6 @@
           if( info.isAVFile() ){  list << info; } //add to the list
         }
       if(!list.isEmpty()){ emit PlayFiles(list); }
-    }
-
-    //====================
-    //         Folder Pane
-    //====================
-
-    void DirWidget::showDirTreePane(bool showdirtree){
-        if(showdirtree !=showHidden){
-          showHidden = showdirtree;
-          if(!currentDir.isEmpty()){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
-        }
-      }
-
-    bool DirWidget::showingDirTreePane(){
-        return showHidden;
     }
 
 

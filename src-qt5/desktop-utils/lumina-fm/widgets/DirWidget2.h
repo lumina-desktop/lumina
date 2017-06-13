@@ -44,15 +44,17 @@ public:
 	//Information
 	QString id();
 	QString currentDir();
-    QFileSystemModel dirtreeModel;
+    QFileSystemModel *dirtreeModel;
 
 	//View Settings
 	void setShowDetails(bool show);
 	void showHidden(bool show);
 	void showThumbnails(bool show);
 	void setThumbnailSize(int px);
-	void setFocusLineDir();
-	
+    void setFocusLineDir();
+    void showDirTreePane(bool show);
+    bool showingDirTreePane();
+
 public slots:
 	//void LoadDir(QString dir, LFileInfoList list);
 	void LoadSnaps(QString basedir, QStringList snaps);
@@ -63,8 +65,6 @@ public slots:
 	//Theme change functions
 	void UpdateIcons();
 	void UpdateText();
-    void showDirTreePane(bool);
-    bool showingDirTreePane();
 
 
 private:
@@ -73,7 +73,7 @@ private:
 	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
-	bool canmodify;
+    bool canmodify, showdirtree;
 
 	//The Toolbar and associated items
 	QToolBar *toolbar;

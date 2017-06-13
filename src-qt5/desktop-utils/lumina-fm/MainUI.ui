@@ -134,7 +134,6 @@
     <addaction name="actionRefresh"/>
     <addaction name="separator"/>
     <addaction name="actionView_Hidden_Files"/>
-    <addaction name="actionView_showDirTreePane"/>
     <addaction name="separator"/>
     <addaction name="actionShow_Thumbnails"/>
     <addaction name="menuView_Mode"/>
