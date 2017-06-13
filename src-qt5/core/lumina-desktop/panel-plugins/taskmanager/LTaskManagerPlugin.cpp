@@ -22,7 +22,7 @@ LTaskManagerPlugin::LTaskManagerPlugin(QWidget *parent, QString id, bool horizon
 }
 
 LTaskManagerPlugin::~LTaskManagerPlugin(){
-	
+
 }
 
 //==============
@@ -31,7 +31,7 @@ LTaskManagerPlugin::~LTaskManagerPlugin(){
 void LTaskManagerPlugin::UpdateButtons(){
   updating = QDateTime::currentDateTime(); //global time stamp
   QDateTime ctime = updating; //current thread time stamp
-	
+
   //Get the current window list
   QList<WId> winlist = LSession::handle()->XCB->WindowList();
   // Ignore the windows which don't want to be listed
@@ -119,7 +119,7 @@ void LTaskManagerPlugin::UpdateButtons(){
 	    but->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	}else{
 	    but->setIconSize(QSize(this->width(), this->width()));
-	    but->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	    but->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	}
       this->layout()->addWidget(but);
       connect(but, SIGNAL(MenuClosed()), this, SIGNAL(MenuClosed()));
