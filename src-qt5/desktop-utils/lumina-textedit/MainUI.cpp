@@ -303,10 +303,12 @@ void MainUI::showLineNumbers(bool show){
 
 void MainUI::wrapLines(bool wrap){
   settings->setValue("wrapLines",wrap);
-  for(int i=0; i<tabWidget->count(); i++){
+  if(currentEditor() == 0){ return; }
+  currentEditor()->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+  /*for(int i=0; i<tabWidget->count(); i++){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-  }	
+  }*/	
 }
 
 void MainUI::ModifyColors(){
@@ -353,6 +355,7 @@ void MainUI::tabChanged(){
   //Update the font/size widgets to reflect what is set on this tab
   fontbox->setCurrentFont(font);
   fontSizes->setValue( font.pointSize() );
+  ui->actionWrap_Lines->setChecked( cur->lineWrapMode()==QPlainTextEdit::WidgetWidth );
 }
 
 void MainUI::tabClosed(int tab){

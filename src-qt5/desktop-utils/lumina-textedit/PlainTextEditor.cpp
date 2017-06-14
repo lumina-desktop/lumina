@@ -134,13 +134,16 @@ int PlainTextEditor::LNWWidth(){
   int lines = this->blockCount();
   if(lines<1){ lines = 1; }
   int chars = 1;
-  qDebug() << "point 1" << this->document()->defaultFont();
+  //qDebug() << "point 1" << this->document()->defaultFont();
   while(lines>=10){ chars++; lines/=10; }
   QFontMetrics metrics(this->document()->defaultFont());
   return (metrics.width("9")*chars); //make sure to add a tiny bit of padding
 }
 
 void PlainTextEditor::paintLNW(QPaintEvent *ev){
+  //qDebug() << "Paint LNW Event:" << ev->rect() << LNW->geometry();
+  //if(ev->rect().height() < (QFontMetrics(this->document()->defaultFont()).height() *1.5) ){ return; }
+  //qDebug() << " -- paint line numbers";
   QPainter P(LNW);
   //First set the background color
   P.fillRect(ev->rect(), QColor("lightgrey"));
@@ -153,15 +156,15 @@ void PlainTextEditor::paintLNW(QPaintEvent *ev){
   P.setFont(this->document()->defaultFont());
   //Now loop over the blocks (lines) and write in the numbers
   QFontMetrics metrics(this->document()->defaultFont());
-  qDebug() << "point 2" << this->document()->defaultFont();
+  //qDebug() << "point 2" << this->document()->defaultFont();
   P.setPen(Qt::black); //setup the font color
   while(block.isValid() && bTop<=ev->rect().bottom()){ //ensure block below top of viewport
     bBottom = bTop+blockBoundingRect(block).height();
     if(block.isVisible() && bBottom >= ev->rect().top()){ //ensure block above bottom of viewport
       P.drawText(0,bTop, LNW->width(), metrics.height(), Qt::AlignRight, QString::number(block.blockNumber()+1) );
-      qDebug() << "bTop" << bTop;
-      qDebug() << "LNW->width()" << LNW->width();
-      qDebug() << "metrics.height()" << metrics.height();
+      //qDebug() << "bTop" << bTop;
+      //qDebug() << "LNW->width()" << LNW->width();
+      //qDebug() << "metrics.height()" << metrics.height();
     }
     //Go to the next block
     block = block.next();
