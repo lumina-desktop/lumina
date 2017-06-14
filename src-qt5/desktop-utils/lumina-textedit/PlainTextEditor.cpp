@@ -134,8 +134,10 @@ int PlainTextEditor::LNWWidth(){
   int lines = this->blockCount();
   if(lines<1){ lines = 1; }
   int chars = 1;
+  qDebug() << "point 1" << this->document()->defaultFont();
   while(lines>=10){ chars++; lines/=10; }
-  return (this->fontMetrics().width("9")*chars); //make sure to add a tiny bit of padding
+  QFontMetrics metrics(this->document()->defaultFont());
+  return (metrics.width("9")*chars); //make sure to add a tiny bit of padding
 }
 
 void PlainTextEditor::paintLNW(QPaintEvent *ev){
@@ -146,12 +148,20 @@ void PlainTextEditor::paintLNW(QPaintEvent *ev){
   QTextBlock block = this->firstVisibleBlock();
   int bTop = blockBoundingGeometry(block).translated(contentOffset()).top();
   int bBottom;
+//  QFont font = P.font();
+//  font.setPointSize(this->document()->defaultFont().pointSize());
+  P.setFont(this->document()->defaultFont());
   //Now loop over the blocks (lines) and write in the numbers
+  QFontMetrics metrics(this->document()->defaultFont());
+  qDebug() << "point 2" << this->document()->defaultFont();
   P.setPen(Qt::black); //setup the font color
   while(block.isValid() && bTop<=ev->rect().bottom()){ //ensure block below top of viewport
     bBottom = bTop+blockBoundingRect(block).height();
     if(block.isVisible() && bBottom >= ev->rect().top()){ //ensure block above bottom of viewport
-      P.drawText(0,bTop, LNW->width(), this->fontMetrics().height(), Qt::AlignRight, QString::number(block.blockNumber()+1) );
+      P.drawText(0,bTop, LNW->width(), metrics.height(), Qt::AlignRight, QString::number(block.blockNumber()+1) );
+      qDebug() << "bTop" << bTop;
+      qDebug() << "LNW->width()" << LNW->width();
+      qDebug() << "metrics.height()" << metrics.height();
     }
     //Go to the next block
     block = block.next();
@@ -332,4 +342,8 @@ void PlainTextEditor::resizeEvent(QResizeEvent *ev){
   //Now re-adjust the placement of the LNW (within the left margin area)
   QRect cGeom = this->contentsRect();
   LNW->setGeometry( QRect(cGeom.left(), cGeom.top(), LNWWidth(), cGeom.height()) );
+}
+
+void PlainTextEditor::updateLNW(){
+    LNW_updateWidth();
 }

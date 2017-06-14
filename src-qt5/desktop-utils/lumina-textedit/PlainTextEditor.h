@@ -37,6 +37,9 @@ public:
 	//Functions for managing the line number widget (internal - do not need to run directly)
 	int LNWWidth(); //replacing the LNW size hint detection
 	void paintLNW(QPaintEvent *ev); //forwarded from the LNW paint event
+    void updateLNW();
+
+    QFontMetrics *metrics;
 	
 private:
 	QWidget *LNW; //Line Number Widget
@@ -65,7 +68,7 @@ private slots:
 	void textChanged();
 	void cursorMoved();
 	//Function for prompting the user if the file changed externally
-        void fileChanged();
+    void fileChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);

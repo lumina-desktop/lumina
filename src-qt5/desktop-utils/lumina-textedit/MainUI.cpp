@@ -18,6 +18,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QActionGroup>
+#include "PlainTextEditor.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -255,6 +256,7 @@ void MainUI::changeFontSize(int newFontSize){
     QFont currentFont = currentEditor()->document()->defaultFont();
     currentFont.setPointSize(newFontSize);
     currentEditor()->document()->setDefaultFont(currentFont);
+    currentEditor()->updateLNW();
 }
 
 void MainUI::changeTabsLocation(QAction *act){
