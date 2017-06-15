@@ -37,6 +37,11 @@
 			"foreground": "colors/function"
 		},
 		{
+			"name": "numbers",
+			"regex" : "\\b[0-9\\.]+\\b",
+			"foreground": "colors/altkeyword"
+		},
+		{
 			"name": "text",
 			"regex":  "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
 			"foreground": "colors/text"
