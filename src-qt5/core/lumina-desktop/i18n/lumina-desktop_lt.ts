@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Negali per daug žinoti, tačiau gali per daug pasakyti.</translation>
     </message>
     <message>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienintelis būdas gerai atlikti savo darbą yra mėgti tai ką darai.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Tik du dalykai yra beribiai: visata ir žmogaus kvailumas; tačiau dėl visatos aš nesu tikras.</translation>
     </message>
     <message>
@@ -360,7 +360,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Smagu yra daryti tai, kas neįmanoma.</translation>
     </message>
     <message>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sąmojingas pasakymas nieko neįrodo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
@@ -406,7 +406,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aš niekada neleidau, kad mano mokslai trukdytų mano išsilavinimui.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
@@ -773,24 +773,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbalaukio veiksmai</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <location filename="../LDesktop.cpp" line="608"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujas aplankas</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
         <location filename="../LDesktop.cpp" line="628"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujas failas</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Įdėti</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
@@ -827,7 +827,7 @@
         <location filename="../LDesktop.cpp" line="634"/>
         <location filename="../LDesktop.cpp" line="655"/>
         <source>Desktop</source>
-        <translation type="unfinished">Darbalaukis</translation>
+        <translation>Darbalaukis</translation>
     </message>
 </context>
 <context>
@@ -874,7 +874,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsis</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1416,22 +1416,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Pristabdyti</translation>
+        <translation>Pristabdyti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Paleisti iš naujo</translation>
+        <translation>Paleisti iš naujo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Log Out</source>
-        <translation type="unfinished">Atsijungti</translation>
+        <translation>Atsijungti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1501,7 +1501,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
