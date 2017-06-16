@@ -848,10 +848,11 @@
     //---------------------------------------------------//
     void DirWidget::autoExtractFiles(){
         QProcess *pExtract= new QProcess(this);
-        QString program = "lumina-archiver --ax";
-        QStringList file = currentBrowser()->currentSelection();
-        pExtract->start(program, QStringList() << file);
-
+        QString program = "lumina-archiver --ax ";
+        QStringList files = currentBrowser()->currentSelection();
+        for(int i=0; i<files.length(); i++){
+            QString runline = program + files[i];
+        pExtract->start(runline);
     }
     //---------------------------------------------------//
 
