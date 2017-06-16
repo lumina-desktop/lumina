@@ -34,13 +34,13 @@ public:
 	enum DETAILTYPES{ NAME, SIZE, TYPE, DATEMOD, DATECREATE};
 	DirWidget(QString objID, QWidget *parent = 0); //needs a unique ID (to distinguish from other DirWidgets)
 	~DirWidget();
-	
+
 	void cleanup(); //called before the browser is closed down
-	
+
 	//Directory Managment
 	void ChangeDir(QString dirpath);
 	void setDirCompleter(QCompleter *comp);
-	
+
 	//Information
 	QString id();
 	QString currentDir();
@@ -61,7 +61,7 @@ public:
 public slots:
 	//void LoadDir(QString dir, LFileInfoList list);
 	void LoadSnaps(QString basedir, QStringList snaps);
-	
+
 	//Refresh options
 	void refresh(); //Refresh current directory
 
@@ -109,14 +109,14 @@ private slots:
 
 	// -- Bottom Action Buttons
 	void on_tool_zoom_in_clicked();
-	void on_tool_zoom_out_clicked();	
+	void on_tool_zoom_out_clicked();
 
 	// -- Top Snapshot Buttons
 	void on_tool_snap_newer_clicked();
 	void on_tool_snap_older_clicked();
 	void on_slider_snap_valueChanged(int val = -1);
 	void direct_snap_selected(QAction*);
-	
+
 	//Top Toolbar buttons
 	void on_actionBack_triggered();
 	void on_actionUp_triggered();
@@ -130,16 +130,16 @@ private slots:
 	void fileCheckSums();
 	void fileProperties();
 	void openTerminal();
-	
+
 
 	//Browser Functions
 	void OpenContextMenu();
 	void UpdateContextMenu();
 	void currentDirectoryChanged(bool widgetonly = false);
 	void dirStatusChanged(QString);
-    void setCurrentBrowser(QString);
-//    void on_folderViewPane_clicked();
-  
+	void setCurrentBrowser(QString);
+	void on_folderViewPane_clicked(const QModelIndex &index);
+
 	//Context Menu Functions
 	// - DIRECTORY operations
 	void createNewFile();
@@ -156,7 +156,7 @@ private slots:
 	void removeFiles();
 	void runFiles();
 	void runWithFiles();
-	//void attachToNewEmail();	
+	//void attachToNewEmail();
     void autoExtractFiles();
 
 	// - Context-specific operations
@@ -169,7 +169,7 @@ signals:
 	void OpenDirectories(QStringList); //Directories to open in other tabs/columns
 	void findSnaps(QString, QString); //ID, dirpath (Request snapshot information for a directory)
 	void CloseBrowser(QString); //ID (Request that this browser be closed)
-	
+
 	//External App/Widget launching
 	void PlayFiles(LFileInfoList); //open in multimedia player
 	void ViewFiles(LFileInfoList); //open in slideshow

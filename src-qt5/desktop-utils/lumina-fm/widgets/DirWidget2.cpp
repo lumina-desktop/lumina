@@ -72,8 +72,8 @@
       dirtreeModel = new QFileSystemModel(this);
       dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);      // remove extraneous dirs
       dirtreeModel->setRootPath(folderTreePath);
-      //ui->folderViewPane->setModel(dirtreeModel)
-
+      ui->folderViewPane->setModel(dirtreeModel);
+      ui->splitter->setSizes( QList<int>() << this->width()/3 << 2*this->width()/3);
     //---------------------------------------------------//
 
       //Now update the rest of the UI
@@ -158,12 +158,11 @@
         return showdirtree;
     }
 
-    /*
     void DirWidget::on_folderViewPane_clicked(const QModelIndex &index){
-    QString tPath = dirtreeModel->fileInfo(index).absoluteFilePath();     // get what was clicked
-    ChangeDir(tPath);
+      QString tPath = dirtreeModel->fileInfo(index).absoluteFilePath();     // get what was clicked
+      ChangeDir(tPath);
     }
-    */
+
     //---------------------------------------------------//
 
 
@@ -574,7 +573,7 @@
           contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
           contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
     //---------------------------------------------------//
-          contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify);
+          if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
     //---------------------------------------------------//
         }
         if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
@@ -617,6 +616,9 @@
       ui->actionBack->setEnabled( currentBrowser()->history().length()>1 );
       line_dir->setText(normalbasedir);
       emit TabNameChanged(ID, normalbasedir.section("/",-1));
+      QModelIndex index = dirtreeModel->index(cur,0);
+      ui->folderViewPane->setCurrentIndex( index );
+      ui->folderViewPane->scrollTo(index);
     }
 
     void DirWidget::dirStatusChanged(QString stat){
