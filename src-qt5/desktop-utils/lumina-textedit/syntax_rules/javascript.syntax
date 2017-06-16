@@ -31,7 +31,12 @@
 		},
 		{
 			"name": "function names",
-			"regex": "\\b[A-Za-z0-9_]+(?=\\()|(?:\\.)[a-z]+",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/function"
+		},
+		{
+			"name": "attributes",
+			"regex": "(?<=\.)[A-Za-z_][A-Za-z0-9_]*",
 			"foreground": "colors/function"
 		},
 		{

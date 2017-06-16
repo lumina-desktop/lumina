@@ -42,4 +42,3 @@ function squaredDistance(p1, p2) {
   let d = distance(polygonCentroid(p1), polygonCentroid(p2));
   return d * d;
 }
-(?:[a-z]+[\.])([a-z])+
