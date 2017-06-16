@@ -22,6 +22,7 @@
     #include <LuminaOS.h>
     #include <LuminaXDG.h>
     #include <LUtils.h>
+    #include <ExternalProcess.h>
 
     #include "../ScrollDialog.h"
 
@@ -261,7 +262,7 @@
     connect(kCopy, SIGNAL(activated()), this, SLOT(copyFiles()) );
     connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
     connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
-    connect(kExtract, SIGNAL(activated()), this, SLOT(autoextractfiles()) );
+    connect(kExtract, SIGNAL(activated()), this, SLOT(autoExtractFiles()) );
     connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
     connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
     connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
@@ -847,12 +848,14 @@
 
     //---------------------------------------------------//
     void DirWidget::autoExtractFiles(){
-        QProcess *pExtract= new QProcess(this);
+        QStringList files = currentBrowser()->currentSelection();
+        ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
+        /*ExternalProcess *pExtract= new ExternalProcess(this);
         QString program = "lumina-archiver --ax ";
         QStringList files = currentBrowser()->currentSelection();
         for(int i=0; i<files.length(); i++){
             QString runline = program + files[i];
-        pExtract->start(runline);
+        pExtract->start(runline);*/
     }
     //---------------------------------------------------//
 
