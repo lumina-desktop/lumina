@@ -30,14 +30,14 @@
 			"foreground": "colors/altkeyword"
 		},
 		{
-			"name": "function names",
-			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"name": "attributes",
+			"regex": "(\\.)[A-Za-z_][A-Za-z0-9_]*(?![\\(a-zA-Z0-9])",
 			"foreground": "colors/function"
 		},
 		{
-			"name": "attributes",
-			"regex": "(?<=\.)[A-Za-z_][A-Za-z0-9_]*",
-			"foreground": "colors/function"
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/class"
 		},
 		{
 			"name" : "text",
