@@ -45,6 +45,7 @@ public:
 	QString id();
 	QString currentDir();
     QFileSystemModel *dirtreeModel;
+    QStringList getPreferredApplications();
 
 	//View Settings
 	void setShowDetails(bool show);
@@ -82,7 +83,7 @@ private:
 	QLineEdit *line_dir;
 
 	//The context menu and associated items
-	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu;
+    QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
 
 	//The keyboard shortcuts for context menu items
 	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \

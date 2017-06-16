@@ -64,6 +64,8 @@
       connect(BW, SIGNAL(updateDirectoryStatus(QString)), this, SLOT(dirStatusChanged(QString)) );
       connect(BW, SIGNAL(hasFocus(QString)), this, SLOT(setCurrentBrowser(QString)) );
 
+      //----//
+
       // Create treeviewpane QFileSystemModel model and populate
       QString folderTreePath = QDir::rootPath();
       dirtreeModel = new QFileSystemModel(this);
@@ -71,10 +73,12 @@
       dirtreeModel->setRootPath(folderTreePath);
       //ui->folderViewPane->setModel(dirtreeModel)
 
+      //----//
+
       //Now update the rest of the UI
       canmodify = false; //initial value
       contextMenu = new QMenu(this);
-      cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = 0; //not created yet
+      cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = 0; //not created yet
       connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(UpdateContextMenu()) );
 
       UpdateIcons();
@@ -138,6 +142,7 @@
       ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
     }
 
+    //----//
     //====================
     //         Folder Pane
     //====================
@@ -158,7 +163,7 @@
     ChangeDir(tPath);
     }
     */
-
+    //----//
 
 
     // ================
@@ -292,6 +297,36 @@
       cFModMenu->addSeparator();
       cFModMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() );
     */
+
+    //----//
+      if(cOpenWithMenu==0){ cOpenWithMenu = new QMenu(this); }
+          else{ cOpenWithMenu->clear(); }
+          cOpenWithMenu->setTitle(tr("Open with..."));
+          cOpenWithMenu->setIcon( LXDG::findIcon("run-build-configure","") );
+          XDGDesktopList applist;
+            applist.updateList();
+          PREFAPPS = getPreferredApplications();
+          //qDebug() << "Preferred Apps:" << PREFAPPS;
+          cOpenWithMenu->clear();
+          //Now get the application mimetype for the file extension (if available)
+          QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
+          //Now add all the detected applications
+          QHash< QString, QList<XDGDesktop*> > hash = LXDG::sortDesktopCats( applist.apps(false,true) );
+          QStringList cat = hash.keys();
+          cat.sort(); //sort alphabetically
+          for(int c=0; c<cat.length(); c++){
+            QList<XDGDesktop*> app = hash[cat[c]];
+            if(app.length()<1){ cOpenWithMenu =0; continue; }
+            for(int a=0; a<app.length(); a++){
+                QString program = app[a]->filePath;
+                    QStringList arguments;
+                    arguments << "%u";
+                    QProcess *p = new QProcess();
+                    p->start(program, arguments);
+
+              cOpenWithMenu->addAction(LXDG::findIcon(app[a]->icon), (app[a]->name), this, SLOT(p->start(program, arguments)) );}}
+          cOpenWithMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Other..."), this, SLOT(runWithFiles()) );
+    //----//
       if(cFViewMenu==0){ cFViewMenu = new QMenu(this); }
       else{ cFViewMenu->clear(); }
       cFViewMenu->setTitle(tr("View Files..."));
@@ -523,7 +558,7 @@
 
       if(!sel.isEmpty()){
         contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
-        contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+        //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
       }
       contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
      // contextMenu->addMenu(cFModMenu);
@@ -668,6 +703,36 @@
     }*/
 
     // - Selected FILE operations
+
+    //----//
+    QStringList DirWidget::getPreferredApplications(){
+      QStringList out;
+      //First list all the applications registered for that same mimetype
+      QString mime = fileEXT;
+      out << LXDG::findAvailableAppsForMime(mime);
+
+      //Now search the internal settings for that extension and find any applications last used
+      QStringList keys = settings->allKeys();
+      for(int i=0; i<keys.length(); i++){
+        if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
+        if(keys[i].toLower() == fileEXT.toLower()){
+          QStringList files = settings->value(keys[i]).toString().split(":::");
+          qDebug() << "Found Files:" << keys[i] << files;
+          bool cleaned = false;
+          for(int j=0; j<files.length(); j++){
+            if(QFile::exists(files[j])){ out << files[j]; }
+            else{ files.removeAt(j); j--; cleaned=true; } //file no longer available - remove it
+          }
+          if(cleaned){ settings->setValue(keys[i], files.join(":::")); } //update the registry
+          if(!out.isEmpty()){ break; } //already found files
+        }
+      }
+      //Make sure we don't have any duplicates before we return the list
+      out.removeDuplicates();
+      return out;
+    }
+    //----//
+
     void DirWidget::cutFiles(){
       QStringList sel = currentBrowser()->currentSelection();
       if(sel.isEmpty() || !canmodify){ return; }
