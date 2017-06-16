@@ -55,6 +55,8 @@ public:
     void showDirTreePane(bool show);
     bool showingDirTreePane();
 
+
+
 public slots:
 	//void LoadDir(QString dir, LFileInfoList list);
 	void LoadSnaps(QString basedir, QStringList snaps);
@@ -126,7 +128,8 @@ private slots:
 	void UpdateContextMenu();
 	void currentDirectoryChanged(bool widgetonly = false);
 	void dirStatusChanged(QString);
-	void setCurrentBrowser(QString);
+    void setCurrentBrowser(QString);
+//    void on_folderViewPane_clicked();
   
 	//Context Menu Functions
 	// - DIRECTORY operations

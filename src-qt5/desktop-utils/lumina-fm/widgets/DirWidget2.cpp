@@ -1,4 +1,4 @@
-        //===========================================
+    //===========================================
     //  Lumina-DE source code
     //  Copyright (c) 2015, Ken Moore
     //  Available under the 3-clause BSD license
@@ -151,6 +151,14 @@
     bool DirWidget::showingDirTreePane(){
         return showdirtree;
     }
+
+    /*
+    void DirWidget::on_folderViewPane_clicked(const QModelIndex &index){
+    QString tPath = dirtreeModel->fileInfo(index).absoluteFilePath();     // get what was clicked
+    ChangeDir(tPath);
+    }
+    */
+
 
 
     // ================
