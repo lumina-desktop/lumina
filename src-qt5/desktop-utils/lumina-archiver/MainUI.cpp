@@ -52,7 +52,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->action_Open->setShortcut(tr("CTRL+O"));
   ui->action_Quit->setShortcut(tr("CTRL+Q"));
   ui->actionExtract_All->setShortcut(tr("CTRL+E"));
-  
+
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->label_progress_icon->setVisible(false);
@@ -77,11 +77,11 @@ void MainUI::LoadArguments(QStringList args){
     if(args[i]=="--ax"){ autoExtract = true; continue; }
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
-      if(autoExtract){ 
-        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) ); 
+      if(autoExtract){
+        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
         connect(BACKEND, SIGNAL(ExtractSuccessful()), this, SLOT(close()) );
       }
-      BACKEND->loadFile(args[i]);  
+      BACKEND->loadFile(args[i]);
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
@@ -114,7 +114,7 @@ QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
   }else{
     for(int i=0; i<start->childCount(); i++){
       if(start->child(i)->whatsThis(0) == path){ return start->child(i); }
-      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }      
+      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }
     }
   }
   return 0; //nothing found
@@ -245,7 +245,7 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
-    disconnect(BACKEND, SIGNAL(fileLoaded()), this, SLOT(autoextractFiles()) );
+    disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
     QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
     if(dir.isEmpty()){ return; }
     ui->label_progress->setText(tr("Extracting..."));
