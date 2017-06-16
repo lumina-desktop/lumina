@@ -74,6 +74,12 @@
       dirtreeModel->setRootPath(folderTreePath);
       ui->folderViewPane->setModel(dirtreeModel);
       ui->splitter->setSizes( QList<int>() << this->width()/3 << 2*this->width()/3);
+      ui->folderViewPane->setHeaderHidden(true);
+      ui->folderViewPane->resizeColumnToContents(0);
+      ui->folderViewPane->setColumnHidden(1, true);
+      ui->folderViewPane->setColumnHidden(2, true);
+      ui->folderViewPane->setColumnHidden(3, true);
+
     //---------------------------------------------------//
 
       //Now update the rest of the UI
