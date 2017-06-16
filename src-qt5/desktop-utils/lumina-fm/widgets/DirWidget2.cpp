@@ -64,7 +64,7 @@
       connect(BW, SIGNAL(updateDirectoryStatus(QString)), this, SLOT(dirStatusChanged(QString)) );
       connect(BW, SIGNAL(hasFocus(QString)), this, SLOT(setCurrentBrowser(QString)) );
 
-      //----//
+    //---------------------------------------------------//
 
       // Create treeviewpane QFileSystemModel model and populate
       QString folderTreePath = QDir::rootPath();
@@ -73,7 +73,7 @@
       dirtreeModel->setRootPath(folderTreePath);
       //ui->folderViewPane->setModel(dirtreeModel)
 
-      //----//
+    //---------------------------------------------------//
 
       //Now update the rest of the UI
       canmodify = false; //initial value
@@ -142,7 +142,7 @@
       ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
     }
 
-    //----//
+    //---------------------------------------------------//
     //====================
     //         Folder Pane
     //====================
@@ -163,7 +163,7 @@
     ChangeDir(tPath);
     }
     */
-    //----//
+    //---------------------------------------------------//
 
 
     // ================
@@ -245,6 +245,7 @@
     kCopy= new QShortcut(QKeySequence(QKeySequence::Copy),this);
     kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
     kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
+    kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
     kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
     kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
     kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
@@ -260,6 +261,7 @@
     connect(kCopy, SIGNAL(activated()), this, SLOT(copyFiles()) );
     connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
     connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
+    connect(kExtract, SIGNAL(activated()), this, SLOT(autoextractfiles()) );
     connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
     connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
     connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
@@ -298,7 +300,8 @@
       cFModMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() );
     */
 
-    //----//
+    //---------------------------------------------------//
+      /*
       if(cOpenWithMenu==0){ cOpenWithMenu = new QMenu(this); }
           else{ cOpenWithMenu->clear(); }
           cOpenWithMenu->setTitle(tr("Open with..."));
@@ -326,7 +329,8 @@
 
               cOpenWithMenu->addAction(LXDG::findIcon(app[a]->icon), (app[a]->name), this, SLOT(p->start(program, arguments)) );}}
           cOpenWithMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Other..."), this, SLOT(runWithFiles()) );
-    //----//
+    */
+    //---------------------------------------------------//
       if(cFViewMenu==0){ cFViewMenu = new QMenu(this); }
       else{ cFViewMenu->clear(); }
       cFViewMenu->setTitle(tr("View Files..."));
@@ -568,6 +572,9 @@
           contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
           contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
           contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
+    //---------------------------------------------------//
+          contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify);
+    //---------------------------------------------------//
         }
         if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
           contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
@@ -704,7 +711,8 @@
 
     // - Selected FILE operations
 
-    //----//
+    //---------------------------------------------------//
+    /*
     QStringList DirWidget::getPreferredApplications(){
       QStringList out;
       //First list all the applications registered for that same mimetype
@@ -712,7 +720,7 @@
       out << LXDG::findAvailableAppsForMime(mime);
 
       //Now search the internal settings for that extension and find any applications last used
-      QStringList keys = settings->allKeys();
+     QStringList keys = settings->allKeys();
       for(int i=0; i<keys.length(); i++){
         if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
         if(keys[i].toLower() == fileEXT.toLower()){
@@ -731,7 +739,8 @@
       out.removeDuplicates();
       return out;
     }
-    //----//
+    */
+    //---------------------------------------------------//
 
     void DirWidget::cutFiles(){
       QStringList sel = currentBrowser()->currentSelection();
@@ -835,6 +844,17 @@
         }
       if(!list.isEmpty()){ emit PlayFiles(list); }
     }
+
+    //---------------------------------------------------//
+    void DirWidget::autoExtractFiles(){
+        QProcess *pExtract= new QProcess(this);
+        QString program = "lumina-archiver --ax";
+        QStringList file = currentBrowser()->currentSelection();
+        pExtract->start(program, QStringList() << file);
+
+    }
+    //---------------------------------------------------//
+
 
 
     //====================
