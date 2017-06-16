@@ -45,6 +45,7 @@ public:
 	QString id();
 	QString currentDir();
     QFileSystemModel *dirtreeModel;
+    QStringList PREFAPPS;
 
 	//View Settings
 	void setShowDetails(bool show);
@@ -54,6 +55,8 @@ public:
     void setFocusLineDir();
     void showDirTreePane(bool show);
     bool showingDirTreePane();
+
+
 
 public slots:
 	//void LoadDir(QString dir, LFileInfoList list);
@@ -80,11 +83,11 @@ private:
 	QLineEdit *line_dir;
 
 	//The context menu and associated items
-	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu;
+    QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
 
 	//The keyboard shortcuts for context menu items
-	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
-        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm;
+    QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
+        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract;
 
 	//Functions for internal use
 	void createShortcuts(); //on init only
@@ -92,6 +95,14 @@ private:
 
 	BrowserWidget* currentBrowser();
 	QStringList currentDirFiles(); //all the "files" available within the current dir/browser
+
+    QProcess *pExtract;
+
+    //OpenWithMenu
+    QString fileEXT, filePath;
+    QStringList mimetypes, keys, files;
+    //QStringList getPreferredApplications();
+
 
 private slots:
 	//UI BUTTONS/Actions
@@ -126,7 +137,8 @@ private slots:
 	void UpdateContextMenu();
 	void currentDirectoryChanged(bool widgetonly = false);
 	void dirStatusChanged(QString);
-	void setCurrentBrowser(QString);
+    void setCurrentBrowser(QString);
+//    void on_folderViewPane_clicked();
   
 	//Context Menu Functions
 	// - DIRECTORY operations
@@ -145,10 +157,12 @@ private slots:
 	void runFiles();
 	void runWithFiles();
 	//void attachToNewEmail();	
+    void autoExtractFiles();
 
 	// - Context-specific operations
 	void openInSlideshow();
-	void openMultimedia();
+    void openMultimedia();
+
 
 signals:
 	//Directory loading/finding signals
