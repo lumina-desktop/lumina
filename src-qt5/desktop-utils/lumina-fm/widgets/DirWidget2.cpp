@@ -65,8 +65,6 @@
       connect(BW, SIGNAL(updateDirectoryStatus(QString)), this, SLOT(dirStatusChanged(QString)) );
       connect(BW, SIGNAL(hasFocus(QString)), this, SLOT(setCurrentBrowser(QString)) );
 
-    //---------------------------------------------------//
-
       // Create treeviewpane QFileSystemModel model and populate
       QString folderTreePath = QDir::rootPath();
       dirtreeModel = new QFileSystemModel(this);
@@ -79,8 +77,6 @@
       ui->folderViewPane->setColumnHidden(1, true);
       ui->folderViewPane->setColumnHidden(2, true);
       ui->folderViewPane->setColumnHidden(3, true);
-
-    //---------------------------------------------------//
 
       //Now update the rest of the UI
       canmodify = false; //initial value
@@ -149,7 +145,6 @@
       ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
     }
 
-    //---------------------------------------------------//
     //====================
     //         Folder Pane
     //====================
@@ -168,9 +163,6 @@
       QString tPath = dirtreeModel->fileInfo(index).absoluteFilePath();     // get what was clicked
       ChangeDir(tPath);
     }
-
-    //---------------------------------------------------//
-
 
     // ================
     //    PUBLIC SLOTS
@@ -578,9 +570,7 @@
           contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
           contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
           contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
-    //---------------------------------------------------//
           if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-    //---------------------------------------------------//
         }
         if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
           contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
@@ -854,7 +844,6 @@
       if(!list.isEmpty()){ emit PlayFiles(list); }
     }
 
-    //---------------------------------------------------//
     void DirWidget::autoExtractFiles(){
         QStringList files = currentBrowser()->currentSelection();
 	qDebug() << "Starting auto-extract:" << files;
@@ -866,9 +855,6 @@
             QString runline = program + files[i];
         pExtract->start(runline);*/
     }
-    //---------------------------------------------------//
-
-
 
     //====================
     //         PROTECTED
