@@ -20,7 +20,7 @@ Browser::Browser(QObject *parent) : QObject(parent){
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
-  connect(this, SIGNAL(threadDone(QString, QByteArray)), this, SLOT(futureFinished(QString, QByteArray))); //will always be between different threads
+  connect(this, SIGNAL(threadDone(QString, QImage)), this, SLOT(futureFinished(QString, QImage))); //will always be between different threads
 }
 
 Browser::~Browser(){
@@ -53,20 +53,25 @@ bool Browser::showingThumbnails(){
 //   PRIVATE
 void Browser::loadItem(QString info, Browser *obj){
   //qDebug() << "LoadItem:" << info;
-  QByteArray bytes;
+  QImage pix;
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
     QFile file(info);
     if(file.open(QIODevice::ReadOnly)){
-      bytes = file.readAll();
+      QByteArray bytes = file.readAll();
       file.close();
+      pix.loadFromData(bytes);
+      if(bytes.size() > (512*1024) ){ //more than 512 KB
+        pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+      }
     }
   }
+
   //qDebug() << " - done with item:" << info;
-  obj->emit threadDone(info, bytes);
+  obj->emit threadDone(info, pix);
 }
 
 QIcon Browser::loadIcon(QString icon){
-  if(!mimeIcons.contains(icon)){ 
+  if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
 
@@ -76,7 +81,7 @@ QIcon Browser::loadIcon(QString icon){
 
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
-  if(file.startsWith(currentDir+"/") ){ 
+  if(file.startsWith(currentDir+"/") ){
     if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file, this); } //file modified but not removed
     else{ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); } //file removed - need to update entire dir
   }else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
@@ -87,20 +92,20 @@ void Browser::dirChanged(QString dir){
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
-void Browser::futureFinished(QString name, QByteArray icon){
+void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
   qDebug() << "Future Finished:" << name;
       QIcon ico;
       LFileInfo info(name);
-      if(!icon.isEmpty()){
+      if(!icon.isNull()){
         //qDebug() << " -- Data:";
-        QPixmap pix;
-        if(pix.loadFromData(icon) ){ ico.addPixmap(pix); }
+        QPixmap pix = QPixmap::fromImage(icon);
+        ico.addPixmap(pix);
       }else if(info.isDir()){
         //qDebug() << " -- Folder:";
-        ico = loadIcon("folder"); 
+        ico = loadIcon("folder");
       }
-      if(ico.isNull()){ 
+      if(ico.isNull()){
 	//qDebug() << " -- MimeType:" << info.fileName() << info.mimetype();
         ico = loadIcon(info.iconfile());
       }
@@ -116,8 +121,8 @@ void Browser::loadDirectory(QString dir){
   qDebug() << "Load Directory" << dir;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
     oldFiles.clear();
-    emit clearItems(); 
-  } 
+    emit clearItems();
+  }
   currentDir = dir; //save this for later
   //clean up the watcher first
   QStringList watched; watched << watcher->files() << watcher->directories();
@@ -141,7 +146,7 @@ void Browser::loadDirectory(QString dir){
         QtConcurrent::run(this, &Browser::loadItem, path, this);
       }else{
         //No special icon loading - just skip the file read step
-        futureFinished(path, QByteArray()); //loadItem(path, this);
+        futureFinished(path, QImage()); //loadItem(path, this);
       }
     }
     watcher->addPath(directory.absolutePath());
