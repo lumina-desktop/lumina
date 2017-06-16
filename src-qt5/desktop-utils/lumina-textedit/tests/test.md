@@ -8,9 +8,13 @@
 *Italic*
 
 **Bold**
-
 ***Bold and Italic***
+***a***
 
+_Italic_
+__Bold__
+___Bold and Italic___
+___a___
 [link](link)
 
 Some [link](link) within a text block.
@@ -20,6 +24,10 @@ Some [text](link) within a text block with another [Link](Link) in it.
 Horizontal Rules
 ---
 ***
+___
+* * *
+_ _  _
+*  *    *
 
 some `in-line code block` test in `a line`.
 
