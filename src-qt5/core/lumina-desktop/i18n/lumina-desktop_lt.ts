@@ -261,12 +261,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished"></translation>
+        <translation>Žmogus su įstatymu yra dauguma.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
         <source>Don't expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesitikėk padrąsinti silpnus, žemindamas stiprius.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pareiga nėra kolektyvinis dalykas, tai yra asmeninis dalykas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
@@ -316,7 +316,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra svarbu kaip lėtai judi tol, kol nenustoji judėjęs.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
@@ -326,17 +326,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation>Prisiminkite, niekas negali jūsų priversti jaustis menkesniais, be jūsų pačių sutikimo.</translation>
+        <translation>Prisimink, niekas be tavo paties sutikimo negali priversti tavęs jaustis menkesniu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>Svarbu ne nugyventų gyvenimo metų skaičius, o gyvenimas nugyventuose metuose.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation>Arba parašykite ką nors apie ką verta skaityti, arba padarykite ką nors apie ką verta rašyti.</translation>
+        <translation>Arba parašyk ką nors apie ką verta skaityti, arba padaryk ką nors apie ką verta rašyti.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
@@ -361,7 +361,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>Do, or do not. There is no 'try'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daryti arba nedaryti. Nėra "bandyti".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Juodosios skylės yra ten, kur Dievas padalijo iš nulio.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
