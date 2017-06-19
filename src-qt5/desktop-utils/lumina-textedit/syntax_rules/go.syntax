@@ -1,14 +1,14 @@
 # Syntax support file for the Lumina Text Editor
 # ===================================
-#  Javascript language support rules
-#  Written by Ken Moore <ken@ixsystems.com>
+#  Go language support rules
+#  Written by Zackary Welch <zwelch@ixsystems.com>
 #  Released under the 2-clause BSD license
 # ===================================
 
 {
 	"meta": {
-		"name": "Javascript",
-		"file_suffix": ["js"]
+		"name": "Go",
+		"file_suffix": ["go"]
 	},
 	"format": {
 		"line_wrap": false,
@@ -16,7 +16,7 @@
 	},
 	"rules": [{
 			"name": "keywords",
-			"words": ["export","function", "import", "from", "let", "if", "return", "for", "while"],
+			"words": ["break", "default", "func", "interface", "select", "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var", "uint32", "uint64", "float32", "float64"],
 			"foreground": "colors/keyword"
 		},
 		{
@@ -32,13 +32,8 @@
 		},
 		{
 			"name": "numbers",
-			"regex": "\\b[0-9]+\\.?[0-9]*\\b",
+			"regex": "\\b[0-9]+\\.?[0-9]*\\b|[0-9]+e[\\+\\-]?[0-9]+",
 			"foreground": "colors/altkeyword"
-		},
-		{
-			"name": "attributes",
-			"regex": "(\\.)[A-Za-z_][A-Za-z0-9_]*(?![\\(a-zA-Z0-9])",
-			"foreground": "colors/function"
 		},
 		{
 			"name": "function names",
