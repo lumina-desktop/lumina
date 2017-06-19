@@ -415,8 +415,7 @@ void LSession::updateDesktops(){
       QString oldname;
       for(int i=0; i<old.length(); i++){
         QString tmp = old[i].section("/",0,0).section("-",1,-1); //old desktop ID
-        if(tmp=="default"){ continue; } //always skip this one
-        else if(lastused.contains(tmp)){
+        if(lastused.contains(tmp)){
           oldname = tmp; break; //use the first screen that was last used
         }
       }
