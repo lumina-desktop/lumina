@@ -43,7 +43,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
 }
 
 PlainTextEditor::~PlainTextEditor(){
-	
+
 }
 
 void PlainTextEditor::showLineNumbers(bool show){
@@ -60,13 +60,14 @@ void PlainTextEditor::LoadSyntaxRule(QString type){
       SYNTAX->loadRules(files[i]);
       break;
     }
+    if(i==files.length()-1){ SyntaxFile dummy; SYNTAX->loadRules(dummy); }
   }
   SYNTAX->rehighlight();
 }
 
 void PlainTextEditor::updateSyntaxColors(){
   SYNTAX->reloadRules();
-  SYNTAX->rehighlight();	
+  SYNTAX->rehighlight();
 }
 
 //File loading/setting options
@@ -77,7 +78,7 @@ void PlainTextEditor::LoadFile(QString filepath){
   this->clear();
   QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){
-    if(files[i].supportsFile(filepath) ){ 
+    if(files[i].supportsFile(filepath) ){
       files[i].SetupDocument(this);
       SYNTAX->loadRules(files[i]);
       break;
@@ -125,7 +126,7 @@ QString PlainTextEditor::currentFile(){
 }
 
 bool PlainTextEditor::hasChange(){
-  return hasChanges;	
+  return hasChanges;
 }
 
 //Functions for managing the line number widget
@@ -171,7 +172,7 @@ void PlainTextEditor::paintLNW(QPaintEvent *ev){
     bTop = bBottom;
   }
 }
-	
+
 //==============
 //       PRIVATE
 //==============
@@ -190,7 +191,7 @@ void PlainTextEditor::clearMatchData(){
 void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar startch){
   if(forward){ matchleft = fromPos;  }
   else{ matchright = fromPos; }
-  
+
   int nested = 1; //always start within the first nest (the primary nest)
   int tmpFromPos = fromPos;
   //if(!forward){ tmpFromPos++; } //need to include the initial location
@@ -205,7 +206,7 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       }else{ break; }
     }else{
       QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
-      if(!cur.isNull()){ 
+      if(!cur.isNull()){
         QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position()+1);
         //qDebug() << "Found backwards match:" << nested << startch << ch << mid;
         //qDebug() << doc.mid(cur.position(),1) << doc.mid(tmpFromPos,1);
@@ -215,10 +216,10 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       }else{ break; }
     }
   }
-  
+
   //Now highlight the two characters
-  QList<QTextEdit::ExtraSelection> sels = this->extraSelections();	
-  if(matchleft>=0){ 
+  QList<QTextEdit::ExtraSelection> sels = this->extraSelections();
+  if(matchleft>=0){
     QTextEdit::ExtraSelection sel;
     if(matchright>=0){ sel.format.setBackground( QColor(settings->value("colors/bracket-found").toString()) ); }
     else{ sel.format.setBackground( QColor(settings->value("colors/bracket-missing").toString()) ); }
@@ -238,7 +239,7 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       if(!forward){ cur.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor); }
       else{ cur.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor); }
     sel.cursor = cur;
-    sels << sel;	  
+    sels << sel;
   }
   this->setExtraSelections(sels);
 }
@@ -327,7 +328,7 @@ void PlainTextEditor::fileChanged(){
   text.append("\n");
   text.append( tr("(Note: You will lose all currently-unsaved changes)") );
   text.append("\n\n%1");
-  
+ 
   if(!update){
     update = (QMessageBox::Yes == QMessageBox::question(this, tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
   }

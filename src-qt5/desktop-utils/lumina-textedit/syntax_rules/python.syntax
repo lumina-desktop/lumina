@@ -7,7 +7,7 @@
 
 {
 	"meta": {
-		"name": "Python (Experimental)",
+		"name": "Python",
 		"file_suffix": ["py", "pyc"]
 	},
 	"format": {

@@ -119,7 +119,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
-	
+
 }
 
 void MainUI::LoadArguments(QStringList args){ //CLI arguments
@@ -157,7 +157,7 @@ void MainUI::updateIcons(){
   ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
   ui->tool_hideReplaceGroup->setIcon(LXDG::findIcon("dialog-close",""));
   //ui->tool_find_next->setIcon(LXDG::findIcon(""));
-	
+
   QTimer::singleShot(0,colorDLG, SLOT(updateIcons()) );
 }
 
@@ -308,7 +308,7 @@ void MainUI::wrapLines(bool wrap){
   /*for(int i=0; i<tabWidget->count(); i++){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-  }*/	
+  }*/
 }
 
 void MainUI::ModifyColors(){
@@ -394,7 +394,7 @@ void MainUI::tabDraggedOut(int tab, Qt::DropAction act){
 void MainUI::closeFindReplace(){
   ui->groupReplace->setVisible(false);
   PlainTextEditor *cur = currentEditor();
-  if(cur!=0){ cur->setFocus(); }	
+  if(cur!=0){ cur->setFocus(); }
 }
 
 void MainUI::openFind(){
@@ -402,8 +402,8 @@ void MainUI::openFind(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
-  ui->line_find->setFocus();	
+  ui->line_replace->setText("");
+  ui->line_find->setFocus();
 }
 
 void MainUI::openReplace(){
@@ -411,7 +411,7 @@ void MainUI::openReplace(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
+  ui->line_replace->setText("");
   ui->line_replace->setFocus();
 }
 

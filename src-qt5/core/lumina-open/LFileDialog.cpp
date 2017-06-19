@@ -24,7 +24,7 @@ LFileDialog::LFileDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LFileDia
 }
 
 LFileDialog::~LFileDialog(){
-	
+
 }
 
 // ----------
@@ -67,7 +67,7 @@ QStringList LFileDialog::getPreferredApplications(){
   //First list all the applications registered for that same mimetype
   QString mime = fileEXT;
   out << LXDG::findAvailableAppsForMime(mime);
-	
+
   //Now search the internal settings for that extension and find any applications last used
   QStringList keys = settings->allKeys();
   for(int i=0; i<keys.length(); i++){
@@ -99,8 +99,8 @@ void LFileDialog::setPreferredApplication(QString desktopfile){
       newfiles << desktopfile;
       //Only keep the 5 most recent preferred applications per extension
       for(int j=0; j<5 && j<files.length(); j++){
-      	  newfiles << files[j];	
-      }   
+      	  newfiles << files[j];
+      }
       settings->setValue(keys[i], newfiles.join(":::"));
       return;
     }
@@ -194,7 +194,7 @@ void LFileDialog::generateAppList(bool shownetwork){
         if(tmp.removeDuplicates() > 0 ){
           // also put this app in the preferred list
           //qDebug() << "Mimetype match:" << mimetypes << app[a]->mimeList;
-	  PREFAPPS.append(app[a]->filePath);	      
+	  PREFAPPS.append(app[a]->filePath);
 	  //If this is the first preferred app found - select this app initially
 	  if(ui->combo_apps->currentIndex()<=0){ ui->combo_apps->setCurrentIndex(ui->combo_apps->count()-1); }
         }
@@ -248,7 +248,7 @@ void LFileDialog::on_tool_ok_clicked(){
   appSelected = true;
   setDefault = ui->check_default->isChecked();
   if(ui->radio_custom->isChecked()){
-    appExec = ui->line_bin->text();  
+    appExec = ui->line_bin->text();
   }else if(ui->radio_rec->isChecked()){
     //application selected
     XDGDesktop app(PREFAPPS[ui->combo_rec->currentIndex()]);
