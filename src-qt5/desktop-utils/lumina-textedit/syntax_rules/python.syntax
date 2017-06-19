@@ -38,7 +38,7 @@
 		},
 		{
 			"name": "numbers",
-			"regex" : "\\b[0-9\\.]+\\b",
+			"regex" : "\\b[0-9]+\\.?[0-9]*\\b",
 			"foreground": "colors/altkeyword"
 		},
 		{
