@@ -1,6 +1,6 @@
 # Syntax support file for the Lumina Text Editor
 # ===================================
-#  XML language support rules
+#  HTML language support rules
 #  Written by Ken Moore <ken@ixsystems.com>
 #  Released under the 2-clause BSD license
 # ===================================
@@ -13,7 +13,6 @@
 	"format": {
 		"line_wrap": false,
 		"highlight_whitespace_eol" : true,
-		"columns_per_line" : 70,
 		"font_type" : "monospace",
 		"tab_width": 8
 	},
