@@ -8,7 +8,7 @@
 {
 	"meta": {
 		"name": "JSON",
-		"file_suffix": ["json"]
+		"file_suffix": ["json", "syntax"]
 	},
 	"format": {
 		"line_wrap": false,
