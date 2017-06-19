@@ -21,41 +21,41 @@
 			"foreground": "colors/keyword"
 		},
 		{
-			"name": "bold",
-			"regex" : "[\\*]{2}[^\\*\\_\\s]+[\\*]{2}",
-			"foreground": "colors/altkeyword",
-			"font_weight" : "bold"
-		},
-		{
-			"name": "italic",
-			"regex" : "[\\*]{1}[^\\*\\_\\s]+[\\*]{1}",
-			"foreground": "colors/altkeyword",
-			"font_style" : "italic"
-		},
-		{
 			"name": "bold and italic",
-			"regex" : "[\\*]{3}[^\\s]*[^\\*\\_]+[^\\s]*[\\*]{3}",
+			"regex" : "[\\*]{3}(?!\\s)[^\\*\\_]+(?!\\s)[\\*]{3}",
 			"foreground": "colors/altkeyword",
 			"font_weight" : "bold",
 			"font_style" : "italic"
 		},
 		{
 			"name": "bold",
-			"regex" : "[_]{2}[^\\*\\_\\s]+[_]{2}",
+			"regex" : "[\\*]{2}(?!\\s)[^\\*\\_]+(?!\\s)[\\*]{2}",
 			"foreground": "colors/altkeyword",
 			"font_weight" : "bold"
 		},
 		{
 			"name": "italic",
-			"regex" : "[_]{1}[^\\*\\_\\s]+[_]{1}",
+			"regex" : "[\\*](?!\\s){1}[^\\*\\_]+(?!\\s)[\\*]{1}",
 			"foreground": "colors/altkeyword",
 			"font_style" : "italic"
 		},
 		{
 			"name": "bold and italic",
-			"regex" : "[_]{3}[^\\s]*[^\\*\\_]+[^\\s]*[_]{3}",
+			"regex" : "[_]{3}(?!\\s)[^\\*\\_]+(?!\\s)[_]{3}",
 			"foreground": "colors/altkeyword",
 			"font_weight" : "bold",
+			"font_style" : "italic"
+		},
+		{
+			"name": "bold",
+			"regex" : "[_]{2}(?!\\s)[^\\*\\_]+(?!\\s)[_]{2}",
+			"foreground": "colors/altkeyword",
+			"font_weight" : "bold"
+		},
+		{
+			"name": "italic",
+			"regex" : "[_]{1}(?!\\s)[^\\*\\_]+(?!\\s)[_]{1}",
+			"foreground": "colors/altkeyword",
 			"font_style" : "italic"
 		},
 		{
@@ -88,6 +88,16 @@
 			"name" : "block quote",
 			"regex" : "^(\\> )+",
 			"foreground" : "colors/keyword"
+		},
+		{
+			"name" : "lists",
+			"regex" : "^\\s*([0-9].|[\\*\\+\\-]{1})\\s+",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
 		}
 	]
 }
