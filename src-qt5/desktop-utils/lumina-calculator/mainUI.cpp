@@ -60,7 +60,7 @@ mainUI::mainUI() : QMainWindow(), ui(new Ui::mainUI()){
   escShortcut = new QShortcut(Qt::Key_Escape, this);
   connect(escShortcut, SIGNAL(activated()), this, SLOT(clear_calc()) );
   quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
-  connect(quitShortcut, SIGNAL(activated()), this, SLOT(on_quitShortcut_Triggered()) );
+  connect(quitShortcut, SIGNAL(activated()), this, SLOT(quitShortcut_Triggered()) );
 }
 
 mainUI::~mainUI(){
@@ -169,7 +169,7 @@ void mainUI::copy_to_clipboard(QListWidgetItem *it){
 
 void mainUI::checkInput(const QString &str){
   if(str.length()==1 && ui->list_results->count()>0){
-    if(OPS.contains(str)){ 
+    if(OPS.contains(str)){
       QString lastresult = ui->list_results->item( ui->list_results->count()-1)->text().section("]",0,0).section("[",-1).simplified();
       ui->line_eq->setText( lastresult+str);
     }
@@ -216,8 +216,8 @@ double mainUI::performSciOperation(QString func, double arg){
   else if(func=="sinh"){ return ::sinh(arg); }
   else if(func=="cosh"){ return ::cosh(arg); }
   else if(func=="tanh"){ return ::tanh(arg); }
-  else{ 
-    qDebug() << "Unknown Scientific Function:" << func; 
+  else{
+    qDebug() << "Unknown Scientific Function:" << func;
     return BADVALUE;
   }
   //Special cases:
@@ -292,7 +292,7 @@ double mainUI::strToNumber(QString str){
   for(int i=0; i<symbols.length(); i++){
     int tmp = str.indexOf(symbols[i]);
     while(tmp==0 || (tmp>0 && str[tmp-1].toLower()=='e') ){ tmp = str.indexOf(symbols[i], tmp+1); } //catch scientific notation
-    if(sym < tmp){ 
+    if(sym < tmp){
       //qDebug() << " - found:" << tmp << sym;
       sym = tmp;
     }
@@ -312,7 +312,7 @@ double mainUI::strToNumber(QString str){
   //qDebug() << " - Found Number:" << str;// << str.toDouble();
   if(str=="\u03C0"){ return PI; }
   //else if(str.endsWith("\u03C0")){
-     //return performOperation( strToNumber(str.section("\u03C0",0,-2)), PI, '*'); 
+     //return performOperation( strToNumber(str.section("\u03C0",0,-2)), PI, '*');
   else if(str.contains("\u03C0")){
      qDebug() << " Has Pi:" << str.count("\u03C0");
     //Pi is mixed into the number - need to multiply it all out
@@ -336,7 +336,7 @@ QString mainUI::getHistory(int number){
   QString ans = ui->list_results->item(number-1)->text().section("=",0,0).section("]",-1).simplified();
   QString eq = ui->list_results->item(number-1)->text().section("[",-1).section("]",0,0).simplified();
   //See if the text answer is accurate enough (does not look rounded)
-  if(ans.length()<7){ 
+  if(ans.length()<7){
     return ("("+ans+")"); //short enough answer that it was probably not rounded
   }else{
     //need to re-calculate the last equation instead for exact result
@@ -344,7 +344,6 @@ QString mainUI::getHistory(int number){
   }
 }
 
-void mainUI::on_quitShortcut_Triggered(){
+void mainUI::quitShortcut_Triggered(){
     QApplication::quit();
 }
-
