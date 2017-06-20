@@ -14,6 +14,7 @@ int main(int argc, char** argv){
     qDebug() << "  - isPrimary:" << devList[i].isPrimary();
     qDebug() << "  - isAutomatic:" << devList[i].isAutomatic();
     qDebug() << "  - Current Geometry:" << devList[i].currentGeometry();
+    qDebug() << "  - Physical Size (mm):" << devList[i].physicalSizeMM();
     qDebug() << "  - Available Resolutions:" << devList[i].availableResolutions();
   }
   return 0;

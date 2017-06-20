@@ -38,7 +38,7 @@ struct p_objects{
 	  primary = automatic = false;
 	  monitor_atom = 0;
 	}*/
-	
+
 };
 
 class OutputDevice{
@@ -61,14 +61,15 @@ public:
 
 	//Information
 	QString ID();
-	
+
 	bool isEnabled();
 	bool isPrimary();
 	bool isAutomatic();
 	QList<QSize> availableResolutions();
 	QSize currentResolution(); //could be different from geometry.size() if things like panning/rotation are enabled
 	QRect currentGeometry();
-	
+	QSize physicalSizeMM();
+
 	//Modification
 	bool setAsPrimary(bool);
 	bool disable();
@@ -78,7 +79,7 @@ public:
 
 	void updateInfoCache(); //Run this after all modification functions to refresh the current info for this device
 
-	//Now define a simple public_objects class so that each implementation 
+	//Now define a simple public_objects class so that each implementation
 	//  has a storage container for placing semi-private objects as needed
 	//class p_objects; //forward declaration - defined in the .cpp file
 	p_objects p_obj;
@@ -92,7 +93,7 @@ public:
 	//Simplification functions for dealing with multiple monitors
 	void setPrimaryMonitor(QString id);
 	void disableMonitor(QString id);
-	//void enableMonitor(QString id, 
+	//void enableMonitor(QString id, QRect geom);
 
 };
 #endif
