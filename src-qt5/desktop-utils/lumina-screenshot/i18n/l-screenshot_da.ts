@@ -162,27 +162,27 @@
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
         <translation>Kunne ikke gemme skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>Skærmbilledet kunne ikke gemmes. Tjek venligst mappetilladelserne eller vælg en anden mappe</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
         <translation>Gem skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="315"/>
+        <location filename="../MainUI.cpp" line="322"/>
         <source>Unsaved Screenshot</source>
         <translation>Ugemt skærmbillede</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Det aktuelle skærmbillede er endnu ikke blevet gemt. Vil du gemme eller forkaste dine ændringer?</translation>
     </message>
@@ -197,7 +197,7 @@
         <translation>Kvikgem</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG-filer (*.png);;Alle filer (*)</translation>
     </message>

@@ -32,68 +32,68 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="56"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="98"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="62"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="116"/>
         <source>Click to Set</source>
         <translation>Clique para definir</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
         <source>Launch %1</source>
         <translation type="unfinished">Lançar %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="103"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
         <source>Open</source>
         <translation type="unfinished">Abrir</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="104"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="106"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
         <source>View Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="107"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="109"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="111"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>Copy</source>
         <translation type="unfinished">Copiar</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="113"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>Cut</source>
         <translation type="unfinished">Cortar</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="114"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Delete</source>
         <translation type="unfinished">Excluir</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
         <source>Select Application</source>
         <translation>Selecionar aplicativo</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="174"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="243"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
         <source>New Filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -101,87 +101,87 @@
 <context>
     <name>AppMenu</name>
     <message>
-        <location filename="../AppMenu.cpp" line="45"/>
+        <location filename="../AppMenu.cpp" line="48"/>
         <source>Desktop</source>
         <translation>Área de trabalho</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="82"/>
+        <location filename="../AppMenu.cpp" line="85"/>
         <source>Manage Applications</source>
         <translation>Gerenciar aplicativos</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="87"/>
+        <location filename="../AppMenu.cpp" line="90"/>
         <source>Control Panel</source>
         <translation>Painel de controle</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="97"/>
+        <location filename="../AppMenu.cpp" line="100"/>
         <source>Multimedia</source>
         <translation>Multimídia</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="98"/>
+        <location filename="../AppMenu.cpp" line="101"/>
         <source>Development</source>
         <translation>Desenvolvimento</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="99"/>
+        <location filename="../AppMenu.cpp" line="102"/>
         <source>Education</source>
         <translation>Educação</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="100"/>
+        <location filename="../AppMenu.cpp" line="103"/>
         <source>Games</source>
         <translation>Jogos</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="101"/>
+        <location filename="../AppMenu.cpp" line="104"/>
         <source>Graphics</source>
         <translation>Gráficos</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="102"/>
+        <location filename="../AppMenu.cpp" line="105"/>
         <source>Network</source>
         <translation>Redes</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="103"/>
+        <location filename="../AppMenu.cpp" line="106"/>
         <source>Office</source>
         <translation>Escritório</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="104"/>
+        <location filename="../AppMenu.cpp" line="107"/>
         <source>Science</source>
         <translation>Ciências</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="105"/>
+        <location filename="../AppMenu.cpp" line="108"/>
         <source>Settings</source>
         <translation>Configurações</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="106"/>
+        <location filename="../AppMenu.cpp" line="109"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="107"/>
+        <location filename="../AppMenu.cpp" line="110"/>
         <source>Utility</source>
         <translation>Utilitários</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="108"/>
+        <location filename="../AppMenu.cpp" line="111"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="109"/>
+        <location filename="../AppMenu.cpp" line="112"/>
         <source>Unsorted</source>
         <translation>Não organizados</translation>
     </message>
     <message>
-        <location filename="../AppMenu.cpp" line="38"/>
+        <location filename="../AppMenu.cpp" line="41"/>
         <source>Applications</source>
         <translation>Aplicativos</translation>
     </message>
@@ -199,287 +199,287 @@
         <translation>Iniciando o ambiente de trabalho do Lumina...</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="15"/>
+        <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
         <translation>Versão %1</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="39"/>
+        <location filename="../BootSplash.cpp" line="41"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
         <translation>Este ambiente de trabalho é alimentado por café, café e mais café.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="41"/>
+        <location filename="../BootSplash.cpp" line="43"/>
         <source>Keep up with desktop news!</source>
         <translation>Mantenha-se informado com notícias do ambiente de trabalho!</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="43"/>
+        <location filename="../BootSplash.cpp" line="45"/>
         <source>There is a full handbook of information about the desktop available online.</source>
         <translation>Existe um manual completo de informações sobre o ambiente de trabalho disponível on-line.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="45"/>
+        <location filename="../BootSplash.cpp" line="47"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
         <translation>Quer mudar a interface? Tudo é personalizável na configuração do ambiente de trabalho!</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="47"/>
+        <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
         <translation>A Lumina pode facilmente reproduzir a interface da maioria dos outros ambientes de trabalho.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="49"/>
+        <location filename="../BootSplash.cpp" line="51"/>
         <source>This desktop is generously sponsored by iXsystems</source>
         <translation>Este ambiente de trabalho é generosamente patrocinado pela iXsystems</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="51"/>
+        <location filename="../BootSplash.cpp" line="53"/>
         <source>I have never been hurt by what I have not said</source>
         <translation>Eu nunca fui ferido pelo o que eu não disse</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="53"/>
+        <location filename="../BootSplash.cpp" line="55"/>
         <source>Gotta have more cowbell!</source>
         <translation>Tenho que ter mais sinos tocando!</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="55"/>
+        <location filename="../BootSplash.cpp" line="57"/>
         <source>Everything has its beauty but not everyone sees it.</source>
         <translation>Há beleza em tudo, mas nem todos a vêem.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="57"/>
+        <location filename="../BootSplash.cpp" line="59"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
         <translation>Diante de Deus, todos somos igualmente sábios - e igualmente tolos.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="59"/>
+        <location filename="../BootSplash.cpp" line="61"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
         <translation>Não podemos fazer tudo de uma vez, mas podemos fazer algo de uma vez.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="61"/>
+        <location filename="../BootSplash.cpp" line="63"/>
         <source>One with the law is a majority.</source>
         <translation>Um seguindo a lei é uma maioria.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="63"/>
+        <location filename="../BootSplash.cpp" line="65"/>
         <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation>Não espere fortalecer o fraco puxando para baixo o forte.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="65"/>
+        <location filename="../BootSplash.cpp" line="67"/>
         <source>You can&apos;t know too much, but you can say too much.</source>
         <translation>Você não pode saber muito, mas pode dizer demais.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="67"/>
+        <location filename="../BootSplash.cpp" line="69"/>
         <source>Duty is not collective; it is personal.</source>
         <translation>O dever não é coletivo; é pessoal.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="69"/>
+        <location filename="../BootSplash.cpp" line="71"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
         <translation>Qualquer sociedade que daria um pouco de liberdade para ganhar um pouco de segurança não merecerá nenhum e perderá ambos.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="71"/>
+        <location filename="../BootSplash.cpp" line="73"/>
         <source>Never trust a computer you can’t throw out a window.</source>
         <translation>Nunca confie em um computador que você não pode jogar para fora de uma janela.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="73"/>
+        <location filename="../BootSplash.cpp" line="75"/>
         <source>Study the past if you would define the future.</source>
         <translation>Estude o passado se você for definir o futuro.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="75"/>
+        <location filename="../BootSplash.cpp" line="77"/>
         <source>The way to get started is to quit talking and begin doing.</source>
         <translation>A maneira de começar é parar de falar e começar a fazer.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="77"/>
+        <location filename="../BootSplash.cpp" line="79"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
         <translation>Peça e lhe será dado; procure, e você encontrará; bata e a porta será aberta para você.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="79"/>
+        <location filename="../BootSplash.cpp" line="81"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
         <translation>Comece onde está. Use o que você tem. Faça o que possa.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="81"/>
+        <location filename="../BootSplash.cpp" line="83"/>
         <source>A person who never made a mistake never tried anything new.</source>
         <translation>Uma pessoa que nunca cometeu um erro nunca tentou algo novo.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="83"/>
+        <location filename="../BootSplash.cpp" line="85"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
         <translation>Não importa como lentamente você vai, contanto que você não pare.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="85"/>
+        <location filename="../BootSplash.cpp" line="87"/>
         <source>Do what you can, where you are, with what you have.</source>
         <translation>Faça o que puder, onde estiver, com o que tem.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="87"/>
+        <location filename="../BootSplash.cpp" line="89"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
         <translation>Lembre-se que ninguém pode fazer você se sentir inferior sem o seu consentimento.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="89"/>
+        <location filename="../BootSplash.cpp" line="91"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
         <translation>Não são os anos em sua vida que contam. É a vida em seus anos.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="91"/>
+        <location filename="../BootSplash.cpp" line="93"/>
         <source>Either write something worth reading or do something worth writing.</source>
         <translation>Ou escreva algo que vale a pena ler, ou façar algo que vale a pena escrever.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="93"/>
+        <location filename="../BootSplash.cpp" line="95"/>
         <source>The only way to do great work is to love what you do.</source>
         <translation>A única maneira de fazer um excelente trabalho é amar o que você faz.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="95"/>
+        <location filename="../BootSplash.cpp" line="97"/>
         <source>Political correctness is tyranny with manners.</source>
         <translation>Politicamente correto é tirania com maneiras.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="97"/>
+        <location filename="../BootSplash.cpp" line="99"/>
         <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation>Só duas coisas são infinitas, o universo e a estupidez humana, e eu não tenho certeza sobre o primeiro.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="99"/>
+        <location filename="../BootSplash.cpp" line="101"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
         <translation>Acho que quanto mais trabalho duro, mais sorte tenho.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="101"/>
+        <location filename="../BootSplash.cpp" line="103"/>
         <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation>Faça, ou não. Não há &apos;tentativa&apos;.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="103"/>
+        <location filename="../BootSplash.cpp" line="105"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
         <translation>Um matemático é um dispositivo para transformar café em teoremas.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="105"/>
+        <location filename="../BootSplash.cpp" line="107"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
         <translation>As pessoas boas não precisam de leis para dizer como agir com responsabilidade, enquanto as pessoas más vão encontrar uma maneira de contornar as leis.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="107"/>
+        <location filename="../BootSplash.cpp" line="109"/>
         <source>Black holes are where God divided by zero.</source>
         <translation>Buracos negros são onde Deus é dividido por zero.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="109"/>
+        <location filename="../BootSplash.cpp" line="111"/>
         <source>It&apos;s kind of fun to do the impossible.</source>
         <translation>É meio divertido fazer o impossível.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="111"/>
+        <location filename="../BootSplash.cpp" line="113"/>
         <source>Knowledge speaks, but wisdom listens.</source>
         <translation>O conhecimento fala, mas a sabedoria ouve.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="113"/>
+        <location filename="../BootSplash.cpp" line="115"/>
         <source>A witty saying proves nothing.</source>
         <translation>Um ditado espirituoso não prova nada.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="115"/>
+        <location filename="../BootSplash.cpp" line="117"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
         <translation>Sucesso geralmente vem para aqueles que estão muito ocupados para estar procurando por ele.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="117"/>
+        <location filename="../BootSplash.cpp" line="119"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
         <translation>O silêncio bem medido tem mais eloquência do que o discurso.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="119"/>
+        <location filename="../BootSplash.cpp" line="121"/>
         <source>I have never let my schooling interfere with my education.</source>
         <translation>Eu nunca deixei minha instrução interferir com minha educação.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="121"/>
+        <location filename="../BootSplash.cpp" line="123"/>
         <source>The best way to predict the future is to invent it.</source>
         <translation>A melhor maneira de prever o futuro é inventá-lo.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="123"/>
+        <location filename="../BootSplash.cpp" line="125"/>
         <source>Well done is better than well said.</source>
         <translation>Bem feito é melhor do que bem dito.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="125"/>
+        <location filename="../BootSplash.cpp" line="127"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
         <translation>Às vezes não é suficiente que façamos o nosso melhor; devemos fazer o que é necessário.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="127"/>
+        <location filename="../BootSplash.cpp" line="129"/>
         <source>The truth is more important than the facts.</source>
         <translation>A verdade é mais importante do que os fatos.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="129"/>
+        <location filename="../BootSplash.cpp" line="131"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
         <translation>É melhor ficar em silêncio e ser pensado um tolo do que falar e remover todas as dúvidas.</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="140"/>
+        <location filename="../BootSplash.cpp" line="142"/>
         <source>Initializing Session …</source>
         <translation>Inicializando sessão…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="143"/>
+        <location filename="../BootSplash.cpp" line="145"/>
         <source>Loading System Settings …</source>
         <translation>Carregando configurações do sistema…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="146"/>
+        <location filename="../BootSplash.cpp" line="148"/>
         <source>Loading User Preferences …</source>
         <translation>Carregando preferências do usuário…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="149"/>
+        <location filename="../BootSplash.cpp" line="151"/>
         <source>Preparing System Tray …</source>
         <translation>Preparando bandeja do sistema…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="152"/>
+        <location filename="../BootSplash.cpp" line="154"/>
         <source>Starting Window Manager …</source>
         <translation>Iniciando gerenciador de janelas …</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="155"/>
+        <location filename="../BootSplash.cpp" line="157"/>
         <source>Detecting Applications …</source>
         <translation>Detectando aplicativos…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="158"/>
+        <location filename="../BootSplash.cpp" line="160"/>
         <source>Preparing Menus …</source>
         <translation>Preparando menus…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="161"/>
+        <location filename="../BootSplash.cpp" line="163"/>
         <source>Preparing Workspace …</source>
         <translation>Preparando o espaço de trabalho…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="164"/>
+        <location filename="../BootSplash.cpp" line="166"/>
         <source>Finalizing …</source>
         <translation>Finalizando…</translation>
     </message>
     <message>
-        <location filename="../BootSplash.cpp" line="167"/>
+        <location filename="../BootSplash.cpp" line="169"/>
         <source>Starting App: %1</source>
         <translation>Iniciando aplicativo: %1</translation>
     </message>
@@ -525,32 +525,32 @@
 <context>
     <name>ItemWidget</name>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="39"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="44"/>
         <source>Go Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="177"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
         <source>Pin to Desktop</source>
         <translation>Fixa na área de trabalho</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="181"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="195"/>
         <source>Remove from Favorites</source>
         <translation>Remover dos favoritos</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="184"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="199"/>
         <source>Add to Favorites</source>
         <translation>Adicionar aos favoritos</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="188"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="204"/>
         <source>Remove from Quicklaunch</source>
         <translation>Remover do lançador rápido</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="191"/>
+        <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="208"/>
         <source>Add to Quicklaunch</source>
         <translation>Adicionar ao lançador rápido</translation>
     </message>
@@ -677,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="131"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="137"/>
         <source>Time Zone (%1)</source>
         <translation>Fuso horário (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="153"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
         <source>Use System Time</source>
         <translation>Usar hora do sistema</translation>
     </message>
@@ -766,46 +766,75 @@
 <context>
     <name>LDesktop</name>
     <message>
-        <location filename="../LDesktop.cpp" line="211"/>
+        <location filename="../LDesktop.cpp" line="214"/>
         <source>Window List</source>
         <translation>Lista de janelas</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="281"/>
+        <location filename="../LDesktop.cpp" line="255"/>
+        <source>Desktop Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="257"/>
+        <location filename="../LDesktop.cpp" line="608"/>
+        <source>New Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="258"/>
+        <location filename="../LDesktop.cpp" line="628"/>
+        <source>New File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="259"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="291"/>
         <source>Lumina Desktop</source>
         <translation>Lumina Desktop</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="282"/>
+        <location filename="../LDesktop.cpp" line="292"/>
         <source>Workspace %1</source>
         <translation>Espaço de trabalho %1</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="292"/>
+        <location filename="../LDesktop.cpp" line="302"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="293"/>
+        <location filename="../LDesktop.cpp" line="303"/>
         <source>Lock Session</source>
         <translation>Travar sessão</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="294"/>
+        <location filename="../LDesktop.cpp" line="304"/>
         <source>Browse Files</source>
         <translation>Navegar por arquivos</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="323"/>
+        <location filename="../LDesktop.cpp" line="338"/>
         <source>Leave</source>
         <translation>Deixar</translation>
+    </message>
+    <message>
+        <location filename="../LDesktop.cpp" line="614"/>
+        <location filename="../LDesktop.cpp" line="634"/>
+        <location filename="../LDesktop.cpp" line="655"/>
+        <source>Desktop</source>
+        <translation type="unfinished">Área de trabalho</translation>
     </message>
 </context>
 <context>
     <name>LDesktopSwitcher</name>
     <message>
-        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="132"/>
-        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="140"/>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
         <translation>Espaço de trabalho %1</translation>
     </message>
@@ -821,8 +850,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="160"/>
-        <location filename="../LSession.cpp" line="342"/>
+        <location filename="../LSession.cpp" line="163"/>
+        <location filename="../LSession.cpp" line="344"/>
         <source>Desktop</source>
         <translation>Área de trabalho</translation>
     </message>
@@ -844,8 +873,8 @@
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
-        <source>System Volume</source>
-        <translation>Volume do sistema</translation>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1385,14 +1414,24 @@
         <translation>Configurar área de trabalho</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
-        <source>Sign Out User</source>
-        <translation>Desconectar Usuário</translation>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
+        <source>Suspend</source>
+        <translation type="unfinished">Suspender</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
-        <source>Restart System</source>
-        <translation>Reiniciar sistema</translation>
+        <source>Restart</source>
+        <translation type="unfinished">Reiniciar</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
+        <source>Log Out</source>
+        <translation type="unfinished">Encerrar sessão</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1400,19 +1439,9 @@
         <translation>Preferências</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
-        <source>Power Off System</source>
-        <translation>Desligar sistema</translation>
-    </message>
-    <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
         <source>(System Performing Updates)</source>
         <translation>(Sistema aplicando atualizações)</translation>
-    </message>
-    <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
-        <source>Suspend System</source>
-        <translation>Suspender Sistema</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
@@ -1471,8 +1500,8 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
-        <source>Shutdown</source>
-        <translation>Desligar</translation>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>

@@ -16,8 +16,11 @@
 
 #include <unistd.h>
 
+#include <QDebug>
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
+  auto_extract_close = false;
   QString title = tr("Archive Manager");
   if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
   this->setWindowTitle(title);
@@ -49,7 +52,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->action_Open->setShortcut(tr("CTRL+O"));
   ui->action_Quit->setShortcut(tr("CTRL+Q"));
   ui->actionExtract_All->setShortcut(tr("CTRL+E"));
-  
+
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->label_progress_icon->setVisible(false);
@@ -68,11 +71,17 @@ MainUI::~MainUI(){
 
 void MainUI::LoadArguments(QStringList args){
   bool burnIMG = false;
+  bool autoExtract = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
-    if(QFile::exists(args[i])){ 
+    if(args[i]=="--ax"){ autoExtract = true; continue; }
+    if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
-      BACKEND->loadFile(args[i]);  
+      if(autoExtract){
+        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+        connect(BACKEND, SIGNAL(ExtractSuccessful()), this, SLOT(close()) );
+      }
+      BACKEND->loadFile(args[i]);
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
@@ -105,10 +114,9 @@ QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
   }else{
     for(int i=0; i<start->childCount(); i++){
       if(start->child(i)->whatsThis(0) == path){ return start->child(i); }
-      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }      
+      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }
     }
   }
-  //qDebug() << "Could not find item:" << path;
   return 0; //nothing found
 }
 
@@ -236,6 +244,14 @@ void MainUI::extractFiles(){
   BACKEND->startExtract(dir, true);
 }
 
+void MainUI::autoextractFiles(){
+    disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+    QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
+    if(dir.isEmpty()){ return; }
+    ui->label_progress->setText(tr("Extracting..."));
+    BACKEND->startExtract(dir, true);
+  }
+
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected
   QList<QTreeWidgetItem*> sel = ui->tree_contents->selectedItems();
@@ -262,7 +278,6 @@ void MainUI::UpdateTree(){
   files.sort();
   //Remove any entries for file no longer in the archive
   bool changed = cleanItems(files);
-  //qDebug() << "Found Files:" << files;
   for(int i=0; i<files.length(); i++){
     if(0 != findItem(files[i]) ){ continue; } //already in the tree widget
     QString mime = LXDG::findAppMimeForFile(files[i].section("/",-1), false); //first match only
@@ -328,6 +343,11 @@ void MainUI::ProcStarting(){
 }
 
 void MainUI::ProcFinished(bool success, QString msg){
+  if(ui->label_archive->text()!=BACKEND->currentFile()){
+    ui->label_archive->setText(BACKEND->currentFile());
+    this->setWindowTitle(BACKEND->currentFile().section("/",-1));
+    ui->tree_contents->clear();
+  }
   UpdateTree();
   ui->progressBar->setRange(0,0);
   ui->progressBar->setValue(0);
@@ -337,11 +357,6 @@ void MainUI::ProcFinished(bool success, QString msg){
   ui->label_progress_icon->setVisible(!msg.isEmpty());
   if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-complete","").pixmap(32,32) );}
   else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-attention","").pixmap(32,32) );}
-  if(ui->label_archive->text()!=BACKEND->currentFile()){
-    ui->label_archive->setText(BACKEND->currentFile());
-    this->setWindowTitle(BACKEND->currentFile().section("/",-1));
-    ui->tree_contents->clear();
-  }
   QFileInfo info(BACKEND->currentFile());
     bool canmodify = info.isWritable();
     if(!info.exists()){ canmodify = QFileInfo(BACKEND->currentFile().section("/",0,-2)).isWritable(); }

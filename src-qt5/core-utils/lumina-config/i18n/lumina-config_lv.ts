@@ -980,12 +980,12 @@
         <translation>Izvēlēties monitoru/darbvirsmu, ko konfigurēt</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Nesaglabātas izmaiņas</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Šajā lapā pašlaik ir nesaglabātas izmaiņas. Vai vēlaties saglabāt tās tagad?</translation>
     </message>
@@ -1483,7 +1483,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Darbvirsmas iestatījumi</translation>
     </message>

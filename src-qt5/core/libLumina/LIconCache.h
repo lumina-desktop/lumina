@@ -35,11 +35,17 @@ class LIconCache : public QObject{
 public:
 	LIconCache(QObject *parent = 0);
 	~LIconCache();
+
+	//Static method for using this class (DO NOT MIX WITH GLOBAL OBJECT METHOD)
+	// Either use this the entire time, or use a saved/global object - pick one and stick with it
+	//  otherwise you may end up with multiple icon cache's running for your application
+	static LIconCache* instance();
+
 	//Icon Checks
 	bool exists(QString icon);
 	bool isLoaded(QString icon);
 	QString findFile(QString icon); //find the full path of a given file/name (searching the current Icon theme)
-	
+
 	//Special loading routines for QLabel and QAbstractButton (pushbutton, toolbutton, etc)
 	void loadIcon(QAbstractButton *button, QString icon, bool noThumb = false);
 	void loadIcon(QLabel *label, QString icon, bool noThumb = false);

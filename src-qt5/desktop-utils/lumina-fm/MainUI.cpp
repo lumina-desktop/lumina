@@ -12,6 +12,7 @@
 #include "gitCompat.h"
 #include "gitWizard.h"
 
+#include <LUtils.h>
 #include <LDesktopUtils.h>
 
 #define DEBUG 0
@@ -21,20 +22,20 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //qRegisterMetaType<QFileInfoList>("QFileInfoList");
   qRegisterMetaType< LFileInfoList >("LFileInfoList");
   //just to silence/fix some Qt connect warnings in QtConcurrent
-  //qRegisterMetaType< QVector<int> >("QVector<int>"); 
+  //qRegisterMetaType< QVector<int> >("QVector<int>");
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
   waitingToClose = false;
-	
+
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
-  settings = new QSettings( QSettings::UserScope, "lumina-desktop", "lumina-fm", this);
+  settings = LUtils::openSettings("lumina-desktop", "lumina-fm", this);
 
   //Reset the UI to the previously used size (if possible)
 QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   if(!orig.isEmpty() && orig.isValid()){
     //Make sure the old size is larger than the default size hint
     if(orig.width() < this->sizeHint().width()){ orig.setWidth(this->sizeHint().width()); }
-    if(orig.height() < this->sizeHint().height()){ orig.setHeight(this->sizeHint().height()); }    
+    if(orig.height() < this->sizeHint().height()){ orig.setHeight(this->sizeHint().height()); }
     //Also ensure the old size is smaller than the current screen size
     QSize screen = QApplication::desktop()->availableGeometry(this).size();
     if(orig.width() > screen.width()){ orig.setWidth(screen.width()); }
@@ -93,6 +94,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
   focusDirWidgetShort = new QShortcut( QKeySequence(tr("Ctrl+L")), this);
+  toggledirtreepaneShort = new QShortcut( QKeySequence(tr("Ctrl+P")), this);
 
   //Finish loading the interface
   workThread->start();
@@ -133,7 +135,7 @@ void MainUI::OpenDirs(QStringList dirs){
     if(DEBUG){ qDebug() << "Open Directory:" << dirs[i]; }
     ///Get a new Unique ID
     int id = 0;
-    for(int j=0; j<DWLIST.length(); j++){ 
+    for(int j=0; j<DWLIST.length(); j++){
       if(DWLIST[j]->id().section("-",1,1).toInt() >= id){ id = DWLIST[j]->id().section("-",1,1).toInt()+1; }
     }
     //Create the new DirWidget
@@ -156,7 +158,7 @@ void MainUI::OpenDirs(QStringList dirs){
     connect(DW, SIGNAL(PasteFiles(QString,QStringList)), this, SLOT(PasteFiles(QString, QStringList)) );
     connect(DW, SIGNAL(CloseBrowser(QString)), this, SLOT(CloseBrowser(QString)) );
     connect(DW, SIGNAL(TabNameChanged(QString,QString)), this, SLOT(TabNameChanged(QString, QString)) );
-    //Now create the tab for this 
+    //Now create the tab for this
     //if(radio_view_tabs->isChecked()){
       int index = tabBar->addTab( LXDG::findIcon("folder-open",""), dirs[i].section("/",-1) );
       tabBar->setTabWhatsThis( index, "DW-"+QString::number(id) );
@@ -174,11 +176,13 @@ void MainUI::OpenDirs(QStringList dirs){
         tabBar->setCurrentIndex(index);
       }
     }*/
-    
+
     //Initialize the widget with the proper settings
     DW->setShowDetails(radio_view_details->isChecked()); 
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
+    DW->showThumbnails( ui->actionShow_Thumbnails->isChecked() );
+    DW->showDirTreePane( ui->actionView_showDirTreePane->isChecked() );
     //Now load the directory
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
@@ -193,11 +197,12 @@ void MainUI::OpenDirs(QStringList dirs){
   if(DWLIST.isEmpty()){ OpenDirs(QStringList()); }
   waitingToClose = false;
   ui->menuGit->setEnabled( GIT::isAvailable() );
+  this->showNormal(); //single-instance check - make sure the window is raised again if it was minimized
 }
 
 void MainUI::setupIcons(){
   this->setWindowIcon( LXDG::findIcon("Insight-FileManager","") );
-	
+
   //Setup all the icons using libLumina
   // File menu
   ui->actionNew_Window->setIcon( LXDG::findIcon("window-new","") );
@@ -251,6 +256,8 @@ void MainUI::setupConnections(){
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
   connect(focusDirWidgetShort, SIGNAL(activated()), this, SLOT( focusDirWidget() ) );
+  connect(toggledirtreepaneShort, SIGNAL(activated()), this, SLOT( toggleDirTreePane() ) );
+
 }
 
 void MainUI::focusDirWidget()
@@ -267,31 +274,42 @@ void MainUI::togglehiddenfiles()
     on_actionView_Hidden_Files_triggered();
 }
 
+void MainUI::toggleDirTreePane()
+{
+    //change setChecked to inverse value
+    ui->actionView_Hidden_Files->setChecked( !settings->value("showdirtree", true).toBool() );
+    // then trigger function
+    on_actionView_showDirTreePane_triggered();
+}
+
 void MainUI::loadSettings(){
   //Note: make sure this is run after all the UI elements are created and connected to slots
   // but before the first directory gets loaded
-  QSettings SET("lumina-desktop","lumina-fm");
-  ui->actionView_Hidden_Files->setChecked( SET.value("showhidden", false).toBool() );
+  ui->actionView_Hidden_Files->setChecked( settings->value("showhidden", false).toBool() );
     on_actionView_Hidden_Files_triggered(); //make sure to update the models too
+  ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails",true).toBool());
+    on_actionShow_Thumbnails_triggered(); //make sure to update models too
+    ui->actionView_showDirTreePane->setChecked( settings->value("showdirtree", false).toBool());
+    on_actionView_showDirTreePane_triggered(); //make sure to update the models too
+
   //ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
     //on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
   //ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
   //View Type
-  //qDebug() << "View Mode:" << SET.value("viewmode","details").toString();
-  bool showDetails = (SET.value("viewmode","details").toString()=="details");
+  //qDebug() << "View Mode:" << settings->value("viewmode","details").toString();
+  bool showDetails = (settings->value("viewmode","details").toString()=="details");
   if(showDetails){ radio_view_details->setChecked(true); }
   else{ radio_view_list->setChecked(true); }
   //Grouping type
-  //bool usetabs = (SET.value("groupmode","tabs").toString()=="tabs");
+  //bool usetabs = (settings->value("groupmode","tabs").toString()=="tabs");
   //if(usetabs){ radio_view_tabs->setChecked(true); }
  // else{ radio_view_cols->setChecked(true); }
-  
+
 }
 
 void MainUI::RebuildBookmarksMenu(){
   //Create the bookmarks menu
-  QSettings SET("lumina-desktop","lumina-fm");
-  QStringList BM = SET.value("bookmarks", QStringList()).toStringList();
+  QStringList BM = settings->value("bookmarks", QStringList()).toStringList();
   ui->menuBookmarks->clear();
     ui->menuBookmarks->addAction(ui->actionManage_Bookmarks);
     ui->menuBookmarks->addAction(ui->actionAdd_Bookmark);
@@ -311,7 +329,7 @@ void MainUI::RebuildBookmarksMenu(){
       changed = true;
     }*/
   }
-  if(changed){ SET.setValue("bookmarks",BM); }
+  if(changed){ settings->setValue("bookmarks",BM); }
   ui->actionManage_Bookmarks->setEnabled(BM.length()>0);
 }
 
@@ -341,7 +359,7 @@ void MainUI::RebuildDeviceMenu(){
       //Add filesystem type to the label
       label = QString(tr("%1 (Type: %2)")).arg(label, fs);
     }
-    QAction *act = new QAction(label,this);          
+    QAction *act = new QAction(label,this);
         act->setWhatsThis(path); //full path to mountpoint
 	act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
 	//Now set the appropriate icon
@@ -362,7 +380,7 @@ DirWidget* MainUI::FindActiveBrowser(){
   //Get the current tab ID to start with
   QString cur = tabBar->tabWhatsThis(tabBar->currentIndex());
   //if(cur.startsWith("#")){ cur.clear(); } //multimedia/player tab open
-  
+
   if(DWLIST.length()==1){
     //Only 1 browser open - use it
     curB = DWLIST[0];
@@ -379,7 +397,6 @@ DirWidget* MainUI::FindActiveBrowser(){
       for(int i=0; i<DWLIST.length(); i++){
         if(DWLIST[i]->isAncestorOf(focus)){ curB = DWLIST[i]; break; } //This browser has focus
       }
-	    
     }else{
       //Non-Browser in focus - use the fallback below
     }
@@ -473,18 +490,26 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
 
 }
 
+void MainUI::on_actionView_showDirTreePane_triggered(){
+  //worker->showdirtree = ui->actionView_showDirTreePane->isChecked();
+  settings->setValue("showdirtree", ui->actionView_showDirTreePane->isChecked());
+//Re-load the current browsers
+
+}
+
+
 /*void MainUI::on_actionShow_Action_Buttons_triggered(){
   bool show = ui->actionShow_Action_Buttons->isChecked();
   settings->setValue("showactions", show);
   //for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->setShowSidebar(show); }
 }*/
 
-/*void MainUI::on_actionShow_Thumbnails_triggered(){
+void MainUI::on_actionShow_Thumbnails_triggered(){
   //Now save this setting for later
   bool show = ui->actionShow_Thumbnails->isChecked();
   settings->setValue("showthumbnails", show);
-  //for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->setShowThumbnails(show); }
-}*/
+  for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->showThumbnails(show); }
+}
 
 void MainUI::goToBookmark(QAction *act){
   if(act==ui->actionManage_Bookmarks){
@@ -523,9 +548,8 @@ void MainUI::goToDevice(QAction *act){
 void MainUI::viewModeChanged(bool active){
   if(!active){ return; } //on every view change, all radio buttons will call this function - only run this once though
   bool showDetails = radio_view_details->isChecked();
-  QSettings SET("lumina-desktop","lumina-fm");
-  if(showDetails){ SET.setValue("viewmode","details"); }
-  else{ SET.setValue("viewmode","list"); }
+  if(showDetails){ settings->setValue("viewmode","details"); }
+  else{ settings->setValue("viewmode","list"); }
 
   //Re-load the view widgets
   for(int i=0; i<DWLIST.length(); i++){

@@ -585,12 +585,12 @@ New Location: %2</source>
         <translation>Insight</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Left</source>
         <translation>Shift + Kiri</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Shift+Right</source>
         <translation>Shift+Right</translation>
     </message>
@@ -770,12 +770,12 @@ New Location: %2</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="63"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Detailed List</source>
         <translation>Senarai Detail</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="64"/>
+        <location filename="../MainUI.cpp" line="65"/>
         <source>Basic List</source>
         <translation>dasar Daftar</translation>
     </message>
@@ -830,22 +830,22 @@ New Location: %2</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>Invalid Directories</source>
         <translation>Direktori tidak valid</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Direktori berikut tidak valid dan tidak bisa dibuka:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="222"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>CTRL+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="231"/>
+        <location filename="../MainUI.cpp" line="233"/>
         <source>CTRL+E</source>
         <translation type="unfinished"></translation>
     </message>
@@ -865,42 +865,42 @@ New Location: %2</source>
         <translation>Sistem berkas %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>New Bookmark</source>
         <translation>Markah Baru</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>Name:</source>
         <translation>Nama:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>Invalid Name</source>
         <translation>Nama Tak Valid</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation type="unfinished">Nama pembatas buku sudah ada. Harap pilih nama lain.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="621"/>
+        <location filename="../MainUI.cpp" line="620"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="711"/>
+        <location filename="../MainUI.cpp" line="710"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="729"/>
+        <location filename="../MainUI.cpp" line="728"/>
         <source>Slideshow</source>
         <translation>Pertunjukan Slide</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="909"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Items to be removed:</source>
         <translation>Item yang akan dihapus:</translation>
     </message>
@@ -910,12 +910,12 @@ New Location: %2</source>
         <translation>memverifikasi Anda ingin keluar</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
@@ -925,37 +925,37 @@ New Location: %2</source>
         <translation>Anda memiliki banyak tab yang terbuka, anda yakin bahwa anda ingin keluar?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Verify Removal</source>
         <translation>verifikasi penghapusan</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>PERINGATAN: Ini akan secara permanen menghapus berkas dari sistem!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Are you sure you want to continue?</source>
         <translation>Anda yakin ingin melanjutkan?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>Rename File</source>
         <translation>Ganti nama berkas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>New Name:</source>
         <translation>Nama baru:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>Overwrite File?</source>
         <translation>Timpa Berkas?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>berkas yang ada dengan nama yang sama akan diganti.  Apakah Anda yakin ingin melanjutkan?</translation>
     </message>

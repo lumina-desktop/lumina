@@ -979,12 +979,12 @@ Wilt u het overschrijven?</translation>
         <translation>Selecteer het in te stellen beeldscherm/bureaublad</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Niet-opgeslagen wijzigingen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Deze pagina bevat niet-opgeslagen wijzigingen. Wilt u deze nu opslaan?</translation>
     </message>
@@ -1482,7 +1482,7 @@ Wilt u het overschrijven?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Bureaubladinstellingen</translation>
     </message>

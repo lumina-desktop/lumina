@@ -162,27 +162,27 @@
         <translation>Nustatymai</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
         <translation>Nepavyko įrašyti ekrano kopijos</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>Nepavyko įrašyti ekrano kopiją. Prašome patikrinti katalogo leidimus arba pasirinkti kitą katalogą</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
         <translation>Įrašyti ekrano kopiją</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="315"/>
+        <location filename="../MainUI.cpp" line="322"/>
         <source>Unsaved Screenshot</source>
         <translation>Neįrašyta ekrano kopija</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Esama ekrano kopija kol kas nebuvo neįrašyta. Norite įrašyti ar atmesti savo pakeitimus?</translation>
     </message>
@@ -197,7 +197,7 @@
         <translation>Greitasis įrašymas</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG failai (*.png);;Visi failai (*)</translation>
     </message>

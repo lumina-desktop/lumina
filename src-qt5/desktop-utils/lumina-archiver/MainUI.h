@@ -24,11 +24,13 @@ public:
 	~MainUI();
 
 	void LoadArguments(QStringList);
-	void loadIcons();
+    void loadIcons();
+
 
 private:
 	Ui::MainUI *ui;
 	Backend *BACKEND;
+	bool auto_extract_close;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
 	bool cleanItems(QStringList list, QTreeWidgetItem *start = 0); //returns true if anything gets cleaned
@@ -43,7 +45,8 @@ private slots:
 	void addFiles();
 	void addDirs();
 	void remFiles();
-	void extractFiles();
+    void extractFiles();
+    void autoextractFiles();
 	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();

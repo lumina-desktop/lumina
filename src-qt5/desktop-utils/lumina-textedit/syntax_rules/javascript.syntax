@@ -1,0 +1,54 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Javascript language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Javascript",
+		"file_suffix": ["js"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : false
+	},
+	"rules": [{
+			"name": "keywords",
+			"words": ["export","function", "import", "from", "let", "if", "return", "for", "while"],
+			"foreground": "colors/keyword"
+		},
+		{
+			"name": "single-line comment",
+			"regex": "//[^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "multi-line comment",
+			"regex_start": "/\\*",
+			"regex_end": "\\*/",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "numbers",
+			"regex": "\\b[0-9]+\\.?[0-9]*\\b",
+			"foreground": "colors/altkeyword"
+		},
+		{
+			"name": "attributes",
+			"regex": "(\\.)[A-Za-z_][A-Za-z0-9_]*(?![\\(a-zA-Z0-9])",
+			"foreground": "colors/function"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/class"
+		},
+		{
+			"name" : "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
+		}
+	]
+}

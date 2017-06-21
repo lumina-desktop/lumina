@@ -12,7 +12,12 @@ line
 comment */
 stuff
 
-some /*single line comment with multi-line tags */
+some /*single line comment with multi-line tags */ and other stuff
 
 "some text"
 "some text with url: http://sample.com"
+
+switch(something){
+  case 1:
+
+}

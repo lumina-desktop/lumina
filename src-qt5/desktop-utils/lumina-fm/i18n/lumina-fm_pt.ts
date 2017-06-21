@@ -588,12 +588,12 @@ Nova Localização: %2</translation>
         <translation>Visão</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Left</source>
         <translation>Shift+Esquerda</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Shift+Right</source>
         <translation>Shift+Direita</translation>
     </message>
@@ -773,12 +773,12 @@ Nova Localização: %2</translation>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="63"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Detailed List</source>
         <translation>Lista detalhada</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="64"/>
+        <location filename="../MainUI.cpp" line="65"/>
         <source>Basic List</source>
         <translation>Lista Básica</translation>
     </message>
@@ -833,22 +833,22 @@ Nova Localização: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>Invalid Directories</source>
         <translation>Diretório Inválido</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Os seguintes diretórios são inválidos e não puderam ser abertos:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="222"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>CTRL+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="231"/>
+        <location filename="../MainUI.cpp" line="233"/>
         <source>CTRL+E</source>
         <translation type="unfinished"></translation>
     </message>
@@ -868,42 +868,42 @@ Nova Localização: %2</translation>
         <translation>Sistema de arquivos: 1%</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>New Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>Name:</source>
         <translation type="unfinished">Nome:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>Invalid Name</source>
         <translation type="unfinished">Nome Inválido</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation type="unfinished">Esse nome de favorito já existe. Por favor, escolha outro. </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="621"/>
+        <location filename="../MainUI.cpp" line="620"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="711"/>
+        <location filename="../MainUI.cpp" line="710"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="729"/>
+        <location filename="../MainUI.cpp" line="728"/>
         <source>Slideshow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="909"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Items to be removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,12 +913,12 @@ Nova Localização: %2</translation>
         <translation>Verificar Saída</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
@@ -928,37 +928,37 @@ Nova Localização: %2</translation>
         <translation>Você tem múltiplas páginas abertas. Você tem certeza que deseja sair?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Verify Removal</source>
         <translation>Verificar Remoção</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>ATENÇÃO: Isso iá excluir os arquivos permanentemente do sistema!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Are you sure you want to continue?</source>
         <translation>Tem a certeza de que deseja continuar?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>Rename File</source>
         <translation>Renomear Arquivo</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>New Name:</source>
         <translation>Novo Nome:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>Overwrite File?</source>
         <translation>Sobrepor o Arquivo?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Um arquivo existente com o mesmo nome será substituído. Tem certeza de que deseja continuar?</translation>
     </message>

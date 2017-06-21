@@ -588,12 +588,12 @@ New Location: %2</source>
         <translation>Náhľad </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Left</source>
         <translation>Shift+Šípka vľavo </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Shift+Right</source>
         <translation>Shift+šípka vpravo</translation>
     </message>
@@ -773,12 +773,12 @@ New Location: %2</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="63"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Detailed List</source>
         <translation>Podrobný zoznam</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="64"/>
+        <location filename="../MainUI.cpp" line="65"/>
         <source>Basic List</source>
         <translation>Jednoduchý zoznam </translation>
     </message>
@@ -833,22 +833,22 @@ New Location: %2</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>Invalid Directories</source>
         <translation>Neplatné priečinky</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Nasledujúce adresáre sú chybné a nedajú sa otvoriť: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="222"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>CTRL+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="231"/>
+        <location filename="../MainUI.cpp" line="233"/>
         <source>CTRL+E</source>
         <translation type="unfinished"></translation>
     </message>
@@ -868,42 +868,42 @@ New Location: %2</source>
         <translation>Súborový systém: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>New Bookmark</source>
         <translation>Nová záložka</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>Name:</source>
         <translation>Meno:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>Invalid Name</source>
         <translation>Neplatné meno </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Názov záložky už existuje. Prosím vyberte iný.  </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="621"/>
+        <location filename="../MainUI.cpp" line="620"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="711"/>
+        <location filename="../MainUI.cpp" line="710"/>
         <source>Multimedia</source>
         <translation>Multimédiá</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="729"/>
+        <location filename="../MainUI.cpp" line="728"/>
         <source>Slideshow</source>
         <translation>Prezentácia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="909"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Items to be removed:</source>
         <translation>Položky na odstránenie:</translation>
     </message>
@@ -913,12 +913,12 @@ New Location: %2</source>
         <translation>Overte ukončenie </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
@@ -928,37 +928,37 @@ New Location: %2</source>
         <translation>Máte otvorené viaceré karty. Naozaj ich chcete zatvoriť? </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Verify Removal</source>
         <translation>Overte odstránenie </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>Výstraha: Budú natrvalo odstránené súbor/y zo systému!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Are you sure you want to continue?</source>
         <translation>Naozaj chcete pokračovať? </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>Rename File</source>
         <translation>Premenovať súbor</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>New Name:</source>
         <translation>Nový názov:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>Overwrite File?</source>
         <translation>Prepísať súbor?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Súbor s rovnakým názvom bude predpísaný. Naozaj chcete pokračovať? </translation>
     </message>

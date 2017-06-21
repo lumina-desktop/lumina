@@ -585,12 +585,12 @@ New Location: %2</source>
         <translation>निरीक्षण</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>Shift+Left</source>
         <translation>शिफ्ट+लेफ्ट</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Shift+Right</source>
         <translation>शिफ्ट+राइट</translation>
     </message>
@@ -770,12 +770,12 @@ New Location: %2</source>
         <translation>कण्ट्रोल+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="63"/>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Detailed List</source>
         <translation>पूर्ण सूचि सहित</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="64"/>
+        <location filename="../MainUI.cpp" line="65"/>
         <source>Basic List</source>
         <translation>सामान्य सूचि</translation>
     </message>
@@ -830,22 +830,22 @@ New Location: %2</source>
         <translation>कण्ट्रोल+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>Invalid Directories</source>
         <translation>अवैध डायरेक्टरिज़</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>निम्नलिखित डायरेक्टरियाँ अवैध है और इन्हें नहीं खोला जा सकता:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="222"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>CTRL+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="231"/>
+        <location filename="../MainUI.cpp" line="233"/>
         <source>CTRL+E</source>
         <translation type="unfinished"></translation>
     </message>
@@ -865,42 +865,42 @@ New Location: %2</source>
         <translation>फाइलसिस्टम:%1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>New Bookmark</source>
         <translation>नया बुकमार्क</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="595"/>
+        <location filename="../MainUI.cpp" line="594"/>
         <source>Name:</source>
         <translation>नाम:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>Invalid Name</source>
         <translation>अवैध नाम</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="600"/>
+        <location filename="../MainUI.cpp" line="599"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>ये बुकमार्क पहले से ही मौजूद है|कृपया कोई अन्य चुने|</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="621"/>
+        <location filename="../MainUI.cpp" line="620"/>
         <source>Git Repository Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="711"/>
+        <location filename="../MainUI.cpp" line="710"/>
         <source>Multimedia</source>
         <translation>मल्टीमीडिया</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="729"/>
+        <location filename="../MainUI.cpp" line="728"/>
         <source>Slideshow</source>
         <translation>स्लाइड शो</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="909"/>
+        <location filename="../MainUI.cpp" line="908"/>
         <source>Items to be removed:</source>
         <translation>हटाए जाने वाले विषय</translation>
     </message>
@@ -910,12 +910,12 @@ New Location: %2</source>
         <translation>निकासी सुनिश्चित करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
@@ -925,37 +925,37 @@ New Location: %2</source>
         <translation>आपने कई टैब्स खोली हुई है|क्या आप सचमुच बाहर निकलना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Verify Removal</source>
         <translation>हटाव सुनिश्चित करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>चेतावनी:ये आपकी फाइलों को हमेशा के लिए आपके उपकरण से नष्ट कर देगा!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="908"/>
+        <location filename="../MainUI.cpp" line="907"/>
         <source>Are you sure you want to continue?</source>
         <translation>क्या आप सचमुच ये प्रक्रिया जारी रखना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>Rename File</source>
         <translation>फाइल का नाम दोबारा तय करें</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="868"/>
+        <location filename="../MainUI.cpp" line="867"/>
         <source>New Name:</source>
         <translation>नया नाम</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>Overwrite File?</source>
         <translation>फाइल के ऊपर लिखे?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="882"/>
+        <location filename="../MainUI.cpp" line="881"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>इसी नाम की मौजूदा फाइल नई फाइल से बदल दी जाएगी| क्या आप सचमुच ऐसा करना चाहते हैं?</translation>
     </message>

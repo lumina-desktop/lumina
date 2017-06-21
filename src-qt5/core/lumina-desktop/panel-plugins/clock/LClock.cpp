@@ -88,22 +88,26 @@ void LClock::updateTime(bool adjustformat){
     label.replace("\n",", ");
   }
   if(adjustformat){
+    QFont font = LSession::handle()->font();
+      font.setBold(true);
+    button->setFont(font);
    //Check the font/spacing for the display and adjust as necessary
     QStringList lines = label.split("/n");
+    QFontMetrics metrics(font);
     if(this->layout()->direction()==QBoxLayout::LeftToRight){
       //horizontal layout
       int wid = 0;
       int lwid;
       for(int i=0; i<lines.length(); i++){
-        lwid = button->fontMetrics().width(lines[i]);
+        lwid = metrics.width(lines[i]);
         if(lwid>wid){ wid = lwid; }
       }
-     if(lines.length()==1){ wid+=6; } //need some extra margins for single-line 
-     else{ wid-=6; } // need to remove some margins for multi-line
-     this->setFixedWidth( wid );
+     this->setMinimumWidth( wid - (4*metrics.width("O")) );
+     this->setMaximumWidth(wid + (4*metrics.width("O")));
     }else{
       //vertical layout
-      this->setMaximumWidth(button->fontMetrics().lineSpacing() * lines.length());
+      this->setMinimumHeight(metrics.lineSpacing() * lines.length());
+      this->setMaximumHeight( (lines.length()+4)*metrics.height() );
     }
   }
   button->setText(label);

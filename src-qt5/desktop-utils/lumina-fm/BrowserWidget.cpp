@@ -17,6 +17,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
   this->setLayout( new QVBoxLayout(this) );
   ID = objID;
+  //BROWSER = 0;
   //Setup the backend browser object
   BROWSER = new Browser(this);
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
@@ -33,13 +34,13 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
 }
 
 BrowserWidget::~BrowserWidget(){
-
+  BROWSER->deleteLater();
 }
 
 void BrowserWidget::changeDirectory(QString dir){
-  qDebug() << "Change Directory:" << dir << historyList;
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
-  
+  qDebug() << "Change Directory:" << dir << historyList;
+
   if( !dir.contains("/.zfs/snapshot/") ){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
   }else{
@@ -105,6 +106,14 @@ void BrowserWidget::showHiddenFiles(bool show){
 
 bool BrowserWidget::hasHiddenFiles(){
   return BROWSER->showingHiddenFiles();
+}
+
+void BrowserWidget::showThumbnails(bool show){
+  BROWSER->showThumbnails(show);
+}
+
+bool BrowserWidget::hasThumbnails(){
+  return BROWSER->showingThumbnails();
 }
 
 void BrowserWidget::setThumbnailSize(int px){

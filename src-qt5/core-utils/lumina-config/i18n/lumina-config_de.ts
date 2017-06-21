@@ -980,12 +980,12 @@
         <translation>Monitor/Arbeitsfläche zum Konfigurieren auswählen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>Unsaved Changes</source>
         <translation>Ungespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="131"/>
+        <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Diese Seite enthält ungespeicherte Änderungen, möchten Sie diese jetzt speichern?</translation>
     </message>
@@ -1396,7 +1396,7 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechseldatenträgersymbole anzeigen</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
@@ -1483,7 +1483,7 @@
         <translation>Systemeinstellungen</translation>
     </message>
     <message>
-        <location filename="../pages/page_main.cpp" line="145"/>
+        <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
         <translation>Arbeitsflächeneinstellungen</translation>
     </message>

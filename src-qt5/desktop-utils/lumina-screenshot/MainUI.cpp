@@ -29,7 +29,7 @@ MainUI::MainUI()
   if(ui->spin_monitor->maximum()<2){
     ui->spin_monitor->setEnabled(false);
     ui->radio_monitor->setEnabled(false);
-  }	  
+  }
   scaleTimer = new QTimer(this);
     scaleTimer->setSingleShot(true);
     scaleTimer->setInterval(200); //~1/5 second
@@ -59,7 +59,7 @@ MainUI::MainUI()
   connect(scaleTimer, SIGNAL(timeout()), this, SLOT(imgScalingChanged()) );
   connect(tabbar, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
   connect(ui->check_show_popups, SIGNAL(toggled(bool)), this, SLOT(showPopupsChanged(bool)) );
-  settings = new QSettings("lumina-desktop", "lumina-screenshot",this);
+  settings = LUtils::openSettings("lumina-desktop", "lumina-screenshot",this);
   QString opt = settings->value("screenshot-target", "window").toString();
   if( opt == "window") {ui->radio_window->setChecked(true); }
   else if(opt=="area"){ ui->radio_area->setChecked(true); }
@@ -72,6 +72,13 @@ MainUI::MainUI()
   IMG->setDefaultSize(ui->scrollArea->maximumViewportSize());
   IMG->LoadImage( QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId()).toImage() ); //initial screenshot
   lastScreenShot = QDateTime::currentDateTime();
+
+  // Shortcuts
+  quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
+  connect(quitShortcut, SIGNAL(activated()), this, SLOT(quitShortcut_activated()) );
+  openShortcut = new QShortcut(Qt::CTRL + Qt::Key_O, this);
+  connect(openShortcut, SIGNAL(activated()), this, SLOT(quicksave()) );
+
   //ui->label_screenshot->setPixmap( cpic.scaled(ui->label_screenshot->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 }
 
@@ -286,12 +293,12 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
       QList<WId> wins = XCB->WindowList();
       QList<WId> stack = XCB->WM_Get_Client_List(true);
       cwin = 0;
-      //qDebug() << "Try to select window:" << ev->globalPos(); 
+      //qDebug() << "Try to select window:" << ev->globalPos();
       for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
         if(!wins.contains(stack[i])){ continue; }
-        if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){ 
+        if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){
           //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
-          cwin = stack[i]; 
+          cwin = stack[i];
         }
       }
       //qDebug() << " - Got window:" << cwin;
@@ -329,4 +336,8 @@ void MainUI::closeEvent(QCloseEvent *ev){
     }
   }
   QMainWindow::closeEvent(ev);
+}
+
+void MainUI::quitShortcut_activated(){
+    QApplication::quit();
 }

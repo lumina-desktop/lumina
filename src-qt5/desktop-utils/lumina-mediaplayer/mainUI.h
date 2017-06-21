@@ -51,6 +51,8 @@ private:
 	void setupTrayIcon();
 	void closeTrayIcon();
 
+	void loadFile(QString); //simplification for loading files into the local playlist
+
 private slots:
 	void closeApplication();
 	void PlayerTypeChanged(bool active = true);

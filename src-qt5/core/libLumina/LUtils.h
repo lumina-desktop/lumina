@@ -25,6 +25,7 @@
 #include <QRegExp>
 #include <QFuture>
 #include <QScreen>
+#include <QSettings>
 
 class LUtils{
 public:
@@ -45,6 +46,9 @@ public:
 	  QString bins(bin);
 	  return isValidBinary(bins); //overload for a "junk" binary variable input
 	}
+
+	//Open the right settings file (user/permissions aware)
+	static QSettings* openSettings(QString org, QString name, QObject *parent = 0);
 
 	//Return all the dirs on the system which contain .desktop files
         static QStringList systemApplicationDirs();

@@ -43,7 +43,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
 }
 
 PlainTextEditor::~PlainTextEditor(){
-	
+
 }
 
 void PlainTextEditor::showLineNumbers(bool show){
@@ -53,13 +53,21 @@ void PlainTextEditor::showLineNumbers(bool show){
 }
 
 void PlainTextEditor::LoadSyntaxRule(QString type){
-  SYNTAX->loadRules(type);
+  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  for(int i=0; i<files.length(); i++){
+    if(files[i].name() == type){
+      files[i].SetupDocument(this);
+      SYNTAX->loadRules(files[i]);
+      break;
+    }
+    if(i==files.length()-1){ SyntaxFile dummy; SYNTAX->loadRules(dummy); }
+  }
   SYNTAX->rehighlight();
 }
 
 void PlainTextEditor::updateSyntaxColors(){
   SYNTAX->reloadRules();
-  SYNTAX->rehighlight();	
+  SYNTAX->rehighlight();
 }
 
 //File loading/setting options
@@ -68,7 +76,15 @@ void PlainTextEditor::LoadFile(QString filepath){
   bool diffFile = (filepath != this->whatsThis());
   this->setWhatsThis(filepath);
   this->clear();
-  SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1)) );
+  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  for(int i=0; i<files.length(); i++){
+    if(files[i].supportsFile(filepath) ){
+      files[i].SetupDocument(this);
+      SYNTAX->loadRules(files[i]);
+      break;
+    }
+  }
+  //SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1), settings) );
   lastSaveContents = LUtils::readFile(filepath).join("\n");
   if(diffFile){
     this->setPlainText( lastSaveContents );
@@ -94,7 +110,7 @@ void PlainTextEditor::SaveFile(bool newname){
     QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
     if(file.isEmpty()){ return; }
     this->setWhatsThis(file);
-    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1)) );
+    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
     SYNTAX->rehighlight();
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
@@ -110,7 +126,7 @@ QString PlainTextEditor::currentFile(){
 }
 
 bool PlainTextEditor::hasChange(){
-  return hasChanges;	
+  return hasChanges;
 }
 
 //Functions for managing the line number widget
@@ -119,11 +135,16 @@ int PlainTextEditor::LNWWidth(){
   int lines = this->blockCount();
   if(lines<1){ lines = 1; }
   int chars = 1;
+  //qDebug() << "point 1" << this->document()->defaultFont();
   while(lines>=10){ chars++; lines/=10; }
-  return (this->fontMetrics().width("9")*chars); //make sure to add a tiny bit of padding
+  QFontMetrics metrics(this->document()->defaultFont());
+  return (metrics.width("9")*chars); //make sure to add a tiny bit of padding
 }
 
 void PlainTextEditor::paintLNW(QPaintEvent *ev){
+  //qDebug() << "Paint LNW Event:" << ev->rect() << LNW->geometry();
+  //if(ev->rect().height() < (QFontMetrics(this->document()->defaultFont()).height() *1.5) ){ return; }
+  //qDebug() << " -- paint line numbers";
   QPainter P(LNW);
   //First set the background color
   P.fillRect(ev->rect(), QColor("lightgrey"));
@@ -131,19 +152,27 @@ void PlainTextEditor::paintLNW(QPaintEvent *ev){
   QTextBlock block = this->firstVisibleBlock();
   int bTop = blockBoundingGeometry(block).translated(contentOffset()).top();
   int bBottom;
+//  QFont font = P.font();
+//  font.setPointSize(this->document()->defaultFont().pointSize());
+  P.setFont(this->document()->defaultFont());
   //Now loop over the blocks (lines) and write in the numbers
+  QFontMetrics metrics(this->document()->defaultFont());
+  //qDebug() << "point 2" << this->document()->defaultFont();
   P.setPen(Qt::black); //setup the font color
   while(block.isValid() && bTop<=ev->rect().bottom()){ //ensure block below top of viewport
     bBottom = bTop+blockBoundingRect(block).height();
     if(block.isVisible() && bBottom >= ev->rect().top()){ //ensure block above bottom of viewport
-      P.drawText(0,bTop, LNW->width(), this->fontMetrics().height(), Qt::AlignRight, QString::number(block.blockNumber()+1) );
+      P.drawText(0,bTop, LNW->width(), metrics.height(), Qt::AlignRight, QString::number(block.blockNumber()+1) );
+      //qDebug() << "bTop" << bTop;
+      //qDebug() << "LNW->width()" << LNW->width();
+      //qDebug() << "metrics.height()" << metrics.height();
     }
     //Go to the next block
     block = block.next();
     bTop = bBottom;
   }
 }
-	
+
 //==============
 //       PRIVATE
 //==============
@@ -162,7 +191,7 @@ void PlainTextEditor::clearMatchData(){
 void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar startch){
   if(forward){ matchleft = fromPos;  }
   else{ matchright = fromPos; }
-  
+
   int nested = 1; //always start within the first nest (the primary nest)
   int tmpFromPos = fromPos;
   //if(!forward){ tmpFromPos++; } //need to include the initial location
@@ -177,7 +206,7 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       }else{ break; }
     }else{
       QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
-      if(!cur.isNull()){ 
+      if(!cur.isNull()){
         QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position()+1);
         //qDebug() << "Found backwards match:" << nested << startch << ch << mid;
         //qDebug() << doc.mid(cur.position(),1) << doc.mid(tmpFromPos,1);
@@ -187,10 +216,10 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       }else{ break; }
     }
   }
-  
+
   //Now highlight the two characters
-  QList<QTextEdit::ExtraSelection> sels = this->extraSelections();	
-  if(matchleft>=0){ 
+  QList<QTextEdit::ExtraSelection> sels = this->extraSelections();
+  if(matchleft>=0){
     QTextEdit::ExtraSelection sel;
     if(matchright>=0){ sel.format.setBackground( QColor(settings->value("colors/bracket-found").toString()) ); }
     else{ sel.format.setBackground( QColor(settings->value("colors/bracket-missing").toString()) ); }
@@ -210,7 +239,7 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
       if(!forward){ cur.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor); }
       else{ cur.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor); }
     sel.cursor = cur;
-    sels << sel;	  
+    sels << sel;
   }
   this->setExtraSelections(sels);
 }
@@ -299,7 +328,7 @@ void PlainTextEditor::fileChanged(){
   text.append("\n");
   text.append( tr("(Note: You will lose all currently-unsaved changes)") );
   text.append("\n\n%1");
-  
+ 
   if(!update){
     update = (QMessageBox::Yes == QMessageBox::question(this, tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
   }
@@ -317,4 +346,8 @@ void PlainTextEditor::resizeEvent(QResizeEvent *ev){
   //Now re-adjust the placement of the LNW (within the left margin area)
   QRect cGeom = this->contentsRect();
   LNW->setGeometry( QRect(cGeom.left(), cGeom.top(), LNWWidth(), cGeom.height()) );
+}
+
+void PlainTextEditor::updateLNW(){
+    LNW_updateWidth();
 }

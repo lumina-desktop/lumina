@@ -125,9 +125,11 @@ void LDesktopPluginSpace::addDesktopPlugin(QString plugID){
   //Now get the saved geometry for the plugin
   QRect geom = plug->gridGeometry(); //grid coordinates
   if(geom.isNull()){
+    //Try the old format (might be slight drift between sessions if the grid size changes)
     geom = plug->loadPluginGeometry(); //in pixel coords
     if(!geom.isNull()){ geom = geomToGrid(geom); } //convert to grid coordinates
   }
+  if(DEBUG){ qDebug() << "Saved plugin geom:" << geom << plugID; }
   //Now determine the position to put it
   if(geom.isNull()){
     //No previous location - need to calculate initial geom

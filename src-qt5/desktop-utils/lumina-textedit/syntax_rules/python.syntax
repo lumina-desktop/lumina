@@ -1,0 +1,55 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Python language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Python",
+		"file_suffix": ["py", "pyc"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol": true
+	},
+	"rules": [{
+			"name": "single-line comment",
+			"regex": "#[^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "keywords",
+			"words": ["and" , "as" , "assert" , "break" , "class" , "continue" , "def" , "del" , "elif" , "else" , "except" , "exec" , "finally" , "for" , "from" , "global" , "if" , "import" , "in" , "is" , "lambda" , "not" , "or" , "pass" , "print" , "raise" , "return" , "try" , "while" , "with" , "yield"],
+			"foreground": "colors/keyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "class names",
+			"regex": "\\bQ[A-Za-z]+\\b",
+			"foreground": "colors/class",
+			"font_weight": "bold"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/function"
+		},
+		{
+			"name": "numbers",
+			"regex" : "\\b[0-9]+\\.?[0-9]*\\b",
+			"foreground": "colors/altkeyword"
+		},
+		{
+			"name": "text",
+			"regex":  "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground": "colors/text"
+		},
+		{
+			"name": "preprocessor",
+			"regex": "^[\\s]*#[^\n]*",
+			"foreground": "colors/preprocessor"
+		}
+	]
+}

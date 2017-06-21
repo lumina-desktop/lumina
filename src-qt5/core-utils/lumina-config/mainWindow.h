@@ -41,6 +41,6 @@ private slots:
 	void on_actionSave_triggered();
 	void on_actionBack_triggered();
         void changeMonitor(QAction*);
-	void on_quitShortcut_Triggered();
+	void quitShortcut_Triggered();
 };
 #endif

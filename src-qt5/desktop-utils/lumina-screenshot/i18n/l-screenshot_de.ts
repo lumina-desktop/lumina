@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich auswählen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation type="unfinished"></translation>
+        <translation>Popup-Warnungen über nicht gespeicherte Bildschirmfotos anzeigen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="499"/>
@@ -162,27 +162,27 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
         <translation>Bildschirmfoto konnte nicht gespeichert werden</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>Das Bildschirmfoto konnte nicht gespeichert werden. Bitte überprüfen Sie die Verzeichnisberechtigungen oder wählen Sie ein anderes Verzeichnis aus</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
         <translation>Bildschirmfoto speichern</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="315"/>
+        <location filename="../MainUI.cpp" line="322"/>
         <source>Unsaved Screenshot</source>
         <translation>Nicht gespeichertes Bildschirmfoto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Das aktuelle Bildschirmfoto wurde noch nicht gespeichert. Möchten Sie Ihre Änderungen speichern oder verwerfen?</translation>
     </message>
@@ -197,7 +197,7 @@
         <translation>Schnellspeichern</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>PNG-Dateien (*.png);;Alle Dateien (*)</translation>
     </message>

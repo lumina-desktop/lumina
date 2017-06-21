@@ -18,6 +18,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QActionGroup>
+#include "PlainTextEditor.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -48,7 +49,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     agrp->addAction(ui->action_tabsLeft);
     agrp->addAction(ui->action_tabsRight);
   //Load settings
-  settings = new QSettings("lumina-desktop","lumina-textedit");
+  settings = LUtils::openSettings("lumina-desktop","lumina-textedit", this);
   if(settings->contains("lastfont")){
     QFont oldfont;
     if(oldfont.fromString(settings->value("lastfont").toString() ) ){
@@ -65,7 +66,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
   ui->groupReplace->setVisible(false);
   //Update the menu of available syntax highlighting modes
-  QStringList smodes = Custom_Syntax::availableRules();
+  QStringList smodes = Custom_Syntax::availableRules(settings);
   for(int i=0; i<smodes.length(); i++){
     ui->menuSyntax_Highlighting->addAction(smodes[i]);
   }
@@ -118,7 +119,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
-	
+
 }
 
 void MainUI::LoadArguments(QStringList args){ //CLI arguments
@@ -156,7 +157,7 @@ void MainUI::updateIcons(){
   ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
   ui->tool_hideReplaceGroup->setIcon(LXDG::findIcon("dialog-close",""));
   //ui->tool_find_next->setIcon(LXDG::findIcon(""));
-	
+
   QTimer::singleShot(0,colorDLG, SLOT(updateIcons()) );
 }
 
@@ -213,6 +214,9 @@ void MainUI::OpenFile(QString file){
       edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
       edit->setLineWrapMode( ui->actionWrap_Lines->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
       edit->setFocusPolicy(Qt::ClickFocus); //no "tabbing" into this widget
+      QFont font = fontbox->currentFont();
+      font.setPointSize( fontSizes->value() );
+      edit->document()->setDefaultFont(font);
     }
     tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
@@ -238,17 +242,21 @@ void MainUI::SaveFileAs(){
   cur->SaveFile(true);	
 }
 
-void MainUI::fontChanged(const QFont &font){
+void MainUI::fontChanged(const QFont&){
+  if(currentEditor()==0){ return; }
   //Save this font for later
+  QFont font = fontbox->currentFont();
+  font.setPointSize( fontSizes->value() );
   settings->setValue("lastfont", font.toString());
-  //Now apply this font to all the open editors
-  QApplication::setFont(font, "PlainTextEditor");
+   currentEditor()->document()->setDefaultFont(font);
 }
 
 void MainUI::changeFontSize(int newFontSize){
-    QFont currentFont = fontbox->currentFont();
+  if(currentEditor()==0){ return; }
+    QFont currentFont = currentEditor()->document()->defaultFont();
     currentFont.setPointSize(newFontSize);
-    QApplication::setFont(currentFont, "PlainTextEditor");
+    currentEditor()->document()->setDefaultFont(currentFont);
+    currentEditor()->updateLNW();
 }
 
 void MainUI::changeTabsLocation(QAction *act){
@@ -295,10 +303,12 @@ void MainUI::showLineNumbers(bool show){
 
 void MainUI::wrapLines(bool wrap){
   settings->setValue("wrapLines",wrap);
-  for(int i=0; i<tabWidget->count(); i++){
+  if(currentEditor() == 0){ return; }
+  currentEditor()->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+  /*for(int i=0; i<tabWidget->count(); i++){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-  }	
+  }*/
 }
 
 void MainUI::ModifyColors(){
@@ -341,6 +351,11 @@ void MainUI::tabChanged(){
   //this->setWindowTitle( tabWidget->tabText( tabWidget->currentIndex() ) );
   this->setWindowTitle( (changes ? "*" : "") + tabWidget->tabToolTip( tabWidget->currentIndex() ).section("/",-2) );
   if(!ui->line_find->hasFocus() && !ui->line_replace->hasFocus()){ tabWidget->currentWidget()->setFocus(); }
+  QFont font = cur->document()->defaultFont();
+  //Update the font/size widgets to reflect what is set on this tab
+  fontbox->setCurrentFont(font);
+  fontSizes->setValue( font.pointSize() );
+  ui->actionWrap_Lines->setChecked( cur->lineWrapMode()==QPlainTextEdit::WidgetWidth );
 }
 
 void MainUI::tabClosed(int tab){
@@ -379,7 +394,7 @@ void MainUI::tabDraggedOut(int tab, Qt::DropAction act){
 void MainUI::closeFindReplace(){
   ui->groupReplace->setVisible(false);
   PlainTextEditor *cur = currentEditor();
-  if(cur!=0){ cur->setFocus(); }	
+  if(cur!=0){ cur->setFocus(); }
 }
 
 void MainUI::openFind(){
@@ -387,8 +402,8 @@ void MainUI::openFind(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
-  ui->line_find->setFocus();	
+  ui->line_replace->setText("");
+  ui->line_find->setFocus();
 }
 
 void MainUI::openReplace(){
@@ -396,7 +411,7 @@ void MainUI::openReplace(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
+  ui->line_replace->setText("");
   ui->line_replace->setFocus();
 }
 

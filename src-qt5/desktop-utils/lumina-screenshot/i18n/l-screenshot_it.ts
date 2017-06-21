@@ -162,27 +162,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
         <translation>Impossibile cattuare lo schermo</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
         <translation>L&apos;immagine dello schermo non può essere salvata. Si prega di verificare i permessi della cartella o scegliere una cartella differente</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
         <translation>Salva schermata</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="315"/>
+        <location filename="../MainUI.cpp" line="322"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -197,7 +197,7 @@
         <translation>Salvataggio Rapido</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="113"/>
+        <location filename="../MainUI.cpp" line="120"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>File PNG (*.png);;AllFiles (*)</translation>
     </message>

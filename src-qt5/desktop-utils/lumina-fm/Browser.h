@@ -35,24 +35,26 @@ public:
 	void showHiddenFiles(bool);
 	bool showingHiddenFiles();
 
+	void showThumbnails(bool);
+	bool showingThumbnails();
+
 	//FileItem loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
 
 private:
 	QString currentDir;
 	QFileSystemWatcher *watcher;
-	bool showHidden;
+	bool showHidden, showThumbs;
 	QStringList imageFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
-	
 
-	void loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
+	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
 	QIcon loadIcon(QString icon); //simplification for using/populating the mimIcons cache
 
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
 
-	void futureFinished(QString, QByteArray);
+	void futureFinished(QString, QImage);
 
 public slots:
 	void loadDirectory(QString dir = "");
@@ -67,7 +69,7 @@ signals:
 	void itemsLoading(int); //number of items which are getting loaded
 
 	//Internal signal for the alternate threads
-	void threadDone(QString, QByteArray);
+	void threadDone(QString, QImage);
 };
 
 #endif

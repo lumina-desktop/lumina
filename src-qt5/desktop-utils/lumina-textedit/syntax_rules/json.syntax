@@ -1,0 +1,34 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  JSON language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "JSON",
+		"file_suffix": ["json", "syntax"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : true,
+		"tab_width": 8
+	},
+	"rules": [{
+			"name": "keywords",
+			"words": ["true","false"],
+			"foreground": "colors/keyword"
+		},
+		{
+			"name": "numbers",
+			"regex" : "[0-9\\.]+",
+			"foreground": "colors/altkeyword"
+		},
+		{
+			"name" : "strings inside a tag",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
+		}
+	]
+}
