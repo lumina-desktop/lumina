@@ -38,6 +38,8 @@ private:
 
 	QStringList currentOpts();
 
+	void AddScreenToWidget(ScreenInfo);
+
 private slots:
 	void UpdateScreens();
 	void ScreenSelected();
