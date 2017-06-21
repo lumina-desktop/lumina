@@ -34,7 +34,7 @@ struct p_objects{
 	QList<QSize> resolutions;
 	QSize physicalSizeMM;
 	QString name;
-	QList<xcb_randr_output_t> outputs;
+	xcb_randr_output_t output;
 	QList<xcb_randr_mode_t> modes;
 
 	/*p_objects(){
@@ -69,6 +69,7 @@ public:
 	bool isEnabled();
 	bool isPrimary();
 	bool isAutomatic();
+	bool isConnected();
 	QList<QSize> availableResolutions();
 	QSize currentResolution(); //could be different from geometry.size() if things like panning/rotation are enabled
 	QRect currentGeometry();
