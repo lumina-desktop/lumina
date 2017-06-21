@@ -6,11 +6,7 @@
 //===========================================
 #include "LuminaRandR.h"
 
-//#include "xcb/randr.h"
-//#include "xcb/xcb_atom.h"
-
-#include <QDebug>
-#include <QX11Info>
+//#include "X11/extensions/Xrandr.h"
 
 inline QString atomToName(xcb_atom_t atom){
   xcb_get_atom_name_reply_t *nreply = xcb_get_atom_name_reply(QX11Info::connection(), xcb_get_atom_name_unchecked(QX11Info::connection(), atom), NULL);
@@ -35,6 +31,61 @@ inline QStringList atomsToNames(xcb_atom_t *atoms, unsigned int num){
   }
   return names;
 };
+
+inline bool loadScreenInfo(p_objects *p_obj, xcb_randr_monitor_info_t *info){
+  if(p_obj->monitor_atom == 0){ p_obj->monitor_atom = info->name; }
+  if(p_obj->name.isEmpty()){ p_obj->name = atomToName(info->name); }
+  //Now update all the info in the cache
+  p_obj->primary = (info->primary == 1);
+  p_obj->automatic = (info->automatic == 1);
+  p_obj->geometry = QRect(info->x, info->y, info->width, info->height);
+  p_obj->physicalSizeMM = QSize(info->width_in_millimeters, info->height_in_millimeters);
+  //Load the "outputs"
+  p_obj->outputs.clear();
+  int out_len =  xcb_randr_monitor_info_outputs_length(info);
+  for(int i=0; i<out_len; i++){ p_obj->outputs << xcb_randr_monitor_info_outputs(info)[i]; }
+  qDebug() << "Info Loaded:" << p_obj->name;
+  //qDebug() << "Output Number:" << screennum;
+  /*xcb_screen_t *scrn = xcb_aux_get_screen(QX11Info::connection(), screennum);
+  if(scrn==0){ return; }
+  xcb_randr_get_screen_info_reply_t *sinfo = xcb_randr_get_screen_info_reply(QX11Info::connection(), xcb_randr_get_screen_info_unchecked( QX11Info::connection(), scrn->root), NULL);
+  if(sinfo!=0){
+    qDebug() << "Got valid screen info";
+    qDebug() << " - Number of Screen Resolutions:" << xcb_randr_get_screen_info_sizes_length(sinfo);
+    free(sinfo);
+  }*/
+  for(int i=0; i<p_obj->outputs.length(); i++){
+    xcb_randr_get_output_info_reply_t *info = xcb_randr_get_output_info_reply(QX11Info::connection(),
+		xcb_randr_get_output_info_unchecked(QX11Info::connection(), p_obj->outputs[i], QX11Info::appTime()),
+		NULL);
+    if(info==0){ continue; } //bad output
+    //Modes
+    int mode_len = xcb_randr_get_output_info_modes_length(info);
+    qDebug() << "Number of Modes:" << mode_len;
+    if(mode_len<=0){ continue; } //skip this output - not a physical screen which can be used
+     p_obj->modes.clear();
+    for(int j=0; j<mode_len; j++){
+      p_obj->modes.append( xcb_randr_get_output_info_modes(info)[j] );
+    }
+  }
+  //qDebug() << "INFO:" << p_obj->name;
+  //qDebug() << "Found Outputs:" << p_obj->outputs;
+  //qDebug() << "Found Modes:" << p_obj->modes;
+  p_obj->resolutions.clear();
+  xcb_randr_get_screen_resources_reply_t *srreply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
+		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()), NULL);
+  if(srreply!=0){
+    for(int i=0; i<xcb_randr_get_screen_resources_modes_length(srreply); i++){
+      xcb_randr_mode_info_t minfo = xcb_randr_get_screen_resources_modes(srreply)[i];
+      if(p_obj->modes.contains(minfo.id)){
+        QSize sz(minfo.width, minfo.height);
+        if(!p_obj->resolutions.contains(sz)){ p_obj->resolutions.append( sz); }
+      }
+    }
+    free(srreply);
+  }
+  return true;
+}
 
 /*class OutputDevice::p_objects{
 public:
@@ -106,8 +157,8 @@ OutputDevice::~OutputDevice(){
 }
 
 // INFORMATION FUNCTIONS (simply read from cache)
-QString OutputDevice::ID(){ qDebug() << "Find ID"; return p_obj.name; }
-bool OutputDevice::isEnabled(){ return p_obj.monitor_atom !=0; }
+QString OutputDevice::ID(){ return p_obj.name; }
+bool OutputDevice::isEnabled(){ return !p_obj.geometry.isNull(); }
 bool OutputDevice::isPrimary(){ return p_obj.primary; }
 bool OutputDevice::isAutomatic(){ return p_obj.automatic; }
 QList<QSize> OutputDevice::availableResolutions(){ return p_obj.resolutions; }
@@ -129,9 +180,21 @@ bool OutputDevice::setAsPrimary(bool set){
 }
 
 bool OutputDevice::disable(){
+  //qDebug() << "Disable Monitor:" << p_obj.monitor_atom;
   if(p_obj.monitor_atom!=0){
-    xcb_randr_delete_monitor(QX11Info::connection(), QX11Info::appRootWindow(), p_obj.monitor_atom);
-    p_obj.monitor_atom = 0;
+    //qDebug() << " - Go ahead";
+    for(int o=0; o<p_obj.outputs.length(); o++){
+      for(int m=0; m<p_obj.modes.length(); m++){
+        qDebug() << "Deleting Mode for Output:" << "Mode:" << p_obj.modes[m] << "Output:" << p_obj.outputs[o];
+        //XLib version
+        //XRRDeleteOutputMode(QX11Info::display(), p_obj.outputs[o], p_obj.modes[m]);
+        //XCB version
+        xcb_randr_delete_output_mode(QX11Info::connection(), p_obj.outputs[o], p_obj.modes[m]);
+        xcb_flush(QX11Info::connection());
+      }
+    }
+    //xcb_randr_delete_monitor_checked(QX11Info::connection(), QX11Info::appRootWindow(), p_obj.monitor_atom);
+    //p_obj.monitor_atom = 0;
     return true;
   }
   return false;
@@ -151,55 +214,25 @@ void OutputDevice::changeResolution(QSize){
 void OutputDevice::updateInfoCache(){
     //Find the **active** monitor with the given id/name
   if(p_obj.monitor_atom !=0 || !p_obj.name.isEmpty() ){
-    xcb_randr_get_monitors_cookie_t cookie = xcb_randr_get_monitors_unchecked(QX11Info::connection(), QX11Info::appRootWindow(), 1);
-    xcb_randr_get_monitors_reply_t *reply = xcb_randr_get_monitors_reply(QX11Info::connection(), cookie, NULL);
-    if(reply!=0){
-      xcb_randr_monitor_info_iterator_t iter = xcb_randr_get_monitors_monitors_iterator(reply);
-      //qDebug() << "Number of Monitors:" << xcb_randr_get_monitors_monitors_length(reply);
-      while(iter.rem>0){
-        //qDebug() << " Index:" << iter.index << "Rem:" << iter.rem;
-        if( p_obj.monitor_atom == iter.data->name || p_obj.name == atomToName(iter.data->name) ){
-          if(p_obj.monitor_atom == 0){ p_obj.monitor_atom = iter.data->name; }
-          if(p_obj.name.isEmpty()){ p_obj.name = atomToName(iter.data->name); }
-          //Now update all the info in the cache
-          p_obj.primary = (iter.data->primary == 1);
-          p_obj.automatic = (iter.data->automatic == 1);
-          p_obj.geometry = QRect(iter.data->x, iter.data->y, iter.data->width, iter.data->height);
-          p_obj.physicalSizeMM = QSize(iter.data->width_in_millimeters, iter.data->height_in_millimeters);
-          //Load the "outputs"
-          p_obj.outputs.clear();
-          int out_len =  xcb_randr_monitor_info_outputs_length(iter.data);
-          for(int i=0; i<out_len; i++){ p_obj.outputs << xcb_randr_monitor_info_outputs(iter.data)[i]; }
-          qDebug() << "Info Loaded:" << p_obj.name;
-          //break; //Finished with the information for this particular monitor
+    bool found = false;
+    for(int i=0; i<2 && !found; i++){
+      xcb_randr_get_monitors_cookie_t cookie = xcb_randr_get_monitors_unchecked(QX11Info::connection(), QX11Info::appRootWindow(), (i==0 ? 1 : 0) ); //toggle between active/not monitors
+      xcb_randr_get_monitors_reply_t *reply = xcb_randr_get_monitors_reply(QX11Info::connection(), cookie, NULL);
+      if(reply!=0){
+        xcb_randr_monitor_info_iterator_t iter = xcb_randr_get_monitors_monitors_iterator(reply);
+        //qDebug() << "Number of Monitors:" << xcb_randr_get_monitors_monitors_length(reply);
+        while(iter.rem>0){
+          if( p_obj.monitor_atom == iter.data->name || p_obj.name == atomToName(iter.data->name) ){
+            loadScreenInfo(&p_obj, iter.data);
+            found = true;
+            break; //Finished with the information for this particular monitor
+          }
+          xcb_randr_monitor_info_next(&iter);
         }
-        xcb_randr_monitor_info_next(&iter);
-      }
-      free(reply);
-    } //end check for reply structure
+        free(reply);
+      } //end check for reply structure
+    } //end loop over active/inactive monitor state
   } //end loading of active/enabled monitor information
-
-  //Now load any information from the outputs
-  for(int i=0; i<p_obj.outputs.length(); i++){
-    xcb_randr_get_output_info_reply_t *info = xcb_randr_get_output_info_reply(QX11Info::connection(),
-		xcb_randr_get_output_info_unchecked(QX11Info::connection(), p_obj.outputs[i], QX11Info::appTime()),
-		NULL);
-    if(info==0){ continue; } //bad output
-    //Modes
-    int mode_len = xcb_randr_get_output_info_modes_length(info);
-    qDebug() << "Number of Modes:" << mode_len;
-    if(mode_len<=0){ continue; } //skip this output - not a physical screen which can be used
-     p_obj.resolutions.clear();
-    for(int j=0; j<mode_len; j++){
-      xcb_randr_mode_t mode = xcb_randr_get_output_info_modes(info)[j];
-      //Still need to convert the mode into the resolution somehow
-      //qDebug() << "Got Mode:" << atomToName(mode);
-      p_obj.resolutions << QSize(mode,1);
-    }
-    qDebug() << " - Number of CRTC's:" << xcb_randr_get_output_info_crtcs_length(info);
-    qDebug() << " - Number of clones:" << xcb_randr_get_output_info_clones_length(info);
-    qDebug() << " - Name of Output:" << QString::fromUtf8( (char*) xcb_randr_get_output_info_name(info), xcb_randr_get_output_info_name_length(info));
-  }
 
 }
 
@@ -208,39 +241,33 @@ void OutputDevice::updateInfoCache(){
 // ============================
 
 OutputDeviceList::OutputDeviceList(){
-
-  QList<xcb_randr_output_t> usedOutputs;
+  QList<xcb_atom_t> usedOutputs;
   //Get the information about all the "enabled" monitors
-  xcb_randr_get_monitors_cookie_t cookieA = xcb_randr_get_monitors_unchecked(QX11Info::connection(), QX11Info::appRootWindow(), 1);
-  xcb_randr_get_monitors_reply_t *replyA = xcb_randr_get_monitors_reply(QX11Info::connection(), cookieA, NULL);
-  if(replyA!=0){
-    xcb_randr_monitor_info_iterator_t iter = xcb_randr_get_monitors_monitors_iterator(replyA);
-    //qDebug() << "Number of Monitors:" << xcb_randr_get_monitors_monitors_length(reply);
-    while(iter.rem>0){
-      //qDebug() << "Found Monitor:";
-      //qDebug() << " Index:" << iter.index << "Rem:" << iter.rem;
-      QString name = atomToName(iter.data->name);
-      OutputDevice dev(name);
-      usedOutputs << dev.p_obj.outputs;
-
-      this->append(dev); //add to the internal list
-      xcb_randr_monitor_info_next(&iter);
-    }
-    //Free up any objects we are done with
-    free(replyA);
-  } //end loading of active/enabled monitors
+  for(int i=0; i<2; i++){ //loop over active/inactive monitors
+    qDebug() << "Scanning For Monitors:" << (i==0 ? "active" : "inactive");
+    xcb_randr_get_monitors_cookie_t cookieA = xcb_randr_get_monitors_unchecked(QX11Info::connection(), QX11Info::appRootWindow(), (i==0 ? 1 : 10)); //toggle active/inactive monitors
+    xcb_randr_get_monitors_reply_t *replyA = xcb_randr_get_monitors_reply(QX11Info::connection(), cookieA, NULL);
+    if(replyA!=0){
+      xcb_randr_monitor_info_iterator_t iter = xcb_randr_get_monitors_monitors_iterator(replyA);
+      //qDebug() << "Number of Monitors:" << xcb_randr_get_monitors_monitors_length(reply);
+      while(iter.rem>0){
+        //qDebug() << "Found Monitor:";
+        //qDebug() << " Index:" << iter.index << "Rem:" << iter.rem;
+        if(!usedOutputs.contains(iter.data->name)){
+          QString name = atomToName(iter.data->name);
+          OutputDevice dev(name);
+          usedOutputs << iter.data->name;
+          out_devs.append(dev); //add to the internal list
+        }
+        xcb_randr_monitor_info_next(&iter);
+      }
+      //Free up any objects we are done with
+      free(replyA);
+    } //end loading of active/enabled monitors
+  } //end loop over active/inactive monitors
 
 
   //Now get the information about any **UNUSED** monitors/outputs
-  xcb_randr_get_providers_reply_t *pinfo = xcb_randr_get_providers_reply( QX11Info::connection(),
-		xcb_randr_get_providers(QX11Info::connection(), QX11Info::appRootWindow()), NULL);
-  if(pinfo != 0){
-    xcb_randr_provider_t *prov = xcb_randr_get_providers_providers(pinfo);
-    int plen = xcb_randr_get_providers_providers_length(pinfo);
-    qDebug() << "Number of Providers:" << plen;
-    free(pinfo);
-  }
-
   /*xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
 		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()),
 		NULL);
@@ -281,7 +308,7 @@ OutputDeviceList::OutputDeviceList(){
     }
 
     //Properties
-    xcb_randr_list_output_properties_reply_t *pinfo = xcb_randr_list_output_properties_reply(QX11Info::connection(), 
+    xcb_randr_list_output_properties_reply_t *pinfo = xcb_randr_list_output_properties_reply(QX11Info::connection(),
 		xcb_randr_list_output_properties_unchecked(QX11Info::connection(), output),
 		NULL);
     int pinfo_len = xcb_randr_list_output_properties_atoms_length(pinfo);
@@ -317,5 +344,11 @@ void OutputDeviceList::setPrimaryMonitor(QString id){
 }
 
 void OutputDeviceList::disableMonitor(QString id){
-
+  for(int i=0; i<out_devs.length(); i++){
+    if(out_devs[i].ID() == id){
+        out_devs[i].disable();
+        out_devs[i].updateInfoCache();
+      break;
+    }
+  }
 }

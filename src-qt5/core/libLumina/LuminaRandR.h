@@ -16,6 +16,9 @@
 #include <QPoint>
 #include <QRect>
 #include <QList>
+#include <QObject>
+#include <QDebug>
+#include <QX11Info>
 
 // XCB
 #include "xcb/randr.h"
@@ -32,6 +35,7 @@ struct p_objects{
 	QSize physicalSizeMM;
 	QString name;
 	QList<xcb_randr_output_t> outputs;
+	QList<xcb_randr_mode_t> modes;
 
 	/*p_objects(){
           // Set the defaults for non-default-constructed variables
@@ -85,10 +89,20 @@ public:
 	p_objects p_obj;
 };
 
-class OutputDeviceList : public QList<OutputDevice>{
+class OutputDeviceList{
+private:
+	QList<OutputDevice> out_devs;
+
 public:
 	OutputDeviceList();
 	~OutputDeviceList();
+
+	int length(){ return out_devs.length(); }
+
+	OutputDevice* at(int i){
+	  if(i<out_devs.length()){ return &out_devs[i]; }
+           return 0;
+	}
 
 	//Simplification functions for dealing with multiple monitors
 	void setPrimaryMonitor(QString id);
