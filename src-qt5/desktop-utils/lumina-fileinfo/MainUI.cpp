@@ -27,8 +27,6 @@ MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
 
 MainUI::~MainUI(){
   terminate_thread = true;
-  disconnect(this, SIGNAL(folder_size_changed(quint64, quint64, quint64, bool )) );
-  if(!INFO){ delete INFO; }
   this->close();
 }
 
