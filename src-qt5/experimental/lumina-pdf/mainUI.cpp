@@ -67,12 +67,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Setup all the icons
   ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
   ui->actionClose->setIcon( LXDG::findIcon("window-close",""));
-  ui->actionFit_Width->setIcon(LXDG::findIcon("zoom-fit-width",""));
+  ui->actionFit_Width->setIcon(LXDG::findIcon("arrow-expand-all",""));
   ui->actionFit_Page->setIcon(LXDG::findIcon("zoom-fit-best",""));
   ui->actionOpen_PDF->setIcon(LXDG::findIcon("document-open",""));
   ui->actionSingle_Page->setIcon(LXDG::findIcon("view-preview",""));
-  ui->actionDual_Pages->setIcon(LXDG::findIcon("view-split-left-right",""));
-  ui->actionAll_Pages->setIcon(LXDG::findIcon("view-grid",""));
+  ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-agenda",""));
+  ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
 }
 
 MainUI::~MainUI(){
