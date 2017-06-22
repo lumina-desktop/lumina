@@ -16,7 +16,7 @@
 Browser::Browser(QObject *parent) : QObject(parent){
   watcher = new QFileSystemWatcher(this);
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged(QString)) );
-  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
+ connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
@@ -52,7 +52,6 @@ bool Browser::showingThumbnails(){
 
 //   PRIVATE
 void Browser::loadItem(QString info, Browser *obj){
-  //qDebug() << "LoadItem:" << info;
   QImage pix;
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
     QFile file(info);
@@ -88,30 +87,30 @@ void Browser::fileChanged(QString file){
 }
 
 void Browser::dirChanged(QString dir){
+
   if(dir==currentDir){ QTimer::singleShot(500, this, SLOT(loadDirectory()) ); }
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
-  qDebug() << "Future Finished:" << name;
-      QIcon ico;
-      LFileInfo info(name);
+     QIcon ico;
+     //LFileInfo info(name);
+     LFileInfo *info = new LFileInfo(name);
       if(!icon.isNull()){
         //qDebug() << " -- Data:";
         QPixmap pix = QPixmap::fromImage(icon);
         ico.addPixmap(pix);
-      }else if(info.isDir()){
+       }else if(info->isDir()){
         //qDebug() << " -- Folder:";
         ico = loadIcon("folder");
       }
       if(ico.isNull()){
 	//qDebug() << " -- MimeType:" << info.fileName() << info.mimetype();
-        ico = loadIcon(info.iconfile());
+        ico = loadIcon(info->iconfile());
       }
-  qDebug() << " -- emit signal";
-      this->emit itemDataAvailable( ico, info );
-  qDebug() << " -- done:" << name;
+      this->emit itemDataAvailable( ico, info);
+     //qDebug() << " -- done:" << name;
 }
 
 // PUBLIC SLOTS

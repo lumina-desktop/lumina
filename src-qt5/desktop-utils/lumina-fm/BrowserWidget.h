@@ -72,7 +72,7 @@ private slots:
 	//Browser connections
 	void clearItems();
 	void itemRemoved(QString);
-	void itemDataAvailable(QIcon, LFileInfo);
+	void itemDataAvailable(QIcon, LFileInfo*);
 	void itemsLoading(int total);
 	void selectionChanged();
 
@@ -86,9 +86,9 @@ signals:
 	void contextMenuRequested();
 	void DataDropped(QString, QStringList);
 	void hasFocus(QString); //ID output
-	
+
 	//Internal signal
 	void dirChange(QString); //current dir path
-	
+
 };
 #endif
