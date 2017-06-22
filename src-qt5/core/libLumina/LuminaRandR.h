@@ -25,23 +25,18 @@
 #include "xcb/xcb_atom.h"
 
 struct p_objects{
-//public:
-	xcb_atom_t monitor_atom; //This is the index used to identify particular monitors (unique ID)
+	xcb_randr_output_t output; //This is the index used to identify particular monitors (unique ID)
 
 	//Cached Information
-	bool primary, automatic;
+	bool primary;
 	QRect geometry;
-	QList<QSize> resolutions;
-	QSize physicalSizeMM;
-	QString name;
-	xcb_randr_output_t output;
-	QList<xcb_randr_mode_t> modes;
 
-	/*p_objects(){
-          // Set the defaults for non-default-constructed variables
-	  primary = automatic = false;
-	  monitor_atom = 0;
-	}*/
+	QSize physicalSizeMM; //physical size of the display in MM
+	QString name;
+
+	xcb_randr_mode_t current_mode;
+	QList<xcb_randr_mode_t> modes; //each mode is a combination of resolution + refresh rate
+	QList<QSize> resolutions; //smaller subset of modes - just unique resolutions
 
 };
 
@@ -68,12 +63,12 @@ public:
 
 	bool isEnabled();
 	bool isPrimary();
-	bool isAutomatic();
 	bool isConnected();
 	QList<QSize> availableResolutions();
 	QSize currentResolution(); //could be different from geometry.size() if things like panning/rotation are enabled
 	QRect currentGeometry();
 	QSize physicalSizeMM();
+	QSize physicalDPI();
 
 	//Modification
 	bool setAsPrimary(bool);
@@ -107,6 +102,8 @@ public:
 
 	//Simplification functions for dealing with multiple monitors
 	void setPrimaryMonitor(QString id);
+	QString primaryMonitor();
+
 	void disableMonitor(QString id);
 	//void enableMonitor(QString id, QRect geom);
 
