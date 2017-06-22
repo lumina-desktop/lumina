@@ -123,12 +123,13 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
     if(rule.contains("font_weight")){
       QString wgt = rule.value("font_weight").toString();
       if(wgt =="bold"){ tmp.format.setFontWeight(QFont::Bold); }
-      if(wgt =="light"){ tmp.format.setFontWeight(QFont::Light); }
+      else if(wgt =="light"){ tmp.format.setFontWeight(QFont::Light); }
       else{ tmp.format.setFontWeight(QFont::Normal); }
     }
     if(rule.contains("font_style")){
       if(rule.value("font_style").toString()=="italic"){ tmp.format.setFontItalic(true); }
     }
+
     //Now save the rule(s) to the list
     if(rule.contains("words")){
       //special logic - this generates a bunch of rules all at once (one per word)
@@ -205,12 +206,6 @@ QString Custom_Syntax::ruleForFile(QString filename, QSettings *settings){
   for(int i=0; i<files.length(); i++){
     if(files[i].supportsFile(filename)){ return files[i].name(); }
   }
-
-  /*QString suffix = filename.section(".",-1);
-  if(suffix=="cpp" || suffix=="hpp" || suffix=="c" || suffix=="h"){ return "C++"; }
-  //else if(suffix=="py" || suffix=="pyc"){ return "Python"; }
-  else if(suffix=="sh"){ return "Shell"; }
-  else if(suffix=="rst"){ return "reST"; }*/
   return "";
 }
 
