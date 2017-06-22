@@ -105,8 +105,8 @@ public:
 	void setPrimaryMonitor(QString id);
 	QString primaryMonitor();
 
-	void disableMonitor(QString id);
-	//void enableMonitor(QString id, QRect geom);
+	bool disableMonitor(QString id);
+	bool enableMonitor(QString id, QRect geom);
 
 };
 #endif

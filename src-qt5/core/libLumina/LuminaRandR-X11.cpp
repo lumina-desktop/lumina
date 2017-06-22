@@ -40,6 +40,7 @@ inline bool loadScreenInfo(p_objects *p_obj){
   p_obj->primary = false;
   p_obj->modes.clear();
   p_obj->resolutions.clear();
+  p_obj->crtc = 0;
 
   //Get the information associated with the output and save it in the p_objects cache
   xcb_randr_get_output_info_reply_t *info = xcb_randr_get_output_info_reply(QX11Info::connection(),
@@ -55,6 +56,11 @@ inline bool loadScreenInfo(p_objects *p_obj){
     for(int j=0; j<mode_len; j++){
       p_obj->modes.append( xcb_randr_get_output_info_modes(info)[j] );
     }
+    //int pref_len = info->num_preferred;
+    //qDebug() << "Modes:" << p_obj->modes << "Num Preferred:" << pref_len;
+    /*for(int j=0; j<pref_len; j++){
+      p_obj->preferred.append( xcb_randr_get_output_info_preferred(info)[j] );
+    }*/
   p_obj->crtc = info->crtc;
   free(info); //done with output_info
 
@@ -102,11 +108,19 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
 		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()), NULL);
   if(srreply!=0){
     unsigned int refreshrate = 0;
+    QSize sz;
     for(int i=0; i<xcb_randr_get_screen_resources_modes_length(srreply); i++){
       xcb_randr_mode_info_t minfo = xcb_randr_get_screen_resources_modes(srreply)[i];
       if(modes.contains(minfo.id)){
-        QSize sz(minfo.width, minfo.height);
-        if(sz == res && minfo.dot_clock > refreshrate){ det_mode = minfo.id; refreshrate = minfo.dot_clock; }
+        if(res.isNull() && (minfo.width > sz.width() || minfo.height > sz.height()) ){
+          //No resolution requested - pick the largest one
+          qDebug() << "Found Bigger Mode:" << sz << QSize(minfo.width, minfo.height);
+          sz = QSize(minfo.width, minfo.height);
+          det_mode = minfo.id;
+        }else if(!res.isNull()){
+          sz = QSize(minfo.width, minfo.height);
+          if(sz == res && minfo.dot_clock > refreshrate){ det_mode = minfo.id; refreshrate = minfo.dot_clock; }
+        }
       }
     }
     free(srreply);
@@ -197,12 +211,38 @@ bool OutputDevice::disable(){
 
 bool OutputDevice::enable(QRect geom){
   //if no geom provided, will add as the right-most screen at optimal resolution
-  if(this->isEnabled()){ return true; } //already enabled
+  //if(this->isEnabled()){ return true; } //already enabled
   qDebug() << "Enable Monitor:" << geom;
   xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj.modes);
   if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
+  //qDebug() << " - Found Mode:" << mode;
+  if(p_obj.crtc == 0){
+    //Need to scan for an available crtc to use (turning on a monitor for the first time)
+    xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
+		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()),
+		NULL);
+    int num = xcb_randr_get_screen_resources_crtcs_length(reply);
+    for(int i=0; i<num && p_obj.crtc==0; i++){
+      xcb_randr_crtc_t crt = xcb_randr_get_screen_resources_crtcs(reply)[i];
+      xcb_randr_get_crtc_info_reply_t *info = xcb_randr_get_crtc_info_reply(QX11Info::connection(),
+		xcb_randr_get_crtc_info_unchecked(QX11Info::connection(), crt, QX11Info::appTime()),
+		NULL);
+      //Verify that the output is supported by this crtc
+      QList<xcb_randr_output_t> possible;
+      if(xcb_randr_get_crtc_info_outputs_length(info) < 1){ //make sure it is not already associated with an output
+        int pnum = xcb_randr_get_crtc_info_possible_length(info);
+        for(int p=0; p<pnum; p++){ possible << xcb_randr_get_crtc_info_possible(info)[p]; }
+      }
+      if(possible.contains(p_obj.output)){ p_obj.crtc = crt; }
+      free(info);
+    }
+    free(reply);
+  }
+  //qDebug() << " - Using crtc:" << p_obj.crtc;
+  xcb_randr_output_t outList[1]{ p_obj.output };
+
   xcb_randr_set_crtc_config_cookie_t cookie = xcb_randr_set_crtc_config_unchecked(QX11Info::connection(), p_obj.crtc,
-		XCB_CURRENT_TIME, XCB_CURRENT_TIME, geom.x(), geom.y(), mode, XCB_RANDR_ROTATION_ROTATE_0, 1, &p_obj.output);
+		XCB_CURRENT_TIME, XCB_CURRENT_TIME, geom.x(), geom.y(), mode, XCB_RANDR_ROTATION_ROTATE_0, 1, outList);
     //Now check the result of the configuration
     xcb_randr_set_crtc_config_reply_t *reply = xcb_randr_set_crtc_config_reply(QX11Info::connection(), cookie, NULL);
     if(reply==0){ return false; }
@@ -229,6 +269,7 @@ void OutputDevice::updateInfoCache(){
 		NULL);
       //Compare names
       QString name = QString::fromLocal8Bit( (char*) xcb_randr_get_output_info_name(info), xcb_randr_get_output_info_name_length(info));
+      free(info);
       if(name == p_obj.name){ p_obj.output = output; break; }
     }
     free(reply);
@@ -273,12 +314,26 @@ QString OutputDeviceList::primaryMonitor(){
   return "";
 }
 
-void OutputDeviceList::disableMonitor(QString id){
+bool OutputDeviceList::disableMonitor(QString id){
+  bool ok = false;
   for(int i=0; i<out_devs.length(); i++){
     if(out_devs[i].ID() == id){
-        out_devs[i].disable();
+        ok = out_devs[i].disable();
         out_devs[i].updateInfoCache();
       break;
     }
   }
+  return ok;
+}
+
+bool OutputDeviceList::enableMonitor(QString id, QRect geom){
+  bool ok = false;
+  for(int i=0; i<out_devs.length(); i++){
+    if(out_devs[i].ID() == id){
+        ok = out_devs[i].enable(geom);
+        out_devs[i].updateInfoCache();
+      break;
+    }
+  }
+  return ok;
 }

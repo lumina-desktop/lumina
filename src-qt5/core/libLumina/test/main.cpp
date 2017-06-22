@@ -5,9 +5,14 @@
 
 
 int main(int argc, char** argv){
+  QString toggle = "HDMI-2";
+  QRect toggleGeom(1921,0, 1024,768); //put to the right of the default monitor
+  int toggleOK = -1; //-1: automatic, 0: enable monitor, 1: disable monitor
+
   QApplication A(argc, argv);
   qDebug() << "Load Monitor Device Information";
   OutputDeviceList devList;
+
   qDebug() << "Detected Information:";
   for(int i=0; i<devList.length(); i++){
     qDebug() << "["+devList.at(i)->ID()+"]";
@@ -19,11 +24,19 @@ int main(int argc, char** argv){
       qDebug() << "  - Physical Size (mm):" << devList.at(i)->physicalSizeMM();
       qDebug() << "  - Current DPI:" << devList.at(i)->physicalDPI();
       qDebug() << "  - Available Resolutions:" << devList.at(i)->availableResolutions();
+      if(devList.at(i)->ID() == toggle && toggleOK<0){ toggleOK = (devList.at(i)->isEnabled() ? 1 : 0); }
     }
   }
-  /*QString disable = "HDMI-2";
-  qDebug() << "Try Disabling Monitor:" << disable;
-  devList.disableMonitor(disable);*/
+  qDebug() << "\n================\n";
+  if(toggleOK == 0){
+    qDebug() << "Try Enabling Monitor:" << toggle << toggleGeom;
+    bool ok = devList.enableMonitor(toggle, toggleGeom);
+    qDebug() << " -- Success:" << ok;
+  }else if(toggleOK == 1){
+    qDebug() << "Try Disabling Monitor:" << toggle;
+    bool ok = devList.disableMonitor(toggle);
+    qDebug() << " -- Success:" << ok;
+  }
 
   /*QString setprimary = "eDP-1";
   if(devList.primaryMonitor() != setprimary){
