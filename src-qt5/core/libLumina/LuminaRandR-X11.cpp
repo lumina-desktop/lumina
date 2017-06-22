@@ -62,11 +62,11 @@ inline bool loadScreenInfo(p_objects *p_obj){
   xcb_randr_get_crtc_info_reply_t *cinfo = xcb_randr_get_crtc_info_reply(QX11Info::connection(),
 		xcb_randr_get_crtc_info_unchecked(QX11Info::connection(), p_obj->crtc, QX11Info::appTime()),
 		NULL);
-  if(cinfo==0){ return false; }
-  p_obj->geometry = QRect(cinfo->x, cinfo->y, cinfo->width, cinfo->height);
-  p_obj->current_mode = cinfo->mode;
-
-  free(cinfo); //done with crtc_info
+  if(cinfo!=0){
+    p_obj->geometry = QRect(cinfo->x, cinfo->y, cinfo->width, cinfo->height);
+    p_obj->current_mode = cinfo->mode;
+    free(cinfo); //done with crtc_info
+  }
 
   if(!p_obj->modes.isEmpty()){
     //And see if this output is currently the primary output

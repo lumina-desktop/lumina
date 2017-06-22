@@ -21,11 +21,11 @@ int main(int argc, char** argv){
       qDebug() << "  - Available Resolutions:" << devList.at(i)->availableResolutions();
     }
   }
-  /*QString disable = "DVI-I-1";
+  /*QString disable = "HDMI-2";
   qDebug() << "Try Disabling Monitor:" << disable;
   devList.disableMonitor(disable);*/
 
-  QString setprimary = "eDP-1";
+  /*QString setprimary = "eDP-1";
   if(devList.primaryMonitor() != setprimary){
     qDebug() << "Try setting monitor as primary:" << setprimary;
     devList.setPrimaryMonitor(setprimary);
@@ -36,7 +36,8 @@ int main(int argc, char** argv){
         qDebug() << "Successful:" << devList.at(i)->isPrimary();
       }
     }
-  }
-  qDebug() << "Finished Test!";
+  }*/
+
+  qDebug() << "[  Finished Test!  ]";
   return 0;
 }

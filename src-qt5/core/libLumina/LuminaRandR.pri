@@ -4,7 +4,6 @@ QT *= x11extras
 
 #X11/XCB includes
 LIBS *= -lxcb -lxcb-randr
-#LIBS *= -lXrandr
 
 SOURCES *= $${PWD}/LuminaRandR-X11.cpp
 
