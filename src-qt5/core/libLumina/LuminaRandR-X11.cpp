@@ -114,7 +114,7 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
       if(modes.contains(minfo.id)){
         if(res.isNull() && (minfo.width > sz.width() || minfo.height > sz.height()) ){
           //No resolution requested - pick the largest one
-          qDebug() << "Found Bigger Mode:" << sz << QSize(minfo.width, minfo.height);
+          //qDebug() << "Found Bigger Mode:" << sz << QSize(minfo.width, minfo.height);
           sz = QSize(minfo.width, minfo.height);
           det_mode = minfo.id;
         }else if(!res.isNull()){
@@ -212,7 +212,7 @@ bool OutputDevice::disable(){
 bool OutputDevice::enable(QRect geom){
   //if no geom provided, will add as the right-most screen at optimal resolution
   //if(this->isEnabled()){ return true; } //already enabled
-  qDebug() << "Enable Monitor:" << geom;
+  //qDebug() << "Enable Monitor:" << geom;
   xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj.modes);
   if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
   //qDebug() << " - Found Mode:" << mode;
