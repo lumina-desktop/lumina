@@ -17,10 +17,12 @@
 #include <QScrollBar>
 #include <QSettings>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QFileSystemModel>
 
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
 #include <LUtils.h>
+#include <ExternalProcess.h>
 
 #include "../ScrollDialog.h"
 
@@ -62,14 +64,28 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   connect(BW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
   connect(BW, SIGNAL(updateDirectoryStatus(QString)), this, SLOT(dirStatusChanged(QString)) );
   connect(BW, SIGNAL(hasFocus(QString)), this, SLOT(setCurrentBrowser(QString)) );
+
+  // Create treeviewpane QFileSystemModel model and populate
+  QString folderTreePath = QDir::rootPath();
+  dirtreeModel = new QFileSystemModel(this);
+  dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);      // remove extraneous dirs
+  dirtreeModel->setRootPath(folderTreePath);
+  ui->folderViewPane->setModel(dirtreeModel);
+  ui->splitter->setSizes( QList<int>() << this->width()/3 << 2*this->width()/3);
+  ui->folderViewPane->setHeaderHidden(true);
+  ui->folderViewPane->resizeColumnToContents(0);
+  ui->folderViewPane->setColumnHidden(1, true);
+  ui->folderViewPane->setColumnHidden(2, true);
+  ui->folderViewPane->setColumnHidden(3, true);
+
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
-  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = 0; //not created yet
+  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = 0; //not created yet
   connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(UpdateContextMenu()) );
 
   UpdateIcons();
-  UpdateText();	
+  UpdateText();
   createShortcuts();
   createMenus();
 }
@@ -129,6 +145,25 @@ void DirWidget::setThumbnailSize(int px){
   ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
 }
 
+//====================
+//         Folder Pane
+//====================
+
+void DirWidget::showDirTreePane(bool show){
+  if(show !=showdirtree){
+  showdirtree = show;
+  }
+}
+
+bool DirWidget::showingDirTreePane(){
+  return showdirtree;
+}
+
+void DirWidget::on_folderViewPane_clicked(const QModelIndex &index){
+  QString tPath = dirtreeModel->fileInfo(index).absoluteFilePath();     // get what was clicked
+  ChangeDir(tPath);
+}
+
 // ================
 //    PUBLIC SLOTS
 // ================
@@ -140,8 +175,8 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   snapshots = snaps;
   //if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
   //Now update the UI as necessary
-  if(ui->tool_snap->menu()==0){ 
-    ui->tool_snap->setMenu(new QMenu(this)); 
+  if(ui->tool_snap->menu()==0){
+    ui->tool_snap->setMenu(new QMenu(this));
     connect(ui->tool_snap->menu(), SIGNAL(triggered(QAction*)), this, SLOT(direct_snap_selected(QAction*)) );
   }
   ui->tool_snap->menu()->clear();
@@ -151,12 +186,12 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   }
   ui->slider_snap->setRange(0, snaps.length());
   if(currentBrowser()->currentDirectory().contains(ZSNAPDIR)){
-    //The user was already within a snapshot - figure out which one and set the slider appropriately
-    int index = snaps.indexOf( currentBrowser()->currentDirectory().section(ZSNAPDIR,1,1).section("/",0,0) );
-    if(index < 0){ index = snaps.length(); } //unknown - load the system (should never happen)
-    ui->slider_snap->setValue(index);
+  //The user was already within a snapshot - figure out which one and set the slider appropriately
+   int index = snaps.indexOf( currentBrowser()->currentDirectory().section(ZSNAPDIR,1,1).section("/",0,0) );
+   if(index < 0){ index = snaps.length(); } //unknown - load the system (should never happen)
+   ui->slider_snap->setValue(index);
   }else{
-    ui->slider_snap->setValue(snaps.length()); //last item (normal system)
+   ui->slider_snap->setValue(snaps.length()); //last item (normal system)
   }
   on_slider_snap_valueChanged();
   QApplication::processEvents(); //let the slider changed signal get thrown away before we re-enable the widget
@@ -183,10 +218,9 @@ void DirWidget::UpdateIcons(){
   ui->actionMenu->setIcon( LXDG::findIcon("view-more-vertical","format-list-unordered") );
   ui->actionSingleColumn->setIcon(LXDG::findIcon("view-right-close","view-close") );
   ui->actionDualColumn->setIcon(LXDG::findIcon("view-right-new","view-split-left-right") );
-  
+
   ui->tool_zoom_in->setIcon(LXDG::findIcon("zoom-in",""));
   ui->tool_zoom_out->setIcon(LXDG::findIcon("zoom-out",""));
-
 }
 
 void DirWidget::UpdateText(){
@@ -199,36 +233,37 @@ void DirWidget::UpdateText(){
 //       PRIVATE
 // =================
 void DirWidget::createShortcuts(){
-kZoomIn= new QShortcut(QKeySequence(QKeySequence::ZoomIn),this);
-kZoomOut= new QShortcut(QKeySequence(QKeySequence::ZoomOut),this);
-kNewFile= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_F),this);
-kNewDir= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N),this);
-kNewXDG= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_G),this);
-kCut= new QShortcut(QKeySequence(QKeySequence::Cut),this);
-kCopy= new QShortcut(QKeySequence(QKeySequence::Copy),this);
-kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
-kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
-kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
-kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
-kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
-kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
-kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
+  kZoomIn= new QShortcut(QKeySequence(QKeySequence::ZoomIn),this);
+  kZoomOut= new QShortcut(QKeySequence(QKeySequence::ZoomOut),this);
+  kNewFile= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_F),this);
+  kNewDir= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N),this);
+  kNewXDG= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_G),this);
+  kCut= new QShortcut(QKeySequence(QKeySequence::Cut),this);
+  kCopy= new QShortcut(QKeySequence(QKeySequence::Copy),this);
+  kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
+  kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
+  kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
+  kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
+  kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
+  kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
+  kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
+  kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
 
-connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
-connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
-connect(kNewFile, SIGNAL(activated()), this, SLOT(createNewFile()) );
-connect(kNewDir, SIGNAL(activated()), this, SLOT(createNewDir()) );
-connect(kNewXDG, SIGNAL(activated()), this, SLOT(createNewXDGEntry()) );
-connect(kCut, SIGNAL(activated()), this, SLOT(cutFiles()) );
-connect(kCopy, SIGNAL(activated()), this, SLOT(copyFiles()) );
-connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
-connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
-connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
-connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
-connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
-connect(kOpMM, SIGNAL(activated()), this, SLOT(openMultimedia()) );
-connect(kOpTerm, SIGNAL(activated()), this, SLOT(openTerminal()) );
-
+  connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
+  connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
+  connect(kNewFile, SIGNAL(activated()), this, SLOT(createNewFile()) );
+  connect(kNewDir, SIGNAL(activated()), this, SLOT(createNewDir()) );
+  connect(kNewXDG, SIGNAL(activated()), this, SLOT(createNewXDGEntry()) );
+  connect(kCut, SIGNAL(activated()), this, SLOT(cutFiles()) );
+  connect(kCopy, SIGNAL(activated()), this, SLOT(copyFiles()) );
+  connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
+  connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
+  connect(kExtract, SIGNAL(activated()), this, SLOT(autoExtractFiles()) );
+  connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
+  connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
+  connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
+  connect(kOpMM, SIGNAL(activated()), this, SLOT(openMultimedia()) );
+  connect(kOpTerm, SIGNAL(activated()), this, SLOT(openTerminal()) );
 }
 
 void DirWidget::createMenus(){
@@ -260,6 +295,38 @@ void DirWidget::createMenus(){
   cFModMenu->addSeparator();
   cFModMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() );
 */
+
+//---------------------------------------------------//
+  /*
+  if(cOpenWithMenu==0){ cOpenWithMenu = new QMenu(this); }
+      else{ cOpenWithMenu->clear(); }
+      cOpenWithMenu->setTitle(tr("Open with..."));
+      cOpenWithMenu->setIcon( LXDG::findIcon("run-build-configure","") );
+      XDGDesktopList applist;
+        applist.updateList();
+      PREFAPPS = getPreferredApplications();
+      //qDebug() << "Preferred Apps:" << PREFAPPS;
+      cOpenWithMenu->clear();
+      //Now get the application mimetype for the file extension (if available)
+      QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
+      //Now add all the detected applications
+      QHash< QString, QList<XDGDesktop*> > hash = LXDG::sortDesktopCats( applist.apps(false,true) );
+      QStringList cat = hash.keys();
+      cat.sort(); //sort alphabetically
+      for(int c=0; c<cat.length(); c++){
+        QList<XDGDesktop*> app = hash[cat[c]];
+        if(app.length()<1){ cOpenWithMenu =0; continue; }
+        for(int a=0; a<app.length(); a++){
+            QString program = app[a]->filePath;
+                QStringList arguments;
+                arguments << "%u";
+                QProcess *p = new QProcess();
+                p->start(program, arguments);
+
+          cOpenWithMenu->addAction(LXDG::findIcon(app[a]->icon), (app[a]->name), this, SLOT(p->start(program, arguments)) );}}
+      cOpenWithMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Other..."), this, SLOT(runWithFiles()) );
+*/
+//---------------------------------------------------//
   if(cFViewMenu==0){ cFViewMenu = new QMenu(this); }
   else{ cFViewMenu->clear(); }
   cFViewMenu->setTitle(tr("View Files..."));
@@ -318,7 +385,7 @@ void DirWidget::on_slider_snap_valueChanged(int val){
   //Update the snapshot interface
   ui->tool_snap_newer->setEnabled(val < ui->slider_snap->maximum());
   ui->tool_snap_older->setEnabled(val > ui->slider_snap->minimum());
-  if(val >= snapshots.length() || val < 0){ 
+  if(val >= snapshots.length() || val < 0){
     ui->tool_snap->setText(tr("Current"));
   }else if(QFile::exists(snapbasedir+snapshots[val])){
     ui->tool_snap->setText( QFileInfo(snapbasedir+snapshots[val]).lastModified().toString(Qt::DefaultLocaleShortDate) );
@@ -378,12 +445,12 @@ void DirWidget::on_actionBack_triggered(){
 }
 
 void DirWidget::on_actionUp_triggered(){
-  QString dir = currentBrowser()->currentDirectory().section("/",0,-2);
+QString dir = currentBrowser()->currentDirectory().section("/",0,-2);
   if(dir.isEmpty())
-      dir = "/";
-  //Quick check to ensure the directory exists
-  while(!QFile::exists(dir) && !dir.isEmpty()){
-    dir = dir.section("/",0,-2); //back up one additional dir
+   dir = "/";
+   //Quick check to ensure the directory exists
+   while(!QFile::exists(dir) && !dir.isEmpty()){
+   dir = dir.section("/",0,-2); //back up one additional dir
   }
   currentBrowser()->changeDirectory(dir);
 }
@@ -417,7 +484,7 @@ void DirWidget::on_actionSingleColumn_triggered(bool checked){
 }
 
 void DirWidget::on_actionDualColumn_triggered(bool checked){
-   if(!checked){ return; }
+  if(!checked){ return; }
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
@@ -467,7 +534,7 @@ void DirWidget::fileProperties(){
     QMessageBox::warning(this, tr("Missing Utility"), tr("The \"lumina-fileinfo\" utility could not be found on the system. Please install it first.") );
     return;
   }
-  for(int i=0; i<sel.length(); i++){ 
+  for(int i=0; i<sel.length(); i++){
     QProcess::startDetached("lumina-fileinfo \""+sel[i]+"\""); //use absolute paths
   }
 }
@@ -489,18 +556,19 @@ void DirWidget::UpdateContextMenu(){
   //qDebug() << "  Selection:" << sel;
   contextMenu->clear();
 
-  if(!sel.isEmpty()){  
-    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
-    contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+  if(!sel.isEmpty()){
+   contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
+   //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
  //   cFModMenu->setEnabled(!sel.isEmpty() && canmodify);
 
-    if(!sel.isEmpty()){
+  if(!sel.isEmpty()){
       contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
+      if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
     }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
       contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
@@ -513,12 +581,12 @@ void DirWidget::UpdateContextMenu(){
     contextMenu->addMenu(cFViewMenu);
     cFViewMenu->setEnabled(!sel.isEmpty());
 
-  //Now add the general selection options
-  contextMenu->addSection(LXDG::findIcon("folder","inode/directory"), tr("Directory Operations"));
-  if(canmodify){
-    contextMenu->addMenu(cNewMenu);
-  }
-  contextMenu->addMenu(cOpenMenu);
+    //Now add the general selection options
+   contextMenu->addSection(LXDG::findIcon("folder","inode/directory"), tr("Directory Operations"));
+   if(canmodify){
+     contextMenu->addMenu(cNewMenu);
+   }
+   contextMenu->addMenu(cOpenMenu);
 }
 
 void DirWidget::currentDirectoryChanged(bool widgetonly){
@@ -528,10 +596,10 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }
   else if( !currentBrowser()->isEnabled() ){ ui->label_status->setText(tr("Loading...")); }
   //qDebug() << "Start search for snapshots";
-  if(!cur.contains("/.zfs/snapshot") ){ 
+  if(!cur.contains("/.zfs/snapshot") ){
     normalbasedir = cur;
     ui->group_snaps->setVisible(false);
-    emit findSnaps(ID, cur); 
+    emit findSnaps(ID, cur);
     qDebug() << "Changed to directory:" << cur;
   }else{
     //Re-assemble the normalbasedir variable (in case moving around within a snapshot)
@@ -540,8 +608,11 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
     qDebug() << "Changed to snapshot:" << cur << normalbasedir;
   }
   ui->actionBack->setEnabled( currentBrowser()->history().length()>1 );
-  line_dir->setText(normalbasedir);
+ line_dir->setText(normalbasedir);
   emit TabNameChanged(ID, normalbasedir.section("/",-1));
+  QModelIndex index = dirtreeModel->index(cur,0);
+  ui->folderViewPane->setCurrentIndex( index );
+  ui->folderViewPane->scrollTo(index);
 }
 
 void DirWidget::dirStatusChanged(QString stat){
@@ -564,12 +635,12 @@ void DirWidget::setCurrentBrowser(QString id){
 
 //Context Menu Functions
 void DirWidget::createNewFile(){
- if(!canmodify){ return; } //cannot create anything here
+  if(!canmodify){ return; } //cannot create anything here
   //Prompt for the new filename
   bool ok = false;
   QString newdocument = QInputDialog::getText(this, tr("New Document"), tr("Name:"), QLineEdit::Normal, "", \
         &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
-  if(!ok || newdocument.isEmpty()){ return; }	
+  if(!ok || newdocument.isEmpty()){ return; }
   //Create the empty file
   QString full = currentBrowser()->currentDirectory();
   if(!full.endsWith("/")){ full.append("/"); }
@@ -584,7 +655,7 @@ void DirWidget::createNewFile(){
     //If successfully opened, it has created a blank file
     file.close();
   }else{
-    QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));	  
+    QMessageBox::warning(this, tr("Error Creating Document"), tr("The document could not be created. Please ensure that you have the proper permissions."));
   }
 }
 
@@ -593,7 +664,7 @@ void DirWidget::createNewDir(){
   //Prompt for the new dir name
   bool ok = false;
   QString newdir = QInputDialog::getText(this, tr("New Directory"), tr("Name:"), QLineEdit::Normal, "", \
-		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || newdir.isEmpty()){ return; }
   //Now create the new dir
   QString full = currentBrowser()->currentDirectory();
@@ -617,7 +688,7 @@ void DirWidget::createNewXDGEntry(){
   bool ok = false;
   QString newdocument = QInputDialog::getText(this, tr("New Document"), tr("Name:"), QLineEdit::Normal, "", \
         &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
-  if(!ok || newdocument.isEmpty()){ return; }	
+  if(!ok || newdocument.isEmpty()){ return; }
   if(!newdocument.endsWith(".desktop")){ newdocument.append(".desktop"); }
   //Create the empty file
   QString full = currentBrowser()->currentDirectory();
@@ -633,57 +704,89 @@ void DirWidget::createNewXDGEntry(){
 
 /*void DirWidget::createNewSymlink{
 
-}*/
+ }*/
 
 // - Selected FILE operations
+
+//---------------------------------------------------//
+/*
+QStringList DirWidget::getPreferredApplications(){
+  QStringList out;
+  //First list all the applications registered for that same mimetype
+  QString mime = fileEXT;
+  out << LXDG::findAvailableAppsForMime(mime);
+
+  //Now search the internal settings for that extension and find any applications last used
+  QStringList keys = settings->allKeys();
+  for(int i=0; i<keys.length(); i++){
+    if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
+    if(keys[i].toLower() == fileEXT.toLower()){
+      QStringList files = settings->value(keys[i]).toString().split(":::");
+      qDebug() << "Found Files:" << keys[i] << files;
+      bool cleaned = false;
+      for(int j=0; j<files.length(); j++){
+        if(QFile::exists(files[j])){ out << files[j]; }
+        else{ files.removeAt(j); j--; cleaned=true; } //file no longer available - remove it
+      }
+      if(cleaned){ settings->setValue(keys[i], files.join(":::")); } //update the registry
+      if(!out.isEmpty()){ break; } //already found files
+    }
+  }
+  //Make sure we don't have any duplicates before we return the list
+  out.removeDuplicates();
+  return out;
+}
+  */
+  //---------------------------------------------------//
+
 void DirWidget::cutFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty() || !canmodify){ return; }
-  emit CutFiles(sel);	
+  emit CutFiles(sel);
 }
 
 void DirWidget::copyFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty()){ return; }
-  emit CopyFiles(sel);	
+  emit CopyFiles(sel);
 }
 
 void DirWidget::pasteFiles(){
   if( !canmodify ){ return; }
-  emit PasteFiles(currentBrowser()->currentDirectory(), QStringList() );	
+  emit PasteFiles(currentBrowser()->currentDirectory(), QStringList() );
 }
 
 void DirWidget::renameFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty() || !canmodify){ return; }
   qDebug() << "Deleting selected Items:" << sel;
-  emit RenameFiles(sel);	
+  emit RenameFiles(sel);
 }
 
 void DirWidget::favoriteFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty()){ return; }
-  emit FavoriteFiles(sel);	
+  emit FavoriteFiles(sel);
 }
 
 void DirWidget::removeFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty() || !canmodify){ return; }
   qDebug() << "Deleting selected Items:" << sel;
-  emit RemoveFiles(sel);	
+  emit RemoveFiles(sel);
 }
 
 void DirWidget::runFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty()){ return; }
   QStringList dirs;
-  for(int i=0; i<sel.length(); i++){ 
+  for(int i=0; i<sel.length(); i++){
     if(QFileInfo(sel[i]).isDir()){
       dirs << sel[i];
     }else{
       QProcess::startDetached("lumina-open \""+sel[i]+"\"");
     }
-  }	  
+  }
   if(!dirs.isEmpty()){
     currentBrowser()->changeDirectory( dirs.takeFirst()); //load the first directory in this widget
   }
@@ -696,13 +799,13 @@ void DirWidget::runWithFiles(){
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty()){ return; }
   QStringList dirs;
-  for(int i=0; i<sel.length(); i++){ 
+  for(int i=0; i<sel.length(); i++){
     if(QFileInfo(sel[i]).isDir()){
       dirs << sel[i];
     }else{
       QProcess::startDetached("lumina-open -select \""+sel[i]+"\"");
     }
-  }	  
+  }
   if(!dirs.isEmpty()){
     emit OpenDirectories(dirs); //open the rest of the directories in other tabs
   }
@@ -710,7 +813,7 @@ void DirWidget::runWithFiles(){
 
 /*void DirWidget::attachToNewEmail(){
 
-}*/	
+}*/
 
 // - Context-specific operations
 void DirWidget::openInSlideshow(){
@@ -737,6 +840,18 @@ void DirWidget::openMultimedia(){
       if( info.isAVFile() ){  list << info; } //add to the list
     }
   if(!list.isEmpty()){ emit PlayFiles(list); }
+}
+
+void DirWidget::autoExtractFiles(){
+  QStringList files = currentBrowser()->currentSelection();
+  qDebug() << "Starting auto-extract:" << files;
+  ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
+  /*ExternalProcess *pExtract= new ExternalProcess(this);
+  QString program = "lumina-archiver --ax ";
+  QStringList files = currentBrowser()->currentSelection();
+  for(int i=0; i<files.length(); i++){
+     QString runline = program + files[i];
+  pExtract->start(runline);*/
 }
 
 //====================

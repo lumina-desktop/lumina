@@ -27,7 +27,7 @@
 		},
 		{
 			"name": "keywords",
-			"words": ["char", "class", "const", "double", "enum", "explicit", "extern", "float", "friend", "inline", "int", "long", "namespace", "operator", "private", "protected", "public", "short", "signals", "signed", "slots", "static", "struct", "template", "typedef", "typename", "union", "unsigned", "virtual", "void", "volatile", "true", "false", "bool"],
+			"words": ["char", "class", "const", "double", "enum", "explicit", "extern", "float", "friend", "inline", "int", "long", "namespace", "operator", "private", "protected", "public", "short", "signals", "signed", "slots", "static", "struct", "template", "typedef", "typename", "union", "using","unsigned", "virtual", "void", "volatile", "true", "false", "bool"],
 			"foreground": "colors/keyword",
 			"font_weight": "bold"
 		},
@@ -42,6 +42,11 @@
 			"regex": "\\b[A-Za-z0-9_-\\.]+(?=::)\\b",
 			"foreground": "colors/class",
 			"font_weight": "bold"
+		},
+		{
+			"name": "numbers",
+			"regex" : "\\b[0-9\\.]+\\b",
+			"foreground": "colors/text"
 		},
 		{
 			"name": "function names",

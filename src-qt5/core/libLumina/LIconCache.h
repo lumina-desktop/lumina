@@ -45,7 +45,7 @@ public:
 	bool exists(QString icon);
 	bool isLoaded(QString icon);
 	QString findFile(QString icon); //find the full path of a given file/name (searching the current Icon theme)
-	
+
 	//Special loading routines for QLabel and QAbstractButton (pushbutton, toolbutton, etc)
 	void loadIcon(QAbstractButton *button, QString icon, bool noThumb = false);
 	void loadIcon(QLabel *label, QString icon, bool noThumb = false);

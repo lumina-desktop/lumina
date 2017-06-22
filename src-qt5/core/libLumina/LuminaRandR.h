@@ -16,6 +16,9 @@
 #include <QPoint>
 #include <QRect>
 #include <QList>
+#include <QObject>
+#include <QDebug>
+#include <QX11Info>
 
 // XCB
 #include "xcb/randr.h"
@@ -31,14 +34,15 @@ struct p_objects{
 	QList<QSize> resolutions;
 	QSize physicalSizeMM;
 	QString name;
-	QList<xcb_randr_output_t> outputs;
+	xcb_randr_output_t output;
+	QList<xcb_randr_mode_t> modes;
 
 	/*p_objects(){
           // Set the defaults for non-default-constructed variables
 	  primary = automatic = false;
 	  monitor_atom = 0;
 	}*/
-	
+
 };
 
 class OutputDevice{
@@ -61,14 +65,16 @@ public:
 
 	//Information
 	QString ID();
-	
+
 	bool isEnabled();
 	bool isPrimary();
 	bool isAutomatic();
+	bool isConnected();
 	QList<QSize> availableResolutions();
 	QSize currentResolution(); //could be different from geometry.size() if things like panning/rotation are enabled
 	QRect currentGeometry();
-	
+	QSize physicalSizeMM();
+
 	//Modification
 	bool setAsPrimary(bool);
 	bool disable();
@@ -78,21 +84,31 @@ public:
 
 	void updateInfoCache(); //Run this after all modification functions to refresh the current info for this device
 
-	//Now define a simple public_objects class so that each implementation 
+	//Now define a simple public_objects class so that each implementation
 	//  has a storage container for placing semi-private objects as needed
 	//class p_objects; //forward declaration - defined in the .cpp file
 	p_objects p_obj;
 };
 
-class OutputDeviceList : public QList<OutputDevice>{
+class OutputDeviceList{
+private:
+	QList<OutputDevice> out_devs;
+
 public:
 	OutputDeviceList();
 	~OutputDeviceList();
 
+	int length(){ return out_devs.length(); }
+
+	OutputDevice* at(int i){
+	  if(i<out_devs.length()){ return &out_devs[i]; }
+           return 0;
+	}
+
 	//Simplification functions for dealing with multiple monitors
 	void setPrimaryMonitor(QString id);
 	void disableMonitor(QString id);
-	//void enableMonitor(QString id, 
+	//void enableMonitor(QString id, QRect geom);
 
 };
 #endif

@@ -98,6 +98,7 @@ void MainUI::setupPlayer(){
 }
 
 void MainUI::setupPandora(){
+  PANDORA = new PianoBarProcess(this);
   if(!LUtils::isValidBinary("pianobar")){
     ui->radio_pandora->setEnabled(false);
     ui->radio_local->setChecked(true);
@@ -107,7 +108,7 @@ void MainUI::setupPandora(){
   }
   ui->radio_pandora->setToolTip(tr("Stream music from the Pandora online radio service"));
   ui->radio_pandora->setStatusTip(ui->radio_pandora->toolTip());
-  PANDORA = new PianoBarProcess(this);
+
   connect(PANDORA, SIGNAL(currentStateChanged(PianoBarProcess::State)), this, SLOT(PandoraStateChanged(PianoBarProcess::State)) );
   connect(PANDORA, SIGNAL(NewInformation(QString)), this, SLOT(NewPandoraInfo(QString)) );
   connect(PANDORA, SIGNAL(NowPlayingStation(QString, QString)), this, SLOT(PandoraStationChanged(QString)) );

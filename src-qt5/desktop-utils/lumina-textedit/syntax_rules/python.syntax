@@ -7,7 +7,7 @@
 
 {
 	"meta": {
-		"name": "Python (Experimental)",
+		"name": "Python",
 		"file_suffix": ["py", "pyc"]
 	},
 	"format": {
@@ -35,6 +35,11 @@
 			"name": "function names",
 			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
 			"foreground": "colors/function"
+		},
+		{
+			"name": "numbers",
+			"regex" : "\\b[0-9]+\\.?[0-9]*\\b",
+			"foreground": "colors/altkeyword"
 		},
 		{
 			"name": "text",

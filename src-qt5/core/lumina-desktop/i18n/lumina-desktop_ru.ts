@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation>Не ждите, чтобы создать слабое, потянув вниз сильное.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Вы не можете знать слишком много, но вы можете сказать слишком много.</translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Только две вещи бесконечны, вселенная и человеческая глупость.</translation>
     </message>
     <message>
@@ -360,7 +360,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation>Делай, или не делай. Не пробуй.</translation>
     </message>
     <message>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Это своего рода забава - сделать невозможное.</translation>
     </message>
     <message>
@@ -773,24 +773,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Действия на рабочем столе</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <location filename="../LDesktop.cpp" line="608"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый каталог</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
         <location filename="../LDesktop.cpp" line="628"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый файл</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
@@ -827,7 +827,7 @@
         <location filename="../LDesktop.cpp" line="634"/>
         <location filename="../LDesktop.cpp" line="655"/>
         <source>Desktop</source>
-        <translation type="unfinished">Рабочий стол</translation>
+        <translation>Рабочий стол</translation>
     </message>
 </context>
 <context>
@@ -874,7 +874,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Громкость</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1416,22 +1416,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Отложить</translation>
+        <translation>Отложить</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Перезагрузить</translation>
+        <translation>Перезапустить</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить питание</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Log Out</source>
-        <translation type="unfinished">Завершить Сеанс</translation>
+        <translation>Завершить Сеанс</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1501,7 +1501,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить питание</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>

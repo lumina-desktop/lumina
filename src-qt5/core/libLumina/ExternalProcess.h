@@ -23,26 +23,26 @@ private:
 
 private slots:
 	void resetCursor(){
-	  if(!cursorRestored){ 
-	    QApplication::restoreOverrideCursor(); 
-	    cursorRestored = true; 
+	  if(!cursorRestored){
+	    QApplication::restoreOverrideCursor();
+	    cursorRestored = true;
 	  }
 	}
 	void processStarting(){
-	  if(!cursorRestored){ 
+	  if(!cursorRestored){
 	    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	    QTimer::singleShot(15000, this, SLOT(resetCursor()) );
 	  }
 	}
 	void processFinished(){
-	  if(!cursorRestored){ 
-	    QApplication::restoreOverrideCursor(); 
+	  if(!cursorRestored){
+	    QApplication::restoreOverrideCursor();
 	    cursorRestored = true;
 	  }
 	  //Clean up this object
           this->deleteLater();
 	}
-	
+
 public:
 	ExternalProcess(QString logfile = "", bool manageCursors = true) : QProcess(){
 	  this->setProcessChannelMode(QProcess::MergedChannels);

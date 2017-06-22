@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>367</height>
+             <height>359</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>24</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -418,6 +418,20 @@
   <action name="actionClone_Repository">
    <property name="text">
     <string>Clone Repository</string>
+   </property>
+  </action>
+  <action name="actionView_showDirTreePane">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Directory Tree Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Directory Tree Pane</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

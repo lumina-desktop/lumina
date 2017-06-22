@@ -31,19 +31,22 @@ void LSession::stopall(){
 void LSession::procFinished(){
   //Go through and check the status on all the procs to determine which one finished
   int stopped = 0;
+  //qDebug() << "Got Process Stopped Signal:";
   for(int i=0; i<PROCS.length(); i++){
     if(PROCS[i]->state()==QProcess::NotRunning){
+      //qDebug() << " - Stopped:" << PROCS[i]->objectName();
       stopped++;
       if(!stopping){
         //See if this process is the main desktop binary
         if(PROCS[i]->objectName()=="runtime"){ stopall(); }
         //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
-        break;
+        //break;
       }
     }
   }
-  if(stopping && stopped==PROCS.length()){
+  //qDebug() << " - Final Count:" << stopped << stopping;
+  if(stopping || stopped==PROCS.length()){
     QCoreApplication::exit(0);
   }
 }
@@ -65,7 +68,7 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
     if(!QFile::exists("/etc/machine-id") && !QFile::exists("/var/db/dbus/machine-id")){
       if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure") ){ } //good - the UUID was created successfully
       else if(LUtils::isValidBinary("dbus-launch")){ command.prepend("dbus-launch --exit-with-session "); }
-      else{ 
+      else{
         //create a simple DBUS UUID and put it in the universal-fallback location (OS-independent)
         // TO-DO - root vs user level permissions issue?
         qDebug() << "Could not find '/etc/machine-id' or '/var/db/dbus/machine-id': Qt will most likely crash. \nPlease run 'dbus-uuidgen --ensure' with root permissions to generate this file if Lumina does not start properly.";
@@ -98,13 +101,13 @@ void LSession::start(bool unified){
 	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
 	       LUtils::writeFile(confDir+"/fluxbox-init", keys, true);
 	      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-	    }    
+	    }
 	    if(!QFile::exists(confDir+"/fluxbox-keys")){
 	      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
 	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
 	       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
 	      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-	    }    
+	    }
 	    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
 	      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
@@ -129,7 +132,7 @@ void LSession::start(bool unified){
 		 bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
 		 qDebug() << "Detected GPU Acceleration:" << hasAccel;
 		 QStringList info = LUtils::readFile(set);
-		 for(int i=0; i<info.length(); i++){ 
+		 for(int i=0; i<info.length(); i++){
 		   if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
 		 }
 		 LUtils::writeFile(set, info, true);
@@ -142,7 +145,7 @@ void LSession::start(bool unified){
   } else {
 	if(!LUtils::isValidBinary(WM)){
 	  exit(1);
-	}	
+	}
 	startProcess("wm", WM);
   }
   //Desktop Next

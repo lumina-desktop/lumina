@@ -32,7 +32,7 @@ AppLauncherPlugin::AppLauncherPlugin(QWidget* parent, QString ID) : LDPlugin(par
   loadButton();
   //QTimer::singleShot(0,this, SLOT(loadButton()) );
 }
-	
+
 void AppLauncherPlugin::Cleanup(){
   //This is run only when the plugin was forcibly closed/removed
 
@@ -73,7 +73,7 @@ void AppLauncherPlugin::loadButton(){
       QAction *tmp = this->contextMenu()->addAction( QString(tr("Launch %1")).arg(file.name), this, SLOT(buttonClicked()) );
       ICONS->loadIcon(tmp, file.icon);
       //See if there are any "actions" listed for this file, and put them in the context menu as needed.
-      if(!file.actions.isEmpty()){ 
+      if(!file.actions.isEmpty()){
         for(int i=0; i<file.actions.length(); i++){
           tmp = this->contextMenu()->addAction( file.actions[i].name );
             if(ICONS->exists(file.actions[i].icon)){ ICONS->loadIcon(tmp, file.actions[i].icon); }
@@ -89,17 +89,17 @@ void AppLauncherPlugin::loadButton(){
     button->setWhatsThis(info.absoluteFilePath());
     QString iconame;
     if(info.isDir()){
-	if(path.startsWith("/media/")){ 
+	if(path.startsWith("/media/")){
            iconame = "drive-removable-media";
           //Could add device ID parsing here to determine what "type" of device it is - will be OS-specific though
 	  //button->setIcon( LXDG::findIcon("drive-removable-media","") );
 	}
-        else{ iconame = "folder"; } //button->setIcon( LXDG::findIcon("folder","") ); 
+        else{ iconame = "folder"; } //button->setIcon( LXDG::findIcon("folder","") );
     }else if(LUtils::imageExtensions().contains(info.suffix().toLower()) ){
       iconame = info.absoluteFilePath();
       //QPixmap pix;
-      //if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory	  
-      //else{ iconame = "dialog-cancel"; } //button->setIcon( LXDG::findIcon("dialog-cancel","") ); 
+      //if(pix.load(path)){ button->setIcon( QIcon(pix.scaled(256,256)) ); } //max size for thumbnails in memory
+      //else{ iconame = "dialog-cancel"; } //button->setIcon( LXDG::findIcon("dialog-cancel","") );
     }else{
       iconame = LXDG::findAppMimeForFile(path).replace("/","-");
       //button->setIcon( QIcon(LXDG::findMimeIcon(path).pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
@@ -111,16 +111,22 @@ void AppLauncherPlugin::loadButton(){
   }else{
     //InValid File
     button->setWhatsThis("");
-    
     iconID = "quickopen";
     //button->setIcon( QIcon(LXDG::findIcon("quickopen","dialog-cancel").pixmap(QSize(icosize,icosize)).scaledToHeight(icosize, Qt::SmoothTransformation) ) );
     button->setText( tr("Click to Set") );
     if(!watcher->files().isEmpty()){ watcher->removePaths(watcher->files()); }
   }
-  if(!iconID.isEmpty()){ 
-    bool updatenow = ICONS->isLoaded(iconID);
-    ICONS->loadIcon(button, iconID); 
-    if(updatenow){ iconLoaded(iconID); } //will not get a signal - already loaded right now
+  if(!iconID.isEmpty()){
+    if(ICONS->isLoaded(iconID)){
+      ICONS->loadIcon(button, iconID);
+      iconLoaded(iconID); //will not get a signal - already loaded right now
+    }else{
+      //Not loaded yet - verify that the icon exists first
+      if(!ICONS->exists(iconID) && iconID.contains("/") ){ iconID = iconID.replace("/","-"); } //quick mimetype->icon replacement just in case
+      if(!ICONS->exists(iconID)){ iconID = "unknown"; }
+      //Now load the icon
+      ICONS->loadIcon(button, iconID);
+    }
   }
   //Now adjust the context menu for the button as needed
   QAction *tmp = 0;

@@ -14,6 +14,7 @@ include(../../core/libLumina/LDesktopUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
+include(../../core/libLumina/ExternalProcess.pri)
 
 SOURCES += main.cpp \
 		MainUI.cpp \

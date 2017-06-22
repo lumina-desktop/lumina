@@ -85,7 +85,7 @@ private slots:
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot
 
-    void on_quitShortcut_Triggered();
+    void quitShortcut_activated();
 
 protected:
 	void mousePressEvent(QMouseEvent *ev);

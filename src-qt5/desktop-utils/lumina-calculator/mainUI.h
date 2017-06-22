@@ -54,7 +54,7 @@ private slots:
 
 	void saveHistory();
 
-    void on_quitShortcut_Triggered();
+	void quitShortcut_Triggered();
 
 private:
 	Ui::mainUI *ui;

@@ -52,7 +52,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->action_Open->setShortcut(tr("CTRL+O"));
   ui->action_Quit->setShortcut(tr("CTRL+Q"));
   ui->actionExtract_All->setShortcut(tr("CTRL+E"));
-  
+
   ui->progressBar->setVisible(false);
   ui->label_progress->setVisible(false);
   ui->label_progress_icon->setVisible(false);
@@ -75,39 +75,13 @@ void MainUI::LoadArguments(QStringList args){
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
     if(args[i]=="--ax"){ autoExtract = true; continue; }
-  /*i++;
-        QFileInfo filename(args[i]);
-        QDir filedir = filename.canonicalPath();
-        QString newdir = filename.completeBaseName();
-        filedir.mkpath(newdir);
-        dir = newdir;
-        qDebug() << "MAINUI - archivefile = " << args[i];
-        qDebug() << "MAINUI - filedir = " << filedir;
-        qDebug() << "MAINUI - newdir = " << newdir;
-        qDebug() << "MAINUI - dir = " << dir;
-        BACKEND->loadFile(args[i]);
-        qDebug () << "MAINUI - File should have loaded";
-        //add in a delay in case i'm hitting a race condition
-        QTime waitTime= QTime::currentTime().addSecs(2);
-        while (QTime::currentTime() < waitTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-        //things should have settled, now trigger extraction
-        if(autoExtract){
-            ui->label_progress->setText(tr("Extracting..."));
-            autoextractFiles();
-            qDebug () << "MAINUI - Extraction should have started";
-            }
-        //now quit
-        //QCoreApplication::quit();
-        return;
-    }*/
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
-      if(autoExtract){ 
-        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) ); 
+      if(autoExtract){
+        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
         connect(BACKEND, SIGNAL(ExtractSuccessful()), this, SLOT(close()) );
       }
-      BACKEND->loadFile(args[i]);  
+      BACKEND->loadFile(args[i]);
       ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
@@ -140,10 +114,9 @@ QTreeWidgetItem* MainUI::findItem(QString path, QTreeWidgetItem *start){
   }else{
     for(int i=0; i<start->childCount(); i++){
       if(start->child(i)->whatsThis(0) == path){ return start->child(i); }
-      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }      
+      else if(path.startsWith(start->child(i)->whatsThis(0)+"/")){ return findItem(path, start->child(i)); }
     }
   }
-  //qDebug() << "Could not find item:" << path;
   return 0; //nothing found
 }
 
@@ -272,18 +245,11 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
-    disconnect(BACKEND, SIGNAL(fileLoaded()), this, SLOT(autoextractFiles()) );
+    disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
     QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
-    //QFileDialog::getExistingDirectory(this, tr("Extract Into Directory"), QDir::homePath() );
     if(dir.isEmpty()){ return; }
-    //add in a delay in case i'm hitting a race condition
-    /*qDebug() << "void MainUI::autoextractFiles() has started";
-    QTime waitTime= QTime::currentTime().addSecs(2);
-    while (QTime::currentTime() < waitTime)
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);*/
     ui->label_progress->setText(tr("Extracting..."));
     BACKEND->startExtract(dir, true);
-//    QApplication::quit();
   }
 
 void MainUI::extractSelection(){
@@ -312,7 +278,6 @@ void MainUI::UpdateTree(){
   files.sort();
   //Remove any entries for file no longer in the archive
   bool changed = cleanItems(files);
-  //qDebug() << "Found Files:" << files;
   for(int i=0; i<files.length(); i++){
     if(0 != findItem(files[i]) ){ continue; } //already in the tree widget
     QString mime = LXDG::findAppMimeForFile(files[i].section("/",-1), false); //first match only

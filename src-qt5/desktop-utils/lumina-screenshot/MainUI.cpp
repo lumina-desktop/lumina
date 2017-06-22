@@ -29,7 +29,7 @@ MainUI::MainUI()
   if(ui->spin_monitor->maximum()<2){
     ui->spin_monitor->setEnabled(false);
     ui->radio_monitor->setEnabled(false);
-  }	  
+  }
   scaleTimer = new QTimer(this);
     scaleTimer->setSingleShot(true);
     scaleTimer->setInterval(200); //~1/5 second
@@ -75,7 +75,7 @@ MainUI::MainUI()
 
   // Shortcuts
   quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
-  connect(quitShortcut, SIGNAL(activated()), this, SLOT(on_quitShortcut_Triggered()) );
+  connect(quitShortcut, SIGNAL(activated()), this, SLOT(quitShortcut_activated()) );
   openShortcut = new QShortcut(Qt::CTRL + Qt::Key_O, this);
   connect(openShortcut, SIGNAL(activated()), this, SLOT(quicksave()) );
 
@@ -293,12 +293,12 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
       QList<WId> wins = XCB->WindowList();
       QList<WId> stack = XCB->WM_Get_Client_List(true);
       cwin = 0;
-      //qDebug() << "Try to select window:" << ev->globalPos(); 
+      //qDebug() << "Try to select window:" << ev->globalPos();
       for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
         if(!wins.contains(stack[i])){ continue; }
-        if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){ 
+        if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){
           //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
-          cwin = stack[i]; 
+          cwin = stack[i];
         }
       }
       //qDebug() << " - Got window:" << cwin;
@@ -338,6 +338,6 @@ void MainUI::closeEvent(QCloseEvent *ev){
   QMainWindow::closeEvent(ev);
 }
 
-void MainUI::on_quitShortcut_Triggered(){
+void MainUI::quitShortcut_activated(){
     QApplication::quit();
 }

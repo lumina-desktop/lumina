@@ -18,6 +18,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QActionGroup>
+#include "PlainTextEditor.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -118,7 +119,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
-	
+
 }
 
 void MainUI::LoadArguments(QStringList args){ //CLI arguments
@@ -156,7 +157,7 @@ void MainUI::updateIcons(){
   ui->tool_replace_all->setIcon(LXDG::findIcon("arrow-down-double"));
   ui->tool_hideReplaceGroup->setIcon(LXDG::findIcon("dialog-close",""));
   //ui->tool_find_next->setIcon(LXDG::findIcon(""));
-	
+
   QTimer::singleShot(0,colorDLG, SLOT(updateIcons()) );
 }
 
@@ -255,6 +256,7 @@ void MainUI::changeFontSize(int newFontSize){
     QFont currentFont = currentEditor()->document()->defaultFont();
     currentFont.setPointSize(newFontSize);
     currentEditor()->document()->setDefaultFont(currentFont);
+    currentEditor()->updateLNW();
 }
 
 void MainUI::changeTabsLocation(QAction *act){
@@ -301,10 +303,12 @@ void MainUI::showLineNumbers(bool show){
 
 void MainUI::wrapLines(bool wrap){
   settings->setValue("wrapLines",wrap);
-  for(int i=0; i<tabWidget->count(); i++){
+  if(currentEditor() == 0){ return; }
+  currentEditor()->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+  /*for(int i=0; i<tabWidget->count(); i++){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     edit->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
-  }	
+  }*/
 }
 
 void MainUI::ModifyColors(){
@@ -351,6 +355,7 @@ void MainUI::tabChanged(){
   //Update the font/size widgets to reflect what is set on this tab
   fontbox->setCurrentFont(font);
   fontSizes->setValue( font.pointSize() );
+  ui->actionWrap_Lines->setChecked( cur->lineWrapMode()==QPlainTextEdit::WidgetWidth );
 }
 
 void MainUI::tabClosed(int tab){
@@ -389,7 +394,7 @@ void MainUI::tabDraggedOut(int tab, Qt::DropAction act){
 void MainUI::closeFindReplace(){
   ui->groupReplace->setVisible(false);
   PlainTextEditor *cur = currentEditor();
-  if(cur!=0){ cur->setFocus(); }	
+  if(cur!=0){ cur->setFocus(); }
 }
 
 void MainUI::openFind(){
@@ -397,8 +402,8 @@ void MainUI::openFind(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
-  ui->line_find->setFocus();	
+  ui->line_replace->setText("");
+  ui->line_find->setFocus();
 }
 
 void MainUI::openReplace(){
@@ -406,7 +411,7 @@ void MainUI::openReplace(){
   if(cur==0){ return; }
   ui->groupReplace->setVisible(true);
   ui->line_find->setText( cur->textCursor().selectedText() );
-  ui->line_replace->setText(""); 
+  ui->line_replace->setText("");
   ui->line_replace->setFocus();
 }
 
