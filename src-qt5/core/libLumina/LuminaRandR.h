@@ -26,6 +26,7 @@
 
 struct p_objects{
 	xcb_randr_output_t output; //This is the index used to identify particular monitors (unique ID)
+	xcb_randr_crtc_t crtc; //This is the index used for the current settings/configuration (associated with output)
 
 	//Cached Information
 	bool primary;
@@ -73,7 +74,7 @@ public:
 	//Modification
 	bool setAsPrimary(bool);
 	bool disable();
-	void enable(QRect geom = QRect()); //if no geom provided, will add as the right-most screen at optimal resolution
+	bool enable(QRect geom = QRect()); //if no geom provided, will add as the right-most screen at optimal resolution
 	void changeResolution(QSize);
 	void changeGeometry(QRect); //move a currently-enabled screen to another place
 
