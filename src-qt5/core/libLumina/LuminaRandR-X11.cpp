@@ -112,6 +112,7 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
     for(int i=0; i<xcb_randr_get_screen_resources_modes_length(srreply); i++){
       xcb_randr_mode_info_t minfo = xcb_randr_get_screen_resources_modes(srreply)[i];
       if(modes.contains(minfo.id)){
+       //qDebug() << "Found mode!" << minfo.id << res << refreshrate;
         if(res.isNull() && (minfo.width > sz.width() || minfo.height > sz.height()) ){
           //No resolution requested - pick the largest one
           //qDebug() << "Found Bigger Mode:" << sz << QSize(minfo.width, minfo.height);
@@ -119,6 +120,7 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
           det_mode = minfo.id;
         }else if(!res.isNull()){
           sz = QSize(minfo.width, minfo.height);
+           //qDebug() << "Compare Sizes:" << sz << res;
           if(sz == res && minfo.dot_clock > refreshrate){ det_mode = minfo.id; refreshrate = minfo.dot_clock; }
         }
       }
@@ -130,7 +132,7 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
 
 inline bool showOutput(QRect geom, p_objects *p_obj){
   //if no geom provided, will add as the right-most screen at optimal resolution
-  //qDebug() << "Enable Monitor:" << geom;
+  qDebug() << "Enable Monitor:" << geom;
   xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj->modes);
   if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
   //qDebug() << " - Found Mode:" << mode;
@@ -157,6 +159,7 @@ inline bool showOutput(QRect geom, p_objects *p_obj){
     free(reply);
   }
   //qDebug() << " - Using crtc:" << p_obj->crtc;
+  //qDebug() << " - Using mode:" << mode;
   xcb_randr_output_t outList[1]{ p_obj->output };
 
   xcb_randr_set_crtc_config_cookie_t cookie = xcb_randr_set_crtc_config_unchecked(QX11Info::connection(), p_obj->crtc,
