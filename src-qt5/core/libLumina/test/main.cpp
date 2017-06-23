@@ -5,8 +5,8 @@
 
 
 int main(int argc, char** argv){
-  QString toggle = "HDMI-2";
-  QRect toggleGeom(1920,0, 1920,1080);
+  QString toggle = "DVI-I-1";
+  QRect toggleGeom(7680,0, 1024,768);
   int toggleOK = -1; //-1: automatic, 0: enable monitor, 1: disable monitor
 
   QApplication A(argc, argv);

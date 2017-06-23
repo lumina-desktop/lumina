@@ -31,16 +31,16 @@ int main(int argc, char** argv){
     puts("Returns: 0 for a valid password, 1 for invalid");
     return 1;
   }
-  //Validate current user (make sure current UID matches the logged-in user, 
+  //Validate current user (make sure current UID matches the logged-in user,
   char* cUser = getlogin();
   struct passwd *pwd = 0;
   pwd = getpwnam(cUser);
   if(pwd==0){ return 1; } //Login user could not be found in the database? (should never happen)
   if( getuid() != pwd->pw_uid ){ return 1; } //Current UID does not match currently logged-in user UID
-  //Create the non-interactive PAM structures	
+  //Create the non-interactive PAM structures
   pam_handle_t *pamh;
   struct pam_conv pamc = { openpam_nullconv, NULL };
-    //Place the user-supplied password into the structure 
+    //Place the user-supplied password into the structure
     int ret = pam_start( "system", cUser, &pamc, &pamh);
     if(ret != PAM_SUCCESS){ return 1; } //could not init PAM
     //char* cPassword = argv[1];

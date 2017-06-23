@@ -10,13 +10,13 @@
 #include <unistd.h>
 
 #define NUMTRIES 3
-#define WAITMINS 1
+//#define WAITMINS 1
 #define DEBUG 1
 
 LLockScreen::LLockScreen(QWidget *parent) : QWidget(parent), ui(new Ui::LLockScreen()){
   ui->setupUi(this);
   waittime = new QTimer(this);
-    waittime->setInterval(WAITMINS*60000); //(too many attempts in short time)
+    //waittime->setInterval(WAITMINS*60000); //(too many attempts in short time)
     waittime->setSingleShot(true);
   refreshtime = new QTimer(this); //timer to update the wait time display
     refreshtime->setInterval(6000); //6 seconds (1/10 second)
@@ -92,6 +92,7 @@ void LLockScreen::TryUnlock(){
     if(triesleft>0){ 
       this->setEnabled(true);
     }else{ 
+      waittime->setInterval( (attempts/NUMTRIES)*60000);
       waittime->start(); 
       refreshtime->start();
     }

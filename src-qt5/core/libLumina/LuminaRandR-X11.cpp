@@ -130,11 +130,43 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
   return det_mode;
 }
 
+inline void adjustScreenTotal(xcb_randr_crtc_t output, QRect geom, bool addingoutput){
+  QRect total, mmTotal;
+  xcb_randr_get_screen_resources_reply_t *srreply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
+		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()), NULL);
+  if(srreply!=0){
+    for(int i=0; i<xcb_randr_get_screen_resources_crtcs_length(srreply); i++){
+      xcb_randr_crtc_t crtc = xcb_randr_get_screen_resources_crtcs(srreply)[i];
+      if(output == crtc){
+        //Found the output we are (going) to treat differently
+        if(addingoutput){
+          total = total.united(geom);
+        }
+        //ignore the output if we just removed it
+      }else{
+        //Get the current geometry of this crtc (if available) and add it to the total
+        xcb_randr_get_crtc_info_reply_t *cinfo = xcb_randr_get_crtc_info_reply(QX11Info::connection(),
+		xcb_randr_get_crtc_info_unchecked(QX11Info::connection(), crtc, QX11Info::appTime()),
+		NULL);
+        if(cinfo!=0){
+          total = total.united( QRect(cinfo->x, cinfo->y, cinfo->width, cinfo->height) );
+	   //QSize dpi( qRound((cinfo->width * 25.4)/cinfo->), qRound((p_obj.geometry.height() * 25.4)/p_obj.physicalSizeMM.height() ) );
+          free(cinfo); //done with crtc_info
+        }
+      }
+    }
+    free(srreply);
+  }
+  QSize newRes = total.size();
+  QSize newMM = mmTotal.size();
+  xcb_randr_set_screen_size(QX11Info::connection(), QX11Info::appRootWindow(), newRes.width(), newRes.height(), newMM.width(), newMM.height());
+}
+
 inline bool showOutput(QRect geom, p_objects *p_obj){
   //if no geom provided, will add as the right-most screen at optimal resolution
   qDebug() << "Enable Monitor:" << geom;
   xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj->modes);
-  if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
+  if(mode==XCB_NONE){ qDebug() << "[ERROR] Invalid resolution supplied!"; return false; } //invalid resolution for this monitor
   //qDebug() << " - Found Mode:" << mode;
   if(p_obj->crtc == 0){
     //Need to scan for an available crtc to use (turning on a monitor for the first time)
@@ -158,6 +190,10 @@ inline bool showOutput(QRect geom, p_objects *p_obj){
     }
     free(reply);
   }
+if(p_obj->crtc == 0){ qDebug() << "[ERROR] No Available CRTC devices for display"; return false; }
+  //Now need to update the overall session size (if necessary)
+  adjustScreenTotal(p_obj->crtc, geom, true); //adding output at this geometry
+
   //qDebug() << " - Using crtc:" << p_obj->crtc;
   //qDebug() << " - Using mode:" << mode;
   xcb_randr_output_t outList[1]{ p_obj->output };
@@ -166,8 +202,8 @@ inline bool showOutput(QRect geom, p_objects *p_obj){
 		XCB_CURRENT_TIME, XCB_CURRENT_TIME, geom.x(), geom.y(), mode, XCB_RANDR_ROTATION_ROTATE_0, 1, outList);
     //Now check the result of the configuration
     xcb_randr_set_crtc_config_reply_t *reply = xcb_randr_set_crtc_config_reply(QX11Info::connection(), cookie, NULL);
-    if(reply==0){ return false; }
-    bool ok = (reply->status == XCB_RANDR_SET_CONFIG_SUCCESS);
+    bool ok = false;
+    if(reply!=0){ ok = (reply->status == XCB_RANDR_SET_CONFIG_SUCCESS); }
     free(reply);
     return ok;
 }
@@ -247,6 +283,9 @@ bool OutputDevice::disable(){
     if(reply==0){ return false; }
     bool ok = (reply->status == XCB_RANDR_SET_CONFIG_SUCCESS);
     free(reply);
+    if(ok){
+      adjustScreenTotal(p_obj.crtc, QRect(), false); //adding output at this geometry
+    }
     return ok;
   }
   return false;
