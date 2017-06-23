@@ -128,6 +128,46 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
   return det_mode;
 }
 
+inline bool showOutput(QRect geom, p_objects *p_obj){
+  //if no geom provided, will add as the right-most screen at optimal resolution
+  //qDebug() << "Enable Monitor:" << geom;
+  xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj->modes);
+  if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
+  //qDebug() << " - Found Mode:" << mode;
+  if(p_obj->crtc == 0){
+    //Need to scan for an available crtc to use (turning on a monitor for the first time)
+    xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
+		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()),
+		NULL);
+    int num = xcb_randr_get_screen_resources_crtcs_length(reply);
+    for(int i=0; i<num && p_obj->crtc==0; i++){
+      xcb_randr_crtc_t crt = xcb_randr_get_screen_resources_crtcs(reply)[i];
+      xcb_randr_get_crtc_info_reply_t *info = xcb_randr_get_crtc_info_reply(QX11Info::connection(),
+		xcb_randr_get_crtc_info_unchecked(QX11Info::connection(), crt, QX11Info::appTime()),
+		NULL);
+      //Verify that the output is supported by this crtc
+      QList<xcb_randr_output_t> possible;
+      if(xcb_randr_get_crtc_info_outputs_length(info) < 1){ //make sure it is not already associated with an output
+        int pnum = xcb_randr_get_crtc_info_possible_length(info);
+        for(int p=0; p<pnum; p++){ possible << xcb_randr_get_crtc_info_possible(info)[p]; }
+      }
+      if(possible.contains(p_obj->output)){ p_obj->crtc = crt; }
+      free(info);
+    }
+    free(reply);
+  }
+  //qDebug() << " - Using crtc:" << p_obj->crtc;
+  xcb_randr_output_t outList[1]{ p_obj->output };
+
+  xcb_randr_set_crtc_config_cookie_t cookie = xcb_randr_set_crtc_config_unchecked(QX11Info::connection(), p_obj->crtc,
+		XCB_CURRENT_TIME, XCB_CURRENT_TIME, geom.x(), geom.y(), mode, XCB_RANDR_ROTATION_ROTATE_0, 1, outList);
+    //Now check the result of the configuration
+    xcb_randr_set_crtc_config_reply_t *reply = xcb_randr_set_crtc_config_reply(QX11Info::connection(), cookie, NULL);
+    if(reply==0){ return false; }
+    bool ok = (reply->status == XCB_RANDR_SET_CONFIG_SUCCESS);
+    free(reply);
+    return ok;
+}
 /*
     //Clones
     qDebug() << "Number of Clones:" << xcb_randr_get_output_info_clones_length(info);
@@ -210,49 +250,23 @@ bool OutputDevice::disable(){
 }
 
 bool OutputDevice::enable(QRect geom){
-  //if no geom provided, will add as the right-most screen at optimal resolution
-  //if(this->isEnabled()){ return true; } //already enabled
-  //qDebug() << "Enable Monitor:" << geom;
-  xcb_randr_mode_t mode = modeForResolution(geom.size(), p_obj.modes);
-  if(mode==XCB_NONE){ return false; } //invalid resolution for this monitor
-  //qDebug() << " - Found Mode:" << mode;
-  if(p_obj.crtc == 0){
-    //Need to scan for an available crtc to use (turning on a monitor for the first time)
-    xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(QX11Info::connection(),
-		xcb_randr_get_screen_resources_unchecked(QX11Info::connection(), QX11Info::appRootWindow()),
-		NULL);
-    int num = xcb_randr_get_screen_resources_crtcs_length(reply);
-    for(int i=0; i<num && p_obj.crtc==0; i++){
-      xcb_randr_crtc_t crt = xcb_randr_get_screen_resources_crtcs(reply)[i];
-      xcb_randr_get_crtc_info_reply_t *info = xcb_randr_get_crtc_info_reply(QX11Info::connection(),
-		xcb_randr_get_crtc_info_unchecked(QX11Info::connection(), crt, QX11Info::appTime()),
-		NULL);
-      //Verify that the output is supported by this crtc
-      QList<xcb_randr_output_t> possible;
-      if(xcb_randr_get_crtc_info_outputs_length(info) < 1){ //make sure it is not already associated with an output
-        int pnum = xcb_randr_get_crtc_info_possible_length(info);
-        for(int p=0; p<pnum; p++){ possible << xcb_randr_get_crtc_info_possible(info)[p]; }
-      }
-      if(possible.contains(p_obj.output)){ p_obj.crtc = crt; }
-      free(info);
-    }
-    free(reply);
-  }
-  //qDebug() << " - Using crtc:" << p_obj.crtc;
-  xcb_randr_output_t outList[1]{ p_obj.output };
-
-  xcb_randr_set_crtc_config_cookie_t cookie = xcb_randr_set_crtc_config_unchecked(QX11Info::connection(), p_obj.crtc,
-		XCB_CURRENT_TIME, XCB_CURRENT_TIME, geom.x(), geom.y(), mode, XCB_RANDR_ROTATION_ROTATE_0, 1, outList);
-    //Now check the result of the configuration
-    xcb_randr_set_crtc_config_reply_t *reply = xcb_randr_set_crtc_config_reply(QX11Info::connection(), cookie, NULL);
-    if(reply==0){ return false; }
-    bool ok = (reply->status == XCB_RANDR_SET_CONFIG_SUCCESS);
-    free(reply);
-    return ok;
+  if(this->isEnabled()){ return false; } //already enabled
+  return showOutput(geom, &p_obj);
 }
 
-void OutputDevice::changeResolution(QSize){
+bool OutputDevice::changeResolution(QSize res){
+  if(!this->isEnabled()){ return false; }
+  return showOutput( QRect( p_obj.geometry.topLeft(), res), &p_obj );
+}
 
+bool OutputDevice::move(QPoint pt){
+  if(!this->isEnabled()){ return false; }
+  return showOutput( QRect( pt, p_obj.geometry.size()), &p_obj);
+}
+
+bool OutputDevice::setGeometry(QRect geom){
+  if(!this->isEnabled()){ return false; }
+  return showOutput(geom, &p_obj);
 }
 
 void OutputDevice::updateInfoCache(){

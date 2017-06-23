@@ -74,9 +74,10 @@ public:
 	//Modification
 	bool setAsPrimary(bool);
 	bool disable();
-	bool enable(QRect geom = QRect()); //if no geom provided, will add as the right-most screen at optimal resolution
-	void changeResolution(QSize);
-	void changeGeometry(QRect); //move a currently-enabled screen to another place
+	bool enable(QRect geom); //if empty resolution is supplied (QSize(0,0)) it will use the highest-available resolution
+	bool changeResolution(QSize); //change the resolution (but not position) of a currently-enabled screen
+	bool move(QPoint); //move a currently-enabled screen to another place
+	bool setGeometry(QRect); //move/resize a currently-enabled screen
 
 	void updateInfoCache(); //Run this after all modification functions to refresh the current info for this device
 
