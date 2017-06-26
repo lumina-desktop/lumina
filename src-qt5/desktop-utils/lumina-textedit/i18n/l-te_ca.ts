@@ -146,7 +146,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="188"/>
         <source>New File</source>
         <translation>Fitxer nou</translation>
     </message>
@@ -262,30 +262,30 @@
         <translation>A la dreta</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Text Editor</source>
         <translation>Editor de text</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Open File(s)</source>
         <translation>Obre fitxers</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Text Files (*)</source>
         <translation>Fitxers de text (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Es perden els canvis no desats?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +296,7 @@ El voleu tancar tanmateix?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 
@@ -310,32 +310,32 @@ Voleu tancar l&apos;editor tanmateix?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Save File</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Text File (*)</source>
         <translation>Fitxer de text (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="289"/>
+        <location filename="../PlainTextEditor.cpp" line="318"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Número de fila: %1. Número de columna: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="298"/>
+        <location filename="../PlainTextEditor.cpp" line="327"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>El fitxer següent ha estat canviat per alguna altra utilitat. El voleu tornar a carregar?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="300"/>
+        <location filename="../PlainTextEditor.cpp" line="329"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Nota: perdreu tots els canvis que no estiguin desats ara mateix.)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="304"/>
+        <location filename="../PlainTextEditor.cpp" line="333"/>
         <source>File Modified</source>
         <translation>Fitxer modificat</translation>
     </message>
