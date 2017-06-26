@@ -79,8 +79,8 @@ private:
 
 public:
 	FirefliesAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
-	~FirefliesAnimation(){ 
-	  this->stop(); 
+	~FirefliesAnimation(){
+	  this->stop();
 	  //while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
 	}
 
