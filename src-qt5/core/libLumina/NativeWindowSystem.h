@@ -23,20 +23,20 @@ private:
 
 	//Simplifications to find an already-created window object
 	NativeWindow* findWindow(WId id){
-	  for(int i=0; i<NWindows.length(); i++){ 
-	    if(id==NWindows[i]->id()){ return NWindows[i]; } 
+	  for(int i=0; i<NWindows.length(); i++){
+	    if(id==NWindows[i]->id()){ return NWindows[i]; }
 	  }
 	  return 0;
 	}
 
 	NativeWindow* findTrayWindow(WId id){
-	  for(int i=0; i<TWindows.length(); i++){ 
-	    if(id==TWindows[i]->id()){ return TWindows[i]; } 
+	  for(int i=0; i<TWindows.length(); i++){
+	    if(id==TWindows[i]->id()){ return TWindows[i]; }
 	  }
 	  return 0;
 	}
 
-	//Now define a simple private_objects class so that each implementation 
+	//Now define a simple private_objects class so that each implementation
 	//  has a storage container for defining/placing private objects as needed
 	class p_objects;
 	p_objects* obj;
@@ -58,7 +58,7 @@ private:
 	  }
 	}
 
-	// Since some properties may be easier to update in bulk 
+	// Since some properties may be easier to update in bulk
 	//   let the native system interaction do them in whatever logical groups are best
 	void UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props);
 

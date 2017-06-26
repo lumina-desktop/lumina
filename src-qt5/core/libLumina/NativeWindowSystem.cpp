@@ -59,14 +59,14 @@ public:
 	//Functions for setting up these objects as needed
 	bool init_ATOMS(){
 	  QStringList atoms;
-	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS" 
-		<< "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION" 
+	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS"
+		<< "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION"
 		<< "_NET_SYSTEM_TRAY_VISUAL" << QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen()));
 	    //Create all the requests for the atoms
 	    QList<xcb_intern_atom_reply_t*> reply;
 	    for(int i=0; i<atoms.length(); i++){
 	      reply << xcb_intern_atom_reply(QX11Info::connection(), \
-				xcb_intern_atom(QX11Info::connection(), 0, atoms[i].length(), atoms[i].toLocal8Bit()), NULL); 
+				xcb_intern_atom(QX11Info::connection(), 0, atoms[i].length(), atoms[i].toLocal8Bit()), NULL);
 	    }
 	    //Now evaluate all the requests and save the atoms
 	    for(int i=0; i<reply.length(); i++){ //NOTE: this will always be the same length as the "atoms" list
@@ -83,7 +83,7 @@ public:
 
 	bool register_wm(){
 	  uint32_t value_list[1] = {ROOT_WIN_EVENT_MASK};
-	  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root_window, XCB_CW_EVENT_MASK, value_list)); 
+	  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root_window, XCB_CW_EVENT_MASK, value_list));
 	  if(status!=0){ return false; }
 	  uint32_t params[] = {1};
 	  wm_window = xcb_generate_id(QX11Info::connection()); //need a new ID
@@ -97,7 +97,7 @@ public:
 	  //Also set this property on the child window (pointing to itself)
 	  xcb_ewmh_set_supporting_wm_check(&EWMH, wm_window, wm_window);
 	  //Now also setup the root event mask on the wm_window
-	  status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), wm_window, XCB_CW_EVENT_MASK, value_list)); 
+	  status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), wm_window, XCB_CW_EVENT_MASK, value_list));
 	  if(status!=0){ return false; }
 	  return true;
 	}
@@ -144,18 +144,18 @@ public:
 	  xcb_visualtype_t *type = xcb_aux_find_visual_by_attrs(root_screen, XCB_VISUAL_CLASS_TRUE_COLOR, 32);
 	  if(type!=0){
 	    xcb_change_property(QX11Info::connection(), XCB_PROP_MODE_REPLACE, tray_window, \
-		ATOMS.value("_NET_SYSTEM_TRAY_VISUAL"), XCB_ATOM_VISUALID, 32, 1, &type->visual_id);	    
+		ATOMS.value("_NET_SYSTEM_TRAY_VISUAL"), XCB_ATOM_VISUALID, 32, 1, &type->visual_id);
 	  }else{
 	    qWarning() << " - Could not set TrueColor visual for system tray";
 	  }
-  
+
 	  //Finally, send out an X event letting others know that the system tray is up and running
 	   xcb_client_message_event_t event;
 	    event.response_type = XCB_CLIENT_MESSAGE;
 	    event.format = 32;
 	    event.window = root_screen->root;
 	    event.type = EWMH.MANAGER; //MANAGER atom
-	    event.data.data32[0] = XCB_TIME_CURRENT_TIME; //CurrentTime;  
+	    event.data.data32[0] = XCB_TIME_CURRENT_TIME; //CurrentTime;
 	    event.data.data32[1] = _NET_SYSTEM_TRAY_S; //_NET_SYSTEM_TRAY_S atom
 	    event.data.data32[2] = tray_window;
 	    event.data.data32[3] = 0;
@@ -255,7 +255,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     if(name.isEmpty()){
       //_NET_WM_VISIBLE_NAME
       xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_name_unchecked(&obj->EWMH, win->id());
-      if(cookie.sequence != 0){ 
+      if(cookie.sequence != 0){
         xcb_ewmh_get_utf8_strings_reply_t data;
         if( 1 == xcb_ewmh_get_wm_visible_name_reply(&obj->EWMH, cookie, &data, NULL) ){
           name = QString::fromUtf8(data.strings, data.strings_len);
@@ -288,7 +288,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     if(name.isEmpty()){
       //_NET_WM_VISIBLE_ICON_NAME
       xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_visible_icon_name_unchecked(&obj->EWMH, win->id());
-      if(cookie.sequence != 0){ 
+      if(cookie.sequence != 0){
         xcb_ewmh_get_utf8_strings_reply_t data;
         if( 1 == xcb_ewmh_get_wm_visible_icon_name_reply(&obj->EWMH, cookie, &data, NULL) ){
           name = QString::fromUtf8(data.strings, data.strings_len);
@@ -337,7 +337,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 	    uint* dat = iter.data;
 	    //dat+=2; //remember the first 2 element offset
 	    for(int i=0; i<image.byteCount()/4; ++i, ++dat){
-	      ((uint*)image.bits())[i] = *dat; 
+	      ((uint*)image.bits())[i] = *dat;
 	    }
           icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
           //Now see if there are any more icons available
@@ -350,7 +350,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     win->setProperty(NativeWindow::Icon, icon);
   } //end ICON property
 
-  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize) 
+  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize)
 	|| props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
     //Try the ICCCM "Normal Hints" structure first (newer spec?)
     xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_normal_hints_unchecked(QX11Info::connection(), win->id());
@@ -429,7 +429,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
                           XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
-	
+
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
@@ -457,7 +457,7 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
                           XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
-	
+
   uint32_t value_list[1] = {TRAY_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
@@ -478,7 +478,7 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
     if(win!=0){
       TWindows.removeAll(win);
       win->emit WindowClosed(id);
-      win->deleteLater();      
+      win->deleteLater();
     }
   }
 }
@@ -515,13 +515,13 @@ void NativeWindowSystem::NewMousePress(int buttoncode, WId win){
   //Convert the native button code into a Qt mouse button code
   Qt::MouseButton button;
   switch(buttoncode){
-	case 1: 
+	case 1:
 	  button = Qt::LeftButton ; break;
-	case 2: 
+	case 2:
 	  button = Qt::MiddleButton ; break;
-	case 3: 
+	case 3:
 	  button = Qt::RightButton ; break;
-	case 4: 
+	case 4:
 	  button = Qt::LeftButton ; break;
 	default:
 	  return; //Unhandled button
@@ -534,13 +534,13 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
   //Convert the native button code into a Qt mouse button code
   Qt::MouseButton button;
   switch(buttoncode){
-	case 1: 
+	case 1:
 	  button = Qt::LeftButton ; break;
-	case 2: 
+	case 2:
 	  button = Qt::MiddleButton ; break;
-	case 3: 
+	case 3:
 	  button = Qt::RightButton ; break;
-	case 4: 
+	case 4:
 	  button = Qt::LeftButton ; break;
 	default:
 	  return; //Unhandled button
@@ -564,7 +564,7 @@ void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Pr
   if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
   if(WIN==0){ return; } //invalid window ID - no longer available
   //Now make any changes as needed
-  
+
 }
 
 void NativeWindowSystem::RequestClose(WId win){
