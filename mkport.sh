@@ -3,9 +3,9 @@
 # from a checked out git repo
 
 # Set the port
-port="x11/lumina"
+#port="x11/lumina"
 dfile="lumina"
-VERSION="1.2.2"
+VERSION="1.3.0"
 
 massage_subdir() {
   cd "$1"
