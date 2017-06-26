@@ -39,7 +39,7 @@ BrowserWidget::~BrowserWidget(){
 
 void BrowserWidget::changeDirectory(QString dir){
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
-  qDebug() << "Change Directory:" << dir << historyList;
+  //qDebug() << "Change Directory:" << dir << historyList;
 
   if( !dir.contains("/.zfs/snapshot/") ){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
@@ -49,7 +49,7 @@ void BrowserWidget::changeDirectory(QString dir){
     cleaned = cleaned.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
-  qDebug() << "History:" << historyList;
+  //qDebug() << "History:" << historyList;
   emit dirChange(dir);
 }
 
@@ -364,7 +364,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
 }
 
 void BrowserWidget::itemsLoading(int total){
-  qDebug() << "Got number of items loading:" << total;
+  //qDebug() << "Got number of items loading:" << total;
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   numItems = total; //save this for later

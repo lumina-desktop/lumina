@@ -91,18 +91,19 @@ private:
 	bool waitingToClose;
 
 	QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort, *toggledirtreepaneShort;
+	QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
+	//QShortcut *toggledirtreepaneShort;
 	//QCompleter *dirCompleter;
 
 	//Simplification Functions
 	void setupConnections(); 	//used during initialization
 	void loadSettings(); 		//used during initialization
-	
+
 	void RebuildBookmarksMenu();
 	void RebuildDeviceMenu();
-	
+
 	DirWidget* FindActiveBrowser();
-	
+
 private slots:
 	void slotSingleInstance(QStringList in){
 	  this->show();
@@ -110,9 +111,9 @@ private slots:
 	  this->activateWindow();
 	  this->OpenDirs(in);
 	}
-	
+
 	//void slotStartSyncTimer();
-	
+
 	//Menu Actions
 	void on_actionNew_Window_triggered();
 	void on_actionNew_Tab_triggered();
@@ -126,9 +127,10 @@ private slots:
 	void on_actionDelete_Selection_triggered();*/
 	void on_actionRefresh_triggered();
 	void on_actionView_Hidden_Files_triggered();
-    void on_actionView_showDirTreePane_triggered();
+    //void on_actionView_showDirTreePane_triggered();
 	//void on_actionShow_Action_Buttons_triggered();
-    void on_actionShow_Thumbnails_triggered();
+	void treeWidgetWidthChanged(float percent);
+	void on_actionShow_Thumbnails_triggered();
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);
@@ -139,7 +141,7 @@ private slots:
 	//Git Menu options
 	void on_menuGit_aboutToShow();
 	void on_actionRepo_Status_triggered();
-	void on_actionClone_Repository_triggered();	
+	void on_actionClone_Repository_triggered();
 
 	//Tab interactions
 	void tabChanged(int tab = -1);
@@ -149,13 +151,13 @@ private slots:
 
 	//Other Shortcuts
 	void togglehiddenfiles();
-    void toggleDirTreePane();
+	//void toggleDirTreePane();
 	void focusDirWidget();
 
 	//Backend Info passing
 	//void DirDataAvailable(QString, QString, LFileInfoList);
 	void SnapshotDataAvailable(QString, QString, QStringList);
-	
+
 	//Dir Browser Interactions
 	void OpenPlayer(LFileInfoList);
 	void OpenImages(LFileInfoList);

@@ -59,7 +59,7 @@ void Browser::loadItem(QString info, Browser *obj){
       QByteArray bytes = file.readAll();
       file.close();
       pix.loadFromData(bytes);
-      if(bytes.size() > (512*1024) ){ //more than 512 KB
+      if(pix.width() > 256 || pix.height() > 256 ){
         pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
       }
     }
@@ -117,7 +117,7 @@ void Browser::futureFinished(QString name, QImage icon){
 void Browser::loadDirectory(QString dir){
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
-  qDebug() << "Load Directory" << dir;
+  //qDebug() << "Load Directory" << dir;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
     oldFiles.clear();
     emit clearItems();
