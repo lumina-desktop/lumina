@@ -58,6 +58,12 @@ public:
 
 	//Functions for setting up these objects as needed
 	bool init_ATOMS(){
+	  xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &EWMH);
+	   if(!xcb_ewmh_init_atoms_replies(&EWMH, cookie, NULL) ){
+	     qDebug() << "Error with XCB atom initializations";
+	     return false;
+	   }
+
 	  QStringList atoms;
 	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS"
 		<< "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION"
@@ -98,7 +104,7 @@ public:
 	  xcb_ewmh_set_supporting_wm_check(&EWMH, wm_window, wm_window);
 	  //Now also setup the root event mask on the wm_window
 	  status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), wm_window, XCB_CW_EVENT_MASK, value_list));
-	  if(status!=0){ return false; }	  
+	  if(status!=0){ return false; }
 	  return true;
 	}
 
@@ -204,6 +210,8 @@ bool NativeWindowSystem::start(){
   if(ok){
     setRoot_supportedActions();
     ok = obj->start_system_tray();
+  }else{
+    qWarning() << "Could not register the WM";
   }
   return ok;
 }
