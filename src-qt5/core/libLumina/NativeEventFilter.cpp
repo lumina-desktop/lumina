@@ -58,7 +58,7 @@ XCB_CLIENT_MESSAGE
 #define DEBUG 0
 
 //Special objects/variables for XCB parsing
-static LXCB *XCB = new LXCB();
+static LXCB *XCB = 0;
 static xcb_atom_t _NET_SYSTEM_TRAY_OPCODE = 0;
 
 inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilter *obj){
@@ -90,6 +90,7 @@ NativeEventFilter::NativeEventFilter() : QObject(){
       free(r);
     }
   }
+  if(XCB==0){ XCB = new LXCB(); }
 }
 
 void NativeEventFilter::start(){
