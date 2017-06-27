@@ -23,7 +23,9 @@ private:
 
 	//Simplifications to find an already-created window object
 	NativeWindow* findWindow(WId id){
+	  qDebug() << "Find Window:" << id;
 	  for(int i=0; i<NWindows.length(); i++){
+             qDebug() << "  -- Check Window:" << NWindows[i]->id();
 	    if(id==NWindows[i]->id()){ return NWindows[i]; }
 	  }
 	  return 0;
