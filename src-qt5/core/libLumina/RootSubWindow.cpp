@@ -41,34 +41,34 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
     //above the frame itself - need to figure out which quadrant it is in (8-directions)
     if(pt.y() < WIN_BORDER){
       //One of the top options
-      if(pt.x() < WIN_BORDER){ 
+      if(pt.x() < WIN_BORDER){
 	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
 	return ResizeTopLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER)){ 
+      }else if(pt.x() > (this->width()-WIN_BORDER)){
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
 	return ResizeTopRight;
-      }else{ 
+      }else{
 	if(setoffset){ offset.setX(0); offset.setY(pt.y()); } //difference from top edge (X does not matter)
-	return ResizeTop; 
-      }		    
+	return ResizeTop;
+      }
     }else if(pt.y() > (this->height()-WIN_BORDER) ){
       //One of the bottom options
-      if(pt.x() < WIN_BORDER){ 
+      if(pt.x() < WIN_BORDER){
 	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
 	return ResizeBottomLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER)){ 
+      }else if(pt.x() > (this->width()-WIN_BORDER)){
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
 	return ResizeBottomRight;
-      }else{ 
+      }else{
 	if(setoffset){ offset.setX(0); offset.setY(this->height() - pt.y()); } //difference from bottom edge (X does not matter)
-	return ResizeBottom; 
-      }	
+	return ResizeBottom;
+      }
     }else{
       //One of the side options
-      if(pt.x() < WIN_BORDER){ 
+      if(pt.x() < WIN_BORDER){
 	if(setoffset){ offset.setX(pt.x()); offset.setY(0); } //difference from left edge (Y does not matter)
 	return ResizeLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER) ){ 
+      }else if(pt.x() > (this->width()-WIN_BORDER) ){
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(0); } //difference from right edge (Y does not matter)
 	return ResizeRight;
       }else{
@@ -112,7 +112,7 @@ void RootSubWindow::setMouseCursor(ModState state, bool override){
       break;
     case ResizeTopLeft:
       shape = Qt::SizeFDiagCursor;
-      break;	    
+      break;
   }
   if(override){
     QApplication::setOverrideCursor(QCursor(shape));
@@ -123,6 +123,7 @@ void RootSubWindow::setMouseCursor(ModState state, bool override){
 }
 
 void RootSubWindow::initWindowFrame(){
+  qDebug() << "Create RootSubWindow Frame";
   mainLayout = new QVBoxLayout(this);
   titleBar = new QHBoxLayout(this);
  closeB = new QToolButton(this);
@@ -139,7 +140,6 @@ void RootSubWindow::initWindowFrame(){
   connect(maxB, SIGNAL(clicked()), this, SLOT(toggleMaximize()) );
   connect(minB, SIGNAL(clicked()), this, SLOT(toggleMinimize()) );
   //Now assemble the frame layout based on the current settings
-  this->setLayout(mainLayout);
     titleBar->addWidget(otherB);
     titleBar->addWidget(titleLabel);
     titleBar->addWidget(minB);
@@ -161,6 +161,8 @@ void RootSubWindow::initWindowFrame(){
   mainLayout->setSpacing(0);
   titleBar->setSpacing(1);
   titleBar->setContentsMargins(0,0,0,0);
+  this->setLayout(mainLayout);
+  qDebug() << " - Done";
 }
 
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){

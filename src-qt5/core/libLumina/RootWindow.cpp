@@ -168,6 +168,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
+  qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
   for(int i=0; i<WINDOWS.length() && subwin==0; i++){
     if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; }
   }
@@ -176,7 +177,7 @@ void RootWindow::NewWindow(NativeWindow *win){
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
     WINDOWS << subwin;
   }
-  //subwin->show();
+  subwin->show();
 }
 
 void RootWindow::CloseWindow(WId win){
