@@ -96,13 +96,19 @@ public slots:
 	  screenLocked = lock;
 	}
 
-	//RootWindow interactions
+	//Root Window property registrations
 	void RegisterVirtualRoot(WId);
+	void setRoot_supportedActions();
+	void setRoot_numberOfWorkspaces(QStringList names);
+	void setRoot_currentWorkspace(int);
+	void setRoot_clientList(QList<WId>, bool stackorder = false);
+	void setRoot_desktopGeometry(QRect);
+	void setRoot_desktopWorkarea(QList<QRect>);
+	void setRoot_activeWindow(WId);
+
 	//  - Workspaces
 	int currentWorkspace();
 	//void GoToWorkspace(int);
-	//void RegisterWorkspaces(QStringList); //Names of workspaces, in ascending order
-	//void RegisterKnownInteractions();
 
 
 	//NativeWindowEventFilter interactions

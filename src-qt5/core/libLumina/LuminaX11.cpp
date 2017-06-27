@@ -1514,7 +1514,7 @@ void LXCB::WM_Set_Client_List(QList<WId> list, bool stacking){
     xcb_ewmh_set_client_list_stacking(&EWMH, QX11Info::appScreen(), list.length(), array);
   }else{
     xcb_ewmh_set_client_list(&EWMH, QX11Info::appScreen(), list.length(), array);
-  }	  
+  }
 
 }
 
@@ -1528,7 +1528,7 @@ unsigned int LXCB::WM_Get_Number_Desktops(){
 }
 
 void LXCB::WM_SetNumber_Desktops(unsigned int number){
-  //NOTE: number should be at least 1	
+  //NOTE: number should be at least 1
   xcb_ewmh_set_number_of_desktops(&EWMH, QX11Info::appScreen(), number);
 }
 
@@ -1555,7 +1555,7 @@ QList<QPoint> LXCB::WM_Get_Desktop_Viewport(){
       out << QPoint( reply.desktop_viewport[i].x, reply.desktop_viewport[i].y );
     }
     xcb_ewmh_get_desktop_viewport_reply_wipe(&reply); //clean up the reply structure first
-  }	  
+  }
   return out;
 }
 

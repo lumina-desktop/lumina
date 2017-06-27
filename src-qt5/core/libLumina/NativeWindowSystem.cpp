@@ -98,7 +98,7 @@ public:
 	  xcb_ewmh_set_supporting_wm_check(&EWMH, wm_window, wm_window);
 	  //Now also setup the root event mask on the wm_window
 	  status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), wm_window, XCB_CW_EVENT_MASK, value_list));
-	  if(status!=0){ return false; }
+	  if(status!=0){ return false; }	  
 	  return true;
 	}
 
@@ -201,7 +201,10 @@ bool NativeWindowSystem::start(){
     if( !obj->init_ATOMS() ){ return false; }
   } //Done with private object init
   bool ok  = obj->register_wm();
-  if(ok){ ok = obj->start_system_tray(); }
+  if(ok){
+    setRoot_supportedActions();
+    ok = obj->start_system_tray();
+  }
   return ok;
 }
 
@@ -408,13 +411,110 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 
 
 // === PUBLIC SLOTS ===
-//These are the slots which are only used by the desktop system itself or the NativeEventFilter
-void NativeWindowSystem::RegisterVirtualRoot(WId){
+//These are the slots which are typically only used by the desktop system itself or the NativeEventFilter
+void NativeWindowSystem::RegisterVirtualRoot(WId id){
+  //Convert to XCB array
+  xcb_window_t array[1];
+  array[0] = id;
+  //Set the property
+  xcb_ewmh_set_virtual_roots(&obj->EWMH, QX11Info::appScreen(), 1, array);
+}
 
+void NativeWindowSystem::setRoot_supportedActions(){
+//NET_WM standards (ICCCM implied - no standard way to list those)
+  xcb_atom_t list[] = {obj->EWMH._NET_WM_NAME,
+		obj->EWMH._NET_WM_ICON,
+		obj->EWMH._NET_WM_ICON_NAME,
+		obj->EWMH._NET_WM_DESKTOP,
+		/*_NET_WINDOW_TYPE (and all the various types)*/
+		obj->EWMH._NET_WM_WINDOW_TYPE, obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP, obj->EWMH._NET_WM_WINDOW_TYPE_DOCK,
+		obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR, obj->EWMH._NET_WM_WINDOW_TYPE_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY,
+		obj->EWMH._NET_WM_WINDOW_TYPE_SPLASH, obj->EWMH._NET_WM_WINDOW_TYPE_DIALOG, obj->EWMH._NET_WM_WINDOW_TYPE_NORMAL,
+		obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP,
+		obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION, obj->EWMH._NET_WM_WINDOW_TYPE_COMBO, obj->EWMH._NET_WM_WINDOW_TYPE_DND,
+		};
+  xcb_ewmh_set_supported(&obj->EWMH, QX11Info::appScreen(), 0,list);
+}
+
+void NativeWindowSystem::setRoot_numberOfWorkspaces(QStringList names){
+  if(names.isEmpty()){ names << "one"; }
+  //First set the overall number of workspaces
+  xcb_ewmh_set_number_of_desktops(&obj->EWMH, QX11Info::appScreen(), names.length());
+  //Now set the names for the workspaces
+  //EWMH LIBRARY BROKEN  - appears to be a mismatch in the function header (looking for a single char array, instead of a list of char arrays)
+  // Ken Moore - 6/27/17
+  /*
+  char *array[ names.length() ];
+  for(int i=0; i<names.length(); i++){array[i] = names[i].toUtf8().data(); } //Convert to an array of char arrays
+  xcb_ewmh_set_desktop_names(&obj->EWMH, QX11Info::appScreen(), names.length(), array);
+  */
+}
+
+void NativeWindowSystem::setRoot_currentWorkspace(int num){
+  xcb_ewmh_set_current_desktop(&obj->EWMH, QX11Info::appScreen(), num);
+}
+
+void NativeWindowSystem::setRoot_clientList(QList<WId> list, bool stackorder){
+  //convert the QList into a generic array
+  xcb_window_t array[list.length()];
+  for(int i=0; i<list.length(); i++){ array[i] = list[i]; }
+  if(stackorder){
+    xcb_ewmh_set_client_list_stacking(&obj->EWMH, QX11Info::appScreen(), list.length(), array);
+  }else{
+    xcb_ewmh_set_client_list(&obj->EWMH, QX11Info::appScreen(), list.length(), array);
+  }
+}
+
+void NativeWindowSystem::setRoot_desktopGeometry(QRect geom){
+  //This one is a combo function
+  // This will set the "DESKTOP_VIEWPORT" property (point)
+  //    as well as the "DESKTOP_GEOMETRY" property (size)
+  //Turn the QList into xcb_ewmh_coordinates_t*
+  xcb_ewmh_coordinates_t array[1];
+  array[0].x=geom.x(); array[0].y=geom.y();
+  //Now set the property
+  xcb_ewmh_set_desktop_viewport(&obj->EWMH, QX11Info::appScreen(), 1, array);
+  xcb_ewmh_set_desktop_geometry(&obj->EWMH, QX11Info::appScreen(), geom.width(), geom.height());
+}
+
+void NativeWindowSystem::setRoot_desktopWorkarea(QList<QRect> list){
+  //Convert to the XCB/EWMH data structures
+  xcb_ewmh_geometry_t array[list.length()];
+  for(int i=0; i<list.length(); i++){
+    array[i].x = list[i].x(); array[i].y = list[i].y();
+    array[i].width = list[i].width(); array[i].height = list[i].height();
+  }
+  //Now set the property
+  xcb_ewmh_set_workarea(&obj->EWMH, QX11Info::appScreen(), list.length(), array);
+}
+
+void NativeWindowSystem::setRoot_activeWindow(WId win){
+  xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win);
+  //Also send the active window a message to take input focus
+  //Send the window a WM_TAKE_FOCUS message
+    xcb_client_message_event_t event;
+    event.response_type = XCB_CLIENT_MESSAGE;
+    event.format = 32;
+    event.window = win;
+    event.type = obj->ATOMS["WM_PROTOCOLS"];
+    event.data.data32[0] = obj->ATOMS["WM_TAKE_FOCUS"];
+    event.data.data32[1] = XCB_TIME_CURRENT_TIME; //CurrentTime;
+    event.data.data32[2] = 0;
+    event.data.data32[3] = 0;
+    event.data.data32[4] = 0;
+
+    xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+    xcb_flush(QX11Info::connection());
 }
 
 int NativeWindowSystem::currentWorkspace(){
-  return 0;
+  xcb_get_property_cookie_t cookie = xcb_ewmh_get_current_desktop_unchecked(&obj->EWMH, QX11Info::appScreen());
+  uint32_t num = 0;
+  if(1==xcb_ewmh_get_current_desktop_reply(&obj->EWMH, cookie, &num, NULL) ){
+    return num;
+  }else{
+    return 0;
+  }
 }
 
 //NativeWindowEventFilter interactions
