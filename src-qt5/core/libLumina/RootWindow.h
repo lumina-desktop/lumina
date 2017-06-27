@@ -31,7 +31,7 @@ public:
 
 	RootWindow();
 	~RootWindow();
-	
+
 	void start();
 
 private:
@@ -49,7 +49,7 @@ private:
 
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
-	
+
 public slots:
 	void ResizeRoot();
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);

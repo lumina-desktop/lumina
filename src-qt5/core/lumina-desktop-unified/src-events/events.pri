@@ -1,6 +1,6 @@
-SOURCES *= $${PWD}/LXcbEventFilter.cpp
+#SOURCES *= $${PWD}/LXcbEventFilter.cpp
 
-HEADERS *= $${PWD}/LXcbEventFilter.h
+#HEADERS *= $${PWD}/LXcbEventFilter.h
 
 #Shortcut event files
 SOURCES *= $${PWD}/LShortcutEvents.cpp

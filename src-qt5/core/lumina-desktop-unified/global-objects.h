@@ -19,7 +19,7 @@
 
 //Load the appropriate "EventFilter" class for the graphics subsystem
 //#ifndef USE_WAYLAND
-#include "src-events/LXcbEventFilter.h"
+//#include "src-events/LXcbEventFilter.h"
 //#endif
 #include "src-events/LShortcutEvents.h"
 
@@ -30,9 +30,13 @@
 #define ANIMTIME 80 //animation time in milliseconds
 
 //Global flags/structures
-namespace Lumina{	
+namespace Lumina{
 	//Data structures and objects
-	extern EventFilter *EFILTER; //Native Event Watcher
+	// -- Native Window System Objects
+	extern NativeWindowSystem *NWS;
+	extern NativeEventFilter *NEF;
+
+	//extern EventFilter *EFILTER; //Native Event Watcher
 	extern LShortcutEvents *SHORTCUTS; //Keyboard/mouse shortcut events
 	extern DesktopSettings *SETTINGS; //All Settings files
 	//ScreenSaver
@@ -43,7 +47,7 @@ namespace Lumina{
 	//LWindowManager *WM;
 	//Application List
 	extern XDGDesktopList *APPLIST;
-	
+
 	extern QThread *EVThread; //X Event thread
 };
 

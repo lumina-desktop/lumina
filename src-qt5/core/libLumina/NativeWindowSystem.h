@@ -62,6 +62,9 @@ private:
 	//   let the native system interaction do them in whatever logical groups are best
 	void UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props);
 
+	//Generic private variables
+	bool screenLocked;
+
 public:
 	enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
 	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
@@ -84,8 +87,16 @@ public:
 public slots:
 	//These are the slots which are typically only used by the desktop system itself or the NativeWindowEventFilter
 
+	//This is called by the lock screen to keep the NWS aware of the current status
+	// it is **NOT** the function to call for the user to actually lock the session (that is in the screensaver/lockscreen class)
+	 void ScreenLockChanged(bool lock){
+	  screenLocked = lock;
+	}
+
 	//RootWindow interactions
 	void RegisterVirtualRoot(WId);
+	//  - Workspaces
+	int currentWorkspace();
 	//void GoToWorkspace(int);
 	//void RegisterWorkspaces(QStringList); //Names of workspaces, in ascending order
 	//void RegisterKnownInteractions();
@@ -98,10 +109,10 @@ public slots:
 	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
 	void GotPong(WId);
 
-/*	void NewKeyPress(int keycode, WId win = 0);
+	void NewKeyPress(int keycode, WId win = 0);
 	void NewKeyRelease(int keycode, WId win = 0);
 	void NewMousePress(int buttoncode, WId win = 0);
-	void NewMouseRelease(int buttoncode, WId win = 0);*/
+	void NewMouseRelease(int buttoncode, WId win = 0);
 	void CheckDamageID(WId);
 
 private slots:
@@ -115,10 +126,10 @@ signals:
 	void NewWindowAvailable(NativeWindow*);
 	void NewTrayWindowAvailable(NativeWindow*);
 	void NewInputEvent(); //a mouse or keypress was detected (lock-state independent);
-	void KeyPressDetected(Qt::Key, WId); //only emitted if lockstate = false
-	void KeyReleaseDetected(Qt::Key, WId); //only emitted if lockstate = false
-	void MousePressDetected(Qt::MouseButton, WId); //only emitted if lockstate = false
-	void MouseReleaseDetected(Qt::MouseButton, WId); //only emitted if lockstate = false
+	void KeyPressDetected(WId, int); //only emitted if lockstate = false
+	void KeyReleaseDetected(WId, int); //only emitted if lockstate = false
+	void MousePressDetected(WId, NativeWindowSystem::MouseButton); //only emitted if lockstate = false
+	void MouseReleaseDetected(WId, NativeWindowSystem::MouseButton); //only emitted if lockstate = false
 
 };
 

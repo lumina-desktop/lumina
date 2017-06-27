@@ -29,15 +29,15 @@ private:
 
 	//Actual check functions
 	void CheckKeySequence(WId win);
-	void CheckMouseSequence(WId win, Lumina::MouseButton, bool release);
+	void CheckMouseSequence(WId win, NativeWindowSystem::MouseButton, bool release);
 	QString keylistToString();
 	void evaluateShortcutAction(QString action);
 
 public slots:
 	void KeyPress(WId window, int key);
 	void KeyRelease(WId window, int key);
-	void MousePress(WId window, Lumina::MouseButton);
-	void MouseRelease(WId window, Lumina::MouseButton);
+	void MousePress(WId window, NativeWindowSystem::MouseButton);
+	void MouseRelease(WId window, NativeWindowSystem::MouseButton);
 	void clearKeys();
 
 signals:
@@ -50,7 +50,7 @@ signals:
 	// Session Options
 	void ChangeWorkspace(int); // +/- 1 from current
 	void LockSession();
-	
+
 	//Active Window Options
 	void ActiveWindowMoveToWorkspace(int); //number of workspace
 	void ActiveWindowTakeToWorkspace(int); //number of workspace

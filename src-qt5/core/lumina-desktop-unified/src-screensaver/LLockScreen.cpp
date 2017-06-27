@@ -10,17 +10,15 @@
 #include <unistd.h>
 
 #define NUMTRIES 3
-//#define WAITMINS 1
 #define DEBUG 1
 
 LLockScreen::LLockScreen(QWidget *parent) : QWidget(parent), ui(new Ui::LLockScreen()){
   ui->setupUi(this);
   waittime = new QTimer(this);
-    //waittime->setInterval(WAITMINS*60000); //(too many attempts in short time)
     waittime->setSingleShot(true);
   refreshtime = new QTimer(this); //timer to update the wait time display
     refreshtime->setInterval(6000); //6 seconds (1/10 second)
-	
+
   connect(ui->tool_unlock, SIGNAL(clicked()), this, SLOT(TryUnlock()) );
   connect(ui->line_password, SIGNAL(returnPressed()), this, SLOT(TryUnlock()) );
   connect(ui->line_password, SIGNAL(textEdited(QString)), this, SIGNAL(InputDetected()) );
@@ -30,7 +28,7 @@ LLockScreen::LLockScreen(QWidget *parent) : QWidget(parent), ui(new Ui::LLockScr
 }
 
 LLockScreen::~LLockScreen(){
-	
+
 }
 
 void LLockScreen::LoadSystemDetails(){
@@ -47,7 +45,7 @@ void LLockScreen::aboutToHide(){
   ui->line_password->clear();
   ui->line_password->clearFocus();
   if(refreshtime->isActive()){ refreshtime->stop(); }
-} 
+}
 
 void LLockScreen::aboutToShow(){
   if(!waittime->isActive()){
@@ -61,21 +59,17 @@ void LLockScreen::aboutToShow(){
   UpdateLockInfo();
   ui->line_password->clear();
   ui->line_password->setFocus();
-} 
+}
 
 // =================
 //      PRIVATE SLOTS
 // =================
 void LLockScreen::UpdateLockInfo(){
   QString info;
-  /*if(triesleft>0 && triesleft<NUMTRIES ){ 
-    if(triesleft==1){info = tr("1 Attempt Left"); }
-    else{info = QString(tr("%1 Attempts Left")).arg(QString::number(triesleft)); }
-  }else*/ 
-  if(waittime->isActive()){ 
+  if(waittime->isActive()){
     info = tr("Too Many Failures")+"\n"+ QString(tr("Wait %1 Minutes")).arg( QString::number(qRound(waittime->remainingTime()/6000.0)/10.0) );
   }else if(attempts>0){ info.append("\n"+QString(tr("Failed Attempts: %1")).arg(QString::number(attempts)) ); }
-  ui->label_info->setText(info);	
+  ui->label_info->setText(info);
 }
 
 void LLockScreen::TryUnlock(){
@@ -89,11 +83,11 @@ void LLockScreen::TryUnlock(){
     this->setEnabled(true);
   }else{
     triesleft--;
-    if(triesleft>0){ 
+    if(triesleft>0){
       this->setEnabled(true);
-    }else{ 
+    }else{
       waittime->setInterval( (attempts/NUMTRIES)*60000);
-      waittime->start(); 
+      waittime->start();
       refreshtime->start();
     }
     ui->line_password->setFocus();

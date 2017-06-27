@@ -17,7 +17,8 @@ public:
 
 private:
 	void CleanupSession();
-	
+	void setupGlobalConnections();
+
 	int VersionStringToNumber(QString version);
 	QMediaPlayer *mediaObj;
 	void playAudioFile(QString filepath);
@@ -45,7 +46,7 @@ signals:
 	//General Signals
 	void LocaleChanged();
 	void IconThemeChanged();
-	
+
 };
 
 #endif

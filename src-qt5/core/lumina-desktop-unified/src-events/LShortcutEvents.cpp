@@ -25,18 +25,9 @@ void LShortcutEvents::start(){
     clearTimer->setSingleShot(true);
     connect(clearTimer, SIGNAL(timeout()), this, SLOT(clearKeys()) );
   }
-  //Now connect this object to the global EFILTER object signals
-  connect(Lumina::EFILTER, SIGNAL(KeyPressed(WId, int)), this, SLOT(KeyPress(WId, int)) );
-  connect(Lumina::EFILTER, SIGNAL(KeyReleased(WId, int)), this, SLOT(KeyRelease(WId, int)) );
-  connect(Lumina::EFILTER, SIGNAL(MousePressed(WId, Lumina::MouseButton)), this, SLOT(MousePress(WId, Lumina::MouseButton)) );
-  connect(Lumina::EFILTER, SIGNAL(MouseReleased(WId, Lumina::MouseButton)), this, SLOT(MouseRelease(WId, Lumina::MouseButton)) );
 }
 
 void LShortcutEvents::stop(){
-  disconnect(Lumina::EFILTER, SIGNAL(KeyPressed(WId, int)), this, SLOT(KeyPress(WId, int)) );
-  disconnect(Lumina::EFILTER, SIGNAL(KeyReleased(WId, int)), this, SLOT(KeyRelease(WId, int)) );
-  disconnect(Lumina::EFILTER, SIGNAL(MousePressed(WId, Lumina::MouseButton)), this, SLOT(MousePress(WId, Lumina::MouseButton)) );
-  disconnect(Lumina::EFILTER, SIGNAL(MouseReleased(WId, Lumina::MouseButton)), this, SLOT(MouseRelease(WId, Lumina::MouseButton)) );
   clearKeys();
 }
 
@@ -59,42 +50,42 @@ void LShortcutEvents::CheckKeySequence(WId win){
   }
 }
 
-void LShortcutEvents::CheckMouseSequence(WId win, Lumina::MouseButton button, bool release){
-  if(release && (button == Lumina::WheelUp || button == Lumina::WheelDown || button == Lumina::WheelLeft || button == Lumina::WheelRight)){ 
+void LShortcutEvents::CheckMouseSequence(WId win, NativeWindowSystem::MouseButton button, bool release){
+  if(release && (button == NativeWindowSystem::WheelUp || button == NativeWindowSystem::WheelDown || button == NativeWindowSystem::WheelLeft || button == NativeWindowSystem::WheelRight)){ 
     return; //skip mouse release events for wheel actions (always come in pairs of press/release)
-  }else if(keylist.isEmpty() || button == Lumina::NoButton){ return; } //Never overwrite mouse clicks themselves - just combinations with key presses
+  }else if(keylist.isEmpty() || button == NativeWindowSystem::NoButton){ return; } //Never overwrite mouse clicks themselves - just combinations with key presses
   //Get the keyboard modifiers
   QString shortcut = keylistToString();
   //Add the mouse button to the shortcut
   switch(button){
-    case Lumina::LeftButton:
+    case NativeWindowSystem::LeftButton:
       shortcut.append("+LeftMouse");
       break;
-    case Lumina::RightButton:
+    case NativeWindowSystem::RightButton:
       shortcut.append("+RightMouse");
       break;
-    case Lumina::MidButton:
+    case NativeWindowSystem::MidButton:
       shortcut.append("+MiddleMouse");
       break;
-    case Lumina::BackButton:
+    case NativeWindowSystem::BackButton:
       shortcut.append("+BackMouse");
       break;
-    case Lumina::ForwardButton:
+    case NativeWindowSystem::ForwardButton:
       shortcut.append("+ForwardMouse");
       break;
-    case Lumina::TaskButton:
+    case NativeWindowSystem::TaskButton:
       shortcut.append("+TaskMouse");
       break;
-    case Lumina::WheelUp:
+    case NativeWindowSystem::WheelUp:
       shortcut.append("+WheelUp");
       break;
-    case Lumina::WheelDown:
+    case NativeWindowSystem::WheelDown:
       shortcut.append("+WheelDown");
       break;
-    case Lumina::WheelLeft:
+    case NativeWindowSystem::WheelLeft:
       shortcut.append("+WheelLeft");
       break;
-    case Lumina::WheelRight:
+    case NativeWindowSystem::WheelRight:
       shortcut.append("+WheelRight");
       break;
     default:
@@ -146,7 +137,7 @@ void LShortcutEvents::evaluateShortcutAction(QString action){
 // === PUBLIC SLOTS ===
 void LShortcutEvents::KeyPress(WId window, int key){
   if(window!=WIN){ keylist.clear(); WIN = window; }
-  if(!keylist.contains(key)){ 
+  if(!keylist.contains(key)){
     //Put it in the list in ascending order
     bool found = false;
     for(int i=0; i<keylist.length() && !found; i++){
@@ -156,26 +147,26 @@ void LShortcutEvents::KeyPress(WId window, int key){
     evaluated = false;
   }
   //Evaluate the key sequence only when the first one is released
-  clearTimer->start(); //will "restart" if already running 
+  clearTimer->start(); //will "restart" if already running
 }
 
 void LShortcutEvents::KeyRelease(WId window, int key){
   if(window!=WIN){ keylist.clear(); return; }
   if(!evaluated){ CheckKeySequence(WIN); } //run this "before" removing the key from the list
   keylist.removeAll(key);
-  clearTimer->start(); //will "restart" if already running 
+  clearTimer->start(); //will "restart" if already running
 }
 
-void LShortcutEvents::MousePress(WId window, Lumina::MouseButton button){
+void LShortcutEvents::MousePress(WId window, NativeWindowSystem::MouseButton button){
   //We do not provide shortcuts for combinations of mouse buttons - just mouse+keyboard combinations
   CheckMouseSequence(window, button, false);
-  clearTimer->start(); //will "restart" if already running 
+  clearTimer->start(); //will "restart" if already running
 }
 
-void LShortcutEvents::MouseRelease(WId window, Lumina::MouseButton button){
+void LShortcutEvents::MouseRelease(WId window, NativeWindowSystem::MouseButton button){
   //We do not provide shortcuts for combinations of mouse buttons - just mouse+keyboard combinations
   CheckMouseSequence(window, button, true);
-  clearTimer->start(); //will "restart" if already running 
+  clearTimer->start(); //will "restart" if already running
 }
 
 void LShortcutEvents::clearKeys(){

@@ -175,6 +175,7 @@ public:
 NativeWindowSystem::NativeWindowSystem() : QObject(){
   obj = 0;
   pingTimer = 0;
+  screenLocked = false;
 }
 
 NativeWindowSystem::~NativeWindowSystem(){
@@ -210,6 +211,8 @@ void NativeWindowSystem::stop(){
 
 //Small simplification functions
 Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
+  qDebug() << "Try to convert keycode to Qt::Key:" << keycode;
+  qDebug() << " - Not implemented yet";
   return Qt::Key_unknown;
 }
 
@@ -410,6 +413,10 @@ void NativeWindowSystem::RegisterVirtualRoot(WId){
 
 }
 
+int NativeWindowSystem::currentWorkspace(){
+  return 0;
+}
+
 //NativeWindowEventFilter interactions
 void NativeWindowSystem::NewWindowDetected(WId id){
   //Make sure this can be managed first
@@ -499,54 +506,29 @@ void NativeWindowSystem::GotPong(WId id){
   if(waitingForPong.isEmpty() && pingTimer!=0){ pingTimer->stop(); }
 }
 
-/*void NativeWindowSystem::NewKeyPress(int keycode, WId win){
+void NativeWindowSystem::NewKeyPress(int keycode, WId win){
   emit NewInputEvent();
+  if(screenLocked){ return; }
+  emit KeyPressDetected(win, keycode);
 }
 
 void NativeWindowSystem::NewKeyRelease(int keycode, WId win){
   emit NewInputEvent();
-  //Convert the native button code into a Qt keycode
-  //Qt::Key key = keycode; //TODO
-  //emit KeyReleaseDetected( key, win);
+  if(screenLocked){ return; }
+  emit KeyReleaseDetected(win, keycode);
 }
 
 void NativeWindowSystem::NewMousePress(int buttoncode, WId win){
   emit NewInputEvent();
-  //Convert the native button code into a Qt mouse button code
-  Qt::MouseButton button;
-  switch(buttoncode){
-	case 1:
-	  button = Qt::LeftButton ; break;
-	case 2:
-	  button = Qt::MiddleButton ; break;
-	case 3:
-	  button = Qt::RightButton ; break;
-	case 4:
-	  button = Qt::LeftButton ; break;
-	default:
-	  return; //Unhandled button
-  }
-  emit MousePressDetected(button, win);
+  if(screenLocked){ return; }
+  emit MousePressDetected(win, MouseToQt(buttoncode));
 }
 
 void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
   emit NewInputEvent();
-  //Convert the native button code into a Qt mouse button code
-  Qt::MouseButton button;
-  switch(buttoncode){
-	case 1:
-	  button = Qt::LeftButton ; break;
-	case 2:
-	  button = Qt::MiddleButton ; break;
-	case 3:
-	  button = Qt::RightButton ; break;
-	case 4:
-	  button = Qt::LeftButton ; break;
-	default:
-	  return; //Unhandled button
-  }
-  emit MouseReleaseDetected(button, win);
-}*/
+  if(screenLocked){ return; }
+  emit MouseReleaseDetected(win, MouseToQt(buttoncode));
+}
 
 void NativeWindowSystem::CheckDamageID(WId win){
   NativeWindow *WIN = findTrayWindow(win);
@@ -564,7 +546,9 @@ void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Pr
   if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
   if(WIN==0){ return; } //invalid window ID - no longer available
   //Now make any changes as needed
-
+  // TODO
+  qDebug() << "Request Properties Changed:" << props << vals;
+  qDebug() << " - Not implemented yet";
 }
 
 void NativeWindowSystem::RequestClose(WId win){

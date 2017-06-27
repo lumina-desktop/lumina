@@ -17,7 +17,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
     locktimer->setSingleShot(true);
   hidetimer = new QTimer(this);
     hidetimer->setSingleShot(true);
-	
+
   LOCKER = new LLockScreen(this);
 	LOCKER->hide();
   settings = new QSettings("lumina-desktop","lumina-screensaver",this);
@@ -33,7 +33,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
 }
 
 LScreenSaver::~LScreenSaver(){
-	
+
 }
 
 bool LScreenSaver::isLocked(){
@@ -66,7 +66,7 @@ void LScreenSaver::reloadSettings(){
   hidetimer->setInterval( settings->value("hidesecs",15).toInt() * 1000 );
 }
 
-void LScreenSaver::newInputEvent(){  
+void LScreenSaver::newInputEvent(){
   if(updating){ return; } //in the middle of making changes which could cause an event
   if(DEBUG){ qDebug() << "New Input Event"; }
   if(SSRunning && SSLocked){
@@ -79,7 +79,6 @@ void LScreenSaver::newInputEvent(){
     HideScreenSaver();
   }
   UpdateTimers();
-  
 }
 
 void LScreenSaver::LockScreenNow(){
@@ -119,7 +118,7 @@ void LScreenSaver::ShowScreenSaver(){
   if(!this->isActiveWindow()){
     this->raise();
     this->show();
-    this->activateWindow(); 
+    this->activateWindow();
   }
   for(int i=0; i<BASES.length(); i++){
     BASES[i]->show();
@@ -149,10 +148,11 @@ void LScreenSaver::HideScreenSaver(){
   if(!SSLocked){
     this->hide();
     emit ClosingScreenSaver();
+    emit LockStatusChanged(false);
   }
-  for(int i=0; i<BASES.length(); i++){ 
+  for(int i=0; i<BASES.length(); i++){
     BASES[i]->hide();
-    BASES[i]->stopPainting(); 
+    BASES[i]->stopPainting();
   }
   UpdateTimers();
 }
@@ -171,6 +171,7 @@ void LScreenSaver::LockScreen(){
   if(SSLocked){ return; }
   if(DEBUG){ qDebug() << "Locking Screen:" << QDateTime::currentDateTime().toString(); }
   SSLocked = true;
+  emit LockStatusChanged(true);
   LOCKER->LoadSystemDetails();
   UpdateTimers();
 }
@@ -178,6 +179,7 @@ void LScreenSaver::LockScreen(){
 void LScreenSaver::SSFinished(){
   if(DEBUG){ qDebug() << "Screensaver Finished:" << QDateTime::currentDateTime().toString(); }
   SSLocked = false;
+  emit LockStatusChanged(false);
   HideLockScreen();
   HideScreenSaver();
 }

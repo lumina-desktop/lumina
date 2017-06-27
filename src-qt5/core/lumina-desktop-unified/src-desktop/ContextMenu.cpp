@@ -13,7 +13,7 @@ void DesktopContextMenu::SettingsChanged(DesktopSettings::File file){
 
 void DesktopContextMenu::UpdateMenu(){
   //Put a label at the top
-  unsigned int num = Lumina::EFILTER->currentWorkspace(); //LX11::GetCurrentDesktop();
+  unsigned int num = Lumina::NWS->currentWorkspace();
   workspaceLabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>");
   this->clear(); //clear it for refresh
   this->addAction(wkspaceact);

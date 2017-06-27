@@ -5,8 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 //  This is a container object for setting/announcing changes
-//    in a native window's properties. 
-//    The WM will usually run the "setProperty" function on this object, 
+//    in a native window's properties.
+//    The WM will usually run the "setProperty" function on this object,
 //     and any other classes/widgets which watch this window can act appropriatly after-the-fact
 //  Non-WM classes should use the "Request" signals to ask the WM to do something, and listen for changes later
 //===========================================
@@ -59,7 +59,7 @@ public:
 	~NativeWindow();
 
 	WId id();
-	QWindow* window();	
+	QWindow* window();
 
 	QVariant property(NativeWindow::Property);
 	void setProperty(NativeWindow::Property, QVariant);
@@ -89,7 +89,7 @@ signals:
 	void RequestClose(WId);				//Close the window
 	void RequestKill(WId);				//Kill the window/app (usually from being unresponsive)
 	void RequestPing(WId);				//Verify that the window is still active (such as not closing after a request
-	
+
 	// System Tray Icon Embed/Unembed Requests
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);

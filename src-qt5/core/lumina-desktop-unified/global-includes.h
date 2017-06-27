@@ -59,6 +59,8 @@
 #include <RootWindow.h>
 #include <ExternalProcess.h>
 #include <NativeWindow.h>
+#include <NativeWindowSystem.h>
+#include <NativeEventFilter.h>
 
 // Standard C includes
 #include <unistd.h>
