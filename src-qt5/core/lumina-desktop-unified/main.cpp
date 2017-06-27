@@ -12,6 +12,7 @@
 
 int main(int argc, char ** argv)
 {
+  qDebug() << "Starting lumina-desktop-unified...";
     if (argc > 1) {
       if (QString(argv[1]) == QString("--version")){
         qDebug() << LDesktopUtils::LuminaDesktopVersion();
@@ -42,6 +43,6 @@ int main(int argc, char ** argv)
     theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
-    qDebug() << "Finished Closing Down Lumina";
+    qDebug() << "Finished Closing Down Unified Lumina";
     return retCode;
 }
