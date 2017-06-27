@@ -8,7 +8,7 @@
 #include "global-includes.h"
 #include "LSession.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 int main(int argc, char ** argv)
 {
@@ -29,6 +29,7 @@ int main(int argc, char ** argv)
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
+    if(DEBUG){ qDebug() << "Starting unified session"; }
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
     QTime *timer=0;
