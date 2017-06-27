@@ -155,7 +155,7 @@ void RootSubWindow::initWindowFrame(){
     maxB->setObjectName("Button_Maximize");
     otherM->setObjectName("Menu_Actions");
     titleLabel->setObjectName("Label_Title");
-  this->setStyleSheet("QWidget#WindowFrame{background-color: darkblue;} QWidget#Label_Title{background-color: transparent; color: white; }");
+  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; }");
   //And adjust the margins
   mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER);
   mainLayout->setSpacing(0);
@@ -227,7 +227,7 @@ void RootSubWindow::startResizing(){
 void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList<QVariant> vals){
   for(int i=0; i<props.length() && i<vals.length(); i++){
     if(vals[i].isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
-    //qDebug() << "Set Window Property:" << props[i] << vals[i];
+    qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
 		if(vals[i].toBool()){ this->show(); }

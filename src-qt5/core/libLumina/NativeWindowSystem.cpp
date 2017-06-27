@@ -408,7 +408,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 
 
 // === PUBLIC SLOTS ===
-//These are the slots which are only used by the desktop system itself or the NativeWindowEventFilter
+//These are the slots which are only used by the desktop system itself or the NativeEventFilter
 void NativeWindowSystem::RegisterVirtualRoot(WId){
 
 }
@@ -476,6 +476,7 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindow *win = findWindow(id);
+  qDebug() << "Got Window Closed" << id << win;
   if(win!=0){
     NWindows.removeAll(win);
     win->emit WindowClosed(id);
@@ -491,7 +492,7 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
 }
 
 void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop){
-  //NOTE: This is triggered by the NativeWindowEventFilter - not by changes to the NativeWindow objects themselves
+  //NOTE: This is triggered by the NativeEventFilter - not by changes to the NativeWindow objects themselves
   NativeWindow *win = findWindow(id);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
