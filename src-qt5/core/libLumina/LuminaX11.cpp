@@ -75,9 +75,6 @@ void LXCB::createWMAtoms(){
       i--;
     }
   }
-  
-  
-  
 }
 
 // === WindowList() ===
@@ -91,13 +88,13 @@ QList<WId> LXCB::WindowList(bool rawlist){
   if( 1 == xcb_ewmh_get_client_list_reply( &EWMH, cookie, &winlist, NULL) ){
     //qDebug() << " - Loop over items";
     unsigned int wkspace = CurrentWorkspace();
-    for(unsigned int i=0; i<winlist.windows_len; i++){ 
+    for(unsigned int i=0; i<winlist.windows_len; i++){
       //Filter out the Lumina Desktop windows
       if(WindowClass(winlist.windows[i]) == "Lumina Desktop Environment"){ continue; }
       //Also filter out windows not on the active workspace
       else if( (WindowWorkspace(winlist.windows[i])!=wkspace) && !rawlist ){ continue; }
       else{
-        output << winlist.windows[i]; 
+        output << winlist.windows[i];
       }
     }
   }

@@ -12,7 +12,7 @@ target.path = $${L_BINDIR}
 include(../libLumina/ResizeMenu.pri)
 include(../libLumina/LDesktopUtils.pri) #includes LUtils and LOS
 include(../libLumina/LuminaXDG.pri)
-include(../libLumina/LuminaX11.pri)
+#include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 include(../libLumina/DesktopSettings.pri)

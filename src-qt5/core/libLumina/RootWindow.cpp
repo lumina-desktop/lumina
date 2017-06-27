@@ -130,7 +130,7 @@ void RootWindow::ResizeRoot(){
   //Trigger a repaint and send out any signals
   this->setGeometry(fullscreen);
   this->update();
-  emit RootResized();
+  emit RootResized(fullscreen);
   if(!valid.isEmpty()){ emit NewScreens(valid); }
   if(!invalid.isEmpty()){ emit RemovedScreens(invalid); }
 }

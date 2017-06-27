@@ -51,26 +51,29 @@ XCB_CLIENT_MESSAGE
 #define SYSTEM_TRAY_BEGIN_MESSAGE 1
 #define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
-#include <LuminaX11.h>
+//#include <LuminaX11.h>
+#include <QX11Info>
+#include <xcb/xcb_ewmh.h>
 #include <xcb/xcb_keysyms.h>
 #include <xcb/damage.h>
 
 #define DEBUG 0
 
 //Special objects/variables for XCB parsing
-static LXCB *XCB = 0;
+static xcb_ewmh_connection_t EWMH;
+//static LXCB *XCB = 0;
 static xcb_atom_t _NET_SYSTEM_TRAY_OPCODE = 0;
 
 inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilter *obj){
   //qDebug() << "Got Property Event:" << ev->window << ev->atom;
   NativeWindow::Property prop = NativeWindow::None;
   //Now determine which properties are getting changed, and update the native window as appropriate
-  if(ev->atom == XCB->EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
-  else if(ev->atom == XCB->EWMH._NET_WM_ICON){ prop = NativeWindow::Icon; }
-  else if(ev->atom == XCB->EWMH._NET_WM_ICON_NAME){ prop = NativeWindow::ShortTitle; }
-  else if(ev->atom == XCB->EWMH._NET_WM_DESKTOP){ prop = NativeWindow::Workspace; }
-  else if(ev->atom == XCB->EWMH._NET_WM_WINDOW_TYPE ){ prop = NativeWindow::WinTypes; }
-  else if( ev->atom == XCB->EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
+  if(ev->atom == EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
+  else if(ev->atom == EWMH._NET_WM_ICON){ prop = NativeWindow::Icon; }
+  else if(ev->atom == EWMH._NET_WM_ICON_NAME){ prop = NativeWindow::ShortTitle; }
+  else if(ev->atom == EWMH._NET_WM_DESKTOP){ prop = NativeWindow::Workspace; }
+  else if(ev->atom == EWMH._NET_WM_WINDOW_TYPE ){ prop = NativeWindow::WinTypes; }
+  else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
     obj->emit WindowPropertyChanged(ev->window, prop);
@@ -81,6 +84,12 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
 //Constructor for the Event Filter wrapper
 NativeEventFilter::NativeEventFilter() : QObject(){
   EF = new EventFilter(this);
+  if(EWMH.nb_screens <=0){
+   xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &EWMH);
+   if(!xcb_ewmh_init_atoms_replies(&EWMH, cookie, NULL) ){
+     qDebug() << "Error with XCB atom initializations";
+   }
+  }
   if(_NET_SYSTEM_TRAY_OPCODE==0){
     //_NET_SYSTEM_TRAY_OPCODE
     xcb_intern_atom_cookie_t cookie = xcb_intern_atom(QX11Info::connection(), 0, 23,"_NET_SYSTEM_TRAY_OPCODE");
@@ -90,7 +99,6 @@ NativeEventFilter::NativeEventFilter() : QObject(){
       free(r);
     }
   }
-  if(XCB==0){ XCB = new LXCB(); }
 }
 
 void NativeEventFilter::start(){
