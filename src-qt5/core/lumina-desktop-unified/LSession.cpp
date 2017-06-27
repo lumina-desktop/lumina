@@ -17,7 +17,6 @@
 //Initialize all the global objects to null pointers
 NativeWindowSystem* Lumina::NWS = 0;
 NativeEventFilter* Lumina::NEF = 0;
-//EventFilter* Lumina::EFILTER = 0;
 LScreenSaver* Lumina::SS = 0;
 DesktopSettings* Lumina::SETTINGS = 0;
 //Lumina::WM = 0;
@@ -46,10 +45,8 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Now initialize the global objects (but do not start them yet)
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
-  //Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter first
   Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
-  //Lumina::WM = new LWindowManager();
   //Now put the Event Filter into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
     Lumina::NEF->moveToThread(Lumina::EVThread);
@@ -148,6 +145,7 @@ void LSession::setupSession(){
   }
   Lumina::ROOTWIN->start();
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
+  Lumina::NWS->setRoot_currentWorkspace(0);
 
   DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );

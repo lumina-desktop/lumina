@@ -441,7 +441,7 @@ void NativeWindowSystem::setRoot_supportedActions(){
 		obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP,
 		obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION, obj->EWMH._NET_WM_WINDOW_TYPE_COMBO, obj->EWMH._NET_WM_WINDOW_TYPE_DND,
 		};
-  xcb_ewmh_set_supported(&obj->EWMH, QX11Info::appScreen(), 0,list);
+  xcb_ewmh_set_supported(&obj->EWMH, QX11Info::appScreen(), 19,list);
 }
 
 void NativeWindowSystem::setRoot_numberOfWorkspaces(QStringList names){
