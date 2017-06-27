@@ -10,7 +10,7 @@
 #include <QVBoxLayout>
 #include <QVBoxLayout>
 
-#define WIN_BORDER 3
+#define WIN_BORDER 5
 
 // === PUBLIC ===
 RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
@@ -24,6 +24,7 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   LoadProperties( NativeWindow::allProperties() );
   //Hookup the signals/slots
   connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
+  WIN->addFrameWinID(this->winId());
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -123,7 +124,7 @@ void RootSubWindow::setMouseCursor(ModState state, bool override){
 }
 
 void RootSubWindow::initWindowFrame(){
-  qDebug() << "Create RootSubWindow Frame";
+  //qDebug() << "Create RootSubWindow Frame";
   mainLayout = new QVBoxLayout(this);
   titleBar = new QHBoxLayout(this);
  closeB = new QToolButton(this);
@@ -161,8 +162,8 @@ void RootSubWindow::initWindowFrame(){
   mainLayout->setSpacing(0);
   titleBar->setSpacing(1);
   titleBar->setContentsMargins(0,0,0,0);
-  this->setLayout(mainLayout);
-  qDebug() << " - Done";
+  //this->setLayout(mainLayout);
+  //qDebug() << " - Done";
 }
 
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){

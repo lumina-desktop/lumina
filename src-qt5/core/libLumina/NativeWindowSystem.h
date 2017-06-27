@@ -14,6 +14,7 @@
 #include "NativeWindow.h"
 #include <QDateTime>
 #include <QTimer>
+#include <QDebug>
 
 class NativeWindowSystem : public QObject{
 	Q_OBJECT
@@ -26,14 +27,14 @@ private:
 	  qDebug() << "Find Window:" << id;
 	  for(int i=0; i<NWindows.length(); i++){
              qDebug() << "  -- Check Window:" << NWindows[i]->id();
-	    if(id==NWindows[i]->id()){ return NWindows[i]; }
+	    if(NWindows[i]->isRelatedTo(id)){ qDebug() << "  -- Got Match!"; return NWindows[i]; }
 	  }
 	  return 0;
 	}
 
 	NativeWindow* findTrayWindow(WId id){
 	  for(int i=0; i<TWindows.length(); i++){
-	    if(id==TWindows[i]->id()){ return TWindows[i]; }
+	    if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
 	  }
 	  return 0;
 	}

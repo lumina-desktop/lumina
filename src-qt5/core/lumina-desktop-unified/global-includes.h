@@ -66,10 +66,6 @@
 #include <unistd.h>
 
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)
-namespace Lumina{
-	//Flags/enumerations
-	enum WindowAction{MoveResize, Show, Hide, TryClose, Closed, WA_NONE};
-	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
-};
+
 
 #endif

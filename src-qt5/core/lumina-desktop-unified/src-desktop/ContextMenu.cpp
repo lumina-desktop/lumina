@@ -85,6 +85,7 @@ void DesktopContextMenu::start(){
 
 // === PRIVATE SLOTS ===
 void DesktopContextMenu::LaunchAction(QAction *act){
+  //qDebug() << "Launch Action Triggered:" << act->whatsThis();
   if(act->whatsThis().isEmpty() || act->parent()!=this ){ return; }
   qDebug() << "Launch Menu Action:" << act->whatsThis();
   QString cmd = act->whatsThis();

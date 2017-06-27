@@ -58,6 +58,9 @@ public:
 	NativeWindow(WId id);
 	~NativeWindow();
 
+	void addFrameWinID(WId);
+	bool isRelatedTo(WId);
+
 	WId id();
 	QWindow* window();
 
@@ -76,6 +79,7 @@ private:
 	QHash <NativeWindow::Property, QVariant> hash;
 	QWindow *WIN;
 	WId winid;
+	QList<WId> relatedTo;
 
 signals:
 	//General Notifications

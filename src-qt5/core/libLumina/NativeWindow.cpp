@@ -17,6 +17,14 @@ NativeWindow::~NativeWindow(){
   //WIN->deleteLater(); //This class only deals with Native windows which were created outside the app - they need to be cleaned up outside the app too
 }
 
+void NativeWindow::addFrameWinID(WId fid){
+  relatedTo << fid;
+}
+
+bool NativeWindow::isRelatedTo(WId tmp){
+  return (relatedTo.contains(tmp) || winid == tmp);
+}
+
 WId NativeWindow::id(){
   return winid;
 }

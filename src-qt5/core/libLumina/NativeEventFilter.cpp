@@ -146,7 +146,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 	    case XCB_MOTION_NOTIFY:
 		//This is a mouse movement event
-		//qDebug() << "Motion Notify Event";
+		qDebug() << "Motion Notify Event";
                  obj->emit MouseMovement();
 	        break;
 	    case XCB_ENTER_NOTIFY:
@@ -166,47 +166,26 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_MAP_NOTIFY:
-		//qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
-		/*if(Lumina::SS->isLocked()){ waitingToShow << ((xcb_map_notify_event_t *)ev)->window ; }
-		else{
-		  for(int i=0; i<windows.length(); i++){
-		    if(windows[i]->id() == ((xcb_map_notify_event_t *)ev)->window){ windows[i]->setProperty(NativeWindow::Visible, true); break; }
-		  }
-		}*/
+		qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
                    obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible );
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
-		//qDebug() << "Window Map Request Event";
+		qDebug() << "Window Map Request Event";
                    obj->emit WindowCreated( ((xcb_map_request_event_t *) ev)->window );
-		//SetupNewWindow(  );
 		break;
 //==============================
 	    case XCB_CREATE_NOTIFY:
-		//qDebug() << "Window Create Event";
+		qDebug() << "Window Create Event";
 	        break;
 //==============================
 	    case XCB_UNMAP_NOTIFY:
-		//qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
-		/*if(waitingToShow.contains(((xcb_unmap_notify_event_t *)ev)->window)){ waitingToShow.removeAll(((xcb_unmap_notify_event_t *)ev)->window); }
-		for(int i=0; i<windows.length(); i++){
-		  if(windows[i]->id() == ((xcb_unmap_notify_event_t *)ev)->window){ windows[i]->setProperty(NativeWindow::Visible, false); break; }
-		}*/
+		qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible );
 		break;
 //==============================
 	    case XCB_DESTROY_NOTIFY:
-		//qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
+		qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
                   obj->emit WindowDestroyed( ((xcb_destroy_notify_event_t *) ev)->window );
-		/*if( !rmTrayApp( ((xcb_destroy_notify_event_t *) ev)->window ) ){
-		  //qDebug() <<" - Non-tray window";
-		  for(int i=0; i<windows.length(); i++){
-		    if(windows[i]->id() == ((xcb_destroy_notify_event_t *)ev)->window){
-		      windows[i]->emit WindowClosed(windows[i]->id());
-		      QTimer::singleShot(500, windows.takeAt(i), SLOT(deleteLater()) ); //give a few moments first, then clean up the object
-		      break;
-		    }
-		  }
-		}*/
 	        break;
 //==============================
 	    case XCB_FOCUS_IN:
@@ -218,7 +197,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_PROPERTY_NOTIFY:
-		//qDebug() << "Property Notify Event:";
+		qDebug() << "Property Notify Event:";
 		ParsePropertyEvent((xcb_property_notify_event_t*)ev, obj);
 		break;
 //==============================
