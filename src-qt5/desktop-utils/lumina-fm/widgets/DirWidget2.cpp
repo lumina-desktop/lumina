@@ -560,7 +560,7 @@ void DirWidget::UpdateContextMenu(){
 
   if(!sel.isEmpty()){
    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
-   //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+   contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
