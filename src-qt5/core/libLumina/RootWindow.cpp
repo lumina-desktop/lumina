@@ -177,7 +177,9 @@ void RootWindow::NewWindow(NativeWindow *win){
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
     WINDOWS << subwin;
   }
-  subwin->show();
+  //win->setProperty(NativeWindow::Visible, true);
+  //win->requestProperty( NativeWindow::Active, true);
+  win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true);
 }
 
 void RootWindow::CloseWindow(WId win){

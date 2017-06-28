@@ -8,7 +8,8 @@
 #include <QDebug>
 #include <QApplication>
 #include <QVBoxLayout>
-#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QTimer>
 
 #define WIN_BORDER 5
 
@@ -19,12 +20,14 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   //Create the QWindow and QWidget containers for the window
   WIN = win;
   closing = false;
-  WinWidget = QWidget::createWindowContainer( WIN->window(), this);
+  //WinWidget = QWidget::createWindowContainer( WIN->window(), this);
   initWindowFrame();
-  LoadProperties( NativeWindow::allProperties() );
   //Hookup the signals/slots
   connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
-  WIN->addFrameWinID(this->winId());
+  WIN->addFrameWinID(WinWidget->winId());
+  WIN->emit RequestReparent(WIN->id(), WinWidget->winId(), QPoint(0,0));
+  LoadAllProperties();
+  //QTimer::singleShot(20, this, SLOT(LoadAllProperties()) );
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -126,7 +129,7 @@ void RootSubWindow::setMouseCursor(ModState state, bool override){
 void RootSubWindow::initWindowFrame(){
   //qDebug() << "Create RootSubWindow Frame";
   mainLayout = new QVBoxLayout(this);
-  titleBar = new QHBoxLayout(this);
+  titleBar = new QHBoxLayout();
  closeB = new QToolButton(this);
   maxB = new QToolButton(this);
   minB = new QToolButton(this);
@@ -137,6 +140,7 @@ void RootSubWindow::initWindowFrame(){
     otherB->setMenu(otherM);
     otherB->setPopupMode(QToolButton::InstantPopup);
     otherB->setAutoRaise(true);
+  WinWidget = new QWidget(this);
   connect(closeB, SIGNAL(clicked()), this, SLOT(triggerClose()) );
   connect(maxB, SIGNAL(clicked()), this, SLOT(toggleMaximize()) );
   connect(minB, SIGNAL(clicked()), this, SLOT(toggleMinimize()) );
@@ -169,9 +173,12 @@ void RootSubWindow::initWindowFrame(){
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   QList<QVariant> vals;
   for(int i=0; i<list.length(); i++){
+    if(list[i] == NativeWindow::Visible){ list.removeAt(i); i--; continue; }
     vals << WIN->property(list[i]);
+    qDebug() << "Property:" << list[i] << vals[i];
   }
   propertiesChanged(list, vals);
+  WIN->requestProperty(NativeWindow::Visible, true);
 }
 
 // === PUBLIC SLOTS ===
@@ -179,6 +186,13 @@ void RootSubWindow::clientClosed(){
   qDebug() << "Client Closed";
   closing = true;
   this->close();
+}
+
+void RootSubWindow::LoadAllProperties(){
+  QList< NativeWindow::Property> list = WIN->allProperties();
+   /*list.removeAll(NativeWindow::Visible);
+   list << NativeWindow::Visible;*/
+  LoadProperties(list);
 }
 
 //Button Actions - public so they can be tied to key shortcuts and stuff as well
@@ -227,21 +241,31 @@ void RootSubWindow::startResizing(){
 // === PRIVATE SLOTS ===
 void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList<QVariant> vals){
   for(int i=0; i<props.length() && i<vals.length(); i++){
-    if(vals[i].isNull()){ return; } //not the same as a default/empty value - the property has just not been set yet
-    qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
+    if(vals[i].isNull()){ continue; } //not the same as a default/empty value - the property has just not been set yet
+    //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		if(vals[i].toBool()){ this->show(); }
+		qDebug() << "Got Visibility Change:" << vals[i];
+		if(vals[i].toBool()){ WinWidget->setVisible(true); this->show(); }
 		else{ this->hide(); }
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
 		break;
 	case NativeWindow::Icon:
+		//qDebug() << "Got Icon Change:" << vals[i];
 		otherB->setIcon(vals[i].value< QIcon>());
 		break;
+	case NativeWindow::GlobalPos:
+		//qDebug() << "Got Global Pos:" << vals[i].toPoint();
+		this->move( vals[i].toPoint() );
+		break;
 	case NativeWindow::Size:
-		WinWidget->resize(vals[i].toSize());
+		//qDebug() << "Got Widget Size:" << vals[i].toSize();
+		//WinWidget->setSizeHint( vals[i].toSize() );
+		//WinWidget->resize(vals[i].toSize() );
+		this->resize( vals[i].toSize()+QSize( this->width()-WinWidget->width(), this->height()-WinWidget->height() ) );
+		//qDebug() << " - Size after change:" << WinWidget->size() << this->size();
 		break;
 	case NativeWindow::MinSize:
 		WinWidget->setMinimumSize(vals[i].toSize());
@@ -250,7 +274,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		if(vals[i].toBool()){ WinWidget->setFocus(); }
+		//if(vals[i].toBool()){ WinWidget->setFocus(); }
 		break;
 	/*case NativeWindow::WindowFlags:
 		this->setWindowFlags( val.value< Qt::WindowFlags >() );
@@ -380,3 +404,19 @@ void RootSubWindow::leaveEvent(QEvent *ev){
     setMouseCursor(Normal);
   }
 }
+
+/*void RootSubWindow::hideEvent(QHideEvent *ev){
+  WIN->requestProperty(NativeWindow::Visible, false);
+  QFrame::hideEvent(ev);
+}*/
+
+void RootSubWindow::resizeEvent(QResizeEvent *ev){
+  qDebug() << "Got Resize Event:" << ev->size();
+  WIN->requestProperty(NativeWindow::Size, WinWidget->size());
+  QFrame::resizeEvent(ev);
+}
+/*void RootSubWindow::showEvent(QShowEvent *ev){
+  WIN->requestProperty(NativeWindow::Visible, true);
+  QFrame::showEvent(ev);
+}*/
+

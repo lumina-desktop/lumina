@@ -87,6 +87,16 @@ public:
 	  return (ATOMS.keys().length() == atoms.length());
 	}
 
+	WId getTransientFor(WId win){
+	  xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_transient_for_unchecked(QX11Info::connection(), win);
+	  xcb_window_t trans;
+	  if(1!= xcb_icccm_get_wm_transient_for_reply(QX11Info::connection(), cookie, &trans, NULL) ){
+	    return win; //error in fetching transient window ID (or none found)
+	  }else{
+	    return trans;
+	  }
+}
+
 	bool register_wm(){
 	  uint32_t value_list[1] = {ROOT_WIN_EVENT_MASK};
 	  xcb_generic_error_t *status = xcb_request_check( QX11Info::connection(), xcb_change_window_attributes_checked(QX11Info::connection(), root_window, XCB_CW_EVENT_MASK, value_list));
@@ -253,6 +263,25 @@ NativeWindowSystem::MouseButton NativeWindowSystem::MouseToQt(int keycode){
 }
 
 // === PRIVATE ===
+NativeWindow* NativeWindowSystem::findWindow(WId id){
+  //qDebug() << "Find Window:" << id;
+  for(int i=0; i<NWindows.length(); i++){
+    if(NWindows[i]->isRelatedTo(id)){ qDebug() << "  -- Got Window Match!" << id; return NWindows[i]; }
+  }
+  //Check to see if this is a transient for some other window
+  WId tid = obj->getTransientFor(id);
+  if(tid!=id){ return findWindow(tid); } //call it recursively as needed
+  //qDebug() << "  -- Could not find Window!";
+  return 0;
+}
+
+NativeWindow* NativeWindowSystem::findTrayWindow(WId id){
+  for(int i=0; i<TWindows.length(); i++){
+    if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
+  }
+  return 0;
+}
+
 void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props){
   //Put the properties in logical groups as appropriate (some XCB calls return multiple properties)
   if(props.contains(NativeWindow::Title)){
@@ -285,7 +314,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
         xcb_icccm_get_text_property_reply_wipe(&reply);
       }
     }
-    win->setProperty(NativeWindow::Name, name);
+    win->setProperty(NativeWindow::Title, name);
   } //end TITLE property
 
   if(props.contains(NativeWindow::ShortTitle)){
@@ -415,8 +444,85 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
     }*/
     win->setProperty(NativeWindow::Workspace, wkspace);
   }
+
+  if(props.contains(NativeWindow::RelatedWindows)){
+    WId orig = win->id();
+    WId tid = obj->getTransientFor(orig);
+    QList<WId> list;
+    while(tid != orig){
+      list << tid;
+      orig = tid;
+      tid = obj->getTransientFor(orig);
+    }
+    win->setProperty(NativeWindow::RelatedWindows, QVariant::fromValue(list));
+  }
+  if(props.contains(NativeWindow::Visible)){
+    xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), xcb_get_window_attributes(QX11Info::connection(), win->id()) , NULL);
+    if(attr != 0){
+      win->setProperty(NativeWindow::Visible, attr->map_state == XCB_MAP_STATE_VIEWABLE);
+      free(attr);
+    }
+  }
 }
 
+void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals){
+  qDebug() << "Change Window Properties:" << props << vals;
+  if(props.contains(NativeWindow::Title)){
+
+  }
+  if(props.contains(NativeWindow::ShortTitle)){
+
+  }
+  if(props.contains(NativeWindow::Icon)){
+
+  }
+  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize)
+	|| props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
+
+  }
+  if(props.contains(NativeWindow::Name)){
+
+  }
+  if(props.contains(NativeWindow::Workspace)){
+    int num = vals[ props.indexOf(NativeWindow::Workspace) ].toInt();
+    xcb_ewmh_set_wm_desktop(&obj->EWMH, win->id(), (num<0 ? 0xFFFFFFFF : qAbs(num) ) );
+  }
+  if(props.contains(NativeWindow::RelatedWindows)){
+
+  }
+  if(props.contains(NativeWindow::Visible)){
+    qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindow::Visible) ];
+    if( vals[ props.indexOf(NativeWindow::Visible) ].toBool() ){
+      qDebug() << " - Map it!";
+      xcb_map_window(QX11Info::connection(), win->id());
+    }else{
+      qDebug() << " - Unmap it!";
+      xcb_unmap_window(QX11Info::connection(), win->id());
+    }
+  }
+  if(props.contains(NativeWindow::Active)){
+    //Only one window can be "Active" at a time - so only do anything if this window wants to be active
+    if(vals[props.indexOf(NativeWindow::Active)].toBool() ){
+      xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win->id());
+      //Also send the active window a message to take input focus
+      //Send the window a WM_TAKE_FOCUS message
+        xcb_client_message_event_t event;
+        event.response_type = XCB_CLIENT_MESSAGE;
+        event.format = 32;
+        event.window = win->id();
+        event.type = obj->ATOMS["WM_PROTOCOLS"];
+        event.data.data32[0] = obj->ATOMS["WM_TAKE_FOCUS"];
+        event.data.data32[1] = XCB_TIME_CURRENT_TIME; //CurrentTime;
+        event.data.data32[2] = 0;
+        event.data.data32[3] = 0;
+        event.data.data32[4] = 0;
+
+        xcb_send_event(QX11Info::connection(), 0, win->id(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
+        xcb_flush(QX11Info::connection());
+    }
+  }
+
+}
 
 // === PUBLIC SLOTS ===
 //These are the slots which are typically only used by the desktop system itself or the NativeEventFilter
@@ -534,6 +640,8 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   if(attr == 0){ return; } //could not get attributes of window
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
+  //Now go ahead and create/populate the container for this window
+  NativeWindow *win = new NativeWindow(id);
   //Register for events from this window
   #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
                           XCB_EVENT_MASK_BUTTON_RELEASE | 	\
@@ -543,14 +651,20 @@ void NativeWindowSystem::NewWindowDetected(WId id){
                           XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
-                          XCB_EVENT_MASK_ENTER_WINDOW)
+                          XCB_EVENT_MASK_ENTER_WINDOW| \
+			  XCB_EVENT_MASK_PROPERTY_CHANGE)
 
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
-  //Now go ahead and create/populate the container for this window
-  NativeWindow *win = new NativeWindow(id);
   NWindows << win;
   UpdateWindowProperties(win, NativeWindow::allProperties());
+  qDebug() << "New Window [associated ID's]:" << win->property(NativeWindow::RelatedWindows);
+  //Now setup the connections with this window
+  connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
+  connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
+  connect(win, SIGNAL(RequestPing(WId)), this, SLOT(RequestPing(WId)) );
+  connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
+  connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
   emit NewWindowAvailable(win);
 }
 
@@ -608,6 +722,14 @@ void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property pr
   }
 }
 
+void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop, QVariant val){
+  NativeWindow *win = findWindow(id);
+  if(win==0){ win = findTrayWindow(id); }
+  if(win!=0){
+    win->setProperty(prop, val);
+  }
+}
+
 void NativeWindowSystem::GotPong(WId id){
   if(waitingForPong.contains(id)){
     waitingForPong.remove(id);
@@ -655,9 +777,7 @@ void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Pr
   if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
   if(WIN==0){ return; } //invalid window ID - no longer available
   //Now make any changes as needed
-  // TODO
-  qDebug() << "Request Properties Changed:" << props << vals;
-  qDebug() << " - Not implemented yet";
+  ChangeWindowProperties(WIN, props, vals);
 }
 
 void NativeWindowSystem::RequestClose(WId win){
@@ -690,4 +810,12 @@ void NativeWindowSystem::RequestPing(WId win){
     connect(pingTimer, SIGNAL(timeout()), this, SLOT(checkPings()) );
   }
   pingTimer->start();
+}
+
+void NativeWindowSystem::RequestReparent(WId client, WId parent, QPoint relorigin){
+  xcb_reparent_window(QX11Info::connection(), client, parent, relorigin.x(), relorigin.y());
+  //Now enable compositing between these two windows as well
+  // TODO
+
+  xcb_map_window(QX11Info::connection(), parent);
 }

@@ -29,7 +29,7 @@ public:
 	enum Action {A_MOVE, A_RESIZE, A_MINIMIZE, A_SHADE, A_STICK, A_MAX_VERT, A_MAX_HORZ, A_FULLSCREEN, A_CHANGE_DESKTOP, A_CLOSE, A_ABOVE, A_BELOW};
 
 	enum Property{ 	 /*QVariant Type*/
-		None, 		/*null*/
+		None=0, 		/*null*/
 		MinSize,  		/*QSize*/
 		MaxSize, 		/*QSize*/
 		Size, 			/*QSize*/
@@ -79,7 +79,7 @@ public slots:
 private:
 	QHash <NativeWindow::Property, QVariant> hash;
 	QWindow *WIN;
-	WId winid;
+	WId winid, frameid;
 	QList<WId> relatedTo;
 
 signals:
@@ -92,9 +92,9 @@ signals:
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
 	//Note: "WId" should be the NativeWindow id()
 	void RequestClose(WId);				//Close the window
-	void RequestKill(WId);				//Kill the window/app (usually from being unresponsive)
+	void RequestKill(WId);					//Kill the window/app (usually from being unresponsive)
 	void RequestPing(WId);				//Verify that the window is still active (such as not closing after a request
-
+	void RequestReparent(WId, WId, QPoint); //client window, frame window, relative origin point in frame
 	// System Tray Icon Embed/Unembed Requests
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);

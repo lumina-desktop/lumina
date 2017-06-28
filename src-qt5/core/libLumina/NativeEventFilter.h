@@ -34,6 +34,7 @@ signals:
 	void WindowCreated(WId);
 	void WindowDestroyed(WId);
 	void WindowPropertyChanged(WId, NativeWindow::Property);
+	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant);
 
 	//System Tray Signals
 	void TrayWindowCreated(WId);

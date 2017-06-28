@@ -23,21 +23,9 @@ private:
 	QList<NativeWindow*> TWindows;
 
 	//Simplifications to find an already-created window object
-	NativeWindow* findWindow(WId id){
-	  qDebug() << "Find Window:" << id;
-	  for(int i=0; i<NWindows.length(); i++){
-	    if(NWindows[i]->isRelatedTo(id)){ qDebug() << "  -- Got Match!"; return NWindows[i]; }
-	  }
-	  qDebug() << "  -- Could not find Window!";
-	  return 0;
-	}
+	NativeWindow* findWindow(WId id);
 
-	NativeWindow* findTrayWindow(WId id){
-	  for(int i=0; i<TWindows.length(); i++){
-	    if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
-	  }
-	  return 0;
-	}
+	NativeWindow* findTrayWindow(WId id);
 
 	//Now define a simple private_objects class so that each implementation
 	//  has a storage container for defining/placing private objects as needed
@@ -64,6 +52,7 @@ private:
 	// Since some properties may be easier to update in bulk
 	//   let the native system interaction do them in whatever logical groups are best
 	void UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props);
+	void ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals);
 
 	//Generic private variables
 	bool screenLocked;
@@ -116,6 +105,7 @@ public slots:
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
 	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
+	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant); //will save that property/value to the right object
 	void GotPong(WId);
 
 	void NewKeyPress(int keycode, WId win = 0);
@@ -130,6 +120,7 @@ private slots:
 	void RequestClose(WId);
 	void RequestKill(WId);
 	void RequestPing(WId);
+	void RequestReparent(WId, WId, QPoint); //client, parent, relative origin point in parent
 
 signals:
 	void NewWindowAvailable(NativeWindow*);

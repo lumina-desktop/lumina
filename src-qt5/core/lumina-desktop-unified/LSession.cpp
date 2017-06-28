@@ -241,6 +241,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
   connect(Lumina::NEF, SIGNAL(TrayWindowCreated(WId)), Lumina::NWS, SLOT(NewTrayWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(TrayWindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(PossibleDamageEvent(WId)), Lumina::NWS, SLOT(CheckDamageID(WId)));

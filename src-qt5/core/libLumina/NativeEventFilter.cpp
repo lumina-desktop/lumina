@@ -76,7 +76,10 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
+    qDebug() << "Detected Property Change:" << ev->window << prop;
     obj->emit WindowPropertyChanged(ev->window, prop);
+  }else{
+    //qDebug() << "Unknown Property Change:" << ev->window << ev->atom;
   }
 }
 
@@ -175,7 +178,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 //==============================
 	    case XCB_MAP_NOTIFY:
 		qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
-                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible );
+                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, true);
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
 		qDebug() << "Window Map Request Event";
@@ -188,7 +191,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 //==============================
 	    case XCB_UNMAP_NOTIFY:
 		qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
-                  obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible );
+                  obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, false);
 		break;
 //==============================
 	    case XCB_DESTROY_NOTIFY:
@@ -205,7 +208,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_PROPERTY_NOTIFY:
-		qDebug() << "Property Notify Event:";
+		//qDebug() << "Property Notify Event:";
 		ParsePropertyEvent((xcb_property_notify_event_t*)ev, obj);
 		break;
 //==============================

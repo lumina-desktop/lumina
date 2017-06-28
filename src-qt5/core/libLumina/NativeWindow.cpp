@@ -9,6 +9,7 @@
 // === PUBLIC ===
 NativeWindow::NativeWindow(WId id) : QObject(){
   winid = id;
+  frameid = 0;
   WIN = QWindow::fromWinId(winid);
 }
 
@@ -18,11 +19,11 @@ NativeWindow::~NativeWindow(){
 }
 
 void NativeWindow::addFrameWinID(WId fid){
-  relatedTo << fid;
+  frameid = fid;
 }
 
 bool NativeWindow::isRelatedTo(WId tmp){
-  return (relatedTo.contains(tmp) || winid == tmp);
+  return (relatedTo.contains(tmp) || winid == tmp || frameid == tmp);
 }
 
 WId NativeWindow::id(){
@@ -65,6 +66,11 @@ void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<
   for(int i=0; i<props.length(); i++){
     if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this property
     if(props[i] == NativeWindow::None || props[i] == NativeWindow::RelatedWindows || hash.value(props[i])==vals[i] ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
+    if( (props[i] == NativeWindow::Visible || props[i] == NativeWindow::Active) && frameid !=0){
+      //These particular properties needs to change the frame - not the window itself
+      emit RequestPropertiesChange(frameid, QList<NativeWindow::Property>() << props[i], QList<QVariant>() << vals[i]);
+      props.removeAt(i); vals.removeAt(i); i--;
+    }
   }
   emit RequestPropertiesChange(winid, props, vals);
 }

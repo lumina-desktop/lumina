@@ -53,6 +53,7 @@ private:
 
 public slots:
 	void clientClosed();
+	void LoadAllProperties();
 
 	//Button Actions - public so they can be tied to key shortcuts and stuff as well
 	void toggleMinimize();
@@ -73,6 +74,12 @@ protected:
 	void mouseMoveEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent*);
 	void leaveEvent(QEvent *ev);
+
+	//void hideEvent(QHideEvent *ev);
+	void resizeEvent(QResizeEvent *ev);
+	//void showEvent(QShowEvent *ev);
+	//void moveEvent(QMoveEvent *ev);
+
 
 };
 

@@ -497,7 +497,7 @@ QIcon LXCB::WindowIcon(WId win){
 	uint* dat = iter.data;
 	//dat+=2; //remember the first 2 element offset
 	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
-	  ((uint*)image.bits())[i] = *dat; 
+	  ((uint*)image.bits())[i] = *dat;
 	}
       icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
       //Now see if there are any more icons available
