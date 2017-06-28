@@ -35,11 +35,13 @@ QWindow* NativeWindow::window(){
 
 QVariant NativeWindow::property(NativeWindow::Property prop){
   if(hash.contains(prop)){ return hash.value(prop); }
+  else if(prop == NativeWindow::RelatedWindows){ return QVariant::fromValue(relatedTo); }
   return QVariant(); //null variant
 }
 
 void NativeWindow::setProperty(NativeWindow::Property prop, QVariant val){
-  if(prop == NativeWindow::None || hash.value(prop)==val){ return; }
+  if(prop == NativeWindow::RelatedWindows){ relatedTo = val.value< QList<WId> >(); }
+  else if(prop == NativeWindow::None || hash.value(prop)==val){ return; }
   hash.insert(prop, val);
   emit PropertiesChanged(QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
 }
@@ -54,7 +56,7 @@ void NativeWindow::setProperties(QList<NativeWindow::Property> props, QList<QVar
 }
 
 void NativeWindow::requestProperty(NativeWindow::Property prop, QVariant val){
-  if(prop == NativeWindow::None || hash.value(prop)==val ){ return; }
+  if(prop == NativeWindow::None || prop == NativeWindow::RelatedWindows || hash.value(prop)==val ){ return; }
   emit RequestPropertiesChange(winid, QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
 }
 
@@ -62,7 +64,7 @@ void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<
   //Verify/adjust inputs as needed
   for(int i=0; i<props.length(); i++){
     if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this property
-    if(props[i] == NativeWindow::None || hash.value(props[i])==vals[i] ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
+    if(props[i] == NativeWindow::None || props[i] == NativeWindow::RelatedWindows || hash.value(props[i])==vals[i] ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
   }
   emit RequestPropertiesChange(winid, props, vals);
 }

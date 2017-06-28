@@ -30,9 +30,9 @@ public:
 
 	enum Property{ 	 /*QVariant Type*/
 		None, 		/*null*/
-		MinSize,  	/*QSize*/
-		MaxSize, 	/*QSize*/
-		Size, 		/*QSize*/
+		MinSize,  		/*QSize*/
+		MaxSize, 		/*QSize*/
+		Size, 			/*QSize*/
 		GlobalPos,	/*QPoint*/
 		Title, 		/*QString*/
 		ShortTitle,	/*QString*/
@@ -41,17 +41,18 @@ public:
 		Workspace,	/*int*/
 		States,		/*QList<NativeWindow::State> : Current state of the window */
 		WinTypes,	/*QList<NativeWindow::Type> : Current type of window (typically does not change)*/
-		WinActions, /*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
-		FrameExtents, /*QList<int> : [Left, Right, Top, Bottom] in pixels */
+		WinActions, 	/*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
+		FrameExtents, 	/*QList<int> : [Left, Right, Top, Bottom] in pixels */
+		RelatedWindows, /* QList<WId> - better to use the "isRelatedTo(WId)" function instead of reading this directly*/
 		Active, 		/*bool*/
 		Visible 		/*bool*/
 		};
 
 	static QList<NativeWindow::Property> allProperties(){
-	  //Return all the available properties (excluding "None")
+	  //Return all the available properties (excluding "None" and "FrameExtents" (WM control only) )
 	  QList<NativeWindow::Property> props;
 	  props << MinSize << MaxSize << Size << GlobalPos << Title << ShortTitle << Icon << Name << Workspace \
-	    << States << WinTypes << WinActions << Active << Visible;
+	    << States << WinTypes << WinActions << RelatedWindows << Active << Visible;
 	  return props;
 	};
 

@@ -26,9 +26,9 @@ private:
 	NativeWindow* findWindow(WId id){
 	  qDebug() << "Find Window:" << id;
 	  for(int i=0; i<NWindows.length(); i++){
-             qDebug() << "  -- Check Window:" << NWindows[i]->id();
 	    if(NWindows[i]->isRelatedTo(id)){ qDebug() << "  -- Got Match!"; return NWindows[i]; }
 	  }
+	  qDebug() << "  -- Could not find Window!";
 	  return 0;
 	}
 
@@ -69,7 +69,7 @@ private:
 	bool screenLocked;
 
 public:
-	enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
+	//enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
 	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
 
 	NativeWindowSystem();
