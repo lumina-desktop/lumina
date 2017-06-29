@@ -412,11 +412,18 @@ void RootSubWindow::leaveEvent(QEvent *ev){
 }*/
 
 void RootSubWindow::resizeEvent(QResizeEvent *ev){
-  qDebug() << "Got Resize Event:" << ev->size();
+  //qDebug() << "Got Resize Event:" << ev->size();
   WIN->requestProperty(NativeWindow::Size, WinWidget->size());
   QFrame::resizeEvent(ev);
 }
+
 /*void RootSubWindow::showEvent(QShowEvent *ev){
   WIN->requestProperty(NativeWindow::Visible, true);
   QFrame::showEvent(ev);
 }*/
+
+void RootSubWindow::moveEvent(QMoveEvent *ev){
+  //qDebug() << "Got Move Event:" << ev->pos();
+  WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
+  QFrame::moveEvent(ev);
+}

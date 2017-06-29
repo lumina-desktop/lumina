@@ -78,7 +78,7 @@ protected:
 	//void hideEvent(QHideEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
 	//void showEvent(QShowEvent *ev);
-	//void moveEvent(QMoveEvent *ev);
+	void moveEvent(QMoveEvent *ev);
 
 
 };
