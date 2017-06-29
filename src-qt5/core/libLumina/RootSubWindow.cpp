@@ -245,7 +245,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		qDebug() << "Got Visibility Change:" << vals[i];
+		//qDebug() << "Got Visibility Change:" << vals[i];
 		if(vals[i].toBool()){ WinWidget->setVisible(true); this->show(); }
 		else{ this->hide(); }
 		break;
@@ -301,11 +301,11 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
     activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
   }
   setMouseCursor(activeState, true); //this one is an override cursor
-
+  QFrame::mousePressEvent(ev);
 }
 
 void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
-  ev->accept();
+  //ev->accept();
   if(activeState == Normal){
     setMouseCursor( getStateAtPoint(ev->pos()) ); //just update the mouse cursor
   }else{
@@ -382,12 +382,13 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
 
     this->setGeometry(geom);
   }
+  QFrame::mouseMoveEvent(ev);
 }
 
 void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   //Check for a right-click event
   //qDebug() << "Frame Mouse Release Event";
-  ev->accept();
+  QFrame::mouseReleaseEvent(ev);
   if( (activeState==Normal) && (titleBar->geometry().contains(ev->pos())) && (ev->button()==Qt::RightButton) ){
     otherM->popup(ev->globalPos());
     return;
@@ -419,4 +420,3 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
   WIN->requestProperty(NativeWindow::Visible, true);
   QFrame::showEvent(ev);
 }*/
-
