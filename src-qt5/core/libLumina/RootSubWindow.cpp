@@ -325,7 +325,10 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 }
 
 void RootSubWindow::animFinished(){
-  if(anim->propertyName()=="geometry"){ this->setGeometry(this->geometry()); } //make sure to send one more resize/move event
+  if(anim->propertyName()=="geometry"){
+    WIN->requestProperty(NativeWindow::Size, WinWidget->size());
+    WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
+  }
 
 }
 
