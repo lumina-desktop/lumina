@@ -139,6 +139,7 @@ void RootSubWindow::initWindowFrame(){
   anim  = new QPropertyAnimation(this);
     anim->setTargetObject(this);
     anim->setDuration(200); //1/5 second (appx)
+  connect(anim, SIGNAL(finished()), this, SLOT(animFinished()) );
   titleLabel = new QLabel(this);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   otherM = new QMenu(this); //menu of other actions
@@ -258,8 +259,6 @@ void RootSubWindow::startResizing(){
 
 }
 
-
-
 // === PRIVATE SLOTS ===
 void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList<QVariant> vals){
   for(int i=0; i<props.length() && i<vals.length(); i++){
@@ -323,6 +322,11 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		qDebug() << "Window Property Unused:" << props[i] << vals[i];
     }
   }
+}
+
+void RootSubWindow::animFinished(){
+  if(anim->propertyName()=="geometry"){ this->setGeometry(this->geometry()); } //make sure to send one more resize/move event
+
 }
 
 // === PROTECTED ===

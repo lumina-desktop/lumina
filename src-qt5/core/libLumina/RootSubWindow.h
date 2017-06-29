@@ -71,6 +71,7 @@ public slots:
 
 private slots:
 	void propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
+	void animFinished();
 
 protected:
 	void mousePressEvent(QMouseEvent*);
