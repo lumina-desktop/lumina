@@ -476,9 +476,16 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
   if(props.contains(NativeWindow::Icon)){
 
   }
-  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize)
-	|| props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
-
+  if(props.contains(NativeWindow::Size) ){
+    xcb_configure_window_value_list_t  valList;
+    uint16_t mask = 0;
+    //if(props.contains(NativeWindow::Size)){
+      QSize sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
+      valList.width = sz.width();
+      valList.height = sz.height();
+      mask = mask & XCB_CONFIG_WINDOW_WIDTH & XCB_CONFIG_WINDOW_HEIGHT;
+    //}
+    xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
   if(props.contains(NativeWindow::Name)){
 
