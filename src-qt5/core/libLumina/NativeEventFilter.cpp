@@ -197,6 +197,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 	    case XCB_DESTROY_NOTIFY:
 		qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
                   obj->emit WindowDestroyed( ((xcb_destroy_notify_event_t *) ev)->window );
+		obj->emit WindowDestroyed( ((xcb_destroy_notify_event_t *) ev)->event ); //sometimes this is the right window instead (window that sent the event)
 	        break;
 //==============================
 	    case XCB_FOCUS_IN:
