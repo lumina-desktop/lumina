@@ -263,15 +263,17 @@ NativeWindowSystem::MouseButton NativeWindowSystem::MouseToQt(int keycode){
 }
 
 // === PRIVATE ===
-NativeWindow* NativeWindowSystem::findWindow(WId id){
+NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
   for(int i=0; i<NWindows.length(); i++){
-    if(NWindows[i]->isRelatedTo(id)){ qDebug() << "  -- Got Window Match!" << id; return NWindows[i]; }
+    if(NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
   }
   //Check to see if this is a transient for some other window
-  WId tid = obj->getTransientFor(id);
-  if(tid!=id){ return findWindow(tid); } //call it recursively as needed
-  //qDebug() << "  -- Could not find Window!";
+  if(checkRelated){
+    WId tid = obj->getTransientFor(id);
+    if(tid!=id){ return findWindow(tid, checkRelated); } //call it recursively as needed
+    //qDebug() << "  -- Could not find Window!";
+  }
   return 0;
 }
 
@@ -718,7 +720,7 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 }
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
-  NativeWindow *win = findWindow(id);
+  NativeWindow *win = findWindow(id, false);
   qDebug() << "Got Window Closed" << id << win;
   if(win!=0){
     qDebug() << "Old Window List:" << NWindows.length();

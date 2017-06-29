@@ -23,7 +23,7 @@ private:
 	QList<NativeWindow*> TWindows;
 
 	//Simplifications to find an already-created window object
-	NativeWindow* findWindow(WId id);
+	NativeWindow* findWindow(WId id, bool checkRelated = true);
 
 	NativeWindow* findTrayWindow(WId id);
 

@@ -177,7 +177,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_MAP_NOTIFY:
-		qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
+		//qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
                    obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, true);
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
@@ -186,11 +186,11 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_CREATE_NOTIFY:
-		qDebug() << "Window Create Event";
+		//qDebug() << "Window Create Event";
 	        break;
 //==============================
 	    case XCB_UNMAP_NOTIFY:
-		qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
+		//qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, false);
 		break;
 //==============================

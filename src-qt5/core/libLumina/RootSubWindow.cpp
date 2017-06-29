@@ -138,7 +138,7 @@ void RootSubWindow::initWindowFrame(){
   otherB = new QToolButton(this);
   anim  = new QPropertyAnimation(this);
     anim->setTargetObject(this);
-    anim->setDuration(300); //1/3 second (appx)
+    anim->setDuration(200); //1/5 second (appx)
   titleLabel = new QLabel(this);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   otherM = new QMenu(this); //menu of other actions
@@ -165,7 +165,7 @@ void RootSubWindow::initWindowFrame(){
     maxB->setObjectName("Button_Maximize");
     otherM->setObjectName("Menu_Actions");
     titleLabel->setObjectName("Label_Title");
-  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; } QToolButton::hover{border-color: white;} QToolButton::pressed{ background-color: white; } QToolButton::menu-arrow{ image: none; }");
+  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; border-radius: 3px; } QToolButton::hover{background-color: rgba(255,255,255,150); } QToolButton::pressed{ background-color: white; } QToolButton::menu-arrow{ image: none; }");
   //And adjust the margins
   mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); //default border
   mainLayout->setSpacing(0);
@@ -266,12 +266,18 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		if(vals[i].toBool()){
 		  WinWidget->setVisible(true);
 		  anim->setPropertyName("geometry");
-		  anim->setStartValue( QRect(this->geometry().center(), QSize(0,0)) ); 
+		  anim->setStartValue( QRect(this->geometry().center(), QSize(0,0)) );
 		  anim->setEndValue(this->geometry());
 		  anim->start();
 		  this->show();
+		}else{
+		  anim->setPropertyName("geometry");
+		  anim->setStartValue(this->geometry());
+		  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
+		  anim->start();
+		  QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
+		  //this->hide();
 		}
-		else{ this->hide(); }
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
@@ -282,12 +288,12 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
-		qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
+		//qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
 		this->move( vals[i].toPoint() - (WinWidget->mapToGlobal(QPoint(0,0)) - this->pos()) ); //WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
 		if(WinWidget->size() != vals[i].toSize()){
-		 qDebug() << "Got Widget Size Change:" << vals[i].toSize();
+		 //qDebug() << "Got Widget Size Change:" << vals[i].toSize();
 		  WinWidget->resize(vals[i].toSize());
 		  this->resize( WIN->geometry().size() );
 		  qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
@@ -454,7 +460,7 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
 }*/
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
-  qDebug() << "Got Move Event:" << ev->pos() << WinWidget->mapToGlobal(QPoint(0,0));
+  //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->mapToGlobal(QPoint(0,0));
   WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
   QFrame::moveEvent(ev);
 }
