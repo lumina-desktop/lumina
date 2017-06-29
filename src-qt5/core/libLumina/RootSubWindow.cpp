@@ -261,11 +261,11 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		this->move( vals[i].toPoint() );
 		break;
 	case NativeWindow::Size:
-		//qDebug() << "Got Widget Size:" << vals[i].toSize();
+		qDebug() << "Got Widget Size:" << vals[i].toSize();
 		//WinWidget->setSizeHint( vals[i].toSize() );
 		//WinWidget->resize(vals[i].toSize() );
 		this->resize( vals[i].toSize()+QSize( this->width()-WinWidget->width(), this->height()-WinWidget->height() ) );
-		//qDebug() << " - Size after change:" << WinWidget->size() << this->size();
+		qDebug() << " - Size after change:" << WinWidget->size() << this->size();
 		break;
 	case NativeWindow::MinSize:
 		WinWidget->setMinimumSize(vals[i].toSize());

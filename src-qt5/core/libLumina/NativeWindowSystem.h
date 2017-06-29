@@ -106,6 +106,9 @@ public slots:
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
 	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
 	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant); //will save that property/value to the right object
+	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>);
+	void RequestPropertyChange(WId, NativeWindow::Property, QVariant);
+	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void GotPong(WId);
 
 	void NewKeyPress(int keycode, WId win = 0);
@@ -116,7 +119,6 @@ public slots:
 
 private slots:
 	//These are the slots which are built-in and automatically connected when a new NativeWindow is created
-	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void RequestClose(WId);
 	void RequestKill(WId);
 	void RequestPing(WId);

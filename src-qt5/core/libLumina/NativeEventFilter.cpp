@@ -227,11 +227,25 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 //==============================
 	    case XCB_CONFIGURE_NOTIFY:
 		//qDebug() << "Configure Notify Event";
+		obj->emit WindowPropertiesChanged( ((xcb_configure_notify_event_t*)ev)->window,
+			QList<NativeWindow::Property>() << NativeWindow::GlobalPos << NativeWindow::Size,
+			QList<QVariant>() << QPoint(((xcb_configure_notify_event_t*)ev)->x, ((xcb_configure_notify_event_t*)ev)->y) <<
+				QSize(((xcb_configure_notify_event_t*)ev)->width, ((xcb_configure_notify_event_t*)ev)->height) );
 	        break;
 //==============================
 	    case XCB_CONFIGURE_REQUEST:
 		//qDebug() << "Configure Request Event";
+		obj->emit RequestWindowPropertiesChange( ((xcb_configure_request_event_t*)ev)->window,
+			QList<NativeWindow::Property>() << NativeWindow::GlobalPos << NativeWindow::Size,
+			QList<QVariant>() << QPoint(((xcb_configure_request_event_t*)ev)->x, ((xcb_configure_request_event_t*)ev)->y) <<
+				QSize(((xcb_configure_request_event_t*)ev)->width, ((xcb_configure_request_event_t*)ev)->height) );
 	        break;
+//==============================
+	    case XCB_RESIZE_REQUEST:
+		//qDebug() << "Resize Request Event";
+		obj->emit RequestWindowPropertyChange( ((xcb_resize_request_event_t*)ev)->window,
+			NativeWindow::Size, QSize(((xcb_resize_request_event_t*)ev)->width, ((xcb_resize_request_event_t*)ev)->height) );
+		break;
 //==============================
 	    case XCB_SELECTION_CLEAR:
 		//qDebug() << "Selection Clear Event";

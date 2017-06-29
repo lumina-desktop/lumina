@@ -644,21 +644,21 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   NativeWindow *win = new NativeWindow(id);
   //Register for events from this window
   #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
-                          XCB_EVENT_MASK_BUTTON_RELEASE | 	\
-                          XCB_EVENT_MASK_POINTER_MOTION |	\
-			  XCB_EVENT_MASK_BUTTON_MOTION |	\
-                          XCB_EVENT_MASK_EXPOSURE |		\
-                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
-                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
-                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
-                          XCB_EVENT_MASK_ENTER_WINDOW| \
-			  XCB_EVENT_MASK_PROPERTY_CHANGE)
+			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
+ 			XCB_EVENT_MASK_POINTER_MOTION |	\
+			XCB_EVENT_MASK_BUTTON_MOTION |	\
+			XCB_EVENT_MASK_EXPOSURE |		\
+			XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+			XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
+			XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+			XCB_EVENT_MASK_ENTER_WINDOW| \
+			XCB_EVENT_MASK_PROPERTY_CHANGE)
 
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   NWindows << win;
   UpdateWindowProperties(win, NativeWindow::allProperties());
-  qDebug() << "New Window [associated ID's]:" << win->property(NativeWindow::RelatedWindows);
+  qDebug() << "New Window [& associated ID's]:" << win->id() << win->property(NativeWindow::RelatedWindows);
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
@@ -730,6 +730,29 @@ void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property pr
   }
 }
 
+void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindow::Property> props, QList<QVariant> vals){
+  NativeWindow *win = findWindow(id);
+  if(win==0){ win = findTrayWindow(id); }
+  if(win!=0){
+    for(int i=0; i<props.length() && i<vals.length(); i++){ win->setProperty(props[i], vals[i]); }
+  }
+}
+
+void NativeWindowSystem::RequestPropertyChange(WId id, NativeWindow::Property prop, QVariant val){
+  //This is just a simplified version of the multiple-property function
+  RequestPropertiesChange(id, QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
+}
+
+void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Property> props, QList<QVariant> vals){
+  //Find the window object associated with this id
+  bool istraywin = false; //just in case we care later if it is a tray window or a regular window
+  NativeWindow *WIN = findWindow(win);
+  if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
+  if(WIN==0){ return; } //invalid window ID - no longer available
+  //Now make any changes as needed
+  ChangeWindowProperties(WIN, props, vals);
+}
+
 void NativeWindowSystem::GotPong(WId id){
   if(waitingForPong.contains(id)){
     waitingForPong.remove(id);
@@ -770,15 +793,6 @@ void NativeWindowSystem::CheckDamageID(WId win){
 
 // === PRIVATE SLOTS ===
 //These are the slots which are built-in and automatically connected when a new NativeWindow is created
-void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Property> props, QList<QVariant> vals){
-  //Find the window object associated with this id
-  bool istraywin = false; //just in case we care later if it is a tray window or a regular window
-  NativeWindow *WIN = findWindow(win);
-  if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
-  if(WIN==0){ return; } //invalid window ID - no longer available
-  //Now make any changes as needed
-  ChangeWindowProperties(WIN, props, vals);
-}
 
 void NativeWindowSystem::RequestClose(WId win){
   //Send the window a WM_DELETE_WINDOW message

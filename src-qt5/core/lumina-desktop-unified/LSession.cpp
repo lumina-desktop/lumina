@@ -242,6 +242,9 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindow::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)));
   connect(Lumina::NEF, SIGNAL(TrayWindowCreated(WId)), Lumina::NWS, SLOT(NewTrayWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(TrayWindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(PossibleDamageEvent(WId)), Lumina::NWS, SLOT(CheckDamageID(WId)));

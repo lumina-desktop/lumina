@@ -179,7 +179,7 @@ void LXCB::SetCurrentWorkspace(int number){
     event.data.data32[4] = 0;
 
   xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-	
+
   //EWMH function (does not seem to be recognized by Fluxbox)
   xcb_ewmh_request_change_showing_desktop(&EWMH, QX11Info::appScreen(), number);
 }
@@ -190,7 +190,7 @@ QString LXCB::WindowClass(WId win){
   QString out;
   if(win==0){ return ""; }
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
-  if(cookie.sequence == 0){ return out; } 
+  if(cookie.sequence == 0){ return out; }
   xcb_icccm_get_wm_class_reply_t value;
   if( 1== xcb_icccm_get_wm_class_reply( QX11Info::connection(), cookie, &value, NULL) ){
     out = QString::fromUtf8(value.class_name);
@@ -207,7 +207,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
   uint32_t wkspace = 0;
   xcb_get_property_cookie_t scookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
-  if(cookie.sequence == 0){ return wkspace; } 
+  if(cookie.sequence == 0){ return wkspace; }
   xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
   xcb_ewmh_get_atoms_reply_t reply;
   if(1==xcb_ewmh_get_wm_state_reply(&EWMH,scookie, &reply, NULL)){
@@ -217,7 +217,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
     }
   }
   //qDebug() << " - done: " << wkspace;
-  return wkspace;	
+  return wkspace;
 }
 
 // === WindowGeometry() ===
