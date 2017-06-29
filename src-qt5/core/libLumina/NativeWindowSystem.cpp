@@ -469,7 +469,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 
 void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals){
   if(props.length() == 0 || vals.length()!=props.length()  || win ==0 ){ return; }
-  qDebug() << "Change Window Properties:" << props << vals;
+  //qDebug() << "Change Window Properties:" << props << vals;
   if(props.contains(NativeWindow::Title)){
 
   }
@@ -513,12 +513,12 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
 
   }
   if(props.contains(NativeWindow::Visible)){
-    qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindow::Visible) ];
+    //qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindow::Visible) ];
     if( vals[ props.indexOf(NativeWindow::Visible) ].toBool() ){
-      qDebug() << " - Map it!";
+      //qDebug() << " - Map it!";
       xcb_map_window(QX11Info::connection(), win->id());
     }else{
-      qDebug() << " - Unmap it!";
+      //qDebug() << " - Unmap it!";
       xcb_unmap_window(QX11Info::connection(), win->id());
     }
   }
@@ -657,7 +657,7 @@ int NativeWindowSystem::currentWorkspace(){
 //NativeWindowEventFilter interactions
 void NativeWindowSystem::NewWindowDetected(WId id){
   //Make sure this can be managed first
-  if(findWindow(id) != 0){ return; } //already managed
+  if(findWindow(id, false) != 0){ qDebug() << "Window Already Managed!!!!"; return; } //already managed
   xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
   xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
   if(attr == 0){ return; } //could not get attributes of window
