@@ -162,7 +162,7 @@ void RootSubWindow::initWindowFrame(){
     maxB->setObjectName("Button_Maximize");
     otherM->setObjectName("Menu_Actions");
     titleLabel->setObjectName("Label_Title");
-  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; }");
+  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border-color: transparent; } QToolButton::hover{border-color: white;}");
   //And adjust the margins
   mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); //default border
   mainLayout->setSpacing(0);
