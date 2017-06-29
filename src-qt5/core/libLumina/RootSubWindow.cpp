@@ -265,8 +265,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		otherB->setIcon(vals[i].value<QIcon>());
 		break;
 	case NativeWindow::GlobalPos:
-		qDebug() << "Got Global Pos:" << WIN->geometry().topLeft() << vals[i].toPoint();
-		this->move( WIN->geometry().topLeft() );
+		qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
+		this->move( vals[i].toPoint() - (WinWidget->mapToGlobal(QPoint(0,0)) - this->pos()) ); //WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
 		if(WinWidget->size() != vals[i].toSize()){
@@ -438,6 +438,6 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
   qDebug() << "Got Move Event:" << ev->pos() << WinWidget->mapToGlobal(QPoint(0,0));
-  //WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
+  WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
   QFrame::moveEvent(ev);
 }
