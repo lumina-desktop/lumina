@@ -466,6 +466,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
 }
 
 void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals){
+  if(props.length() == 0 || vals.length()!=props.length()  || win ==0 ){ return; }
   qDebug() << "Change Window Properties:" << props << vals;
   if(props.contains(NativeWindow::Title)){
 

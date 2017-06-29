@@ -180,6 +180,7 @@ void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
         QList<int> frame; frame << WIN_BORDER << WIN_BORDER << WIN_BORDER+titleLabel->height() << WIN_BORDER;
         vals[i] = QVariant::fromValue< QList<int> >(frame); //use this by default
         WIN->requestProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(frame)); //make sure these values get saved permanently
+        WIN->setProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(frame));
       }
     }
     qDebug() << "Property:" << list[i] << vals[i];
@@ -271,6 +272,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		qDebug() << "Got Widget Size:" << vals[i].toSize();
 		//WinWidget->setSizeHint( vals[i].toSize() );
 		//WinWidget->resize(vals[i].toSize() );
+		WinWidget->resize(vals[i].toSize());
 		this->resize( WIN->geometry().size() );
 		qDebug() << " - Size after change:" << WinWidget->size() << this->size();
 		break;
