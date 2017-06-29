@@ -485,12 +485,18 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
       valList.width = sz.width();
       valList.height = sz.height();
       mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    }else{
+      valList.width = win->property(NativeWindow::Size).toSize().width();
+      valList.height = win->property(NativeWindow::Size).toSize().height();
     }
     if(props.contains(NativeWindow::GlobalPos)){
       QPoint pt = vals[ props.indexOf(NativeWindow::GlobalPos) ] .toPoint();
       valList.x = pt.x();
       valList.y = pt.y();
       mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    }else{
+      valList.x = win->property(NativeWindow::GlobalPos).toPoint().x();
+      valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
     }
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
