@@ -75,6 +75,16 @@ void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<
   emit RequestPropertiesChange(winid, props, vals);
 }
 
+QRect NativeWindow::geometry(){
+  //Calculate the "full" geometry of the window + frame (if any)
+  QRect geom( hash.value(NativeWindow::GlobalPos).toPoint(), hash.value(NativeWindow::Size).toSize() );
+  //Now adjust the window geom by the frame margins
+  QList<int> frame = hash.value(NativeWindow::FrameExtents).value< QList<int> >(); //Left,Right,Top,Bottom
+  if(frame.length()==4){
+    geom = geom.adjusted( -frame[0], -frame[2], frame[1], frame[3] );
+  }
+  return geom;
+}
 // ==== PUBLIC SLOTS ===
 void NativeWindow::requestClose(){
   emit RequestClose(winid);

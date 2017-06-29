@@ -254,17 +254,17 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		break;
 	case NativeWindow::Icon:
 		//qDebug() << "Got Icon Change:" << vals[i];
-		otherB->setIcon(vals[i].value< QIcon>());
+		otherB->setIcon(vals[i].value<QIcon>());
 		break;
 	case NativeWindow::GlobalPos:
 		//qDebug() << "Got Global Pos:" << vals[i].toPoint();
-		this->move( vals[i].toPoint() );
+		this->move( WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
 		qDebug() << "Got Widget Size:" << vals[i].toSize();
 		//WinWidget->setSizeHint( vals[i].toSize() );
 		//WinWidget->resize(vals[i].toSize() );
-		this->resize( vals[i].toSize()+QSize( this->width()-WinWidget->width(), this->height()-WinWidget->height() ) );
+		this->resize( WIN->geometry().size() );
 		qDebug() << " - Size after change:" << WinWidget->size() << this->size();
 		break;
 	case NativeWindow::MinSize:
@@ -305,7 +305,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
 }
 
 void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
-  //ev->accept();
+  activate(); //make sure this window is "Active"
   if(activeState == Normal){
     setMouseCursor( getStateAtPoint(ev->pos()) ); //just update the mouse cursor
   }else{
