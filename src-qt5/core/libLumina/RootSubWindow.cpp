@@ -265,8 +265,9 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		//qDebug() << "Got Visibility Change:" << vals[i];
 		if(vals[i].toBool()){
 		  WinWidget->setVisible(true);
-		  anim->setPropertyName("windowOpacity");
-		  anim->setStartValue(0.0); anim->setEndValue(1.0);
+		  anim->setPropertyName("geometry");
+		  anim->setStartValue( QRect(this->geometry().center(), QSize(0,0)) ); 
+		  anim->setEndValue(this->geometry());
 		  anim->start();
 		  this->show();
 		}

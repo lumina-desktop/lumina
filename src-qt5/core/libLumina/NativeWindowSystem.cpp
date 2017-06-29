@@ -721,9 +721,11 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindow *win = findWindow(id);
   qDebug() << "Got Window Closed" << id << win;
   if(win!=0){
+    qDebug() << "Old Window List:" << NWindows.length();
     NWindows.removeAll(win);
     win->emit WindowClosed(id);
     win->deleteLater();
+    qDebug() << " - Now:" << NWindows.length();
   }else{
     win = findTrayWindow(id);
     if(win!=0){
