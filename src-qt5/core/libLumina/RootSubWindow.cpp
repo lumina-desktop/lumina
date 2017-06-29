@@ -28,6 +28,7 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
   WIN->addFrameWinID(WinWidget->winId());
   WIN->emit RequestReparent(WIN->id(), WinWidget->winId(), QPoint(0,0));
+  qDebug() << "[NEW WINDOW]" << WIN->id() << WinWidget->winId() << this->winId();
   LoadAllProperties();
   //QTimer::singleShot(20, this, SLOT(LoadAllProperties()) );
 }
@@ -300,7 +301,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		 //qDebug() << "Got Widget Size Change:" << vals[i].toSize();
 		  WinWidget->resize(vals[i].toSize());
 		  this->resize( WIN->geometry().size() );
-		  qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		  //qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
 		}
 		break;
 	case NativeWindow::MinSize:
