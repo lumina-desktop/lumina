@@ -202,7 +202,12 @@ void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
 void RootSubWindow::clientClosed(){
   qDebug() << "Client Closed";
   closing = true;
-  this->close();
+  anim->setPropertyName("geometry");
+  anim->setStartValue(this->geometry());
+  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
+  anim->start();
+  QTimer::singleShot(anim->duration(), this, SLOT(close()) );
+  //this->close();
 }
 
 void RootSubWindow::LoadAllProperties(){
@@ -266,8 +271,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		if(vals[i].toBool()){
 		  WinWidget->setVisible(true);
 		  anim->setPropertyName("geometry");
-		  anim->setStartValue( QRect(this->geometry().center(), QSize(0,0)) );
-		  anim->setEndValue(this->geometry());
+		  anim->setStartValue( QRect(WIN->geometry().center(), QSize(0,0)) );
+		  anim->setEndValue(WIN->geometry());
 		  anim->start();
 		  this->show();
 		}else{
@@ -284,7 +289,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		break;
 	case NativeWindow::Icon:
 		//qDebug() << "Got Icon Change:" << vals[i];
-		if(vals[i].value<QIcon>().isNull() ){ LIconCache::instance()->loadIcon(otherB, "window-close"); }
+		if(vals[i].value<QIcon>().isNull() ){ LIconCache::instance()->loadIcon(otherB, "list"); }
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
@@ -448,7 +453,7 @@ void RootSubWindow::leaveEvent(QEvent *ev){
 
 void RootSubWindow::resizeEvent(QResizeEvent *ev){
   //qDebug() << "Got Resize Event:" << ev->size();
-  if(WinWidget->size() != WIN->property(NativeWindow::Size).toSize()){
+  if(WinWidget->size() != WIN->property(NativeWindow::Size).toSize() && anim->state()!=QAbstractAnimation::Running){
     WIN->requestProperty(NativeWindow::Size, WinWidget->size());
   }
   QFrame::resizeEvent(ev);
@@ -461,6 +466,6 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
   //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->mapToGlobal(QPoint(0,0));
-  WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) );
+  if(!closing && anim->state()!=QAbstractAnimation::Running){ WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) ); }
   QFrame::moveEvent(ev);
 }
