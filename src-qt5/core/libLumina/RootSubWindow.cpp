@@ -269,12 +269,12 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		this->move( WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
-		qDebug() << "Got Widget Size:" << vals[i].toSize();
-		//WinWidget->setSizeHint( vals[i].toSize() );
-		//WinWidget->resize(vals[i].toSize() );
-		WinWidget->resize(vals[i].toSize());
-		this->resize( WIN->geometry().size() );
-		qDebug() << " - Size after change:" << WinWidget->size() << this->size();
+		if(WinWidget->size() != vals[i].toSize()){
+		 qDebug() << "Got Widget Size Change:" << vals[i].toSize();
+		  WinWidget->resize(vals[i].toSize());
+		  this->resize( WIN->geometry().size() );
+		  qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		}
 		break;
 	case NativeWindow::MinSize:
 		WinWidget->setMinimumSize(vals[i].toSize());
@@ -425,7 +425,9 @@ void RootSubWindow::leaveEvent(QEvent *ev){
 
 void RootSubWindow::resizeEvent(QResizeEvent *ev){
   //qDebug() << "Got Resize Event:" << ev->size();
-  WIN->requestProperty(NativeWindow::Size, WinWidget->size());
+  if(WinWidget->size() != WIN->property(NativeWindow::Size).toSize()){
+    WIN->requestProperty(NativeWindow::Size, WinWidget->size());
+  }
   QFrame::resizeEvent(ev);
 }
 
