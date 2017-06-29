@@ -18,6 +18,7 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QMenu>
+#include <QPropertyAnimation>
 #include <NativeWindow.h>
 
 
@@ -47,6 +48,8 @@ private:
 	QToolButton *closeB, *maxB, *minB, *otherB;
 	QLabel *titleLabel;
 	QMenu *otherM; //menu of other actions
+	//Other random objects (animations,etc)
+	QPropertyAnimation *anim;
 	void initWindowFrame();
 
 	void LoadProperties( QList< NativeWindow::Property> list);

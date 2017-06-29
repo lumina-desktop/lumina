@@ -136,6 +136,9 @@ void RootSubWindow::initWindowFrame(){
   maxB = new QToolButton(this);
   minB = new QToolButton(this);
   otherB = new QToolButton(this);
+  anim  = new QPropertyAnimation(this);
+    anim->setTargetObject(this);
+    anim->setDuration(300); //1/3 second (appx)
   titleLabel = new QLabel(this);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   otherM = new QMenu(this); //menu of other actions
@@ -162,12 +165,13 @@ void RootSubWindow::initWindowFrame(){
     maxB->setObjectName("Button_Maximize");
     otherM->setObjectName("Menu_Actions");
     titleLabel->setObjectName("Label_Title");
-  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; } QToolButton::hover{border-color: white;} QToolButton::menu-arrow{ image: none; }");
+  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; } QToolButton::hover{border-color: white;} QToolButton::pressed{ background-color: white; } QToolButton::menu-arrow{ image: none; }");
   //And adjust the margins
   mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); //default border
   mainLayout->setSpacing(0);
   titleBar->setSpacing(1);
   titleBar->setContentsMargins(0,0,0,0);
+
   //Now load the icons for the button
   LIconCache::instance()->loadIcon(closeB, "window-close");
   LIconCache::instance()->loadIcon(maxB, "window-maximize");
@@ -259,7 +263,13 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     switch(props[i]){
 	case NativeWindow::Visible:
 		//qDebug() << "Got Visibility Change:" << vals[i];
-		if(vals[i].toBool()){ WinWidget->setVisible(true); this->show(); }
+		if(vals[i].toBool()){
+		  WinWidget->setVisible(true);
+		  this->show();
+		  anim->setPropertyName("windowOpacity");
+		  anim->setStartValue(0.0); anim->setEndValue(1.0);
+		  anim->start();
+		}
 		else{ this->hide(); }
 		break;
 	case NativeWindow::Title:
