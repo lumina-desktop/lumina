@@ -265,7 +265,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		otherB->setIcon(vals[i].value<QIcon>());
 		break;
 	case NativeWindow::GlobalPos:
-		qDebug() << "Got Global Pos:" << vals[i].toPoint();
+		qDebug() << "Got Global Pos:" << WIN->geometry().topLeft() << vals[i].toPoint();
 		this->move( WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
