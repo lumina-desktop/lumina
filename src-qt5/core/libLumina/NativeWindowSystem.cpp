@@ -477,19 +477,19 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
   if(props.contains(NativeWindow::Icon)){
 
   }
-  if(props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
+  if(props.contains(NativeWindow::Size) ){//|| props.contains(NativeWindow::GlobalPos) ){
     xcb_configure_window_value_list_t  valList;
     uint16_t mask = 0;
-    if(props.contains(NativeWindow::Size)){
+    //if(props.contains(NativeWindow::Size)){
       QSize sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
       valList.width = sz.width();
       valList.height = sz.height();
       mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
-    }else{
+    /*}else{
       valList.width = win->property(NativeWindow::Size).toSize().width();
       valList.height = win->property(NativeWindow::Size).toSize().height();
-    }
-    if(props.contains(NativeWindow::GlobalPos)){
+    }*/
+    /*if(props.contains(NativeWindow::GlobalPos)){
       QPoint pt = vals[ props.indexOf(NativeWindow::GlobalPos) ] .toPoint();
       valList.x = pt.x();
       valList.y = pt.y();
@@ -497,7 +497,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
     }else{
       valList.x = win->property(NativeWindow::GlobalPos).toPoint().x();
       valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
-    }
+    }*/
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
   if(props.contains(NativeWindow::Name)){
