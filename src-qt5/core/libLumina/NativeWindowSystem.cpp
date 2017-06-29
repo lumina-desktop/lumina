@@ -65,7 +65,7 @@ public:
 	   }
 
 	  QStringList atoms;
-	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS"
+	    atoms << "WM_TAKE_FOCUS" << "WM_DELETE_WINDOW" << "WM_PROTOCOLS" << "_NET_WM_WINDOW_OPACITY"
 		<< "WM_CHANGE_STATE" << "_NET_SYSTEM_TRAY_OPCODE" << "_NET_SYSTEM_TRAY_ORIENTATION"
 		<< "_NET_SYSTEM_TRAY_VISUAL" << QString("_NET_SYSTEM_TRAY_S%1").arg(QString::number(QX11Info::appScreen()));
 	    //Create all the requests for the atoms
@@ -560,14 +560,15 @@ void NativeWindowSystem::setRoot_supportedActions(){
 		obj->EWMH._NET_WM_ICON,
 		obj->EWMH._NET_WM_ICON_NAME,
 		obj->EWMH._NET_WM_DESKTOP,
-		/*_NET_WINDOW_TYPE (and all the various types)*/
+		obj->ATOMS["_NET_WM_WINDOW_OPACITY"],
+		/*_NET_WINDOW_TYPE (and all the various types - 15 in total*/
 		obj->EWMH._NET_WM_WINDOW_TYPE, obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP, obj->EWMH._NET_WM_WINDOW_TYPE_DOCK,
 		obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR, obj->EWMH._NET_WM_WINDOW_TYPE_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY,
 		obj->EWMH._NET_WM_WINDOW_TYPE_SPLASH, obj->EWMH._NET_WM_WINDOW_TYPE_DIALOG, obj->EWMH._NET_WM_WINDOW_TYPE_NORMAL,
 		obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP,
 		obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION, obj->EWMH._NET_WM_WINDOW_TYPE_COMBO, obj->EWMH._NET_WM_WINDOW_TYPE_DND,
 		};
-  xcb_ewmh_set_supported(&obj->EWMH, QX11Info::appScreen(), 19,list);
+  xcb_ewmh_set_supported(&obj->EWMH, QX11Info::appScreen(), 20,list);
 }
 
 void NativeWindowSystem::setRoot_numberOfWorkspaces(QStringList names){

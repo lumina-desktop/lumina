@@ -265,10 +265,10 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		//qDebug() << "Got Visibility Change:" << vals[i];
 		if(vals[i].toBool()){
 		  WinWidget->setVisible(true);
-		  this->show();
 		  anim->setPropertyName("windowOpacity");
 		  anim->setStartValue(0.0); anim->setEndValue(1.0);
 		  anim->start();
+		  this->show();
 		}
 		else{ this->hide(); }
 		break;
