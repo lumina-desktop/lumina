@@ -162,7 +162,7 @@ void RootSubWindow::initWindowFrame(){
     titleLabel->setObjectName("Label_Title");
   this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; }");
   //And adjust the margins
-  mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER);
+  mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); //default border
   mainLayout->setSpacing(0);
   titleBar->setSpacing(1);
   titleBar->setContentsMargins(0,0,0,0);
@@ -175,6 +175,13 @@ void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   for(int i=0; i<list.length(); i++){
     if(list[i] == NativeWindow::Visible){ list.removeAt(i); i--; continue; }
     vals << WIN->property(list[i]);
+    if(list[i] == NativeWindow::FrameExtents){
+      if(vals[i].isNull()){
+        QList<int> frame; frame << WIN_BORDER << WIN_BORDER << WIN_BORDER+titleLabel->height() << WIN_BORDER;
+        vals[i] = QVariant::fromValue< QList<int> >(frame); //use this by default
+        WIN->requestProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(frame)); //make sure these values get saved permanently
+      }
+    }
     qDebug() << "Property:" << list[i] << vals[i];
   }
   propertiesChanged(list, vals);
@@ -275,6 +282,9 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		break;
 	case NativeWindow::Active:
 		//if(vals[i].toBool()){ WinWidget->setFocus(); }
+		break;
+	case NativeWindow::FrameExtents:
+		mainLayout->setContentsMargins( vals[i].value< QList<int> >().at(0),vals[i].value< QList<int> >().at(2) - titleLabel->height(),vals[i].value< QList<int> >().at(1),vals[i].value< QList<int> >().at(3));
 		break;
 	/*case NativeWindow::WindowFlags:
 		this->setWindowFlags( val.value< Qt::WindowFlags >() );
