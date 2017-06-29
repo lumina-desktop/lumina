@@ -13,6 +13,8 @@
 
 #define WIN_BORDER 5
 
+#include <LIconCache.h>
+
 // === PUBLIC ===
 RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   this->setAttribute(Qt::WA_DeleteOnClose);
@@ -166,8 +168,11 @@ void RootSubWindow::initWindowFrame(){
   mainLayout->setSpacing(0);
   titleBar->setSpacing(1);
   titleBar->setContentsMargins(0,0,0,0);
-  //this->setLayout(mainLayout);
-  //qDebug() << " - Done";
+  //Now load the icons for the button
+  LIconCache::instance()->loadIcon(closeB, "window-close");
+  LIconCache::instance()->loadIcon(maxB, "window-maximize");
+  LIconCache::instance()->loadIcon(minB, "window-minimize");
+  LIconCache::instance()->loadIcon(otherB, "list");
 }
 
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
@@ -262,7 +267,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		break;
 	case NativeWindow::Icon:
 		//qDebug() << "Got Icon Change:" << vals[i];
-		otherB->setIcon(vals[i].value<QIcon>());
+		if(vals[i].value<QIcon>().isNull() ){ LIconCache::instance()->loadIcon(otherB, "window-close"); }
+		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
 		qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
