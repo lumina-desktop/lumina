@@ -15,7 +15,7 @@
 #include <LuminaOS.h>
 
 //LFileInfo INFO = LFileInfo("");
-	
+
 MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer form
   canwrite = false;
@@ -27,14 +27,14 @@ MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
 
 MainUI::~MainUI(){
   terminate_thread = true;
-  if(INFO!=0){ delete INFO; }
+  this->close();
 }
 
 //=============
 //      PUBLIC
 //=============
 void MainUI::LoadFile(QString path, QString type){
-  
+
   //Do the first file information tab
   qDebug() << "Load File:" << path << type;
   INFO = new LFileInfo(path);
@@ -51,7 +51,6 @@ void MainUI::LoadFile(QString path, QString type){
     if(type=="APP"){ INFO->XDG()->type = XDGDesktop::APP; }
     else if(type=="LINK"){ INFO->XDG()->type = XDGDesktop::LINK; }
   }
-	  
   //First load the general file information
   if(!INFO->filePath().isEmpty()){
     ui->label_file_name->setText( INFO->fileName() );
@@ -106,7 +105,7 @@ void MainUI::LoadFile(QString path, QString type){
   qDebug() << "Check XDG Info:" << type;
   //qDebug() << INFO->isDesktopFile() << type;
   if(INFO->isDesktopFile() || !type.isEmpty()){
-  
+
     if(INFO->XDG()->type == XDGDesktop::APP){
       ui->line_xdg_command->setText(INFO->XDG()->exec);
       ui->line_xdg_wdir->setText(INFO->XDG()->path);
@@ -126,9 +125,9 @@ void MainUI::LoadFile(QString path, QString type){
       ui->lblWorkingDir->setText(tr("URL:"));
       ui->line_xdg_wdir->setText( INFO->XDG()->url );
       ui->tool_xdg_getDir->setVisible(false); //the dir selection button
-      
+
     }
-    ui->line_xdg_name->setText(INFO->XDG()->name);	
+    ui->line_xdg_name->setText(INFO->XDG()->name);
     ui->line_xdg_comment->setText(INFO->XDG()->comment);
     ui->push_xdg_getIcon->setWhatsThis( INFO->XDG()->icon );
     ReloadAppIcon();
@@ -142,12 +141,12 @@ void MainUI::LoadFile(QString path, QString type){
   }else{
     xdgvaluechanged(); //just do the disables here
     //Also remove the xdg tab
-    if(ui->tabWidget->indexOf(ui->tab_deskedit) >= 0){ 
+    if(ui->tabWidget->indexOf(ui->tab_deskedit) >= 0){
       qDebug() << "Removing the deskedit tab";
       ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_deskedit) );
     }
   }
-  //Setup the tab 
+  //Setup the tab
   if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
   else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
   qDebug() << "Done Loading File";
@@ -157,8 +156,8 @@ void MainUI::UpdateIcons(){
   this->setWindowIcon(LXDG::findIcon("document-preview","unknown"));
   ui->push_close->setIcon( LXDG::findIcon("dialog-close","") );
   ui->push_save->setIcon( LXDG::findIcon("document-save","") );
-  ui->tool_xdg_getCommand->setIcon( LXDG::findIcon("edit-find-project","") );
-  ui->tool_xdg_getDir->setIcon( LXDG::findIcon("document-open","") );	
+  ui->tool_xdg_getCommand->setIcon( LXDG::findIcon("edit-find-page","") );
+  ui->tool_xdg_getDir->setIcon( LXDG::findIcon("document-open","") );
 }
 
 //==============
@@ -234,7 +233,6 @@ void MainUI::on_push_close_clicked(){
   if(ui->push_save->isEnabled()){
     //Still have unsaved changes
     //TO-DO - prompt for whether to save the changes
-	  
   }
   this->close();
 }
@@ -317,7 +315,7 @@ void MainUI::on_push_xdg_getIcon_clicked(){
   for(int i=0; i<ext.length(); i++){ ext[i].prepend("*."); } //turn them into valid filters
   QString file = QFileDialog::getOpenFileName(this, tr("Select an icon"), dir ,QString(tr("Images (%1);; All Files (*)")).arg(ext.join(" ")) );
   if(file.isEmpty()){ return; } //cancelled
-  ui->push_xdg_getIcon->setWhatsThis(file);	
+  ui->push_xdg_getIcon->setWhatsThis(file);
   ReloadAppIcon();
   xdgvaluechanged();
 }
@@ -329,7 +327,7 @@ void MainUI::xdgvaluechanged(){
     //Compare the current UI values to the file values
     ui->push_save->setEnabled(canwrite); //assume changed at this point
     // TO-DO
-	  
+
   }else{
     ui->push_save->setVisible(false);
     ui->push_save->setEnabled(false);

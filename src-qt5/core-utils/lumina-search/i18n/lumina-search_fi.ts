@@ -114,22 +114,22 @@
         <translation>Ota uusi kuvakaappaus</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"/>
+        <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Etsi: %1 – Älykäs: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>Off</source>
         <translation>Ei käytössä</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>On</source>
         <translation>Käytössä</translation>
     </message>

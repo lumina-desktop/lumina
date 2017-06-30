@@ -22,7 +22,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   BROWSER = new Browser(this);
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
-  connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo)), this, SLOT(itemDataAvailable(QIcon, LFileInfo)) );
+  connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
   connect(BROWSER, SIGNAL(itemsLoading(int)), this, SLOT(itemsLoading(int)) );
   connect(this, SIGNAL(dirChange(QString)), BROWSER, SLOT(loadDirectory(QString)) );
   listWidget = 0;
@@ -39,7 +39,7 @@ BrowserWidget::~BrowserWidget(){
 
 void BrowserWidget::changeDirectory(QString dir){
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
-  qDebug() << "Change Directory:" << dir << historyList;
+  //qDebug() << "Change Directory:" << dir << historyList;
 
   if( !dir.contains("/.zfs/snapshot/") ){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
@@ -49,7 +49,7 @@ void BrowserWidget::changeDirectory(QString dir){
     cleaned = cleaned.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
-  qDebug() << "History:" << historyList;
+  //qDebug() << "History:" << historyList;
   emit dirChange(dir);
 }
 
@@ -118,7 +118,7 @@ bool BrowserWidget::hasThumbnails(){
 
 void BrowserWidget::setThumbnailSize(int px){
   bool larger = true;
-  if(listWidget!=0){ 
+  if(listWidget!=0){
     larger = listWidget->iconSize().height() < px;
     listWidget->setIconSize(QSize(px,px));
   }else if(treeWidget!=0){
@@ -138,7 +138,7 @@ int BrowserWidget::thumbnailSize(){
 
 void BrowserWidget::setHistory(QStringList paths){
   //NOTE: later items are used first
-   historyList = paths; 
+   historyList = paths;
 }
 
 QStringList BrowserWidget::history(){
@@ -192,7 +192,7 @@ QStringList BrowserWidget::currentItems(int type){
       }else if(i==0){ //ALL
         paths << listWidget->item(i)->whatsThis();
       }
-    }   
+    }
   }else if(treeWidget!=0){
     for(int i=0; i<treeWidget->topLevelItemCount(); i++){
       if(i<0 && !treeWidget->topLevelItem(i)->text(1).isEmpty()){ //FILES
@@ -270,45 +270,46 @@ void BrowserWidget::itemRemoved(QString item){
   }
 }
 
-void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo info){
-  //qDebug() << "Item Data Available:" << info.fileName();
+void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
+  //qDebug() << "Item Data Available:" << info->fileName();
   int num = 0;
   if(listWidget!=0){
     //LIST WIDGET - name and icon only
-    if(!listWidget->findItems(info.fileName(), Qt::MatchExactly).isEmpty()){ 
+    if(!listWidget->findItems(info->fileName(), Qt::MatchExactly).isEmpty()){
       //Update existing item
-      QListWidgetItem *it = listWidget->findItems(info.fileName(), Qt::MatchExactly).first();
-      it->setText(info.fileName());
-      it->setWhatsThis(info.absoluteFilePath());
+      QListWidgetItem *it = listWidget->findItems(info->fileName(), Qt::MatchExactly).first();
+      it->setText(info->fileName());
+      it->setWhatsThis(info->absoluteFilePath());
       it->setIcon(ico);
     }else{
       //New item
-      QListWidgetItem *it = new CQListWidgetItem(ico, info.fileName(), listWidget);
-        it->setWhatsThis(info.absoluteFilePath());
-        it->setData(Qt::UserRole, (info.isDir() ? "dir" : "file")); //used for sorting
+      QListWidgetItem *it = new CQListWidgetItem(ico, info->fileName(), listWidget);
+        it->setWhatsThis(info->absoluteFilePath());
+        it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
       listWidget->addItem(it);
     }
     num = listWidget->count();
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
-    if( ! treeWidget->findItems(info.fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info.fileName(), Qt::MatchExactly, 0).first(); }
-    else{ 
-      it = new CQTreeWidgetItem(treeWidget);  
-      it->setText(0, info.fileName() ); //name (0)
+    if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first(); }
+    else{
+      it = new CQTreeWidgetItem(treeWidget);
+      it->setText(0, info->fileName() ); //name (0)
       treeWidget->addTopLevelItem(it);
     }
     //Now set/update all the data
     it->setIcon(0, ico);
-    it->setText(1, info.isDir() ? "" : LUtils::BytesToDisplaySize(info.size()) ); //size (1)
-    it->setText(2, info.mimetype() ); //type (2)
-    it->setText(3, DTtoString(info.lastModified() )); //modification date (3)
-    it->setText(4, DTtoString(info.created()) ); //creation date (4)
+    it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
+    it->setText(2, info->mimetype() ); //type (2)
+    it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
+    it->setText(4, DTtoString(info->created()) ); //creation date (4)
     //Now all the hidden data
-    it->setWhatsThis(0, info.absoluteFilePath());
-    it->setWhatsThis(3, info.lastModified().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
-    it->setWhatsThis(4, info.created().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
+    it->setWhatsThis(0, info->absoluteFilePath());
+    it->setWhatsThis(3, info->lastModified().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
+    it->setWhatsThis(4, info->created().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     num = treeWidget->topLevelItemCount();
   }
+
   if(num < numItems){
     //Still loading items
     //this->setEnabled(false);
@@ -341,7 +342,6 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo info){
         }
       }
     }
-
     if( (nF+nD) >0){
       stats.prepend("\t");
       if(nF>0){
@@ -364,7 +364,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo info){
 }
 
 void BrowserWidget::itemsLoading(int total){
-  qDebug() << "Got number of items loading:" << total;
+  //qDebug() << "Got number of items loading:" << total;
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   numItems = total; //save this for later

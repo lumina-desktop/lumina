@@ -83,7 +83,7 @@ public:
 	  this->stop(); 
 	  //while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
 	}
-		
+
 	void LoadAnimations(){
 	  while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
 	  canvas->setStyleSheet("background: black;");

@@ -16,28 +16,28 @@
 #include <QPoint>
 #include <QRect>
 #include <QList>
+#include <QObject>
+#include <QDebug>
+#include <QX11Info>
 
 // XCB
 #include "xcb/randr.h"
 #include "xcb/xcb_atom.h"
 
 struct p_objects{
-//public:
-	xcb_atom_t monitor_atom; //This is the index used to identify particular monitors (unique ID)
+	xcb_randr_output_t output; //This is the index used to identify particular monitors (unique ID)
+	xcb_randr_crtc_t crtc; //This is the index used for the current settings/configuration (associated with output)
 
 	//Cached Information
-	bool primary, automatic;
+	bool primary;
 	QRect geometry;
-	QList<QSize> resolutions;
-	QSize physicalSizeMM;
-	QString name;
-	QList<xcb_randr_output_t> outputs;
 
-	/*p_objects(){
-          // Set the defaults for non-default-constructed variables
-	  primary = automatic = false;
-	  monitor_atom = 0;
-	}*/
+	QSize physicalSizeMM; //physical size of the display in MM
+	QString name;
+
+	xcb_randr_mode_t current_mode;
+	QList<xcb_randr_mode_t> modes; //each mode is a combination of resolution + refresh rate
+	QList<QSize> resolutions; //smaller subset of modes - just unique resolutions
 
 };
 
@@ -64,18 +64,20 @@ public:
 
 	bool isEnabled();
 	bool isPrimary();
-	bool isAutomatic();
+	bool isConnected();
 	QList<QSize> availableResolutions();
 	QSize currentResolution(); //could be different from geometry.size() if things like panning/rotation are enabled
 	QRect currentGeometry();
 	QSize physicalSizeMM();
+	QSize physicalDPI();
 
 	//Modification
 	bool setAsPrimary(bool);
 	bool disable();
-	void enable(QRect geom = QRect()); //if no geom provided, will add as the right-most screen at optimal resolution
-	void changeResolution(QSize);
-	void changeGeometry(QRect); //move a currently-enabled screen to another place
+	bool enable(QRect geom); //if empty resolution is supplied (QSize(0,0)) it will use the highest-available resolution
+	bool changeResolution(QSize); //change the resolution (but not position) of a currently-enabled screen
+	bool move(QPoint); //move a currently-enabled screen to another place
+	bool setGeometry(QRect); //move/resize a currently-enabled screen
 
 	void updateInfoCache(); //Run this after all modification functions to refresh the current info for this device
 
@@ -85,15 +87,27 @@ public:
 	p_objects p_obj;
 };
 
-class OutputDeviceList : public QList<OutputDevice>{
+class OutputDeviceList{
+private:
+	QList<OutputDevice> out_devs;
+
 public:
 	OutputDeviceList();
 	~OutputDeviceList();
 
+	int length(){ return out_devs.length(); }
+
+	OutputDevice* at(int i){
+	  if(i<out_devs.length()){ return &out_devs[i]; }
+           return 0;
+	}
+
 	//Simplification functions for dealing with multiple monitors
 	void setPrimaryMonitor(QString id);
-	void disableMonitor(QString id);
-	//void enableMonitor(QString id, QRect geom);
+	QString primaryMonitor();
+
+	bool disableMonitor(QString id);
+	bool enableMonitor(QString id, QRect geom);
 
 };
 #endif

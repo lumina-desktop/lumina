@@ -16,7 +16,7 @@
 Browser::Browser(QObject *parent) : QObject(parent){
   watcher = new QFileSystemWatcher(this);
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged(QString)) );
-  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
+ connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
@@ -52,7 +52,6 @@ bool Browser::showingThumbnails(){
 
 //   PRIVATE
 void Browser::loadItem(QString info, Browser *obj){
-  //qDebug() << "LoadItem:" << info;
   QImage pix;
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
     QFile file(info);
@@ -60,7 +59,7 @@ void Browser::loadItem(QString info, Browser *obj){
       QByteArray bytes = file.readAll();
       file.close();
       pix.loadFromData(bytes);
-      if(bytes.size() > (512*1024) ){ //more than 512 KB
+      if(pix.width() > 256 || pix.height() > 256 ){
         pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
       }
     }
@@ -88,37 +87,37 @@ void Browser::fileChanged(QString file){
 }
 
 void Browser::dirChanged(QString dir){
+
   if(dir==currentDir){ QTimer::singleShot(500, this, SLOT(loadDirectory()) ); }
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
-  qDebug() << "Future Finished:" << name;
-      QIcon ico;
-      LFileInfo info(name);
+     QIcon ico;
+     //LFileInfo info(name);
+     LFileInfo *info = new LFileInfo(name);
       if(!icon.isNull()){
         //qDebug() << " -- Data:";
         QPixmap pix = QPixmap::fromImage(icon);
         ico.addPixmap(pix);
-      }else if(info.isDir()){
+       }else if(info->isDir()){
         //qDebug() << " -- Folder:";
         ico = loadIcon("folder");
       }
       if(ico.isNull()){
 	//qDebug() << " -- MimeType:" << info.fileName() << info.mimetype();
-        ico = loadIcon(info.iconfile());
+        ico = loadIcon(info->iconfile());
       }
-  qDebug() << " -- emit signal";
-      this->emit itemDataAvailable( ico, info );
-  qDebug() << " -- done:" << name;
+      this->emit itemDataAvailable( ico, info);
+     //qDebug() << " -- done:" << name;
 }
 
 // PUBLIC SLOTS
 void Browser::loadDirectory(QString dir){
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
-  qDebug() << "Load Directory" << dir;
+  //qDebug() << "Load Directory" << dir;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
     oldFiles.clear();
     emit clearItems();

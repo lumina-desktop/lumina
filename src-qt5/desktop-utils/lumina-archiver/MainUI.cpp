@@ -355,8 +355,8 @@ void MainUI::ProcFinished(bool success, QString msg){
   ui->label_progress->setText(msg);
   ui->label_progress->setVisible(!msg.isEmpty());
   ui->label_progress_icon->setVisible(!msg.isEmpty());
-  if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-complete","").pixmap(32,32) );}
-  else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-attention","").pixmap(32,32) );}
+  if(success){ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-done","").pixmap(32,32) );}
+  else{ ui->label_progress_icon->setPixmap( LXDG::findIcon("task-question","").pixmap(32,32) );}
   QFileInfo info(BACKEND->currentFile());
     bool canmodify = info.isWritable();
     if(!info.exists()){ canmodify = QFileInfo(BACKEND->currentFile().section("/",0,-2)).isWritable(); }

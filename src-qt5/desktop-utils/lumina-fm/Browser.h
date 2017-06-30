@@ -63,7 +63,7 @@ signals:
 	//Main Signals
 	void itemRemoved(QString item); //emitted if a file was removed from the underlying
 	void clearItems(); //emitted when dirs change for example
-	void itemDataAvailable(QIcon, LFileInfo);
+	void itemDataAvailable(QIcon, LFileInfo*);
 
 	//Start/Stop signals for loading of data
 	void itemsLoading(int); //number of items which are getting loaded

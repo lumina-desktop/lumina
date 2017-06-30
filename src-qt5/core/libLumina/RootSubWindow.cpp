@@ -10,7 +10,7 @@
 #include <QVBoxLayout>
 #include <QVBoxLayout>
 
-#define WIN_BORDER 3 
+#define WIN_BORDER 3
 
 // === PUBLIC ===
 RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
@@ -274,7 +274,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
     activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
   }
   setMouseCursor(activeState, true); //this one is an override cursor
-  
+
 }
 
 void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){

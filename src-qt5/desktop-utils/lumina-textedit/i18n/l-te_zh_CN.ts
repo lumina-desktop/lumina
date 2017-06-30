@@ -146,7 +146,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="188"/>
         <source>New File</source>
         <translation>新建文件</translation>
     </message>
@@ -262,30 +262,30 @@
         <translation>右边</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Text Editor</source>
         <translation>文本编辑器</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Open File(s)</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Text Files (*)</source>
         <translation>文本文件 (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>Lose Unsaved Changes?</source>
         <translation>丢弃未保存的更改？</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +296,7 @@ Do you want to close it anyway?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 
@@ -310,32 +310,32 @@ Do you want to close the editor anyway?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Text File (*)</source>
         <translation>文本文件 (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="289"/>
+        <location filename="../PlainTextEditor.cpp" line="318"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>行数: %1，列数: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="298"/>
+        <location filename="../PlainTextEditor.cpp" line="327"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>以下文件已在他处被修改，是否重新加载？</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="300"/>
+        <location filename="../PlainTextEditor.cpp" line="329"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>（注意：未保存的修改将会丢失）</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="304"/>
+        <location filename="../PlainTextEditor.cpp" line="333"/>
         <source>File Modified</source>
         <translation>文件已被修改</translation>
     </message>

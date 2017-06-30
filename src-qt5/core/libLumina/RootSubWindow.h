@@ -30,7 +30,7 @@ public:
 	WId id();
 
 private:
-	//Window status 
+	//Window status
 	enum ModState{Normal, Move, ResizeTop, ResizeTopRight, ResizeRight, ResizeBottomRight, ResizeBottom, ResizeBottomLeft, ResizeLeft, ResizeTopLeft};
 	ModState activeState;
 	ModState currentCursor;
@@ -64,7 +64,7 @@ public slots:
 	//Mouse Interactivity
 	void startMoving();
 	void startResizing();
-	
+
 private slots:
 	void propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
 

@@ -16,9 +16,9 @@
 #include <QInputDialog>
 #include <QScrollBar>
 #include <QSettings>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QtConcurrent>
 #include <QFileSystemModel>
-
+#include <QCompleter>
 #include <LuminaOS.h>
 #include <LuminaXDG.h>
 #include <LUtils.h>
@@ -71,7 +71,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);      // remove extraneous dirs
   dirtreeModel->setRootPath(folderTreePath);
   ui->folderViewPane->setModel(dirtreeModel);
-  ui->splitter->setSizes( QList<int>() << this->width()/3 << 2*this->width()/3);
+  ui->splitter->setSizes( QList<int>() << this->width()/4 << 3*this->width()/4);
   ui->folderViewPane->setHeaderHidden(true);
   ui->folderViewPane->resizeColumnToContents(0);
   ui->folderViewPane->setColumnHidden(1, true);
@@ -83,11 +83,13 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   contextMenu = new QMenu(this);
   cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = 0; //not created yet
   connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(UpdateContextMenu()) );
+  connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()) );
 
   UpdateIcons();
   UpdateText();
   createShortcuts();
   createMenus();
+  line_dir->setCompleter(new QCompleter(dirtreeModel, this));
 }
 
 DirWidget::~DirWidget(){
@@ -112,7 +114,7 @@ void DirWidget::ChangeDir(QString dirpath){
 }
 
 void DirWidget::setDirCompleter(QCompleter *comp){
-  //line_dir->setCompleter(comp);
+  line_dir->setCompleter(comp);
 }
 
 QString DirWidget::id(){
@@ -131,6 +133,9 @@ void DirWidget::setShowDetails(bool show){
 void DirWidget::showHidden(bool show){
   BW->showHiddenFiles(show);
   if(RCBW!=0){ RCBW->showHiddenFiles(show); }
+  //Also make sure the tree model is showing hidden files as needed
+  if(show){ dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::Hidden | QDir::AllDirs); }
+  else{ dirtreeModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); }
 }
 
 void DirWidget::showThumbnails(bool show){
@@ -148,15 +153,8 @@ void DirWidget::setThumbnailSize(int px){
 //====================
 //         Folder Pane
 //====================
-
-void DirWidget::showDirTreePane(bool show){
-  if(show !=showdirtree){
-  showdirtree = show;
-  }
-}
-
-bool DirWidget::showingDirTreePane(){
-  return showdirtree;
+void DirWidget::adjustTreeWidget(float percent){
+  ui->splitter->setSizes( QList<int>() << this->width()*(percent/100.0) << this->width() * ((100.0-percent)/100.0) );
 }
 
 void DirWidget::on_folderViewPane_clicked(const QModelIndex &index){
@@ -349,6 +347,10 @@ QStringList DirWidget::currentDirFiles(){
 // =================
 //    PRIVATE SLOTS
 // =================
+void DirWidget::splitterMoved(){
+  float percent = (ui->splitter->sizes().first() / ( (float) this->width()) )*100.0;
+  this->emit treeWidgetSizeChanged(percent);
+}
 
 //UI BUTTONS
 void DirWidget::on_tool_zoom_in_clicked(){
@@ -600,17 +602,17 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
     normalbasedir = cur;
     ui->group_snaps->setVisible(false);
     emit findSnaps(ID, cur);
-    qDebug() << "Changed to directory:" << cur;
+    //qDebug() << "Changed to directory:" << cur;
   }else{
     //Re-assemble the normalbasedir variable (in case moving around within a snapshot)
     normalbasedir = cur;
     normalbasedir.replace( QRegExp("\\/\\.zfs\\/snapshot/([^/]+)\\/"), "/" );
-    qDebug() << "Changed to snapshot:" << cur << normalbasedir;
+    //qDebug() << "Changed to snapshot:" << cur << normalbasedir;
   }
   ui->actionBack->setEnabled( currentBrowser()->history().length()>1 );
- line_dir->setText(normalbasedir);
+  line_dir->setText(normalbasedir);
   emit TabNameChanged(ID, normalbasedir.section("/",-1));
-  QModelIndex index = dirtreeModel->index(cur,0);
+  QModelIndex index = dirtreeModel->index(normalbasedir,0);
   ui->folderViewPane->setCurrentIndex( index );
   ui->folderViewPane->scrollTo(index);
 }

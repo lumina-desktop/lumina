@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="97"/>
+        <location filename="../MainUI.cpp" line="96"/>
         <source>File Information</source>
         <translation>Інформація про файл</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="140"/>
+        <location filename="../MainUI.cpp" line="139"/>
         <source>Edit Shortcut</source>
         <translation>Редагувати скорочення</translation>
     </message>
@@ -117,109 +117,109 @@
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="60"/>
         <source>---Calculating---</source>
         <translation>--- Обчислення ---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="69"/>
         <source>Read/Write</source>
         <translation>Читання/запис</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="70"/>
         <source>Read Only</source>
         <translation>Лише для читання</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="72"/>
+        <location filename="../MainUI.cpp" line="71"/>
         <source>Write Only</source>
         <translation>Лише запис</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="73"/>
+        <location filename="../MainUI.cpp" line="72"/>
         <source>No Access</source>
         <translation>Немає доступу</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="76"/>
         <source>XDG Shortcut</source>
         <translation>XDG  адреса</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="78"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>Directory</source>
         <translation>Тека</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
+        <location filename="../MainUI.cpp" line="78"/>
         <source>Binary</source>
         <translation>Двійковий</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="81"/>
+        <location filename="../MainUI.cpp" line="80"/>
         <source>Hidden %1</source>
         <translation>Прихований %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="126"/>
+        <location filename="../MainUI.cpp" line="125"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="249"/>
+        <location filename="../MainUI.cpp" line="247"/>
         <source>Save Application File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="249"/>
+        <location filename="../MainUI.cpp" line="247"/>
         <source>Application Registrations (*.desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="288"/>
         <source>Select a binary</source>
         <translation>Вибрати бінарний</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="291"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="293"/>
+        <location filename="../MainUI.cpp" line="291"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Некоректний вибір: Не є виконуваним</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="305"/>
+        <location filename="../MainUI.cpp" line="303"/>
         <source>Select a directory</source>
         <translation>Виберіть каталог</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="318"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>Select an icon</source>
         <translation>Вибрати піктограму</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="318"/>
+        <location filename="../MainUI.cpp" line="316"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Зображень (%1);; Всі файли (*)</translation>
     </message>
     <message>
+        <location filename="../MainUI.cpp" line="339"/>
         <location filename="../MainUI.cpp" line="341"/>
-        <location filename="../MainUI.cpp" line="343"/>
         <source> Folders: </source>
         <translation> Папки: </translation>
     </message>
     <message>
+        <location filename="../MainUI.cpp" line="339"/>
         <location filename="../MainUI.cpp" line="341"/>
-        <location filename="../MainUI.cpp" line="343"/>
         <source>Files: </source>
         <translation>Файли: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="343"/>
+        <location filename="../MainUI.cpp" line="341"/>
         <source>  Calculating...</source>
         <translation>  Обчислення...</translation>
     </message>

@@ -21,7 +21,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l'aplicació</translation>
+        <translation>Seleccioneu l&apos;aplicació</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
@@ -38,62 +38,62 @@
         <translation>Cliqueu per establir-ho</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
         <source>Launch %1</source>
         <translation>Llança %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Open With</source>
         <translation>Obre amb</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>View Properties</source>
-        <translation>Mostra'n les propietats</translation>
+        <translation>Mostra&apos;n les propietats</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
         <source>File Operations</source>
         <translation>Operacions de fitxers</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Rename</source>
-        <translation>Canvia'n el nom</translation>
+        <translation>Canvia&apos;n el nom</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
         <source>Copy</source>
         <translation>Copia</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
         <source>Cut</source>
         <translation>Retalla</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
         <source>Delete</source>
         <translation>Suprimeix</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Select Application</source>
-        <translation>Seleccioneu l'aplicació</translation>
+        <translation>Seleccioneu l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
         <source>New Filename</source>
         <translation>Nom de fitxer nou</translation>
     </message>
@@ -196,7 +196,7 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation>S'inicia l'escriptori Lumina...</translation>
+        <translation>S&apos;inicia l&apos;escriptori Lumina...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="17"/>
@@ -211,22 +211,22 @@
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>Keep up with desktop news!</source>
-        <translation>Mantingueu-vos al dia de les notícies de l'escriptori!</translation>
+        <translation>Mantingueu-vos al dia de les notícies de l&apos;escriptori!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation>Hi ha un manual ple d'informació de l'escriptori disponible en línia.</translation>
+        <translation>Hi ha un manual ple d&apos;informació de l&apos;escriptori disponible en línia.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation>Voleu canviar-ne la interfície? Tot és personalitzable des de la configuració de l'escriptori!</translation>
+        <translation>Voleu canviar-ne la interfície? Tot és personalitzable des de la configuració de l&apos;escriptori!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation>El Lumina pot reproduir fàcilment la interfície de la majoria d'altres entorns d'escriptori.</translation>
+        <translation>El Lumina pot reproduir fàcilment la interfície de la majoria d&apos;altres entorns d&apos;escriptori.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
@@ -236,7 +236,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation>Mai no m'ha fet mal el que no he dit.</translation>
+        <translation>Mai no m&apos;ha fet mal el que no he dit.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation>No espereu fer forts els febles enfonsant forts.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation>No es pot saber massa, però es pot dir massa.</translation>
     </message>
     <message>
@@ -281,7 +281,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation>Qualsevol societat que deixi de banda una mica de llibertat per guanyar una mica de seguretat no en mereixerà ni una ni l'altra i les perdrà totes dues.</translation>
+        <translation>Qualsevol societat que deixi de banda una mica de llibertat per guanyar una mica de seguretat no en mereixerà ni una ni l&apos;altra i les perdrà totes dues.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation>L'única manera de fer una bona feina és que us agradi el que feu.</translation>
+        <translation>L&apos;única manera de fer una bona feina és que us agradi el que feu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
@@ -350,8 +350,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
-        <translation>Només hi ha dues coses infinites: l'univers i l'estupidesa humana, i no estic segur de la primera.</translation>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <translation>Només hi ha dues coses infinites: l&apos;univers i l&apos;estupidesa humana, i no estic segur de la primera.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
@@ -360,8 +360,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no 'try'.</source>
-        <translation>Fes-ho o no. No hi ha un "intent".</translation>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <translation>Fes-ho o no. No hi ha un &quot;intent&quot;.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -371,7 +371,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation>La gent bona no necessita lleis que els diguin d'actuar responsablement, mentre que la mala gent trobarà una manera d'evitar les lleis.</translation>
+        <translation>La gent bona no necessita lleis que els diguin d&apos;actuar responsablement, mentre que la mala gent trobarà una manera d&apos;evitar les lleis.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
@@ -380,8 +380,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It's kind of fun to do the impossible.</source>
-        <translation>És bastant divertit fer l'impossible.</translation>
+        <source>It&apos;s kind of fun to do the impossible.</source>
+        <translation>És bastant divertit fer l&apos;impossible.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation>L'èxit normalment arriba als que estan massa enfeinats per buscar-lo.</translation>
+        <translation>L&apos;èxit normalment arriba als que estan massa enfeinats per buscar-lo.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
@@ -421,7 +421,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation>Algunes vegades no n'hi ha prou amb fer-ho el millor que podem, hem de fer el que cal.</translation>
+        <translation>Algunes vegades no n&apos;hi ha prou amb fer-ho el millor que podem, hem de fer el que cal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
@@ -446,7 +446,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="148"/>
         <source>Loading User Preferences …</source>
-        <translation>Carregant les preferències de l'usuari…</translation>
+        <translation>Carregant les preferències de l&apos;usuari…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="151"/>
@@ -471,7 +471,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="163"/>
         <source>Preparing Workspace …</source>
-        <translation>Preparant l'espai de treball…</translation>
+        <translation>Preparant l&apos;espai de treball…</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="166"/>
@@ -481,7 +481,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="169"/>
         <source>Starting App: %1</source>
-        <translation>Iniciant l'aplicació: %1</translation>
+        <translation>Iniciant l&apos;aplicació: %1</translation>
     </message>
 </context>
 <context>
@@ -532,7 +532,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
         <source>Pin to Desktop</source>
-        <translation>Enganxa a l'escriptori</translation>
+        <translation>Enganxa a l&apos;escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="195"/>
@@ -560,7 +560,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation>Error analitzant la sortida de l'script: %1</translation>
+        <translation>Error analitzant la sortida de l&apos;script: %1</translation>
     </message>
 </context>
 <context>
@@ -684,7 +684,7 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
         <source>Use System Time</source>
-        <translation>Usa l'hora del sistema</translation>
+        <translation>Usa l&apos;hora del sistema</translation>
     </message>
 </context>
 <context>
@@ -692,17 +692,17 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation>Modifica l'ítem</translation>
+        <translation>Modifica l&apos;ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Start Moving Item</source>
-        <translation>Inicia el trasllat de l'ítem</translation>
+        <translation>Inicia el trasllat de l&apos;ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Start Resizing Item</source>
-        <translation>Inicia el canvi de mida de l'ítem</translation>
+        <translation>Inicia el canvi de mida de l&apos;ítem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
@@ -717,7 +717,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="51"/>
         <source>Remove Item</source>
-        <translation>Elimina l'ítem</translation>
+        <translation>Elimina l&apos;ítem</translation>
     </message>
 </context>
 <context>
@@ -773,7 +773,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation>Accions de l'escriptori</translation>
+        <translation>Accions de l&apos;escriptori</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="344"/>
+        <location filename="../LSession.cpp" line="342"/>
         <source>Desktop</source>
         <translation>Escriptori</translation>
     </message>
@@ -879,7 +879,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Obre el Mesclador d'àudio</translation>
+        <translation>Obre el Mesclador d&apos;àudio</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
@@ -1182,12 +1182,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation>Mostra'n les opcions</translation>
+        <translation>Mostra&apos;n les opcions</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation>Obre'n el lloc web</translation>
+        <translation>Obre&apos;n el lloc web</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
@@ -1219,7 +1219,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>URL de l'RSS</translation>
+        <translation>URL de l&apos;RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
@@ -1244,7 +1244,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation>Alguns canals RSS poden sol·licitar intervals d'actualització personalitzats en lloc d'utilitzar aquest paràmetre.</translation>
+        <translation>Alguns canals RSS poden sol·licitar intervals d&apos;actualització personalitzats en lloc d&apos;utilitzar aquest paràmetre.</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
@@ -1290,7 +1290,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation>RSS de l'escriptori Lumina</translation>
+        <translation>RSS de l&apos;escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
@@ -1315,7 +1315,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation>Data de l'última construcció: %1</translation>
+        <translation>Data de l&apos;última construcció: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
@@ -1353,7 +1353,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation>Tots els paràmetres de l'escriptori</translation>
+        <translation>Tots els paràmetres de l&apos;escriptori</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
@@ -1411,7 +1411,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation>Configureu l'escriptori</translation>
+        <translation>Configureu l&apos;escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
@@ -1557,7 +1557,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Giny de l'usuari</translation>
+        <translation>Giny de l&apos;usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1605,12 +1605,12 @@
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation>Carpeta de l'usuari</translation>
+        <translation>Carpeta de l&apos;usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation>Directori de l'usuari</translation>
+        <translation>Directori de l&apos;usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>
@@ -1620,7 +1620,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translation>Torna al directori de l'usuari</translation>
+        <translation>Torna al directori de l&apos;usuari</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
@@ -1635,7 +1635,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Preferències de l'escriptori</translation>
+        <translation>Preferències de l&apos;escriptori</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
@@ -1645,7 +1645,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Aparença de l'escriptori / connectors</translation>
+        <translation>Aparença de l&apos;escriptori / connectors</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
@@ -1655,12 +1655,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
         <source>Screensaver Settings</source>
-        <translation>Paràmetres de l'estalvi de pantalla</translation>
+        <translation>Paràmetres de l&apos;estalvi de pantalla</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Quant a l'escriptori Lumina</translation>
+        <translation>Quant a l&apos;escriptori Lumina</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>

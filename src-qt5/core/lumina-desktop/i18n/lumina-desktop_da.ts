@@ -38,62 +38,62 @@
         <translation>Klik for at sætte</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
         <source>Launch %1</source>
         <translation>Start %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Open With</source>
         <translation>Åbn med</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>View Properties</source>
         <translation>Vis egenskaber</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
         <source>File Operations</source>
         <translation>Filhandlinger</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
         <source>Copy</source>
         <translation>Kopiér</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
         <source>Cut</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Select Application</source>
         <translation>Vælg program</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Name:</source>
         <translation>Navn:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
         <source>New Filename</source>
         <translation>Nyt filnavn</translation>
     </message>
@@ -773,24 +773,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivebordshandlinger</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <location filename="../LDesktop.cpp" line="608"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny mappe</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
         <location filename="../LDesktop.cpp" line="628"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny fil</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Indsæt</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
@@ -827,7 +827,7 @@
         <location filename="../LDesktop.cpp" line="634"/>
         <location filename="../LDesktop.cpp" line="655"/>
         <source>Desktop</source>
-        <translation type="unfinished">Skrivebord</translation>
+        <translation>Skrivebord</translation>
     </message>
 </context>
 <context>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="344"/>
+        <location filename="../LSession.cpp" line="342"/>
         <source>Desktop</source>
         <translation>Skrivebord</translation>
     </message>
@@ -874,7 +874,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydstyrke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1416,22 +1416,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Dvale</translation>
+        <translation>Dvale</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Genstart</translation>
+        <translation>Genstart</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluk</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Log Out</source>
-        <translation type="unfinished">Log ud</translation>
+        <translation>Log ud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1501,7 +1501,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluk</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
