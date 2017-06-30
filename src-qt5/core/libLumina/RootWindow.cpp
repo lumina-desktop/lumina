@@ -184,7 +184,7 @@ void RootWindow::NewWindow(NativeWindow *win){
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; }
+    if(WINDOWS[i]->id() == win){ qDebug() << "Remove Window From Root List"; WINDOWS.takeAt(i)->clientClosed(); break; }
   }
 }
 

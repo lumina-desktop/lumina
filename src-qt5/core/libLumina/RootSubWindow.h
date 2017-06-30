@@ -50,6 +50,7 @@ private:
 	QMenu *otherM; //menu of other actions
 	//Other random objects (animations,etc)
 	QPropertyAnimation *anim;
+	QVariant animResetProp;
 	void initWindowFrame();
 
 	void LoadProperties( QList< NativeWindow::Property> list);

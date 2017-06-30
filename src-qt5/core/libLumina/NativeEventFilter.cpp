@@ -181,7 +181,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
                    obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, true);
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
-		qDebug() << "Window Map Request Event";
+		//qDebug() << "Window Map Request Event";
                    obj->emit WindowCreated( ((xcb_map_request_event_t *) ev)->window );
 		break;
 //==============================
@@ -195,7 +195,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_DESTROY_NOTIFY:
-		qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
+		//qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
                   obj->emit WindowDestroyed( ((xcb_destroy_notify_event_t *) ev)->window );
 	        break;
 //==============================
@@ -262,7 +262,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
                     obj->emit PossibleDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
 		  //checkDamageID( ((xcb_damage_notify_event_t*)ev)->drawable );
 		//}else{
-		  qDebug() << "Default Event:" << (ev->response_type & ~0x80);
+		  //qDebug() << "Default Event:" << (ev->response_type & ~0x80);
 		//}
 //==============================
 	  }

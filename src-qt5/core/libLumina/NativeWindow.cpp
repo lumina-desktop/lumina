@@ -10,7 +10,8 @@
 NativeWindow::NativeWindow(WId id) : QObject(){
   winid = id;
   frameid = 0;
-  WIN = QWindow::fromWinId(winid);
+  dmgID = 0;
+  //WIN = QWindow::fromWinId(winid);
 }
 
 NativeWindow::~NativeWindow(){
@@ -22,6 +23,10 @@ void NativeWindow::addFrameWinID(WId fid){
   frameid = fid;
 }
 
+void NativeWindow::addDamageID(unsigned int dmg){
+  dmgID = dmg;
+}
+
 bool NativeWindow::isRelatedTo(WId tmp){
   return (relatedTo.contains(tmp) || winid == tmp || frameid == tmp);
 }
@@ -30,9 +35,17 @@ WId NativeWindow::id(){
   return winid;
 }
 
-QWindow* NativeWindow::window(){
-  return WIN;
+WId NativeWindow::frameId(){
+  return frameid;
 }
+
+unsigned int NativeWindow::damageId(){
+  return dmgID;
+}
+
+/*QWindow* NativeWindow::window(){
+  return WIN;
+}*/
 
 QVariant NativeWindow::property(NativeWindow::Property prop){
   if(hash.contains(prop)){ return hash.value(prop); }
@@ -40,37 +53,37 @@ QVariant NativeWindow::property(NativeWindow::Property prop){
   return QVariant(); //null variant
 }
 
-void NativeWindow::setProperty(NativeWindow::Property prop, QVariant val){
+void NativeWindow::setProperty(NativeWindow::Property prop, QVariant val, bool force){
   if(prop == NativeWindow::RelatedWindows){ relatedTo = val.value< QList<WId> >(); }
-  else if(prop == NativeWindow::None || hash.value(prop)==val){ return; }
-  hash.insert(prop, val);
+  else if(prop == NativeWindow::None || (!force && hash.value(prop)==val)){ return; }
+  else{ hash.insert(prop, val); }
   emit PropertiesChanged(QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
 }
 
-void NativeWindow::setProperties(QList<NativeWindow::Property> props, QList<QVariant> vals){
+void NativeWindow::setProperties(QList<NativeWindow::Property> props, QList<QVariant> vals, bool force){
   for(int i=0; i<props.length(); i++){
-    if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this propertu
-    if(props[i] == NativeWindow::None || (hash.value(props[i]) == vals[i]) ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
+    if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this property
+    if(props[i] == NativeWindow::None || (!force && (hash.value(props[i]) == vals[i])) ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
     hash.insert(props[i], vals[i]);
   }
   emit PropertiesChanged(props, vals);
 }
 
-void NativeWindow::requestProperty(NativeWindow::Property prop, QVariant val){
-  if(prop == NativeWindow::None || prop == NativeWindow::RelatedWindows || hash.value(prop)==val ){ return; }
+void NativeWindow::requestProperty(NativeWindow::Property prop, QVariant val, bool force){
+  if(prop == NativeWindow::None || prop == NativeWindow::RelatedWindows || (!force && hash.value(prop)==val) ){ return; }
   emit RequestPropertiesChange(winid, QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
 }
 
-void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<QVariant> vals){
+void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<QVariant> vals, bool force){
   //Verify/adjust inputs as needed
   for(int i=0; i<props.length(); i++){
     if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this property
-    if(props[i] == NativeWindow::None || props[i] == NativeWindow::RelatedWindows || hash.value(props[i])==vals[i] ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
-    if( (props[i] == NativeWindow::Visible || props[i] == NativeWindow::Active) && frameid !=0){
+    if(props[i] == NativeWindow::None || props[i] == NativeWindow::RelatedWindows || (!force && hash.value(props[i])==vals[i]) ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
+    /*if( (props[i] == NativeWindow::Visible || props[i] == NativeWindow::Active) && frameid !=0){
       //These particular properties needs to change the frame - not the window itself
       emit RequestPropertiesChange(frameid, QList<NativeWindow::Property>() << props[i], QList<QVariant>() << vals[i]);
       props.removeAt(i); vals.removeAt(i); i--;
-    }
+    }*/
   }
   emit RequestPropertiesChange(winid, props, vals);
 }

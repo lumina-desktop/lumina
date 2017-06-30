@@ -60,16 +60,20 @@ public:
 	~NativeWindow();
 
 	void addFrameWinID(WId);
+	void addDamageID(unsigned int);
 	bool isRelatedTo(WId);
 
 	WId id();
-	QWindow* window();
+	WId frameId();
+	unsigned int damageId();
+
+	//QWindow* window();
 
 	QVariant property(NativeWindow::Property);
-	void setProperty(NativeWindow::Property, QVariant);
-	void setProperties(QList<NativeWindow::Property>, QList<QVariant>);
-	void requestProperty(NativeWindow::Property, QVariant);
-	void requestProperties(QList<NativeWindow::Property>, QList<QVariant>);
+	void setProperty(NativeWindow::Property, QVariant, bool force = false);
+	void setProperties(QList<NativeWindow::Property>, QList<QVariant>, bool force = false);
+	void requestProperty(NativeWindow::Property, QVariant, bool force = false);
+	void requestProperties(QList<NativeWindow::Property>, QList<QVariant>, bool force = false);
 
 	QRect geometry(); //this returns the "full" geometry of the window (window + frame)
 
@@ -80,9 +84,10 @@ public slots:
 
 private:
 	QHash <NativeWindow::Property, QVariant> hash;
-	QWindow *WIN;
+	//QWindow *WIN;
 	WId winid, frameid;
 	QList<WId> relatedTo;
+	unsigned int dmgID;
 
 signals:
 	//General Notifications
