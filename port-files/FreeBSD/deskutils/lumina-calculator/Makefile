@@ -23,7 +23,7 @@ MAKE_JOBS_UNSAFE=yes
 
 USE_QT5=	core gui widgets network svg \
 		buildtools_build x11extras concurrent multimedia
-USES=		dqmake
+USES=		qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
