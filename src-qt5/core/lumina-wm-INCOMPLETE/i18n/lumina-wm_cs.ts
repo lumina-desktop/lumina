@@ -26,12 +26,12 @@
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
         <source>Too Many Failures</source>
-        <translation>Příliš mnoho selhání</translation>
+        <translation>Příliš mnoho nezdařilých pokusů</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
         <source>Wait %1 Minutes</source>
-        <translation>Počkat %1 minut</translation>
+        <translation>Čekejte %1 minut</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="77"/>
