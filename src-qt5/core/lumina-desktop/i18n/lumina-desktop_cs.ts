@@ -40,47 +40,47 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
         <source>Launch %1</source>
-        <translation type="unfinished">Spustit %1</translation>
+        <translation>Spustit %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
         <source>Open</source>
-        <translation type="unfinished">Otevřít</translation>
+        <translation>Otevřít</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít pomocí</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit vlastnosti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operace se souborem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejmenovat</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopírovat</translation>
+        <translation>Kopírovat</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>Cut</source>
-        <translation type="unfinished">Vyjmout</translation>
+        <translation>Vyjmout</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Delete</source>
-        <translation type="unfinished">Vymazat</translation>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový název souboru</translation>
     </message>
 </context>
 <context>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation>Neočekávej, že povzbudíš slabé, tím že dolů stáhneš silné.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Nemůžeš vědět příliš mnoho, ale můžeš toho říct přespříliš.</translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Jen dvě věci jsou nekonečné, vesmír a lidská hloupost. A nejsem si jist, jak si mám vykládat to první.</translation>
     </message>
     <message>
@@ -360,7 +360,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <source>Do, or do not. There is no 'try'.</source>
         <translation>Udělej to, nebo to nedělej vůbec. Nejde o to to jen zkoušet.</translation>
     </message>
     <message>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Dělat nemožné je zábava.</translation>
     </message>
     <message>
@@ -692,7 +692,7 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit položku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
@@ -773,24 +773,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Akce desktopu</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <location filename="../LDesktop.cpp" line="608"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nová složka</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
         <location filename="../LDesktop.cpp" line="628"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový soubor</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
@@ -827,7 +827,7 @@
         <location filename="../LDesktop.cpp" line="634"/>
         <location filename="../LDesktop.cpp" line="655"/>
         <source>Desktop</source>
-        <translation type="unfinished">Plocha</translation>
+        <translation>Plocha</translation>
     </message>
 </context>
 <context>
@@ -874,7 +874,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlasitost</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1416,22 +1416,22 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Uspat do paměti</translation>
+        <translation>Uspat do paměti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Restartovat</translation>
+        <translation>Restartovat</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnout</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
         <source>Log Out</source>
-        <translation type="unfinished">Odhlásit se</translation>
+        <translation>Odhlásit se</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1501,7 +1501,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnout</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
