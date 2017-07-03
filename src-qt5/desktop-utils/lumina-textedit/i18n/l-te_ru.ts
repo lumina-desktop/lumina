@@ -27,7 +27,7 @@
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation>Выбор цвета</translation>
+        <translation>Выберите цвет</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../MainUI.ui" line="209"/>
         <source>View</source>
-        <translation>Просмотр</translation>
+        <translation>Вид</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="213"/>
