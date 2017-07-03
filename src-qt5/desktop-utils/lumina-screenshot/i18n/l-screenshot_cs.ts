@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte oblast</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation>Nástrojový pruh</translation>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation>Pohled</translation>
+        <translation>Zobrazit</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
