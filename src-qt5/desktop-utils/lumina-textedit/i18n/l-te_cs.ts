@@ -21,13 +21,13 @@
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation>Vzorek</translation>
+        <translation>Ukázka</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation>Vyberte barvu</translation>
+        <translation>Vybrat barvu</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>nástrojová lišta</translation>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
