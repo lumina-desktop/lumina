@@ -103,6 +103,13 @@ Examples:
 
 6-optional) Run "make distclean" to clean up all the build files in the Lumina source tree. (go back to step 3 later)
 
+NOTE: The Lumina project is naturally broken down into a number of individual "sub-projects" which are designed to be built and packaged individually. These sub-projects all use the same overall dependencies, but might have differing library/runtime dependencies or even an alternate minimum-supported version of Qt.
+The sub-projects are broken down as follows:
+ * [lumina-core](https://github.com/trueos/lumina/tree/master/src-qt5/core): The core of the project (desktop itself)
+ * [lumina-coreutils](https://github.com/trueos/lumina/tree/master/src-qt5/core-utils): The core utilities for configuring/managing the desktop
+ * [desktop-utilities](https://github.com/trueos/lumina/tree/master/src-qt5/desktop-utils): Various support utilities for desktop systems. Every one of these utilities should be independently packaged.
+
+
 # General TrueOS Information <a name="gentrosinfo"></a>
 
 This section describes where you can find more information about TrueOS and its related projects, file new issues on GitHub, and converse with other users or contributors to the project.
