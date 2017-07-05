@@ -83,8 +83,8 @@ Other Files that get installed if "core" is built directly:
       * `acpi`: Battery detection/status
       * `dbus-send`: System shutdown/restart
     9. Debian GNU/Linux
-      * `xbacklight`: screen brightness control
-      * `amixer`: Audio mixer control
-      * `pavucontrol`: Graphical audio mixer utility
-      * `acpi`: Battery detection/status
-      * `dbus-send`: System shutdown/restart
+       * `xbacklight`: screen brightness control
+       * `amixer`: Audio mixer control
+       * `pavucontrol`: Graphical audio mixer utility
+       * `acpi`: Battery detection/status
+       * `dbus-send`: System shutdown/restart
