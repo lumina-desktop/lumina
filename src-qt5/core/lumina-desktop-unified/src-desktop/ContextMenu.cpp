@@ -19,7 +19,7 @@ void DesktopContextMenu::UpdateMenu(){
   this->addAction(wkspaceact);
   this->addSeparator();
   //Now load the user's menu setup and fill the menu
-  QStringList items = Lumina::SETTINGS->value(DesktopSettings::ContextMenu, "itemlist", QStringList()<< "terminal" << "filemanager" << "line" << "settings" <<"lockdesktop").toStringList();
+  QStringList items = DesktopSettings::instance()->value(DesktopSettings::ContextMenu, "itemlist", QStringList()<< "terminal" << "filemanager" << "line" << "settings" <<"lockdesktop").toStringList();
   //usewinmenu=false;
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ this->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"))->setWhatsThis("lumina-open -terminal"); }
@@ -76,7 +76,7 @@ DesktopContextMenu::~DesktopContextMenu(){
 }
 
 void DesktopContextMenu::start(){
-  connect(Lumina::SETTINGS, SIGNAL(FileModified(DesktopSettings::File)), this, SLOT(SettingsChanged(DesktopSettings::File)) );
+  connect(DesktopSettings::instance(), SIGNAL(FileModified(DesktopSettings::File)), this, SLOT(SettingsChanged(DesktopSettings::File)) );
   connect(this, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
 
   //Still need to connect to some "workspaceChanged(int)" signal

@@ -38,7 +38,7 @@ namespace Lumina{
 
 	//extern EventFilter *EFILTER; //Native Event Watcher
 	extern LShortcutEvents *SHORTCUTS; //Keyboard/mouse shortcut events
-	extern DesktopSettings *SETTINGS; //All Settings files
+	//extern DesktopSettings *SETTINGS; //All Settings files
 	//ScreenSaver
 	extern LScreenSaver *SS;
 	//Root Window

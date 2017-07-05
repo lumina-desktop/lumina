@@ -37,11 +37,11 @@ void LShortcutEvents::CheckKeySequence(WId win){
   QString shortcut = keylistToString();
  //Now see if there is a match for this shortcut
   //  "strict" actions (operate even if a non-desktop window is active/focused)
-  QString action = Lumina::SETTINGS->value(DesktopSettings::Keys, "strict/"+shortcut, "").toString();
+  QString action = DesktopSettings::instance()->value(DesktopSettings::Keys, "strict/"+shortcut, "").toString();
   qDebug() << "Strict Action:" << "strict/"+shortcut << action;
   if(action.isEmpty() && win==0){
     //"loose" actions (operating on the desktop or root window itself)
-    action = Lumina::SETTINGS->value(DesktopSettings::Keys, "desktop/"+shortcut, "").toString();
+    action = DesktopSettings::instance()->value(DesktopSettings::Keys, "desktop/"+shortcut, "").toString();
     qDebug() << "Desktop Action:" << "desktop/"+shortcut << action;
   }
   if(!action.isEmpty()){
@@ -94,10 +94,10 @@ void LShortcutEvents::CheckMouseSequence(WId win, NativeWindowSystem::MouseButto
   if(shortcut.isEmpty()){ return; }
   //Now see if there is a match for this shortcut
   //  "strict" actions (operate even if a non-desktop window is active/focused)
-  QString action = Lumina::SETTINGS->value(DesktopSettings::Keys, "strict/"+shortcut, "").toString();
+  QString action = DesktopSettings::instance()->value(DesktopSettings::Keys, "strict/"+shortcut, "").toString();
   if(action.isEmpty() && win==0){
     //"loose" actions (operating on the desktop or root window itself)
-    action = Lumina::SETTINGS->value(DesktopSettings::Keys, "desktop/"+shortcut, "").toString();
+    action = DesktopSettings::instance()->value(DesktopSettings::Keys, "desktop/"+shortcut, "").toString();
   }
   if(!action.isEmpty()){
     //Found a valid action - go ahead and evaluate it

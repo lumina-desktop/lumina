@@ -18,7 +18,7 @@
 NativeWindowSystem* Lumina::NWS = 0;
 NativeEventFilter* Lumina::NEF = 0;
 LScreenSaver* Lumina::SS = 0;
-DesktopSettings* Lumina::SETTINGS = 0;
+//DesktopSettings* Lumina::SETTINGS = 0;
 //Lumina::WM = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
@@ -45,11 +45,11 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Now initialize the global objects (but do not start them yet)
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
-  Lumina::SETTINGS = new DesktopSettings();
+  //Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
-  //Now put the Event Filter into it's own thread to keep things snappy
+  //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
-    Lumina::NEF->moveToThread(Lumina::EVThread);
+    Lumina::NWS->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
@@ -69,7 +69,7 @@ LSession::~LSession(){
     if(Lumina::EVThread->isRunning()){ Lumina::EVThread->quit(); }
     Lumina::EVThread->deleteLater();
   }
-  if(Lumina::SETTINGS!=0){ Lumina::SETTINGS->deleteLater(); }
+  if(DesktopSettings::instance()!=0){ DesktopSettings::instance()->deleteLater(); }
   if(Lumina::ROOTWIN!=0){ Lumina::ROOTWIN->deleteLater(); }
   if(Lumina::APPLIST!=0){ Lumina::APPLIST->deleteLater(); }
 }
@@ -88,7 +88,7 @@ void LSession::setupSession(){
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
-  Lumina::SETTINGS->start();
+  DesktopSettings::instance()->start();
   /*sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
   DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
   //Load the proper translation files
@@ -201,7 +201,7 @@ void LSession::CleanupSession(){
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
   LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
-  bool playaudio = Lumina::SETTINGS->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
+  bool playaudio = DesktopSettings::instance()->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Now perform any other cleanup
   //Lumina::NEF->stop();
@@ -329,7 +329,7 @@ void LSession::launchStartupApps(){
 
   //Enable Numlock
   if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
-    if(Lumina::SETTINGS->value(DesktopSettings::System,"EnableNumlock",false).toBool()){
+    if(DesktopSettings::instance()->value(DesktopSettings::System,"EnableNumlock",false).toBool()){
       QProcess::startDetached("numlockx on");
     }else{
       QProcess::startDetached("numlockx off");
@@ -350,7 +350,7 @@ void LSession::launchStartupApps(){
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
   */
   //Now play the login music since we are finished
-  if(Lumina::SETTINGS->value(DesktopSettings::System,"PlayStartupAudio",true).toBool()){
+  if(DesktopSettings::instance()->value(DesktopSettings::System,"PlayStartupAudio",true).toBool()){
     //Make sure to re-set the system volume to the last-used value at outset
     /*int vol = LOS::audioVolume();
     if(vol>=0){ LOS::setAudioVolume(vol); }*/
@@ -362,11 +362,11 @@ void LSession::launchStartupApps(){
 void LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = Lumina::SETTINGS->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
+  QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
-    Lumina::SETTINGS->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
+    DesktopSettings::instance()->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
   }
 }
 
