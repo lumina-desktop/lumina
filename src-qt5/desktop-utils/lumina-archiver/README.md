@@ -2,9 +2,6 @@
 
 This is a graphical archive manager based around the `tar` utility, which also provides limited support to copying USB images to a USB device via the `dd`utility.
 
-Binaries:
- * `lumina-archiver`: Graphical utility for configuring the desktop session
-
 ### Library Dependencies
 
 1. Qt 5.2+ (specific modules listed below)
