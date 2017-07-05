@@ -4,15 +4,15 @@ It is **strongly-encouraged** that the "core" of Lumina is built and distributed
 
 Binaries:
  * `start-lumina-desktop`: (lumina-session directory) Use this to start the desktop session
- * `lumina-desktop`: (lumina-desktop directory): Use this to communicate with the currently-running session
- * `lumina-open`: (lumina-open directory: Use this to launch external applications. Complement to the `xdg-open` utility.
- * `lumina-info`: (lumina-info directory: View basic information about the desktop itself such as version, license, etc.
+ * `lumina-desktop`: (lumina-desktop directory) Use this to communicate with the currently-running session
+ * `lumina-open`: (lumina-open directory) Use this to launch external applications. Complement to the `xdg-open` utility.
+ * `lumina-info`: (lumina-info directory) View basic information about the desktop itself such as version, license, etc.
 
 Other Files that get installed if "core" is built directly:
  * PREFIX/share/icons/material-design-[light/dark]: Basic SVG icon theme.
- * PREFIX/share/lumina-desktop/themes/*: Built-in themes for the Lumina desktop
- * PREFIX/share/lumina-desktop/colors/*: Built-in color schemes for the Lumina desktop
- * PREFIX/share/lumina-desktop/menu-scripts/*: Built-in scripts for creating menu entries on-demand.
+ * PREFIX/share/lumina-desktop/themes: Built-in themes for the Lumina desktop
+ * PREFIX/share/lumina-desktop/colors: Built-in color schemes for the Lumina desktop
+ * PREFIX/share/lumina-desktop/menu-scripts: Built-in scripts for creating menu entries on-demand.
  * PREFIX/share/lumina-desktop/globs2: Fallback XDG mimetype database (in case the system does not have one available)
 
 ### Library Dependencies
@@ -50,7 +50,7 @@ Other Files that get installed if "core" is built directly:
    * `compton` *or* `xcompmgr`: Compositor to provide cross-application transparency effects and graphical smoothing
    * `xterm`, `qterminal` or some other graphical terminal: XDG standards require the availability of a graphical terminal to launch particular types of applications.
 3. OS-specific utilities (optional, but allow for better OS integration)
-  1. FreeBSD/TrueOS
+   1. FreeBSD/TrueOS
       * AppCafe (graphical package manager)
       * SysAdm (system control panel)
       * `pc-sysconfig`, `intel_backlight`, `xbrightness` : screen brightness control utilities
