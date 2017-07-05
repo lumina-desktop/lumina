@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QDebug>
 
-#include <unistd.h> 
+#include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -25,6 +25,16 @@ DesktopSettings::~DesktopSettings(){
   if(!files.isEmpty()){ stop(); }
 }
 
+DesktopSettings* DesktopSettings::instance(){
+  static DesktopSettings *set = 0;
+  if(set==0){
+    //First-time init
+    set = new DesktopSettings();
+    set->start();
+  }
+  return set;
+}
+
 //Start/stop routines
 void DesktopSettings::start(){
   files.clear(); settings.clear(); //clear the internal hashes (just in case)
@@ -35,7 +45,7 @@ void DesktopSettings::start(){
   }
   parseSystemSettings(); //set the runmode appropriately
   locateFiles(); //
- 
+
 }
 
 void DesktopSettings::stop(){

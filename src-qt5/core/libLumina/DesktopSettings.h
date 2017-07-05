@@ -30,6 +30,8 @@ public:
 	DesktopSettings(QObject *parent = 0);
 	~DesktopSettings();
 
+	static DesktopSettings* instance();
+
 	//Start/stop routines
 	void start();
 	void stop();
