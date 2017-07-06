@@ -21,7 +21,7 @@ This is a graphical archive manager based around the `tar` utility, which also p
    * `tar`: Used for the backend archive control system
    * `dd`: Used to copy an image file ("*.img") to a USB device
 
-### CLI switches
+### Command Line arguments
 
     * --burn-img : launches burn dialog as soon as lumina-archiver loads.
 	 * Example : `$ lumina-archiver --burn-img ./TrueOS-2017-07-05-x64-USB.img`
