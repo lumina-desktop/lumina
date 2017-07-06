@@ -36,3 +36,14 @@ Syntax files:
    * widgets
 2. Other Libraries
    * libc
+
+
+### Command Line Arguments
+
+* Any files listed after `lumina-texteditor` will open up new tabs of the editor
+ * Example : `lumina-textedit ./test1.txt ./test2.txt ./test3.txt`
+* Wildcards are allowed to open multiple files in any path
+ * Example : `lumina-textedit ./testdir/*
+* `lte` exists as a symlink for `lumina-textedit` for convenience
+ 
+
