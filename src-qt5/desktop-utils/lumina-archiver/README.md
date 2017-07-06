@@ -23,9 +23,8 @@ This is a graphical archive manager based around the `tar` utility, which also p
 
 ### Command Line arguments
 
-    * --burn-img : launches burn dialog as soon as lumina-archiver loads.
-	 * Example : `$ lumina-archiver --burn-img ./TrueOS-2017-07-05-x64-USB.img`
-
-    * --ax : preforms auto-extraction on file into new directory created with the same name as the given file. 
- 	 * Example : `$ lumina-archiver --ax ./lumina-master.zip`
+* `--burn-img` launches burn dialog as soon as lumina-archiver loads.
+ * Example : `$ lumina-archiver --burn-img ./TrueOS-2017-07-05-x64-USB.img`
+* `--ax` preforms auto-extraction on file into new directory created with the same name as the given file. 
+ * Example : `$ lumina-archiver --ax ./lumina-master.zip`
 
