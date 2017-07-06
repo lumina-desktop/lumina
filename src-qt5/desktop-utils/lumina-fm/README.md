@@ -36,4 +36,9 @@ Key Features:
 
 * Any paths listed after `lumina-fm` will open up new tabs of the browser
  * Example : `lumina-fm /usr /etc /bin`
+* `-new-instance` will open Lumina-fm with a new browser window for the home directory
+ * Example : `lumina-fm -new-instance`
+* Paths can be used along with `-new-instance` to open a new browser to that path, mulitple arguments are allowed.  
+ * Example : `lumina-fm -new-instance /usr /bin /etc`
 
+ 
