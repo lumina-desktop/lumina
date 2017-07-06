@@ -31,3 +31,9 @@ Key Features:
 * `lumina-archiver`: Allow for instant-extract of an archive into a new subfolder within the current directory
 * `lumina-open`: Needed to allow "open-with" functionality for files
 * `lumina-fileinfo`: Allows an option to view the properties of files
+
+### Command Line Arguments
+
+* Any paths listed after `lumina-fm` will open up new tabs of the browser
+ * Example : `lumina-fm /usr /etc /bin`
+
