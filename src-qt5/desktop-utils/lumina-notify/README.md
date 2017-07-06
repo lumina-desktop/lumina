@@ -15,7 +15,6 @@ For multiple word arguments encapsulate them with "s
 
 ***
 Example usage in shell script
-***
 
 ~~~~
 #!/bin/csh
@@ -31,6 +30,8 @@ else
 ./lumina-notify "High Five for Darth Jar Jar" Sure OK "Respect"
 endif`
 ~~~~
+
+***
 
 ### Library Dependencies
 
