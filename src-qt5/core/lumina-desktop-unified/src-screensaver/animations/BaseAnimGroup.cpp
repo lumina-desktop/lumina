@@ -11,6 +11,7 @@
 #include "Fireflies.h"
 #include "Grav.h"
 #include "SampleAnimation.h"
+#include "Text.h"
 
 //==============================
 //     PLUGIN LOADING/LISTING
@@ -19,16 +20,16 @@ BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent, QSetti
   //This is where we place all the known plugin ID's, and load the associated subclass
   if(type=="fireflies"){
     return (new FirefliesAnimation(parent,set));
-  }else if(type == "sample"){
-    return (new SampleAnimation(parent, set));
   }else if(type == "grav") {
     return (new GravAnimation(parent, set));
+  }else if(type == "text") {
+    return (new TextAnimation(parent, set));
   }else {
     //Unknown screensaver, return a blank animation group
     return (new BaseAnimGroup(parent, set));
   }
 }
-	
+
 QStringList BaseAnimGroup::KnownAnimations(){
-  return (QStringList() << "grav" /*<< "sample" << "fireflies"*/ << "none");
+  return (QStringList() << "text");
 }

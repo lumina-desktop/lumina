@@ -33,6 +33,7 @@
 #include <QPropertyAnimation>
 #include <QAnimationGroup>
 #include <QParallelAnimationGroup>
+#include <QSequentialAnimationGroup>
 #include <QWindow>
 #include <QWidget>
 #include <QWidgetAction>
