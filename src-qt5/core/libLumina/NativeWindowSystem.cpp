@@ -257,22 +257,25 @@ Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
   xcb_keysym_t symbol = xcb_key_symbols_get_keysym(SYM, keycode,0);
   //not sure about the "column" input - we want raw keys though so ignore the "modified" key states (columns) for now
   qDebug() << "Try to convert keycode to Qt::Key:" << keycode << symbol;
+  //Now map this symbol to the appropriate Qt::Key enumeration
   if(xcb_is_keypad_key(symbol)){ qDebug() << "Keypad Key"; }
   else if(xcb_is_private_keypad_key(symbol)){ qDebug() << "Private Keypad Key"; }
   else if(xcb_is_cursor_key(symbol)){ qDebug() << "Cursor Key"; }
   else if(xcb_is_pf_key(symbol)){ qDebug() << "PF Key"; }
   else if(xcb_is_function_key(symbol)){ qDebug() << "Function Key"; }
   else if(xcb_is_misc_function_key(symbol)){ qDebug() << "Misc Function Key"; }
-  else if(xcb_is_modifier_key(symbol)){ qDebug() << "Modifier Key"; }
-  else if(!QKeySequence(symbol).isEmpty()){
+  else if(xcb_is_modifier_key(symbol)){
+    qDebug() << "Modifier Key";
+
+  }else if(!QKeySequence(symbol).isEmpty()){
     //One of the standard keys, go ahead and do a direct map
-    qDebug() << " -- [GOT MATCH]" << QKeySequence(symbol)[0];
+    qDebug() << " -- [GOT MATCH]" << QKeySequence(symbol);
     return Qt::Key_unknown; //QKeySequence(symbol)[0]; //only ever one key in this method
+  }else{
+    qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
+    qDebug() << " -- Key Sequence Map:" << QKeySequence(symbol);
+    qDebug() << " - Not implemented yet";
   }
-  //Now map this symbol to the appropriate Qt::Key enumeration
-  qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
-  qDebug() << " -- Key Sequence Map:" << QKeySequence(symbol);
-  qDebug() << " - Not implemented yet";
   return Qt::Key_unknown;
 }
 
