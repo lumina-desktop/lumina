@@ -265,6 +265,7 @@ Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
   else if(xcb_is_modifier_key(symbol)){ qDebug() << "Modifier Key"; }
   //Now map this symbol to the appropriate Qt::Key enumeration
   qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
+  qDebug() << " -- Key Sequence Map:" << QKeySequence(symbol);
   qDebug() << " - Not implemented yet";
   return Qt::Key_unknown;
 }
