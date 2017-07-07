@@ -264,6 +264,11 @@ Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
   else if(xcb_is_function_key(symbol)){ qDebug() << "Function Key"; }
   else if(xcb_is_misc_function_key(symbol)){ qDebug() << "Misc Function Key"; }
   else if(xcb_is_modifier_key(symbol)){ qDebug() << "Modifier Key"; }
+  else if(!QKeySequence(symbol).isEmpty()){
+    //One of the standard keys, go ahead and do a direct map
+    qDebug() << " -- [GOT MATCH]" << QKeySequence(symbol)[0];
+    return Qt::Key_unknown; //QKeySequence(symbol)[0]; //only ever one key in this method
+  }
   //Now map this symbol to the appropriate Qt::Key enumeration
   qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
   qDebug() << " -- Key Sequence Map:" << QKeySequence(symbol);
