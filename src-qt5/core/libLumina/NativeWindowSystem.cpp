@@ -16,6 +16,7 @@
 #include <QScreen>
 #include <QFont>
 #include <QFontMetrics>
+#include <QKeySequence>
 
 //XCB Library includes
 #include <xcb/xcb.h>
