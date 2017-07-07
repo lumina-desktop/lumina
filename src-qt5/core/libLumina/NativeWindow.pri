@@ -1,7 +1,7 @@
 
 # Files
 QT *= x11extras
-LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lXdamage 
+LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lxcb-keysyms -lXdamage 
 
 SOURCES *= $${PWD}/NativeWindow.cpp \
 		$${PWD}/NativeWindowSystem.cpp \

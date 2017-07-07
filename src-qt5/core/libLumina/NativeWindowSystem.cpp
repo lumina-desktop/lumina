@@ -27,6 +27,7 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
+#include <xcb/xcb_keysyms.h>
 
 //XLib includes (XCB Damage lib does not appear to register for damage events properly)
 #include <X11/extensions/Xdamage.h>
@@ -250,7 +251,13 @@ void NativeWindowSystem::stop(){
 
 //Small simplification functions
 Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
-  qDebug() << "Try to convert keycode to Qt::Key:" << keycode;
+  static xcb_key_symbols_t *SYM = 0;
+  if(SYM==0){ SYM = xcb_key_symbols_alloc(QX11Info::connection()); }
+  xcb_keysym_t symbol = xcb_key_symbols_get_keysym(SYM, keycode,0);
+  //not sure about the "column" input - we want raw keys though so ignore the "modified" key states (columns) for now
+  qDebug() << "Try to convert keycode to Qt::Key:" << keycode << symbol;
+  //Now map this symbol to the appropriate Qt::Key enumeration
+  qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
   qDebug() << " - Not implemented yet";
   return Qt::Key_unknown;
 }
@@ -802,6 +809,7 @@ void NativeWindowSystem::GotPong(WId id){
 void NativeWindowSystem::NewKeyPress(int keycode, WId win){
   emit NewInputEvent();
   if(screenLocked){ return; }
+  KeycodeToQt(keycode);
   emit KeyPressDetected(win, keycode);
 }
 

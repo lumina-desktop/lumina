@@ -88,20 +88,7 @@ void LSession::setupSession(){
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
-  DesktopSettings::instance()->start();
-  /*sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
-  DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
-  //Load the proper translation files
-  if(sessionsettings->value("ForceInitialLocale",false).toBool()){
-    //Some system locale override it in place - change the env first
-    LUtils::setLocaleEnv( sessionsettings->value("InitLocale/LANG","").toString(), \
-				sessionsettings->value("InitLocale/LC_MESSAGES","").toString(), \
-				sessionsettings->value("InitLocale/LC_TIME","").toString(), \
-				sessionsettings->value("InitLocale/LC_NUMERIC","").toString(), \
-				sessionsettings->value("InitLocale/LC_MONETARY","").toString(), \
-				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
-				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
-  }*/
+  DesktopSettings::instance(); //don't do anything other than init/start the static object here
   if(DEBUG){ qDebug() << " - Load Localization Files:" << timer->elapsed();}
   currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
   if(DEBUG){ qDebug() << " - Start Event Filter:" << timer->elapsed(); }
