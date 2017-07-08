@@ -27,6 +27,9 @@ LShortcutEvents* Lumina::SHORTCUTS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop-unified"){
   //Initialize the global objects to null pointers
+  qRegisterMetaType< Qt::Key >("Qt::Key");
+  qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
+
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
   //Setup the global registrations
@@ -187,7 +190,7 @@ void LSession::CleanupSession(){
   //Create a temporary flag to prevent crash dialogs from opening during cleanup
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
-  LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
+  //LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
   bool playaudio = DesktopSettings::instance()->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Now perform any other cleanup
