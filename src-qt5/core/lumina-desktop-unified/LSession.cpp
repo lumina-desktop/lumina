@@ -253,8 +253,8 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::SS, SIGNAL(LockStatusChanged(bool)), Lumina::NWS, SLOT(ScreenLockChanged(bool)) );
 
   //Mouse/Keyboard Shortcut Events (Make sure to connect to the NWS - the raw events need to be ignored sometimes)
-  connect(Lumina::NWS, SIGNAL(KeyPressDetected(WId, int)), Lumina::SHORTCUTS, SLOT(KeyPress(WId, Qt::Key)) );
-  connect(Lumina::NWS, SIGNAL(KeyReleaseDetected(WId, int)), Lumina::SHORTCUTS, SLOT(KeyRelease(WId, Qt::Key)) );
+  connect(Lumina::NWS, SIGNAL(KeyPressDetected(WId, Qt::Key)), Lumina::SHORTCUTS, SLOT(KeyPress(WId, Qt::Key)) );
+  connect(Lumina::NWS, SIGNAL(KeyReleaseDetected(WId, Qt::Key)), Lumina::SHORTCUTS, SLOT(KeyRelease(WId, Qt::Key)) );
   connect(Lumina::NWS, SIGNAL(MousePressDetected(WId, NativeWindowSystem::MouseButton)), Lumina::SHORTCUTS, SLOT(MousePress(WId, NativeWindowSystem::MouseButton)) );
   connect(Lumina::NWS, SIGNAL(MouseReleaseDetected(WId, NativeWindowSystem::MouseButton)), Lumina::SHORTCUTS, SLOT(MouseRelease(WId, NativeWindowSystem::MouseButton)) );
 

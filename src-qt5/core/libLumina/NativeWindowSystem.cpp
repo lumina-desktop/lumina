@@ -19,15 +19,6 @@
 #include <QKeySequence>
 
 
-#define XK_MISCELLANY
-#define XK_XKB_KEYS
-#define XK_LATIN1
-#define XK_LATIN2
-#define XK_LATIN3
-#define XK_LATIN4
-//NOTE: Look at the keysymdef.h file for additional define/characters which we may need later
-#include <X11/keysymdef.h>
-
 //XCB Library includes
 #include <xcb/xcb.h>
 #include <xcb/xcb_atom.h>
@@ -38,7 +29,6 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
-#include <xcb/xcb_keysyms.h>
 
 //XLib includes (XCB Damage lib does not appear to register for damage events properly)
 #include <X11/extensions/Xdamage.h>
@@ -258,101 +248,6 @@ bool NativeWindowSystem::start(){
 
 void NativeWindowSystem::stop(){
 
-}
-
-//Small simplification functions
-Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
-  static xcb_key_symbols_t *SYM = 0;
-  if(SYM==0){ SYM = xcb_key_symbols_alloc(QX11Info::connection()); }
-  xcb_keysym_t symbol = xcb_key_symbols_get_keysym(SYM, keycode,0);
-  //not sure about the "column" input - we want raw keys though so ignore the "modified" key states (columns) for now
-  qDebug() << "Try to convert keycode to Qt::Key:" << keycode << symbol;
-  //Now map this symbol to the appropriate Qt::Key enumeration
-  if(xcb_is_keypad_key(symbol)){ qDebug() << "Keypad Key"; }
-  else if(xcb_is_private_keypad_key(symbol)){ qDebug() << "Private Keypad Key"; }
-  else if(xcb_is_cursor_key(symbol)){ qDebug() << "Cursor Key"; }
-  else if(xcb_is_pf_key(symbol)){ qDebug() << "PF Key"; }
-  else if(xcb_is_function_key(symbol)){
-    switch(symbol){
-	case XK_F1: return Qt::Key_F1;
-	case XK_F2: return Qt::Key_F2;
-	case XK_F3: return Qt::Key_F3;
-	case XK_F4: return Qt::Key_F4;
-	case XK_F5: return Qt::Key_F5;
-	case XK_F6: return Qt::Key_F6;
-	case XK_F7: return Qt::Key_F7;
-	case XK_F8: return Qt::Key_F8;
-	case XK_F9: return Qt::Key_F9;
-	case XK_F10: return Qt::Key_F10;
-	case XK_F11: return Qt::Key_F11;
-	case XK_F12: return Qt::Key_F12;
-	case XK_F13: return Qt::Key_F13;
-	case XK_F14: return Qt::Key_F14;
-	case XK_F15: return Qt::Key_F15;
-	case XK_F16: return Qt::Key_F16;
-	case XK_F17: return Qt::Key_F17;
-	case XK_F18: return Qt::Key_F18;
-	case XK_F19: return Qt::Key_F19;
-	case XK_F20: return Qt::Key_F20;
-	case XK_F21: return Qt::Key_F21;
-	case XK_F22: return Qt::Key_F22;
-	case XK_F23: return Qt::Key_F23;
-	case XK_F24: return Qt::Key_F24;
-	case XK_F25: return Qt::Key_F25;
-	case XK_F26: return Qt::Key_F26;
-	case XK_F27: return Qt::Key_F27;
-	case XK_F28: return Qt::Key_F28;
-	case XK_F29: return Qt::Key_F29;
-	case XK_F30: return Qt::Key_F30;
-	case XK_F31: return Qt::Key_F31;
-	case XK_F32: return Qt::Key_F32;
-	case XK_F33: return Qt::Key_F33;
-	case XK_F34: return Qt::Key_F34;
-	case XK_F35: return Qt::Key_F35;
-	default:
-	  qDebug() << "Unknown Function Key";
-    }
-  }else if(xcb_is_misc_function_key(symbol)){ qDebug() << "Misc Function Key"; }
-  else if(xcb_is_modifier_key(symbol)){
-    qDebug() << "Modifier Key";
-    /*switch(symbol){
-      case: XK_
-    }*/
-  }else if(!QKeySequence(symbol).isEmpty()){
-    //One of the standard keys, go ahead and do a direct map
-    qDebug() << " -- [GOT MATCH]" << QKeySequence(symbol);
-    return Qt::Key_unknown; //QKeySequence(symbol)[0]; //only ever one key in this method
-  }else{
-    qDebug() << " -- Simple Qt Map:" << (Qt::Key)(symbol);
-    qDebug() << " -- Key Sequence Map:" << QKeySequence(symbol);
-    qDebug() << " - Not implemented yet";
-  }
-  return Qt::Key_unknown;
-}
-
-NativeWindowSystem::MouseButton NativeWindowSystem::MouseToQt(int keycode){
-  switch(keycode){
-    case 1:
-      return NativeWindowSystem::LeftButton;
-    case 3:
-      return NativeWindowSystem::RightButton;
-    case 2:
-      return NativeWindowSystem::MidButton;
-    case 4:
-      return NativeWindowSystem::WheelUp;
-    case 5:
-      return NativeWindowSystem::WheelDown;
-    case 6:
-      return NativeWindowSystem::WheelLeft;
-    case 7:
-      return NativeWindowSystem::WheelRight;
-    case 8:
-      return NativeWindowSystem::BackButton; //Not sure if this is correct yet (1/27/17)
-    case 9:
-      return NativeWindowSystem::ForwardButton; //Not sure if this is correct yet (1/27/17)
-    default:
-      return NativeWindowSystem::NoButton;
-  }
 }
 
 // === PRIVATE ===
@@ -877,14 +772,15 @@ void NativeWindowSystem::GotPong(WId id){
 void NativeWindowSystem::NewKeyPress(int keycode, WId win){
   emit NewInputEvent();
   if(screenLocked){ return; }
-  KeycodeToQt(keycode);
-  emit KeyPressDetected(win, keycode);
+  Qt::Key key = KeycodeToQt(keycode);
+  if(key!=Qt::Key_unknown){ emit KeyPressDetected(win, key); }
 }
 
 void NativeWindowSystem::NewKeyRelease(int keycode, WId win){
   emit NewInputEvent();
   if(screenLocked){ return; }
-  emit KeyReleaseDetected(win, keycode);
+  Qt::Key key = KeycodeToQt(keycode);
+  if(key!=Qt::Key_unknown){ emit KeyReleaseDetected(win, key); }
 }
 
 void NativeWindowSystem::NewMousePress(int buttoncode, WId win){

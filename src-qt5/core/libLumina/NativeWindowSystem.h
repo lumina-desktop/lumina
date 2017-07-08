@@ -128,8 +128,8 @@ signals:
 	void NewWindowAvailable(NativeWindow*);
 	void NewTrayWindowAvailable(NativeWindow*);
 	void NewInputEvent(); //a mouse or keypress was detected (lock-state independent);
-	void KeyPressDetected(WId, int); //only emitted if lockstate = false
-	void KeyReleaseDetected(WId, int); //only emitted if lockstate = false
+	void KeyPressDetected(WId, Qt::Key); //only emitted if lockstate = false
+	void KeyReleaseDetected(WId, Qt::Key); //only emitted if lockstate = false
 	void MousePressDetected(WId, NativeWindowSystem::MouseButton); //only emitted if lockstate = false
 	void MouseReleaseDetected(WId, NativeWindowSystem::MouseButton); //only emitted if lockstate = false
 
