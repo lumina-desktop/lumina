@@ -22,7 +22,7 @@ public:
 	void stop();
 
 private:
-	QList<int> keylist; //keys currently held down (NOTE: QKeySequence has a max of 4 keys for combinations)
+	QList< Qt::Key > keylist; //keys currently held down
 	WId WIN; //current window being acted on by the keys
 	QTimer *clearTimer; //used to clear the internal keylist every once in a while if no events come in.
 	bool evaluated;
@@ -34,8 +34,8 @@ private:
 	void evaluateShortcutAction(QString action);
 
 public slots:
-	void KeyPress(WId window, int key);
-	void KeyRelease(WId window, int key);
+	void KeyPress(WId window, Qt::Key key);
+	void KeyRelease(WId window, Qt::Key key);
 	void MousePress(WId window, NativeWindowSystem::MouseButton);
 	void MouseRelease(WId window, NativeWindowSystem::MouseButton);
 	void clearKeys();
@@ -66,6 +66,7 @@ signals:
 
 	//General Utility Launch
 	void LaunchApplication(QString exec);
+	void LaunchStandardApplication(QString app); //standard app like "terminal", "browser", "email", "settings", etc..
 
 };
 

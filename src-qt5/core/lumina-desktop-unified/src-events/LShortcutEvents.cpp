@@ -106,15 +106,34 @@ void LShortcutEvents::CheckMouseSequence(WId win, NativeWindowSystem::MouseButto
 }
 
 QString LShortcutEvents::keylistToString(){
+  if(keylist.isEmpty()){ return ""; }
   QString shortcut;
+  QList<int> keys; int ckey = 0;
   for(int i=0; i<keylist.length(); i++){
-    if(i>0){ shortcut.append("+"); }
-    shortcut.append( QString::number(keylist[i]) );
+    if(i == keylist.length()-1){ ckey+=keylist[i]; } //always treat the last key as a non-modifier
+    else if(keylist[i] == Qt::Key_Control){ ckey+=Qt::CTRL; } //use the modifier form of the key
+    else if(keylist[i] == Qt::Key_Alt){ ckey += Qt::ALT; }
+    else if(keylist[i] == Qt::Key_Shift){ ckey += Qt::SHIFT; }
+    else if(keylist[i] == Qt::Key_Meta){ ckey += Qt::META; }
+    else{ ckey+= keylist[i]; keys << ckey; ckey = 0; } //non-modifier - need to finish current mod+key combo and start a new one
+  }
+  if(ckey!=0){ keys << ckey; } //add in the last one as well
+  if(keys.length() < 1){ return  ""; }
+  QKeySequence seq;
+  switch(keys.length()){
+    case 1:
+      seq = QKeySequence(keys[0]); break;
+    case 2:
+      seq = QKeySequence(keys[0], keys[1]); break;
+    case 3:
+      seq = QKeySequence(keys[0], keys[1], keys[2]); break;
+    default:
+      seq = QKeySequence(keys[0],keys[1], keys[2], keys[3]); break;
   }
   /*qDebug() << "KeyList to String:";
-  qDebug() << "  keys:" << keylist;
-  qDebug() << "  string:" << shortcut;*/
-  return shortcut;
+  qDebug() << "  keys:" << seq;
+  qDebug() << "  string:" << seq.toString();*/
+  return seq.toString();
 }
 
 void LShortcutEvents::evaluateShortcutAction(QString action){
@@ -123,6 +142,8 @@ void LShortcutEvents::evaluateShortcutAction(QString action){
   if(action.startsWith("Exec=")){
     emit LaunchApplication(action.section("=",1,-1));
     return;
+  }else if(action.startsWith("Launch=")){
+    emit LaunchStandardApplication(action.section("=",1,-1));
   }
   //Specific Internal actions
   action = action.toLower();
@@ -135,9 +156,9 @@ void LShortcutEvents::evaluateShortcutAction(QString action){
 }
 
 // === PUBLIC SLOTS ===
-void LShortcutEvents::KeyPress(WId window, int key){
+void LShortcutEvents::KeyPress(WId window, Qt::Key key){
   if(window!=WIN){ keylist.clear(); WIN = window; }
-  if(!keylist.contains(key)){
+  /*if(!keylist.contains(key)){
     //Put it in the list in ascending order
     bool found = false;
     for(int i=0; i<keylist.length() && !found; i++){
@@ -145,15 +166,22 @@ void LShortcutEvents::KeyPress(WId window, int key){
     }
     if(!found){ keylist << key;  }
     evaluated = false;
+  }*/
+  if(!keylist.isEmpty()){
+    if( keylist.last()!=key ){ keylist << key; }
+  }else{
+    keylist << key;
   }
   //Evaluate the key sequence only when the first one is released
   clearTimer->start(); //will "restart" if already running
 }
 
-void LShortcutEvents::KeyRelease(WId window, int key){
+void LShortcutEvents::KeyRelease(WId window, Qt::Key key){
   if(window!=WIN){ keylist.clear(); return; }
   if(!evaluated){ CheckKeySequence(WIN); } //run this "before" removing the key from the list
-  keylist.removeAll(key);
+  for(int i=keylist.length()-1; i>=0; i--){
+    if(keylist[i] == key){ keylist.removeAt(i); break; }
+  }
   clearTimer->start(); //will "restart" if already running
 }
 
