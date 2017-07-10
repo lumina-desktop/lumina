@@ -21,7 +21,7 @@
     <message>
         <location filename="../LLockScreen.cpp" line="39"/>
         <source>Locked by: %1</source>
-        <translation>Zamknuto: %1</translation>
+        <translation>Zamknuto uživatelem: %1</translation>
     </message>
     <message>
         <location filename="../LLockScreen.cpp" line="76"/>
