@@ -51,7 +51,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation>(Odkaz na e-mail)</translation>
+        <translation>(Poslat odkaz e-mailem)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
