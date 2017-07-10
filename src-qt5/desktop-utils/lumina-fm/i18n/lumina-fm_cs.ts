@@ -16,7 +16,7 @@
     <message>
         <location filename="../BMMDialog.ui" line="40"/>
         <source>Path</source>
-        <translation>Cesta</translation>
+        <translation>Popis umístění</translation>
     </message>
     <message>
         <location filename="../BMMDialog.ui" line="52"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../BMMDialog.cpp" line="64"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Záložka s tímto názvem již existuje. Zvolte jiný název.</translation>
+        <translation>Záložka s tímto názvem už existuje. Zvolte jiný.</translation>
     </message>
 </context>
 <context>
@@ -99,12 +99,12 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="349"/>
         <source>Dirs: %1</source>
-        <translation>Adresáře: %1</translation>
+        <translation>Složky: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="363"/>
         <source>No Directory Contents</source>
-        <translation>Žádný obsah adresáře</translation>
+        <translation>Složka nic neobsahuje</translation>
     </message>
 </context>
 <context>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="221"/>
         <source>Select Action</source>
-        <translation>Vybrat činnost</translation>
+        <translation>Vybrat akci</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="229"/>
@@ -213,7 +213,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>Dokument se nepodařilo vytvořit. Ujistěte se, prosím, že máte náležitá oprávnění.</translation>
+        <translation>Dokument se nepodařilo vytvořit. Ověřte že máte potřebná oprávnění.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="590"/>
@@ -235,19 +235,19 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="512"/>
         <source>Directory Operations</source>
-        <translation>Operace s adresáři</translation>
+        <translation>Operace se složkami</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="524"/>
         <source>Loading...</source>
-        <translation>Nahrává se...</translation>
+        <translation>Načítání…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <location filename="../widgets/DirWidget2.cpp" line="600"/>
         <location filename="../widgets/DirWidget2.cpp" line="622"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
-        <translation>Soubor nebo složka se stejným jménem již existuje! Použijte prosím jiné jméno.</translation>
+        <translation>Soubor nebo složka se stejným názvem už existuje! Použijte jiný.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="604"/>
@@ -257,17 +257,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="604"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>Dokument se nepodařilo vytvořit. Ujistěte se, prosím, že máte náležitá oprávnění ke změně nynějšího adresáře.</translation>
+        <translation>Složku se nepodařilo vytvořit. Ověřte že máte potřebná oprávnění k úpravám ve stávající složce.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Current</source>
-        <translation>Nynější</translation>
+        <translation>Stávající</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="233"/>
         <source>Create...</source>
-        <translation>Vytvořit...</translation>
+        <translation>Vytvořit…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="235"/>
@@ -277,17 +277,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="236"/>
         <source>Directory</source>
-        <translation>Adresář</translation>
+        <translation>Složka</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="237"/>
         <source>Application Launcher</source>
-        <translation>Spouštěč programů</translation>
+        <translation>Spouštěč aplikací</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="241"/>
         <source>Launch...</source>
-        <translation>Spustit...</translation>
+        <translation>Spustit…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="243"/>
@@ -332,7 +332,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
         <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <translation>Nástroj „lumina-fileinfo“ nebyl nalezen. Nejprve bude třeba ho nainstalovat.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="496"/>
         <source>Rename...</source>
-        <translation>Přejmenovat...</translation>
+        <translation>Přejmenovat…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="497"/>
@@ -430,22 +430,22 @@
     <message>
         <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
-        <translation>Nelze smazat tyto soubory:</translation>
+        <translation>Tyto soubory nelze smazat:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
-        <translation>Nelze kopírovat tyto soubory:</translation>
+        <translation>Tyto soubory nelze kopírovat:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
-        <translation>Nelze obnovit tyto soubory:</translation>
+        <translation>Tyto soubory nelze obnovit:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="167"/>
         <source>Could not move these files:</source>
-        <translation>Nelze přesunout tyto soubory:</translation>
+        <translation>Tyto soubory nelze přesunout:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="169"/>
@@ -477,7 +477,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation>Klonovat úložiště Git</translation>
+        <translation>Klonovat Git repozitář</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
@@ -487,12 +487,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>Tento průvodce vás provede postupem stažení úložiště Git z internetu.</translation>
+        <translation>Tento průvodce vás provede stažením Git repozitáře z Internetu.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation>Nastavení úložiště GitHub</translation>
+        <translation>Nastavení pro repozitář GitHub</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
@@ -502,12 +502,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation>Název úložiště</translation>
+        <translation>Název repozitáře</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation>Soukromé úložiště</translation>
+        <translation>Soukromý repozitář</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
@@ -517,7 +517,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation>Použít můj klíč SSH</translation>
+        <translation>Použít svůj SSH klíč</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
@@ -537,17 +537,17 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation>Anonymní (pouze veřejná úložiště)</translation>
+        <translation>Anonymní (pouze veřejné repozitáře)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation>Volitelné heslo SSH</translation>
+        <translation>Volitelné SSH heslo</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation>Pokročilé volby</translation>
+        <translation>Pokročilé předvolby</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
@@ -567,7 +567,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
         <source>Click "Next" to start downloading the repository</source>
-        <translation>Klepněte na Další pro započetí se stahováním úložiště</translation>
+        <translation>Kliknutím na Další zahajte stahování repozitáře</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -640,17 +640,17 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="250"/>
         <source>Search Directory...</source>
-        <translation>Prohledat složku...</translation>
+        <translation>Prohledat složku…</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="283"/>
         <source>Increase Icon Size</source>
-        <translation>Zvětšit velikost ikony</translation>
+        <translation>Zvětšit velikost ikon</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
         <source>Decrease Icon Size</source>
-        <translation>Zmenšit velikost ikony</translation>
+        <translation>Zmenšit velikost ikon</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
@@ -705,7 +705,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="392"/>
         <source>Refresh</source>
-        <translation>Obnovit</translation>
+        <translation>Načíst znovu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="403"/>
@@ -715,12 +715,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="414"/>
         <source>Repo Status</source>
-        <translation>Stav úložiště</translation>
+        <translation>Stav repozitáře</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="419"/>
         <source>Clone Repository</source>
-        <translation>Klonovat úložiště</translation>
+        <translation>Klonovat repozitář</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="177"/>
@@ -740,7 +740,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="196"/>
         <source>&amp;Preferences</source>
-        <translation>&amp;Nastavení</translation>
+        <translation>&amp;Předvolby</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -760,12 +760,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="234"/>
         <source>Show Action Buttons</source>
-        <translation>Ukázat tlačítka činností</translation>
+        <translation>Zobrazit tlačítka akcí</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
-        <translation>Nahrát náhledy</translation>
+        <translation>Načíst náhledy</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="253"/>
@@ -800,7 +800,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="337"/>
         <source>Rename...</source>
-        <translation>Přejmenovat...</translation>
+        <translation>Přejmenovat…</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
@@ -835,12 +835,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="190"/>
         <source>Invalid Directories</source>
-        <translation>Neplatné adresáře</translation>
+        <translation>Neplatné složky</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="190"/>
         <source>The following directories are invalid and could not be opened:</source>
-        <translation>Následující adresáře jsou neplatné a nepodařilo se je otevřít:</translation>
+        <translation>Následující složky nejsou platné a nepodařilo se je otevřít:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="224"/>
@@ -880,17 +880,17 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="599"/>
         <source>Invalid Name</source>
-        <translation>Neplatné jméno</translation>
+        <translation>Neplatný název</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="599"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Záložka s tímto názvem již existuje. Zvolte jiný název.</translation>
+        <translation>Záložka s tímto názvem už existuje. Zvolte jiný.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="620"/>
         <source>Git Repository Status</source>
-        <translation>Stav úložiště Git</translation>
+        <translation>Stav Git repozitáře</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="710"/>
@@ -935,7 +935,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="907"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
-        <translation>Varování: Tímto bude soubor(y) trvale odstraněn ze systému!</translation>
+        <translation>Varování: Tímto budou soubory trvale odstraněny ze systému!</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="907"/>
@@ -978,12 +978,12 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
-        <translation>(Žádný běžící obrazový záznam)</translation>
+        <translation>(Žádné přehrávané video)</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
         <source>Playing:</source>
-        <translation>Přehrávání:</translation>
+        <translation>Přehrávané:</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="130"/>
@@ -1012,12 +1012,12 @@ Nové umístění: %2</translation>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation>Vyhodnocuje se...</translation>
+        <translation>Vyhodnocuje se…</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
@@ -1095,7 +1095,7 @@ Nové umístění: %2</translation>
         <location filename="../widgets/SlideshowWidget.ui" line="304"/>
         <location filename="../widgets/SlideshowWidget.ui" line="320"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="218"/>
@@ -1163,7 +1163,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation>Chyby během operace. Klepněte pro zobrazení podrobností</translation>
+        <translation>Chyby během operace. Podrobnosti zobrazíte kliknutím</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
