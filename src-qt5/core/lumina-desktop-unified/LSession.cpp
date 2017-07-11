@@ -29,6 +29,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Initialize the global objects to null pointers
   qRegisterMetaType< Qt::Key >("Qt::Key");
   qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
+  qRegisterMetaType< QList< NativeWindow::Property > >("QList<NativeWindow::Property>");
 
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
@@ -222,6 +223,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
 
   //Root window connections
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
