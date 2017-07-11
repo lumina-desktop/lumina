@@ -16,12 +16,12 @@
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation>Zdrojový repozitář</translation>
+        <translation>Repozitář se zdrojovými kódy</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>Lumina Website</source>
-        <translation>Stránky projektu Lumina</translation>
+        <translation>Webové stránky projektu Lumina</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>OS Build:</source>
-        <translation>Sestavení OS:</translation>
+        <translation>Sestavení operačního systému:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="218"/>
