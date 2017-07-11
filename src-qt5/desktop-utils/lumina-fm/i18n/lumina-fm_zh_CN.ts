@@ -333,8 +333,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="462"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>无法在您的系统里找到 &quot;lumina-fileinfo&quot; 工具。请先安装它。</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>无法在您的系统里找到 "lumina-fileinfo" 工具。请先安装它。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="488"/>
@@ -571,7 +571,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation>点击 “下一步” 开始下载存储库</translation>
     </message>
     <message>
@@ -1016,7 +1016,7 @@ New Location: %2</source>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表单</translation>
+        <translation>表单</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
