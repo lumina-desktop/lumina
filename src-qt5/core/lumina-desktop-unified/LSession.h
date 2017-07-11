@@ -28,9 +28,12 @@ private:
 public slots:
 	void setupSession();  //called during startup only
 
+	//Slots for public access/usage
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);
 	void StartReboot(bool skipupdates = false);
+	void LaunchApplication(QString app);
+	void LaunchStandardApplication(QString app);
 
 	void reloadIconTheme(); //will emit the IconThemeChanged signal when ready
 	void switchLocale(QString localeCode); //will emit the LocaleChanged signal when ready

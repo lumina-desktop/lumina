@@ -222,7 +222,9 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
-
+  connect(Lumina::SHORTCUTS, SIGNAL(LaunchApplication(QString), this, SLOT(LaunchApplication(QString)) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LaunchStandardApplication(QString)), this, SLOT(LaunchStandardApplication(QString)) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
   //Root window connections
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
@@ -379,6 +381,14 @@ void LSession::StartReboot(bool skipupdates){
   CleanupSession();
   LOS::systemRestart(skipupdates);
   QCoreApplication::exit(0);
+}
+
+void LSession::LaunchApplication(QString app){
+
+}
+
+void LSession::LaunchStandardApplication(QString app){
+
 }
 
 void LSession::reloadIconTheme(){

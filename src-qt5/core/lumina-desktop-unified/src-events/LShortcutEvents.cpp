@@ -139,11 +139,11 @@ QString LShortcutEvents::keylistToString(){
 void LShortcutEvents::evaluateShortcutAction(QString action){
   qDebug() << "Found Shortcut Action:" << action;
   evaluated = true;
-  if(action.startsWith("Exec=")){
-    emit LaunchApplication(action.section("=",1,-1));
+  if(action.startsWith("Exec:")){
+    emit LaunchApplication(action.section(":",1,-1));
     return;
-  }else if(action.startsWith("Launch=")){
-    emit LaunchStandardApplication(action.section("=",1,-1));
+  }else if(action.startsWith("Launch:")){
+    emit LaunchStandardApplication(action.section(":",1,-1));
   }
   //Specific Internal actions
   action = action.toLower();
@@ -152,6 +152,7 @@ void LShortcutEvents::evaluateShortcutAction(QString action){
   else if(action=="reboot"){ emit StartReboot(); }
   else if(action=="shutdown"){ emit StartShutdown(); }
   else if(action=="show_leave_options"){ emit OpenLeaveDialog(); }
+  else if(action=="lockscreen"){ emit LockSession(); }
 
 }
 
