@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>Nástrojový panel</translation>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
