@@ -248,251 +248,251 @@ Qt::Key NativeWindowSystem::KeycodeToQt(int keycode){
         case  XK_braceright: return Qt::Key_BraceRight;
         case  XK_asciitilde: return Qt::Key_AsciiTilde;
 
-        //case XK_nobreakspace                  0x00a0  /* U+00A0 NO-BREAK SPACE */
-        //case XK_exclamdown                    0x00a1  /* U+00A1 INVERTED EXCLAMATION MARK */
-        //case XK_cent                          0x00a2  /* U+00A2 CENT SIGN */
-        //case XK_sterling                      0x00a3  /* U+00A3 POUND SIGN */
-        //case XK_currency                      0x00a4  /* U+00A4 CURRENCY SIGN */
-        //case XK_yen                           0x00a5  /* U+00A5 YEN SIGN */
-        //case XK_brokenbar                     0x00a6  /* U+00A6 BROKEN BAR */
-        //case XK_section                       0x00a7  /* U+00A7 SECTION SIGN */
-        //case XK_diaeresis                     0x00a8  /* U+00A8 DIAERESIS */
-        //case XK_copyright                     0x00a9  /* U+00A9 COPYRIGHT SIGN */
-        //case XK_ordfeminine                   0x00aa  /* U+00AA FEMININE ORDINAL INDICATOR */
-        //case XK_guillemotleft                 0x00ab  /* U+00AB LEFT-POINTING DOUBLE ANGLE QUOTATION MARK */
-        //case XK_notsign                       0x00ac  /* U+00AC NOT SIGN */
-        //case XK_hyphen                        0x00ad  /* U+00AD SOFT HYPHEN */
-        //case XK_registered                    0x00ae  /* U+00AE REGISTERED SIGN */
-        //case XK_macron                        0x00af  /* U+00AF MACRON */
-        //case XK_degree                        0x00b0  /* U+00B0 DEGREE SIGN */
-        //case XK_plusminus                     0x00b1  /* U+00B1 PLUS-MINUS SIGN */
-        //case XK_twosuperior                   0x00b2  /* U+00B2 SUPERSCRIPT TWO */
-        //case XK_threesuperior                 0x00b3  /* U+00B3 SUPERSCRIPT THREE */
-        //case XK_acute                         0x00b4  /* U+00B4 ACUTE ACCENT */
-        //case XK_mu                            0x00b5  /* U+00B5 MICRO SIGN */
-        //case XK_paragraph                     0x00b6  /* U+00B6 PILCROW SIGN */
-        //case XK_periodcentered                0x00b7  /* U+00B7 MIDDLE DOT */
-        //case XK_cedilla                       0x00b8  /* U+00B8 CEDILLA */
-        //case XK_onesuperior                   0x00b9  /* U+00B9 SUPERSCRIPT ONE */
-        //case XK_masculine                     0x00ba  /* U+00BA MASCULINE ORDINAL INDICATOR */
-        //case XK_guillemotright                0x00bb  /* U+00BB RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK */
-        //case XK_onequarter                    0x00bc  /* U+00BC VULGAR FRACTION ONE QUARTER */
-        //case XK_onehalf                       0x00bd  /* U+00BD VULGAR FRACTION ONE HALF */
-        //case XK_threequarters                 0x00be  /* U+00BE VULGAR FRACTION THREE QUARTERS */
-        //case XK_questiondown                  0x00bf  /* U+00BF INVERTED QUESTION MARK */
-        //case XK_Agrave                        0x00c0  /* U+00C0 LATIN CAPITAL LETTER A WITH GRAVE */
-        //case XK_Aacute                        0x00c1  /* U+00C1 LATIN CAPITAL LETTER A WITH ACUTE */
-        //case XK_Acircumflex                   0x00c2  /* U+00C2 LATIN CAPITAL LETTER A WITH CIRCUMFLEX */
-        //case XK_Atilde                        0x00c3  /* U+00C3 LATIN CAPITAL LETTER A WITH TILDE */
-        //case XK_Adiaeresis                    0x00c4  /* U+00C4 LATIN CAPITAL LETTER A WITH DIAERESIS */
-        //case XK_Aring                         0x00c5  /* U+00C5 LATIN CAPITAL LETTER A WITH RING ABOVE */
-        //case XK_AE                            0x00c6  /* U+00C6 LATIN CAPITAL LETTER AE */
-        //case XK_Ccedilla                      0x00c7  /* U+00C7 LATIN CAPITAL LETTER C WITH CEDILLA */
-        //case XK_Egrave                        0x00c8  /* U+00C8 LATIN CAPITAL LETTER E WITH GRAVE */
-        //case XK_Eacute                        0x00c9  /* U+00C9 LATIN CAPITAL LETTER E WITH ACUTE */
-        //case XK_Ecircumflex                   0x00ca  /* U+00CA LATIN CAPITAL LETTER E WITH CIRCUMFLEX */
-        //case XK_Ediaeresis                    0x00cb  /* U+00CB LATIN CAPITAL LETTER E WITH DIAERESIS */
-        //case XK_Igrave                        0x00cc  /* U+00CC LATIN CAPITAL LETTER I WITH GRAVE */
-        //case XK_Iacute                        0x00cd  /* U+00CD LATIN CAPITAL LETTER I WITH ACUTE */
-        //case XK_Icircumflex                   0x00ce  /* U+00CE LATIN CAPITAL LETTER I WITH CIRCUMFLEX */
-        //case XK_Idiaeresis                    0x00cf  /* U+00CF LATIN CAPITAL LETTER I WITH DIAERESIS */
-        //case XK_ETH                           0x00d0  /* U+00D0 LATIN CAPITAL LETTER ETH */
-        //case XK_Eth                           0x00d0  /* deprecated */
-        //case XK_Ntilde                        0x00d1  /* U+00D1 LATIN CAPITAL LETTER N WITH TILDE */
-        //case XK_Ograve                        0x00d2  /* U+00D2 LATIN CAPITAL LETTER O WITH GRAVE */
-        //case XK_Oacute                        0x00d3  /* U+00D3 LATIN CAPITAL LETTER O WITH ACUTE */
-        //case XK_Ocircumflex                   0x00d4  /* U+00D4 LATIN CAPITAL LETTER O WITH CIRCUMFLEX */
-        //case XK_Otilde                        0x00d5  /* U+00D5 LATIN CAPITAL LETTER O WITH TILDE */
-        //case XK_Odiaeresis                    0x00d6  /* U+00D6 LATIN CAPITAL LETTER O WITH DIAERESIS */
-        //case XK_multiply                      0x00d7  /* U+00D7 MULTIPLICATION SIGN */
-        //case XK_Oslash                        0x00d8  /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
-        //case XK_Ooblique                      0x00d8  /* U+00D8 LATIN CAPITAL LETTER O WITH STROKE */
-        //case XK_Ugrave                        0x00d9  /* U+00D9 LATIN CAPITAL LETTER U WITH GRAVE */
-        //case XK_Uacute                        0x00da  /* U+00DA LATIN CAPITAL LETTER U WITH ACUTE */
-        //case XK_Ucircumflex                   0x00db  /* U+00DB LATIN CAPITAL LETTER U WITH CIRCUMFLEX */
-        //case XK_Udiaeresis                    0x00dc  /* U+00DC LATIN CAPITAL LETTER U WITH DIAERESIS */
-        //case XK_Yacute                        0x00dd  /* U+00DD LATIN CAPITAL LETTER Y WITH ACUTE */
-        //case XK_THORN                         0x00de  /* U+00DE LATIN CAPITAL LETTER THORN */
-        //case XK_Thorn                         0x00de  /* deprecated */
-        //case XK_ssharp                        0x00df  /* U+00DF LATIN SMALL LETTER SHARP S */
-        //case XK_agrave                        0x00e0  /* U+00E0 LATIN SMALL LETTER A WITH GRAVE */
-        //case XK_aacute                        0x00e1  /* U+00E1 LATIN SMALL LETTER A WITH ACUTE */
-        //case XK_acircumflex                   0x00e2  /* U+00E2 LATIN SMALL LETTER A WITH CIRCUMFLEX */
-        //case XK_atilde                        0x00e3  /* U+00E3 LATIN SMALL LETTER A WITH TILDE */
-        //case XK_adiaeresis                    0x00e4  /* U+00E4 LATIN SMALL LETTER A WITH DIAERESIS */
-        //case XK_aring                         0x00e5  /* U+00E5 LATIN SMALL LETTER A WITH RING ABOVE */
-        //case XK_ae                            0x00e6  /* U+00E6 LATIN SMALL LETTER AE */
-        //case XK_ccedilla                      0x00e7  /* U+00E7 LATIN SMALL LETTER C WITH CEDILLA */
-        //case XK_egrave                        0x00e8  /* U+00E8 LATIN SMALL LETTER E WITH GRAVE */
-        //case XK_eacute                        0x00e9  /* U+00E9 LATIN SMALL LETTER E WITH ACUTE */
-        //case XK_ecircumflex                   0x00ea  /* U+00EA LATIN SMALL LETTER E WITH CIRCUMFLEX */
-        //case XK_ediaeresis                    0x00eb  /* U+00EB LATIN SMALL LETTER E WITH DIAERESIS */
-        //case XK_igrave                        0x00ec  /* U+00EC LATIN SMALL LETTER I WITH GRAVE */
-        //case XK_iacute                        0x00ed  /* U+00ED LATIN SMALL LETTER I WITH ACUTE */
-        //case XK_icircumflex                   0x00ee  /* U+00EE LATIN SMALL LETTER I WITH CIRCUMFLEX */
-        //case XK_idiaeresis                    0x00ef  /* U+00EF LATIN SMALL LETTER I WITH DIAERESIS */
-        //case XK_eth                           0x00f0  /* U+00F0 LATIN SMALL LETTER ETH */
-        //case XK_ntilde                        0x00f1  /* U+00F1 LATIN SMALL LETTER N WITH TILDE */
-        //case XK_ograve                        0x00f2  /* U+00F2 LATIN SMALL LETTER O WITH GRAVE */
-        //case XK_oacute                        0x00f3  /* U+00F3 LATIN SMALL LETTER O WITH ACUTE */
-        //case XK_ocircumflex                   0x00f4  /* U+00F4 LATIN SMALL LETTER O WITH CIRCUMFLEX */
-        //case XK_otilde                        0x00f5  /* U+00F5 LATIN SMALL LETTER O WITH TILDE */
-        //case XK_odiaeresis                    0x00f6  /* U+00F6 LATIN SMALL LETTER O WITH DIAERESIS */
-        //case XK_division                      0x00f7  /* U+00F7 DIVISION SIGN */
-        //case XK_oslash                        0x00f8  /* U+00F8 LATIN SMALL LETTER O WITH STROKE */
-        //case XK_ooblique                      0x00f8  /* U+00F8 LATIN SMALL LETTER O WITH STROKE */
-        //case XK_ugrave                        0x00f9  /* U+00F9 LATIN SMALL LETTER U WITH GRAVE */
-        //case XK_uacute                        0x00fa  /* U+00FA LATIN SMALL LETTER U WITH ACUTE */
-        //case XK_ucircumflex                   0x00fb  /* U+00FB LATIN SMALL LETTER U WITH CIRCUMFLEX */
-        //case XK_udiaeresis                    0x00fc  /* U+00FC LATIN SMALL LETTER U WITH DIAERESIS */
-        //case XK_yacute                        0x00fd  /* U+00FD LATIN SMALL LETTER Y WITH ACUTE */
-        //case XK_thorn                         0x00fe  /* U+00FE LATIN SMALL LETTER THORN */
-        //case XK_ydiaeresis                    0x00ff  /* U+00FF LATIN SMALL LETTER Y WITH DIAERESIS */
+        case XK_nobreakspace: return Qt::Key_nobreakspace;
+        case XK_exclamdown: return Qt::Key_exclamdown;
+        case XK_cent: return Qt::Key_cent;
+        case XK_sterling: return Qt::Key_sterling;
+        case XK_currency: return Qt::Key_currency;
+        case XK_yen: return Qt::Key_yen;
+        case XK_brokenbar: return Qt::Key_brokenbar;
+        case XK_section: return Qt::Key_section;
+        case XK_diaeresis: return Qt::Key_diaeresis;
+        case XK_copyright: return Qt::Key_copyright;
+        case XK_ordfeminine: return Qt::Key_ordfeminine;
+        case XK_guillemotleft: return Qt::Key_guillemotleft;
+        case XK_notsign: return Qt::Key_notsign;
+        case XK_hyphen: return Qt::Key_hyphen;
+        case XK_registered: return Qt::Key_registered;
+        case XK_macron: return Qt::Key_macron;
+        case XK_degree: return Qt::Key_degree;
+        case XK_plusminus: return Qt::Key_plusminus;
+        case XK_twosuperior: return Qt::Key_twosuperior;
+        case XK_threesuperior: return Qt::Key_threesuperior;
+        case XK_acute: return Qt::Key_acute;
+        case XK_mu: return Qt::Key_mu;
+        case XK_paragraph: return Qt::Key_paragraph;
+        case XK_periodcentered: return Qt::Key_periodcentered;
+        case XK_cedilla: return Qt::Key_cedilla;
+        case XK_onesuperior: return Qt::Key_onesuperior;
+        case XK_masculine: return Qt::Key_masculine;
+        case XK_guillemotright: return Qt::Key_guillemotright;
+        case XK_onequarter: return Qt::Key_onequarter;
+        case XK_onehalf: return Qt::Key_onehalf;
+        case XK_threequarters: return Qt::Key_threequarters;
+        case XK_questiondown: return Qt::Key_questiondown;
+        case XK_Agrave: return Qt::Key_Agrave;
+        case XK_Aacute: return Qt::Key_Aacute;
+        case XK_Acircumflex: return Qt::Key_Acircumflex;
+        case XK_Atilde: return Qt::Key_Atilde;
+        case XK_Adiaeresis: return Qt::Key_Adiaeresis;
+        case XK_Aring: return Qt::Key_Aring;
+        case XK_AE: return Qt::Key_AE;
+        case XK_Ccedilla: return Qt::Key_Ccedilla;
+        case XK_Egrave: return Qt::Key_Egrave;
+        case XK_Eacute: return Qt::Key_Eacute;
+        case XK_Ecircumflex: return Qt::Key_Ecircumflex;
+        case XK_Ediaeresis: return Qt::Key_Ediaeresis;
+        case XK_Igrave: return Qt::Key_Igrave;
+        case XK_Iacute: return Qt::Key_Iacute;
+        case XK_Icircumflex: return Qt::Key_Icircumflex;
+        case XK_Idiaeresis: return Qt::Key_Idiaeresis;
+        case XK_ETH: return Qt::Key_ETH;
+        //case XK_Eth: return Qt::Key_Eth;
+        case XK_Ntilde: return Qt::Key_Ntilde;
+        case XK_Ograve: return Qt::Key_Ograve;
+        case XK_Oacute: return Qt::Key_Oacute;
+        case XK_Ocircumflex: return Qt::Key_Ocircumflex;
+        case XK_Otilde: return Qt::Key_Otilde;
+        case XK_Odiaeresis: return Qt::Key_Odiaeresis;
+        case XK_multiply: return Qt::Key_multiply;
+        //case XK_Oslash: return Qt::Key_AsciiTilde;
+        case XK_Ooblique: return Qt::Key_Ooblique;
+        case XK_Ugrave: return Qt::Key_Ugrave;
+        case XK_Uacute: return Qt::Key_Uacute;
+        case XK_Ucircumflex: return Qt::Key_Ucircumflex;
+        case XK_Udiaeresis: return Qt::Key_Udiaeresis;
+        case XK_Yacute: return Qt::Key_Yacute;
+        case XK_THORN: return Qt::Key_THORN;
+        //case XK_Thorn: return Qt::Key_AsciiTilde;
+        case XK_ssharp: return Qt::Key_ssharp;
+        /*case XK_agrave: return Qt::Key_AsciiTilde;
+        case XK_aacute: return Qt::Key_AsciiTilde;
+        case XK_acircumflex: return Qt::Key_AsciiTilde;
+        case XK_atilde: return Qt::Key_AsciiTilde;
+        case XK_adiaeresis: return Qt::Key_AsciiTilde;
+        case XK_aring: return Qt::Key_AsciiTilde;
+        case XK_ae: return Qt::Key_AsciiTilde;
+        case XK_ccedilla: return Qt::Key_AsciiTilde;
+        case XK_egrave: return Qt::Key_AsciiTilde;
+        case XK_eacute: return Qt::Key_AsciiTilde;
+        case XK_ecircumflex: return Qt::Key_AsciiTilde;
+        case XK_ediaeresis: return Qt::Key_AsciiTilde;
+        case XK_igrave: return Qt::Key_AsciiTilde;
+        case XK_iacute: return Qt::Key_AsciiTilde;
+        case XK_icircumflex: return Qt::Key_AsciiTilde;
+        case XK_idiaeresis: return Qt::Key_AsciiTilde;
+        case XK_eth: return Qt::Key_AsciiTilde;
+        case XK_ntilde: return Qt::Key_AsciiTilde;
+        case XK_ograve: return Qt::Key_AsciiTilde;
+        case XK_oacute: return Qt::Key_AsciiTilde;
+        case XK_ocircumflex: return Qt::Key_AsciiTilde;
+        case XK_otilde: return Qt::Key_AsciiTilde;
+        case XK_odiaeresis: return Qt::Key_AsciiTilde;
+        case XK_division: return Qt::Key_AsciiTilde;
+        case XK_oslash: return Qt::Key_AsciiTilde;
+        case XK_ooblique: return Qt::Key_AsciiTilde;
+        case XK_ugrave: return Qt::Key_AsciiTilde;
+        case XK_uacute: return Qt::Key_AsciiTilde;
+        case XK_ucircumflex: return Qt::Key_AsciiTilde;
+        case XK_udiaeresis: return Qt::Key_AsciiTilde;
+        case XK_yacute: return Qt::Key_AsciiTilde;
+        case XK_thorn: return Qt::Key_AsciiTilde;
+        case XK_ydiaeresis: return Qt::Key_AsciiTilde;
 
-        //case XK_Aogonek                       0x01a1  /* U+0104 LATIN CAPITAL LETTER A WITH OGONEK */
-        //case XK_breve                         0x01a2  /* U+02D8 BREVE */
-        //case XK_Lstroke                       0x01a3  /* U+0141 LATIN CAPITAL LETTER L WITH STROKE */
-        //case XK_Lcaron                        0x01a5  /* U+013D LATIN CAPITAL LETTER L WITH CARON */
-        //case XK_Sacute                        0x01a6  /* U+015A LATIN CAPITAL LETTER S WITH ACUTE */
-        //case XK_Scaron                        0x01a9  /* U+0160 LATIN CAPITAL LETTER S WITH CARON */
-        //case XK_Scedilla                      0x01aa  /* U+015E LATIN CAPITAL LETTER S WITH CEDILLA */
-        //case XK_Tcaron                        0x01ab  /* U+0164 LATIN CAPITAL LETTER T WITH CARON */
-        //case XK_Zacute                        0x01ac  /* U+0179 LATIN CAPITAL LETTER Z WITH ACUTE */
-        //case XK_Zcaron                        0x01ae  /* U+017D LATIN CAPITAL LETTER Z WITH CARON */
-        //case XK_Zabovedot                     0x01af  /* U+017B LATIN CAPITAL LETTER Z WITH DOT ABOVE */
-        //case XK_aogonek                       0x01b1  /* U+0105 LATIN SMALL LETTER A WITH OGONEK */
-        //case XK_ogonek                        0x01b2  /* U+02DB OGONEK */
-        //case XK_lstroke                       0x01b3  /* U+0142 LATIN SMALL LETTER L WITH STROKE */
-        //case XK_lcaron                        0x01b5  /* U+013E LATIN SMALL LETTER L WITH CARON */
-        //case XK_sacute                        0x01b6  /* U+015B LATIN SMALL LETTER S WITH ACUTE */
-        //case XK_caron                         0x01b7  /* U+02C7 CARON */
-        //case XK_scaron                        0x01b9  /* U+0161 LATIN SMALL LETTER S WITH CARON */
-        //case XK_scedilla                      0x01ba  /* U+015F LATIN SMALL LETTER S WITH CEDILLA */
-        //case XK_tcaron                        0x01bb  /* U+0165 LATIN SMALL LETTER T WITH CARON */
-        //case XK_zacute                        0x01bc  /* U+017A LATIN SMALL LETTER Z WITH ACUTE */
-        //case XK_doubleacute                   0x01bd  /* U+02DD DOUBLE ACUTE ACCENT */
-        //case XK_zcaron                        0x01be  /* U+017E LATIN SMALL LETTER Z WITH CARON */
-        //case XK_zabovedot                     0x01bf  /* U+017C LATIN SMALL LETTER Z WITH DOT ABOVE */
-        //case XK_Racute                        0x01c0  /* U+0154 LATIN CAPITAL LETTER R WITH ACUTE */
-        //case XK_Abreve                        0x01c3  /* U+0102 LATIN CAPITAL LETTER A WITH BREVE */
-        //case XK_Lacute                        0x01c5  /* U+0139 LATIN CAPITAL LETTER L WITH ACUTE */
-        //case XK_Cacute                        0x01c6  /* U+0106 LATIN CAPITAL LETTER C WITH ACUTE */
-        //case XK_Ccaron                        0x01c8  /* U+010C LATIN CAPITAL LETTER C WITH CARON */
-        //case XK_Eogonek                       0x01ca  /* U+0118 LATIN CAPITAL LETTER E WITH OGONEK */
-        //case XK_Ecaron                        0x01cc  /* U+011A LATIN CAPITAL LETTER E WITH CARON */
-        //case XK_Dcaron                        0x01cf  /* U+010E LATIN CAPITAL LETTER D WITH CARON */
-        //case XK_Dstroke                       0x01d0  /* U+0110 LATIN CAPITAL LETTER D WITH STROKE */
-        //case XK_Nacute                        0x01d1  /* U+0143 LATIN CAPITAL LETTER N WITH ACUTE */
-        //case XK_Ncaron                        0x01d2  /* U+0147 LATIN CAPITAL LETTER N WITH CARON */
-        //case XK_Odoubleacute                  0x01d5  /* U+0150 LATIN CAPITAL LETTER O WITH DOUBLE ACUTE */
-        //case XK_Rcaron                        0x01d8  /* U+0158 LATIN CAPITAL LETTER R WITH CARON */
-        //case XK_Uring                         0x01d9  /* U+016E LATIN CAPITAL LETTER U WITH RING ABOVE */
-        //case XK_Udoubleacute                  0x01db  /* U+0170 LATIN CAPITAL LETTER U WITH DOUBLE ACUTE */
-        //case XK_Tcedilla                      0x01de  /* U+0162 LATIN CAPITAL LETTER T WITH CEDILLA */
-        //case XK_racute                        0x01e0  /* U+0155 LATIN SMALL LETTER R WITH ACUTE */
-        //case XK_abreve                        0x01e3  /* U+0103 LATIN SMALL LETTER A WITH BREVE */
-        //case XK_lacute                        0x01e5  /* U+013A LATIN SMALL LETTER L WITH ACUTE */
-        //case XK_cacute                        0x01e6  /* U+0107 LATIN SMALL LETTER C WITH ACUTE */
-        //case XK_ccaron                        0x01e8  /* U+010D LATIN SMALL LETTER C WITH CARON */
-        //case XK_eogonek                       0x01ea  /* U+0119 LATIN SMALL LETTER E WITH OGONEK */
-        //case XK_ecaron                        0x01ec  /* U+011B LATIN SMALL LETTER E WITH CARON */
-        //case XK_dcaron                        0x01ef  /* U+010F LATIN SMALL LETTER D WITH CARON */
-        //case XK_dstroke                       0x01f0  /* U+0111 LATIN SMALL LETTER D WITH STROKE */
-        //case XK_nacute                        0x01f1  /* U+0144 LATIN SMALL LETTER N WITH ACUTE */
-        //case XK_ncaron                        0x01f2  /* U+0148 LATIN SMALL LETTER N WITH CARON */
-        //case XK_odoubleacute                  0x01f5  /* U+0151 LATIN SMALL LETTER O WITH DOUBLE ACUTE */
-        //case XK_rcaron                        0x01f8  /* U+0159 LATIN SMALL LETTER R WITH CARON */
-        //case XK_uring                         0x01f9  /* U+016F LATIN SMALL LETTER U WITH RING ABOVE */
-        //case XK_udoubleacute                  0x01fb  /* U+0171 LATIN SMALL LETTER U WITH DOUBLE ACUTE */
-        //case XK_tcedilla                      0x01fe  /* U+0163 LATIN SMALL LETTER T WITH CEDILLA */
-        //case XK_abovedot                      0x01ff  /* U+02D9 DOT ABOVE */
-        //case XK_Hstroke                       0x02a1  /* U+0126 LATIN CAPITAL LETTER H WITH STROKE */
-        //case XK_Hcircumflex                   0x02a6  /* U+0124 LATIN CAPITAL LETTER H WITH CIRCUMFLEX */
-        //case XK_Iabovedot                     0x02a9  /* U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE */
-        //case XK_Gbreve                        0x02ab  /* U+011E LATIN CAPITAL LETTER G WITH BREVE */
-        //case XK_Jcircumflex                   0x02ac  /* U+0134 LATIN CAPITAL LETTER J WITH CIRCUMFLEX */
-        //case XK_hstroke                       0x02b1  /* U+0127 LATIN SMALL LETTER H WITH STROKE */
-        //case XK_hcircumflex                   0x02b6  /* U+0125 LATIN SMALL LETTER H WITH CIRCUMFLEX */
-        //case XK_idotless                      0x02b9  /* U+0131 LATIN SMALL LETTER DOTLESS I */
-        //case XK_gbreve                        0x02bb  /* U+011F LATIN SMALL LETTER G WITH BREVE */
-        //case XK_jcircumflex                   0x02bc  /* U+0135 LATIN SMALL LETTER J WITH CIRCUMFLEX */
-        //case XK_Cabovedot                     0x02c5  /* U+010A LATIN CAPITAL LETTER C WITH DOT ABOVE */
-        //case XK_Ccircumflex                   0x02c6  /* U+0108 LATIN CAPITAL LETTER C WITH CIRCUMFLEX */
-        //case XK_Gabovedot                     0x02d5  /* U+0120 LATIN CAPITAL LETTER G WITH DOT ABOVE */
-        //case XK_Gcircumflex                   0x02d8  /* U+011C LATIN CAPITAL LETTER G WITH CIRCUMFLEX */
-        //case XK_Ubreve                        0x02dd  /* U+016C LATIN CAPITAL LETTER U WITH BREVE */
-        //case XK_Scircumflex                   0x02de  /* U+015C LATIN CAPITAL LETTER S WITH CIRCUMFLEX */
-        //case XK_cabovedot                     0x02e5  /* U+010B LATIN SMALL LETTER C WITH DOT ABOVE */
-        //case XK_ccircumflex                   0x02e6  /* U+0109 LATIN SMALL LETTER C WITH CIRCUMFLEX */
-        //case XK_gabovedot                     0x02f5  /* U+0121 LATIN SMALL LETTER G WITH DOT ABOVE */
-        //case XK_gcircumflex                   0x02f8  /* U+011D LATIN SMALL LETTER G WITH CIRCUMFLEX */
-        //case XK_ubreve                        0x02fd  /* U+016D LATIN SMALL LETTER U WITH BREVE */
-        //case XK_scircumflex                   0x02fe  /* U+015D LATIN SMALL LETTER S WITH CIRCUMFLEX */
-        //case XK_kra                           0x03a2  /* U+0138 LATIN SMALL LETTER KRA */
-        //case XK_kappa                         0x03a2  /* deprecated */
-        //case XK_Rcedilla                      0x03a3  /* U+0156 LATIN CAPITAL LETTER R WITH CEDILLA */
-        //case XK_Itilde                        0x03a5  /* U+0128 LATIN CAPITAL LETTER I WITH TILDE */
-        //case XK_Lcedilla                      0x03a6  /* U+013B LATIN CAPITAL LETTER L WITH CEDILLA */
-        //case XK_Emacron                       0x03aa  /* U+0112 LATIN CAPITAL LETTER E WITH MACRON */
-        //case XK_Gcedilla                      0x03ab  /* U+0122 LATIN CAPITAL LETTER G WITH CEDILLA */
-        //case XK_Tslash                        0x03ac  /* U+0166 LATIN CAPITAL LETTER T WITH STROKE */
-        //case XK_rcedilla                      0x03b3  /* U+0157 LATIN SMALL LETTER R WITH CEDILLA */
-        //case XK_itilde                        0x03b5  /* U+0129 LATIN SMALL LETTER I WITH TILDE */
-        //case XK_lcedilla                      0x03b6  /* U+013C LATIN SMALL LETTER L WITH CEDILLA */
-        //case XK_emacron                       0x03ba  /* U+0113 LATIN SMALL LETTER E WITH MACRON */
-        //case XK_gcedilla                      0x03bb  /* U+0123 LATIN SMALL LETTER G WITH CEDILLA */
-        //case XK_tslash                        0x03bc  /* U+0167 LATIN SMALL LETTER T WITH STROKE */
-        //case XK_ENG                           0x03bd  /* U+014A LATIN CAPITAL LETTER ENG */
-        //case XK_eng                           0x03bf  /* U+014B LATIN SMALL LETTER ENG */
-        //case XK_Amacron                       0x03c0  /* U+0100 LATIN CAPITAL LETTER A WITH MACRON */
-        //case XK_Iogonek                       0x03c7  /* U+012E LATIN CAPITAL LETTER I WITH OGONEK */
-        //case XK_Eabovedot                     0x03cc  /* U+0116 LATIN CAPITAL LETTER E WITH DOT ABOVE */
-        //case XK_Imacron                       0x03cf  /* U+012A LATIN CAPITAL LETTER I WITH MACRON */
-        //case XK_Ncedilla                      0x03d1  /* U+0145 LATIN CAPITAL LETTER N WITH CEDILLA */
-        //case XK_Omacron                       0x03d2  /* U+014C LATIN CAPITAL LETTER O WITH MACRON */
-        //case XK_Kcedilla                      0x03d3  /* U+0136 LATIN CAPITAL LETTER K WITH CEDILLA */
-        //case XK_Uogonek                       0x03d9  /* U+0172 LATIN CAPITAL LETTER U WITH OGONEK */
-        //case XK_Utilde                        0x03dd  /* U+0168 LATIN CAPITAL LETTER U WITH TILDE */
-        //case XK_Umacron                       0x03de  /* U+016A LATIN CAPITAL LETTER U WITH MACRON */
-        //case XK_amacron                       0x03e0  /* U+0101 LATIN SMALL LETTER A WITH MACRON */
-        //case XK_iogonek                       0x03e7  /* U+012F LATIN SMALL LETTER I WITH OGONEK */
-        //case XK_eabovedot                     0x03ec  /* U+0117 LATIN SMALL LETTER E WITH DOT ABOVE */
-        //case XK_imacron                       0x03ef  /* U+012B LATIN SMALL LETTER I WITH MACRON */
-        //case XK_ncedilla                      0x03f1  /* U+0146 LATIN SMALL LETTER N WITH CEDILLA */
-        //case XK_omacron                       0x03f2  /* U+014D LATIN SMALL LETTER O WITH MACRON */
-        //case XK_kcedilla                      0x03f3  /* U+0137 LATIN SMALL LETTER K WITH CEDILLA */
-        //case XK_uogonek                       0x03f9  /* U+0173 LATIN SMALL LETTER U WITH OGONEK */
-        //case XK_utilde                        0x03fd  /* U+0169 LATIN SMALL LETTER U WITH TILDE */
-        //case XK_umacron                       0x03fe  /* U+016B LATIN SMALL LETTER U WITH MACRON */
-        //case XK_Wcircumflex                0x1000174  /* U+0174 LATIN CAPITAL LETTER W WITH CIRCUMFLEX */
-        //case XK_wcircumflex                0x1000175  /* U+0175 LATIN SMALL LETTER W WITH CIRCUMFLEX */
-        //case XK_Ycircumflex                0x1000176  /* U+0176 LATIN CAPITAL LETTER Y WITH CIRCUMFLEX */
-        //case XK_ycircumflex                0x1000177  /* U+0177 LATIN SMALL LETTER Y WITH CIRCUMFLEX */
-        //case XK_Babovedot                  0x1001e02  /* U+1E02 LATIN CAPITAL LETTER B WITH DOT ABOVE */
-        //case XK_babovedot                  0x1001e03  /* U+1E03 LATIN SMALL LETTER B WITH DOT ABOVE */
-        //case XK_Dabovedot                  0x1001e0a  /* U+1E0A LATIN CAPITAL LETTER D WITH DOT ABOVE */
-        //case XK_dabovedot                  0x1001e0b  /* U+1E0B LATIN SMALL LETTER D WITH DOT ABOVE */
-        //case XK_Fabovedot                  0x1001e1e  /* U+1E1E LATIN CAPITAL LETTER F WITH DOT ABOVE */
-        //case XK_fabovedot                  0x1001e1f  /* U+1E1F LATIN SMALL LETTER F WITH DOT ABOVE */
-        //case XK_Mabovedot                  0x1001e40  /* U+1E40 LATIN CAPITAL LETTER M WITH DOT ABOVE */
-        //case XK_mabovedot                  0x1001e41  /* U+1E41 LATIN SMALL LETTER M WITH DOT ABOVE */
-        //case XK_Pabovedot                  0x1001e56  /* U+1E56 LATIN CAPITAL LETTER P WITH DOT ABOVE */
-        //case XK_pabovedot                  0x1001e57  /* U+1E57 LATIN SMALL LETTER P WITH DOT ABOVE */
-        //case XK_Sabovedot                  0x1001e60  /* U+1E60 LATIN CAPITAL LETTER S WITH DOT ABOVE */
-        //case XK_sabovedot                  0x1001e61  /* U+1E61 LATIN SMALL LETTER S WITH DOT ABOVE */
-        //case XK_Tabovedot                  0x1001e6a  /* U+1E6A LATIN CAPITAL LETTER T WITH DOT ABOVE */
-        //case XK_tabovedot                  0x1001e6b  /* U+1E6B LATIN SMALL LETTER T WITH DOT ABOVE */
-        //case XK_Wgrave                     0x1001e80  /* U+1E80 LATIN CAPITAL LETTER W WITH GRAVE */
-        //case XK_wgrave                     0x1001e81  /* U+1E81 LATIN SMALL LETTER W WITH GRAVE */
-        //case XK_Wacute                     0x1001e82  /* U+1E82 LATIN CAPITAL LETTER W WITH ACUTE */
-        //case XK_wacute                     0x1001e83  /* U+1E83 LATIN SMALL LETTER W WITH ACUTE */
-        //case XK_Wdiaeresis                 0x1001e84  /* U+1E84 LATIN CAPITAL LETTER W WITH DIAERESIS */
-        //case XK_wdiaeresis                 0x1001e85  /* U+1E85 LATIN SMALL LETTER W WITH DIAERESIS */
-        //case XK_Ygrave                     0x1001ef2  /* U+1EF2 LATIN CAPITAL LETTER Y WITH GRAVE */
-        //case XK_ygrave                     0x1001ef3  /* U+1EF3 LATIN SMALL LETTER Y WITH GRAVE */
-        //case XK_OE                            0x13bc  /* U+0152 LATIN CAPITAL LIGATURE OE */
-        //case XK_oe                            0x13bd  /* U+0153 LATIN SMALL LIGATURE OE */
-        //case XK_Ydiaeresis                    0x13be  /* U+0178 LATIN CAPITAL LETTER Y WITH DIAERESIS */
+        case: XK_Agonek: return Qt::Key_AsciiTilde;
+        case XK_breve: return Qt::Key_AsciiTilde;
+        case XK_Lstroke: return Qt::Key_AsciiTilde;
+        case XK_Lcaron: return Qt::Key_AsciiTilde;
+        case XK_Sacute: return Qt::Key_AsciiTilde;
+        case XK_Scaron: return Qt::Key_AsciiTilde;
+        case XK_Scedilla: return Qt::Key_AsciiTilde;
+        case XK_Tcaron: return Qt::Key_AsciiTilde;
+        case XK_Zacute: return Qt::Key_AsciiTilde;
+        case XK_Zcaron: return Qt::Key_AsciiTilde;
+        case XK_Zabovedot: return Qt::Key_AsciiTilde;
+        case XK_aogonek: return Qt::Key_AsciiTilde;
+        case XK_ogonek: return Qt::Key_AsciiTilde;
+        case XK_lstroke: return Qt::Key_AsciiTilde;
+        case XK_lcaron: return Qt::Key_AsciiTilde;
+        case XK_sacute: return Qt::Key_AsciiTilde;
+        case XK_caron: return Qt::Key_AsciiTilde;
+        case XK_scaron: return Qt::Key_AsciiTilde;
+        case XK_scedilla: return Qt::Key_AsciiTilde;
+        case XK_tcaron: return Qt::Key_AsciiTilde;
+        case XK_zacute: return Qt::Key_AsciiTilde;
+        case XK_doubleacute: return Qt::Key_AsciiTilde;
+        case XK_zcaron: return Qt::Key_AsciiTilde;
+        case XK_zabovedot: return Qt::Key_AsciiTilde;
+        case XK_Racute: return Qt::Key_AsciiTilde;
+        case XK_Abreve: return Qt::Key_AsciiTilde;
+        case XK_Lacute: return Qt::Key_AsciiTilde;
+        case XK_Cacute: return Qt::Key_AsciiTilde;
+        case XK_Ccaron: return Qt::Key_AsciiTilde;
+        case XK_Eogonek: return Qt::Key_AsciiTilde;
+        case XK_Ecaron: return Qt::Key_AsciiTilde;
+        case XK_Dcaron: return Qt::Key_AsciiTilde;
+        case XK_Dstroke: return Qt::Key_AsciiTilde;
+        case XK_Nacute: return Qt::Key_AsciiTilde;
+        case XK_Ncaron: return Qt::Key_AsciiTilde;
+        case XK_Odoubleacute: return Qt::Key_AsciiTilde;
+        case XK_Rcaron: return Qt::Key_AsciiTilde;
+        case XK_Uring: return Qt::Key_AsciiTilde;
+        case XK_Udoubleacute: return Qt::Key_AsciiTilde;
+        case XK_Tcedilla: return Qt::Key_AsciiTilde;
+        case XK_racute: return Qt::Key_AsciiTilde;
+        case XK_abreve: return Qt::Key_AsciiTilde;
+        case XK_lacute: return Qt::Key_AsciiTilde;
+        case XK_cacute: return Qt::Key_AsciiTilde;
+        case XK_ccaron: return Qt::Key_AsciiTilde;
+        case XK_eogonek: return Qt::Key_AsciiTilde;
+        case XK_ecaron: return Qt::Key_AsciiTilde;
+        case XK_dcaron: return Qt::Key_AsciiTilde;
+        case XK_dstroke: return Qt::Key_AsciiTilde;
+        case XK_nacute: return Qt::Key_AsciiTilde;
+        case XK_ncaron: return Qt::Key_AsciiTilde;
+        case XK_odoubleacute: return Qt::Key_AsciiTilde;
+        case XK_rcaron: return Qt::Key_AsciiTilde;
+        case XK_uring: return Qt::Key_AsciiTilde;
+        case XK_udoubleacute: return Qt::Key_AsciiTilde;
+        case XK_tcedilla: return Qt::Key_AsciiTilde;
+        case XK_abovedot: return Qt::Key_AsciiTilde;
+        case XK_Hstroke: return Qt::Key_AsciiTilde;
+        case XK_Hcircumflex: return Qt::Key_AsciiTilde;
+        case XK_Iabovedot: return Qt::Key_AsciiTilde;
+        case XK_Gbreve: return Qt::Key_AsciiTilde;
+        case XK_Jcircumflex: return Qt::Key_AsciiTilde;
+        case XK_hstroke: return Qt::Key_AsciiTilde;
+        case XK_hcircumflex: return Qt::Key_AsciiTilde;
+        case XK_idotless: return Qt::Key_AsciiTilde;
+        case XK_gbreve: return Qt::Key_AsciiTilde;
+        case XK_jcircumflex: return Qt::Key_AsciiTilde;
+        case XK_Cabovedot: return Qt::Key_AsciiTilde;
+        case XK_Ccircumflex: return Qt::Key_AsciiTilde;
+        case XK_Gabovedot: return Qt::Key_AsciiTilde;
+        case XK_Gcircumflex: return Qt::Key_AsciiTilde;
+        case XK_Ubreve: return Qt::Key_AsciiTilde;
+        case XK_Scircumflex: return Qt::Key_AsciiTilde;
+        case XK_cabovedot: return Qt::Key_AsciiTilde;
+        case XK_ccircumflex: return Qt::Key_AsciiTilde;
+        case XK_gabovedot: return Qt::Key_AsciiTilde;
+        case XK_gcircumflex: return Qt::Key_AsciiTilde;
+        case XK_ubreve: return Qt::Key_AsciiTilde;
+        case XK_scircumflex: return Qt::Key_AsciiTilde;
+        case XK_kra: return Qt::Key_AsciiTilde;
+        case XK_kappa: return Qt::Key_AsciiTilde;
+        case XK_Rcedilla: return Qt::Key_AsciiTilde;
+        case XK_Itilde: return Qt::Key_AsciiTilde;
+        case XK_Lcedilla: return Qt::Key_AsciiTilde;
+        case XK_Emacron: return Qt::Key_AsciiTilde;
+        case XK_Gcedilla: return Qt::Key_AsciiTilde;
+        case XK_Tslash: return Qt::Key_AsciiTilde;
+        case XK_rcedilla: return Qt::Key_AsciiTilde;
+        case XK_itilde: return Qt::Key_AsciiTilde;
+        case XK_lcedilla: return Qt::Key_AsciiTilde;
+        case XK_emacron: return Qt::Key_AsciiTilde;
+        case XK_gcedilla: return Qt::Key_AsciiTilde;
+        case XK_tslash: return Qt::Key_AsciiTilde;
+        case XK_ENG: return Qt::Key_AsciiTilde;
+        case XK_eng: return Qt::Key_AsciiTilde;
+        case XK_Amacron: return Qt::Key_AsciiTilde;
+        case XK_Iogonek: return Qt::Key_AsciiTilde;
+        case XK_Eabovedot: return Qt::Key_AsciiTilde;
+        case XK_Imacron: return Qt::Key_AsciiTilde;
+        case XK_Ncedilla: return Qt::Key_AsciiTilde;
+        case XK_Omacron: return Qt::Key_AsciiTilde;
+        case XK_Kcedilla: return Qt::Key_AsciiTilde;
+        case XK_Uogonek: return Qt::Key_AsciiTilde;
+        case XK_Utilde: return Qt::Key_AsciiTilde;
+        case XK_Umacron: return Qt::Key_AsciiTilde;
+        case XK_amacron: return Qt::Key_AsciiTilde;
+        case XK_iogonek: return Qt::Key_AsciiTilde;
+        case XK_eabovedot: return Qt::Key_AsciiTilde;
+        case XK_imacron: return Qt::Key_AsciiTilde;
+        case XK_ncedilla: return Qt::Key_AsciiTilde;
+        case XK_omacron: return Qt::Key_AsciiTilde;
+        case XK_kcedilla: return Qt::Key_AsciiTilde;
+        case XK_uogonek: return Qt::Key_AsciiTilde;
+        case XK_utilde: return Qt::Key_AsciiTilde;
+        case XK_umacron: return Qt::Key_AsciiTilde;
+        case XK_Wcircumflex: return Qt::Key_AsciiTilde;
+        case XK_wcircumflex: return Qt::Key_AsciiTilde;
+        case XK_Ycircumflex: return Qt::Key_AsciiTilde;
+        case XK_ycircumflex: return Qt::Key_AsciiTilde;
+        case XK_Babovedot: return Qt::Key_AsciiTilde;
+        case XK_babovedot: return Qt::Key_AsciiTilde;
+        case XK_Dabovedot: return Qt::Key_AsciiTilde;
+        case XK_dabovedot: return Qt::Key_AsciiTilde;
+        case XK_Fabovedot: return Qt::Key_AsciiTilde;
+        case XK_fabovedot: return Qt::Key_AsciiTilde;
+        case XK_Mabovedot: return Qt::Key_AsciiTilde;
+        case XK_mabovedot: return Qt::Key_AsciiTilde;
+        case XK_Pabovedot: return Qt::Key_AsciiTilde;
+        case XK_pabovedot: return Qt::Key_AsciiTilde;
+        case XK_Sabovedot: return Qt::Key_AsciiTilde;
+        case XK_sabovedot: return Qt::Key_AsciiTilde;
+        case XK_Tabovedot: return Qt::Key_AsciiTilde;
+        case XK_tabovedot: return Qt::Key_AsciiTilde;
+        case XK_Wgrave: return Qt::Key_AsciiTilde;
+        case XK_wgrave: return Qt::Key_AsciiTilde;
+        case XK_Wacute: return Qt::Key_AsciiTilde;
+        case XK_wacute: return Qt::Key_AsciiTilde;
+        case XK_Wdiaeresis: return Qt::Key_AsciiTilde;
+        case XK_wdiaeresis: return Qt::Key_AsciiTilde;
+        case XK_Ygrave: return Qt::Key_AsciiTilde;
+        case XK_ygrave: return Qt::Key_AsciiTilde;
+        case XK_OE: return Qt::Key_AsciiTilde;
+        case XK_oe: return Qt::Key_AsciiTilde;
+        case XK_Ydiaeresis: return Qt::Key_AsciiTilde;*/
 	default:
 	  qDebug() << "Unknown Key";
   }
