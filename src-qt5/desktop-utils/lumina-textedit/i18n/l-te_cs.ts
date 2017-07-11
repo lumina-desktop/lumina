@@ -32,7 +32,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
@@ -67,7 +67,7 @@
         <location filename="../MainUI.ui" line="146"/>
         <location filename="../MainUI.ui" line="158"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="168"/>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../MainUI.ui" line="143"/>
         <source>Replace all matches (to end of document)</source>
-        <translation>Nahradit všechny shody (až nakonec dokumentu)</translation>
+        <translation>Nahradit všechny shody (až do konce dokumentu)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="155"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../MainUI.ui" line="213"/>
         <source>Syntax Highlighting</source>
-        <translation>Zvýraznění syntaxe</translation>
+        <translation>Zvýrazňovat syntaxi</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="220"/>
@@ -132,17 +132,17 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>Nástrojová lišta</translation>
+        <translation>Nástrojový panel</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
         <source>Show Line Numbers</source>
-        <translation>Zobrazit čísla řádků</translation>
+        <translation>Zobrazovat čísla řádků</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="283"/>
         <source>None</source>
-        <translation>Nic</translation>
+        <translation>Žádný</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
@@ -233,13 +233,13 @@
     <message>
         <location filename="../MainUI.ui" line="392"/>
         <source>Show Popup Warnings</source>
-        <translation>Ukázat vyskakovací varování</translation>
+        <translation>Zobrazovat vyskakovací varování</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="395"/>
         <location filename="../MainUI.ui" line="398"/>
         <source>Show warnings about unsaved changes</source>
-        <translation>Ukázat varování o neuložených změnách</translation>
+        <translation>Zobrazovat varování o neuložených změnách</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="409"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../MainUI.cpp" line="194"/>
         <source>Open File(s)</source>
-        <translation>Otevřít soubor(y)</translation>
+        <translation>Otevřít soubory</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="194"/>
@@ -327,17 +327,17 @@ Přesto chcete editor zavřít?
     <message>
         <location filename="../PlainTextEditor.cpp" line="298"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation>Následující soubor byl změněn jiným programem. Chcete jej nahrát znovu?</translation>
+        <translation>Následující soubor byl změněn jiným programem. Chcete jej načíst znovu?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="300"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Poznámka: Ztratíte všechny nyní neuložené změny)</translation>
+        <translation>(Poznámka: Ztratíte všechny doposud neuložené změny)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="304"/>
         <source>File Modified</source>
-        <translation>Soubor změněn</translation>
+        <translation>Soubor byl změněn</translation>
     </message>
 </context>
 </TS>
