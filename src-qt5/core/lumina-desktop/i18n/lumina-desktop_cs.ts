@@ -6,7 +6,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation>Klepnutím přiřaďte aplikaci</translation>
+        <translation>Kliknutím přiřaďte aplikaci</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="42"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>Keep up with desktop news!</source>
-        <translation>Dostávat zprávy novinkách v prostředí!</translation>
+        <translation>Buďte v obraze ohledně novinek v prostředí!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
@@ -226,17 +226,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation>Lumina lehce dokáže napodobit vzhled rozhraní většiny jiných prostředí pracovní plochy.</translation>
+        <translation>Lumina lehce dokáže napodobit vzhled rozhraní většiny ostatních pracovních prostředí.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation>Toto prostředí je laskavě podporováno a penězi zaštiťováno společností iXsystems</translation>
+        <translation>Toto prostředí je štědře podporováno společností iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation>Nikdy jsem se netrápil tím, co jsem neřekl</translation>
+        <translation>Nikdy mi neublížilo to, co jsem nemusel říct</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
@@ -246,12 +246,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation>Vše je dobré, ale ne každý vidí tu krásu.</translation>
+        <translation>Vše je krásné, ale ne každý to vidí.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation>Před Bohem jsme všichni rozumní stejně – a stejně nerozumní.</translation>
+        <translation>Před Bohem jsme všichni stejně moudří – a stejně hloupí.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
@@ -266,12 +266,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
         <source>Don't expect to build up the weak by pulling down the strong.</source>
-        <translation>Neočekávej že povzbudíš slabé tím že dolů stáhneš silné.</translation>
+        <translation>Neočekávejte že povzbudíte slabé tím že stáhnete dolů silné.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>You can't know too much, but you can say too much.</source>
-        <translation>Nemůžeš vědět příliš mnoho, ale můžeš toho říct přespříliš.</translation>
+        <translation>Nemůžete vědět příliš mnoho, ale můžete toho říct přespříliš.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
@@ -286,12 +286,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation>Nikdy nevěř počítači, který nemůžeš vyhodit z okna.</translation>
+        <translation>Nikdy nevěřte počítači, který nemůžete vyhodit z okna.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>Study the past if you would define the future.</source>
-        <translation>Uč se z minulosti, pokud chceš určovat jak bude vypadat budoucnost.</translation>
+        <translation>Učte se z minulosti, pokud chcete určovat budoucnost.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
@@ -301,12 +301,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation>Požádej a bude ti dáno; hledej a nalezneš; zaklepej a dveře ti budou otevřeny.</translation>
+        <translation>Požádejte a bude vám dáno; hledejte a naleznete; zaklepej a dveře vám budou otevřeny.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation>Začni tam, kde jsi. Používej to, co máš. Udělej, co můžeš.</translation>
+        <translation>Začněte tam, kde jste. Používejte to, co máte. Udělejte, co můžete.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
@@ -316,32 +316,32 @@
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation>Nezáleží na tom jak pomalu jdeš – důležité je, že nezastavíš.</translation>
+        <translation>Nezáleží na tom jak pomalu jdete – důležité je, že se nezastavíte.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation>Dělej, co můžeš, tam kde jsi, s tím, co máš.</translation>
+        <translation>Dělejte, co můžete, tam kde jste, s tím, co máte.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation>Pamatuj si, že nikomu se nepodaří, aby ses cítil být menším, bez tvého souhlasu.</translation>
+        <translation>Pamatujte, že se nikomu nepodaří, aby se cítil být menším, bez jeho souhlasu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation>Nejsou to roky tvého života, co se počítá. Je to život v tvých letech.</translation>
+        <translation>V životě nejsou roky to, co se počítá. Počítá se život v rocích.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation>Buď napiš něco, co stojí za přečtení, nebo udělej něco, o čem má smysl napsat.</translation>
+        <translation>Buď napište něco, co stojí za přečtení, nebo udělejte něco, o čem má smysl napsat.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation>Jediným způsobem, jak dělat práci skvěle, je milovat to, co děláš.</translation>
+        <translation>Jediným způsobem jak odvádět skvělou práci je milovat to, co děláte.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
@@ -361,7 +361,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>Do, or do not. There is no 'try'.</source>
-        <translation>Udělej to, nebo to nedělej vůbec. Nejde o to to jen zkoušet.</translation>
+        <translation>Udělejte to, nebo to nedělejte vůbec. Nejde o to to jen zkoušet.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -371,7 +371,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation>Dobří lidé nepotřebují zákony k tomu, aby jim říkaly, aby jednali zodpovědně, zatímco špatní lidé si najdou cestičku okolo zákonů.</translation>
+        <translation>Dobří lidé nepotřebují zákony k tomu, aby jim říkaly, aby jednali zodpovědně, zatímco špatní lidé si vždy najdou kličku k obejití zákonů.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation>Úspěch obyčejně přijde k těm, kdož jsou příliš zaneprázdněni na to, aby jej hledali.</translation>
+        <translation>Úspěch obyčejně přijde k těm, kteří jsou příliš zaneprázdněni na to, aby ho hledali.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
@@ -421,17 +421,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation>Někdy není dost, že něco uděláme, jak nejlépe umíme. Musíme dělat, co se od nás žádá.</translation>
+        <translation>Někdy nestačí, že děláme jak nejlépe umíme. Musíme dělat, co se od nás žádá.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>The truth is more important than the facts.</source>
-        <translation>Pravda je důležitější než skutečnost.</translation>
+        <translation>Pravda je důležitější než fakta.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="131"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation>Lépe zůstat potichu a být považován za hlupáka, než vyjádřit názor a odstranit veškerou pochybnost.</translation>
+        <translation>Lépe zůstat zticha a být považován za hlupáka, než promluvit a tím to potvrdit.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="142"/>
@@ -653,7 +653,7 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
-        <translation>Neseřazeno</translation>
+        <translation>Nezařazeno</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
@@ -844,7 +844,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation>Odebrat z rychlého spuštění</translation>
+        <translation>Odebrat z rychlého spouštění</translation>
     </message>
 </context>
 <context>
@@ -967,7 +967,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/LUserButton.cpp" line="41"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Rychlé spuštění aplikace nebo otevření souboru</translation>
+        <translation>Rychlé spouštění aplikací nebo otevírání souborů</translation>
     </message>
 </context>
 <context>
@@ -1096,7 +1096,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation>Vybere multimediální soubory</translation>
+        <translation>Vyberte multimediální soubory</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
@@ -1159,7 +1159,7 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation>Zvolte složku s multimédii</translation>
+        <translation>Vyberte složku s multimédii</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
@@ -1219,12 +1219,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation>Adresa RSS</translation>
+        <translation>URL adresa RSS kanálu</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
         <source>Load a preset RSS Feed</source>
-        <translation>Nahrát kanál RSS s přednastavením</translation>
+        <translation>Načíst přednastavený RSS kanál</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
@@ -1270,7 +1270,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="70"/>
         <source>Add RSS Feed</source>
-        <translation>Přidat kanál RSS</translation>
+        <translation>Přidat RSS kanál</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
@@ -1290,12 +1290,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation>RSS prostředí Lumina</translation>
+        <translation>RSS kanál prostředí Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
         <source>Feed URL: %1</source>
-        <translation>Adresa (URL) kanálu: %1</translation>
+        <translation>URL adresa kanálu: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="144"/>
@@ -1315,12 +1315,12 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation>Poslední datum sestavení: %1</translation>
+        <translation>Datum minulého sestavení: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
         <source>Last Sync: %1</source>
-        <translation>Poslední synchronizace: %1</translation>
+        <translation>Minulá synchronizace: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
@@ -1338,7 +1338,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation>Nastavení</translation>
+        <translation>Předvolby</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
@@ -1456,7 +1456,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation>Na použití čekají aktualizace systému! Chcete je nainstalovat nyní?</translation>
+        <translation>Aktualizace systému čekají na instalaci! Chcete je nainstalovat nyní?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
@@ -1486,7 +1486,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="14"/>
         <source>System Options</source>
-        <translation>Možnosti systému</translation>
+        <translation>Předvolby systému</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="55"/>
@@ -1506,7 +1506,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="156"/>
@@ -1521,12 +1521,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>Apply Updates?</source>
-        <translation>Použít aktualizace?</translation>
+        <translation>Nainstalovat aktualizace?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation>Na použití čekají aktualizace systému! Chcete je nainstalovat nyní?</translation>
+        <translation>Aktualizace systému čekají na instalaci! Chcete je nainstalovat nyní?</translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1539,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="134"/>
         <source>Remove Shortcut</source>
-        <translation>Odebrat klávesovou zkratku</translation>
+        <translation>Odebrat zkratku</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="139"/>
@@ -1630,7 +1630,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="458"/>
         <source>Config</source>
-        <translation>Konfigurace</translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
@@ -1645,12 +1645,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Vzhled/Pluginy plochy</translation>
+        <translation>Vzhled / zásuvné moduly plochy</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
         <source>Screen Configuration</source>
-        <translation>Konfigurace obrazovky</translation>
+        <translation>Nastavení obrazovky</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
