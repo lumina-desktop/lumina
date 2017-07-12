@@ -295,35 +295,15 @@ void DirWidget::createMenus(){
 */
 
 //---------------------------------------------------//
-  /*
-  if(cOpenWithMenu==0){ cOpenWithMenu = new QMenu(this); }
-      else{ cOpenWithMenu->clear(); }
-      cOpenWithMenu->setTitle(tr("Open with..."));
-      cOpenWithMenu->setIcon( LXDG::findIcon("run-build-configure","") );
-      XDGDesktopList applist;
-        applist.updateList();
-      PREFAPPS = getPreferredApplications();
-      //qDebug() << "Preferred Apps:" << PREFAPPS;
-      cOpenWithMenu->clear();
-      //Now get the application mimetype for the file extension (if available)
-      QStringList mimetypes = LXDG::findAppMimeForFile(filePath, true).split("::::"); //use all mimetypes
-      //Now add all the detected applications
-      QHash< QString, QList<XDGDesktop*> > hash = LXDG::sortDesktopCats( applist.apps(false,true) );
-      QStringList cat = hash.keys();
-      cat.sort(); //sort alphabetically
-      for(int c=0; c<cat.length(); c++){
-        QList<XDGDesktop*> app = hash[cat[c]];
-        if(app.length()<1){ cOpenWithMenu =0; continue; }
-        for(int a=0; a<app.length(); a++){
-            QString program = app[a]->filePath;
-                QStringList arguments;
-                arguments << "%u";
-                QProcess *p = new QProcess();
-                p->start(program, arguments);
 
-          cOpenWithMenu->addAction(LXDG::findIcon(app[a]->icon), (app[a]->name), this, SLOT(p->start(program, arguments)) );}}
-      cOpenWithMenu->addAction(LXDG::findIcon("run-build-configure",""), tr("Other..."), this, SLOT(runWithFiles()) );
-*/
+  if(cOpenWithMenu==0){
+    cOpenWithMenu = new QMenu(this);
+    connect(cOpenWithMenu, SIGNAL(triggered(QAction*)), this, SLOT(OpenWithApp(QAction*)) );
+  }
+  else{ cOpenWithMenu->clear(); }
+  cOpenWithMenu->setTitle(tr("Open with..."));
+  cOpenWithMenu->setIcon( LXDG::findIcon("system-run-with","") );
+
 //---------------------------------------------------//
   if(cFViewMenu==0){ cFViewMenu = new QMenu(this); }
   else{ cFViewMenu->clear(); }
@@ -560,7 +540,8 @@ void DirWidget::UpdateContextMenu(){
 
   if(!sel.isEmpty()){
    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
-   contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+   //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
+   contextMenu->addMenu(cOpenWithMenu);
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
@@ -589,6 +570,50 @@ void DirWidget::UpdateContextMenu(){
      contextMenu->addMenu(cNewMenu);
    }
    contextMenu->addMenu(cOpenMenu);
+  //=====================
+  //PREFAPPS = getPreferredApplications();
+  //qDebug() << "Preferred Apps:" << PREFAPPS;
+  cOpenWithMenu->clear();
+  //Now get the application mimetype for the file extension (if available)
+  QStringList mimetypes;
+  for(int i=0; i<sel.length(); i++){
+    QStringList mimes = LXDG::findAppMimeForFile(sel[i], true).split("::::"); //use all mimetypes
+    if(mimetypes.isEmpty()){ mimetypes << mimes; }
+    else{
+      //need to verify that the mimetypes are the same before adding them.
+      QStringList test; test << mimetypes << mimes;
+      if(test.removeDuplicates()>0){ mimetypes = test; }
+      else{
+        //Bad match - incompatible file types are selected - disable the recommendations
+        mimetypes.clear();
+        break;
+      }
+    }
+  }
+  //Now add all the detected applications
+  if(!mimetypes.isEmpty()){
+    static XDGDesktopList applist;
+    applist.updateList();
+    QList<XDGDesktop*> apps = applist.apps(false,true);
+    QList<XDGDesktop*> found;
+    for(int a=0; a<apps.length(); a++){
+      if(apps[a]->mimeList.isEmpty()){ continue; } //no corresponding mime types for this app
+        QStringList test; test << mimetypes << apps[a]->mimeList;
+       if(test.removeDuplicates()>0){ found << apps[a]; }
+    }
+    if(!found.isEmpty()){
+      //sort the apps by name
+      found = LXDG::sortDesktopNames(found);
+      //add apps to the menu
+      for(int i=0; i<found.length(); i++){
+        QAction *act = cOpenWithMenu->addAction( LXDG::findIcon(found[i]->icon, ""), found[i]->name );
+          act->setToolTip(found[i]->comment);
+          act->setWhatsThis(found[i]->filePath);
+      }
+      cOpenWithMenu->addSeparator();
+    }
+  }
+  cOpenWithMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Other..."), this, SLOT(runWithFiles()) );
 }
 
 void DirWidget::currentDirectoryChanged(bool widgetonly){
@@ -842,6 +867,15 @@ void DirWidget::openMultimedia(){
       if( info.isAVFile() ){  list << info; } //add to the list
     }
   if(!list.isEmpty()){ emit PlayFiles(list); }
+}
+
+void DirWidget::OpenWithApp(QAction* act){
+  if(act->whatsThis().isEmpty()){ return; }
+  QStringList sel = currentBrowser()->currentSelection();
+  //Now we need to open the app file, and create the process
+  XDGDesktop desk(act->whatsThis());
+  QString exec = desk.generateExec(sel);
+  ExternalProcess::launch(exec);
 }
 
 void DirWidget::autoExtractFiles(){
