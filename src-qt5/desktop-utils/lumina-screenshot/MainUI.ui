@@ -496,7 +496,7 @@
     <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string></string>
    </property>
    <property name="movable">
     <bool>false</bool>
