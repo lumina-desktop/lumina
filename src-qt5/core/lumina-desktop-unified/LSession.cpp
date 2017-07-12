@@ -11,7 +11,7 @@
 
 #include "BootSplash.h"
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 //Initialize all the global objects to null pointers
@@ -223,7 +223,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
   connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
-  connect(Lumina::SHORTCUTS, SIGNAL(LaunchApplication(QString), this, SLOT(LaunchApplication(QString)) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LaunchApplication(QString)), this, SLOT(LaunchApplication(QString)) );
   connect(Lumina::SHORTCUTS, SIGNAL(LaunchStandardApplication(QString)), this, SLOT(LaunchStandardApplication(QString)) );
   connect(Lumina::SHORTCUTS, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
 

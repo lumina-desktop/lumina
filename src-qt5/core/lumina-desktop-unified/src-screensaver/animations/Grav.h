@@ -136,7 +136,7 @@ private slots:
 public:
 	GravAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
 	~GravAnimation(){
-	  this->stop();
+	  //this->stop();
 	}
 
 	void LoadAnimations(){
@@ -178,7 +178,7 @@ public:
             connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
 	    planets << tmp;
 	  }
-	  while(planets.length()>number){planets.takeAt(number)->deleteLater(); sun->deleteLater(); }
+	  while(planets.length()>number){planets.takeAt(number)->deleteLater(); }
 	}
 
 };

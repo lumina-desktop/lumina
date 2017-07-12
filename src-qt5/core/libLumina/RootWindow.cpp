@@ -14,6 +14,7 @@
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
+  this->setMouseTracking(true);
 }
 
 RootWindow::~RootWindow(){
