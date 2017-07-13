@@ -6,6 +6,8 @@
 //===========================================
 #include "NativeWindow.h"
 
+#include <QDebug>
+
 // === PUBLIC ===
 NativeWindow::NativeWindow(WId id) : QObject(){
   winid = id;

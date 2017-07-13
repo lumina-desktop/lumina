@@ -89,6 +89,7 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
    image.loadFromData(img->data, img->size);
   return image;*/
 
+  return QImage();
 }
 
 // ============
@@ -145,6 +146,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
 bool NativeEmbedWidget::detachWindow(){
   xcb_reparent_window(QX11Info::connection(), WIN->id(), QX11Info::appRootWindow(), -1, -1);
   WIN = 0;
+  return true;
 }
 
 bool NativeEmbedWidget::isEmbedded(){
