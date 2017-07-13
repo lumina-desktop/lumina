@@ -11,12 +11,10 @@ NativeWindow::NativeWindow(WId id) : QObject(){
   winid = id;
   frameid = 0;
   dmgID = 0;
-  //WIN = QWindow::fromWinId(winid);
 }
 
 NativeWindow::~NativeWindow(){
   hash.clear();
-  //WIN->deleteLater(); //This class only deals with Native windows which were created outside the app - they need to be cleaned up outside the app too
 }
 
 void NativeWindow::addFrameWinID(WId fid){
@@ -42,10 +40,6 @@ WId NativeWindow::frameId(){
 unsigned int NativeWindow::damageId(){
   return dmgID;
 }
-
-/*QWindow* NativeWindow::window(){
-  return WIN;
-}*/
 
 QVariant NativeWindow::property(NativeWindow::Property prop){
   if(hash.contains(prop)){ return hash.value(prop); }
@@ -93,9 +87,11 @@ QRect NativeWindow::geometry(){
   QRect geom( hash.value(NativeWindow::GlobalPos).toPoint(), hash.value(NativeWindow::Size).toSize() );
   //Now adjust the window geom by the frame margins
   QList<int> frame = hash.value(NativeWindow::FrameExtents).value< QList<int> >(); //Left,Right,Top,Bottom
+  qDebug() << "Calculate Geometry:" << geom << frame;
   if(frame.length()==4){
     geom = geom.adjusted( -frame[0], -frame[2], frame[1], frame[3] );
   }
+  qDebug() << " - Total:" << geom;
   return geom;
 }
 // ==== PUBLIC SLOTS ===

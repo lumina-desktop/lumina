@@ -26,10 +26,10 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   initWindowFrame();
   //Hookup the signals/slots
   connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
-  WIN->addFrameWinID(WinWidget->winId());
-  WIN->emit RequestReparent(WIN->id(), WinWidget->winId(), QPoint(0,0));
+  WinWidget->embedWindow(WIN);
   qDebug() << "[NEW WINDOW]" << WIN->id() << WinWidget->winId() << this->winId();
   LoadAllProperties();
+  //this->show();
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -147,7 +147,7 @@ void RootSubWindow::initWindowFrame(){
     otherB->setMenu(otherM);
     otherB->setPopupMode(QToolButton::InstantPopup);
     otherB->setAutoRaise(true);
-  WinWidget = new QWidget(this);
+  WinWidget = new NativeEmbedWidget(this);
   connect(closeB, SIGNAL(clicked()), this, SLOT(triggerClose()) );
   connect(maxB, SIGNAL(clicked()), this, SLOT(toggleMaximize()) );
   connect(minB, SIGNAL(clicked()), this, SLOT(toggleMinimize()) );
@@ -267,13 +267,13 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		//qDebug() << "Got Visibility Change:" << vals[i];
+		qDebug() << "Got Visibility Change:" << vals[i] << this->geometry();
 		if(vals[i].toBool()){
-		  WinWidget->setVisible(true);
-		  animResetProp = WIN->geometry(); //show event - might not have the right geom yet
+		  animResetProp = WIN->geometry(); //this->geometry();
 		  anim->setPropertyName("geometry");
-		  anim->setStartValue( QRect(WIN->geometry().center(), QSize(0,0)) );
-		  anim->setEndValue(WIN->geometry());
+		  anim->setStartValue( QRect(animResetProp.toRect().center(), QSize(0,0)) );
+		  anim->setEndValue(animResetProp);
+		  this->setGeometry( anim->startValue().toRect() ); //ensure the window is the initial geom before it becomes visible
 		  anim->start();
 		  this->show();
 		}else{
@@ -283,7 +283,6 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
 		  anim->start();
 		  QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
-		  //this->hide();
 		}
 		break;
 	case NativeWindow::Title:
@@ -295,16 +294,16 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
-		//qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
+		qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
 		this->move( vals[i].toPoint() - (WinWidget->mapToGlobal(QPoint(0,0)) - this->pos()) ); //WIN->geometry().topLeft() );
 		break;
 	case NativeWindow::Size:
-		if(WinWidget->size() != vals[i].toSize()){
+		//if(WinWidget->size() != vals[i].toSize()){
 		 qDebug() << "Got Widget Size Change:" << vals[i].toSize();
-		  WinWidget->resize(vals[i].toSize());
+		 //WinWidget->resize(vals[i].toSize());
 		  this->resize( WIN->geometry().size() );
 		  qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
-		}
+		//}
 		break;
 	case NativeWindow::MinSize:
 		WinWidget->setMinimumSize(vals[i].toSize());
@@ -331,13 +330,13 @@ void RootSubWindow::animFinished(){
   if(closing){ this->close(); return;}
   else if(anim->propertyName()=="geometry"){
     if(!animResetProp.isNull()){
-      qDebug() << "Animation Finished, Reset Geometry:" << animResetProp;
+      /*qDebug() << "Animation Finished, Reset Geometry:" << animResetProp;
       qDebug() << " - Starting Value:" << anim->startValue();
       qDebug() << " - Ending Value:" << anim->endValue();
-      qDebug() << " - Current Value:" << this->geometry();
+      qDebug() << " - Current Value:" << this->geometry();*/
       this->setGeometry( animResetProp.toRect() );
-      WIN->requestProperty(NativeWindow::Size, WinWidget->size(), true);
-      WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)),true );
+      //WIN->requestProperty(NativeWindow::Size, WinWidget->size(), true);
+      //WIN->requestProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)),true );
     }
   }
   animResetProp = QVariant(); //clear the variable

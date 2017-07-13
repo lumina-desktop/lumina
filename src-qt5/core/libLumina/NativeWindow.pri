@@ -6,10 +6,12 @@ LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damag
 SOURCES *= $${PWD}/NativeWindow.cpp \
 		$${PWD}/NativeWindowSystem.cpp \
 		$${PWD}/NativeKeyToQt.cpp \
-		$${PWD}/NativeEventFilter.cpp
+		$${PWD}/NativeEventFilter.cpp \
+		$${PWD}/NativeEmbedWidget.cpp
 
 HEADERS *= $${PWD}/NativeWindow.h \
 		$${PWD}/NativeWindowSystem.h \
-		$${PWD}/NativeEventFilter.h
+		$${PWD}/NativeEventFilter.h \
+		$${PWD}/NativeEmbedWidget.h
 
 INCLUDEPATH *= $${PWD}

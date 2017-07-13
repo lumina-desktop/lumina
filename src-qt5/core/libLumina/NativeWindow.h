@@ -95,6 +95,7 @@ signals:
 	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void WindowClosed(WId);
 	void WindowNotResponding(WId); //will be sent out if a window does not respond to a ping request
+	void VisualChanged();
 
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
 	//Note: "WId" should be the NativeWindow id()

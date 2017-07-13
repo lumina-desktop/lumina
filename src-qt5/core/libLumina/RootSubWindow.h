@@ -20,7 +20,7 @@
 #include <QMenu>
 #include <QPropertyAnimation>
 #include <NativeWindow.h>
-
+#include <NativeEmbedWidget.h>
 
 class RootSubWindow : public QFrame{
 	Q_OBJECT
@@ -41,7 +41,7 @@ private:
 	void setMouseCursor(ModState, bool override = false);  //Update the mouse cursor based on state
 	//Native window embed objects
 	NativeWindow *WIN;
-	QWidget *WinWidget;
+	NativeEmbedWidget *WinWidget;
 	bool closing;
 	//Title bar objects
 	QBoxLayout *titleBar, *mainLayout;

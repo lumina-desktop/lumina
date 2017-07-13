@@ -254,8 +254,9 @@ void NativeWindowSystem::stop(){
 NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
   for(int i=0; i<NWindows.length(); i++){
-    if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
-    else if(!checkRelated && id==NWindows[i]->id()){ return NWindows[i]; }
+    if(id==NWindows[i]->id() || id==NWindows[i]->frameId() ){ return NWindows[i]; }
+    //if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
+    //else if(!checkRelated && id==NWindows[i]->id()){ return NWindows[i]; }
   }
   //Check to see if this is a transient for some other window
   if(checkRelated){
@@ -703,13 +704,13 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindow *win = findWindow(id, false);
-  //qDebug() << "Got Window Closed" << id << win;
+  qDebug() << "Got Window Closed" << id << win;
   //qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
     NWindows.removeAll(win);
     //RequestReparent(id, QX11Info::appRootWindow(), QPoint(0,0));
     win->emit WindowClosed(id);
-    //qDebug() << "Visible Window Closed!!!";
+    qDebug() << "Visible Window Closed!!!";
     //win->deleteLater();
   }else{
     win = findTrayWindow(id);
@@ -798,24 +799,8 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
 void NativeWindowSystem::CheckDamageID(WId win){
   for(int i=0; i<NWindows.length(); i++){
     if(NWindows[i]->damageId() == win || NWindows[i]->id() == win || NWindows[i]->frameId()==win){
+      NWindows[i]->emit VisualChanged();
       //qDebug() << "Got DAMAGE Event";
-      /*NativeWindow *WIN = NWindows[i];
-      QSize sz = WIN->property(NativeWindow::Size).toSize();
-      //Need the graphics context of the window
-      xcb_gcontext_t gc = xcb_generate_id(QX11Info::connection());
-        xcb_screen_t *screen = xcb_setup_roots_iterator(xcb_get_setup(QX11Info::connection())).data;
-       uint32_t values[1];
-        values[0] = screen->black_pixel;
-      xcb_create_gc(QX11Info::connection(),
-	gc,
-	WIN->frameId(),
-	XCB_GC_BACKGROUND,
-	values );
-      xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
-      xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-      //Now put this pixmap onto the frame window
-      xcb_copy_area(QX11Info::connection(), pix, WIN->frameId(), gc, 0,0,0,0,sz.width(), sz.height());*/
-      /*xcb_put_image(QX11Info::connection(), XCB_IMAGE_FORMAT_Z_PIXMAP, pix, gc, sz.width(), sz.height(), 0, 0, */
       return;
     }
   }
