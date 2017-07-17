@@ -122,7 +122,7 @@ void LPlugins::LoadPanelPlugins(){
     info.name = QObject::tr("System Dashboard");
     info.description = QObject::tr("View or change system settings (audio volume, screen brightness, battery life, virtual desktops).");
     info.ID = "systemdashboard";
-    info.icon = "dashboard-show";
+    info.icon = "arrow-down-drop-circle";
   PANEL.insert(info.ID, info);  
   //Task Manager
   info = LPI(); //clear it

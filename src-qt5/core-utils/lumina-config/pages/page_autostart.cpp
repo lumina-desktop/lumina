@@ -86,7 +86,7 @@ void page_autostart::LoadSettings(int){
 void page_autostart::updateIcons(){
   ui->tool_session_addapp->setIcon( LXDG::findIcon("system-run","") );
   ui->tool_session_addbin->setIcon( LXDG::findIcon("system-search","") );
-  ui->tool_session_addfile->setIcon( LXDG::findIcon("run-build-file","") );
+  ui->tool_session_addfile->setIcon( LXDG::findIcon("quickopen-file","") );
 }
 
 //=================
