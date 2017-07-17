@@ -29,7 +29,7 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
   connect(brighttimer, SIGNAL(timeout()), this, SLOT(setCurrentBrightness()) );
   connect(ui->combo_locale, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLocale()) );
   //And setup the default icons
-  ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-system-power-management","").pixmap(ui->label_bright_icon->maximumSize()) );
+  ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-desktop-brightness","").pixmap(ui->label_bright_icon->maximumSize()) );
   ui->tool_wk_prev->setIcon( LXDG::findIcon("go-previous-view",""));
   ui->tool_wk_next->setIcon( LXDG::findIcon("go-next-view","") );
   ui->tool_logout->setIcon( LXDG::findIcon("system-log-out","") );
