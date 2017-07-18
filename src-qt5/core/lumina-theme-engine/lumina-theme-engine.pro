@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += src/qt5ct-qtplugin src/qt5ct-style src/qt5ct
+SUBDIRS += src/lthemeengine-qtplugin src/lthemeengine-style src/lthemeengine
 
 unix:exists($$[QT_INSTALL_BINS]/lrelease){
 LRELEASE_EXECUTABLE = $$[QT_INSTALL_BINS]/lrelease
