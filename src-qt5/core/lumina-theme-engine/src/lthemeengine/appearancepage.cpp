@@ -310,7 +310,7 @@ void AppearancePage::readSettings()
 
     QDir("/").mkpath(lthemeengine::userColorSchemePath());
     findColorSchemes(lthemeengine::userColorSchemePath());
-    findColorSchemes(lthemeengine::sharedColorSchemePath());
+    findColorSchemes(lthemeengine::sharedColorSchemePath().join(", "));
 
     if(m_ui->colorSchemeComboBox->count() == 0)
     {

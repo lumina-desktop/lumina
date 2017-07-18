@@ -160,7 +160,7 @@ void QSSPage::readSettings()
     //load stylesheets
     m_ui->qssListWidget->clear();
     findStyleSheets(lthemeengine::userStyleSheetPath());
-    findStyleSheets(lthemeengine::sharedStyleSheetPath());
+    findStyleSheets(lthemeengine::sharedStyleSheetPath().join(", "));
 
     QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     QStringList styleSheets = settings.value("Interface/stylesheets").toStringList();

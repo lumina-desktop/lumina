@@ -35,8 +35,8 @@
 #define LTHEMEENGINE_TOSTRING(s) #s
 #define LTHEMEENGINE_STRINGIFY(s)         LTHEMEENGINE_TOSTRING(s)
 
-#define LTHEMEENGINE_VERSION_INT (LTHEMEENGINE_VERSION_MAJOR<<8 | QT5CT_VERSION_MINOR)
-#define LTHEMEENGINE_VERSION_STR LTHEMEENGINE_STRINGIFY(QT5CT_VERSION_MAJOR.QT5CT_VERSION_MINOR)
+#define LTHEMEENGINE_VERSION_INT (LTHEMEENGINE_VERSION_MAJOR<<8 | LTHEMEENGINE_VERSION_MINOR)
+#define LTHEMEENGINE_VERSION_STR LTHEMEENGINE_STRINGIFY(LTHEMEENGINE_VERSION_MAJOR.QT5CT_VERSION_MINOR)
 
 #include <QString>
 #include <QStringList>
@@ -48,9 +48,9 @@ public:
     static QString configFile();
     static QStringList iconPaths();
     static QString userStyleSheetPath();
-    static QString sharedStyleSheetPath();
+    static QStringList sharedStyleSheetPath();
     static QString userColorSchemePath();
-    static QString sharedColorSchemePath();
+    static QStringList sharedColorSchemePath();
     static QString systemLanguageID();
 
 private:

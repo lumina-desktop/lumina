@@ -85,20 +85,37 @@ QString lthemeengine::userStyleSheetPath()
     return configPath() + "qss/";
 }
 
-QString lthemeengine::sharedStyleSheetPath()
-{
-    return LTHEMEENGINE_DATADIR"/lthemeengine/qss/";
-}
+QStringList lthemeengine::sharedStyleSheetPath()
+ {
+    QStringList dirs;
+    dirs << QString(getenv("XDG_CONFIG_HOME"));
+    dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
+    for(int i=0; i<dirs.length(); i++){
+      dirs[i].append("/lthemeengine/colors/");
+    }
+    if(dirs.isEmpty()){
+        dirs << LTHEMEENGINE_DATADIR"/lthemeengine/qss/"; //no XDG settings - use the hardcoded path
+    }
+    return dirs;
+ }
 
-QString lthemeengine::userColorSchemePath()
-{
-    return configPath() + "colors/";
-}
+ QString lthemeengine::userColorSchemePath(){
+     return configPath() + "colors/";
+ }
 
-QString lthemeengine::sharedColorSchemePath()
-{
-    return LTHEMEENGINE_DATADIR"/lthemeengine/colors/";
-}
+QStringList lthemeengine::sharedColorSchemePath()
+ {
+    QStringList dirs;
+    dirs << QString(getenv("XDG_CONFIG_HOME"));
+    dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
+    for(int i=0; i<dirs.length(); i++){
+      dirs[i].append("/lthemeengine/colors/");
+    }
+    if(dirs.isEmpty()){
+        dirs << LTHEMEENGINE_DATADIR"/lthemeengine/colors/"; //no XDG settings - use the hardcoded path
+    }
+    return dirs;
+ }
 
 QString lthemeengine::systemLanguageID()
 {
