@@ -85,9 +85,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent*);
 	void leaveEvent(QEvent *ev);
 
-	//void hideEvent(QHideEvent *ev);
-	void resizeEvent(QResizeEvent *ev);
-	//void showEvent(QShowEvent *ev);
 	void moveEvent(QMoveEvent *ev);
 
 
