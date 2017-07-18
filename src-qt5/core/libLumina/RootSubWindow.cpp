@@ -68,17 +68,32 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
 	if(setoffset){ offset.setX(0); offset.setY(this->height() - pt.y()); } //difference from bottom edge (X does not matter)
 	return ResizeBottom;
       }
-    }else{
-      //One of the side options
-      if(pt.x() < WIN_BORDER){
+    }else if(pt.x() < WIN_BORDER){
+      //Left side options
+      if(pt.y() < this->height()/5){
+	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
+	return ResizeTopLeft;
+      }else if(pt.y() > (this->height()*4.0/5.0)){
+	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
+	return ResizeBottomLeft;
+      }else{
 	if(setoffset){ offset.setX(pt.x()); offset.setY(0); } //difference from left edge (Y does not matter)
 	return ResizeLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER) ){
+      }
+    }else if(pt.x() > (this->width()-WIN_BORDER) ){
+      //Right side options
+      if(pt.y() < this->height()/5){
+	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
+	return ResizeTopRight;
+      }else if(pt.y() > (this->height()*4.0/5.0)){
+	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
+	return ResizeBottomRight;
+      }else{
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(0); } //difference from right edge (Y does not matter)
 	return ResizeRight;
-      }else{
-	return Normal;
       }
+    }else{
+	return Normal;
     }
   }
   return Normal;
@@ -525,7 +540,7 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
 }*/
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
-  qDebug() << "Got Move Event:" << ev->pos() << WinWidget->geometry();
+  //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->geometry();
   QFrame::moveEvent(ev);
   if(!closing && anim->state()!=QAbstractAnimation::Running){
     moveTimer->start();
