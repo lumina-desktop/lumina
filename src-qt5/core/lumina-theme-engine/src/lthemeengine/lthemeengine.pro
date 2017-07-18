@@ -47,8 +47,6 @@ HEADERS += \
    DEFINES += USE_WIDGETS
 }
 
-RESOURCES = translations/translations.qrc
-
 target.path = $$BINDIR
 
 desktop.files = lthemeengine.desktop

@@ -30,7 +30,7 @@
 #include <lthemeengine/lthemeengine.h>
 #include "lthemeengineproxystyle.h"
 
-lthemeengineProxyStyle::Qt5CTProxyStyle(const QString &key) :
+lthemeengineProxyStyle::lthemeengineProxyStyle(const QString &key) :
     QProxyStyle(key)
 {
     QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
@@ -38,7 +38,7 @@ lthemeengineProxyStyle::Qt5CTProxyStyle(const QString &key) :
     m_activateItemOnSingleClick = settings.value("Interface/activate_item_on_single_click", Qt::PartiallyChecked).toInt();
 }
 
-lthemeengineProxyStyle::~Qt5CTProxyStyle()
+lthemeengineProxyStyle::~lthemeengineProxyStyle()
 {
     //qDebug("%s", Q_FUNC_INFO);
 }

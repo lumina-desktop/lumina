@@ -22,7 +22,7 @@ message(Found lrelease executable: $$LRELEASE_EXECUTABLE)
 message(generating translations)
 unix:system(find . -name *.ts | xargs $$LRELEASE_EXECUTABLE)
 
-include(lumina-theme-engine.pri)
+include(lthemeengine.pri)
 
 message (PREFIX=$$PREFIX)
 message (BINDIR=$$BINDIR)

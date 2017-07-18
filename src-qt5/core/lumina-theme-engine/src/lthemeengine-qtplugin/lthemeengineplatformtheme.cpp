@@ -60,7 +60,7 @@ Q_LOGGING_CATEGORY(llthemeengine, "lthemeengine")
 
 //QT_QPA_PLATFORMTHEME=lthemeengine
 
-lthemeenginePlatformTheme::Qt5CTPlatformTheme()
+lthemeenginePlatformTheme::lthemeenginePlatformTheme()
 {
     if(QGuiApplication::desktopSettingsAware())
     {
@@ -78,7 +78,7 @@ lthemeenginePlatformTheme::Qt5CTPlatformTheme()
 #endif
 }
 
-lthemeenginePlatformTheme::~Qt5CTPlatformTheme()
+lthemeenginePlatformTheme::~lthemeenginePlatformTheme()
 {
     if(m_customPalette)
         delete m_customPalette;
