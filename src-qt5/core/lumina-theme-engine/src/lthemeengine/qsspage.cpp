@@ -45,7 +45,7 @@ QSSPage::QSSPage(QWidget *parent) :
     m_ui(new Ui::QSSPage)
 {
     m_ui->setupUi(this);
-    QDir("/").mkpath(Qt5CT::userStyleSheetPath());
+    QDir("/").mkpath(lthemeengine::userStyleSheetPath());
 
     m_menu = new QMenu(this);
     m_menu->addAction(QIcon::fromTheme("accessories-text-editor"), tr("Edit"), this, SLOT(on_editButton_clicked()));
@@ -69,7 +69,7 @@ QSSPage::~QSSPage()
 void QSSPage::writeSettings()
 {
     QStringList styleSheets;
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
 
     for(int i = 0; i < m_ui->qssListWidget->count(); ++i)
     {
@@ -106,7 +106,7 @@ void QSSPage::on_createButton_clicked()
     if(!name.endsWith(".qss", Qt::CaseInsensitive))
         name.append(".qss");
 
-    QString filePath = Qt5CT::userStyleSheetPath() + name;
+    QString filePath = lthemeengine::userStyleSheetPath() + name;
 
     if(QFile::exists(filePath))
     {
@@ -159,10 +159,10 @@ void QSSPage::readSettings()
 {
     //load stylesheets
     m_ui->qssListWidget->clear();
-    findStyleSheets(Qt5CT::userStyleSheetPath());
-    findStyleSheets(Qt5CT::sharedStyleSheetPath());
+    findStyleSheets(lthemeengine::userStyleSheetPath());
+    findStyleSheets(lthemeengine::sharedStyleSheetPath());
 
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     QStringList styleSheets = settings.value("Interface/stylesheets").toStringList();
     for(int i = 0; i < m_ui->qssListWidget->count(); ++i)
     {
@@ -209,7 +209,7 @@ void QSSPage::on_renameButton_clicked()
     if(!name.endsWith(".qss", Qt::CaseInsensitive))
             name.append(".qss");
 
-    QString newPath = Qt5CT::userStyleSheetPath() + name;
+    QString newPath = lthemeengine::userStyleSheetPath() + name;
 
     if(!QFile::rename(item->data(QSS_FULL_PATH_ROLE).toString(), newPath))
     {

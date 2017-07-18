@@ -29,10 +29,10 @@
 #include <QStylePlugin>
 #include <QSettings>
 #include <QStyleFactory>
-#include <lthemeengine/qt5ct.h>
+#include <lthemeengine/lthemeengine.h>
 #include "lthemeengineproxystyle.h"
 
-class Qt5CTStylePlugin : public QStylePlugin
+class lthemeengineStylePlugin : public QStylePlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QStyleFactoryInterface" FILE "lthemeengine.json")
@@ -41,15 +41,15 @@ public:
     QStyle *create(const QString &key);
 };
 
-QStyle *Qt5CTStylePlugin::create(const QString &key)
+QStyle *lthemeengineStylePlugin::create(const QString &key)
 {
     if (key == "lthemeengine-style")
     {
-        QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+        QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
         QString style = settings.value("Appearance/style", "Fusion").toString();
         if(key == style || !QStyleFactory::keys().contains(style))
             style = "Fusion";
-        return new Qt5CTProxyStyle(style);
+        return new lthemeengineProxyStyle(style);
     }
     return 0;
 }

@@ -44,7 +44,7 @@ QSSEditorDialog::QSSEditorDialog(const QString &filePath, QWidget *parent) :
     m_ui->textEdit->setPlainText(QString::fromUtf8(file.readAll()));
     setWindowTitle(tr("%1 - Style Sheet Editor").arg(file.fileName()));
 
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     restoreGeometry(settings.value("QSSEditor/geometry").toByteArray());
 }
 
@@ -62,7 +62,7 @@ void QSSEditorDialog::save()
 
 void QSSEditorDialog::hideEvent(QHideEvent *)
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.setValue("QSSEditor/geometry", saveGeometry());
 }
 

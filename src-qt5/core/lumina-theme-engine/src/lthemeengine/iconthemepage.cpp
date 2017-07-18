@@ -53,7 +53,7 @@ IconThemePage::~IconThemePage()
 
 void IconThemePage::writeSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     QTreeWidgetItem *item = m_ui->treeWidget->currentItem();
     if(item)
         settings.setValue("Appearance/icon_theme", item->data(3, Qt::UserRole));
@@ -61,7 +61,7 @@ void IconThemePage::writeSettings()
 
 void IconThemePage::readSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     QString name = settings.value("Appearance/icon_theme").toString();
 
     if(name.isEmpty())
@@ -81,7 +81,7 @@ void IconThemePage::readSettings()
 void IconThemePage::loadThemes()
 {
     QFileInfoList themeFileList;
-    foreach(QString path, Qt5CT::iconPaths())
+    foreach(QString path, lthemeengine::iconPaths())
     {
         QDir dir(path);
         dir.setFilter(QDir::Dirs | QDir::NoDotDot | QDir::NoDot);

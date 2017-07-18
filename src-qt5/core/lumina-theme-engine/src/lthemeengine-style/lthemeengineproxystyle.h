@@ -26,18 +26,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT5CTPROXYSTYLE_H
-#define QT5CTPROXYSTYLE_H
+#ifndef LTHEMEENGINEPROXYSTYLE_H
+#define LTHEMEENGINEPROXYSTYLE_H
 
 #include <QProxyStyle>
 
-class Qt5CTProxyStyle : public QProxyStyle
+class lthemeengineProxyStyle : public QProxyStyle
 {
     Q_OBJECT
 public:
-    explicit Qt5CTProxyStyle(const QString &key);
+    explicit lthemeengineProxyStyle(const QString &key);
 
-    virtual ~Qt5CTProxyStyle();
+    virtual ~lthemeengineProxyStyle();
 
     int styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const;
 
@@ -47,4 +47,4 @@ private:
 
 };
 
-#endif // QT5CTPROXYSTYLE_H
+#endif // LTHEMEENGINEPROXYSTYLE_H

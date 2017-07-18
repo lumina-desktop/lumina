@@ -87,7 +87,7 @@ AppearancePage::~AppearancePage()
 
 void AppearancePage::writeSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.beginGroup("Appearance");
     settings.setValue("style", m_ui->styleComboBox->currentText());
     settings.setValue("custom_palette", m_ui->customPaletteButton->isChecked());
@@ -131,7 +131,7 @@ void AppearancePage::createColorScheme()
         return;
     }
 
-    QString schemePath = Qt5CT::userColorSchemePath() + "/" + name;
+    QString schemePath = lthemeengine::userColorSchemePath() + "/" + name;
 
     createColorScheme(schemePath, palette());
     m_ui->colorSchemeComboBox->addItem(name.section('.',0,0), schemePath);
@@ -207,7 +207,7 @@ void AppearancePage::copyColorScheme()
         return;
     }
 
-    QString newPath =  Qt5CT::userColorSchemePath() + "/" + name;
+    QString newPath =  lthemeengine::userColorSchemePath() + "/" + name;
     QFile::copy(m_ui->colorSchemeComboBox->currentData().toString(), newPath);
     m_ui->colorSchemeComboBox->addItem(name.section('.',0,0), newPath);
 }
@@ -241,7 +241,7 @@ void AppearancePage::renameColorScheme()
         return;
     }
 
-    QString newPath =  Qt5CT::userColorSchemePath() + "/" + name;
+    QString newPath =  lthemeengine::userColorSchemePath() + "/" + name;
     QFile::rename(m_ui->colorSchemeComboBox->currentData().toString(), newPath);
     m_ui->colorSchemeComboBox->setItemText(index, name.section('.',0,0));
     m_ui->colorSchemeComboBox->setItemData(index, newPath);
@@ -300,7 +300,7 @@ void AppearancePage::updateActions()
 
 void AppearancePage::readSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.beginGroup("Appearance");
     QString style = settings.value("style", "Fusion").toString();
     m_ui->styleComboBox->setCurrentText(style);
@@ -308,9 +308,9 @@ void AppearancePage::readSettings()
     m_ui->customPaletteButton->setChecked(settings.value("custom_palette", false).toBool());
     QString colorSchemePath = settings.value("color_scheme_path").toString();
 
-    QDir("/").mkpath(Qt5CT::userColorSchemePath());
-    findColorSchemes(Qt5CT::userColorSchemePath());
-    findColorSchemes(Qt5CT::sharedColorSchemePath());
+    QDir("/").mkpath(lthemeengine::userColorSchemePath());
+    findColorSchemes(lthemeengine::userColorSchemePath());
+    findColorSchemes(lthemeengine::sharedColorSchemePath());
 
     if(m_ui->colorSchemeComboBox->count() == 0)
     {

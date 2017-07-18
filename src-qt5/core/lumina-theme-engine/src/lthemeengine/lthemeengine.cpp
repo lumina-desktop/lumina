@@ -30,22 +30,22 @@
 #include <QLocale>
 #include "lthemeengine.h"
 
-#ifndef QT5CT_DATADIR
-#define QT5CT_DATADIR "/usr/share"
+#ifndef LTHEMEENGINE_DATADIR
+#define LTHEMEENGINE_DATADIR "/usr/share"
 #endif
 
 
-QString Qt5CT::configPath()
+QString lthemeengine::configPath()
 {
     return QDir::homePath() + "/.config/lthemeengine/";
 }
 
-QString Qt5CT::configFile()
+QString lthemeengine::configFile()
 {
     return configPath() + "lthemeengine.conf";
 }
 
-QStringList Qt5CT::iconPaths()
+QStringList lthemeengine::iconPaths()
 {
     QString xdgDataDirs = qgetenv("XDG_DATA_DIRS");
     QString xdgDataHome = qgetenv("XDG_DATA_HOME");
@@ -80,27 +80,27 @@ QStringList Qt5CT::iconPaths()
     return paths;
 }
 
-QString Qt5CT::userStyleSheetPath()
+QString lthemeengine::userStyleSheetPath()
 {
     return configPath() + "qss/";
 }
 
-QString Qt5CT::sharedStyleSheetPath()
+QString lthemeengine::sharedStyleSheetPath()
 {
-    return QT5CT_DATADIR"/lthemeengine/qss/";
+    return LTHEMEENGINE_DATADIR"/lthemeengine/qss/";
 }
 
-QString Qt5CT::userColorSchemePath()
+QString lthemeengine::userColorSchemePath()
 {
     return configPath() + "colors/";
 }
 
-QString Qt5CT::sharedColorSchemePath()
+QString lthemeengine::sharedColorSchemePath()
 {
-    return QT5CT_DATADIR"/lthemeengine/colors/";
+    return LTHEMEENGINE_DATADIR"/lthemeengine/colors/";
 }
 
-QString Qt5CT::systemLanguageID()
+QString lthemeengine::systemLanguageID()
 {
 #ifdef Q_OS_UNIX
     QByteArray v = qgetenv ("LC_ALL");

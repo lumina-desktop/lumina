@@ -27,23 +27,23 @@
  */
 
 #include <QSettings>
-#include <lthemeengine/qt5ct.h>
+#include <lthemeengine/lthemeengine.h>
 #include "lthemeengineproxystyle.h"
 
-Qt5CTProxyStyle::Qt5CTProxyStyle(const QString &key) :
+lthemeengineProxyStyle::Qt5CTProxyStyle(const QString &key) :
     QProxyStyle(key)
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     m_dialogButtonsHaveIcons = settings.value("Interface/dialog_buttons_have_icons", Qt::PartiallyChecked).toInt();
     m_activateItemOnSingleClick = settings.value("Interface/activate_item_on_single_click", Qt::PartiallyChecked).toInt();
 }
 
-Qt5CTProxyStyle::~Qt5CTProxyStyle()
+lthemeengineProxyStyle::~Qt5CTProxyStyle()
 {
     //qDebug("%s", Q_FUNC_INFO);
 }
 
-int Qt5CTProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
+int lthemeengineProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
 {
     if(hint == QStyle::SH_DialogButtonBox_ButtonsHaveIcons)
     {

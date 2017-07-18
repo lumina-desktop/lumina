@@ -50,12 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->tabWidget->addTab(new QSSPage(this), tr("Style Sheets"));
 #endif
 
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     restoreGeometry(settings.value("SettingsWindow/geometry").toByteArray());
 
     setWindowIcon(QIcon::fromTheme("preferences-desktop-theme"));
 
-    m_ui->versionLabel->setText(tr("Version: %1").arg(QT5CT_VERSION_STR));
+    m_ui->versionLabel->setText(tr("Version: %1").arg(LTHEMEENGINE_VERSION_STR));
 }
 
 MainWindow::~MainWindow()
@@ -65,7 +65,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *)
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.setValue("SettingsWindow/geometry", saveGeometry());
 }
 

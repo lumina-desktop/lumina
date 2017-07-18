@@ -15,12 +15,12 @@ INCLUDEPATH += ../
 
 HEADERS += \
     lthemeengineproxystyle.h \
-    ../lthemeengine/qt5ct.h
+    ../lthemeengine/lthemeengine.h
 
 SOURCES += \
     plugin.cpp \
     lthemeengineproxystyle.cpp \
-    ../lthemeengine/qt5ct.cpp
+    ../lthemeengine/lthemeengine.cpp
 
 OTHER_FILES += \
     lthemeengine.json

@@ -26,8 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT5CTPLATFORMTHEME_H
-#define QT5CTPLATFORMTHEME_H
+#ifndef LTHEMEENGINEPLATFORMTHEME_H
+#define LTHEMEENGINEPLATFORMTHEME_H
 
 #include <qpa/qplatformtheme.h>
 #include <QObject>
@@ -50,13 +50,13 @@ class QPlatformSystemTrayIcon;
 class QPlatformMenuBar;
 #endif
 
-class Qt5CTPlatformTheme : public QObject, public QPlatformTheme
+class lthemeenginePlatformTheme : public QObject, public QPlatformTheme
 {
     Q_OBJECT
 public:
-    Qt5CTPlatformTheme();
+    lthemeenginePlatformTheme();
 
-    virtual ~Qt5CTPlatformTheme();
+    virtual ~lthemeenginePlatformTheme();
 
 
     //virtual QPlatformMenuItem* createPlatformMenuItem() const;
@@ -119,4 +119,4 @@ private:
 
 Q_DECLARE_LOGGING_CATEGORY(llthemeengine)
 
-#endif // QT5CTPLATFORMTHEME_H
+#endif // LTHEMEENGINEPLATFORMTHEME_H

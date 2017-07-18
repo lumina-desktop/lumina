@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     QTranslator translator;
-    QString locale = Qt5CT::systemLanguageID();
+    QString locale = lthemeengine::systemLanguageID();
     translator.load(QString(":/lthemeengine_") + locale);
     app.installTranslator(&translator);
 
@@ -48,8 +48,8 @@ int main(int argc, char **argv)
     qt_translator.load(QLibraryInfo::location (QLibraryInfo::TranslationsPath) + "/qtbase_" + locale);
     app.installTranslator(&qt_translator);
 
-    qDebug("Configuration path: %s", qPrintable(Qt5CT::configPath()));
-    qDebug("Shared QSS path: %s", qPrintable(Qt5CT::sharedStyleSheetPath()));
+    qDebug("Configuration path: %s", qPrintable(lthemeengine::configPath()));
+    qDebug("Shared QSS path: %s", qPrintable(lthemeengine::sharedStyleSheetPath()));
 
     //checking environment
     QStringList errorMessages;

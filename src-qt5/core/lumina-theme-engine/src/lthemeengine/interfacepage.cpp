@@ -60,7 +60,7 @@ InterfacePage::~InterfacePage()
 
 void InterfacePage::writeSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.beginGroup("Interface");
     settings.setValue("double_click_interval", m_ui->doubleClickIntervalSpinBox->value());
     settings.setValue("cursor_flash_time", m_ui->cursorFlashTimeSpinBox->value());
@@ -97,7 +97,7 @@ void InterfacePage::writeSettings()
 
 void InterfacePage::readSettings()
 {
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
     settings.beginGroup("Interface");
     m_ui->doubleClickIntervalSpinBox->setValue(qApp->doubleClickInterval());
     m_ui->cursorFlashTimeSpinBox->setValue(qApp->cursorFlashTime());

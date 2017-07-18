@@ -44,7 +44,7 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 
-#include <lthemeengine/qt5ct.h>
+#include <lthemeengine/lthemeengine.h>
 #include "lthemeengineplatformtheme.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
 #include <private/qdbusmenubar_p.h>
@@ -56,11 +56,11 @@
 
 
 
-Q_LOGGING_CATEGORY(llthemeengine, "qt5ct")
+Q_LOGGING_CATEGORY(llthemeengine, "lthemeengine")
 
 //QT_QPA_PLATFORMTHEME=lthemeengine
 
-Qt5CTPlatformTheme::Qt5CTPlatformTheme()
+lthemeenginePlatformTheme::Qt5CTPlatformTheme()
 {
     if(QGuiApplication::desktopSettingsAware())
     {
@@ -71,21 +71,21 @@ Qt5CTPlatformTheme::Qt5CTPlatformTheme()
 #endif
         QGuiApplication::setFont(m_generalFont);
     }
-    qCDebug(llthemeengine) << "using qt5ct plugin";
+    qCDebug(llthemeengine) << "using lthemeengine plugin";
 #ifdef QT_WIDGETS_LIB
     if(!QStyleFactory::keys().contains("lthemeengine-style"))
-        qCCritical(llthemeengine) << "unable to find qt5ct proxy style";
+        qCCritical(llthemeengine) << "unable to find lthemeengine proxy style";
 #endif
 }
 
-Qt5CTPlatformTheme::~Qt5CTPlatformTheme()
+lthemeenginePlatformTheme::~Qt5CTPlatformTheme()
 {
     if(m_customPalette)
         delete m_customPalette;
 }
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
-QPlatformMenuBar *Qt5CTPlatformTheme::createPlatformMenuBar() const
+QPlatformMenuBar *lthemeenginePlatformTheme::createPlatformMenuBar() const
 {
     if(m_checkDBusGlobalMenu)
     {
@@ -98,7 +98,7 @@ QPlatformMenuBar *Qt5CTPlatformTheme::createPlatformMenuBar() const
 #endif
 
 #if !defined(QT_NO_DBUS) && !defined(QT_NO_SYSTEMTRAYICON)
-QPlatformSystemTrayIcon *Qt5CTPlatformTheme::createPlatformSystemTrayIcon() const
+QPlatformSystemTrayIcon *lthemeenginePlatformTheme::createPlatformSystemTrayIcon() const
 {
     if(m_checkDBusTray)
     {
@@ -111,20 +111,20 @@ QPlatformSystemTrayIcon *Qt5CTPlatformTheme::createPlatformSystemTrayIcon() cons
 }
 #endif
 
-const QPalette *Qt5CTPlatformTheme::palette(QPlatformTheme::Palette type) const
+const QPalette *lthemeenginePlatformTheme::palette(QPlatformTheme::Palette type) const
 {
     Q_UNUSED(type);
     return (m_usePalette ? m_customPalette : nullptr);
 }
 
-const QFont *Qt5CTPlatformTheme::font(QPlatformTheme::Font type) const
+const QFont *lthemeenginePlatformTheme::font(QPlatformTheme::Font type) const
 {
     if(type == QPlatformTheme::FixedFont)
         return &m_fixedFont;
     return &m_generalFont;
 }
 
-QVariant Qt5CTPlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) const
+QVariant lthemeenginePlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) const
 {
     switch (hint)
     {
@@ -139,7 +139,7 @@ QVariant Qt5CTPlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) const
     case QPlatformTheme::StyleNames:
         return QStringList() << "lthemeengine-style";
     case QPlatformTheme::IconThemeSearchPaths:
-        return Qt5CT::iconPaths();
+        return lthemeengine::iconPaths();
     case DialogButtonBoxLayout:
         return m_buttonBoxLayout;
     case QPlatformTheme::UiEffects:
@@ -153,7 +153,7 @@ QVariant Qt5CTPlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) const
     }
 }
 
-void Qt5CTPlatformTheme::applySettings()
+void lthemeenginePlatformTheme::applySettings()
 {
     if(!QGuiApplication::desktopSettingsAware())
         return;
@@ -224,10 +224,10 @@ void Qt5CTPlatformTheme::applySettings()
 }
 
 #ifdef QT_WIDGETS_LIB
-void Qt5CTPlatformTheme::createFSWatcher()
+void lthemeenginePlatformTheme::createFSWatcher()
 {
     QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
-    watcher->addPath(Qt5CT::configPath());
+    watcher->addPath(lthemeengine::configPath());
 
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
@@ -236,7 +236,7 @@ void Qt5CTPlatformTheme::createFSWatcher()
     connect(timer, SIGNAL(timeout()), SLOT(updateSettings()));
 }
 
-void Qt5CTPlatformTheme::updateSettings()
+void lthemeenginePlatformTheme::updateSettings()
 {
     qCDebug(llthemeengine) << "updating settings..";
     readSettings();
@@ -244,7 +244,7 @@ void Qt5CTPlatformTheme::updateSettings()
 }
 #endif
 
-void Qt5CTPlatformTheme::readSettings()
+void lthemeenginePlatformTheme::readSettings()
 {
     if(m_customPalette)
     {
@@ -252,7 +252,7 @@ void Qt5CTPlatformTheme::readSettings()
         m_customPalette = 0;
     }
 
-    QSettings settings(Qt5CT::configFile(), QSettings::IniFormat);
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
 
     settings.beginGroup("Appearance");
     m_style = settings.value("style", "Fusion").toString();
@@ -311,13 +311,13 @@ void Qt5CTPlatformTheme::readSettings()
 }
 
 #ifdef QT_WIDGETS_LIB
-bool Qt5CTPlatformTheme::hasWidgets()
+bool lthemeenginePlatformTheme::hasWidgets()
 {
     return qobject_cast<QApplication *> (qApp) != nullptr;
 }
 #endif
 
-QString Qt5CTPlatformTheme::loadStyleSheets(const QStringList &paths)
+QString lthemeenginePlatformTheme::loadStyleSheets(const QStringList &paths)
 {
     QString content;
     foreach (QString path, paths)
@@ -335,7 +335,7 @@ QString Qt5CTPlatformTheme::loadStyleSheets(const QStringList &paths)
     return content;
 }
 
-QPalette Qt5CTPlatformTheme::loadColorScheme(const QString &filePath)
+QPalette lthemeenginePlatformTheme::loadColorScheme(const QString &filePath)
 {
     QPalette customPalette;
     QSettings settings(filePath, QSettings::IniFormat);

@@ -17,7 +17,7 @@ greaterThan(QT_MINOR_VERSION, 7) {
 SOURCES += \
     main.cpp \
     lthemeengineplatformtheme.cpp \
-    ../lthemeengine/qt5ct.cpp
+    ../lthemeengine/lthemeengine.cpp
 
 !equals (DISABLE_WIDGETS,1) {
    QT += widgets
@@ -29,7 +29,7 @@ INCLUDEPATH += ../
 
 HEADERS += \
     lthemeengineplatformtheme.h \
-    ../lthemeengine/qt5ct.h
+    ../lthemeengine/lthemeengine.h
 
 target.path = $$PLUGINDIR/platformthemes
 INSTALLS += target
