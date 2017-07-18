@@ -31,7 +31,7 @@
 #include "lthemeengine.h"
 
 #ifndef LTHEMEENGINE_DATADIR
-#define LTHEMEENGINE_DATADIR "/usr/share"
+#define LTHEMEENGINE_DATADIR "/usr/local/share"
 #endif
 
 
