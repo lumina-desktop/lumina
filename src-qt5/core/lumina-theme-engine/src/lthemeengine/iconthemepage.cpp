@@ -33,7 +33,7 @@
 #include <QTreeWidgetItem>
 #include <QImageReader>
 #include <QLocale>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "iconthemepage.h"
 #include "ui_iconthemepage.h"
 

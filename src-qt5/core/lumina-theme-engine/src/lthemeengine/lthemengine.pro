@@ -1,4 +1,4 @@
-include(../../qt5ct.pri)
+include(../../lthemeengine.pri)
 
 TEMPLATE = app
 
@@ -10,7 +10,7 @@ SOURCES += \
     tabpage.cpp \
     appearancepage.cpp \
     fontspage.cpp \
-    qt5ct.cpp \
+    lthemeengine.cpp \
     paletteeditdialog.cpp \
     iconthemepage.cpp \
     interfacepage.cpp \
@@ -35,7 +35,7 @@ HEADERS += \
     tabpage.h \
     appearancepage.h \
     fontspage.h \
-    qt5ct.h \
+    lthemeengine.h \
     paletteeditdialog.h \
     iconthemepage.h \
     interfacepage.h \
@@ -51,7 +51,7 @@ RESOURCES = translations/translations.qrc
 
 target.path = $$BINDIR
 
-desktop.files = qt5ct.desktop
+desktop.files = lthemeengine.desktop
 desktop.path = $$DATADIR/applications
 
 INSTALLS += target desktop

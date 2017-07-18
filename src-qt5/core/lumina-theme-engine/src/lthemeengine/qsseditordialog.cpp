@@ -28,7 +28,7 @@
 
 #include <QFile>
 #include <QSettings>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "qsseditordialog.h"
 #include "ui_qsseditordialog.h"
 

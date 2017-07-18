@@ -29,7 +29,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <QDialogButtonBox>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "interfacepage.h"
 #include "ui_interfacepage.h"
 

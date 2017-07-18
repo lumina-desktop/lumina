@@ -28,7 +28,7 @@
 
 #include <QDir>
 #include <QLocale>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 
 #ifndef QT5CT_DATADIR
 #define QT5CT_DATADIR "/usr/share"
@@ -37,12 +37,12 @@
 
 QString Qt5CT::configPath()
 {
-    return QDir::homePath() + "/.config/qt5ct/";
+    return QDir::homePath() + "/.config/lthemeengine/";
 }
 
 QString Qt5CT::configFile()
 {
-    return configPath() + "qt5ct.conf";
+    return configPath() + "lthemeengine.conf";
 }
 
 QStringList Qt5CT::iconPaths()
@@ -87,7 +87,7 @@ QString Qt5CT::userStyleSheetPath()
 
 QString Qt5CT::sharedStyleSheetPath()
 {
-    return QT5CT_DATADIR"/qt5ct/qss/";
+    return QT5CT_DATADIR"/lthemeengine/qss/";
 }
 
 QString Qt5CT::userColorSchemePath()
@@ -97,7 +97,7 @@ QString Qt5CT::userColorSchemePath()
 
 QString Qt5CT::sharedColorSchemePath()
 {
-    return QT5CT_DATADIR"/qt5ct/colors/";
+    return QT5CT_DATADIR"/lthemeengine/colors/";
 }
 
 QString Qt5CT::systemLanguageID()

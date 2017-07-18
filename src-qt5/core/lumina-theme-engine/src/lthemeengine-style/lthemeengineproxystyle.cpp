@@ -27,8 +27,8 @@
  */
 
 #include <QSettings>
-#include <qt5ct/qt5ct.h>
-#include "qt5ctproxystyle.h"
+#include <lthemeengine/qt5ct.h>
+#include "lthemeengineproxystyle.h"
 
 Qt5CTProxyStyle::Qt5CTProxyStyle(const QString &key) :
     QProxyStyle(key)

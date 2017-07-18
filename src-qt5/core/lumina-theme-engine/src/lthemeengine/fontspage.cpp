@@ -33,7 +33,7 @@
 #include <QFontDialog>
 #include <QDir>
 #include <QFile>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "fontspage.h"
 #include "fontconfigdialog.h"
 #include "ui_fontspage.h"

@@ -29,7 +29,7 @@
 #include <QApplication>
 #include <QLibraryInfo>
 #include <QLocale>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include <QTranslator>
 #include <QMessageBox>
 #include <QProcessEnvironment>
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     QTranslator translator;
     QString locale = Qt5CT::systemLanguageID();
-    translator.load(QString(":/qt5ct_") + locale);
+    translator.load(QString(":/lthemeengine_") + locale);
     app.installTranslator(&translator);
 
     QTranslator qt_translator;
@@ -60,15 +60,15 @@ int main(int argc, char **argv)
         errorMessages << app.translate("main", "Please remove the <b>QT_STYLE_OVERRIDE</b> environment variable");
     }
 
-    if(env.value("QT_QPA_PLATFORMTHEME") != "qt5ct")
+    if(env.value("QT_QPA_PLATFORMTHEME") != "lthemeengine")
     {
         errorMessages << app.translate("main", "The <b>QT_QPA_PLATFORMTHEME</b> environment "
                                                "variable is not set correctly");
     }
 
-    if(!QStyleFactory::keys().contains("qt5ct-style"))
+    if(!QStyleFactory::keys().contains("lthemeengine-style"))
     {
-        errorMessages << app.translate("main", "Unable to find <b>libqt5ct-style.so</b>");
+        errorMessages << app.translate("main", "Unable to find <b>liblthemeengine-style.so</b>");
     }
 
     if(!errorMessages.isEmpty())

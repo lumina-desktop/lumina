@@ -53,7 +53,7 @@ Comment[zh_TW]=Qt5 設定工具
 Name[zh_TW]=Qt5 設定
 
 
-Exec=qt5ct
+Exec=lthemeengine
 Icon=preferences-desktop-theme
 Terminal=false
 Type=Application

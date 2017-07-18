@@ -117,6 +117,6 @@ private:
 
 };
 
-Q_DECLARE_LOGGING_CATEGORY(lqt5ct)
+Q_DECLARE_LOGGING_CATEGORY(llthemeengine)
 
 #endif // QT5CTPLATFORMTHEME_H

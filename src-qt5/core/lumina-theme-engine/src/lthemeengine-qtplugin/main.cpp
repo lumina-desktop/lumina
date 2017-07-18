@@ -27,14 +27,14 @@
  */
 
 #include <qpa/qplatformthemeplugin.h>
-#include "qt5ctplatformtheme.h"
+#include "lthemeengineplatformtheme.h"
 
 QT_BEGIN_NAMESPACE
 
 class Qt5CTPlatformThemePlugin: public QPlatformThemePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QPA.QPlatformThemeFactoryInterface.5.1" FILE "qt5ct.json")
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QPA.QPlatformThemeFactoryInterface.5.1" FILE "lthemeengine.json")
 public:
     QPlatformTheme *create(const QString &key, const QStringList &params);
 };
@@ -42,7 +42,7 @@ public:
 QPlatformTheme *Qt5CTPlatformThemePlugin::create(const QString &key, const QStringList &params)
 {
     Q_UNUSED(params);
-    if (key.toLower() == "qt5ct")
+    if (key.toLower() == "lthemeengine")
         return new Qt5CTPlatformTheme();
     return NULL;
 }

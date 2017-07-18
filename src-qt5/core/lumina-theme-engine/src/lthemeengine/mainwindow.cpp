@@ -28,7 +28,7 @@
 
 #include <QApplication>
 #include <QSettings>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "mainwindow.h"
 #include "appearancepage.h"
 #include "fontspage.h"

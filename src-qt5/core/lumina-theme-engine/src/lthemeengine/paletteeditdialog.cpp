@@ -29,7 +29,7 @@
 #include <QPalette>
 #include <QColorDialog>
 #include <QSettings>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "paletteeditdialog.h"
 #include "ui_paletteeditdialog.h"
 

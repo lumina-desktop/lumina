@@ -34,7 +34,7 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QIcon>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "appearancepage.h"
 #include "paletteeditdialog.h"
 #include "ui_appearancepage.h"
@@ -46,7 +46,7 @@ AppearancePage::AppearancePage(QWidget *parent) :
 {
     m_ui->setupUi(this);
     QStringList keys = QStyleFactory::keys();
-    keys.removeAll("qt5ct-style"); //hide qt5ct proxy style
+    keys.removeAll("lthemeengine-style"); //hide lthemeengine proxy style
     m_ui->styleComboBox->addItems(keys);
 
     connect(m_ui->paletteComboBox, SIGNAL(activated(int)), SLOT(updatePalette()));

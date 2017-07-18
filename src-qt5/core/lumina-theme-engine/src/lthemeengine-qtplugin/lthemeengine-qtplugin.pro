@@ -1,7 +1,7 @@
-include(../../qt5ct.pri)
+include(../../lthemeengine.pri)
 
 TEMPLATE = lib
-TARGET = qt5ct
+TARGET = lthemeengine
 CONFIG += plugin
 
 greaterThan(QT_MINOR_VERSION, 7) {
@@ -16,20 +16,20 @@ greaterThan(QT_MINOR_VERSION, 7) {
 
 SOURCES += \
     main.cpp \
-    qt5ctplatformtheme.cpp \
-    ../qt5ct/qt5ct.cpp
+    lthemeengineplatformtheme.cpp \
+    ../lthemeengine/qt5ct.cpp
 
 !equals (DISABLE_WIDGETS,1) {
    QT += widgets
 }
 
-OTHER_FILES += qt5ct.json
+OTHER_FILES += lthemeengine.json
 
 INCLUDEPATH += ../
 
 HEADERS += \
-    qt5ctplatformtheme.h \
-    ../qt5ct/qt5ct.h
+    lthemeengineplatformtheme.h \
+    ../lthemeengine/qt5ct.h
 
 target.path = $$PLUGINDIR/platformthemes
 INSTALLS += target

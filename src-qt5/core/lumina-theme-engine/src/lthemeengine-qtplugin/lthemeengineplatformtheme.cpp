@@ -44,8 +44,8 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 
-#include <qt5ct/qt5ct.h>
-#include "qt5ctplatformtheme.h"
+#include <lthemeengine/qt5ct.h>
+#include "lthemeengineplatformtheme.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
 #include <private/qdbusmenubar_p.h>
 #endif
@@ -56,9 +56,9 @@
 
 
 
-Q_LOGGING_CATEGORY(lqt5ct, "qt5ct")
+Q_LOGGING_CATEGORY(llthemeengine, "qt5ct")
 
-//QT_QPA_PLATFORMTHEME=qt5ct
+//QT_QPA_PLATFORMTHEME=lthemeengine
 
 Qt5CTPlatformTheme::Qt5CTPlatformTheme()
 {
@@ -71,10 +71,10 @@ Qt5CTPlatformTheme::Qt5CTPlatformTheme()
 #endif
         QGuiApplication::setFont(m_generalFont);
     }
-    qCDebug(lqt5ct) << "using qt5ct plugin";
+    qCDebug(llthemeengine) << "using qt5ct plugin";
 #ifdef QT_WIDGETS_LIB
-    if(!QStyleFactory::keys().contains("qt5ct-style"))
-        qCCritical(lqt5ct) << "unable to find qt5ct proxy style";
+    if(!QStyleFactory::keys().contains("lthemeengine-style"))
+        qCCritical(llthemeengine) << "unable to find qt5ct proxy style";
 #endif
 }
 
@@ -91,7 +91,7 @@ QPlatformMenuBar *Qt5CTPlatformTheme::createPlatformMenuBar() const
     {
         QDBusConnection conn = QDBusConnection::sessionBus();
         m_dbusGlobalMenuAvailable = conn.interface()->isServiceRegistered("com.canonical.AppMenu.Registrar");
-        qCDebug(lqt5ct) << "D-Bus global menu:" << (m_dbusGlobalMenuAvailable ? "yes" : "no");
+        qCDebug(llthemeengine) << "D-Bus global menu:" << (m_dbusGlobalMenuAvailable ? "yes" : "no");
     }
     return (m_dbusGlobalMenuAvailable ? new QDBusMenuBar() : nullptr);
 }
@@ -105,7 +105,7 @@ QPlatformSystemTrayIcon *Qt5CTPlatformTheme::createPlatformSystemTrayIcon() cons
         QDBusMenuConnection conn;
         m_dbusTrayAvailable = conn.isStatusNotifierHostRegistered();
         m_checkDBusTray = false;
-        qCDebug(lqt5ct) << "D-Bus system tray:" << (m_dbusTrayAvailable ? "yes" : "no");
+        qCDebug(llthemeengine) << "D-Bus system tray:" << (m_dbusTrayAvailable ? "yes" : "no");
     }
     return (m_dbusTrayAvailable ? new QDBusTrayIcon() : nullptr);
 }
@@ -137,7 +137,7 @@ QVariant Qt5CTPlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) const
     case QPlatformTheme::SystemIconThemeName:
         return m_iconTheme;
     case QPlatformTheme::StyleNames:
-        return QStringList() << "qt5ct-style";
+        return QStringList() << "lthemeengine-style";
     case QPlatformTheme::IconThemeSearchPaths:
         return Qt5CT::iconPaths();
     case DialogButtonBoxLayout:
@@ -165,7 +165,7 @@ void Qt5CTPlatformTheme::applySettings()
         if(QCoreApplication::testAttribute(Qt::AA_SetPalette))
         {
             m_usePalette = false;
-            qCDebug(lqt5ct) << "palette support is disabled";
+            qCDebug(llthemeengine) << "palette support is disabled";
         }
     }
 #endif
@@ -184,8 +184,8 @@ void Qt5CTPlatformTheme::applySettings()
         qApp->setWheelScrollLines(m_wheelScrollLines);
 #endif
 
-        if(m_update && qApp->style()->objectName() == "qt5ct-style") //ignore application style
-            qApp->setStyle("qt5ct-style"); //recreate style object
+        if(m_update && qApp->style()->objectName() == "lthemeengine-style") //ignore application style
+            qApp->setStyle("lthemeengine-style"); //recreate style object
 
         if(m_update && m_usePalette)
         {
@@ -199,7 +199,7 @@ void Qt5CTPlatformTheme::applySettings()
         if(m_prevStyleSheet == qApp->styleSheet())
             qApp->setStyleSheet(m_userStyleSheet);
         else
-            qCDebug(lqt5ct) << "custom style sheet is disabled";
+            qCDebug(llthemeengine) << "custom style sheet is disabled";
         m_prevStyleSheet = m_userStyleSheet;
     }
 #endif
@@ -238,7 +238,7 @@ void Qt5CTPlatformTheme::createFSWatcher()
 
 void Qt5CTPlatformTheme::updateSettings()
 {
-    qCDebug(lqt5ct) << "updating settings..";
+    qCDebug(llthemeengine) << "updating settings..";
     readSettings();
     applySettings();
 }

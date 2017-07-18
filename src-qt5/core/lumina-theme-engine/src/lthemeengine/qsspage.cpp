@@ -32,7 +32,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QMenu>
-#include "qt5ct.h"
+#include "lthemeengine.h"
 #include "qsseditordialog.h"
 #include "qsspage.h"
 #include "ui_qsspage.h"
