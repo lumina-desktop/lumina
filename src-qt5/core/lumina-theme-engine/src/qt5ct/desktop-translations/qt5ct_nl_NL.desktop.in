@@ -1,0 +1,33 @@
+[Desktop Entry]
+X-Desktop-File-Install-Version=0.11
+Name=Qt5 Settings
+
+Comment=Qt5 Configuration Tool
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Exec=qt5ct
+Icon=preferences-desktop-theme
+Terminal=false
+Type=Application
+Categories=Settings;DesktopSettings;Qt;
+
+
+# Translations
+Comment[nl_NL]=Qt5-instellingengereedschap
+Name[nl_NL]=Qt5-instellingen
+Icon[nl_NL]=preferences-desktop-theme

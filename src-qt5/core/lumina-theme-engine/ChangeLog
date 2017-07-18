@@ -1,0 +1,221 @@
+Changelog of the Qt5 Configuration Tool
+
+-----------
+Version 0.1
+* first test release
+
+Version 0.2
+* fixed palette preview
+* fixed preview window
+* fixed some widget positions
+* fixed Russian translation
+
+Version 0.3
+* added gui settings
+
+Version 0.4
+* added font config generation
+* fixed segmentation fault in the preview window
+* updated Russian translation
+
+Version 0.5
+* added dialog buttons layout setting
+* added feature to change install prefix
+* updated Russian translation
+
+Version 0.6
+* added style sheet settings
+* added transifex integration
+* updated Russian translation
+
+Version 0.7
+* added feature to rename style sheet
+* added context menu to the style sheet list
+* added feature to apply theme for running applications
+* added Chinese (Taiwan) translation (Jeff Huang)
+* added Czech translation (fri)
+* added German translation (Mario Blättermann)
+* updated Russian translation
+
+Version 0.8
+* improved icon theme parsing
+* added Bulgarian translation (Kiril Kirilov)
+* fixed plugin metadata
+* fixed font updating issue
+* fixed Russian translation
+
+Version 0.9
+* added more user friendly color roles
+* added feature to disable qss support
+* added Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+* updated Czech translation (fri)
+* updated Bulgarian translation (Kiril Kirilov)
+* updated German translation (Mario Blättermann)
+* updated Russian translation
+
+Version 0.10
+* added more debug messages
+* added Greek translation (Dimitrios Glentadakis)
+* moved home page to sf.net
+* fixed qss path
+
+Version 0.11
+* added Polish translation (FadeMind)
+* removed private headers usage
+* improved build scripts
+* fixed settings updating issue
+* fixed font setting
+* fixed fonts.conf generation
+* fixed segmentation fault on "widget-less" applications
+* updated German translation (Ettore Atalan)
+
+Version 0.12
+* added Chinese Simplified translation (Cary Tian)
+* fixed infinite loop in the icon theme parser (Sergey A. Sukiyazov)
+
+Version 0.13
+* added $XDG_DATA_HOME support
+* added Italian translation (Luigi Baldoni)
+
+Version 0.14
+* added option "Dialog buttons have icons"
+* added option "Menus have icons"
+* fixed style and palette initialization
+* updated Russian translation
+* updated German translation (Ettore Atalan)
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+
+Version 0.15
+* fixed problem with qtcurve style
+* updated Czech translation (fri)
+
+Version 0.16
+* added feature to save palette editor geometry
+* changed palette editor layout
+* updated Chinese Simplified translation (Cary Tian)
+
+Version 0.17
+* fixed crash in qupzilla
+* updated Greek translation (Dimitrios Glentadakis)
+
+Version 0.18
+* added color schemes support
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated German translation (Ettore Atalan)
+* updated Polish translation (FadeMind)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+* updated Russian translation
+
+Version 0.19
+* added feature to save geometry of the style sheet editor
+* fixed qt5ct.desktop
+* updated Greek translation (Dimitrios Glentadakis)
+* updated Czech translation (fri)
+* updated Chinese Simplified translation (Cary Tian)
+
+Version 0.20
+* fixed widget spacing
+* fixed typo
+* updated Bulgarian translation (Kiril Kirilov)
+* updated Italian translation (Luigi Baldoni)
+
+Version 0.21
+* added option "Activate item on signle-click"
+* added Spanish translation (jcn363)
+* added Slovak translation (Ján Ďanovský)
+* updated Polish translation (FadeMind)
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Czech translation (fri)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+
+Version 0.22
+* disabled html mode in the qss editor
+* fixed issue with overriding style sheets
+* added Hebrew translation (Genghis Khan)
+* updated Italian translation (Luigi Baldoni)
+* updated documentation
+
+Version 0.23
+* added support for single line comments in the style sheets
+* fixed issue with overriding application palette
+* updated Bulgarian translation (Kiril Kirilov)
+
+Version 0.24
+* added feature to preview color scheme on edit
+* added icons for some actions
+* fixed palette editor
+* fixed documentation
+* fixed infinite recursion in the icon theme parser (patch by Sergey A. Sukiyazov)
+* updated Greek translation (Dimitrios Glentadakis)
+
+Version 0.25
+* added environment variables verification
+* added French translation (Geiger David)
+* updated Slovak translation (Ján Ďanovský)
+* updated Russian translation
+* updated Czech translation (fri)
+* updated German translation (Ettore Atalan)
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Polish translation (Tomasz Przybył)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+
+Version 0.26
+* fixed stellarium compatibility
+* updated French translation (Geiger David)
+* updated Greek translation (Dimitrios Glentadakis)
+
+Version 0.27
+* added D-Bus tray support
+* added feature to disable debug output
+* updated documentation
+
+Version 0.28
+* added Qt 5.8 support
+* added qt5ct proxy-style plugin
+* added Serbian translation (markosm)
+* updated Bulgarian translation (Kiril Kirilov)
+* updated Italian translation (Luigi Baldoni)
+* updated Russian translation
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Czech translation (fri)
+* updated German translation (Atalanttore)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+
+Version 0.29
+* fixed libqt5ct-style.so installation path (Philip Müller)
+* updated Greek translation (Dimitrios Glentadakis)
+
+Version 0.30
+* fixed crash on nonexistent style in qt5ct.conf
+* fixed issue with KDE color themes
+* updated documentation
+* updated Bulgarian translation (Kiril Kirilov)
+* updated French translation (Geiger David)
+
+Version 0.31
+* added option "Toolbar button style"
+* added option "Mouse wheel scroll lines"
+* added test for minimal Qt version
+* added Arabic translation (abouzakaria kov)
+* using c++11 for source code
+* fixed Qt 5.4 support
+* updated Russian translation
+* updated Bulgarian translation (Kiril Kirilov)
+* updated Dutch (Netherlands) translation (Heimen Stoffels)
+* updated Chinese (Taiwan) translation (Jeff Huang)
+* updated German translation (Ettore Atalan)
+* updated Serbian translation (markosm)
+* updated Czech translation (fri)
+
+Version 0.32
+* added global menu support
+* updated Czech translation (fri)
+* updated Greek translation (Dimitrios Glentadakis)
+* updated Russian translation
+
+Version 0.33
+* fixed build without dbus support (coacher)
+* fixed Qt 5.6 support (coacher)
+* updated Hebrew translation (Elkana Birdugo)

@@ -1,0 +1,55 @@
+qt5ct - Qt5 Configuration Tool
+
+This program allows users to configure Qt5 settings (theme, font, icons, etc.)
+under DE/WM without Qt integration.
+
+Official home page: https://sourceforge.net/projects/qt5ct/
+
+Requirements:
+
+- GNU Linux or FreeBSD
+- qtbase >= 5.4.0
+- qtsvg >= 5.4.0 (For svg icons)
+- qttools >= 5.4.0 (For build only)
+
+
+Installation:
+
+qmake PREFIX=<your installation path>
+make
+make install (under root)
+
+Add line 'export QT_QPA_PLATFORMTHEME=qt5ct' to ~/.profile and re-login.
+Alternatively, create the file /etc/X11/Xsession.d/100-qt5ct with
+the following line:
+
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+Now restart X11 server to take the changes effect.
+
+Extra build options (for advanced users only):
+qmake DISABLE_WIDGETS=1 - compiles platform plugin without QtWidgets (useful for QML applications only)
+qmake PLUGINDIR=<custom path> - changes the default installation path of the plugins (libqt5ct.so and libqt5ct-style.so)
+
+Debug Messages:
+
+By default, platform plugin prints debug information to stderr. To disable this behaviour, you should
+export the following environment variable:
+
+export QT_LOGGIN_RULES="qt5ct.debug=false"
+
+Another way is to change qtlogging.ini file. See Qt documentation for details:
+http://doc.qt.io/qt-5/qloggingcategory.html (paragraph "Configuring Categories")
+
+Files and Directories:
+
+qt5ct - Qt5 configuration tool
+libqt5ct.so - qt5ct platform plugin
+libqt5ct-style.so - qt5ct proxy style plugin
+~/.config/qt5ct/qt5ct.conf - configuration file
+~/.config/qt5ct/qss/ - style sheets
+
+
+Translation:
+
+Use Transifex service: https://www.transifex.com/projects/p/qt5ct/
