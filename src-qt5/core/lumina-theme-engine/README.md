@@ -10,3 +10,5 @@ This is a theme engine for the Lumina Desktop
   - qttools >= 5.4.0
 
 2. Lumina Desktop
+
+Environment Variable QT_QPA_PLATFORMTHEME=lthemeengine needs to be set
