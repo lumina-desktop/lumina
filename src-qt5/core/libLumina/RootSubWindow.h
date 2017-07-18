@@ -44,14 +44,17 @@ private:
 	NativeEmbedWidget *WinWidget;
 	bool closing;
 	//Title bar objects
-	QBoxLayout *titleBar, *mainLayout;
+	QBoxLayout *titleBarL, *mainLayout;
 	QToolButton *closeB, *maxB, *minB, *otherB;
 	QLabel *titleLabel;
 	QMenu *otherM; //menu of other actions
+	QWidget *titleBar;
 	//Other random objects (animations,etc)
 	QPropertyAnimation *anim;
 	QVariant animResetProp;
+	QTimer *moveTimer;
 	void initWindowFrame();
+	void enableFrame(bool);
 
 	void LoadProperties( QList< NativeWindow::Property> list);
 

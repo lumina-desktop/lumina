@@ -107,4 +107,11 @@ signals:
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);
 };
+
+// Declare the enumerations as Qt MetaTypes
+Q_DECLARE_METATYPE(NativeWindow::Type);
+Q_DECLARE_METATYPE(NativeWindow::Action);
+Q_DECLARE_METATYPE(NativeWindow::State);
+Q_DECLARE_METATYPE(NativeWindow::Property);
+
 #endif

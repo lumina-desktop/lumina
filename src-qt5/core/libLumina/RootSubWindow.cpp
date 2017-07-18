@@ -22,14 +22,12 @@ RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
   //Create the QWindow and QWidget containers for the window
   WIN = win;
   closing = false;
-  //WinWidget = QWidget::createWindowContainer( WIN->window(), this);
   initWindowFrame();
   //Hookup the signals/slots
   connect(WIN, SIGNAL(PropertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>)));
   WinWidget->embedWindow(WIN);
   qDebug() << "[NEW WINDOW]" << WIN->id() << WinWidget->winId() << this->winId();
   LoadAllProperties();
-  //this->show();
 }
 
 RootSubWindow::~RootSubWindow(){
@@ -48,10 +46,10 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
     //above the frame itself - need to figure out which quadrant it is in (8-directions)
     if(pt.y() < WIN_BORDER){
       //One of the top options
-      if(pt.x() < WIN_BORDER){
+      if(pt.x() < this->width()/5){
 	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
 	return ResizeTopLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER)){
+      }else if(pt.x() > (this->width()*4.0/5.0)){
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
 	return ResizeTopRight;
       }else{
@@ -60,10 +58,10 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
       }
     }else if(pt.y() > (this->height()-WIN_BORDER) ){
       //One of the bottom options
-      if(pt.x() < WIN_BORDER){
+      if(pt.x() < this->width()/5){
 	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
 	return ResizeBottomLeft;
-      }else if(pt.x() > (this->width()-WIN_BORDER)){
+      }else if(pt.x() > (this->width()*4.0/5.0)){
 	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
 	return ResizeBottomRight;
       }else{
@@ -131,8 +129,13 @@ void RootSubWindow::setMouseCursor(ModState state, bool override){
 
 void RootSubWindow::initWindowFrame(){
   //qDebug() << "Create RootSubWindow Frame";
+  this->setContentsMargins(0,0,0,0);
   mainLayout = new QVBoxLayout(this);
-  titleBar = new QHBoxLayout();
+    mainLayout->setContentsMargins(0,0,0,0);
+  titleBar = new QWidget(this);
+    titleBar->setContentsMargins(0,0,0,0);
+  titleBarL = new QHBoxLayout(titleBar);
+    titleBarL->setContentsMargins(0,0,0,0);
  closeB = new QToolButton(this);
   maxB = new QToolButton(this);
   minB = new QToolButton(this);
@@ -152,13 +155,14 @@ void RootSubWindow::initWindowFrame(){
   connect(maxB, SIGNAL(clicked()), this, SLOT(toggleMaximize()) );
   connect(minB, SIGNAL(clicked()), this, SLOT(toggleMinimize()) );
   //Now assemble the frame layout based on the current settings
-    titleBar->addWidget(otherB);
-    titleBar->addWidget(titleLabel);
-    titleBar->addWidget(minB);
-    titleBar->addWidget(maxB);
-    titleBar->addWidget(closeB);
+    titleBarL->addWidget(otherB);
+    titleBarL->addWidget(titleLabel);
+    titleBarL->addWidget(minB);
+    titleBarL->addWidget(maxB);
+    titleBarL->addWidget(closeB);
   WinWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  mainLayout->addLayout(titleBar);
+  titleBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  mainLayout->addWidget(titleBar);
   mainLayout->addWidget(WinWidget);
   //Now all the stylesheet options
   this->setObjectName("WindowFrame");
@@ -167,15 +171,20 @@ void RootSubWindow::initWindowFrame(){
     maxB->setObjectName("Button_Maximize");
     otherM->setObjectName("Menu_Actions");
     titleLabel->setObjectName("Label_Title");
-  this->setStyleSheet("QWidget#WindowFrame{background-color: rgba(0,0,0,125);} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; border-radius: 3px; } QToolButton::hover{background-color: rgba(255,255,255,150); } QToolButton::pressed{ background-color: white; } QToolButton::menu-arrow{ image: none; }");
+  this->setStyleSheet("QFrame#WindowFrame{background-color: rgba(0,0,0,125)} QWidget#Label_Title{background-color: transparent; color: white; } QToolButton{background-color: transparent; border: 1px solid transparent; border-radius: 3px; } QToolButton::hover{background-color: rgba(255,255,255,150); } QToolButton::pressed{ background-color: white; } QToolButton::menu-arrow{ image: none; }");
   //And adjust the margins
-  mainLayout->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); //default border
   mainLayout->setSpacing(0);
-  titleBar->setSpacing(1);
-  titleBar->setContentsMargins(0,0,0,0);
+  titleBarL->setSpacing(1);
+  this->setFrameStyle(QFrame::NoFrame);
+  this->setLineWidth(0);
+  this->setMidLineWidth(0);
   this->setFrameRect(QRect(0,0,0,0));
-  this->setFrameShape(QFrame::NoFrame);
-  this->setContentsMargins(0,0,0,0);
+
+  //Setup the timer object to syncronize info
+  moveTimer = new QTimer(this);
+  moveTimer->setSingleShot(true);
+  moveTimer->setInterval(100); //1/10 second
+  connect(moveTimer, SIGNAL(timeout()), WinWidget, SLOT(resyncWindow()) );
 
   //Now load the icons for the button
   LIconCache::instance()->loadIcon(closeB, "window-close");
@@ -184,26 +193,34 @@ void RootSubWindow::initWindowFrame(){
   LIconCache::instance()->loadIcon(otherB, "list");
 }
 
+void RootSubWindow::enableFrame(bool on){
+  //Make the individual frame elements visible as needed
+  if(on){ this->setContentsMargins(WIN_BORDER,WIN_BORDER,WIN_BORDER,WIN_BORDER); }//default border
+  else{ this->setContentsMargins(0, 0, 0, 0); }
+  titleBar->setVisible(on);
+  //And now calculate/save the frame extents
+  QList<int> extents; extents << 0 << 0 << 0 << 0; //left, right, top, bottom
+  if(on){
+    extents[0] = WIN_BORDER;
+    extents[1] = WIN_BORDER;
+    extents[2] = WIN_BORDER + titleBar->height();
+    extents[3] = WIN_BORDER;
+  }
+  qDebug() << "SET FRAME EXTENTS:" << extents;
+  WIN->requestProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(extents) ); //save on raw window itself
+  WIN->setProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(extents) ); //save to structure now
+}
+
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   QList<QVariant> vals;
+  //Always ensure that visibility changes are evaluated last
+  bool addvisible = false;
   for(int i=0; i<list.length(); i++){
-    if(list[i] == NativeWindow::Visible){ list.removeAt(i); i--; continue; }
+    if(list[i] == NativeWindow::Visible){ list.removeAt(i); i--; addvisible = true; continue; }
     vals << WIN->property(list[i]);
-    /*if(list[i] == NativeWindow::FrameExtents){
-      qDebug() << "Check Frame Extents:" << vals[i];
-      if(vals[i].isNull()){
-        qDebug() << " - supply default frame extents";
-        QList<int> frame; frame << WinWidget->geometry().x() << this->width()-WinWidget->geometry().x()-WinWidget->geometry().width() << WinWidget->y() << this->height() - WinWidget->y() - WinWidget->geometry().height();
-        vals[i] = QVariant::fromValue< QList<int> >(frame); //use this by default
-        WIN->requestProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(frame)); //make sure these values get saved permanently
-        WIN->setProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(frame));
-	qDebug() << " - Default values:" << frame;
-      }
-    }*/
-    //qDebug() << "Property:" << list[i] << vals[i];
   }
+  //if(addvisible){ list << NativeWindow::Visible; vals << WIN->property(NativeWindow::Visible); }
   propertiesChanged(list, vals);
-  WIN->requestProperty(NativeWindow::Visible, true);
 }
 
 // === PUBLIC SLOTS ===
@@ -220,9 +237,12 @@ void RootSubWindow::clientClosed(){
 }
 
 void RootSubWindow::LoadAllProperties(){
-  QList< NativeWindow::Property> list = WIN->allProperties();
-  list << NativeWindow::FrameExtents;
+  QList< NativeWindow::Property> list;
+  list << NativeWindow::WinTypes << NativeWindow::WinActions << NativeWindow::States
+	<< NativeWindow::MinSize << NativeWindow::MaxSize << NativeWindow::Title << NativeWindow::ShortTitle
+	<< NativeWindow::Icon << NativeWindow::Size << NativeWindow::GlobalPos << NativeWindow::Visible << NativeWindow::Active;
   LoadProperties(list);
+  WIN->requestProperty(NativeWindow::Visible, true);
 }
 
 //Button Actions - public so they can be tied to key shortcuts and stuff as well
@@ -271,10 +291,10 @@ void RootSubWindow::startResizing(){
 void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList<QVariant> vals){
   for(int i=0; i<props.length() && i<vals.length(); i++){
     if(vals[i].isNull()){ continue; } //not the same as a default/empty value - the property has just not been set yet
-    qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
+    //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
+		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
 		if(vals[i].toBool()){
 		  animResetProp = WIN->geometry(); //this->geometry();
 		  anim->setPropertyName("geometry");
@@ -312,9 +332,12 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  vals << vals.takeAt(i);
 		  i--;
 		}else if(anim->state() != QPropertyAnimation::Running){
-		  qDebug() << "Got Widget Size Change:" << vals[i].toSize() << WinWidget->size();
-		  this->resize( WIN->geometry().size() );
-		  qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		  if(vals[i].toSize() != WinWidget->size()){
+		    qDebug() << "Got Widget Size Change:" << vals[i].toSize() << WinWidget->size();
+		    WinWidget->resize(vals[i].toSize());
+		    this->resize( WIN->geometry().size() );
+		    qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		  }
 		}
 		break;
 	case NativeWindow::MinSize:
@@ -326,7 +349,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 	case NativeWindow::Active:
 		//if(vals[i].toBool()){ WinWidget->setFocus(); }
 		break;
-	case NativeWindow::FrameExtents:
+	/*case NativeWindow::FrameExtents:
 		qDebug() << " - FRAME CHANGE";
 		if(vals[i].isNull()){
 		  vals[i] = QVariant::fromValue<QList<int> >( QList<int>() << WinWidget->geometry().x() << this->width()-WinWidget->geometry().x()-WinWidget->geometry().width() << WinWidget->y() << this->height() - WinWidget->y() - WinWidget->geometry().height() );
@@ -334,10 +357,10 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		}
 		qDebug() << "Setting Frame Extents:" << vals[i].value<QList<int> >();
 		mainLayout->setContentsMargins( vals[i].value< QList<int> >().at(0),vals[i].value< QList<int> >().at(2) - titleLabel->height(),vals[i].value< QList<int> >().at(1),vals[i].value< QList<int> >().at(3));
-		break;
-	/*case NativeWindow::WindowFlags:
-		this->setWindowFlags( val.value< Qt::WindowFlags >() );
 		break;*/
+	case NativeWindow::WinTypes:
+		enableFrame(vals[i].value< QList<NativeWindow::Type> >().contains(NativeWindow::T_NORMAL) );
+		break;
 	default:
 		qDebug() << "Window Property Unused:" << props[i] << vals[i];
     }
@@ -473,7 +496,7 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
-  if(QWidget::mouseGrabber() == this){ this->releaseMouse(); }
+  if(QFrame::mouseGrabber() == this){ this->releaseMouse(); }
 }
 
 void RootSubWindow::leaveEvent(QEvent *ev){
@@ -490,9 +513,9 @@ void RootSubWindow::leaveEvent(QEvent *ev){
 
 void RootSubWindow::resizeEvent(QResizeEvent *ev){
   //qDebug() << "Got Resize Event:" << ev->size();
-  if(WinWidget->size() != WIN->property(NativeWindow::Size).toSize() && anim->state()!=QAbstractAnimation::Running){
+  /*if(WinWidget->size() != WIN->property(NativeWindow::Size).toSize() && anim->state()!=QAbstractAnimation::Running){
     WIN->requestProperty(NativeWindow::Size, WinWidget->size());
-  }
+  }*/
   QFrame::resizeEvent(ev);
 }
 
@@ -502,7 +525,12 @@ void RootSubWindow::resizeEvent(QResizeEvent *ev){
 }*/
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
-  //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->mapToGlobal(QPoint(0,0));
-  if(!closing && anim->state()!=QAbstractAnimation::Running){ WIN->setProperty(NativeWindow::GlobalPos, WinWidget->mapToGlobal(QPoint(0,0)) ); }
+  qDebug() << "Got Move Event:" << ev->pos() << WinWidget->geometry();
   QFrame::moveEvent(ev);
+  if(!closing && anim->state()!=QAbstractAnimation::Running){
+    moveTimer->start();
+    //WinWidget->resyncWindow();
+    //WIN->requestProperty(NativeWindow::GlobalPos, ev->pos() );
+  }
+
 }

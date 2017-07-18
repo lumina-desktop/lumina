@@ -40,7 +40,7 @@ inline void registerClientEvents(WId id){
 //Simplification functions for the XCB/XLib interactions
 void NativeEmbedWidget::syncWinSize(QSize sz){
   if(WIN==0){ return; }
-  qDebug() << "Sync Window Size:" << sz;
+  //qDebug() << "Sync Window Size:" << sz;
     xcb_configure_window_value_list_t  valList;
     valList.x = 0;
     valList.y = 0;
@@ -53,6 +53,7 @@ void NativeEmbedWidget::syncWinSize(QSize sz){
 }
 
 void NativeEmbedWidget::syncWidgetSize(QSize sz){
+  //qDebug() << "Sync Widget Size:" << sz;
   this->resize(sz);
 }
 

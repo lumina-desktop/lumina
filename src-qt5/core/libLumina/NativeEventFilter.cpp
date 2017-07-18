@@ -76,7 +76,7 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
-    qDebug() << "Detected Property Change:" << ev->window << prop;
+    if(DEBUG){ qDebug() << "Detected Property Change:" << ev->window << prop; }
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{
     //qDebug() << "Unknown Property Change:" << ev->window << ev->atom;
@@ -157,7 +157,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 	    case XCB_MOTION_NOTIFY:
 		//This is a mouse movement event
-		qDebug() << "Motion Notify Event";
+		if(DEBUG){ qDebug() << "Motion Notify Event"; }
                  obj->emit MouseMovement();
 	        break;
 	    case XCB_ENTER_NOTIFY:
@@ -270,54 +270,3 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 	return false;
 	//never stop event handling (this will not impact the X events themselves - just the internal Qt application)
 }
-
-
-//=========
-//  PRIVATE
-//=========
-
-
-// WINDOW HANDLING FUNCTIONS
-/*void EventFilter::SetupNewWindow(xcb_map_request_event_t  *ev){
-  WId win = ev->window;
-
-  bool ok = obj->XCB->WM_ManageWindow(win, true);
-  //Quick check if this is a transient window if we could not manage it directly
-  if(!ok){
-    WId tran = obj->XCB->WM_ICCCM_GetTransientFor(win);
-    if(tran!=win && tran!=0){
-      win = tran;
-      ok = obj->XCB->WM_ManageWindow(win);
-    }
-  }
-  qDebug() << "New Window:" << win << obj->XCB->WM_ICCCM_GetClass(win) << " Managed:" << ok;
-  obj->XCB->WM_Set_Active_Window(win);
-  //Determing the requested geometry/location/management within the event,
-  NativeWindow *nwin = new NativeWindow(win);
-  QObject::connect(nwin, SIGNAL(RequestClose(WId)), obj, SLOT(TryCloseWindow(WId)) );
-  QObject::connect(nwin, SIGNAL(RequestActivate(WId)), obj, SLOT(TryActivateWindow(WId)) );
-  windows << nwin;
-  bool show_now = !Lumina::SS->isLocked();
-  if(!show_now){ waitingToShow << win; } //add to the list to get set visible later
-  //populate the native window settings as they are right now
-  nwin->setProperty(NativeWindow::Active, true);
-  nwin->setProperty(NativeWindow::Visible, show_now);
-  nwin->setProperty(NativeWindow::Workspace, obj->XCB->CurrentWorkspace());
-  icccm_size_hints hints = obj->XCB->WM_ICCCM_GetNormalHints(win);
-  if(!hints.isValid()){ hints = obj->XCB->WM_ICCCM_GetSizeHints(win); }
-  if(hints.validMinSize()){ nwin->setProperty(NativeWindow::MinSize, QSize(hints.min_width,hints.min_height)); }
-  if(hints.validMaxSize()){ nwin->setProperty(NativeWindow::MaxSize, QSize(hints.max_width,hints.max_height)); }
-  if(hints.validBaseSize()){ nwin->setProperty(NativeWindow::Size, QSize(hints.base_width,hints.base_height)); }
-  else if(hints.validSize()){ nwin->setProperty(NativeWindow::Size, QSize(hints.width, hints.height)); }
-  nwin->setProperty(NativeWindow::Icon, obj->XCB->WM_Get_Icon(win));
-  QString title = obj->XCB->WM_Get_Name(win);
-    if(title.isEmpty()){ title = obj->XCB->WM_Get_Visible_Name(win); }
-    if(title.isEmpty()){ title = obj->XCB->WM_ICCCM_GetName(win); }
-  nwin->setProperty(NativeWindow::Title, title);
-    title = obj->XCB->WM_Get_Icon_Name(win);
-    if(title.isEmpty()){ title = obj->XCB->WM_Get_Visible_Icon_Name(win); }
-    if(title.isEmpty()){ title = obj->XCB->WM_ICCCM_GetIconName(win); }
-  nwin->setProperty(NativeWindow::ShortTitle, title);
-
-  obj->emit WindowCreated(nwin);
-}*/

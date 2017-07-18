@@ -37,6 +37,9 @@ public:
 	bool detachWindow();
 	bool isEmbedded(); //status of the embed
 
+public slots:
+	void resyncWindow(){ syncWinSize(this->size()); }
+
 protected:
 	void resizeEvent(QResizeEvent *ev);
 	void showEvent(QShowEvent *ev);

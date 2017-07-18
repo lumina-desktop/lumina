@@ -260,8 +260,8 @@ NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   }
   //Check to see if this is a transient for some other window
   if(checkRelated){
-    WId tid = obj->getTransientFor(id);
-    if(tid!=id){ return findWindow(tid, checkRelated); } //call it recursively as needed
+    //WId tid = obj->getTransientFor(id);
+    //if(tid!=id){ return findWindow(tid, checkRelated); } //call it recursively as needed
     //qDebug() << "  -- Could not find Window!";
   }
   return 0;
@@ -438,7 +438,7 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
   }
   if(props.contains(NativeWindow::FrameExtents)){
     //Just assign default values to this - need to automate it later
-    win->setProperty(NativeWindow::FrameExtents, QVariant::fromValue<QList<int> >(QList<int>() << 5 << 5 << 5+QFontMetrics(QFont()).height() << 5) );
+    //win->setProperty(NativeWindow::FrameExtents, QVariant::fromValue<QList<int> >(QList<int>() << 5 << 5 << 5+QFontMetrics(QFont()).height() << 5) );
   }
   if(props.contains(NativeWindow::RelatedWindows)){
     WId orig = win->id();
@@ -458,6 +458,11 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
       free(attr);
     }
   }
+  if(props.contains(NativeWindow::WinTypes)){
+    QList< NativeWindow::Type> types;
+    types << NativeWindow::T_NORMAL; //make this load appropriately later
+    win->setProperty(NativeWindow::WinTypes, QVariant::fromValue< QList<NativeWindow::Type> >(types) );
+  }
 }
 
 void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals){
@@ -472,29 +477,27 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
   if(props.contains(NativeWindow::Icon)){
 
   }
-  if(props.contains(NativeWindow::Size) ){//|| props.contains(NativeWindow::GlobalPos) ){
+  if(props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
     xcb_configure_window_value_list_t  valList;
-    valList.x = 0;
+    valList.x = 0; //Note that this is the relative position - should always be 0,0 relative to the embed widget
     valList.y = 0;
-    uint16_t mask = 0;
-    //if(props.contains(NativeWindow::Size)){
-      QSize sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
-      valList.width = sz.width();
-      valList.height = sz.height();
-      mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
-    /*}else{
-      valList.width = win->property(NativeWindow::Size).toSize().width();
-      valList.height = win->property(NativeWindow::Size).toSize().height();
-    }*/
+    QSize sz = win->property(NativeWindow::Size).toSize();
+    if(props.contains(NativeWindow::Size)){
+      sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
+    }
+    valList.width = sz.width();
+    valList.height = sz.height();
     /*if(props.contains(NativeWindow::GlobalPos)){
       QPoint pt = vals[ props.indexOf(NativeWindow::GlobalPos) ] .toPoint();
       valList.x = pt.x();
-      valList.y = pt.y();*/
-      mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
-    /*}else{
+      valList.y = pt.y();
+    }else{
       valList.x = win->property(NativeWindow::GlobalPos).toPoint().x();
       valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
     }*/
+    uint16_t mask = 0;
+    mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    qDebug() << "Configure window Geometry:" << sz;
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
   if(props.contains(NativeWindow::Name)){
@@ -725,7 +728,7 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
 
 void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop){
   //NOTE: This is triggered by the NativeEventFilter - not by changes to the NativeWindow objects themselves
-  NativeWindow *win = findWindow(id);
+  NativeWindow *win = findWindow(id, prop!=NativeWindow::Visible);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     UpdateWindowProperties(win, QList<NativeWindow::Property>() << prop);
@@ -733,7 +736,7 @@ void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property pr
 }
 
 void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop, QVariant val){
-  NativeWindow *win = findWindow(id);
+  NativeWindow *win = findWindow(id,prop!=NativeWindow::Visible);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     win->setProperty(prop, val);
