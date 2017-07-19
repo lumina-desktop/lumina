@@ -155,6 +155,26 @@ bool NativeEmbedWidget::isEmbedded(){
 }
 
 // ==============
+//   PUBLIC SLOTS
+// ==============
+void NativeEmbedWidget::resyncWindow(){
+  QSize sz = this->size();
+   if(WIN==0){ return; }
+  //qDebug() << "Sync Window Size:" << sz;
+    xcb_configure_window_value_list_t  valList;
+    valList.x = -1;
+    valList.y = 0;
+    valList.width = sz.width();
+    valList.height = sz.height();
+    uint16_t mask = 0;
+      mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+      mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
+   valList.x = 0;
+    xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
+}
+
+// ==============
 //      PROTECTED
 // ==============
 void NativeEmbedWidget::resizeEvent(QResizeEvent *ev){
