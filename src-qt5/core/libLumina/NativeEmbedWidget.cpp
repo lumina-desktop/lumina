@@ -38,17 +38,13 @@ inline void registerClientEvents(WId id){
 //Simplification functions for the XCB/XLib interactions
 void NativeEmbedWidget::syncWinSize(QSize sz){
   if(WIN==0){ return; }
+  if(!sz.isValid()){ sz = this->size(); } //use the current widget size
   //qDebug() << "Sync Window Size:" << sz;
-    xcb_configure_window_value_list_t  valList;
-    valList.x = 0;
-    valList.y = 0;
-    valList.width = sz.width();
-    valList.height = sz.height();
-    uint16_t mask = 0;
-      mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
-      mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
-    xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
-    //xcb_flush(QX11Info::connection());
+  if(sz == winSize){ return; } //no change
+    const uint32_t valList[2] = {(uint32_t) sz.width(), (uint32_t) sz.height()};
+    const uint32_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
+  winSize = sz; //save this for checking later
 }
 
 void NativeEmbedWidget::syncWidgetSize(QSize sz){
@@ -89,7 +85,7 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
 // ============
 NativeEmbedWidget::NativeEmbedWidget(QWidget *parent) : QWidget(parent){
   WIN = 0; //nothing embedded yet
-  this->setStyleSheet("background: transparent;"); //this widget should be fully-transparent to Qt itself (will paint on top of that)
+  this->setSizeIncrement(2,2);
 }
 
 bool NativeEmbedWidget::embedWindow(NativeWindow *window){
@@ -125,7 +121,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
 
   WIN->addDamageID( (uint) dmgID); //save this for later
   WIN->addFrameWinID(this->winId());
-  connect(WIN, SIGNAL(VisualChanged()), this, SLOT(update()) ); //make sure we repaint the widget on visual change
+  connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
 
   registerClientEvents(WIN->id());
   registerClientEvents(this->winId());
@@ -146,32 +142,37 @@ bool NativeEmbedWidget::isEmbedded(){
 //   PUBLIC SLOTS
 // ==============
 void NativeEmbedWidget::resyncWindow(){
-  QSize sz = this->size();
    if(WIN==0){ return; }
-  //Just jitter the x origin of the window 1 pixel so the window knows to re-check it's global position
-  //  before creating child windows (menu's in particular).
+  return; //skip the stuff below (not working)
+  QRect geom = WIN->geometry();
+  //Send an artificial configureNotify event to the window with the global position/size included
+  xcb_configure_notify_event_t event;
+    event.x = geom.x() + this->pos().x();
+    event.y = geom.y() + this->pos().y();
+    event.width = this->width();
+    event.height = this->height();
+    event.border_width = 0;
+    event.above_sibling = XCB_NONE;
+    event.override_redirect = false;
+    event.window = WIN->id();
+    event.event = WIN->id();
+    event.response_type = XCB_CONFIGURE_NOTIFY;
+  xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (const char *) &event);
 
-  //qDebug() << "Sync Window Size:" << sz;
-    xcb_configure_window_value_list_t  valList;
-    valList.x = 0;
-    valList.y = 0;
-    valList.width = sz.width();
-    //valList.height = sz.height()-1;
-    uint16_t mask = 0;
-      mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
-      mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
-    //xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
-   valList.height = sz.height();
-    //xcb_flush(QX11Info::connection());
-    xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
+  xcb_flush(QX11Info::connection());
 }
 
+void NativeEmbedWidget::repaintWindow(){
+  this->update();
+}
 // ==============
 //      PROTECTED
 // ==============
 void NativeEmbedWidget::resizeEvent(QResizeEvent *ev){
-  if(WIN!=0){ syncWinSize(ev->size()); } //syncronize the window with the new widget size
   QWidget::resizeEvent(ev);
+  if(WIN!=0){
+    syncWinSize(ev->size());
+  } //syncronize the window with the new widget size
 }
 
 void NativeEmbedWidget::showEvent(QShowEvent *ev){
@@ -186,14 +187,19 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   //QWidget::paintEvent(ev); //ensure all the Qt-compositing is done first
+  if(this->size()!=winSize){ return; } //do not paint here - waiting to re-sync the sizes
   if(WIN==0){ QWidget::paintEvent(ev); return; }
   //Need to paint the image from the window onto the widget as an overlay
   QRect geom = QRect(0,0,this->width(), this->height()); //always paint the whole window
-  //qDebug() << "Get Paint image";
+  //qDebug() << "Get Paint image:" << ev->rect() << geom;
+  //geom = ev->rect(); //atomic updates
+  //geom.adjust(-1,-1,1,1); //add an additional pixel in each direction to be painted
+  //geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
   QImage img = windowImage(geom);
   if(!img.isNull()){
+    if(img.size() != geom.size()){ return; }
     QPainter P(this);
-    P.drawImage( geom , img, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+    P.drawImage( geom , img, QRect(geom.topLeft(), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
     //qDebug() << "Painted Rect:" << ev->rect() << this->geometry();
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
   //  Since this is an embedded image - we fully expect there to be transparency most of the time.

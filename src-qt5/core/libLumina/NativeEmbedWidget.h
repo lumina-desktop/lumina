@@ -13,6 +13,7 @@
 
 #include "NativeWindow.h"
 #include <QWidget>
+#include <QTimer>
 #include <QResizeEvent>
 #include <QShowEvent>
 #include <QHideEvent>
@@ -22,13 +23,16 @@ class NativeEmbedWidget : public QWidget{
 	Q_OBJECT
 private:
 	NativeWindow *WIN;
+	QSize winSize;
 
+private slots:
 	//Simplification functions
-	void syncWinSize(QSize);
-	void syncWidgetSize(QSize);
+	void syncWinSize(QSize sz = QSize());
+	void syncWidgetSize(QSize sz);
 	void hideWindow();
 	void showWindow();
 	QImage windowImage(QRect geom);
+
 
 public:
 	NativeEmbedWidget(QWidget *parent);
@@ -39,6 +43,7 @@ public:
 
 public slots:
 	void resyncWindow();
+	void repaintWindow();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);

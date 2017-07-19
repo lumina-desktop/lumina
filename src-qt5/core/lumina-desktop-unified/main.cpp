@@ -28,6 +28,7 @@ int main(int argc, char ** argv)
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+    setenv("QT_NO_GLIB", "1", 1); //Disable the glib event loop within Qt at runtime (performance hit + bugs)
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
     if(DEBUG){ qDebug() << "Starting unified session"; }

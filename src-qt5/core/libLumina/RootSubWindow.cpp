@@ -181,6 +181,12 @@ void RootSubWindow::initWindowFrame(){
   titleBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   mainLayout->addWidget(titleBar);
   mainLayout->addWidget(WinWidget);
+  //Setup the cursors for the buttons
+  closeB->setCursor(Qt::ArrowCursor);
+  minB->setCursor(Qt::ArrowCursor);
+  maxB->setCursor(Qt::ArrowCursor);
+  otherM->setCursor(Qt::ArrowCursor);
+  titleLabel->setCursor(Qt::ArrowCursor);
   //Now all the stylesheet options
   this->setObjectName("WindowFrame");
     closeB->setObjectName("Button_Close");
@@ -492,7 +498,6 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
       default:
 	break;
     }
-
     this->setGeometry(geom);
   }
   QFrame::mouseMoveEvent(ev);
