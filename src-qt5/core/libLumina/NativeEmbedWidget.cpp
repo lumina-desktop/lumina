@@ -163,6 +163,11 @@ void NativeEmbedWidget::resyncWindow(){
 }
 
 void NativeEmbedWidget::repaintWindow(){
+  qDebug() << "Update Window Image";
+  QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
+  if(!tmp.isNull()){
+    winImage = tmp;
+  }else{ qDebug() << "Got Null Image!!"; }
   this->update();
 }
 // ==============
@@ -186,23 +191,17 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
-  //QWidget::paintEvent(ev); //ensure all the Qt-compositing is done first
   if(this->size()!=winSize){ return; } //do not paint here - waiting to re-sync the sizes
   if(WIN==0){ QWidget::paintEvent(ev); return; }
   //Need to paint the image from the window onto the widget as an overlay
-  QRect geom = QRect(0,0,this->width(), this->height()); //always paint the whole window
-  //qDebug() << "Get Paint image:" << ev->rect() << geom;
-  //geom = ev->rect(); //atomic updates
-  //geom.adjust(-1,-1,1,1); //add an additional pixel in each direction to be painted
-  //geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
-  QImage img = windowImage(geom);
-  if(!img.isNull()){
-    if(img.size() != geom.size()){ return; }
+  QRect geom = ev->rect(); //atomic updates
+  geom.adjust(-1,-1,1,1); //add an additional pixel in each direction to be painted
+  geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
+  if(!winImage.isNull()){
+    if( !QRect(QPoint(0,0),winImage.size()).contains(geom) ){ QTimer::singleShot(0,this, SLOT(repaintWindow()) );return; }
     QPainter P(this);
-    P.drawImage( geom , img, QRect(geom.topLeft(), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
-    //qDebug() << "Painted Rect:" << ev->rect() << this->geometry();
+    P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
-  //  Since this is an embedded image - we fully expect there to be transparency most of the time.
+  //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
   }
-  //qDebug() << "Done Painting";
 }

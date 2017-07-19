@@ -24,6 +24,7 @@ class NativeEmbedWidget : public QWidget{
 private:
 	NativeWindow *WIN;
 	QSize winSize;
+	QImage winImage;
 
 private slots:
 	//Simplification functions
