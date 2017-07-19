@@ -92,7 +92,7 @@ void page_interface_panels::LoadSettings(int screennum){
 
 void page_interface_panels::updateIcons(){
   ui->tool_panels_add->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_profile->setIcon( LXDG::findIcon("view-media-artist","") );
+  ui->tool_profile->setIcon( LXDG::findIcon("border-color","") );
   ui->tool_import->setIcon( LXDG::findIcon("document-import","") );
 }
 

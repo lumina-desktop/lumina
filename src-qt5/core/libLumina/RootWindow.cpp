@@ -14,6 +14,7 @@
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
+  this->setMouseTracking(true);
 }
 
 RootWindow::~RootWindow(){
@@ -51,7 +52,7 @@ void RootWindow::updateScreenPixmap(screeninfo *info){
     QPixmap raw(info->file); //load the image from file
     //Now apply the proper aspect ratio as needed
     if(info->scale == RootWindow::Stretch || info->scale == RootWindow::Full || info->scale == RootWindow::Fit){
-       Qt::AspectRatioMode armode = Qt::KeepAspectRatio; 
+       Qt::AspectRatioMode armode = Qt::KeepAspectRatio;
        if(info->scale == RootWindow::Stretch ){  armode = Qt::IgnoreAspectRatio; }
       else if(info->scale == RootWindow::Full ){ armode = Qt::KeepAspectRatioByExpanding; }
       if(raw.height()!=info->area.height() && raw.width() !=info->area.width()){
@@ -60,16 +61,16 @@ void RootWindow::updateScreenPixmap(screeninfo *info){
     }
     //Now calculate offset and draw width/height
     QRect drawRect(0,0, raw.width(), raw.height());
-    if(info->scale == RootWindow::Full ){ 
+    if(info->scale == RootWindow::Full ){
       drawRect.moveTo( (info->area.width() - raw.width())/2, (info->area.height() - raw.height())/2 );
     }else if(info->scale == RootWindow::Fit ){
-      drawRect.moveTo( (info->area.width() - raw.width())/2, (info->area.height() - raw.height())/2 );    
+      drawRect.moveTo( (info->area.width() - raw.width())/2, (info->area.height() - raw.height())/2 );
     }else if(info->scale == RootWindow::Center ){
-      drawRect.moveTo( (info->area.width() - raw.width())/2, (info->area.height() - raw.height())/2 );    
+      drawRect.moveTo( (info->area.width() - raw.width())/2, (info->area.height() - raw.height())/2 );
     }else if(info->scale == RootWindow::Tile ){
       //Draw the entire area - no offset
       drawRect.setHeight(info->area.height());
-      drawRect.setWidth(info->area.width()); 
+      drawRect.setWidth(info->area.width());
     }else if(info->scale == RootWindow::BottomLeft ){
       drawRect.moveTo( 0 , info->area.height() - raw.height() );
     }else if(info->scale == RootWindow::BottomRight ){
@@ -130,7 +131,7 @@ void RootWindow::ResizeRoot(){
   //Trigger a repaint and send out any signals
   this->setGeometry(fullscreen);
   this->update();
-  emit RootResized();
+  emit RootResized(fullscreen);
   if(!valid.isEmpty()){ emit NewScreens(valid); }
   if(!invalid.isEmpty()){ emit RemovedScreens(invalid); }
 }
@@ -138,7 +139,7 @@ void RootWindow::ResizeRoot(){
 void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file){
   bool found = false;
   for(int i=0; i<WALLPAPERS.length() && !found; i++){
-    if(WALLPAPERS[i].id == id){ 
+    if(WALLPAPERS[i].id == id){
       WALLPAPERS[i].scale = scale;
       WALLPAPERS[i].file = file;
       updateScreenPixmap(&WALLPAPERS[i]);
@@ -168,20 +169,23 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
+  qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
   for(int i=0; i<WINDOWS.length() && subwin==0; i++){
-    if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; } 
+    if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; }
   }
   if(subwin==0){
     subwin = new RootSubWindow(this, win);
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
     WINDOWS << subwin;
   }
-  //subwin->show();
+  //win->setProperty(NativeWindow::Visible, true);
+  //win->requestProperty( NativeWindow::Active, true);
+  win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true);
 }
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; } 
+    if(WINDOWS[i]->id() == win){ qDebug() << "Remove Window From Root List"; WINDOWS.takeAt(i)->clientClosed(); break; }
   }
 }
 

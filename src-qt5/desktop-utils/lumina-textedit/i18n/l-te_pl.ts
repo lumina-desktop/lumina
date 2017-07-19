@@ -146,7 +146,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="188"/>
         <source>New File</source>
         <translation>Nowy plik</translation>
     </message>
@@ -262,30 +262,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Text Editor</source>
         <translation>Edytory tekstu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Open File(s)</source>
         <translation>Otwórz plik(i)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Text Files (*)</source>
         <translation>Pliki tekstowe (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Porzucić niezapisane zmiany?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +296,7 @@ Czy na pewno go zamknąć?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 
@@ -310,32 +310,32 @@ Czy chcesz mimo to zamknąć edytor?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Text File (*)</source>
         <translation>Plik tekstowy (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="289"/>
+        <location filename="../PlainTextEditor.cpp" line="318"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Numier wiersza: %1, Numer kolumny: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="298"/>
+        <location filename="../PlainTextEditor.cpp" line="327"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>Zawartość pliku została zmieniona przez zewnętrzny program. Czy ponownie załadować plik?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="300"/>
+        <location filename="../PlainTextEditor.cpp" line="329"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Uwaga: Utracisz wszystkie niezapisane dane)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="304"/>
+        <location filename="../PlainTextEditor.cpp" line="333"/>
         <source>File Modified</source>
         <translation>Plik zmodyfikowany</translation>
     </message>

@@ -10,4 +10,5 @@ INCLUDEPATH *= ${PWD}
 
 # include other library dependencies
 include(LUtils.pri)
-include(NativeWindow.pri);
+include(NativeWindow.pri)
+include(LIconCache.pri)

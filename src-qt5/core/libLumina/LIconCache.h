@@ -69,7 +69,7 @@ private:
 
 private slots:
 	void IconLoaded(QString id, QDateTime sync, QByteArray *data);
- 
+
 signals:
 	void InternalIconLoaded(QString, QDateTime, QByteArray*); //INTERNAL SIGNAL - DO NOT USE in other classes/objects
 	void IconAvailable(QString); //way for classes to listen/reload icons as they change

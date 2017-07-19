@@ -5,8 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 //  This is a container object for setting/announcing changes
-//    in a native window's properties. 
-//    The WM will usually run the "setProperty" function on this object, 
+//    in a native window's properties.
+//    The WM will usually run the "setProperty" function on this object,
 //     and any other classes/widgets which watch this window can act appropriatly after-the-fact
 //  Non-WM classes should use the "Request" signals to ask the WM to do something, and listen for changes later
 //===========================================
@@ -29,10 +29,10 @@ public:
 	enum Action {A_MOVE, A_RESIZE, A_MINIMIZE, A_SHADE, A_STICK, A_MAX_VERT, A_MAX_HORZ, A_FULLSCREEN, A_CHANGE_DESKTOP, A_CLOSE, A_ABOVE, A_BELOW};
 
 	enum Property{ 	 /*QVariant Type*/
-		None, 		/*null*/
-		MinSize,  	/*QSize*/
-		MaxSize, 	/*QSize*/
-		Size, 		/*QSize*/
+		None=0, 		/*null*/
+		MinSize,  		/*QSize*/
+		MaxSize, 		/*QSize*/
+		Size, 			/*QSize*/
 		GlobalPos,	/*QPoint*/
 		Title, 		/*QString*/
 		ShortTitle,	/*QString*/
@@ -41,31 +41,41 @@ public:
 		Workspace,	/*int*/
 		States,		/*QList<NativeWindow::State> : Current state of the window */
 		WinTypes,	/*QList<NativeWindow::Type> : Current type of window (typically does not change)*/
-		WinActions, /*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
-		FrameExtents, /*QList<int> : [Left, Right, Top, Bottom] in pixels */
+		WinActions, 	/*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
+		FrameExtents, 	/*QList<int> : [Left, Right, Top, Bottom] in pixels */
+		RelatedWindows, /* QList<WId> - better to use the "isRelatedTo(WId)" function instead of reading this directly*/
 		Active, 		/*bool*/
 		Visible 		/*bool*/
 		};
 
 	static QList<NativeWindow::Property> allProperties(){
-	  //Return all the available properties (excluding "None")
+	  //Return all the available properties (excluding "None" and "FrameExtents" (WM control only) )
 	  QList<NativeWindow::Property> props;
 	  props << MinSize << MaxSize << Size << GlobalPos << Title << ShortTitle << Icon << Name << Workspace \
-	    << States << WinTypes << WinActions << Active << Visible;
+	    << States << WinTypes << WinActions << RelatedWindows << Active << Visible;
 	  return props;
 	};
 
 	NativeWindow(WId id);
 	~NativeWindow();
 
+	void addFrameWinID(WId);
+	void addDamageID(unsigned int);
+	bool isRelatedTo(WId);
+
 	WId id();
-	QWindow* window();	
+	WId frameId();
+	unsigned int damageId();
+
+	//QWindow* window();
 
 	QVariant property(NativeWindow::Property);
-	void setProperty(NativeWindow::Property, QVariant);
-	void setProperties(QList<NativeWindow::Property>, QList<QVariant>);
-	void requestProperty(NativeWindow::Property, QVariant);
-	void requestProperties(QList<NativeWindow::Property>, QList<QVariant>);
+	void setProperty(NativeWindow::Property, QVariant, bool force = false);
+	void setProperties(QList<NativeWindow::Property>, QList<QVariant>, bool force = false);
+	void requestProperty(NativeWindow::Property, QVariant, bool force = false);
+	void requestProperties(QList<NativeWindow::Property>, QList<QVariant>, bool force = false);
+
+	QRect geometry(); //this returns the "full" geometry of the window (window + frame)
 
 public slots:
 	void requestClose(); //ask the app to close the window (may/not depending on activity)
@@ -74,8 +84,10 @@ public slots:
 
 private:
 	QHash <NativeWindow::Property, QVariant> hash;
-	QWindow *WIN;
-	WId winid;
+	//QWindow *WIN;
+	WId winid, frameid;
+	QList<WId> relatedTo;
+	unsigned int dmgID;
 
 signals:
 	//General Notifications
@@ -83,15 +95,23 @@ signals:
 	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void WindowClosed(WId);
 	void WindowNotResponding(WId); //will be sent out if a window does not respond to a ping request
+	void VisualChanged();
 
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
 	//Note: "WId" should be the NativeWindow id()
 	void RequestClose(WId);				//Close the window
-	void RequestKill(WId);				//Kill the window/app (usually from being unresponsive)
+	void RequestKill(WId);					//Kill the window/app (usually from being unresponsive)
 	void RequestPing(WId);				//Verify that the window is still active (such as not closing after a request
-	
+	void RequestReparent(WId, WId, QPoint); //client window, frame window, relative origin point in frame
 	// System Tray Icon Embed/Unembed Requests
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);
 };
+
+// Declare the enumerations as Qt MetaTypes
+Q_DECLARE_METATYPE(NativeWindow::Type);
+Q_DECLARE_METATYPE(NativeWindow::Action);
+Q_DECLARE_METATYPE(NativeWindow::State);
+Q_DECLARE_METATYPE(NativeWindow::Property);
+
 #endif

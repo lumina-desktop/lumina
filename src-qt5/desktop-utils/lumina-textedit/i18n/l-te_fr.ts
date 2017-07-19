@@ -146,7 +146,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="188"/>
         <source>New File</source>
         <translation>Nouveau fichier</translation>
     </message>
@@ -262,30 +262,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="61"/>
+        <location filename="../MainUI.cpp" line="62"/>
         <source>Text Editor</source>
         <translation>Éditeur de Texte</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Open File(s)</source>
         <translation>Ouvrir Fichier(s)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>Text Files (*)</source>
         <translation>Fichiers de Texte (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Perdre les modifications non enregistrées ?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="351"/>
-        <location filename="../MainUI.cpp" line="362"/>
+        <location filename="../MainUI.cpp" line="366"/>
+        <location filename="../MainUI.cpp" line="377"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +296,7 @@ Voulez-vous le fermer quand même ?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="470"/>
+        <location filename="../MainUI.cpp" line="485"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 
@@ -310,32 +310,32 @@ Voulez-vous tout de même fermer l&apos;éditeur ?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Save File</source>
         <translation>Enregistrer le Fichier</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="94"/>
+        <location filename="../PlainTextEditor.cpp" line="110"/>
         <source>Text File (*)</source>
         <translation>Fichier de Texte (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="289"/>
+        <location filename="../PlainTextEditor.cpp" line="318"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Ligne Numéro : %1, Colonne Numéro : %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="298"/>
+        <location filename="../PlainTextEditor.cpp" line="327"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>Le fichier suivant a été modifié par un autre programme. Voulez-vous le recharger ?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="300"/>
+        <location filename="../PlainTextEditor.cpp" line="329"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Note : Les modifications non enregistrées seront perdues)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="304"/>
+        <location filename="../PlainTextEditor.cpp" line="333"/>
         <source>File Modified</source>
         <translation>Fichier Modifié</translation>
     </message>

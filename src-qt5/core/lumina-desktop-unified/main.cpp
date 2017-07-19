@@ -8,10 +8,11 @@
 #include "global-includes.h"
 #include "LSession.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 int main(int argc, char ** argv)
 {
+  qDebug() << "Starting lumina-desktop-unified...";
     if (argc > 1) {
       if (QString(argv[1]) == QString("--version")){
         qDebug() << LDesktopUtils::LuminaDesktopVersion();
@@ -27,8 +28,10 @@ int main(int argc, char ** argv)
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+    setenv("QT_NO_GLIB", "1", 1); //Disable the glib event loop within Qt at runtime (performance hit + bugs)
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
+    if(DEBUG){ qDebug() << "Starting unified session"; }
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
     QTime *timer=0;
@@ -41,6 +44,6 @@ int main(int argc, char ** argv)
     theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
-    qDebug() << "Finished Closing Down Lumina";
+    qDebug() << "Finished Closing Down Unified Lumina";
     return retCode;
 }

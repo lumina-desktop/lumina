@@ -12,12 +12,13 @@ target.path = $${L_BINDIR}
 include(../libLumina/ResizeMenu.pri)
 include(../libLumina/LDesktopUtils.pri) #includes LUtils and LOS
 include(../libLumina/LuminaXDG.pri)
-include(../libLumina/LuminaX11.pri)
+#include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 include(../libLumina/DesktopSettings.pri)
 include(../libLumina/RootWindow.pri)
 include(../libLumina/ExternalProcess.pri)
+include(../libLumina/NativeWindow.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)
@@ -43,10 +44,12 @@ FORMS    +=	BootSplash.ui
 #include(panel-plugins/panel-plugins.pri)
 #include(desktop-plugins/desktop-plugins.pri)
 
-
+# Install all the various files for the desktop itself
 desktop.path = $${L_SESSDIR}
 desktop.files = lumina-desktop.desktop
 
+defaults.path = $${L_SHAREDIR}/lumina-desktop
+defaults.files = defaults/*
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
@@ -114,7 +117,7 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target desktop
+INSTALLS += target desktop defaults
 
 WITH_I18N{
   INSTALLS += dotrans

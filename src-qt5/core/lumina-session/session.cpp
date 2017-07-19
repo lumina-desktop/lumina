@@ -92,7 +92,7 @@ void LSession::start(bool unified){
   if(WM=="fluxbox"){
 	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	  if( !LUtils::isValidBinary("fluxbox") ){
-	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue"; 
+	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";
 	  }else{
 	    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
 	    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }

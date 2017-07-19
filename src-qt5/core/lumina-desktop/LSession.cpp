@@ -471,7 +471,7 @@ void LSession::updateDesktops(){
   //Make sure all the background windows are registered on the system as virtual roots
   QTimer::singleShot(100,this, SLOT(registerDesktopWindows()));
   //Determine if any High-DPI screens are available and enable auto-scaling as needed
-  for(int i=0; i<scrns.length(); i++){
+  /*for(int i=0; i<scrns.length(); i++){
     qDebug() << "Check Screen DPI:" << scrns[i]->name();
     qDebug() << " -- Physical DPI:" << scrns[i]->physicalDotsPerInchX() << "x" << scrns[i]->physicalDotsPerInchY();
     qDebug() << " -- Logical DPI:" << scrns[i]->logicalDotsPerInchX() << "x" << scrns[i]->logicalDotsPerInchY();
@@ -481,7 +481,7 @@ void LSession::updateDesktops(){
     }else if(i==(scrns.length()-1)){
       unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR");
     }
-  }
+  }*/
 }
 
 void LSession::registerDesktopWindows(){

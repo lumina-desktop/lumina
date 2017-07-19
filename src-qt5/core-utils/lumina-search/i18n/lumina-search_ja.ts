@@ -119,23 +119,23 @@
         <translation>新しいスナップショットを作成します。</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"/>
+        <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
         <translatorcomment>キーボードショートカットなので訳してはいけない!</translatorcomment>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>検索: %1 -- スマート検索: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>Off</source>
         <translation>オフ</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>On</source>
         <translation>オン</translation>
     </message>

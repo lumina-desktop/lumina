@@ -12,8 +12,6 @@
 // *.desktop Exec Compliance Updated: 9/9/2014
 // Mime Application Version Compliance: 1.0.1 (11/14/14) (Skips random *.desktop parsing: ~80% compliant)
 //===========================================
-
-  
 #ifndef _LUMINA_LIBRARY_XDG_H
 #define _LUMINA_LIBRARY_XDG_H
 
@@ -83,7 +81,7 @@ public:
 
 	bool saveDesktopFile(bool merge = true); //This will use the "filePath" variable for where to save the file
 
-	bool setAutoStarted(bool autostart = true); 
+	bool setAutoStarted(bool autostart = true);
 };
 
 // ========================
@@ -127,29 +125,29 @@ private:
 	XDGDesktop *desk;
 
 	void loadExtraInfo();
-	
+
 public:
 	//Couple overloaded contructors
 	LFileInfo();
 	LFileInfo(QString filepath);
 	LFileInfo(QFileInfo info);
-	~LFileInfo(){ 
-	  desk->deleteLater(); 
+	~LFileInfo(){
+	  desk->deleteLater();
 	}
-	
+
 	//Functions for accessing the extra information
 	// -- Return the mimetype for the file
 	QString mimetype();
-	
+
 	// -- Return the icon file to use for this file
 	QString iconfile(); //Note: This string is auto-formatted for use in the LXDG::findIcon() routine.
-	
+
 	// -- Check if this is an XDG desktop file
 	bool isDesktopFile();
-	
+
 	// -- Allow access to the internal XDG desktop data structure
 	XDGDesktop* XDG();
-	
+
 	//Other file type identification routines
 	bool isImage(); //Is a readable image file (for thumbnail support)
 	bool isAVFile(); //Is an audio/video file
@@ -165,7 +163,7 @@ public:
 	//static XDGDesktop* loadDesktopFile(QString filepath, bool&ok, QObject *parent = 0);
 	//static bool saveDesktopFile(XDGDesktop *dFile, bool merge = true);
 	//Check a *.desktop file for validity (showAll skips the DE-exclusivity checks)
-	//static bool checkValidity(XDGDesktop *dFile, bool showAll = true); 
+	//static bool checkValidity(XDGDesktop *dFile, bool showAll = true);
 	//Check for a valid executable
 	static bool checkExec(QString exec);
 	//Get a list of all the directories where *.desktop files exist
@@ -210,7 +208,7 @@ public:
 	static QStringList findAVFileExtensions();
 	//Load all the "globs2" mime database files
 	static QStringList loadMimeFileGlobs2();
-	
+
 	//Find all the autostart *.desktop files
 	static QList<XDGDesktop*> findAutoStartFiles(bool includeInvalid = false);
 	//static bool setAutoStarted(bool autostart, XDGDesktop *app);

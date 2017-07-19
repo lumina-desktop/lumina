@@ -162,7 +162,7 @@ private slots:
 	// - Context-specific operations
 	void openInSlideshow();
 	void openMultimedia();
-
+	void OpenWithApp(QAction*);
 
 signals:
 	//Directory loading/finding signals

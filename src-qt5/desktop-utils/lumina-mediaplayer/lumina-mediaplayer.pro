@@ -94,6 +94,9 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-mediaplayer.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
+link.path=$${L_BINDIR}
+link.extra=ln -sf lumina-mediaplayer $(INSTALL_ROOT)$${L_BINDIR}/lplay
+
 INSTALLS += target desktop
 
 WITH_I18N{

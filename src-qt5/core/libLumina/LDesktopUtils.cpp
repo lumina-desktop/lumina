@@ -15,12 +15,12 @@
 
 static QStringList fav;
 
-QString LDesktopUtils::LuminaDesktopVersion(){ 
-  QString ver = "1.2.2";
+QString LDesktopUtils::LuminaDesktopVersion(){
+  QString ver = "1.3.1";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif
-  return ver; 
+  return ver;
 }
 
 QString LDesktopUtils::LuminaDesktopBuildDate(){
@@ -88,7 +88,7 @@ QStringList LDesktopUtils::listFavorites(){
     fav.removeDuplicates();
     lastRead = cur;
   }
-  
+
   return fav;
 }
 
@@ -138,7 +138,7 @@ void LDesktopUtils::removeFavorite(QString path){
 void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
   //NOTE: Version number syntax: <major>*1000000 + <minor>*1000 + <revision>
   // Example: 1.2.3 -> 1002003
-}  
+}
 
 void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
@@ -156,15 +156,15 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   QDesktopWidget *desk =QApplication::desktop();
   QRect screenGeom;
   for(int i=0; i<desk->screenCount(); i++){
-     if(desk->screenGeometry(i).x()==0){ 
-	screen = QString::number(i); 
-	screenGeom = desk->screenGeometry(i); 
-	break; 
+     if(desk->screenGeometry(i).x()==0){
+	screen = QString::number(i);
+	screenGeom = desk->screenGeometry(i);
+	break;
     }
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files
   QStringList deskset, sesset;//, lopenset;
-  
+
   // -- SESSION SETTINGS --
   QStringList tmp = sysDefaults.filter("session_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("session."); }//for backwards compat
@@ -177,36 +177,36 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
-  
+    if(var.contains(".")){ var.replace(".","_"); }
+    //Now parse the variable and put the value in the proper file
+
     if(var.contains("_default_")){ val = LUtils::AppToAbsolute(val); } //got an application/binary
      //Special handling for values which need to exist first
-    if(var.endsWith("_ifexists") ){ 
+    if(var.endsWith("_ifexists") ){
       var = var.remove("_ifexists"); //remove this flag from the variable
       //Check if the value exists (absolute path only)
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
     }
-  
+
     //Parse/save the value
     QString sset; //temporary strings
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){ 
+    else if(var=="session_default_terminal"){
       LXDG::setDefaultAppForMime("application/terminal", val);
-      //sset = "default-terminal="+val; 
-    }else if(var=="session_default_filemanager"){ 
+      //sset = "default-terminal="+val;
+    }else if(var=="session_default_filemanager"){
       LXDG::setDefaultAppForMime("inode/directory", val);
       //sset = "default-filemanager="+val;
-      //loset = "directory="+val; 
-    }else if(var=="session_default_webbrowser"){ 
-      //loset = "webbrowser="+val; 
+      //loset = "directory="+val;
+    }else if(var=="session_default_webbrowser"){
+      //loset = "webbrowser="+val;
       LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
       LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
-    }else if(var=="session_default_email"){ 
+    }else if(var=="session_default_email"){
       LXDG::setDefaultAppForMime("application/email",val);
-      //loset = "email="+val; 
+      //loset = "email="+val;
     }
     //Put the line into the file (overwriting any previous assignment as necessary)
     /*if(!loset.isEmpty()){
@@ -218,7 +218,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(!sset.isEmpty()){
       int index = sesset.indexOf(QRegExp(sset.section("=",0,0)+"=*", Qt::CaseSensitive, QRegExp::Wildcard));
       if(index<0){ sesset << sset; } //new line
-      else{ sesset[index] = sset; } //overwrite the other line	    
+      else{ sesset[index] = sset; } //overwrite the other line
     }
   }
   //if(!lopenset.isEmpty()){ lopenset.prepend("[default]"); } //the session options exist within this set
@@ -232,11 +232,11 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
+    if(var.contains(".")){ var.replace(".","_"); }
+    //Now parse the variable and put the value in the proper file
     val = LUtils::AppToAbsolute(val);
      //Special handling for values which need to exist first
-    if(var.endsWith("_ifexists") ){ 
+    if(var.endsWith("_ifexists") ){
       var = var.remove("_ifexists"); //remove this flag from the variable
       //Check if the value exists (absolute path only)
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
@@ -259,8 +259,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
+    if(var.contains(".")){ var.replace(".","_"); }
+    //Now parse the variable and put the value in the proper file
     if(var=="desktop_visiblepanels"){ deskset << "panels="+val; }
     else if(var=="desktop_backgroundfiles"){ deskset << "background\\filelist="+val; }
     else if(var=="desktop_backgroundrotateminutes"){ deskset << "background\\minutesToChange="+val; }
@@ -282,8 +282,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
       if(val.isEmpty()){ continue; }
       QString istrue = (val.toLower()=="true") ? "true": "false";
       //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-      if(var.contains(".")){ var.replace(".","_"); } 
-      //Now parse the variable and put the value in the proper file   
+      if(var.contains(".")){ var.replace(".","_"); }
+      //Now parse the variable and put the value in the proper file
       if(var==(panvar+"_pixelsize")){
         //qDebug() << "Panel Size:" << val;
 	if(val.contains("%")){
@@ -293,7 +293,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
           else if(last=="w"){ val = QString::number( qRound(screenGeom.width()*val.toDouble())/100 ); }//adjust value to a percentage of the width of the screen
         }
         //qDebug() << " -- Adjusted:" << val;
-        deskset << "height="+val; 
+        deskset << "height="+val;
       }
       else if(var==(panvar+"_autohide")){ deskset << "hidepanel="+istrue; }
       else if(var==(panvar+"_location")){ deskset << "location="+val.toLower(); }
@@ -314,8 +314,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QString val = tmp[i].section("=",1,1).section("#",0,0).toLower().simplified();
     if(val.isEmpty()){ continue; }
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
+    if(var.contains(".")){ var.replace(".","_"); }
+    //Now parse the variable and put the value in the proper file
     if(var=="menu_plugins"){ deskset << "itemlist="+val; }
   }
   if(!tmp.isEmpty()){ deskset << ""; } //space between sections
@@ -328,7 +328,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
+    if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
     qDebug() << "Favorite entry:" << var << val;
     val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
@@ -346,19 +346,19 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
+    if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
     val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
     if(var=="quicklaunch_add_ifexists" && QFile::exists(val)){ quickL << val; }
     else if(var=="quicklaunch_add"){ quickL << val; }
   }
-  if(!quickL.isEmpty()){ 
+  if(!quickL.isEmpty()){
     if(sesset.isEmpty()){ sesset << "[General]"; } //everything is in this section
-    sesset << "QuicklaunchApps="+quickL.join(", "); 
+    sesset << "QuicklaunchApps="+quickL.join(", ");
   }
 
   //Now do any theme settings
-  QStringList themesettings = LTHEME::currentSettings(); 
+  QStringList themesettings = LTHEME::currentSettings();
       //List: [theme path, colorspath, iconsname, font, fontsize]
   //qDebug() << "Current Theme Color:" << themesettings[1];
   tmp = sysDefaults.filter("theme_");
@@ -370,19 +370,19 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     if(val.isEmpty()){ continue; }
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
-    //Now parse the variable and put the value in the proper file   
+    if(var.contains(".")){ var.replace(".","_"); }
+    //Now parse the variable and put the value in the proper file
     if(var=="theme_themefile"){ themesettings[0] = val; }
     else if(var=="theme_colorfile"){ themesettings[1] = val; }
     else if(var=="theme_iconset"){ themesettings[2] = val; }
     else if(var=="theme_font"){ themesettings[3] = val; }
-    else if(var=="theme_fontsize"){ 
+    else if(var=="theme_fontsize"){
       if(val.endsWith("%")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 )+"px"; }
-      themesettings[4] = val; 
+      themesettings[4] = val;
     }
   }
   //qDebug() << " - Now Color:" << themesettings[1] << setTheme;
-  
+
   //Now double check that the custom theme/color files exist and reset it will the full path as necessary
   if(setTheme){
     QStringList systhemes = LTHEME::availableSystemThemes();
@@ -414,15 +414,15 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
   //Ensure that the settings directory exists
   QString setdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
-  if(!QFile::exists(setdir)){ 
-    QDir dir; 
-    dir.mkpath(setdir); 
+  if(!QFile::exists(setdir)){
+    QDir dir;
+    dir.mkpath(setdir);
   }
   //Now save the settings files
   if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
-  
+
   //Now run any extra config scripts or utilities as needed
   tmp = sysDefaults.filter("usersetup_run");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("usersetup.run"); }
@@ -431,25 +431,25 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
-    if(var.contains(".")){ var.replace(".","_"); } 
+    if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
     if(var=="usersetup_run"){
       qDebug() << "Running user setup command:" << val;
       QProcess::execute(val);
     }
   }
-   
+
 }
 
 bool LDesktopUtils::checkUserFiles(QString lastversion){
-  //internal version conversion examples: 
+  //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   //returns true if something changed
   int oldversion = LDesktopUtils::VersionStringToNumber(lastversion);
   int nversion = LDesktopUtils::VersionStringToNumber(QApplication::applicationVersion());
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
-  
+
   QString confdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
   //Check for the desktop settings file
   QString dset = confdir+"desktopsettings.conf";
@@ -461,7 +461,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
   }
   //Convert the favorites framework as necessary (change occured with 0.8.4)
   if(newversion || newrelease){
-    LDesktopUtils::upgradeFavorites(oldversion);	  
+    LDesktopUtils::upgradeFavorites(oldversion);
   }
   //Convert from the old desktop numbering system to the new one (change occured with 1.0.1)
   if(oldversion<=1000001){
@@ -488,7 +488,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
     }
     LUtils::writeFile(dset, DS, true);
   }
-  
+
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
   if(!QFile::exists(dset+"fluxbox-init")){
@@ -517,7 +517,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
 int LDesktopUtils::VersionStringToNumber(QString version){
   version = version.section("-",0,0); //trim any extra labels off the end
   int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
-  maj = mid = min = 0; 
+  maj = mid = min = 0;
   bool ok = true;
   maj = version.section(".",0,0).toInt(&ok);
   if(ok){ mid = version.section(".",1,1).toInt(&ok); }else{ maj = 0; }
