@@ -16,7 +16,7 @@
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
-//xcb_pixmap_t PIXBACK; //backend pixmap that compositing redirects to
+//xcb_image_t *ximg;
 
 #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
 			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
@@ -66,31 +66,19 @@ void NativeEmbedWidget::showWindow(){
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
-  //Need the graphics context of the window
-  /*xcb_gcontext_t gc = xcb_generate_id(QX11Info::connection());
-    xcb_screen_t *screen = xcb_setup_roots_iterator(xcb_get_setup(QX11Info::connection())).data;
-   uint32_t values[1];
-    values[0] = screen->black_pixel;
-  xcb_create_gc(QX11Info::connection(),
-	gc,
-	this->winId(),
-	XCB_GC_BACKGROUND,
-	values );
+  //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
   xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-  //Now copy this pixmap onto widget
-  xcb_copy_area(QX11Info::connection(), pix, this->winId(), gc, geom.x(),geom.y(),geom.x(),geom.y(),geom.width(), geom.height());
+  //Convert this pixmap into a QImage
+  //if(ximg!=0){ xcb_image_destroy(ximg); } //clean up previous image data
+  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
+  img = img.copy(); //detach this image from the XCB data structures
+  //Cleanup the XCB data structures
   xcb_free_pixmap(QX11Info::connection(), pix);
-  return QImage();*/
+  xcb_image_destroy(ximg);
+  return img.copy();
 
-  /*xcb_put_image(QX11Info::connection(), XCB_IMAGE_FORMAT_Z_PIXMAP, pix, gc, sz.width(), sz.height(), 0, 0, */
-  /*xcb_image_t *img = xcb_image_get(QX11Info::connection(), WIN->id(), geom.x(), geom.y(), geom.width(), geom.height(), 1, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  if(img==0){ return QImage(); }
-  QImage image(geom.size(), QImage::Format_ARGB32);
-   image.loadFromData(img->data, img->size);
-  return image;*/
-
-  return QImage();
 }
 
 // ============
@@ -121,13 +109,10 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     xcb_send_event(QX11Info::connection(), 0, WIN->id(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
   */
   //Now setup any redirects and return
-  //this->SelectInput(WIN->id(), true); //Notify of structure changes
-  //xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+  xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
   //xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), PIXBACK);
-  //Now map the window (will be a transparent child of the container)
-  //xcb_map_window(QX11Info::connection(), WIN->id());
-  //xcb_map_window(QX11Info::connection(), this->winId());
+
   //Now create/register the damage handler
   // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
   //  -- Retested 6/29/17 (no change) Ken Moore
@@ -200,9 +185,11 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   if(!img.isNull()){
     QPainter P(this);
     P.drawImage( ev->rect() , img, ev->rect(), Qt::NoOpaqueDetection); //1-to-1 mapping
+    qDebug() << "Painted Rect:" << ev->rect() << this->geometry();
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
   //  Since this is an embedded image - we fully expect there to be transparency most of the time.
   }else{
     QWidget::paintEvent(ev);
   }
+  qDebug() << "Done Painting";
 }
