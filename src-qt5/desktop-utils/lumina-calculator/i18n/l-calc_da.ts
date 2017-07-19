@@ -7,7 +7,7 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="53"/>
         <source>Calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Lommeregner</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="657"/>
