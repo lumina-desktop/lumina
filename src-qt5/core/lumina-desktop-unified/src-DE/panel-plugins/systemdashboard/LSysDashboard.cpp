@@ -77,7 +77,7 @@ void LSysDashboard::updateIcon(bool force){
 }
 
 void LSysDashboard::resetIcon(){
-  button->setIcon( LXDG::findIcon("dashboard-show",""));
+  button->setIcon( LXDG::findIcon("arrow-down-drop-circle",""));
 }
 
 void LSysDashboard::openMenu(){

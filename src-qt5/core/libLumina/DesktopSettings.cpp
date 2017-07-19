@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QDebug>
 
-#include <unistd.h> 
+#include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -25,6 +25,16 @@ DesktopSettings::~DesktopSettings(){
   if(!files.isEmpty()){ stop(); }
 }
 
+DesktopSettings* DesktopSettings::instance(){
+  static DesktopSettings *set = 0;
+  if(set==0){
+    //First-time init
+    set = new DesktopSettings();
+    set->start();
+  }
+  return set;
+}
+
 //Start/stop routines
 void DesktopSettings::start(){
   files.clear(); settings.clear(); //clear the internal hashes (just in case)
@@ -35,7 +45,7 @@ void DesktopSettings::start(){
   }
   parseSystemSettings(); //set the runmode appropriately
   locateFiles(); //
- 
+
 }
 
 void DesktopSettings::stop(){
@@ -111,7 +121,7 @@ void DesktopSettings::parseSystemSettings(){
 
     //Now determine the runmode for this user
     struct passwd *pw = getpwuid(getuid());
-    if(pw!=0){ 
+    if(pw!=0){
       QString cuser = QString(pw->pw_name);
       free(pw); //done with this structure
       if( settings[path]->value("fulluser_users", QStringList()).toStringList().contains(cuser) ){ runmode = DesktopSettings::UserFull; }
@@ -123,10 +133,10 @@ void DesktopSettings::parseSystemSettings(){
         gid_t grpList[100];
         int grpSize = 100;
         if( getgrouplist(cuser.toLocal8Bit(), getgid(), grpList, &grpSize) > 0 ){
-          QStringList groups; 
-          for(int i=0; i<grpSize; i++){ 
+          QStringList groups;
+          for(int i=0; i<grpSize; i++){
             struct group *g = getgrgid(grpList[i]);
-            if(g!=0){ 
+            if(g!=0){
               groups << QString(g->gr_name);
               free(g);
             }
@@ -136,18 +146,18 @@ void DesktopSettings::parseSystemSettings(){
           if( (fromfile+groups).removeDuplicates() > 0 ){ runmode = DesktopSettings::UserFull; }
           else{
             fromfile = settings[path]->value("fullsystem_groups", QStringList()).toStringList();
-            fromfile.removeDuplicates(); 
+            fromfile.removeDuplicates();
             if((fromfile+groups).removeDuplicates() > 0 ){ runmode = DesktopSettings::SystemFull; }
             else{
               fromfile = settings[path]->value("staticinterface_groups", QStringList()).toStringList();
-              fromfile.removeDuplicates(); 
+              fromfile.removeDuplicates();
               if((fromfile+groups).removeDuplicates() > 0 ){ runmode =  DesktopSettings::SystemInterface; }
             }
           }
-        } //end group list read 
+        } //end group list read
       }
     }else{
-      runmode = DesktopSettings::SystemFull; //could not read user name - assume system files only      
+      runmode = DesktopSettings::SystemFull; //could not read user name - assume system files only
     }
 
     break; //found this file - go ahead and stop now (no hierarchy for this special file)
@@ -246,7 +256,7 @@ void DesktopSettings::fileChanged(QString file){
   QList< DesktopSettings::File > types = files.keys();
   for(int i=0; i<types.length(); i++){
     if(files[types[i]].contains(file)){
-      emit FileModified(types[i]); 
+      emit FileModified(types[i]);
       break;
     }
   }

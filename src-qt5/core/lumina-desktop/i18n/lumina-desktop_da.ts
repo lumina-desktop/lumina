@@ -38,62 +38,62 @@
         <translation>Klik for at sætte</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="72"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
         <source>Launch %1</source>
         <translation>Start %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="127"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="129"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Open With</source>
         <translation>Åbn med</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="132"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
         <source>View Properties</source>
         <translation>Vis egenskaber</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
         <source>File Operations</source>
         <translation>Filhandlinger</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
         <source>Copy</source>
         <translation>Kopiér</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
         <source>Cut</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Select Application</source>
         <translation>Vælg program</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="205"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
         <source>Name:</source>
         <translation>Navn:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="291"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
         <source>New Filename</source>
         <translation>Nyt filnavn</translation>
     </message>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation>Du kan ikke vide for meget, men du kan sige for meget.</translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det første.</translation>
     </message>
     <message>
@@ -360,8 +360,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no 'try'.</source>
-        <translation>Gør eller lad være. Der er ikke noget "prøv".</translation>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
+        <translation>Gør eller lad være. Der er ikke noget &quot;prøv&quot;.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="344"/>
+        <location filename="../LSession.cpp" line="342"/>
         <source>Desktop</source>
         <translation>Skrivebord</translation>
     </message>

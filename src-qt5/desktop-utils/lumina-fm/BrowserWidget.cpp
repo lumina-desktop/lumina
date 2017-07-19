@@ -39,7 +39,7 @@ BrowserWidget::~BrowserWidget(){
 
 void BrowserWidget::changeDirectory(QString dir){
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
-  qDebug() << "Change Directory:" << dir << historyList;
+  //qDebug() << "Change Directory:" << dir << historyList;
 
   if( !dir.contains("/.zfs/snapshot/") ){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
@@ -49,7 +49,7 @@ void BrowserWidget::changeDirectory(QString dir){
     cleaned = cleaned.replace( QRegExp("/\\.zfs/snapshot/(.)+/"), "/" );
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
-  qDebug() << "History:" << historyList;
+  //qDebug() << "History:" << historyList;
   emit dirChange(dir);
 }
 
@@ -275,27 +275,63 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   int num = 0;
   if(listWidget!=0){
     //LIST WIDGET - name and icon only
-    if(!listWidget->findItems(info->fileName(), Qt::MatchExactly).isEmpty()){
-      //Update existing item
-      QListWidgetItem *it = listWidget->findItems(info->fileName(), Qt::MatchExactly).first();
-      it->setText(info->fileName());
-      it->setWhatsThis(info->absoluteFilePath());
-      it->setIcon(ico);
+    if(info->isDesktopFile()){
+      QList<QListWidgetItem*> items = listWidget->findItems(info->XDG()->name, Qt::MatchExactly);
+      //Could be multiple items with the same text in this case - check paths as well
+      bool found = false;
+      for(int i=0; i<items.length() && !found; i++){
+        if(items[i]->whatsThis()==info->absoluteFilePath()){
+          found = true;
+          items[i]->setText(info->XDG()->name);
+          items[i]->setIcon(ico);
+        }
+      }
+      if(!found){
+        //New Item
+        QListWidgetItem *it = new CQListWidgetItem(ico, info->XDG()->name, listWidget);
+          it->setWhatsThis(info->absoluteFilePath());
+          it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
+        listWidget->addItem(it);
+      }
     }else{
-      //New item
-      QListWidgetItem *it = new CQListWidgetItem(ico, info->fileName(), listWidget);
+      //non-desktop entry
+      if(!listWidget->findItems(info->fileName(), Qt::MatchExactly).isEmpty()){
+        //Update existing item
+        QListWidgetItem *it = listWidget->findItems(info->fileName(), Qt::MatchExactly).first();
+        it->setText(info->fileName());
         it->setWhatsThis(info->absoluteFilePath());
-        it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
-      listWidget->addItem(it);
-    }
-    num = listWidget->count();
+        it->setIcon(ico);
+
+      }else{
+        //New item
+        QListWidgetItem *it = new CQListWidgetItem(ico, info->fileName(), listWidget);
+          it->setWhatsThis(info->absoluteFilePath());
+          it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
+        listWidget->addItem(it);
+      }
+      num = listWidget->count();
+    } //end non-desktop entry
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
-    if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first(); }
-    else{
-      it = new CQTreeWidgetItem(treeWidget);
-      it->setText(0, info->fileName() ); //name (0)
-      treeWidget->addTopLevelItem(it);
+    if(info->isDesktopFile()){
+      QList<QTreeWidgetItem*> items = treeWidget->findItems(info->XDG()->name, Qt::MatchExactly, 0);
+      for(int i=0; i<items.length() && it==0; i++){
+        //Can be multiple with the same name - check paths too
+        if(items[i]->whatsThis(0)==info->absoluteFilePath()){ it = items[i]; }
+      }
+      if(it==0){
+        //New item
+        it = new CQTreeWidgetItem(treeWidget);
+        it->setText(0, info->XDG()->name ); //name (0)
+        treeWidget->addTopLevelItem(it);
+      }
+    }else{
+      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first(); }
+      else{
+        it = new CQTreeWidgetItem(treeWidget);
+        it->setText(0, info->fileName() ); //name (0)
+        treeWidget->addTopLevelItem(it);
+      }
     }
     //Now set/update all the data
     it->setIcon(0, ico);
@@ -364,7 +400,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
 }
 
 void BrowserWidget::itemsLoading(int total){
-  qDebug() << "Got number of items loading:" << total;
+  //qDebug() << "Got number of items loading:" << total;
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   numItems = total; //save this for later

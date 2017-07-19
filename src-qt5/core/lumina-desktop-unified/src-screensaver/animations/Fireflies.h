@@ -46,7 +46,7 @@ public:
 	  fly = new QWidget(parent);
 	  range = parent->size();
 	  maxX = range.width()/4;  maxY = range.height()/4;
-	  fly->setStyleSheet("background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(215, 215, 143, 255), stop:0.83871 rgba(221, 235, 64, 140), stop:1 rgba(0, 0, 0, 255));");
+	  fly->setStyleSheet("background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(215, 215, 143, 255), stop:0.83871 rgba(221, 235, 64, 140), stop:0.99 rgba(0, 0, 0, 255), stop:1 transparent);");
 	  //setup the movement animation
 	  movement = new QPropertyAnimation(fly);
 	  movement->setTargetObject(fly);
@@ -79,8 +79,8 @@ private:
 
 public:
 	FirefliesAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
-	~FirefliesAnimation(){ 
-	  this->stop(); 
+	~FirefliesAnimation(){
+	  this->stop();
 	  //while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
 	}
 

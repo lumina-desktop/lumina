@@ -18,6 +18,8 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QActionGroup>
+#include <QPrinter>
+#include <QPrintDialog>
 #include "PlainTextEditor.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
@@ -87,6 +89,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionClose_File, SIGNAL(triggered()), this, SLOT(CloseFile()) );
   connect(ui->actionSave_File, SIGNAL(triggered()), this, SLOT(SaveFile()) );
   connect(ui->actionSave_File_As, SIGNAL(triggered()), this, SLOT(SaveFileAs()) );
+  connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(Print()) );
   connect(ui->menuSyntax_Highlighting, SIGNAL(triggered(QAction*)), this, SLOT(UpdateHighlighting(QAction*)) );
   connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged()) );
   connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosed(int)) );
@@ -144,6 +147,7 @@ void MainUI::updateIcons(){
   ui->actionClose_File->setIcon(LXDG::findIcon("document-close") );
   ui->actionSave_File->setIcon(LXDG::findIcon("document-save") );
   ui->actionSave_File_As->setIcon(LXDG::findIcon("document-save-as") );
+  ui->actionPrint->setIcon(LXDG::findIcon("printer") );
   ui->actionFind->setIcon(LXDG::findIcon("edit-find") );
   ui->actionReplace->setIcon(LXDG::findIcon("edit-find-replace") );
   ui->menuSyntax_Highlighting->setIcon( LXDG::findIcon("format-text-color") );
@@ -239,7 +243,20 @@ void MainUI::SaveFile(){
 void MainUI::SaveFileAs(){
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
-  cur->SaveFile(true);	
+  cur->SaveFile(true);
+}
+
+void MainUI::Print() {
+	QPrinter *print = new QPrinter(QPrinter::HighResolution);
+	QPrintDialog dialog(print, NULL);
+	dialog.setWindowTitle(tr("Print Content"));
+	dialog.setOptions( QAbstractPrintDialog::PrintCurrentPage | QAbstractPrintDialog::PrintToFile );
+	if(currentEditor()->textCursor().hasSelection()) {
+		dialog.setOptions( QAbstractPrintDialog::PrintCurrentPage | QAbstractPrintDialog::PrintToFile | QAbstractPrintDialog::PrintSelection );
+	}
+	if(dialog.exec() == QDialog::Accepted) {
+		currentEditor()->print(print);
+	}
 }
 
 void MainUI::fontChanged(const QFont&){
@@ -422,7 +439,7 @@ void MainUI::findNext(){
   if(!found){
     //Try starting back at the top of the file
     cur->moveCursor(QTextCursor::Start);
-    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );	  
+    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively : QTextDocument::FindFlags() );
   }
 }
 
@@ -433,7 +450,7 @@ void MainUI::findPrev(){
   if(!found){
     //Try starting back at the bottom of the file
     cur->moveCursor(QTextCursor::End);
-    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively | QTextDocument::FindBackward : QTextDocument::FindBackward );	  
+    cur->find( ui->line_find->text(), ui->tool_find_casesensitive->isChecked() ? QTextDocument::FindCaseSensitively | QTextDocument::FindBackward : QTextDocument::FindBackward );
   }
 }
 

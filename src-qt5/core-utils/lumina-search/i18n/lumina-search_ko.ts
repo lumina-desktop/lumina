@@ -114,22 +114,22 @@
         <translation>스크린샷 찍기</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"/>
+        <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>검색: %1 -- 스마트: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>Off</source>
         <translation>꺼짐</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>On</source>
         <translation>켜짐</translation>
     </message>

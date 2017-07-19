@@ -44,17 +44,16 @@ public:
 	//Information
 	QString id();
 	QString currentDir();
-    QFileSystemModel *dirtreeModel;
-    QStringList PREFAPPS;
+	QFileSystemModel *dirtreeModel;
+	QStringList PREFAPPS;
 
 	//View Settings
 	void setShowDetails(bool show);
 	void showHidden(bool show);
 	void showThumbnails(bool show);
 	void setThumbnailSize(int px);
-    void setFocusLineDir();
-    void showDirTreePane(bool show);
-    bool showingDirTreePane();
+	void setFocusLineDir();
+	void adjustTreeWidget(float percent); //percent between 0-100
 
 
 
@@ -76,7 +75,7 @@ private:
 	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
-    bool canmodify, showdirtree;
+	bool canmodify;
 
 	//The Toolbar and associated items
 	QToolBar *toolbar;
@@ -96,7 +95,7 @@ private:
 	BrowserWidget* currentBrowser();
 	QStringList currentDirFiles(); //all the "files" available within the current dir/browser
 
-    QProcess *pExtract;
+    //QProcess *pExtract;
 
     //OpenWithMenu
     QString fileEXT, filePath;
@@ -106,6 +105,7 @@ private:
 
 private slots:
 	//UI BUTTONS/Actions
+	void splitterMoved();
 
 	// -- Bottom Action Buttons
 	void on_tool_zoom_in_clicked();
@@ -157,24 +157,25 @@ private slots:
 	void runFiles();
 	void runWithFiles();
 	//void attachToNewEmail();
-    void autoExtractFiles();
+	void autoExtractFiles();
 
 	// - Context-specific operations
 	void openInSlideshow();
-    void openMultimedia();
-
+	void openMultimedia();
+	void OpenWithApp(QAction*);
 
 signals:
 	//Directory loading/finding signals
 	void OpenDirectories(QStringList); //Directories to open in other tabs/columns
 	void findSnaps(QString, QString); //ID, dirpath (Request snapshot information for a directory)
 	void CloseBrowser(QString); //ID (Request that this browser be closed)
+	void treeWidgetSizeChanged(float); //percent width
 
 	//External App/Widget launching
 	void PlayFiles(LFileInfoList); //open in multimedia player
 	void ViewFiles(LFileInfoList); //open in slideshow
 	void LaunchTerminal(QString); //dirpath
-	
+
 	//System Interactions
 	void CutFiles(QStringList); //file selection
 	void CopyFiles(QStringList); //file selection
@@ -183,10 +184,10 @@ signals:
 	void RenameFiles(QStringList); //file selection
 	void RemoveFiles(QStringList); //file selection
 	void TabNameChanged(QString, QString); //objID, new tab name
-	
+
 protected:
 	void mouseReleaseEvent(QMouseEvent *);
-	
+
 };
 
 #endif

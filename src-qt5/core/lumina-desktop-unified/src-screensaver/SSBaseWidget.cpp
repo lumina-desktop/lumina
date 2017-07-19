@@ -25,7 +25,7 @@ SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
 SSBaseWidget::~SSBaseWidget(){
   if(ANIM!=0){ this->stopPainting(); }
 }
-	
+
 void SSBaseWidget::setPlugin(QString plug){
   plug = plug.toLower();
   if(validPlugs.contains(plug) || plug=="random"){ plugType = plug; }
@@ -38,12 +38,12 @@ void SSBaseWidget::setPlugin(QString plug){
 void SSBaseWidget::startPainting(){
   cplug = plugType;
   //free up any old animation instance
-  if(ANIM!=0){ 
+  if(ANIM!=0){
     ANIM->stop(); ANIM->clear();
-    delete ANIM; ANIM = 0; 
-  } 
+    delete ANIM; ANIM = 0;
+  }
   //If a random plugin - grab one of the known plugins
-  if(cplug=="random"){ 
+  if(cplug=="random"){
     QStringList valid = BaseAnimGroup::KnownAnimations();
     valid.removeAll("none"); //they want a screensaver - remove the "none" option from the valid list
     if(valid.isEmpty()){ cplug = "none"; } //no known plugins
@@ -67,9 +67,9 @@ void SSBaseWidget::startPainting(){
   }
   //Now start the animation(s)
   if(ANIM!=0){
-    if(ANIM->animationCount()>0){ 
+    if(ANIM->animationCount()>0){
       if(DEBUG){ qDebug() << " - Starting SS Plugin:" << cplug << ANIM->animationCount() << ANIM->duration() << ANIM->loopCount(); }
-      ANIM->start(); 
+      ANIM->start();
     }
   }
 }

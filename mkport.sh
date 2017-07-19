@@ -3,9 +3,8 @@
 # from a checked out git repo
 
 # Set the port
-port="x11/lumina"
 dfile="lumina"
-VERSION="1.2.2"
+VERSION="1.3.0"
 
 massage_subdir() {
   cd "$1"
@@ -98,3 +97,6 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
+#Set a couple variables for the TrueOS build cluster to know which is the "overall" port
+port="x11/lumina" #reset this variable in case something else needs it
+export bPort="x11/lumina"

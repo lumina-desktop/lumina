@@ -15,7 +15,6 @@ For multiple word arguments encapsulate them with "s
 
 ***
 Example usage in shell script
-***
 
 ~~~~
 #!/bin/csh
@@ -31,3 +30,12 @@ else
 ./lumina-notify "High Five for Darth Jar Jar" Sure OK "Respect"
 endif`
 ~~~~
+
+***
+
+### Library Dependencies
+
+1. Qt 5.0+ (specific modules listed below)
+   * core
+   * gui
+   * widgets

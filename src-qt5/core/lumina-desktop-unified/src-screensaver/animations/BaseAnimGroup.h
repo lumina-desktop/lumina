@@ -26,13 +26,13 @@ public:
 	  canvas->setCursor( QCursor(Qt::BlankCursor) );
 	}
 	~BaseAnimGroup(){}
-	
+
 	//==============================
 	//     PLUGIN LOADING/LISTING (Change in the .cpp file)
 	//==============================
 	static BaseAnimGroup* NewAnimation(QString type, QWidget *parent, QSettings *set);
 	static QStringList KnownAnimations();
-	
+
 };
 
 #endif
