@@ -16,8 +16,6 @@
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
-//xcb_image_t *ximg;
-
 #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
 			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
  			XCB_EVENT_MASK_POINTER_MOTION |	\
@@ -50,6 +48,7 @@ void NativeEmbedWidget::syncWinSize(QSize sz){
       mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
       mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
     xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
+    //xcb_flush(QX11Info::connection());
 }
 
 void NativeEmbedWidget::syncWidgetSize(QSize sz){
@@ -69,15 +68,19 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
   //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
   xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
+  if(pix==0){ return QImage(); }
+
   //Convert this pixmap into a QImage
-  //if(ximg!=0){ xcb_image_destroy(ximg); } //clean up previous image data
   xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  if(ximg == 0){ return QImage(); }
   QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
   img = img.copy(); //detach this image from the XCB data structures
+  xcb_image_destroy(ximg);
+
   //Cleanup the XCB data structures
   xcb_free_pixmap(QX11Info::connection(), pix);
-  xcb_image_destroy(ximg);
-  return img.copy();
+
+  return img;
 
 }
 
@@ -110,8 +113,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   */
   //Now setup any redirects and return
   xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
-
-  //xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), PIXBACK);
+  xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
   //Now create/register the damage handler
   // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
@@ -120,6 +122,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   //xcb_damage_create(QX11Info::connection(), dmgID, WIN->id(), XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
   // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
   Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
+
   WIN->addDamageID( (uint) dmgID); //save this for later
   WIN->addFrameWinID(this->winId());
   connect(WIN, SIGNAL(VisualChanged()), this, SLOT(update()) ); //make sure we repaint the widget on visual change
@@ -145,17 +148,21 @@ bool NativeEmbedWidget::isEmbedded(){
 void NativeEmbedWidget::resyncWindow(){
   QSize sz = this->size();
    if(WIN==0){ return; }
+  //Just jitter the x origin of the window 1 pixel so the window knows to re-check it's global position
+  //  before creating child windows (menu's in particular).
+
   //qDebug() << "Sync Window Size:" << sz;
     xcb_configure_window_value_list_t  valList;
-    valList.x = -1;
+    valList.x = 0;
     valList.y = 0;
     valList.width = sz.width();
-    valList.height = sz.height();
+    //valList.height = sz.height()-1;
     uint16_t mask = 0;
       mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
       mask = mask | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
-    xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
-   valList.x = 0;
+    //xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
+   valList.height = sz.height();
+    //xcb_flush(QX11Info::connection());
     xcb_configure_window_aux(QX11Info::connection(), WIN->id(), mask, &valList);
 }
 
@@ -181,15 +188,15 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   //QWidget::paintEvent(ev); //ensure all the Qt-compositing is done first
   if(WIN==0){ QWidget::paintEvent(ev); return; }
   //Need to paint the image from the window onto the widget as an overlay
-  QImage img = windowImage(ev->rect());
+  QRect geom = QRect(0,0,this->width(), this->height()); //always paint the whole window
+  //qDebug() << "Get Paint image";
+  QImage img = windowImage(geom);
   if(!img.isNull()){
     QPainter P(this);
-    P.drawImage( ev->rect() , img, ev->rect(), Qt::NoOpaqueDetection); //1-to-1 mapping
-    qDebug() << "Painted Rect:" << ev->rect() << this->geometry();
+    P.drawImage( geom , img, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+    //qDebug() << "Painted Rect:" << ev->rect() << this->geometry();
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
   //  Since this is an embedded image - we fully expect there to be transparency most of the time.
-  }else{
-    QWidget::paintEvent(ev);
   }
-  qDebug() << "Done Painting";
+  //qDebug() << "Done Painting";
 }
