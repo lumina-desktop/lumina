@@ -7,14 +7,14 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproductor Multimedia</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ahora reproduciendo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de reproducción</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
@@ -44,17 +44,17 @@
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>TITULO</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>ARTISTA</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ÁLBUM</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
