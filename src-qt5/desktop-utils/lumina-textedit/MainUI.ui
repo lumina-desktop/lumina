@@ -185,7 +185,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -202,6 +202,7 @@
     <addaction name="actionSave_File"/>
     <addaction name="actionSave_File_As"/>
     <addaction name="separator"/>
+    <addaction name="actionPrint"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -431,6 +432,14 @@
    </property>
    <property name="text">
     <string>Right</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

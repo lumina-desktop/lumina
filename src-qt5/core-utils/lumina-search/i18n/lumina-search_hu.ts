@@ -114,22 +114,22 @@
         <translation>Új pillanatkép készítése</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="29"/>
+        <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
         <translation>Keresés: %1 -- Intelligens: %2</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>Off</source>
         <translation>Ki</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="101"/>
         <source>On</source>
         <translation>Be</translation>
     </message>

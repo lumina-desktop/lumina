@@ -1,6 +1,6 @@
 include("$${PWD}/../../OS-detect.pri")
 
-QT += core gui widgets
+QT += core gui widgets printsupport
 
 TARGET  = lumina-textedit
 target.path = $${L_BINDIR}

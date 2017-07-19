@@ -36,11 +36,26 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Panel</string>
+       </property>
        <property name="text">
-        <string notr="true">Panel</string>
+        <string notr="true"/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
        <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
+        <enum>Qt::ToolButtonIconOnly</enum>
        </property>
       </widget>
      </item>
@@ -65,27 +80,69 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
         <string>Profile</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>
        </property>
        <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
+        <enum>Qt::ToolButtonIconOnly</enum>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="tool_import">
-       <property name="text">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
         <string>Import</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>
        </property>
        <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
+        <enum>Qt::ToolButtonIconOnly</enum>
        </property>
       </widget>
      </item>
@@ -107,7 +164,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>336</width>
+        <width>358</width>
         <height>298</height>
        </rect>
       </property>

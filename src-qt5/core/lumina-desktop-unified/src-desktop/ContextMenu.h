@@ -19,7 +19,7 @@ private:
 	QLabel *workspaceLabel;
 	QWidgetAction *wkspaceact;
 
-public: 
+public:
 	DesktopContextMenu(QWidget *parent = 0);
 	~DesktopContextMenu();
 

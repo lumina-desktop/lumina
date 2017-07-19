@@ -18,8 +18,9 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QMenu>
+#include <QPropertyAnimation>
 #include <NativeWindow.h>
-
+#include <NativeEmbedWidget.h>
 
 class RootSubWindow : public QFrame{
 	Q_OBJECT
@@ -40,19 +41,28 @@ private:
 	void setMouseCursor(ModState, bool override = false);  //Update the mouse cursor based on state
 	//Native window embed objects
 	NativeWindow *WIN;
-	QWidget *WinWidget;
+	NativeEmbedWidget *WinWidget;
 	bool closing;
 	//Title bar objects
-	QBoxLayout *titleBar, *mainLayout;
+	QBoxLayout *titleBarL, *mainLayout;
 	QToolButton *closeB, *maxB, *minB, *otherB;
 	QLabel *titleLabel;
 	QMenu *otherM; //menu of other actions
+	QWidget *titleBar;
+	//Other random objects (animations,etc)
+	QPropertyAnimation *anim;
+	QVariant animResetProp;
+	QTimer *moveTimer;
+	QRect lastGeom; //frame coordinates
+
 	void initWindowFrame();
+	void enableFrame(bool);
 
 	void LoadProperties( QList< NativeWindow::Property> list);
 
 public slots:
 	void clientClosed();
+	void LoadAllProperties();
 
 	//Button Actions - public so they can be tied to key shortcuts and stuff as well
 	void toggleMinimize();
@@ -67,12 +77,16 @@ public slots:
 
 private slots:
 	void propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
+	void animFinished();
 
 protected:
 	void mousePressEvent(QMouseEvent*);
 	void mouseMoveEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent*);
 	void leaveEvent(QEvent *ev);
+
+	void moveEvent(QMoveEvent *ev);
+
 
 };
 

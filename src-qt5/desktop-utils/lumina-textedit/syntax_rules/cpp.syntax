@@ -27,7 +27,7 @@
 		},
 		{
 			"name": "keywords",
-			"words": ["char", "class", "const", "double", "enum", "explicit", "extern", "float", "friend", "inline", "int", "long", "namespace", "operator", "private", "protected", "public", "short", "signals", "signed", "slots", "static", "struct", "template", "typedef", "typename", "union", "using","unsigned", "virtual", "void", "volatile", "true", "false", "bool"],
+			"words": ["char", "class", "const", "double", "enum", "explicit", "extern", "float", "friend", "inline", "int", "long", "namespace", "operator", "private", "protected", "public", "short", "signals", "signed", "slots", "static", "struct", "template", "typedef", "typename", "union", "using","unsigned", "virtual", "void", "volatile", "true", "false", "bool", "and", "or", "not"],
 			"foreground": "colors/keyword",
 			"font_weight": "bold"
 		},

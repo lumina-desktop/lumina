@@ -20,7 +20,7 @@ private:
 public:
 	SampleAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
 	~SampleAnimation(){ this->stop(); delete ball; }
-		
+
 	void LoadAnimations(){
 	  //qDebug() << "Loading Sample Animation";
 	  ball = new QWidget(canvas);

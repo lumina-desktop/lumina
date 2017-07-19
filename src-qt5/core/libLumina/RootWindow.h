@@ -31,7 +31,7 @@ public:
 
 	RootWindow();
 	~RootWindow();
-	
+
 	void start();
 
 private:
@@ -49,7 +49,7 @@ private:
 
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
-	
+
 public slots:
 	void ResizeRoot();
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);
@@ -65,7 +65,7 @@ protected:
 
 signals:
 	void RegisterVirtualRoot(WId);
-	void RootResized();
+	void RootResized(QRect);
 	void NewScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
 	void RemovedScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
 

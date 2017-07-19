@@ -52,6 +52,7 @@ private slots:
 	void CloseFile(); //current file only
 	void SaveFile();
 	void SaveFileAs();
+	void Print();
 	void fontChanged(const QFont &font);
 	void updateStatusTip();
 	void changeFontSize(int newFontSize);

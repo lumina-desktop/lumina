@@ -19,7 +19,7 @@ public:
 	~LScreenSaver();
 
 	bool isLocked();
-	
+
 private:
 	QTimer *starttimer, *locktimer, *hidetimer;
 	QSettings *settings;
@@ -48,6 +48,7 @@ private slots:
 signals:
 	void StartingScreenSaver();
 	void ClosingScreenSaver();
+	void LockStatusChanged(bool locked);
 
 protected:
 	void mouseMoveEvent(QMouseEvent*){

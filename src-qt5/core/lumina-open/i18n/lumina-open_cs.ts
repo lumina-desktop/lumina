@@ -6,12 +6,12 @@
     <message>
         <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
-        <translation>Otevřít pomocí...</translation>
+        <translation>Otevřít pomocí…</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="68"/>
         <source>Preferred</source>
-        <translation>Preferované</translation>
+        <translation>Upřednostňované</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="75"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Místo v binárním kódu</translation>
+        <translation>Umístění spustitelného souboru</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -46,12 +46,12 @@
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation>(Odkaz na e-mail)</translation>
+        <translation>(Poslat odkaz e-mailem)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="126"/>
         <source>Utilities</source>
-        <translation>Pomůcky</translation>
+        <translation>Nástroje</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="127"/>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
         <source>Find Application Binary</source>
-        <translation>Najít soubor aplikace</translation>
+        <translation>Najít spustitelný soubor aplikace</translation>
     </message>
 </context>
 <context>
@@ -161,27 +161,27 @@
     <message>
         <location filename="../main.cpp" line="246"/>
         <source>Invalid file or URL: %1</source>
-        <translation>Neplatný soubor nebo URL: %1</translation>
+        <translation>Neplatný soubor nebo URL adresa: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="267"/>
         <source>Application entry is invalid: %1</source>
-        <translation>Záznam programu je neplatný: %1</translation>
+        <translation>Záznam pro aplikaci není platný: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="278"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Zástupci aplikace chybí informace o zahájení (chybné zkratky):% 1</translation>
+        <translation>V zástupci aplikace chybí informace pro spouštění (chybná zkratka):% 1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="291"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>URL zástupci chybí URL: %1</translation>
+        <translation>V zástupci URL adresy chybí URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="302"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>Zástupci složky chybí cesta do adresáře: %1</translation>
+        <translation>V zástupci složky chybí popis jejího umístění: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="307"/>
@@ -195,8 +195,8 @@
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
-        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>Nepodařilo se najít &quot;%1&quot;. Nejprve, prosím, zajistěte, aby byl nainstalován.</translation>
+        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <translation>Nepodařilo se najít „%1“. Nejprve zajistěte, aby bylo nainstalované.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="421"/>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../main.cpp" line="421"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>Následující aplikace ohlašují chybu a musí být ukončeny:</translation>
+        <translation>V následující aplikaci došlo k chyba a bude proto ukončena:</translation>
     </message>
 </context>
 </TS>

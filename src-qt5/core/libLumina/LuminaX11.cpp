@@ -75,9 +75,6 @@ void LXCB::createWMAtoms(){
       i--;
     }
   }
-  
-  
-  
 }
 
 // === WindowList() ===
@@ -91,13 +88,13 @@ QList<WId> LXCB::WindowList(bool rawlist){
   if( 1 == xcb_ewmh_get_client_list_reply( &EWMH, cookie, &winlist, NULL) ){
     //qDebug() << " - Loop over items";
     unsigned int wkspace = CurrentWorkspace();
-    for(unsigned int i=0; i<winlist.windows_len; i++){ 
+    for(unsigned int i=0; i<winlist.windows_len; i++){
       //Filter out the Lumina Desktop windows
       if(WindowClass(winlist.windows[i]) == "Lumina Desktop Environment"){ continue; }
       //Also filter out windows not on the active workspace
       else if( (WindowWorkspace(winlist.windows[i])!=wkspace) && !rawlist ){ continue; }
       else{
-        output << winlist.windows[i]; 
+        output << winlist.windows[i];
       }
     }
   }
@@ -182,7 +179,7 @@ void LXCB::SetCurrentWorkspace(int number){
     event.data.data32[4] = 0;
 
   xcb_send_event(QX11Info::connection(), 0, QX11Info::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-	
+
   //EWMH function (does not seem to be recognized by Fluxbox)
   xcb_ewmh_request_change_showing_desktop(&EWMH, QX11Info::appScreen(), number);
 }
@@ -193,7 +190,7 @@ QString LXCB::WindowClass(WId win){
   QString out;
   if(win==0){ return ""; }
   xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win);
-  if(cookie.sequence == 0){ return out; } 
+  if(cookie.sequence == 0){ return out; }
   xcb_icccm_get_wm_class_reply_t value;
   if( 1== xcb_icccm_get_wm_class_reply( QX11Info::connection(), cookie, &value, NULL) ){
     out = QString::fromUtf8(value.class_name);
@@ -210,7 +207,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
   uint32_t wkspace = 0;
   xcb_get_property_cookie_t scookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&EWMH, win);
-  if(cookie.sequence == 0){ return wkspace; } 
+  if(cookie.sequence == 0){ return wkspace; }
   xcb_ewmh_get_wm_desktop_reply(&EWMH, cookie, &wkspace, NULL);
   xcb_ewmh_get_atoms_reply_t reply;
   if(1==xcb_ewmh_get_wm_state_reply(&EWMH,scookie, &reply, NULL)){
@@ -220,7 +217,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
     }
   }
   //qDebug() << " - done: " << wkspace;
-  return wkspace;	
+  return wkspace;
 }
 
 // === WindowGeometry() ===
@@ -500,7 +497,7 @@ QIcon LXCB::WindowIcon(WId win){
 	uint* dat = iter.data;
 	//dat+=2; //remember the first 2 element offset
 	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
-	  ((uint*)image.bits())[i] = *dat; 
+	  ((uint*)image.bits())[i] = *dat;
 	}
       icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
       //Now see if there are any more icons available
@@ -1514,7 +1511,7 @@ void LXCB::WM_Set_Client_List(QList<WId> list, bool stacking){
     xcb_ewmh_set_client_list_stacking(&EWMH, QX11Info::appScreen(), list.length(), array);
   }else{
     xcb_ewmh_set_client_list(&EWMH, QX11Info::appScreen(), list.length(), array);
-  }	  
+  }
 
 }
 
@@ -1528,7 +1525,7 @@ unsigned int LXCB::WM_Get_Number_Desktops(){
 }
 
 void LXCB::WM_SetNumber_Desktops(unsigned int number){
-  //NOTE: number should be at least 1	
+  //NOTE: number should be at least 1
   xcb_ewmh_set_number_of_desktops(&EWMH, QX11Info::appScreen(), number);
 }
 
@@ -1555,7 +1552,7 @@ QList<QPoint> LXCB::WM_Get_Desktop_Viewport(){
       out << QPoint( reply.desktop_viewport[i].x, reply.desktop_viewport[i].y );
     }
     xcb_ewmh_get_desktop_viewport_reply_wipe(&reply); //clean up the reply structure first
-  }	  
+  }
   return out;
 }
 

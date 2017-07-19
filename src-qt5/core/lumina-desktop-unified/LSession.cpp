@@ -11,13 +11,14 @@
 
 #include "BootSplash.h"
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 //Initialize all the global objects to null pointers
-EventFilter* Lumina::EFILTER = 0;
+NativeWindowSystem* Lumina::NWS = 0;
+NativeEventFilter* Lumina::NEF = 0;
 LScreenSaver* Lumina::SS = 0;
-DesktopSettings* Lumina::SETTINGS = 0;
+//DesktopSettings* Lumina::SETTINGS = 0;
 //Lumina::WM = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
@@ -26,6 +27,10 @@ LShortcutEvents* Lumina::SHORTCUTS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop-unified"){
   //Initialize the global objects to null pointers
+  qRegisterMetaType< Qt::Key >("Qt::Key");
+  qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
+  qRegisterMetaType< QList< NativeWindow::Property > >("QList<NativeWindow::Property>");
+
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
   //Setup the global registrations
@@ -38,42 +43,37 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
-  //this->setAttribute(Qt::AA_UseDesktopOpenGL);
+  this->setAttribute(Qt::AA_UseDesktopOpenGL);
   this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
   //Now initialize the global objects (but do not start them yet)
-  Lumina::EFILTER = new EventFilter(); //Need the XCB Event filter first
-  Lumina::SETTINGS = new DesktopSettings();
+  Lumina::NEF = new NativeEventFilter();
+  Lumina::NWS = new NativeWindowSystem();
+  //Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
-  //Lumina::WM = new LWindowManager();
-  //Now put the Event Filter into it's own thread to keep things snappy
+  //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
-    Lumina::EFILTER->moveToThread(Lumina::EVThread);
+    Lumina::NWS->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
 
-  //Setup the basic connections between the shortcuts class and the session itself
-  connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
-  connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
-  connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
-  //Setup the various connections between the global classes
-  // NOTE: Most of these connections will only become "active" as the global objects get started during the setupSession routine
-  connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::EFILTER, SLOT(RegisterVirtualRoot(WId)) );
-  connect(Lumina::EFILTER, SIGNAL(WindowCreated(NativeWindow*)), Lumina::ROOTWIN, SLOT(NewWindow(NativeWindow*)) );
- } //end check for primary process 
+  setupGlobalConnections();
+ } //end check for primary process
 }
 
 LSession::~LSession(){
    //Clean up the global objects as needed
-  if(Lumina::EFILTER!=0){ Lumina::EFILTER->deleteLater(); }
+  if(Lumina::NEF!=0){ Lumina::NEF->deleteLater(); }
+  if(Lumina::NWS!=0){ Lumina::NWS->deleteLater(); }
+  //if(Lumina::EFILTER!=0){ Lumina::EFILTER->deleteLater(); }
   if(Lumina::SS!=0){ Lumina::SS->deleteLater(); }
   if(Lumina::EVThread!=0){
     if(Lumina::EVThread->isRunning()){ Lumina::EVThread->quit(); }
     Lumina::EVThread->deleteLater();
   }
-  if(Lumina::SETTINGS!=0){ Lumina::SETTINGS->deleteLater(); }
+  if(DesktopSettings::instance()!=0){ DesktopSettings::instance()->deleteLater(); }
   if(Lumina::ROOTWIN!=0){ Lumina::ROOTWIN->deleteLater(); }
   if(Lumina::APPLIST!=0){ Lumina::APPLIST->deleteLater(); }
 }
@@ -92,49 +92,40 @@ void LSession::setupSession(){
   //Setup the QSettings default paths
     splash.showScreen("settings");
   if(DEBUG){ qDebug() << " - Init QSettings:" << timer->elapsed();}
-  Lumina::SETTINGS->start();
-  /*sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
-  DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
-  //Load the proper translation files
-  if(sessionsettings->value("ForceInitialLocale",false).toBool()){
-    //Some system locale override it in place - change the env first
-    LUtils::setLocaleEnv( sessionsettings->value("InitLocale/LANG","").toString(), \
-				sessionsettings->value("InitLocale/LC_MESSAGES","").toString(), \
-				sessionsettings->value("InitLocale/LC_TIME","").toString(), \
-				sessionsettings->value("InitLocale/LC_NUMERIC","").toString(), \
-				sessionsettings->value("InitLocale/LC_MONETARY","").toString(), \
-				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
-				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
-  }*/
-  if(DEBUG){ qDebug() << " - Load Localization Files:" << timer->elapsed();}  
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop"); 
+  DesktopSettings::instance(); //don't do anything other than init/start the static object here
+  if(DEBUG){ qDebug() << " - Load Localization Files:" << timer->elapsed();}
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
   if(DEBUG){ qDebug() << " - Start Event Filter:" << timer->elapsed(); }
-  Lumina::EFILTER->start();
+  Lumina::NEF->start();
+  if( !Lumina::NWS->start() ){
+    qWarning() << "Could not start the Lumina desktop. Is another desktop or window manager running?";
+    this->exit(1);
+    return;
+  }
 //use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
-  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}  
+  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   //checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
   //DESKTOPS.clear();
-      
+
   //Start the background system tray
     splash.showScreen("systray");
-	
   //Initialize the global menus
   qDebug() << " - Initialize system menus";
     splash.showScreen("apps");
   if(DEBUG){ qDebug() << " - Populate App List:" << timer->elapsed();}
   Lumina::APPLIST->updateList();
   //appmenu = new AppMenu();
-  
+
     splash.showScreen("menus");
   //if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   //settingsmenu = new SettingsMenu();
   //if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
   //sysWindow = new SystemWindow();
-  
+
   //Initialize the desktops
     splash.showScreen("desktop");
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed(); }
@@ -144,6 +135,9 @@ void LSession::setupSession(){
     Lumina::ROOTWIN->ChangeWallpaper(scrns[i]->name(), RootWindow::Stretch, LOS::LuminaShare()+"desktop-background.jpg");
   }
   Lumina::ROOTWIN->start();
+  Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
+  Lumina::NWS->setRoot_currentWorkspace(0);
+
   DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
   cmenu->start();
@@ -180,7 +174,7 @@ void LSession::setupSession(){
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
   splash.hide();
   LSession::processEvents();
-  splash.close(); 
+  splash.close();
   LSession::processEvents();
   //DEBUG: Wait a bit then close down the session
   //QTimer::singleShot(15000, this, SLOT(StartLogout()) );
@@ -197,11 +191,11 @@ void LSession::CleanupSession(){
   //Create a temporary flag to prevent crash dialogs from opening during cleanup
   LUtils::writeFile("/tmp/.luminastopping",QStringList() << "yes", true);
   //Start the logout chimes (if necessary)
-  LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
-  bool playaudio = Lumina::SETTINGS->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
+  //LOS::setAudioVolume( LOS::audioVolume() ); //make sure the audio volume is saved in the backend for the next login
+  bool playaudio = DesktopSettings::instance()->value(DesktopSettings::Session,"PlayLogoutAudio",true).toBool();
   if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
   //Now perform any other cleanup
-  Lumina::EFILTER->stop();
+  //Lumina::NEF->stop();
   //Now wait a moment for things to close down before quitting
   if(playaudio){
     //wait a max of 5 seconds for audio to finish
@@ -219,10 +213,68 @@ void LSession::CleanupSession(){
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
 }
 
+//=================
+
+void LSession::setupGlobalConnections(){
+  //Setup the various connections between the global classes
+  // NOTE: Most of these connections will only become "active" as the global objects get started during the setupSession routine
+
+  //Setup the basic connections between the shortcuts class and the session itself
+  connect(Lumina::SHORTCUTS, SIGNAL(StartLogout()), this, SLOT(StartLogout()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(StartReboot()), this, SLOT(StartReboot()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(StartShutdown()), this, SLOT(StartShutdown()) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LaunchApplication(QString)), this, SLOT(LaunchApplication(QString)) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LaunchStandardApplication(QString)), this, SLOT(LaunchStandardApplication(QString)) );
+  connect(Lumina::SHORTCUTS, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
+
+  //Root window connections
+  connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
+  connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
+
+  //Native Window Class connections
+  connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
+  connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindow::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)));
+  connect(Lumina::NEF, SIGNAL(TrayWindowCreated(WId)), Lumina::NWS, SLOT(NewTrayWindowDetected(WId)));
+  connect(Lumina::NEF, SIGNAL(TrayWindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
+  connect(Lumina::NEF, SIGNAL(PossibleDamageEvent(WId)), Lumina::NWS, SLOT(CheckDamageID(WId)));
+  connect(Lumina::NEF, SIGNAL(KeyPressed(int, WId)), Lumina::NWS, SLOT(NewKeyPress(int, WId)));
+  connect(Lumina::NEF, SIGNAL(KeyReleased(int, WId)), Lumina::NWS, SLOT(NewKeyRelease(int, WId)));
+  connect(Lumina::NEF, SIGNAL(MousePressed(int, WId)), Lumina::NWS, SLOT(NewMousePress(int, WId)));
+  connect(Lumina::NEF, SIGNAL(MouseReleased(int, WId)), Lumina::NWS, SLOT(NewMouseRelease(int, WId)));
+  //connect(Lumina::NEF, SIGNAL(MouseMovement(WId)), Lumina::NWS, SLOT());
+  //connect(Lumina::NEF, SIGNAL(MouseEnterWindow(WId)), Lumina::NWS, SLOT());
+  //connect(Lumina::NEF, SIGNAL(MouseLeaveWindow(WId)), Lumina::NWS, SLOT());
+
+  //Input Events for ScreenSaver
+  connect(Lumina::NEF, SIGNAL(KeyPressed(int, WId)), Lumina::SS, SLOT(newInputEvent()));
+  connect(Lumina::NEF, SIGNAL(KeyReleased(int, WId)), Lumina::SS, SLOT(newInputEvent()));
+  connect(Lumina::NEF, SIGNAL(MousePressed(int, WId)), Lumina::SS, SLOT(newInputEvent()));
+  connect(Lumina::NEF, SIGNAL(MouseReleased(int, WId)), Lumina::SS, SLOT(newInputEvent()));
+  connect(Lumina::NEF, SIGNAL(MouseMovement()), Lumina::SS, SLOT(newInputEvent()));
+
+  connect(Lumina::SS, SIGNAL(LockStatusChanged(bool)), Lumina::NWS, SLOT(ScreenLockChanged(bool)) );
+
+  //Mouse/Keyboard Shortcut Events (Make sure to connect to the NWS - the raw events need to be ignored sometimes)
+  connect(Lumina::NWS, SIGNAL(KeyPressDetected(WId, Qt::Key)), Lumina::SHORTCUTS, SLOT(KeyPress(WId, Qt::Key)) );
+  connect(Lumina::NWS, SIGNAL(KeyReleaseDetected(WId, Qt::Key)), Lumina::SHORTCUTS, SLOT(KeyRelease(WId, Qt::Key)) );
+  connect(Lumina::NWS, SIGNAL(MousePressDetected(WId, NativeWindowSystem::MouseButton)), Lumina::SHORTCUTS, SLOT(MousePress(WId, NativeWindowSystem::MouseButton)) );
+  connect(Lumina::NWS, SIGNAL(MouseReleaseDetected(WId, NativeWindowSystem::MouseButton)), Lumina::SHORTCUTS, SLOT(MouseRelease(WId, NativeWindowSystem::MouseButton)) );
+
+  //NWS Events to the window system
+  connect(Lumina::NWS, SIGNAL(NewWindowAvailable(NativeWindow*)), Lumina::ROOTWIN, SLOT(NewWindow(NativeWindow*)) );
+}
+
+//=================
+
 int LSession::VersionStringToNumber(QString version){
   version = version.section("-",0,0); //trim any extra labels off the end
   int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
-  maj = mid = min = 0; 
+  maj = mid = min = 0;
   bool ok = true;
   maj = version.section(".",0,0).toInt(&ok);
   if(ok){ mid = version.section(".",1,1).toInt(&ok); }else{ maj = 0; }
@@ -232,6 +284,8 @@ int LSession::VersionStringToNumber(QString version){
   //NOTE: This format allows numbers to be anywhere from 0->999 without conflict
   return (maj*1000000 + mid*1000 + min);
 }
+
+//=================
 
 //Play System Audio
 void LSession::playAudioFile(QString filepath){
@@ -257,10 +311,10 @@ void LSession::NewCommunication(QStringList list){
   for(int i=0; i<list.length(); i++){
     if(list[i]=="--logout"){
       QTimer::singleShot(0, this, SLOT(StartLogout()) );
-    }else if(list[i]=="--lock-session"){ 
+    }else if(list[i]=="--lock-session"){
       Lumina::SS->LockScreenNow();
     }
-  }  
+  }
 }
 
 void LSession::launchStartupApps(){
@@ -269,44 +323,44 @@ void LSession::launchStartupApps(){
 
   //Enable Numlock
   if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
-    if(Lumina::SETTINGS->value(DesktopSettings::System,"EnableNumlock",false).toBool()){
+    if(DesktopSettings::instance()->value(DesktopSettings::System,"EnableNumlock",false).toBool()){
       QProcess::startDetached("numlockx on");
     }else{
       QProcess::startDetached("numlockx off");
     }
   }
-  int tmp = LOS::ScreenBrightness();
-  if(tmp>0){ 
+  /*int tmp = LOS::ScreenBrightness();
+  if(tmp>0){
     LOS::setScreenBrightness( tmp );
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
   //ExternalProcess::launch("nice lumina-open -autostart-apps");
-  
+
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
   qDebug() << " - Loading previous settings";
   tmp = LOS::audioVolume();
   LOS::setAudioVolume(tmp);
   qDebug() << " - - Audio Volume:" << QString::number(tmp)+"%";
-  
+  */
   //Now play the login music since we are finished
-  if(Lumina::SETTINGS->value(DesktopSettings::System,"PlayStartupAudio",true).toBool()){
+  if(DesktopSettings::instance()->value(DesktopSettings::System,"PlayStartupAudio",true).toBool()){
     //Make sure to re-set the system volume to the last-used value at outset
-    int vol = LOS::audioVolume();
-    if(vol>=0){ LOS::setAudioVolume(vol); }
+    /*int vol = LOS::audioVolume();
+    if(vol>=0){ LOS::setAudioVolume(vol); }*/
     LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
   }
   qDebug() << " - Finished with startup routines";
 }
 
 void LSession::checkUserFiles(){
-  //internal version conversion examples: 
+  //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = Lumina::SETTINGS->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
+  QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
-    Lumina::SETTINGS->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
+    DesktopSettings::instance()->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
   }
 }
 
@@ -322,26 +376,34 @@ void LSession::StartLogout(){
 void LSession::StartShutdown(bool skipupdates){
   CleanupSession();
   LOS::systemShutdown(skipupdates);
-  QCoreApplication::exit(0);		
+  QCoreApplication::exit(0);
 }
 
 void LSession::StartReboot(bool skipupdates){
   CleanupSession();
   LOS::systemRestart(skipupdates);
-  QCoreApplication::exit(0);	
+  QCoreApplication::exit(0);
+}
+
+void LSession::LaunchApplication(QString app){
+
+}
+
+void LSession::LaunchStandardApplication(QString app){
+
 }
 
 void LSession::reloadIconTheme(){
   //Wait a moment for things to settle before sending out the signal to the interfaces
   QApplication::processEvents();
   QApplication::processEvents();
-  emit IconThemeChanged();	
+  emit IconThemeChanged();
 }
 
 //Temporarily change the session locale (nothing saved between sessions)
 void LSession::switchLocale(QString localeCode){
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator); 
-  if(currTranslator!=0 || localeCode=="en_US"){ 
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop", localeCode, currTranslator);
+  if(currTranslator!=0 || localeCode=="en_US"){
     LUtils::setLocaleEnv(localeCode); //will set everything to this locale (no custom settings)
   }
   emit LocaleChanged();
