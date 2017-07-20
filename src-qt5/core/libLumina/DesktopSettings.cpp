@@ -238,6 +238,8 @@ QString DesktopSettings::rel_path(DesktopSettings::File file){
 	name="keys"; break;
     case DesktopSettings::Theme:
 	name="theme"; break;
+    case DesktopSettings::Animation:
+	name="animations"; break;
   }
   return FILEPREFIX+name+".conf";
 }

@@ -64,6 +64,7 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
       animResetProp = anim->startValue();
       QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
     }
+    WinWidget->pause();
     anim->start();
     this->show();
   } //end of Visibility animation
@@ -80,10 +81,10 @@ void RootSubWindow::animFinished(){
       //Also ensure that the proper geometry is saved to the window structure
       QRect curg = this->geometry();
       QRect wing = WIN->geometry();
-      qDebug() << " - After Animation Reset:" << curg << wing;
+      //qDebug() << " - After Animation Reset:" << curg << wing;
       if(curg!=wing){
         QRect clientg = clientGlobalGeom();
-        qDebug() << "Sub Window geometry:" << clientg;
+        //qDebug() << "Sub Window geometry:" << clientg;
         WIN->setProperties(QList< NativeWindow::Property>() << NativeWindow::Size << NativeWindow::GlobalPos,
 		QList<QVariant>() << clientg.size() << clientg.topLeft() );
         WinWidget->resyncWindow(); //also let the window know about the current geometry
@@ -91,4 +92,6 @@ void RootSubWindow::animFinished(){
     }
   }
   animResetProp = QVariant(); //clear the variable
+   WinWidget->resume();
+
 }

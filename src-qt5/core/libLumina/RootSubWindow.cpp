@@ -14,6 +14,7 @@
 #define WIN_BORDER 5
 
 #include <LIconCache.h>
+#include <DesktopSettings.h>
 
 // === PUBLIC ===
 RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
@@ -304,6 +305,7 @@ void RootSubWindow::startMoving(){
   activeState = Move;
   offset = this->mapFromGlobal(curpt);
   setMouseCursor(activeState, true); //this one is an override cursor
+  WinWidget->pause();
   //Also need to capture the mouse
   this->grabMouse();
 }
@@ -320,25 +322,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     switch(props[i]){
 	case NativeWindow::Visible:
 		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
-		loadAnimation( "random", NativeWindow::Visible, vals[i]);
-		/*if(vals[i].toBool()){
-		  if(lastGeom.isNull()){ animResetProp = this->geometry(); }
-		  else{ animResetProp = lastGeom; }
-		  anim->setPropertyName("geometry");
-		  anim->setStartValue( QRect(animResetProp.toRect().center(), QSize(0,0)) );
-		  anim->setEndValue(animResetProp);
-		  this->setGeometry( anim->startValue().toRect() ); //ensure the window is the initial geom before it becomes visible
-		  anim->start();
-		  this->show();
-		}else{
-		  animResetProp = this->geometry(); //hide event - should already be the right geom
-		  lastGeom = this->geometry();
-		  anim->setPropertyName("geometry");
-		  anim->setStartValue(this->geometry());
-		  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
-		  anim->start();
-		  QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
-		}*/
+		if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
+		else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
@@ -396,7 +381,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   //qDebug() << "Frame Mouse Press Event";
   offset.setX(0); offset.setY(0);
   if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
-  this->activate();
+  //this->activate();
   if(this->childAt(ev->pos())!=0){
     //Check for any non-left-click event and skip it
     if(ev->button()!=Qt::LeftButton){ return; }
@@ -407,6 +392,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
     activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
   }
   setMouseCursor(activeState, true); //this one is an override cursor
+  if(activeState!=Normal){WinWidget->pause(); }
   QFrame::mousePressEvent(ev);
 }
 
@@ -500,6 +486,7 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
     otherM->popup(ev->globalPos());
     return;
   }
+  if(activeState!=Normal){ WinWidget->resume(); }
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
@@ -519,5 +506,4 @@ void RootSubWindow::moveEvent(QMoveEvent *ev){
   if(!closing && anim->state()!=QAbstractAnimation::Running){
     moveTimer->start();
   }
-
 }

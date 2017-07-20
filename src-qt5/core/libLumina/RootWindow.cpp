@@ -169,7 +169,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
-  qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
+  //qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
   for(int i=0; i<WINDOWS.length() && subwin==0; i++){
     if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; }
   }
@@ -185,7 +185,7 @@ void RootWindow::NewWindow(NativeWindow *win){
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ qDebug() << "Remove Window From Root List"; WINDOWS.takeAt(i)->clientClosed(); break; }
+    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; }
   }
 }
 
@@ -196,10 +196,12 @@ void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
   bool found = false;
   QPainter painter(this);
+  QRect geom = ev->rect();
+    geom.adjust(-10,-10,10,10); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
   for(int i=0; i<WALLPAPERS.length(); i++){
-    if(WALLPAPERS[i].area.intersects(ev->rect()) ){
+    if(WALLPAPERS[i].area.intersects(geom) ){
       found = true;
-      QRect intersect = WALLPAPERS[i].area.intersected(ev->rect());
+      QRect intersect = WALLPAPERS[i].area.intersected(geom);
       painter.drawPixmap( intersect, WALLPAPERS[i].wallpaper, intersect.translated(-WALLPAPERS[i].area.x(), -WALLPAPERS[i].area.y()) );
     }
   }
