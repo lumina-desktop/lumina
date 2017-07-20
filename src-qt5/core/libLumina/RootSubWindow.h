@@ -39,6 +39,7 @@ private:
 	//Functions for getting/setting state
 	ModState getStateAtPoint(QPoint pt, bool setoffset = false); //generally used for mouse location detection
 	void setMouseCursor(ModState, bool override = false);  //Update the mouse cursor based on state
+
 	//Native window embed objects
 	NativeWindow *WIN;
 	NativeEmbedWidget *WinWidget;
@@ -60,9 +61,13 @@ private:
 
 	void LoadProperties( QList< NativeWindow::Property> list);
 
+	static QStringList validAnimations(NativeWindow::Property);
+
 public slots:
 	void clientClosed();
 	void LoadAllProperties();
+
+	QRect clientGlobalGeom();
 
 	//Button Actions - public so they can be tied to key shortcuts and stuff as well
 	void toggleMinimize();
@@ -77,6 +82,8 @@ public slots:
 
 private slots:
 	void propertiesChanged(QList<NativeWindow::Property>, QList<QVariant>);
+
+	void loadAnimation(QString name, NativeWindow::Property, QVariant nval); //new val
 	void animFinished();
 
 protected:

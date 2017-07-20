@@ -163,11 +163,11 @@ void NativeEmbedWidget::resyncWindow(){
 }
 
 void NativeEmbedWidget::repaintWindow(){
-  qDebug() << "Update Window Image";
+  //qDebug() << "Update Window Image";
   QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
   if(!tmp.isNull()){
     winImage = tmp;
-  }else{ qDebug() << "Got Null Image!!"; }
+  }//else{ qDebug() << "Got Null Image!!"; }
   this->update();
 }
 // ==============
@@ -192,10 +192,11 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   if(this->size()!=winSize){ return; } //do not paint here - waiting to re-sync the sizes
-  if(WIN==0){ QWidget::paintEvent(ev); return; }
+  else if(WIN==0){ QWidget::paintEvent(ev); return; }
+  else if(this->size() != winImage.size()){ return; }
   //Need to paint the image from the window onto the widget as an overlay
   QRect geom = ev->rect(); //atomic updates
-  geom.adjust(-1,-1,1,1); //add an additional pixel in each direction to be painted
+  geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
   geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
   if(!winImage.isNull()){
     if( !QRect(QPoint(0,0),winImage.size()).contains(geom) ){ QTimer::singleShot(0,this, SLOT(repaintWindow()) );return; }

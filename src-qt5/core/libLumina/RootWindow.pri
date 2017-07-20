@@ -1,7 +1,8 @@
 
 # Files
 SOURCES *= $${PWD}/RootWindow.cpp \
-		$${PWD}/RootSubWindow.cpp
+		$${PWD}/RootSubWindow.cpp \
+		$${PWD}/RootSubWindow-animations.cpp
 
 HEADERS *= $${PWD}/RootWindow.h \
 		$${PWD}/RootSubWindow.h
@@ -12,3 +13,4 @@ INCLUDEPATH *= ${PWD}
 include(LUtils.pri)
 include(NativeWindow.pri)
 include(LIconCache.pri)
+include(DesktopSettings.pri)

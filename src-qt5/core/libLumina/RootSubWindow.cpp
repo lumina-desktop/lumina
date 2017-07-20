@@ -246,6 +246,14 @@ void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   propertiesChanged(list, vals);
 }
 
+QRect RootSubWindow::clientGlobalGeom(){
+  QRect tot = this->geometry();
+  QList<int> frame = WIN->property(NativeWindow::FrameExtents).value< QList<int> >();
+  //Now adjust this to take out the frame
+    tot.adjust(frame[0], frame[2], -frame[1], -frame[3]);
+  return tot;
+}
+
 // === PUBLIC SLOTS ===
 void RootSubWindow::clientClosed(){
   //qDebug() << "Client Closed";
@@ -312,7 +320,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     switch(props[i]){
 	case NativeWindow::Visible:
 		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
-		if(vals[i].toBool()){
+		loadAnimation( "random", NativeWindow::Visible, vals[i]);
+		/*if(vals[i].toBool()){
 		  if(lastGeom.isNull()){ animResetProp = this->geometry(); }
 		  else{ animResetProp = lastGeom; }
 		  anim->setPropertyName("geometry");
@@ -329,7 +338,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
 		  anim->start();
 		  QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
-		}
+		}*/
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
@@ -340,11 +349,6 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
-		//qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
-		if(activeState == RootSubWindow::Normal){
-		  this->move( WIN->geometry().topLeft() );
-		}
-		break;
 	case NativeWindow::Size:
 		//qDebug() << " - SIZE CHANGE";
 		if(WIN->property(NativeWindow::FrameExtents).isNull() && (i<props.indexOf(NativeWindow::FrameExtents)) ){
@@ -353,11 +357,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  vals << vals.takeAt(i);
 		  i--;
 		}else if(anim->state() != QPropertyAnimation::Running ){
-		  if(vals[i].toSize() != WinWidget->size() && activeState==Normal){
-		    //qDebug() << "Got Widget Size Change:" << vals[i].toSize() << WinWidget->size();
-		    WinWidget->resize(vals[i].toSize());
-		    this->resize( WIN->geometry().size() );
-		    //qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		  if(vals[i].toSize() != WinWidget->size() && activeState==Normal && vals[i]==WIN->property(NativeWindow::Size)){
+		    this->setGeometry(WIN->geometry());
 		  }
 		}
 		break;
@@ -386,20 +387,6 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		qDebug() << "Window Property Unused:" << props[i] << vals[i];
     }
   }
-}
-
-void RootSubWindow::animFinished(){
-  if(closing){ this->close(); return;}
-  else if(anim->propertyName()=="geometry"){
-    if(!animResetProp.isNull()){
-      /*qDebug() << "Animation Finished, Reset Geometry:" << animResetProp;
-      qDebug() << " - Starting Value:" << anim->startValue();
-      qDebug() << " - Ending Value:" << anim->endValue();
-      qDebug() << " - Current Value:" << this->geometry();*/
-      this->setGeometry( animResetProp.toRect() );
-    }
-  }
-  animResetProp = QVariant(); //clear the variable
 }
 
 // === PROTECTED ===
@@ -498,7 +485,9 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
       default:
 	break;
     }
-    this->setGeometry(geom);
+    //if( (geom.width()%2==0 && geom.height()%2==0) || activeState==Move){
+      this->setGeometry(geom);
+    //}
   }
   QFrame::mouseMoveEvent(ev);
 }
@@ -529,8 +518,6 @@ void RootSubWindow::moveEvent(QMoveEvent *ev){
   QFrame::moveEvent(ev);
   if(!closing && anim->state()!=QAbstractAnimation::Running){
     moveTimer->start();
-    //WinWidget->resyncWindow();
-    //WIN->requestProperty(NativeWindow::GlobalPos, ev->pos() );
   }
 
 }
