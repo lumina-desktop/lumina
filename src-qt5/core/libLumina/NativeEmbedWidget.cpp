@@ -155,7 +155,6 @@ void NativeEmbedWidget::resume(){
   //syncWinSize();
   //showWindow();
   repaintWindow(); //update the cached image right away
-  this->parentWidget()->update();
 }
 
 void NativeEmbedWidget::resyncWindow(){
@@ -185,6 +184,8 @@ void NativeEmbedWidget::resyncWindow(){
   valList[0] = (uint32_t) sz.width();
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
     xcb_flush(QX11Info::connection());
+  syncWinSize();
+  QTimer::singleShot(0, this, SLOT(repaintWindow()) );
 }
 
 void NativeEmbedWidget::repaintWindow(){
@@ -194,7 +195,7 @@ void NativeEmbedWidget::repaintWindow(){
     if(!tmp.isNull()){
       winImage = tmp;
     }//else{ qDebug() << "Got Null Image!!"; }
-  this->update();
+  this->parentWidget()->update();
 }
 // ==============
 //      PROTECTED
@@ -231,7 +232,13 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
       P.setClipping(true);
       P.setClipRect(0,0,this->width(), this->height());
     //qDebug() << "Paint Embed Window:" << geom << winImage.size();
-    /*if(winImage.size().width() <= geom.size().width() && winImage.size().height() <= geom.size().height()){*/ P.drawImage( geom , winImage); //}
+    if(winImage.size() == this->size()){
+      P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+      //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
+      //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
+    }else{
+      P.drawImage( geom , winImage);
+    }
     //else{ QImage scaled = winImage.scaled(geom.size()); P.drawImage(geom, scaled); }
     //P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels

@@ -305,7 +305,7 @@ void RootSubWindow::startMoving(){
   activeState = Move;
   offset = this->mapFromGlobal(curpt);
   setMouseCursor(activeState, true); //this one is an override cursor
-  WinWidget->pause();
+  //WinWidget->pause();
   //Also need to capture the mouse
   this->grabMouse();
 }
@@ -392,7 +392,8 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
     activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
   }
   setMouseCursor(activeState, true); //this one is an override cursor
-  if(activeState!=Normal){WinWidget->pause(); }
+  //if(activeState!=Normal){WinWidget->pause(); }
+  if(activeState!=Normal && activeState!=Move){WinWidget->pause(); }
   QFrame::mousePressEvent(ev);
 }
 
@@ -487,6 +488,7 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
     return;
   }
   if(activeState!=Normal){ WinWidget->resume(); }
+  if(activeState!=Normal && activeState!=Move){WinWidget->resume(); }
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
