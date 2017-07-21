@@ -235,7 +235,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Auto-Extract</source>
-        <translation type="unfinished"></translation>
+        <translation>Extreu automàticament</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="587"/>
@@ -336,8 +336,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>No s&apos;ha pogut trobar la utilitat &quot;lumina-fileinfo&quot; al sistema. Si us plau, instal·leu-la primer.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>No s'ha pogut trobar la utilitat "lumina-fileinfo" al sistema. Si us plau, instal·leu-la primer.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="562"/>
@@ -640,7 +640,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="246"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra previsualitzacions d'imatges</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="251"/>
@@ -730,17 +730,17 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra la finestra de l'arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Show Directory Tree Pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra el plafó de l'arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
