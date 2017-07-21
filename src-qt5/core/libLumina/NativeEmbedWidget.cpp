@@ -37,8 +37,8 @@ inline void registerClientEvents(WId id){
 // ============
 //Simplification functions for the XCB/XLib interactions
 void NativeEmbedWidget::syncWinSize(QSize sz){
-  if(WIN==0){ return; }
-  if(!sz.isValid()){ sz = this->size(); } //use the current widget size
+  if(WIN==0 ){ return; }
+  else if(!sz.isValid()){ sz = this->size(); } //use the current widget size
   //qDebug() << "Sync Window Size:" << sz;
   if(sz == winSize){ return; } //no change
     const uint32_t valList[2] = {(uint32_t) sz.width(), (uint32_t) sz.height()};
@@ -58,9 +58,11 @@ void NativeEmbedWidget::hideWindow(){
 
 void NativeEmbedWidget::showWindow(){
   xcb_map_window(QX11Info::connection(), WIN->id());
+  QTimer::singleShot(0,this, SLOT(repaintWindow()));
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
+  //if(paused){ return QImage(); }
   //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
   xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
@@ -85,7 +87,8 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
 // ============
 NativeEmbedWidget::NativeEmbedWidget(QWidget *parent) : QWidget(parent){
   WIN = 0; //nothing embedded yet
-  this->setSizeIncrement(2,2);
+  paused = false;
+  //this->setSizeIncrement(2,2);
 }
 
 bool NativeEmbedWidget::embedWindow(NativeWindow *window){
@@ -141,9 +144,22 @@ bool NativeEmbedWidget::isEmbedded(){
 // ==============
 //   PUBLIC SLOTS
 // ==============
+//Pause/resume
+void NativeEmbedWidget::pause(){
+  if(winImage.isNull()){ repaintWindow(); } //make sure we have one image already cached first
+  paused = true;
+}
+
+void NativeEmbedWidget::resume(){
+  paused = false;
+  //syncWinSize();
+  //showWindow();
+  repaintWindow(); //update the cached image right away
+}
+
 void NativeEmbedWidget::resyncWindow(){
    if(WIN==0){ return; }
-  return; //skip the stuff below (not working)
+  /*return; //skip the stuff below (not working)
   QRect geom = WIN->geometry();
   //Send an artificial configureNotify event to the window with the global position/size included
   xcb_configure_notify_event_t event;
@@ -158,17 +174,28 @@ void NativeEmbedWidget::resyncWindow(){
     event.event = WIN->id();
     event.response_type = XCB_CONFIGURE_NOTIFY;
   xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (const char *) &event);
-
-  xcb_flush(QX11Info::connection());
+  */
+  //Just jitter the window size by 1 pixel really quick so the window knows to update it's geometry
+  QSize sz = this->size();
+  uint32_t valList[2] = {(uint32_t) sz.width()-1, (uint32_t) sz.height()};
+    uint32_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
+    xcb_flush(QX11Info::connection());
+  valList[0] = (uint32_t) sz.width();
+    xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
+    xcb_flush(QX11Info::connection());
+  syncWinSize();
+  QTimer::singleShot(0, this, SLOT(repaintWindow()) );
 }
 
 void NativeEmbedWidget::repaintWindow(){
-  qDebug() << "Update Window Image";
-  QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
-  if(!tmp.isNull()){
-    winImage = tmp;
-  }else{ qDebug() << "Got Null Image!!"; }
-  this->update();
+  //qDebug() << "Update Window Image:" << !paused;
+  if(paused){ return; }
+    QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
+    if(!tmp.isNull()){
+      winImage = tmp;
+    }//else{ qDebug() << "Got Null Image!!"; }
+  this->parentWidget()->update();
 }
 // ==============
 //      PROTECTED
@@ -191,17 +218,30 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
-  if(this->size()!=winSize){ return; } //do not paint here - waiting to re-sync the sizes
   if(WIN==0){ QWidget::paintEvent(ev); return; }
+  else if( winImage.isNull() ){ /*QTimer::singleShot(0, this, SLOT(repaintWindow()) );*/ return; }
+  else if(paused){ return; }
+  //else if(this->size()!=winSize){ QTimer::singleShot(0,this, SLOT(syncWinSize())); return; } //do not paint here - waiting to re-sync the sizes
+  //else if(this->size() != winImage.size()){ QTimer::singleShot(0, this, SLOT(repaintWindow()) ); return; }
   //Need to paint the image from the window onto the widget as an overlay
   QRect geom = ev->rect(); //atomic updates
-  geom.adjust(-1,-1,1,1); //add an additional pixel in each direction to be painted
+  geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
   geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
-  if(!winImage.isNull()){
     if( !QRect(QPoint(0,0),winImage.size()).contains(geom) ){ QTimer::singleShot(0,this, SLOT(repaintWindow()) );return; }
     QPainter P(this);
-    P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+      P.setClipping(true);
+      P.setClipRect(0,0,this->width(), this->height());
+    //qDebug() << "Paint Embed Window:" << geom << winImage.size();
+    if(winImage.size() == this->size()){
+      P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+      //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
+      //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
+    }else{
+      P.drawImage( geom , winImage);
+    }
+    //else{ QImage scaled = winImage.scaled(geom.size()); P.drawImage(geom, scaled); }
+    //P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
   //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
-  }
+
 }

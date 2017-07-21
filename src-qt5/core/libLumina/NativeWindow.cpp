@@ -89,11 +89,11 @@ QRect NativeWindow::geometry(){
   QRect geom( hash.value(NativeWindow::GlobalPos).toPoint(), hash.value(NativeWindow::Size).toSize() );
   //Now adjust the window geom by the frame margins
   QList<int> frame = hash.value(NativeWindow::FrameExtents).value< QList<int> >(); //Left,Right,Top,Bottom
-  qDebug() << "Calculate Geometry:" << geom << frame;
+  //qDebug() << "Calculate Geometry:" << geom << frame;
   if(frame.length()==4){
     geom = geom.adjusted( -frame[0], -frame[2], frame[1], frame[3] );
   }
-  qDebug() << " - Total:" << geom;
+  //qDebug() << " - Total:" << geom;
   return geom;
 }
 // ==== PUBLIC SLOTS ===

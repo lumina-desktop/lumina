@@ -25,6 +25,7 @@ private:
 	NativeWindow *WIN;
 	QSize winSize;
 	QImage winImage;
+	bool paused;
 
 private slots:
 	//Simplification functions
@@ -42,7 +43,13 @@ public:
 	bool detachWindow();
 	bool isEmbedded(); //status of the embed
 
+
+
 public slots:
+	//Pause/resume
+	void pause();
+	void resume();
+
 	void resyncWindow();
 	void repaintWindow();
 
