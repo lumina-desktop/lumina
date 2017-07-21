@@ -22,12 +22,12 @@
     <message>
         <location filename="../mainUI.cpp" line="85"/>
         <source>Power %1</source>
-        <translation>Násobek %1</translation>
+        <translation>Mocnina %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="87"/>
         <source>Base-10 Exponential %1</source>
-        <translation>10 mocnina z %1</translation>
+        <translation>10 mocnina %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="89"/>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../mainUI.cpp" line="91"/>
         <source>Constant Pi %1</source>
-        <translation>Konstanta Pí %1</translation>
+        <translation>Konstanta pí %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="94"/>
