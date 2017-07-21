@@ -14,6 +14,7 @@
 #define WIN_BORDER 5
 
 #include <LIconCache.h>
+#include <DesktopSettings.h>
 
 // === PUBLIC ===
 RootSubWindow::RootSubWindow(QWidget *root, NativeWindow *win) : QFrame(root){
@@ -246,6 +247,14 @@ void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   propertiesChanged(list, vals);
 }
 
+QRect RootSubWindow::clientGlobalGeom(){
+  QRect tot = this->geometry();
+  QList<int> frame = WIN->property(NativeWindow::FrameExtents).value< QList<int> >();
+  //Now adjust this to take out the frame
+    tot.adjust(frame[0], frame[2], -frame[1], -frame[3]);
+  return tot;
+}
+
 // === PUBLIC SLOTS ===
 void RootSubWindow::clientClosed(){
   //qDebug() << "Client Closed";
@@ -296,6 +305,7 @@ void RootSubWindow::startMoving(){
   activeState = Move;
   offset = this->mapFromGlobal(curpt);
   setMouseCursor(activeState, true); //this one is an override cursor
+  //WinWidget->pause();
   //Also need to capture the mouse
   this->grabMouse();
 }
@@ -312,24 +322,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     switch(props[i]){
 	case NativeWindow::Visible:
 		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
-		if(vals[i].toBool()){
-		  if(lastGeom.isNull()){ animResetProp = this->geometry(); }
-		  else{ animResetProp = lastGeom; }
-		  anim->setPropertyName("geometry");
-		  anim->setStartValue( QRect(animResetProp.toRect().center(), QSize(0,0)) );
-		  anim->setEndValue(animResetProp);
-		  this->setGeometry( anim->startValue().toRect() ); //ensure the window is the initial geom before it becomes visible
-		  anim->start();
-		  this->show();
-		}else{
-		  animResetProp = this->geometry(); //hide event - should already be the right geom
-		  lastGeom = this->geometry();
-		  anim->setPropertyName("geometry");
-		  anim->setStartValue(this->geometry());
-		  anim->setEndValue( QRect(this->geometry().center(), QSize(0,0) ) );
-		  anim->start();
-		  QTimer::singleShot(anim->duration(), this, SLOT(hide()) );
-		}
+		if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
+		else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
@@ -340,11 +334,6 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
-		//qDebug() << "Got Global Pos:" << this->pos() << WinWidget->mapToGlobal(QPoint(0,0)) << WIN->geometry().topLeft() << vals[i].toPoint();
-		if(activeState == RootSubWindow::Normal){
-		  this->move( WIN->geometry().topLeft() );
-		}
-		break;
 	case NativeWindow::Size:
 		//qDebug() << " - SIZE CHANGE";
 		if(WIN->property(NativeWindow::FrameExtents).isNull() && (i<props.indexOf(NativeWindow::FrameExtents)) ){
@@ -353,11 +342,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  vals << vals.takeAt(i);
 		  i--;
 		}else if(anim->state() != QPropertyAnimation::Running ){
-		  if(vals[i].toSize() != WinWidget->size() && activeState==Normal){
-		    //qDebug() << "Got Widget Size Change:" << vals[i].toSize() << WinWidget->size();
-		    WinWidget->resize(vals[i].toSize());
-		    this->resize( WIN->geometry().size() );
-		    //qDebug() << " - Size after change:" << WinWidget->size() << this->size() << WIN->geometry();
+		  if(vals[i].toSize() != WinWidget->size() && activeState==Normal && vals[i]==WIN->property(NativeWindow::Size)){
+		    this->setGeometry(WIN->geometry());
 		  }
 		}
 		break;
@@ -388,20 +374,6 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
   }
 }
 
-void RootSubWindow::animFinished(){
-  if(closing){ this->close(); return;}
-  else if(anim->propertyName()=="geometry"){
-    if(!animResetProp.isNull()){
-      /*qDebug() << "Animation Finished, Reset Geometry:" << animResetProp;
-      qDebug() << " - Starting Value:" << anim->startValue();
-      qDebug() << " - Ending Value:" << anim->endValue();
-      qDebug() << " - Current Value:" << this->geometry();*/
-      this->setGeometry( animResetProp.toRect() );
-    }
-  }
-  animResetProp = QVariant(); //clear the variable
-}
-
 // === PROTECTED ===
 void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   activate();
@@ -409,7 +381,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   //qDebug() << "Frame Mouse Press Event";
   offset.setX(0); offset.setY(0);
   if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
-  this->activate();
+  //this->activate();
   if(this->childAt(ev->pos())!=0){
     //Check for any non-left-click event and skip it
     if(ev->button()!=Qt::LeftButton){ return; }
@@ -420,6 +392,8 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
     activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
   }
   setMouseCursor(activeState, true); //this one is an override cursor
+  //if(activeState!=Normal){WinWidget->pause(); }
+  if(activeState!=Normal && activeState!=Move){WinWidget->pause(); }
   QFrame::mousePressEvent(ev);
 }
 
@@ -498,7 +472,9 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
       default:
 	break;
     }
-    this->setGeometry(geom);
+    //if( (geom.width()%2==0 && geom.height()%2==0) || activeState==Move){
+      this->setGeometry(geom);
+    //}
   }
   QFrame::mouseMoveEvent(ev);
 }
@@ -511,6 +487,8 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
     otherM->popup(ev->globalPos());
     return;
   }
+  if(activeState!=Normal){ WinWidget->resume(); }
+  if(activeState!=Normal && activeState!=Move){WinWidget->resume(); }
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
@@ -529,8 +507,5 @@ void RootSubWindow::moveEvent(QMoveEvent *ev){
   QFrame::moveEvent(ev);
   if(!closing && anim->state()!=QAbstractAnimation::Running){
     moveTimer->start();
-    //WinWidget->resyncWindow();
-    //WIN->requestProperty(NativeWindow::GlobalPos, ev->pos() );
   }
-
 }
