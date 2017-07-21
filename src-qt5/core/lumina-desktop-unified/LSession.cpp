@@ -18,8 +18,6 @@
 NativeWindowSystem* Lumina::NWS = 0;
 NativeEventFilter* Lumina::NEF = 0;
 LScreenSaver* Lumina::SS = 0;
-//DesktopSettings* Lumina::SETTINGS = 0;
-//Lumina::WM = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
 XDGDesktopList* Lumina::APPLIST = 0;
@@ -49,7 +47,6 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Now initialize the global objects (but do not start them yet)
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
-  //Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
   //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
@@ -67,7 +64,6 @@ LSession::~LSession(){
    //Clean up the global objects as needed
   if(Lumina::NEF!=0){ Lumina::NEF->deleteLater(); }
   if(Lumina::NWS!=0){ Lumina::NWS->deleteLater(); }
-  //if(Lumina::EFILTER!=0){ Lumina::EFILTER->deleteLater(); }
   if(Lumina::SS!=0){ Lumina::SS->deleteLater(); }
   if(Lumina::EVThread!=0){
     if(Lumina::EVThread->isRunning()){ Lumina::EVThread->quit(); }

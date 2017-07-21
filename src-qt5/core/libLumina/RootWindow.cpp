@@ -10,6 +10,8 @@
 #include <QScreen>
 #include <QDebug>
 
+#define DEBUG 1
+
 // === PUBLIC ===
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
@@ -100,12 +102,14 @@ void RootWindow::updateScreenPixmap(screeninfo *info){
 
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
+  if(DEBUG){ qDebug() << "Resize Root..."; }
   QList<QScreen*> scrns = QApplication::screens();
   //Update all the screen locations and ID's in the WALLPAPERS list
   QRect fullscreen;
   QStringList valid;
   //Update the size of the rootWindow itself
   for(int i=0; i<scrns.length(); i++){
+    if(DEBUG){ qDebug() << " - Found Screen:" << scrns[i]->name() << scrns[i]->geometry(); }
     fullscreen = fullscreen.united(scrns[i]->geometry());
     valid << scrns[i]->name();
     for(int j=0; j<WALLPAPERS.length(); j++){
@@ -129,11 +133,13 @@ void RootWindow::ResizeRoot(){
     }
   }
   //Trigger a repaint and send out any signals
+  if(DEBUG){ qDebug() << " - FullScreen Geometry:" << fullscreen; }
   this->setGeometry(fullscreen);
   this->update();
   emit RootResized(fullscreen);
   if(!valid.isEmpty()){ emit NewScreens(valid); }
   if(!invalid.isEmpty()){ emit RemovedScreens(invalid); }
+  if(DEBUG){ qDebug() << " - Geom after change:" << this->geometry(); }
 }
 
 void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file){
@@ -148,6 +154,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
     }
   }
   if(!found){
+    ResizeRoot();
     //Need to create a new screeninfo structure
     QList<QScreen*> scrns = QApplication::screens();
     for(int i=0; i<scrns.length(); i++){
