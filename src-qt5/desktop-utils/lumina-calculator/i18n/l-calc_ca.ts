@@ -27,7 +27,7 @@
     <message>
         <location filename="../mainUI.cpp" line="87"/>
         <source>Base-10 Exponential %1</source>
-        <translation>Base-10 exponencial %1</translation>
+        <translation>Exponencial en base 10 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="89"/>
