@@ -12,12 +12,12 @@
     <message>
         <location filename="../mainUI.ui" line="657"/>
         <source>Advanced Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanceret handlinger</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="83"/>
         <source>Percentage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Procent %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="85"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../mainUI.cpp" line="94"/>
         <source>Square Root %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadratrod %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="96"/>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem lommeregnerhistorik</translation>
     </message>
 </context>
 </TS>
