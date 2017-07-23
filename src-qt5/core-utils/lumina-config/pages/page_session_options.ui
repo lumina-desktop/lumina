@@ -207,16 +207,6 @@
      <item row="4" column="1">
       <widget class="QComboBox" name="combo_session_datetimeorder"/>
      </item>
-     <item row="5" column="1">
-      <widget class="QComboBox" name="mywindowmanager"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Window Manager</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item row="1" column="0">

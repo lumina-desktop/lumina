@@ -33,7 +33,6 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->check_session_playlogoutaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_autoapplinks, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_watch_app_procs, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
-  connect(ui->mywindowmanager, SIGNAL(currentIndexChanged(int)), this, SLOT(settingChanged()));
  updateIcons();
  
 }
@@ -54,11 +53,6 @@ void page_session_options::SaveSettings(){
   sessionsettings.setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings.setValue("DateFormat", ui->line_session_date->text());
   sessionsettings.setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
-  sessionsettings.setValue("WindowManager", ui->mywindowmanager->currentText());
-
-  // Warn user if they select a non-default window manager
-  if (! ui->mywindowmanager->currentText().contains("fluxbox") )
-      QMessageBox::information(this, tr("Window manager"), "Warning: Please note window managers other than Fluxbox are not supported." );
 
   QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
   if(QFile::exists(lopenWatchFile) && ui->check_watch_app_procs->isChecked()){
@@ -95,16 +89,7 @@ void page_session_options::LoadSettings(int){
   ui->line_session_time->setText( sessionsettings.value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings.value("DateFormat","").toString() );
   int index = ui->combo_session_datetimeorder->findData( sessionsettings.value("DateTimeOrder","timeonly").toString() );
-  FindWindowManagerOptions();  // check system for available options
-  index = ui->mywindowmanager->findText( sessionsettings.value("WindowManager").toString() );
-  if (index == -1)  // did not find existing option in list, so add it
-  {
-      ui->mywindowmanager->addItem( sessionsettings.value("WindowManager").toString() );
-      // Past window manager is now in list so we can select it, even itf it did not exist before
-      index = ui->mywindowmanager->findText( sessionsettings.value("WindowManager").toString() );
-  }
-  
-ui->combo_session_datetimeorder->setCurrentIndex(index);
+  ui->combo_session_datetimeorder->setCurrentIndex(index);
 
   QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
   ui->check_watch_app_procs->setChecked( !QFile::exists(lopenWatchFile) );
@@ -125,23 +110,6 @@ void page_session_options::updateIcons(){
 //=================
 //         PRIVATE 
 //=================
-
-void page_session_options::FindWindowManagerOptions(){
-    // Try to find all available window managers and add them to drop-down box.
-    ui->mywindowmanager->clear();
-    if (QFileInfo::exists("/usr/bin/fluxbox"))
-        ui->mywindowmanager->addItem("/usr/bin/fluxbox");
-    else if (QFileInfo::exists("/usr/local/bin/fluxbox"))
-        ui->mywindowmanager->addItem("/usr/local/bin/fluxbox");
-    if (QFileInfo::exists("/usr/bin/kwin"))
-        ui->mywindowmanager->addItem("/usr/bin/kwin");
-    else if (QFileInfo::exists("/usr/local/bin/kwin"))
-        ui->mywindowmanager->addItem("/usr/local/bin/kwin");
-    if (QFileInfo::exists("/usr/bin/openbox"))
-        ui->mywindowmanager->addItem("/usr/bin/openbox");
-    else if (QFileInfo::exists("/usr/local/bin/openbox"))
-        ui->mywindowmanager->addItem("/usr/local/bin/openbox");
-}
 
 //=================
 //    PRIVATE SLOTS

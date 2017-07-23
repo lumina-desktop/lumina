@@ -30,7 +30,6 @@ public slots:
 private:
 	Ui::page_session_options *ui;
 	bool loading;
-	void FindWindowManagerOptions();
 
 private slots:
 	void sessionChangeUserIcon();
