@@ -783,16 +783,12 @@ Nové umístění: %2</translation>
         <translation>Zobrazit tlačítka akcí</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
         <translation>Načíst náhledy</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="253"/>
-=======
         <location filename="../MainUI.ui" line="254"/>
->>>>>>> 86f6fadf45c2b87749cffac82411d2371448da53
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
