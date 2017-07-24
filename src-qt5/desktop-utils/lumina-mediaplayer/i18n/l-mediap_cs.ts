@@ -164,7 +164,7 @@
     <message>
         <location filename="../mainUI.ui" line="699"/>
         <source>toolBar</source>
-        <translation>Nástrojová lišta</translation>
+        <translation>lištaNástrojů</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="726"/>
