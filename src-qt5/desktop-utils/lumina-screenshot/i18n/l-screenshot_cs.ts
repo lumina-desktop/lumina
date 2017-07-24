@@ -24,7 +24,7 @@
     <message>
         <location filename="../MainUI.ui" line="422"/>
         <source>Include Borders</source>
-        <translation>Zahrnout rámečky</translation>
+        <translation>Včetně rámečků</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="540"/>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation>Otevřít snímek obrazovky v programu</translation>
+        <translation>Otevřít snímek obrazovky v aplikaci</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation>Kopírovat snímek obrazovky do schránky</translation>
+        <translation>Zkopírovat snímek obrazovky do schránky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation>Oříznout snímek obrazovky na výběr</translation>
+        <translation>Oříznout snímek obrazovky podle výběru</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte oblast</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -104,12 +104,12 @@
     <message>
         <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
-        <translation>Ukázat vyskakovací varování o neuložených snímcích obrazovky</translation>
+        <translation>Zobrazovat vyskakovací varování o neuložených snímcích obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation>Nástrojový pruh</translation>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
-        <translation>Zavřít program</translation>
+        <translation>Zavřít aplikaci</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="562"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation>Pohled</translation>
+        <translation>Zobrazit</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation>Nepodařilo se uložit snímek obrazovky. Prověřte, prosím, oprávnění k adresáři nebo zvolte jiný adresář</translation>
+        <translation>Snímek obrazovky se nepodařilo uložit. Zkontrolujte přístupová práva ke složce nebo zvolte jinou</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="120"/>
@@ -179,12 +179,12 @@
     <message>
         <location filename="../MainUI.cpp" line="322"/>
         <source>Unsaved Screenshot</source>
-        <translation>Neuložené snímky obrazovky</translation>
+        <translation>Neuložený snímek obrazovky</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="323"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation>Nynější snímek obrazovky ještě nebyl uložen. Chcete své změny uložit nebo zahodit?</translation>
+        <translation>Stávající snímek obrazovky ještě nebyl uložen. Chcete ho uložit nebo zahodit?</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>
@@ -194,7 +194,7 @@
     <message>
         <location filename="../MainUI.ui" line="551"/>
         <source>Quick Save</source>
-        <translation>Rychle uložit</translation>
+        <translation>Rychlé ukládání</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="120"/>

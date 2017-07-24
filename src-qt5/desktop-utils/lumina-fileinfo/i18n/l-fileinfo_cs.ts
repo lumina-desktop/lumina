@@ -33,7 +33,7 @@
     <message>
         <location filename="../MainUI.ui" line="111"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation>Poznámka: Doba, kdy byl soubor vytvořen, může být mladší než čas změny, pokud byla oprávnění k souboru změněna nedávno.</translation>
+        <translation>Poznámka: Doba kdy byl soubor vytvořen může být mladší než čas změny, pokud byla oprávnění k souboru změněna nedávno.</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -59,7 +59,7 @@
         <location filename="../MainUI.ui" line="216"/>
         <location filename="../MainUI.cpp" line="139"/>
         <source>Edit Shortcut</source>
-        <translation>Upravit klávesovou zkratku</translation>
+        <translation>Upravit zkratku</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../MainUI.ui" line="298"/>
         <source>Options</source>
-        <translation>Volby</translation>
+        <translation>Předvolby</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="336"/>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../MainUI.cpp" line="76"/>
         <source>XDG Shortcut</source>
-        <translation>XDG klávesová zkratka</translation>
+        <translation>XDG zkratka</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="77"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="78"/>
         <source>Binary</source>
-        <translation>Soubor</translation>
+        <translation>Spustitelný soubor</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="80"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../MainUI.cpp" line="125"/>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>URL adresa:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="247"/>
@@ -174,12 +174,12 @@
     <message>
         <location filename="../MainUI.cpp" line="247"/>
         <source>Application Registrations (*.desktop)</source>
-        <translation>Zápis aplikace (*.desktop)</translation>
+        <translation>Registrace aplikací (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="288"/>
         <source>Select a binary</source>
-        <translation>Vybrat soubor</translation>
+        <translation>Vyberte spustitelný soubor</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="291"/>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../MainUI.cpp" line="341"/>
         <source>  Calculating...</source>
-        <translation>  Počítá se...</translation>
+        <translation>  Počítá se…</translation>
     </message>
 </context>
 </TS>

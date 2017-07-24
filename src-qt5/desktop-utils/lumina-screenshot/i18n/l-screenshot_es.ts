@@ -39,37 +39,37 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lumina Captura de pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir la captura de pantalla con una aplicación</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar la captura de pantalla a un portapapeles</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remedir la captura de pantalla a la selección</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">barra de herramientas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>

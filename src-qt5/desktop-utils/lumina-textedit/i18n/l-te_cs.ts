@@ -21,18 +21,18 @@
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation>Vzorek</translation>
+        <translation>Ukázka</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation>Vyberte barvu</translation>
+        <translation>Vybrat barvu</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="71"/>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojit kartu</translation>
     </message>
 </context>
 <context>
@@ -67,7 +67,7 @@
         <location filename="../MainUI.ui" line="146"/>
         <location filename="../MainUI.ui" line="158"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="168"/>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../MainUI.ui" line="143"/>
         <source>Replace all matches (to end of document)</source>
-        <translation>Nahradit všechny shody (až nakonec dokumentu)</translation>
+        <translation>Nahradit všechny shody (až do konce dokumentu)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="155"/>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../MainUI.ui" line="213"/>
         <source>Syntax Highlighting</source>
-        <translation>Zvýraznění syntaxe</translation>
+        <translation>Zvýrazňovat syntaxi</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="220"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění karet</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
@@ -132,17 +132,17 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>nástrojová lišta</translation>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
         <source>Show Line Numbers</source>
-        <translation>Zobrazit čísla řádků</translation>
+        <translation>Zobrazovat čísla řádků</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="283"/>
         <source>None</source>
-        <translation>Nic</translation>
+        <translation>Žádný</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="288"/>
@@ -233,33 +233,33 @@
     <message>
         <location filename="../MainUI.ui" line="392"/>
         <source>Show Popup Warnings</source>
-        <translation>Ukázat vyskakovací varování</translation>
+        <translation>Zobrazovat vyskakovací varování</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="395"/>
         <location filename="../MainUI.ui" line="398"/>
         <source>Show warnings about unsaved changes</source>
-        <translation>Ukázat varování o neuložených změnách</translation>
+        <translation>Zobrazovat varování o neuložených změnách</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="409"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="417"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="425"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="62"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../MainUI.cpp" line="195"/>
         <source>Open File(s)</source>
-        <translation>Otevřít soubor(y)</translation>
+        <translation>Otevřít soubory</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="195"/>
@@ -327,17 +327,17 @@ Přesto chcete editor zavřít?
     <message>
         <location filename="../PlainTextEditor.cpp" line="327"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation>Následující soubor byl změněn jiným programem. Chcete jej nahrát znovu?</translation>
+        <translation>Následující soubor byl změněn jiným programem. Chcete jej načíst znovu?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="329"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation>(Poznámka: Ztratíte všechny nyní neuložené změny)</translation>
+        <translation>(Poznámka: Ztratíte všechny doposud neuložené změny)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="333"/>
         <source>File Modified</source>
-        <translation>Soubor změněn</translation>
+        <translation>Soubor byl změněn</translation>
     </message>
 </context>
 </TS>

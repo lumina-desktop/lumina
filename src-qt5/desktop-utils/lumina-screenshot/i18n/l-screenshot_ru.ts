@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation>Просмотр</translation>
+        <translation>Вид</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
-        <translation>Сохранить Снимок</translation>
+        <translation>Сохранить Снимок Экрана</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="322"/>

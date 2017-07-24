@@ -59,52 +59,52 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="218"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="219"/>
         <source>Size</source>
-        <translation type="unfinished">Tamaño</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="220"/>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="221"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Fecha de Modificación</translation>
+        <translation>Fecha de Modificación</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="222"/>
         <source>Date Created</source>
-        <translation type="unfinished">Fecha de Creación</translation>
+        <translation>Fecha de Creación</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="325"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Capacidad: %1</translation>
+        <translation>Capacidad: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="350"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Archivos: %1 (%2)</translation>
+        <translation>Archivos: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="352"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="358"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Directorios: %1</translation>
+        <translation>Directorios: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="372"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No Directorio Contentos</translation>
     </message>
 </context>
 <context>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="157"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Aumentar los tamaños de iconos</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="173"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Disminuir los tamaños de iconos</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="191"/>
@@ -160,12 +160,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="230"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menú</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Elegir acción</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
@@ -175,22 +175,22 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vista de columna única</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Columna doble</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="255"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista de columna doble</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="621"/>
         <source>(Limited Access) </source>
-        <translation>(Acceso Limitado)</translation>
+        <translation>(Acceso Limitado) </translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="643"/>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="565"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operaciones de archivo</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
@@ -272,7 +272,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="271"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="273"/>
@@ -282,27 +282,27 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="274"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="275"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aplicación Iniciador</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="279"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="281"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>Presentación</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="283"/>
@@ -566,7 +566,7 @@ Ubicación Nueva: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

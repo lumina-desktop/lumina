@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation>预览</translation>
+        <translation type="unfinished">查看</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>

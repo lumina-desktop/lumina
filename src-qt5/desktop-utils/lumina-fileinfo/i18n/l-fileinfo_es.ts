@@ -210,18 +210,18 @@
         <location filename="../MainUI.cpp" line="339"/>
         <location filename="../MainUI.cpp" line="341"/>
         <source> Folders: </source>
-        <translation>Directorios:</translation>
+        <translation> Directorios: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="339"/>
         <location filename="../MainUI.cpp" line="341"/>
         <source>Files: </source>
-        <translation>Archivos:</translation>
+        <translation>Archivos: </translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="341"/>
         <source>  Calculating...</source>
-        <translation>Calculando…</translation>
+        <translation>  Calculando…</translation>
     </message>
 </context>
 </TS>

@@ -112,7 +112,7 @@
     <message>
         <location filename="../MainUI.ui" line="209"/>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Ver</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="213"/>

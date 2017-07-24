@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>复制选中区域</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="62"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴</translation>
     </message>
 </context>
 <context>
@@ -19,27 +19,27 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>开启终端</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>
         <source>Top of Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕顶端</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭终端</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>移至监视器</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>监视器 %1</translation>
     </message>
 </context>
 </TS>

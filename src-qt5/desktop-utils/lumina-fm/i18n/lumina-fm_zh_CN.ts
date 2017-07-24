@@ -571,7 +571,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation>点击 “下一步” 开始下载存储库</translation>
     </message>
     <message>
@@ -1031,7 +1031,7 @@ New Location: %2</source>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表单</translation>
+        <translation>表单</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>

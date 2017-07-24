@@ -10,6 +10,8 @@
 #include <QScreen>
 #include <QDebug>
 
+#define DEBUG 1
+
 // === PUBLIC ===
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
@@ -100,12 +102,14 @@ void RootWindow::updateScreenPixmap(screeninfo *info){
 
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
+  if(DEBUG){ qDebug() << "Resize Root..."; }
   QList<QScreen*> scrns = QApplication::screens();
   //Update all the screen locations and ID's in the WALLPAPERS list
   QRect fullscreen;
   QStringList valid;
   //Update the size of the rootWindow itself
   for(int i=0; i<scrns.length(); i++){
+    if(DEBUG){ qDebug() << " - Found Screen:" << scrns[i]->name() << scrns[i]->geometry(); }
     fullscreen = fullscreen.united(scrns[i]->geometry());
     valid << scrns[i]->name();
     for(int j=0; j<WALLPAPERS.length(); j++){
@@ -129,11 +133,13 @@ void RootWindow::ResizeRoot(){
     }
   }
   //Trigger a repaint and send out any signals
+  if(DEBUG){ qDebug() << " - FullScreen Geometry:" << fullscreen; }
   this->setGeometry(fullscreen);
   this->update();
   emit RootResized(fullscreen);
   if(!valid.isEmpty()){ emit NewScreens(valid); }
   if(!invalid.isEmpty()){ emit RemovedScreens(invalid); }
+  if(DEBUG){ qDebug() << " - Geom after change:" << this->geometry(); }
 }
 
 void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file){
@@ -148,6 +154,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
     }
   }
   if(!found){
+    ResizeRoot();
     //Need to create a new screeninfo structure
     QList<QScreen*> scrns = QApplication::screens();
     for(int i=0; i<scrns.length(); i++){
@@ -169,7 +176,7 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
-  qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
+  //qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
   for(int i=0; i<WINDOWS.length() && subwin==0; i++){
     if(WINDOWS[i]->id() == win->id()){ subwin = WINDOWS[i]; }
   }
@@ -185,7 +192,7 @@ void RootWindow::NewWindow(NativeWindow *win){
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ qDebug() << "Remove Window From Root List"; WINDOWS.takeAt(i)->clientClosed(); break; }
+    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; }
   }
 }
 
@@ -196,10 +203,12 @@ void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
   bool found = false;
   QPainter painter(this);
+  QRect geom = ev->rect();
+    geom.adjust(-10,-10,10,10); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
   for(int i=0; i<WALLPAPERS.length(); i++){
-    if(WALLPAPERS[i].area.intersects(ev->rect()) ){
+    if(WALLPAPERS[i].area.intersects(geom) ){
       found = true;
-      QRect intersect = WALLPAPERS[i].area.intersected(ev->rect());
+      QRect intersect = WALLPAPERS[i].area.intersected(geom);
       painter.drawPixmap( intersect, WALLPAPERS[i].wallpaper, intersect.translated(-WALLPAPERS[i].area.x(), -WALLPAPERS[i].area.y()) );
     }
   }

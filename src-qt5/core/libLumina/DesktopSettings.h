@@ -25,7 +25,7 @@
 class DesktopSettings : public QObject{
 	Q_OBJECT
 public:
-	enum File{ System, Favorites, Environment, Session, Desktop, ContextMenu, Keys, Theme };
+	enum File{ System, Favorites, Environment, Session, Desktop, ContextMenu, Keys, Theme, Animation };
 
 	DesktopSettings(QObject *parent = 0);
 	~DesktopSettings();
