@@ -62,6 +62,7 @@
 #include <NativeWindow.h>
 #include <NativeWindowSystem.h>
 #include <NativeEventFilter.h>
+#include <XDGMime.h>
 
 // Standard C includes
 #include <unistd.h>

@@ -75,7 +75,12 @@ isEmpty(OS){
     #Apply any special rules for particular distros
     equals(LINUX_DISTRO,"Fedora"){
       isEmpty(L_ETCDIR){ L_ETCDIR=/etc }
-    }
+      }
+    equals(LINUX_DISTRO,"Gentoo"){
+      isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
+      isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/../etc }
+      isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
+      }
   }else{
     OS="Unknown";
   }

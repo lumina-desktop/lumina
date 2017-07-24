@@ -32,6 +32,8 @@ private slots:
 signals:
 	void LockSession();
 	void showLeaveDialog();
+	void LaunchStandardApplication(QString);
+	void LaunchApplication(QString);
 };
 
 #endif
