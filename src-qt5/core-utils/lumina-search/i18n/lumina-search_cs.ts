@@ -16,12 +16,12 @@
     <message>
         <location filename="../ConfigUI.ui" line="39"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="48"/>
         <source>Excluded Directories</source>
-        <translation>Vyloučené adresáře</translation>
+        <translation>Vynechané složky</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="119"/>
@@ -31,12 +31,12 @@
     <message>
         <location filename="../ConfigUI.cpp" line="41"/>
         <source>Select Search Directory</source>
-        <translation>Vyberte adresář pro hledání</translation>
+        <translation>Vyberte složku ve které hledat</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="54"/>
         <source>Exclude Directories</source>
-        <translation>Vyloučit adresáře</translation>
+        <translation>Vynechat složky</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation>Hledat...</translation>
+        <translation>Co hledat…</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="23"/>
@@ -54,12 +54,12 @@
     <message>
         <location filename="../MainUI.ui" line="30"/>
         <source>Configure search parameters</source>
-        <translation>Konfigurace parametrů hledání</translation>
+        <translation>Nastavení parametrů hledání</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
-        <translation>Zastavit aktivní hledání</translation>
+        <translation>Zastavit probíhající hledání</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="54"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
-        <translation>Hledat: %1 -- Chytrý: %2</translation>
+        <translation>Hledat: %1 -- Chytré: %2</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="101"/>
@@ -139,12 +139,12 @@
     <message>
         <location filename="../Worker.cpp" line="42"/>
         <source>Searching: %1</source>
-        <translation>Hledám: %1</translation>
+        <translation>Hledání: %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
-        <translation>Spuštění hledání: %1</translation>
+        <translation>Spouštění hledání: %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="112"/>

@@ -19,6 +19,7 @@ include(../libLumina/DesktopSettings.pri)
 include(../libLumina/RootWindow.pri)
 include(../libLumina/ExternalProcess.pri)
 include(../libLumina/NativeWindow.pri)
+include(../libLumina/XDGMime.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)

@@ -11,7 +11,7 @@
     <message>
         <location filename="../AppDialog.ui" line="20"/>
         <source>Search for....</source>
-        <translation>Hledat...</translation>
+        <translation>Hledat…</translation>
     </message>
 </context>
 <context>
@@ -35,12 +35,12 @@
         <location filename="../ColorDialog.ui" line="54"/>
         <location filename="../ColorDialog.ui" line="70"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="67"/>
         <source>Manually set value for selection</source>
-        <translation>Ručně nastavit hodnotu pro výběr</translation>
+        <translation>Nastavit hodnotu pro výběr ručně</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="95"/>
@@ -60,7 +60,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="115"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="135"/>
@@ -76,8 +76,8 @@
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>This color scheme already exists.
  Overwrite it?</source>
-        <translation>Toto barevné schéma již existuje.
-Přepsat je?</translation>
+        <translation>Toto barevné schéma už existuje.
+Přepsat?</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="121"/>
@@ -88,7 +88,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
         <source>Color Value</source>
-        <translation>Hodnota barvy</translation>
+        <translation>Barevná hodnota</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
@@ -101,17 +101,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../GetPluginDialog.ui" line="14"/>
         <source>Select Plugin</source>
-        <translation>Vybrat modul</translation>
+        <translation>Vybrat zásuvný modul</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="26"/>
         <source>Select a Plugin:</source>
-        <translation>Vybrat modul:</translation>
+        <translation>Vybrat zásuvný modul:</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="57"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="77"/>
@@ -144,7 +144,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../PanelWidget.ui" line="138"/>
         <source> pixel(s) thick</source>
-        <translation> tloušťka obrazového bodu(ů)</translation>
+        <translation> tloušťka (obrazových bodů)</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="157"/>
@@ -174,17 +174,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../PanelWidget.ui" line="250"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="257"/>
         <source>Sample</source>
-        <translation>Příklad</translation>
+        <translation>Ukázka</translation>
     </message>
     <message>
         <location filename="../PanelWidget.ui" line="287"/>
         <source>Plugins</source>
-        <translation>Přídavné moduly</translation>
+        <translation>Zásuvné moduly</translation>
     </message>
     <message>
         <location filename="../PanelWidget.cpp" line="19"/>
@@ -244,17 +244,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="81"/>
         <source>This provides shortcuts to everything in the desktop folder - allowing easy access to all your favorite files/applications.</source>
-        <translation>Toto poskytuje klávesové zkratky pro všechno ve složce pracovní plochy. Umožňuje snadný přístup ke všem oblíbeným souborům/aplikacím.</translation>
+        <translation>Toto poskytuje zkratky pro všechno ve složce pracovní plochy. Umožňuje snadný přístup ke všem oblíbeným souborům/aplikacím.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="87"/>
         <source>Spacer</source>
-        <translation>Mezera</translation>
+        <translation>Oddělovač</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="88"/>
         <source>Invisible spacer to separate plugins.</source>
-        <translation>Neviditelná mezera pro oddělení přídavných modulů.</translation>
+        <translation>Neviditelný oddělovač pro oddělení zásuvných modulů.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="102"/>
@@ -264,12 +264,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="108"/>
         <source>Battery Monitor</source>
-        <translation>Monitor baterie</translation>
+        <translation>Monitor akumulátoru</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="109"/>
         <source>Keep track of your battery status.</source>
-        <translation>Sledovat stav baterie.</translation>
+        <translation>Sledovat stav akumulátoru.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="115"/>
@@ -284,12 +284,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="122"/>
         <source>System Dashboard</source>
-        <translation>Palubní deska systému</translation>
+        <translation>Přehled o systému</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation>Zobrazit nebo změnit nastavení systému (hlasitost, jas obrazovky, životnost baterie, virtuální plochy).</translation>
+        <translation>Zobrazit nebo změnit nastavení systému (hlasitost, jas obrazovky, stav akumulátoru, virtuální plochy).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
@@ -300,17 +300,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="136"/>
         <source>Task Manager (No Groups)</source>
-        <translation>Správce úloh (žádné skupiny)</translation>
+        <translation>Správce úloh (bez skupin)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="143"/>
         <source>System Tray</source>
-        <translation>Oznamovací oblast panelu</translation>
+        <translation>Oznamovací oblast systémového panelu</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="144"/>
         <source>Display area for dockable system applications</source>
-        <translation>Zobrazit oblast pro ukotvitelné systémové aplikace</translation>
+        <translation>Oblast obrazovky pro ukotvitelné systémové aplikace</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
@@ -345,8 +345,8 @@ Přepsat je?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
-        <translation>Náhradní spouštěcí nabídka se zaměřením na uživatelovy soubory, adresáře a záložky (oblíbené).</translation>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <translation>Alternativa ke spouštěcí nabídce se zaměřením na uživatelovy soubory, adresáře a oblíbené položky.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -356,7 +356,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Náhradní spouštěcí nabídka se zaměřením na spouštění programů.</translation>
+        <translation>Alternativní spouštěcí nabídka se zaměřením na spouštění programů.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -376,12 +376,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation>Zobrazit a ovládat všechna běžící okna s programy (seskupit podobná okna pod jedno tlačítko).</translation>
+        <translation>Zobrazit a ovládat všechna běžící okna s aplikacemi (seskupit podobná okna pod jedno tlačítko).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>Zobrazit a ovládat všechna běžící okna s programy (všechna jednotlivá okna mají tlačítko)</translation>
+        <translation>Zobrazit a ovládat všechna běžící okna s aplikacemi (pro každé okno zvlášť tlačítko)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -391,17 +391,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="158"/>
         <source>Unified system access and application launch menu.</source>
-        <translation>Sjednocený přístup k systému a k nabídce pro spouštění aplikací.</translation>
+        <translation>Sjednocená nabídka pro přístup k systému a spouštění aplikací.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation>Přišpendlit klávesovou zkratku pro aplikaci přímo k panelu</translation>
+        <translation>Přišpendlit zástupce aplikace přímo na panel</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translation>Tlačítko pracovní plochy ke spuštění programu</translation>
+        <translation>Tlačítko pracovní plochy spouštějící aplikaci</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="204"/>
@@ -416,7 +416,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="212"/>
         <source>Keep simple text notes on your desktop</source>
-        <translation>Uchovat jednoduché textové poznámky na pracovní ploše</translation>
+        <translation>Mějte jednoduché textové poznámky přímo na pracovní ploše</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="171"/>
@@ -438,7 +438,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="226"/>
         <source>Keep track of system statistics such as CPU/Memory usage and CPU temperatures.</source>
-        <translation>Sledovat systémové statistiky jako zatížení procesoru/využití paměti a teplota procesoru.</translation>
+        <translation>Sledovat systémové statistiky jako zatížení procesoru / využití operační paměti a teplotu procesoru.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="232"/>
@@ -448,7 +448,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation>Sledovat kanály RSS (vyžaduje internetové připojení)</translation>
+        <translation>Sledovat kanály RSS (vyžaduje připojení k Internetu)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
@@ -463,7 +463,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="264"/>
         <source>Browse the system with the default file manager.</source>
-        <translation>Procházet systém s výchozím správcem souborů.</translation>
+        <translation>Procházet systém pomocí výchozího správce souborů.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
@@ -474,7 +474,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="271"/>
         <source>Show the system applications menu.</source>
-        <translation>Ukázat nabídku se systémovými programy.</translation>
+        <translation>Zobrazit nabídku se systémovými aplikacemi.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="277"/>
@@ -489,7 +489,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="285"/>
         <source>Show the desktop settings menu.</source>
-        <translation>Ukázat nabídku s nastaveními pracovní plochy.</translation>
+        <translation>Zobrazit nabídku s nastaveními pracovní plochy.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="298"/>
@@ -505,12 +505,12 @@ Přepsat je?</translation>
         <location filename="../LPlugins.cpp" line="178"/>
         <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
-        <translation>Nabídka skript</translation>
+        <translation>Skript nabídky</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
-        <translation>Nastavitelná oblast pro automatické ukazování ikon na ploše</translation>
+        <translation>Nastavitelná oblast pro automatické zobrazování ikon na ploše</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="263"/>
@@ -520,12 +520,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
-        <translation>Nastavení</translation>
+        <translation>Předvolby</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
-        <translation>Ukázat otevřená, zmenšená a činná okna aplikací a okna s naléhavými zprávami</translation>
+        <translation>Ukázat otevřená, minimalizovaná a aktivní okna aplikací a ta s naléhavými zprávami</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="179"/>
@@ -551,17 +551,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
-        <translation>Barva všeho viditelného textu.</translation>
+        <translation>Barva veškerého viditelného textu.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="329"/>
         <source>Text (Disabled)</source>
-        <translation>Text (zakázáno)</translation>
+        <translation>Text (vypnuté)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="330"/>
         <source>Text color for disabled or inactive items.</source>
-        <translation>Barva textu pro zakázané nebo nečinné položky.</translation>
+        <translation>Barva textu pro vypnuté nebo nečinné položky.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="335"/>
@@ -586,12 +586,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="347"/>
         <source>Base Window Color (Alternate)</source>
-        <translation>Základní barva okna (náhradní)</translation>
+        <translation>Základní barva okna (alternativní)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="348"/>
         <source>Main background color for widgets that list or display collections of items.</source>
-        <translation>Hlavní barva pozadí pro doplňky ukazující nebo znázorňující sbírky položek.</translation>
+        <translation>Hlavní barva pozadí pro doplňky ukazující nebo znázorňující sady položek.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="353"/>
@@ -606,7 +606,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="359"/>
         <source>Primary Color (Disabled)</source>
-        <translation>Hlavní barva (zakázáno)</translation>
+        <translation>Hlavní barva (vypnuto)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="360"/>
@@ -621,12 +621,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="366"/>
         <source>Alternate color for the theme.</source>
-        <translation>Náhradní barva pro vzhled.</translation>
+        <translation>Alternativní barva pro vzhled.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="371"/>
         <source>Secondary Color (Disabled)</source>
-        <translation>Vedlejší barva (zakázáno)</translation>
+        <translation>Vedlejší barva (vypnuto)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="372"/>
@@ -646,12 +646,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="383"/>
         <source>Accent Color (Disabled)</source>
-        <translation>Barva zdůraznění (zakázáno)</translation>
+        <translation>Barva zdůraznění (vypnuto)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="384"/>
         <source>Color used for borders or other accents (more subdued).</source>
-        <translation>Barva používaná na okraje nebo jiná zdůraznění (tlumenější).</translation>
+        <translation>Barva používaná pro okraje nebo jiná zdůraznění (tlumenější).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="389"/>
@@ -666,7 +666,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="395"/>
         <source>Highlight Color (Disabled)</source>
-        <translation>Barva zvýraznění (zakázáno)</translation>
+        <translation>Barva zvýraznění (vypnuto)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="396"/>
@@ -681,12 +681,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="42"/>
         <source>Change background image(s)</source>
-        <translation>Změnit obrázek(y) pozadí</translation>
+        <translation>Změnit obrázek na pozadí</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme Settings</source>
-        <translation>Nastavení vzhledu</translation>
+        <translation>Nastavení téma vzhledu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
@@ -706,12 +706,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Startup Settings</source>
-        <translation>Nastavení spuštění systému</translation>
+        <translation>Nastavení spouštění</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Automatically start applications or services</source>
-        <translation>Automaticky spustit aplikace nebo služby</translation>
+        <translation>Automaticky spouštět aplikace nebo služby</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="42"/>
@@ -721,12 +721,12 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Theme</source>
-        <translation>Vzhled</translation>
+        <translation>Téma vzhledu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
-        <translation>Automatické spuštění</translation>
+        <translation>Automatické spouštění</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
@@ -781,17 +781,17 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop Plugins</source>
-        <translation>Přídavné moduly pracovní plochy</translation>
+        <translation>Zásuvné moduly pracovní plochy</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change what icons or tools are embedded on the desktop</source>
-        <translation>Změnit, které ikony nebo nástroje jsou usazeny na pracovní ploše</translation>
+        <translation>Změnit které ikony nebo nástroje jsou vsazeny do pracovní plochy</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels and Plugins</source>
-        <translation>Panely a přídavné moduly</translation>
+        <translation>Panely a zásuvné moduly</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
@@ -801,22 +801,22 @@ Přepsat je?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu Plugins</source>
-        <translation>Přídavné moduly nabídky</translation>
+        <translation>Zásuvné moduly nabídky</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change what options are shown on the desktop context menu</source>
-        <translation>Změnit, které volby jsou ukázány v související nabídce pracovní plochy</translation>
+        <translation>Změnit které volby jsou zobrazovány v kontextové nabídce pracovní plochy</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Locale Settings</source>
-        <translation>Jazyková nastavení</translation>
+        <translation>Místní a jazyková nastavení</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change the default locale settings for this user</source>
-        <translation>Změnit výchozí nastavení jazyka pro tohoto uživatele</translation>
+        <translation>Změnit výchozí místní a jazyková nastavení pro tohoto uživatele</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
@@ -844,7 +844,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../ScriptDialog.ui" line="14"/>
         <source>Setup a JSON Menu Script</source>
-        <translation>Nastavit skript nabídky JSON</translation>
+        <translation>Nastavit JSON skript nabídky</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="25"/>
@@ -865,12 +865,12 @@ Přepsat je?</translation>
         <location filename="../ScriptDialog.ui" line="54"/>
         <location filename="../ScriptDialog.ui" line="87"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="126"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="133"/>
@@ -908,7 +908,7 @@ Přepsat je?</translation>
     <message>
         <location filename="../ThemeDialog.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="94"/>
@@ -924,15 +924,15 @@ Přepsat je?</translation>
         <location filename="../ThemeDialog.cpp" line="65"/>
         <location filename="../ThemeDialog.cpp" line="82"/>
         <source>Theme Exists</source>
-        <translation>Vzhled existuje</translation>
+        <translation>Téma vzhledu existuje</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.cpp" line="65"/>
         <location filename="../ThemeDialog.cpp" line="82"/>
         <source>This theme already exists.
  Overwrite it?</source>
-        <translation>Tento vzhled již existuje.
-Přepsat jej?</translation>
+        <translation>Toto téma vzhledu už v systému existuje.
+Přepsat?</translation>
     </message>
 </context>
 <context>
@@ -955,7 +955,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../mainWindow.ui" line="53"/>
         <source>Save current changes</source>
-        <translation>Uložit nynější změny</translation>
+        <translation>Uložit stávající změny</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="56"/>
@@ -971,13 +971,13 @@ Přepsat jej?</translation>
         <location filename="../mainWindow.ui" line="64"/>
         <location filename="../mainWindow.ui" line="67"/>
         <source>Back to overall settings</source>
-        <translation>Zpět do obecných nastavení</translation>
+        <translation>Zpět do celkových nastavení</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="78"/>
         <location filename="../mainWindow.ui" line="81"/>
         <source>Select monitor/desktop to configure</source>
-        <translation>Vybrat obrazovku/pracovní plochu k nastavení</translation>
+        <translation>Vybrat obrazovku / pracovní plochu k nastavení</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="130"/>
@@ -987,7 +987,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../mainWindow.cpp" line="130"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
-        <translation>Tato strana má teď neuložené změny. Chcete je nyní uložit?</translation>
+        <translation>Na této stránce aktuálně jsou neuložené změny. Chcete je nyní uložit?</translation>
     </message>
 </context>
 <context>
@@ -1000,7 +1000,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
         <source>Add New Startup Service</source>
-        <translation>Přidat novou službu při spuštění</translation>
+        <translation>Přidat novou službu při spouštění</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
@@ -1020,7 +1020,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
-        <translation>Služby při spuštění</translation>
+        <translation>Služby při spouštění</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="133"/>
@@ -1063,12 +1063,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation>Zakázat kompozitního správce (požadováno opětovné spuštění sezení)</translation>
+        <translation>Vypnout kompozitního správce zobrazení (požadováno opětovné spuštění sezení)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.ui" line="39"/>
         <source>Only use compositing with GPU acceleration </source>
-        <translation>Použít pouze kompozici pomocí zrychlení přes grafický procesor </translation>
+        <translation>Použít pouze kompozici vykreslovanou prostředky grafického čipu </translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="37"/>
@@ -1152,7 +1152,7 @@ Přepsat jej?</translation>
         <location filename="../pages/page_defaultapps.ui" line="128"/>
         <location filename="../pages/page_defaultapps.ui" line="138"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>…</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="42"/>
@@ -1162,7 +1162,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
-        <translation>Klepnutím nastavit</translation>
+        <translation>Nastavte kliknutím</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="88"/>
@@ -1205,7 +1205,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="107"/>
         <source>Action</source>
-        <translation>Činnost</translation>
+        <translation>Akce</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="112"/>
@@ -1235,7 +1235,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="184"/>
         <source>Note: Current key bindings need to be cleared and saved before they can be re-used.</source>
-        <translation>Poznámka: Nynější přiřazení kláves je třeba změnit a uložit, dříve než je bude možné opět použít.</translation>
+        <translation>Poznámka: Stávající přiřazení kláves je třeba vyčistit a uložit a až potom bude možné je znovu použít.</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="220"/>
@@ -1244,12 +1244,12 @@ Přepsat jej?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	klávesa Windows/Mac
-&quot;Control&quot;:	klávesa Ctrl</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	klávesa Windows/Mac
+"Control":	klávesa Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1259,27 +1259,27 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
-        <translation>Zvýšit hlasitost zvuku</translation>
+        <translation>Zesílit zvuk</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
-        <translation>Snížit hlasitost</translation>
+        <translation>Ztlumit zvuk</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
         <source>Screen Brightness Up</source>
-        <translation>Zvýšit jas obrazovky</translation>
+        <translation>Zesvětlit obrazovku</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="81"/>
         <source>Screen Brightness Down</source>
-        <translation>Snížit jas obrazovky</translation>
+        <translation>Ztmavit obrazovku</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
-        <translation>Udělat snímek obrazovky</translation>
+        <translation>Zachytit snímek obrazovky</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
@@ -1317,7 +1317,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="108"/>
         <source>Focus Policy</source>
-        <translation>Zaměřovací politika</translation>
+        <translation>Pravidlo zaměření okna</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="118"/>
@@ -1327,13 +1327,13 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="136"/>
         <source>Window Theme Preview</source>
-        <translation>Náhled na vzhled okna</translation>
+        <translation>Náhled vzhledu okna</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
         <location filename="../pages/page_fluxbox_settings.cpp" line="181"/>
         <source>No Preview Available</source>
-        <translation>Náhled není dostupný</translation>
+        <translation>Náhled není k dispozici</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
@@ -1343,12 +1343,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
-        <translation>Klepnout pro zaměření</translation>
+        <translation>Zaměřit kliknutím</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
-        <translation>Činné zaměření myši</translation>
+        <translation>Aktivní zaměření myší</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
@@ -1358,12 +1358,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
-        <translation>Zarovnat v řádku</translation>
+        <translation>Zarovnat vedle sebe</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
-        <translation>Zarovnat ve sloupci</translation>
+        <translation>Zarovnat pod sebou</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
@@ -1373,7 +1373,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
-        <translation>Pod ukazovátkem myši</translation>
+        <translation>Pod ukazatelem myši</translation>
     </message>
 </context>
 <context>
@@ -1386,7 +1386,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="26"/>
         <source>Embedded Utilities</source>
-        <translation>Začleněné obslužné programy</translation>
+        <translation>Vestavěné nástroje</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="79"/>
@@ -1396,7 +1396,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazovat ikony vyjímatelných médií</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
@@ -1414,7 +1414,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_interface_menu.ui" line="38"/>
         <source>Context Menu Plugins</source>
-        <translation>Přídavné moduly pro související nabídku</translation>
+        <translation>Zásuvné moduly pro kontextovou nabídku</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.cpp" line="46"/>
@@ -1437,7 +1437,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="82"/>
         <source>Import</source>
-        <translation>Zavedení</translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
@@ -1455,7 +1455,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_main.ui" line="32"/>
         <source>Search for....</source>
-        <translation>Hledat...</translation>
+        <translation>Hledat…</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="56"/>
@@ -1480,7 +1480,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation>Nastavení systému</translation>
+        <translation>Systémová nastavení</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="158"/>
@@ -1498,7 +1498,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_locale.ui" line="32"/>
         <source>System localization settings (restart required)</source>
-        <translation>Nastavení jazyka systému (vyžaduje opětovné spuštění)</translation>
+        <translation>Nastavení jazyka systému (vyžaduje restart)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="39"/>
@@ -1528,7 +1528,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_locale.ui" line="89"/>
         <source>Collate</source>
-        <translation>Seřadit</translation>
+        <translation>Řazení</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="99"/>
@@ -1556,32 +1556,32 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="34"/>
         <source>Enable numlock on startup</source>
-        <translation>Povolit zapnutí číslicové klávesnice (NumLock) při spuštění</translation>
+        <translation>Zapnout číselný blok klávesnice (NumLock) při spuštění</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="41"/>
         <source>Play chimes on startup</source>
-        <translation>Při spuštění systému přehrávat zvonky</translation>
+        <translation>Doprovázet spouštění systému zvuky</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="48"/>
         <source>Play chimes on exit</source>
-        <translation>Při ukončení systému přehrávat zvonky</translation>
+        <translation>Doprovázet vypínání systému zvuky</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation>Automaticky vytvořit/odstranit symbolické odkazy na pracovní plochu pro programy, jež jsou nainstalovány/odebrány</translation>
+        <translation>Automaticky vytvořit/odstranit symbolické odkazy na pracovní plochu pro aplikace, které jsou nainstalovány/odebrány</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation>Spravovat odkazy na programy na pracovní ploše</translation>
+        <translation>Spravovat odkazy na aplikace na pracovní ploše</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation>Ukázat údaje o pádu programu</translation>
+        <translation>Zobrazit údaje o pádu aplikace</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="74"/>
@@ -1633,12 +1633,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
-        <translation>Čas (datum jako nástrojová rada)</translation>
+        <translation>Čas (datum jako v bublinovém popisku)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
-        <translation>Datum (čas jako nástrojová rada)</translation>
+        <translation>Datum (čas v bublinovém popisku)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="20"/>
@@ -1668,7 +1668,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="129"/>
         <source>Reset User Image</source>
-        <translation>Nastavit obrázek uživatele znovu</translation>
+        <translation>Vrátit obrázek uživatele na výchozí</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="129"/>
@@ -1713,7 +1713,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
-        <translation>%1: AM/PM (12-hodinové) hodiny (velká nebo malá písmena)</translation>
+        <translation>%1: Dop./Odp. (12-hodinové) hodiny (velká nebo malá písmena)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="176"/>
@@ -1748,7 +1748,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>%1: Day as full name (localized)</source>
-        <translation>%1: Den jako plný název (lokalizovaný)</translation>
+        <translation>%1: Den jako úplný název (lokalizovaný)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="196"/>
@@ -1768,7 +1768,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="199"/>
         <source>%1: Month as full name (localized)</source>
-        <translation>%1: Měsíc jako plný název (lokalizovaný)</translation>
+        <translation>%1: Měsíc jako úplný název (lokalizovaný)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="200"/>
@@ -1783,7 +1783,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="202"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation>Text musí být v jednoduchých závorkách, aby se přehlížela nahrazení</translation>
+        <translation>Text může obklopen jednoduchými uvozovkami, aby byla přehlížena nahrazování</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="203"/>
@@ -1801,7 +1801,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="36"/>
         <source>Desktop Theme</source>
-        <translation>Vzhled plochy</translation>
+        <translation>Téma vzhledu plochy</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="42"/>
@@ -1821,7 +1821,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="70"/>
         <source>Theme Template:</source>
-        <translation>Šablony vzhledů:</translation>
+        <translation>Šablona vzhledu:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="86"/>
@@ -1847,22 +1847,22 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_theme.ui" line="138"/>
         <source>Icon Pack:</source>
-        <translation>Balík symbolů:</translation>
+        <translation>Balík ikon:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="148"/>
         <source>Mouse Cursors:</source>
-        <translation>Ukazovátka myši:</translation>
+        <translation>Ukazatele myši:</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="192"/>
         <source>Application Themes</source>
-        <translation>Vzhledy programů</translation>
+        <translation>Témata vzhledu aplikací</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.ui" line="198"/>
         <source>Qt5 Theme Engine</source>
-        <translation>Stroj vzhledu Qt5</translation>
+        <translation>Engine téma vzhledu pro Qt5</translation>
     </message>
     <message>
         <location filename="../pages/page_theme.cpp" line="58"/>
@@ -1911,7 +1911,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="100"/>
         <source>Rotate Background</source>
-        <translation>Otočit pozadí</translation>
+        <translation>Střídat pozadí</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="107"/>
@@ -1963,12 +1963,12 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
-        <translation>Adresář (jeden)</translation>
+        <translation>Složka (jediná)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
-        <translation>Adresář (rekurzivní)</translation>
+        <translation>Složka (vnořená)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="122"/>
@@ -2028,7 +2028,7 @@ Přepsat jej?</translation>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="142"/>
         <source>(use system default)</source>
-        <translation>(Použít výchozí nastavení systému)</translation>
+        <translation>(použít výchozí nastavení systému)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="162"/>
@@ -2044,7 +2044,7 @@ Přepsat jej?</translation>
         <location filename="../pages/page_wallpaper.cpp" line="233"/>
         <location filename="../pages/page_wallpaper.cpp" line="258"/>
         <source>Find Background Image Directory</source>
-        <translation>Najít adresář s obrázky pozadí</translation>
+        <translation>Najít složku s obrázky pozadí</translation>
     </message>
 </context>
 </TS>

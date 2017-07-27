@@ -18,8 +18,6 @@
 NativeWindowSystem* Lumina::NWS = 0;
 NativeEventFilter* Lumina::NEF = 0;
 LScreenSaver* Lumina::SS = 0;
-//DesktopSettings* Lumina::SETTINGS = 0;
-//Lumina::WM = 0;
 QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
 XDGDesktopList* Lumina::APPLIST = 0;
@@ -49,7 +47,6 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   //Now initialize the global objects (but do not start them yet)
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
-  //Lumina::SETTINGS = new DesktopSettings();
   Lumina::SS = new LScreenSaver();
   //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
@@ -67,7 +64,6 @@ LSession::~LSession(){
    //Clean up the global objects as needed
   if(Lumina::NEF!=0){ Lumina::NEF->deleteLater(); }
   if(Lumina::NWS!=0){ Lumina::NWS->deleteLater(); }
-  //if(Lumina::EFILTER!=0){ Lumina::EFILTER->deleteLater(); }
   if(Lumina::SS!=0){ Lumina::SS->deleteLater(); }
   if(Lumina::EVThread!=0){
     if(Lumina::EVThread->isRunning()){ Lumina::EVThread->quit(); }
@@ -385,11 +381,46 @@ void LSession::StartReboot(bool skipupdates){
   QCoreApplication::exit(0);
 }
 
-void LSession::LaunchApplication(QString app){
-
+void LSession::LaunchApplication(QString exec){
+  ExternalProcess::launch(exec);
 }
 
-void LSession::LaunchStandardApplication(QString app){
+void LSession::LaunchStandardApplication(QString app, QStringList args){
+  //Find/replace standardized apps with thier mimetypes
+  if(app.startsWith("--")){ app = "application/"+app.section("--",-1).simplified(); }
+  //First see if this is a mimetype with a default application
+  if(app.count("/")==1 && !app.startsWith("/")){
+    QString mimeapp = XDGMime::findDefaultAppForMime(app);
+    if(!mimeapp.isEmpty()){ app = mimeapp; }
+  }
+  if(app.endsWith(".desktop")){
+    //Get the XDGDesktop structure
+    XDGDesktop *desk = 0; bool cleanup = false;
+    if(app.startsWith("/") && QFile::exists(app)){ desk = new XDGDesktop(app); cleanup = true; }
+    if(!desk->isValid()){
+      //Need to find the app within the current list
+      QHash<QString, XDGDesktop*>applist = Lumina::APPLIST->files;
+      if(cleanup){ desk->deleteLater(); desk = 0; cleanup = false; }
+      app = app.section("/",-1); //make sure this is a relative path
+      QStringList list = applist.keys().filter("/"+app);
+      if(!list.filter(QDir::homePath()).isEmpty()){ desk = applist[list.filter(QDir::homePath()).first()]; } //prefer user-override files
+      if(desk==0 || !desk->isValid()){
+        desk = 0;
+        for(int i=0; i<list.length() && desk==0; i++){
+          XDGDesktop *tmp = applist[list[i]];
+          if(tmp->isValid()){ desk = tmp; }
+        }
+      }
+    }
+    if(desk!=0 && desk->isValid()){
+      //Got the application - go ahead and assemble the startup command
+      QString exec = desk->generateExec(args); //args are embedded into the exec command as needed
+      ExternalProcess::launch(exec, QStringList(), desk->startupNotify);
+    }
+    if(cleanup){ desk->deleteLater(); }
+  }else{
+    ExternalProcess::launch(app, args, false); // do not use startup notify cursor
+  }
 
 }
 

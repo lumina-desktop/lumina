@@ -86,14 +86,23 @@ void NativeWindow::requestProperties(QList<NativeWindow::Property> props, QList<
 
 QRect NativeWindow::geometry(){
   //Calculate the "full" geometry of the window + frame (if any)
-  QRect geom( hash.value(NativeWindow::GlobalPos).toPoint(), hash.value(NativeWindow::Size).toSize() );
+  //Check that the size is between the min/max limitations
+  QSize size = hash.value(NativeWindow::Size).toSize();
+  QSize min = hash.value(NativeWindow::MinSize).toSize();
+  QSize max = hash.value(NativeWindow::MaxSize).toSize();
+  if(min.isValid() && min.width() > size.width() ){ size.setWidth(min.width()); }
+  if(min.isValid() && min.height() > size.height()){ size.setHeight(min.height()); }
+  if(max.isValid() && max.width() < size.width()  && max.width()>min.width()){ size.setWidth(max.width()); }
+  if(max.isValid() && max.height() < size.height()  && max.height()>min.height()){ size.setHeight(max.height()); }
+  //Assemble the full geometry
+  QRect geom( hash.value(NativeWindow::GlobalPos).toPoint(), size );
   //Now adjust the window geom by the frame margins
   QList<int> frame = hash.value(NativeWindow::FrameExtents).value< QList<int> >(); //Left,Right,Top,Bottom
-  qDebug() << "Calculate Geometry:" << geom << frame;
+  //qDebug() << "Calculate Geometry:" << geom << frame;
   if(frame.length()==4){
     geom = geom.adjusted( -frame[0], -frame[2], frame[1], frame[3] );
   }
-  qDebug() << " - Total:" << geom;
+  //qDebug() << " - Total:" << geom;
   return geom;
 }
 // ==== PUBLIC SLOTS ===

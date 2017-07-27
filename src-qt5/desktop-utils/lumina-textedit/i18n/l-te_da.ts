@@ -53,7 +53,7 @@
     <message>
         <location filename="../MainUI.ui" line="17"/>
         <source>MainWindow</source>
-        <translation>Hovedvindue</translation>
+        <translation>HovedVindue</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="66"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>værktøjsbjælke</translation>
+        <translation>værktøjsLinje</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
