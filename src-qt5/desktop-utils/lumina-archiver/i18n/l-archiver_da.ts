@@ -29,7 +29,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>HovedVindue</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="38"/>
@@ -41,12 +41,12 @@
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="137"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="148"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../MainUI.ui" line="159"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>værktøjsLinje</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="184"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../MainUI.cpp" line="54"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
@@ -306,7 +306,7 @@
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="200"/>
