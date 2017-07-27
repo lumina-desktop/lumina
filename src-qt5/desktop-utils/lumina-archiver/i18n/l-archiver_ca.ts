@@ -56,7 +56,7 @@
     <message>
         <location filename="../MainUI.ui" line="159"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="184"/>
