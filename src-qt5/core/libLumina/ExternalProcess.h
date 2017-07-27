@@ -44,7 +44,7 @@ private slots:
 	}
 
 public:
-	ExternalProcess(QString logfile = "", bool manageCursors = true) : QProcess(){
+	ExternalProcess(QString logfile = "", bool manageCursors = false) : QProcess(){
 	  this->setProcessChannelMode(QProcess::MergedChannels);
 	  cursorRestored = !manageCursors;
 	  if(logfile.isEmpty()){
@@ -62,9 +62,9 @@ public:
 	  }*/
 	}
 
-	static void launch(QString program, QStringList args = QStringList()){
+	static void launch(QString program, QStringList args = QStringList(), bool manageCursors = false){
 	  //Quick launch of a process with logging disabled and automatic cleanup
-	  ExternalProcess *tmp = new ExternalProcess();
+	  ExternalProcess *tmp = new ExternalProcess("", manageCursors);
 	  if(args.isEmpty()){ tmp->start(program); }
 	  else{ tmp->start(program, args); }
 	}

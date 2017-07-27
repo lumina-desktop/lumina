@@ -53,7 +53,7 @@
     <message>
         <location filename="../MainUI.ui" line="17"/>
         <source>MainWindow</source>
-        <translation>Hlavní okno</translation>
+        <translation>HlavníOkno</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="66"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>Nástrojová lišta</translation>
+        <translation>lištaNástrojů</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
