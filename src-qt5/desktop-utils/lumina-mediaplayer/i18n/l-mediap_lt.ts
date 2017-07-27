@@ -7,14 +7,14 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Medijos grotuvas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabar grojama</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
@@ -24,37 +24,37 @@
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Grojaraštis</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>aukštyn</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>žemyn</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabartinė daina</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>PAVADINIMAS</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>ATLIKĖJAS</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>ALBUMAS</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
@@ -74,17 +74,17 @@
     <message>
         <location filename="../mainUI.ui" line="417"/>
         <source>View details about song (launches web browser)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti išsamesnę dainos informaciją (paleidžia saityno naršyklę)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="448"/>
         <source>Current Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabartinė stotis</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti dabartinę stotį</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
@@ -94,17 +94,17 @@
     <message>
         <location filename="../mainUI.ui" line="492"/>
         <source>Create new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti naują stotį</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="495"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>pridėti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
@@ -124,17 +124,17 @@
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;Reikia paskyros?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Garso kokybė</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgaliotojo serverio URL</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
@@ -144,82 +144,82 @@
     <message>
         <location filename="../mainUI.ui" line="618"/>
         <source>Apply Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Taikyti nustatymus</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="656"/>
         <source>Audio Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Garso tvarkyklė</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodinys</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="699"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrankių juosta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="726"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Groti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="731"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pristabdyti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="736"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stabdyti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="741"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="746"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atgal</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="751"/>
         <source>VolUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagarsinti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="754"/>
         <source>Raise audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Padidinti garso garsį</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="759"/>
         <source>VolDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Patildyti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="762"/>
         <source>Lower audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumažinti garso garsį</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="767"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Užverti programą</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="770"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl(Vald)+Q</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="784"/>
