@@ -266,9 +266,9 @@ void RootSubWindow::LoadAllProperties(){
   QList< NativeWindow::Property> list;
   list << NativeWindow::WinTypes << NativeWindow::WinActions << NativeWindow::States
 	<< NativeWindow::MinSize << NativeWindow::MaxSize << NativeWindow::Title << NativeWindow::ShortTitle
-	<< NativeWindow::Icon << NativeWindow::Size << NativeWindow::GlobalPos << NativeWindow::Visible << NativeWindow::Active;
+	<< NativeWindow::Icon << NativeWindow::Size << NativeWindow::GlobalPos;// << NativeWindow::Visible << NativeWindow::Active;
   LoadProperties(list);
-  WIN->requestProperty(NativeWindow::Visible, true);
+  //WIN->requestProperty(NativeWindow::Visible, true);
 }
 
 //Button Actions - public so they can be tied to key shortcuts and stuff as well
@@ -342,13 +342,25 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  vals << vals.takeAt(i);
 		  i--;
 		}else if(anim->state() != QPropertyAnimation::Running ){
-		  if(vals[i].toSize() != WinWidget->size() && activeState==Normal && vals[i]==WIN->property(NativeWindow::Size)){
+		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size() && activeState==Normal ){
 		    this->setGeometry(WIN->geometry());
 		  }
 		}
 		break;
 	case NativeWindow::MinSize:
-		WinWidget->setMinimumSize(vals[i].toSize());
+		if(vals[i].toSize().isValid()){
+		  //Just larger than titlebar, with enough space for 8 characters in the titlebar (+4 buttons)
+		  //qDebug() << "Got invalid Min Size: Set a reasonable default minimum";
+		  WinWidget->setMinimumSize( QSize( this->fontMetrics().height()*4 + this->fontMetrics().width("O")*10, this->fontMetrics().height()*10) );
+		  WIN->setProperty(NativeWindow::MinSize, WinWidget->minimumSize());
+		}else{
+		  WinWidget->setMinimumSize(vals[i].toSize());
+		}
+		if(WIN->property(NativeWindow::Size).toSize().width() < WinWidget->minimumSize().width() \
+		     || WIN->property(NativeWindow::Size).toSize().height() < WinWidget->minimumSize().height()  ){
+		  WIN->setProperty(NativeWindow::Size, WinWidget->minimumSize(), true); //force this
+		  //WinWidget->resize(WinWidget->minimumSize());
+		}
 		break;
 	case NativeWindow::MaxSize:
 		WinWidget->setMaximumSize(vals[i].toSize());
