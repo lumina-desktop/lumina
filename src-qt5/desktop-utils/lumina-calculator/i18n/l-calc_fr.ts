@@ -57,52 +57,52 @@
     <message>
         <location filename="../mainUI.cpp" line="101"/>
         <source>Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinus %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="103"/>
         <source>Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cosinus %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="108"/>
         <source>Arc Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Sinus %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="110"/>
         <source>Arc Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Cosinus %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="112"/>
         <source>Arc Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Tangente %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="115"/>
         <source>Hyperbolic Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinus Hyperbolique %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="117"/>
         <source>Hyperbolic Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cosinus Hyperbolique %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="119"/>
         <source>Hyperbolic Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente Hyperbolique %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer Historique de la Calculatrice</translation>
     </message>
 </context>
 </TS>
