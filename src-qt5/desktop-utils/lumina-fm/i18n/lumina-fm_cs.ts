@@ -336,8 +336,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj &quot;lumina-fileinfo&quot; nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="562"/>
@@ -870,7 +870,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="238"/>
         <source>CTRL+E</source>
-        <translation>Ctrl+E</translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="356"/>
