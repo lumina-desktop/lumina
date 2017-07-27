@@ -42,12 +42,12 @@
     <message>
         <location filename="../mainUI.cpp" line="94"/>
         <source>Square Root %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Racine Carrée %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="96"/>
         <source>Logarithm %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Logarithme %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="98"/>
