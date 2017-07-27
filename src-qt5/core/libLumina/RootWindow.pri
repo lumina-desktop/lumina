@@ -1,6 +1,7 @@
 
 # Files
 SOURCES *= $${PWD}/RootWindow.cpp \
+		$${PWD}/RootWindow-mgmt.cpp \
 		$${PWD}/RootSubWindow.cpp \
 		$${PWD}/RootSubWindow-animations.cpp
 

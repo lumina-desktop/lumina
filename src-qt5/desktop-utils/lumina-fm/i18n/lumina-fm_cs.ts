@@ -336,8 +336,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj &quot;lumina-fileinfo&quot; nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="562"/>
@@ -783,16 +783,12 @@ Nové umístění: %2</translation>
         <translation>Zobrazit tlačítka akcí</translation>
     </message>
     <message>
-<<<<<<< HEAD
         <location filename="../MainUI.ui" line="245"/>
         <source>Load Thumbnails</source>
         <translation>Načíst náhledy</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="253"/>
-=======
         <location filename="../MainUI.ui" line="254"/>
->>>>>>> 86f6fadf45c2b87749cffac82411d2371448da53
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
@@ -874,7 +870,7 @@ Nové umístění: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="238"/>
         <source>CTRL+E</source>
-        <translation>Ctrl+E</translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="356"/>

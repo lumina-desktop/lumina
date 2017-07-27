@@ -29,7 +29,7 @@
     <message>
         <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
-        <translation>Desa com a...</translation>
+        <translation>Desa com a</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="138"/>
@@ -164,12 +164,12 @@
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
-        <translation>No s'ha pogut desar la captura.</translation>
+        <translation>No s'ha pogut desar la captura</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre.</translation>
+        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="120"/>

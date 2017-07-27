@@ -132,7 +132,7 @@
     <message>
         <location filename="../MainUI.ui" line="252"/>
         <source>toolBar</source>
-        <translation>įrankių juosta</translation>
+        <translation>Įrankių juosta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="278"/>
