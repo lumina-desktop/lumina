@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Pradžios meniu alternatyva, susitelkianti ties naudotojo failais, katalogais ir kitais mėgstamais elementais.</translation>
     </message>
     <message>
@@ -536,12 +536,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation>Blocca sessione</translation>
+        <translation>Užrakinti seansą</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation>Blocca l&apos;attuale sessione desktop</translation>
+        <translation>Užrakinti esamą darbalaukio seansą</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -716,7 +716,7 @@
     <message>
         <location filename="../pages/getPage.cpp" line="42"/>
         <source>Wallpaper</source>
-        <translation>Immagine di sfondo</translation>
+        <translation>Darbalaukio fonas</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
@@ -726,7 +726,7 @@
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Autostart</source>
-        <translation>Avvio automatico</translation>
+        <translation>Automatinis paleidimas</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
@@ -766,17 +766,17 @@
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Desktop</source>
-        <translation>Scrivania</translation>
+        <translation>Darbalaukis</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Panels</source>
-        <translation>Pannelli</translation>
+        <translation>Skydeliai</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Menu</source>
-        <translation>Menu</translation>
+        <translation>Meniu</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt klavišas
-&quot;Mod4&quot;: 	Windows/Mac klavišas
-&quot;Control&quot;:	Ctrl (Vald) klavišas</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt klavišas
+"Mod4": 	Windows/Mac klavišas
+"Control":	Ctrl (Vald) klavišas</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
