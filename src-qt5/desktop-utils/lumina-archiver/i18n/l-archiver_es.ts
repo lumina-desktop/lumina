@@ -6,22 +6,22 @@
     <message>
         <location filename="../TarBackend.cpp" line="218"/>
         <source>Could not read archive</source>
-        <translation type="unfinished"></translation>
+        <translation>No podía leer el archivo</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="220"/>
         <source>Archive Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archivo Cargado</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="253"/>
         <source>Extraction Finished</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Extracción Termina</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="254"/>
         <source>Modification Finished</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modificación Termina</translation>
     </message>
 </context>
 <context>

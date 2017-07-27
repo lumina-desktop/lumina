@@ -27,32 +27,32 @@
     <message>
         <location filename="../mainUI.cpp" line="87"/>
         <source>Base-10 Exponential %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Base-10 Exponentielle %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="89"/>
         <source>Exponential %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentiel %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="91"/>
         <source>Constant Pi %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Pi %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="94"/>
         <source>Square Root %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Racine Carrée %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="96"/>
         <source>Logarithm %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Logarithme %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="98"/>
         <source>Natural Log %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Logarithme Naturel %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="101"/>
