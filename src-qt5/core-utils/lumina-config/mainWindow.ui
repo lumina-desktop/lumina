@@ -10,17 +10,11 @@
     <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="windowTitle">
-    <string>toolBar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
