@@ -7,69 +7,69 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Media Player</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tocando agora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nenhum vídeo em execução)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Playlist</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>Cima</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Música atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>TÍTULO</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>ARTISTA</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>ÁLBUM</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>Marcar música como favorita</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Enjoado dessa música (não vai tocar por um mês)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Banir esta música (não será mais tocada)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>

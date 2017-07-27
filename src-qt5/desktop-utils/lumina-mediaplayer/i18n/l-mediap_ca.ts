@@ -7,356 +7,357 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproductor de mitjans</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara es reprodueix</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Cap vídeo en execució)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Llista de reproducció</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>amunt</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>avall</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Cançó actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>TÍTOL</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>ARTISTA</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>ÀLBUM</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>M'agrada aquesta cançó</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cansat d'aquesta cançó (no sonarà durant un mes)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prohibeix aquesta cançó (no tornarà a sonar)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>
         <source>View details about song (launches web browser)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra els detalls de la cançó (obre el navegador)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="448"/>
         <source>Current Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissora actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation type="unfinished"></translation>
+        <translation>Suprimeix l'emissora actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation>supr.</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
         <source>Create new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea una emissora nova</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="495"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>afageix</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada del compte de Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>Adreça electrònica</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasenya</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;Us cal un compte?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualitat de l'àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL de l'intermediari</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Control de l'URL de l'intermediari</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
         <source>Apply Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplica els paràmetres</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="656"/>
         <source>Audio Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlador d'àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxer</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="699"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="726"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprodueix</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="731"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="736"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Atura</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="741"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Següent</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="746"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Enrere</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="751"/>
         <source>VolUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Apuja</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="754"/>
         <source>Raise audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Apuja el volum de l'àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="759"/>
         <source>VolDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Abaixa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="762"/>
         <source>Lower audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Abaixa el volum de l'àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="767"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanca l'aplicació</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="770"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="784"/>
         <source>Close to tray when active</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimitza a la safata quan estigui actiu</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>From current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>De l'artista actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="792"/>
         <source>Create station from current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea una emissora de l'artista actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="797"/>
         <source>From current song</source>
-        <translation type="unfinished"></translation>
+        <translation>De la cançó actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="800"/>
         <source>Create station from current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea una emissora de la cançó actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="811"/>
         <source>Show song notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra les notificacions de la cançó</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="816"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="819"/>
         <source>Search for a new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca una emissora nova</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ràdio Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="834"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmet de Ràdio Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="842"/>
         <source>Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxers locals</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="845"/>
         <source>Play Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprodueix fitxers locals</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Si us plau, instal·leu la utilitat "pianobar" per habilitar aquesta funcionalitat.</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmet música des del servei de ràdio en línia de Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Baix</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="123"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitjà</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="124"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="358"/>
         <source>Open Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Obre fitxers multimèdia</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="406"/>
         <source>Now Playing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara es reprodueix:</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="471"/>
         <source>[PLAYBACK ERROR]
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[ERROR DE REPRODUCCIÓ]
+%1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="488"/>
         <source>Media Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Es carreguen els mitjans...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="490"/>
         <source>Media Stalled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitjans estancats...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="492"/>
         <source>Media Buffering...</source>
-        <translation type="unfinished"></translation>
+        <translation>S'omple la memòria intermèdia...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Pandora: Create Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora: crea una emissora</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Search Term</source>
-        <translation type="unfinished"></translation>
+        <translation>Terme de cerca</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="654"/>
         <source>Pandora Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Pregunta de Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="659"/>
         <source>Pandora Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error de Pandora</translation>
     </message>
 </context>
 <context>
@@ -364,7 +365,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="358"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type="unfinished"></translation>
+        <translation>No hi ha coincidències. Si us plau, intenteu un altre terme de cerca.</translation>
     </message>
 </context>
 </TS>

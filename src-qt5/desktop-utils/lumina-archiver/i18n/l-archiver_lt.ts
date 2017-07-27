@@ -6,22 +6,22 @@
     <message>
         <location filename="../TarBackend.cpp" line="218"/>
         <source>Could not read archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko perskaityti archyvo</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="220"/>
         <source>Archive Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Archyvas įkeltas</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="253"/>
         <source>Extraction Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleidimas užbaigtas</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="254"/>
         <source>Modification Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifikavimas užbaigtas</translation>
     </message>
 </context>
 <context>
@@ -29,114 +29,114 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagrindinis langas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="38"/>
         <source>Archive:</source>
-        <translation type="unfinished"></translation>
+        <translation>Archyvas:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="137"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Taisa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="148"/>
         <source>Burn to Disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašyti į diską</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="159"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrankių juosta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="184"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atverti archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="187"/>
         <source>Open archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="192"/>
         <source>&amp;New Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Naujas archyvas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="195"/>
         <source>New archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujas archyvas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="200"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Išeiti</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="205"/>
         <source>Add File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti failą(-us)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>Add files to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti failus į archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="213"/>
         <source>Remove File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Šalinti failą(-us)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
         <source>Remove selection from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Šalinti žymėjimą iš archyvo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>Extract All</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleisti viską</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="224"/>
         <source>Extract archive into a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleisti archyvą į katalogą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="229"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti katalogą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="232"/>
         <source>Add directory to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti katalogą į archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
         <source>Extract Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleisti žymėjimą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="240"/>
         <source>Extract Selected Items</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleisti pažymėtus elementus</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="245"/>
         <source>USB Image</source>
-        <translation type="unfinished"></translation>
+        <translation>USB atvaizdis</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="248"/>
@@ -146,132 +146,132 @@
     <message>
         <location filename="../MainUI.cpp" line="24"/>
         <source>Archive Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Archyvų tvarkytuvė</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="25"/>
         <source>Admin Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Administratoriaus veiksena</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="51"/>
         <source>CTRL+N</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(Vald)+N</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="52"/>
         <source>CTRL+O</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(Vald)+O</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="53"/>
         <source>CTRL+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(Vald)+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="54"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL(Vald)+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>MimeType</source>
-        <translation type="unfinished"></translation>
+        <translation>MIME tipas</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dydis</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
         <location filename="../MainUI.cpp" line="210"/>
         <source>Opening Archive...</source>
-        <translation type="unfinished"></translation>
+        <translation>Atveriamas archyvas...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
         <source>All Types %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi tipai %1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="155"/>
         <location filename="../MainUI.cpp" line="173"/>
         <source>Uncompressed Archive (*.tar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesuglaudintas archyvas (*.tar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="156"/>
         <location filename="../MainUI.cpp" line="174"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
-        <translation type="unfinished"></translation>
+        <translation>GZip suglaudintas archyvas (*.tar.gz *.tgz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="157"/>
         <location filename="../MainUI.cpp" line="175"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
-        <translation type="unfinished"></translation>
+        <translation>BZip suglaudintas archyvas (*.tar.bz *.tbz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="158"/>
         <location filename="../MainUI.cpp" line="176"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
-        <translation type="unfinished"></translation>
+        <translation>BZip2 suglaudintas archyvas (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="159"/>
         <location filename="../MainUI.cpp" line="178"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
-        <translation type="unfinished"></translation>
+        <translation>LMZA suglaudintas archyvas (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="160"/>
         <location filename="../MainUI.cpp" line="177"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
-        <translation type="unfinished"></translation>
+        <translation>XZ suglaudintas archyvas (*.tar.xz *.txz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="161"/>
         <location filename="../MainUI.cpp" line="179"/>
         <source>CPIO Archive (*.cpio)</source>
-        <translation type="unfinished"></translation>
+        <translation>CPIO archyvas (*.cpio)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="162"/>
         <location filename="../MainUI.cpp" line="180"/>
         <source>PAX Archive (*.pax)</source>
-        <translation type="unfinished"></translation>
+        <translation>PAX archyvas (*.pax)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="163"/>
         <location filename="../MainUI.cpp" line="181"/>
         <source>AR Archive (*.ar)</source>
-        <translation type="unfinished"></translation>
+        <translation>AR archyvas (*.ar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="164"/>
         <location filename="../MainUI.cpp" line="182"/>
         <source>SHAR Archive (*.shar)</source>
-        <translation type="unfinished"></translation>
+        <translation>SHAR archyvas (*.shar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="165"/>
         <location filename="../MainUI.cpp" line="183"/>
         <source>Zip Archive (*.zip)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zip archyvas (*.zip)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="166"/>
         <location filename="../MainUI.cpp" line="184"/>
         <source>7-Zip Archive (*.7z)</source>
-        <translation type="unfinished"></translation>
+        <translation>7-Zip archyvas (*.7z)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="172"/>
         <source>All Known Types %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi žinomi tipai %1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="185"/>
@@ -296,50 +296,50 @@
     <message>
         <location filename="../MainUI.cpp" line="189"/>
         <source>Show All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti visus failus (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="197"/>
         <source>Create Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaida</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Could not overwrite file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko perrašyti failo:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="208"/>
         <source>Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="216"/>
         <location filename="../MainUI.cpp" line="223"/>
         <source>Add to Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti į archyvą</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="218"/>
         <location filename="../MainUI.cpp" line="225"/>
         <source>Adding Items...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridedami elementai...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="236"/>
         <source>Removing Items...</source>
-        <translation type="unfinished"></translation>
+        <translation>Šalinami elementai...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="241"/>
         <location filename="../MainUI.cpp" line="262"/>
         <source>Extract Into Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleisti į katalogą</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="243"/>
@@ -347,7 +347,7 @@
         <location filename="../MainUI.cpp" line="264"/>
         <location filename="../MainUI.cpp" line="270"/>
         <source>Extracting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleidžiama...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -380,7 +380,7 @@
     <message>
         <location filename="../imgDialog.ui" line="96"/>
         <source>Refresh Device List</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš naujo įkelti įrenginių sąrašą</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="108"/>
@@ -395,17 +395,17 @@
     <message>
         <location filename="../imgDialog.ui" line="166"/>
         <source>Time Elapsed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Praėjo laiko:</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="222"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="229"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėti</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="21"/>
@@ -415,7 +415,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Administratoriaus veiksena</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
@@ -450,7 +450,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Administrator Permissions Needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Reikalingi administratoriaus leidimai</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -465,7 +465,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>ERROR</source>
-        <translation type="unfinished"></translation>
+        <translation>KLAIDA</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
@@ -475,7 +475,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>SUCCESS</source>
-        <translation type="unfinished"></translation>
+        <translation>PAVYKO</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
