@@ -18,10 +18,11 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPaintEvent>
-//#include <QMdiArea>
 
 #include "RootSubWindow.h"
-#include "NativeWindow.h"
+
+#include <NativeWindow.h>
+#include <DesktopSettings.h>
 
 class RootWindow : public QWidget{
 	Q_OBJECT
@@ -49,6 +50,7 @@ private:
 
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
+	void arrangeWindows(RootSubWindow *primary = 0, QString type = "");
 
 public slots:
 	void ResizeRoot();
@@ -57,6 +59,11 @@ public slots:
 
 	void NewWindow(NativeWindow*);
 	void CloseWindow(WId); //automatically connected for any new native window
+
+	//Window arrangement functions - defined in "RootWindow-mgmt.cpp"
+	void ArrangeWindows(WId *primary = 0, QString type = "");
+	void TileWindows(WId *primary = 0, QString type = "");
+	void CheckWindowPosition(WId, bool newwindow = false); //used after a "drop" to validate/snap/re-arrange window(s) as needed
 
 private slots:
 
