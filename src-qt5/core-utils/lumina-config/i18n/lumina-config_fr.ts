@@ -346,7 +346,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menu de démarrage alternatif qui se concentre sur les fichiers d'utilisateurs, les répertoires d'utilisateurs, et les favoris d'utilisateurs.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -356,7 +356,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu de démarrage alternatif qui se concentre sur le lancement d'applications.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
