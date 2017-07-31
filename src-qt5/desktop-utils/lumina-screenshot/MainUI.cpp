@@ -209,14 +209,14 @@ bool MainUI::getWindow(){
     this->grabMouse( QCursor(Qt::CrossCursor) );
     mousegrabbed = true;
     this->centralWidget()->setEnabled(false);
-    //this->hide();
+    this->setWindowOpacity(0);
     return false; //wait for the next click to continue
   }else  if(ui->radio_area->isChecked()){
     settings->setValue("screenshot-target", "area");
     this->grabMouse( QCursor(Qt::CrossCursor) );
     mousegrabbed = true;
     this->centralWidget()->setEnabled(false);
-    //this->hide();
+    this->setWindowOpacity(0);
     return false; //wait for the next click to continue
   }else if(ui->radio_monitor->isChecked()){
     //will auto-grab the proper monitor later
@@ -247,7 +247,7 @@ void MainUI::getPixmap(){
       cpic = scrn->grabWindow(cwin);
     }
   }
-  this->show();
+  this->showNormal();
   this->setGeometry(lastgeom);
   lastScreenShot = QDateTime::currentDateTime();
   //Now display the pixmap on the label as well
@@ -283,6 +283,7 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
     mousegrabbed = false;
     this->centralWidget()->setEnabled(true);
     this->releaseMouse();
+    this->setWindowOpacity(1);
     if(ui->radio_area->isChecked()){
       //Need to determind the rectange which covers the area selected
       areaOverlay->hide();
