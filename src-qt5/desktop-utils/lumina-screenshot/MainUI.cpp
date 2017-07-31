@@ -229,6 +229,7 @@ bool MainUI::getWindow(){
 void MainUI::getPixmap(){
   QScreen *scrn = QApplication::screens().at(0);
   QPixmap cpic;
+  qDebug() << "Grab Pixmap:" << cwin;
   if( (cwin==0 && ui->radio_window->isChecked() ) || ui->radio_all->isChecked() ){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
@@ -237,6 +238,7 @@ void MainUI::getPixmap(){
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
   }else if(cwin==0 && ui->radio_area->isChecked()){
     //Grab the section of the screen which was selected
+    qDebug() << "Screen Area:" << snapArea;
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), snapArea.x(), snapArea.y(), snapArea.width(), snapArea.height() );
   }else{
     //Grab just the designated window
@@ -294,15 +296,15 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
       QList<WId> wins = XCB->WindowList();
       QList<WId> stack = XCB->WM_Get_Client_List(true);
       cwin = 0;
-      //qDebug() << "Try to select window:" << ev->globalPos();
+      qDebug() << "Try to select window:" << ev->globalPos() << ev->pos() << QCursor::pos();
       for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
         if(!wins.contains(stack[i])){ continue; }
         if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){
-          //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
+          qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]) << XCB->WindowGeometry(stack[i], true);
           cwin = stack[i];
         }
       }
-      //qDebug() << " - Got window:" << cwin;
+      qDebug() << " - Got window:" << cwin;
       if(cwin==this->winId()){  return; } //cancelled
     }
     this->hide();
