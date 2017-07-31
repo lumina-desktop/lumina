@@ -6,22 +6,22 @@
     <message>
         <location filename="../TarBackend.cpp" line="218"/>
         <source>Could not read archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pouvait pas lire l'archive</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="220"/>
         <source>Archive Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Archive Chargée</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="253"/>
         <source>Extraction Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Extraction Terminée</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="254"/>
         <source>Modification Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Modification Terminée</translation>
     </message>
 </context>
 <context>
@@ -34,69 +34,69 @@
     <message>
         <location filename="../MainUI.ui" line="38"/>
         <source>Archive:</source>
-        <translation type="unfinished"></translation>
+        <translation>Archiver:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="137"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="148"/>
         <source>Burn to Disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Graver sur Disque</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="159"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="184"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ouvrir Archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="187"/>
         <source>Open archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="192"/>
         <source>&amp;New Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nouveau Archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="195"/>
         <source>New archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="200"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="205"/>
         <source>Add File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter des Fichiers</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="208"/>
         <source>Add files to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter des fichiers à archiver</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="213"/>
         <source>Remove File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer des Fichiers</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
@@ -116,12 +116,12 @@
     <message>
         <location filename="../MainUI.ui" line="229"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un Répertoire</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="232"/>
         <source>Add directory to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un répertoire à l'archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="237"/>
