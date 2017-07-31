@@ -37,6 +37,7 @@ TRANSLATIONS =  i18n/l-fileinfo_af.ts \
                 i18n/l-fileinfo_el.ts \
                 i18n/l-fileinfo_en_GB.ts \
                 i18n/l-fileinfo_en_ZA.ts \
+                i18n/l-fileinfo_en_AU.ts \
                 i18n/l-fileinfo_es.ts \
                 i18n/l-fileinfo_et.ts \
                 i18n/l-fileinfo_eu.ts \

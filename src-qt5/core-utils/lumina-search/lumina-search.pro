@@ -42,6 +42,7 @@ TRANSLATIONS =  i18n/lumina-search_af.ts \
                 i18n/lumina-search_el.ts \
                 i18n/lumina-search_en_GB.ts \
                 i18n/lumina-search_en_ZA.ts \
+                i18n/lumina-search_en_AU.ts \
                 i18n/lumina-search_es.ts \
                 i18n/lumina-search_et.ts \
                 i18n/lumina-search_eu.ts \

@@ -39,6 +39,7 @@ TRANSLATIONS =  i18n/l-mediap_af.ts \
                 i18n/l-mediap_el.ts \
                 i18n/l-mediap_en_GB.ts \
                 i18n/l-mediap_en_ZA.ts \
+                i18n/l-mediap_en_AU.ts \
                 i18n/l-mediap_es.ts \
                 i18n/l-mediap_et.ts \
                 i18n/l-mediap_eu.ts \
