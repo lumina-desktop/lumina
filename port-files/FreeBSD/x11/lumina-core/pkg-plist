@@ -1665,6 +1665,7 @@ share/lumina-desktop/i18n/lumina-desktop_da.qm
 share/lumina-desktop/i18n/lumina-desktop_de.qm
 share/lumina-desktop/i18n/lumina-desktop_el.qm
 share/lumina-desktop/i18n/lumina-desktop_en_GB.qm
+share/lumina-desktop/i18n/lumina-desktop_en_AU.qm
 share/lumina-desktop/i18n/lumina-desktop_en_ZA.qm
 share/lumina-desktop/i18n/lumina-desktop_es.qm
 share/lumina-desktop/i18n/lumina-desktop_et.qm
@@ -1731,6 +1732,7 @@ share/lumina-desktop/i18n/lumina-info_da.qm
 share/lumina-desktop/i18n/lumina-info_de.qm
 share/lumina-desktop/i18n/lumina-info_el.qm
 share/lumina-desktop/i18n/lumina-info_en_GB.qm
+share/lumina-desktop/i18n/lumina-info_en_AU.qm
 share/lumina-desktop/i18n/lumina-info_en_ZA.qm
 share/lumina-desktop/i18n/lumina-info_es.qm
 share/lumina-desktop/i18n/lumina-info_et.qm
@@ -1797,6 +1799,7 @@ share/lumina-desktop/i18n/lumina-open_da.qm
 share/lumina-desktop/i18n/lumina-open_de.qm
 share/lumina-desktop/i18n/lumina-open_el.qm
 share/lumina-desktop/i18n/lumina-open_en_GB.qm
+share/lumina-desktop/i18n/lumina-open_en_AU.qm
 share/lumina-desktop/i18n/lumina-open_en_ZA.qm
 share/lumina-desktop/i18n/lumina-open_es.qm
 share/lumina-desktop/i18n/lumina-open_et.qm
