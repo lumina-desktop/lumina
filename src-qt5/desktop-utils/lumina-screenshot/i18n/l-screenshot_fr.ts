@@ -19,7 +19,7 @@
     <message>
         <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
-        <translation>Capture d&apos;écran</translation>
+        <translation>Capture d'écran</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="422"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
-        <translation>Enregistrer la capture d&apos;écran</translation>
+        <translation>Enregistrer la capture d'écran</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="322"/>
