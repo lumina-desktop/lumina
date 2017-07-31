@@ -82,27 +82,27 @@
         <translation>Data de creació</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="325"/>
+        <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
         <translation>Capacitat: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="386"/>
         <source>Files: %1 (%2)</source>
         <translation>Fitxers: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="352"/>
+        <location filename="../BrowserWidget.cpp" line="388"/>
         <source>Files: %1</source>
         <translation>Fitxers: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="358"/>
+        <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
         <translation>Directoris: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="372"/>
+        <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
         <translation>No hi ha contingut de directori</translation>
     </message>
@@ -165,17 +165,17 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation>Seleccioneu l'acció</translation>
+        <translation>Seleccioneu l&apos;acció</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
-        <source>SingleColumn</source>
-        <translation>Una columna</translation>
+        <source>Single Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
         <source>Single column view</source>
-        <translation>Vista d'una columna</translation>
+        <translation>Vista d&apos;una columna</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
@@ -188,84 +188,89 @@
         <translation>Vista de dues columnes</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="621"/>
+        <location filename="../widgets/DirWidget2.cpp" line="646"/>
         <source>(Limited Access) </source>
         <translation>(Accés limitat) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>New Document</source>
         <translation>Document nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
         <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>Error Creating Document</source>
         <translation>Error en crear el document</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>No s'ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
+        <translation>No s&apos;ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
         <source>New Directory</source>
         <translation>Directori nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>Invalid Name</source>
         <translation>El nom no és vàlid</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
         <source>File Operations</source>
         <translation>Operacions de fitxers</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
         <translation>Extreu automàticament</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="587"/>
+        <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
         <translation>Operacions de directoris</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
         <translation>Carregant...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Ja existeix un fitxer o un directori amb este mateix nom, utilitzeu-ne un altre.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>Error Creating Directory</source>
         <translation>Error en crear el directori</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>No s'ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
+        <translation>No s&apos;ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="391"/>
+        <location filename="../widgets/DirWidget2.cpp" line="371"/>
         <source>Current</source>
         <translation>Actual</translation>
     </message>
@@ -287,7 +292,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="275"/>
         <source>Application Launcher</source>
-        <translation>Llançador d'aplicacions</translation>
+        <translation>Llançador d&apos;aplicacions</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="279"/>
@@ -310,62 +315,67 @@
         <translation>Reproductor multimèdia</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <source>Open with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
         <translation>Mostra els fitxers...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="332"/>
+        <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
         <translation>Sumes de verificació</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="334"/>
+        <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
         <translation>Propietats</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="524"/>
+        <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
         <translation>Sumes de verificació del fitxer:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>Missing Utility</source>
         <translation>Utilitat no present</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>No s'ha pogut trobar la utilitat "lumina-fileinfo" al sistema. Si us plau, instal·leu-la primer.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>No s&apos;ha pogut trobar la utilitat &quot;lumina-fileinfo&quot; al sistema. Si us plau, instal·leu-la primer.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="562"/>
+        <location filename="../widgets/DirWidget2.cpp" line="542"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="551"/>
         <source>Rename...</source>
         <translation>Reanomena...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Cut Selection</source>
         <translation>Talla la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Copy Selection</source>
         <translation>Copia la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="557"/>
         <source>Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="561"/>
         <source>Delete Selection</source>
         <translation>Suprimeix la selecció</translation>
     </message>
@@ -405,7 +415,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Nota: si no, només s'afegirà un número al nom del fitxer.</translation>
+        <translation>Nota: si no, només s&apos;afegirà un número al nom del fitxer.</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="148"/>
@@ -430,22 +440,22 @@
     <message>
         <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
-        <translation>No s'han pogut suprimir aquests fitxers:</translation>
+        <translation>No s&apos;han pogut suprimir aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
-        <translation>No s'han pogut copiar aquests fitxers:</translation>
+        <translation>No s&apos;han pogut copiar aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
-        <translation>No s'han pogut restaurar aquests fitxers:</translation>
+        <translation>No s&apos;han pogut restaurar aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="167"/>
         <source>Could not move these files:</source>
-        <translation>No s'han pogut moure aquests fitxers:</translation>
+        <translation>No s&apos;han pogut moure aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="169"/>
@@ -466,7 +476,7 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d'això, feu-ne una còpia.
+        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d&apos;això, feu-ne una còpia.
 
 Localització antiga: %1
 Localització nova: %2</translation>
@@ -487,7 +497,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>Aquest assistent us guiarà a través del procés de baixada d'un repositori GIT des d'Internet.</translation>
+        <translation>Aquest assistent us guiarà a través del procés de baixada d&apos;un repositori GIT des d&apos;Internet.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
@@ -512,7 +522,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation>Tipus d'accés</translation>
+        <translation>Tipus d&apos;accés</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
@@ -527,7 +537,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation>Nom d'usuari</translation>
+        <translation>Nom d&apos;usuari</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
@@ -566,8 +576,8 @@ Localització nova: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
-        <translation>Cliqueu a "Següent" per començar a baixar el repositori</translation>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <translation>Cliqueu a &quot;Següent&quot; per començar a baixar el repositori</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -615,7 +625,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="143"/>
         <source>Bookmarks</source>
-        <translation>Adreces d'interès</translation>
+        <translation>Adreces d&apos;interès</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="151"/>
@@ -640,7 +650,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="246"/>
         <source>Show Image Previews</source>
-        <translation>Mostra previsualitzacions d'imatges</translation>
+        <translation>Mostra previsualitzacions d&apos;imatges</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="251"/>
@@ -690,7 +700,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Add Bookmark</source>
-        <translation>Afegeix una adreça d'interès</translation>
+        <translation>Afegeix una adreça d&apos;interès</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
@@ -730,12 +740,12 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Show Directory Tree Window</source>
-        <translation>Mostra la finestra de l'arbre de directoris</translation>
+        <translation>Mostra la finestra de l&apos;arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Show Directory Tree Pane</source>
-        <translation>Mostra el plafó de l'arbre de directoris</translation>
+        <translation>Mostra el plafó de l&apos;arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
@@ -775,12 +785,12 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>Manage Bookmarks</source>
-        <translation>Gestiona les adreces d'interès / marcadors</translation>
+        <translation>Gestiona les adreces d&apos;interès / marcadors</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>Show Action Buttons</source>
-        <translation>Mostra els botons d'acció</translation>
+        <translation>Mostra els botons d&apos;acció</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="254"/>
@@ -855,7 +865,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="195"/>
         <source>The following directories are invalid and could not be opened:</source>
-        <translation>Els directoris següents no són vàlids i no s'han pogut obrir:</translation>
+        <translation>Els directoris següents no són vàlids i no s&apos;han pogut obrir:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="229"/>
@@ -885,7 +895,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
         <source>New Bookmark</source>
-        <translation>Adreça d'interès nova</translation>
+        <translation>Adreça d&apos;interès nova</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
@@ -900,7 +910,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="591"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Aquest nom d'adreça d'interès ja existeix. Trieu-ne un altre.</translation>
+        <translation>Aquest nom d&apos;adreça d&apos;interès ja existeix. Trieu-ne un altre.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="612"/>
@@ -1052,7 +1062,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
         <source>File Operation Errors</source>
-        <translation>Errors d'operacions de fitxers</translation>
+        <translation>Errors d&apos;operacions de fitxers</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
@@ -1075,17 +1085,17 @@ Localització nova: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Suprimeix aquest fitxer d'imatge</translation>
+        <translation>Suprimeix aquest fitxer d&apos;imatge</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>
         <source>Rotate this image file counter-clockwise</source>
-        <translation>Gira aquest fitxer d'imatge cap a l'esquerra</translation>
+        <translation>Gira aquest fitxer d&apos;imatge cap a l&apos;esquerra</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="69"/>
         <source>Rotate this image file clockwise</source>
-        <translation>Gira aquest fitxer d'imatge cap a la dreta</translation>
+        <translation>Gira aquest fitxer d&apos;imatge cap a la dreta</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="89"/>
@@ -1178,7 +1188,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation>Hi ha hagut errors durant l'operació. Cliqueu per veure'n els detalls.</translation>
+        <translation>Hi ha hagut errors durant l&apos;operació. Cliqueu per veure&apos;n els detalls.</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
