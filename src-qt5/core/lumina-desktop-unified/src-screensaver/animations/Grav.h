@@ -93,13 +93,16 @@ public:
 	  orbit->setTargetObject(planet);
 
 	  //Creates the random position of the planet, making sure it isn't too close to the sun
- 	  int randwidth =  qrand()%(range.width()/2);
-	  if(randwidth < range.width() + 100 and randwidth > range.width() - 100) randwidth = 100;
- 	  int randheight=  qrand()%(range.height()/2);
-	  if(randheight < range.height() + 100 and randheight > range.height() - 100) randheight = 100;
+	  QRect invalid = QRect(center+QPoint(-50,-50), center+QPoint(50,50));
+           QPoint tmp = center;
+           while(invalid.contains(center)){
+ 	    int randwidth =  qrand()%(range.width() - 2*planet_radius) + planet_radius;
+ 	    int randheight=  qrand()%(range.height()- 2*planet_radius) + planet_radius;
+	    tmp = QPoint(randwidth, randheight);
+	  }
 
 	  //Creates all frames for the animation
-	  setupLoop(QPoint(randwidth, randheight), &center);
+	  setupLoop(tmp, &center);
 	  this->addAnimation(orbit);
 	  planet->show();
 
@@ -172,13 +175,11 @@ public:
 
 	  //Loops through all planets and sets up the animations, then adds them to the base group and vector, which
 	  for(int i=0; i<number; i++){
-            if(planets.length()>number){ continue; }
 	    Grav *tmp = new Grav(canvas);
 	    this->addAnimation(tmp);
             connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
 	    planets << tmp;
 	  }
-	  while(planets.length()>number){planets.takeAt(number)->deleteLater(); }
 	}
 
 };
