@@ -37,15 +37,12 @@ QPalette PaletteEditDialog::selectedPalette() const{
 
 void PaletteEditDialog::setPalette(const QPalette &palette){
   for(int i = 0; i < QPalette::NColorRoles; i++){
-    if(!m_ui->tableWidget->item(i,0))
-      m_ui->tableWidget->setItem(i, 0, new QTableWidgetItem());
-      if(!m_ui->tableWidget->item(i,1))
-        m_ui->tableWidget->setItem(i, 1, new QTableWidgetItem());
-        if(!m_ui->tableWidget->item(i,2))
-          m_ui->tableWidget->setItem(i, 2, new QTableWidgetItem());
-          m_ui->tableWidget->item(i,0)->setBackgroundColor(palette.color(QPalette::Active, QPalette::ColorRole(i)));
-          m_ui->tableWidget->item(i,1)->setBackgroundColor(palette.color(QPalette::Inactive, QPalette::ColorRole(i)));
-          m_ui->tableWidget->item(i,2)->setBackgroundColor(palette.color(QPalette::Disabled, QPalette::ColorRole(i)));
+    if(!m_ui->tableWidget->item(i,0)){ m_ui->tableWidget->setItem(i, 0, new QTableWidgetItem()); }
+    if(!m_ui->tableWidget->item(i,1)){ m_ui->tableWidget->setItem(i, 1, new QTableWidgetItem()); }
+    if(!m_ui->tableWidget->item(i,2)){ m_ui->tableWidget->setItem(i, 2, new QTableWidgetItem()); }
+    m_ui->tableWidget->item(i,0)->setBackgroundColor(palette.color(QPalette::Active, QPalette::ColorRole(i)));
+    m_ui->tableWidget->item(i,1)->setBackgroundColor(palette.color(QPalette::Inactive, QPalette::ColorRole(i)));
+    m_ui->tableWidget->item(i,2)->setBackgroundColor(palette.color(QPalette::Disabled, QPalette::ColorRole(i)));
     }
   QStringList labels;
   labels << tr("Window text") << tr("Button background") << tr("Bright") << tr("Less bright") << tr("Dark") << tr("Less dark") << tr("Normal text") << tr("Bright text") << tr("Button text") << tr("Normal background") << tr("Window") << tr("Shadow") << tr("Highlight") << tr("Highlighted text")  << tr("Link")  << tr("Visited link") << tr("Alternate background") << tr("Default") << tr("Tooltip background")  << tr("Tooltip text");

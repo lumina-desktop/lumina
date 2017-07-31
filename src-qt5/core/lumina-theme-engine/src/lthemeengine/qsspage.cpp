@@ -36,10 +36,9 @@ void QSSPage::writeSettings(){
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
     QListWidgetItem *item = m_ui->qssListWidget->item(i);
-    if(item->checkState() == Qt::Checked)
-      styleSheets << item->data(QSS_FULL_PATH_ROLE).toString();
-    }
+    if(item->checkState() == Qt::Checked){ styleSheets << item->data(QSS_FULL_PATH_ROLE).toString(); }
   settings.setValue("Interface/stylesheets", styleSheets);
+  }
 }
 
 void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *){
@@ -57,26 +56,24 @@ void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QLis
 
 void QSSPage::on_createButton_clicked(){
   QString name = QInputDialog::getText(this, tr("Enter Style Sheet Name"), tr("File name:"));
-  if(name.isEmpty())
+  if(name.isEmpty()){ return; }
+  if(!name.endsWith(".qss", Qt::CaseInsensitive)){ name.append(".qss"); }
+  QString filePath = lthemeengine::userStyleSheetPath() + name;
+  if(QFile::exists(filePath)){
+    QMessageBox::warning(this, tr("Error"), tr("The file \"%1\" already exists").arg(filePath));
     return;
-    if(!name.endsWith(".qss", Qt::CaseInsensitive))
-      name.append(".qss");
-      QString filePath = lthemeengine::userStyleSheetPath() + name;
-      if(QFile::exists(filePath)){
-        QMessageBox::warning(this, tr("Error"), tr("The file \"%1\" already exists").arg(filePath));
-        return;
-        }
-      //creating empty file
-      QFile file(filePath);
-      file.open(QIODevice::WriteOnly);
-      file.close();
-      //creating item
-      QFileInfo info(filePath);
-      QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
-      item->setToolTip(info.filePath());
-      item->setData(QSS_FULL_PATH_ROLE, info.filePath());
-      item->setData(QSS_WRITABLE_ROLE, info.isWritable());
-      item->setCheckState(Qt::Unchecked);
+    }
+  //creating empty file
+  QFile file(filePath);
+  file.open(QIODevice::WriteOnly);
+  file.close();
+  //creating item
+  QFileInfo info(filePath);
+  QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
+  item->setToolTip(info.filePath());
+  item->setData(QSS_FULL_PATH_ROLE, info.filePath());
+  item->setData(QSS_WRITABLE_ROLE, info.isWritable());
+  item->setCheckState(Qt::Unchecked);
 }
 
 void QSSPage::on_editButton_clicked(){
@@ -89,13 +86,10 @@ void QSSPage::on_editButton_clicked(){
 
 void QSSPage::on_removeButton_clicked(){
   QListWidgetItem *item = m_ui->qssListWidget->currentItem();
-  if(!item)
-    return;
-    int button = QMessageBox::question(this, tr("Confirm Remove"),tr("Are you sure you want to remove style sheet \"%1\"?").arg(item->text()), QMessageBox::Yes | QMessageBox::No);
-    if(button == QMessageBox::Yes){
-      QFile::remove(item->data(QSS_FULL_PATH_ROLE).toString());
-      delete item;
-      }
+  if(!item){ return; }
+  int button = QMessageBox::question(this, tr("Confirm Remove"),tr("Are you sure you want to remove style sheet \"%1\"?").arg(item->text()), QMessageBox::Yes | QMessageBox::No);
+  if(button == QMessageBox::Yes){ QFile::remove(item->data(QSS_FULL_PATH_ROLE).toString()); }
+  delete item;
 }
 
 void QSSPage::readSettings(){
@@ -107,10 +101,8 @@ void QSSPage::readSettings(){
   QStringList styleSheets = settings.value("Interface/stylesheets").toStringList();
   for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
     QListWidgetItem *item = m_ui->qssListWidget->item(i);
-    if(styleSheets.contains(item->data(QSS_FULL_PATH_ROLE).toString()))
-      item->setCheckState(Qt::Checked);
-    else
-       item->setCheckState(Qt::Unchecked);
+    if(styleSheets.contains(item->data(QSS_FULL_PATH_ROLE).toString())){ item->setCheckState(Qt::Checked); }
+    else { item->setCheckState(Qt::Unchecked); }
     }
 }
 
@@ -128,29 +120,25 @@ void QSSPage::findStyleSheets(const QString &path){
 
 void QSSPage::on_renameButton_clicked(){
   QListWidgetItem *item = m_ui->qssListWidget->currentItem();
-  if(!item)
+  if(!item){ return; }
+  QString name = QInputDialog::getText(this, tr("Rename Style Sheet"), tr("Style sheet name:"), QLineEdit::Normal, item->text(), 0);
+  if(name.isEmpty()){ return; }
+  if(!m_ui->qssListWidget->findItems(name, Qt::MatchExactly).isEmpty()){
+    QMessageBox::warning(this, tr("Error"), tr("The style sheet \"%1\" already exists").arg(name));
     return;
-    QString name = QInputDialog::getText(this, tr("Rename Style Sheet"), tr("Style sheet name:"), QLineEdit::Normal, item->text(), 0);
-    if(name.isEmpty())
-      return;
-        if(!m_ui->qssListWidget->findItems(name, Qt::MatchExactly).isEmpty()){
-          QMessageBox::warning(this, tr("Error"), tr("The style sheet \"%1\" already exists").arg(name));
-          return;
-          }
-    if(!name.endsWith(".qss", Qt::CaseInsensitive)) name.append(".qss");
-      QString newPath = lthemeengine::userStyleSheetPath() + name;
-      if(!QFile::rename(item->data(QSS_FULL_PATH_ROLE).toString(), newPath)){
-        QMessageBox::warning(this, tr("Error"), tr("Unable to rename file"));
-         return;
-         }
-      item->setText(name);
-      item->setData(QSS_FULL_PATH_ROLE, newPath);
-      item->setToolTip(newPath);
+    }
+  if(!name.endsWith(".qss", Qt::CaseInsensitive)){ name.append(".qss"); }
+  QString newPath = lthemeengine::userStyleSheetPath() + name;
+  if(!QFile::rename(item->data(QSS_FULL_PATH_ROLE).toString(), newPath)){
+    QMessageBox::warning(this, tr("Error"), tr("Unable to rename file"));
+    return;
+    }
+  item->setText(name);
+  item->setData(QSS_FULL_PATH_ROLE, newPath);
+  item->setToolTip(newPath);
 }
 
 void QSSPage::on_qssListWidget_customContextMenuRequested(const QPoint &pos){
   QListWidgetItem *item = m_ui->qssListWidget->currentItem();
-    if(item && item->data(QSS_WRITABLE_ROLE).toBool()){
-      m_menu->exec(m_ui->qssListWidget->viewport()->mapToGlobal(pos));
-      }
+  if(item && item->data(QSS_WRITABLE_ROLE).toBool()){ m_menu->exec(m_ui->qssListWidget->viewport()->mapToGlobal(pos)); }
 }
