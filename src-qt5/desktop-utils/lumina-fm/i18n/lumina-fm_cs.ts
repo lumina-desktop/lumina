@@ -235,7 +235,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Auto-Extract</source>
-        <translation>Automatická extrakce</translation>
+        <translation>Automatické rozbalení</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="587"/>

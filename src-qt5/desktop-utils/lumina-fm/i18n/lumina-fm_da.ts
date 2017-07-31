@@ -235,7 +235,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Auto-Extract</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisk udpakning</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="587"/>
@@ -336,8 +336,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Kunne ikke finde &quot;lumina-fileinfo&quot;-redskabet på systemet. Installér det venligst først.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Kunne ikke finde "lumina-fileinfo"-redskabet på systemet. Installér det venligst først.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="562"/>
@@ -566,8 +566,8 @@ Ny placering: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Klik på &quot;Næste&quot; for at starte download af arkivet</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Klik på "Næste" for at starte download af arkivet</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -640,7 +640,7 @@ Ny placering: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="246"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis forhåndsvisninger af billeder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="251"/>
@@ -730,17 +730,17 @@ Ny placering: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis vindue med mappetræ</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Show Directory Tree Pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis rude med mappetræ</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
