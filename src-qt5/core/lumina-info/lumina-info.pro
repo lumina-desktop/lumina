@@ -41,6 +41,7 @@ TRANSLATIONS =  i18n/lumina-info_af.ts \
                 i18n/lumina-info_el.ts \
                 i18n/lumina-info_en_GB.ts \
                 i18n/lumina-info_en_ZA.ts \
+                i18n/lumina-info_en_AU.ts \
                 i18n/lumina-info_es.ts \
                 i18n/lumina-info_et.ts \
                 i18n/lumina-info_eu.ts \
