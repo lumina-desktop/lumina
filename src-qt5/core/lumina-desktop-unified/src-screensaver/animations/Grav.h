@@ -14,6 +14,7 @@
 #include "BaseAnimGroup.h"
 #include <QParallelAnimationGroup>
 #include <QtMath>
+#include <QMatrix>
 
 class Grav: public QParallelAnimationGroup{
 	Q_OBJECT
@@ -21,11 +22,11 @@ private:
 	QWidget *planet;
 	QPropertyAnimation *orbit;
 	QSize range;
-	QList<QPoint> path;
+	//QList<QPoint> path;
 	double radius;
 
 	void setupLoop(QPoint start, QPoint *ref){
-	  orbit->setStartValue(start);
+	  //orbit->setStartValue(start);
 
 	  //Used to find overall speed. Distance from the planet to the sun
 	  radius = qSqrt( (qPow(start.x()-ref->x(),2) + qPow(start.y()-ref->y(),2) ));
@@ -39,9 +40,9 @@ private:
 
 	  QPoint firstP = QPoint(ref->x() + xrand*start.x()*(qCos(0/step) -qSin(0/step)), ref->y() + yrand*start.y()*(qCos(0/step) -qSin(0/step)));
 	  QPoint lastP = QPoint(ref->x() + xrand*start.x()*(qCos(PI/step) -qSin(PI/step)), ref->y() + yrand*start.y()*(qCos(PI/step) -qSin(PI/step)));
-	  //orbit->setKeyValueAt(0,  firstP);
-	  //orbit->setKeyValueAt(1,  lastP);
-	  path.push_back(firstP);
+	  orbit->setKeyValueAt(0,  firstP);
+	  orbit->setKeyValueAt(1,  lastP);
+	  //path.push_back(firstP);
 
 	  //Loops through all steps and creates all the points of the orbit
 	  for(int i=1; i<step; i++) {
@@ -54,21 +55,20 @@ private:
 
 		//Creates a new point and creates a key as part of the animation
 		QPoint newLoc = QPoint(newX, newY);
-		//orbit->setKeyValueAt(i/step,  newLoc);
-		path.push_back(newLoc);
-          }
-
+		orbit->setKeyValueAt(i/step,  newLoc);
+		//path.push_back(newLoc);
+	  }
 	  //Sets the time for a full orbit. Increasing makes the orbit slower.
-	  path.push_back(lastP);
+	  //path.push_back(lastP);
 	}
 private slots:
 	void LoopChanged(int loop){
 	    //Adjust the orbit animation a bit
-	    if(loop >= 0) {
+	    /*if(loop >= 0) {
 	      orbit->setStartValue(orbit->endValue()); //start at the previous end point
               orbit->setEndValue(path.at(loop%1000));
 	      orbit->setDuration(10);
-	    }
+	    }*/
 	}
 	void stopped(){ qDebug() << "Planet stopped"; planet->hide();}
 
@@ -79,7 +79,7 @@ public:
 	  QPoint center = parent->geometry().center();
 
 	  //Creates a random planet size. Between 12 and 45 pixels
-	  double planet_radius = 1.75* ((qrand()%20)+7);
+	  int planet_radius = qRound(1.75* ((qrand()%20)+7) );
 
 	  //Creates a random color in RGB, then creates a circular gradient
 	  QString color = "rgba(" + QString::number(qrand() % 256) + ", " + QString::number(qrand() % 256) + ", " + QString::number(qrand() % 256);
@@ -94,12 +94,16 @@ public:
 
 	  //Creates the random position of the planet, making sure it isn't too close to the sun
 	  QRect invalid = QRect(center+QPoint(-50,-50), center+QPoint(50,50));
-           QPoint tmp = center;
-           while(invalid.contains(center)){
+	  QPoint tmp = center;
+	  while(invalid.contains(tmp)){
  	    int randwidth =  qrand()%(range.width() - 2*planet_radius) + planet_radius;
  	    int randheight=  qrand()%(range.height()- 2*planet_radius) + planet_radius;
 	    tmp = QPoint(randwidth, randheight);
 	  }
+
+	  /*double tmpDistance = qSqrt((qPow((tmp.x()-center.x()), 2) + qPow((tmp.y()-center.y()), 2)));
+	  double theta = qAsin(qAbs(tmp.y()-center.y())/tmpDistance);
+	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -center.x(), -center.y());*/
 
 	  //Creates all frames for the animation
 	  setupLoop(tmp, &center);
@@ -107,13 +111,14 @@ public:
 	  planet->show();
 
 	  //Ensures the screensaver will not stop until the user wishes to login or it times out
-	  this->setLoopCount(2000); //number of orbits
-	  orbit->setEndValue(path.at(0));
-	  LoopChanged(0);  //load initial values
+	  this->setLoopCount(5); //number of orbits
+	  orbit->setDuration( qrand() %1000 + 19000); //20 second orbits
+	  //orbit->setEndValue(path.at(0));
+	  //LoopChanged(0);  //load initial values
 
 	  //Sets the initial size and location of the planet
 	  planet->setGeometry(QRect(orbit->startValue().toPoint(), QSize(planet_radius, planet_radius)));
-	  connect(this, SIGNAL(currentLoopChanged(int)), this, SLOT(LoopChanged(int)) );
+	  //connect(this, SIGNAL(currentLoopChanged(int)), this, SLOT(LoopChanged(int)) );
 	  connect(this, SIGNAL(finished()), this, SLOT(stopped()) );
 	}
 	~Grav(){}
@@ -174,10 +179,11 @@ public:
 	  int number = settings->value("planets/number",10).toInt();
 
 	  //Loops through all planets and sets up the animations, then adds them to the base group and vector, which
+	  qDebug() << "Starting planets";
 	  for(int i=0; i<number; i++){
 	    Grav *tmp = new Grav(canvas);
 	    this->addAnimation(tmp);
-            connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
+		connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
 	    planets << tmp;
 	  }
 	}

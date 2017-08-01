@@ -76,8 +76,9 @@ void SSBaseWidget::startPainting(){
 
 void SSBaseWidget::stopPainting(){
   if(ANIM!=0){
+    qDebug() << "Stopping Animation!!";
     ANIM->stop();
-    ANIM->clear();
+    //ANIM->clear();
     ANIM->deleteLater();
     ANIM = 0;
   }
