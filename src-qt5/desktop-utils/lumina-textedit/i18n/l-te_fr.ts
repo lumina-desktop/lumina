@@ -51,241 +51,246 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="17"/>
-        <source>MainWindow</source>
-        <translation>Fenêtre principale</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="66"/>
+        <location filename="../MainUI.ui" line="63"/>
         <source>Find the previous match</source>
         <translation>Trouver l&apos;occurrence précédente</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="69"/>
-        <location filename="../MainUI.ui" line="82"/>
-        <location filename="../MainUI.ui" line="133"/>
-        <location filename="../MainUI.ui" line="146"/>
-        <location filename="../MainUI.ui" line="158"/>
+        <location filename="../MainUI.ui" line="66"/>
+        <location filename="../MainUI.ui" line="79"/>
+        <location filename="../MainUI.ui" line="130"/>
+        <location filename="../MainUI.ui" line="143"/>
+        <location filename="../MainUI.ui" line="155"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="168"/>
+        <location filename="../MainUI.ui" line="165"/>
         <source>Find:</source>
         <translation>Rechercher :</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="79"/>
+        <location filename="../MainUI.ui" line="76"/>
         <source>Find the next match</source>
         <translation>Recherche la prochaine occurrence</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="89"/>
+        <location filename="../MainUI.ui" line="86"/>
         <source>Replace:</source>
         <translation>Remplacer :</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="108"/>
+        <location filename="../MainUI.ui" line="105"/>
         <source>Match case</source>
         <translation>Respecter la casse</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="130"/>
+        <location filename="../MainUI.ui" line="127"/>
         <source>Replace next match</source>
         <translation>Remplacer la prochaine occurrence</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="143"/>
+        <location filename="../MainUI.ui" line="140"/>
         <source>Replace all matches (to end of document)</source>
         <translation>Remplacer toutes les occurrences (jusqu&apos;à la fin du document)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="155"/>
+        <location filename="../MainUI.ui" line="152"/>
         <source>Hide the find/replace options</source>
         <translation>Cacher les options rechercher/remplacer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="196"/>
+        <location filename="../MainUI.ui" line="193"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="209"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>View</source>
         <translation>Vue</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="211"/>
         <source>Syntax Highlighting</source>
         <translation>Coloration Syntaxique</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="220"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Tabs Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="235"/>
         <source>Edit</source>
         <translation>Éditer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="252"/>
-        <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="278"/>
+        <location filename="../MainUI.ui" line="273"/>
         <source>Show Line Numbers</source>
         <translation>Afficher les Numéros de Lignes</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="283"/>
+        <location filename="../MainUI.ui" line="278"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.ui" line="283"/>
+        <location filename="../MainUI.cpp" line="192"/>
         <source>New File</source>
         <translation>Nouveau fichier</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="286"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="299"/>
+        <location filename="../MainUI.ui" line="294"/>
         <source>Open File</source>
         <translation>Ouvrir le Fichier</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="302"/>
+        <location filename="../MainUI.ui" line="297"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="310"/>
+        <location filename="../MainUI.ui" line="305"/>
         <source>Save File</source>
         <translation>Enregistrer le Fichier</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="313"/>
+        <location filename="../MainUI.ui" line="308"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="316"/>
         <source>Save File As</source>
         <translation>Enregistrer le Fichier Sous</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="326"/>
+        <location filename="../MainUI.ui" line="321"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"/>
+        <location filename="../MainUI.ui" line="324"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="337"/>
+        <location filename="../MainUI.ui" line="332"/>
         <source>Close File</source>
         <translation>Fermer le Fichier</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"/>
+        <location filename="../MainUI.ui" line="335"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="348"/>
+        <location filename="../MainUI.ui" line="343"/>
         <source>Customize Colors</source>
         <translation>Personnaliser les Couleurs</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="359"/>
+        <location filename="../MainUI.ui" line="354"/>
         <source>Wrap Lines</source>
         <translation>Renvoyer à la Ligne</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="364"/>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Find</source>
         <translation>Rechercher</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="367"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="375"/>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Replace</source>
         <translation>Remplacer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="378"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="392"/>
+        <location filename="../MainUI.ui" line="387"/>
         <source>Show Popup Warnings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"/>
-        <location filename="../MainUI.ui" line="398"/>
+        <location filename="../MainUI.ui" line="390"/>
+        <location filename="../MainUI.ui" line="393"/>
         <source>Show warnings about unsaved changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"/>
+        <location filename="../MainUI.ui" line="404"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"/>
+        <location filename="../MainUI.ui" line="412"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="425"/>
+        <location filename="../MainUI.ui" line="420"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="433"/>
+        <location filename="../MainUI.ui" line="428"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="436"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Text Editor</source>
         <translation>Éditeur de Texte</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="195"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Open File(s)</source>
         <translation>Ouvrir Fichier(s)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="195"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Text Files (*)</source>
         <translation>Fichiers de Texte (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="366"/>
-        <location filename="../MainUI.cpp" line="377"/>
-        <location filename="../MainUI.cpp" line="485"/>
+        <location filename="../MainUI.cpp" line="252"/>
+        <source>Print Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="383"/>
+        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="502"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Perdre les modifications non enregistrées ?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="366"/>
-        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="383"/>
+        <location filename="../MainUI.cpp" line="394"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +301,7 @@ Voulez-vous le fermer quand même ?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="485"/>
+        <location filename="../MainUI.cpp" line="502"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

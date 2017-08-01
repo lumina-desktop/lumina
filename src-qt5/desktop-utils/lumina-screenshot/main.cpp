@@ -11,10 +11,11 @@
 
 int main(int argc, char ** argv)
 {
+    LTHEME::LoadCustomEnvSettings();
     //Make sure Qt5 auto-scaling is disabled for this application (need exact pixel measurements)
     unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR");
-    LTHEME::LoadCustomEnvSettings();
     LSingleApplication a(argc, argv, "l-screenshot");
+    if(!a.isPrimaryProcess()){ return 0; }
     //LuminaThemeEngine theme(&a);
     a.setApplicationName("Take Screenshot");
 

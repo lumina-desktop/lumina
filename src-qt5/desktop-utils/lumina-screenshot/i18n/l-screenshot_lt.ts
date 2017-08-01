@@ -107,11 +107,6 @@
         <translation>Rodyti iškylančiuosius įspėjimus apie neįrašytas ekrano kopijas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation>Įrankių juosta</translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Fotografuoti</translation>

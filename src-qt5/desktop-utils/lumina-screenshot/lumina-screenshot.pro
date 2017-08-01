@@ -39,6 +39,7 @@ TRANSLATIONS =  i18n/l-screenshot_af.ts \
                 i18n/l-screenshot_el.ts \
                 i18n/l-screenshot_en_GB.ts \
                 i18n/l-screenshot_en_ZA.ts \
+                i18n/l-screenshot_en_AU.ts \
                 i18n/l-screenshot_es.ts \
                 i18n/l-screenshot_et.ts \
                 i18n/l-screenshot_eu.ts \

@@ -102,7 +102,7 @@
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation>Desa l'historial de la calculadora</translation>
+        <translation>Desa l&apos;historial de la calculadora</translation>
     </message>
 </context>
 </TS>

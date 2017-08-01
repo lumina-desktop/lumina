@@ -13,15 +13,13 @@ public:
 };
 
 QStyle *lthemeengineStylePlugin::create(const QString &key){
-    if (key == "lthemeengine-style")
-    {
-        QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
-        QString style = settings.value("Appearance/style", "Fusion").toString();
-        if(key == style || !QStyleFactory::keys().contains(style))
-            style = "Fusion";
-        return new lthemeengineProxyStyle(style);
+  if (key == "lthemeengine-style"){
+    QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
+    QString style = settings.value("Appearance/style", "Fusion").toString();
+    if(key == style || !QStyleFactory::keys().contains(style)){ style = "Fusion"; }
+    return new lthemeengineProxyStyle(style);
     }
-    return 0;
+  return 0;
 }
 
 #include "plugin.moc"

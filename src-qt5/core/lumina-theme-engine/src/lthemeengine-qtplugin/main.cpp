@@ -11,10 +11,9 @@ public:
 };
 
 QPlatformTheme *lthemeenginePlatformThemePlugin::create(const QString &key, const QStringList &params){
-    Q_UNUSED(params);
-    if (key.toLower() == "lthemeengine")
-        return new lthemeenginePlatformTheme();
-    return NULL;
+  Q_UNUSED(params);
+  if (key.toLower() == "lthemeengine") { return new lthemeenginePlatformTheme(); }
+  return NULL;
 }
 
 QT_END_NAMESPACE

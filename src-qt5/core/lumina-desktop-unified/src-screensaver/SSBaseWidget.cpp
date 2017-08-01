@@ -78,7 +78,7 @@ void SSBaseWidget::stopPainting(){
   if(ANIM!=0){
     ANIM->stop();
     ANIM->clear();
-    delete ANIM;
+    ANIM->deleteLater();
     ANIM = 0;
   }
 }

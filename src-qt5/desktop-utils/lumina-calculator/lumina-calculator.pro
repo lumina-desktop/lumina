@@ -33,6 +33,7 @@ TRANSLATIONS =  i18n/l-calc_af.ts \
                 i18n/l-calc_el.ts \
                 i18n/l-calc_en_GB.ts \
                 i18n/l-calc_en_ZA.ts \
+                i18n/l-calc_en_AU.ts \
                 i18n/l-calc_es.ts \
                 i18n/l-calc_et.ts \
                 i18n/l-calc_eu.ts \
