@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
-#define DEBUG 0
+#define DEBUG 1
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
@@ -151,8 +151,9 @@ void LScreenSaver::HideScreenSaver(){
     emit LockStatusChanged(false);
   }
   for(int i=0; i<BASES.length(); i++){
-    BASES[i]->hide();
+    qDebug() << "Stop ScreenSaver:" << i;
     BASES[i]->stopPainting();
+    BASES[i]->hide();
   }
   UpdateTimers();
 }
