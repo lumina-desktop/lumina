@@ -11,7 +11,7 @@ desktop.path=$${L_SHAREDIR}/applications/
 #Install paths
 unix {
   isEmpty(PREFIX) {
-    PREFIX = /usr
+    PREFIX = /usr/local
   }
   isEmpty(PLUGINDIR) {
     PLUGINDIR = $$[QT_INSTALL_PLUGINS]
