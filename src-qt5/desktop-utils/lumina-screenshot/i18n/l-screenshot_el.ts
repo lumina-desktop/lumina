@@ -109,7 +109,7 @@
     <message>
         <location filename="../MainUI.ui" line="499"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Μπάρα Εργαλείων</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Προβολή</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
