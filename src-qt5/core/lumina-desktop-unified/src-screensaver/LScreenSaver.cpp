@@ -102,8 +102,8 @@ void LScreenSaver::ShowScreenSaver(){
   //Now go through and create/show all the various widgets
   QList<QScreen*> SCREENS = QApplication::screens();
   QRect bounds;
-  cBright = LOS::ScreenBrightness();
-  if(cBright>0){ LOS::setScreenBrightness(cBright/2); } //cut to half while the screensaver is active
+  //cBright = LOS::ScreenBrightness();
+  //if(cBright>0){ LOS::setScreenBrightness(cBright/2); } //cut to half while the screensaver is active
   for(int i=0; i<SCREENS.length(); i++){
     bounds = bounds.united(SCREENS[i]->geometry());
     if(DEBUG){ qDebug() << " - New SS Base:" << i; }
@@ -144,7 +144,7 @@ void LScreenSaver::HideScreenSaver(){
   //QApplication::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
-  if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
+  //if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
   if(!SSLocked){
     this->hide();
     emit ClosingScreenSaver();

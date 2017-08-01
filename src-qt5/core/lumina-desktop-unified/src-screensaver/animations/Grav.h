@@ -14,6 +14,7 @@
 #include "BaseAnimGroup.h"
 #include <QParallelAnimationGroup>
 #include <QtMath>
+#include <QMatrix>
 
 class Grav: public QParallelAnimationGroup{
 	Q_OBJECT
@@ -56,7 +57,7 @@ private:
 		QPoint newLoc = QPoint(newX, newY);
 		//orbit->setKeyValueAt(i/step,  newLoc);
 		path.push_back(newLoc);
-          }
+	  }
 
 	  //Sets the time for a full orbit. Increasing makes the orbit slower.
 	  path.push_back(lastP);
@@ -94,13 +95,17 @@ public:
 
 	  //Creates the random position of the planet, making sure it isn't too close to the sun
 	  QRect invalid = QRect(center+QPoint(-50,-50), center+QPoint(50,50));
-           QPoint tmp = center;
-           while(invalid.contains(center)){
- 	    int randwidth =  qrand()%(range.width() - 2*planet_radius) + planet_radius;
- 	    int randheight=  qrand()%(range.height()- 2*planet_radius) + planet_radius;
+	  QPoint tmp = center;
+	  while(invalid.contains(tmp)){
+ 	    int randwidth =  qrand()%(int)(range.width() - 2*planet_radius) + planet_radius;
+ 	    int randheight=  qrand()%(int)(range.height()- 2*planet_radius) + planet_radius;
 	    tmp = QPoint(randwidth, randheight);
 	  }
 
+	  /*double tmpDistance = qSqrt((qPow((tmp.x()-center.x()), 2) + qPow((tmp.y()-center.y()), 2)));
+	  double theta = qAsin(qAbs(tmp.y()-center.y())/tmpDistance);
+	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -center.x(), -center.y());*/
+	  
 	  //Creates all frames for the animation
 	  setupLoop(tmp, &center);
 	  this->addAnimation(orbit);
@@ -174,10 +179,11 @@ public:
 	  int number = settings->value("planets/number",10).toInt();
 
 	  //Loops through all planets and sets up the animations, then adds them to the base group and vector, which
+	  qDebug() << "Starting planets";
 	  for(int i=0; i<number; i++){
 	    Grav *tmp = new Grav(canvas);
 	    this->addAnimation(tmp);
-            connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
+		connect(tmp, SIGNAL(finished()), this, SLOT(checkFinished()));
 	    planets << tmp;
 	  }
 	}
