@@ -104,7 +104,7 @@
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>查看</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="699"/>
@@ -214,7 +214,7 @@
     <message>
         <location filename="../mainUI.ui" line="767"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭应用程序</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="770"/>
