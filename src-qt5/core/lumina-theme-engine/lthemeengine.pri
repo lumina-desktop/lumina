@@ -8,18 +8,10 @@ QMAKE_DISTCLEAN += -r .build
 
 CONFIG += c++11
 
-!isEqual (QT_MAJOR_VERSION, 5) {
-  error("Use Qt 5.4.0 or higher.")
-}
-
-!greaterThan(QT_MINOR_VERSION, 3) {
-  error("Use Qt 5.4.0 or higher.")
-}
-
 #Install paths
 unix {
   isEmpty(PREFIX) {
-    PREFIX = /usr
+    PREFIX = /usr/local/
   }
   isEmpty(PLUGINDIR) {
     PLUGINDIR = $$[QT_INSTALL_PLUGINS]
