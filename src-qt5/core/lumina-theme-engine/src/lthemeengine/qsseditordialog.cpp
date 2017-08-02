@@ -36,10 +36,6 @@ void QSSEditorDialog::on_buttonBox_clicked(QAbstractButton *button){
     save();
     accept();
     }
-  else if(id == QDialogButtonBox::Save){
-    save();
-    }
-  else{
-  reject();
-  }
+  else if(id == QDialogButtonBox::Save){ save(); }
+  else{ reject(); }
 }

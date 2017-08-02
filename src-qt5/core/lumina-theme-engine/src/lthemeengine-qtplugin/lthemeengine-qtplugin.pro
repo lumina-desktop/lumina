@@ -19,10 +19,6 @@ SOURCES += \
     lthemeengineplatformtheme.cpp \
     ../lthemeengine/lthemeengine.cpp
 
-!equals (DISABLE_WIDGETS,1) {
-   QT += widgets
-}
-
 OTHER_FILES += lthemeengine.json
 
 INCLUDEPATH += ../

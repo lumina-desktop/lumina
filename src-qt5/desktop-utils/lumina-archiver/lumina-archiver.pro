@@ -36,6 +36,7 @@ TRANSLATIONS =  i18n/l-archiver_af.ts \
                 i18n/l-archiver_el.ts \
                 i18n/l-archiver_en_GB.ts \
                 i18n/l-archiver_en_ZA.ts \
+                i18n/l-archiver_en_AU.ts \
                 i18n/l-archiver_es.ts \
                 i18n/l-archiver_et.ts \
                 i18n/l-archiver_eu.ts \

@@ -107,11 +107,6 @@
         <translation>Vis pop op-advarsler om ugemte skærmbilleder</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation>værktøjsLinje</translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Fang</translation>

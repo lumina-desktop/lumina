@@ -195,7 +195,7 @@
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>Nepodařilo se najít „%1“. Nejprve zajistěte, aby bylo nainstalované.</translation>
     </message>
     <message>

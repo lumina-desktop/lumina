@@ -89,7 +89,7 @@ void LSession::start(bool unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
   //Window Manager First
-  if(WM=="fluxbox"){
+  if(WM=="fluxbox" || WM.endsWith("/fluxbox") || WM.isEmpty() ){
 	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	  if( !LUtils::isValidBinary("fluxbox") ){
 	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";

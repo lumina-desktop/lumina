@@ -64,6 +64,7 @@ TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_el.ts \
                 i18n/lumina-config_en_GB.ts \
                 i18n/lumina-config_en_ZA.ts \
+                i18n/lumina-config_en_AU.ts \
                 i18n/lumina-config_es.ts \
                 i18n/lumina-config_et.ts \
                 i18n/lumina-config_eu.ts \

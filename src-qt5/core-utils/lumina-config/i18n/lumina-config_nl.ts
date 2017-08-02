@@ -937,44 +937,34 @@ Wilt u het overschrijven?</translation>
 <context>
     <name>mainWindow</name>
     <message>
-        <location filename="../mainWindow.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation>HoofdVenster</translation>
-    </message>
-    <message>
-        <location filename="../mainWindow.ui" line="23"/>
-        <source>toolBar</source>
-        <translation>werkBalk</translation>
-    </message>
-    <message>
-        <location filename="../mainWindow.ui" line="50"/>
+        <location filename="../mainWindow.ui" line="44"/>
         <source>Save</source>
         <translation>Opslaan</translation>
     </message>
     <message>
-        <location filename="../mainWindow.ui" line="53"/>
+        <location filename="../mainWindow.ui" line="47"/>
         <source>Save current changes</source>
         <translation>Huidige wijzigingen opslaan</translation>
     </message>
     <message>
-        <location filename="../mainWindow.ui" line="56"/>
+        <location filename="../mainWindow.ui" line="50"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainWindow.ui" line="61"/>
+        <location filename="../mainWindow.ui" line="55"/>
         <source>Back to settings</source>
         <translation>Terug naar instellingen</translation>
     </message>
     <message>
-        <location filename="../mainWindow.ui" line="64"/>
-        <location filename="../mainWindow.ui" line="67"/>
+        <location filename="../mainWindow.ui" line="58"/>
+        <location filename="../mainWindow.ui" line="61"/>
         <source>Back to overall settings</source>
         <translation>Terug naar instellingenoverzicht</translation>
     </message>
     <message>
-        <location filename="../mainWindow.ui" line="78"/>
-        <location filename="../mainWindow.ui" line="81"/>
+        <location filename="../mainWindow.ui" line="72"/>
+        <location filename="../mainWindow.ui" line="75"/>
         <source>Select monitor/desktop to configure</source>
         <translation>Selecteer het in te stellen beeldscherm/bureaublad</translation>
     </message>
@@ -1429,12 +1419,17 @@ Wilt u het overschrijven?</translation>
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.ui" line="69"/>
+        <location filename="../pages/page_interface_panels.ui" line="46"/>
+        <source>Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.ui" line="96"/>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.ui" line="82"/>
+        <location filename="../pages/page_interface_panels.ui" line="130"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1615,17 +1610,22 @@ Wilt u het overschrijven?</translation>
         <translation>Weergave-opmaak</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="234"/>
+        <location filename="../pages/page_session_options.ui" line="220"/>
+        <source>Window Manager</source>
+        <translation type="unfinished">Vensterbeheerder</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="248"/>
         <source>Reset Desktop Settings</source>
         <translation>Bureaublad-instellingen herstellen</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="253"/>
+        <location filename="../pages/page_session_options.ui" line="267"/>
         <source>Return to system defaults</source>
         <translation>Herstellen naar standaardwaarden van het systeem</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="260"/>
+        <location filename="../pages/page_session_options.ui" line="274"/>
         <source>Return to Lumina defaults</source>
         <translation>Herstellen naar standaardwaarden van Lumina</translation>
     </message>
@@ -1650,142 +1650,147 @@ Wilt u het overschrijven?</translation>
         <translation>Eerst de datum, dan de tijd</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="81"/>
+        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <source>Window manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.cpp" line="94"/>
         <source>Desktop Settings</source>
         <translation>Bureaubladinstellingen</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="124"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Select an image</source>
         <translation>Selecteer een afbeelding</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="125"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>Images</source>
         <translation>Afbeeldingen</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="129"/>
+        <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Reset User Image</source>
         <translation>Gebruikersafbeelding herstellen</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="129"/>
+        <location filename="../pages/page_session_options.cpp" line="180"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Wilt u de gebruikersafbeelding herstellen naar de systeemstandaard?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="168"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>Valid Time Codes:</source>
         <translation>Geldige tijdcodes:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="169"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: uur zonder leidende nul (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="170"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: uur met leidende nul (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="171"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: minuten zonder leidende nul (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="172"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: minuten met leidende nul (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="173"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: seconden zonder leidende nul (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: seconden met leidende nul (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM (12 uur) klok (met kleine of hoofdletter)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>%1: Timezone</source>
         <translation>%1: Tijdzone</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="177"/>
+        <location filename="../pages/page_session_options.cpp" line="228"/>
         <source>Time Codes</source>
         <translation>Tijdcodes</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="191"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>Valid Date Codes:</source>
         <translation>Geldige datumcodes:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="192"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: dag in numeriek formaat zonder voorgaande nul (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="193"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: dag in numeriek formaat met voorgaande nul (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="194"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: dag in afgekort formaat (aangepast aan landinstellingen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="195"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: dag voluit (aangepast aan landinstellingen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="196"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: maand in numeriek formaat zonder voorgaande nul (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="197"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: maand in numeriek formaat met voorgaande nul (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="198"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: maand in afgekort formaat (aangepast aan landinstellingen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="199"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: maand voluit (aangepast aan landinstellingen)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="200"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: jaar geschreven als 2 getallen (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="201"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: jaar geschreven als 4 getallen (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="202"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>De tekst kan worden geplaatst tussen enkele aanhalingstekens om vervanging te negeren</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="203"/>
+        <location filename="../pages/page_session_options.cpp" line="254"/>
         <source>Date Codes</source>
         <translation>Datumcodes</translation>
     </message>

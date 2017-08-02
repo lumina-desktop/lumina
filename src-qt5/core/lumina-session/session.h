@@ -19,15 +19,15 @@ private:
 	QString id;
 private slots:
 	void filechanged(QString path){
-          qDebug() << "File Changed:" << path;
-	  qDebug() << " - Program:" << this->program();
+          //qDebug() << "File Changed:" << path;
+	  //qDebug() << " - Program:" << this->program();
 	  if(watcher==0){ return; } //just in case
 	  if(this->state()==QProcess::Running){
-	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){ 
-              qDebug() << "Sending Fluxbox signal to reload configs..."; 
+	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){
+             // qDebug() << "Sending Fluxbox signal to reload configs...";
               ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
-	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){ 
-              qDebug() << "Sending Compton signal to reload configs...";
+	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){
+              //qDebug() << "Sending Compton signal to reload configs...";
               ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
 	  }
 	  //Now make sure this file/dir was not removed from the watcher
@@ -40,7 +40,7 @@ public:
 	  id=ID;
 	  watcher = 0;
           if(!watchfiles.isEmpty()){
-            qDebug() << "Watch Files for changes:" << ID << watchfiles;
+            //qDebug() << "Watch Files for changes:" << ID << watchfiles;
 	    watcher = new QFileSystemWatcher(this);
 	    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(filechanged(QString)) );
 	    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(filechanged(QString)) );
@@ -74,5 +74,5 @@ public:
 	~LSession(){ }
 
 	void start(bool unified = false);
-	
+
 };
