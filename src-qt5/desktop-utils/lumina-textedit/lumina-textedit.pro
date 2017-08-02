@@ -40,6 +40,7 @@ TRANSLATIONS =  i18n/l-te_af.ts \
                 i18n/l-te_el.ts \
                 i18n/l-te_en_GB.ts \
                 i18n/l-te_en_ZA.ts \
+                i18n/l-te_en_AU.ts \
                 i18n/l-te_es.ts \
                 i18n/l-te_et.ts \
                 i18n/l-te_eu.ts \

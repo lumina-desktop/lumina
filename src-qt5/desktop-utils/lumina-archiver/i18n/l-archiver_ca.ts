@@ -6,7 +6,7 @@
     <message>
         <location filename="../TarBackend.cpp" line="218"/>
         <source>Could not read archive</source>
-        <translation>No s'ha pogut llegir l'arxiu</translation>
+        <translation>No s&apos;ha pogut llegir l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="220"/>
@@ -27,131 +27,121 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation>Finestra principal</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="38"/>
+        <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
         <translation>Arxiu:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
         <translation>Fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="137"/>
+        <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
         <translation>Edita</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="148"/>
+        <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
         <translation>Grava-ho al disc</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="159"/>
-        <source>toolBar</source>
-        <translation>Barra d'eines</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="184"/>
+        <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
         <translation>&amp;Obre un arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="187"/>
+        <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
         <translation>Obre un arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="192"/>
+        <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
         <translation>Arxiu &amp;nou</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="195"/>
+        <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
         <translation>Arxiu nou</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="200"/>
+        <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
         <translation>&amp;Surt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="205"/>
+        <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
         <translation>Afegeix fitxers</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="208"/>
+        <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation>Afegiu fitxers a l'arxiu</translation>
+        <translation>Afegiu fitxers a l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
         <translation>Elimina fitxers</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
+        <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation>Elimina la selecció de l'arxiu</translation>
+        <translation>Elimina la selecció de l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
         <translation>Extreu-ho tot</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="224"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
-        <translation>Extreu l'arxiu en un directori</translation>
+        <translation>Extreu l&apos;arxiu en un directori</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="229"/>
+        <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
         <translation>Afegeix un directori</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation>Afegeix un directori a l'arxiu</translation>
+        <translation>Afegeix un directori a l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
         <translation>Extreu la selecció</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="240"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
         <translation>Extreu els elements seleccionats</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
         <translation>Imatge USB</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="248"/>
+        <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d'administrador)</translation>
+        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d&apos;administrador)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="24"/>
         <source>Archive Manager</source>
-        <translation>Gestor d'arxius</translation>
+        <translation>Gestor d&apos;arxius</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="25"/>
         <source>Admin Mode</source>
-        <translation>Mode d'administrador</translation>
+        <translation>Mode d&apos;administrador</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="51"/>
@@ -189,7 +179,7 @@
         <location filename="../MainUI.cpp" line="79"/>
         <location filename="../MainUI.cpp" line="210"/>
         <source>Opening Archive...</source>
-        <translation>S'obre l'arxiu...</translation>
+        <translation>S&apos;obre l&apos;arxiu...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="154"/>
@@ -311,7 +301,7 @@
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Could not overwrite file:</source>
-        <translation>No s'ha pogut sobreescriure el fitxer:</translation>
+        <translation>No s&apos;ha pogut sobreescriure el fitxer:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="208"/>
@@ -322,18 +312,18 @@
         <location filename="../MainUI.cpp" line="216"/>
         <location filename="../MainUI.cpp" line="223"/>
         <source>Add to Archive</source>
-        <translation>Afegeix a l'arxiu</translation>
+        <translation>Afegeix a l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="218"/>
         <location filename="../MainUI.cpp" line="225"/>
         <source>Adding Items...</source>
-        <translation>S'afegeixen elements...</translation>
+        <translation>S&apos;afegeixen elements...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="236"/>
         <source>Removing Items...</source>
-        <translation>S'eliminen elements...</translation>
+        <translation>S&apos;eliminen elements...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="241"/>
@@ -347,7 +337,7 @@
         <location filename="../MainUI.cpp" line="264"/>
         <location filename="../MainUI.cpp" line="270"/>
         <source>Extracting...</source>
-        <translation>S'extreu...</translation>
+        <translation>S&apos;extreu...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="290"/>
@@ -385,7 +375,7 @@
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation>Neteja tot l'espai extra al dispositiu (conv = sync)</translation>
+        <translation>Neteja tot l&apos;espai extra al dispositiu (conv = sync)</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
@@ -415,7 +405,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
-        <translation>Mode d'administrador</translation>
+        <translation>Mode d&apos;administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
@@ -450,12 +440,12 @@
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Administrator Permissions Needed</source>
-        <translation>Calen permisos d'administrador</translation>
+        <translation>Calen permisos d&apos;administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>This operation requires administrator priviledges.</source>
-        <translation>Aquesta operació requereix privilegis d'administrador.</translation>
+        <translation>Aquesta operació requereix privilegis d&apos;administrador.</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -470,7 +460,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation>El procés no s'ha pogut completar:</translation>
+        <translation>El procés no s&apos;ha pogut completar:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
@@ -480,7 +470,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation>La imatge s'ha gravat correctament al dispositiu USB.</translation>
+        <translation>La imatge s&apos;ha gravat correctament al dispositiu USB.</translation>
     </message>
 </context>
 </TS>

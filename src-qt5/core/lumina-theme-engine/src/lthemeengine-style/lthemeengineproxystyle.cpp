@@ -14,16 +14,12 @@ lthemeengineProxyStyle::~lthemeengineProxyStyle(){
 
 int lthemeengineProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const{
   if(hint == QStyle::SH_DialogButtonBox_ButtonsHaveIcons){
-    if(m_dialogButtonsHaveIcons == Qt::Unchecked)
-      return 0;
-    else if(m_dialogButtonsHaveIcons == Qt::Checked)
-      return 1;
+    if(m_dialogButtonsHaveIcons == Qt::Unchecked){ return 0; }
+    else if(m_dialogButtonsHaveIcons == Qt::Checked){ return 1; }
     }
   else if(hint == QStyle::QStyle::SH_ItemView_ActivateItemOnSingleClick){
-    if(m_activateItemOnSingleClick == Qt::Unchecked)
-      return 0;
-    else if(m_activateItemOnSingleClick == Qt::Checked)
-      return 1;
+    if(m_activateItemOnSingleClick == Qt::Unchecked){ return 0; }
+    else if(m_activateItemOnSingleClick == Qt::Checked){ return 1; }
     }
   return QProxyStyle::styleHint(hint, option, widget, returnData);
 }

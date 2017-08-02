@@ -14,10 +14,10 @@
 
 class SSBaseWidget : public QWidget{
 	Q_OBJECT
-public:	
+public:
 	SSBaseWidget(QWidget *parent, QSettings *set);
 	~SSBaseWidget();
-	
+
 	void setPlugin(QString);
 
 public slots:
@@ -30,7 +30,7 @@ private:
 	QSettings *settings;
 
 private slots:
-	
+
 signals:
 	void InputDetected(); //just in case no event handling setup at the WM level
 
@@ -49,7 +49,7 @@ protected:
 	  QPainter p(this);
 	  style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 	}
-	
+
 };
 
 #endif

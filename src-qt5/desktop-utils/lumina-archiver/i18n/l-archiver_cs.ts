@@ -27,119 +27,109 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation>HlavníOkno</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="38"/>
+        <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
         <translation>Archiv:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="137"/>
+        <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
         <translation>Upravit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="148"/>
+        <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
         <translation>Zapsat na jednotku datového úložiště</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="159"/>
-        <source>toolBar</source>
-        <translation>lištaNástrojů</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="184"/>
+        <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
         <translation>&amp;Otevřít archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="187"/>
+        <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
         <translation>Otevřít archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="192"/>
+        <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
         <translation>&amp;Nový archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="195"/>
+        <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
         <translation>Nový archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="200"/>
+        <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
         <translation>U&amp;končit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="205"/>
+        <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
         <translation>Přidat soubory</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="208"/>
+        <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
         <translation>Přidat soubory do archviu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
         <translation>Odebrat soubry</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
+        <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
         <translation>Odebrat označené z archivu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
         <translation>Rozbalit vše</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="224"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
         <translation>Rozbalit obsah archivu do složky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="229"/>
+        <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
         <translation>Přidat složku</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
         <translation>Přidat složku do archivu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
         <translation>Rozbalit označené</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="240"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
         <translation>Rozbalit označené položky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
         <translation>Obraz pro USB úložiště</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="248"/>
+        <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
         <translation>Zkopírovat IMG na USB zařízení (může vyžadovat oprávnění pro správu systému)</translation>
     </message>

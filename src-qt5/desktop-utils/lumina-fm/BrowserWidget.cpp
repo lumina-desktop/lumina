@@ -275,7 +275,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   int num = 0;
   if(listWidget!=0){
     //LIST WIDGET - name and icon only
-    if(info->isDesktopFile()){
+    if(info->isDesktopFile() && info.XDG()->isValid()){
       QList<QListWidgetItem*> items = listWidget->findItems(info->XDG()->name, Qt::MatchExactly);
       //Could be multiple items with the same text in this case - check paths as well
       bool found = false;

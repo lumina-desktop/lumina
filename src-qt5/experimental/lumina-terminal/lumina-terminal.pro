@@ -40,6 +40,7 @@ TRANSLATIONS =  i18n/l-terminal_af.ts \
                 i18n/l-terminal_el.ts \
                 i18n/l-terminal_en_GB.ts \
                 i18n/l-terminal_en_ZA.ts \
+                i18n/l-terminal_en_AU.ts \
                 i18n/l-terminal_es.ts \
                 i18n/l-terminal_et.ts \
                 i18n/l-terminal_eu.ts \
