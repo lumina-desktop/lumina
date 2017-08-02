@@ -107,11 +107,6 @@
         <translation>未保存截图时显示弹出警告</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation>工具栏</translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>捕获</translation>

@@ -31,5 +31,5 @@ BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent, QSetti
 }
 
 QStringList BaseAnimGroup::KnownAnimations(){
-  return (QStringList() << "fireflies" << "grav" << "text");
+  return (QStringList() << "grav");
 }

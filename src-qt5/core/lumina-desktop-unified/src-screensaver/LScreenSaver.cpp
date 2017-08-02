@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
-#define DEBUG 0
+#define DEBUG 1
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
@@ -102,13 +102,14 @@ void LScreenSaver::ShowScreenSaver(){
   //Now go through and create/show all the various widgets
   QList<QScreen*> SCREENS = QApplication::screens();
   QRect bounds;
-  cBright = LOS::ScreenBrightness();
-  if(cBright>0){ LOS::setScreenBrightness(cBright/2); } //cut to half while the screensaver is active
+  //cBright = LOS::ScreenBrightness();
+  //if(cBright>0){ LOS::setScreenBrightness(cBright/2); } //cut to half while the screensaver is active
   for(int i=0; i<SCREENS.length(); i++){
     bounds = bounds.united(SCREENS[i]->geometry());
     if(DEBUG){ qDebug() << " - New SS Base:" << i; }
     BASES << new SSBaseWidget(this, settings);
     connect(BASES[i], SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
+    
     //Setup the geometry of the base to match the screen
     BASES[i]->setGeometry(SCREENS[i]->geometry());  //match this screen geometry
     BASES[i]->setPlugin(settings->value("screenplugin"+QString::number(i+1), settings->value("defaultscreenplugin","random").toString() ).toString() );
@@ -144,15 +145,16 @@ void LScreenSaver::HideScreenSaver(){
   //QApplication::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
-  if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
+  //if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
   if(!SSLocked){
     this->hide();
     emit ClosingScreenSaver();
     emit LockStatusChanged(false);
   }
   for(int i=0; i<BASES.length(); i++){
-    BASES[i]->hide();
+    qDebug() << "Stop ScreenSaver:" << i;
     BASES[i]->stopPainting();
+    BASES[i]->hide();
   }
   UpdateTimers();
 }

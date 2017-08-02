@@ -51,241 +51,246 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="17"/>
-        <source>MainWindow</source>
-        <translation>Pagrindinis langas</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="66"/>
+        <location filename="../MainUI.ui" line="63"/>
         <source>Find the previous match</source>
         <translation>Rasti ankstesnį atitikmenį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="69"/>
-        <location filename="../MainUI.ui" line="82"/>
-        <location filename="../MainUI.ui" line="133"/>
-        <location filename="../MainUI.ui" line="146"/>
-        <location filename="../MainUI.ui" line="158"/>
+        <location filename="../MainUI.ui" line="66"/>
+        <location filename="../MainUI.ui" line="79"/>
+        <location filename="../MainUI.ui" line="130"/>
+        <location filename="../MainUI.ui" line="143"/>
+        <location filename="../MainUI.ui" line="155"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="168"/>
+        <location filename="../MainUI.ui" line="165"/>
         <source>Find:</source>
         <translation>Rasti:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="79"/>
+        <location filename="../MainUI.ui" line="76"/>
         <source>Find the next match</source>
         <translation>Rasti kitą atitikmenį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="89"/>
+        <location filename="../MainUI.ui" line="86"/>
         <source>Replace:</source>
         <translation>Pakeisti:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="108"/>
+        <location filename="../MainUI.ui" line="105"/>
         <source>Match case</source>
         <translation>Skirti raidžių dydį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="130"/>
+        <location filename="../MainUI.ui" line="127"/>
         <source>Replace next match</source>
         <translation>Pakeisti kitą atitikmenį</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="143"/>
+        <location filename="../MainUI.ui" line="140"/>
         <source>Replace all matches (to end of document)</source>
         <translation>Pakeisti visus atitikmenis (iki dokumento pabaigos)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="155"/>
+        <location filename="../MainUI.ui" line="152"/>
         <source>Hide the find/replace options</source>
         <translation>Slėpti radimo/pakeitimo parinktis</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="196"/>
+        <location filename="../MainUI.ui" line="193"/>
         <source>File</source>
         <translation>Failas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="209"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>View</source>
         <translation>Rodinys</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="211"/>
         <source>Syntax Highlighting</source>
         <translation>Sintaksės paryškinimas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="220"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Tabs Location</source>
         <translation>Kortelių vieta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="235"/>
         <source>Edit</source>
         <translation>Taisa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="252"/>
-        <source>toolBar</source>
-        <translation>Įrankių juosta</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="278"/>
+        <location filename="../MainUI.ui" line="273"/>
         <source>Show Line Numbers</source>
         <translation>Rodyti eilučių numerius</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="283"/>
+        <location filename="../MainUI.ui" line="278"/>
         <source>None</source>
         <translation>Nėra</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="288"/>
-        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.ui" line="283"/>
+        <location filename="../MainUI.cpp" line="192"/>
         <source>New File</source>
         <translation>Naujas failas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="286"/>
         <source>Ctrl+N</source>
         <translation>Ctrl(Vald)+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="299"/>
+        <location filename="../MainUI.ui" line="294"/>
         <source>Open File</source>
         <translation>Atverti failą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="302"/>
+        <location filename="../MainUI.ui" line="297"/>
         <source>Ctrl+O</source>
         <translation>Ctrl(Vald)+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="310"/>
+        <location filename="../MainUI.ui" line="305"/>
         <source>Save File</source>
         <translation>Įrašyti failą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="313"/>
+        <location filename="../MainUI.ui" line="308"/>
         <source>Ctrl+S</source>
         <translation>Ctrl(Vald)+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="316"/>
         <source>Save File As</source>
         <translation>Įrašyti failą kaip</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="326"/>
+        <location filename="../MainUI.ui" line="321"/>
         <source>Close</source>
         <translation>Užverti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"/>
+        <location filename="../MainUI.ui" line="324"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl(Vald)+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="337"/>
+        <location filename="../MainUI.ui" line="332"/>
         <source>Close File</source>
         <translation>Užverti failą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"/>
+        <location filename="../MainUI.ui" line="335"/>
         <source>Ctrl+W</source>
         <translation>Ctrl(Vald)+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="348"/>
+        <location filename="../MainUI.ui" line="343"/>
         <source>Customize Colors</source>
         <translation>Tinkinti spalvas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="359"/>
+        <location filename="../MainUI.ui" line="354"/>
         <source>Wrap Lines</source>
         <translation>Skaidyti eilutes</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="364"/>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Find</source>
         <translation>Rasti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="367"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Ctrl+F</source>
         <translation>Ctrl(Vald)+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="375"/>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Replace</source>
         <translation>Pakeisti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="378"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+R</source>
         <translation>Ctrl(Vald)+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="392"/>
+        <location filename="../MainUI.ui" line="387"/>
         <source>Show Popup Warnings</source>
         <translation>Rodyti iškylančiuosius įspėjimus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"/>
-        <location filename="../MainUI.ui" line="398"/>
+        <location filename="../MainUI.ui" line="390"/>
+        <location filename="../MainUI.ui" line="393"/>
         <source>Show warnings about unsaved changes</source>
         <translation>Rodyti įspėjimus apie neįrašytus pakeitimus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"/>
+        <location filename="../MainUI.ui" line="404"/>
         <source>Top</source>
         <translation>Viršus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"/>
+        <location filename="../MainUI.ui" line="412"/>
         <source>Bottom</source>
         <translation>Apačia</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="425"/>
+        <location filename="../MainUI.ui" line="420"/>
         <source>Left</source>
         <translation>Kairė</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="433"/>
+        <location filename="../MainUI.ui" line="428"/>
         <source>Right</source>
         <translation>Dešinė</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="62"/>
+        <location filename="../MainUI.ui" line="433"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="436"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="64"/>
         <source>Text Editor</source>
         <translation>Tekstų redaktorius</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="195"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Open File(s)</source>
         <translation>Atverti failą(-us)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="195"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Text Files (*)</source>
         <translation>Tekstiniai failai (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="366"/>
-        <location filename="../MainUI.cpp" line="377"/>
-        <location filename="../MainUI.cpp" line="485"/>
+        <location filename="../MainUI.cpp" line="252"/>
+        <source>Print Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="383"/>
+        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="502"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Prarasti neįrašytus pakeitimus?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="366"/>
-        <location filename="../MainUI.cpp" line="377"/>
+        <location filename="../MainUI.cpp" line="383"/>
+        <location filename="../MainUI.cpp" line="394"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -296,7 +301,7 @@ Ar vis tiek norite jį užverti?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="485"/>
+        <location filename="../MainUI.cpp" line="502"/>
         <source>There are unsaved changes.
 Do you want to close the editor anyway?
 

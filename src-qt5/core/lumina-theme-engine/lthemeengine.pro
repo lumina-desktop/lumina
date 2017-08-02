@@ -1,5 +1,7 @@
-QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras network
+QT       += core gui widgets x11extras network
+!isEqual (QT_MAJOR_VERSION, 5) {
+  error("Use Qt 5.4.0 or higher.")
+}
 
 QMAKE_DISTCLEAN += -r .build
 
@@ -11,7 +13,7 @@ desktop.path=$${L_SHAREDIR}/applications/
 #Install paths
 unix {
   isEmpty(PREFIX) {
-    PREFIX = /usr
+    PREFIX = /usr/local
   }
   isEmpty(PLUGINDIR) {
     PLUGINDIR = $$[QT_INSTALL_PLUGINS]

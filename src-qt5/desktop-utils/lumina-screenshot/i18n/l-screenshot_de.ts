@@ -107,11 +107,6 @@
         <translation>Popup-Warnungen über nicht gespeicherte Bildschirmfotos anzeigen</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>Aufnehmen</translation>

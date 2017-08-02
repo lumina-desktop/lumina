@@ -36,6 +36,7 @@ TRANSLATIONS =  i18n/lumina-open_af.ts \
                 i18n/lumina-open_el.ts \
                 i18n/lumina-open_en_GB.ts \
                 i18n/lumina-open_en_ZA.ts \
+                i18n/lumina-open_en_AU.ts \
                 i18n/lumina-open_es.ts \
                 i18n/lumina-open_et.ts \
                 i18n/lumina-open_eu.ts \
