@@ -83,7 +83,7 @@
         <location filename="../ColorDialog.cpp" line="121"/>
         <location filename="../ColorDialog.cpp" line="122"/>
         <source>Select Color</source>
-        <translation>Seleccione Color</translation>
+        <translation>Seleccionar Color</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Iniciar alternativa de menú enfocándose en los archivos del usuario, directorios y favoritos.</translation>
     </message>
     <message>
@@ -1234,12 +1234,12 @@ Sobrescribirlo?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>

@@ -109,6 +109,7 @@ void LScreenSaver::ShowScreenSaver(){
     if(DEBUG){ qDebug() << " - New SS Base:" << i; }
     BASES << new SSBaseWidget(this, settings);
     connect(BASES[i], SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
+    
     //Setup the geometry of the base to match the screen
     BASES[i]->setGeometry(SCREENS[i]->geometry());  //match this screen geometry
     BASES[i]->setPlugin(settings->value("screenplugin"+QString::number(i+1), settings->value("defaultscreenplugin","random").toString() ).toString() );

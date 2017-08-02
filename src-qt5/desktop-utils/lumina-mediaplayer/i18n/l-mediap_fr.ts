@@ -7,24 +7,24 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecteur Multimédia</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture en Cours</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de Vidéo en Cours d'Exécution</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../mainUI.ui" line="699"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="726"/>

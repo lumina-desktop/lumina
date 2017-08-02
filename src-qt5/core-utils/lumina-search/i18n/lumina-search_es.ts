@@ -90,7 +90,7 @@
         <location filename="../MainUI.ui" line="122"/>
         <location filename="../MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
-        <translation>Guardar Captura de Pantalla</translation>
+        <translation type="unfinished">Guardar la Captura de Pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>

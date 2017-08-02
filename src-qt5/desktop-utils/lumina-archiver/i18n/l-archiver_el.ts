@@ -36,12 +36,12 @@
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>

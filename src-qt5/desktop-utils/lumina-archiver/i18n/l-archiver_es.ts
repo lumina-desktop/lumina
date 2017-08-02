@@ -29,64 +29,64 @@
     <message>
         <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archivo comprimido:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Quemar al Disco</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Abrir Archivo comprimido</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abrir archivo comprimido</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Nuevo Archivo comprimido</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nuevo Archivo comprimido</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Quitar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir Archivo(s)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Añadir archivos al archivo comprimido</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover Archivo(s)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="210"/>

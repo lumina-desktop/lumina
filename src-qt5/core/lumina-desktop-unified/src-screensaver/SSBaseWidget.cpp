@@ -39,8 +39,7 @@ void SSBaseWidget::startPainting(){
   cplug = plugType;
   //free up any old animation instance
   if(ANIM!=0){
-    ANIM->stop(); ANIM->clear();
-    delete ANIM; ANIM = 0;
+    stopPainting();
   }
   //If a random plugin - grab one of the known plugins
   if(cplug=="random"){
