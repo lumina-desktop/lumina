@@ -55,9 +55,9 @@ QString LIconCache::findFile(QString icon){
   if(icon.isEmpty()){ return ""; }
   //Get the currently-set theme
   QString cTheme = QIcon::themeName();
-  if(cTheme.isEmpty()){ 
-    QIcon::setThemeName("material-design-light"); 
-    cTheme = "material-design-light";	  
+  if(cTheme.isEmpty()){
+    QIcon::setThemeName("material-design-light");
+    cTheme = "material-design-light";	
   }
   //Make sure the current search paths correspond to this theme
   if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){
@@ -309,7 +309,12 @@ bool LIconCache::isThemeIcon(QString id){
 }
 
 QIcon LIconCache::iconFromTheme(QString id){
-  return QIcon::fromTheme(id);
+  QIcon ico = QIcon::fromTheme(id);
+  if(ico.isNull()){
+    //icon missing in theme? run the old icon-finder system
+    ico = QIcon(findFile(id));
+  }
+  return ico;
 }
 
 // === PRIVATE SLOTS ===
