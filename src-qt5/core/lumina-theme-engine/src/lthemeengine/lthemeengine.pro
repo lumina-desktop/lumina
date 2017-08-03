@@ -2,7 +2,7 @@ include(../../lthemeengine.pri)
 
 TEMPLATE = app
 
-QT += widgets
+QT *= widgets
 
 SOURCES += \
     main.cpp \

@@ -30,7 +30,7 @@ private slots:
 
 private:
     void readSettings();
-    void findStyleSheets(const QStringList &paths);
+    void findStyleSheets(QStringList paths);
     Ui::QSSPage *m_ui;
     QMenu *m_menu;
 };

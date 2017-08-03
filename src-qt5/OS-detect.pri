@@ -121,9 +121,9 @@ isEmpty(OS){
   }
 
   #Some conf to redirect intermediate stuff in separate dirs
-  UI_DIR=$${PWD}/.build/ui/
-  MOC_DIR=$${PWD}/.build/moc/
-  OBJECTS_DIR=$${PWD}/.build/obj
-  RCC_DIR=$${PWD}/.build/rcc
-  QMAKE_DISTCLEAN += -r $${PWD}/.build
+  UI_DIR=./.build/ui/
+  MOC_DIR=./.build/moc/
+  OBJECTS_DIR=./.build/obj
+  RCC_DIR=./.build/rcc
+  QMAKE_DISTCLEAN += -r ./.build
 }

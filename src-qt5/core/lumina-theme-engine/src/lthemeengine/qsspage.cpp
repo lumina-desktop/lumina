@@ -105,7 +105,8 @@ void QSSPage::readSettings(){
     }
 }
 
-void QSSPage::findStyleSheets(const QStringList &paths){
+void QSSPage::findStyleSheets(QStringList paths){
+  paths.removeDuplicates();
   for(int i=0; i<paths.length(); i++){
     if(!QFile::exists(paths[i])){ continue; }
     QDir dir(paths[i]);
