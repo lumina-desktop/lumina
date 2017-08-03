@@ -119,4 +119,11 @@ isEmpty(OS){
     L_SESSDIR = $$DESTDIR$${L_SESSDIR}
     L_MANDIR = $$DESTDIR$${L_MANDIR}
   }
+
+  #Some conf to redirect intermediate stuff in separate dirs
+  UI_DIR=$${PWD}/.build/ui/
+  MOC_DIR=$${PWD}/.build/moc/
+  OBJECTS_DIR=$${PWD}/.build/obj
+  RCC_DIR=$${PWD}/.build/rcc
+  QMAKE_DISTCLEAN += -r $${PWD}/.build
 }

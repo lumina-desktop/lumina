@@ -6,6 +6,7 @@
 #define LTHEMEENGINE_DATADIR "/usr/local/share"
 #endif
 
+#include <QDebug>
 
 QString lthemeengine::configPath(){
   return QDir::homePath() + "/.config/lthemeengine/";
@@ -46,7 +47,8 @@ QStringList lthemeengine::sharedStyleSheetPath(){
   QStringList dirs;
   dirs << QString(getenv("XDG_CONFIG_HOME"));
   dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
-  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/colors/"); }
+  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
+  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/qss/"); }
   if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/qss/"; } //no XDG settings - use the hardcoded path
   return dirs;
  }
@@ -59,8 +61,10 @@ QStringList lthemeengine::sharedColorSchemePath(){
   QStringList dirs;
   dirs << QString(getenv("XDG_CONFIG_HOME"));
   dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
+  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
   for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/colors/"); }
   if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/colors/"; } //no XDG settings - use the hardcoded path
+  qDebug() << "Got Color Dirs:" << dirs;
   return dirs;
 }
 

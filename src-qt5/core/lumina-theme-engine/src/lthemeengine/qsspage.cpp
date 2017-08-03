@@ -95,8 +95,7 @@ void QSSPage::on_removeButton_clicked(){
 void QSSPage::readSettings(){
   //load stylesheets
   m_ui->qssListWidget->clear();
-  findStyleSheets(lthemeengine::userStyleSheetPath());
-  findStyleSheets(lthemeengine::sharedStyleSheetPath().join(", "));
+  findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath());
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   QStringList styleSheets = settings.value("Interface/stylesheets").toStringList();
   for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
@@ -106,16 +105,19 @@ void QSSPage::readSettings(){
     }
 }
 
-void QSSPage::findStyleSheets(const QString &path){
-  QDir dir(path);
-  dir.setFilter(QDir::Files);
-  dir.setNameFilters(QStringList() << "*.qss");
-  foreach (QFileInfo info, dir.entryInfoList()){
-    QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
-    item->setToolTip(info.filePath());
-    item->setData(QSS_FULL_PATH_ROLE, info.filePath());
-    item->setData(QSS_WRITABLE_ROLE, info.isWritable());
+void QSSPage::findStyleSheets(const QStringList &paths){
+  for(int i=0; i<paths.length(); i++){
+    if(!QFile::exists(paths[i])){ continue; }
+    QDir dir(paths[i]);
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList() << "*.qss");
+    foreach (QFileInfo info, dir.entryInfoList()){
+      QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
+      item->setToolTip(info.filePath());
+      item->setData(QSS_FULL_PATH_ROLE, info.filePath());
+      item->setData(QSS_WRITABLE_ROLE, info.isWritable());
     }
+  }
 }
 
 void QSSPage::on_renameButton_clicked(){

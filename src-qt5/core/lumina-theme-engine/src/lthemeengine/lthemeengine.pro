@@ -43,13 +43,12 @@ HEADERS += \
     qsspage.h \
     qsseditordialog.h
 
-!equals (DISABLE_WIDGETS,1) {
    DEFINES += USE_WIDGETS
-}
 
-target.path = $$BINDIR
+TARGET = lthemeengine
+target.path = $${L_BINDIR}
 
 desktop.files = lthemeengine.desktop
-desktop.path = $$DATADIR/applications
+desktop.path = $${L_SHAREDIR}/applications
 
 INSTALLS += target desktop
