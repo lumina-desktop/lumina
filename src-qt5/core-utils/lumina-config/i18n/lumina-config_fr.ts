@@ -55,7 +55,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="105"/>
         <source>Sample</source>
-        <translation>Exemple</translation>
+        <translation>Échantillon</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="115"/>
@@ -83,7 +83,7 @@ Voulez-vous l'écraser ?</translation>
         <location filename="../ColorDialog.cpp" line="121"/>
         <location filename="../ColorDialog.cpp" line="122"/>
         <source>Select Color</source>
-        <translation>Sélection de couleur</translation>
+        <translation>Sélectionner une Couleur</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="142"/>
