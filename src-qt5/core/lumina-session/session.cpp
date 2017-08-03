@@ -85,6 +85,12 @@ void LSession::start(bool unified){
   if(!LUtils::isValidBinary("lumina-desktop") ){
     exit(1);
   }
+  setenv("DESKTOP_SESSION","Lumina",1);
+  setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+  setenv("QT_QPA_PLATFORMTHEME","lthemeengine", true);
+  setenv("QT_NO_GLIB", "1", 1); //Disable the glib event loop within Qt at runtime (performance hit + bugs)
+  unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //need exact-pixel measurements (no fake scaling)
+
  if(!unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
