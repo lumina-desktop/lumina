@@ -19,7 +19,7 @@
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Sin Video Ejecutándose)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
@@ -29,17 +29,17 @@
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Canción actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
@@ -59,12 +59,12 @@
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Encantar esta canción</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cansado de esta canción (no va a tocar por un mes)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
