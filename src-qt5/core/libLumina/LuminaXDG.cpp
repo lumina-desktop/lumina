@@ -723,7 +723,7 @@ QList<XDGDesktop*> LXDG::sortDesktopNames(QList<XDGDesktop*> apps){
   //Sort the list by name of the application
   QHash<QString, XDGDesktop*> sorter;
   for(int i=0; i<apps.length(); i++){
-    sorter.insert(apps[i]->name.toLower(), apps[i]);	  
+    sorter.insert(apps[i]->name.toLower(), apps[i]);
   }
   QStringList keys = sorter.keys();
   keys.sort();
@@ -746,16 +746,22 @@ void LXDG::setEnvironmentVars(){
 }
 
 QIcon LXDG::findIcon(QString iconName, QString fallback){
+  //With the addition of the Lumina theme engine (8/3/17), switch back to using the Qt icon from theme method for apps
+  QIcon tmp = QIcon::fromTheme(iconName);
+  if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
+  return tmp;
+
+
   //NOTE: This was re-written on 11/10/15 to avoid using the QIcon::fromTheme() framework
   //   -- Too many issues with SVG files and/or search paths with the built-in system
-	
+
   //Check if the icon is an absolute path and exists
   bool DEBUG =false;
   if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
   if(QFile::exists(iconName) && iconName.startsWith("/")){ return QIcon(iconName); }
   else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just look for the icon
   //Check if the icon is actually given
-  if(iconName.isEmpty()){ 
+  if(iconName.isEmpty()){
     if(fallback.isEmpty()){  return QIcon(); }
     else{ return LXDG::findIcon(fallback, ""); }
   }
@@ -763,9 +769,9 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   if(DEBUG){ qDebug() << "[LXDG] Start search for icon"; }
   //Get the currently-set theme
   QString cTheme = QIcon::themeName();
-  if(cTheme.isEmpty()){ 
-    QIcon::setThemeName("material-design-light"); 
-    cTheme = "material-design-light";	  
+  if(cTheme.isEmpty()){
+    QIcon::setThemeName("material-design-light");
+    cTheme = "material-design-light";
   }
   //Make sure the current search paths correspond to this theme
   if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){

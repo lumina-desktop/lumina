@@ -80,7 +80,7 @@ QString LIconCache::findFile(QString icon){
       fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
     }
     //Now load all the icon theme dependencies in order (Theme1 -> Theme2 -> Theme3 -> Fallback)
-    
+
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
     QDir::setSearchPaths("default", oxy);
@@ -121,6 +121,10 @@ QString LIconCache::findFile(QString icon){
 
 void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   if(icon.isEmpty()){ return; }
+  if(isThemeIcon(icon)){
+    button->setIcon( iconFromTheme(icon));
+    return ;
+  }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -138,6 +142,10 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
 
 void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
   if(icon.isEmpty()){ return; }
+  if(isThemeIcon(icon)){
+    action->setIcon( iconFromTheme(icon));
+    return ;
+  }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -155,6 +163,10 @@ void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
 
 void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   if(icon.isEmpty()){ return; }
+  if(isThemeIcon(icon)){
+    label->setPixmap( iconFromTheme(icon).pixmap(label->sizeHint()) );
+    return ;
+  }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
   if(!needload){
@@ -164,7 +176,7 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = createData(icon); 
+  else { idata = createData(icon);
     if(idata.fullpath.isEmpty()){ return; } //nothing to do
   }
   idata.pendingLabels << QPointer<QLabel>(label); //save this QLabel for later
@@ -183,6 +195,8 @@ void LIconCache::clearIconTheme(){
 
 QIcon LIconCache::loadIcon(QString icon, bool noThumb){
   if(icon.isEmpty()){ return QIcon(); }
+  if(isThemeIcon(icon)){ return iconFromTheme(icon); }
+
   if(HASH.contains(icon)){
     if(!HASH[icon].icon.isNull()){ return HASH[icon].icon; }
     else if(!HASH[icon].thumbnail.isNull() && !noThumb){ return HASH[icon].thumbnail; }
@@ -288,6 +302,14 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
     }
   }
   obj->emit InternalIconLoaded(id, cdt, BA);
+}
+
+bool LIconCache::isThemeIcon(QString id){
+  return (!id.contains("/") && !id.contains(".") );
+}
+
+QIcon LIconCache::iconFromTheme(QString id){
+  return QIcon::fromTheme(id);
 }
 
 // === PRIVATE SLOTS ===
