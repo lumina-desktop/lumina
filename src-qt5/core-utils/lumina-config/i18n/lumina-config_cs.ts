@@ -345,7 +345,7 @@ Přepsat?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>Alternativa ke spouštěcí nabídce se zaměřením na uživatelovy soubory, adresáře a oblíbené položky.</translation>
     </message>
     <message>
@@ -1234,12 +1234,12 @@ Přepsat?</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	klávesa Windows/Mac
-&quot;Control&quot;:	klávesa Ctrl</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt key
+"Mod4": 	klávesa Windows/Mac
+"Control":	klávesa Ctrl</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1422,7 +1422,7 @@ Přepsat?</translation>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="46"/>
         <source>Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Panel</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="96"/>
@@ -1613,7 +1613,7 @@ Přepsat?</translation>
     <message>
         <location filename="../pages/page_session_options.ui" line="220"/>
         <source>Window Manager</source>
-        <translation type="unfinished">Správce oken</translation>
+        <translation>Správce oken</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="248"/>
@@ -1653,7 +1653,7 @@ Přepsat?</translation>
     <message>
         <location filename="../pages/page_session_options.cpp" line="61"/>
         <source>Window manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Správce oken</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="94"/>
