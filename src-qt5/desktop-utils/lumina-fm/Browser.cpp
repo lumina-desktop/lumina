@@ -97,13 +97,13 @@ void Browser::futureFinished(QString name, QImage icon){
      QIcon ico;
      //LFileInfo info(name);
      LFileInfo *info = new LFileInfo(name);
-      if(!icon.isNull()){
+      if(!icon.isNull() && showThumbs){
         //qDebug() << " -- Data:";
         QPixmap pix = QPixmap::fromImage(icon);
         ico.addPixmap(pix);
-       }else if(info->isDir()){
+       //}else if(info->isDir()){
         //qDebug() << " -- Folder:";
-        ico = loadIcon("folder");
+        //ico = loadIcon("folder");
       }
       if(ico.isNull()){
 	//qDebug() << " -- MimeType:" << info.fileName() << info.mimetype();
@@ -141,12 +141,12 @@ void Browser::loadDirectory(QString dir){
       QString path = directory.absoluteFilePath(files[i]);
       if(old.contains(path)){ old.removeAll(path); }
       oldFiles << path; //add to list for next time
-      if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
+      //if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
         QtConcurrent::run(this, &Browser::loadItem, path, this);
-      }else{
+      /*}else{
         //No special icon loading - just skip the file read step
         futureFinished(path, QImage()); //loadItem(path, this);
-      }
+      }*/
     }
     watcher->addPath(directory.absolutePath());
     if(!old.isEmpty()){
