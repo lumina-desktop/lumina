@@ -23,7 +23,7 @@
 #define DEBUG 0
 int findAvailableSession(){
   int num = 0;
-  while(!QFile::exists("/tmp/.X11-unix/X"+QString::number(num))){ num++; }
+  while(QFile::exists("/tmp/.X11-unix/X"+QString::number(num))){ num++; }
   return num;
 }
 
