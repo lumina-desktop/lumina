@@ -190,8 +190,7 @@ void AppearancePage::readSettings(){
   m_ui->customPaletteButton->setChecked(settings.value("custom_palette", false).toBool());
   QString colorSchemePath = settings.value("color_scheme_path").toString();
   QDir("/").mkpath(lthemeengine::userColorSchemePath());
-  findColorSchemes(lthemeengine::userColorSchemePath());
-  findColorSchemes(lthemeengine::sharedColorSchemePath().join(", "));
+  findColorSchemes( QStringList() << lthemeengine::userColorSchemePath() << lthemeengine::sharedColorSchemePath());
   if(m_ui->colorSchemeComboBox->count() == 0){
     m_customPalette = palette(); //load fallback palette
     }
@@ -223,12 +222,16 @@ void AppearancePage::setPalette(QWidget *w, QPalette p){
   w->setPalette(p);
 }
 
-void AppearancePage::findColorSchemes(const QString &path){
-  QDir dir(path);
-  dir.setFilter(QDir::Files);
-  dir.setNameFilters(QStringList() << "*.conf");
-  foreach (QFileInfo info, dir.entryInfoList()){
-    m_ui->colorSchemeComboBox->addItem(info.baseName(), info.filePath());
+void AppearancePage::findColorSchemes(QStringList paths){
+  paths.removeDuplicates();
+  for(int i=0; i<paths.length(); i++){
+    if( !QFile::exists(paths[i])){ continue; }
+    QDir dir(paths[i]);
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList() << "*.conf");
+    foreach (QFileInfo info, dir.entryInfoList()){
+      m_ui->colorSchemeComboBox->addItem(info.baseName(), info.filePath());
+      }
     }
 }
 

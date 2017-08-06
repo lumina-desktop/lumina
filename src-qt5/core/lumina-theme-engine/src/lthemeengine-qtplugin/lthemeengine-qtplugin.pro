@@ -2,7 +2,7 @@ include(../../lthemeengine.pri)
 
 TEMPLATE = lib
 TARGET = lthemeengine
-CONFIG += plugin
+CONFIG *= plugin
 
 greaterThan(QT_MINOR_VERSION, 7) {
   QT += gui-private theme_support-private

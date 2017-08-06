@@ -8,9 +8,10 @@ SUBDIRS+= lumina-desktop \
 	lumina-session \
 	lumina-open \
 	lumina-info \
-	$${PWD}/../../icon-theme
-#	lumina-wm-INCOMPLETE \
+	$${PWD}/../../icon-theme \
+	lumina-theme-engine
 #	lumina-checkpass
+#	lumina-desktop-unified
 
 #Also install any special menu scripts
 scripts.path = $${L_SHAREDIR}/lumina-desktop/menu-scripts
