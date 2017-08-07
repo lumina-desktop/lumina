@@ -165,17 +165,17 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation>Seleccioneu l&apos;acció</translation>
+        <translation>Seleccioneu l'acció</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Columna simple</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
         <source>Single column view</source>
-        <translation>Vista d&apos;una columna</translation>
+        <translation>Vista d'una columna</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
@@ -213,7 +213,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>No s&apos;ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
+        <translation>No s'ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="693"/>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="616"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Altres...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="624"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>No s&apos;ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
+        <translation>No s'ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="371"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="275"/>
         <source>Application Launcher</source>
-        <translation>Llançador d&apos;aplicacions</translation>
+        <translation>Llançador d'aplicacions</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="279"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="304"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Obre amb...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="310"/>
@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>No s&apos;ha pogut trobar la utilitat &quot;lumina-fileinfo&quot; al sistema. Si us plau, instal·leu-la primer.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>No s'ha pogut trobar la utilitat "lumina-fileinfo" al sistema. Si us plau, instal·leu-la primer.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -415,7 +415,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Nota: si no, només s&apos;afegirà un número al nom del fitxer.</translation>
+        <translation>Nota: si no, només s'afegirà un número al nom del fitxer.</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="148"/>
@@ -440,22 +440,22 @@
     <message>
         <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
-        <translation>No s&apos;han pogut suprimir aquests fitxers:</translation>
+        <translation>No s'han pogut suprimir aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
-        <translation>No s&apos;han pogut copiar aquests fitxers:</translation>
+        <translation>No s'han pogut copiar aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
-        <translation>No s&apos;han pogut restaurar aquests fitxers:</translation>
+        <translation>No s'han pogut restaurar aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="167"/>
         <source>Could not move these files:</source>
-        <translation>No s&apos;han pogut moure aquests fitxers:</translation>
+        <translation>No s'han pogut moure aquests fitxers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="169"/>
@@ -476,7 +476,7 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d&apos;això, feu-ne una còpia.
+        <translation>No és possible moure un directori a dins de si mateix. Si us plau, en comptes d'això, feu-ne una còpia.
 
 Localització antiga: %1
 Localització nova: %2</translation>
@@ -497,7 +497,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>Aquest assistent us guiarà a través del procés de baixada d&apos;un repositori GIT des d&apos;Internet.</translation>
+        <translation>Aquest assistent us guiarà a través del procés de baixada d'un repositori GIT des d'Internet.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
@@ -522,7 +522,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation>Tipus d&apos;accés</translation>
+        <translation>Tipus d'accés</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
@@ -537,7 +537,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation>Nom d&apos;usuari</translation>
+        <translation>Nom d'usuari</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
@@ -576,8 +576,8 @@ Localització nova: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Cliqueu a &quot;Següent&quot; per començar a baixar el repositori</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Cliqueu a "Següent" per començar a baixar el repositori</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -625,7 +625,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="143"/>
         <source>Bookmarks</source>
-        <translation>Adreces d&apos;interès</translation>
+        <translation>Adreces d'interès</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="151"/>
@@ -650,7 +650,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="246"/>
         <source>Show Image Previews</source>
-        <translation>Mostra previsualitzacions d&apos;imatges</translation>
+        <translation>Mostra previsualitzacions d'imatges</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="251"/>
@@ -700,7 +700,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="327"/>
         <source>Add Bookmark</source>
-        <translation>Afegeix una adreça d&apos;interès</translation>
+        <translation>Afegeix una adreça d'interès</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="330"/>
@@ -740,12 +740,12 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Show Directory Tree Window</source>
-        <translation>Mostra la finestra de l&apos;arbre de directoris</translation>
+        <translation>Mostra la finestra de l'arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Show Directory Tree Pane</source>
-        <translation>Mostra el plafó de l&apos;arbre de directoris</translation>
+        <translation>Mostra el plafó de l'arbre de directoris</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
@@ -785,12 +785,12 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="221"/>
         <source>Manage Bookmarks</source>
-        <translation>Gestiona les adreces d&apos;interès / marcadors</translation>
+        <translation>Gestiona les adreces d'interès / marcadors</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>Show Action Buttons</source>
-        <translation>Mostra els botons d&apos;acció</translation>
+        <translation>Mostra els botons d'acció</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="254"/>
@@ -865,7 +865,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="195"/>
         <source>The following directories are invalid and could not be opened:</source>
-        <translation>Els directoris següents no són vàlids i no s&apos;han pogut obrir:</translation>
+        <translation>Els directoris següents no són vàlids i no s'han pogut obrir:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="229"/>
@@ -895,7 +895,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
         <source>New Bookmark</source>
-        <translation>Adreça d&apos;interès nova</translation>
+        <translation>Adreça d'interès nova</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
@@ -910,7 +910,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="591"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>Aquest nom d&apos;adreça d&apos;interès ja existeix. Trieu-ne un altre.</translation>
+        <translation>Aquest nom d'adreça d'interès ja existeix. Trieu-ne un altre.</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="612"/>
@@ -1062,7 +1062,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
         <source>File Operation Errors</source>
-        <translation>Errors d&apos;operacions de fitxers</translation>
+        <translation>Errors d'operacions de fitxers</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
@@ -1085,17 +1085,17 @@ Localització nova: %2</translation>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Suprimeix aquest fitxer d&apos;imatge</translation>
+        <translation>Suprimeix aquest fitxer d'imatge</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>
         <source>Rotate this image file counter-clockwise</source>
-        <translation>Gira aquest fitxer d&apos;imatge cap a l&apos;esquerra</translation>
+        <translation>Gira aquest fitxer d'imatge cap a l'esquerra</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="69"/>
         <source>Rotate this image file clockwise</source>
-        <translation>Gira aquest fitxer d&apos;imatge cap a la dreta</translation>
+        <translation>Gira aquest fitxer d'imatge cap a la dreta</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="89"/>
@@ -1188,7 +1188,7 @@ Localització nova: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation>Hi ha hagut errors durant l&apos;operació. Cliqueu per veure&apos;n els detalls.</translation>
+        <translation>Hi ha hagut errors durant l'operació. Cliqueu per veure'n els detalls.</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
