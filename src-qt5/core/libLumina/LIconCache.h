@@ -67,6 +67,9 @@ private:
 	void startReadFile(QString id, QString path);
 	void ReadFile(LIconCache *obj, QString id, QString path);
 
+	bool isThemeIcon(QString id);
+	QIcon iconFromTheme(QString id);
+
 private slots:
 	void IconLoaded(QString id, QDateTime sync, QByteArray *data);
 

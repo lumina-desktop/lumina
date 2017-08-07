@@ -317,8 +317,8 @@
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translatorcomment>&quot;Home Button&quot;の説明文</translatorcomment>
-        <translation>すべての開いているウィンドウを隠してデスクトップを表示します。</translation>
+        <translatorcomment>"Home Button"の説明文</translatorcomment>
+        <translation>すべての開いているウィンドウを隠してデスクトップを表示します</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
@@ -348,7 +348,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation>ユーザーのファイル・ディレクトリーやお気に入りに特化した別の種類のスタートメニューです。</translation>
     </message>
     <message>
@@ -369,7 +369,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="95"/>
         <source>Simple line to provide visual separation between items.</source>
-        <translation>アイテムの間を分割する線を表示します</translation>
+        <translation>アイテムの間を分割する線を表示します。</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
@@ -384,7 +384,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation>実行中のアプリケーションウインドウを表示し、制御します (すべてのウインドウがそれぞれひとつのボタンを持ちます)。</translation>
+        <translation>実行中のアプリケーションウインドウを表示し、制御します (すべてのウインドウがそれぞれひとつのボタンを持ちます)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -399,12 +399,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="165"/>
         <source>Pin an application shortcut directly to the panel</source>
-        <translation>アプリケーションへのショートカットをデスクトップに貼り付けます。</translation>
+        <translation>アプリケーションへのショートカットをデスクトップに貼り付けます</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="198"/>
         <source>Desktop button for launching an application</source>
-        <translatorcomment>もう一つの&quot;Application Launcher&quot;の説明</translatorcomment>
+        <translatorcomment>もう一つの"Application Launcher"の説明</translatorcomment>
         <translation>アプリケーションを起動するデスクトップボタン</translation>
     </message>
     <message>
@@ -1038,7 +1038,7 @@
     <message>
         <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
-        <translation>選択されたファイルは実行可能ファイルではありません。</translation>
+        <translation>選択されたファイルは実行可能ファイルではありません!</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="150"/>
@@ -1129,7 +1129,7 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
-        <translation>Webブラウザー</translation>
+        <translation>Webブラウザー:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="81"/>
@@ -1180,7 +1180,7 @@
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
-        <translation>選択したプログラムは実行可能ではありません。</translation>
+        <translation>選択したプログラムは実行可能ではありません!</translation>
     </message>
 </context>
 <context>
@@ -1244,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
-        <translation>&quot;Mod1&quot;:	Alt キー
-&quot;Mod4&quot;: 	Windows/Mac キー
-&quot;Control&quot;:	Ctrl キー</translation>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
+        <translation>"Mod1":	Alt キー
+"Mod4": 	Windows/Mac キー
+"Control":	Ctrl キー</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1396,7 +1396,7 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">着脱可能なメディアアイコンを表示</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
@@ -1432,7 +1432,7 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="46"/>
         <source>Panel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">パネル</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="96"/>
@@ -1485,7 +1485,7 @@
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">系統設定</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="158"/>
@@ -1663,7 +1663,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="61"/>
         <source>Window manager</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウマネージャ</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="94"/>
@@ -1798,7 +1798,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation>シングルクォートで囲まれた文字は日付への置き換え対象から外れます。</translation>
+        <translation>シングルクォートで囲まれた文字は日付への置き換え対象から外れます</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="254"/>

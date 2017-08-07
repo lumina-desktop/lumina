@@ -2,11 +2,11 @@ include(../../lthemeengine.pri)
 
 TEMPLATE = lib
 TARGET = lthemeengine-style
-QT += widgets
+QT *= widgets
 
 # Input
 
-CONFIG += plugin
+CONFIG *= plugin
 
 target.path = $$PLUGINDIR/styles
 INSTALLS += target

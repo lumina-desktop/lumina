@@ -102,7 +102,7 @@ void LClock::updateTime(bool adjustformat){
         lwid = metrics.width(lines[i]);
         if(lwid>wid){ wid = lwid; }
       }
-     this->setMinimumWidth( wid - (4*metrics.width("O")) );
+     this->setMinimumWidth(wid);
      this->setMaximumWidth(wid + (4*metrics.width("O")));
     }else{
       //vertical layout

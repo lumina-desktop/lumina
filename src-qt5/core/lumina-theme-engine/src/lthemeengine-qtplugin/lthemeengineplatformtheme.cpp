@@ -70,7 +70,7 @@ QPlatformSystemTrayIcon *lthemeenginePlatformTheme::createPlatformSystemTrayIcon
     QDBusMenuConnection conn;
     m_dbusTrayAvailable = conn.isStatusNotifierHostRegistered();
     m_checkDBusTray = false;
-    qCDebug(llthemeengine) << "D-Bus system tray:" << (m_dbusTrayAvailable ? "yes" : "no");
+    //qCDebug(llthemeengine) << "D-Bus system tray:" << (m_dbusTrayAvailable ? "yes" : "no");
     }
   return (m_dbusTrayAvailable ? new QDBusTrayIcon() : nullptr);
 }
@@ -177,10 +177,10 @@ void lthemeenginePlatformTheme::readSettings(){
   settings.beginGroup("Appearance");
   m_style = settings.value("style", "Fusion").toString();
   if(settings.value("custom_palette", false).toBool()){
-    QString schemePath = settings.value("color_scheme_path").toString();
+    QString schemePath = settings.value("color_scheme_path","airy").toString();
     m_customPalette = new QPalette(loadColorScheme(schemePath));
     }
-  m_iconTheme = settings.value("icon_theme").toString();
+  m_iconTheme = settings.value("icon_theme", "material-design-light").toString();
   settings.endGroup();
   settings.beginGroup("Fonts");
   m_generalFont = settings.value("general", QPlatformTheme::font(QPlatformTheme::SystemFont)).value<QFont>();
@@ -237,7 +237,20 @@ QString lthemeenginePlatformTheme::loadStyleSheets(const QStringList &paths){
   return content;
 }
 
-QPalette lthemeenginePlatformTheme::loadColorScheme(const QString &filePath){
+QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
+  if(!filePath.contains("/") && !filePath.endsWith(".conf") && !filePath.isEmpty()){
+    //relative theme name, auto-complete it
+    QStringList dirs;
+    dirs << getenv("XDG_CONFIG_HOME");
+    dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
+    dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
+    QString relpath = "/lthemeengine/colors/%1.conf";
+    relpath = relpath.arg(filePath);
+    for(int i=0; i<dirs.length(); i++){
+      if(QFile::exists(dirs[i]+relpath)){ filePath = dirs[i]+relpath; break; }
+    }
+  }
+
   QPalette customPalette;
   QSettings settings(filePath, QSettings::IniFormat);
   settings.beginGroup("ColorScheme");
