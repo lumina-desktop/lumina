@@ -170,7 +170,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienas stulpelis</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai išskleisti</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="568"/>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="616"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kita...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="624"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="304"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti naudojant...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="310"/>
@@ -650,7 +650,7 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="246"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti paveikslų peržiūras</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="251"/>
@@ -740,12 +740,12 @@ Nauja vieta: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti katalogų medžio langą</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Show Directory Tree Pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti katalogų medžio polangį</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
