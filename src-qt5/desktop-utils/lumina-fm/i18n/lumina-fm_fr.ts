@@ -59,32 +59,32 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="218"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="219"/>
         <source>Size</source>
-        <translation type="unfinished">Taille</translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="220"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="221"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Modifié le</translation>
+        <translation>Date de Modification</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="222"/>
         <source>Date Created</source>
-        <translation type="unfinished">Créé le</translation>
+        <translation>Date de Création</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Capacité : %1</translation>
+        <translation>Capacité: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="386"/>
@@ -99,12 +99,12 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Répertoires: %1</translation>
+        <translation>Répertoires: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished">Pas de contenu de répertoire</translation>
+        <translation>Pas de Contenu de Répertoire</translation>
     </message>
 </context>
 <context>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="157"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Augmenter les Tailles des Icônes</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="173"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuer les Tailles des Icônes</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="191"/>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="230"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
@@ -213,7 +213,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>Le document ne peut pas être créé. Assurez vous d&apos;avoir les permissions adéquates.</translation>
+        <translation>Le document ne peut pas être créé. Assurez vous d'avoir les permissions adéquates.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="693"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>Le répertoire ne peut pas être créé. Veuillez vous assurer d&apos;avoir les permissions adéquates pour modifier le répertoire actuel.</translation>
+        <translation>Le répertoire ne peut pas être créé. Veuillez vous assurer d'avoir les permissions adéquates pour modifier le répertoire actuel.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="371"/>
@@ -282,7 +282,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="273"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="274"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
-        <translation>Somme de contrôle de fichier:</translation>
+        <translation>Somme de Contrôle de Fichier:</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>L&apos;utilitaire &quot;lumina-fileinfo&quot; est introuvable. Veuillez l&apos;installer.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>L'utilitaire "lumina-fileinfo" est introuvable. Veuillez l'installer.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Overwrite Files?</source>
-        <translation>Écraser les fichiers?</translation>
+        <translation>Écraser les Fichiers?</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="131"/>
@@ -415,7 +415,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Remarque: Il suffit d&apos;ajouter un nombre au nom de fichier autrement.</translation>
+        <translation>Remarque: Il suffit d'ajouter un nombre au nom de fichier autrement.</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="148"/>
@@ -440,17 +440,17 @@
     <message>
         <location filename="../FODialog.cpp" line="164"/>
         <source>Could not remove these files:</source>
-        <translation>Impossible de supprimer ces fichiers.</translation>
+        <translation>Impossible de supprimer ces fichiers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="165"/>
         <source>Could not copy these files:</source>
-        <translation>Impossible de supprimer ces fichiers.</translation>
+        <translation>Impossible de copier ces fichiers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="166"/>
         <source>Could not restore these files:</source>
-        <translation>Restauration impossible de ces fichiers:</translation>
+        <translation>Impossible de restaurer ces fichiers:</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="167"/>
@@ -476,7 +476,7 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>Il n&apos;est possible de déplacer un répertoire dans lui-même. Veuille faire plutôt une copie de répertoire.Ancien emplacement: %1Nouvel emplacement: %2</translation>
+        <translation>Il n'est possible de déplacer un répertoire dans lui-même. Veuille faire plutôt une copie de répertoire.Ancien emplacement: %1Nouvel emplacement: %2</translation>
     </message>
 </context>
 <context>
@@ -573,7 +573,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -612,12 +612,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="126"/>
         <source>View</source>
-        <translation>Afficher</translation>
+        <translation>Regarder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="130"/>
         <source>View Mode</source>
-        <translation>Mode d&apos;affichage</translation>
+        <translation>Mode d'affichage</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="143"/>
@@ -657,12 +657,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>Increase Icon Size</source>
-        <translation>Augmenter la taille de l&apos;icône</translation>
+        <translation>Augmenter la taille de l'icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <source>Decrease Icon Size</source>
-        <translation>Diminuer la taille de l&apos;icône</translation>
+        <translation>Diminuer la taille de l'icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="294"/>
@@ -747,7 +747,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
@@ -787,7 +787,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>Show Action Buttons</source>
-        <translation>Afficher les Boutons d&apos;action</translation>
+        <translation>Afficher les Boutons d'action</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="254"/>
@@ -897,7 +897,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="591"/>
@@ -1000,7 +1000,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
-        <translation>(Pas d&apos;exécution en cours de Vidéo)</translation>
+        <translation>(Pas d'exécution en cours de Vidéo)</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
@@ -1015,7 +1015,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
-        <translation>Erreur lors de l&apos;ouverture du fichier : %1</translation>
+        <translation>Erreur lors de l'ouverture du fichier : %1</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
@@ -1028,13 +1028,13 @@ New Location: %2</source>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1082,7 +1082,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Supprimer ce fichier d&apos;image</translation>
+        <translation>Supprimer ce fichier d'image</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>
@@ -1180,7 +1180,7 @@ New Location: %2</source>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Terminé</translation>
+        <translation>Terminé</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>

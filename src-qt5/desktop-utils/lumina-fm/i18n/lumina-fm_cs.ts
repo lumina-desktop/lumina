@@ -170,7 +170,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeden sloupec</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="616"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostatní…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="624"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="304"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít s…</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="310"/>
@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj &quot;lumina-fileinfo&quot; nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -576,7 +576,7 @@ Nové umístění: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation>Kliknutím na Další zahajte stahování repozitáře</translation>
     </message>
     <message>

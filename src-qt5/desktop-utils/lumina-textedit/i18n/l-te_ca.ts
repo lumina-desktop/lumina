@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Tipus d&apos;ítem</translation>
+        <translation>Tipus d'ítem</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../MainUI.ui" line="420"/>
         <source>Left</source>
-        <translation>A l&apos;esquerra</translation>
+        <translation>A l'esquerra</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
@@ -254,12 +254,12 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimeix</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="64"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../MainUI.cpp" line="252"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimeix-ne el contingut</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="383"/>
@@ -307,7 +307,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Hi ha canvis no desats.
-Voleu tancar l&apos;editor tanmateix?
+Voleu tancar l'editor tanmateix?
 
 %1</translation>
     </message>

@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Type d&apos;article</translation>
+        <translation>Type d'article</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -21,13 +21,13 @@
     <message>
         <location filename="../ColorDialog.ui" line="34"/>
         <source>Sample</source>
-        <translation>Aperçu</translation>
+        <translation>Échantillon</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="44"/>
         <location filename="../ColorDialog.cpp" line="55"/>
         <source>Select Color</source>
-        <translation>Choisir une Couleur</translation>
+        <translation>Sélectionner une Couleur</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="64"/>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Détacher l'Onglet</translation>
     </message>
 </context>
 <context>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../MainUI.ui" line="63"/>
         <source>Find the previous match</source>
-        <translation>Trouver l&apos;occurrence précédente</translation>
+        <translation>Trouver l'occurrence précédente</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="66"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../MainUI.ui" line="140"/>
         <source>Replace all matches (to end of document)</source>
-        <translation>Remplacer toutes les occurrences (jusqu&apos;à la fin du document)</translation>
+        <translation>Remplacer toutes les occurrences (jusqu'à la fin du document)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>View</source>
-        <translation>Vue</translation>
+        <translation>Regarder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="211"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Emplacement des Onglets</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="235"/>
@@ -223,43 +223,43 @@
     <message>
         <location filename="../MainUI.ui" line="387"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les Avertissements Contextuels</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="390"/>
         <location filename="../MainUI.ui" line="393"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher des avertissements concernant les changements non enregistrés</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="404"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Haut</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="412"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="420"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="64"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../MainUI.cpp" line="252"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer le Contenu</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="383"/>
@@ -307,7 +307,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Il y a des modifications non enregistrées.
-Voulez-vous tout de même fermer l&apos;éditeur ?
+Voulez-vous tout de même fermer l'éditeur ?
 
 %1</translation>
     </message>

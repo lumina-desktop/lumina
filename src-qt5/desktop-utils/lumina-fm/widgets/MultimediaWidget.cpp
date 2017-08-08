@@ -11,7 +11,7 @@
 
 MultimediaWidget::MultimediaWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MultimediaWidget){
   ui->setupUi(this); //load the designer file
-	
+
   //Add in the special QMultimediaWidgets
   mediaObj = new QMediaPlayer(this);
     mediaObj->setVolume(100);
@@ -21,10 +21,10 @@ MultimediaWidget::MultimediaWidget(QWidget *parent) : QWidget(parent), ui(new Ui
     ui->videoLayout->addWidget(videoDisplay);
     mediaObj->setVideoOutput(videoDisplay);
     videoDisplay->setVisible(false);
-	
+
   UpdateIcons();
   UpdateText();
-	
+
   //Connect the special signals/slots for the media object
   connect(mediaObj, SIGNAL(durationChanged(qint64)), this, SLOT(playerDurationChanged(qint64)) );
   connect(mediaObj, SIGNAL(seekableChanged(bool)), ui->playerSlider, SLOT(setEnabled(bool)) );
@@ -33,7 +33,7 @@ MultimediaWidget::MultimediaWidget(QWidget *parent) : QWidget(parent), ui(new Ui
   connect(mediaObj, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged(QMediaPlayer::State)) );
   connect(mediaObj, SIGNAL(videoAvailableChanged(bool)), this, SLOT(playerVideoAvailable(bool)) );
   connect(mediaObj, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(playerError()) );
-  
+
   //Disable some of the initial states
   ui->tool_player_stop->setEnabled(false); //nothing to stop yet
   ui->tool_player_pause->setVisible(false); //nothing to pause yet
@@ -41,7 +41,7 @@ MultimediaWidget::MultimediaWidget(QWidget *parent) : QWidget(parent), ui(new Ui
 }
 
 MultimediaWidget::~MultimediaWidget(){
-	
+
 }
 
 // ================
@@ -82,8 +82,8 @@ void MultimediaWidget::UpdateText(){
 QString MultimediaWidget::msToText(qint64 ms){
   QString disp;
   if(ms>3600000){
-    disp.append( QString::number(ms/3600000)+":" ); 
-    ms = ms%3600000; 
+    disp.append( QString::number(ms/3600000)+":" );
+    ms = ms%3600000;
   }
   if(ms>60000){
     disp.append( QString::number(ms/60000)+":" );
@@ -107,7 +107,7 @@ void MultimediaWidget::playerStatusChanged(QMediaPlayer::MediaStatus stat){
   //Only use this for end-of-file detection - use the state detection otherwise
   if(stat == QMediaPlayer::EndOfMedia){
     if(!mediaObj->isMuted()){ playerFinished(); } //make sure it is not being seeked right now
-  }	  
+  }
 }
 
 void MultimediaWidget::playerStateChanged(QMediaPlayer::State newstate){
@@ -139,13 +139,13 @@ void MultimediaWidget::playerStateChanged(QMediaPlayer::State newstate){
 
 void MultimediaWidget::playerVideoAvailable(bool showVideo){
   ui->label_player_novideo->setVisible(!showVideo);
-  videoDisplay->setVisible(showVideo);	
+  videoDisplay->setVisible(showVideo);
 }
 
 void MultimediaWidget::playerDurationChanged(qint64 dur){
     if(dur < 0){ return; } //not ready yet
     ui->playerSlider->setMaximum(mediaObj->duration());
-    playerTTime = msToText(dur);   	
+    playerTTime = msToText(dur);
 }
 
 void MultimediaWidget::playerTimeChanged(qint64 ctime){
@@ -185,7 +185,7 @@ void MultimediaWidget::on_tool_player_play_clicked(){
 }
 
 void MultimediaWidget::on_combo_player_list_currentIndexChanged(int index){
-  ui->tool_player_next->setEnabled( ui->combo_player_list->count() > (index+1) );	
+  ui->tool_player_next->setEnabled( ui->combo_player_list->count() > (index+1) );
   ui->tool_player_prev->setEnabled( (index-1) >= 0 );
 }
 
@@ -195,16 +195,16 @@ void MultimediaWidget::on_tool_player_next_clicked(){
 }
 
 void MultimediaWidget::on_tool_player_prev_clicked(){
-  ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()-1);	
+  ui->combo_player_list->setCurrentIndex( ui->combo_player_list->currentIndex()-1);
   if(mediaObj->state()!=QMediaPlayer::StoppedState){ on_tool_player_play_clicked(); }
 }
 
-void MultimediaWidget::on_tool_player_pause_clicked(){ 
-  mediaObj->pause(); 
+void MultimediaWidget::on_tool_player_pause_clicked(){
+  mediaObj->pause();
 }
 
-void MultimediaWidget::on_tool_player_stop_clicked(){ 
-  mediaObj->stop(); 
+void MultimediaWidget::on_tool_player_stop_clicked(){
+  mediaObj->stop();
 }
 
 //Slider controls
@@ -220,4 +220,3 @@ void MultimediaWidget::on_playerSlider_valueChanged(int val){
   ui->label_player_runstats->setText( msToText(val)+"/"+playerTTime );
   if(mediaObj->isMuted()){ mediaObj->setPosition(val); } //currently seeking
 }
-	
