@@ -39,7 +39,7 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished">Lumina Captura de pantalla</translation>
+        <translation type="unfinished">Captura de pantalla de Lumina</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="87"/>
@@ -74,22 +74,22 @@
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar la captura de pantalla a la selección</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>%Recortar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Configuraciones de la captura de pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> Segs Retraso</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
-        <translation>Guardar la Captura de Pantalla</translation>
+        <translation type="unfinished">Guardar la Captura de Pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="322"/>

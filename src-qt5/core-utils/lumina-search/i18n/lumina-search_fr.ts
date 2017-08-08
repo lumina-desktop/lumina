@@ -90,7 +90,7 @@
         <location filename="../MainUI.ui" line="122"/>
         <location filename="../MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
-        <translation>Enregistrer la Capture d&apos;Écran</translation>
+        <translation>Enregistrer la Capture d'Écran</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
-        <translation>Échap.</translation>
+        <translation>Échap</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="98"/>

@@ -9,10 +9,8 @@
 
 //PI is equal to 2*pi
 #define PI 6.2832
-
 #include "global-includes.h"
 #include "BaseAnimGroup.h"
-#include <QParallelAnimationGroup>
 #include <QtMath>
 #include <QMatrix>
 
@@ -32,44 +30,53 @@ private:
 	  radius = qSqrt( (qPow(start.x()-ref->x(),2) + qPow(start.y()-ref->y(),2) ));
 
 	  //Number of frames in animation. Increase for smother motion
-          double step = 1000.0;
+	  double step = 300.0;
 
 	  //Random values that give the eliptical pattern to the orbit. Between 0.4 and 2.3
-   	  double xrand =  (qrand()%20+4)/10.0;
-	  double yrand =  (qrand()%20+4)/10.0;
+   	  double xrand = 0.4; //(qrand()%10+4)/10.0;
+	  double yrand = 0.4; //(qrand()%10+4)/10.0;
 
-	  QPoint firstP = QPoint(ref->x() + xrand*start.x()*(qCos(0/step) -qSin(0/step)), ref->y() + yrand*start.y()*(qCos(0/step) -qSin(0/step)));
-	  QPoint lastP = QPoint(ref->x() + xrand*start.x()*(qCos(PI/step) -qSin(PI/step)), ref->y() + yrand*start.y()*(qCos(PI/step) -qSin(PI/step)));
-	  orbit->setKeyValueAt(0,  firstP);
-	  orbit->setKeyValueAt(1,  lastP);
+	  double theta = 1.5707963; 
+	  //double theta = aTan((start.x() - ref->x())/(start.y() - ref->y()));
+	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -ref->x(), -ref->y());
+	  qDebug() << rotation;
+	  //qDebug() << "Starting Point" << start;
+	  //qDebug() << "Angle" << theta;
+	  //qDebug() << "Distance" << radius;
+	  //qDebug() << "Center" << *ref;
+
+	  QPoint firstP = (QPoint(ref->x() + xrand*start.x()*(qCos(0/step) -qSin(0/step)), ref->y() + yrand*start.y()*(qCos(0/step) -qSin(0/step))));
+	  QPoint rotFP = rotation.map(firstP); 
+	  qDebug() << "First Point" << firstP;
+      qDebug() << "Rotation by Matrix" << rotFP;
+	  QPoint lastP = (QPoint(ref->x() + xrand*start.x()*(qCos(PI/step) -qSin(PI/step)), ref->y() + yrand*start.y()*(qCos(PI/step) -qSin(PI/step))));
+	  orbit->setKeyValueAt(0, firstP);
+	  orbit->setKeyValueAt(1, lastP);
 	  //path.push_back(firstP);
 
 	  //Loops through all steps and creates all the points of the orbit
 	  for(int i=1; i<step; i++) {
 		//Calculates the new point, including gravitational pull and eccentricity. Goes from 0 to 2PI in steps.
-		double newX =  ref->x() + xrand*start.x()*(qCos((PI*i)/step) -qSin((PI*i)/step));
-		double newY = ref->y() +  yrand*start.y()*(qSin((PI*i)/step) + qCos((PI*i)/step));
-
-		//Calculates the radius from the sun as the distance between the points
-		radius = (qSqrt( (qPow(newX-ref->x(),2) + qPow(newY-ref->y(),2) )));
+		double newX = ref->x() + xrand*start.x()*(qCos((PI*i)/step) - qSin((PI*i)/step));
+		double newY = ref->y() + yrand*start.y()*(qSin((PI*i)/step) + qCos((PI*i)/step));
 
 		//Creates a new point and creates a key as part of the animation
-		QPoint newLoc = QPoint(newX, newY);
-		orbit->setKeyValueAt(i/step,  newLoc);
+		QPoint newLoc = (QPoint(newX, newY));
+		orbit->setKeyValueAt(i/step, newLoc);
 		//path.push_back(newLoc);
 	  }
 	  //Sets the time for a full orbit. Increasing makes the orbit slower.
 	  //path.push_back(lastP);
 	}
 private slots:
-	void LoopChanged(int loop){
+	/*void LoopChanged(int loop){
 	    //Adjust the orbit animation a bit
-	    /*if(loop >= 0) {
+	    if(loop >= 0) {
 	      orbit->setStartValue(orbit->endValue()); //start at the previous end point
               orbit->setEndValue(path.at(loop%1000));
 	      orbit->setDuration(10);
-	    }*/
-	}
+	    }
+	}*/
 	void stopped(){ qDebug() << "Planet stopped"; planet->hide();}
 
 public:
@@ -96,14 +103,10 @@ public:
 	  QRect invalid = QRect(center+QPoint(-50,-50), center+QPoint(50,50));
 	  QPoint tmp = center;
 	  while(invalid.contains(tmp)){
- 	    int randwidth =  qrand()%(range.width() - 2*planet_radius) + planet_radius;
- 	    int randheight=  qrand()%(range.height()- 2*planet_radius) + planet_radius;
+ 	    int randwidth = qrand()%(range.width() - 2*planet_radius) + planet_radius;
+ 	    int randheight = qrand()%(range.height()- 2*planet_radius) + planet_radius;
 	    tmp = QPoint(randwidth, randheight);
 	  }
-
-	  /*double tmpDistance = qSqrt((qPow((tmp.x()-center.x()), 2) + qPow((tmp.y()-center.y()), 2)));
-	  double theta = qAsin(qAbs(tmp.y()-center.y())/tmpDistance);
-	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -center.x(), -center.y());*/
 
 	  //Creates all frames for the animation
 	  setupLoop(tmp, &center);
@@ -111,7 +114,7 @@ public:
 	  planet->show();
 
 	  //Ensures the screensaver will not stop until the user wishes to login or it times out
-	  this->setLoopCount(5); //number of orbits
+	  this->setLoopCount(1); //number of orbits
 	  orbit->setDuration( qrand() %1000 + 19000); //20 second orbits
 	  //orbit->setEndValue(path.at(0));
 	  //LoopChanged(0);  //load initial values
@@ -138,13 +141,14 @@ private slots:
 	  for(int i=0; i<this->animationCount(); i++){
 	    if(this->animationAt(i)->state()==QAbstractAnimation::Running){ running++; }
 	  }
-          if(running<=1){ wobble->stop();  emit wobble->finished();}
+	  if(running<=1){ wobble->stop();  emit wobble->finished();}
 	}
 
 public:
 	GravAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
 	~GravAnimation(){
-	  //this->stop();
+	  sun->deleteLater();
+	  while(planets.length()>0){ planets.takeAt(0)->deleteLater(); }
 	}
 
 	void LoadAnimations(){
@@ -152,8 +156,8 @@ public:
 	  sun = new QWidget(canvas);
 	  QPoint center = canvas->geometry().center();
 	  QString sunstyle = QStringLiteral("background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, ") +
-					QStringLiteral("stop:0 rgba(0, 0, 0, 0), stop:0.38 rgba(0, 0, 0, 0), stop:0.4 rgba(82, 121, 76, 33), stop:0.5 rgba(159, 235, 148, 64), ") +
-					QStringLiteral("stop:0.6 rgba(255, 238, 150, 129), stop:0.7 rgba(0, 0, 0, 0));");
+						QStringLiteral("stop:0 rgba(0, 0, 0, 0), stop:0.38 rgba(0, 0, 0, 0), stop:0.4 rgba(82, 121, 76, 33), stop:0.5 rgba(159, 235, 148, 64), ") +
+						QStringLiteral("stop:0.6 rgba(255, 238, 150, 129), stop:0.7 rgba(0, 0, 0, 0));");
 	  sun->setStyleSheet(sunstyle);
 
 	  //Creates the sun's pulsing animation
@@ -170,7 +174,6 @@ public:
 	  this->addAnimation(wobble);
 	  sun->show();
 	  sun->setGeometry(initgeom);
-	  while(planets.length()>0){ planets.takeAt(0)->deleteLater(); }
 
 	  //Gives the screensaver a black background
 	  canvas->setStyleSheet("background: black;");

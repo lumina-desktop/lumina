@@ -191,7 +191,10 @@ void LSession::CleanupSession(){
   int vol = LOS::audioVolume();
   if(vol>=0){ sessionsettings->setValue("last_session_state/audio_volume", vol); }
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
-  if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
+  if( playaudio ){
+      QString sfile = sessionsettings->value("audiofiles/logout", LOS::LuminaShare()+"Logout.ogg").toString();
+      playAudioFile(sfile);
+  }
   //Stop the background system tray (detaching/closing apps as necessary)
   stopSystemTray(!cleansession);
   //Now perform any other cleanup
@@ -296,7 +299,8 @@ void LSession::launchStartupApps(){
 
   //Now play the login music since we are finished
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
+     QString sfile = sessionsettings->value("audiofiles/login", LOS::LuminaShare()+"Login.ogg").toString();
+     playAudioFile(sfile);
   }
   qDebug() << "[DESKTOP INIT FINISHED]";
 }

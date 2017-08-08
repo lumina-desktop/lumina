@@ -12,6 +12,8 @@
 #include "Grav.h"
 #include "SampleAnimation.h"
 #include "Text.h"
+#include "ImageSlideshow.h"
+#include "VideoSlideshow.h"
 
 //==============================
 //     PLUGIN LOADING/LISTING
@@ -24,6 +26,10 @@ BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent, QSetti
     return (new GravAnimation(parent, set));
   }else if(type == "text") {
     return (new TextAnimation(parent, set));
+  }else if(type == "imageSlideshow") {
+    return (new ImageAnimation(parent, set));
+  }else if(type == "videoSlideshow") {
+    return (new VideoAnimation(parent, set));
   }else {
     //Unknown screensaver, return a blank animation group
     return (new BaseAnimGroup(parent, set));
@@ -31,5 +37,5 @@ BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent, QSetti
 }
 
 QStringList BaseAnimGroup::KnownAnimations(){
-  return (QStringList() << "grav");
+  return (QStringList() << "videoSlideshow" /*<< "grav" << "text" << "imageSlideshow" << "fireflies"*/);
 }

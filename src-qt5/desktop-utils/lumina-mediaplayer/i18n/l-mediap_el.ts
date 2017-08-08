@@ -154,17 +154,17 @@
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Προβολή</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="699"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Μπάρα Εργαλείων</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="726"/>

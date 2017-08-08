@@ -78,8 +78,10 @@ void LBattery::updateBattery(bool force){
     }
     if(icon<iconOld && icon==0){
       //Play some audio warning chime when 
-      LSession::handle()->playAudioFile(LOS::LuminaShare()+"low-battery.ogg");
-    }
+      QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
+      LSession::handle()->playAudioFile(sfile);
+      }
+
     if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
     else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
     else{ label->setStyleSheet("QLabel{ background: transparent;}"); }

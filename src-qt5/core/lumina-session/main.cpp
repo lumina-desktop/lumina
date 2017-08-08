@@ -21,6 +21,11 @@
 #include <unistd.h>
 
 #define DEBUG 0
+int findAvailableSession(){
+  int num = 0;
+  while(QFile::exists("/tmp/.X11-unix/X"+QString::number(num))){ num++; }
+  return num;
+}
 
 int main(int argc, char ** argv)
 {
@@ -45,7 +50,7 @@ int main(int argc, char ** argv)
       QString prog = QString(argv[0]).section("/",-1);
       LUtils::isValidBinary(prog); //will adjust the path to be absolute
       if(unified){ prog = prog+" --unified"; }
-      QStringList args; args << prog;
+      QStringList args; args << prog << "--" << ":"+QString::number(findAvailableSession());
       //if(LUtils::isValidBinary("x11vnc")){ args << "--" << "-listen" << "tcp"; } //need to be able to VNC into this session
       return QProcess::execute("xinit", args);
     }
