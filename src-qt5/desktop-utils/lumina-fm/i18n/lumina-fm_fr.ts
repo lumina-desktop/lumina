@@ -165,17 +165,17 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez l'Action</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Seule Colonne</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Affichage à une seule colonne</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
@@ -982,7 +982,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="873"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
-        <translation>Un fichier existant avec le même nom sera remplacé. Etes vous sûr de vouloir procéder?</translation>
+        <translation>Un fichier existant avec le même nom sera remplacé. Etes-vous sûr de vouloir procéder?</translation>
     </message>
 </context>
 <context>
