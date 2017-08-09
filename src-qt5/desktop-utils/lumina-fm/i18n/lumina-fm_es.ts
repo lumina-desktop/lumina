@@ -170,7 +170,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Única Columna</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
@@ -235,22 +235,22 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Auto-Extraer</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operaciones de directorio</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="616"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otro...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="676"/>
@@ -312,27 +312,27 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="283"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproductor Multimedia</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="304"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir con...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver archivos...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma de verificación</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propiedades</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="504"/>
@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>La utilería &quot;lumina-fileinfo&quot; no se puede encontrar en el sistema. Por favor instálelo primero.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>La utilería "lumina-fileinfo" no se puede encontrar en el sistema. Por favor instálelo primero.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -487,77 +487,77 @@ Ubicación Nueva: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar un repositorio Git</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenidos!</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Este asistente irá guiarlo a través del proceso de descargar un repositorio GIT de la Internet.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraciones del Repositorio GitHub</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>Organización/Usuario</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del Repositorio</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Repositorio Privado</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de Acceso</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar mi clave SSH</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrar al servidor</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anónimo (solos repositorios públicos)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña SSH Opcional</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones avanzadas</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
@@ -576,7 +576,7 @@ Ubicación Nueva: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
