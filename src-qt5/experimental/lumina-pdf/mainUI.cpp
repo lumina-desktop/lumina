@@ -15,24 +15,29 @@
 #include <QDebug>
 #include <QApplication>
 #include <QScreen>
+#include <QTimer>
+
+#include <QtConcurrent>
 
 #include <LuminaXDG.h>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
-
+  presentationLabel = 0;
   this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
-
+  CurrentPage = 0;
   lastdir = QDir::homePath();
   Printer = new QPrinter();
   WIDGET = new QPrintPreviewWidget(Printer,this);
   this->setCentralWidget(WIDGET);
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
+  connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) ); //Can change to PaintToPrinter() later
+  connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
 
   //Create the other interface widgets
   progress = new QProgressBar(this);
@@ -101,6 +106,8 @@ void MainUI::loadFile(QString path){
     delete DOC;
     DOC=0;
   }
+  loadingHash.clear(); //clear out this hash
+  numPages = -1;
   DOC = TDOC; //Save this for later
   qDebug() << "Opening File:" << path;
   this->setWindowTitle(DOC->title());
@@ -110,7 +117,7 @@ void MainUI::loadFile(QString path){
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
-    Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) ); 
+    Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) );
     Printer->setPageMargins(QMarginsF(0,0,0,0), QPageLayout::Point);
     switch(PAGE->orientation()){
 	case Poppler::Page::Landscape:
@@ -119,15 +126,149 @@ void MainUI::loadFile(QString path){
 	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
-    WIDGET->updatePreview(); //start loading the file preview
+    qDebug() << " - Document Setup";
+    QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
+}
+
+void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page){
+  //qDebug() << " - Render Page:" << num;
+  Poppler::Page *PAGE = doc->page(num);
+  if(PAGE!=0){
+    loadingHash.insert(num, PAGE->renderToImage(3*dpi.width(), 3*dpi.height()).scaled(page.width(), page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+  }else{
+    loadingHash.insert(num, QImage());
+  }
+  if(PAGE!=0){ delete PAGE; }
+  obj->emit PageLoaded(num);
+}
+
+QScreen* MainUI::getScreen(bool current, bool &cancelled){
+  //Note: the "cancelled" boolian is actually an output - not an input
+  QList<QScreen*> screens = QApplication::screens();
+  cancelled = false;
+  if(screens.length() ==1){ return screens[0]; } //only one option
+  //Multiple screens available - figure it out
+  if(current){
+    //Just return the screen the window is currently on
+    for(int i=0; i<screens.length(); i++){
+      if(screens[i]->geometry().contains( this->mapToGlobal(this->pos()) )){
+        return screens[i];
+      }
+    }
+    //If it gets this far, there was an error and it should just return the primary screen
+    return QApplication::primaryScreen();
+  }else{
+    //Ask the user to select a screen (for presentations, etc..)
+    QStringList names;
+    for(int i=0; i<screens.length(); i++){
+      QString screensize = QString::number(screens[i]->size().width())+"x"+QString::number(screens[i]->size().height());
+       names << QString(tr("%1 (%2)")).arg(screens[i]->name(), screensize);
+    }
+    bool ok = false;
+    QString sel = QInputDialog::getItem(this, tr("Select Screen"), tr("Screen:"), names, 0, false, &ok);
+    cancelled = !ok;
+    if(!ok){ return screens[0]; } //cancelled - just return the first one
+    int index = names.indexOf(sel);
+    if(index < 0){ return screens[0]; } //error - should never happen though
+    return screens[index]; //return the selected screen
+  }
+}
+
+void MainUI::startPresentation(bool atStart){
+  if(DOC==0){ return; } //just in case
+  bool cancelled = false;
+  QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
+  if(cancelled){ return;}
+  int page = 0;
+  if(!atStart){ page = CurrentPage; }
+  //PDPI = QSize(SCALEFACTOR*screen->physicalDotsPerInchX(), SCALEFACTOR*screen->physicalDotsPerInchY());
+  //Now create the full-screen window on the selected screen
+  if(presentationLabel == 0){
+    //Create the label and any special flags for it
+    presentationLabel = new QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+      presentationLabel->setStyleSheet("background-color: black;");
+      presentationLabel->setAlignment(Qt::AlignCenter);
+  }
+  //Now put the label in the proper location
+  presentationLabel->setGeometry(screen->geometry());
+  presentationLabel->showFullScreen();
+
+  ui->actionStop_Presentation->setEnabled(true);
+  ui->menuStart_Presentation->setEnabled(false);
+  QApplication::processEvents();
+  //Now start at the proper page
+  ShowPage(page);
+  this->grabKeyboard(); //Grab any keyboard events - even from the presentation window
+}
+
+void MainUI::ShowPage(int page){
+  if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
+  //Check for valid document/page
+  if(page<0 || page >=numPages ){
+    endPresentation();
+    return; //invalid - no document loaded or invalid page specified
+  }
+  CurrentPage = page;
+  QImage PAGEIMAGE = loadingHash[page];
+
+  //Now scale the image according to the user-designations and show it
+  if(!PAGEIMAGE.isNull()){
+    QPixmap pix;
+    pix.convertFromImage( PAGEIMAGE.scaled( presentationLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+    presentationLabel->setPixmap(pix);
+    presentationLabel->show(); //always make sure it was not hidden
+  }else{
+    presentationLabel->setPixmap(QPixmap());
+    endPresentation();
+  }
+}
+
+void MainUI::endPresentation(){
+  if(presentationLabel==0 || !presentationLabel->isVisible()){ return; } //not in presentation mode
+  presentationLabel->hide(); //just hide this (no need to re-create the label for future presentations)
+  ui->actionStop_Presentation->setEnabled(false);
+  ui->menuStart_Presentation->setEnabled(true);
+  this->releaseKeyboard();
+}
+
+void MainUI::startLoadingPages(QPrinter *printer){
+  if(numPages>0){ return; } //currently loaded[ing]
+  //qDebug() << " - Start Loading Pages";
+  numPages = DOC->numPages();
+  progress->setRange(0,numPages);
+  progress->setValue(0);
+  progAct->setVisible(true);
+  QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
+  QSize DPI(printer->resolution(),printer->resolution());
+  for(int i=0; i<numPages; i++){
+    //qDebug() << " - Kickoff page load:" << i;
+    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size() );
+  }
+}
+
+void MainUI::slotPageLoaded(int page){
+  //qDebug() << "Page Loaded:" << page;
+  int finished = loadingHash.keys().length();
+  if(finished == numPages){
+    progress->setVisible(false);
+    progAct->setVisible(false);
+    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+  }else{
+    progress->setValue(finished);
+  }
+}
+
+void MainUI::slotStartPresentation(QAction *act){
+  startPresentation(act == ui->actionAt_Beginning);
 }
 
 void MainUI::paintOnWidget(QPrinter *PRINTER){
   if(DOC==0){ return; }
   //this->show();
-  //QApplication::processEvents();
+  if(loadingHash.keys().length() != numPages){ startLoadingPages(PRINTER); return; }
+
   int pages = DOC->numPages();
   int firstpage = 0;
   //qDebug() << "Start Rendering PDF:" << PRINTER->fromPage() << PRINTER->toPage();
@@ -135,38 +276,12 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
     firstpage = PRINTER->fromPage() - 1;
     pages = PRINTER->toPage();
   }
-  qDebug() << " - Generating Pages:" << firstpage << pages;
-  //Now start painting all the pages onto the widget
-  QRectF size = PRINTER->pageRect(QPrinter::DevicePixel);
-  QSize DPI(PRINTER->resolution(),PRINTER->resolution());
-  //QScreen *scrn = QApplication::screens().first();
-  //QSize SDPI(scrn->logicalDotsPerInchX(), scrn->logicalDotsPerInchY());
   QPainter painter(PRINTER);
-  //qDebug() << "Set progress bar range:" << firstpage+1 << pages;
-  progress->setRange(firstpage+1,pages+1);
-  //progress->setValue(firstpage);
-  progAct->setVisible(true);
-    qDebug() << "Printer DPI:" << DPI;
-    //qDebug() << "Screen DPI:" << SDPI;
     for(int i=firstpage; i<pages; i++){
-      //qDebug() << "Loading Page:" << i;
-      progress->setValue(i+1);
-      //qDebug() << " - ProcessEvents";
-      QApplication::processEvents();
-      //Now paint this page on the printer
-      //qDebug() << " - Load Poppler Page";
       if(i != firstpage){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      Poppler::Page *PAGE = DOC->page(i);
-      if(PAGE!=0){
-        painter.drawImage(0,0,PAGE->renderToImage(2*DPI.width(), 2*DPI.height()).scaled(size.width(), size.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
-      }else{
-        painter.drawImage(0,0,QImage()); 
-      }
-      if(PAGE!=0){ delete PAGE; }
-      //QApplication::processEvents();
+      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i]); }
+      else{ painter.drawImage(0,0, QImage()); }
     }
-  //qDebug() << "Done Loading Pages";
-  progAct->setVisible(false);
 }
 
 void MainUI::OpenNewFile(){
@@ -174,5 +289,4 @@ void MainUI::OpenNewFile(){
   QString path = QFileDialog::getOpenFileName(this, tr("Open PDF"), lastdir, tr("PDF Documents (*.pdf)"));
   //Now Open it
   if(!path.isEmpty()){ loadFile(path); }
-  
 }

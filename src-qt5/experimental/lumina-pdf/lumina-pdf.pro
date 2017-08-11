@@ -15,7 +15,7 @@ target.path = $${L_BINDIR}
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
         mainUI.cpp
 
 HEADERS  += mainUI.h
