@@ -72,12 +72,16 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Setup all the icons
   ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
   ui->actionClose->setIcon( LXDG::findIcon("window-close",""));
-  ui->actionFit_Width->setIcon(LXDG::findIcon("arrow-expand-all",""));
+  ui->actionFit_Width->setIcon(LXDG::findIcon("transform-scale",""));
   ui->actionFit_Page->setIcon(LXDG::findIcon("zoom-fit-best",""));
   ui->actionOpen_PDF->setIcon(LXDG::findIcon("document-open",""));
-  ui->actionSingle_Page->setIcon(LXDG::findIcon("view-preview",""));
-  ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-agenda",""));
-  ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
+  ui->actionSingle_Page->setIcon(LXDG::findIcon("format-view-agenda",""));
+  ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
+  ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-large",""));
+
+  //Now set the default state of the menu's and actions
+  ui->menuStart_Presentation->setEnabled(false);
+  ui->actionStop_Presentation->setEnabled(false);
 }
 
 MainUI::~MainUI(){
@@ -126,7 +130,7 @@ void MainUI::loadFile(QString path){
 	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
-    qDebug() << " - Document Setup";
+    qDebug() << " - Document Setup : start loading pages now";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
@@ -136,7 +140,8 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
   //qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
-    loadingHash.insert(num, PAGE->renderToImage(3*dpi.width(), 3*dpi.height()).scaled(page.width(), page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    //qDebug() << "DPI:" << 4*dpi;
+    loadingHash.insert(num, PAGE->renderToImage(2.5*dpi.width(), 2.5*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
   }else{
     loadingHash.insert(num, QImage());
   }
@@ -206,12 +211,14 @@ void MainUI::startPresentation(bool atStart){
 void MainUI::ShowPage(int page){
   if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   //Check for valid document/page
-  if(page<0 || page >=numPages ){
+  //qDebug() << "Load Page:" << page << "/" << numPages-1;
+  if(page<0 || page > numPages ){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
   CurrentPage = page;
-  QImage PAGEIMAGE = loadingHash[page];
+  QImage PAGEIMAGE;
+  if(page<numPages){ PAGEIMAGE = loadingHash[page]; }
 
   //Now scale the image according to the user-designations and show it
   if(!PAGEIMAGE.isNull()){
@@ -220,8 +227,8 @@ void MainUI::ShowPage(int page){
     presentationLabel->setPixmap(pix);
     presentationLabel->show(); //always make sure it was not hidden
   }else{
+    //Blank page (useful so there is one blank page after the last slide before stopping the presentation)
     presentationLabel->setPixmap(QPixmap());
-    endPresentation();
   }
 }
 
@@ -252,9 +259,10 @@ void MainUI::slotPageLoaded(int page){
   //qDebug() << "Page Loaded:" << page;
   int finished = loadingHash.keys().length();
   if(finished == numPages){
-    progress->setVisible(false);
     progAct->setVisible(false);
     QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    ui->actionStop_Presentation->setEnabled(true);
+    ui->menuStart_Presentation->setEnabled(false);
   }else{
     progress->setValue(finished);
   }
@@ -272,7 +280,7 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
   QPainter painter(PRINTER);
     for(int i=0; i<numPages; i++){
       if(i != 0){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i]); }
+      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
       else{ painter.drawImage(0,0, QImage()); }
     }
 }
@@ -323,14 +331,18 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   QPainter painter(PRINTER);
   QTransform transF;
   transF.rotate(90);
+  //Show the progress bar
+  progAct->setVisible(true);
+  progress->setRange(0, pageCount.length()-1);
   for(int i=0; i<pageCount.length(); i++){
     if(i!=0){ PRINTER->newPage(); }
+    progress->setValue(i);
+    QApplication::processEvents();
     QImage img = loadingHash[pageCount[i]].scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    qDebug() << "Image Size:" << img.size();
-    //if(landscape){ img = img.transformed(transF, Qt::SmoothTransformation); qDebug() << " - rotated image size:" << img.size(); }
     //Now draw the image
     painter.drawImage(0,0,img);
   }
+  progAct->setVisible(false);
 }
 
 void MainUI::OpenNewFile(){
