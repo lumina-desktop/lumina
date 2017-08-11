@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainUI</class>
+ <widget class="QMainWindow" name="MainUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>659</width>
+    <height>588</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>659</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionPrint"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_PDF"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menuPresentation">
+    <property name="title">
+     <string>Presentation</string>
+    </property>
+    <widget class="QMenu" name="menuStart_Presentation">
+     <property name="title">
+      <string>Start Presentation</string>
+     </property>
+     <addaction name="actionAt_Beginning"/>
+    </widget>
+    <addaction name="menuStart_Presentation"/>
+    <addaction name="actionStop_Presentation"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuPresentation"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFit_Page"/>
+   <addaction name="actionFit_Width"/>
+   <addaction name="separator"/>
+   <addaction name="actionSingle_Page"/>
+   <addaction name="actionDual_Pages"/>
+   <addaction name="actionAll_Pages"/>
+  </widget>
+  <action name="actionOpen_PDF">
+   <property name="text">
+    <string>Open PDF</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionFit_Page">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fit Page</string>
+   </property>
+  </action>
+  <action name="actionFit_Width">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fit Width</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionSingle_Page">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Single Page</string>
+   </property>
+  </action>
+  <action name="actionDual_Pages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dual Pages</string>
+   </property>
+  </action>
+  <action name="actionAll_Pages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>All Pages</string>
+   </property>
+  </action>
+  <action name="actionAt_Beginning">
+   <property name="text">
+    <string>At Beginning</string>
+   </property>
+  </action>
+  <action name="actionStop_Presentation">
+   <property name="text">
+    <string>Stop Presentation</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

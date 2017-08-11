@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=lumina-pdf %f
+Icon=application-pdf
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+MimeType=application/pdf;
+Name=Lumina PDF Viewer
+Comment=View PDF Files
