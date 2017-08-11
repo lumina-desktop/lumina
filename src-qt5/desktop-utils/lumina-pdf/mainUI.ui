@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>659</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -33,7 +33,21 @@
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
+   <widget class="QMenu" name="menuPresentation">
+    <property name="title">
+     <string>Presentation</string>
+    </property>
+    <widget class="QMenu" name="menuStart_Presentation">
+     <property name="title">
+      <string>Start Presentation</string>
+     </property>
+     <addaction name="actionAt_Beginning"/>
+    </widget>
+    <addaction name="menuStart_Presentation"/>
+    <addaction name="actionStop_Presentation"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPresentation"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -121,6 +135,16 @@
    </property>
    <property name="text">
     <string>All Pages</string>
+   </property>
+  </action>
+  <action name="actionAt_Beginning">
+   <property name="text">
+    <string>At Beginning</string>
+   </property>
+  </action>
+  <action name="actionStop_Presentation">
+   <property name="text">
+    <string>Stop Presentation</string>
    </property>
   </action>
  </widget>
