@@ -231,7 +231,7 @@ Voulez-vous l'écraser ?</translation>
         <location filename="../PanelWidget.cpp" line="155"/>
         <location filename="../PanelWidget.cpp" line="156"/>
         <source>Select Color</source>
-        <translation type="unfinished">Sélection de couleur</translation>
+        <translation>Sélection de Couleur</translation>
     </message>
 </context>
 <context>
@@ -346,7 +346,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation type="unfinished">Menu de démarrage alternatif qui se concentre sur les fichiers d'utilisateurs, les répertoires d'utilisateurs, et les favoris d'utilisateurs.</translation>
+        <translation>Menu de démarrage alternatif qui se concentre sur les fichiers d'utilisateurs, les répertoires d'utilisateurs, et les favoris d'utilisateurs.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -741,7 +741,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished">Raccourcis Clavier</translation>
+        <translation>Raccourcis Clavier</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
@@ -826,7 +826,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
         <source>General Options</source>
-        <translation type="unfinished">Préférences Générales</translation>
+        <translation>Options Générales</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
@@ -865,17 +865,17 @@ Voulez-vous l'écraser ?</translation>
         <location filename="../ScriptDialog.ui" line="54"/>
         <location filename="../ScriptDialog.ui" line="87"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="126"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="133"/>
         <source>Apply</source>
-        <translation type="unfinished">Appliquer</translation>
+        <translation>Appliquer</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.cpp" line="57"/>
@@ -940,7 +940,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../mainWindow.ui" line="44"/>
         <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="47"/>
@@ -950,7 +950,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="55"/>
@@ -985,7 +985,7 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../pages/page_autostart.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
@@ -995,17 +995,17 @@ Voulez-vous l'écraser ?</translation>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
         <source>Application</source>
-        <translation type="unfinished">Application</translation>
+        <translation>Application</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="85"/>
         <source>Binary</source>
-        <translation type="unfinished">Binaire</translation>
+        <translation>Binaire</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="95"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="66"/>
