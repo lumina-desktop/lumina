@@ -30,22 +30,22 @@ public:
 
 	enum Property{ 	 /*QVariant Type*/
 		None=0, 		/*null*/
-		MinSize,  		/*QSize*/
-		MaxSize, 		/*QSize*/
-		Size, 			/*QSize*/
-		GlobalPos,	/*QPoint*/
-		Title, 		/*QString*/
-		ShortTitle,	/*QString*/
-		Icon, 		/*QIcon*/
-		Name, 		/*QString*/
-		Workspace,	/*int*/
-		States,		/*QList<NativeWindow::State> : Current state of the window */
-		WinTypes,	/*QList<NativeWindow::Type> : Current type of window (typically does not change)*/
-		WinActions, 	/*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
-		FrameExtents, 	/*QList<int> : [Left, Right, Top, Bottom] in pixels */
-		RelatedWindows, /* QList<WId> - better to use the "isRelatedTo(WId)" function instead of reading this directly*/
-		Active, 		/*bool*/
-		Visible 		/*bool*/
+		MinSize=1,  		/*QSize*/
+		MaxSize=2, 		/*QSize*/
+		Size=3, 			/*QSize*/
+		GlobalPos=4,	/*QPoint*/
+		Title=5, 		/*QString*/
+		ShortTitle=6,	/*QString*/
+		Icon=7, 		/*QIcon*/
+		Name=8, 		/*QString*/
+		Workspace=9,	/*int*/
+		States=10,		/*QList<NativeWindow::State> : Current state of the window */
+		WinTypes=11,	/*QList<NativeWindow::Type> : Current type of window (typically does not change)*/
+		WinActions=12, 	/*QList<NativeWindow::Action> : Current actions that the window allows (Managed/set by the WM)*/
+		FrameExtents=13, 	/*QList<int> : [Left, Right, Top, Bottom] in pixels */
+		RelatedWindows=14, /* QList<WId> - better to use the "isRelatedTo(WId)" function instead of reading this directly*/
+		Active=15, 		/*bool*/
+		Visible=16 		/*bool*/
 		};
 
 	static QList<NativeWindow::Property> allProperties(){

@@ -132,6 +132,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
 
   registerClientEvents(WIN->id());
   registerClientEvents(this->winId());
+  qDebug() << "Events Registered:" << WIN->id() << this->winId();
   return true;
 }
 

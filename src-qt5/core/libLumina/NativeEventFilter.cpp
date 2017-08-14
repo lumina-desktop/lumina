@@ -65,7 +65,7 @@ static xcb_ewmh_connection_t EWMH;
 static xcb_atom_t _NET_SYSTEM_TRAY_OPCODE = 0;
 
 inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilter *obj){
-  //qDebug() << "Got Property Event:" << ev->window << ev->atom;
+  qDebug() << "Got Property Event:" << ev->window << ev->atom;
   NativeWindow::Property prop = NativeWindow::None;
   //Now determine which properties are getting changed, and update the native window as appropriate
   if(ev->atom == EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
@@ -76,14 +76,33 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
-    if(DEBUG){ qDebug() << "Detected Property Change:" << ev->window << prop; }
+    //if(DEBUG){ 
+      qDebug() << "Detected Property Change:" << ev->window << prop; 
+    //}
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{
     //qDebug() << "Unknown Property Change:" << ev->window << ev->atom;
   }
 }
 
-inline void ParseClientMessageEvent(xcb_client_message_event *ev, NativeEventFilter *obj){
+inline void ParseClientMessageEvent(xcb_client_message_event_t *ev, NativeEventFilter *obj){
+  NativeWindow::Property prop = NativeWindow::None;
+  QVariant val;
+  if(ev->type==EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
+  else if(ev->type==EWMH._NET_WM_ICON){ prop = NativeWindow::Icon; }
+  else if(ev->type==EWMH._NET_WM_ICON_NAME){ prop = NativeWindow::ShortTitle; }
+  else if(ev->type==EWMH._NET_WM_DESKTOP){
+		prop = NativeWindow::Workspace;
+		val = QVariant( (int) ev->data.data32[0] );
+  }else if(ev->type==EWMH._NET_WM_WINDOW_TYPE){ prop = NativeWindow::WinTypes; }
+  else if(ev->type==EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
+
+  if(prop!=NativeWindow::None){
+    //if(DEBUG){ 
+      qDebug() << "Detected Property Change Request:" << ev->window << prop; //}
+    if(val.isNull()){ obj->emit WindowPropertyChanged(ev->window, prop); }
+    else{ obj->emit RequestWindowPropertyChange(ev->window, prop, val); }
+  }
 
 }
 
@@ -226,7 +245,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		      //addTrayApp( ((xcb_client_message_event_t*)ev)->data.data32[2] );
 		  }
 		  //Ignore the System Tray messages at the moment
-	        }else if(((xcb_client_message_event_t*)ev)->window == QX11Info::appRootWindow()){
+	        }else if(((xcb_client_message_event_t*)ev)->window != QX11Info::appRootWindow()){
 		  ParseClientMessageEvent((xcb_client_message_event_t*)ev, obj);
 		}
 	        break;
