@@ -25,14 +25,14 @@ LClock::LClock(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, 
 	calAct->setDefaultWidget(calendar);
   TZMenu = new QMenu(this);
     connect(TZMenu, SIGNAL(triggered(QAction*)), this, SLOT(ChangeTZ(QAction*)) );
-	
+
   //Now assemble the menu
   button->menu()->addAction(calAct);
   button->menu()->addMenu(TZMenu);
-	
+
   this->layout()->setContentsMargins(0,0,0,0); //reserve some space on left/right
   this->layout()->addWidget(button);
-	
+
   //Setup the timer
   timer = new QTimer();
   //Load all the initial settings
@@ -71,10 +71,11 @@ void LClock::updateTime(bool adjustformat){
   }else if(datetimeorder == "datetime"){
 	  label = datelabel + "\n" + timelabel;
 	  button->setToolTip("");
-  }else{ 
+  }else{
 	 label = timelabel;
 	button->setToolTip(datelabel);
   }
+  QStringList lines = label.split("\n");
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
     //different routine for vertical text (need newlines instead of spaces)
     for(int i=0; i<label.count("\n")+1; i++){
@@ -84,7 +85,7 @@ void LClock::updateTime(bool adjustformat){
       }
     }
     //label.replace(" ","\n");
-  }else if( this->size().height() < 2*this->fontMetrics().height() ){
+  }else if( this->size().height() < lines.length()*this->fontMetrics().height() ){
     label.replace("\n",", ");
   }
   if(adjustformat){
@@ -92,16 +93,17 @@ void LClock::updateTime(bool adjustformat){
       font.setBold(true);
     button->setFont(font);
    //Check the font/spacing for the display and adjust as necessary
-    QStringList lines = label.split("/n");
+    QStringList lines = label.split("\n");
     QFontMetrics metrics(font);
     if(this->layout()->direction()==QBoxLayout::LeftToRight){
       //horizontal layout
       int wid = 0;
-      int lwid;
+      int lwid = 0;
       for(int i=0; i<lines.length(); i++){
         lwid = metrics.width(lines[i]);
         if(lwid>wid){ wid = lwid; }
       }
+     qDebug() << "Verify Clock width:" << lines.length() << wid << lines;
      this->setMinimumWidth(wid);
      this->setMaximumWidth(wid + (4*metrics.width("O")));
     }else{
