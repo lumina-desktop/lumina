@@ -83,6 +83,10 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   }
 }
 
+inline void ParseClientMessageEvent(xcb_client_message_event *ev, NativeEventFilter *obj){
+
+}
+
 
 //Constructor for the Event Filter wrapper
 NativeEventFilter::NativeEventFilter() : QObject(){
@@ -222,7 +226,9 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		      //addTrayApp( ((xcb_client_message_event_t*)ev)->data.data32[2] );
 		  }
 		  //Ignore the System Tray messages at the moment
-	        }
+	        }else if(((xcb_client_message_event_t*)ev)->window == QX11Info::appRootWindow()){
+		  ParseClientMessageEvent((xcb_client_message_event_t*)ev, obj);
+		}
 	        break;
 //==============================
 	    case XCB_CONFIGURE_NOTIFY:

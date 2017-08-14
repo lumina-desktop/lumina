@@ -707,13 +707,13 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindow *win = findWindow(id, false);
-  qDebug() << "Got Window Closed" << id << win;
+  //qDebug() << "Got Window Closed" << id << win;
   //qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
     NWindows.removeAll(win);
     //RequestReparent(id, QX11Info::appRootWindow(), QPoint(0,0));
     win->emit WindowClosed(id);
-    qDebug() << "Visible Window Closed!!!";
+    //qDebug() << "Visible Window Closed!!!";
     //win->deleteLater();
   }else{
     win = findTrayWindow(id);
