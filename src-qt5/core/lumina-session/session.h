@@ -59,6 +59,7 @@ class LSession : public QObject{
 private:
 	QList<QProcess*> PROCS;
 	bool stopping;
+	int wmfails;
 
 private slots:
 	void stopall();
@@ -69,7 +70,7 @@ private slots:
 
 public:
 	LSession(){
-	stopping = false;
+	stopping = false; wmfails = 0;
 	}
 	~LSession(){ }
 
