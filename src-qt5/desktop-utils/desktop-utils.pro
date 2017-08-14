@@ -12,5 +12,6 @@ SUBDIRS+= lumina-fm \
 	lumina-archiver \
 #	lumina-notify \
 	lumina-mediaplayer \
-	lumina-xdg-entry
+	lumina-xdg-entry \
+	lumina-pdf
 #	lumina-terminal
