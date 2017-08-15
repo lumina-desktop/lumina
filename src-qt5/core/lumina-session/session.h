@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QDebug>
 #include <QFileSystemWatcher>
+#include <QTimer>
 
 #include <sys/types.h>
 #include <signal.h>
@@ -60,6 +61,7 @@ private:
 	QList<QProcess*> PROCS;
 	bool stopping;
 	int wmfails;
+	QTimer *wmTimer;
 
 private slots:
 	void stopall();
@@ -68,9 +70,14 @@ private slots:
 
 	void startProcess(QString ID, QString command, QStringList watchfiles = QStringList());
 
+	void resetWMCounter(){ wmfails = 0; }
 public:
 	LSession(){
 	stopping = false; wmfails = 0;
+	  wmTimer = new QTimer(this);
+	  wmTimer->setSingleShot(true);
+	  wmTimer->setInterval(2000); //2 second timeout
+           connect(wmTimer, SIGNAL(timeout()), this, SLOT(resetWMCounter()) );
 	}
 	~LSession(){ }
 

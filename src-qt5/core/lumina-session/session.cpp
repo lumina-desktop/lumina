@@ -39,7 +39,7 @@ void LSession::procFinished(){
       if(!stopping){
         //See if this process is the main desktop binary
         if(PROCS[i]->objectName()=="runtime"){ stopall(); }
-        else if(PROCS[i]->objectName()=="wm" && wmfails<3){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); } //restart the WM
+        else if(PROCS[i]->objectName()=="wm" && wmfails<2){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); } //restart the WM
         //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         //break;
