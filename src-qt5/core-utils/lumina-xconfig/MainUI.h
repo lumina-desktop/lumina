@@ -43,6 +43,7 @@ private:
 	QString currentSelection();
 
 	void AddScreenToWidget(ScreenInfo);
+	void SyncBackend(); //sync backend structures to current settings
 
 private slots:
 	void UpdateScreens();
@@ -52,6 +53,7 @@ private slots:
 	void DeactivateScreen(QString device = "");
 	void ActivateScreen();
 	void ApplyChanges(); //config changes
+	void SaveSettings();
 	void RestartFluxbox();
 };
 

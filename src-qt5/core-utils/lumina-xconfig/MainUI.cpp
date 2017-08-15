@@ -32,6 +32,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_deactivate, SIGNAL(clicked()), this, SLOT(DeactivateScreen()) );
   //connect(ui->tool_moveleft, SIGNAL(clicked()), this, SLOT(MoveScreenLeft()) );
   //connect(ui->tool_moveright, SIGNAL(clicked()), this, SLOT(MoveScreenRight()) );
+  connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(SaveSettings()) );
   connect(ui->tool_applyconfig, SIGNAL(clicked()), this, SLOT(ApplyChanges()) );
   connect(ui->mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),this, SLOT(ScreenSelected()) );
   connect(ui->tool_tile, SIGNAL(clicked()), ui->mdiArea, SLOT(tileSubWindows()) );
@@ -111,6 +112,31 @@ void MainUI::AddScreenToWidget(ScreenInfo screen){
   it->setGeometry(scaled); //scale it down for the display
   it->setFixedSize(scaled.size());
 
+}
+
+void MainUI::SyncBackend(){
+  QString item = currentSelection();
+  if(item.isEmpty()){ return; } //nothing to do
+  QString newres = ui->combo_resolution->currentData().toString();
+  if(newres.isEmpty()){ return; } //nothing to do
+  //qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
+  //Adjust the order of the two screens
+  bool setprimary = ui->check_primary->isChecked();
+  QList<QMdiSubWindow*> windows = ui->mdiArea->subWindowList();
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID == item){
+      SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
+      SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
+      SCREENS[i].rotation = ui->combo_rotation->currentData().toInt();
+    }
+    if(setprimary){ SCREENS[i].isprimary = SCREENS[i].ID==item; }
+    //Find the window associated with this screen
+    for(int s=0; s<windows.length(); s++){
+      if(windows[s]->whatsThis()==SCREENS[i].ID){
+        SCREENS[i].geom.setTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
+      }
+    }
+  }
 }
 
 void MainUI::UpdateScreens(){
@@ -272,33 +298,17 @@ void MainUI::ActivateScreen(){
 }
 
 void MainUI::ApplyChanges(){
-  QString item = currentSelection();
-  if(item.isEmpty()){ return; } //nothing to do
-  QString newres = ui->combo_resolution->currentData().toString();
-  if(newres.isEmpty()){ return; } //nothing to do
-  //qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
-  //Adjust the order of the two screens
-  bool setprimary = ui->check_primary->isChecked();
-  QList<QMdiSubWindow*> windows = ui->mdiArea->subWindowList();
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID == item){
-      SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
-      SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
-      SCREENS[i].rotation = ui->combo_rotation->currentData().toInt();
-    }
-    if(setprimary){ SCREENS[i].isprimary = SCREENS[i].ID==item; }
-    //Find the window associated with this screen
-    for(int s=0; s<windows.length(); s++){
-      if(windows[s]->whatsThis()==SCREENS[i].ID){
-        SCREENS[i].geom.setTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
-      }
-    }
-  }
+  SyncBackend();
   //Now run the command
   RRSettings::Apply(SCREENS);
   //And update the UI and WM in a moment
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
   QTimer::singleShot(1000, this, SLOT(RestartFluxbox()) );
+}
+
+void MainUI::SaveSettings(){
+  SyncBackend();
+  RRSettings::SaveScreens(SCREENS);
 }
 
 void MainUI::RestartFluxbox(){

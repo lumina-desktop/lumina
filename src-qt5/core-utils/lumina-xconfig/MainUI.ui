@@ -67,7 +67,8 @@
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-grid-small"/>
+           <iconset theme="format-view-grid-small">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -268,7 +269,23 @@
       <item>
        <widget class="QToolButton" name="tool_applyconfig">
         <property name="text">
-         <string>Apply Settings</string>
+         <string>Apply</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_save">
+        <property name="toolTip">
+         <string>Save current settings as user defaults</string>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-save"/>
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextBesideIcon</enum>
