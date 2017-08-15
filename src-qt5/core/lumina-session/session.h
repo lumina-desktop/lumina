@@ -76,7 +76,7 @@ public:
 	stopping = false; wmfails = 0;
 	  wmTimer = new QTimer(this);
 	  wmTimer->setSingleShot(true);
-	  wmTimer->setInterval(5000); //5 second timeout
+	  wmTimer->setInterval(2000); //2 second timeout
            connect(wmTimer, SIGNAL(timeout()), this, SLOT(resetWMCounter()) );
 	}
 	~LSession(){ }
