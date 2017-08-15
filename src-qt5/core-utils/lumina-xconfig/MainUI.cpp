@@ -20,6 +20,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->combo_location->clear();
     ui->combo_location->addItem(tr("Right Of"), "--right-of");
     ui->combo_location->addItem(tr("Left Of"), "--left-of");
+  ui->combo_rotation->clear();
+    ui->combo_rotation->addItem(tr("None"), 0);
+    ui->combo_rotation->addItem(tr("Left"), -90);
+    ui->combo_rotation->addItem(tr("Right"), 90);
+    ui->combo_rotation->addItem(tr("Inverted"), 180);
 
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
   connect(ui->push_rescan, SIGNAL(clicked()), this, SLOT(UpdateScreens()) );
@@ -174,15 +179,11 @@ void MainUI::ScreenSelected(){
   //QListWidgetItem *item = ui->list_screens->currentItem();
   if(item.isEmpty()){
     //nothing selected
-    //ui->tool_deactivate->setEnabled(false);
-    //ui->tool_moveleft->setEnabled(false);
-    //ui->tool_moveright->setEnabled(false);
+    ui->tool_deactivate->setEnabled(false);
     ui->tab_config->setEnabled(false);
   }else{
     //Item selected
-    //ui->tool_deactivate->setEnabled(ui->list_screens->count()>1);
-    //ui->tool_moveleft->setEnabled(ui->list_screens->row(item) > 0);
-    //ui->tool_moveright->setEnabled(ui->list_screens->row(item) < (ui->list_screens->count()-1));
+    ui->tool_deactivate->setEnabled(true);
     ui->tab_config->setEnabled(true);
     //Update the info available on the config tab
     ScreenInfo cur = currentScreenInfo();
@@ -195,6 +196,9 @@ void MainUI::ScreenSelected(){
       if(cur.resList[i].contains(cres)){ ui->combo_resolution->setCurrentIndex(i); }
     }
     ui->check_primary->setChecked( cur.isprimary );
+    int index = ui->combo_rotation->findData( cur.rotation );
+    if(index<0){ index = 0; }
+    ui->combo_rotation->setCurrentIndex(index);
   }
 }
 
@@ -268,7 +272,6 @@ void MainUI::ActivateScreen(){
 }
 
 void MainUI::ApplyChanges(){
-  //NOTE: need to re-specifiy the 
   QString item = currentSelection();
   if(item.isEmpty()){ return; } //nothing to do
   QString newres = ui->combo_resolution->currentData().toString();
@@ -281,6 +284,7 @@ void MainUI::ApplyChanges(){
     if(SCREENS[i].ID == item){
       SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
       SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
+      SCREENS[i].rotation = ui->combo_rotation->currentData().toInt();
     }
     if(setprimary){ SCREENS[i].isprimary = SCREENS[i].ID==item; }
     //Find the window associated with this screen
@@ -291,8 +295,8 @@ void MainUI::ApplyChanges(){
     }
   }
   //Now run the command
-  QStringList opts = currentOpts();
-  LUtils::runCmd("xrandr", opts);
+  RRSettings::Apply(SCREENS);
+  //And update the UI and WM in a moment
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
   QTimer::singleShot(1000, this, SLOT(RestartFluxbox()) );
 }

@@ -13,7 +13,7 @@
 #include <QStringList>
 
 class ScreenInfo{
-  public:	
+  public:
 	QString ID;
 	QRect geom; //screen geometry
         bool isprimary;
@@ -21,13 +21,15 @@ class ScreenInfo{
 	bool isavailable;
 	int order; //left to right
 	QStringList resList;
+	int rotation; //possible values: [-90, 0, 90, 180]
 
 	//Initial Defaults
 	ScreenInfo(){
-	  order = -1; //initial value is invalid	
+	  order = -1; //initial value is invalid
           isprimary = false;
           isactive = false;
 	  isavailable = false;
+	  rotation = 0; //no rotation by default
 	}
 	~ScreenInfo(){}
 };
@@ -42,9 +44,9 @@ public:
 
 	//Save the screen config for later
 	static bool SaveScreens(QList<ScreenInfo> screens);
-	
+
 	//Apply screen configuration
 	static void Apply(QList<ScreenInfo> screens);
-}; 
+};
 
 #endif

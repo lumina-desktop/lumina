@@ -29,6 +29,7 @@ void RRSettings::ApplyPrevious(){
         if(screens[i].isprimary){ primary = screens[i].ID; }
         screens[i].isactive = lastactive.contains(screens[i].ID);
         screens[i].order = (screens[i].isactive ? -1 : -3); //check/ignore
+        screens[i].rotation = set.value("rotation",0).toInt();
       set.endGroup();
     }else if(screens[i].isavailable){
       screens[i].order = -2; //needs activation/placement
@@ -116,6 +117,8 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
       QString devres = info[i].section(" ",2,2, QString::SectionSkipEmpty);
       if(!devres.contains("x")){ devres = info[i].section(" ",3,3,QString::SectionSkipEmpty); }
       if(!devres.contains("x")){ devres.clear(); }
+      //Pull the monitor rotation mode out as well (last word before the parenthesis)
+      QString devrotate = info[i].section("(",0,0).split(" ",QString::SkipEmptyParts).last();
       qDebug() << " - ID:" <<dev << "Current Geometry:" << devres;
       //qDebug() << " - Res:" << devres;
       if( !devres.contains("x") || !devres.contains("+") ){ devres.clear(); }
@@ -127,12 +130,16 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
      }else if( !devres.isEmpty() ){
         cscreen.isprimary = info[i].contains(" primary ");
 	//Device that is connected and attached (has a resolution)
-	qDebug() << "Create new Screen entry:" << dev << devres;
+	qDebug() << "Create new Screen entry:" << dev << devres << devrotate << info[i].section("(",0,0);
 	cscreen.ID = dev;
 	//Note: devres format: "<width>x<height>+<xoffset>+<yoffset>"
 	cscreen.geom.setRect( devres.section("+",-2,-2).toInt(), devres.section("+",-1,-1).toInt(), devres.section("x",0,0).toInt(), devres.section("+",0,0).section("x",1,1).toInt() ); 
 	cscreen.isavailable = true;
         cscreen.isactive = true;
+        if(devrotate=="left"){ cscreen.rotation = -90; }
+        else if(devrotate=="right"){ cscreen.rotation = 90; }
+        else if(devrotate=="inverted"){ cscreen.rotation = 180; }
+        else{ cscreen.rotation = 0; }
       }else if(info[i].contains(" connected")){
         //Device that is connected, but not attached
 	qDebug() << "Create new Screen entry:" << dev << "none";
@@ -164,6 +171,7 @@ bool RRSettings::SaveScreens(QList<ScreenInfo> screens){
     set.beginGroup(screens[i].ID);
       set.setValue("geometry", screens[i].geom);
       set.setValue("isprimary", screens[i].isprimary);
+      set.setValue("rotation", screens[i].rotation);
     set.endGroup();
   }
   set.setValue("lastActive",active);
@@ -178,15 +186,18 @@ bool RRSettings::SaveScreens(QList<ScreenInfo> screens){
 void RRSettings::Apply(QList<ScreenInfo> screens){
   //Read all the settings and create the xrandr options to maintain these settings
   QStringList opts;
-  qDebug() << "Apply:" << screens.length();
+  //qDebug() << "Apply:" << screens.length();
   for(int i=0; i<screens.length(); i++){
     qDebug() << " -- Screen:" << i << screens[i].ID << screens[i].isactive << screens[i].order;
     if(screens[i].order <0 || !screens[i].isactive){ continue; } //skip this screen - non-active
     opts << "--output" << screens[i].ID << "--mode" << QString::number(screens[i].geom.width())+"x"+QString::number(screens[i].geom.height());
     opts << "--pos" << QString::number(screens[i].geom.x())+"x"+QString::number(screens[i].geom.y());
+      if(screens[i].rotation==-90){ opts << "--rotate" << "left"; }
+      else if(screens[i].rotation==90){ opts << "--rotate" << "right"; }
+      else if(screens[i].rotation==180){ opts << "--rotate" << "inverted"; }
+      else{ opts << "--rotate" << "normal"; }
     if(screens[i].isprimary){ opts << "--primary"; }
   }
-  qDebug() << "Run command: xrandr" << opts;
+  //qDebug() << "Run command: xrandr" << opts;
   LUtils::runCmd("xrandr", opts);
-  //LUtils::runCmd("sleep 2; killall fluxbox"); //restart fluxbox as needed - it can't handle xrandr changes to the current session
 }
