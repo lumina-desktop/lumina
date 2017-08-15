@@ -259,7 +259,7 @@
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="64"/>
