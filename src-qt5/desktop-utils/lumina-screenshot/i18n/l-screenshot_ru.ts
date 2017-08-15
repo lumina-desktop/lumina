@@ -172,12 +172,12 @@
         <translation>Сохранить Снимок Экрана</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation>Несохраненный скриншот</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>Текущий кадр не был сохранен. Вы хотите сохранить или отменить изменения?</translation>
     </message>

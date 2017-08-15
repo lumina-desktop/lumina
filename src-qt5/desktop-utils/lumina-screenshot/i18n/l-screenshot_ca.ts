@@ -172,12 +172,12 @@
         <translation>Desa la captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation>Captura no desada</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>La captura actual encara no s&apos;ha desat. Voleu desar o descartar els canvis?</translation>
     </message>

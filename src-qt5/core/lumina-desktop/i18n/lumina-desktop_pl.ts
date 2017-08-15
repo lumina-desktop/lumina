@@ -83,17 +83,17 @@
         <translation type="unfinished">Usuń</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Select Application</source>
         <translation>Wybierz aplikację</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
         <source>New Filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Ładowanie)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="93"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 pozostało)</translation>
     </message>
@@ -677,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="137"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
         <translation>Strefa czasowa (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
         <translation>Czas systemowy</translation>
     </message>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="342"/>
+        <location filename="../LSession.cpp" line="346"/>
         <source>Desktop</source>
         <translation>Pulpit</translation>
     </message>

@@ -92,6 +92,7 @@ void LSession::setupSession(){
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
 
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
   BootSplash splash;
     splash.showScreen("init");
   qDebug() << "Initializing Session";
@@ -115,7 +116,6 @@ void LSession::setupSession(){
 				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
 				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
   }
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
 //use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");

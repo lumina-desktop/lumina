@@ -1177,11 +1177,6 @@
 <context>
     <name>page_fluxbox_keys</name>
     <message>
-        <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
-        <source>page_fluxbox_keys</source>
-        <translation>page_fluxbox_keys</translation>
-    </message>
-    <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
         <translation>基本编辑器</translation>
@@ -1650,147 +1645,147 @@
         <translation>日期显示于时间之上</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="60"/>
         <source>Window manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="94"/>
+        <location filename="../pages/page_session_options.cpp" line="93"/>
         <source>Desktop Settings</source>
         <translation>桌面设置</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>Select an image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Images</source>
         <translation>图像</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Reset User Image</source>
         <translation>重置用户图标</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>您希望将用户图标重置为系统默认吗？</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="218"/>
         <source>Valid Time Codes:</source>
         <translation>可用的时间代码：</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: 不带前导0的小时 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: 带前导0的小时 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: 不带前导0的分钟 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: 带前导0的分钟 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: 不带前导0的秒数 (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: 带前导0的秒数 (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: 上午/下午 (12小时) 时钟 (大写或小写)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: Timezone</source>
         <translation>%1: 时区</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="228"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>Time Codes</source>
         <translation>时间代码</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>Valid Date Codes:</source>
         <translation>可用的日期代码:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: 不包含前导0的日 (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: 包含前导0的日 (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: 缩略的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: 完整的星期几 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: 不带前导0的月份 (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: 带前导0的月份 (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: 缩略的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: 完整的月份 (本地化的)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: 两位数年份 (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: 四位数年份 (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>可将文字包在单引号中来避免转义</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="254"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Date Codes</source>
         <translation>日期代码</translation>
     </message>

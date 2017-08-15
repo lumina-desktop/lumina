@@ -165,7 +165,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation>Sélectionnez l'Action</translation>
+        <translation>Sélectionnez l&apos;Action</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
@@ -213,7 +213,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>Le document ne peut pas être créé. Assurez vous d'avoir les permissions adéquates.</translation>
+        <translation>Le document ne peut pas être créé. Assurez vous d&apos;avoir les permissions adéquates.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="693"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>Le répertoire ne peut pas être créé. Veuillez vous assurer d'avoir les permissions adéquates pour modifier le répertoire actuel.</translation>
+        <translation>Le répertoire ne peut pas être créé. Veuillez vous assurer d&apos;avoir les permissions adéquates pour modifier le répertoire actuel.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="371"/>
@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>L'utilitaire "lumina-fileinfo" est introuvable. Veuillez l'installer.</translation>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>L&apos;utilitaire &quot;lumina-fileinfo&quot; est introuvable. Veuillez l&apos;installer.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -415,7 +415,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>Remarque: Il suffit d'ajouter un nombre au nom de fichier autrement.</translation>
+        <translation>Remarque: Il suffit d&apos;ajouter un nombre au nom de fichier autrement.</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="148"/>
@@ -476,7 +476,7 @@
 
 Old Location: %1
 New Location: %2</source>
-        <translation>Il n'est possible de déplacer un répertoire dans lui-même. Veuille faire plutôt une copie de répertoire.Ancien emplacement: %1Nouvel emplacement: %2</translation>
+        <translation>Il n&apos;est possible de déplacer un répertoire dans lui-même. Veuille faire plutôt une copie de répertoire.Ancien emplacement: %1Nouvel emplacement: %2</translation>
     </message>
 </context>
 <context>
@@ -573,7 +573,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -617,7 +617,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="130"/>
         <source>View Mode</source>
-        <translation>Mode d'affichage</translation>
+        <translation>Mode d&apos;affichage</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="143"/>
@@ -657,12 +657,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="284"/>
         <source>Increase Icon Size</source>
-        <translation>Augmenter la taille de l'icône</translation>
+        <translation>Augmenter la taille de l&apos;icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="289"/>
         <source>Decrease Icon Size</source>
-        <translation>Diminuer la taille de l'icône</translation>
+        <translation>Diminuer la taille de l&apos;icône</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="294"/>
@@ -787,7 +787,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>Show Action Buttons</source>
-        <translation>Afficher les Boutons d'action</translation>
+        <translation>Afficher les Boutons d&apos;action</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="254"/>
@@ -1000,7 +1000,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
-        <translation>(Pas d'exécution en cours de Vidéo)</translation>
+        <translation>(Pas d&apos;exécution en cours de Vidéo)</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
@@ -1015,7 +1015,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
-        <translation>Erreur lors de l'ouverture du fichier : %1</translation>
+        <translation>Erreur lors de l&apos;ouverture du fichier : %1</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
@@ -1082,7 +1082,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="36"/>
         <source>Delete this image file</source>
-        <translation>Supprimer ce fichier d'image</translation>
+        <translation>Supprimer ce fichier d&apos;image</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="56"/>

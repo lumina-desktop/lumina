@@ -172,12 +172,12 @@
         <translation>保存截图</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation>未保存截图</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>当前截图未保存。您要保存还是丢弃您的修改？</translation>
     </message>

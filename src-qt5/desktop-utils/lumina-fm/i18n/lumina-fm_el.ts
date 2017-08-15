@@ -282,7 +282,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="273"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αρχείο</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="274"/>
@@ -345,8 +345,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -572,7 +573,7 @@ New Location: %2</source>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
