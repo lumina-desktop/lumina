@@ -40,9 +40,9 @@ void RRSettings::ApplyPrevious(){
     else{ avail << screens[i].ID; } //needed for some checks later - make it simple
   }
   //NOTE ABOUT orders: -1: check geom, -2: auto-add to end, -3: ignored
-  
+
   //Quick checks for simple systems - just use current X config as-is
-  if(devs.isEmpty() && (avail.filter("LVDS").isEmpty() || screens.length()==1) ){ return; } 
+  if(devs.isEmpty() && (avail.filter("LVDS").isEmpty() || screens.length()==1) ){ return; }
 
   //Typical ID's: LVDS-[], DVI-I-[], DP-[], HDMI-[], VGA-[]
   //"LVDS" is the built-in laptop display normally
@@ -55,8 +55,8 @@ void RRSettings::ApplyPrevious(){
     if(primary.isEmpty()){ primary = avail.first(); }
   }
   //Ensure only one monitor is primary, and reset a few flags
-  for(int i=0; i<screens.length(); i++){  
-    if(screens[i].ID!=primary){ screens[i].isprimary = false; }  
+  for(int i=0; i<screens.length(); i++){
+    if(screens[i].ID!=primary){ screens[i].isprimary = false; }
     screens[i].isactive = true; //we want all these monitors to be active eventually
   }
   // Handle all the available monitors
@@ -85,9 +85,9 @@ void RRSettings::ApplyPrevious(){
         }
       } //end loop over screens
     }
-    if(next>=0){ 
+    if(next>=0){
       cx+=screens[next].geom.width();
-      screens[next].order = handled; handled++; 
+      screens[next].order = handled; handled++;
     }else{
       //Still missing monitors (vertical alignment?)
       qDebug() << "Unhandled Monitors:" << screens.length()-handled;
@@ -106,10 +106,10 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
   for(int i=0; i<info.length(); i++){
     if(info[i].contains("connected") ){
       //qDebug() << "xrandr info:" << info[i];
-      if(!cscreen.ID.isEmpty()){ 
+      if(!cscreen.ID.isEmpty()){
 	SCREENS << cscreen; //current screen finished - save it into the array
-	cscreen = ScreenInfo(); //Now create a new structure      
-      } 
+	cscreen = ScreenInfo(); //Now create a new structure
+      }
       //qDebug() << "Line:" << info[i];
       QString dev = info[i].section(" ",0,0); //device ID
       //The device resolution can be either the 3rd or 4th output - check both
@@ -173,7 +173,7 @@ bool RRSettings::SaveScreens(QList<ScreenInfo> screens){
   }
   return true;
 }
-	
+
 //Apply screen configuration
 void RRSettings::Apply(QList<ScreenInfo> screens){
   //Read all the settings and create the xrandr options to maintain these settings
@@ -188,4 +188,5 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
   }
   qDebug() << "Run command: xrandr" << opts;
   LUtils::runCmd("xrandr", opts);
+  //LUtils::runCmd("sleep 2; killall fluxbox"); //restart fluxbox as needed - it can't handle xrandr changes to the current session
 }

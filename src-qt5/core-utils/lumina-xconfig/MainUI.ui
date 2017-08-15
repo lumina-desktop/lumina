@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>321</height>
+    <width>560</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,44 +18,10 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QListWidget" name="list_screens">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="flow">
-         <enum>QListView::LeftToRight</enum>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::ListMode</enum>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>true</bool>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="selectionRectVisible">
-         <bool>true</bool>
-        </property>
-       </widget>
+       <widget class="QMdiArea" name="mdiArea"/>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QToolButton" name="tool_deactivate">
           <property name="text">
@@ -64,27 +30,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tool_moveleft">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tool_moveright">
+         <widget class="QToolButton" name="tool_tile">
           <property name="text">
            <string>...</string>
           </property>
@@ -169,16 +115,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tool_applyconfig">
-            <property name="text">
-             <string>Apply Settings</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>
@@ -277,6 +213,16 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_applyconfig">
+        <property name="text">
+         <string>Apply Settings</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="push_close">

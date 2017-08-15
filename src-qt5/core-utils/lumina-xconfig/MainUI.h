@@ -11,6 +11,8 @@
 #include <QRect>
 #include <QString>
 #include <QList>
+#include <QMdiArea>
+#include <QMdiSubWindow>
 
 #include "ScreenSettings.h"
 
@@ -34,20 +36,23 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	QList<ScreenInfo> SCREENS;
+	double scaleFactor;
 	ScreenInfo currentScreenInfo();
 
 	QStringList currentOpts();
+	QString currentSelection();
 
 	void AddScreenToWidget(ScreenInfo);
 
 private slots:
 	void UpdateScreens();
 	void ScreenSelected();
-	void MoveScreenLeft();
-	void MoveScreenRight();
+	//void MoveScreenLeft();
+	//void MoveScreenRight();
 	void DeactivateScreen(QString device = "");
 	void ActivateScreen();
 	void ApplyChanges(); //config changes
+	void RestartFluxbox();
 };
 
 #endif
