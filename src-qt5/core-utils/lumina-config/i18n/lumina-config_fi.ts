@@ -979,6 +979,21 @@ Korvataanko se?</translation>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Sivulla on yhä tallentamattomia muutoksia. Haluatko tallentaa ne nyt?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Peru</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1433,6 +1448,11 @@ Korvataanko se?</translation>
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Työpöytäasetukset</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

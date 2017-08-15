@@ -979,6 +979,21 @@ Přepsat?</translation>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Na této stránce aktuálně jsou neuložené změny. Chcete je nyní uložit?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Storno</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1433,6 +1448,11 @@ Přepsat?</translation>
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Nastavení pracovní plochy</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

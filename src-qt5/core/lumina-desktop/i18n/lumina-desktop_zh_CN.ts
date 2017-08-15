@@ -1449,34 +1449,49 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
         <translation>应用更新？</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>您有系统更新可用！请问您是否想现在安装？</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (已插电)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (估计 %2)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
         <source>%1% Remaining</source>
         <translation>剩余 %1%</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
         <source>Workspace %1/%2</source>
         <translation>工作区 %1/%2</translation>
     </message>
@@ -1505,6 +1520,7 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1527,6 +1543,16 @@
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>您有系统更新可用！请问您是否想现在安装？</translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="58"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="59"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -421,52 +421,67 @@
         <translation>提示：否则的话它就只是在文件名后面加一个数字。</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>正在删除：%1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>复制 %1 至 %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>回复中: %1 到 %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translatorcomment>移动：%1 至 %2</translatorcomment>
         <translation>移动：%1 至 %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translatorcomment>无法移动文件：</translatorcomment>
         <translation>无法移动文件：</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translatorcomment>无法复制这些文件：</translatorcomment>
         <translation>无法复制这些文件：</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translatorcomment>无法恢复这些文件：</translatorcomment>
         <translation>无法恢复这些文件：</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translatorcomment>无法移动这些文件：</translatorcomment>
         <translation>无法移动这些文件：</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>文件错误</translation>
     </message>
@@ -474,12 +489,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>非法移动</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1

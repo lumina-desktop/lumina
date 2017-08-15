@@ -977,6 +977,21 @@
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Тази страница съдържа незапазени промени. Искате ли да ги запазите сега?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1431,6 +1446,11 @@
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Настройки на работния плот</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

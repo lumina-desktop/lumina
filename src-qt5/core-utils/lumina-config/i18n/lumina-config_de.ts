@@ -979,6 +979,21 @@
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Diese Seite enthält ungespeicherte Änderungen, möchten Sie diese jetzt speichern?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1433,6 +1448,11 @@
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Arbeitsflächen-Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

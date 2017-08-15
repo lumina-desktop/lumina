@@ -182,6 +182,21 @@
         <translation>Esama ekrano kopija kol kas nebuvo neįrašyta. Norite įrašyti ar atmesti savo pakeitimus?</translation>
     </message>
     <message>
+        <location filename="../MainUI.cpp" line="329"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="330"/>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="331"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainUI.ui" line="543"/>
         <source>Ctrl+S</source>
         <translation>Ctrl(Vald)+S</translation>

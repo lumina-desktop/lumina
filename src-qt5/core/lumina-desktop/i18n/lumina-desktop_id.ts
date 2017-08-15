@@ -1449,34 +1449,49 @@
         <translation>Mundur</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Batalkan</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
         <source>%1% (Plugged In)</source>
         <translation type="unfinished">%1% (Terpasang Dalam)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 Perkiraan)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
         <source>%1% Remaining</source>
         <translation>%1% Sisa</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
         <source>Workspace %1/%2</source>
         <translation type="unfinished">Ruang kerja %1/%2</translation>
     </message>
@@ -1505,6 +1520,7 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Cancel</source>
         <translation>Batalkan</translation>
     </message>
@@ -1526,6 +1542,16 @@
     <message>
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="58"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="59"/>
+        <source>No</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
