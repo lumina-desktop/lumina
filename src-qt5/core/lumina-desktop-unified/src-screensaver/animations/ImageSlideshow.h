@@ -17,9 +17,9 @@ private:
 	QPropertyAnimation *bounce, *fading;
 	QPixmap pixmap;
 	QStringList imageFiles;
-	QString imagePath;
+	QString imagePath, scriptPath;
 	QSize screenSize;
-	bool animate;
+	bool animate, scriptLoad;
 
 private:
 	void setupAnimation() {
@@ -45,7 +45,16 @@ private:
 		//Choose a new file if the chosen one is not an image
 	 	while(QImageReader::imageFormat(randomFile).isEmpty())
 		  randomFile = imagePath+imageFiles[qrand() % imageFiles.size()];
-		pixmap.load(imagePath+imageFiles[qrand() % imageFiles.size()]);
+    if(scriptLoad){
+      QProcess process;
+      process.start("/home/zwelch/test.sh");
+      process.waitForFinished(1000);
+      QByteArray output = process.readAllStandardOutput();
+      qDebug() << output;
+      pixmap.load(imagePath+imageFiles[qrand() % imageFiles.size()]);
+    }else{
+      pixmap.load(imagePath+imageFiles[qrand() % imageFiles.size()]);
+    }
 
 	    //If the image is larger than the screen, then shrink the image down to 3/4 it's size (so there's still some bounce)
 		//Scale the pixmap to keep the aspect ratio instead of resizing the label itself
@@ -66,11 +75,13 @@ private slots:
 	void stopped(){ qDebug() << "Image Stopped"; image->hide();}
 
 public:
-	ImageSlideshow(QWidget *parent, QString path, bool animate) : QParallelAnimationGroup(parent){
+	ImageSlideshow(QWidget *parent, QString path, bool animate, bool scriptLoad, QString scriptPath) : QParallelAnimationGroup(parent){
 	  imagePath = path;
 	  image = new QLabel(parent);
 	  screenSize = parent->size();
 	  this->animate = animate;
+    this->scriptLoad = scriptLoad;
+    this->scriptPath = scriptPath;
 	  
 	  //Generate the list of files in the directory
 	  imageFiles = QDir(imagePath).entryList(QDir::Files);
@@ -132,7 +143,11 @@ public:
 	  QString imagePath = settings->value("imageSlideshow/path","/usr/local/backgrounds/").toString();
 	  //Load whether to animate the image (default true)
 	  bool animate = settings->value("imageSlideshow/animate", true).toBool();
-	  ImageSlideshow *tmp = new ImageSlideshow(canvas, imagePath, animate);
+	  bool scriptLoad = settings->value("imageSlideshow/scriptLoad", true).toBool();
+    QString scriptPath;
+    if(scriptLoad)
+      scriptPath = settings->value("imageSlideshow/scriptPath", "/usr/local/backgrounds/script.sh").toString();
+	  ImageSlideshow *tmp = new ImageSlideshow(canvas, imagePath, animate, scriptLoad, scriptPath);
 	  this->addAnimation(tmp);
 	}
 

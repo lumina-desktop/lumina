@@ -151,10 +151,12 @@ void LScreenSaver::HideScreenSaver(){
     emit ClosingScreenSaver();
     emit LockStatusChanged(false);
   }
+  qDebug() << "Stop ScreenSavers";
   for(int i=0; i<BASES.length(); i++){
-    qDebug() << "Stop ScreenSaver:" << i;
     BASES[i]->stopPainting();
     BASES[i]->hide();
+	BASES.takeAt(i)->deleteLater();
+	i--;
   }
   UpdateTimers();
 }
