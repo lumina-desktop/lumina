@@ -1178,11 +1178,6 @@ Sovrascriverlo?</translation>
 <context>
     <name>page_fluxbox_keys</name>
     <message>
-        <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
-        <source>page_fluxbox_keys</source>
-        <translation>Tasti_abbreviazioni_fluxbox</translation>
-    </message>
-    <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
         <translation>Editor base</translation>
@@ -1651,147 +1646,147 @@ Sovrascriverlo?</translation>
         <translation>Prima data e poi orario</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="60"/>
         <source>Window manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="94"/>
+        <location filename="../pages/page_session_options.cpp" line="93"/>
         <source>Desktop Settings</source>
         <translation>Impostazioni del desktop</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>Select an image</source>
         <translation>Scegli un&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Images</source>
         <translation>Immagini</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Reset User Image</source>
         <translation>Reimposta immagine utente</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Vorresti reimpostare l&apos;immagine utente al valore predefinito di sistema?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="218"/>
         <source>Valid Time Codes:</source>
         <translation>Codici orari validi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Ora senza zero iniziale (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Ora con zero iniziale (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minuti senza zero iniziale (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minuti con zero iniziale (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Secondi senza zero iniziale (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Secondi con zero iniziale (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>% 1:  Orologio AM/PM (12 ore) (maiuscole o minuscole)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: Timezone</source>
         <translation>%1: Fuso orario</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="228"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>Time Codes</source>
         <translation>Codici numerici temporali</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>Valid Date Codes:</source>
         <translation>Codici data validi:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>% 1: Giorno numerico senza zero iniziale (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>% 1: Giorno numerico con zero iniziale (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>% 1: Giorno con abbreviazione (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as full name (localized)</source>
         <translation>% 1: Giorno con descrizione completa (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>% 1: Mese numerico senza zero iniziale (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>% 1: Mese numerico con zero iniziale (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Mese con abbreviazione (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Mese con descrizione completa (in base alla lingua)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Anno come numero di 2 cifre (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Anno come numero di 4 cifre (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Il testo può essere all&apos;interno di apici singoli per ignorare le sostituzioni</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="254"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Date Codes</source>
         <translation>Codici date</translation>
     </message>

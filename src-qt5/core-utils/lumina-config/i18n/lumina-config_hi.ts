@@ -1176,11 +1176,6 @@
 <context>
     <name>page_fluxbox_keys</name>
     <message>
-        <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
-        <source>page_fluxbox_keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
         <translation type="unfinished"></translation>
@@ -1647,147 +1642,147 @@
         <translation type="unfinished">पहले तारीख फिर समय</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="60"/>
         <source>Window manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="94"/>
+        <location filename="../pages/page_session_options.cpp" line="93"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>Select an image</source>
         <translation type="unfinished">तस्वीर चुनें</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Images</source>
         <translation type="unfinished">तस्वीरें</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Reset User Image</source>
         <translation type="unfinished">यूजर की तस्वीर पुनर्निर्धारित करें</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation type="unfinished">क्या आप चाहते हैं कि यूजर की तस्वीर उपकरण निर्धारित तय हो?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="218"/>
         <source>Valid Time Codes:</source>
         <translation type="unfinished">वैध टाइम कोड्स:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation type="unfinished">%1:जीरो से शुरू न होने वाले घन्टे(1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation type="unfinished">%1:जीरो से शुरू होने वाले घन्टे(01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation type="unfinished">%1:जीरो से शुरू न होने वाले मिनट्स(2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation type="unfinished">%1:जीरो से शुरू होने वाले मिनट्स(02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation type="unfinished">%1:जीरो से शुरू न होने वाले सेकंड्स(3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation type="unfinished">%1:जीरो से शुरू होने वाले सेकंड्स(03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation type="unfinished">%1:%1: AM/PM (12-घंटे)घड़ी(बड़े व छोटे अक्षर)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: Timezone</source>
         <translation type="unfinished">%1:समय क्षेत्र</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="228"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>Time Codes</source>
         <translation type="unfinished">समय संकेत</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>Valid Date Codes:</source>
         <translation type="unfinished">वैध समय संकेत</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation type="unfinished">%1:दिन नंबर जो शून्य से शुरू नहीं होते(1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation type="unfinished">%1:दिन नंबर जो शून्य से शुरू होते हैं(01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation type="unfinished">%1: दिन का उपनाम(स्थानीय)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as full name (localized)</source>
         <translation type="unfinished">%1:दिन का पूरा नाम(स्थानीय)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation type="unfinished">%1:मासिक नंबर जो शून्य से शुरू नहीं होते हैं(2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation type="unfinished">%1:मासिक नंबर जो शून्य से शुरू होते हैं(02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation type="unfinished">%1:महीने का उपनाम(स्थानीय)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as full name (localized)</source>
         <translation type="unfinished">%1:महीने का पूरा नाम(स्थानीय)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation type="unfinished">%1:वर्ष दो अंको में(15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation type="unfinished">%1:वर्ष चार अंको में(2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation type="unfinished">प्रतिस्थापन अनदेखी के लिए टेक्स्ट एकल-चिन्ह हो सकता है</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="254"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Date Codes</source>
         <translation type="unfinished">तारीख संकेत</translation>
     </message>

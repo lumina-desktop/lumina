@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>La utilería "lumina-fileinfo" no se puede encontrar en el sistema. Por favor instálelo primero.</translation>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>La utilería &quot;lumina-fileinfo&quot; no se puede encontrar en el sistema. Por favor instálelo primero.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -576,7 +576,7 @@ Ubicación Nueva: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

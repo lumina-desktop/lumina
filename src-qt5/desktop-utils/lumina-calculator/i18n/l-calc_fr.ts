@@ -102,7 +102,7 @@
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation>Enregistrer l'Historique de la Calculatrice</translation>
+        <translation>Enregistrer l&apos;Historique de la Calculatrice</translation>
     </message>
 </context>
 </TS>

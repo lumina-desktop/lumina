@@ -6,7 +6,7 @@
     <message>
         <location filename="../TarBackend.cpp" line="218"/>
         <source>Could not read archive</source>
-        <translation>Ne pouvait pas lire l'archive</translation>
+        <translation>Ne pouvait pas lire l&apos;archive</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="220"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation>Ajouter un répertoire à l'archive</translation>
+        <translation>Ajouter un répertoire à l&apos;archive</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
