@@ -19,7 +19,7 @@ class ScreenInfo{
         bool isprimary;
 	bool isactive;
 	bool isavailable;
-	int applyChange; //[<=0: do nothing, 1: deactivate]
+	int applyChange; //[<=0: do nothing, 1: deactivate, 2: activate]
 	QStringList resList;
 	int rotation; //possible values: [-90, 0, 90, 180]
 

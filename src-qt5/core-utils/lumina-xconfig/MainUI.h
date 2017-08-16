@@ -48,9 +48,10 @@ private:
 private slots:
 	void UpdateScreens();
 	void ScreenSelected();
-	//void MoveScreenLeft();
-	//void MoveScreenRight();
-	void DeactivateScreen(QString device = "");
+	void updateNewScreenResolutions();
+	void tileScreens();
+
+	void DeactivateScreen();
 	void ActivateScreen();
 	void ApplyChanges(); //config changes
 	void SaveSettings();

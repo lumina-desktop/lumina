@@ -18,7 +18,14 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QMdiArea" name="mdiArea"/>
+       <widget class="QMdiArea" name="mdiArea">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -79,7 +86,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_config">
        <attribute name="title">
@@ -124,36 +131,6 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="1">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
           <property name="font">
@@ -167,15 +144,15 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="combo_rotation"/>
+        </item>
         <item row="2" column="1">
          <widget class="QCheckBox" name="check_primary">
           <property name="text">
            <string>Primary Screen</string>
           </property>
          </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="combo_rotation"/>
         </item>
        </layout>
       </widget>
@@ -196,6 +173,13 @@
            <string>Available Screens</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="2">
+            <widget class="QPushButton" name="push_activate">
+             <property name="text">
+              <string>Enable Screen</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QComboBox" name="combo_availscreens">
              <property name="toolTip">
@@ -204,23 +188,9 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="combo_location">
+            <widget class="QComboBox" name="combo_resolutions">
              <property name="toolTip">
               <string>Location to insert the screen</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="combo_cscreens">
-             <property name="toolTip">
-              <string>Current screens</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="push_activate">
-             <property name="text">
-              <string>Enable Screen</string>
              </property>
             </widget>
            </item>
@@ -285,7 +255,8 @@
          <string>Save</string>
         </property>
         <property name="icon">
-         <iconset theme="document-save"/>
+         <iconset theme="document-save">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextBesideIcon</enum>

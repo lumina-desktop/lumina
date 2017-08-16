@@ -50,43 +50,7 @@ void RRSettings::ApplyPrevious(){
   //Ensure only one monitor is primary, and reset a few flags
   for(int i=0; i<screens.length(); i++){
     if(screens[i].ID!=primary){ screens[i].isprimary = false; }
-    //screens[i].isactive = true; //we want all these monitors to be active eventually
   }
-  // Handle all the available monitors
- /*int handled = 0;
-  int cx = 0; //current x point
-  while(handled<screens.length()){
-    //Go through horizontally and place monitors (TO-DO: Vertical placement not handled yet)
-    int next = -1;
-    int diff = -1;
-    for(int i=0; i<screens.length(); i++){
-      if(screens[i].order==-1){
-        if(diff<0 || ((screens[i].geom.x()-cx) < diff)){
-          diff = screens[i].geom.x()-cx;
-          next = i;
-        }
-      }
-    }//end loop over screens
-    if(next<0){
-      //Go through and start adding the non-assigned screens to the end
-      for(int i=0; i<screens.length(); i++){
-        if(screens[i].order==-2){
-          if(diff<0 || ((screens[i].geom.x()-cx) < diff)){
-            diff = screens[i].geom.x()-cx;
-            next = i;
-          }
-        }
-      } //end loop over screens
-    }
-    if(next>=0){
-      cx+=screens[next].geom.width();
-      screens[next].order = handled; handled++;
-    }else{
-      //Still missing monitors (vertical alignment?)
-      qDebug() << "Unhandled Monitors:" << screens.length()-handled;
-      break;
-    }
-  }*/
   //Now reset the display with xrandr
   RRSettings::Apply(screens);
 }
@@ -111,7 +75,7 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
       if(!devres.contains("x")){ devres.clear(); }
       //Pull the monitor rotation mode out as well (last word before the parenthesis)
       QString devrotate = info[i].section("(",0,0).split(" ",QString::SkipEmptyParts).last();
-      qDebug() << " - ID:" <<dev << "Current Geometry:" << devres;
+      //qDebug() << " - ID:" <<dev << "Current Geometry:" << devres;
       //qDebug() << " - Res:" << devres;
       if( !devres.contains("x") || !devres.contains("+") ){ devres.clear(); }
       //qDebug() << " - Res (modified):" << devres;
@@ -122,7 +86,7 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
      }else if( !devres.isEmpty() ){
         cscreen.isprimary = info[i].contains(" primary ");
 	//Device that is connected and attached (has a resolution)
-	qDebug() << "Create new Screen entry:" << dev << devres << devrotate << info[i].section("(",0,0);
+	//qDebug() << "Create new Screen entry:" << dev << devres << devrotate << info[i].section("(",0,0);
 	cscreen.ID = dev;
 	//Note: devres format: "<width>x<height>+<xoffset>+<yoffset>"
 	cscreen.geom.setRect( devres.section("+",-2,-2).toInt(), devres.section("+",-1,-1).toInt(), devres.section("x",0,0).toInt(), devres.section("+",0,0).section("x",1,1).toInt() ); 
@@ -134,7 +98,7 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
         else{ cscreen.rotation = 0; }
       }else if(info[i].contains(" connected")){
         //Device that is connected, but not attached
-	qDebug() << "Create new Screen entry:" << dev << "none";
+	//qDebug() << "Create new Screen entry:" << dev << "none";
 	cscreen.ID = dev;
 	//cscreen.order = -2; //flag this right now as a non-active screen
         cscreen.isavailable = true;
@@ -181,9 +145,11 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
   //qDebug() << "Apply:" << screens.length();
   for(int i=0; i<screens.length(); i++){
     qDebug() << " -- Screen:" << i << screens[i].ID << screens[i].isactive;
-    if(screens[i].applyChange <=0 || !screens[i].isactive){ continue; } //skip this screen - non-active
+    if( !screens[i].isactive){ continue; } //skip this screen - non-active
     else if(screens[i].applyChange==1){ opts << "--output" << screens[i].ID << "--off"; continue; } //deactivate a screen
-    opts << "--output" << screens[i].ID << "--mode" << QString::number(screens[i].geom.width())+"x"+QString::number(screens[i].geom.height());
+    opts << "--output" << screens[i].ID;
+    if(screens[i].applyChange==2){ opts << "--auto"; }
+    else{ opts << "--mode" << QString::number(screens[i].geom.width())+"x"+QString::number(screens[i].geom.height()); }
     opts << "--pos" << QString::number(screens[i].geom.x())+"x"+QString::number(screens[i].geom.y());
       if(screens[i].rotation==-90){ opts << "--rotate" << "left"; }
       else if(screens[i].rotation==90){ opts << "--rotate" << "right"; }
@@ -191,6 +157,6 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
       else{ opts << "--rotate" << "normal"; }
     if(screens[i].isprimary){ opts << "--primary"; }
   }
-  //qDebug() << "Run command: xrandr" << opts;
+  qDebug() << "Run command: xrandr" << opts;
   LUtils::runCmd("xrandr", opts);
 }
