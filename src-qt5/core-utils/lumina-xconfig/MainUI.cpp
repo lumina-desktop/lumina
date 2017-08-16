@@ -15,7 +15,7 @@
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   loadIcons();
-  scaleFactor = 1/20.0;
+  scaleFactor = 1/15.0; //simple default value
   //Fill the location list with the valid entries
   ui->combo_location->clear();
     ui->combo_location->addItem(tr("Right Of"), "--right-of");
@@ -56,7 +56,7 @@ void MainUI::loadIcons(){
   ui->tool_applyconfig->setIcon( LXDG::findIcon("dialog-ok-apply","") );
 }
 
-QStringList MainUI::currentOpts(){
+/*QStringList MainUI::currentOpts(){
   //Read all the settings and create the xrandr options to maintain these settings
   QStringList opts;
   for(int i=0; i<SCREENS.length(); i++){
@@ -73,7 +73,7 @@ QStringList MainUI::currentOpts(){
     }
   }
   return opts;
-}
+}*/
 
 QString MainUI::currentSelection(){
   QMdiSubWindow *tmp = ui->mdiArea->activeSubWindow();
@@ -134,6 +134,7 @@ void MainUI::SyncBackend(){
     for(int s=0; s<windows.length(); s++){
       if(windows[s]->whatsThis()==SCREENS[i].ID){
         SCREENS[i].geom.setTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
+        SCREENS[i].applyChange = (windows[s]->isEnabled() ? 0 : 1); //disabled window is one that will be removed
       }
     }
   }
@@ -143,9 +144,9 @@ void MainUI::UpdateScreens(){
   //First probe the server for current screens
   SCREENS = RRSettings::CurrentScreens();
   //Now go through the screens and arrange them in order from left->right in the UI
-  bool found = true;
-  int xoffset = 0; //start at 0
-  int cnum = 0;
+  //bool found = true;
+  //int xoffset = 0; //start at 0
+  //int cnum = 0;
   QString csel = currentSelection();
   //Clear all the current widgets
   while(ui->mdiArea->currentSubWindow()!=0 ){
@@ -154,8 +155,11 @@ void MainUI::UpdateScreens(){
     ui->mdiArea->removeSubWindow(tmp);
     tmp->deleteLater();
   }
-
-  while(found){
+  //Now add all the active screens to the display
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].isactive){ AddScreenToWidget(SCREENS[i]); }
+  }
+  /*while(found){
     found = false; //make sure to break out if a screen is not found
     for(int i=0; i<SCREENS.length(); i++){
       if(SCREENS[i].order != -1){qDebug() << "Skip Screen:" << i << SCREENS[i].order; } //already evaluated - skip it
@@ -175,15 +179,15 @@ void MainUI::UpdateScreens(){
          AddScreenToWidget(SCREENS[i]);
       }
     }
-  }
+  }*/
 
   //Now update the available/current screens in the UI
   ui->combo_availscreens->clear();
   ui->combo_cscreens->clear();
   for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].order<0){
+    if(!SCREENS[i].isactive && SCREENS[i].isavailable){
       ui->combo_availscreens->addItem(SCREENS[i].ID);
-    }else{
+    }else if(SCREENS[i].isactive){
       ui->combo_cscreens->addItem(SCREENS[i].ID);
     }
   }
@@ -271,30 +275,32 @@ void MainUI::ScreenSelected(){
 }*/
 
 void MainUI::DeactivateScreen(QString device){
-  if(device.isEmpty()){ device = currentSelection(); }
-  if(device.isEmpty()){ return; } //nothing found
-  //Remove the screen from the settings
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID==device){ SCREENS.removeAt(i); break; }
-  }
-  //Now run the command
-  QStringList opts = currentOpts();
-  opts << "--output" << device << "--off";
-  LUtils::runCmd("xrandr", opts);
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+  QMdiSubWindow *cur = ui->mdiArea->currentSubWindow();
+  if(cur==0){ return; }
+  cur->setEnabled( !cur->isEnabled() ); //toggle it between enabled/disabled
 }
 
 void MainUI::ActivateScreen(){
   //Assemble the command;
   QString ID = ui->combo_availscreens->currentText();
-  QString DID = ui->combo_cscreens->currentText();
+  //Find the screen infor associated with this ID
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID==ID){
+      SCREENS[i].isactive = true;
+      QStringList res = SCREENS[i].resList.first().split("x");
+      SCREENS[i].geom.setSize(  QSize(res[0].toInt(), res[1].toInt()) );
+      AddScreenToWidget(SCREENS[i]);
+      break;
+    }
+  }
+  /*QString DID = ui->combo_cscreens->currentText();
   QString loc = ui->combo_location->currentData().toString();
   if(ID.isEmpty() || DID.isEmpty() || loc.isEmpty()){ return; } //invalid inputs
   QStringList opts = currentOpts();
     opts << "--output" << ID << loc << DID <<"--auto";
   //qDebug() << "Activate Options:" << opts;
   LUtils::runCmd("xrandr", opts );
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );*/
 }
 
 void MainUI::ApplyChanges(){

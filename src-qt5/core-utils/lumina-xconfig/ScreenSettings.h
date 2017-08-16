@@ -19,13 +19,14 @@ class ScreenInfo{
         bool isprimary;
 	bool isactive;
 	bool isavailable;
-	int order; //left to right
+	int applyChange; //[<=0: do nothing, 1: deactivate]
 	QStringList resList;
 	int rotation; //possible values: [-90, 0, 90, 180]
 
+
 	//Initial Defaults
 	ScreenInfo(){
-	  order = -1; //initial value is invalid
+	  applyChange = -1; //initial value is invalid
           isprimary = false;
           isactive = false;
 	  isavailable = false;

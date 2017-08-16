@@ -39,7 +39,7 @@ private:
 	double scaleFactor;
 	ScreenInfo currentScreenInfo();
 
-	QStringList currentOpts();
+	//QStringList currentOpts();
 	QString currentSelection();
 
 	void AddScreenToWidget(ScreenInfo);
