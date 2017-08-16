@@ -49,7 +49,7 @@ private slots:
 	void UpdateScreens();
 	void ScreenSelected();
 	void updateNewScreenResolutions();
-	void tileScreens();
+	void tileScreens(bool activeonly = false);
 
 	void DeactivateScreen();
 	void ActivateScreen();

@@ -197,26 +197,46 @@ void MainUI::updateNewScreenResolutions(){
 }
 
 void MainUI::tileScreens(bool activeonly){
+  qDebug() << "Tile Windows in Y Dimension";
   QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
   QRegion total;
   int xpos, ypos;
   xpos = ypos = 0;
   QMdiSubWindow *cur = 0;
-  float diff;
   while(!wins.isEmpty()){
     cur=0;
-    diff = -1;
-    //Scan for the window closest to the current X value
-    for(x=0; x<wins.length(); x++){
-      //Scan for the window closest to the current Y value
-      for(int y=0; y<wins.length(); y++){
-        if(cur==0){ cur = wins[y]; }
-        else if(cur==wins[y]){ continue; } //skip it
-        else if(wins[y]->geometry().y()<cur->geometry().y() && wins[y]->geometry().y()>ypos){ cur = wins[y]; }
-      }
+    for(int i=0; i<wins.length(); i++){
+      if(cur==0){ cur = wins[i]; } //first one
+      else if(wins[i]->pos().y() < cur->pos().y()){ cur = wins[i]; }
     }
-    if(cur!=0){
-      
+    if(cur==0){
+      //Note: This should **never** happen
+      qDebug() << "No windows found below y=:" << ypos;
+      //need to move the reference point
+      QRect bounding = total.boundingRect();
+      ypos+= (bounding.height()/2);
+    }else{
+      if(total.isNull()){
+        //First window handled
+        cur->move(cur->pos().x(), ypos);
+      }else{
+        int newy = ypos;
+        bool overlap = true;
+        while(overlap){
+          QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
+          QRegion diff = tmp.subtracted(total);
+          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          qDebug() << "Check Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
+          if(overlap){
+            QRect bound = diff.boundingRect();
+            if(newy!=bound.top()){ newy = bound.top(); }
+            else{ newy = bound.bottom(); }
+          }
+        }
+        cur->move(cur->pos().x(), newy);
+      }
+      total = total.united(cur->geometry());
+      wins.removeAll(cur);
     }
   }
 }
