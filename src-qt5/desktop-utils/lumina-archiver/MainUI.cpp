@@ -196,8 +196,8 @@ QString MainUI::OpenFileTypes(){
 void MainUI::NewArchive(){
   QString file = QFileDialog::getSaveFileName(this, tr("Create Archive"), QDir::homePath(), CreateFileTypes() );
   if(file.isEmpty()){ return; }
-  if(QFile::exists(file)){ 
-    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); } 
+  if(QFile::exists(file)){
+    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); }
   }
   ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
@@ -267,6 +267,12 @@ void MainUI::extractSelection(){
 
 void MainUI::ViewFile(QTreeWidgetItem *it){
   if(it->childCount()>0){ return; } //directory - not viewable
+  /*QString newfile = QDir::tempPath()+"/"+it->whatsThis(0).section("/",-1);
+  if(QFile::exists(newfile)){
+    if(QMessageBox::Yes != QMessageBox::question(this, tr("File exists"), tr("A temporary file with the same name already exists, do you want to overwrite it?")+"\n\n"+newfile, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+      return; //cancelled
+    }
+  }*/
   ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startViewFile(it->whatsThis(0));
 }

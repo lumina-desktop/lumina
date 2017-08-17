@@ -88,9 +88,9 @@ void LaunchAutoStart(){
     QString cmd = xdgapps[i]->getDesktopExec();
     if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
     //Now run the command
-    if(!cmd.isEmpty()){ 
+    if(!cmd.isEmpty()){
       qDebug() << " - Auto-Starting File:" << xdgapps[i]->filePath;
-      QProcess::startDetached(cmd); 
+      QProcess::startDetached(cmd);
     }
   }
   //make sure we clean up all the xdgapps structures
@@ -103,7 +103,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     if(extension=="mimetype"){
 	//qDebug() << "inFile:" << inFile;
 	QStringList matches = LXDG::findAppMimeForFile(inFile, true).split("::::"); //allow multiple matches
-	//qDebug() << "Matches:" << matches;
+	qDebug() << "Mimetype Matches:" << matches;
 	for(int i=0; i<matches.length(); i++){
 	  defApp = LXDG::findDefaultAppForMime(matches[i]);
           //qDebug() << "MimeType:" << matches[i] << defApp;
@@ -111,7 +111,7 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
 	  else if(i+1==matches.length()){ extension = matches[0]; }
 	}
     }else{ defApp = LFileDialog::getDefaultApp(extension); }
-    //qDebug() << "extension:" << extension << "defApp:" << defApp;
+    qDebug() << "Mimetype:" << extension << "defApp:" << defApp;
     if( !defApp.isEmpty() && !showDLG ){
       if(defApp.endsWith(".desktop")){
         XDGDesktop DF(defApp);
@@ -159,10 +159,10 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
     if(!w.appPath.isEmpty()){ path = w.appPath; }
     //Just do the default application registration here for now
     //  might move it to the runtime phase later after seeing that the app has successfully started
-    if(w.setDefault){ 
+    if(w.setDefault){
       if(!w.appFile.isEmpty()){ LFileDialog::setDefaultApp(extension, w.appFile); }
       else{ LFileDialog::setDefaultApp(extension, w.appExec); }
-    }else{ LFileDialog::setDefaultApp(extension, ""); }
+    }
     //Now return the resulting application command
     return w.appExec;
 }
@@ -234,7 +234,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
   bool isFile=false; bool isUrl=false;
   QString extension;
   //Quick check/replacement for the URL syntax of a file
-  if(inFile.startsWith("file://")){ inFile.remove(0,7); }
+  if(inFile.startsWith("file://")){ inFile = QUrl(inFile).toLocalFile(); } //change from URL to file format for a local file
   //First make sure this is not a binary name first
   QString bin = inFile.section(" ",0,0).simplified();
   if(LUtils::isValidBinary(bin) && !bin.endsWith(".desktop") && !QFileInfo(inFile).isDir() ){isFile=true; }
@@ -317,10 +317,10 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }
   }
   //Now assemble the exec string (replace file/url field codes as necessary)
-  if(useInputFile){ 
+  if(useInputFile){
     args = inFile; //just to keep them distinct internally
     // NOTE: lumina-open is only designed for a single input file,
-    //    so no need to distinguish between the list codes (uppercase) 
+    //    so no need to distinguish between the list codes (uppercase)
     //    and the single-file codes (lowercase)
     //Special "inFile" format replacements for input codes
     if( (cmd.contains("%f") || cmd.contains("%F") ) ){
