@@ -131,7 +131,7 @@
     <message>
         <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti IMG atvaizdį į USB įrenginį (gali prireikti administratoriaus leidimo)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="24"/>
@@ -266,22 +266,22 @@
     <message>
         <location filename="../MainUI.cpp" line="185"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: ISO atvaizdis (*.iso *.img)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="186"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: XAR archyvas (*.xar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="187"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: Java archyvas (*.jar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="188"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: RedHat paketas (*.rpm)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="189"/>
@@ -350,12 +350,12 @@
     <message>
         <location filename="../imgDialog.ui" line="14"/>
         <source>Burn IMG to device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašyti IMG atvaizdį į įrenginį</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="29"/>
         <source>IMG File</source>
-        <translation type="unfinished"></translation>
+        <translation>IMG failas</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="54"/>
@@ -365,7 +365,7 @@
     <message>
         <location filename="../imgDialog.ui" line="84"/>
         <source>USB Device</source>
-        <translation type="unfinished"></translation>
+        <translation>USB įrenginys</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="96"/>
@@ -380,7 +380,7 @@
     <message>
         <location filename="../imgDialog.ui" line="132"/>
         <source>Burning to USB:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašoma į USB:</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="166"/>
@@ -400,7 +400,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="21"/>
         <source>Burn IMG to Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašyti IMG atvaizdį į įrenginį</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
@@ -410,32 +410,32 @@
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
         <source>Kilobyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilobaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="37"/>
         <source>Megabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Megabaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="38"/>
         <source>Gigabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gigabaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Cancel Image Burn?</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisakyti atvaizdžio rašymo?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Do you wish to stop the current IMG burn process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite stabdyti esamą IMG atvaizdžio rašymo procesą?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
-        <translation type="unfinished"></translation>
+        <translation>Įspėjimas: Tai paliks USB įrenginį nesuderintoje būsenoje</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proceso užbaigti nepavyko:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
@@ -470,7 +470,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvaizdis buvo sėkmingai įrašytas į USB įrenginį</translation>
     </message>
 </context>
 </TS>

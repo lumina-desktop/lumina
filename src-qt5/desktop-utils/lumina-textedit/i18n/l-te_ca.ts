@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Tipus d'ítem</translation>
+        <translation>Tipus d&apos;ítem</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../MainUI.ui" line="420"/>
         <source>Left</source>
-        <translation>A l'esquerra</translation>
+        <translation>A l&apos;esquerra</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="428"/>
@@ -307,7 +307,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Hi ha canvis no desats.
-Voleu tancar l'editor tanmateix?
+Voleu tancar l&apos;editor tanmateix?
 
 %1</translation>
     </message>

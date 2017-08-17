@@ -57,7 +57,7 @@ QString LIconCache::findFile(QString icon){
   QString cTheme = QIcon::themeName();
   if(cTheme.isEmpty()){
     QIcon::setThemeName("material-design-light");
-    cTheme = "material-design-light";	
+    cTheme = "material-design-light";
   }
   //Make sure the current search paths correspond to this theme
   if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){
@@ -231,7 +231,7 @@ QStringList LIconCache::getChildIconDirs(QString path){
   QDir D(path);
   QStringList out;
   QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){ 
+  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){
     //Need to sort these directories by image size
     //qDebug() << " - Parent:" << parent << "Dirs:" << dirs;
     for(int i=0; i<dirs.length(); i++){
@@ -305,7 +305,7 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
 }
 
 bool LIconCache::isThemeIcon(QString id){
-  return (!id.contains("/") && !id.contains(".") );
+  return (!id.contains("/") && !id.contains(".") && !id.contains("libreoffice") );
 }
 
 QIcon LIconCache::iconFromTheme(QString id){

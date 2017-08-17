@@ -59,17 +59,17 @@
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>Patinka ši daina</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavargau nuo šios dainos (nebus grojama mėnesį)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uždrausti šią dainą (daugiau nebebus grojama)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>
@@ -114,12 +114,12 @@
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>El. paštas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
@@ -162,130 +162,125 @@
         <translation>Rodinys</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="699"/>
-        <source>toolBar</source>
-        <translation>Įrankių juosta</translation>
-    </message>
-    <message>
-        <location filename="../mainUI.ui" line="726"/>
+        <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
         <translation>Groti</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="731"/>
+        <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
         <translation>Pristabdyti</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="736"/>
+        <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
         <translation>Stabdyti</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="741"/>
+        <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
         <translation>Kitas</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="746"/>
+        <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
         <translation>Atgal</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="751"/>
+        <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
         <translation>Pagarsinti</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="754"/>
+        <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
         <translation>Padidinti garso garsį</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="759"/>
+        <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
         <translation>Patildyti</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="762"/>
+        <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
         <translation>Sumažinti garso garsį</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="767"/>
+        <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
         <translation>Užverti programą</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="770"/>
+        <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl(Vald)+Q</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="784"/>
+        <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
-        <translation type="unfinished"></translation>
+        <translation>Kai aktyvi, užverti į sistemos dėklą</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="789"/>
+        <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="792"/>
+        <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="797"/>
+        <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="800"/>
+        <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="811"/>
+        <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti dainų pranešimus</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="816"/>
+        <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="819"/>
+        <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="831"/>
+        <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="834"/>
+        <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="842"/>
+        <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietiniai failai</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="845"/>
+        <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Groti vietinius failus</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Norėdami įjungti šį funkcionalumą, įdiekite "pianobar" paslaugų programą</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
@@ -310,12 +305,12 @@
     <message>
         <location filename="../mainUI.cpp" line="358"/>
         <source>Open Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti multimedijos failus</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="406"/>
         <source>Now Playing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabar grojama:</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="471"/>
@@ -351,12 +346,12 @@
     <message>
         <location filename="../mainUI.cpp" line="654"/>
         <source>Pandora Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora klausimas</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="659"/>
         <source>Pandora Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora klaida</translation>
     </message>
 </context>
 <context>

@@ -15,19 +15,34 @@
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
   loadIcons();
-  //Fill the location list with the valid entries
-  ui->combo_location->clear();
-    ui->combo_location->addItem(tr("Right Of"), "--right-of");
-    ui->combo_location->addItem(tr("Left Of"), "--left-of");
+  scaleFactor = 1/15.0; //simple default value
+  ui->combo_rotation->clear();
+    ui->combo_rotation->addItem(tr("None"), 0);
+    ui->combo_rotation->addItem(tr("Left"), -90);
+    ui->combo_rotation->addItem(tr("Right"), 90);
+    ui->combo_rotation->addItem(tr("Inverted"), 180);
 
+  singleTileMenu = new QMenu(this);
+    singleTileMenu->addAction(tr("Align Horizontally"))->setWhatsThis("X");
+    singleTileMenu->addAction(tr("Align Vertically"))->setWhatsThis("Y");
+    singleTileMenu->addAction(tr("Align Horizontal then Vertical"))->setWhatsThis("XY");
+    singleTileMenu->addAction(tr("Align Vertical then Horizontal"))->setWhatsThis("YX");
+  ui->mdiArea->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu()) );
+
+  connect(singleTileMenu, SIGNAL(triggered(QAction*)), this, SLOT(tileSingleScreen(QAction*)) );
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
   connect(ui->push_rescan, SIGNAL(clicked()), this, SLOT(UpdateScreens()) );
   connect(ui->push_activate, SIGNAL(clicked()), this, SLOT(ActivateScreen()) );
   connect(ui->tool_deactivate, SIGNAL(clicked()), this, SLOT(DeactivateScreen()) );
-  connect(ui->tool_moveleft, SIGNAL(clicked()), this, SLOT(MoveScreenLeft()) );
-  connect(ui->tool_moveright, SIGNAL(clicked()), this, SLOT(MoveScreenRight()) );
+
+  connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(SaveSettings()) );
   connect(ui->tool_applyconfig, SIGNAL(clicked()), this, SLOT(ApplyChanges()) );
-  connect(ui->list_screens, SIGNAL(itemSelectionChanged()),this, SLOT(ScreenSelected()) );
+  connect(ui->mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),this, SLOT(ScreenSelected()) );
+  connect(ui->tool_tileX, SIGNAL(clicked()), this, SLOT(tileScreensX()) );
+  connect(ui->tool_tileY, SIGNAL(clicked()), this, SLOT(tileScreensY()) );
+  connect(ui->tool_tile, SIGNAL(clicked()), this, SLOT(tileScreens()) );
+  connect(ui->combo_availscreens, SIGNAL(currentIndexChanged(int)), this, SLOT(updateNewScreenResolutions()) );
   QTimer::singleShot(0, this, SLOT(UpdateScreens()) );
 }
 
@@ -38,8 +53,7 @@ MainUI::~MainUI(){
 void MainUI::loadIcons(){
   this->setWindowIcon( LXDG::findIcon("preferences-system-windows-actions","") );
   ui->tool_deactivate->setIcon( LXDG::findIcon("list-remove","") );
-  ui->tool_moveleft->setIcon( LXDG::findIcon("arrow-left","") );
-  ui->tool_moveright->setIcon( LXDG::findIcon("arrow-right","") );
+
   ui->push_activate->setIcon( LXDG::findIcon("list-add","") );
   ui->push_rescan->setIcon( LXDG::findIcon("view-refresh","") );
   ui->push_close->setIcon( LXDG::findIcon("window-close","") );
@@ -48,30 +62,17 @@ void MainUI::loadIcons(){
   ui->tool_applyconfig->setIcon( LXDG::findIcon("dialog-ok-apply","") );
 }
 
-QStringList MainUI::currentOpts(){
-  //Read all the settings and create the xrandr options to maintain these settings
-  QStringList opts;
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].order <0){ continue; } //skip this screen - non-active
-    opts << "--output" << SCREENS[i].ID << "--mode" << QString::number(SCREENS[i].geom.width())+"x"+QString::number(SCREENS[i].geom.height());
-    if(SCREENS[i].isprimary){ opts << "--primary"; }
-    if(SCREENS[i].order > 0){
-      //Get the ID of the previous screen
-      QString id;
-      for(int j=0; j<SCREENS.length(); j++){
-        if(SCREENS[j].order == SCREENS[i].order-1){ id = SCREENS[j].ID; break;}
-      }
-      if(!id.isEmpty()){ opts << "--right-of" << id; }
-    }
-  }
-  return opts;
+QString MainUI::currentSelection(){
+  QMdiSubWindow *tmp = ui->mdiArea->activeSubWindow();
+  if(tmp!=0){ return tmp->whatsThis(); }
+  else{ return ""; }
 }
 
 ScreenInfo MainUI::currentScreenInfo(){
-  QListWidgetItem *item = ui->list_screens->currentItem();
+  QString item = currentSelection();
   if(item!=0){
     for(int i=0; i<SCREENS.length(); i++){
-      if(SCREENS[i].ID==item->whatsThis()){ return SCREENS[i]; }
+      if(SCREENS[i].ID==item){ return SCREENS[i]; }
     }
   }
   //Fallback when nothing found/selected
@@ -79,104 +80,84 @@ ScreenInfo MainUI::currentScreenInfo(){
 }
 
 void MainUI::AddScreenToWidget(ScreenInfo screen){
-  QListWidgetItem *it = new QListWidgetItem();
-  it->setTextAlignment(Qt::AlignCenter);
-  it->setText( screen.ID+"\n\n ("+QString::number(screen.geom.x())+", "+QString::number(screen.geom.y())+")\n ("+QString::number(screen.geom.width())+"x"+QString::number(screen.geom.height())+")  " );
+  qDebug() << "Add Screen To Widget:" << screen.ID << screen.geom;
+  QLabel *lab = new QLabel(this);
+  lab->setAlignment(Qt::AlignCenter);
+  QMdiSubWindow *it = ui->mdiArea->addSubWindow(lab, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+  it->setSystemMenu(0);
+  it->setWindowTitle(screen.ID);
+  lab->setText(QString::number(screen.geom.width())+"x"+QString::number(screen.geom.height()));
+
   it->setWhatsThis(screen.ID);
-  ui->list_screens->addItem(it);
+  QRect scaled( screen.geom.topLeft()*scaleFactor, screen.geom.size()*scaleFactor);
+  qDebug() << " - Scaled:" << scaled;
+  it->show();
+  it->setGeometry(scaled); //scale it down for the display
+  it->setFixedSize(scaled.size());
+
+}
+
+void MainUI::SyncBackend(){
+  QString item = currentSelection();
+  if(item.isEmpty()){ return; } //nothing to do
+  QString newres = ui->combo_resolution->currentData().toString().section("(",0,0).simplified();
+  if(newres.isEmpty()){ return; } //nothing to do
+  //qDebug() << "Apply Screen Changes" << item << "->" << newres;
+  //Adjust the order of the two screens
+  bool setprimary = ui->check_primary->isChecked();
+  QList<QMdiSubWindow*> windows = ui->mdiArea->subWindowList();
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID == item){
+      SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
+      SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
+      //qDebug() << " - New Geom:" << SCREENS[i].geom;
+      SCREENS[i].rotation = ui->combo_rotation->currentData().toInt();
+    }
+    if(setprimary){ SCREENS[i].isprimary = (SCREENS[i].ID==item); }
+    //Find the window associated with this screen
+    for(int s=0; s<windows.length(); s++){
+      if(windows[s]->whatsThis()==SCREENS[i].ID){
+        qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
+        SCREENS[i].geom.moveTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
+        qDebug() << " - New Geom:" << SCREENS[i].geom;
+        if(SCREENS[i].applyChange<1){ SCREENS[i].applyChange = (windows[s]->widget()->isEnabled() ? 0 : 1); } //disabled window is one that will be removed
+      }
+    }
+  }
 }
 
 void MainUI::UpdateScreens(){
   //First probe the server for current screens
   SCREENS = RRSettings::CurrentScreens();
-  /*QStringList info = LUtils::getCmdOutput("xrandr -q");
-  ScreenInfo cscreen;
-  for(int i=0; i<info.length(); i++){
-    if(info[i].contains("connected") ){
-      //qDebug() << "xrandr info:" << info[i];
-      if(!cscreen.ID.isEmpty()){
-	SCREENS << cscreen; //current screen finished - save it into the array
-	cscreen = ScreenInfo(); //Now create a new structure
-      }
-      //qDebug() << "Line:" << info[i];
-      QString dev = info[i].section(" ",0,0); //device ID
-      //The device resolution can be either the 3rd or 4th output - check both
-      QString devres = info[i].section(" ",2,2, QString::SectionSkipEmpty);
-      if(!devres.contains("x")){ devres = info[i].section(" ",3,3,QString::SectionSkipEmpty); }
-      if(!devres.contains("x")){ devres.clear(); }
-      qDebug() << " - ID:" <<dev << "Current Geometry:" << devres;
-      //qDebug() << " - Res:" << devres;
-      if( !devres.contains("x") || !devres.contains("+") ){ devres.clear(); }
-      //qDebug() << " - Res (modified):" << devres;
-      if(info[i].contains(" disconnected ") && !devres.isEmpty() ){
-	//Disable this device and restart (disconnected, but still attached to the X server)
-	DeactivateScreen(dev);
-	UpdateScreens();
-	return;
-      }else if( !devres.isEmpty() ){
-        cscreen.isprimary = info[i].contains(" primary ");
-	//Device that is connected and attached (has a resolution)
-	qDebug() << "Create new Screen entry:" << dev << devres;
-	cscreen.ID = dev;
-	//Note: devres format: "<width>x<height>+<xoffset>+<yoffset>"
-	cscreen.geom.setRect( devres.section("+",-2,-2).toInt(), devres.section("+",-1,-1).toInt(), devres.section("x",0,0).toInt(), devres.section("+",0,0).section("x",1,1).toInt() ); 
-
-      }else if(info[i].contains(" connected")){
-        //Device that is connected, but not attached
-	qDebug() << "Create new Screen entry:" << dev << "none";
-	cscreen.ID = dev;
-	cscreen.order = -2; //flag this right now as a non-active screen
-      }
-    }else if( !cscreen.ID.isEmpty() && info[i].section("\t",0,0,QString::SectionSkipEmpty).contains("x")){
-      //available resolution for a device
-      cscreen.resList << info[i].section("\t",0,0,QString::SectionSkipEmpty);
-    }
-  } //end loop over info lines
-  if(!cscreen.ID.isEmpty()){ SCREENS << cscreen; } //make sure to add the last screen to the array
-  */
+  //Determine the scale factor for putting these into the UI
+  QRegion tot;
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].isactive){ tot = tot.united( SCREENS[i].geom ); }
+  }
+  int wid = tot.boundingRect().width();
+  scaleFactor = (0.9*ui->mdiArea->width())/wid;
   //Now go through the screens and arrange them in order from left->right in the UI
-  bool found = true;
-  int xoffset = 0; //start at 0
-  int cnum = 0;
-  QString csel = "";
-  if(ui->list_screens->currentItem()!=0){ csel = ui->list_screens->currentItem()->whatsThis(); }
-  ui->list_screens->clear();
-  while(found){
-    found = false; //make sure to break out if a screen is not found
-    for(int i=0; i<SCREENS.length(); i++){
-      if(SCREENS[i].order != -1){qDebug() << "Skip Screen:" << i << SCREENS[i].order; } //already evaluated - skip it
-      else if(SCREENS[i].geom.x()==xoffset){
-	found = true; //make sure to look for the next one
-	xoffset = xoffset+SCREENS[i].geom.width(); //next number to look for
-	SCREENS[i].order = cnum; //assign the current order to it
-	cnum++; //get ready for the next one
-         AddScreenToWidget(SCREENS[i]);
-	/*QListWidgetItem *it = new QListWidgetItem();
-	  it->setTextAlignment(Qt::AlignCenter);
-	  it->setText( SCREENS[i].ID+"\n ("+QString::number(SCREENS[i].geom.x())+", "+QString::number(SCREENS[i].geom.y())+")\n("+QString::number(SCREENS[i].geom.width())+"x"+QString::number(SCREENS[i].geom.height())+")  " );
-	  it->setWhatsThis(SCREENS[i].ID);
-	ui->list_screens->addItem(it);*/
-	//if(SCREENS[i].ID==csel){ ui->list_screens->setCurrentItem(it); }
-      }else if(SCREENS[i].geom.x() < xoffset || SCREENS[i].geom.x() > xoffset){
-        //Screen not aligned with previous screen edge
-        qDebug() << "Found mis-aligned screen:" << i << SCREENS[i].ID;
-        found = true; //make sure to look for the next one
-        xoffset = xoffset+SCREENS[i].geom.width(); //next number to look for
-	SCREENS[i].order = cnum; //assign the current order to it
-	cnum++; //get ready for the next one
-         AddScreenToWidget(SCREENS[i]);
-      }
-    }
+  //bool found = true;
+  //int xoffset = 0; //start at 0
+  //int cnum = 0;
+  QString csel = currentSelection();
+  //Clear all the current widgets
+  while(ui->mdiArea->currentSubWindow()!=0 ){
+    QMdiSubWindow *tmp = ui->mdiArea->currentSubWindow();
+    tmp->widget()->deleteLater();
+    ui->mdiArea->removeSubWindow(tmp);
+    tmp->deleteLater();
+  }
+  //Now add all the active screens to the display
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].isactive){ AddScreenToWidget(SCREENS[i]); }
   }
 
   //Now update the available/current screens in the UI
   ui->combo_availscreens->clear();
-  ui->combo_cscreens->clear();
   for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].order<0){
+    if(!SCREENS[i].isactive && SCREENS[i].isavailable){
       ui->combo_availscreens->addItem(SCREENS[i].ID);
-    }else{
-      ui->combo_cscreens->addItem(SCREENS[i].ID);
     }
   }
   if(ui->combo_availscreens->count()<1){
@@ -187,24 +168,20 @@ void MainUI::UpdateScreens(){
     ui->group_avail->setVisible(true);
     ui->tabWidget->setTabEnabled(1,true);
   }
-  if(ui->list_screens->currentItem()==0){ ui->list_screens->setCurrentRow(0); }
   ScreenSelected(); //update buttons
-  RRSettings::SaveScreens(SCREENS);
+  updateNewScreenResolutions();
 }
 
 void MainUI::ScreenSelected(){
-  QListWidgetItem *item = ui->list_screens->currentItem();
-  if(item==0){
+  QString item = currentSelection();
+  //QListWidgetItem *item = ui->list_screens->currentItem();
+  if(item.isEmpty()){
     //nothing selected
     ui->tool_deactivate->setEnabled(false);
-    ui->tool_moveleft->setEnabled(false);
-    ui->tool_moveright->setEnabled(false);
     ui->tab_config->setEnabled(false);
   }else{
     //Item selected
-    ui->tool_deactivate->setEnabled(ui->list_screens->count()>1);
-    ui->tool_moveleft->setEnabled(ui->list_screens->row(item) > 0);
-    ui->tool_moveright->setEnabled(ui->list_screens->row(item) < (ui->list_screens->count()-1));
+    ui->tool_deactivate->setEnabled(true);
     ui->tab_config->setEnabled(true);
     //Update the info available on the config tab
     ScreenInfo cur = currentScreenInfo();
@@ -217,102 +194,190 @@ void MainUI::ScreenSelected(){
       if(cur.resList[i].contains(cres)){ ui->combo_resolution->setCurrentIndex(i); }
     }
     ui->check_primary->setChecked( cur.isprimary );
+    int index = ui->combo_rotation->findData( cur.rotation );
+    if(index<0){ index = 0; }
+    ui->combo_rotation->setCurrentIndex(index);
   }
 }
 
-void MainUI::MoveScreenLeft(){
-  QListWidgetItem *item = ui->list_screens->currentItem();
-  if(item==0){ return; } //no selection
-  //Get the current ID
-  QString CID = item->whatsThis();
-  //Now get the ID of the one on the left
-  item = ui->list_screens->item( ui->list_screens->row(item)-1 );
-  if(item == 0){ return; } //no item on the left (can't go left)
-  QString LID = item->whatsThis(); //left ID
-  //Adjust the order of the two screens
+void MainUI::updateNewScreenResolutions(){
+  QString id = ui->combo_availscreens->currentText();
   for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID == CID){ SCREENS[i].order = SCREENS[i].order-1; }
-    else if(SCREENS[i].ID==LID){ SCREENS[i].order = SCREENS[i].order+1; }
+    if(SCREENS[i].ID==id){
+      ui->combo_resolutions->clear();
+      for(int r=0; r<SCREENS[i].resList.length(); r++){
+        ui->combo_resolutions->addItem(SCREENS[i].resList[r].section(" ",0,0, QString::SectionSkipEmpty));
+        if(SCREENS[i].resList[r].contains("+")){ ui->combo_resolutions->setCurrentIndex(r); } //preferred resolution
+      }
+      break;
+    }
   }
-  //Now run the command
-  QStringList opts = currentOpts();
-  LUtils::runCmd("xrandr", opts);
-  //Now run the command
-  //LUtils::runCmd("xrandr", QStringList() << "--output" << CID << "--left-of" << LID);
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
-void MainUI::MoveScreenRight(){
-  QListWidgetItem *item = ui->list_screens->currentItem();
-  if(item==0){ return; } //no selection
-  //Get the current ID
-  QString CID = item->whatsThis();
-  //Now get the ID of the one on the left
-  item = ui->list_screens->item( ui->list_screens->row(item)+1 );
-  if(item == 0){ return; } //no item on the right (can't go right)
-  QString RID = item->whatsThis(); //right ID
-  //Adjust the order of the two screens
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID == RID){ SCREENS[i].order = SCREENS[i].order-1; }
-    else if(SCREENS[i].ID==CID){ SCREENS[i].order = SCREENS[i].order+1; }
+void MainUI::tileScreensY(bool activeonly){
+  //qDebug() << "Tile Windows in Y Dimension";
+  QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
+  QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
+  QRegion total;
+  int ypos = 0;
+  QMdiSubWindow *cur = 0;
+  while(!wins.isEmpty()){
+    cur=0;
+    for(int i=0; i<wins.length(); i++){
+      if(wins[i]==active && wins.length()>1){ continue; } //ensure active window is last
+      if(cur==0){ cur = wins[i]; } //first one
+      else if(wins[i]->pos().y() < cur->pos().y()){ cur = wins[i]; }
+    }
+    if(cur==0){
+      //Note: This should **never** happen
+      qDebug() << "No windows found below y=:" << ypos;
+      //need to move the reference point
+      QRect bounding = total.boundingRect();
+      ypos+= (bounding.height()/2);
+    }else{
+      if(total.isNull()){
+        //First window handled
+        if(!activeonly || cur==active){ cur->move(cur->pos().x(), ypos); }
+      }else{
+        int newy = ypos;
+        bool overlap = true;
+        while(overlap){
+          QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
+          QRegion diff = tmp.subtracted(total);
+          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          //qDebug() << "Check Y Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
+          if(overlap){
+            QRect bound = diff.boundingRect();
+            if(bound.isNull()){ newy+=cur->height(); }
+            else if(newy!=bound.top()){ newy = bound.top(); }
+            else if(newy!=bound.bottom()){ newy = bound.bottom() + 1; }
+            else{ newy++; } //make sure it always changes - no infinite loops!!
+          }
+        }
+        if(!activeonly || cur==active){ cur->move(cur->pos().x(), newy); }
+      }
+      total = total.united(cur->geometry());
+      wins.removeAll(cur);
+    }
   }
-  //Now run the command
-  QStringList opts = currentOpts();
-  LUtils::runCmd("xrandr", opts);
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
 }
 
-void MainUI::DeactivateScreen(QString device){
-  if(device.isEmpty()){
-    //Get the currently selected device
-    QListWidgetItem *item = ui->list_screens->currentItem();
-    if(item==0){ return; } //no selection
-    //Get the current ID
-    device = item->whatsThis();
+void MainUI::tileScreensX(bool activeonly){
+  //qDebug() << "Tile Windows in X Dimension";
+  QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
+  QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
+  QRegion total;
+  int xpos = 0;
+  QMdiSubWindow *cur = 0;
+  while(!wins.isEmpty()){
+    cur=0;
+    for(int i=0; i<wins.length(); i++){
+      if(wins[i]==active && wins.length()>1){ continue; } //ensure active window is last
+      if(cur==0){ cur = wins[i]; } //first one
+      else if(wins[i]->pos().x() < cur->pos().x()){ cur = wins[i]; }
+    }
+    if(cur==0){
+      //Note: This should **never** happen
+      qDebug() << "No windows found left of x=:" << xpos;
+      //need to move the reference point
+      QRect bounding = total.boundingRect();
+      xpos+= (bounding.width()/2);
+    }else{
+      if(total.isNull()){
+        //First window handled
+        if(!activeonly || cur==active){ cur->move(xpos, cur->pos().y()); }
+      }else{
+        int newx = xpos;
+        bool overlap = true;
+        while(overlap){
+          QRegion tmp(newx, cur->pos().y(), cur->width(), cur->height());
+          QRegion diff = tmp.subtracted(total);
+          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          //qDebug() << "Check X Overlap:" << newx << overlap << tmp.boundingRect() << diff.boundingRect();
+          if(overlap){
+            QRect bound = diff.boundingRect();
+            if(bound.isNull()){ newx+=cur->width(); }
+            else if(newx!=bound.left()){ newx = bound.left(); }
+            else if(newx!=bound.right()){ newx = bound.right() + 1; }
+            else{ newx++; }//make sure it always changes - no infinite loops!!
+          }else{
+            qDebug() << "Found Area:" << tmp << diff << newx;
+          }
+        }
+        if(!activeonly || cur==active){ cur->move(newx, cur->pos().y()); }
+      }
+      total = total.united(cur->geometry());
+      wins.removeAll(cur);
+    }
   }
-  if(device.isEmpty()){ return; } //nothing found
-  //Remove the screen from the settings
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID==device){ SCREENS.removeAt(i); break; }
+}
+
+void MainUI::tileScreens(){
+  tileScreensY();
+  tileScreensX();
+}
+
+void MainUI::tileSingleScreen(QAction* act){
+  if(act->whatsThis()=="X"){
+    tileScreensX(true);
+  }else if(act->whatsThis()=="Y"){
+    tileScreensY(true);
+  }else if(act->whatsThis()=="XY"){
+    tileScreensX(true);
+    tileScreensY(true);
+  }else if(act->whatsThis()=="YX"){
+    tileScreensY(true);
+    tileScreensX(true);
   }
-  //Now run the command
-  QStringList opts = currentOpts();
-  opts << "--output" << device << "--off";
-  LUtils::runCmd("xrandr", opts);
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+}
+
+void MainUI::DeactivateScreen(){
+  QMdiSubWindow *cur = ui->mdiArea->currentSubWindow();
+  if(cur==0){ return; }
+  cur->widget()->setEnabled( !cur->widget()->isEnabled() ); //toggle it between enabled/disabled
 }
 
 void MainUI::ActivateScreen(){
   //Assemble the command;
   QString ID = ui->combo_availscreens->currentText();
-  QString DID = ui->combo_cscreens->currentText();
-  QString loc = ui->combo_location->currentData().toString();
-  if(ID.isEmpty() || DID.isEmpty() || loc.isEmpty()){ return; } //invalid inputs
-  QStringList opts = currentOpts();
-    opts << "--output" << ID << loc << DID <<"--auto";
-  //qDebug() << "Activate Options:" << opts;
-  LUtils::runCmd("xrandr", opts );
-  QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+  QStringList res = ui->combo_resolutions->currentText().split("x");
+  //Find the screen infor associated with this ID
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].ID==ID){
+      SCREENS[i].isactive = true;
+      SCREENS[i].geom.setSize(  QSize(res[0].toInt(), res[1].toInt()) );
+      SCREENS[i].applyChange = 2; //need to activate this monitor
+      AddScreenToWidget(SCREENS[i]);
+      break;
+    }
+  }
+  tileScreensX(true);
+  //Now remove that option from the "new" list
+  ui->combo_availscreens->removeItem(ui->combo_availscreens->currentIndex());
+  if(ui->combo_availscreens->count()<1){
+    ui->group_avail->setVisible(false);
+    ui->tabWidget->setCurrentIndex(0);
+    ui->tabWidget->setTabEnabled(1,false);
+  }else{
+    ui->group_avail->setVisible(true);
+    ui->tabWidget->setTabEnabled(1,true);
+  }
 }
 
 void MainUI::ApplyChanges(){
-  //NOTE: need to re-specifiy the 
-  QListWidgetItem *it = ui->list_screens->currentItem();
-  if(it==0){ return; } //nothing to do
-  QString newres = ui->combo_resolution->currentData().toString();
-  if(newres.isEmpty()){ return; } //nothing to do
-  //qDebug() << "Apply Screen Changes" << it->whatsThis() << "->" << newres;
-  //Adjust the order of the two screens
-  bool setprimary = ui->check_primary->isChecked();
-  for(int i=0; i<SCREENS.length(); i++){
-    if(SCREENS[i].ID == it->whatsThis()){
-      SCREENS[i].geom.setWidth(newres.section("x",0,0).toInt());
-      SCREENS[i].geom.setHeight(newres.section("x",1,1).toInt());
-    }
-    if(setprimary){ SCREENS[i].isprimary = SCREENS[i].ID==it->whatsThis(); }
-  }
+  SyncBackend();
   //Now run the command
-  QStringList opts = currentOpts();
-  LUtils::runCmd("xrandr", opts);
+  RRSettings::Apply(SCREENS);
+  //And update the UI and WM in a moment
   QTimer::singleShot(500, this, SLOT(UpdateScreens()) );
+  QTimer::singleShot(1000, this, SLOT(RestartFluxbox()) );
+}
+
+void MainUI::SaveSettings(){
+  SyncBackend();
+  RRSettings::SaveScreens(SCREENS);
+}
+
+void MainUI::RestartFluxbox(){
+  QProcess::startDetached("killall fluxbox");
 }
