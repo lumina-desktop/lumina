@@ -13,6 +13,8 @@
 #include <QList>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QMenu>
+#include <QAction>
 
 #include "ScreenSettings.h"
 
@@ -37,6 +39,8 @@ private:
 	Ui::MainUI *ui;
 	QList<ScreenInfo> SCREENS;
 	double scaleFactor;
+	QMenu *singleTileMenu;
+
 	ScreenInfo currentScreenInfo();
 
 	//QStringList currentOpts();
@@ -49,7 +53,11 @@ private slots:
 	void UpdateScreens();
 	void ScreenSelected();
 	void updateNewScreenResolutions();
-	void tileScreens(bool activeonly = false);
+	void tileScreensY(bool activeonly = false);
+	void tileScreensX(bool activeonly = false);
+	void tileScreens();
+	void tileSingleScreen(QAction*);
+	void showMenu(const QPoint &pos){ singleTileMenu->popup(pos); }
 
 	void DeactivateScreen();
 	void ActivateScreen();

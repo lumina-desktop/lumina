@@ -22,15 +22,25 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     ui->combo_rotation->addItem(tr("Right"), 90);
     ui->combo_rotation->addItem(tr("Inverted"), 180);
 
+  singleTileMenu = new QMenu(this);
+    singleTileMenu->addAction(tr("Align Horizontally"))->setWhatsThis("X");
+    singleTileMenu->addAction(tr("Align Vertically"))->setWhatsThis("Y");
+    singleTileMenu->addAction(tr("Align Horizontal then Vertical"))->setWhatsThis("XY");
+    singleTileMenu->addAction(tr("Align Vertical then Horizontal"))->setWhatsThis("YX");
+  ui->mdiArea->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)) );
+
+  connect(singleTileMenu, SIGNAL(triggered(QAction*)), this, SLOT(tileSingleScreen(QAction*)) );
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
   connect(ui->push_rescan, SIGNAL(clicked()), this, SLOT(UpdateScreens()) );
   connect(ui->push_activate, SIGNAL(clicked()), this, SLOT(ActivateScreen()) );
   connect(ui->tool_deactivate, SIGNAL(clicked()), this, SLOT(DeactivateScreen()) );
-  //connect(ui->tool_moveleft, SIGNAL(clicked()), this, SLOT(MoveScreenLeft()) );
-  //connect(ui->tool_moveright, SIGNAL(clicked()), this, SLOT(MoveScreenRight()) );
+
   connect(ui->tool_save, SIGNAL(clicked()), this, SLOT(SaveSettings()) );
   connect(ui->tool_applyconfig, SIGNAL(clicked()), this, SLOT(ApplyChanges()) );
   connect(ui->mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),this, SLOT(ScreenSelected()) );
+  connect(ui->tool_tileX, SIGNAL(clicked()), this, SLOT(tileScreensX()) );
+  connect(ui->tool_tileY, SIGNAL(clicked()), this, SLOT(tileScreensY()) );
   connect(ui->tool_tile, SIGNAL(clicked()), this, SLOT(tileScreens()) );
   connect(ui->combo_availscreens, SIGNAL(currentIndexChanged(int)), this, SLOT(updateNewScreenResolutions()) );
   QTimer::singleShot(0, this, SLOT(UpdateScreens()) );
@@ -43,8 +53,7 @@ MainUI::~MainUI(){
 void MainUI::loadIcons(){
   this->setWindowIcon( LXDG::findIcon("preferences-system-windows-actions","") );
   ui->tool_deactivate->setIcon( LXDG::findIcon("list-remove","") );
-  //ui->tool_moveleft->setIcon( LXDG::findIcon("arrow-left","") );
-  //ui->tool_moveright->setIcon( LXDG::findIcon("arrow-right","") );
+
   ui->push_activate->setIcon( LXDG::findIcon("list-add","") );
   ui->push_rescan->setIcon( LXDG::findIcon("view-refresh","") );
   ui->push_close->setIcon( LXDG::findIcon("window-close","") );
@@ -75,6 +84,7 @@ void MainUI::AddScreenToWidget(ScreenInfo screen){
   QLabel *lab = new QLabel(this);
   lab->setAlignment(Qt::AlignCenter);
   QMdiSubWindow *it = ui->mdiArea->addSubWindow(lab, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+  it->setSystemMenu(0);
   it->setWindowTitle(screen.ID);
   lab->setText(QString::number(screen.geom.width())+"x"+QString::number(screen.geom.height()));
 
@@ -107,7 +117,9 @@ void MainUI::SyncBackend(){
     //Find the window associated with this screen
     for(int s=0; s<windows.length(); s++){
       if(windows[s]->whatsThis()==SCREENS[i].ID){
+        qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
         SCREENS[i].geom.moveTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
+        qDebug() << " - New Geom:" << SCREENS[i].geom;
         if(SCREENS[i].applyChange<1){ SCREENS[i].applyChange = (windows[s]->widget()->isEnabled() ? 0 : 1); } //disabled window is one that will be removed
       }
     }
@@ -196,12 +208,12 @@ void MainUI::updateNewScreenResolutions(){
   }
 }
 
-void MainUI::tileScreens(bool activeonly){
+void MainUI::tileScreensY(bool activeonly){
   qDebug() << "Tile Windows in Y Dimension";
   QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
+  QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
   QRegion total;
-  int xpos, ypos;
-  xpos = ypos = 0;
+  int ypos = 0;
   QMdiSubWindow *cur = 0;
   while(!wins.isEmpty()){
     cur=0;
@@ -218,7 +230,7 @@ void MainUI::tileScreens(bool activeonly){
     }else{
       if(total.isNull()){
         //First window handled
-        cur->move(cur->pos().x(), ypos);
+        if(!activeonly || cur==active){ cur->move(cur->pos().x(), ypos); }
       }else{
         int newy = ypos;
         bool overlap = true;
@@ -226,18 +238,86 @@ void MainUI::tileScreens(bool activeonly){
           QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
           overlap = (diff.boundingRect()!=tmp.boundingRect());
-          qDebug() << "Check Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
+          //qDebug() << "Check Y Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
             QRect bound = diff.boundingRect();
-            if(newy!=bound.top()){ newy = bound.top(); }
-            else{ newy = bound.bottom(); }
+            if(bound.isNull()){ newy+=cur->height(); }
+            else if(newy!=bound.top()){ newy = bound.top() + 1; }
+            else if(newy!=bound.bottom()){ newy = bound.bottom() + 1; }
+            else{ newy++; } //make sure it always changes - no infinite loops!!
           }
         }
-        cur->move(cur->pos().x(), newy);
+        if(!activeonly || cur==active){ cur->move(cur->pos().x(), newy); }
       }
       total = total.united(cur->geometry());
       wins.removeAll(cur);
     }
+  }
+}
+
+void MainUI::tileScreensX(bool activeonly){
+  qDebug() << "Tile Windows in X Dimension";
+  QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
+  QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
+  QRegion total;
+  int xpos = 0;
+  QMdiSubWindow *cur = 0;
+  while(!wins.isEmpty()){
+    cur=0;
+    for(int i=0; i<wins.length(); i++){
+      if(cur==0){ cur = wins[i]; } //first one
+      else if(wins[i]->pos().x() < cur->pos().x()){ cur = wins[i]; }
+    }
+    if(cur==0){
+      //Note: This should **never** happen
+      qDebug() << "No windows found left of x=:" << xpos;
+      //need to move the reference point
+      QRect bounding = total.boundingRect();
+      xpos+= (bounding.width()/2);
+    }else{
+      if(total.isNull()){
+        //First window handled
+        if(!activeonly || cur==active){ cur->move(xpos, cur->pos().y()); }
+      }else{
+        int newx = xpos;
+        bool overlap = true;
+        while(overlap){
+          QRegion tmp(newx, cur->pos().y(), cur->width(), cur->height());
+          QRegion diff = tmp.subtracted(total);
+          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          //qDebug() << "Check X Overlap:" << newx << overlap << tmp.boundingRect() << diff.boundingRect();
+          if(overlap){
+            QRect bound = diff.boundingRect();
+            if(bound.isNull()){ newx+=cur->width(); }
+            else if(newx!=bound.left()){ newx = bound.left() + 1; }
+            else if(newx!=bound.right()){ newx = bound.right() + 1; }
+            else{ newx++; }//make sure it always changes - no infinite loops!!
+          }
+        }
+        if(!activeonly || cur==active){ cur->move(newx, cur->pos().y()); }
+      }
+      total = total.united(cur->geometry());
+      wins.removeAll(cur);
+    }
+  }
+}
+
+void MainUI::tileScreens(){
+  tileScreensY();
+  tileScreensX();
+}
+
+void MainUI::tileSingleScreen(QAction* act){
+  if(act->whatsThis()=="X"){
+    tileScreensX(true);
+  }else if(act->whatsThis()=="Y"){
+    tileScreensY(true);
+  }else if(act->whatsThis()=="XY"){
+    tileScreensX(true);
+    tileScreensY(true);
+  }else if(act->whatsThis()=="YX"){
+    tileScreensY(true);
+    tileScreensX(true);
   }
 }
 

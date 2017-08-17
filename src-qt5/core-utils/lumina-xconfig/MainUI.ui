@@ -35,7 +35,7 @@
            <string>Disable Current Screen</string>
           </property>
           <property name="text">
-           <string>...</string>
+           <string notr="true">...</string>
           </property>
          </widget>
         </item>
@@ -66,12 +66,32 @@
          </spacer>
         </item>
         <item>
+         <widget class="QToolButton" name="tool_tileX">
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="format-view-column"/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tool_tileY">
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="format-view-agenda"/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QToolButton" name="tool_tile">
           <property name="toolTip">
            <string>Tile Screens</string>
           </property>
           <property name="text">
-           <string>...</string>
+           <string notr="true">...</string>
           </property>
           <property name="icon">
            <iconset theme="format-view-grid-small">
