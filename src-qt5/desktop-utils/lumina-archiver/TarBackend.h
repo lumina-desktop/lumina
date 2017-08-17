@@ -22,7 +22,7 @@ public:
 
 	//Listing routines
 	QString currentFile();
-	bool isWorking(); //is this currently still making changes?	
+	bool isWorking(); //is this currently still making changes?
 
 	//Contents listing
 	QStringList heirarchy(); //returns all the file paths within the archive
