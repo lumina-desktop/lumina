@@ -82,27 +82,27 @@
         <translation>Data utworzenia</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="325"/>
+        <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
         <translation>Pojemność: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="386"/>
         <source>Files: %1 (%2)</source>
         <translation>Pliki: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="352"/>
+        <location filename="../BrowserWidget.cpp" line="388"/>
         <source>Files: %1</source>
         <translation>Pliki: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="358"/>
+        <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
         <translation>Katalogi : %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="372"/>
+        <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
         <translation>Brak zawartości katalogu</translation>
     </message>
@@ -169,8 +169,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
-        <source>SingleColumn</source>
-        <translation>Kolumna pojedyncza</translation>
+        <source>Single Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
@@ -188,84 +188,89 @@
         <translation>Widok kolumny podwójnej</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="621"/>
+        <location filename="../widgets/DirWidget2.cpp" line="646"/>
         <source>(Limited Access) </source>
         <translation>(Ograniczony dostęp) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>New Document</source>
         <translation>Nowy dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
         <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>Error Creating Document</source>
         <translation>Błąd podczas tworzenia dokumentu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Nie udało się utworzyć dokumentu. Upewnij się czy masz właściwe uprawnienia.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
         <source>New Directory</source>
         <translation>Nowy katalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>Invalid Name</source>
         <translation>Nieprawidłowa nazwa</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
         <source>File Operations</source>
         <translation>Operacje na plikach</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="587"/>
+        <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
         <translation>Operacje na katalogach</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
         <translation>Wczytywanie...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Plik lub katalog o podanej nazwie już istnieje! Proszę wybrać inną nazwę.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>Error Creating Directory</source>
         <translation>Błąd podczas tworzenia katalogu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Nie udało się stworzyć katalogu. Proszę upewnij się czy masz właściwe uprawnienia by móc modyfikować ten katalog.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="391"/>
+        <location filename="../widgets/DirWidget2.cpp" line="371"/>
         <source>Current</source>
         <translation>Bieżący</translation>
     </message>
@@ -310,62 +315,67 @@
         <translation>Odtwarzacz multimedialny</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <source>Open with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
         <translation>Podgląd...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="332"/>
+        <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
         <translation>Suma kontrolna</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="334"/>
+        <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
         <translation>Właściwości</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="524"/>
+        <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
         <translation>Suma kontrolna:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>Missing Utility</source>
         <translation>Brak odpowiedniego narzędzia</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Nie udało się w systemie odnaleźć narzędzia &quot;lumina-fileinfo&quot;. Proszę je najpierw zainstalować.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="562"/>
+        <location filename="../widgets/DirWidget2.cpp" line="542"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="551"/>
         <source>Rename...</source>
         <translation>Zmień nazwę...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Cut Selection</source>
         <translation>Wytnij</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Copy Selection</source>
         <translation>Kopiuj</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="557"/>
         <source>Paste</source>
         <translation>Wklej</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="561"/>
         <source>Delete Selection</source>
         <translation>Usuń</translation>
     </message>
@@ -408,47 +418,62 @@
         <translation>Uwaga: Zostanie dodana liczba to nazwy pliku.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>Usuwanie: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>Kopiowanie: %1 do %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>Przywracanie: %1 jako %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>Przenoszenie: %1 do %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translation>Nie można usunąć plików:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translation>Nie można skopiować plików:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translation>Nie można przywrócić plików:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>Nie można przenieść plików:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>Błędy pliku</translation>
     </message>
@@ -456,12 +481,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>Nieprawidłowa operacja przenoszenia</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1

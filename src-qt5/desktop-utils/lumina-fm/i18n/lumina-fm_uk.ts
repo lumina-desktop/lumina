@@ -82,27 +82,27 @@
         <translation type="unfinished">Дата створення</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="325"/>
+        <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
         <translation type="unfinished">Місткість: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="386"/>
         <source>Files: %1 (%2)</source>
         <translation type="unfinished">Файли: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="352"/>
+        <location filename="../BrowserWidget.cpp" line="388"/>
         <source>Files: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="358"/>
+        <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
         <translation type="unfinished">Dirs: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="372"/>
+        <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -169,7 +169,7 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
-        <source>SingleColumn</source>
+        <source>Single Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,84 +188,89 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="621"/>
+        <location filename="../widgets/DirWidget2.cpp" line="646"/>
         <source>(Limited Access) </source>
         <translation>(Обмежений доступ) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>New Document</source>
         <translation>Новий документ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
         <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>Name:</source>
         <translation>Ім&apos;я:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>Error Creating Document</source>
         <translation>Помилка створення документа</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Цей документ не може бути створений. Будь ласка, впевніться, що у вас є відповідні права.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
         <source>New Directory</source>
         <translation>Новий каталог</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>Invalid Name</source>
         <translation>Некоректна назва</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="587"/>
+        <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Файл або каталог з таким іменем вже існує! Будь ласка, виберіть інше ім&apos;я.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>Error Creating Directory</source>
         <translation>Помилка створення каталогу</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Каталог не може бути створений. Будь ласка, впевніться, що у вас є відповідні права, щоб змінити поточний каталог.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="391"/>
+        <location filename="../widgets/DirWidget2.cpp" line="371"/>
         <source>Current</source>
         <translation>Поточний</translation>
     </message>
@@ -310,62 +315,67 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <source>Open with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="332"/>
+        <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="334"/>
+        <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="524"/>
+        <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
         <translation>Контрольні суми файлів:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>Missing Utility</source>
         <translation>Утиліта не знайдена</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Утиліта &quot;Lumina-FileInfo&quot; не може бути знайдена в системі. Будь ласка, встановіть її в першу чергу.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="562"/>
+        <location filename="../widgets/DirWidget2.cpp" line="542"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="551"/>
         <source>Rename...</source>
         <translation>Перейменувати...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Cut Selection</source>
         <translation>Вирізати обране</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Copy Selection</source>
         <translation>Копіювати виділене</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="557"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="561"/>
         <source>Delete Selection</source>
         <translation>Видалити виділене</translation>
     </message>
@@ -408,47 +418,62 @@
         <translation>Примітка: В іншому випадку буде просто додано номер до імені файлу.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>Вилучення: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>Скопіювати %1 в %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>Відновити: %1 в %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>Переміщення: %1 в %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translation>Не вдалося видалити файли:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translation>Не вдалося скопіювати файли:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translation>Не вдалося відновити файли:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>Не вдається перемістити файли:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>Помилки файлів</translation>
     </message>
@@ -456,12 +481,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>Некоректний хід.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1

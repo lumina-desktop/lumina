@@ -154,131 +154,126 @@
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Προβολή</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="699"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainUI.ui" line="726"/>
+        <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="731"/>
+        <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="736"/>
+        <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="741"/>
+        <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="746"/>
+        <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="751"/>
+        <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="754"/>
+        <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="759"/>
+        <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="762"/>
+        <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="767"/>
+        <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="770"/>
+        <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="784"/>
+        <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="789"/>
+        <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="792"/>
+        <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="797"/>
+        <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="800"/>
+        <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="811"/>
+        <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="816"/>
+        <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="819"/>
+        <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="831"/>
+        <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="834"/>
+        <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="842"/>
+        <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="845"/>
+        <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
         <translation type="unfinished"></translation>
     </message>

@@ -82,27 +82,27 @@
         <translation type="unfinished">Tanggal Dibuat</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="325"/>
+        <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
         <translation type="unfinished">Kapasitas: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="386"/>
         <source>Files: %1 (%2)</source>
         <translation type="unfinished">Berkas: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="352"/>
+        <location filename="../BrowserWidget.cpp" line="388"/>
         <source>Files: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="358"/>
+        <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
         <translation type="unfinished">Direktori: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="372"/>
+        <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -169,7 +169,7 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
-        <source>SingleColumn</source>
+        <source>Single Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,84 +188,89 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="621"/>
+        <location filename="../widgets/DirWidget2.cpp" line="646"/>
         <source>(Limited Access) </source>
         <translation>(Akses terbatas)</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>New Document</source>
         <translation>Dokumen Baru</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
         <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>Name:</source>
         <translation>Nama:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>Error Creating Document</source>
         <translation>Galat saat membuat dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation type="unfinished">Dokumen tidak dapat dibuat.  Pastikan bahwa Anda memiliki izin yang tepat.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
         <source>New Directory</source>
         <translation>Direktori Baru</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>Invalid Name</source>
         <translation>Nama Tak Valid</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="587"/>
+        <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation type="unfinished">Sebuah berkas / direktori dengan nama yang sama sudah ada. Coba gunakan nama yang lain.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>Error Creating Directory</source>
         <translation>Galat sewaktu membuat direktori</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation type="unfinished">Direktori tidak dapat dibuat.  Pastikan bahwa Anda memiliki izin yang tepat untuk memodifikasi direktori saat ini.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="391"/>
+        <location filename="../widgets/DirWidget2.cpp" line="371"/>
         <source>Current</source>
         <translation>Saat Ini</translation>
     </message>
@@ -310,62 +315,67 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <source>Open with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="332"/>
+        <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="334"/>
+        <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="524"/>
+        <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
         <translation>Checksum Berkas:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>Missing Utility</source>
         <translation>Hilang Utilitas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>&quot;Lumina-Fileinfo&quot; utilitas tidak dapat ditemukan pada sistem.  Silahkan install terlebih dahulu.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="562"/>
+        <location filename="../widgets/DirWidget2.cpp" line="542"/>
         <source>Open</source>
         <translation>Buka</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="551"/>
         <source>Rename...</source>
         <translation>Ganti Nama…</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Cut Selection</source>
         <translation type="unfinished">Potong data terpilih</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Copy Selection</source>
         <translation>Salin pilihan</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="557"/>
         <source>Paste</source>
         <translation>Pasta</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="561"/>
         <source>Delete Selection</source>
         <translation>Hapus Seleksi</translation>
     </message>
@@ -408,47 +418,62 @@
         <translation>Catatan: Ini hanya akan menambahkan nomor ke nama file sebaliknya.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>Menghapus: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>Menyalin: %1 pada %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>memulihkan: %1 sebagai %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>pindah: %1 untuk %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translation>Tidak dapat menghapus berkas ini:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translation>Tidak bisa menyalin berkas:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translation>Tidak dapat mengembalikan berkas ini:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>Tak bisa memindah berkas:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>Kesalahan Berkas</translation>
     </message>
@@ -456,12 +481,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>Langkah tidak valid.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1

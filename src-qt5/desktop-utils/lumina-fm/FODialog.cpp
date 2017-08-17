@@ -128,7 +128,13 @@ bool FODialog::CheckOverwrite(){
     }
     if(!existing.isEmpty()){
       //Prompt for whether to overwrite, not overwrite, or cancel
-      QMessageBox::StandardButton ans = QMessageBox::question(this, tr("Overwrite Files?"), tr("Do you want to overwrite the existing files?")+"\n"+tr("Note: It will just add a number to the filename otherwise.")+"\n\n"+existing.join(", "), QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel, QMessageBox::NoToAll);
+      QMessageBox dialog(QMessageBox::Question, tr("Overwrite Files?"), tr("Do you want to overwrite the existing files?")+"\n"+tr("Note: It will just add a number to the filename otherwise.")+"\n\n"+existing.join(", "), QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel, this);
+
+      dialog.setButtonText(QMessageBox::YesToAll, tr("YesToAll"));
+      dialog.setButtonText(QMessageBox::NoToAll, tr("NoToAll"));
+      dialog.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+      dialog.setDefaultButton(QMessageBox::NoToAll);
+      const int ans = dialog.exec();
       if(ans==QMessageBox::NoToAll){ Worker->overwrite = 0; } //don't overwrite
       else if(ans==QMessageBox::YesToAll){ Worker->overwrite = 1; } //overwrite
       else{ qDebug() << " - Cancelled"; Worker->overwrite = -1; ok = false; } //cancel operations

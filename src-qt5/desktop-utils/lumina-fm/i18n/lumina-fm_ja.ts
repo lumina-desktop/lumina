@@ -85,27 +85,27 @@
         <translation>作成日時</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="325"/>
+        <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
         <translation>使用済み容量: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="350"/>
+        <location filename="../BrowserWidget.cpp" line="386"/>
         <source>Files: %1 (%2)</source>
         <translation>ファイル数: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="352"/>
+        <location filename="../BrowserWidget.cpp" line="388"/>
         <source>Files: %1</source>
         <translation>ファイル: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="358"/>
+        <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
         <translation>ディレクトリー: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="372"/>
+        <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
         <translation>ディレクトリーがありません</translation>
     </message>
@@ -172,8 +172,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
-        <source>SingleColumn</source>
-        <translation>一列表示</translation>
+        <source>Single Column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
@@ -191,84 +191,89 @@
         <translation>二列で表示</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="621"/>
+        <location filename="../widgets/DirWidget2.cpp" line="646"/>
         <source>(Limited Access) </source>
         <translation>(アクセス制限あり) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>New Document</source>
         <translation>新しいドキュメント</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="643"/>
         <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="716"/>
         <source>Name:</source>
         <translation>名前:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>Error Creating Document</source>
         <translation>ドキュメントの作成中にエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="660"/>
+        <location filename="../widgets/DirWidget2.cpp" line="685"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>ドキュメントを作成できません。パーミッション設定を確認してください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
+        <location filename="../widgets/DirWidget2.cpp" line="693"/>
         <source>New Directory</source>
         <translation>新しいディレクトリー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>Invalid Name</source>
         <translation>名前が無効です</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="565"/>
+        <location filename="../widgets/DirWidget2.cpp" line="546"/>
         <source>File Operations</source>
         <translation>ファイル操作</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="573"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="587"/>
+        <location filename="../widgets/DirWidget2.cpp" line="568"/>
         <source>Directory Operations</source>
         <translation>ディレクトリー操作</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="624"/>
         <source>Loading...</source>
         <translation>ロードしています...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="651"/>
-        <location filename="../widgets/DirWidget2.cpp" line="678"/>
-        <location filename="../widgets/DirWidget2.cpp" line="700"/>
+        <location filename="../widgets/DirWidget2.cpp" line="676"/>
+        <location filename="../widgets/DirWidget2.cpp" line="703"/>
+        <location filename="../widgets/DirWidget2.cpp" line="725"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>同名のファイルまたはディレクトリーが存在します。別の名前にしてください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>Error Creating Directory</source>
         <translation>ディレクトリーの作成時にエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="707"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>ディレクトリーを作成できません。現在作業中のディレクトリーの書き込みパーミッション設定を確認してください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="391"/>
+        <location filename="../widgets/DirWidget2.cpp" line="371"/>
         <source>Current</source>
         <translatorcomment>スナップショットが存在する場合にはスナップショット名が入る</translatorcomment>
         <translation>現行版</translation>
@@ -314,62 +319,67 @@
         <translation>マルチメディアプレイヤー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <source>Open with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="310"/>
         <source>View Files...</source>
         <translation>ファイルの情報を表示...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="332"/>
+        <location filename="../widgets/DirWidget2.cpp" line="312"/>
         <source>Checksums</source>
         <translation>チェックサム</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="334"/>
+        <location filename="../widgets/DirWidget2.cpp" line="314"/>
         <source>Properties</source>
         <translation>プロパティー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="524"/>
+        <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
         <translation>ファイルのチェックサム:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>Missing Utility</source>
         <translation>ユーティリティーがありません</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="536"/>
+        <location filename="../widgets/DirWidget2.cpp" line="516"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>&quot;lumina-fileinfo&quot; ユーティリティーはシステムに存在しません。先にインストールしてください。</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="562"/>
+        <location filename="../widgets/DirWidget2.cpp" line="542"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="551"/>
         <source>Rename...</source>
         <translation>名前の変更...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Cut Selection</source>
         <translation>選択したアイテムを切り取る</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="572"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Copy Selection</source>
         <translation>選択したアイテムをコピー</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="557"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="561"/>
         <source>Delete Selection</source>
         <translation>選択したアイテムを削除</translation>
     </message>
@@ -412,47 +422,62 @@
         <translation>注意: 上書きしない場合にはファイル名に番号を追加します。</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>削除中: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>%1 を %2 にコピーしています</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>%1 を %2 に戻しています</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>%1 を %2 に移動しています</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translation>これらのファイルを削除できません:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translation>これらのファイルをコピーできません:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translation>これらのファイルを元に戻せません:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>これらのファイルを移動できません:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translatorcomment>ダイアログのタイトル設定用UI</translatorcomment>
         <translation>ファイルエラー</translation>
@@ -461,13 +486,13 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translatorcomment>ダイアログのタイトル</translatorcomment>
         <translation>無理な移動</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1

@@ -35,12 +35,12 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
       }else{
 	if(!path.startsWith("/") && !path.startsWith("-") ){ path.prepend(QDir::currentPath()+"/"); }
       }
-    inputlist << path; 
+    inputlist << path;
   }
   isActive = isBypass = false;
   lserver = 0;
   //Now check for the manual CLI flag to bypass single-instance forwarding (if necessary)
-  if(inputlist.contains("-new-instance")){ 
+  if(inputlist.contains("-new-instance")){
     isBypass = true;
     inputlist.removeAll("-new-instance");
   }
@@ -48,16 +48,16 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
 }
 
 LSingleApplication::~LSingleApplication(){
-  if(lserver != 0 && lockfile->isLocked() ){ 
+  if(lserver != 0 && lockfile->isLocked() ){
     //currently locked instance: remove the lock now
     lserver->close();
     QLocalServer::removeServer(cfile);
-    lockfile->unlock(); 
+    lockfile->unlock();
   }
 }
 
 bool LSingleApplication::isPrimaryProcess(){
-  return (isActive || isBypass);	
+  return (isActive || isBypass);
 }
 
 void LSingleApplication::PerformLockChecks(){
@@ -99,7 +99,7 @@ void LSingleApplication::PerformLockChecks(){
 	lockfile->unlock();
 	isActive = true;
      }
-      
+
   }else if(!isBypass){
     //forward the current inputs to the locked process for processing and exit
     //Check the connection to the local server first

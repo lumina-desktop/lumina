@@ -101,7 +101,7 @@ void page_interface_panels::updateIcons(){
 //=================
 void page_interface_panels::setupProfiles(){
   ui->tool_profile->setMenu( new QMenu(this) );
-  QAction *act = ui->tool_profile->menu()->addAction("No Panels");
+  QAction *act = ui->tool_profile->menu()->addAction(tr("No Panels"));
     act->setWhatsThis("none");
   act = ui->tool_profile->menu()->addAction("Windows");
     act->setWhatsThis("windows");
@@ -110,8 +110,7 @@ void page_interface_panels::setupProfiles(){
   act = ui->tool_profile->menu()->addAction("XFCE");
     act->setWhatsThis("xfce");
   act = ui->tool_profile->menu()->addAction("Mac OSX");
-    act->setWhatsThis("osx");
-
+    act->setWhatsThis("osx"); 
   connect(ui->tool_profile->menu(), SIGNAL(triggered(QAction*)), this, SLOT(applyProfile(QAction*)) );
 }
 

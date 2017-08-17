@@ -38,9 +38,8 @@ void MainWindow::on_buttonBox_clicked(QAbstractButton *button){
   if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Apply){
     for(int i = 0; i < m_ui->tabWidget->count(); ++i){
       TabPage *p = qobject_cast<TabPage*>(m_ui->tabWidget->widget(i));
-      if(p)
-        p->writeSettings();
-        }
+      if(p) { p->writeSettings(); }
+      }
     }
   if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Cancel){
     close();

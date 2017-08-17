@@ -7,22 +7,22 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="53"/>
         <source>Calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculatrice</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="657"/>
         <source>Advanced Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Opérations Avancées</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="83"/>
         <source>Percentage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pourcentage %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="85"/>
         <source>Power %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Puissance %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="87"/>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation>Enregistrer l'Historique de la Calculatrice</translation>
+        <translation>Enregistrer l&apos;Historique de la Calculatrice</translation>
     </message>
 </context>
 </TS>

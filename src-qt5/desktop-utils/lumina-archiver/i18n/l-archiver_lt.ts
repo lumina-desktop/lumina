@@ -27,121 +27,111 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation>Pagrindinis langas</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="38"/>
+        <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
         <translation>Archyvas:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
         <translation>Failas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="137"/>
+        <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
         <translation>Taisa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="148"/>
+        <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
         <translation>Rašyti į diską</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="159"/>
-        <source>toolBar</source>
-        <translation>Įrankių juosta</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="184"/>
+        <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
         <translation>&amp;Atverti archyvą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="187"/>
+        <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
         <translation>Atverti archyvą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="192"/>
+        <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
         <translation>&amp;Naujas archyvas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="195"/>
+        <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
         <translation>Naujas archyvas</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="200"/>
+        <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
         <translation>&amp;Išeiti</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="205"/>
+        <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
         <translation>Pridėti failą(-us)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="208"/>
+        <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
         <translation>Pridėti failus į archyvą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
         <translation>Šalinti failą(-us)</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
+        <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
         <translation>Šalinti žymėjimą iš archyvo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
         <translation>Išskleisti viską</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="224"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
         <translation>Išskleisti archyvą į katalogą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="229"/>
+        <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
         <translation>Pridėti katalogą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
         <translation>Pridėti katalogą į archyvą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
         <translation>Išskleisti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="240"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
         <translation>Išskleisti pažymėtus elementus</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
         <translation>USB atvaizdis</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="248"/>
+        <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti IMG atvaizdį į USB įrenginį (gali prireikti administratoriaus leidimo)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="24"/>
@@ -276,22 +266,22 @@
     <message>
         <location filename="../MainUI.cpp" line="185"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: ISO atvaizdis (*.iso *.img)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="186"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: XAR archyvas (*.xar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="187"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: Java archyvas (*.jar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="188"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIK SKAITYMUI: RedHat paketas (*.rpm)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="189"/>
@@ -360,12 +350,12 @@
     <message>
         <location filename="../imgDialog.ui" line="14"/>
         <source>Burn IMG to device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašyti IMG atvaizdį į įrenginį</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="29"/>
         <source>IMG File</source>
-        <translation type="unfinished"></translation>
+        <translation>IMG failas</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="54"/>
@@ -375,7 +365,7 @@
     <message>
         <location filename="../imgDialog.ui" line="84"/>
         <source>USB Device</source>
-        <translation type="unfinished"></translation>
+        <translation>USB įrenginys</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="96"/>
@@ -390,7 +380,7 @@
     <message>
         <location filename="../imgDialog.ui" line="132"/>
         <source>Burning to USB:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašoma į USB:</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="166"/>
@@ -410,7 +400,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="21"/>
         <source>Burn IMG to Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rašyti IMG atvaizdį į įrenginį</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
@@ -420,32 +410,32 @@
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
         <source>Kilobyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilobaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="37"/>
         <source>Megabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Megabaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="38"/>
         <source>Gigabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gigabaitų(-ai)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Cancel Image Burn?</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisakyti atvaizdžio rašymo?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Do you wish to stop the current IMG burn process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite stabdyti esamą IMG atvaizdžio rašymo procesą?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
-        <translation type="unfinished"></translation>
+        <translation>Įspėjimas: Tai paliks USB įrenginį nesuderintoje būsenoje</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -470,7 +460,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proceso užbaigti nepavyko:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
@@ -480,7 +470,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvaizdis buvo sėkmingai įrašytas į USB įrenginį</translation>
     </message>
 </context>
 </TS>

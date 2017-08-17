@@ -127,7 +127,12 @@ void mainWindow::pageSetTitle(QString title){
 bool mainWindow::page_change(QString id){
   if(ui->actionSave->isEnabled()){
     //unsaved changed available - prompt to save first
-    QMessageBox::StandardButton result = QMessageBox::question(this, tr("Unsaved Changes"), tr("This page currently has unsaved changes, do you wish to save them now?"),  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
+    QMessageBox dialog(QMessageBox::Question, tr("Unsaved Changes"), tr("This page currently has unsaved changes, do you wish to save them now?"),  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
+    dialog.setDefaultButton(QMessageBox::No);
+    dialog.setButtonText(QMessageBox::Yes, tr("Yes"));
+    dialog.setButtonText(QMessageBox::No, tr("No"));
+    dialog.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+    const int result = dialog.exec();
     if(result == QMessageBox::Yes){ on_actionSave_triggered(); }
     else if(result == QMessageBox::Cancel){ return false; } //stop now
   }

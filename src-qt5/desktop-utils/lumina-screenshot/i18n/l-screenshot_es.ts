@@ -39,7 +39,7 @@
     <message>
         <location filename="../MainUI.ui" line="20"/>
         <source>Lumina Screenshot</source>
-        <translation type="unfinished">Lumina Captura de pantalla</translation>
+        <translation type="unfinished">Captura de pantalla de Lumina</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="87"/>
@@ -74,22 +74,22 @@
     <message>
         <location filename="../MainUI.ui" line="157"/>
         <source>Crop screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar la captura de pantalla a la selección</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="160"/>
         <source>&amp;Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>%Recortar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="293"/>
         <source>Screen Capture Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Configuraciones de la captura de pantalla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="341"/>
         <source> Sec Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> Segs Retraso</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="433"/>
@@ -105,11 +105,6 @@
         <location filename="../MainUI.ui" line="466"/>
         <source>Show popup warnings about unsaved screenshots</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation type="unfinished">barra de herramientas</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="526"/>
@@ -174,16 +169,31 @@
     <message>
         <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
-        <translation>Guardar la Captura de Pantalla</translation>
+        <translation type="unfinished">Guardar la Captura de Pantalla</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="329"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="330"/>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="331"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

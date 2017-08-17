@@ -83,17 +83,17 @@
         <translation type="unfinished">Delete</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Select Application</source>
         <translation>Select Application</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
         <source>New Filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don't expect to build up the weak by pulling down the strong.</source>
+        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can't know too much, but you can say too much.</source>
+        <source>You can&apos;t know too much, but you can say too much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -360,7 +360,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no 'try'.</source>
+        <source>Do, or do not. There is no &apos;try&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It's kind of fun to do the impossible.</source>
+        <source>It&apos;s kind of fun to do the impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Charging)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="93"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 Remaining)</translation>
     </message>
@@ -677,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="137"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
         <translation>Time Zone (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
         <translation>Use System Time</translation>
     </message>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="342"/>
+        <location filename="../LSession.cpp" line="346"/>
         <source>Desktop</source>
         <translation>Desktop</translation>
     </message>
@@ -1449,34 +1449,49 @@
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
         <translation>Apply Updates?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>You have system updates waiting to be applied! Do you wish to install them now?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (Plugged In)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 Estimated)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
         <source>%1% Remaining</source>
         <translation>%1% Remaining</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
         <source>Workspace %1/%2</source>
         <translation>Workspace %1/%2</translation>
     </message>
@@ -1505,6 +1520,7 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
@@ -1527,6 +1543,16 @@
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>You have system updates waiting to be applied! Do you wish to install them now?</translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="58"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="59"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

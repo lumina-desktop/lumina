@@ -254,7 +254,8 @@ void NativeWindowSystem::stop(){
 NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
   for(int i=0; i<NWindows.length(); i++){
-    if(id==NWindows[i]->id() || id==NWindows[i]->frameId() ){ return NWindows[i]; }
+    if(id==NWindows[i]->id() ){ return NWindows[i]; }
+    else if(id==NWindows[i]->frameId() ){ qDebug() << "Matched Frame:" << id; return NWindows[i]; }
     //if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
     //else if(!checkRelated && id==NWindows[i]->id()){ return NWindows[i]; }
   }
@@ -496,7 +497,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
       valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
     }*/
     uint16_t mask = 0;
-    mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;// | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
     qDebug() << "Configure window Geometry:" << sz;
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
@@ -667,7 +668,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   registerClientEvents(win->id());
   NWindows << win;
   UpdateWindowProperties(win, NativeWindow::allProperties());
-  qDebug() << "New Window [& associated ID's]:" << win->id() << win->property(NativeWindow::RelatedWindows);
+  qDebug() << "New Window [& associated ID's]:" << win->id()  << win->frameId() << win->property(NativeWindow::RelatedWindows);
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
@@ -707,13 +708,13 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindow *win = findWindow(id, false);
-  qDebug() << "Got Window Closed" << id << win;
+  //qDebug() << "Got Window Closed" << id << win;
   //qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
     NWindows.removeAll(win);
     //RequestReparent(id, QX11Info::appRootWindow(), QPoint(0,0));
     win->emit WindowClosed(id);
-    qDebug() << "Visible Window Closed!!!";
+    //qDebug() << "Visible Window Closed!!!";
     //win->deleteLater();
   }else{
     win = findTrayWindow(id);

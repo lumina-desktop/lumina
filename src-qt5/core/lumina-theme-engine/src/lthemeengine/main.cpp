@@ -22,15 +22,9 @@ int main(int argc, char **argv){
   //checking environment
   QStringList errorMessages;
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  if(env.contains("QT_STYLE_OVERRIDE")){
-    errorMessages << app.translate("main", "Please remove the <b>QT_STYLE_OVERRIDE</b> environment variable");
-    }
-  if(env.value("QT_QPA_PLATFORMTHEME") != "lthemeengine"){
-    errorMessages << app.translate("main", "The <b>QT_QPA_PLATFORMTHEME</b> environment variable is not set correctly");
-    }
-  if(!QStyleFactory::keys().contains("lthemeengine-style")){
-    errorMessages << app.translate("main", "Unable to find <b>liblthemeengine-style.so</b>");
-    }
+  if(env.contains("QT_STYLE_OVERRIDE")){ errorMessages << app.translate("main", "Please remove the <b>QT_STYLE_OVERRIDE</b> environment variable"); }
+  //if(env.value("QT_QPA_PLATFORMTHEME") != "lthemeengine"){ errorMessages << app.translate("main", "The <b>QT_QPA_PLATFORMTHEME</b> environment variable is not set correctly"); }
+  if(!QStyleFactory::keys().contains("lthemeengine-style")){ errorMessages << app.translate("main", "Unable to find <b>liblthemeengine-style.so</b>"); }
   if(!errorMessages.isEmpty()){
     QMessageBox::critical(0, app.translate("main", "Error"), errorMessages.join("<br><br>"));
     return 0;

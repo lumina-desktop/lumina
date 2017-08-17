@@ -19,17 +19,17 @@
     <message>
         <location filename="../MainUI.ui" line="529"/>
         <source>Take Screenshot</source>
-        <translation>Capture d&apos;écran</translation>
+        <translation>Capture d&apos;Écran</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="422"/>
         <source>Include Borders</source>
-        <translation>Inclure les bordures</translation>
+        <translation>Inclure les Bordures</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="540"/>
         <source>Save As</source>
-        <translation>Enregistrer sous</translation>
+        <translation>Enregistrer Sous</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="138"/>
@@ -44,32 +44,32 @@
     <message>
         <location filename="../MainUI.ui" line="87"/>
         <source>Open screenshot with an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la capture d&apos;écran avec une application</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="90"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="103"/>
         <source>Copy screenshot to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier la capture d&apos;écran dans le presse-papier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="106"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>
         <source>Resize screenshot to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner la capture d&apos;écran à la sélection</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="157"/>
@@ -107,11 +107,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
@@ -134,7 +129,7 @@
     <message>
         <location filename="../MainUI.ui" line="562"/>
         <source>Esc</source>
-        <translation>Echap</translation>
+        <translation>Échap</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="328"/>
@@ -154,7 +149,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Regarder</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -174,16 +169,31 @@
     <message>
         <location filename="../MainUI.cpp" line="120"/>
         <source>Save Screenshot</source>
-        <translation>Enregistrer la capture d&apos;écran</translation>
+        <translation>Enregistrer la Capture d&apos;Écran</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="329"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="330"/>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="331"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

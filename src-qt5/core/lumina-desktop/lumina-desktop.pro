@@ -128,6 +128,7 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_da.ts \
                 i18n/lumina-desktop_de.ts \
                 i18n/lumina-desktop_el.ts \
+                i18n/lumina-desktop_en_AU.ts \
                 i18n/lumina-desktop_en_GB.ts \
                 i18n/lumina-desktop_en_ZA.ts \
                 i18n/lumina-desktop_es.ts \

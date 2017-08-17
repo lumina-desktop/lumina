@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QString>
+#include <QMenu>
+#include <QAction>
 
 namespace Ui {
 class QSSEditorDialog;
@@ -20,12 +22,15 @@ public:
 
 private slots:
     void on_buttonBox_clicked(QAbstractButton *button);
+    void colorPicked(QAction*);
 
 private:
     void save();
     void hideEvent(QHideEvent *);
     Ui::QSSEditorDialog *m_ui;
     QString m_filePath;
+    QMenu *colorMenu;
+
 };
 
 #endif // QSSEDITORDIALOG_H

@@ -1,7 +1,7 @@
 include("$${PWD}/../../OS-detect.pri")
 
-QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
+QT       *= core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT *= widgets concurrent
 
 
 TARGET = lumina-pdf
@@ -15,7 +15,9 @@ target.path = $${L_BINDIR}
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 
-SOURCES += main.cpp\
+message("Qt Modules Needed: $${QT}")
+
+SOURCES += main.cpp \
         mainUI.cpp
 
 HEADERS  += mainUI.h
@@ -37,6 +39,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_da.ts \
                 i18n/l-pdf_de.ts \
                 i18n/l-pdf_el.ts \
+                i18n/l-pdf_en_AU.ts \
                 i18n/l-pdf_en_GB.ts \
                 i18n/l-pdf_en_ZA.ts \
                 i18n/l-pdf_es.ts \
@@ -64,6 +67,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_ms.ts \
                 i18n/l-pdf_mt.ts \
                 i18n/l-pdf_nb.ts \
+                i18n/l-pdf_ne.ts \
                 i18n/l-pdf_nl.ts \
                 i18n/l-pdf_pa.ts \
                 i18n/l-pdf_pl.ts \
@@ -71,6 +75,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_pt_BR.ts \
                 i18n/l-pdf_ro.ts \
                 i18n/l-pdf_ru.ts \
+                i18n/l-pdf_sa.ts \
                 i18n/l-pdf_sk.ts \
                 i18n/l-pdf_sl.ts \
                 i18n/l-pdf_sr.ts \
@@ -80,6 +85,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_tg.ts \
                 i18n/l-pdf_th.ts \
                 i18n/l-pdf_tr.ts \
+                i18n/l-pdf_ur.ts \
                 i18n/l-pdf_uk.ts \
                 i18n/l-pdf_uz.ts \
                 i18n/l-pdf_vi.ts \

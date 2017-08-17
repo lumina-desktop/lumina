@@ -116,7 +116,7 @@
     <message>
         <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
-        <translation>Échap.</translation>
+        <translation>Échap</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="98"/>

@@ -209,14 +209,14 @@ bool MainUI::getWindow(){
     this->grabMouse( QCursor(Qt::CrossCursor) );
     mousegrabbed = true;
     this->centralWidget()->setEnabled(false);
-    //this->hide();
+    this->setWindowOpacity(0);
     return false; //wait for the next click to continue
   }else  if(ui->radio_area->isChecked()){
     settings->setValue("screenshot-target", "area");
     this->grabMouse( QCursor(Qt::CrossCursor) );
     mousegrabbed = true;
     this->centralWidget()->setEnabled(false);
-    //this->hide();
+    this->setWindowOpacity(0);
     return false; //wait for the next click to continue
   }else if(ui->radio_monitor->isChecked()){
     //will auto-grab the proper monitor later
@@ -229,6 +229,7 @@ bool MainUI::getWindow(){
 void MainUI::getPixmap(){
   QScreen *scrn = QApplication::screens().at(0);
   QPixmap cpic;
+  //qDebug() << "Grab Pixmap:" << cwin;
   if( (cwin==0 && ui->radio_window->isChecked() ) || ui->radio_all->isChecked() ){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
@@ -237,6 +238,7 @@ void MainUI::getPixmap(){
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
   }else if(cwin==0 && ui->radio_area->isChecked()){
     //Grab the section of the screen which was selected
+    //qDebug() << "Screen Area:" << snapArea;
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), snapArea.x(), snapArea.y(), snapArea.width(), snapArea.height() );
   }else{
     //Grab just the designated window
@@ -247,7 +249,7 @@ void MainUI::getPixmap(){
       cpic = scrn->grabWindow(cwin);
     }
   }
-  this->show();
+  this->showNormal();
   this->setGeometry(lastgeom);
   lastScreenShot = QDateTime::currentDateTime();
   //Now display the pixmap on the label as well
@@ -283,6 +285,7 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
     mousegrabbed = false;
     this->centralWidget()->setEnabled(true);
     this->releaseMouse();
+    this->setWindowOpacity(1);
     if(ui->radio_area->isChecked()){
       //Need to determind the rectange which covers the area selected
       areaOverlay->hide();
@@ -293,11 +296,11 @@ void MainUI::mouseReleaseEvent(QMouseEvent *ev){
       QList<WId> wins = XCB->WindowList();
       QList<WId> stack = XCB->WM_Get_Client_List(true);
       cwin = 0;
-      //qDebug() << "Try to select window:" << ev->globalPos();
+      //qDebug() << "Try to select window:" << ev->globalPos() << ev->pos() << QCursor::pos();
       for(int i=stack.length()-1; i>=0 && cwin==0; i--){ //work top->bottom in the stacking order
         if(!wins.contains(stack[i])){ continue; }
         if( XCB->WindowGeometry(stack[i], true).contains(ev->globalPos()) && XCB->WindowState(stack[i])!=LXCB::INVISIBLE ){
-          //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]);
+          //qDebug() << "Found Window:" << i << XCB->WindowClass(stack[i]) << XCB->WindowGeometry(stack[i], true);
           cwin = stack[i];
         }
       }
@@ -319,10 +322,14 @@ void MainUI::closeEvent(QCloseEvent *ev){
   //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
   if(ui->check_show_popups->isChecked() && !picSaved){
     //Ask what to do about the unsaved changed
-    const int messageRet = QMessageBox::warning(this, tr("Unsaved Screenshot"),
-				    tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
-				    QMessageBox::Discard | QMessageBox::Save |QMessageBox::Cancel, QMessageBox::Cancel);
-    switch (messageRet) {
+    QMessageBox dialog( QMessageBox::Warning, tr("Unsaved Screenshot"), 
+            tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
+            QMessageBox::Discard | QMessageBox::Save | QMessageBox::Cancel, this);
+    dialog.setDefaultButton(QMessageBox::Cancel);
+    dialog.setButtonText(QMessageBox::Save, tr("Save"));
+    dialog.setButtonText(QMessageBox::Discard, tr("Discard"));
+    dialog.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+    switch (dialog.exec()) {
     case QMessageBox::Discard:
       // Just close, we don't care about the file.
       break;

@@ -16,6 +16,7 @@
 int  main(int argc, char *argv[]) {
    LTHEME::LoadCustomEnvSettings();
    LSingleApplication a(argc, argv, "l-mediap");
+   if(!a.isPrimaryProcess()){ return 0; }
    //Now go ahead and setup the app
    QStringList args;
    for(int i=1; i<argc; i++){

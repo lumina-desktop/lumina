@@ -107,11 +107,6 @@
         <translation>未保存截图时显示弹出警告</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="499"/>
-        <source>toolBar</source>
-        <translation>工具栏</translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="526"/>
         <source>Capture</source>
         <translation>捕获</translation>
@@ -154,7 +149,7 @@
     <message>
         <location filename="../MainUI.cpp" line="39"/>
         <source>View</source>
-        <translation type="unfinished">查看</translation>
+        <translation>查看</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="40"/>
@@ -177,14 +172,29 @@
         <translation>保存截图</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="322"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Unsaved Screenshot</source>
         <translation>未保存截图</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
         <translation>当前截图未保存。您要保存还是丢弃您的修改？</translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="329"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="330"/>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="331"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>

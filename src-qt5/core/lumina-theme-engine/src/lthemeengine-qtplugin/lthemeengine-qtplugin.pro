@@ -2,7 +2,7 @@ include(../../lthemeengine.pri)
 
 TEMPLATE = lib
 TARGET = lthemeengine
-CONFIG += plugin
+CONFIG *= plugin
 
 greaterThan(QT_MINOR_VERSION, 7) {
   QT += gui-private theme_support-private
@@ -18,10 +18,6 @@ SOURCES += \
     main.cpp \
     lthemeengineplatformtheme.cpp \
     ../lthemeengine/lthemeengine.cpp
-
-!equals (DISABLE_WIDGETS,1) {
-   QT += widgets
-}
 
 OTHER_FILES += lthemeengine.json
 

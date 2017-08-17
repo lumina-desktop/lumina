@@ -27,119 +27,109 @@
 <context>
     <name>MainUI</name>
     <message>
-        <location filename="../MainUI.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="38"/>
+        <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="128"/>
+        <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="137"/>
+        <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="148"/>
+        <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="159"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="184"/>
+        <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="187"/>
+        <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="192"/>
+        <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="195"/>
+        <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="200"/>
+        <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="205"/>
+        <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="208"/>
+        <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="213"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
+        <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="224"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="229"/>
+        <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="232"/>
+        <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="240"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="245"/>
+        <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="248"/>
+        <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,7 +296,7 @@
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="200"/>
