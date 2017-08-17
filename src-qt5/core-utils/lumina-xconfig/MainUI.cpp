@@ -80,7 +80,7 @@ ScreenInfo MainUI::currentScreenInfo(){
 }
 
 void MainUI::AddScreenToWidget(ScreenInfo screen){
-  qDebug() << "Add Screen To Widget:" << screen.ID << screen.geom;
+  //qDebug() << "Add Screen To Widget:" << screen.ID << screen.geom;
   QLabel *lab = new QLabel(this);
   lab->setAlignment(Qt::AlignCenter);
   QMdiSubWindow *it = ui->mdiArea->addSubWindow(lab, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
@@ -90,7 +90,7 @@ void MainUI::AddScreenToWidget(ScreenInfo screen){
 
   it->setWhatsThis(screen.ID);
   QRect scaled( screen.geom.topLeft()*scaleFactor, screen.geom.size()*scaleFactor);
-  qDebug() << " - Scaled:" << scaled;
+  //qDebug() << " - Scaled:" << scaled;
   it->show();
   it->setGeometry(scaled); //scale it down for the display
   it->setFixedSize(scaled.size());
@@ -117,9 +117,9 @@ void MainUI::SyncBackend(){
     //Find the window associated with this screen
     for(int s=0; s<windows.length(); s++){
       if(windows[s]->whatsThis()==SCREENS[i].ID){
-        qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
+        //qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
         SCREENS[i].geom.moveTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
-        qDebug() << " - New Geom:" << SCREENS[i].geom;
+        //qDebug() << " - New Geom:" << SCREENS[i].geom;
         if(SCREENS[i].applyChange<1){ SCREENS[i].applyChange = (windows[s]->widget()->isEnabled() ? 0 : 1); } //disabled window is one that will be removed
       }
     }
@@ -244,14 +244,23 @@ void MainUI::tileScreensY(bool activeonly){
         while(overlap){
           QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
           //qDebug() << "Check Y Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
+	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
-            if(bound.isNull()){ newy+=cur->height(); }
-            else if(newy!=bound.top()){ newy = bound.top(); }
-            else if(newy!=bound.bottom()){ newy = bound.bottom() + 1; }
-            else{ newy++; } //make sure it always changes - no infinite loops!!
+            //qDebug() << " - got Y overlap:" << bound << rects;
+            if( bound.isNull() || rects.isEmpty() ){ newy+=cur->height(); }
+            else{
+             int orig = newy;
+              newy = bound.top();
+              for(int i=0; i<rects.length(); i++){
+                //qDebug() << " - Check Rect:" << newy << rects[i] << cur->height();
+                if(rects[i].height()==cur->height()){ continue; } //skip this one - just the same height
+                if(rects[i].top()>newy || newy==bound.bottom()){ newy=rects[i].top(); }
+              }
+              if(orig==newy){ newy = bound.bottom()+1; } //make sure it always changes - no infinite loops!!
+            }
           }
         }
         if(!activeonly || cur==active){ cur->move(cur->pos().x(), newy); }
@@ -292,16 +301,23 @@ void MainUI::tileScreensX(bool activeonly){
         while(overlap){
           QRegion tmp(newx, cur->pos().y(), cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect());
-          //qDebug() << "Check X Overlap:" << newx << overlap << tmp.boundingRect() << diff.boundingRect();
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
+          //qDebug() << "Check X Overlap:" << newx << overlap << total.rects() << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
+	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
-            if(bound.isNull()){ newx+=cur->width(); }
-            else if(newx!=bound.left()){ newx = bound.left(); }
-            else if(newx!=bound.right()){ newx = bound.right() + 1; }
-            else{ newx++; }//make sure it always changes - no infinite loops!!
-          }else{
-            qDebug() << "Found Area:" << tmp << diff << newx;
+            //qDebug() << " - got X overlap:" << bound << rects;
+            if( bound.isNull() || rects.isEmpty() ){ newx+=cur->width(); }
+            else{
+             int orig = newx;
+              newx = bound.left();
+              for(int i=0; i<rects.length(); i++){
+                //qDebug() << " - Check Rect:" << newx << rects[i] << cur->width();
+                if(rects[i].width()==cur->width()){ continue; } //skip this one - just the same width
+                if(rects[i].left()>newx || newx==bound.right()){ newx=rects[i].left(); }
+              }
+              if(orig==newx){ newx = bound.right()+1; } //make sure it always changes - no infinite loops!!
+            }
           }
         }
         if(!activeonly || cur==active){ cur->move(newx, cur->pos().y()); }
