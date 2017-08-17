@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Nástroj &quot;lumina-fileinfo&quot; nebyl nalezen.Prosím nainstalujte ho první.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Nástroj "lumina-fileinfo" nebyl nalezen.Prosím nainstalujte ho první.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -420,17 +420,17 @@
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano na vše</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne na vše</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -591,7 +591,7 @@ Nové umístění: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <source>Click "Next" to start downloading the repository</source>
         <translation>Kliknutím na Další zahajte stahování repozitáře</translation>
     </message>
     <message>
