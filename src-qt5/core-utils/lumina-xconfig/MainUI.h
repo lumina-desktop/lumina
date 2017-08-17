@@ -57,7 +57,7 @@ private slots:
 	void tileScreensX(bool activeonly = false);
 	void tileScreens();
 	void tileSingleScreen(QAction*);
-	void showMenu(const QPoint &pos){ singleTileMenu->popup(pos); }
+	void showMenu(){ singleTileMenu->popup(QCursor::pos()); }
 
 	void DeactivateScreen();
 	void ActivateScreen();

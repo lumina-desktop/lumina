@@ -28,7 +28,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     singleTileMenu->addAction(tr("Align Horizontal then Vertical"))->setWhatsThis("XY");
     singleTileMenu->addAction(tr("Align Vertical then Horizontal"))->setWhatsThis("YX");
   ui->mdiArea->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu(const QPoint&)) );
+  connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu()) );
 
   connect(singleTileMenu, SIGNAL(triggered(QAction*)), this, SLOT(tileSingleScreen(QAction*)) );
   connect(ui->push_close, SIGNAL(clicked()), this, SLOT(close()) );
@@ -129,6 +129,13 @@ void MainUI::SyncBackend(){
 void MainUI::UpdateScreens(){
   //First probe the server for current screens
   SCREENS = RRSettings::CurrentScreens();
+  //Determine the scale factor for putting these into the UI
+  QRegion tot;
+  for(int i=0; i<SCREENS.length(); i++){
+    if(SCREENS[i].isactive){ tot = tot.united( SCREENS[i].geom ); }
+  }
+  int wid = tot.boundingRect().width();
+  scaleFactor = (0.9*ui->mdiArea->width())/wid;
   //Now go through the screens and arrange them in order from left->right in the UI
   //bool found = true;
   //int xoffset = 0; //start at 0
@@ -161,7 +168,6 @@ void MainUI::UpdateScreens(){
     ui->group_avail->setVisible(true);
     ui->tabWidget->setTabEnabled(1,true);
   }
-  //if(ui->list_screens->currentItem()==0){ ui->list_screens->setCurrentRow(0); }
   ScreenSelected(); //update buttons
   updateNewScreenResolutions();
 }
@@ -209,7 +215,7 @@ void MainUI::updateNewScreenResolutions(){
 }
 
 void MainUI::tileScreensY(bool activeonly){
-  qDebug() << "Tile Windows in Y Dimension";
+  //qDebug() << "Tile Windows in Y Dimension";
   QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
   QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
   QRegion total;
@@ -218,6 +224,7 @@ void MainUI::tileScreensY(bool activeonly){
   while(!wins.isEmpty()){
     cur=0;
     for(int i=0; i<wins.length(); i++){
+      if(wins[i]==active && wins.length()>1){ continue; } //ensure active window is last
       if(cur==0){ cur = wins[i]; } //first one
       else if(wins[i]->pos().y() < cur->pos().y()){ cur = wins[i]; }
     }
@@ -242,7 +249,7 @@ void MainUI::tileScreensY(bool activeonly){
           if(overlap){
             QRect bound = diff.boundingRect();
             if(bound.isNull()){ newy+=cur->height(); }
-            else if(newy!=bound.top()){ newy = bound.top() + 1; }
+            else if(newy!=bound.top()){ newy = bound.top(); }
             else if(newy!=bound.bottom()){ newy = bound.bottom() + 1; }
             else{ newy++; } //make sure it always changes - no infinite loops!!
           }
@@ -256,7 +263,7 @@ void MainUI::tileScreensY(bool activeonly){
 }
 
 void MainUI::tileScreensX(bool activeonly){
-  qDebug() << "Tile Windows in X Dimension";
+  //qDebug() << "Tile Windows in X Dimension";
   QList<QMdiSubWindow*> wins = ui->mdiArea->subWindowList();
   QMdiSubWindow *active = ui->mdiArea->currentSubWindow();
   QRegion total;
@@ -265,6 +272,7 @@ void MainUI::tileScreensX(bool activeonly){
   while(!wins.isEmpty()){
     cur=0;
     for(int i=0; i<wins.length(); i++){
+      if(wins[i]==active && wins.length()>1){ continue; } //ensure active window is last
       if(cur==0){ cur = wins[i]; } //first one
       else if(wins[i]->pos().x() < cur->pos().x()){ cur = wins[i]; }
     }
@@ -289,9 +297,11 @@ void MainUI::tileScreensX(bool activeonly){
           if(overlap){
             QRect bound = diff.boundingRect();
             if(bound.isNull()){ newx+=cur->width(); }
-            else if(newx!=bound.left()){ newx = bound.left() + 1; }
+            else if(newx!=bound.left()){ newx = bound.left(); }
             else if(newx!=bound.right()){ newx = bound.right() + 1; }
             else{ newx++; }//make sure it always changes - no infinite loops!!
+          }else{
+            qDebug() << "Found Area:" << tmp << diff << newx;
           }
         }
         if(!activeonly || cur==active){ cur->move(newx, cur->pos().y()); }
@@ -340,6 +350,17 @@ void MainUI::ActivateScreen(){
       AddScreenToWidget(SCREENS[i]);
       break;
     }
+  }
+  tileScreensX(true);
+  //Now remove that option from the "new" list
+  ui->combo_availscreens->removeItem(ui->combo_availscreens->currentIndex());
+  if(ui->combo_availscreens->count()<1){
+    ui->group_avail->setVisible(false);
+    ui->tabWidget->setCurrentIndex(0);
+    ui->tabWidget->setTabEnabled(1,false);
+  }else{
+    ui->group_avail->setVisible(true);
+    ui->tabWidget->setTabEnabled(1,true);
   }
 }
 
