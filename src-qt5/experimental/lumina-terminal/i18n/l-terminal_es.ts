@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar selección</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="62"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Pegar</translation>
     </message>
 </context>
 <context>
@@ -19,7 +19,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Terminal</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>

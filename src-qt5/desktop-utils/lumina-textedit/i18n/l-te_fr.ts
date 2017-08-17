@@ -11,7 +11,7 @@
     <message>
         <location filename="../ColorDialog.ui" line="24"/>
         <source>Item Type</source>
-        <translation>Type d'article</translation>
+        <translation>Type d&apos;article</translation>
     </message>
     <message>
         <location filename="../ColorDialog.ui" line="29"/>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation>Détacher l'Onglet</translation>
+        <translation>Détacher l&apos;Onglet</translation>
     </message>
 </context>
 <context>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../MainUI.ui" line="63"/>
         <source>Find the previous match</source>
-        <translation>Trouver l'occurrence précédente</translation>
+        <translation>Trouver l&apos;occurrence précédente</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="66"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../MainUI.ui" line="140"/>
         <source>Replace all matches (to end of document)</source>
-        <translation>Remplacer toutes les occurrences (jusqu'à la fin du document)</translation>
+        <translation>Remplacer toutes les occurrences (jusqu&apos;à la fin du document)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
@@ -307,7 +307,7 @@ Do you want to close the editor anyway?
 
 %1</source>
         <translation>Il y a des modifications non enregistrées.
-Voulez-vous tout de même fermer l'éditeur ?
+Voulez-vous tout de même fermer l&apos;éditeur ?
 
 %1</translation>
     </message>

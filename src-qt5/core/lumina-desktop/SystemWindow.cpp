@@ -55,6 +55,9 @@ bool SystemWindow::promptAboutUpdates(bool &skip){
   if(pending.isEmpty()){ skip = false; } //continue without skip
   else{
     QMessageBox dlg(QMessageBox::Question, tr("Apply Updates?"), tr("You have system updates waiting to be applied! Do you wish to install them now?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
+      dlg.setButtonText(QMessageBox::Yes, tr("Yes"));
+      dlg.setButtonText(QMessageBox::No, tr("No"));
+      dlg.setButtonText(QMessageBox::Cancel, tr("Cancel"));
       dlg.setDetailedText(pending);
       dlg.setDefaultButton(QMessageBox::Yes);
       dlg.show();

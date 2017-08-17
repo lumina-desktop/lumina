@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
         <translation>Pradžios meniu alternatyva, susitelkianti ties naudotojo failais, katalogais ir kitais mėgstamais elementais.</translation>
     </message>
     <message>
@@ -979,6 +979,21 @@
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Šiuo metu šiame puslapyje yra neįrašytų pakeitimų, ar norite juos dabar įrašyti?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Atsisakyti</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1178,11 +1193,6 @@
 <context>
     <name>page_fluxbox_keys</name>
     <message>
-        <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
-        <source>page_fluxbox_keys</source>
-        <translation>Spartieji klavišai</translation>
-    </message>
-    <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
         <translation>Paprastas redaktorius</translation>
@@ -1234,12 +1244,12 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>"Mod1":	Alt key
-"Mod4": 	Windows/Mac key
-"Control":	Ctrl key</source>
-        <translation>"Mod1":	Alt klavišas
-"Mod4": 	Windows/Mac klavišas
-"Control":	Ctrl (Vald) klavišas</translation>
+        <source>&quot;Mod1&quot;:	Alt key
+&quot;Mod4&quot;: 	Windows/Mac key
+&quot;Control&quot;:	Ctrl key</source>
+        <translation>&quot;Mod1&quot;:	Alt klavišas
+&quot;Mod4&quot;: 	Windows/Mac klavišas
+&quot;Control&quot;:	Ctrl (Vald) klavišas</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
@@ -1438,6 +1448,11 @@
         <location filename="../pages/page_interface_panels.cpp" line="58"/>
         <source>Desktop Settings</source>
         <translation>Darbalaukio nustatymai</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1651,147 +1666,147 @@
         <translation>Data, o paskui laikas</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="60"/>
         <source>Window manager</source>
         <translation>Langų tvarkytuvė</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="94"/>
+        <location filename="../pages/page_session_options.cpp" line="93"/>
         <source>Desktop Settings</source>
         <translation>Darbalaukio nustatymai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>Select an image</source>
         <translation>Pasirinkite paveikslą</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Images</source>
         <translation>Paveikslai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Reset User Image</source>
         <translation>Atstatyti naudotojo paveikslą</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Ar norėtumėte atstatyti naudotojo paveikslą į sistemos numatytąjį?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="218"/>
         <source>Valid Time Codes:</source>
         <translation>Tinkami laiko kodai:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Valanda be priekinio nulio (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Valanda su priekiniu nuliu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minutės be priekinio nulio (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minutės su priekiniu nuliu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Sekundės be priekinio nulio (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Sekundės su priekiniu nuliu (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM (12-valandų) laikrodis (didžiosiomis ar mažosiomis raidėmis)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: Timezone</source>
         <translation>%1: Laiko juosta</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="228"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>Time Codes</source>
         <translation>Laiko kodai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>Valid Date Codes:</source>
         <translation>Tinkami datos kodai:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Diena skaitmenimis be priekinio nulio (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Diena skaitmenimis su priekiniu nuliu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Diena kaip santrumpa (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Diena kaip pilnas pavadinimas (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Mėnesis skaitmenimis be priekinio nulio (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Mėnesis skaitmenimis su priekiniu nuliu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Mėnesis kaip santrumpa (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Mėnesis kaip pilnas pavadinimas (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Metai kaip 2-skaitmenų skaičius (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Metai kaip 4-skaitmenų skaičius (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Tekstas gali būti patalpintas į kabutes, kad būtų nepaisoma pakeitimų</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="254"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Date Codes</source>
         <translation>Datų kodai</translation>
     </message>

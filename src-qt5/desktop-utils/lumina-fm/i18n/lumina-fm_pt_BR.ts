@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>O &quot;lumina-fileinfo&quot; não pode ser encontrado no sistema. Por favor, instale-o...</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>O "lumina-fileinfo" não pode ser encontrado no sistema. Por favor, instale-o...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -418,47 +418,62 @@
         <translation>Nota: isto irá adicionar um número ao nome do arquivo.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>Removendo: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>Copiando %1 para %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>Restaurando: %1 como %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>Movendo: %1 para %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
         <translation>Não foi possível remover estes arquivos:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
         <translation>Não foi possível copiar estes arquivos:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
         <translation>Não foi possível restaurar estes arquivos:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>Não foi possível mover estes arquivos:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>Erros do arquivo</translation>
     </message>
@@ -466,12 +481,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>Movimento inválido</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1
@@ -576,8 +591,8 @@ Nova Localização: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Clique em &quot;Avançar&quot; para iniciar o download do repositório</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Clique em "Avançar" para iniciar o download do repositório</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -750,7 +765,7 @@ Nova Localização: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
