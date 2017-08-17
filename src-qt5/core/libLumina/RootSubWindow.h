@@ -29,6 +29,7 @@ public:
 	~RootSubWindow();
 
 	WId id();
+	NativeWindow* nativeWindow();
 
 private:
 	//Window status

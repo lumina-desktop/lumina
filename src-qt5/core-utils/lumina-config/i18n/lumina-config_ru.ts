@@ -977,6 +977,21 @@
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Эта страница в настоящее время имеет несохраненные изменения, вы хотите сохранить их сейчас?</translation>
     </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="132"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="133"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainWindow.cpp" line="134"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
 </context>
 <context>
     <name>page_autostart</name>
@@ -1175,11 +1190,6 @@
 </context>
 <context>
     <name>page_fluxbox_keys</name>
-    <message>
-        <location filename="../pages/page_fluxbox_keys.ui" line="14"/>
-        <source>page_fluxbox_keys</source>
-        <translation>Сочетания клавиш</translation>
-    </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
@@ -1437,6 +1447,11 @@
         <source>Desktop Settings</source>
         <translation>Параметры рабочего стола</translation>
     </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <source>No Panels</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>page_main</name>
@@ -1649,147 +1664,147 @@
         <translation>Вначале Дата потом Время</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="61"/>
+        <location filename="../pages/page_session_options.cpp" line="60"/>
         <source>Window manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="94"/>
+        <location filename="../pages/page_session_options.cpp" line="93"/>
         <source>Desktop Settings</source>
         <translation>Параметры рабочего стола</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="174"/>
         <source>Select an image</source>
         <translation>Выберите изображение</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <location filename="../pages/page_session_options.cpp" line="175"/>
         <source>Images</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Reset User Image</source>
         <translation>Сброс изображения пользователя</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="180"/>
+        <location filename="../pages/page_session_options.cpp" line="179"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Хотите вернуть изображения пользователя по умолчанию?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="218"/>
         <source>Valid Time Codes:</source>
         <translation>Допустимые коды Времени:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="219"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Часы без первого нуля (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="220"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Часы с первым нулем (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="221"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Минуты без первого нуля (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="222"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Минуты с первым нулем (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="223"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Секунды без первого нуля (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="224"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Секунды с первым нулем (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="225"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM / PM (12-часовой) часы (верхний или нижний регистр)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="226"/>
         <source>%1: Timezone</source>
         <translation>%1: Временная зона</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="228"/>
+        <location filename="../pages/page_session_options.cpp" line="227"/>
         <source>Time Codes</source>
         <translation>Коды Времени</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>Valid Date Codes:</source>
         <translation>Допустимые коды Даты:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Дни без первого нуля (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Дни с первым нулем (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: День, как аббревиатура</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: День, как полное наименование</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="246"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Месяц без первого нуля (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="247"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Месяц с первым нулем (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="248"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Месяц, как аббревиатура</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="249"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Месяц, как полное наименование</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="250"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Год, как 2-ое число (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="251"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Год, как 4-ое число (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="252"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Текст может быть в одиночных кавычках, чтобы игнорировать замены</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="254"/>
+        <location filename="../pages/page_session_options.cpp" line="253"/>
         <source>Date Codes</source>
         <translation>Коды Даты</translation>
     </message>

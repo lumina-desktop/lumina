@@ -4,11 +4,8 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifndef _LUMINA_DESKTOP_SCREEN_SAVER_Text_ANIMATION_H
-#define _LUMINA_DESKTOP_SCREEN_SAVER_Text_ANIMATION_H
-
-//PI is equal to 2*pi
-#define PI 6.2832
+#ifndef _LUMINA_DESKTOP_SCREEN_SAVER_TEXT_ANIMATION_H
+#define _LUMINA_DESKTOP_SCREEN_SAVER_TEXT_ANIMATION_H
 
 #include "global-includes.h"
 #include "BaseAnimGroup.h"
@@ -38,7 +35,7 @@ private slots:
 	  currLoc.setY(currLoc.y() + v.y());
 	  movement->setEndValue(currLoc);
 	}
-	void stopped(){ qDebug() << "text stopped"; text->hide();}
+	void stopped(){ qDebug() << "Text Stopped"; text->hide();}
 
 public:
 	Text(QWidget *parent) : QParallelAnimationGroup(parent){

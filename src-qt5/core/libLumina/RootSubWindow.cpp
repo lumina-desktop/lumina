@@ -41,6 +41,10 @@ WId RootSubWindow::id(){
   return WIN->id();
 }
 
+NativeWindow* RootSubWindow::nativeWindow(){
+  return WIN;
+}
+
 // === PRIVATE ===
 RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset){
   //Note: pt should be in widget-relative coordinates, not global

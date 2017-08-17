@@ -11,6 +11,10 @@
 #include <QRect>
 #include <QString>
 #include <QList>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QMenu>
+#include <QAction>
 
 #include "ScreenSettings.h"
 
@@ -34,20 +38,32 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	QList<ScreenInfo> SCREENS;
+	double scaleFactor;
+	QMenu *singleTileMenu;
+
 	ScreenInfo currentScreenInfo();
 
-	QStringList currentOpts();
+	//QStringList currentOpts();
+	QString currentSelection();
 
 	void AddScreenToWidget(ScreenInfo);
+	void SyncBackend(); //sync backend structures to current settings
 
 private slots:
 	void UpdateScreens();
 	void ScreenSelected();
-	void MoveScreenLeft();
-	void MoveScreenRight();
-	void DeactivateScreen(QString device = "");
+	void updateNewScreenResolutions();
+	void tileScreensY(bool activeonly = false);
+	void tileScreensX(bool activeonly = false);
+	void tileScreens();
+	void tileSingleScreen(QAction*);
+	void showMenu(){ singleTileMenu->popup(QCursor::pos()); }
+
+	void DeactivateScreen();
 	void ActivateScreen();
 	void ApplyChanges(); //config changes
+	void SaveSettings();
+	void RestartFluxbox();
 };
 
 #endif

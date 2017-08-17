@@ -39,6 +39,7 @@ void LSession::procFinished(){
       if(!stopping){
         //See if this process is the main desktop binary
         if(PROCS[i]->objectName()=="runtime"){ stopall(); }
+        else if(PROCS[i]->objectName()=="wm" && wmfails<2){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); } //restart the WM
         //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         //break;
@@ -85,11 +86,17 @@ void LSession::start(bool unified){
   if(!LUtils::isValidBinary("lumina-desktop") ){
     exit(1);
   }
+  setenv("DESKTOP_SESSION","Lumina",1);
+  setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+  setenv("QT_QPA_PLATFORMTHEME","lthemeengine", true);
+  setenv("QT_NO_GLIB", "1", 1); //Disable the glib event loop within Qt at runtime (performance hit + bugs)
+  unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //need exact-pixel measurements (no fake scaling)
+
  if(!unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
   //Window Manager First
-  if(WM=="fluxbox" || WM.endsWith("/fluxbox") || WM.isEmpty() ){
+  if(WM=="fluxbox" || WM.endsWith("/fluxbox") || WM.simplified().isEmpty() ){
 	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	  if( !LUtils::isValidBinary("fluxbox") ){
 	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";

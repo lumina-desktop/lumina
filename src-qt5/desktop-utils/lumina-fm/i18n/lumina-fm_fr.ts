@@ -59,32 +59,32 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="218"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="219"/>
         <source>Size</source>
-        <translation type="unfinished">Taille</translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="220"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="221"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Modifié le</translation>
+        <translation>Date de Modification</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="222"/>
         <source>Date Created</source>
-        <translation type="unfinished">Créé le</translation>
+        <translation>Date de Création</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="361"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Capacité : %1</translation>
+        <translation>Capacité: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="386"/>
@@ -99,12 +99,12 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="394"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Répertoires: %1</translation>
+        <translation>Répertoires: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="408"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished">Pas de contenu de répertoire</translation>
+        <translation>Pas de Contenu de Répertoire</translation>
     </message>
 </context>
 <context>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="157"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Augmenter les Tailles des Icônes</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="173"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuer les Tailles des Icônes</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="191"/>
@@ -160,22 +160,22 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="230"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="233"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez l&apos;Action</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="241"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Seule Colonne</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="244"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Affichage à une seule colonne</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
@@ -282,7 +282,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="273"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="274"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="504"/>
         <source>File Checksums:</source>
-        <translation>Somme de contrôle de fichier:</translation>
+        <translation>Somme de Contrôle de Fichier:</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Overwrite Files?</source>
-        <translation>Écraser les fichiers?</translation>
+        <translation>Écraser les Fichiers?</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="131"/>
@@ -418,47 +418,62 @@
         <translation>Remarque: Il suffit d&apos;ajouter un nombre au nom de fichier autrement.</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="148"/>
+        <location filename="../FODialog.cpp" line="133"/>
+        <source>YesToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="134"/>
+        <source>NoToAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="135"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../FODialog.cpp" line="154"/>
         <source>Removing: %1</source>
         <translation>Suppression: %1</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="149"/>
+        <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
         <translation>Copier %1 vers %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="150"/>
+        <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
         <translation>Restauration: %1 pour %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="151"/>
+        <location filename="../FODialog.cpp" line="157"/>
         <source>Moving: %1 to %2</source>
         <translation>Déplacement: %1 vers %2</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="164"/>
+        <location filename="../FODialog.cpp" line="170"/>
         <source>Could not remove these files:</source>
-        <translation>Impossible de supprimer ces fichiers.</translation>
+        <translation>Impossible de supprimer ces fichiers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="165"/>
+        <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
-        <translation>Impossible de supprimer ces fichiers.</translation>
+        <translation>Impossible de copier ces fichiers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="166"/>
+        <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
-        <translation>Restauration impossible de ces fichiers:</translation>
+        <translation>Impossible de restaurer ces fichiers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="167"/>
+        <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
         <translation>Impossible de déplacer ces fichiers:</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="169"/>
+        <location filename="../FODialog.cpp" line="175"/>
         <source>File Errors</source>
         <translation>Erreur de fichier</translation>
     </message>
@@ -466,12 +481,12 @@
 <context>
     <name>FOWorker</name>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>Invalid Move</source>
         <translation>Déplacement invalide</translation>
     </message>
     <message>
-        <location filename="../FODialog.cpp" line="320"/>
+        <location filename="../FODialog.cpp" line="326"/>
         <source>It is not possible to move a directory into itself. Please make a copy of the directory instead.
 
 Old Location: %1
@@ -612,7 +627,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="126"/>
         <source>View</source>
-        <translation>Afficher</translation>
+        <translation>Regarder</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="130"/>
@@ -747,7 +762,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
@@ -897,7 +912,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="586"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="591"/>
@@ -982,7 +997,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="873"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
-        <translation>Un fichier existant avec le même nom sera remplacé. Etes vous sûr de vouloir procéder?</translation>
+        <translation>Un fichier existant avec le même nom sera remplacé. Etes-vous sûr de vouloir procéder?</translation>
     </message>
 </context>
 <context>
@@ -1028,13 +1043,13 @@ New Location: %2</source>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
@@ -1180,7 +1195,7 @@ New Location: %2</source>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished">Terminé</translation>
+        <translation>Terminé</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>

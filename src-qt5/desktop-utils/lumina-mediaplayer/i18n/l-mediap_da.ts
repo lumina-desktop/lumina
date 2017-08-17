@@ -162,123 +162,118 @@
         <translation>Vis</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="699"/>
-        <source>toolBar</source>
-        <translation>værktøjsLinje</translation>
-    </message>
-    <message>
-        <location filename="../mainUI.ui" line="726"/>
+        <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="731"/>
+        <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="736"/>
+        <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="741"/>
+        <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
         <translation>Næste</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="746"/>
+        <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="751"/>
+        <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
         <translation>Højere</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="754"/>
+        <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
         <translation>Skru op for lydstyrken</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="759"/>
+        <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
         <translation>Lavere</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="762"/>
+        <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
         <translation>Skru ned for lydstyrken</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="767"/>
+        <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
         <translation>Luk program</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="770"/>
+        <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="784"/>
+        <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
         <translation>Luk til bakke når aktiv</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="789"/>
+        <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
         <translation>Fra nuværende kunstner</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="792"/>
+        <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
         <translation>Opret station fra nuværende kunstner</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="797"/>
+        <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
         <translation>Fra nuværende sang</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="800"/>
+        <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
         <translation>Opret station fra nuværende sang</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="811"/>
+        <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
         <translation>Vis sangnotifikationer</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="816"/>
+        <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
         <translation>Søg...</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="819"/>
+        <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
         <translation>Søg efter en ny station</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="831"/>
+        <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
         <translation>Pandora Radio</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="834"/>
+        <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
         <translation>Strøm fra Pandora Radio</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="842"/>
+        <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
         <translation>Lokale filer</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="845"/>
+        <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
         <translation>Afspil lokale filer</translation>
     </message>

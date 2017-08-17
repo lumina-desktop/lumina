@@ -83,17 +83,17 @@
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Select Application</source>
         <translation>Anwendung auswählen</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="212"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="298"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
         <source>New Filename</source>
         <translation>Neuer Dateiname</translation>
     </message>
@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="92"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Aufladen)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="93"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 verbleibend)</translation>
     </message>
@@ -677,12 +677,12 @@
 <context>
     <name>LClock</name>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="137"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
         <translation>Zeitzone (%1)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/clock/LClock.cpp" line="159"/>
+        <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
         <translation>Systemzeit verwenden</translation>
     </message>
@@ -851,7 +851,7 @@
     <name>LSession</name>
     <message>
         <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="342"/>
+        <location filename="../LSession.cpp" line="346"/>
         <source>Desktop</source>
         <translation>Arbeitsfläche</translation>
     </message>
@@ -1449,34 +1449,49 @@
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
         <translation>Aktualisierungen anwenden?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>Sie haben Systemaktualisierungen, die darauf warten, angewendet zu werden! Möchten Sie sie jetzt installieren?</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="500"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (Eingesteckt)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="504"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 Geschätzt)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
         <source>%1% Remaining</source>
         <translation>%1% verbleibend</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="521"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="680"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="691"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
         <source>Workspace %1/%2</source>
         <translation>Arbeitsbereich %1/%2</translation>
     </message>
@@ -1505,6 +1520,7 @@
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="127"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -1527,6 +1543,16 @@
         <location filename="../SystemWindow.cpp" line="57"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>Sie haben Systemaktualisierungen, die darauf warten, angewendet zu werden! Möchten Sie sie jetzt installieren?</translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="58"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.cpp" line="59"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

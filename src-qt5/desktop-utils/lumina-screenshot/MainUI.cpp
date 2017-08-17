@@ -322,10 +322,14 @@ void MainUI::closeEvent(QCloseEvent *ev){
   //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
   if(ui->check_show_popups->isChecked() && !picSaved){
     //Ask what to do about the unsaved changed
-    const int messageRet = QMessageBox::warning(this, tr("Unsaved Screenshot"),
-				    tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
-				    QMessageBox::Discard | QMessageBox::Save |QMessageBox::Cancel, QMessageBox::Cancel);
-    switch (messageRet) {
+    QMessageBox dialog( QMessageBox::Warning, tr("Unsaved Screenshot"), 
+            tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
+            QMessageBox::Discard | QMessageBox::Save | QMessageBox::Cancel, this);
+    dialog.setDefaultButton(QMessageBox::Cancel);
+    dialog.setButtonText(QMessageBox::Save, tr("Save"));
+    dialog.setButtonText(QMessageBox::Discard, tr("Discard"));
+    dialog.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+    switch (dialog.exec()) {
     case QMessageBox::Discard:
       // Just close, we don't care about the file.
       break;

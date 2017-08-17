@@ -162,123 +162,118 @@
         <translation>Vista</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="699"/>
-        <source>toolBar</source>
-        <translation>Barra d&apos;eines</translation>
-    </message>
-    <message>
-        <location filename="../mainUI.ui" line="726"/>
+        <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
         <translation>Reprodueix</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="731"/>
+        <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="736"/>
+        <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
         <translation>Atura</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="741"/>
+        <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
         <translation>Següent</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="746"/>
+        <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
         <translation>Enrere</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="751"/>
+        <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
         <translation>Apuja</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="754"/>
+        <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
         <translation>Apuja el volum de l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="759"/>
+        <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
         <translation>Abaixa</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="762"/>
+        <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
         <translation>Abaixa el volum de l&apos;àudio</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="767"/>
+        <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
         <translation>Tanca l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="770"/>
+        <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="784"/>
+        <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
         <translation>Minimitza a la safata quan estigui actiu</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="789"/>
+        <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
         <translation>De l&apos;artista actual</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="792"/>
+        <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
         <translation>Crea una emissora de l&apos;artista actual</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="797"/>
+        <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
         <translation>De la cançó actual</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="800"/>
+        <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
         <translation>Crea una emissora de la cançó actual</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="811"/>
+        <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
         <translation>Mostra les notificacions de la cançó</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="816"/>
+        <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
         <translation>Cerca...</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="819"/>
+        <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
         <translation>Cerca una emissora nova</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="831"/>
+        <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
         <translation>Ràdio Pandora</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="834"/>
+        <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
         <translation>Transmet de Ràdio Pandora</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="842"/>
+        <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
         <translation>Fitxers locals</translation>
     </message>
     <message>
-        <location filename="../mainUI.ui" line="845"/>
+        <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
         <translation>Reprodueix fitxers locals</translation>
     </message>

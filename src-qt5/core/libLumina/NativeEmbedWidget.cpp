@@ -16,6 +16,8 @@
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
+#define DISABLE_COMPOSITING true
+
 #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
 			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
  			XCB_EVENT_MASK_POINTER_MOTION |	\
@@ -26,6 +28,7 @@
 			XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
 			XCB_EVENT_MASK_ENTER_WINDOW| \
 			XCB_EVENT_MASK_PROPERTY_CHANGE)
+
 
 inline void registerClientEvents(WId id){
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
@@ -62,15 +65,14 @@ void NativeEmbedWidget::showWindow(){
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
-  //if(paused){ return QImage(); }
   //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
   xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-  if(pix==0){ return QImage(); }
+  if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
 
   //Convert this pixmap into a QImage
   xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  if(ximg == 0){ return QImage(); }
+  if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
   QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
   img = img.copy(); //detach this image from the XCB data structures
   xcb_image_destroy(ximg);
@@ -111,23 +113,26 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     xcb_send_event(QX11Info::connection(), 0, WIN->id(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
   */
   //Now setup any redirects and return
-  xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
-  xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+  if(!DISABLE_COMPOSITING){
+    xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+    xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
-  //Now create/register the damage handler
-  // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
-  //  -- Retested 6/29/17 (no change) Ken Moore
-  //xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
-  //xcb_damage_create(QX11Info::connection(), dmgID, WIN->id(), XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
-  // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
-  Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
+    //Now create/register the damage handler
+    // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
+    //  -- Retested 6/29/17 (no change) Ken Moore
+    //xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
+    //xcb_damage_create(QX11Info::connection(), dmgID, WIN->id(), XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+    // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
+    Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
 
-  WIN->addDamageID( (uint) dmgID); //save this for later
+    WIN->addDamageID( (uint) dmgID); //save this for later
+  }
   WIN->addFrameWinID(this->winId());
   connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
 
   registerClientEvents(WIN->id());
   registerClientEvents(this->winId());
+  qDebug() << "Events Registered:" << WIN->id() << this->winId();
   return true;
 }
 
@@ -185,16 +190,17 @@ void NativeEmbedWidget::resyncWindow(){
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
     xcb_flush(QX11Info::connection());
   syncWinSize();
-  QTimer::singleShot(0, this, SLOT(repaintWindow()) );
+  QTimer::singleShot(10, this, SLOT(repaintWindow()) );
 }
 
 void NativeEmbedWidget::repaintWindow(){
+  if(DISABLE_COMPOSITING){ return; }
   //qDebug() << "Update Window Image:" << !paused;
   if(paused){ return; }
     QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
     if(!tmp.isNull()){
       winImage = tmp;
-    }//else{ qDebug() << "Got Null Image!!"; }
+    }else{ qDebug() << "Got Null Image!!"; }
   this->parentWidget()->update();
 }
 // ==============
@@ -218,7 +224,7 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
-  if(WIN==0){ QWidget::paintEvent(ev); return; }
+  if(WIN==0 || DISABLE_COMPOSITING){ QWidget::paintEvent(ev); return; }
   else if( winImage.isNull() ){ /*QTimer::singleShot(0, this, SLOT(repaintWindow()) );*/ return; }
   else if(paused){ return; }
   //else if(this->size()!=winSize){ QTimer::singleShot(0,this, SLOT(syncWinSize())); return; } //do not paint here - waiting to re-sync the sizes

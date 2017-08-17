@@ -72,8 +72,8 @@ int main(int argc, char ** argv)
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
-    unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
-    //setenv("QT_QPA_PLATFORMTHEME", "lthemeengine");
+    //unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
+    setenv("QT_QPA_PLATFORMTHEME", "lthemeengine", 1);
     unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //causes pixel-specific scaling issues with the desktop - turn this on after-the-fact for other apps
     //Startup the session
     LSession a(argc, argv);

@@ -22,7 +22,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   SETTINGS = LUtils::openSettings("lumina-desktop","lumina-mediaplayer",this);
   closing = false;
-  DISABLE_VIDEO = true; //add a toggle in the UI for this later
+  DISABLE_VIDEO = false; //add a toggle in the UI for this later
   //Any special UI changes
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -69,7 +69,7 @@ void MainUI::loadArguments(QStringList args){
 void MainUI::setupPlayer(){
   PLAYER = new QMediaPlayer(this); //base multimedia object
   VIDEO = new QVideoWidget(this); //output to this widget for video
-  PLAYLIST = new QMediaPlaylist(PLAYER); //pull from this playlist 
+  PLAYLIST = new QMediaPlaylist(PLAYER); //pull from this playlist
   ui->videoLayout->addWidget(VIDEO);
 
   //Now setup the interfaces between all these objects
@@ -262,13 +262,13 @@ void MainUI::closeApplication(){
     QTimer::singleShot(500, this, SLOT(close()) );
   }else{
     this->close();
-  } 
+  }
 }
 
 void MainUI::PlayerTypeChanged(bool active){
   if(!active){ return; } //this gets rid of the "extra" signals from the radio button functionality (1 signal from each button on change)
-  if(ui->radio_pandora->isChecked()){ 
-    ui->stackedWidget->setCurrentWidget(ui->page_pandora); 
+  if(ui->radio_pandora->isChecked()){
+    ui->stackedWidget->setCurrentWidget(ui->page_pandora);
     PandoraStateChanged(PANDORA->currentState());
     QIcon ico = LXDG::findIcon("pandora",":pandora");
     SYSTRAY->setIcon( ico );
@@ -276,7 +276,7 @@ void MainUI::PlayerTypeChanged(bool active){
     this->setWindowTitle( tr("Pandora Radio") );
     //Now hide/deactivate any toolbar buttons which are not used
     ui->actionBack->setVisible(!ui->radio_pandora->isChecked());
-  }else{ 
+  }else{
     ui->stackedWidget->setCurrentWidget(ui->page_local);
     LocalStateChanged(QMediaPlayer::StoppedState);
     QIcon ico = LXDG::findIcon("media-playlist-audio","audio-x-generic");

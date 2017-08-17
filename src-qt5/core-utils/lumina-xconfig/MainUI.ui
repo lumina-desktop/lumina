@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>321</height>
+    <width>560</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,50 +18,39 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QListWidget" name="list_screens">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QMdiArea" name="mdiArea">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="flow">
-         <enum>QListView::LeftToRight</enum>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::ListMode</enum>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>true</bool>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="selectionRectVisible">
-         <bool>true</bool>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QToolButton" name="tool_deactivate">
+          <property name="toolTip">
+           <string>Disable Current Screen</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string notr="true">...</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -71,22 +60,42 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>0</height>
+            <height>40</height>
            </size>
           </property>
          </spacer>
         </item>
         <item>
-         <widget class="QToolButton" name="tool_moveleft">
+         <widget class="QToolButton" name="tool_tileX">
           <property name="text">
-           <string>...</string>
+           <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="format-view-column"/>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="tool_moveright">
+         <widget class="QToolButton" name="tool_tileY">
           <property name="text">
-           <string>...</string>
+           <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="format-view-agenda"/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tool_tile">
+          <property name="toolTip">
+           <string>Tile Screens</string>
+          </property>
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="format-view-grid-small">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -97,7 +106,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_config">
        <attribute name="title">
@@ -142,47 +151,23 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="1">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="text">
+           <string>Rotation:</string>
           </property>
-         </spacer>
-        </item>
-        <item row="3" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tool_applyconfig">
-            <property name="text">
-             <string>Apply Settings</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </widget>
         </item>
         <item row="1" column="1">
+         <widget class="QComboBox" name="combo_rotation"/>
+        </item>
+        <item row="2" column="1">
          <widget class="QCheckBox" name="check_primary">
           <property name="text">
            <string>Primary Screen</string>
@@ -208,6 +193,13 @@
            <string>Available Screens</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="2">
+            <widget class="QPushButton" name="push_activate">
+             <property name="text">
+              <string>Enable Screen</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QComboBox" name="combo_availscreens">
              <property name="toolTip">
@@ -216,23 +208,9 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="combo_location">
+            <widget class="QComboBox" name="combo_resolutions">
              <property name="toolTip">
               <string>Location to insert the screen</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="combo_cscreens">
-             <property name="toolTip">
-              <string>Current screens</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="push_activate">
-             <property name="text">
-              <string>Enable Screen</string>
              </property>
             </widget>
            </item>
@@ -277,6 +255,33 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_applyconfig">
+        <property name="text">
+         <string>Apply</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_save">
+        <property name="toolTip">
+         <string>Save current settings as user defaults</string>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-save">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="push_close">
