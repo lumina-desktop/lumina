@@ -64,7 +64,7 @@
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="135"/>

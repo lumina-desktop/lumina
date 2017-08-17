@@ -289,7 +289,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation>Vaata või muuda süsteemi sätteid (heli, ekraani heledus, aku, virtuaalsed töölauad)</translation>
+        <translation>Vaata või muuda süsteemi sätteid (heli, ekraani heledus, aku, virtuaalsed töölauad).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -356,7 +356,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation>Alternatiivne Start menüü mis fokuseerub rakenduste käivitamisele </translation>
+        <translation>Alternatiivne Start menüü mis fokuseerub rakenduste käivitamisele.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -366,7 +366,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="95"/>
         <source>Simple line to provide visual separation between items.</source>
-        <translation>Lihtne joon et lihtsustada objektide visuaalset eristamist</translation>
+        <translation>Lihtne joon et lihtsustada objektide visuaalset eristamist.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="101"/>
@@ -551,7 +551,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="324"/>
         <source>Color to use for all visible text.</source>
-        <translation>Nähtava teksti värv</translation>
+        <translation>Nähtava teksti värv.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="329"/>
@@ -1244,9 +1244,9 @@
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
-        <source>&quot;Mod1&quot;:	Alt key
-&quot;Mod4&quot;: 	Windows/Mac key
-&quot;Control&quot;:	Ctrl key</source>
+        <source>"Mod1":	Alt key
+"Mod4": 	Windows/Mac key
+"Control":	Ctrl key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

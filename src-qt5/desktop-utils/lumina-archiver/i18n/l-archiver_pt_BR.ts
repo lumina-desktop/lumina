@@ -36,7 +36,7 @@
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="276"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../MainUI.cpp" line="54"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>

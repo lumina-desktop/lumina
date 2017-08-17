@@ -59,17 +59,17 @@
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>Patinka ši daina</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pavargau nuo šios dainos (nebus grojama mėnesį)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uždrausti šią dainą (daugiau nebebus grojama)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>
@@ -114,12 +114,12 @@
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>El. paštas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
-        <translation type="unfinished"></translation>
+        <translation>Kai aktyvi, užverti į sistemos dėklą</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="786"/>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti dainų pranešimus</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="813"/>
@@ -270,17 +270,17 @@
     <message>
         <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietiniai failai</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Groti vietinius failus</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Norėdami įjungti šį funkcionalumą, įdiekite "pianobar" paslaugų programą</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
@@ -305,12 +305,12 @@
     <message>
         <location filename="../mainUI.cpp" line="358"/>
         <source>Open Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti multimedijos failus</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="406"/>
         <source>Now Playing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabar grojama:</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="471"/>
@@ -346,12 +346,12 @@
     <message>
         <location filename="../mainUI.cpp" line="654"/>
         <source>Pandora Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora klausimas</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="659"/>
         <source>Pandora Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora klaida</translation>
     </message>
 </context>
 <context>

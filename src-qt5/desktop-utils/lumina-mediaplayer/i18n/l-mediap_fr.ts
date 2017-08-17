@@ -159,7 +159,7 @@
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Regarder</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
@@ -214,7 +214,7 @@
     <message>
         <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="781"/>
