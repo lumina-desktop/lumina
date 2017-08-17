@@ -109,6 +109,7 @@ private:
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
 	QTimer *screenTimer;
+	bool xchange; //flag for when the x11 session was adjusted
 
 	//Internal variable for global usage
 	AppMenu *appmenu;

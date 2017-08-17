@@ -34,6 +34,7 @@
 #include <QAnimationGroup>
 #include <QParallelAnimationGroup>
 #include <QSequentialAnimationGroup>
+#include <QGraphicsOpacityEffect>
 #include <QWindow>
 #include <QWidget>
 #include <QWidgetAction>
@@ -47,6 +48,8 @@
 #include <QThread>
 #include <QMediaObject>
 #include <QMediaPlayer>
+#include <QVideoWidget>
+#include <QMediaPlaylist>
 
 // libLumina includes
 #include <LuminaX11.h>

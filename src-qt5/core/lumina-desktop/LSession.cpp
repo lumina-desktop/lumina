@@ -49,6 +49,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   lastActiveWin = 0;
   cleansession = true;
   TrayStopping = false;
+  xchange = false;
   ICONS = new LIconCache(this);
   screenTimer = new QTimer(this);
     screenTimer->setSingleShot(true);
@@ -91,6 +92,7 @@ void LSession::setupSession(){
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
 
+  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
   BootSplash splash;
     splash.showScreen("init");
   qDebug() << "Initializing Session";
@@ -114,7 +116,6 @@ void LSession::setupSession(){
 				sessionsettings->value("InitLocale/LC_COLLATE","").toString(), \
 				sessionsettings->value("InitLocale/LC_CTYPE","").toString() );
   }
-  currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
 //use the system settings
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
@@ -191,7 +192,10 @@ void LSession::CleanupSession(){
   int vol = LOS::audioVolume();
   if(vol>=0){ sessionsettings->setValue("last_session_state/audio_volume", vol); }
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
-  if( playaudio ){ playAudioFile(LOS::LuminaShare()+"Logout.ogg"); }
+  if( playaudio ){
+      QString sfile = sessionsettings->value("audiofiles/logout", LOS::LuminaShare()+"Logout.ogg").toString();
+      playAudioFile(sfile);
+  }
   //Stop the background system tray (detaching/closing apps as necessary)
   stopSystemTray(!cleansession);
   //Now perform any other cleanup
@@ -296,7 +300,8 @@ void LSession::launchStartupApps(){
 
   //Now play the login music since we are finished
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-    LSession::playAudioFile(LOS::LuminaShare()+"Login.ogg");
+     QString sfile = sessionsettings->value("audiofiles/login", LOS::LuminaShare()+"Login.ogg").toString();
+     playAudioFile(sfile);
   }
   qDebug() << "[DESKTOP INIT FINISHED]";
 }
@@ -360,12 +365,14 @@ void LSession::screensChanged(){
   qDebug() << "Screen Number Changed";
   if(screenTimer->isActive()){ screenTimer->stop(); }
   screenTimer->start();
+  xchange = true;
 }
 
 void LSession::screenResized(int scrn){
   qDebug() << "Screen Resized:" << scrn;
   if(screenTimer->isActive()){ screenTimer->stop(); }
   screenTimer->start();
+  xchange = true;
 }
 
 void LSession::checkWindowGeoms(){
@@ -463,9 +470,10 @@ void LSession::updateDesktops(){
   }
   dset.setValue("last_used_screens", allNames);
   //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes in the middle of a session
-    if(numchange && !firstrun) {
+    if(!firstrun && xchange){
       qDebug() << "Update WM";
-      refreshWindowManager();
+      //QProcess::startDetached("killall fluxbox");
+      xchange = false;
     }
 
   //Make sure all the background windows are registered on the system as virtual roots
@@ -656,6 +664,7 @@ void LSession::playAudioFile(QString filepath){
 void LSession::RootSizeChange(){
   qDebug() << "Got Root Size Change";
   if(DESKTOPS.isEmpty()){ return; } //Initial setup not run yet
+  xchange = true;
   screenTimer->start();
 }
 

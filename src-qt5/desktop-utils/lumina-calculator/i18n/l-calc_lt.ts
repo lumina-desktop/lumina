@@ -52,7 +52,7 @@
     <message>
         <location filename="../mainUI.cpp" line="98"/>
         <source>Natural Log %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Natūralusis logaritmas %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="101"/>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrašyti skaičiuotuvo istoriją</translation>
     </message>
 </context>
 </TS>

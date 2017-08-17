@@ -254,12 +254,12 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimeix</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="64"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../MainUI.cpp" line="252"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimeix-ne el contingut</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="383"/>

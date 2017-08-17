@@ -151,6 +151,7 @@ void AppLauncherPlugin::loadButton(){
     tmp = this->contextMenu()->addAction( tr("Delete"), this, SLOT(fileDelete()) );
     ICONS->loadIcon(tmp, "document-close");
   }
+  iconLoaded(iconID); //make sure the emblem is layered on top
   //If the file is a symlink, put the overlay on the icon
   /*if(info.isSymLink()){
     QImage img = button->icon().pixmap(QSize(icosize,icosize)).toImage();
@@ -171,7 +172,7 @@ void AppLauncherPlugin::loadButton(){
        if(txt.contains("\n")){
         //need to check each line
 	QStringList txtL = txt.split("\n");
-	for(int i=0; i<txtL.length(); i++){ 
+	for(int i=0; i<txtL.length(); i++){
 	  if(( i+1<txtL.length()) && (button->fontMetrics().width(txtL[i]) < button->width()/2) ){
 	    txtL[i] = txtL[i]+" "+txtL[i+1];
 	    txtL.removeAt(i+1);
@@ -179,11 +180,11 @@ void AppLauncherPlugin::loadButton(){
 	}
 	txt = txtL.join("\n").section("\n",0,2);
       }
-            
+
       if(txt.contains("\n")){
         //need to check each line
 	QStringList txtL = txt.split("\n");
-	for(int i=0; i<txtL.length(); i++){ 
+	for(int i=0; i<txtL.length(); i++){
 	  if(i>1){ txtL.removeAt(i); i--; } //Only take the first two lines
 	  else{ txtL[i] = button->fontMetrics().elidedText(txtL[i], Qt::ElideRight, (button->width()-OUTMARGIN) );  }
 	}
@@ -200,7 +201,7 @@ void AppLauncherPlugin::loadButton(){
 
   QTimer::singleShot(100, this, SLOT(update()) ); //Make sure to re-draw the image in a moment
 }
-	
+
 void AppLauncherPlugin::buttonClicked(bool openwith){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path) ){
@@ -218,7 +219,7 @@ void AppLauncherPlugin::buttonClicked(bool openwith){
   }else{
     LSession::LaunchApplication("lumina-open \""+path+"\"");
   }
-	  
+
 }
 
 void AppLauncherPlugin::iconLoaded(QString ico){

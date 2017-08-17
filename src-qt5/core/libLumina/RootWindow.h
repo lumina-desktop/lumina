@@ -50,6 +50,7 @@ private:
 
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
+	RootSubWindow* windowForId(WId id);
 	void arrangeWindows(RootSubWindow *primary = 0, QString type = "");
 
 public slots:
@@ -61,8 +62,8 @@ public slots:
 	void CloseWindow(WId); //automatically connected for any new native window
 
 	//Window arrangement functions - defined in "RootWindow-mgmt.cpp"
-	void ArrangeWindows(WId *primary = 0, QString type = "");
-	void TileWindows(WId *primary = 0, QString type = "");
+	void ArrangeWindows(WId primary = 0, QString type = "");
+	void TileWindows(WId primary = 0, QString type = "");
 	void CheckWindowPosition(WId, bool newwindow = false); //used after a "drop" to validate/snap/re-arrange window(s) as needed
 
 private slots:

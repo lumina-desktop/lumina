@@ -19,7 +19,7 @@
     <message>
         <location filename="../TrayIcon.cpp" line="123"/>
         <source>Trigger Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Terminal triggern</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="125"/>

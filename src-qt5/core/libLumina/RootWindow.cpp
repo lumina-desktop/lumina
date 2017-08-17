@@ -100,6 +100,14 @@ void RootWindow::updateScreenPixmap(screeninfo *info){
   info->wallpaper = pix;
 }
 
+RootSubWindow* RootWindow::windowForId(WId id){
+  RootSubWindow *tmp = 0;
+  for(int i=0; i<WINDOWS.length() && tmp==0; i++){
+    if(WINDOWS[i]->id() == id){ tmp = WINDOWS[i]; }
+  }
+  return tmp;
+}
+
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
   if(DEBUG){ qDebug() << "Resize Root..."; }
@@ -202,6 +210,7 @@ void RootWindow::CloseWindow(WId win){
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
+  QWidget::paintEvent(ev);
   bool found = false;
   QPainter painter(this);
   QRect geom = ev->rect();
@@ -214,7 +223,7 @@ void RootWindow::paintEvent(QPaintEvent *ev){
     }
   }
   painter.end();
-  if(!found){
+  /*if(!found){
     QWidget::paintEvent(ev);
-  }
+  }*/
 }

@@ -296,7 +296,7 @@
     <message>
         <location filename="../MainUI.cpp" line="200"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="200"/>
