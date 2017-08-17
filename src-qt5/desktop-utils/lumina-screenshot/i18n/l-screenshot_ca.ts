@@ -189,12 +189,12 @@
     <message>
         <location filename="../MainUI.cpp" line="330"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Descarta</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="331"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>
