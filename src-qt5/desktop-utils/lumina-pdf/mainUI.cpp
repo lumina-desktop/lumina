@@ -261,8 +261,8 @@ void MainUI::slotPageLoaded(int page){
   if(finished == numPages){
     progAct->setVisible(false);
     QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
-    ui->actionStop_Presentation->setEnabled(true);
-    ui->menuStart_Presentation->setEnabled(false);
+    ui->actionStop_Presentation->setEnabled(false);
+    ui->menuStart_Presentation->setEnabled(true);
   }else{
     progress->setValue(finished);
   }
