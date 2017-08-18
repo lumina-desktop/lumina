@@ -409,6 +409,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 	 }
       }
     }
+
   }
   //qDebug() << " - Final Theme Color:" << themesettings[1];
 
@@ -419,7 +420,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     dir.mkpath(setdir);
   }
   //Now save the settings files
-  if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
+  if(setTheme){
+    LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
+    QSettings themeset("lthemeengine","lthemeengine");
+      themeset.setValue("Appearance/icon_theme",themesettings[2]);
+      //Quick hack for a "dark" theme/color to be uniform across the desktop/applications
+      if(themesettings[0].contains("DarkGlass") || themesettings[1].contains("Black")){
+        themeset.setValue("Appearance/custom_palette", true);
+        themeset.setValue("Appearance/color_scheme_path", LOS::LuminaShare().section("/",0,-3)+"/lthemeengine/colors/darker.conf");
+      }
+  }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
 
