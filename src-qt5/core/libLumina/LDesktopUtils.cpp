@@ -337,6 +337,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LDesktopUtils::removeFavorite(val); }
   }
 
+  tmp = sysDefaults.filter("desktoplinks_");
+  QString desktopFolder = QDir::homePath()+"/Desktop/"; //need to make this translatable and dynamic later
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
+    if(var=="desktoplinks_add" && QFile::exists(val) && !QFile::exists(desktopFolder+val.section("/",-1)) ){ QFile::link(val, desktopFolder+val.section("/",-1)); }
+  }
+
   // -- QUICKLAUNCH --
   tmp = sysDefaults.filter("quicklaunch_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("quicklaunch."); }
