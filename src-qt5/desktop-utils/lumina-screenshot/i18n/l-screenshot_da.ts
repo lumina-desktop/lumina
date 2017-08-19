@@ -184,17 +184,17 @@
     <message>
         <location filename="../MainUI.cpp" line="329"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="330"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Forkast</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="331"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>
