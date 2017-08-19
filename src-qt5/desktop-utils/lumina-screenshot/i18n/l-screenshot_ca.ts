@@ -34,7 +34,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>Resize</source>
-        <translation>Canvia&apos;n la mida</translation>
+        <translation>Canvia'n la mida</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation>Selecciona l&apos;àrea</translation>
+        <translation>Selecciona l'àrea</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
-        <translation>Tanca l&apos;aplicació</translation>
+        <translation>Tanca l'aplicació</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="562"/>
@@ -159,12 +159,12 @@
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
-        <translation>No s&apos;ha pogut desar la captura</translation>
+        <translation>No s'ha pogut desar la captura</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation>No s&apos;ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre</translation>
+        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="120"/>
@@ -179,22 +179,22 @@
     <message>
         <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation>La captura actual encara no s&apos;ha desat. Voleu desar o descartar els canvis?</translation>
+        <translation>La captura actual encara no s'ha desat. Voleu desar o descartar els canvis?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="329"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Desa</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="330"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Descarta</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="331"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>

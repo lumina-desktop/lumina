@@ -26,7 +26,7 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
   if(args.isEmpty()){
     proc.start(cmd, QIODevice::ReadOnly);
   }else{
-    proc.start(cmd,args ,QIODevice::ReadOnly);	  
+    proc.start(cmd,args ,QIODevice::ReadOnly);
   }
   QString info;
   while(!proc.waitForFinished(1000)){
@@ -37,7 +37,7 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
   }
   out[0] = QString::number(proc.exitCode());
   out[1] = info+QString(proc.readAllStandardOutput());
-  return out;	
+  return out;
 }
 //=============
 //  LUtils Functions
@@ -59,7 +59,6 @@ int LUtils::runCmd(QString cmd, QStringList args){
   return ret;*/
   QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
   return future.result()[0].toInt(); //turn it back into an integer return code
-	
 }
 
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
@@ -72,7 +71,7 @@ QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   if(args.isEmpty()){
     proc.start(cmd);
   }else{
-    proc.start(cmd,args);	  
+    proc.start(cmd,args);
   }
   //if(!proc.waitForStarted(30000)){ return QStringList(); } //process never started - max wait of 30 seconds
   while(!proc.waitForFinished(300)){
@@ -118,7 +117,7 @@ bool LUtils::isValidBinary(QString& bin){
     //Relative path: search for it on the current "PATH" settings
     QStringList paths = QString(qgetenv("PATH")).split(":");
     for(int i=0; i<paths.length(); i++){
-      if(QFile::exists(paths[i]+"/"+bin)){ bin = paths[i]+"/"+bin; break;}	    
+      if(QFile::exists(paths[i]+"/"+bin)){ bin = paths[i]+"/"+bin; break;}
     }
   }
   //bin should be the full path by now
@@ -150,7 +149,7 @@ QSettings* LUtils::openSettings(QString org, QString name, QObject *parent){
   }else{
     return (new QSettings(filepath, QSettings::IniFormat, parent));
   }
-  
+
 }
 
 QStringList LUtils::systemApplicationDirs(){
@@ -164,7 +163,7 @@ QStringList LUtils::systemApplicationDirs(){
   for(int i=0; i<appDirs.length(); i++){
     if( QFile::exists(appDirs[i]+"/applications") ){
       out << appDirs[i]+"/applications";
-      //Also check any subdirs within this directory 
+      //Also check any subdirs within this directory
       // (looking at you KDE - stick to the standards!!)
       out << LUtils::listSubDirectories(appDirs[i]+"/applications");
     }
@@ -197,7 +196,7 @@ QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){
   }else if(term=="konsole" || term == "qterminal"){
     exec = term+" --workdir \""+dirpath+"\"";
   }else{
-    //-e is the parameter for most of the terminal appliction to execute an external command. 
+    //-e is the parameter for most of the terminal appliction to execute an external command.
     //In this case we start a shell in the selected directory
       //Need the user's shell first
       QString shell = QString(getenv("SHELL"));
@@ -258,7 +257,7 @@ QStringList LUtils::imageExtensions(bool wildcards){
   static QStringList imgExtensions;
   if(imgExtensions.isEmpty()){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
-    for(int i=0; i<fmt.length(); i++){ 
+    for(int i=0; i<fmt.length(); i++){
       if(wildcards){ imgExtensions << "*."+QString::fromLocal8Bit(fmt[i]);  }
       else{ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
     }
@@ -308,7 +307,7 @@ QStringList LUtils::imageExtensions(bool wildcards){
       qDebug() << "Loading System Encoding:" << langEnc;
     }
     //Load current encoding for this locale
-    QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) ); 
+    QTextCodec::setCodecForLocale( QTextCodec::codecForName(langEnc.toUtf8()) );
     return cTrans;
 }
 
@@ -379,7 +378,7 @@ void LUtils::setLocaleEnv(QString lang, QString msg, QString time, QString num,Q
   else{
     if(!ctype.contains(".")){ ctype.append(".UTF-8"); }
     setenv("LC_CTYPE",ctype.toUtf8(),1);
-  }	
+  }
 }
 
 QString LUtils::currentLocale(){

@@ -337,6 +337,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LDesktopUtils::removeFavorite(val); }
   }
 
+  tmp = sysDefaults.filter("desktoplinks_");
+  QString desktopFolder = QDir::homePath()+"/Desktop/"; //need to make this translatable and dynamic later
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
+    if(var=="desktoplinks_add" && QFile::exists(val) && !QFile::exists(desktopFolder+val.section("/",-1)) ){ QFile::link(val, desktopFolder+val.section("/",-1)); }
+  }
+
   // -- QUICKLAUNCH --
   tmp = sysDefaults.filter("quicklaunch_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("quicklaunch."); }
@@ -409,6 +419,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 	 }
       }
     }
+
   }
   //qDebug() << " - Final Theme Color:" << themesettings[1];
 
@@ -419,7 +430,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     dir.mkpath(setdir);
   }
   //Now save the settings files
-  if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
+  if(setTheme){
+    LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
+    QSettings themeset("lthemeengine","lthemeengine");
+      themeset.setValue("Appearance/icon_theme",themesettings[2]);
+      //Quick hack for a "dark" theme/color to be uniform across the desktop/applications
+      if(themesettings[0].contains("DarkGlass") || themesettings[1].contains("Black")){
+        themeset.setValue("Appearance/custom_palette", true);
+        themeset.setValue("Appearance/color_scheme_path", LOS::LuminaShare().section("/",0,-3)+"/lthemeengine/colors/darker.conf");
+      }
+  }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
 
