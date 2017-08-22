@@ -91,6 +91,7 @@ QList<ScreenInfo> RRSettings::PreviousSettings(QString profile){
   QStringList avail;
   for(int i=0; i<screens.length(); i++){
     if(devs.contains(screens[i].ID) && screens[i].isavailable){ //only load settings for monitors which are currently attached
+      avail << screens[i].ID; //currently available
       set.beginGroup(screens[i].ID);
         screens[i].geom = set.value("geometry", QRect()).toRect();
         screens[i].isprimary = set.value("isprimary", false).toBool();
@@ -114,7 +115,7 @@ QList<ScreenInfo> RRSettings::PreviousSettings(QString profile){
       QStringList filter = avail.filter(priority[i]);
       if(!filter.isEmpty()){ filter.sort(); primary = filter.first(); }
     }
-    if(primary.isEmpty()){ primary = avail.first(); }
+    if(primary.isEmpty() && !avail.isEmpty()){ primary = avail.first(); }
   }
   //Ensure only one monitor is primary, and reset a few flags
   for(int i=0; i<screens.length(); i++){
