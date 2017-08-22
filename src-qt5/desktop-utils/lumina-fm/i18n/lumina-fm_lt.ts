@@ -346,8 +346,8 @@
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>Sistemoje nepavyko rasti &quot;lumina-fileinfo&quot; paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
+        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
+        <translation>Sistemoje nepavyko rasti "lumina-fileinfo" paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="542"/>
@@ -420,17 +420,17 @@
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Visiems taip</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Visiems ne</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -591,8 +591,8 @@ Nauja vieta: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation>Spustelėkite &quot;Kitas&quot;, kad pradėtumėte saugyklos atsisiuntimą</translation>
+        <source>Click "Next" to start downloading the repository</source>
+        <translation>Spustelėkite "Kitas", kad pradėtumėte saugyklos atsisiuntimą</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>

@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
-        <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
+        <source>Don't expect to build up the weak by pulling down the strong.</source>
         <translation>Forvent ikke at opbygge det svage ved at nedrive det stærke.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
-        <source>You can&apos;t know too much, but you can say too much.</source>
+        <source>You can't know too much, but you can say too much.</source>
         <translation>Du kan ikke vide for meget, men du kan sige for meget.</translation>
     </message>
     <message>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
-        <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
+        <source>Only two things are infinite, the universe and human stupidity, and I'm not sure about the former.</source>
         <translation>Kun to ting er uendelige, universet og menneskelig dumhed, og jeg er ikke sikker på det første.</translation>
     </message>
     <message>
@@ -360,8 +360,8 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
-        <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation>Gør eller lad være. Der er ikke noget &quot;prøv&quot;.</translation>
+        <source>Do, or do not. There is no 'try'.</source>
+        <translation>Gør eller lad være. Der er ikke noget "prøv".</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
-        <source>It&apos;s kind of fun to do the impossible.</source>
+        <source>It's kind of fun to do the impossible.</source>
         <translation>Det er egentligt sjovt at gøre det umulige.</translation>
     </message>
     <message>
@@ -1461,17 +1461,17 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nej</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
@@ -1547,12 +1547,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="58"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="59"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nej</translation>
     </message>
 </context>
 <context>

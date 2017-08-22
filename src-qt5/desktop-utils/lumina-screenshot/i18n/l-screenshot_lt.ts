@@ -184,17 +184,17 @@
     <message>
         <location filename="../MainUI.cpp" line="329"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrašyti</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="330"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmesti</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="331"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="543"/>
