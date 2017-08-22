@@ -11,46 +11,11 @@
 
 //Reset current screen config to match previously-saved settings
 void RRSettings::ApplyPrevious(){
+  QList<ScreenInfo> screens;
   QSettings set("lumina-desktop","lumina-xconfig");
-  set.beginGroup("MonitorSettings");
-  //Setup a couple lists
-  QStringList devs = set.childGroups(); //known/saved devices
-  QList<ScreenInfo> screens = RRSettings::CurrentScreens();
-  QStringList lastactive = set.value("lastActive",QStringList()).toStringList();
-  //Now go through all the saved settings and put that info into the array
-  QString primary;
-  QStringList avail;
-  for(int i=0; i<screens.length(); i++){
-    if(devs.contains(screens[i].ID) && screens[i].isavailable){ //only load settings for monitors which are currently attached
-      set.beginGroup(screens[i].ID);
-        screens[i].geom = set.value("geometry", QRect()).toRect();
-        screens[i].isprimary = set.value("isprimary", false).toBool();
-        if(screens[i].isprimary){ primary = screens[i].ID; }
-        screens[i].applyChange = (screens[i].isactive && !lastactive.contains(screens[i].ID) ? 1 : 0); //disable/ignore
-        screens[i].rotation = set.value("rotation",0).toInt();
-      set.endGroup();
-    }else if(screens[i].isactive){
-      screens[i].applyChange = 1; //disable monitor - not enabled in the default settings
-    }
-  }
-
-  //Quick checks for simple systems - just use current X config as-is
-  if(devs.isEmpty() && (avail.filter("LVDS").isEmpty() || screens.length()==1) ){ return; }
-
-  //Typical ID's: LVDS-[], DVI-I-[], DP-[], HDMI-[], VGA-[]
-  //"LVDS" or "eDP" is the built-in laptop display normally
-  if(primary.isEmpty()){
-    QStringList priority; priority << "LVDS" << "eDP" << "DP" << "HDMI" << "DVI" << "VGA";
-    for(int i=0; i<priority.length() && primary.isEmpty(); i++){
-      QStringList filter = avail.filter(priority[i]);
-      if(!filter.isEmpty()){ filter.sort(); primary = filter.first(); }
-    }
-    if(primary.isEmpty()){ primary = avail.first(); }
-  }
-  //Ensure only one monitor is primary, and reset a few flags
-  for(int i=0; i<screens.length(); i++){
-    if(screens[i].ID!=primary){ screens[i].isprimary = false; }
-  }
+  QString profile = set.value("default_profile","").toString();
+  if(profile.isEmpty() || !savedProfiles().contains(profile) ){ screens = PreviousSettings(); }
+  else{ screens = PreviousSettings(profile); }
   //Now reset the display with xrandr
   RRSettings::Apply(screens);
 }
@@ -113,10 +78,71 @@ QList<ScreenInfo> RRSettings::CurrentScreens(){
   return SCREENS;
 }
 
-//Save the screen config for later
-bool RRSettings::SaveScreens(QList<ScreenInfo> screens){
+QList<ScreenInfo> RRSettings::PreviousSettings(QString profile){
   QSettings set("lumina-desktop","lumina-xconfig");
-  set.beginGroup("MonitorSettings");
+  if(profile.isEmpty()){ set.beginGroup("MonitorSettings"); }
+  else{ set.beginGroup("MonitorProfiles/"+profile); }
+  //Setup a couple lists
+  QStringList devs = set.childGroups(); //known/saved devices
+  QList<ScreenInfo> screens = RRSettings::CurrentScreens();
+  QStringList lastactive = set.value("lastActive",QStringList()).toStringList();
+  //Now go through all the saved settings and put that info into the array
+  QString primary;
+  QStringList avail;
+  for(int i=0; i<screens.length(); i++){
+    if(devs.contains(screens[i].ID) && screens[i].isavailable){ //only load settings for monitors which are currently attached
+      set.beginGroup(screens[i].ID);
+        screens[i].geom = set.value("geometry", QRect()).toRect();
+        screens[i].isprimary = set.value("isprimary", false).toBool();
+        if(screens[i].isprimary){ primary = screens[i].ID; }
+        screens[i].applyChange = (screens[i].isactive && !lastactive.contains(screens[i].ID) ? 1 : 0); //disable/ignore
+        screens[i].rotation = set.value("rotation",0).toInt();
+      set.endGroup();
+    }else if(screens[i].isactive){
+      screens[i].applyChange = 1; //disable monitor - not enabled in the default settings
+    }
+  }
+
+  //Quick checks for simple systems - just use current X config as-is
+  if(devs.isEmpty() && (avail.filter("LVDS").isEmpty() || screens.length()==1) ){ return screens; }
+
+  //Typical ID's: LVDS-[], DVI-I-[], DP-[], HDMI-[], VGA-[]
+  //"LVDS" or "eDP" is the built-in laptop display normally
+  if(primary.isEmpty()){
+    QStringList priority; priority << "LVDS" << "eDP" << "DP" << "HDMI" << "DVI" << "VGA";
+    for(int i=0; i<priority.length() && primary.isEmpty(); i++){
+      QStringList filter = avail.filter(priority[i]);
+      if(!filter.isEmpty()){ filter.sort(); primary = filter.first(); }
+    }
+    if(primary.isEmpty()){ primary = avail.first(); }
+  }
+  //Ensure only one monitor is primary, and reset a few flags
+  for(int i=0; i<screens.length(); i++){
+    if(screens[i].ID!=primary){ screens[i].isprimary = false; }
+  }
+  return screens;
+}
+
+QStringList RRSettings::savedProfiles(){
+  QSettings set("lumina-desktop","lumina-xconfig");
+  set.beginGroup("MonitorProfiles");
+  return set.childGroups();
+}
+
+void RRSettings::removeProfile(QString profile){
+  QSettings set("lumina-desktop","lumina-xconfig");
+  set.beginGroup("MonitorProfiles");
+  QStringList known = set.childGroups();
+  if(known.contains(profile) && !profile.isEmpty()){
+    set.remove(profile);
+  }
+}
+
+//Save the screen config for later
+bool RRSettings::SaveScreens(QList<ScreenInfo> screens, QString profile){
+  QSettings set("lumina-desktop","lumina-xconfig");
+  if(profile.isEmpty()){ set.beginGroup("MonitorSettings"); }
+  else{ set.beginGroup("MonitorProfiles/"+profile); }
   //Setup a couple lists
   QStringList olddevs = set.childGroups();
   QStringList active;

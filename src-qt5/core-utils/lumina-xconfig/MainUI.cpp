@@ -11,6 +11,8 @@
 #include <LUtils.h>
 
 #include <QTimer>
+#include <QInputDialog>
+#include <QLineEdit>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -28,6 +30,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     singleTileMenu->addAction(tr("Align Horizontal then Vertical"))->setWhatsThis("XY");
     singleTileMenu->addAction(tr("Align Vertical then Horizontal"))->setWhatsThis("YX");
   ui->mdiArea->setContextMenuPolicy(Qt::CustomContextMenu);
+
+  profilesMenu = new QMenu(this);
+    ui->tool_save->setMenu(profilesMenu);
+
   connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu()) );
 
   connect(singleTileMenu, SIGNAL(triggered(QAction*)), this, SLOT(tileSingleScreen(QAction*)) );
@@ -43,6 +49,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_tileY, SIGNAL(clicked()), this, SLOT(tileScreensY()) );
   connect(ui->tool_tile, SIGNAL(clicked()), this, SLOT(tileScreens()) );
   connect(ui->combo_availscreens, SIGNAL(currentIndexChanged(int)), this, SLOT(updateNewScreenResolutions()) );
+
+  connect(ui->tool_profile_load, SIGNAL(clicked()), this, SLOT(loadProfile()) );
+  connect(ui->tool_profile_remove, SIGNAL(clicked()), this, SLOT(removeProfile()) );
+  connect(profilesMenu, SIGNAL(triggered(QAction*)), this, SLOT(saveAsProfile(QAction*)) );
+
+  updateProfiles();
   QTimer::singleShot(0, this, SLOT(UpdateScreens()) );
 }
 
@@ -126,9 +138,11 @@ void MainUI::SyncBackend(){
   }
 }
 
-void MainUI::UpdateScreens(){
+void MainUI::UpdateScreens(QString profile){
   //First probe the server for current screens
-  SCREENS = RRSettings::CurrentScreens();
+  if(profile.isEmpty()){ SCREENS = RRSettings::CurrentScreens(); }
+  else{ SCREENS = RRSettings::PreviousSettings(profile); }
+
   //Determine the scale factor for putting these into the UI
   QRegion tot;
   for(int i=0; i<SCREENS.length(); i++){
@@ -396,4 +410,48 @@ void MainUI::SaveSettings(){
 
 void MainUI::RestartFluxbox(){
   QProcess::startDetached("killall fluxbox");
+}
+
+void MainUI::removeProfile(){
+  QString cur = ui->combo_profiles->currentText();
+  RRSettings::removeProfile(cur);
+  updateProfiles();
+}
+
+void MainUI::updateProfiles(){
+  QStringList profiles = RRSettings::savedProfiles();
+  ui->combo_profiles->clear();
+  profiles.sort();
+  ui->combo_profiles->addItems(profiles);
+  //Update the profiles menu as needed
+  profilesMenu->clear();
+  for(int i=0; i<profiles.length(); i++){
+    profilesMenu->addAction(profiles[i])->setWhatsThis(profiles[i]);
+  }
+  if(!profiles.isEmpty()){ profilesMenu->addSeparator(); }
+  profilesMenu->addAction(tr("New Profile") );
+
+  //Now update the tab as needed
+  ui->tabWidget->setTabEnabled(2,!profiles.isEmpty());
+  if(ui->tabWidget->currentIndex()==2){ ui->tabWidget->setCurrentIndex(0); }
+}
+
+void MainUI::loadProfile(){
+  QString cur = ui->combo_profiles->currentText();
+  UpdateScreens(cur);
+}
+
+void MainUI::saveAsProfile(QAction *act){
+  QString profile = act->whatsThis();
+  if(profile.isEmpty()){
+    //Need to prompt for a profile name
+    QStringList known = RRSettings::savedProfiles();
+    while(known.contains(profile) || profile.isEmpty()){
+      bool ok = false;
+      profile = QInputDialog::getText(this, tr("Create Screen Profile"), profile.isEmpty() ? tr("Profile Name") : tr("Profile exists - different name:"), QLineEdit::Normal, profile, &ok);
+      if(!ok || profile.isEmpty()){ return; } //cancelled
+    }
+  }
+  RRSettings::SaveScreens(SCREENS, profile);
+  updateProfiles();
 }
