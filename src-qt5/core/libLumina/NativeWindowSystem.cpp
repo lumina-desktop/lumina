@@ -480,24 +480,24 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
   }
   if(props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
     xcb_configure_window_value_list_t  valList;
-    valList.x = 0; //Note that this is the relative position - should always be 0,0 relative to the embed widget
-    valList.y = 0;
+    //valList.x = 0; //Note that this is the relative position - should always be 0,0 relative to the embed widget
+    //valList.y = 0;
     QSize sz = win->property(NativeWindow::Size).toSize();
     if(props.contains(NativeWindow::Size)){
       sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
     }
     valList.width = sz.width();
     valList.height = sz.height();
-    /*if(props.contains(NativeWindow::GlobalPos)){
+    if(props.contains(NativeWindow::GlobalPos)){
       QPoint pt = vals[ props.indexOf(NativeWindow::GlobalPos) ] .toPoint();
       valList.x = pt.x();
       valList.y = pt.y();
     }else{
       valList.x = win->property(NativeWindow::GlobalPos).toPoint().x();
       valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
-    }*/
+    }
     uint16_t mask = 0;
-    mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;// | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
     qDebug() << "Configure window Geometry:" << sz;
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
