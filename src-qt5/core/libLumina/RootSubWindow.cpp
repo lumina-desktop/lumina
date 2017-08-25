@@ -294,7 +294,7 @@ void RootSubWindow::toggleSticky(){
 }
 
 void RootSubWindow::activate(){
-  WIN->requestProperty(NativeWindow::Active, true);
+  WIN->requestProperty(NativeWindow::Active, true, true);
 }
 
 //Mouse Interactivity
@@ -394,6 +394,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   activate();
   this->raise();
+  WinWidget->raiseWindow();
   //qDebug() << "Frame Mouse Press Event";
   offset.setX(0); offset.setY(0);
   if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
@@ -414,7 +415,7 @@ void RootSubWindow::mousePressEvent(QMouseEvent *ev){
 }
 
 void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
-  activate(); //make sure this window is "Active"
+  //activate(); //make sure this window is "Active" on mouse over
   if(activeState == Normal){
     setMouseCursor( getStateAtPoint(ev->pos()) ); //just update the mouse cursor
   }else{
@@ -508,7 +509,7 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
-  if(QFrame::mouseGrabber() == this){ this->releaseMouse(); }
+  if(QFrame::mouseGrabber() == this){ this->releaseMouse(); activate(); }
 }
 
 void RootSubWindow::leaveEvent(QEvent *ev){

@@ -18,11 +18,9 @@
 
 #define DISABLE_COMPOSITING false
 
-#define NORMAL_WIN_EVENT_MASK ()
-
-
 inline void registerClientEvents(WId id){
-  uint32_t value_list[1] = {XCB_EVENT_MASK_BUTTON_PRESS
+  uint32_t value_list[1] = {XCB_EVENT_MASK_PROPERTY_CHANGE
+			| XCB_EVENT_MASK_BUTTON_PRESS
 			| XCB_EVENT_MASK_BUTTON_RELEASE
  			| XCB_EVENT_MASK_POINTER_MOTION
 			| XCB_EVENT_MASK_BUTTON_MOTION
@@ -31,7 +29,7 @@ inline void registerClientEvents(WId id){
 			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_ENTER_WINDOW
-			| XCB_EVENT_MASK_PROPERTY_CHANGE};
+			};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
 }
 
@@ -147,6 +145,11 @@ bool NativeEmbedWidget::isEmbedded(){
   return (WIN!=0);
 }
 
+void NativeEmbedWidget::raiseWindow(){
+  uint32_t val = XCB_STACK_MODE_ABOVE;
+  xcb_configure_window(QX11Info::connection(),  WIN->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);
+}
+
 // ==============
 //   PUBLIC SLOTS
 // ==============
@@ -208,6 +211,11 @@ void NativeEmbedWidget::repaintWindow(){
     }else{ qDebug() << "Got Null Image!!"; }
   this->parentWidget()->update();
 }
+
+void NativeEmbedWidget::reregisterEvents(){
+  if(WIN!=0){ registerClientEvents(WIN->id()); }
+}
+
 // ==============
 //      PROTECTED
 // ==============
@@ -236,7 +244,7 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   //else if(this->size() != winImage.size()){ QTimer::singleShot(0, this, SLOT(repaintWindow()) ); return; }
   //Need to paint the image from the window onto the widget as an overlay
   QRect geom = ev->rect(); //atomic updates
-  geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
+  //geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
   geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
     if( !QRect(QPoint(0,0),winImage.size()).contains(geom) ){ QTimer::singleShot(0,this, SLOT(repaintWindow()) );return; }
     QPainter P(this);
@@ -255,4 +263,14 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
   //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
 
+}
+
+bool NativeEmbedWidget::nativeEvent(const QByteArray &eventType, void *message, long *result){
+  /*if(eventType=="xcb_generic_event_t" && WIN!=0){
+    //Convert to known event type (for X11 systems)
+    xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
+    //Now forward this event on to the embedded window
+    xcb_send_event(QX11Info::connection(), true, WIN->id(), EVENT_MASK, ev);
+  }*/
+  return false;
 }

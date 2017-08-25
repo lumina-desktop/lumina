@@ -45,7 +45,6 @@
 #define ROOT_WIN_EVENT_MASK (XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |  \
                          XCB_EVENT_MASK_BUTTON_PRESS | 	\
                          XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
-			 XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                          XCB_EVENT_MASK_POINTER_MOTION | 	\
                          XCB_EVENT_MASK_PROPERTY_CHANGE | 	\
@@ -60,8 +59,9 @@
 			XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
 			XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
 			XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
-			XCB_EVENT_MASK_ENTER_WINDOW| \
-			XCB_EVENT_MASK_PROPERTY_CHANGE)
+			XCB_EVENT_MASK_ENTER_WINDOW | \
+			XCB_EVENT_MASK_PROPERTY_CHANGE | \
+			XCB_EVENT_MASK_FOCUS_CHANGE)
 
 inline void registerClientEvents(WId id){
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
@@ -524,10 +524,20 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
   if(props.contains(NativeWindow::Active)){
     //Only one window can be "Active" at a time - so only do anything if this window wants to be active
     if(vals[props.indexOf(NativeWindow::Active)].toBool() ){
-      xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), (win->frameId()==0 ?win->id() : win->frameId()));
+      //Lower the currently active window (invisible window) to the bottom of the stack
+      xcb_window_t cactive;
+      if( 1 == xcb_ewmh_get_active_window_reply( &obj->EWMH,
+		 xcb_ewmh_get_active_window_unchecked(&obj->EWMH, QX11Info::appScreen()),
+		&cactive, NULL) ){
+          uint32_t val = XCB_STACK_MODE_BELOW;
+          xcb_configure_window(QX11Info::connection(),  cactive, XCB_CONFIG_WINDOW_STACK_MODE, &val);
+      }
+
+      xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win->id() );
       //Also send the active window a message to take input focus
+      xcb_set_input_focus(QX11Info::connection(), XCB_INPUT_FOCUS_PARENT, win->id(), XCB_CURRENT_TIME);
       //Send the window a WM_TAKE_FOCUS message
-        xcb_client_message_event_t event;
+/*        xcb_client_message_event_t event;
         event.response_type = XCB_CLIENT_MESSAGE;
         event.format = 32;
         event.window = win->id();
@@ -540,6 +550,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
 
         xcb_send_event(QX11Info::connection(), 0, win->id(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
         xcb_flush(QX11Info::connection());
+*/
     }
   }
 
@@ -625,7 +636,7 @@ void NativeWindowSystem::setRoot_desktopWorkarea(QList<QRect> list){
 }
 
 void NativeWindowSystem::setRoot_activeWindow(WId win){
-  xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win);
+  /*xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win);
   //Also send the active window a message to take input focus
   //Send the window a WM_TAKE_FOCUS message
     xcb_client_message_event_t event;
@@ -640,7 +651,7 @@ void NativeWindowSystem::setRoot_activeWindow(WId win){
     event.data.data32[4] = 0;
 
     xcb_send_event(QX11Info::connection(), 0, win,  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-    xcb_flush(QX11Info::connection());
+    xcb_flush(QX11Info::connection());*/
 }
 
 int NativeWindowSystem::currentWorkspace(){
