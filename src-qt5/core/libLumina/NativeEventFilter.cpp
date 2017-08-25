@@ -65,7 +65,7 @@ static xcb_ewmh_connection_t EWMH;
 static xcb_atom_t _NET_SYSTEM_TRAY_OPCODE = 0;
 
 inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilter *obj){
-  qDebug() << "Got Property Event:" << ev->window << ev->atom;
+  //qDebug() << "Got Property Event:" << ev->window << ev->atom;
   NativeWindow::Property prop = NativeWindow::None;
   //Now determine which properties are getting changed, and update the native window as appropriate
   if(ev->atom == EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
@@ -76,8 +76,8 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
-    //if(DEBUG){ 
-      qDebug() << "Detected Property Change:" << ev->window << prop; 
+    //if(DEBUG){
+      qDebug() << "Detected Property Change:" << ev->window << prop;
     //}
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{

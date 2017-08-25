@@ -16,22 +16,22 @@
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
-#define DISABLE_COMPOSITING true
+#define DISABLE_COMPOSITING false
 
-#define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
-			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
- 			XCB_EVENT_MASK_POINTER_MOTION |	\
-			XCB_EVENT_MASK_BUTTON_MOTION |	\
-			XCB_EVENT_MASK_EXPOSURE |		\
-			XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
-			XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
-			XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
-			XCB_EVENT_MASK_ENTER_WINDOW| \
-			XCB_EVENT_MASK_PROPERTY_CHANGE)
+#define NORMAL_WIN_EVENT_MASK ()
 
 
 inline void registerClientEvents(WId id){
-  uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
+  uint32_t value_list[1] = {XCB_EVENT_MASK_BUTTON_PRESS
+			| XCB_EVENT_MASK_BUTTON_RELEASE
+ 			| XCB_EVENT_MASK_POINTER_MOTION
+			| XCB_EVENT_MASK_BUTTON_MOTION
+			| XCB_EVENT_MASK_EXPOSURE
+			| XCB_EVENT_MASK_STRUCTURE_NOTIFY
+			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
+			| XCB_EVENT_MASK_ENTER_WINDOW
+			| XCB_EVENT_MASK_PROPERTY_CHANGE};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
 }
 
@@ -40,12 +40,13 @@ inline void registerClientEvents(WId id){
 // ============
 //Simplification functions for the XCB/XLib interactions
 void NativeEmbedWidget::syncWinSize(QSize sz){
-  if(WIN==0 ){ return; }
+  if(WIN==0 || paused){ return; }
   else if(!sz.isValid()){ sz = this->size(); } //use the current widget size
   //qDebug() << "Sync Window Size:" << sz;
-  if(sz == winSize){ return; } //no change
-    const uint32_t valList[2] = {(uint32_t) sz.width(), (uint32_t) sz.height()};
-    const uint32_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+  //if(sz == winSize){ return; } //no change
+  QPoint pt= this->mapToGlobal(QPoint(0,0));
+    const uint32_t valList[4] = {(uint32_t) pt.x(), (uint32_t) pt.y(), (uint32_t) sz.width(), (uint32_t) sz.height()};
+    const uint32_t mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
   winSize = sz; //save this for checking later
 }
@@ -95,8 +96,8 @@ NativeEmbedWidget::NativeEmbedWidget(QWidget *parent) : QWidget(parent){
 
 bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   WIN = window;
-  //PIXBACK = xcb_generate_id(QX11Info::connection());
-  xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
+  //xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
+
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
   /*xcb_client_message_event_t event;
@@ -131,8 +132,8 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
 
   registerClientEvents(WIN->id());
-  registerClientEvents(this->winId());
-  qDebug() << "Events Registered:" << WIN->id() << this->winId();
+  //registerClientEvents(this->winId());
+  //qDebug() << "Events Registered:" << WIN->id() << this->winId();
   return true;
 }
 
@@ -157,15 +158,16 @@ void NativeEmbedWidget::pause(){
 
 void NativeEmbedWidget::resume(){
   paused = false;
-  //syncWinSize();
+  syncWinSize();
   //showWindow();
   repaintWindow(); //update the cached image right away
 }
 
 void NativeEmbedWidget::resyncWindow(){
    if(WIN==0){ return; }
-  /*return; //skip the stuff below (not working)
-  QRect geom = WIN->geometry();
+
+  // Attempt 1 : spec says to send an artificial configure event to the window
+  /*QRect geom = WIN->geometry();
   //Send an artificial configureNotify event to the window with the global position/size included
   xcb_configure_notify_event_t event;
     event.x = geom.x() + this->pos().x();
@@ -180,15 +182,18 @@ void NativeEmbedWidget::resyncWindow(){
     event.response_type = XCB_CONFIGURE_NOTIFY;
   xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (const char *) &event);
   */
-  //Just jitter the window size by 1 pixel really quick so the window knows to update it's geometry
-  QSize sz = this->size();
+
+  // Attempt 2 : Just jitter the window size by 1 pixel really quick so the window knows to update it's geometry
+  /*QSize sz = this->size();
   uint32_t valList[2] = {(uint32_t) sz.width()-1, (uint32_t) sz.height()};
     uint32_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
     xcb_flush(QX11Info::connection());
   valList[0] = (uint32_t) sz.width();
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
-    xcb_flush(QX11Info::connection());
+    xcb_flush(QX11Info::connection());*/
+
+  //Make sure the window size is syncronized and visual up to date
   syncWinSize();
   QTimer::singleShot(10, this, SLOT(repaintWindow()) );
 }
