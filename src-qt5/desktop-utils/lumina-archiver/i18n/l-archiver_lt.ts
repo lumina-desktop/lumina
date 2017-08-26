@@ -445,12 +445,12 @@
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>This operation requires administrator priviledges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ši operacija reikalauja administratoriaus teisių.</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Would you like to enable these priviledges?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norėtumėte leisti šias teises?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
