@@ -108,6 +108,16 @@ RootSubWindow* RootWindow::windowForId(WId id){
   return tmp;
 }
 
+QScreen* RootWindow::screenUnderMouse(){
+  QPoint mpos = QCursor::pos();
+  QList<QScreen*> scrns = QApplication::screens();
+  for(int i=0; i<scrns.length(); i++){
+    if(scrns[i]->geometry().contains(mpos)){ return scrns[i]; }
+  }
+  //Could not find an exact match - just return the first one
+  return scrns.first();
+}
+
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
   if(DEBUG){ qDebug() << "Resize Root..."; }

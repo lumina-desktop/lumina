@@ -18,6 +18,8 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPaintEvent>
+#include <QScreen>
+#include <QDebug>
 
 #include "RootSubWindow.h"
 
@@ -51,7 +53,10 @@ private:
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
 	RootSubWindow* windowForId(WId id);
-	void arrangeWindows(RootSubWindow *primary = 0, QString type = "");
+	void arrangeWindows(RootSubWindow *primary = 0, QString type = "", bool primaryonly = false);
+
+	QScreen* screenUnderMouse();
+
 
 public slots:
 	void ResizeRoot();

@@ -347,6 +347,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  i--;
 		}else if(anim->state() != QPropertyAnimation::Running ){
 		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size() && activeState==Normal ){
+                    qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
 		    this->setGeometry(WIN->geometry());
 		  }
 		}
@@ -370,7 +371,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		//if(vals[i].toBool()){ WinWidget->setFocus(); }
+		if(vals[i].toBool()){ WinWidget->raiseWindow(); }
 		break;
 	/*case NativeWindow::FrameExtents:
 		qDebug() << " - FRAME CHANGE";
@@ -500,6 +501,7 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   //Check for a right-click event
   //qDebug() << "Frame Mouse Release Event";
   QFrame::mouseReleaseEvent(ev);
+  WinWidget->raiseWindow(); //need to ensure the native window is always on top of this frame
   if( (activeState==Normal) && (titleBar->geometry().contains(ev->pos())) && (ev->button()==Qt::RightButton) ){
     otherM->popup(ev->globalPos());
     return;
