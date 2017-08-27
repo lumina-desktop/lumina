@@ -81,6 +81,9 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
     //}
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{
+    //Quick re-check of the simple properties (nothing like the icon or other graphics)
+    obj->emit WindowPropertiesChanged(ev->window, QList<NativeWindow::Property>() << NativeWindow::Title
+		<< NativeWindow::ShortTitle << NativeWindow::Workspace );
     //qDebug() << "Unknown Property Change:" << ev->window << ev->atom;
   }
 }
@@ -98,7 +101,7 @@ inline void ParseClientMessageEvent(xcb_client_message_event_t *ev, NativeEventF
   else if(ev->type==EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
 
   if(prop!=NativeWindow::None){
-    //if(DEBUG){ 
+    //if(DEBUG){
       qDebug() << "Detected Property Change Request:" << ev->window << prop; //}
     if(val.isNull()){ obj->emit WindowPropertyChanged(ev->window, prop); }
     else{ obj->emit RequestWindowPropertyChange(ev->window, prop, val); }

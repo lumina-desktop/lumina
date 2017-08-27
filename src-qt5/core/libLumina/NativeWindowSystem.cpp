@@ -255,7 +255,7 @@ NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
   for(int i=0; i<NWindows.length(); i++){
     if(id==NWindows[i]->id() ){ return NWindows[i]; }
-    else if(id==NWindows[i]->frameId() ){ qDebug() << "Matched Frame:" << id; return NWindows[i]; }
+    else if(id==NWindows[i]->frameId() ){ return NWindows[i]; }
     //if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
     //else if(!checkRelated && id==NWindows[i]->id()){ return NWindows[i]; }
   }
@@ -498,7 +498,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
     }
     uint16_t mask = 0;
     mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
-    qDebug() << "Configure window Geometry:" << sz;
+    //qDebug() << "Configure window Geometry:" << sz;
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
   if(props.contains(NativeWindow::Name)){
@@ -667,7 +667,7 @@ int NativeWindowSystem::currentWorkspace(){
 //NativeWindowEventFilter interactions
 void NativeWindowSystem::NewWindowDetected(WId id){
   //Make sure this can be managed first
-  if(findWindow(id, false) != 0){ qDebug() << "Window Already Managed!!!!";  findWindow(id,false)->setProperty(NativeWindow::Visible, true, true); return; } //already managed
+  if(findWindow(id, false) != 0){ findWindow(id,false)->setProperty(NativeWindow::Visible, true, true); return; } //already managed
   xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
   xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
   if(attr == 0){ return; } //could not get attributes of window
@@ -679,7 +679,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   registerClientEvents(win->id());
   NWindows << win;
   UpdateWindowProperties(win, NativeWindow::allProperties());
-  qDebug() << "New Window [& associated ID's]:" << win->id()  << win->frameId() << win->property(NativeWindow::RelatedWindows);
+  qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindow::Name).toString();
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
@@ -744,6 +744,27 @@ void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property pr
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     UpdateWindowProperties(win, QList<NativeWindow::Property>() << prop);
+  }else if(prop != 0){
+    //Could not find the window for a specific property with an undefined value
+    //  - update this property for all the windows just in case
+    for(int i=0; i<NWindows.length(); i++){
+      UpdateWindowProperties( NWindows[i], QList<NativeWindow::Property>() << prop);
+    }
+  }
+}
+
+void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindow::Property> props){
+  //NOTE: This is triggered by the NativeEventFilter - not by changes to the NativeWindow objects themselves
+  NativeWindow *win = findWindow(id);
+  if(win==0){ win = findTrayWindow(id); }
+  if(win!=0){
+    UpdateWindowProperties(win, props);
+  }else{
+    //Could not find the window for a specific property with an undefined value
+    //  - update this property for all the windows just in case
+    for(int i=0; i<NWindows.length(); i++){
+      UpdateWindowProperties( NWindows[i], props);
+    }
   }
 }
 

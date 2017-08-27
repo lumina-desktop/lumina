@@ -34,6 +34,7 @@ signals:
 	void WindowCreated(WId);
 	void WindowDestroyed(WId);
 	void WindowPropertyChanged(WId, NativeWindow::Property);
+	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>);
 	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant);
 	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant);

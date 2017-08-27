@@ -46,6 +46,8 @@ void RootWindow::arrangeWindows(RootSubWindow *primary, QString type, bool prima
     if(type=="center"){
       QPoint ct = desktopArea.center();
       winlist[i]->setGeometry( ct.x()-(geom.width()/2), ct.y()-(geom.height()/2), geom.width(), geom.height());
+    }else if(type=="snap"){
+
     }else if(type=="single_max"){
       winlist[i]->setGeometry( desktopArea.x(), desktopArea.y(), desktopArea.width(), desktopArea.height());
     }else if(type=="under-mouse"){

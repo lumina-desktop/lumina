@@ -192,6 +192,7 @@ void RootSubWindow::initWindowFrame(){
   maxB->setCursor(Qt::ArrowCursor);
   otherM->setCursor(Qt::ArrowCursor);
   titleLabel->setCursor(Qt::ArrowCursor);
+  WinWidget->setCursor(Qt::ArrowCursor);
   //Now all the stylesheet options
   this->setObjectName("WindowFrame");
     closeB->setObjectName("Button_Close");
@@ -294,6 +295,7 @@ void RootSubWindow::toggleSticky(){
 }
 
 void RootSubWindow::activate(){
+  WinWidget->raiseWindow();
   WIN->requestProperty(NativeWindow::Active, true, true);
 }
 
@@ -501,8 +503,8 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   //Check for a right-click event
   //qDebug() << "Frame Mouse Release Event";
   QFrame::mouseReleaseEvent(ev);
-  WinWidget->raiseWindow(); //need to ensure the native window is always on top of this frame
   if( (activeState==Normal) && (titleBar->geometry().contains(ev->pos())) && (ev->button()==Qt::RightButton) ){
+    WinWidget->raiseWindow();//need to ensure the native window is always on top of this frame but under the menu
     otherM->popup(ev->globalPos());
     return;
   }
@@ -511,7 +513,9 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   activeState = Normal;
   QApplication::restoreOverrideCursor();
   setMouseCursor( getStateAtPoint(ev->pos()) );
-  if(QFrame::mouseGrabber() == this){ this->releaseMouse(); activate(); }
+  if(QFrame::mouseGrabber() == this){ this->releaseMouse(); }
+  activate();
+  QTimer::singleShot(0, WinWidget, SLOT(raiseWindow()) );
 }
 
 void RootSubWindow::leaveEvent(QEvent *ev){

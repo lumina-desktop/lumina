@@ -12,6 +12,7 @@
 
 #include <xcb/xproto.h>
 #include <xcb/xcb_aux.h>
+#include <xcb/xcb_event.h>
 #include <xcb/xcb_image.h>
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
@@ -19,7 +20,7 @@
 #define DISABLE_COMPOSITING false
 
 inline void registerClientEvents(WId id){
-  uint32_t value_list[1] = {XCB_EVENT_MASK_PROPERTY_CHANGE
+  uint32_t value_list[1] = { (XCB_EVENT_MASK_PROPERTY_CHANGE
 			| XCB_EVENT_MASK_BUTTON_PRESS
 			| XCB_EVENT_MASK_BUTTON_RELEASE
  			| XCB_EVENT_MASK_POINTER_MOTION
@@ -28,7 +29,7 @@ inline void registerClientEvents(WId id){
 			| XCB_EVENT_MASK_STRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
-			| XCB_EVENT_MASK_ENTER_WINDOW
+			| XCB_EVENT_MASK_ENTER_WINDOW)
 			};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
 }
@@ -60,6 +61,7 @@ void NativeEmbedWidget::hideWindow(){
 
 void NativeEmbedWidget::showWindow(){
   xcb_map_window(QX11Info::connection(), WIN->id());
+  reregisterEvents();
   QTimer::singleShot(0,this, SLOT(repaintWindow()));
 }
 
@@ -89,6 +91,7 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
 NativeEmbedWidget::NativeEmbedWidget(QWidget *parent) : QWidget(parent){
   WIN = 0; //nothing embedded yet
   paused = false;
+  this->setMouseTracking(true);
   //this->setSizeIncrement(2,2);
 }
 
@@ -265,12 +268,54 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
 
 }
 
+void NativeEmbedWidget::enterEvent(QEvent *ev){
+  QWidget::enterEvent(ev);
+  //this->grabMouse(); //xcb_grab_pointer_unchecked(QX11Info::connection(), );
+}
+
+void NativeEmbedWidget::leaveEvent(QEvent *ev){
+  QWidget::leaveEvent(ev);
+  //this->releaseMouse(); //xcb_ungrab_pointer(QX11Info::connection(), XCB_CURRENT_TIME);
+}
+
 bool NativeEmbedWidget::nativeEvent(const QByteArray &eventType, void *message, long *result){
   /*if(eventType=="xcb_generic_event_t" && WIN!=0){
     //Convert to known event type (for X11 systems)
     xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
+    //qDebug() << "Got Embed Window Event:" << xcb_event_get_label(ev->response_type & XCB_EVENT_RESPONSE_TYPE_MASK) << xcb_event_get_request_label(ev->response_type);
+    uint32_t mask = 0;
+    switch( ev->response_type  & XCB_EVENT_RESPONSE_TYPE_MASK){
+	    case XCB_BUTTON_PRESS:
+		//This is a mouse button press
+		mask = XCB_EVENT_MASK_BUTTON_PRESS;
+		break;
+	    case XCB_BUTTON_RELEASE:
+		//This is a mouse button release
+		//qDebug() << "Button Release Event";
+		mask = XCB_EVENT_MASK_BUTTON_RELEASE;
+		break;
+	    case XCB_MOTION_NOTIFY:
+		//This is a mouse movement event
+		mask = XCB_EVENT_MASK_POINTER_MOTION;
+	        break;
+	    case XCB_ENTER_NOTIFY:
+		//This is a mouse movement event when mouse goes over a new window
+		mask = XCB_EVENT_MASK_ENTER_WINDOW;
+	        break;
+	    case XCB_LEAVE_NOTIFY:
+		//This is a mouse movement event when mouse goes leaves a window
+		mask = XCB_EVENT_MASK_LEAVE_WINDOW;
+	        break;
+	    default:
+		mask = 0;
+    }
+
     //Now forward this event on to the embedded window
-    xcb_send_event(QX11Info::connection(), true, WIN->id(), EVENT_MASK, ev);
+    if(mask!=0){
+      qDebug() << " - Got a mouse event";
+      xcb_send_event(QX11Info::connection(), true, WIN->id(),mask, (char*) ev);
+      return true;
+    }
   }*/
   return false;
 }

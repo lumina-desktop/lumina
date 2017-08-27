@@ -38,9 +38,9 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enable a few of the simple effects by default
-  this->setEffectEnabled( Qt::UI_AnimateMenu, true);
-  this->setEffectEnabled( Qt::UI_AnimateCombo, true);
-  this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
+  //this->setEffectEnabled( Qt::UI_AnimateMenu, true);
+  //this->setEffectEnabled( Qt::UI_AnimateCombo, true);
+  //this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
   this->setAttribute(Qt::AA_UseDesktopOpenGL);
   this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
@@ -231,6 +231,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)) );
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
   connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
   connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindow::Property, QVariant)));

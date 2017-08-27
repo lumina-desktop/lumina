@@ -43,9 +43,9 @@ public:
 	bool detachWindow();
 	bool isEmbedded(); //status of the embed
 
+public slots:
 	void raiseWindow();
 
-public slots:
 	//Pause/resume
 	void pause();
 	void resume();
@@ -59,6 +59,8 @@ protected:
 	void showEvent(QShowEvent *ev);
 	void hideEvent(QHideEvent *ev);
 	void paintEvent(QPaintEvent *ev);
+	void enterEvent(QEvent *ev);
+	void leaveEvent(QEvent *ev);
 	bool nativeEvent(const QByteArray &eventType, void *message, long *result);
 };
 
