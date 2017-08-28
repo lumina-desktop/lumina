@@ -28,6 +28,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   qRegisterMetaType< Qt::Key >("Qt::Key");
   qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
   qRegisterMetaType< QList< NativeWindow::Property > >("QList<NativeWindow::Property>");
+  qRegisterMetaType< NativeWindowSystem::MouseButton >("NativeWindowSystem::MouseButton");
 
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
@@ -289,7 +290,7 @@ void LSession::playAudioFile(QString filepath){
   if( !QFile::exists(filepath) ){ return; }
   //Setup the audio output systems for the desktop
   if(DEBUG){ qDebug() << "Play Audio File"; }
-  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }
+  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(0,QMediaPlayer::LowLatency); }
   if(mediaObj !=0 ){
     if(DEBUG){ qDebug() << " - starting playback:" << filepath; }
     mediaObj->setVolume(100);

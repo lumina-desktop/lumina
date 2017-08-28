@@ -220,11 +220,11 @@ void RootWindow::CloseWindow(WId win){
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
-  QWidget::paintEvent(ev);
+  //QWidget::paintEvent(ev);
   bool found = false;
   QPainter painter(this);
   QRect geom = ev->rect();
-    geom.adjust(-10,-10,10,10); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
+    geom.adjust(-100,-100,100,100); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
   for(int i=0; i<WALLPAPERS.length(); i++){
     if(WALLPAPERS[i].area.intersects(geom) ){
       found = true;

@@ -43,7 +43,8 @@ void NativeEmbedWidget::syncWinSize(QSize sz){
   else if(!sz.isValid()){ sz = this->size(); } //use the current widget size
   //qDebug() << "Sync Window Size:" << sz;
   //if(sz == winSize){ return; } //no change
-  QPoint pt= this->mapToGlobal(QPoint(0,0));
+  QPoint pt(0,0);
+   if(!DISABLE_COMPOSITING){ pt = this->mapToGlobal(QPoint(0,0)); }
     const uint32_t valList[4] = {(uint32_t) pt.x(), (uint32_t) pt.y(), (uint32_t) sz.width(), (uint32_t) sz.height()};
     const uint32_t mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
     xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
@@ -68,14 +69,22 @@ void NativeEmbedWidget::showWindow(){
 QImage NativeEmbedWidget::windowImage(QRect geom){
   //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
-  xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-  if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
 
+  /*xcb_composite_get_overlay_window_reply_t *wreply = xcb_composite_get_overlay_window_reply( QX11Info::connection(),
+			xcb_composite_get_overlay_window_unchecked(QX11Info::connection(), WIN->id()), NULL);
+  if(wreply!=0){
+    xcb_composite_name_window_pixmap(QX11Info::connection(), wreply->overlay_win, pix);
+    free(wreply);
+  }else{*/
+    xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
+  //}
+  if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
   //Convert this pixmap into a QImage
-  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
   if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
   QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
-  img = img.copy(); //detach this image from the XCB data structures
+  img = img.copy(); //detach this image from the XCB data structures before we clean them up
   xcb_image_destroy(ximg);
 
   //Cleanup the XCB data structures
@@ -97,7 +106,6 @@ NativeEmbedWidget::NativeEmbedWidget(QWidget *parent) : QWidget(parent){
 
 bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   WIN = window;
-  //xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
 
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
@@ -117,7 +125,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   //Now setup any redirects and return
   if(!DISABLE_COMPOSITING){
     xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
-    xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+    xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //AUTOMATIC); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
     //Now create/register the damage handler
     // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
@@ -128,6 +136,8 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
 
     WIN->addDamageID( (uint) dmgID); //save this for later
+  }else{
+    xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
   }
   WIN->addFrameWinID(this->winId());
   connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
