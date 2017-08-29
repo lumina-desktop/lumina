@@ -445,6 +445,7 @@ bool XDGDesktop::setAutoStarted(bool autostart){
 }
 
 void XDGDesktop::addToMenu(QMenu *topmenu){
+  if(!this->isValid()){ return; }
   if(actions.isEmpty()){
 	//Just a single entry point - no extra actions
     QAction *act = new QAction(this->name, topmenu);
@@ -617,6 +618,7 @@ void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
       menu->setIcon(LXDG::findIcon(icon,""));
       QList<XDGDesktop*> appL = APPS.value(cats[i]);
       for( int a=0; a<appL.length(); a++){ appL[a]->addToMenu(menu); }
+      topmenu->addMenu(menu);
     } //end loop over cats
   }else{
     QList<XDGDesktop*> APPS = this->apps(false, false);

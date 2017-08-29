@@ -24,14 +24,19 @@ void DesktopContextMenu::UpdateMenu(bool fast){
   QStringList items = DesktopSettings::instance()->value(DesktopSettings::ContextMenu, "itemlist", QStringList()<< "terminal" << "filemanager" << "line" << "applications" << "windowlist" << "settings" << "lockdesktop").toStringList();
   usewinmenu=false;
   for(int i=0; i<items.length(); i++){
-    if(items[i]=="terminal"){ this->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"))->setWhatsThis("lumina-open -terminal"); }
+    if(items[i]=="terminal"){ this->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"))->setWhatsThis("--terminal"); }
     else if(items[i]=="lockdesktop"){ this->addAction(LXDG::findIcon("system-lock-screen",""), tr("Lock Session"), this, SIGNAL(LockSession()) ); }
-    else if(items[i]=="filemanager"){ this->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"))->setWhatsThis("lumina-open \""+QDir::homePath()+"\""); }
-    else if(items[i]=="applications"){ this->addMenu( appMenu ); }
-    else if(items[i]=="line"){ this->addSeparator(); }
+    else if(items[i]=="filemanager"){ this->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"))->setWhatsThis(QDir::homePath()); }
+    else if(items[i]=="applications"){
+      if(appMenu==0){ updateAppMenu(); }
+      this->addMenu( appMenu );
+    }else if(items[i]=="line"){ this->addSeparator(); }
     //else if(items[i]=="settings"){ this->addMenu( LSession::handle()->settingsMenu() ); }
-    else if(items[i]=="windowlist"){ updateWinMenu(); this->addMenu( winMenu); usewinmenu=true; }
-    else if(items[i].startsWith("app::::") && items[i].endsWith(".desktop")){
+    else if(items[i]=="windowlist"){
+      if(winMenu==0){ updateWinMenu(); }
+      this->addMenu( winMenu);
+      usewinmenu=true;
+    }else if(items[i].startsWith("app::::") && items[i].endsWith(".desktop")){
       //Custom *.desktop application
       QString file = items[i].section("::::",1,1).simplified();
       //Try to use the pre-loaded app entry for this
@@ -67,13 +72,14 @@ DesktopContextMenu::DesktopContextMenu(QWidget *parent) : QMenu(parent){
   }
   appMenu = 0;
   winMenu = 0;
+  usewinmenu = false;
   workspaceLabel = new QLabel(0);
   wkspaceact = new QWidgetAction(0);
     wkspaceact->setDefaultWidget(workspaceLabel);
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(LaunchAction(QAction*)) );
   //Connect to a couple global objects
-  connect(XDGDesktopList::instance(), SIGNAL(appsUpdated()), this, SLOT(updateAppMenu()) );
   connect(this, SIGNAL(aboutToShow()), this, SLOT(UpdateMenu()) ); //this will do a "fast" update
+  qDebug() << "Done Creating Context Menu";
 }
 
 DesktopContextMenu::~DesktopContextMenu(){
@@ -85,6 +91,7 @@ DesktopContextMenu::~DesktopContextMenu(){
 void DesktopContextMenu::start(){
   connect(DesktopSettings::instance(), SIGNAL(FileModified(DesktopSettings::File)), this, SLOT(SettingsChanged(DesktopSettings::File)) );
   connect(this, SIGNAL(LockSession()), Lumina::SS, SLOT(LockScreenNow()) );
+  connect(XDGDesktopList::instance(), SIGNAL(appsUpdated()), this, SLOT(updateAppMenu()) );
   UpdateMenu(false);
   //Still need to connect to some "workspaceChanged(int)" signal
 }
@@ -95,7 +102,29 @@ void DesktopContextMenu::LaunchAction(QAction *act){
   if(act->whatsThis().isEmpty() || act->parent()!=this ){ return; }
   qDebug() << "Launch Menu Action:" << act->whatsThis();
   QString cmd = act->whatsThis();
-  ExternalProcess::launch(cmd);
+  if(cmd.startsWith("-action ")){
+    LaunchApp(act); //forward this to the XDGDesktop parser
+  }else if(cmd.startsWith("--") || cmd.endsWith(".desktop")){
+    LSession::instance()->LaunchStandardApplication(cmd);
+  }else if(QFile::exists(cmd)){
+    QString mime = XDGMime::fromFileName(cmd);
+    LSession::instance()->LaunchStandardApplication(mime, QStringList() << cmd);
+  }
+}
+
+void DesktopContextMenu::LaunchApp(QAction *act){
+
+  // The "whatsThis() field is set by the XDGDesktop object/format
+  if(act->whatsThis().isEmpty()){ return; }
+  QString action, file;
+  QString wt = act->whatsThis();
+  if(wt.startsWith("-action")){
+    action = wt.section(" ",1,1); action=action.remove("\"");
+    file = wt.section(" ",2,-1); file=file.remove("\"");
+  }
+  else{ file = wt; }
+  LSession::instance()->LaunchDesktopApplication(file, action);
+
 }
 
 void DesktopContextMenu::showMenu(const QPoint &pt){
@@ -103,18 +132,21 @@ void DesktopContextMenu::showMenu(const QPoint &pt){
 }
 
 void DesktopContextMenu::updateAppMenu(){
+  //qDebug() << "Update App Menu";
   if(appMenu==0){
     appMenu = new QMenu(this);
     appMenu->setTitle( tr("Applications"));
     appMenu->setIcon( LXDG::findIcon("system-run","") );
+    connect(appMenu, SIGNAL(triggered(QAction*)), this, SLOT(LaunchApp(QAction*)) );
   }
+  //qDebug() << "Populate App Menu";
   XDGDesktopList::instance()->populateMenu(appMenu);
 }
 
 void DesktopContextMenu::updateWinMenu(){
+  //qDebug() << "Update Win Menu";
   if(winMenu==0){
     winMenu = new QMenu(this);
     winMenu->setTitle( tr("Task Manager") );
   }
 }
-

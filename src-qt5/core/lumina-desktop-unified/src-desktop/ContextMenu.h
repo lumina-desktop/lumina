@@ -29,6 +29,8 @@ public:
 
 private slots:
 	void LaunchAction(QAction *act);
+	void LaunchApp(QAction *act);
+
 	void showMenu(const QPoint&);
 
 	void updateAppMenu();

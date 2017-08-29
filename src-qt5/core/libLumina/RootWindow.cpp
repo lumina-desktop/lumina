@@ -10,7 +10,7 @@
 #include <QScreen>
 #include <QDebug>
 
-#define DEBUG 1
+#define DEBUG 0
 
 // === PUBLIC ===
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
