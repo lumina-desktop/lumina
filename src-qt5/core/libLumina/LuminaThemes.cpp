@@ -72,7 +72,7 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
   xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
   for(int i=0; i<xdd.length(); i++){
     if(QFile::exists(xdd[i]+"/icons")){
-      paths << xdd[i]+"/icons";	    
+      paths << xdd[i]+"/icons";
     }
   }
   //Now get all the icon themes in these directories
@@ -83,8 +83,8 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
        tmpthemes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
        for(int j=0; j<tmpthemes.length(); j++){
 	 if(tmpthemes[j].startsWith("default")){ continue; }
-         if(QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ||
-		QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.desktop")) ){ themes << tmpthemes[j]; }
+         if( (QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ||
+		QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.desktop")) ) ){ themes << tmpthemes[j]; }
        }
     }
   }
@@ -92,21 +92,32 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
   themes.sort();
   return themes;
 }
-	
+
 QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
-  QStringList paths; paths << LOS::SysPrefix()+"lib/X11/icons/" << LOS::AppPrefix()+"lib/X11/icons/";
-  QStringList out;
-  for(int i=0; i<paths.length(); i++){
-    if( !QFile::exists(paths[i]) ){ continue; }
-    QDir dir(paths[i]);
-    QStringList tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-    for(int j=0; j<tmp.length(); j++){
-      if(QFile::exists(paths[i]+tmp[j]+"/cursors")){
-        out << tmp[j]; //good theme - save it to the output list
-      }
+ QStringList paths;
+  paths << QDir::homePath()+"/.icons";
+  QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
+  xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
+  for(int i=0; i<xdd.length(); i++){
+    if(QFile::exists(xdd[i]+"/icons")){
+      paths << xdd[i]+"/icons";
     }
   }
-  return out;
+  //Now get all the icon themes in these directories
+  QStringList themes, tmpthemes;
+  QDir dir;
+  for(int i=0; i<paths.length(); i++){
+    if(dir.cd(paths[i])){
+       tmpthemes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+       for(int j=0; j<tmpthemes.length(); j++){
+	 if(tmpthemes[j].startsWith("default")){ continue; }
+         if( QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/cursors")) ){ themes << tmpthemes[j]; }
+       }
+    }
+  }
+  themes.removeDuplicates();
+  themes.sort();
+  return themes;
 }
 
 //Save a new theme/color file
