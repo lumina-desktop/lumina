@@ -74,6 +74,7 @@ DesktopContextMenu::DesktopContextMenu(QWidget *parent) : QMenu(parent){
   winMenu = 0;
   usewinmenu = false;
   workspaceLabel = new QLabel(0);
+    workspaceLabel->setAlignment(Qt::AlignCenter);
   wkspaceact = new QWidgetAction(0);
     wkspaceact->setDefaultWidget(workspaceLabel);
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(LaunchAction(QAction*)) );
