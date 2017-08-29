@@ -28,7 +28,8 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QDebug>
-
+#include <QMenu>
+#include <QAction>
 
 // ======================
 // FreeDesktop Desktop Actions Framework (data structure)
@@ -82,6 +83,9 @@ public:
 	bool saveDesktopFile(bool merge = true); //This will use the "filePath" variable for where to save the file
 
 	bool setAutoStarted(bool autostart = true);
+
+	//Create a menu entry for this application
+	void addToMenu(QMenu*);
 };
 
 // ========================
@@ -93,8 +97,13 @@ public:
 	//Functions
 	XDGDesktopList(QObject *parent = 0, bool watchdirs = false);
 	~XDGDesktopList();
+
+	static XDGDesktopList* instance();
+
 	//Main Interface functions
 	QList<XDGDesktop*> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
+	XDGDesktop* findAppFile(QString filename);
+	void populateMenu(QMenu *, bool byCategory = true);
 
 	//Administration variables (not typically used directly)
 	QDateTime lastCheck;

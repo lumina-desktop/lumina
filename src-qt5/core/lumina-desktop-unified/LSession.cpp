@@ -54,7 +54,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
     Lumina::NWS->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
   Lumina::ROOTWIN = new RootWindow();
-  Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
+  Lumina::APPLIST = XDGDesktopList::instance();
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
 
   setupGlobalConnections();
