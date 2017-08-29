@@ -25,7 +25,8 @@
 class DesktopSettings : public QObject{
 	Q_OBJECT
 public:
-	enum File{ System, Favorites, Environment, Session, Desktop, ContextMenu, Keys, Theme, Animation };
+	enum File{ System, Favorites, Environment, Session, Desktop, Panels, Plugins, ContextMenu, Keys, Animation, ScreenSaver};
+	//Changes to this enum need to be added to the "filesForRunMode()" and "rel_path()" functions as well
 
 	DesktopSettings(QObject *parent = 0);
 	~DesktopSettings();
@@ -37,6 +38,7 @@ public:
 	void stop();
 
 	//Main Read/Write functions
+	QList< DesktopSettings::File > writableFiles(); //return the list of all writable files
 	QVariant value(DesktopSettings::File, QString variable, QVariant defaultvalue);
 	bool setValue(DesktopSettings::File, QString variable, QVariant value);
 	QStringList keys(DesktopSettings::File); //return a list of all variables which are available in this file
@@ -51,9 +53,13 @@ private:
 	QHash< DesktopSettings::File, QStringList > files; //location hash for where files are actually located on disk
 	QHash< QString, QSettings*> settings; //location hash for the settings files themselves
 
+	//Functions
 	void parseSystemSettings(); //run at start - determine the RunMode for this user/session
 	void locateFiles(); //run at start - finds the locations of the various files (based on RunMode)
 	void touchFile(QString path); //used to create an empty file so it can be watched for changes later
+
+	//The two functions which define the public "File" enumeration (both need updates when the enum changes)
+	QList< DesktopSettings::File > filesForRunMode(RunMode mode);
 	QString rel_path(DesktopSettings::File); //return the relative file path (starting with "/")
 
 private slots:
