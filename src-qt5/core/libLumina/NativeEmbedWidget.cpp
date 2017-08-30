@@ -14,10 +14,38 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/xcb_event.h>
 #include <xcb/xcb_image.h>
+//#include <xcb/render.h>
+//#include <xcb/xcb_renderutil.h>
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
 #define DISABLE_COMPOSITING false
+
+/*inline xcb_render_pictformat_t get_pictformat(){
+  static xcb_render_pictformat_t format = 0;
+  if(format==0){
+    xcb_render_query_pict_formats_reply_t *reply = xcb_render_query_pict_formats_reply( QX11Info::connection(), xcb_render_query_pict_formats(QX11Info::connection()), NULL);
+    format = xcb_render_util_find_standard_format(reply, XCB_PICT_STANDARD_ARGB_32)->id;
+    free(reply);
+  }
+  return format;
+}
+
+
+inline void renderWindowToWidget(WId id, QWidget *widget, bool hastransparency = true){
+  //window and widget are assumed to be the same size
+  //Pull the XCB pixmap out of the compositing layer
+  xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
+    xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
+  if(pix==0){ qDebug() << "Got blank pixmap!"; return; }
+
+  xcb_render_picture_t pic_id = xcb_generate_id(QX11Info::connection());
+  xcb_render_create_picture_aux(QX11Info::connection(), pic_id, pix, get_pictformat() , 0, NULL);
+  //
+  xcb_render_composite(QX11Info::connection(), hastransparency ? XCB_RENDER_PICT_OP_OVER : XCB_RENDER_PICT_OP_SRC, pic_id, XCB_RENDER_PICTURE_NONE, widget->x11RenderHandle(),
+				0, 0, 0, 0, 0, 0, (uint16_t) widget->width(), (uint16_t) widget->height() );
+}*/
+
 
 inline void registerClientEvents(WId id){
   uint32_t value_list[1] = { (XCB_EVENT_MASK_PROPERTY_CHANGE
@@ -27,7 +55,7 @@ inline void registerClientEvents(WId id){
 			| XCB_EVENT_MASK_BUTTON_MOTION
 			| XCB_EVENT_MASK_EXPOSURE
 			| XCB_EVENT_MASK_STRUCTURE_NOTIFY
-			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+//			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_ENTER_WINDOW)
 			};
@@ -69,22 +97,15 @@ void NativeEmbedWidget::showWindow(){
 QImage NativeEmbedWidget::windowImage(QRect geom){
   //Pull the XCB pixmap out of the compositing layer
   xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
-
-  /*xcb_composite_get_overlay_window_reply_t *wreply = xcb_composite_get_overlay_window_reply( QX11Info::connection(),
-			xcb_composite_get_overlay_window_unchecked(QX11Info::connection(), WIN->id()), NULL);
-  if(wreply!=0){
-    xcb_composite_name_window_pixmap(QX11Info::connection(), wreply->overlay_win, pix);
-    free(wreply);
-  }else{*/
     xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-  //}
   if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
+
   //Convert this pixmap into a QImage
-  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
   if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
   QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
-  img = img.copy(); //detach this image from the XCB data structures before we clean them up
+  img = img.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
   xcb_image_destroy(ximg);
 
   //Cleanup the XCB data structures
@@ -136,12 +157,11 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
 
     WIN->addDamageID( (uint) dmgID); //save this for later
+    connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
   }else{
     xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
   }
   WIN->addFrameWinID(this->winId());
-  connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
-
   registerClientEvents(WIN->id());
   //registerClientEvents(this->winId());
   //qDebug() << "Events Registered:" << WIN->id() << this->winId();
@@ -159,11 +179,13 @@ bool NativeEmbedWidget::isEmbedded(){
 }
 
 void NativeEmbedWidget::raiseWindow(){
+ if(DISABLE_COMPOSITING){ return; }
   uint32_t val = XCB_STACK_MODE_ABOVE;
   xcb_configure_window(QX11Info::connection(),  WIN->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);
 }
 
 void NativeEmbedWidget::lowerWindow(){
+  if(DISABLE_COMPOSITING){ return; }
   uint32_t val = XCB_STACK_MODE_BELOW;
   xcb_configure_window(QX11Info::connection(),  WIN->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);
 }
@@ -216,7 +238,8 @@ void NativeEmbedWidget::resyncWindow(){
 
   //Make sure the window size is syncronized and visual up to date
   syncWinSize();
-  QTimer::singleShot(10, this, SLOT(repaintWindow()) );
+  if(DISABLE_COMPOSITING){ showWindow(); }
+  else{ QTimer::singleShot(10, this, SLOT(repaintWindow()) ); }
 }
 
 void NativeEmbedWidget::repaintWindow(){
@@ -256,8 +279,10 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   if(WIN==0 || DISABLE_COMPOSITING){ QWidget::paintEvent(ev); return; }
-  else if( winImage.isNull() ){ /*QTimer::singleShot(0, this, SLOT(repaintWindow()) );*/ return; }
+  //else if( winImage.isNull() ){return; }
   else if(paused){ return; }
+  //renderWindowToWidget(WIN->id(), this);
+  //return;
   //else if(this->size()!=winSize){ QTimer::singleShot(0,this, SLOT(syncWinSize())); return; } //do not paint here - waiting to re-sync the sizes
   //else if(this->size() != winImage.size()){ QTimer::singleShot(0, this, SLOT(repaintWindow()) ); return; }
   //Need to paint the image from the window onto the widget as an overlay

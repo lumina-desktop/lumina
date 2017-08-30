@@ -26,7 +26,7 @@ private:
 	NativeWindow *WIN;
 	QSize winSize;
 	QImage winImage;
-	bool paused;
+	bool paused, hasAlphaChannel;
 
 private slots:
 	//Simplification functions
