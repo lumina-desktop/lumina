@@ -163,6 +163,11 @@ void NativeEmbedWidget::raiseWindow(){
   xcb_configure_window(QX11Info::connection(),  WIN->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);
 }
 
+void NativeEmbedWidget::lowerWindow(){
+  uint32_t val = XCB_STACK_MODE_BELOW;
+  xcb_configure_window(QX11Info::connection(),  WIN->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);
+}
+
 // ==============
 //   PUBLIC SLOTS
 // ==============
@@ -280,16 +285,36 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
 
 void NativeEmbedWidget::enterEvent(QEvent *ev){
   QWidget::enterEvent(ev);
-  //this->grabMouse(); //xcb_grab_pointer_unchecked(QX11Info::connection(), );
+  //qDebug() << "Enter Embed Widget";
+  //raiseWindow(); //this->grabMouse();
 }
 
 void NativeEmbedWidget::leaveEvent(QEvent *ev){
   QWidget::leaveEvent(ev);
-  //this->releaseMouse(); //xcb_ungrab_pointer(QX11Info::connection(), XCB_CURRENT_TIME);
+  /*qDebug() << "Leave Embed Widget";
+  QPoint pt = QCursor::pos();
+  QPoint relpt = this->parentWidget()->mapFromGlobal(pt);
+  qDebug() << " - Geom:" << this->geometry() << "Global pt:" << pt << "Relative pt:" << relpt;
+  if(!this->geometry().contains(relpt) ){ lowerWindow(); }*/
 }
 
-bool NativeEmbedWidget::nativeEvent(const QByteArray &eventType, void *message, long *result){
-  /*if(eventType=="xcb_generic_event_t" && WIN!=0){
+void NativeEmbedWidget::mouseMoveEvent(QMouseEvent *ev){
+  QWidget::mouseMoveEvent(ev);
+  //Forward this event on to the window
+}
+
+void NativeEmbedWidget::mousePressEvent(QMouseEvent *ev){
+  QWidget::mousePressEvent(ev);
+  //Forward this event on to the window
+}
+
+void NativeEmbedWidget::mouseReleaseEvent(QMouseEvent *ev){
+  QWidget::mouseReleaseEvent(ev);
+  //Forward this event on to the window
+}
+
+/*bool NativeEmbedWidget::nativeEvent(const QByteArray &eventType, void *message, long *result){
+  if(eventType=="xcb_generic_event_t" && WIN!=0){
     //Convert to known event type (for X11 systems)
     xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
     //qDebug() << "Got Embed Window Event:" << xcb_event_get_label(ev->response_type & XCB_EVENT_RESPONSE_TYPE_MASK) << xcb_event_get_request_label(ev->response_type);
@@ -326,6 +351,6 @@ bool NativeEmbedWidget::nativeEvent(const QByteArray &eventType, void *message, 
       xcb_send_event(QX11Info::connection(), true, WIN->id(),mask, (char*) ev);
       return true;
     }
-  }*/
+  }
   return false;
-}
+}*/

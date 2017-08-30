@@ -166,6 +166,7 @@ void LSession::setupSession(){
 
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   Lumina::SHORTCUTS->start(); //Startup the shortcut handler now
+
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );

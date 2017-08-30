@@ -18,6 +18,7 @@
 #include <QShowEvent>
 #include <QHideEvent>
 #include <QPaintEvent>
+#include <QMouseEvent>
 
 class NativeEmbedWidget : public QWidget{
 	Q_OBJECT
@@ -45,6 +46,7 @@ public:
 
 public slots:
 	void raiseWindow();
+	void lowerWindow();
 
 	//Pause/resume
 	void pause();
@@ -61,7 +63,10 @@ protected:
 	void paintEvent(QPaintEvent *ev);
 	void enterEvent(QEvent *ev);
 	void leaveEvent(QEvent *ev);
-	bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+	void mouseMoveEvent(QMouseEvent *ev);
+	void mousePressEvent(QMouseEvent *ev);
+	void mouseReleaseEvent(QMouseEvent *ev);
+	//bool nativeEvent(const QByteArray &eventType, void *message, long *result);
 };
 
 #endif

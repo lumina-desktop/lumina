@@ -45,7 +45,8 @@ private:
 	  ScaleType scale;
 	  QPixmap wallpaper; //Note: This pixmap will always be the same size as "area"
 	};
-	QTimer *autoResizeTimer;
+	QTimer *autoResizeTimer, *mouseFocusTimer;
+	RootSubWindow *lastActiveMouse;
 
 	QList<screeninfo> WALLPAPERS;
 	void updateScreenPixmap(screeninfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
@@ -62,6 +63,7 @@ public slots:
 	void ResizeRoot();
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);
 	    //Note: for "SingleColor" scaling the "file" variable should be "rgb(R,G,B)" or "#hexcode"
+	void checkMouseFocus();
 
 	void NewWindow(NativeWindow*);
 	void CloseWindow(WId); //automatically connected for any new native window

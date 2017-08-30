@@ -16,6 +16,8 @@
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
+  lastActiveMouse = 0;
+  mouseFocusTimer = 0;
   this->setMouseTracking(true);
 }
 
@@ -32,6 +34,12 @@ void RootWindow::start(){
     connect(autoResizeTimer, SIGNAL(timeout()), this, SLOT(ResizeRoot()) );
     connect(QApplication::desktop(), SIGNAL(resized(int)), autoResizeTimer, SLOT(start()) );
     connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), autoResizeTimer, SLOT(start()) );
+  }
+  if(mouseFocusTimer==0){
+    mouseFocusTimer = new QTimer(this);
+    mouseFocusTimer->setInterval(100);
+    connect(mouseFocusTimer, SIGNAL(timeout()), this, SLOT(checkMouseFocus()) );
+
   }
   this->show();
   ResizeRoot();
@@ -192,6 +200,21 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 }
 
+void RootWindow::checkMouseFocus(){
+  QWidget *child = this->childAt(QCursor::pos());
+  while(child!=0 && child->whatsThis()!="RootSubWindow"){
+    child = child->parentWidget();
+    if(child==this){ child = 0;} //end of the line
+  }
+  if(child==lastActiveMouse){ return; } //nothing new to do
+  //Make sure the child is actually a RootSubWindow
+  if(lastActiveMouse!=0){ lastActiveMouse->removeMouseFocus(); lastActiveMouse = 0; }
+  if(child!=0){
+    lastActiveMouse = static_cast<RootSubWindow*>(child);
+    lastActiveMouse->giveMouseFocus();
+  }
+}
+
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
   //qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
@@ -200,6 +223,7 @@ void RootWindow::NewWindow(NativeWindow *win){
   }
   if(subwin==0){
     subwin = new RootSubWindow(this, win);
+    subwin->setWhatsThis("RootSubWindow");
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
     WINDOWS << subwin;
   }
@@ -207,12 +231,18 @@ void RootWindow::NewWindow(NativeWindow *win){
   //win->setProperty(NativeWindow::Visible, true);
   //win->requestProperty( NativeWindow::Active, true);
   win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true);
+  if(!mouseFocusTimer->isActive()){ mouseFocusTimer->start(); }
 }
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; }
+    if(WINDOWS[i]->id() == win){
+      if(lastActiveMouse==WINDOWS[i]){ lastActiveMouse = 0; } //no longer valid
+      WINDOWS.takeAt(i)->clientClosed();
+      break;
+    }
   }
+  if(WINDOWS.isEmpty()){ mouseFocusTimer->stop(); } //no windows to look for
 }
 
 // === PRIVATE SLOTS ===

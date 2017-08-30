@@ -295,7 +295,7 @@ void RootSubWindow::toggleSticky(){
 }
 
 void RootSubWindow::activate(){
-  WinWidget->raiseWindow();
+  //WinWidget->raiseWindow();
   WIN->requestProperty(NativeWindow::Active, true, true);
 }
 
@@ -373,7 +373,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		if(vals[i].toBool()){ WinWidget->raiseWindow(); }
+		//if(vals[i].toBool()){ WinWidget->raiseWindow(); }
 		break;
 	/*case NativeWindow::FrameExtents:
 		qDebug() << " - FRAME CHANGE";
@@ -397,7 +397,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   activate();
   this->raise();
-  WinWidget->raiseWindow();
+  //WinWidget->raiseWindow();
   //qDebug() << "Frame Mouse Press Event";
   offset.setX(0); offset.setY(0);
   if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
@@ -518,12 +518,17 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   QTimer::singleShot(0, WinWidget, SLOT(raiseWindow()) );
 }
 
-void RootSubWindow::leaveEvent(QEvent *ev){
+/*void RootSubWindow::enterEvent(QEvent *ev){
+  QFrame::enterEvent(ev);
+  WinWidget->raiseWindow();
+}*/
+/*void RootSubWindow::leaveEvent(QEvent *ev){
   QFrame::leaveEvent(ev);
   if(activeState == Normal){
     setMouseCursor(Normal);
   }
-}
+  if(!QRect(QPoint(0,0),this->size()).contains( this->mapFromGlobal(QCursor::pos())) ){ WinWidget->lowerWindow(); }
+}*/
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
   //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->geometry();

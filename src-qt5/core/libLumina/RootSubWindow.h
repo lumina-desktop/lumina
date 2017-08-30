@@ -65,6 +65,9 @@ private:
 	static QStringList validAnimations(NativeWindow::Property);
 
 public slots:
+	void giveMouseFocus(){ WinWidget->raiseWindow(); }
+	void removeMouseFocus(){ WinWidget->lowerWindow(); }
+
 	void clientClosed();
 	void LoadAllProperties();
 
@@ -91,8 +94,8 @@ protected:
 	void mousePressEvent(QMouseEvent*);
 	void mouseMoveEvent(QMouseEvent*);
 	void mouseReleaseEvent(QMouseEvent*);
-	void leaveEvent(QEvent *ev);
-
+	//void leaveEvent(QEvent *ev);
+	//void enterEvent(QEvent *ev);
 	void moveEvent(QMoveEvent *ev);
 
 
