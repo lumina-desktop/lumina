@@ -218,7 +218,7 @@ void RootWindow::checkMouseFocus(){
 
     if(DesktopSettings::instance()->value(DesktopSettings::WM, "focusFollowsMouse", true).toBool()){
       lastActiveMouse->giveKeyboardFocus();
-      if(DesktopSettings::instance()->value(DesktopSettings::WM, "raiseOnFocus", true).toBool()){
+      if(DesktopSettings::instance()->value(DesktopSettings::WM, "raiseOnFocus", false).toBool()){
         lastActiveMouse->raise();
       }
     }
