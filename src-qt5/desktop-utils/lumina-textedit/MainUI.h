@@ -76,12 +76,12 @@ private slots:
 	void closeFindReplace();
 	void openFind();
 	void openReplace();
-	
+
 	void findNext();
 	void findPrev();
 	void replaceOne();
 	void replaceAll();
-	
+
 protected:
 	void resizeEvent(QResizeEvent *ev){
 	  settings->setValue("lastSize", ev->size());
