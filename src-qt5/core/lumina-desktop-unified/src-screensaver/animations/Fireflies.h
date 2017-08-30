@@ -78,7 +78,7 @@ private:
 	QList<Firefly*> fireflies;
 
 public:
-	FirefliesAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	FirefliesAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~FirefliesAnimation(){
 	  this->stop();
 	  //while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
@@ -87,14 +87,14 @@ public:
 	void LoadAnimations(){
 	  while(fireflies.length()>0){ fireflies.takeAt(0)->deleteLater(); }
 	  canvas->setStyleSheet("background: black;");
-	  int number = settings->value("fireflies/number",100).toInt();
+	  int number = readSetting("number",qrand()%30 + 50).toInt();
 	  for(int i=0; i<number; i++){
             if(fireflies.length()>number){ continue; }
 	    Firefly *tmp = new Firefly(canvas);
 	    this->addAnimation(tmp);
 	    fireflies << tmp;
 	  }
-	  while( fireflies.length()>number){ fireflies.takeAt(number)->deleteLater(); }
+
 	}
 
 };

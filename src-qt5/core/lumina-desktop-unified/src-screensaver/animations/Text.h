@@ -38,7 +38,7 @@ private slots:
 	void stopped(){ qDebug() << "Text Stopped"; text->hide();}
 
 public:
-	Text(QWidget *parent) : QParallelAnimationGroup(parent){
+	Text(QWidget *parent, QString display) : QParallelAnimationGroup(parent){
 	  text = new QLabel(parent);
 	  range = parent->size();
 	  QPoint center = parent->geometry().center();
@@ -46,7 +46,7 @@ public:
 	  QString color = "rgba(" + QString::number(qrand() % 206 + 50) + ", " + QString::number(qrand() % 206 + 50) + ", " + QString::number(qrand() % 206 + 50);
 	  text->setStyleSheet("QLabel {background-color: rgba(255, 255, 255, 10); color: " + color + "); }");
 	  text->setFont(QFont("Courier", 24, QFont::Bold));
-	  text->setText("test");
+	  text->setText(display);
           QFontMetrics metrics(text->font());
 	  text->setMinimumSize(QSize( metrics.width(text->text())+10, metrics.height()*text->text().count("\n") +10));
 
@@ -75,14 +75,18 @@ public:
 class TextAnimation : public BaseAnimGroup{
 	Q_OBJECT
 public:
-	TextAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	TextAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~TextAnimation(){
 	  this->stop();
 	}
 
 	void LoadAnimations(){
 	  canvas->setStyleSheet("background: black;");
-	  Text *tmp = new Text(canvas);
+	  //Read off the text that needs to be displayed
+	  QString textToShow = readSetting("text", "").toString();
+	  if(textToShow.isEmpty()){ textToShow = "You forgot the text!!"; }
+	  // Now create the animation
+	  Text *tmp = new Text(canvas, textToShow);
 	  this->addAnimation(tmp);
 	}
 

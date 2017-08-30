@@ -7,15 +7,14 @@
 
 #include "SSBaseWidget.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 static QStringList validPlugs;
 // ========
 //   PUBLIC
 // ========
-SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
+SSBaseWidget::SSBaseWidget(QWidget *parent) : QWidget(parent){
   if(validPlugs.isEmpty()){ validPlugs << "none"; } //add more later
-  settings = set; //needed to pass along for plugins to read any special options/settings
   this->setObjectName("LuminaBaseSSWidget");
   ANIM = 0;
   this->setMouseTracking(true);
@@ -60,7 +59,7 @@ void SSBaseWidget::startPainting(){
   this->repaint();
   //If not a stylesheet-based plugin - set it here
   if(cplug!="none"){
-    ANIM = BaseAnimGroup::NewAnimation(cplug, this, settings);
+    ANIM = BaseAnimGroup::NewAnimation(cplug, this);
     connect(ANIM, SIGNAL(finished()), this, SLOT(startPainting()) ); //repeat the plugin as needed
     ANIM->LoadAnimations();
   }
@@ -75,7 +74,7 @@ void SSBaseWidget::startPainting(){
 
 void SSBaseWidget::stopPainting(){
   if(ANIM!=0){
-    qDebug() << "Stopping Animation!!";
+    if(DEBUG){ qDebug() << "Stopping Animation!!"; }
     ANIM->stop();
     //ANIM->clear();
     ANIM->deleteLater();

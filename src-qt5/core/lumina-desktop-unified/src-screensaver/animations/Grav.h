@@ -36,7 +36,7 @@ private:
    	  double xrand = 0.4; //(qrand()%10+4)/10.0;
 	  double yrand = 0.4; //(qrand()%10+4)/10.0;
 
-	  double theta = 1.5707963; 
+	  double theta = 1.5707963;
 	  //double theta = aTan((start.x() - ref->x())/(start.y() - ref->y()));
 	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -ref->x(), -ref->y());
 	  qDebug() << rotation;
@@ -46,9 +46,9 @@ private:
 	  //qDebug() << "Center" << *ref;
 
 	  QPoint firstP = (QPoint(ref->x() + xrand*start.x()*(qCos(0/step) -qSin(0/step)), ref->y() + yrand*start.y()*(qCos(0/step) -qSin(0/step))));
-	  QPoint rotFP = rotation.map(firstP); 
+	  QPoint rotFP = rotation.map(firstP);
 	  qDebug() << "First Point" << firstP;
-      qDebug() << "Rotation by Matrix" << rotFP;
+	  qDebug() << "Rotation by Matrix" << rotFP;
 	  QPoint lastP = (QPoint(ref->x() + xrand*start.x()*(qCos(PI/step) -qSin(PI/step)), ref->y() + yrand*start.y()*(qCos(PI/step) -qSin(PI/step))));
 	  orbit->setKeyValueAt(0, firstP);
 	  orbit->setKeyValueAt(1, lastP);
@@ -145,7 +145,7 @@ private slots:
 	}
 
 public:
-	GravAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	GravAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~GravAnimation(){
 	  sun->deleteLater();
 	  while(planets.length()>0){ planets.takeAt(0)->deleteLater(); }
@@ -179,7 +179,7 @@ public:
 	  canvas->setStyleSheet("background: black;");
 
 	  //Pulls number of planets from settings, with 10 as default
-	  int number = settings->value("planets/number",10).toInt();
+	  int number = readSetting("planets/number",qrand()%5+3).toInt();
 
 	  //Loops through all planets and sets up the animations, then adds them to the base group and vector, which
 	  qDebug() << "Starting planets";

@@ -40,30 +40,27 @@ private:
 	}
 
 	void chooseImage() {
-		QString randomFile = imagePath+imageFiles[qrand() % imageFiles.size()];
-
-		//Choose a new file if the chosen one is not an image
-	 	while(QImageReader::imageFormat(randomFile).isEmpty())
-		  randomFile = imagePath+imageFiles[qrand() % imageFiles.size()];
-    if(scriptLoad){
-      QProcess process;
-      process.start("/home/zwelch/test.sh");
-      process.waitForFinished(1000);
-      QByteArray output = process.readAllStandardOutput();
-      qDebug() << output;
-      pixmap.load(imagePath+imageFiles[qrand() % imageFiles.size()]);
-    }else{
-      pixmap.load(imagePath+imageFiles[qrand() % imageFiles.size()]);
-    }
+	  QString randomFile = imagePath+imageFiles[qrand() % imageFiles.size()];
+	  if(scriptLoad){
+	    QProcess process;
+	    process.start("/home/zwelch/test.sh");
+	    process.waitForFinished(1000);
+	    QByteArray output = process.readAllStandardOutput();
+	    //qDebug() << output;
+	    pixmap.load(randomFile);
+	  }else{
+	    pixmap.load(randomFile);
+	  }
 
 	    //If the image is larger than the screen, then shrink the image down to 3/4 it's size (so there's still some bounce)
 		//Scale the pixmap to keep the aspect ratio instead of resizing the label itself
-	    if(pixmap.width() > screenSize.width() or pixmap.height() > screenSize.height())
-		  pixmap = pixmap.scaled(screenSize*(3.0/4.0), Qt::KeepAspectRatio);
+	  if(pixmap.width() > screenSize.width() or pixmap.height() > screenSize.height()){
+	    pixmap = pixmap.scaled(screenSize*(3.0/4.0), Qt::KeepAspectRatio);
+	  }
 
-		//Set pixmap to the image label
-		image->setPixmap(pixmap);
-	    image->resize(pixmap.size());
+	  //Set pixmap to the image label
+	  image->setPixmap(pixmap);
+	  image->resize(pixmap.size());
 	}
 
 private slots:
@@ -80,20 +77,25 @@ public:
 	  image = new QLabel(parent);
 	  screenSize = parent->size();
 	  this->animate = animate;
-    this->scriptLoad = scriptLoad;
-    this->scriptPath = scriptPath;
-	  
+	  this->scriptLoad = scriptLoad;
+	  this->scriptPath = scriptPath;
+
 	  //Generate the list of files in the directory
 	  imageFiles = QDir(imagePath).entryList(QDir::Files);
-	  if(imageFiles.empty())
-		  qDebug() << "Current image file path has no files.";
-
-	  //Change some default settings for the image. If scaledContents is false, the image will be cut off if resized
-	  image->setScaledContents(true);
-	  image->setAlignment(Qt::AlignHCenter);
-
-	  //Load a random initial image
-	  chooseImage();
+	  //Ensure all the files are actually images
+	  for(int i=0; i<imageFiles.length(); i++){
+	    if(QImageReader::imageFormat(imagePath+"/"+imageFiles[i]).isEmpty()){ imageFiles.removeAt(i); i--; }
+	  }
+	  if(imageFiles.empty()){
+	    qDebug() << "Current image file path has no files.";
+	    image->setText("No image files found:\n"+imagePath);
+	  }else{
+	    //Change some default settings for the image. If scaledContents is false, the image will be cut off if resized
+	    image->setScaledContents(true);
+	    image->setAlignment(Qt::AlignHCenter);
+	    //Load a random initial image
+	    chooseImage();
+	  }
 
 	  //Create the animation that moves the image across the screen
 	  bounce = new QPropertyAnimation(image, "pos", parent);
@@ -132,7 +134,7 @@ public:
 class ImageAnimation: public BaseAnimGroup{
 	Q_OBJECT
 public:
-	ImageAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	ImageAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~ImageAnimation(){
 	  this->stop();
 	}
@@ -140,13 +142,14 @@ public:
 	void LoadAnimations(){
 	  canvas->setStyleSheet("background: black;");
 	  //Load the path of the images from the configuration file (default /usr/local/backgrounds/)
-	  QString imagePath = settings->value("imageSlideshow/path","/usr/local/backgrounds/").toString();
+	  QString imagePath = readSetting("path", LOS::LuminaShare()+"../wallpapers/").toString();
 	  //Load whether to animate the image (default true)
-	  bool animate = settings->value("imageSlideshow/animate", true).toBool();
-	  bool scriptLoad = settings->value("imageSlideshow/scriptLoad", true).toBool();
-    QString scriptPath;
-    if(scriptLoad)
-      scriptPath = settings->value("imageSlideshow/scriptPath", "/usr/local/backgrounds/script.sh").toString();
+	  bool animate = readSetting("animate", true).toBool();
+	  bool scriptLoad = readSetting("scriptLoad", true).toBool();
+	  QString scriptPath;
+	  if(scriptLoad){
+	    scriptPath = readSetting("scriptPath", "/usr/local/backgrounds/script.sh").toString();
+	  }
 	  ImageSlideshow *tmp = new ImageSlideshow(canvas, imagePath, animate, scriptLoad, scriptPath);
 	  this->addAnimation(tmp);
 	}
