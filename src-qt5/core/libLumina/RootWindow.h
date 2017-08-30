@@ -47,6 +47,7 @@ private:
 	};
 	QTimer *autoResizeTimer, *mouseFocusTimer;
 	RootSubWindow *lastActiveMouse;
+	QPoint lastCursorPos;
 
 	QList<screeninfo> WALLPAPERS;
 	void updateScreenPixmap(screeninfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
@@ -83,6 +84,8 @@ signals:
 	void RootResized(QRect);
 	void NewScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
 	void RemovedScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
+	void WorkspaceChanged(int);
+	void MouseMoved();
 
 };
 

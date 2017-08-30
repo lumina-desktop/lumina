@@ -67,6 +67,7 @@ private:
 public slots:
 	void giveMouseFocus(){ WinWidget->raiseWindow(); }
 	void removeMouseFocus(){ WinWidget->lowerWindow(); }
+	void giveKeyboardFocus(){ WIN->requestProperty(NativeWindow::Active, true); }
 
 	void clientClosed();
 	void LoadAllProperties();

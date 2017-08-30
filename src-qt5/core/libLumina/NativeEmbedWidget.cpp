@@ -19,7 +19,7 @@
 #include <xcb/composite.h>
 #include <X11/extensions/Xdamage.h>
 
-#define DISABLE_COMPOSITING false
+#define DISABLE_COMPOSITING true
 
 /*inline xcb_render_pictformat_t get_pictformat(){
   static xcb_render_pictformat_t format = 0;
@@ -85,10 +85,12 @@ void NativeEmbedWidget::syncWidgetSize(QSize sz){
 }
 
 void NativeEmbedWidget::hideWindow(){
+  qDebug() << "Hide Embed Window";
   xcb_unmap_window(QX11Info::connection(), WIN->id());
 }
 
 void NativeEmbedWidget::showWindow(){
+  qDebug() << "Show Embed Window";
   xcb_map_window(QX11Info::connection(), WIN->id());
   reregisterEvents();
   QTimer::singleShot(0,this, SLOT(repaintWindow()));
@@ -209,37 +211,31 @@ void NativeEmbedWidget::resume(){
 void NativeEmbedWidget::resyncWindow(){
    if(WIN==0){ return; }
 
-  // Attempt 1 : spec says to send an artificial configure event to the window
-  /*QRect geom = WIN->geometry();
-  //Send an artificial configureNotify event to the window with the global position/size included
-  xcb_configure_notify_event_t event;
-    event.x = geom.x() + this->pos().x();
-    event.y = geom.y() + this->pos().y();
-    event.width = this->width();
-    event.height = this->height();
-    event.border_width = 0;
-    event.above_sibling = XCB_NONE;
-    event.override_redirect = false;
-    event.window = WIN->id();
-    event.event = WIN->id();
-    event.response_type = XCB_CONFIGURE_NOTIFY;
-  xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (const char *) &event);
-  */
-
-  // Attempt 2 : Just jitter the window size by 1 pixel really quick so the window knows to update it's geometry
-  /*QSize sz = this->size();
-  uint32_t valList[2] = {(uint32_t) sz.width()-1, (uint32_t) sz.height()};
-    uint32_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
-    xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
+  if(DISABLE_COMPOSITING){
+    // Specs say to send an artificial configure event to the window if the window was reparented into the frame
+    QPoint loc = this->mapToGlobal( QPoint(0,0));
+    //Send an artificial configureNotify event to the window with the global position/size included
+    xcb_configure_notify_event_t *event = (xcb_configure_notify_event_t*) calloc(32,1); //always 32-byes long, even if we don't need all of it
+      event->x = loc.x();
+      event->y = loc.y();
+      event->width = this->width();
+      event->height = this->height();
+      event->border_width = 0;
+      event->above_sibling = XCB_NONE;
+      event->override_redirect = false;
+      event->window = WIN->id();
+      event->event = WIN->id();
+      event->response_type = XCB_CONFIGURE_NOTIFY;
+    xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (char *) event);
     xcb_flush(QX11Info::connection());
-  valList[0] = (uint32_t) sz.width();
-    xcb_configure_window(QX11Info::connection(), WIN->id(), mask, valList);
-    xcb_flush(QX11Info::connection());*/
+    free(event);
+  }else{
+    //Window is floating invisibly - make sure it is in the right place
+    //Make sure the window size is syncronized and visual up to date
+    syncWinSize();
+    QTimer::singleShot(10, this, SLOT(repaintWindow()) );
+  }
 
-  //Make sure the window size is syncronized and visual up to date
-  syncWinSize();
-  if(DISABLE_COMPOSITING){ showWindow(); }
-  else{ QTimer::singleShot(10, this, SLOT(repaintWindow()) ); }
 }
 
 void NativeEmbedWidget::repaintWindow(){
@@ -278,9 +274,15 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
-  if(WIN==0 || DISABLE_COMPOSITING){ QWidget::paintEvent(ev); return; }
+  if(WIN==0 || paused){ return; }
   //else if( winImage.isNull() ){return; }
-  else if(paused){ return; }
+  else if(DISABLE_COMPOSITING){
+    // Just make it solid black (underneath the embedded window)
+    //   - only visible when looking through the edge of another window)
+    QPainter P(this);
+      P.fillRect(ev->rect(), Qt::black);
+    return;
+  }
   //renderWindowToWidget(WIN->id(), this);
   //return;
   //else if(this->size()!=winSize){ QTimer::singleShot(0,this, SLOT(syncWinSize())); return; } //do not paint here - waiting to re-sync the sizes

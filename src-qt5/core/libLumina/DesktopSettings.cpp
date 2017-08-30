@@ -230,7 +230,7 @@ QList< DesktopSettings::File > DesktopSettings::filesForRunMode(RunMode mode){
   // Note that the "System" file is always ignored here - that is specially loaded
   QList< DesktopSettings::File > tmp;
   if(mode == DesktopSettings::UserFull || mode == DesktopSettings::SystemFull){
-    tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop <<  DesktopSettings::Panels << DesktopSettings::Plugins << DesktopSettings::Keys << DesktopSettings::ContextMenu << DesktopSettings::Animation << DesktopSettings::ScreenSaver;
+    tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop <<  DesktopSettings::Panels << DesktopSettings::Plugins << DesktopSettings::Keys << DesktopSettings::ContextMenu << DesktopSettings::Animation << DesktopSettings::ScreenSaver << DesktopSettings::WM;
   }else if(runmode == DesktopSettings::SystemInterface){
     tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session;
   }
@@ -262,7 +262,8 @@ QString DesktopSettings::rel_path(DesktopSettings::File file){
 	name="plugins"; break;
     case DesktopSettings::ScreenSaver:
 	name="screensaver"; break;
-
+    case DesktopSettings::WM:
+	name="windows"; break;
   }
   return FILEPREFIX+name+".conf";
 }

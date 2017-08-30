@@ -201,17 +201,28 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 }
 
 void RootWindow::checkMouseFocus(){
+  QPoint cpos = QCursor::pos();
+  if(lastCursorPos != cpos){ emit MouseMoved(); }
+  lastCursorPos = cpos;
   QWidget *child = this->childAt(QCursor::pos());
   while(child!=0 && child->whatsThis()!="RootSubWindow"){
     child = child->parentWidget();
     if(child==this){ child = 0;} //end of the line
   }
+
   if(child==lastActiveMouse){ return; } //nothing new to do
   //Make sure the child is actually a RootSubWindow
   if(lastActiveMouse!=0){ lastActiveMouse->removeMouseFocus(); lastActiveMouse = 0; }
   if(child!=0){
     lastActiveMouse = static_cast<RootSubWindow*>(child);
-    lastActiveMouse->giveMouseFocus();
+
+    if(DesktopSettings::instance()->value(DesktopSettings::WM, "focusFollowsMouse", true).toBool()){
+      lastActiveMouse->giveKeyboardFocus();
+      if(DesktopSettings::instance()->value(DesktopSettings::WM, "raiseOnFocus", true).toBool()){
+        lastActiveMouse->raise();
+      }
+    }
+    lastActiveMouse->giveMouseFocus(); //always give mouse focus on mouseover
   }
 }
 
@@ -228,9 +239,9 @@ void RootWindow::NewWindow(NativeWindow *win){
     WINDOWS << subwin;
   }
   CheckWindowPosition(win->id(), true); //first-time run
-  //win->setProperty(NativeWindow::Visible, true);
-  //win->requestProperty( NativeWindow::Active, true);
-  win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true);
+  win->setProperty(NativeWindow::Visible, true);
+  win->requestProperty( NativeWindow::Active, true);
+  //win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true, true);
   if(!mouseFocusTimer->isActive()){ mouseFocusTimer->start(); }
 }
 

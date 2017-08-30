@@ -327,7 +327,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
+		qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
 		if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		break;
@@ -373,7 +373,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		//if(vals[i].toBool()){ WinWidget->raiseWindow(); }
+		if(vals[i].toBool()){ activate(); } //WinWidget->raiseWindow(); }
 		break;
 	/*case NativeWindow::FrameExtents:
 		qDebug() << " - FRAME CHANGE";
@@ -385,6 +385,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		mainLayout->setContentsMargins( vals[i].value< QList<int> >().at(0),vals[i].value< QList<int> >().at(2) - titleLabel->height(),vals[i].value< QList<int> >().at(1),vals[i].value< QList<int> >().at(3));
 		break;*/
 	case NativeWindow::WinTypes:
+		qDebug() << "Got Window Types:" << vals[i].value< QList<NativeWindow::Type> >();
 		enableFrame(vals[i].value< QList<NativeWindow::Type> >().contains(NativeWindow::T_NORMAL) );
 		break;
 	default:

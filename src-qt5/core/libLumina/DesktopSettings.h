@@ -25,7 +25,7 @@
 class DesktopSettings : public QObject{
 	Q_OBJECT
 public:
-	enum File{ System, Favorites, Environment, Session, Desktop, Panels, Plugins, ContextMenu, Keys, Animation, ScreenSaver};
+	enum File{ System, Favorites, Environment, Session, Desktop, Panels, Plugins, ContextMenu, Keys, Animation, ScreenSaver, WM};
 	//Changes to this enum need to be added to the "filesForRunMode()" and "rel_path()" functions as well
 
 	DesktopSettings(QObject *parent = 0);
