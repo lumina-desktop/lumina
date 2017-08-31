@@ -110,7 +110,9 @@ void LScreenSaver::ShowScreenSaver(){
 
     //Setup the geometry of the base to match the screen
     BASES[i]->setGeometry(SCREENS[i]->geometry());  //match this screen geometry
-    BASES[i]->setPlugin(DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "screenplugin_"+SCREENS[i]->name(), DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "defaultscreenplugin","random").toString() ).toString() );
+    QString plug = DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "plugin_"+SCREENS[i]->name(), "").toString();
+    if(plug.isEmpty()){ plug = DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "default_plugin","random").toString();  }
+    BASES[i]->setPlugin(plug);
   }
   //Now set the overall parent widget geometry and show everything
   this->setGeometry(bounds); //overall background widget

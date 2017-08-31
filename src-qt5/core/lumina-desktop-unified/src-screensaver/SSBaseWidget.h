@@ -27,6 +27,7 @@ public slots:
 private:
 	QString plugType, cplug; //type of custom painting to do
 	BaseAnimGroup *ANIM;
+	QTimer *restartTimer;
 
 private slots:
 

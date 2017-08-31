@@ -65,8 +65,10 @@ QList< DesktopSettings::File > DesktopSettings::writableFiles(){
 QVariant DesktopSettings::value(DesktopSettings::File file, QString variable, QVariant defaultvalue){
   if(!files.contains(file)){ return defaultvalue; }
   for(int i=0; i<files[file].length(); i++){
+    qDebug() << "Look for Settings value:" << variable << files[file];
     if( settings.contains(files[file][i])){ //make sure this file is in the settings hash
       if(settings[files[file][i]]->contains(variable)){ //if this file does not have the variable - go to the next one
+        qDebug() << " - Found Setting in File:" << files[file][i];
         return settings[files[file][i]]->value(variable, defaultvalue);
       }
     }
@@ -124,7 +126,7 @@ void DesktopSettings::parseSystemSettings(){
     QString defMode = settings[path]->value("default_mode","fulluser").toString().toLower();
     if(defMode=="fullsystem"){ runmode= DesktopSettings::SystemFull; }
     else if(defMode=="staticinterface"){ runmode = DesktopSettings::SystemInterface; }
-
+    else{ runmode = DesktopSettings::UserFull; }
     //Now determine the runmode for this user
     struct passwd *pw = getpwuid(getuid());
     if(pw!=0){
@@ -203,7 +205,10 @@ void DesktopSettings::locateFiles(){
     for(int j=0; j<tmp.length(); j++){
       QString path = systemdirs[i]+rel_path(tmp[j]);
       if(QFile::exists(path)){
-        files.insert(tmp[j], QStringList() << path);
+        QStringList filepaths;
+          if(files.contains(tmp[j])){ filepaths = files[tmp[j]]; }
+           filepaths << path; //add this file to the end of the list for this type of settings file
+        files.insert(tmp[j], filepaths);
         settings.insert(path, new QSettings(path, QSettings::IniFormat, this) );
         watcher->addPath(path);
       }

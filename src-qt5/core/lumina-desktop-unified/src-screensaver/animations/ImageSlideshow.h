@@ -17,7 +17,7 @@ private:
 	QPropertyAnimation *bounce, *fading;
 	QPixmap pixmap;
 	QStringList imageFiles;
-	QString imagePath, scriptPath;
+	QString imagePath, scriptPath, curpixmap;
 	QSize screenSize;
 	bool animate, scriptLoad;
 
@@ -40,27 +40,33 @@ private:
 	}
 
 	void chooseImage() {
-	  QString randomFile = imagePath+imageFiles[qrand() % imageFiles.size()];
-	  if(scriptLoad){
+	  /*if(scriptLoad){
 	    QProcess process;
 	    process.start("/home/zwelch/test.sh");
 	    process.waitForFinished(1000);
 	    QByteArray output = process.readAllStandardOutput();
 	    //qDebug() << output;
-	    pixmap.load(randomFile);
-	  }else{
-	    pixmap.load(randomFile);
-	  }
-
-	    //If the image is larger than the screen, then shrink the image down to 3/4 it's size (so there's still some bounce)
+	    //pixmap.load(randomFile);
+	  }else{*/
+	    //File Load
+	    QString randomFile = curpixmap;
+	    if(imageFiles.size()>1 || curpixmap.isEmpty()){
+              while(curpixmap==randomFile){ randomFile = imagePath+imageFiles[qrand() % imageFiles.size()]; }
+	    }
+            if(curpixmap!=randomFile){
+	      //no need to load the new file or change the label
+              pixmap.load(randomFile);
+	      //If the image is larger than the screen, then shrink the image down to 3/4 it's size (so there's still some bounce)
 		//Scale the pixmap to keep the aspect ratio instead of resizing the label itself
-	  if(pixmap.width() > screenSize.width() or pixmap.height() > screenSize.height()){
-	    pixmap = pixmap.scaled(screenSize*(3.0/4.0), Qt::KeepAspectRatio);
-	  }
+	      if(pixmap.width() >= (screenSize.width()-10) || pixmap.height() >= (screenSize.height()-10) ){
+	        pixmap = pixmap.scaled(screenSize*(3.0/4.0), Qt::KeepAspectRatio);
+	      }
+	      //Set pixmap to the image label
+	      image->setPixmap(pixmap);
+	      image->resize(pixmap.size());
+	    }
+	//}
 
-	  //Set pixmap to the image label
-	  image->setPixmap(pixmap);
-	  image->resize(pixmap.size());
 	}
 
 private slots:
@@ -69,7 +75,7 @@ private slots:
 	  chooseImage();
 	  setupAnimation();
 	}
-	void stopped(){ qDebug() << "Image Stopped"; image->hide();}
+	void stopped(){ image->hide();}
 
 public:
 	ImageSlideshow(QWidget *parent, QString path, bool animate, bool scriptLoad, QString scriptPath) : QParallelAnimationGroup(parent){

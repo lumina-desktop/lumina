@@ -12,6 +12,8 @@
 #include <QParallelAnimationGroup>
 #include <QtMath>
 
+#include <unistd.h>
+
 class Text: public QParallelAnimationGroup{
 	Q_OBJECT
 private:
@@ -41,10 +43,10 @@ public:
 	Text(QWidget *parent, QString display) : QParallelAnimationGroup(parent){
 	  text = new QLabel(parent);
 	  range = parent->size();
-	  QPoint center = parent->geometry().center();
+	  QPoint center = QRect( QPoint(0,0), parent->size()).center();
 
 	  QString color = "rgba(" + QString::number(qrand() % 206 + 50) + ", " + QString::number(qrand() % 206 + 50) + ", " + QString::number(qrand() % 206 + 50);
-	  text->setStyleSheet("QLabel {background-color: rgba(255, 255, 255, 10); color: " + color + "); }");
+	  text->setStyleSheet("QLabel {background-color: transparent; color: " + color + "); }");
 	  text->setFont(QFont("Courier", 24, QFont::Bold));
 	  text->setText(display);
           QFontMetrics metrics(text->font());
@@ -60,7 +62,7 @@ public:
 	  v.setY((qrand() % 100 + 50) * qPow(-1, qrand() % 2));
 	  movement->setStartValue(center);
 	  //Ensures the screensaver will not stop until the user wishes to login or it times out
-	  this->setLoopCount(2000); //number of movements
+	  this->setLoopCount(200); //number of wall bounces
 	  movement->setDuration(200);
 	  movement->setEndValue(QPoint(qrand() % (int)range.height(), qrand() % range.width()));
 	  LoopChanged();  //load initial values
@@ -84,7 +86,11 @@ public:
 	  canvas->setStyleSheet("background: black;");
 	  //Read off the text that needs to be displayed
 	  QString textToShow = readSetting("text", "").toString();
-	  if(textToShow.isEmpty()){ textToShow = "You forgot the text!!"; }
+	  if(textToShow.isEmpty()){
+ 	    char hname[300];
+            gethostname(hname, 300);
+            textToShow = QString::fromLocal8Bit(hname);
+	  }
 	  // Now create the animation
 	  Text *tmp = new Text(canvas, textToShow);
 	  this->addAnimation(tmp);

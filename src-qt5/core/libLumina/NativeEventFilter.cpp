@@ -77,7 +77,7 @@ inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilte
   //Send out the signal if necessary
   if(prop!=NativeWindow::None){
     //if(DEBUG){
-      qDebug() << "Detected Property Change:" << ev->window << prop;
+      //qDebug() << "Detected Property Change:" << ev->window << prop;
     //}
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{
