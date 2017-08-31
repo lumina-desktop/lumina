@@ -19,6 +19,7 @@ QStringList RootSubWindow::validAnimations(NativeWindow::Property prop){
 }
 
 void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVariant nval){
+  if(anim->state()==QAbstractAnimation::Running){ return; } //already running
   animResetProp.clear();
   //Special case - random animation each time
   if(name=="random"){
@@ -73,7 +74,6 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
   } //end of Visibility animation
   else if(prop == NativeWindow::Size){
     //This is pretty much all geometry animations where the window is visible->visible
-    animResetProp = QVariant(); //reset this - not needed here
     anim->setPropertyName("geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(nval.toRect());
@@ -104,11 +104,11 @@ void RootSubWindow::animFinished(){
         //qDebug() << "Sub Window geometry:" << clientg;
         WIN->setProperties(QList< NativeWindow::Property>() << NativeWindow::Size << NativeWindow::GlobalPos,
 		QList<QVariant>() << clientg.size() << clientg.topLeft() );
-        WinWidget->resyncWindow(); //also let the window know about the current geometry
       }
     }
+    WinWidget->resyncWindow(); //also let the window know about the current geometry
   }
   animResetProp = QVariant(); //clear the variable
-   QTimer::singleShot(10, WinWidget, SLOT(resume()) );
-
+  //QTimer::singleShot(10, WinWidget, SLOT(resume()) );
+  WinWidget->resume();
 }

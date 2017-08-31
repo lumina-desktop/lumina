@@ -36,6 +36,7 @@ private slots:
 	void showWindow();
 	QImage windowImage(QRect geom);
 
+	void setWinUnpaused();
 
 public:
 	NativeEmbedWidget(QWidget *parent);

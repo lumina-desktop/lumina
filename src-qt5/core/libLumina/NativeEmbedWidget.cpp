@@ -67,7 +67,7 @@ inline void registerClientEvents(WId id){
 // ============
 //Simplification functions for the XCB/XLib interactions
 void NativeEmbedWidget::syncWinSize(QSize sz){
-  if(WIN==0 || paused){ return; }
+  if(WIN==0){ return; }
   else if(!sz.isValid()){ sz = this->size(); } //use the current widget size
   //qDebug() << "Sync Window Size:" << sz;
   //if(sz == winSize){ return; } //no change
@@ -117,8 +117,14 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
 
   return img;
 
-}
 
+}
+void NativeEmbedWidget::setWinUnpaused(){
+  paused = false;
+  if(!DISABLE_COMPOSITING){
+    repaintWindow(); //update the cached image right away
+  }
+}
 // ============
 //      PUBLIC
 // ============
@@ -215,6 +221,7 @@ void NativeEmbedWidget::resume(){
   }else{
     repaintWindow(); //update the cached image right away
   }
+  QTimer::singleShot(10, this, SLOT(setWinUnpaused()) );
 }
 
 void NativeEmbedWidget::resyncWindow(){
@@ -267,7 +274,7 @@ void NativeEmbedWidget::reregisterEvents(){
 // ==============
 void NativeEmbedWidget::resizeEvent(QResizeEvent *ev){
   QWidget::resizeEvent(ev);
-  if(WIN!=0){
+  if(WIN!=0 && !paused){
     syncWinSize(ev->size());
   } //syncronize the window with the new widget size
 }
@@ -283,13 +290,13 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
-  if(WIN==0 || paused){ return; }
+  if(WIN==0){ return; }
   //else if( winImage.isNull() ){return; }
   else if(DISABLE_COMPOSITING){
     // Just make it solid black (underneath the embedded window)
     //   - only visible when looking through the edge of another window)
-    QPainter P(this);
-      P.fillRect(ev->rect(), Qt::black);
+    //QPainter P(this);
+      //P.fillRect(ev->rect(), Qt::black);
     return;
   }
   //renderWindowToWidget(WIN->id(), this);
