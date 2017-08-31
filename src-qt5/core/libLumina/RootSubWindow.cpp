@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTimer>
+#include <QScreen>
 
 #define WIN_BORDER 5
 
@@ -278,12 +279,44 @@ void RootSubWindow::LoadAllProperties(){
 
 //Button Actions - public so they can be tied to key shortcuts and stuff as well
 void RootSubWindow::toggleMinimize(){
-  WIN->setProperty(NativeWindow::Visible, false);
-  QTimer::singleShot(2000, this, SLOT(toggleMaximize()) );
+  WIN->toggleVisibility();
 }
 
 void RootSubWindow::toggleMaximize(){
-  WIN->setProperty(NativeWindow::Visible, true);
+  //Get the current screen that this window is on
+  QList<QScreen*> screens = QApplication::screens();
+  QRect rect;
+  int primaryscreen = 0; //fallback value
+  for(int i=0; i<screens.length(); i++){
+    QRect intersect = screens[i]->geometry().intersected(this->geometry());
+    if( (intersect.width()-rect.width() + intersect.height()-rect.height()) > 0){
+      rect = intersect;
+      primaryscreen = i;
+    }
+  }
+  //Now that we have the screen dimensions, lets check/change the window
+  rect = screens[primaryscreen]->availableGeometry();
+  QList< NativeWindow::State > states = WIN->property(NativeWindow::States).value< QList< NativeWindow::State> >();
+  if(rect == this->geometry() || states.contains(NativeWindow::S_MAX_VERT) || states.contains(NativeWindow::S_MAX_HORZ)){
+    //Already maximized - try to restore it to the previous size/location
+    if(!lastMaxGeom.isNull()){
+      rect = lastMaxGeom;
+    }else{
+      // no last geometry - started out maximized?
+      // make it half the screen size and centered on the screen
+      QPoint center = rect.center();
+      rect.setWidth( rect.width()/2 );
+      rect.setHeight( rect.height()/2 );
+      rect.moveTopLeft( center - QPoint(rect.width()/2, rect.height()/2) );
+    }
+    lastMaxGeom = QRect(); //clear this saved geom
+  }else{
+    //Not maximized yet - go ahead and make it so
+    lastMaxGeom = this->geometry(); //save this for later;
+  }
+  qDebug() << "Toggle Maximize:" << this->geometry() << rect;
+  QString anim_type = DesktopSettings::instance()->value(DesktopSettings::Animation, "window/move", "random").toString();
+  loadAnimation(anim_type, NativeWindow::Size, rect);
 }
 
 void RootSubWindow::triggerClose(){
@@ -291,7 +324,13 @@ void RootSubWindow::triggerClose(){
 }
 
 void RootSubWindow::toggleSticky(){
-
+  QList< NativeWindow::State> states = WIN->property(NativeWindow::States).value< QList< NativeWindow::State > >();
+  if(states.contains(NativeWindow::S_STICKY)){
+    states.removeAll(NativeWindow::S_STICKY);
+  }else{
+    states << NativeWindow::S_STICKY;
+  }
+  WIN->requestProperty(NativeWindow::States, QVariant::fromValue<QList <NativeWindow::State> >(states) );
 }
 
 void RootSubWindow::activate(){
@@ -327,7 +366,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
+		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
 		if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		break;
@@ -347,9 +386,9 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  props << props.takeAt(i);
 		  vals << vals.takeAt(i);
 		  i--;
-		}else if(anim->state() != QPropertyAnimation::Running ){
+		}else if(anim->state() != QPropertyAnimation::Running && !WinWidget->isPaused()){
 		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size() && activeState==Normal ){
-                    qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
+                    //qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
 		    this->setGeometry(WIN->geometry());
 		  }
 		}

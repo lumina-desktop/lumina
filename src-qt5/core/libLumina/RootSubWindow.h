@@ -55,7 +55,7 @@ private:
 	QPropertyAnimation *anim;
 	QVariant animResetProp;
 	QTimer *moveTimer;
-	QRect lastGeom; //frame coordinates
+	QRect lastGeom, lastMaxGeom; //frame coordinates
 
 	void initWindowFrame();
 	void enableFrame(bool);

@@ -55,7 +55,7 @@ inline void registerClientEvents(WId id){
 			| XCB_EVENT_MASK_BUTTON_MOTION
 			| XCB_EVENT_MASK_EXPOSURE
 			| XCB_EVENT_MASK_STRUCTURE_NOTIFY
-//			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_ENTER_WINDOW)
 			};
@@ -85,15 +85,17 @@ void NativeEmbedWidget::syncWidgetSize(QSize sz){
 }
 
 void NativeEmbedWidget::hideWindow(){
-  qDebug() << "Hide Embed Window";
+  //qDebug() << "Hide Embed Window";
   xcb_unmap_window(QX11Info::connection(), WIN->id());
 }
 
 void NativeEmbedWidget::showWindow(){
-  qDebug() << "Show Embed Window";
+  //qDebug() << "Show Embed Window";
   xcb_map_window(QX11Info::connection(), WIN->id());
   reregisterEvents();
-  QTimer::singleShot(0,this, SLOT(repaintWindow()));
+  if(!DISABLE_COMPOSITING){
+    QTimer::singleShot(0,this, SLOT(repaintWindow()));
+  }
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
@@ -162,17 +164,17 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
   }else{
     xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
+    registerClientEvents(this->winId()); //child events get forwarded through the frame - watch this for changes too
   }
   WIN->addFrameWinID(this->winId());
   registerClientEvents(WIN->id());
-  //registerClientEvents(this->winId());
   //qDebug() << "Events Registered:" << WIN->id() << this->winId();
   return true;
 }
 
 bool NativeEmbedWidget::detachWindow(){
   xcb_reparent_window(QX11Info::connection(), WIN->id(), QX11Info::appRootWindow(), -1, -1);
-  WIN = 0;
+  //WIN = 0;
   return true;
 }
 
@@ -197,15 +199,22 @@ void NativeEmbedWidget::lowerWindow(){
 // ==============
 //Pause/resume
 void NativeEmbedWidget::pause(){
-  if(winImage.isNull()){ repaintWindow(); } //make sure we have one image already cached first
+  if(DISABLE_COMPOSITING){
+    this->setVisible(false);
+  }else{
+    if(winImage.isNull()){ repaintWindow(); } //make sure we have one image already cached first
+  }
   paused = true;
 }
 
 void NativeEmbedWidget::resume(){
   paused = false;
   syncWinSize();
-  //showWindow();
-  repaintWindow(); //update the cached image right away
+  if(DISABLE_COMPOSITING){
+    this->setVisible(true);
+  }else{
+    repaintWindow(); //update the cached image right away
+  }
 }
 
 void NativeEmbedWidget::resyncWindow(){

@@ -64,6 +64,17 @@ void DesktopContextMenu::UpdateMenu(bool fast){
   this->addAction(LXDG::findIcon("system-log-out",""), tr("Leave"), this, SIGNAL(showLeaveDialog()) );
 }
 
+// === PRIVATE ===
+void DesktopContextMenu::AddWindowToMenu(NativeWindow *win){
+  QString label = win->property(NativeWindow::ShortTitle).toString();
+  if(label.isEmpty()){ label = win->property(NativeWindow::Title).toString(); }
+  if(label.isEmpty()){ label = win->property(NativeWindow::Name).toString(); }
+  QAction *tmp = winMenu->addAction( win->property(NativeWindow::Icon).value<QIcon>(), label, win, SLOT(toggleVisibility()) );
+  //Need to change the visual somehow to indicate whether it is visible or not
+  //bool visible = win->property(NativeWindow::Visible).toBool();
+  // TODO
+}
+
 // === PUBLIC ===
 DesktopContextMenu::DesktopContextMenu(QWidget *parent) : QMenu(parent){
   if(parent!=0){
@@ -149,5 +160,16 @@ void DesktopContextMenu::updateWinMenu(){
   if(winMenu==0){
     winMenu = new QMenu(this);
     winMenu->setTitle( tr("Task Manager") );
+  }
+  winMenu->clear();
+  QList<NativeWindow*> wins = Lumina::NWS->currentWindows();
+  unsigned int wkspace = Lumina::NWS->currentWorkspace();
+  for(int i=0; i<wins.length(); i++){
+    //First check if this window is in the current workspace (or is "sticky")
+    if(wins.at(i)->property(NativeWindow::Workspace).toUInt() != wkspace
+	      && wins.at(i)->property(NativeWindow::States).value< QList<NativeWindow::State> >().contains(NativeWindow::S_STICKY) ){
+      continue;
+    }
+    AddWindowToMenu(wins.at(i));
   }
 }

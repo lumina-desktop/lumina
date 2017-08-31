@@ -11,6 +11,9 @@ QStringList RootSubWindow::validAnimations(NativeWindow::Property prop){
   QStringList valid;
   if(prop == NativeWindow::Visible){
     valid << "zoom" << "wipe-center-vertical" << "wipe-center-horizontal" << "shade-top" << "shade-right" << "shade-left" << "shade-bottom";
+  }else if(prop == NativeWindow::Size){
+    //Note: this is used for pretty much all geometry changes to the window where it is visible both before/after animation
+    valid << "direct";
   }
   return valid;
 }
@@ -20,7 +23,7 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
   //Special case - random animation each time
   if(name=="random"){
     QStringList valid = validAnimations(prop);
-    name = valid.at(qrand()%valid.length());
+    if(!valid.isEmpty()){ name = valid.at(qrand()%valid.length()); }
   }
   //Now setup the animation
   if(prop == NativeWindow::Visible){
@@ -68,6 +71,20 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
     anim->start();
     this->show();
   } //end of Visibility animation
+  else if(prop == NativeWindow::Size){
+    //This is pretty much all geometry animations where the window is visible->visible
+    animResetProp = QVariant(); //reset this - not needed here
+    anim->setPropertyName("geometry");
+    anim->setStartValue(this->geometry());
+    anim->setEndValue(nval.toRect());
+    /*if(name==""){
+      // TO-DO modify the path from beginning->end somehow
+    }*/
+    // Now start the animation
+    WinWidget->pause();
+    anim->start();
+    this->show();
+  }
 }
 
 void RootSubWindow::animFinished(){
@@ -92,6 +109,6 @@ void RootSubWindow::animFinished(){
     }
   }
   animResetProp = QVariant(); //clear the variable
-   WinWidget->resume();
+   QTimer::singleShot(10, WinWidget, SLOT(resume()) );
 
 }

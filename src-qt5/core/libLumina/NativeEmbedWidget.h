@@ -43,6 +43,7 @@ public:
 	bool embedWindow(NativeWindow *window);
 	bool detachWindow();
 	bool isEmbedded(); //status of the embed
+	bool isPaused(){ return paused; }
 
 public slots:
 	void raiseWindow();

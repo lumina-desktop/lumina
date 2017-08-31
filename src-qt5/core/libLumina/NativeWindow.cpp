@@ -106,6 +106,10 @@ QRect NativeWindow::geometry(){
   return geom;
 }
 // ==== PUBLIC SLOTS ===
+void NativeWindow::toggleVisibility(){
+  setProperty(NativeWindow::Visible, !property(NativeWindow::Visible).toBool() );
+}
+
 void NativeWindow::requestClose(){
   emit RequestClose(winid);
 }
