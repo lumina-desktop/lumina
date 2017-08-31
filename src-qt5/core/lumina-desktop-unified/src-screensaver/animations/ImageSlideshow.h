@@ -54,6 +54,7 @@ private:
               while(curpixmap==randomFile){ randomFile = imagePath+imageFiles[qrand() % imageFiles.size()]; }
 	    }
             if(curpixmap!=randomFile){
+              curpixmap = randomFile; //save this for later
 	      //no need to load the new file or change the label
               pixmap.load(randomFile);
 	      //If the image is larger than the screen, then shrink the image down to 3/4 it's size (so there's still some bounce)
@@ -125,8 +126,8 @@ public:
 		  //If no animation, center the image in the middle of the screen
 		  image->move(QPoint((parent->width()-image->width())/2,(parent->height()-image->height())/2));
 
-	  //Loop through 30 times for a total for 4 minutes
-	  this->setLoopCount(30);
+	  //Loop through 15 times for a total for 2 minutes
+	  this->setLoopCount(15);
 	  bounce->setDuration(8000);
 	  fading->setDuration(8000);
 

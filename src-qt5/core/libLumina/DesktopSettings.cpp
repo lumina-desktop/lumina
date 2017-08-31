@@ -65,10 +65,10 @@ QList< DesktopSettings::File > DesktopSettings::writableFiles(){
 QVariant DesktopSettings::value(DesktopSettings::File file, QString variable, QVariant defaultvalue){
   if(!files.contains(file)){ return defaultvalue; }
   for(int i=0; i<files[file].length(); i++){
-    qDebug() << "Look for Settings value:" << variable << files[file];
+    //qDebug() << "Look for Settings value:" << variable << files[file];
     if( settings.contains(files[file][i])){ //make sure this file is in the settings hash
       if(settings[files[file][i]]->contains(variable)){ //if this file does not have the variable - go to the next one
-        qDebug() << " - Found Setting in File:" << files[file][i];
+        //qDebug() << " - Found Setting in File:" << files[file][i];
         return settings[files[file][i]]->value(variable, defaultvalue);
       }
     }
