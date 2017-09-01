@@ -6,6 +6,7 @@
 //===========================================
 #include "ContextMenu.h"
 #include <global-objects.h>
+#include <JsonMenu.h>
 
 void DesktopContextMenu::SettingsChanged(DesktopSettings::File file){
   if(file == DesktopSettings::ContextMenu){ UpdateMenu(false); }
@@ -24,13 +25,25 @@ void DesktopContextMenu::UpdateMenu(bool fast){
   QStringList items = DesktopSettings::instance()->value(DesktopSettings::ContextMenu, "itemlist", QStringList()<< "terminal" << "filemanager" << "line" << "applications" << "windowlist" << "settings" << "lockdesktop").toStringList();
   usewinmenu=false;
   for(int i=0; i<items.length(); i++){
-    if(items[i]=="terminal"){ this->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"))->setWhatsThis("--terminal"); }
-    else if(items[i]=="lockdesktop"){ this->addAction(LXDG::findIcon("system-lock-screen",""), tr("Lock Session"), this, SIGNAL(LockSession()) ); }
-    else if(items[i]=="filemanager"){ this->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"))->setWhatsThis(QDir::homePath()); }
+    if(items[i]=="terminal"){
+      QAction *act = this->addAction( tr("Terminal"));
+      LIconCache::instance()->loadIcon(act, "utilities-terminal");
+      act->setWhatsThis("--terminal");
+    }
+    else if(items[i]=="lockdesktop"){
+      QAction *act = this->addAction( tr("Lock Session"), this, SIGNAL(LockSession()) );
+      LIconCache::instance()->loadIcon(act, "system-lock-screen");
+    }
+    else if(items[i]=="filemanager"){
+      QAction *act = this->addAction( tr("Browse Files"));
+      LIconCache::instance()->loadIcon(act, "user-home");
+      act->setWhatsThis(QDir::homePath());
+    }
     else if(items[i]=="applications"){
       if(appMenu==0){ updateAppMenu(); }
       this->addMenu( appMenu );
-    }else if(items[i]=="line"){ this->addSeparator(); }
+    }
+    else if(items[i]=="line"){ this->addSeparator(); }
     //else if(items[i]=="settings"){ this->addMenu( LSession::handle()->settingsMenu() ); }
     else if(items[i]=="windowlist"){
       if(winMenu==0){ updateWinMenu(); }
@@ -46,18 +59,18 @@ void DesktopContextMenu::UpdateMenu(bool fast){
         XDGDesktop xdgf(file);// = LXDG::loadDesktopFile(file, ok);
         if(xdgf.type!=XDGDesktop::BAD){ xdgf.addToMenu(this); }
 	  }
-    }/*else if(items[i].startsWith("jsonmenu::::")){
+    }else if(items[i].startsWith("jsonmenu::::")){
       //Custom JSON menu system (populated on demand via external scripts/tools
       QStringList info = items[i].split("::::"); //FORMAT:[ "jsonmenu",exec,name, icon(optional)]
       if(info.length()>=3){
-        qDebug() << "Custom JSON Menu Loaded:" << info;
-        JsonMenu *tmp = new JsonMenu(info[1], deskMenu);
+        //qDebug() << "Custom JSON Menu Loaded:" << info;
+        JsonMenu *tmp = new JsonMenu(info[1], this);
         tmp->setTitle(info[2]);
         connect(tmp, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
         if(info.length()>=4){ tmp->setIcon( LXDG::findIcon(info[3],"") ); }
         this->addMenu(tmp);
       }
-    }*/
+    }
   }
   //Now add the system quit options
   this->addSeparator();
@@ -148,7 +161,7 @@ void DesktopContextMenu::updateAppMenu(){
   if(appMenu==0){
     appMenu = new QMenu(this);
     appMenu->setTitle( tr("Applications"));
-    appMenu->setIcon( LXDG::findIcon("system-run","") );
+    LIconCache::instance()->loadIcon( appMenu, "system-run");
     connect(appMenu, SIGNAL(triggered(QAction*)), this, SLOT(LaunchApp(QAction*)) );
   }
   //qDebug() << "Populate App Menu";
@@ -160,6 +173,7 @@ void DesktopContextMenu::updateWinMenu(){
   if(winMenu==0){
     winMenu = new QMenu(this);
     winMenu->setTitle( tr("Task Manager") );
+    LIconCache::instance()->loadIcon( winMenu, "preferences-system-windows");
   }
   winMenu->clear();
   QList<NativeWindow*> wins = Lumina::NWS->currentWindows();

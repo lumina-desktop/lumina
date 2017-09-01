@@ -61,6 +61,7 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
     }
     if(nval.toBool()){
       this->setGeometry( anim->startValue().toRect() ); //ensure the window is the initial geom before it becomes visible
+      //QTimer::singleShot( anim->duration()+5, this, SLOT(activate()) );
     }else{
       QVariant tmp = anim->startValue();
         anim->setStartValue(anim->endValue());
@@ -111,4 +112,5 @@ void RootSubWindow::animFinished(){
   animResetProp = QVariant(); //clear the variable
   //QTimer::singleShot(10, WinWidget, SLOT(resume()) );
   WinWidget->resume();
+  emit windowAnimFinished();
 }

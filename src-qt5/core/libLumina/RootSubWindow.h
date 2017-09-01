@@ -67,7 +67,7 @@ private:
 public slots:
 	void giveMouseFocus(){ WinWidget->raiseWindow(); }
 	void removeMouseFocus(){ WinWidget->lowerWindow(); }
-	void giveKeyboardFocus(){ WIN->requestProperty(NativeWindow::Active, true); }
+	void giveKeyboardFocus(){ WIN->requestProperty(NativeWindow::Active, true, true); }
 
 	void clientClosed();
 	void LoadAllProperties();
@@ -99,7 +99,9 @@ protected:
 	//void enterEvent(QEvent *ev);
 	void moveEvent(QMoveEvent *ev);
 
-
+signals:
+	void windowMoved(RootSubWindow*);
+	void windowAnimFinished();
 };
 
 #endif

@@ -63,10 +63,41 @@
 			XCB_EVENT_MASK_PROPERTY_CHANGE | \
 			XCB_EVENT_MASK_FOCUS_CHANGE)
 
-inline void registerClientEvents(WId id){
+#define CLIENT_EVENT_MASK (XCB_EVENT_MASK_PROPERTY_CHANGE |  \
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_FOCUS_CHANGE | \
+                          XCB_EVENT_MASK_POINTER_MOTION)
+
+#define FRAME_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | \
+                          XCB_EVENT_MASK_BUTTON_RELEASE | \
+                          XCB_EVENT_MASK_POINTER_MOTION | \
+                          XCB_EVENT_MASK_EXPOSURE | \
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT | \
+                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_ENTER_WINDOW)
+
+inline void registerClientEvents(WId id, bool client = true){
+  uint32_t values[] = {XCB_NONE};
+  values[0] = client ? CLIENT_EVENT_MASK : FRAME_EVENT_MASK ;
+  /*{ (XCB_EVENT_MASK_PROPERTY_CHANGE
+			| XCB_EVENT_MASK_BUTTON_PRESS
+			| XCB_EVENT_MASK_BUTTON_RELEASE
+ 			| XCB_EVENT_MASK_POINTER_MOTION
+			| XCB_EVENT_MASK_BUTTON_MOTION
+			| XCB_EVENT_MASK_EXPOSURE
+			| XCB_EVENT_MASK_STRUCTURE_NOTIFY
+			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
+			| XCB_EVENT_MASK_ENTER_WINDOW)
+			};*/
+  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, values);
+}
+
+/*inline void registerClientEvents(WId id){
   uint32_t value_list[1] = {NORMAL_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
-}
+}*/
 
 //Internal XCB private objects class
 class NativeWindowSystem::p_objects{

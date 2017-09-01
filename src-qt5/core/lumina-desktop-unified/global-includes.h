@@ -50,6 +50,10 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QMediaPlaylist>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+
 
 // libLumina includes
 #include <LuminaX11.h>
@@ -66,6 +70,7 @@
 #include <NativeWindowSystem.h>
 #include <NativeEventFilter.h>
 #include <XDGMime.h>
+#include <LIconCache.h>
 
 // Standard C includes
 #include <unistd.h>

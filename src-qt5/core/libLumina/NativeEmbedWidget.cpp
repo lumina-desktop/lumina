@@ -46,9 +46,24 @@ inline void renderWindowToWidget(WId id, QWidget *widget, bool hastransparency =
 				0, 0, 0, 0, 0, 0, (uint16_t) widget->width(), (uint16_t) widget->height() );
 }*/
 
+#define CLIENT_EVENT_MASK (XCB_EVENT_MASK_PROPERTY_CHANGE |  \
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_FOCUS_CHANGE | \
+                          XCB_EVENT_MASK_POINTER_MOTION)
 
-inline void registerClientEvents(WId id){
-  uint32_t value_list[1] = { (XCB_EVENT_MASK_PROPERTY_CHANGE
+#define FRAME_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | \
+                          XCB_EVENT_MASK_BUTTON_RELEASE | \
+                          XCB_EVENT_MASK_POINTER_MOTION | \
+                          XCB_EVENT_MASK_EXPOSURE | \
+                          XCB_EVENT_MASK_STRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT | \
+                          XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY | \
+                          XCB_EVENT_MASK_ENTER_WINDOW)
+
+inline void registerClientEvents(WId id, bool client = true){
+  uint32_t values[] = {XCB_NONE};
+  values[0] = client ? CLIENT_EVENT_MASK : FRAME_EVENT_MASK ;
+  /*{ (XCB_EVENT_MASK_PROPERTY_CHANGE
 			| XCB_EVENT_MASK_BUTTON_PRESS
 			| XCB_EVENT_MASK_BUTTON_RELEASE
  			| XCB_EVENT_MASK_POINTER_MOTION
@@ -58,8 +73,8 @@ inline void registerClientEvents(WId id){
 			| XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_ENTER_WINDOW)
-			};
-  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
+			};*/
+  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, values);
 }
 
 // ============

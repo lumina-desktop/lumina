@@ -236,11 +236,12 @@ void RootWindow::NewWindow(NativeWindow *win){
     subwin = new RootSubWindow(this, win);
     subwin->setWhatsThis("RootSubWindow");
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
+    connect(subwin, SIGNAL(windowAnimFinished()), this, SLOT(checkMouseFocus()) );
     WINDOWS << subwin;
   }
   CheckWindowPosition(win->id(), true); //first-time run
   win->setProperty(NativeWindow::Visible, true);
-  win->requestProperty( NativeWindow::Active, true);
+  //win->requestProperty( NativeWindow::Active, true);
   //win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true, true);
   if(!mouseFocusTimer->isActive()){ mouseFocusTimer->start(); }
 }

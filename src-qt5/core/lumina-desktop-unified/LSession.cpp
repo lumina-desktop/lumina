@@ -39,9 +39,9 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enable a few of the simple effects by default
-  //this->setEffectEnabled( Qt::UI_AnimateMenu, true);
-  //this->setEffectEnabled( Qt::UI_AnimateCombo, true);
-  //this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
+  this->setEffectEnabled( Qt::UI_AnimateMenu, true);
+  this->setEffectEnabled( Qt::UI_AnimateCombo, true);
+  this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
   this->setAttribute(Qt::AA_UseDesktopOpenGL);
   this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
@@ -51,8 +51,8 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::SS = new LScreenSaver();
   //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
-    Lumina::NWS->moveToThread(Lumina::EVThread);
-  Lumina::EVThread->start();
+    //Lumina::NWS->moveToThread(Lumina::EVThread);
+  //Lumina::EVThread->start();
   Lumina::APPLIST = XDGDesktopList::instance();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
