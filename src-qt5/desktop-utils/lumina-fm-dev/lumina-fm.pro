@@ -28,8 +28,7 @@ SOURCES += main.cpp \
 		Browser.cpp \
 		BrowserWidget.cpp \
 		TrayUI.cpp \
-		OPWidget.cpp \
-    widgets/vidnail.cpp
+		OPWidget.cpp
 
 HEADERS  += MainUI.h \
 		FODialog.h \
@@ -45,8 +44,7 @@ HEADERS  += MainUI.h \
 		Browser.h \
 		BrowserWidget.h \
 		TrayUI.h \
-		OPWidget.h \
-    widgets/vidnail.h
+		OPWidget.h
 
 FORMS    += MainUI.ui \
 		FODialog.ui \
