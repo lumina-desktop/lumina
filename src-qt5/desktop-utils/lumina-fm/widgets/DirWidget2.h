@@ -86,7 +86,7 @@ private:
 
 	//The keyboard shortcuts for context menu items
     QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
-        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract;
+        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract; //, *kArchive;
 
 	//Functions for internal use
 	void createShortcuts(); //on init only
@@ -158,6 +158,7 @@ private slots:
 	void runWithFiles();
 	//void attachToNewEmail();
 	void autoExtractFiles();
+    //void autoArchiveFiles();
 
 	// - Context-specific operations
 	void openInSlideshow();

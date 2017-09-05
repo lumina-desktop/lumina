@@ -241,6 +241,7 @@ void DirWidget::createShortcuts(){
   kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
   kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
   kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
+  //kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
   kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
   kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
   kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
@@ -257,6 +258,7 @@ void DirWidget::createShortcuts(){
   connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
   connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
   connect(kExtract, SIGNAL(activated()), this, SLOT(autoExtractFiles()) );
+  //connect(kArchive, SIGNAL(activated()), this, SLOT(autoArchiveFiles()) );
   connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
   connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
   connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
@@ -552,7 +554,9 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
       if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-    }
+      //if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
+
+  }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
       contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
     }
@@ -888,6 +892,12 @@ void DirWidget::autoExtractFiles(){
   for(int i=0; i<files.length(); i++){
      QString runline = program + files[i];
   pExtract->start(runline);*/
+}
+
+void DirWidget::autoArchiveFiles(){
+  QStringList files = currentBrowser()->currentSelection();
+  qDebug() << "Starting auto-archival:" << files;
+  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << files);
 }
 
 //====================
