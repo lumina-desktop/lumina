@@ -739,36 +739,6 @@ void DirWidget::createNewXDGEntry(){
 
 // - Selected FILE operations
 
-//---------------------------------------------------//
-/*
-QStringList DirWidget::getPreferredApplications(){
-  QStringList out;
-  //First list all the applications registered for that same mimetype
-  QString mime = fileEXT;
-  out << LXDG::findAvailableAppsForMime(mime);
-
-  //Now search the internal settings for that extension and find any applications last used
-  QStringList keys = settings->allKeys();
-  for(int i=0; i<keys.length(); i++){
-    if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
-    if(keys[i].toLower() == fileEXT.toLower()){
-      QStringList files = settings->value(keys[i]).toString().split(":::");
-      qDebug() << "Found Files:" << keys[i] << files;
-      bool cleaned = false;
-      for(int j=0; j<files.length(); j++){
-        if(QFile::exists(files[j])){ out << files[j]; }
-        else{ files.removeAt(j); j--; cleaned=true; } //file no longer available - remove it
-      }
-      if(cleaned){ settings->setValue(keys[i], files.join(":::")); } //update the registry
-      if(!out.isEmpty()){ break; } //already found files
-    }
-  }
-  //Make sure we don't have any duplicates before we return the list
-  out.removeDuplicates();
-  return out;
-}
-  */
-  //---------------------------------------------------//
 
 void DirWidget::cutFiles(){
   QStringList sel = currentBrowser()->currentSelection();
@@ -886,12 +856,6 @@ void DirWidget::autoExtractFiles(){
   QStringList files = currentBrowser()->currentSelection();
   qDebug() << "Starting auto-extract:" << files;
   ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
-  /*ExternalProcess *pExtract= new ExternalProcess(this);
-  QString program = "lumina-archiver --ax ";
-  QStringList files = currentBrowser()->currentSelection();
-  for(int i=0; i<files.length(); i++){
-     QString runline = program + files[i];
-  pExtract->start(runline);*/
 }
 
 void DirWidget::autoArchiveFiles(){
