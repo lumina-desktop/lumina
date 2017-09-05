@@ -858,11 +858,13 @@ void DirWidget::autoExtractFiles(){
   ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
 }
 
-void DirWidget::autoArchiveFiles(){
+/*
+ * void DirWidget::autoArchiveFiles(){
   QStringList files = currentBrowser()->currentSelection();
   qDebug() << "Starting auto-archival:" << files;
   ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << files);
 }
+*/
 
 //====================
 //         PROTECTED
