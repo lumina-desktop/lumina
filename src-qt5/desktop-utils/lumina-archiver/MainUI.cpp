@@ -72,9 +72,11 @@ MainUI::~MainUI(){
 void MainUI::LoadArguments(QStringList args){
   bool burnIMG = false;
   bool autoExtract = false;
+  //bool autoArchive = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
     if(args[i]=="--ax"){ autoExtract = true; continue; }
+    //if(args[i]=="--aa"){ autoArchive = true; continue; }
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
       if(autoExtract){
@@ -86,6 +88,14 @@ void MainUI::LoadArguments(QStringList args){
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
     }
+    //if(autoArchive){
+    //get rest of arguments
+    //for(int i=1; i<args.length(); i++){
+    //  aaFileList << args[i];}
+    // now launch autoarchive method with arg list
+    //  autoArchiveFiles(aaFileList);
+    // connect(BACKEND, SIGNAL(ArchivalSuccessful()), this, SLOT(close()) );
+    //}
   }
 }
 
@@ -251,6 +261,10 @@ void MainUI::autoextractFiles(){
     ui->label_progress->setText(tr("Extracting..."));
     BACKEND->startExtract(dir, true);
   }
+
+/*
+void MainUI::autoArchiveFiles(aaFileList){
+*/
 
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected

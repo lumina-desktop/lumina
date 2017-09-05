@@ -262,6 +262,7 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
       }
     }
     if(args.contains("-x")){ result = tr("Extraction Finished"); emit ExtractSuccessful(); }
+    //if(args.contains("-aa")){ result = tr("Archival Finished"); emit ArchivalSuccessful(); }
     else if(args.contains("-c")){ result = tr("Modification Finished"); }
     if(needupdate){ startList(); }
     else{ emit ProcessFinished(retcode==0, result); result.clear(); }
