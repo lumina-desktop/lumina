@@ -28,7 +28,7 @@
 
 #define DEBUG 0
 
-DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
+DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
   //Assemble the toolbar for the widget
@@ -54,6 +54,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
     toolbar->addAction(ui->actionDualColumn);
     columnActionGroup->addAction(ui->actionDualColumn);
   toolbar->addAction(ui->actionMenu);
+  this->settings = settings;
   //Add the browser widgets
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
@@ -340,8 +341,7 @@ void DirWidget::on_tool_zoom_in_clicked(){
   size += 16;
   setThumbnailSize(size);
   //Now Save the size value as the default for next time
-  QSettings SET("lumina-desktop","lumina-fm");
-  SET.setValue("iconsize", size);
+  settings->setValue("iconsize", size);
 }
 
 void DirWidget::on_tool_zoom_out_clicked(){
@@ -350,8 +350,7 @@ void DirWidget::on_tool_zoom_out_clicked(){
   size -= 16;
   setThumbnailSize(size);
   //Now Save the size value as the default for next time
-  QSettings SET("lumina-desktop","lumina-fm");
-  SET.setValue("iconsize", size);
+  settings->setValue("iconsize", size);
 }
 
 // -- Top Snapshot Buttons

@@ -32,7 +32,7 @@ class DirWidget : public QWidget{
 	Q_OBJECT
 public:
 	enum DETAILTYPES{ NAME, SIZE, TYPE, DATEMOD, DATECREATE};
-	DirWidget(QString objID, QWidget *parent = 0); //needs a unique ID (to distinguish from other DirWidgets)
+	DirWidget(QString objID, QSettings *settings, QWidget *parent = 0); //needs a unique ID (to distinguish from other DirWidgets)
 	~DirWidget();
 
 	void cleanup(); //called before the browser is closed down
@@ -75,6 +75,7 @@ private:
 	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
 	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
+  QSettings *settings;
 	bool canmodify;
 
 	//The Toolbar and associated items
@@ -95,13 +96,11 @@ private:
 	BrowserWidget* currentBrowser();
 	QStringList currentDirFiles(); //all the "files" available within the current dir/browser
 
-    //QProcess *pExtract;
-
-    //OpenWithMenu
-    QString fileEXT, filePath;
-    QStringList mimetypes, keys, files;
-    //QStringList getPreferredApplications();
-
+  //QProcess *pExtract;
+  //OpenWithMenu
+  QString fileEXT, filePath;
+  QStringList mimetypes, keys, files;
+  //QStringList getPreferredApplications();
 
 private slots:
 	//UI BUTTONS/Actions
