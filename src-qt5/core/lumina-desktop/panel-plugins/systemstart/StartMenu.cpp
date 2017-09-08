@@ -35,15 +35,15 @@ StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
 }
 
 StartMenu::~StartMenu(){
-	
+
 }
 
 void StartMenu::UpdateAll(){
   //Update all the icons/text on all the pages
-	
+
   // Update Text
   ui->retranslateUi(this);
-	
+
   //Update Icons
   ui->tool_goto_apps->setIcon(LXDG::findIcon("system-run",""));
   ui->tool_goto_settings->setIcon(LXDG::findIcon("preferences-system",""));
@@ -53,7 +53,7 @@ void StartMenu::UpdateAll(){
   ui->tool_goto_logout->setIcon(LXDG::findIcon("system-log-out",""));
   ui->tool_back->setIcon(LXDG::findIcon("go-previous",""));
   ui->tool_launch_deskinfo->setIcon(LXDG::findIcon("system-help",""));
-	
+
   ui->tool_launch_mixer->setIcon( LXDG::findIcon("preferences-desktop-sound","") );
   ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-desktop-brightness","").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->label_locale_icon->setPixmap( LXDG::findIcon("preferences-desktop-locale","").pixmap(ui->tool_goto_apps->iconSize()) );
@@ -63,7 +63,7 @@ void StartMenu::UpdateAll(){
   ui->tool_restart->setIcon(LXDG::findIcon("system-reboot",""));
   ui->tool_shutdown->setIcon(LXDG::findIcon("system-shutdown",""));
   ui->tool_suspend->setIcon(LXDG::findIcon("system-suspend",""));
-  
+ 
   //Update Visibility of system/session/OS options
   // -- Control Panel
   QString tmp = LOS::ControlPanelShortcut();
@@ -156,11 +156,11 @@ void StartMenu::UpdateQuickLaunch(QString path, bool keep){
 // ==========================
 /*void StartMenu::deleteChildren(QWidget *obj){
   if(obj->layout()==0){
-    for(int i=0; i<obj->children().count(); i++){ 
-      obj->children().at(i)->deleteLater(); 
+    for(int i=0; i<obj->children().count(); i++){
+      obj->children().at(i)->deleteLater();
     }
   }else{
-    
+
   }
 }*/
 
@@ -174,7 +174,7 @@ void StartMenu::ClearScrollArea(QScrollArea *area){
   if(area == ui->scroll_favs){
     area->takeWidget()->deleteLater();
   }
-  if(area->widget()==0){ 
+  if(area->widget()==0){
     area->setWidget( new QWidget(area) ); //create a new widget in the scroll area
   }
   if(area->widget()->layout()==0){
@@ -203,7 +203,7 @@ void StartMenu::SortScrollArea(QScrollArea *area){
   for(int i=0; i<lay->count(); i++){
     items << lay->itemAt(i)->widget()->whatsThis();
   }
-  
+
   items.sort();
   //qDebug() << " - Sorted Items:" << items;
   for(int i=0; i<items.length(); i++){
@@ -223,10 +223,10 @@ void StartMenu::SortScrollArea(QScrollArea *area){
 
 void StartMenu::do_search(QString search, bool force){
   search = search.simplified(); //remove unneccesary whitespace
-  if(search == CSearch && !force){ 
+  if(search == CSearch && !force){
     //nothing new - just ensure the page is visible
     if(ui->stackedWidget->currentWidget()!=ui->page_search  ){ ui->stackedWidget->setCurrentWidget(ui->page_search); }
-    return; 
+    return;
   }else if(search.isEmpty()){
     CSearch.clear();
     if(ui->stackedWidget->currentWidget()==ui->page_search  ){ on_tool_back_clicked(); }
@@ -234,7 +234,7 @@ void StartMenu::do_search(QString search, bool force){
   }
   //Got a search term - check it
   CSearch = search; //save this for comparison later
-  qDebug() << "Search for term:" << search;
+  //qDebug() << "Search for term:" << search;
   ClearScrollArea(ui->scroll_search);
   topsearch.clear();
   //Now find any items which match the search
@@ -275,7 +275,7 @@ void StartMenu::do_search(QString search, bool force){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
-    if(i%3==0){ 
+    if(i%3==0){
       QApplication::processEvents();
       if(searchTimer->isActive()){ return; } //search changed - go ahead and stop here
     }
@@ -305,13 +305,13 @@ bool StartMenu::promptAboutUpdates(bool &skip){
 //        PRIVATE SLOTS
 // ========================
 void StartMenu::LaunchItem(QString path, bool fix){
-  if(path.startsWith("chcat::::")){ 
+  if(path.startsWith("chcat::::")){
     ChangeCategory(path.section("::::",1,50));
     return;
   }
-  qDebug() << "Launching Item:" << path << fix;
+  //qDebug() << "Launching Item:" << path << fix;
   if(!path.isEmpty()){
-    qDebug() << "Launch Application:" << path;
+    //qDebug() << "Launch Application:" << path;
     if( fix && !path.startsWith("lumina-open") ){ LSession::LaunchApplication("lumina-open \""+path+"\""); }
     else{ LSession::LaunchApplication(path); }
     emit CloseMenu(); //so the menu container will close
@@ -355,7 +355,7 @@ void StartMenu::UpdateApps(){
         connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
       }
     }
-    
+
   }else if(ui->check_apps_showcats->checkState() == Qt::Checked){
     //qDebug() << " - Checked";
     //Only show categories to start with - and have the user click-into a cat to see apps
@@ -378,7 +378,7 @@ void StartMenu::UpdateApps(){
         ui->scroll_apps->widget()->layout()->addWidget(it);
         connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       //Show apps for this cat
-      QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value(CCat); 
+      QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value(CCat);
       for(int i=0; i<apps.length(); i++){
 	//qDebug() << " - App:" << apps[i].name;
         ItemWidget *it = new ItemWidget(ui->scroll_apps->widget(), apps[i] );
@@ -390,11 +390,11 @@ void StartMenu::UpdateApps(){
         connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
       }
     }
-    
+
   }else{
     //qDebug() << " - Not Checked";
     //No categories at all - just alphabetize all the apps
-    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All"); 
+    QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All");
     CCat.clear();
     //Now add all the apps for this category
    for(int i=0; i<apps.length(); i++){
@@ -407,8 +407,7 @@ void StartMenu::UpdateApps(){
       connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
   }
-  
-  
+
 }
 
 void StartMenu::UpdateFavs(){
@@ -427,31 +426,7 @@ void StartMenu::UpdateFavs(){
     else{ tmp = rest;  } //everything left over
     if(type==1){
       SortScrollArea(ui->scroll_favs);
-      //Need to run a special routine for sorting the apps (already in the widget)
-      //qDebug() << "Sort App Widgets...";
-      // Since each app actually might have a different name listed within the file
-      /*QLayout *lay = ui->scroll_favs->widget()->layout();
-      QStringList items;
-      for(int i=0; i<lay->count(); i++){
-        items << lay->itemAt(i)->widget()->whatsThis().toLower();
-      }
-  
-      items.sort();
-     // qDebug() << " - Sorted Items:" << items;
-      for(int i=0; i<items.length(); i++){
-        if(items[i].isEmpty()){ continue; }
-        //QLayouts are weird in that they can only add items to the end - need to re-insert almost every item
-        for(int j=0; j<lay->count(); j++){
-          //Find this item
-          if(lay->itemAt(j)->widget()->whatsThis().toLower()==items[i]){
-	    //Found it - now move it if necessary
-	    //qDebug() << "Found Item:" << items[i] << i << j;
-	    lay->addItem( lay->takeAt(j) );
-	    break;
-          }
-        }
-      }*/
-      
+
     }//end of special app sorting routine
     tmp.sort(); //Sort alphabetically by name (dirs/files)
     for(int i=0; i<tmp.length(); i++){
@@ -472,7 +447,6 @@ void StartMenu::UpdateFavs(){
       connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
       connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     }
-    //QApplication::processEvents();
   } //end loop over types
   ui->scroll_favs->update();
   //qDebug() << "End updateFavs";
@@ -541,7 +515,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
     }
     ui->frame_leave_suspend->setVisible( LOS::systemCanSuspend() );
   }
-  
+
 }
 
 void StartMenu::catViewChanged(){
@@ -567,7 +541,7 @@ void StartMenu::on_tool_goto_apps_clicked(){
 }
 
 void StartMenu::on_tool_goto_settings_clicked(){
-  ui->stackedWidget->setCurrentWidget(ui->page_settings);	
+  ui->stackedWidget->setCurrentWidget(ui->page_settings);
 }
 
 void StartMenu::on_tool_goto_logout_clicked(){
@@ -585,7 +559,7 @@ void StartMenu::on_tool_launch_controlpanel_clicked(){
 }
 
 void StartMenu::on_tool_launch_fm_clicked(){
-  LaunchItem(QDir::homePath());	
+  LaunchItem(QDir::homePath());
 }
 
 void StartMenu::on_tool_launch_store_clicked(){
