@@ -16,7 +16,7 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
   label->setAutoRaise(true);
   label->setToolButtonStyle(Qt::ToolButtonIconOnly);
   label->setIcon( LXDG::findIcon("format-view-carousel", "preferences-desktop-display") );
-  label->setToolTip(QString("Workspace 1"));
+  label->setToolTip(QString(tr("Workspace 1")));
   connect(label, SIGNAL(clicked()), this, SLOT(openMenu()));
   menu = new QMenu(this);
   connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuActionTriggered(QAction*)));
