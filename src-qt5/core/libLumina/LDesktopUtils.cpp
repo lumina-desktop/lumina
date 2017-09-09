@@ -143,6 +143,8 @@ void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
 void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
   qDebug() << "Loading System Defaults";
+  bool skipmime = QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimapps.list" );
+  qDebug() << " - Skipping mimetype default apps" << skipmime;
   QStringList sysDefaults;
   if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
@@ -193,18 +195,18 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){
+    else if(var=="session_default_terminal" && !skipmime){
       LXDG::setDefaultAppForMime("application/terminal", val);
       //sset = "default-terminal="+val;
-    }else if(var=="session_default_filemanager"){
+    }else if(var=="session_default_filemanager" && !skipmime){
       LXDG::setDefaultAppForMime("inode/directory", val);
       //sset = "default-filemanager="+val;
       //loset = "directory="+val;
-    }else if(var=="session_default_webbrowser"){
+    }else if(var=="session_default_webbrowser" && !skipmime){
       //loset = "webbrowser="+val;
       LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
       LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
-    }else if(var=="session_default_email"){
+    }else if(var=="session_default_email" && !skipmime){
       LXDG::setDefaultAppForMime("application/email",val);
       //loset = "email="+val;
     }
@@ -225,7 +227,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
  // -- MIMETYPE DEFAULTS --
   tmp = sysDefaults.filter("mime_default_");
-  for(int i=0; i<tmp.length(); i++){
+  for(int i=0; i<tmp.length()  && !skipmime; i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();

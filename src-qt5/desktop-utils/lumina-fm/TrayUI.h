@@ -27,7 +27,7 @@ public slots:
 
 private:
 	QList<OPWidget*> OPS;
-	
+
 	void createOP( FILEOP, QStringList oldF, QStringList newF);
 
 private slots:
