@@ -159,6 +159,7 @@ public:
 
 	//Other file type identification routines
 	bool isImage(); //Is a readable image file (for thumbnail support)
+	bool isVideo(); //Is a readable video file (for thumbnail support)
 	bool isAVFile(); //Is an audio/video file
 };
 typedef QList<LFileInfo> LFileInfoList;

@@ -75,9 +75,9 @@ void XDGDesktop::sync(){
     //-------------------
     if(var=="Name"){
       if(insection){
-        if(name.isEmpty() && loc.isEmpty()){ name = val; }
-	else if(name.isEmpty() && loc==slang){ name = val; } //short locale code
-        else if(loc == lang){ name = val; }
+	      if(loc==slang){ name = val;} //short locale code
+        else if(loc==lang){ name = val;}
+        else if(name.isEmpty() && loc.isEmpty()){ /*qDebug() << "Empty" << val;*/ name = val; }
       }else if(inaction){
         if(CDA.name.isEmpty() && loc.isEmpty()){ CDA.name = val; }
 	else if(CDA.name.isEmpty() && loc==slang){ CDA.name = val; } //short locale code
@@ -704,7 +704,14 @@ XDGDesktop* LFileInfo::XDG(){
   return desk;
 }
 
-// -- Check if this is a readable image file (for thumbnail support)
+// -- Check if this is a readable video file (for thumbnail support)
+bool LFileInfo::isVideo(){
+  if(!mime.startsWith("video/")){ return false; }
+  //Check the hardcoded list of known supported video formats to see if the thumbnail can be generated
+  return ( !LUtils::videoExtensions().filter(this->suffix().toLower()).isEmpty() );
+}
+
+// -- Check if this is a readable image file
 bool LFileInfo::isImage(){
   if(!mime.startsWith("image/")){ return false; } //quick return for non-image files
   //Check the Qt subsystems to see if this image file can be read
