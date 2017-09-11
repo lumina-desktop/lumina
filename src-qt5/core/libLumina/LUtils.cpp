@@ -252,6 +252,12 @@ QString LUtils::AppToAbsolute(QString path){
   return path;
 }
 
+QStringList LUtils::videoExtensions() {
+  static QStringList vidExtensions;
+  vidExtensions << "avi" << "mkv" << "mp4" << "mov" << "webm" << "wmv";
+  return vidExtensions;
+}
+
 QStringList LUtils::imageExtensions(bool wildcards){
   //Note that all the image extensions are lowercase!!
   static QStringList imgExtensions;

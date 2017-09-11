@@ -65,6 +65,7 @@ public:
 
 	//Get the list of all file extensions which Qt can read (lowercase)
 	static QStringList imageExtensions(bool wildcards = false);
+	static QStringList videoExtensions();
 	
 	//Load a translation file for a Lumina Project
 	static QTranslator* LoadTranslation(QApplication *app, QString appname, QString locale = "", QTranslator *cTrans = 0);
