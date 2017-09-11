@@ -12,8 +12,9 @@
 #define QSS_FULL_PATH_ROLE (Qt::ItemDataRole(Qt::UserRole))
 #define QSS_WRITABLE_ROLE (Qt::ItemDataRole(Qt::UserRole + 1))
 
-QSSPage::QSSPage(QWidget *parent) : TabPage(parent), m_ui(new Ui::QSSPage){
+QSSPage::QSSPage(QWidget *parent, bool desktop) : TabPage(parent), m_ui(new Ui::QSSPage){
   m_ui->setupUi(this);
+  desktop_qss = desktop;
   QDir("/").mkpath(lthemeengine::userStyleSheetPath());
   m_menu = new QMenu(this);
   m_menu->addAction(QIcon::fromTheme("accessories-text-editor"), tr("Edit"), this, SLOT(on_editButton_clicked()));
@@ -37,7 +38,8 @@ void QSSPage::writeSettings(){
   for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
     QListWidgetItem *item = m_ui->qssListWidget->item(i);
     if(item->checkState() == Qt::Checked){ styleSheets << item->data(QSS_FULL_PATH_ROLE).toString(); }
-  settings.setValue("Interface/stylesheets", styleSheets);
+  if(desktop_qss){ settings.setValue("Interface/desktop_stylesheets", styleSheets); }
+  else{ settings.setValue("Interface/stylesheets", styleSheets); }
   }
 }
 
@@ -58,7 +60,9 @@ void QSSPage::on_createButton_clicked(){
   QString name = QInputDialog::getText(this, tr("Enter Style Sheet Name"), tr("File name:"));
   if(name.isEmpty()){ return; }
   if(!name.endsWith(".qss", Qt::CaseInsensitive)){ name.append(".qss"); }
-  QString filePath = lthemeengine::userStyleSheetPath() + name;
+  QString filePath;
+    if(desktop_qss){ filePath = lthemeengine::userDesktopStyleSheetPath() + name; }
+    else{ filePath = lthemeengine::userStyleSheetPath() + name; }
   if(QFile::exists(filePath)){
     QMessageBox::warning(this, tr("Error"), tr("The file \"%1\" already exists").arg(filePath));
     return;
@@ -95,9 +99,13 @@ void QSSPage::on_removeButton_clicked(){
 void QSSPage::readSettings(){
   //load stylesheets
   m_ui->qssListWidget->clear();
-  findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath());
+  if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath()); }
+  else{findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath()); }
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
-  QStringList styleSheets = settings.value("Interface/stylesheets").toStringList();
+  QStringList styleSheets;
+  if(desktop_qss){ styleSheets = settings.value("Interface/desktop_stylesheets").toStringList(); }
+  else{ styleSheets = settings.value("Interface/stylesheets").toStringList(); }
+
   for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
     QListWidgetItem *item = m_ui->qssListWidget->item(i);
     if(styleSheets.contains(item->data(QSS_FULL_PATH_ROLE).toString())){ item->setCheckState(Qt::Checked); }

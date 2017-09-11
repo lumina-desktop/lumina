@@ -211,7 +211,9 @@ void lthemeenginePlatformTheme::readSettings(){
       }
     //load style sheets
 #ifdef QT_WIDGETS_LIB
-    QStringList qssPaths = settings.value("stylesheets").toStringList();
+    QStringList qssPaths;
+    if(qApp->applicationName()=="lumina-desktop"){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
+    qssPaths << settings.value("stylesheets").toStringList();
     m_userStyleSheet = loadStyleSheets(qssPaths);
 #endif
     settings.endGroup();

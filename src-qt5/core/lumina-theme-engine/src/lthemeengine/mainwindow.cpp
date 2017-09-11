@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   m_ui->tabWidget->addTab(new IconThemePage(this), tr("Icon Theme"));
   m_ui->tabWidget->addTab(new InterfacePage(this), tr("Interface"));
 #ifdef USE_WIDGETS
-  m_ui->tabWidget->addTab(new QSSPage(this), tr("Style Sheets"));
+  m_ui->tabWidget->addTab(new QSSPage(this, false), tr("Application Theme"));
+  m_ui->tabWidget->addTab(new QSSPage(this, true), tr("Desktop Theme"));
 #endif
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   restoreGeometry(settings.value("SettingsWindow/geometry").toByteArray());

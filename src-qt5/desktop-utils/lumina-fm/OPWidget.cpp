@@ -19,7 +19,7 @@ OPWidget::OPWidget(QWidget *parent) : QWidget(parent), ui(new Ui::OPWidget()){
   //Now create the widget
   ui->setupUi(this);
   ui->tool_close->setIcon( LXDG::findIcon("dialog-close","view-close") );
-  ui->tool_showerrors->setIcon(LXDG::findIcon("dialog-warning",""));
+  ui->tool_showerrors->setIcon(LXDG::findIcon("view-choose","view-preview"));
   //connect the widget buttons
   connect(ui->tool_close, SIGNAL(clicked()), this, SLOT(closeWidget()) );
   connect(ui->tool_showerrors, SIGNAL(clicked()), this, SLOT(showErrors()) );
@@ -79,7 +79,7 @@ void OPWidget::startOperation(){
   starttime = QDateTime::currentMSecsSinceEpoch();
   endtime = -1;
   QTimer::singleShot(0, worker, SLOT(slotStartOperations()) );
-  emit starting(this->whatsThis());  
+  emit starting(this->whatsThis());
 }
 
 

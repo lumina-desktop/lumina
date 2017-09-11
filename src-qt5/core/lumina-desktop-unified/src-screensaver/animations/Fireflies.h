@@ -12,6 +12,7 @@
 #include "global-includes.h"
 #include "BaseAnimGroup.h"
 #include <QSequentialAnimationGroup>
+#include <QGraphicsOpacityEffect>
 
 class Firefly : public QSequentialAnimationGroup{
 	Q_OBJECT
@@ -34,9 +35,12 @@ private slots:
 	    movement->setEndValue(pt);
 	    movement->setDuration( qrand() %500 + 1000); //between 1000->1500 ms animations for movements
 	    //Adjust the flash duration/size a bit
-	    flash->setDuration(qrand() %300 + 700); //700-1000 ms
-	    int sz = qrand()%4 + 6; //6-10 pixel square
+	    flash->setDuration(qrand() %200 + 500); //500-700 ms
+	    int sz = qrand()%4 + 4; //6-10 pixel square
+	    //flash->setKeyValueAt(0.5, (qrand()%50) /100.0);
+	    //fly->resize(sz,sz);
 	    flash->setKeyValueAt(0.5, QSize(sz,sz)); //half-way point for the flash
+
 	  fly->show();
 	}
 	void stopped(){ fly->hide(); }
@@ -46,24 +50,41 @@ public:
 	  fly = new QWidget(parent);
 	  range = parent->size();
 	  maxX = range.width()/4;  maxY = range.height()/4;
-	  fly->setStyleSheet("background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(215, 215, 143, 255), stop:0.83871 rgba(221, 235, 64, 140), stop:0.99 rgba(0, 0, 0, 255), stop:1 transparent);");
+	  QString B = QString::number(qrand()%70);
+          QString RY = QString::number(qrand()%200+50);
+          QString style = "background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(245, 245, 143, 200), stop:0.83871 rgba(%1, %1, %2, 140), stop:0.99 rgba(0, 0, 0, 255), stop:1 transparent);";
+	  fly->setStyleSheet(style.arg(RY, B) );
 	  //setup the movement animation
 	  movement = new QPropertyAnimation(fly);
 	  movement->setTargetObject(fly);
 	  movement->setPropertyName("pos");
 	  movement->setEndValue( QPoint( qrand() % range.width(), qrand()%range.height()) ); //on anim start, this will become the starting point
 	  //setup the flashing animation
-	  flash = new QPropertyAnimation(fly);
+	  /*QGraphicsOpacityEffect *eff = new QGraphicsOpacityEffect(parent);
+	  fly->setGraphicsEffect(eff);
+	  flash = new QPropertyAnimation(eff, "opacity");*/
+	  flash = new QPropertyAnimation(this);
 	  flash->setTargetObject(fly);
 	  flash->setPropertyName("size");
-	  flash->setStartValue(QSize(2,2));
+	  flash->setStartValue(QSize(0,0));
 	  flash->setEndValue(flash->startValue());
+	  //fly->setProperty("opacity",0);
+	  //flash->setPropertyName("opacity");
+	  //flash->setStartValue(0);
+	  //flash->setEndValue(0);
 	  //now setup the order of the animations
 	  this->setLoopCount(100); //do this 100 times
-	  this->addAnimation(movement);
-	  this->addAnimation(flash);
+	  //Roughly half the number of fireflies with start with movement/flash
+          if(qrand()%2 == 1){
+	    this->addAnimation(movement);
+	    this->addAnimation(flash);
+	  }else{
+	    this->addAnimation(flash);
+	    this->addAnimation(movement);
+	  }
 	  //Start up this firefly
 	  LoopChanged();  //load initial values
+
 	  fly->setGeometry( QRect(movement->startValue().toPoint(), flash->startValue().toSize()) );
 	  connect(this, SIGNAL(currentLoopChanged(int)), this, SLOT(LoopChanged()) );
 	  connect(this, SIGNAL(finished()), this, SLOT(stopped()) );

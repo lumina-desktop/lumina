@@ -21,6 +21,8 @@ public:
     static QStringList iconPaths();
     static QString userStyleSheetPath();
     static QStringList sharedStyleSheetPath();
+    static QString userDesktopStyleSheetPath();
+    static QStringList sharedDesktopStyleSheetPath();
     static QString userColorSchemePath();
     static QStringList sharedColorSchemePath();
     static QString systemLanguageID();
