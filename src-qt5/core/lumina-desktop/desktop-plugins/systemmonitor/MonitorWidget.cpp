@@ -17,6 +17,9 @@ MonitorWidget::MonitorWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Moni
     upTimer->setInterval(2000); //update every 2 seconds
   connect(upTimer, SIGNAL(timeout()), this, SLOT(UpdateStats()) );
   LoadIcons();
+  ui->label->setText( tr("CPU Temp:") );
+  ui->label_2->setText( tr("CPU Usage:") );
+  ui->label_3->setText( tr("Mem Usage:") );
   upTimer->start();
 }
 
@@ -25,7 +28,7 @@ MonitorWidget::~MonitorWidget(){
 }
 
 void MonitorWidget::LoadIcons(){
-  ui->tabWidget->setTabIcon(0,LXDG::findIcon("appointment-recurring","") ); //Summary
+  ui->tabWidget->setTabIcon(0,LXDG::findIcon("appointment-blank","") ); //Summary
   ui->tabWidget->setTabIcon(1,LXDG::findIcon("drive-harddisk","") ); //Disk Usage
   //ui->tabWidget->setTabIcon(1,LXDG::findIcon("cpu","") ); //CPU Log
   //ui->tabWidget->setTabIcon(2,LXDG::findIcon("media-flash-memory-stick","") ); //Mem Log
