@@ -15,7 +15,7 @@ class QSSPage : public TabPage
     Q_OBJECT
 
 public:
-    explicit QSSPage(QWidget *parent = 0);
+    explicit QSSPage(QWidget *parent = 0, bool desktop = false);
     ~QSSPage();
 
     void writeSettings();
@@ -33,6 +33,7 @@ private:
     void findStyleSheets(QStringList paths);
     Ui::QSSPage *m_ui;
     QMenu *m_menu;
+    bool desktop_qss;
 };
 
 #endif // QSSPAGE_H

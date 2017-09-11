@@ -53,6 +53,20 @@ QStringList lthemeengine::sharedStyleSheetPath(){
   return dirs;
  }
 
+QString lthemeengine::userDesktopStyleSheetPath(){
+  return configPath() + "desktop_qss/";
+}
+
+QStringList lthemeengine::sharedDesktopStyleSheetPath(){
+  QStringList dirs;
+  dirs << QString(getenv("XDG_CONFIG_HOME"));
+  dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
+  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
+  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/desktop_qss/"); }
+  if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/desktop_qss/"; } //no XDG settings - use the hardcoded path
+  return dirs;
+ }
+
 QString lthemeengine::userColorSchemePath(){
   return configPath() + "colors/";
 }
