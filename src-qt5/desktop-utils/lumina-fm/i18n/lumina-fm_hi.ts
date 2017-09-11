@@ -120,262 +120,262 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="173"/>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Decrease Icon Sizes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="191"/>
+        <location filename="../widgets/DirWidget2.ui" line="203"/>
         <source>Back</source>
         <translation>वापस</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="194"/>
-        <location filename="../widgets/DirWidget2.ui" line="197"/>
+        <location filename="../widgets/DirWidget2.ui" line="206"/>
+        <location filename="../widgets/DirWidget2.ui" line="209"/>
         <source>Go back to previous directory</source>
         <translation>पिछली डायरेक्टरी ए वापस जाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="205"/>
+        <location filename="../widgets/DirWidget2.ui" line="217"/>
         <source>Up</source>
         <translation>ऊपर</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="208"/>
-        <location filename="../widgets/DirWidget2.ui" line="211"/>
+        <location filename="../widgets/DirWidget2.ui" line="220"/>
+        <location filename="../widgets/DirWidget2.ui" line="223"/>
         <source>Go to parent directory</source>
         <translation>मुख्य डायरेक्टरी में जाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="219"/>
+        <location filename="../widgets/DirWidget2.ui" line="231"/>
         <source>Home</source>
         <translation>होम</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="222"/>
-        <location filename="../widgets/DirWidget2.ui" line="225"/>
+        <location filename="../widgets/DirWidget2.ui" line="234"/>
+        <location filename="../widgets/DirWidget2.ui" line="237"/>
         <source>Go to home directory</source>
         <translation>होम डायरेक्टरी में जाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="230"/>
+        <location filename="../widgets/DirWidget2.ui" line="242"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="233"/>
+        <location filename="../widgets/DirWidget2.ui" line="245"/>
         <source>Select Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="241"/>
+        <location filename="../widgets/DirWidget2.ui" line="253"/>
         <source>Single Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="244"/>
+        <location filename="../widgets/DirWidget2.ui" line="256"/>
         <source>Single column view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="252"/>
+        <location filename="../widgets/DirWidget2.ui" line="264"/>
         <source>Dual Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="255"/>
+        <location filename="../widgets/DirWidget2.ui" line="267"/>
         <source>Dual Column View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="646"/>
+        <location filename="../widgets/DirWidget2.cpp" line="649"/>
         <source>(Limited Access) </source>
         <translation>(सीमित पहुँच)</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>New Document</source>
         <translation>न्य डॉक्यूमेंट</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>Name:</source>
         <translation>नाम:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>Error Creating Document</source>
         <translation>डॉक्यूमेंट बनाने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>डॉक्यूमेंट नहीं बनाया जा सकता</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
         <source>New Directory</source>
         <translation>नई डायरेक्टरी</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>Invalid Name</source>
         <translation>अवैध नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="547"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="568"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <location filename="../widgets/DirWidget2.cpp" line="619"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="624"/>
+        <location filename="../widgets/DirWidget2.cpp" line="627"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>इस नाम की फाइल या डायरेक्टरी हले से ही मौजूद है|कृपया अलग नाम चुनें|</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>Error Creating Directory</source>
         <translation>डायरेक्टरी निर्माण में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>ये डायरेक्टरी नहीं बनाई जा सकती | कृपया पहले सुनिश्चित कर लीजिये कि आपको तत्कालीन डायरेक्टरी में बदलाव की अनुमति है या नहीं|</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="371"/>
+        <location filename="../widgets/DirWidget2.cpp" line="372"/>
         <source>Current</source>
         <translation>तत्कालीन</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="271"/>
+        <location filename="../widgets/DirWidget2.cpp" line="274"/>
         <source>Create...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="273"/>
+        <location filename="../widgets/DirWidget2.cpp" line="276"/>
         <source>File</source>
         <translation type="unfinished">फाइल</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="274"/>
+        <location filename="../widgets/DirWidget2.cpp" line="277"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="275"/>
+        <location filename="../widgets/DirWidget2.cpp" line="278"/>
         <source>Application Launcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="279"/>
+        <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>Launch...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="281"/>
+        <location filename="../widgets/DirWidget2.cpp" line="284"/>
         <source>Terminal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="282"/>
+        <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>SlideShow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="283"/>
+        <location filename="../widgets/DirWidget2.cpp" line="286"/>
         <source>Multimedia Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <location filename="../widgets/DirWidget2.cpp" line="307"/>
         <source>Open with...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="310"/>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="312"/>
+        <location filename="../widgets/DirWidget2.cpp" line="315"/>
         <source>Checksums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="314"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="504"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>File Checksums:</source>
         <translation>फाइल अवरोध:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>Missing Utility</source>
         <translation>सुविधा उपलब्ध नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>&quot;लुमिना-फाइलइन्फो&quot; नमक सुविधा उपकरण में नहीं है|कृपया पहले इनस्टॉल करें|</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="542"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>Open</source>
         <translation>खोलें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="551"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Rename...</source>
         <translation>नाम दोबारा तय...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="552"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Cut Selection</source>
         <translation>चुने हुए भाग को कट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="553"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Copy Selection</source>
         <translation>चुने हुए भाग को कॉपी करें</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="557"/>
+        <location filename="../widgets/DirWidget2.cpp" line="560"/>
         <source>Paste</source>
         <translation>चिपकाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="561"/>
+        <location filename="../widgets/DirWidget2.cpp" line="564"/>
         <source>Delete Selection</source>
         <translation>चुने हुए भाग हो डिलीट करे</translation>
     </message>
@@ -1205,6 +1205,74 @@ New Location: %2</source>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">मल्टीमीडिया</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

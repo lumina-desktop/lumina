@@ -34,7 +34,7 @@
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>Resize</source>
-        <translation>Canvia'n la mida</translation>
+        <translation>Canvia&apos;n la mida</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="20"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../MainUI.ui" line="433"/>
         <source>Select Area</source>
-        <translation>Selecciona l'àrea</translation>
+        <translation>Selecciona l&apos;àrea</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="445"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../MainUI.ui" line="559"/>
         <source>Close Application</source>
-        <translation>Tanca l'aplicació</translation>
+        <translation>Tanca l&apos;aplicació</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="562"/>
@@ -159,12 +159,12 @@
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>Could not save screenshot</source>
-        <translation>No s'ha pogut desar la captura</translation>
+        <translation>No s&apos;ha pogut desar la captura</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="103"/>
         <source>The screenshot could not be saved. Please check directory permissions or pick a different directory</source>
-        <translation>No s'ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre</translation>
+        <translation>No s&apos;ha pogut desar la captura. Si us plau, comproveu els permisos del directori o trieu-ne un altre</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="120"/>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../MainUI.cpp" line="326"/>
         <source>The current screenshot has not been saved yet. Do you want to save or discard your changes?</source>
-        <translation>La captura actual encara no s'ha desat. Voleu desar o descartar els canvis?</translation>
+        <translation>La captura actual encara no s&apos;ha desat. Voleu desar o descartar els canvis?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="329"/>
@@ -210,6 +210,74 @@
         <location filename="../MainUI.cpp" line="120"/>
         <source>PNG Files (*.png);;AllFiles (*)</source>
         <translation>Fitxers PNG (*.png);; Tots els fitxers (*)</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished">Paràmetres</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

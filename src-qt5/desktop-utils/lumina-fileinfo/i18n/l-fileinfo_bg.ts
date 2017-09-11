@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="125"/>
         <source>File Information</source>
         <translation>Информация за файла</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="139"/>
+        <location filename="../MainUI.cpp" line="168"/>
         <source>Edit Shortcut</source>
         <translation>Редактиране на прекия път</translation>
     </message>
@@ -117,111 +117,179 @@
         <translation>Затваряне</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="60"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>---Calculating---</source>
         <translation>---Изчисляване---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>Read/Write</source>
         <translation>Четене/Запис</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="87"/>
         <source>Read Only</source>
         <translation>Само за четене</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="88"/>
         <source>Write Only</source>
         <translation>Само за запис</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="72"/>
+        <location filename="../MainUI.cpp" line="89"/>
         <source>No Access</source>
         <translation>Няма достъп</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>XDG Shortcut</source>
         <translation>Пряк път за XDG</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Directory</source>
         <translation>Директория</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="78"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Binary</source>
         <translation>Бинарен файл</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="80"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>Hidden %1</source>
         <translation>Скрит %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="125"/>
+        <location filename="../MainUI.cpp" line="154"/>
         <source>URL:</source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>Save Application File</source>
         <translation>Запис на файла на програмата</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>Application Registrations (*.desktop)</source>
         <translation>Регистрирани програми (*.desktop)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="288"/>
+        <location filename="../MainUI.cpp" line="317"/>
         <source>Select a binary</source>
         <translation>Избор на бинарен файл</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="291"/>
+        <location filename="../MainUI.cpp" line="320"/>
         <source>Error</source>
         <translation>Грешка</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="291"/>
+        <location filename="../MainUI.cpp" line="320"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Невалиден избор: Не е валиден изпълним файл</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="303"/>
+        <location filename="../MainUI.cpp" line="332"/>
         <source>Select a directory</source>
         <translation>Избор на директория</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="345"/>
         <source>Select an icon</source>
         <translation>Избор на икона</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="345"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Изображения (%1);; Всички файлове (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="368"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source> Folders: </source>
         <translation>Папки:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="368"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source>Files: </source>
         <translation>Файлове:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source>  Calculating...</source>
         <translation>Изчисляване...</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

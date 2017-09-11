@@ -120,262 +120,262 @@
         <translation>Padidinti piktogramų dydį</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="173"/>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Decrease Icon Sizes</source>
         <translation>Sumažinti piktogramų dydį</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="191"/>
+        <location filename="../widgets/DirWidget2.ui" line="203"/>
         <source>Back</source>
         <translation>Atgal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="194"/>
-        <location filename="../widgets/DirWidget2.ui" line="197"/>
+        <location filename="../widgets/DirWidget2.ui" line="206"/>
+        <location filename="../widgets/DirWidget2.ui" line="209"/>
         <source>Go back to previous directory</source>
         <translation>Grįžti į ankstesnį katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="205"/>
+        <location filename="../widgets/DirWidget2.ui" line="217"/>
         <source>Up</source>
         <translation>Aukštyn</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="208"/>
-        <location filename="../widgets/DirWidget2.ui" line="211"/>
+        <location filename="../widgets/DirWidget2.ui" line="220"/>
+        <location filename="../widgets/DirWidget2.ui" line="223"/>
         <source>Go to parent directory</source>
         <translation>Pereiti į virškatalogį</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="219"/>
+        <location filename="../widgets/DirWidget2.ui" line="231"/>
         <source>Home</source>
         <translation>Namai</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="222"/>
-        <location filename="../widgets/DirWidget2.ui" line="225"/>
+        <location filename="../widgets/DirWidget2.ui" line="234"/>
+        <location filename="../widgets/DirWidget2.ui" line="237"/>
         <source>Go to home directory</source>
         <translation>Pereiti į namų katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="230"/>
+        <location filename="../widgets/DirWidget2.ui" line="242"/>
         <source>Menu</source>
         <translation>Meniu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="233"/>
+        <location filename="../widgets/DirWidget2.ui" line="245"/>
         <source>Select Action</source>
         <translation>Pasirinkti veiksmą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="241"/>
+        <location filename="../widgets/DirWidget2.ui" line="253"/>
         <source>Single Column</source>
         <translation>Vienas stulpelis</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="244"/>
+        <location filename="../widgets/DirWidget2.ui" line="256"/>
         <source>Single column view</source>
         <translation>Vieno stulpelio rodinys</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="252"/>
+        <location filename="../widgets/DirWidget2.ui" line="264"/>
         <source>Dual Column</source>
         <translation>Dvigubas stulpelis</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="255"/>
+        <location filename="../widgets/DirWidget2.ui" line="267"/>
         <source>Dual Column View</source>
         <translation>Dvigubo stulpelio rodinys</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="646"/>
+        <location filename="../widgets/DirWidget2.cpp" line="649"/>
         <source>(Limited Access) </source>
         <translation>(Prieiga apribota) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>New Document</source>
         <translation>Naujas dokumentas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>Name:</source>
         <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>Error Creating Document</source>
         <translation>Klaida, kuriant dokumentą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Dokumento sukurti nepavyko. Įsitikinkite, kad turite tinkamus leidimus.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
         <source>New Directory</source>
         <translation>Naujas katalogas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>Invalid Name</source>
         <translation>Netinkamas pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="547"/>
         <source>File Operations</source>
         <translation>Failų operacijos</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
         <source>Auto-Extract</source>
         <translation>Automatiškai išskleisti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="568"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>Directory Operations</source>
         <translation>Katalogų operacijos</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <location filename="../widgets/DirWidget2.cpp" line="619"/>
         <source>Other...</source>
         <translation>Kita...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="624"/>
+        <location filename="../widgets/DirWidget2.cpp" line="627"/>
         <source>Loading...</source>
         <translation>Įkeliama...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Failas ar katalogas tokiu pavadinimu jau yra! Prašome pasirinkti kitą pavadinimą.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>Error Creating Directory</source>
         <translation>Klaida, kuriant katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Katalogo sukurti nepavyko. Įsitikinkite, kad turite tinkamus leidimus tam, kad keistumėte esamą katalogą.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="371"/>
+        <location filename="../widgets/DirWidget2.cpp" line="372"/>
         <source>Current</source>
         <translation>Esamas</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="271"/>
+        <location filename="../widgets/DirWidget2.cpp" line="274"/>
         <source>Create...</source>
         <translation>Sukurti...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="273"/>
+        <location filename="../widgets/DirWidget2.cpp" line="276"/>
         <source>File</source>
         <translation>Failą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="274"/>
+        <location filename="../widgets/DirWidget2.cpp" line="277"/>
         <source>Directory</source>
         <translation>Katalogą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="275"/>
+        <location filename="../widgets/DirWidget2.cpp" line="278"/>
         <source>Application Launcher</source>
         <translation>Programos leistuką</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="279"/>
+        <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>Launch...</source>
         <translation>Paleisti...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="281"/>
+        <location filename="../widgets/DirWidget2.cpp" line="284"/>
         <source>Terminal</source>
         <translation>Terminalą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="282"/>
+        <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>SlideShow</source>
         <translation>Skaidrių rodymą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="283"/>
+        <location filename="../widgets/DirWidget2.cpp" line="286"/>
         <source>Multimedia Player</source>
         <translation>Multimedijos grotuvą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <location filename="../widgets/DirWidget2.cpp" line="307"/>
         <source>Open with...</source>
         <translation>Atverti naudojant...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="310"/>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>View Files...</source>
         <translation>Rodyti failų...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="312"/>
+        <location filename="../widgets/DirWidget2.cpp" line="315"/>
         <source>Checksums</source>
         <translation>Kontrolinės sumos</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="314"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Properties</source>
         <translation>Savybės</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="504"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>File Checksums:</source>
         <translation>Failų kontrolinės sumos:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>Missing Utility</source>
         <translation>Trūksta paslaugų programos</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
-        <source>The "lumina-fileinfo" utility could not be found on the system. Please install it first.</source>
-        <translation>Sistemoje nepavyko rasti "lumina-fileinfo" paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
+        <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
+        <translation>Sistemoje nepavyko rasti &quot;lumina-fileinfo&quot; paslaugų programos. Prašome, iš pradžių, ją įdiegti.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="542"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="551"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Rename...</source>
         <translation>Pervadinti...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="552"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Cut Selection</source>
         <translation>Iškirpti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="553"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Copy Selection</source>
         <translation>Kopijuoti žymėjimą</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="557"/>
+        <location filename="../widgets/DirWidget2.cpp" line="560"/>
         <source>Paste</source>
         <translation>Įdėti</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="561"/>
+        <location filename="../widgets/DirWidget2.cpp" line="564"/>
         <source>Delete Selection</source>
         <translation>Ištrinti žymėjimą</translation>
     </message>
@@ -591,8 +591,8 @@ Nauja vieta: %2</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
-        <source>Click "Next" to start downloading the repository</source>
-        <translation>Spustelėkite "Kitas", kad pradėtumėte saugyklos atsisiuntimą</translation>
+        <source>Click &quot;Next&quot; to start downloading the repository</source>
+        <translation>Spustelėkite &quot;Kitas&quot;, kad pradėtumėte saugyklos atsisiuntimą</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
@@ -1209,6 +1209,74 @@ Nauja vieta: %2</translation>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
         <translation>Vykdomos naujos užduotys</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimedija</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

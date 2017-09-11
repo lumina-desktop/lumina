@@ -6,7 +6,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="96"/>
+        <location filename="../MainUI.cpp" line="125"/>
         <source>File Information</source>
         <translation>Informácia o súbore</translation>
     </message>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="139"/>
+        <location filename="../MainUI.cpp" line="168"/>
         <source>Edit Shortcut</source>
         <translation>Upraviť skratky</translation>
     </message>
@@ -117,111 +117,179 @@
         <translation>Zatvoriť</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="60"/>
+        <location filename="../MainUI.cpp" line="77"/>
         <source>---Calculating---</source>
         <translation>--Vypocitavanie--</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="86"/>
         <source>Read/Write</source>
         <translation>Čítanie/Zápis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="70"/>
+        <location filename="../MainUI.cpp" line="87"/>
         <source>Read Only</source>
         <translation>Len na čítanie</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="71"/>
+        <location filename="../MainUI.cpp" line="88"/>
         <source>Write Only</source>
         <translation>Len na zápis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="72"/>
+        <location filename="../MainUI.cpp" line="89"/>
         <source>No Access</source>
         <translation>Žiadny prístup </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="76"/>
+        <location filename="../MainUI.cpp" line="93"/>
         <source>XDG Shortcut</source>
         <translation>XDG skratka </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="94"/>
         <source>Directory</source>
         <translation>Priečinok</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="78"/>
+        <location filename="../MainUI.cpp" line="95"/>
         <source>Binary</source>
         <translation>Binárny</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="80"/>
+        <location filename="../MainUI.cpp" line="97"/>
         <source>Hidden %1</source>
         <translation>Skrytý %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="125"/>
+        <location filename="../MainUI.cpp" line="154"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>Save Application File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>Application Registrations (*.desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="288"/>
+        <location filename="../MainUI.cpp" line="317"/>
         <source>Select a binary</source>
         <translation>Vyberte binárny </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="291"/>
+        <location filename="../MainUI.cpp" line="320"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="291"/>
+        <location filename="../MainUI.cpp" line="320"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Neplatný výber: nemožno ho spustiť </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="303"/>
+        <location filename="../MainUI.cpp" line="332"/>
         <source>Select a directory</source>
         <translation>Vyberte priečinok </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="345"/>
         <source>Select an icon</source>
         <translation>Vyberte ikonu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="316"/>
+        <location filename="../MainUI.cpp" line="345"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Obrázky (%1);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="368"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source> Folders: </source>
         <translation>Priečinok:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="339"/>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="368"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source>Files: </source>
         <translation>Súbory: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="341"/>
+        <location filename="../MainUI.cpp" line="370"/>
         <source>  Calculating...</source>
         <translation>Vypočítava sa...</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
