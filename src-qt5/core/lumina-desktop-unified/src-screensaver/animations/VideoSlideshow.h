@@ -13,11 +13,11 @@
 class VideoAnimation: public BaseAnimGroup{
 	Q_OBJECT
 private:
-	QString videoPath;
+	QString videoPath, singleVideo;
 	QVideoWidget *videoWidget;
 	QMediaPlayer *video;
 	QStringList videoFiles;
-	//bool multimonitor;
+	bool multiple;
 
 private slots:
 
@@ -33,6 +33,8 @@ public:
 
 	  //Load the path of the videos from the configuration file (default /usr/local/videos/)
 	  videoPath = readSetting("path","/usr/local/videos").toString();
+    singleVideo = readSetting("videoLocation","").toString();
+    multiple = readSetting("multiple",true).toBool();
 	  if(!videoPath.endsWith("/")){ videoPath.append("/"); }
 
 	  //Set whether to copy videos on two monitors or play different videos
@@ -51,21 +53,31 @@ public:
 	    return;
 	  }
 
+    if(singleVideo.isNull())
+      singleVideo = videoPath+videoFiles[0];
+
 	  //Loading a random file from a directory
 	  QDesktopWidget *dw = new QDesktopWidget();
-	  QMediaPlaylist *playlist = new QMediaPlaylist();
-	  for(int i = 0; i < videoFiles.size(); i++){
-	    playlist->addMedia(QUrl::fromLocalFile(videoPath+videoFiles[i]));
-	  }
-	  playlist->setCurrentIndex(qrand() % videoFiles.size());
-	  playlist->setPlaybackMode(QMediaPlaylist::Random);
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    if(multiple) {
+      for(int i = 0; i < videoFiles.size(); i++){
+        playlist->addMedia(QUrl::fromLocalFile(videoPath+videoFiles[i]));
+      }
+      playlist->shuffle();
+    }else{
+      playlist->addMedia(QUrl::fromLocalFile(singleVideo));
+      playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+    }
 	  videoWidget->show();
-	  video->setPlaylist(playlist);
+    if(multiple)
+      video->setPlaylist(playlist);
+
 	  //Only play sound for one monitor to prevent messed up audio
 	  if(dw->screenNumber(canvas) == 0)
 	    video->setVolume(100);
 	  else
 	    video->setVolume(0);
+
 	  video->play();
 	}
 
