@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QMenu>
+#include <QDebug>
+
 #include "lthemeengine.h"
 #include "qsseditordialog.h"
 #include "qsspage.h"
@@ -44,6 +46,7 @@ void QSSPage::writeSettings(){
 }
 
 void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *){
+  //qDebug() << "Got Current Item Changed";
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
     m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -67,6 +70,12 @@ void QSSPage::on_createButton_clicked(){
     QMessageBox::warning(this, tr("Error"), tr("The file \"%1\" already exists").arg(filePath));
     return;
     }
+  // Make sure the directory exists
+  QString dir = filePath.section("/",0,-2);
+  if(!QFile::exists(dir)){
+    QDir D(dir);
+    D.mkpath(dir);
+  }
   //creating empty file
   QFile file(filePath);
   file.open(QIODevice::WriteOnly);
@@ -99,7 +108,7 @@ void QSSPage::on_removeButton_clicked(){
 void QSSPage::readSettings(){
   //load stylesheets
   m_ui->qssListWidget->clear();
-  if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath()); }
+  if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userDesktopStyleSheetPath() << lthemeengine::sharedDesktopStyleSheetPath()); }
   else{findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath()); }
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   QStringList styleSheets;
