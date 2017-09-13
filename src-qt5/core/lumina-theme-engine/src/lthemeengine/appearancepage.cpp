@@ -130,6 +130,7 @@ void AppearancePage::copyColorScheme(){
   QFile::copy(m_ui->colorSchemeComboBox->currentData().toString(), newPath);
   m_ui->colorSchemeComboBox->addItem(name.section('.',0,0), newPath);
   m_ui->colorSchemeComboBox->setCurrentIndex( m_ui->colorSchemeComboBox->count()-1);
+  QTimer::singleShot(10, this, SLOT(changeColorScheme()) );
 }
 
 void AppearancePage::renameColorScheme(){
