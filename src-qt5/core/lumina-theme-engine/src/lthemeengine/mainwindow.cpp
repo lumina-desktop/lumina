@@ -1,5 +1,8 @@
 #include <QApplication>
 #include <QSettings>
+#include <QDebug>
+#include <QTimer>
+
 #include "lthemeengine.h"
 #include "mainwindow.h"
 #include "appearancepage.h"
@@ -11,14 +14,22 @@
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWindow){
   m_ui->setupUi(this);
-  m_ui->tabWidget->addTab(new AppearancePage(this), tr("Appearance"));
-  m_ui->tabWidget->addTab(new FontsPage(this), tr("Fonts"));
-  m_ui->tabWidget->addTab(new IconThemePage(this), tr("Icon Theme"));
-  m_ui->tabWidget->addTab(new InterfacePage(this), tr("Interface"));
-#ifdef USE_WIDGETS
-  m_ui->tabWidget->addTab(new QSSPage(this, false), tr("Application Theme"));
-  m_ui->tabWidget->addTab(new QSSPage(this, true), tr("Desktop Theme"));
-#endif
+  bgroup = new QButtonGroup(this);
+  bgroup->setExclusive(true);
+  //Clear out any pages in the stacked widget
+  while(m_ui->stackedWidget->count()>0){
+    m_ui->stackedWidget->removeWidget(m_ui->stackedWidget->widget(0));
+  }
+  //Now add all the pages into the widget
+  bgroup->addButton(m_ui->tool_page_general, m_ui->stackedWidget->addWidget(new AppearancePage(this)) );
+  bgroup->addButton(m_ui->tool_page_effects, m_ui->stackedWidget->addWidget(new InterfacePage(this)));
+  bgroup->addButton(m_ui->tool_page_fonts, m_ui->stackedWidget->addWidget(new FontsPage(this)));
+  bgroup->addButton(m_ui->tool_page_icons, m_ui->stackedWidget->addWidget(new IconThemePage(this)));
+  bgroup->addButton(m_ui->tool_page_styles, m_ui->stackedWidget->addWidget(new QSSPage(this, false)));
+  bgroup->addButton(m_ui->tool_page_deskstyles, m_ui->stackedWidget->addWidget(new QSSPage(this, true)));
+  connect(bgroup, SIGNAL(buttonClicked(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)) );
+
+  QTimer::singleShot(10, m_ui->tool_page_general, SLOT(toggle()));
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   restoreGeometry(settings.value("SettingsWindow/geometry").toByteArray());
   setWindowIcon(QIcon::fromTheme("preferences-desktop-theme"));
@@ -37,8 +48,8 @@ void MainWindow::closeEvent(QCloseEvent *){
 void MainWindow::on_buttonBox_clicked(QAbstractButton *button){
   int id = m_ui->buttonBox->standardButton(button);
   if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Apply){
-    for(int i = 0; i < m_ui->tabWidget->count(); ++i){
-      TabPage *p = qobject_cast<TabPage*>(m_ui->tabWidget->widget(i));
+    for(int i = 0; i < m_ui->stackedWidget->count(); ++i){
+      TabPage *p = qobject_cast<TabPage*>(m_ui->stackedWidget->widget(i));
       if(p) { p->writeSettings(); }
       }
     }

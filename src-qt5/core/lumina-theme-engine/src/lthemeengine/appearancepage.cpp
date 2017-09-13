@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QIcon>
+#include <QTimer>
+
 #include "lthemeengine.h"
 #include "appearancepage.h"
 #include "paletteeditdialog.h"
@@ -81,6 +83,8 @@ void AppearancePage::createColorScheme(){
   QString schemePath = lthemeengine::userColorSchemePath() + "/" + name;
   createColorScheme(schemePath, palette());
   m_ui->colorSchemeComboBox->addItem(name.section('.',0,0), schemePath);
+  m_ui->colorSchemeComboBox->setCurrentIndex( m_ui->colorSchemeComboBox->count()-1);
+  QTimer::singleShot(10, this, SLOT(changeColorScheme()) );
 }
 
 void AppearancePage::changeColorScheme(){
@@ -125,6 +129,7 @@ void AppearancePage::copyColorScheme(){
   QString newPath =  lthemeengine::userColorSchemePath() + "/" + name;
   QFile::copy(m_ui->colorSchemeComboBox->currentData().toString(), newPath);
   m_ui->colorSchemeComboBox->addItem(name.section('.',0,0), newPath);
+  m_ui->colorSchemeComboBox->setCurrentIndex( m_ui->colorSchemeComboBox->count()-1);
 }
 
 void AppearancePage::renameColorScheme(){

@@ -131,9 +131,9 @@ void lthemeenginePlatformTheme::applySettings(){
         else{ qApp->setPalette(qApp->style()->standardPalette()); }
         }
         //do not override application style
-      if(m_prevStyleSheet == qApp->styleSheet()){ qApp->setStyleSheet(m_userStyleSheet); }
-      else{ qCDebug(llthemeengine) << "custom style sheet is disabled";}
-      m_prevStyleSheet = m_userStyleSheet;
+      qApp->setStyleSheet(m_userStyleSheet);
+      //else{ qCDebug(llthemeengine) << "custom style sheet is disabled";}
+      //m_prevStyleSheet = m_userStyleSheet;
     }
 #endif
   QGuiApplication::setFont(m_generalFont); //apply font
@@ -156,13 +156,13 @@ void lthemeenginePlatformTheme::createFSWatcher(){
   watcher->addPath(lthemeengine::configPath());
   QTimer *timer = new QTimer(this);
   timer->setSingleShot(true);
-  timer->setInterval(3000);
+  timer->setInterval(500);
   connect(watcher, SIGNAL(directoryChanged(QString)), timer, SLOT(start()));
   connect(timer, SIGNAL(timeout()), SLOT(updateSettings()));
 }
 
 void lthemeenginePlatformTheme::updateSettings(){
-  qCDebug(llthemeengine) << "updating settings..";
+  //qCDebug(llthemeengine) << "updating settings..";
   readSettings();
   applySettings();
 }
@@ -212,8 +212,9 @@ void lthemeenginePlatformTheme::readSettings(){
     //load style sheets
 #ifdef QT_WIDGETS_LIB
     QStringList qssPaths;
-    if(qApp->applicationName()=="lumina-desktop"){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
+    if(qApp->applicationFilePath().section("/",-1).startsWith("lumina-desktop") ){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
     qssPaths << settings.value("stylesheets").toStringList();
+    //qDebug() << "Loaded Stylesheets:" << qApp->applicationName() << qssPaths;
     m_userStyleSheet = loadStyleSheets(qssPaths);
 #endif
     settings.endGroup();
@@ -226,6 +227,7 @@ bool lthemeenginePlatformTheme::hasWidgets(){
 #endif
 
 QString lthemeenginePlatformTheme::loadStyleSheets(const QStringList &paths){
+  //qDebug() << "Loading Stylesheets:" << paths;
   QString content;
   foreach (QString path, paths){
     if(!QFile::exists(path)){ continue; }
