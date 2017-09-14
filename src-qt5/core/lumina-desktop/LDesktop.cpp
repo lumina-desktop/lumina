@@ -88,7 +88,7 @@ QRect LDesktop::availableScreenGeom(){
     return globalWorkRect; //saved from previous calculations
   }else{
     return LSession::handle()->screenGeom( Screen() );
-  }	  
+  }
 }
 
 void LDesktop::UpdateGeometry(){
@@ -150,7 +150,7 @@ void LDesktop::checkResolution(){
   }else if(scrn.width()==oldWidth && scrn.height()==oldHeight){
     //nothing to do - same as before
   }else{
-    //Calculate the scale factor between the old/new sizes in each dimension 
+    //Calculate the scale factor between the old/new sizes in each dimension
     //  and forward that on to all the interface elements
     double xscale = scrn.width()/((double) oldWidth);
     double yscale = scrn.height()/((double) oldHeight);
@@ -194,7 +194,7 @@ void LDesktop::checkResolution(){
       }
     }
     DP->sync(); //make sure it gets saved to disk right away
-    
+
   }
   issyncing = false;
 }
@@ -238,7 +238,7 @@ void LDesktop::InitDesktop(){
         bgWindow->setWindowOpacity(0.0);
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );*/
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
-  bgDesktop = new LDesktopPluginSpace(); 
+  bgDesktop = new LDesktopPluginSpace();
       int grid = settings->value(DPREFIX+"GridSize",-1).toInt();
       if(grid<0 && LSession::desktop()->screenGeometry(Screen()).height() > 2000){ grid = 200; }
       else if(grid<0){ grid = 100; }
@@ -266,7 +266,7 @@ void LDesktop::InitDesktop(){
 }
 
 void LDesktop::SettingsChanged(){
-  if(issyncing){ return; } //don't refresh for internal modifications to the 
+  if(issyncing){ return; } //don't refresh for internal modifications to the
   issyncing = true;
   qDebug() << "Found Settings Change:" << screenID;
   settings->sync(); //make sure to sync with external settings changes

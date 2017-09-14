@@ -315,7 +315,7 @@ void RootSubWindow::toggleMaximize(){
     //Not maximized yet - go ahead and make it so
     lastMaxGeom = this->geometry(); //save this for later;
   }
-  qDebug() << "Toggle Maximize:" << this->geometry() << rect;
+  //qDebug() << "Toggle Maximize:" << this->geometry() << rect;
   QString anim_type = DesktopSettings::instance()->value(DesktopSettings::Animation, "window/move", "random").toString();
   loadAnimation(anim_type, NativeWindow::Size, rect);
 }
@@ -384,6 +384,10 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
+		if(vals[i].toPoint()!=QPoint(0,0)){
+		  WinWidget->resyncWindow();
+		}
+		break;
 	case NativeWindow::Size:
 		//qDebug() << " - SIZE CHANGE";
 		if(WIN->property(NativeWindow::FrameExtents).isNull() && (i<props.indexOf(NativeWindow::FrameExtents)) ){
@@ -391,7 +395,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  props << props.takeAt(i);
 		  vals << vals.takeAt(i);
 		  i--;
-		}else if(!WinWidget->isPaused() && !this->isVisible() && activeState==Normal){
+		}else if(!WinWidget->isPaused() && activeState==Normal){
 		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size()){
                     qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
 		    this->setGeometry(WIN->geometry());

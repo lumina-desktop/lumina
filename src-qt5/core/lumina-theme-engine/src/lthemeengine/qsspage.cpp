@@ -29,6 +29,8 @@ QSSPage::QSSPage(QWidget *parent, bool desktop) : TabPage(parent), m_ui(new Ui::
   m_ui->createButton->setIcon(QIcon::fromTheme("document-new"));
   m_ui->editButton->setIcon(QIcon::fromTheme("accessories-text-editor"));
   m_ui->removeButton->setIcon(QIcon::fromTheme("edit-delete"));
+  m_ui->tool_enable->setEnabled(false);
+  m_ui->tool_disable->setEnabled(false);
 }
 
 QSSPage::~QSSPage(){
@@ -50,8 +52,10 @@ void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QLis
   if(current!=0){
     m_ui->list_disabled->clearSelection(); //clear any current selection on the other widget
     m_ui->list_disabled->setCurrentRow(-1);
+    m_ui->tool_enable->setEnabled(false);
   }
   //qDebug() << "Got Current Item Changed";
+  m_ui->tool_disable->setEnabled(current!=0);
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
     m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -68,8 +72,10 @@ void QSSPage::on_list_disabled_currentItemChanged(QListWidgetItem *current, QLis
   if(current!=0){
     m_ui->qssListWidget->clearSelection(); //clear any current selection on the other widget
     m_ui->qssListWidget->setCurrentRow(-1);
+    m_ui->tool_disable->setEnabled(false);
   }
   //qDebug() << "Got Current Item Changed";
+  m_ui->tool_enable->setEnabled(current!=0);
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
     m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -105,11 +111,11 @@ void QSSPage::on_createButton_clicked(){
   file.close();
   //creating item
   QFileInfo info(filePath);
-  QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
+  QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->list_disabled);
   item->setToolTip(info.filePath());
   item->setData(QSS_FULL_PATH_ROLE, info.filePath());
   item->setData(QSS_WRITABLE_ROLE, info.isWritable());
-  m_ui->qssListWidget->setCurrentRow(m_ui->qssListWidget->count()-1);
+  m_ui->list_disabled->setCurrentRow(m_ui->list_disabled->count()-1);
   QTimer::singleShot(10, this, SLOT(on_editButton_clicked()) );
 }
 

@@ -22,6 +22,12 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QToolButton" name="tool_priority_up">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="toolTip">
             <string>Increase Priority</string>
            </property>
@@ -29,12 +35,19 @@
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="arrow-up"/>
+            <iconset theme="arrow-up">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QToolButton" name="tool_priority_down">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="toolTip">
             <string>Decrease priority of style</string>
            </property>
@@ -42,12 +55,19 @@
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset theme="arrow-down"/>
+            <iconset theme="arrow-down">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
          <item>
           <spacer name="horizontalSpacer_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -61,6 +81,12 @@
          </item>
          <item>
           <widget class="QToolButton" name="tool_disable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="toolTip">
             <string>Disable Style</string>
            </property>
@@ -68,7 +94,8 @@
             <string>Disable</string>
            </property>
            <property name="icon">
-            <iconset theme="arrow-right"/>
+            <iconset theme="arrow-right">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -120,11 +147,18 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QToolButton" name="tool_enable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Enable</string>
            </property>
            <property name="icon">
-            <iconset theme="arrow-left"/>
+            <iconset theme="arrow-left">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -133,6 +167,12 @@
          </item>
          <item>
           <spacer name="horizontalSpacer_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
