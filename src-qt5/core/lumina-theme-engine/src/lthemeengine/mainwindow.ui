@@ -42,7 +42,8 @@
           <string>General</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-desktop-theme"/>
+          <iconset theme="preferences-desktop-theme">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -73,7 +74,8 @@
           <string>Effects</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-desktop-display"/>
+          <iconset theme="preferences-desktop-display">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -104,7 +106,8 @@
           <string>Fonts</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-desktop-font"/>
+          <iconset theme="preferences-desktop-font">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -135,7 +138,8 @@
           <string>Icons</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-desktop-icons"/>
+          <iconset theme="preferences-desktop-icons">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -167,7 +171,8 @@
 Styles</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-system-windows"/>
+          <iconset theme="preferences-system-windows">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -199,7 +204,8 @@ Styles</string>
 Styles</string>
          </property>
          <property name="icon">
-          <iconset theme="preferences-desktop"/>
+          <iconset theme="preferences-desktop">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -236,7 +242,7 @@ Styles</string>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+        <enum>QFrame::Box</enum>
        </property>
        <widget class="QWidget" name="page"/>
       </widget>

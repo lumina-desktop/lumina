@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QMenu>
 #include <QDebug>
+#include <QTimer>
 
 #include "lthemeengine.h"
 #include "qsseditordialog.h"
@@ -37,15 +38,37 @@ QSSPage::~QSSPage(){
 void QSSPage::writeSettings(){
   QStringList styleSheets;
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
-  for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
+  for(int i = m_ui->qssListWidget->count()-1; i>=0; i--){
     QListWidgetItem *item = m_ui->qssListWidget->item(i);
-    if(item->checkState() == Qt::Checked){ styleSheets << item->data(QSS_FULL_PATH_ROLE).toString(); }
+    styleSheets << item->data(QSS_FULL_PATH_ROLE).toString();
+  }
   if(desktop_qss){ settings.setValue("Interface/desktop_stylesheets", styleSheets); }
   else{ settings.setValue("Interface/stylesheets", styleSheets); }
-  }
 }
 
 void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *){
+  if(current!=0){
+    m_ui->list_disabled->clearSelection(); //clear any current selection on the other widget
+    m_ui->list_disabled->setCurrentRow(-1);
+  }
+  //qDebug() << "Got Current Item Changed";
+  if(current){
+    m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
+    m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
+    m_ui->renameButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
+    }
+  else{
+    m_ui->editButton->setEnabled(false);
+    m_ui->removeButton->setEnabled(false);
+    m_ui->renameButton->setEnabled(false);
+    }
+}
+
+void QSSPage::on_list_disabled_currentItemChanged(QListWidgetItem *current, QListWidgetItem *){
+  if(current!=0){
+    m_ui->qssListWidget->clearSelection(); //clear any current selection on the other widget
+    m_ui->qssListWidget->setCurrentRow(-1);
+  }
   //qDebug() << "Got Current Item Changed";
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -86,11 +109,12 @@ void QSSPage::on_createButton_clicked(){
   item->setToolTip(info.filePath());
   item->setData(QSS_FULL_PATH_ROLE, info.filePath());
   item->setData(QSS_WRITABLE_ROLE, info.isWritable());
-  item->setCheckState(Qt::Unchecked);
+  m_ui->qssListWidget->setCurrentRow(m_ui->qssListWidget->count()-1);
+  QTimer::singleShot(10, this, SLOT(on_editButton_clicked()) );
 }
 
 void QSSPage::on_editButton_clicked(){
-  QListWidgetItem *item = m_ui->qssListWidget->currentItem();
+  QListWidgetItem *item = currentSelection();
   if(item){
     QSSEditorDialog dialog(item->data(QSS_FULL_PATH_ROLE).toString(), this);
     dialog.exec();
@@ -98,31 +122,76 @@ void QSSPage::on_editButton_clicked(){
 }
 
 void QSSPage::on_removeButton_clicked(){
-  QListWidgetItem *item = m_ui->qssListWidget->currentItem();
+  QListWidgetItem *item = currentSelection();
   if(!item){ return; }
   int button = QMessageBox::question(this, tr("Confirm Remove"),tr("Are you sure you want to remove style sheet \"%1\"?").arg(item->text()), QMessageBox::Yes | QMessageBox::No);
   if(button == QMessageBox::Yes){ QFile::remove(item->data(QSS_FULL_PATH_ROLE).toString()); }
   delete item;
 }
 
+void QSSPage::on_tool_enable_clicked(){
+  QList<QListWidgetItem*> sel = m_ui->list_disabled->selectedItems();
+  //qDebug() << "Got Selection:" << sel.count();
+  for(int i=0; i<sel.length(); i++){
+    m_ui->qssListWidget->addItem(sel[i]->clone());
+    delete sel[i];
+    //QCoreApplication::processEvents();
+    m_ui->qssListWidget->setCurrentRow(m_ui->qssListWidget->count()-1);
+  }
+
+}
+
+void QSSPage::on_tool_disable_clicked(){
+  QList<QListWidgetItem*> sel = m_ui->qssListWidget->selectedItems();
+  //qDebug() << "Got Selection:" << sel.count();
+  for(int i=0; i<sel.length(); i++){
+    m_ui->list_disabled->addItem(sel[i]->clone());
+    delete sel[i];
+    //QCoreApplication::processEvents();
+    m_ui->list_disabled->setCurrentRow(m_ui->list_disabled->count()-1);
+  }
+}
+
+void QSSPage::on_tool_priority_up_clicked(){
+  QList<QListWidgetItem*> sel = m_ui->qssListWidget->selectedItems();
+  for(int i=0; i<sel.length(); i++){
+    int index = m_ui->qssListWidget->row(sel[i]);
+    //qDebug() << "Move Item Up:" << index;
+    if(index>0){
+      m_ui->qssListWidget->insertItem(index-1, m_ui->qssListWidget->takeItem(index));
+      m_ui->qssListWidget->setCurrentRow(index-1);
+    }
+  }
+}
+
+void QSSPage::on_tool_priority_down_clicked(){
+  QList<QListWidgetItem*> sel = m_ui->qssListWidget->selectedItems();
+  for(int i=0; i<sel.length(); i++){
+    int index = m_ui->qssListWidget->row(sel[i]);
+    //qDebug() << "Move Item Down:" << index;
+    if(index<(m_ui->qssListWidget->count()-1) ){
+      m_ui->qssListWidget->insertItem(index+1, m_ui->qssListWidget->takeItem(index));
+      m_ui->qssListWidget->setCurrentRow(index+1);
+    }
+  }
+}
+
 void QSSPage::readSettings(){
   //load stylesheets
   m_ui->qssListWidget->clear();
-  if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userDesktopStyleSheetPath() << lthemeengine::sharedDesktopStyleSheetPath()); }
-  else{findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath()); }
+  m_ui->list_disabled->clear();
+  //Read the currently-enabled settings
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   QStringList styleSheets;
   if(desktop_qss){ styleSheets = settings.value("Interface/desktop_stylesheets").toStringList(); }
   else{ styleSheets = settings.value("Interface/stylesheets").toStringList(); }
+  //Now load the items into list widgets
+  if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userDesktopStyleSheetPath() << lthemeengine::sharedDesktopStyleSheetPath(), styleSheets); }
+  else{findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath(), styleSheets); }
 
-  for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
-    QListWidgetItem *item = m_ui->qssListWidget->item(i);
-    if(styleSheets.contains(item->data(QSS_FULL_PATH_ROLE).toString())){ item->setCheckState(Qt::Checked); }
-    else { item->setCheckState(Qt::Unchecked); }
-    }
 }
 
-void QSSPage::findStyleSheets(QStringList paths){
+void QSSPage::findStyleSheets(QStringList paths, QStringList enabled){
   paths.removeDuplicates();
   for(int i=0; i<paths.length(); i++){
     if(!QFile::exists(paths[i])){ continue; }
@@ -130,20 +199,30 @@ void QSSPage::findStyleSheets(QStringList paths){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList() << "*.qss");
     foreach (QFileInfo info, dir.entryInfoList()){
-      QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->qssListWidget);
+      QListWidgetItem *item = new QListWidgetItem(info.fileName());
       item->setToolTip(info.filePath());
       item->setData(QSS_FULL_PATH_ROLE, info.filePath());
       item->setData(QSS_WRITABLE_ROLE, info.isWritable());
+      if( enabled.contains(info.filePath()) ){ m_ui->qssListWidget->addItem(item); }
+      else{ m_ui->list_disabled->addItem(item); }
     }
   }
+  //Now ensure the priority of the items in the active list is correct
+  for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
+    QListWidgetItem *item = m_ui->qssListWidget->item(i);
+    int index = enabled.indexOf( item->data(QSS_FULL_PATH_ROLE).toString() );
+    if(index>=0){ m_ui->qssListWidget->insertItem(index, item); }// item->move(m_ui->qssListWidget->count() - 1 - index); }
+  }
+  m_ui->list_disabled->sortItems(Qt::AscendingOrder);
+
 }
 
 void QSSPage::on_renameButton_clicked(){
-  QListWidgetItem *item = m_ui->qssListWidget->currentItem();
+  QListWidgetItem *item = currentSelection();
   if(!item){ return; }
   QString name = QInputDialog::getText(this, tr("Rename Style Sheet"), tr("Style sheet name:"), QLineEdit::Normal, item->text(), 0);
   if(name.isEmpty()){ return; }
-  if(!m_ui->qssListWidget->findItems(name, Qt::MatchExactly).isEmpty()){
+  if(!m_ui->qssListWidget->findItems(name, Qt::MatchExactly).isEmpty() || !m_ui->list_disabled->findItems(name, Qt::MatchExactly).isEmpty()){
     QMessageBox::warning(this, tr("Error"), tr("The style sheet \"%1\" already exists").arg(name));
     return;
     }
@@ -161,4 +240,10 @@ void QSSPage::on_renameButton_clicked(){
 void QSSPage::on_qssListWidget_customContextMenuRequested(const QPoint &pos){
   QListWidgetItem *item = m_ui->qssListWidget->currentItem();
   if(item && item->data(QSS_WRITABLE_ROLE).toBool()){ m_menu->exec(m_ui->qssListWidget->viewport()->mapToGlobal(pos)); }
+}
+
+QListWidgetItem* QSSPage::currentSelection(){
+  QListWidgetItem *item = m_ui->qssListWidget->currentItem();
+  if(item==0){ item = m_ui->list_disabled->currentItem(); }
+  return item;
 }

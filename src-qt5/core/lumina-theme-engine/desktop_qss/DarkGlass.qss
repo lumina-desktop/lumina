@@ -68,7 +68,7 @@ LTBWidget:hover, LTBWidget#WindowVisible:hover, LTBWidget#WindowInvisible:hover,
 /* CALENDER WIDGET */
  /* (This is a special hack since there is no official support for stylesheets for this widget) */
  QCalendarWidget QWidget#qt_calendar_navigationbar{
-   background-color: palette(alternate-base);
+   background-color: palette(base);
  }
 QCalendarWidget QWidget{ 
    background-color: palette(base); 
