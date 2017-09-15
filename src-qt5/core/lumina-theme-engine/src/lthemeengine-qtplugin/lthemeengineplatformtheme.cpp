@@ -16,6 +16,8 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 
+#include <stdlib.h>
+
 #include <lthemeengine/lthemeengine.h>
 #include "lthemeengineplatformtheme.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
@@ -138,12 +140,16 @@ void lthemeenginePlatformTheme::applySettings(){
 #endif
   QGuiApplication::setFont(m_generalFont); //apply font
   QIcon::setThemeName(m_iconTheme); //apply icons
+  setenv("X_CURSOR_THEME", m_cursorTheme.toLocal8Bit().data(), 1);
+  //qDebug() << "Icon Theme Change:" << m_iconTheme << QIcon::themeSearchPaths();
   if(m_customPalette && m_usePalette){ QGuiApplication::setPalette(*m_customPalette); } //apply palette
 #ifdef QT_WIDGETS_LIB
   if(hasWidgets()){
+    QEvent et(QEvent::ThemeChange);
+    QEvent ec(QEvent::CursorChange);
     foreach (QWidget *w, qApp->allWidgets()){
-      QEvent e(QEvent::ThemeChange);
-      QApplication::sendEvent(w, &e);
+      QApplication::sendEvent(w, &et);
+      QApplication::sendEvent(w, &ec);
       }
     }
 #endif
@@ -180,6 +186,7 @@ void lthemeenginePlatformTheme::readSettings(){
     QString schemePath = settings.value("color_scheme_path","airy").toString();
     m_customPalette = new QPalette(loadColorScheme(schemePath));
     }
+  m_cursorTheme = settings.value("cursor_theme","").toString();
   m_iconTheme = settings.value("icon_theme", "material-design-light").toString();
   settings.endGroup();
   settings.beginGroup("Fonts");
