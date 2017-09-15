@@ -8,6 +8,7 @@
 #include "appearancepage.h"
 #include "fontspage.h"
 #include "iconthemepage.h"
+#include "cursorthemepage.h"
 #include "interfacepage.h"
 #include "qsspage.h"
 #include "ui_mainwindow.h"
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   bgroup->addButton(m_ui->tool_page_icons, m_ui->stackedWidget->addWidget(new IconThemePage(this)));
   bgroup->addButton(m_ui->tool_page_styles, m_ui->stackedWidget->addWidget(new QSSPage(this, false)));
   bgroup->addButton(m_ui->tool_page_deskstyles, m_ui->stackedWidget->addWidget(new QSSPage(this, true)));
+  bgroup->addButton(m_ui->tool_page_cursors, m_ui->stackedWidget->addWidget(new CursorThemePage(this)) );
   connect(bgroup, SIGNAL(buttonClicked(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)) );
 
   QTimer::singleShot(10, m_ui->tool_page_general, SLOT(toggle()));

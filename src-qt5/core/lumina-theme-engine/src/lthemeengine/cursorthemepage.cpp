@@ -6,28 +6,31 @@
 #include <QImageReader>
 #include <QLocale>
 #include "lthemeengine.h"
-#include "iconthemepage.h"
-#include "ui_iconthemepage.h"
+#include "cursorthemepage.h"
+#include "ui_cursorthemepage.h"
 
-IconThemePage::IconThemePage(QWidget *parent) : TabPage(parent), m_ui(new Ui::IconThemePage){
+CursorThemePage::CursorThemePage(QWidget *parent) : TabPage(parent), m_ui(new Ui::CursorThemePage){
   m_ui->setupUi(this);
   loadThemes();
   readSettings();
 }
 
-IconThemePage::~IconThemePage(){
+CursorThemePage::~CursorThemePage(){
   delete m_ui;
 }
 
-void IconThemePage::writeSettings(){
+void CursorThemePage::writeSettings(){
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   QTreeWidgetItem *item = m_ui->treeWidget->currentItem();
-  if(item){ settings.setValue("Appearance/icon_theme", item->data(3, Qt::UserRole)); }
+  if(item){
+    settings.setValue("Appearance/cursor_theme", item->data(3, Qt::UserRole));
+    lthemeengine::setCursorTheme(item->data(3, Qt::UserRole).toString() );
+  }
 }
 
-void IconThemePage::readSettings(){
+void CursorThemePage::readSettings(){
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
-  QString name = settings.value("Appearance/icon_theme").toString();
+  QString name = settings.value("Appearance/cursor_theme").toString();
   if(name.isEmpty()){ return; }
   for(int i = 0; i < m_ui->treeWidget->topLevelItemCount(); ++i){
     QTreeWidgetItem *item = m_ui->treeWidget->topLevelItem(i);
@@ -38,8 +41,8 @@ void IconThemePage::readSettings(){
     }
 }
 
-void IconThemePage::loadThemes(){
-  QFileInfoList themeFileList;
+void CursorThemePage::loadThemes(){
+  /*QFileInfoList themeFileList;
   foreach(QString path, lthemeengine::iconPaths()){
     QDir dir(path);
     dir.setFilter(QDir::Dirs | QDir::NoDotDot | QDir::NoDot);
@@ -48,20 +51,23 @@ void IconThemePage::loadThemes(){
       themeDir.setFilter(QDir::Files);
       themeFileList << themeDir.entryInfoList(QStringList() << "index.theme");
       }
-    }
-  foreach(QFileInfo info, themeFileList){
+    }*/
+  /*foreach(QFileInfo info, themeFileList){
     loadTheme(info.canonicalFilePath());
-    }
+    }*/
+  QStringList themes = lthemeengine::availableSystemCursors();
+  for(int i=0; i<themes.length(); i++){ loadTheme(themes[i]); }
 }
 
-void IconThemePage::loadTheme(const QString &path){
-  QSettings config(path, QSettings::IniFormat);
-  config.setIniCodec("UTF-8");
-  config.beginGroup("Icon Theme");
-  QStringList dirs = config.value("Directories").toStringList();
-  if(dirs.isEmpty() || config.value("Hidden", false).toBool()){ return; }
+void CursorThemePage::loadTheme(const QString &path){
+  //QSettings config(path, QSettings::IniFormat);
+  //config.setIniCodec("UTF-8");
+  //config.beginGroup("Icon Theme");
+  //QStringList dirs = config.value("Directories").toStringList();
+  //if(dirs.isEmpty() || config.value("Hidden", false).toBool()){ return; }
   QString name, comment;
-  QString lang = QLocale::system().name();
+  name = comment = path.section("/",-1);
+  /*QString lang = QLocale::system().name();
   name = config.value(QString("Name[%1]").arg(lang)).toString();
   comment = config.value(QString("Comment[%1]").arg(lang)).toString();
   if(lang.contains("_")){ lang = lang.split("_").first(); }
@@ -69,16 +75,16 @@ void IconThemePage::loadTheme(const QString &path){
   if(comment.isEmpty()){ comment = config.value(QString("Comment[%1]").arg(lang)).toString(); }
   if(name.isEmpty()){ name = config.value("Name").toString(); }
   if(comment.isEmpty()){ comment = config.value("Comment").toString(); }
-  config.endGroup();
-  QIcon icon1 = findIcon(path, 24, "document-save");
-  QIcon icon2 = findIcon(path, 24, "document-print");
-  QIcon icon3 = findIcon(path, 24, "document-edit");
+  config.endGroup();*/
+  QIcon icon1;// = findIcon(path, 24, "document-save");
+  QIcon icon2;//= findIcon(path, 24, "document-print");
+  QIcon icon3;// = findIcon(path, 24, "media-playback-stop");
   QTreeWidgetItem *item = new QTreeWidgetItem();
   item->setIcon(0, icon1);
   item->setIcon(1, icon2);
   item->setIcon(2, icon3);
   item->setText(3, name);
-  item->setData(3, Qt::UserRole, QFileInfo(path).path().section("/", -1));
+  item->setData(3, Qt::UserRole, path.section("/",-1));
   item->setToolTip(3, comment);
   item->setSizeHint(0, QSize(24,24));
   m_ui->treeWidget->addTopLevelItem(item);
@@ -88,7 +94,7 @@ void IconThemePage::loadTheme(const QString &path){
   m_ui->treeWidget->resizeColumnToContents(3);
 }
 
-QIcon IconThemePage::findIcon(const QString &themePath, int size, const QString &name){
+QIcon CursorThemePage::findIcon(const QString &themePath, int size, const QString &name){
   QSettings config(themePath, QSettings::IniFormat);
   config.beginGroup("Icon Theme");
   QStringList dirs = config.value("Directories").toStringList();
@@ -97,7 +103,7 @@ QIcon IconThemePage::findIcon(const QString &themePath, int size, const QString 
   config.endGroup();
   foreach (QString dir, dirs){
     config.beginGroup(dir);
-    if(config.value("Size").toInt() == size || config.value("Type").toString().toLower()=="scalable"){
+    if(config.value("Size").toInt() == size){
       QDir iconDir = QFileInfo(themePath).path() + "/" + dir;
       iconDir.setFilter(QDir::Files);
       iconDir.setNameFilters(QStringList () << name + ".*");
