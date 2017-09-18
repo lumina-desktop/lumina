@@ -30,7 +30,7 @@ public:
 	~AppLauncherPlugin(){}
 
 	void Cleanup(); //special function for final cleanup
-		
+
 private:
 	QToolButton *button;
 	QFileSystemWatcher *watcher;
@@ -45,7 +45,7 @@ private slots:
 	void iconLoaded(QString);
 
 	//void openContextMenu();
-	
+
 	//void increaseIconSize();
 	//void decreaseIconSize();
 	//void deleteFile();
@@ -63,11 +63,16 @@ public slots:
 	void LocaleChange(){
 	  loadButton(); //force reload
 	}
-	
+
 protected:
 	void resizeEvent(QResizeEvent *ev){
 	  LDPlugin::resizeEvent(ev);
 	  QTimer::singleShot(100, this, SLOT(loadButton()) );
+	}
+	void changeEvent(QEvent *ev){
+	  LDPlugin::changeEvent(ev);
+	  QEvent::Type tmp = ev->type();
+	  if(tmp == QEvent::StyleChange || tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){ loadButton(); }
 	}
 };
 #endif

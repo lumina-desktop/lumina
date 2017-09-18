@@ -15,6 +15,7 @@
 #include <QMenu>
 #include <QEvent>
 #include <QAction>
+#include <QTimer>
 
 // libLumina includes
 #include <LuminaXDG.h>
@@ -29,7 +30,7 @@ class LTaskButton : public LTBWidget{
 public:
 	LTaskButton(QWidget *parent=0, bool smallDisplay = true);
 	~LTaskButton();
-	
+
 	//Window Information
 	QList<WId> windows();
 	QString classname();
@@ -56,6 +57,7 @@ public slots:
 	void UpdateMenus(); //re-create the menus (text + icons)
 
 private slots:
+
 	void buttonClicked();
 	void closeWindow(); //send the signal to close a window
 	void maximizeWindow(); //send the signal to maximize/restore a window
@@ -66,7 +68,14 @@ private slots:
 	void triggerWindow(); //change b/w visible and invisible
 	void winClicked(QAction*);
 	void openActionMenu();
- 
+protected:
+	void changeEvent(QEvent *ev){
+	  LTBWidget::changeEvent(ev);
+	  QEvent::Type tmp = ev->type();
+	  if(tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){
+	    QTimer::singleShot(qrand()%100+500, this, SLOT(UpdateButton()) );
+	  }
+	}
 signals:
 	void MenuClosed();
 };

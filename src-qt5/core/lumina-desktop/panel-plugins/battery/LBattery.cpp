@@ -77,7 +77,7 @@ void LBattery::updateBattery(bool force){
         break;
     }
     if(icon<iconOld && icon==0){
-      //Play some audio warning chime when 
+      //Play some audio warning chime when
       QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
       LSession::handle()->playAudioFile(sfile);
       }
