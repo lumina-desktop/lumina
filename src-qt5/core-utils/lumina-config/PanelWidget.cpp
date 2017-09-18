@@ -23,7 +23,7 @@ PanelWidget::PanelWidget(QWidget *parent, QWidget *Main, LPlugins *Pinfo) : QWid
   ui->combo_edge->addItem(tr("Bottom"), "bottom");
   ui->combo_edge->addItem(tr("Left"), "left");
   ui->combo_edge->addItem(tr("Right"), "right");
-	
+
   LoadIcons();
   //Now connect any other signals/slots
   connect(ui->combo_edge, SIGNAL(currentIndexChanged(int)), this, SLOT(ItemChanged()) );
@@ -32,11 +32,11 @@ PanelWidget::PanelWidget(QWidget *parent, QWidget *Main, LPlugins *Pinfo) : QWid
   connect(ui->spin_pxthick, SIGNAL(valueChanged(int)), this, SLOT(ItemChanged()) );
   connect(ui->check_autohide, SIGNAL(stateChanged(int)), this, SLOT(ItemChanged()) );
   connect(ui->group_customcolor, SIGNAL(toggled(bool)), this, SLOT(ItemChanged()) );
-	
+
 }
 
 PanelWidget::~PanelWidget(){
-	
+
 }
 
 void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
@@ -90,8 +90,8 @@ void PanelWidget::LoadSettings(QSettings *settings, int Dnum, int Pnum){
   reloadColorSample();
 }
 
-void PanelWidget::SaveSettings(QSettings *settings){//save the current settings
-  QString screenID = QApplication::screens().at(dnum)->name();
+void PanelWidget::SaveSettings(QSettings *settings, QString screenID){//save the current settings
+  if(screenID.isEmpty()){ screenID = QApplication::screens().at(dnum)->name(); }
   QString prefix = "panel_"+screenID+"."+QString::number(pnum)+"/";
   qDebug() << "Saving panel settings:" << prefix;
   settings->setValue(prefix+"location", ui->combo_edge->currentData().toString() );
