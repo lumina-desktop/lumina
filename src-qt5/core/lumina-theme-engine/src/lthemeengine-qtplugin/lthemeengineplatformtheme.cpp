@@ -133,10 +133,10 @@ void lthemeenginePlatformTheme::applySettings(){
         else{ qApp->setPalette(qApp->style()->standardPalette()); }
         }
         //do not override application style if one is already set by the app itself
-      if(qApp->styleSheet().isEmpty() || qApp->styleSheet()==m_oldStyleSheet){
-        qApp->setStyleSheet(m_userStyleSheet);
-        m_oldStyleSheet = m_userStyleSheet;
-      }
+      QString orig = qApp->styleSheet();
+      if(orig.startsWith(m_oldStyleSheet)){ orig = orig.remove(m_oldStyleSheet); }
+      qApp->setStyleSheet(m_userStyleSheet+orig); //make sure the app style has higher priority than ours
+      m_oldStyleSheet = m_userStyleSheet;
 
     }
 #endif
