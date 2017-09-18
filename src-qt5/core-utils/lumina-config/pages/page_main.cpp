@@ -44,7 +44,7 @@ void page_main::setPreviousPage(QString id){
       }
     }
   }
-  
+
 }
 
 void page_main::UpdateItems(QString search){
@@ -87,15 +87,15 @@ void page_main::UpdateItems(QString search){
     //qDebug() << "Item Found:" << INFO[i].id << INFO[i].title;
     int col = 0;
     QTreeWidgetItem *lastIt = 0;
-    if(INFO[i].category=="interface" && interface->childCount()>0 ){ 
+    if(INFO[i].category=="interface" && interface->childCount()>0 ){
       if( interface->child( interface->childCount()-1)->text(1).isEmpty() ){ lastIt = interface->child(interface->childCount()-1); }
    }else if(INFO[i].category=="appearance"  && appearance->childCount()>0 ){
       if( appearance->child(appearance->childCount()-1)->text(1).isEmpty() ){ lastIt = appearance->child(appearance->childCount()-1); }
-    }else if(INFO[i].category=="session"  && session->childCount()>0 ){ 
+    }else if(INFO[i].category=="session"  && session->childCount()>0 ){
       if( session->child( session->childCount()-1)->text(1).isEmpty() ){ lastIt = session->child(session->childCount()-1); }
-    }else if(INFO[i].category=="user"  && user->childCount()>0 ){ 
+    }else if(INFO[i].category=="user"  && user->childCount()>0 ){
       if( user->child( user->childCount()-1)->text(1).isEmpty() ){ lastIt = user->child(user->childCount()-1); }
-    }else if(INFO[i].category=="system"  && system->childCount()>0 ){ 
+    }else if(INFO[i].category=="system"  && system->childCount()>0 ){
       if( system->child( system->childCount()-1)->text(1).isEmpty() ){ lastIt = system->child(system->childCount()-1); }
     }
     if(lastIt==0){ lastIt = new QTreeWidgetItem();  col = 0;}
@@ -125,7 +125,7 @@ void page_main::UpdateItems(QString search){
   ui->treeWidget->resizeColumnToContents(1);
 
   //Now make sure the width of the tree widget is greater/equal to the recommended size
-  int wid = ui->treeWidget->indentation() + 10; 
+  int wid = ui->treeWidget->indentation() + 10;
   for(int i=0; i<ui->treeWidget->columnCount(); i++){
     wid += ui->treeWidget->columnWidth(i);
   }
@@ -194,7 +194,7 @@ void page_main::showFind(){
 
 void page_main::itemTriggered(QTreeWidgetItem *it, int col){
   if(it->childCount()>0){
-    it->setExpanded( !it->isExpanded() ); 
+    it->setExpanded( !it->isExpanded() );
     it->setSelected(false);
   }else if(!it->whatsThis(col).isEmpty()){
     QString id = it->whatsThis(col);
