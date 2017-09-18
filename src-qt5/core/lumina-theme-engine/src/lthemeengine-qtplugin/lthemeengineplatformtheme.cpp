@@ -132,10 +132,12 @@ void lthemeenginePlatformTheme::applySettings(){
         if(m_customPalette){ qApp->setPalette(*m_customPalette); }
         else{ qApp->setPalette(qApp->style()->standardPalette()); }
         }
-        //do not override application style
-      qApp->setStyleSheet(m_userStyleSheet);
-      //else{ qCDebug(llthemeengine) << "custom style sheet is disabled";}
-      //m_prevStyleSheet = m_userStyleSheet;
+        //do not override application style if one is already set by the app itself
+      if(qApp->styleSheet().isEmpty() || qApp->styleSheet()==m_oldStyleSheet){
+        qApp->setStyleSheet(m_userStyleSheet);
+        m_oldStyleSheet = m_userStyleSheet;
+      }
+
     }
 #endif
   QGuiApplication::setFont(m_generalFont); //apply font
