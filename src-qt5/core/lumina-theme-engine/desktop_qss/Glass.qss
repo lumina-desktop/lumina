@@ -1,5 +1,5 @@
 QWidget#LuminaBootSplash{
-  background: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 palette(light), stop:1 palette(midlight) );
+  background: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 palette(base), stop:1 palette(light) );
   border-radius: 5px;
 }
 

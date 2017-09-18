@@ -139,7 +139,19 @@ void lthemeenginePlatformTheme::applySettings(){
     }
 #endif
   QGuiApplication::setFont(m_generalFont); //apply font
+  bool ithemechange = m_iconTheme != QIcon::themeName();
   QIcon::setThemeName(m_iconTheme); //apply icons
+  //See if we need to reload the application icon from the new theme
+  if(ithemechange){
+    QString appIcon = qApp->windowIcon().name();
+    if(!appIcon.isEmpty() && QIcon::hasThemeIcon(appIcon)){ qApp->setWindowIcon(QIcon::fromTheme(appIcon)); }
+    QWindowList wins = qApp->topLevelWindows();
+    for(int i=0; i<wins.length(); i++){
+     QString winIcon = wins[i]->icon().name();
+      if(!winIcon.isEmpty() && QIcon::hasThemeIcon(winIcon)){ wins[i]->setIcon(QIcon::fromTheme(winIcon)); }
+    }
+  }
+  bool cthemechange = m_cursorTheme != QString(getenv("X_CURSOR_THEME"));
   setenv("X_CURSOR_THEME", m_cursorTheme.toLocal8Bit().data(), 1);
   //qDebug() << "Icon Theme Change:" << m_iconTheme << QIcon::themeSearchPaths();
   if(m_customPalette && m_usePalette){ QGuiApplication::setPalette(*m_customPalette); } //apply palette
@@ -148,8 +160,8 @@ void lthemeenginePlatformTheme::applySettings(){
     QEvent et(QEvent::ThemeChange);
     QEvent ec(QEvent::CursorChange);
     foreach (QWidget *w, qApp->allWidgets()){
-      QApplication::sendEvent(w, &et);
-      QApplication::sendEvent(w, &ec);
+      if(ithemechange){ QApplication::sendEvent(w, &et); }
+      if(cthemechange){ QApplication::sendEvent(w, &ec); }
       }
     }
 #endif
