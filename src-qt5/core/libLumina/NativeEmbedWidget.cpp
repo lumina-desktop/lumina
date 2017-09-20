@@ -116,7 +116,8 @@ void NativeEmbedWidget::showWindow(){
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
-  if(DISABLE_COMPOSITING){
+  //if(DISABLE_COMPOSITING){
+    if(!this->isVisible()){ return QImage(); } //nothing to grab yet
     QList<QScreen*> screens = static_cast<QApplication*>( QApplication::instance() )->screens();
     //for(int i=0; i<screens.length(); i++){
       //if(screens[i]->contains(this)){
@@ -126,7 +127,7 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
       //}
     //}
     return QImage();
-  }else{
+  /*}else{
     //Pull the XCB pixmap out of the compositing layer
     xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
     xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
@@ -144,7 +145,7 @@ QImage NativeEmbedWidget::windowImage(QRect geom){
     xcb_free_pixmap(QX11Info::connection(), pix);
 
     return img;
-  }
+  }*/
 }
 void NativeEmbedWidget::setWinUnpaused(){
   paused = false;
@@ -154,6 +155,7 @@ void NativeEmbedWidget::setWinUnpaused(){
   }else if(this->isVisible()){
     showWindow();
   }
+  resyncWindow(); //make sure the window knows about the new location
 }
 // ============
 //      PUBLIC
@@ -203,6 +205,7 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
     registerClientEvents(this->winId()); //child events get forwarded through the frame - watch this for changes too
     //Also use a partial-composite here - make sure the window pixmap is available even when the window is obscured
     xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_AUTOMATIC);
+    //xcb_composite_redirect_subwindows(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_MANUAL);
     //Also alert us when the window visual changes
     Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
 
@@ -264,10 +267,10 @@ void NativeEmbedWidget::resume(){
 
 void NativeEmbedWidget::resyncWindow(){
    if(WIN==0){ return; }
-  syncWinSize();
-  if(DISABLE_COMPOSITING){
+  //syncWinSize();
+  //if(DISABLE_COMPOSITING){
     // Specs say to send an artificial configure event to the window if the window was reparented into the frame
-    QPoint loc = this->mapToGlobal( QPoint(0,0));
+    QPoint loc = this->mapToGlobal( QPoint(0,0) );
     //Send an artificial configureNotify event to the window with the global position/size included
     xcb_configure_notify_event_t *event = (xcb_configure_notify_event_t*) calloc(32,1); //always 32-byes long, even if we don't need all of it
       event->x = loc.x();
@@ -283,12 +286,12 @@ void NativeEmbedWidget::resyncWindow(){
     xcb_send_event(QX11Info::connection(), false, WIN->id(), XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY, (char *) event);
     xcb_flush(QX11Info::connection());
     free(event);
-  }else{
+  /*}else{
     //Window is floating invisibly - make sure it is in the right place
     //Make sure the window size is syncronized and visual up to date
     //syncWinSize();
     QTimer::singleShot(10, this, SLOT(repaintWindow()) );
-  }
+  }*/
 
 }
 
@@ -344,7 +347,7 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
     QPainter P(this);
       P.setClipping(true);
       P.setClipRect(0,0,this->width(), this->height());
-      if(DISABLE_COMPOSITING){ P.fillRect(geom, Qt::black); } //get weird effects when partial-compositing is enabled if you layer transparent window frames above other windows
+      //if(DISABLE_COMPOSITING){ P.fillRect(geom, Qt::black); } //get weird effects when partial-compositing is enabled if you layer transparent window frames above other windows
     //qDebug() << "Paint Embed Window:" << geom << winImage.size();
     //if(winImage.size() == this->size()){
       P.drawImage( geom , img,  QRect(QPoint(0,0), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
