@@ -595,6 +595,9 @@ void NativeWindowSystem::RegisterVirtualRoot(WId id){
   array[0] = id;
   //Set the property
   xcb_ewmh_set_virtual_roots(&obj->EWMH, QX11Info::appScreen(), 1, array);
+  //Now also enable automatic compositing for children of this window
+  //xcb_composite_redirect_window(QX11Info::connection(), id, XCB_COMPOSITE_REDIRECT_AUTOMATIC);
+  //xcb_composite_redirect_subwindows(QX11Info::connection(), id, XCB_COMPOSITE_REDIRECT_AUTOMATIC);
 }
 
 void NativeWindowSystem::setRoot_supportedActions(){
@@ -603,7 +606,7 @@ void NativeWindowSystem::setRoot_supportedActions(){
 		obj->EWMH._NET_WM_ICON,
 		obj->EWMH._NET_WM_ICON_NAME,
 		obj->EWMH._NET_WM_DESKTOP,
-		obj->ATOMS["_NET_WM_WINDOW_OPACITY"],
+		/*obj->ATOMS["_NET_WM_WINDOW_OPACITY"],*/
 		/*_NET_WINDOW_TYPE (and all the various types - 15 in total*/
 		obj->EWMH._NET_WM_WINDOW_TYPE, obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP, obj->EWMH._NET_WM_WINDOW_TYPE_DOCK,
 		obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR, obj->EWMH._NET_WM_WINDOW_TYPE_MENU, obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY,

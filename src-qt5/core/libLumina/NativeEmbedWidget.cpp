@@ -8,6 +8,8 @@
 
 #include <QPainter>
 #include <QX11Info>
+#include <QApplication>
+#include <QScreen>
 #include <QDebug>
 
 #include <xcb/xproto.h>
@@ -114,30 +116,43 @@ void NativeEmbedWidget::showWindow(){
 }
 
 QImage NativeEmbedWidget::windowImage(QRect geom){
-  //Pull the XCB pixmap out of the compositing layer
-  xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
+  if(DISABLE_COMPOSITING){
+    QList<QScreen*> screens = static_cast<QApplication*>( QApplication::instance() )->screens();
+    //for(int i=0; i<screens.length(); i++){
+      //if(screens[i]->contains(this)){
+    if(!screens.isEmpty()){
+        return screens[0]->grabWindow(WIN->id(), geom.x(), geom.y(), geom.width(), geom.height()).toImage();
+    }
+      //}
+    //}
+    return QImage();
+  }else{
+    //Pull the XCB pixmap out of the compositing layer
+    xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
     xcb_composite_name_window_pixmap(QX11Info::connection(), WIN->id(), pix);
-  if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
+    if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
 
-  //Convert this pixmap into a QImage
-  //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-  if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
-  QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
-  img = img.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
-  xcb_image_destroy(ximg);
+    //Convert this pixmap into a QImage
+    //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+    xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+    if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
+    QImage img(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
+    img = img.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
+    xcb_image_destroy(ximg);
 
-  //Cleanup the XCB data structures
-  xcb_free_pixmap(QX11Info::connection(), pix);
+    //Cleanup the XCB data structures
+    xcb_free_pixmap(QX11Info::connection(), pix);
 
-  return img;
-
-
+    return img;
+  }
 }
 void NativeEmbedWidget::setWinUnpaused(){
   paused = false;
+  winImage = QImage();
   if(!DISABLE_COMPOSITING){
     repaintWindow(); //update the cached image right away
+  }else if(this->isVisible()){
+    showWindow();
   }
 }
 // ============
@@ -186,6 +201,13 @@ bool NativeEmbedWidget::embedWindow(NativeWindow *window){
   }else{
     xcb_reparent_window(QX11Info::connection(), WIN->id(), this->winId(), 0, 0);
     registerClientEvents(this->winId()); //child events get forwarded through the frame - watch this for changes too
+    //Also use a partial-composite here - make sure the window pixmap is available even when the window is obscured
+    xcb_composite_redirect_window(QX11Info::connection(), WIN->id(), XCB_COMPOSITE_REDIRECT_AUTOMATIC);
+    //Also alert us when the window visual changes
+    Damage dmgID = XDamageCreate(QX11Info::display(), WIN->id(), XDamageReportRawRectangles);
+
+    WIN->addDamageID( (uint) dmgID); //save this for later
+    connect(WIN, SIGNAL(VisualChanged()), this, SLOT(repaintWindow()) ); //make sure we repaint the widget on visual change
   }
   WIN->addFrameWinID(this->winId());
   registerClientEvents(WIN->id());
@@ -221,7 +243,8 @@ void NativeEmbedWidget::lowerWindow(){
 //Pause/resume
 void NativeEmbedWidget::pause(){
   if(DISABLE_COMPOSITING){
-    this->setVisible(false);
+    winImage = windowImage(QRect(QPoint(0,0), this->size()));
+    hideWindow();
   }else{
     if(winImage.isNull()){ repaintWindow(); } //make sure we have one image already cached first
   }
@@ -229,10 +252,10 @@ void NativeEmbedWidget::pause(){
 }
 
 void NativeEmbedWidget::resume(){
-  paused = false;
+  //paused = false;
   syncWinSize();
   if(DISABLE_COMPOSITING){
-    this->setVisible(true);
+    //showWindow();
   }else{
     repaintWindow(); //update the cached image right away
   }
@@ -241,7 +264,7 @@ void NativeEmbedWidget::resume(){
 
 void NativeEmbedWidget::resyncWindow(){
    if(WIN==0){ return; }
-
+  syncWinSize();
   if(DISABLE_COMPOSITING){
     // Specs say to send an artificial configure event to the window if the window was reparented into the frame
     QPoint loc = this->mapToGlobal( QPoint(0,0));
@@ -263,21 +286,21 @@ void NativeEmbedWidget::resyncWindow(){
   }else{
     //Window is floating invisibly - make sure it is in the right place
     //Make sure the window size is syncronized and visual up to date
-    syncWinSize();
+    //syncWinSize();
     QTimer::singleShot(10, this, SLOT(repaintWindow()) );
   }
 
 }
 
 void NativeEmbedWidget::repaintWindow(){
-  if(DISABLE_COMPOSITING){ return; }
+  //if(DISABLE_COMPOSITING){ return; }
   //qDebug() << "Update Window Image:" << !paused;
   if(paused){ return; }
-    QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
+    /*QImage tmp = windowImage( QRect(QPoint(0,0), this->size()) );
     if(!tmp.isNull()){
       winImage = tmp;
-    }else{ qDebug() << "Got Null Image!!"; }
-  this->parentWidget()->update();
+    }else{ qDebug() << "Got Null Image!!"; }*/
+    this->parentWidget()->update(); //visual changed - need to update the image on the widget
 }
 
 void NativeEmbedWidget::reregisterEvents(){
@@ -306,34 +329,30 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
   if(WIN==0){ return; }
-  //else if( winImage.isNull() ){return; }
-  else if(DISABLE_COMPOSITING){
-    // Just make it solid black (underneath the embedded window)
-    //   - only visible when looking through the edge of another window)
-    //QPainter P(this);
-      //P.fillRect(ev->rect(), Qt::black);
-    return;
-  }
-  //renderWindowToWidget(WIN->id(), this);
-  //return;
-  //else if(this->size()!=winSize){ QTimer::singleShot(0,this, SLOT(syncWinSize())); return; } //do not paint here - waiting to re-sync the sizes
-  //else if(this->size() != winImage.size()){ QTimer::singleShot(0, this, SLOT(repaintWindow()) ); return; }
-  //Need to paint the image from the window onto the widget as an overlay
   QRect geom = ev->rect(); //atomic updates
+  //qDebug() << "Paint Rect:" << geom;
   //geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
-  geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
-    if( !QRect(QPoint(0,0),winImage.size()).contains(geom) ){ QTimer::singleShot(0,this, SLOT(repaintWindow()) );return; }
+  //geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
+  QImage img;
+  if(!paused){ img = windowImage(geom); }
+  else if(!winImage.isNull()){
+    if(winImage.size() == this->size()){ img = winImage.copy(geom); }
+    else{ img = winImage.scaled(geom.size()); } //this is a fast transformation - might be slightly distorted
+  }
+  //Need to paint the image from the window onto the widget as an overlay
+
     QPainter P(this);
       P.setClipping(true);
       P.setClipRect(0,0,this->width(), this->height());
+      if(DISABLE_COMPOSITING){ P.fillRect(geom, Qt::black); } //get weird effects when partial-compositing is enabled if you layer transparent window frames above other windows
     //qDebug() << "Paint Embed Window:" << geom << winImage.size();
-    if(winImage.size() == this->size()){
-      P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
+    //if(winImage.size() == this->size()){
+      P.drawImage( geom , img,  QRect(QPoint(0,0), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
       //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
       //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
-    }else{
-      P.drawImage( geom , winImage);
-    }
+   // }else{
+      //P.drawImage( geom , winImage); //auto-scale it to fit (transforming a static image while paused?)
+   // }
     //else{ QImage scaled = winImage.scaled(geom.size()); P.drawImage(geom, scaled); }
     //P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
   //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels

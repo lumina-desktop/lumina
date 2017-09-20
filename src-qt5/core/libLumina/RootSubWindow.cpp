@@ -351,14 +351,14 @@ void RootSubWindow::startMoving(){
   activeState = Move;
   offset = this->mapFromGlobal(curpt);
   setMouseCursor(activeState, true); //this one is an override cursor
-  //WinWidget->pause();
+  WinWidget->pause();
   this->grabMouse();
 }
 
 void RootSubWindow::startResizing(){
   activeState = getStateAtPoint( this->mapFromGlobal(QCursor::pos()), true); //also have it set the offset variable
   setMouseCursor(activeState, true); //this one is an override cursor
-  //WinWidget->pause();
+  WinWidget->pause();
   this->grabMouse();
 }
 
@@ -398,7 +398,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		}else if(!WinWidget->isPaused() && activeState==Normal){
 		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size()){
                     qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
-		    this->setGeometry(WIN->geometry());
+		    this->setGeometry( QRect(this->geometry().topLeft(), WIN->geometry().size()) );
+		    WinWidget->resyncWindow();
 		  }
 		}
 		break;
