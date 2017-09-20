@@ -239,7 +239,9 @@ void RootWindow::NewWindow(NativeWindow *win){
     connect(subwin, SIGNAL(windowAnimFinished()), this, SLOT(checkMouseFocus()) );
     WINDOWS << subwin;
   }
+  //QApplication::processEvents();
   CheckWindowPosition(win->id(), true); //first-time run
+  //QTimer::singleShot(300, subwin, SLOT(ensureVisible()));
   win->setProperty(NativeWindow::Visible, true);
   //win->requestProperty( NativeWindow::Active, true);
   //win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true, true);
