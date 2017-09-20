@@ -59,12 +59,14 @@ private:
 
 	void initWindowFrame();
 	void enableFrame(bool);
+	void enableFrame(QList<NativeWindow::Type> types);
 
 	void LoadProperties( QList< NativeWindow::Property> list);
 
 	static QStringList validAnimations(NativeWindow::Property);
 
 public slots:
+	void ensureVisible(){ WIN->setProperty(NativeWindow::Visible, true); }
 	void giveMouseFocus(){ WinWidget->raiseWindow(); }
 	void removeMouseFocus(){ WinWidget->lowerWindow(); }
 	void giveKeyboardFocus(){ WIN->requestProperty(NativeWindow::Active, true, true); }

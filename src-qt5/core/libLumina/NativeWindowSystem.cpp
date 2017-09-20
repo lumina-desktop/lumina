@@ -492,7 +492,27 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
   }
   if(props.contains(NativeWindow::WinTypes)){
     QList< NativeWindow::Type> types;
-    types << NativeWindow::T_NORMAL; //make this load appropriately later
+    xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_window_type_unchecked(&obj->EWMH, win->id());
+    xcb_ewmh_get_atoms_reply_t reply;
+    if(1==xcb_ewmh_get_wm_window_type_reply(&obj->EWMH, cookie, &reply, NULL) ){
+      for(unsigned int i=0; i<reply.atoms_len; i++){
+        if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ types << NativeWindow::T_DESKTOP; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DOCK){ types << NativeWindow::T_DOCK; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ types << NativeWindow::T_TOOLBAR; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_MENU){ types << NativeWindow::T_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY){ types << NativeWindow::T_UTILITY; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_SPLASH){ types << NativeWindow::T_SPLASH; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DIALOG){ types << NativeWindow::T_DIALOG; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ types << NativeWindow::T_DROPDOWN_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ types << NativeWindow::T_POPUP_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ types << NativeWindow::T_TOOLTIP; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ types << NativeWindow::T_NOTIFICATION; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_COMBO){ types << NativeWindow::T_COMBO; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DND){ types << NativeWindow::T_DND; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NORMAL){ types << NativeWindow::T_NORMAL; }
+      }
+    }
+    if(types.isEmpty()){ types << NativeWindow::T_NORMAL; }
     win->setProperty(NativeWindow::WinTypes, QVariant::fromValue< QList<NativeWindow::Type> >(types) );
   }
 }

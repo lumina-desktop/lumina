@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QStringList>
+#include <QElapsedTimer>
 
 #include "MainUI.h"
 #include <LuminaOS.h>
@@ -10,6 +11,7 @@
 #include <LuminaSingleApplication.h>
 
 #include "BrowserWidget.h"
+QElapsedTimer* timer = 0;
 
 int main(int argc, char ** argv)
 {
@@ -27,6 +29,7 @@ int main(int argc, char ** argv)
     MainUI w;
     QObject::connect(&a, SIGNAL(InputsAvailable(QStringList)), &w, SLOT(slotSingleInstance(QStringList)) );
     //QObject::connect(&themes, SIGNAL(updateIcons()), &w, SLOT(setupIcons()) );
+    timer = new QElapsedTimer(); timer->start(); qDebug() << " - Init:" << timer->elapsed();
     w.OpenDirs(in);
     w.show();
 
