@@ -838,6 +838,11 @@
 <context>
     <name>LDesktopSwitcher</name>
     <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
@@ -855,8 +860,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="164"/>
+        <location filename="../LSession.cpp" line="347"/>
         <source>Desktop</source>
         <translatorcomment>これ、ファイルパスなので、「デスクトップ」と訳したらまずい</translatorcomment>
         <translation>Desktop</translation>
@@ -1491,24 +1496,24 @@
         <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (電源接続中)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (推定残り時間: %2)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
         <source>%1% Remaining</source>
         <translation>残り %1%</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
         <source>Workspace %1/%2</source>
         <translation>ワークスペース %1/%2</translation>
     </message>
@@ -1781,6 +1786,74 @@
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
         <translation>未分類</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">マルチメディア</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished">開発</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished">教育</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished">ゲーム</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished">グラフィックス</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished">ネットワーク</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished">オフィス</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished">科学</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished">設定</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished">システム</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished">ユーティリティー</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished">Wine</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished">未分類</translation>
     </message>
 </context>
 </TS>

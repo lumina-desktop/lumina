@@ -11,7 +11,7 @@
 
 #include "BootSplash.h"
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 //Initialize all the global objects to null pointers
@@ -28,6 +28,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   qRegisterMetaType< Qt::Key >("Qt::Key");
   qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
   qRegisterMetaType< QList< NativeWindow::Property > >("QList<NativeWindow::Property>");
+  qRegisterMetaType< NativeWindowSystem::MouseButton >("NativeWindowSystem::MouseButton");
 
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
@@ -50,10 +51,10 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::SS = new LScreenSaver();
   //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
-    Lumina::NWS->moveToThread(Lumina::EVThread);
-  Lumina::EVThread->start();
+    //Lumina::NWS->moveToThread(Lumina::EVThread);
+  //Lumina::EVThread->start();
+  Lumina::APPLIST = XDGDesktopList::instance();
   Lumina::ROOTWIN = new RootWindow();
-  Lumina::APPLIST = new XDGDesktopList(0, true); //keep this list up to date
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
 
   setupGlobalConnections();
@@ -133,7 +134,7 @@ void LSession::setupSession(){
   Lumina::ROOTWIN->start();
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
   Lumina::NWS->setRoot_currentWorkspace(0);
-
+  if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
   DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
   cmenu->start();
@@ -165,6 +166,7 @@ void LSession::setupSession(){
 
   if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
   Lumina::SHORTCUTS->start(); //Startup the shortcut handler now
+
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   //launchStartupApps();
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
@@ -226,11 +228,13 @@ void LSession::setupGlobalConnections(){
   //Root window connections
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
+  connect(Lumina::ROOTWIN, SIGNAL(MouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)) );
   connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
   connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
   connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindow::Property, QVariant)));
@@ -288,7 +292,7 @@ void LSession::playAudioFile(QString filepath){
   if( !QFile::exists(filepath) ){ return; }
   //Setup the audio output systems for the desktop
   if(DEBUG){ qDebug() << "Play Audio File"; }
-  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(); }
+  if(mediaObj==0){   qDebug() << " - Initialize media player"; mediaObj = new QMediaPlayer(0,QMediaPlayer::LowLatency); }
   if(mediaObj !=0 ){
     if(DEBUG){ qDebug() << " - starting playback:" << filepath; }
     mediaObj->setVolume(100);
@@ -382,10 +386,28 @@ void LSession::StartReboot(bool skipupdates){
 }
 
 void LSession::LaunchApplication(QString exec){
+  qDebug() << "Launch Application:" << exec;
   ExternalProcess::launch(exec);
 }
 
+void LSession::LaunchDesktopApplication(QString app, QString action){
+  qDebug() << "Launch Desktop Application:" << app << action;
+  XDGDesktop *xdg = Lumina::APPLIST->findAppFile(app);
+  bool cleanup = false;
+  if(xdg==0){
+    xdg = new XDGDesktop(app);
+    cleanup = true;
+  }
+  if(xdg->isValid()){
+    QString exec = xdg->generateExec(QStringList(), action);
+    ExternalProcess::launch(exec, QStringList(), xdg->startupNotify);
+  }
+
+  if(cleanup && xdg!=0){ xdg->deleteLater(); }
+}
+
 void LSession::LaunchStandardApplication(QString app, QStringList args){
+  qDebug() << "Launch Standard Application:" << app << args;
   //Find/replace standardized apps with thier mimetypes
   if(app.startsWith("--")){ app = "application/"+app.section("--",-1).simplified(); }
   //First see if this is a mimetype with a default application
@@ -393,24 +415,18 @@ void LSession::LaunchStandardApplication(QString app, QStringList args){
     QString mimeapp = XDGMime::findDefaultAppForMime(app);
     if(!mimeapp.isEmpty()){ app = mimeapp; }
   }
-  if(app.endsWith(".desktop")){
+  if(!app.endsWith(".desktop")){
+    //actual command/binary - just launch it
+    ExternalProcess::launch(app, args, false); // do not use startup notify cursor
+  }else{
     //Get the XDGDesktop structure
     XDGDesktop *desk = 0; bool cleanup = false;
     if(app.startsWith("/") && QFile::exists(app)){ desk = new XDGDesktop(app); cleanup = true; }
-    if(!desk->isValid()){
+    if(desk==0 || !desk->isValid()){
       //Need to find the app within the current list
-      QHash<QString, XDGDesktop*>applist = Lumina::APPLIST->files;
       if(cleanup){ desk->deleteLater(); desk = 0; cleanup = false; }
       app = app.section("/",-1); //make sure this is a relative path
-      QStringList list = applist.keys().filter("/"+app);
-      if(!list.filter(QDir::homePath()).isEmpty()){ desk = applist[list.filter(QDir::homePath()).first()]; } //prefer user-override files
-      if(desk==0 || !desk->isValid()){
-        desk = 0;
-        for(int i=0; i<list.length() && desk==0; i++){
-          XDGDesktop *tmp = applist[list[i]];
-          if(tmp->isValid()){ desk = tmp; }
-        }
-      }
+      desk = Lumina::APPLIST->findAppFile(app);
     }
     if(desk!=0 && desk->isValid()){
       //Got the application - go ahead and assemble the startup command
@@ -418,8 +434,6 @@ void LSession::LaunchStandardApplication(QString app, QStringList args){
       ExternalProcess::launch(exec, QStringList(), desk->startupNotify);
     }
     if(cleanup){ desk->deleteLater(); }
-  }else{
-    ExternalProcess::launch(app, args, false); // do not use startup notify cursor
   }
 
 }

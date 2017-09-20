@@ -23,7 +23,7 @@
 //#include "qxcbcursor.h" //needed to prod Qt to refresh the mouse cursor theme
 //#include <QCursor>
 
-QStringList LTHEME::availableSystemThemes(){ 
+QStringList LTHEME::availableSystemThemes(){
   //returns: [name::::path] for each item
   QDir dir(LOS::LuminaShare()+"themes");
   QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name);
@@ -31,7 +31,7 @@ QStringList LTHEME::availableSystemThemes(){
     //Format the output entry [<name>::::<fullpath>]
     list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
-  return list;	
+  return list;
 }
 
 QStringList LTHEME::availableLocalThemes(){	//returns: [name::::path] for each item
@@ -52,7 +52,7 @@ QStringList LTHEME::availableSystemColors(){ 	//returns: [name::::path] for each
     //Format the output entry [<name>::::<fullpath>]
     list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
-  return list;	
+  return list;
 }
 
 QStringList LTHEME::availableLocalColors(){ 	//returns: [name::::path] for each item
@@ -62,7 +62,7 @@ QStringList LTHEME::availableLocalColors(){ 	//returns: [name::::path] for each 
     //Format the output entry [<name>::::<fullpath>]
     list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
-  return list;	
+  return list;
 }
 
 QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
@@ -72,7 +72,7 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
   xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
   for(int i=0; i<xdd.length(); i++){
     if(QFile::exists(xdd[i]+"/icons")){
-      paths << xdd[i]+"/icons";	    
+      paths << xdd[i]+"/icons";
     }
   }
   //Now get all the icon themes in these directories
@@ -83,8 +83,8 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
        tmpthemes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
        for(int j=0; j<tmpthemes.length(); j++){
 	 if(tmpthemes[j].startsWith("default")){ continue; }
-         if(QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ||
-		QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.desktop")) ){ themes << tmpthemes[j]; }
+         if( (QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.theme")) ||
+		QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/index.desktop")) ) ){ themes << tmpthemes[j]; }
        }
     }
   }
@@ -92,21 +92,32 @@ QStringList LTHEME::availableSystemIcons(){ 	//returns: [name] for each item
   themes.sort();
   return themes;
 }
-	
+
 QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
-  QStringList paths; paths << LOS::SysPrefix()+"lib/X11/icons/" << LOS::AppPrefix()+"lib/X11/icons/";
-  QStringList out;
-  for(int i=0; i<paths.length(); i++){
-    if( !QFile::exists(paths[i]) ){ continue; }
-    QDir dir(paths[i]);
-    QStringList tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-    for(int j=0; j<tmp.length(); j++){
-      if(QFile::exists(paths[i]+tmp[j]+"/cursors")){
-        out << tmp[j]; //good theme - save it to the output list
-      }
+ QStringList paths;
+  paths << QDir::homePath()+"/.icons";
+  QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
+  xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
+  for(int i=0; i<xdd.length(); i++){
+    if(QFile::exists(xdd[i]+"/icons")){
+      paths << xdd[i]+"/icons";
     }
   }
-  return out;
+  //Now get all the icon themes in these directories
+  QStringList themes, tmpthemes;
+  QDir dir;
+  for(int i=0; i<paths.length(); i++){
+    if(dir.cd(paths[i])){
+       tmpthemes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+       for(int j=0; j<tmpthemes.length(); j++){
+	 if(tmpthemes[j].startsWith("default")){ continue; }
+         if( QFile::exists(dir.absoluteFilePath(tmpthemes[j]+"/cursors")) ){ themes << tmpthemes[j]; }
+       }
+    }
+  }
+  themes.removeDuplicates();
+  themes.sort();
+  return themes;
 }
 
 //Save a new theme/color file
@@ -119,7 +130,7 @@ bool LTHEME::saveLocalTheme(QString name, QStringList contents){
 bool LTHEME::saveLocalColors(QString name, QStringList contents){
   QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors/";
   if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
-  return LUtils::writeFile(localdir+name+".qss.colors", contents, true);	
+  return LUtils::writeFile(localdir+name+".qss.colors", contents, true);
 }
 
 //Return the currently selected Theme/Colors/Icons
@@ -129,21 +140,23 @@ QStringList LTHEME::currentSettings(){ //returns [theme path, colorspath, iconsn
   for(int i=0; i<settings.length(); i++){
     if(settings[i].startsWith("THEMEFILE=")){ out[0] = settings[i].section("=",1,1).simplified(); }
     else if(settings[i].startsWith("COLORFILE=")){ out[1] = settings[i].section("=",1,1).simplified(); }
-    else if(settings[i].startsWith("ICONTHEME=")){ out[2] = settings[i].section("=",1,1).simplified(); }
+    //else if(settings[i].startsWith("ICONTHEME=")){ out[2] = settings[i].section("=",1,1).simplified(); }
     else if(settings[i].startsWith("FONTFAMILY=")){ out[3] = settings[i].section("=",1,1).simplified(); }
     else if(settings[i].startsWith("FONTSIZE=")){ out[4] = settings[i].section("=",1,1).simplified(); }
   }
+  QSettings engineset("lthemeengine","lthemeengine");
+  out[2]=engineset.value("Appearance/icon_theme", "material-design-light").toString();
   bool nofile = settings.isEmpty();
   if(out[0].isEmpty() || !QFile::exists(out[0]) ){ out[0] = LOS::LuminaShare()+"themes/Lumina-default.qss.template"; }
   if(out[1].isEmpty() || !QFile::exists(out[1]) ){ out[1] = LOS::LuminaShare()+"colors/Lumina-Glass.qss.colors"; }
   if(out[3].isEmpty()){ out[3] = QFont().defaultFamily(); }
-  if(out[4].isEmpty()){ 
+  if(out[4].isEmpty()){
     int num = QFont().pointSize(); out[4] = QString::number(num)+"pt"; //Check point size first
     if(num<0){ num = QFont().pixelSize(); out[4] = QString::number(num)+"px";} //Now check pixel size
     if(num<0){ out[4] = "9pt"; } //Now hard-code a fallback (just in case)
   }
   if(nofile){ setCurrentSettings(out[0], out[1], out[2], out[3], out[4]); }
-  
+
   return out;
 }
 
@@ -167,8 +180,14 @@ QString LTHEME::currentCursor(){
 
   //Change the current Theme/Colors/Icons
 bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize){
-  QIcon::setThemeName(iconname);
-  //Now save the theme settings file	
+  //QIcon::setThemeName(iconname);
+  QSettings engineset("lthemeengine","lthemeengine");
+  engineset.setValue("Appearance/icon_theme", iconname);
+  //engineset.setValue("Appearance/color_scheme_path", colorpath); //re-enable this once the color scheme has been synced with lthemeengine
+  //Need to add theme path saving here too later
+
+
+  //Now save the theme settings file
   QStringList contents;
 	contents << "THEMEFILE="+themepath;
 	contents << "COLORFILE="+colorpath;
@@ -195,13 +214,13 @@ bool LTHEME::setCursorTheme(QString cursorname){
     bool changed = false;
     QString newval = "Inherits="+cursorname;
     for(int i=0; i<info.length() && !changed; i++){
-      if(info[i]=="[Icon Theme]"){ 
+      if(info[i]=="[Icon Theme]"){
 	insection = true;
-      }else if( info[i].startsWith("[") && insection){ 
+      }else if( info[i].startsWith("[") && insection){
 	//Section does not have the setting - add it
-	info.insert(i, newval); 
+	info.insert(i, newval);
 	changed =true;
-      }else if( info[i].startsWith("[") ){ 
+      }else if( info[i].startsWith("[") ){
 	insection = false;
       }else if(insection && info[i].startsWith("Inherits=")){
         info[i] = newval; //replace the current setting

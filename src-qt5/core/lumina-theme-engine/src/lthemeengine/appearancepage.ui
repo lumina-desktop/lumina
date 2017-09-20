@@ -161,8 +161,14 @@
           <property name="text">
            <string>...</string>
           </property>
+          <property name="icon">
+           <iconset theme="view-more-vertical"/>
+          </property>
           <property name="popupMode">
            <enum>QToolButton::InstantPopup</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
           </property>
           <property name="arrowType">
            <enum>Qt::NoArrow</enum>

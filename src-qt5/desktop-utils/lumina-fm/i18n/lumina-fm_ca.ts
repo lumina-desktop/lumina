@@ -120,262 +120,262 @@
         <translation>Augmenta la mida de les icones</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="173"/>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Decrease Icon Sizes</source>
         <translation>Disminueix la mida de les icones</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="191"/>
+        <location filename="../widgets/DirWidget2.ui" line="203"/>
         <source>Back</source>
         <translation>Enrere</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="194"/>
-        <location filename="../widgets/DirWidget2.ui" line="197"/>
+        <location filename="../widgets/DirWidget2.ui" line="206"/>
+        <location filename="../widgets/DirWidget2.ui" line="209"/>
         <source>Go back to previous directory</source>
         <translation>Torna al directori anterior</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="205"/>
+        <location filename="../widgets/DirWidget2.ui" line="217"/>
         <source>Up</source>
         <translation>Amunt</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="208"/>
-        <location filename="../widgets/DirWidget2.ui" line="211"/>
+        <location filename="../widgets/DirWidget2.ui" line="220"/>
+        <location filename="../widgets/DirWidget2.ui" line="223"/>
         <source>Go to parent directory</source>
         <translation>Vés al directori principal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="219"/>
+        <location filename="../widgets/DirWidget2.ui" line="231"/>
         <source>Home</source>
         <translation>Inici</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="222"/>
-        <location filename="../widgets/DirWidget2.ui" line="225"/>
+        <location filename="../widgets/DirWidget2.ui" line="234"/>
+        <location filename="../widgets/DirWidget2.ui" line="237"/>
         <source>Go to home directory</source>
         <translation>Vés al directori principal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="230"/>
+        <location filename="../widgets/DirWidget2.ui" line="242"/>
         <source>Menu</source>
         <translation>Menú</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="233"/>
+        <location filename="../widgets/DirWidget2.ui" line="245"/>
         <source>Select Action</source>
         <translation>Seleccioneu l&apos;acció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="241"/>
+        <location filename="../widgets/DirWidget2.ui" line="253"/>
         <source>Single Column</source>
         <translation>Columna simple</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="244"/>
+        <location filename="../widgets/DirWidget2.ui" line="256"/>
         <source>Single column view</source>
         <translation>Vista d&apos;una columna</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="252"/>
+        <location filename="../widgets/DirWidget2.ui" line="264"/>
         <source>Dual Column</source>
         <translation>Dues columnes</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="255"/>
+        <location filename="../widgets/DirWidget2.ui" line="267"/>
         <source>Dual Column View</source>
         <translation>Vista de dues columnes</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="646"/>
+        <location filename="../widgets/DirWidget2.cpp" line="649"/>
         <source>(Limited Access) </source>
         <translation>(Accés limitat) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>New Document</source>
         <translation>Document nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>Error Creating Document</source>
         <translation>Error en crear el document</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>No s&apos;ha pogut crear el document. Si us plau, assegureu-vos que teniu els permisos adients.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
         <source>New Directory</source>
         <translation>Directori nou</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>Invalid Name</source>
         <translation>El nom no és vàlid</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="547"/>
         <source>File Operations</source>
         <translation>Operacions de fitxers</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
         <source>Auto-Extract</source>
         <translation>Extreu automàticament</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="568"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>Directory Operations</source>
         <translation>Operacions de directoris</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <location filename="../widgets/DirWidget2.cpp" line="619"/>
         <source>Other...</source>
         <translation>Altres...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="624"/>
+        <location filename="../widgets/DirWidget2.cpp" line="627"/>
         <source>Loading...</source>
         <translation>Carregant...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Ja existeix un fitxer o un directori amb este mateix nom, utilitzeu-ne un altre.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>Error Creating Directory</source>
         <translation>Error en crear el directori</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>No s&apos;ha pogut crear el directori. Si us plau, assegureu-vos que teniu els permisos corresponents per modificar el directori actual.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="371"/>
+        <location filename="../widgets/DirWidget2.cpp" line="372"/>
         <source>Current</source>
         <translation>Actual</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="271"/>
+        <location filename="../widgets/DirWidget2.cpp" line="274"/>
         <source>Create...</source>
         <translation>Crea...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="273"/>
+        <location filename="../widgets/DirWidget2.cpp" line="276"/>
         <source>File</source>
         <translation>Fitxer</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="274"/>
+        <location filename="../widgets/DirWidget2.cpp" line="277"/>
         <source>Directory</source>
         <translation>Directori</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="275"/>
+        <location filename="../widgets/DirWidget2.cpp" line="278"/>
         <source>Application Launcher</source>
         <translation>Llançador d&apos;aplicacions</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="279"/>
+        <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>Launch...</source>
         <translation>Obre...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="281"/>
+        <location filename="../widgets/DirWidget2.cpp" line="284"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="282"/>
+        <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>SlideShow</source>
         <translation>Presentació</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="283"/>
+        <location filename="../widgets/DirWidget2.cpp" line="286"/>
         <source>Multimedia Player</source>
         <translation>Reproductor multimèdia</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <location filename="../widgets/DirWidget2.cpp" line="307"/>
         <source>Open with...</source>
         <translation>Obre amb...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="310"/>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>View Files...</source>
         <translation>Mostra els fitxers...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="312"/>
+        <location filename="../widgets/DirWidget2.cpp" line="315"/>
         <source>Checksums</source>
         <translation>Sumes de verificació</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="314"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Properties</source>
         <translation>Propietats</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="504"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>File Checksums:</source>
         <translation>Sumes de verificació del fitxer:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>Missing Utility</source>
         <translation>Utilitat no present</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>No s&apos;ha pogut trobar la utilitat &quot;lumina-fileinfo&quot; al sistema. Si us plau, instal·leu-la primer.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="542"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="551"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Rename...</source>
         <translation>Reanomena...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="552"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Cut Selection</source>
         <translation>Talla la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="553"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Copy Selection</source>
         <translation>Copia la selecció</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="557"/>
+        <location filename="../widgets/DirWidget2.cpp" line="560"/>
         <source>Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="561"/>
+        <location filename="../widgets/DirWidget2.cpp" line="564"/>
         <source>Delete Selection</source>
         <translation>Suprimeix la selecció</translation>
     </message>
@@ -420,17 +420,17 @@
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí a tot</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>No a tot</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -1209,6 +1209,74 @@ Localització nova: %2</translation>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
         <translation>Tasques noves en execució</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimèdia</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

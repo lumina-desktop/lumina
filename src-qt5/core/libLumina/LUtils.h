@@ -55,7 +55,7 @@ public:
 
 	//Create the exec string to open a terminal in a particular directory
 	static QString GenerateOpenTerminalExec(QString term, QString dirpath);
-	
+
 	//List all the sub-directories of a parent dir (recursive)
 	static QStringList listSubDirectories(QString dir, bool recursive = true);
 
@@ -65,18 +65,19 @@ public:
 
 	//Get the list of all file extensions which Qt can read (lowercase)
 	static QStringList imageExtensions(bool wildcards = false);
-	
+	static QStringList videoExtensions();
+
 	//Load a translation file for a Lumina Project
 	static QTranslator* LoadTranslation(QApplication *app, QString appname, QString locale = "", QTranslator *cTrans = 0);
 	//Other localization shortcuts
 	static QStringList knownLocales(); //Note: This only lists locales known to Lumina (so the i18n files need to be installed)
 	static void setLocaleEnv(QString lang, QString msg="", QString time="", QString num="" ,QString money="",QString collate="", QString ctype="");
 	static QString currentLocale();
-	
+
 	//Number format conversions
 	static double DisplaySizeToBytes(QString num); //Turn a display size (like 50M or 50KB) into a double for calculations (bytes)
 	static QString BytesToDisplaySize(qint64 bytes); //convert into a readable size (like 50M or 50KB)
-	
+
 	static QString SecondsToDisplay(int secs); //convert into a readable time
 };
 #endif

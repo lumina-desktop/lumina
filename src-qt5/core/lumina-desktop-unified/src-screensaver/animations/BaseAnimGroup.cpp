@@ -15,27 +15,37 @@
 #include "ImageSlideshow.h"
 #include "VideoSlideshow.h"
 
+
+QVariant BaseAnimGroup::readSetting(QString variable, QVariant defaultvalue){
+  return DesktopSettings::instance()->value(DesktopSettings::ScreenSaver,
+		 	"Animations/"+animPlugin+"/"+variable, defaultvalue);
+}
+
 //==============================
 //     PLUGIN LOADING/LISTING
 //==============================
-BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent, QSettings *set){
+BaseAnimGroup* BaseAnimGroup::NewAnimation(QString type, QWidget *parent){
   //This is where we place all the known plugin ID's, and load the associated subclass
+  BaseAnimGroup *anim = 0;
   if(type=="fireflies"){
-    return (new FirefliesAnimation(parent,set));
+    anim = new FirefliesAnimation(parent);
   }else if(type == "grav") {
-    return (new GravAnimation(parent, set));
+    anim = new GravAnimation(parent);
   }else if(type == "text") {
-    return (new TextAnimation(parent, set));
+    anim = new TextAnimation(parent);
   }else if(type == "imageSlideshow") {
-    return (new ImageAnimation(parent, set));
+    anim = new ImageAnimation(parent);
   }else if(type == "videoSlideshow") {
-    return (new VideoAnimation(parent, set));
+    anim = new VideoAnimation(parent);
   }else {
     //Unknown screensaver, return a blank animation group
-    return (new BaseAnimGroup(parent, set));
+    anim = new BaseAnimGroup(parent);
   }
+  //tag the animation with the type it is and return it
+  if(anim!=0){ anim->animPlugin = type; }
+  return anim;
 }
 
 QStringList BaseAnimGroup::KnownAnimations(){
-  return (QStringList() << "imageSlideshow" /*<< "grav" << "text" << "imageSlideshow" << "fireflies"*/);
+  return (QStringList() << "none" << "grav" << "text" << "imageSlideshow" << "videoSlideshow" << "fireflies");
 }

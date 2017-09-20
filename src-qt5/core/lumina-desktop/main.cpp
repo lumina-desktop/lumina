@@ -93,14 +93,14 @@ int main(int argc, char ** argv)
     if(DEBUG){ timer = new QTime(); timer->start(); }
     //Setup Log File
     //qInstallMessageHandler(MessageOutput);
-    if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
-    LuminaThemeEngine theme(&a);
-    QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
+    //if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
+    //LuminaThemeEngine theme(&a);
+    //QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
     //if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
     //LUtils::LoadTranslation(&a, "lumina-desktop");
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
-    theme.refresh();
+    //theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";

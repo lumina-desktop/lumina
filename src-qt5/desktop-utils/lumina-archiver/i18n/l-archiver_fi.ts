@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="218"/>
+        <location filename="../TarBackend.cpp" line="229"/>
         <source>Could not read archive</source>
         <translation>Arkistoa ei voitu lukea</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="220"/>
+        <location filename="../TarBackend.cpp" line="231"/>
         <source>Archive Loaded</source>
         <translation>Arkisto ladattu</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="253"/>
+        <location filename="../TarBackend.cpp" line="264"/>
         <source>Extraction Finished</source>
         <translation>Purku valmis</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="254"/>
+        <location filename="../TarBackend.cpp" line="266"/>
         <source>Modification Finished</source>
         <translation>Muutos valmis</translation>
     </message>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="296"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
@@ -165,184 +165,252 @@
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="296"/>
         <source>MimeType</source>
         <translation>MIME-tyyppi</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="296"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
-        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="81"/>
+        <location filename="../MainUI.cpp" line="220"/>
         <source>Opening Archive...</source>
         <translation>Avataan arkistoa...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="164"/>
         <source>All Types %1</source>
         <translation>Kaikki tyypit %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="155"/>
-        <location filename="../MainUI.cpp" line="173"/>
+        <location filename="../MainUI.cpp" line="165"/>
+        <location filename="../MainUI.cpp" line="183"/>
         <source>Uncompressed Archive (*.tar)</source>
         <translation>Pakkaamaton arkisto (*.tar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="156"/>
-        <location filename="../MainUI.cpp" line="174"/>
+        <location filename="../MainUI.cpp" line="166"/>
+        <location filename="../MainUI.cpp" line="184"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
         <translation>GZip-pakattu arkisto (*.tar.gz *.tgz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="157"/>
-        <location filename="../MainUI.cpp" line="175"/>
+        <location filename="../MainUI.cpp" line="167"/>
+        <location filename="../MainUI.cpp" line="185"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
         <translation>BZip-pakattu arkisto (*.tar.bz *.tbz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="158"/>
-        <location filename="../MainUI.cpp" line="176"/>
+        <location filename="../MainUI.cpp" line="168"/>
+        <location filename="../MainUI.cpp" line="186"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
         <translation>BZip2-pakattu arkisto (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="159"/>
-        <location filename="../MainUI.cpp" line="178"/>
+        <location filename="../MainUI.cpp" line="169"/>
+        <location filename="../MainUI.cpp" line="188"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
         <translation>LMZA-pakattu arkisto (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="160"/>
-        <location filename="../MainUI.cpp" line="177"/>
+        <location filename="../MainUI.cpp" line="170"/>
+        <location filename="../MainUI.cpp" line="187"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
         <translation>XZ-pakattu arkisto (*.tar.xz *.txz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="161"/>
-        <location filename="../MainUI.cpp" line="179"/>
+        <location filename="../MainUI.cpp" line="171"/>
+        <location filename="../MainUI.cpp" line="189"/>
         <source>CPIO Archive (*.cpio)</source>
         <translation>CPIO-arkisto (*.cpio)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="162"/>
-        <location filename="../MainUI.cpp" line="180"/>
+        <location filename="../MainUI.cpp" line="172"/>
+        <location filename="../MainUI.cpp" line="190"/>
         <source>PAX Archive (*.pax)</source>
         <translation>PAX-arkisto (*.pax)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="163"/>
-        <location filename="../MainUI.cpp" line="181"/>
+        <location filename="../MainUI.cpp" line="173"/>
+        <location filename="../MainUI.cpp" line="191"/>
         <source>AR Archive (*.ar)</source>
         <translation>AR-arkisto (*.ar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="164"/>
-        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="174"/>
+        <location filename="../MainUI.cpp" line="192"/>
         <source>SHAR Archive (*.shar)</source>
         <translation>SHAR-arkisto (*.shar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="165"/>
-        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="175"/>
+        <location filename="../MainUI.cpp" line="193"/>
         <source>Zip Archive (*.zip)</source>
         <translation>Zip-arkisto (*.zip)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="166"/>
-        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="176"/>
+        <location filename="../MainUI.cpp" line="194"/>
         <source>7-Zip Archive (*.7z)</source>
         <translation>7-Zip-arkisto (*.7z)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="172"/>
+        <location filename="../MainUI.cpp" line="182"/>
         <source>All Known Types %1</source>
         <translation>Kaikki tunnetut tyypit %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="195"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
         <translation>VAIN LUKU: ISO-levykuva (*.iso *.img)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="196"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
         <translation>VAIN LUKU: XAR-arkisto (*.xar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="197"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
         <translation>VAIN LUKU: Java-arkisto (*.jar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="198"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
         <translation>VAIN LUKU: RedHat-paketti (*.rpm)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Show All Files (*)</source>
         <translation>Näytä kaikki tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="197"/>
+        <location filename="../MainUI.cpp" line="207"/>
         <source>Create Archive</source>
         <translation>Luo arkisto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="200"/>
+        <location filename="../MainUI.cpp" line="210"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="200"/>
+        <location filename="../MainUI.cpp" line="210"/>
         <source>Could not overwrite file:</source>
         <translation>Ei voitu korvata tiedostoa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="208"/>
+        <location filename="../MainUI.cpp" line="218"/>
         <source>Open Archive</source>
         <translation>Avaa arkisto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="216"/>
-        <location filename="../MainUI.cpp" line="223"/>
+        <location filename="../MainUI.cpp" line="226"/>
+        <location filename="../MainUI.cpp" line="233"/>
         <source>Add to Archive</source>
         <translation>Lisää arkistoon</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="218"/>
-        <location filename="../MainUI.cpp" line="225"/>
+        <location filename="../MainUI.cpp" line="228"/>
+        <location filename="../MainUI.cpp" line="235"/>
         <source>Adding Items...</source>
         <translation>Lisätään kohteita...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="236"/>
+        <location filename="../MainUI.cpp" line="246"/>
         <source>Removing Items...</source>
         <translation>Poistetaan kohteita...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="241"/>
-        <location filename="../MainUI.cpp" line="262"/>
+        <location filename="../MainUI.cpp" line="251"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>Extract Into Directory</source>
         <translation>Pura kansioon</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="243"/>
-        <location filename="../MainUI.cpp" line="251"/>
-        <location filename="../MainUI.cpp" line="264"/>
-        <location filename="../MainUI.cpp" line="270"/>
+        <location filename="../MainUI.cpp" line="253"/>
+        <location filename="../MainUI.cpp" line="261"/>
+        <location filename="../MainUI.cpp" line="278"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Extracting...</source>
         <translation>Puretaan...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="310"/>
         <source>Link To: %1</source>
         <translation>Linkki kohteeseen: %1</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

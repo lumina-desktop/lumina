@@ -9,17 +9,18 @@
 
 #define DEBUG 1
 
-static QStringList validPlugs;
 // ========
 //   PUBLIC
 // ========
-SSBaseWidget::SSBaseWidget(QWidget *parent, QSettings *set) : QWidget(parent){
-  if(validPlugs.isEmpty()){ validPlugs << "none"; } //add more later
-  settings = set; //needed to pass along for plugins to read any special options/settings
+SSBaseWidget::SSBaseWidget(QWidget *parent) : QWidget(parent){
   this->setObjectName("LuminaBaseSSWidget");
   ANIM = 0;
   this->setMouseTracking(true);
   plugType="none";
+  restartTimer = new QTimer(this);
+    restartTimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "globals/plugin_time_seconds", 60).toInt() * 1000);
+    restartTimer->setSingleShot(true);
+  connect(restartTimer, SIGNAL(timeout()), this, SLOT(startPainting()) );
 }
 
 SSBaseWidget::~SSBaseWidget(){
@@ -27,9 +28,7 @@ SSBaseWidget::~SSBaseWidget(){
 }
 
 void SSBaseWidget::setPlugin(QString plug){
-  plug = plug.toLower();
-  if(validPlugs.contains(plug) || plug=="random"){ plugType = plug; }
-  else{ plugType = "none"; }
+  plugType = plug.toLower();
 }
 
 // =============
@@ -48,7 +47,7 @@ void SSBaseWidget::startPainting(){
     if(valid.isEmpty()){ cplug = "none"; } //no known plugins
     else{ cplug = valid[ qrand()%valid.length() ]; } //grab a random plugin
   }
-  if(DEBUG){ qDebug() << " - Screen Saver:" << cplug; }
+  if(DEBUG){ qDebug() << " - Screen Saver:" << plugType << cplug; }
   //Now list all the various plugins and start them appropriately
   QString style;
   if(cplug=="none"){
@@ -60,7 +59,7 @@ void SSBaseWidget::startPainting(){
   this->repaint();
   //If not a stylesheet-based plugin - set it here
   if(cplug!="none"){
-    ANIM = BaseAnimGroup::NewAnimation(cplug, this, settings);
+    ANIM = BaseAnimGroup::NewAnimation(cplug, this);
     connect(ANIM, SIGNAL(finished()), this, SLOT(startPainting()) ); //repeat the plugin as needed
     ANIM->LoadAnimations();
   }
@@ -71,14 +70,19 @@ void SSBaseWidget::startPainting(){
       ANIM->start();
     }
   }
+  restartTimer->start();
 }
 
 void SSBaseWidget::stopPainting(){
   if(ANIM!=0){
-    qDebug() << "Stopping Animation!!";
+    if(DEBUG){ qDebug() << "Stopping Animation!!"; }
     ANIM->stop();
     //ANIM->clear();
     ANIM->deleteLater();
     ANIM = 0;
+    //Delete any child widgets of the canvas
+    QList<QWidget*> widgets = this->findChildren<QWidget*>("",Qt::FindDirectChildrenOnly);
+    for(int i=0; i<widgets.length(); i++){ widgets[i]->deleteLater(); }
   }
+  if(restartTimer->isActive()){ restartTimer->stop(); }
 }

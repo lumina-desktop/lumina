@@ -28,7 +28,7 @@
 
 #define DEBUG 0
 
-DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
+DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
   //Assemble the toolbar for the widget
@@ -54,6 +54,7 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
     toolbar->addAction(ui->actionDualColumn);
     columnActionGroup->addAction(ui->actionDualColumn);
   toolbar->addAction(ui->actionMenu);
+  this->settings = settings;
   //Add the browser widgets
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
@@ -241,6 +242,7 @@ void DirWidget::createShortcuts(){
   kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
   kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
   kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
+  //kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
   kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
   kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
   kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
@@ -257,6 +259,7 @@ void DirWidget::createShortcuts(){
   connect(kPaste, SIGNAL(activated()), this, SLOT(pasteFiles()) );
   connect(kRename, SIGNAL(activated()), this, SLOT(renameFiles()) );
   connect(kExtract, SIGNAL(activated()), this, SLOT(autoExtractFiles()) );
+  //connect(kArchive, SIGNAL(activated()), this, SLOT(autoArchiveFiles()) );
   connect(kFav, SIGNAL(activated()), this, SLOT(favoriteFiles()) );
   connect(kDel, SIGNAL(activated()), this, SLOT(removeFiles()) );
   connect(kOpSS, SIGNAL(activated()), this, SLOT(openInSlideshow()) );
@@ -338,8 +341,7 @@ void DirWidget::on_tool_zoom_in_clicked(){
   size += 16;
   setThumbnailSize(size);
   //Now Save the size value as the default for next time
-  QSettings SET("lumina-desktop","lumina-fm");
-  SET.setValue("iconsize", size);
+  settings->setValue("iconsize", size);
 }
 
 void DirWidget::on_tool_zoom_out_clicked(){
@@ -348,8 +350,7 @@ void DirWidget::on_tool_zoom_out_clicked(){
   size -= 16;
   setThumbnailSize(size);
   //Now Save the size value as the default for next time
-  QSettings SET("lumina-desktop","lumina-fm");
-  SET.setValue("iconsize", size);
+  settings->setValue("iconsize", size);
 }
 
 // -- Top Snapshot Buttons
@@ -552,7 +553,9 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
       if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-    }
+      //if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
+
+  }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
       contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
     }
@@ -735,36 +738,6 @@ void DirWidget::createNewXDGEntry(){
 
 // - Selected FILE operations
 
-//---------------------------------------------------//
-/*
-QStringList DirWidget::getPreferredApplications(){
-  QStringList out;
-  //First list all the applications registered for that same mimetype
-  QString mime = fileEXT;
-  out << LXDG::findAvailableAppsForMime(mime);
-
-  //Now search the internal settings for that extension and find any applications last used
-  QStringList keys = settings->allKeys();
-  for(int i=0; i<keys.length(); i++){
-    if(keys[i].startsWith("default/")){ continue; } //ignore the defaults (they will also be in the main)
-    if(keys[i].toLower() == fileEXT.toLower()){
-      QStringList files = settings->value(keys[i]).toString().split(":::");
-      qDebug() << "Found Files:" << keys[i] << files;
-      bool cleaned = false;
-      for(int j=0; j<files.length(); j++){
-        if(QFile::exists(files[j])){ out << files[j]; }
-        else{ files.removeAt(j); j--; cleaned=true; } //file no longer available - remove it
-      }
-      if(cleaned){ settings->setValue(keys[i], files.join(":::")); } //update the registry
-      if(!out.isEmpty()){ break; } //already found files
-    }
-  }
-  //Make sure we don't have any duplicates before we return the list
-  out.removeDuplicates();
-  return out;
-}
-  */
-  //---------------------------------------------------//
 
 void DirWidget::cutFiles(){
   QStringList sel = currentBrowser()->currentSelection();
@@ -882,13 +855,15 @@ void DirWidget::autoExtractFiles(){
   QStringList files = currentBrowser()->currentSelection();
   qDebug() << "Starting auto-extract:" << files;
   ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
-  /*ExternalProcess *pExtract= new ExternalProcess(this);
-  QString program = "lumina-archiver --ax ";
-  QStringList files = currentBrowser()->currentSelection();
-  for(int i=0; i<files.length(); i++){
-     QString runline = program + files[i];
-  pExtract->start(runline);*/
 }
+
+/*
+ * void DirWidget::autoArchiveFiles(){
+  QStringList files = currentBrowser()->currentSelection();
+  qDebug() << "Starting auto-archival:" << files;
+  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << files);
+}
+*/
 
 //====================
 //         PROTECTED

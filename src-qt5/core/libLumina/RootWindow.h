@@ -18,6 +18,8 @@
 #include <QTimer>
 #include <QApplication>
 #include <QPaintEvent>
+#include <QScreen>
+#include <QDebug>
 
 #include "RootSubWindow.h"
 
@@ -43,7 +45,9 @@ private:
 	  ScaleType scale;
 	  QPixmap wallpaper; //Note: This pixmap will always be the same size as "area"
 	};
-	QTimer *autoResizeTimer;
+	QTimer *autoResizeTimer, *mouseFocusTimer;
+	RootSubWindow *lastActiveMouse;
+	QPoint lastCursorPos;
 
 	QList<screeninfo> WALLPAPERS;
 	void updateScreenPixmap(screeninfo *info); //used for recalculating the wallpaper pixmap based on file/area/scale as needed
@@ -51,12 +55,16 @@ private:
 	//Window Management
 	QList<RootSubWindow*> WINDOWS;
 	RootSubWindow* windowForId(WId id);
-	void arrangeWindows(RootSubWindow *primary = 0, QString type = "");
+	void arrangeWindows(RootSubWindow *primary = 0, QString type = "", bool primaryonly = false);
+
+	QScreen* screenUnderMouse();
+
 
 public slots:
 	void ResizeRoot();
 	void ChangeWallpaper(QString id, RootWindow::ScaleType scale, QString file);
 	    //Note: for "SingleColor" scaling the "file" variable should be "rgb(R,G,B)" or "#hexcode"
+	void checkMouseFocus();
 
 	void NewWindow(NativeWindow*);
 	void CloseWindow(WId); //automatically connected for any new native window
@@ -76,6 +84,8 @@ signals:
 	void RootResized(QRect);
 	void NewScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
 	void RemovedScreens(QStringList); // [screen_id_1, screen_id_2, etc..]
+	void WorkspaceChanged(int);
+	void MouseMoved();
 
 };
 

@@ -126,4 +126,7 @@ isEmpty(OS){
   OBJECTS_DIR=./.build/obj
   RCC_DIR=./.build/rcc
   QMAKE_DISTCLEAN += -r ./.build
+
+  #some other compile time flags
+  CONFIG *= c++11
 }

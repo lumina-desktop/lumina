@@ -22,7 +22,7 @@ public:
 
 	//Listing routines
 	QString currentFile();
-	bool isWorking(); //is this currently still making changes?	
+	bool isWorking(); //is this currently still making changes?
 
 	//Contents listing
 	QStringList heirarchy(); //returns all the file paths within the archive
@@ -64,6 +64,7 @@ signals:
 	void ProcessStarting();
 	void ProgressUpdate(int, QString); //percentage, text
 	void ProcessFinished(bool, QString); //success, text
+    //void ArchivalSuccessful();
 };
 
 #endif

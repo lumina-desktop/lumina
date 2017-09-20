@@ -139,7 +139,7 @@ void MainUI::OpenDirs(QStringList dirs){
       if(DWLIST[j]->id().section("-",1,1).toInt() >= id){ id = DWLIST[j]->id().section("-",1,1).toInt()+1; }
     }
     //Create the new DirWidget
-    DirWidget *DW = new DirWidget("DW-"+QString::number(id), this);
+    DirWidget *DW = new DirWidget("DW-"+QString::number(id), settings, this);
     DW->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->BrowserLayout->addWidget(DW);
     DWLIST << DW;

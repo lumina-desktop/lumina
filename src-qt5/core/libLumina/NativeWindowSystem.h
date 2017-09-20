@@ -105,6 +105,7 @@ public slots:
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
 	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
+	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>);
 	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant); //will save that property/value to the right object
 	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>);
 	void RequestPropertyChange(WId, NativeWindow::Property, QVariant);

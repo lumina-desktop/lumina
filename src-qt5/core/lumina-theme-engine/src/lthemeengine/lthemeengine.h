@@ -16,14 +16,22 @@
 class lthemeengine
 {
 public:
+    static QStringList readFile(QString path);
     static QString configPath();
     static QString configFile();
     static QStringList iconPaths();
     static QString userStyleSheetPath();
     static QStringList sharedStyleSheetPath();
+    static QString userDesktopStyleSheetPath();
+    static QStringList sharedDesktopStyleSheetPath();
     static QString userColorSchemePath();
     static QStringList sharedColorSchemePath();
     static QString systemLanguageID();
+    //Cursor Theme Management
+    static QStringList availableSystemCursors();
+    static QString currentCursor();
+    static bool setCursorTheme(QString);
+
 
 private:
     lthemeengine() {}

@@ -345,8 +345,8 @@ Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
-        <source>Start menu alternative focusing on the user's files, directories, and favorites.</source>
-        <translation>Menu de démarrage alternatif qui se concentre sur les fichiers d'utilisateurs, les répertoires d'utilisateurs, et les favoris d'utilisateurs.</translation>
+        <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
+        <translation>Menu de démarrage alternatif qui se concentre sur les fichiers d&apos;utilisateurs, les répertoires d&apos;utilisateurs, et les favoris d&apos;utilisateurs.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -933,6 +933,74 @@ Voulez-vous l&apos;écraser ?</translation>
  Overwrite it?</source>
         <translation>Ce thème existe déjà.
  Voulez-vous l&apos;écraser ?</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished">Système</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

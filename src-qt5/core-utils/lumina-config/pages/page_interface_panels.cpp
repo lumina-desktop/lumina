@@ -6,6 +6,8 @@
 //===========================================
 #include "page_interface_panels.h"
 #include "ui_page_interface_panels.h"
+#include <QInputDialog>
+
 #include "../GetPluginDialog.h"
 #include "../AppDialog.h"
 
@@ -19,7 +21,6 @@ page_interface_panels::page_interface_panels(QWidget *parent) : PageWidget(paren
   settings = new QSettings("lumina-desktop","desktopsettings");
   connect(ui->tool_panels_add, SIGNAL(clicked()), this, SLOT(newPanel()) );
   updateIcons();
-  setupProfiles();
 
   //Create panels container
   QHBoxLayout *panels_layout = new QHBoxLayout();
@@ -61,7 +62,7 @@ void page_interface_panels::LoadSettings(int screennum){
   int panelnumber = settings->value(DPrefix+"panels",-1).toInt();
   if(panelnumber<0){ panelnumber = 0; }
   QHBoxLayout *panels_layout = static_cast<QHBoxLayout*>(ui->scroll_panels->widget()->layout());
-  
+
   //Remove extra panels (if any)
   for(int i=panelnumber; i<PANELS.length(); i++){
     PanelWidget *tmp = PANELS.takeAt(i);
@@ -87,20 +88,25 @@ void page_interface_panels::LoadSettings(int screennum){
 
   QApplication::processEvents();
   loading = false;
-  setupImports();
+  setupProfiles();
 }
 
 void page_interface_panels::updateIcons(){
   ui->tool_panels_add->setIcon( LXDG::findIcon("list-add","") );
-  ui->tool_profile->setIcon( LXDG::findIcon("border-color","") );
-  ui->tool_import->setIcon( LXDG::findIcon("document-import","") );
+  ui->tool_profile->setIcon( LXDG::findIcon("document-import","") );
 }
 
 //=================
-//         PRIVATE 
+//         PRIVATE
 //=================
 void page_interface_panels::setupProfiles(){
-  ui->tool_profile->setMenu( new QMenu(this) );
+  //qDebug() << "Start loading profiles";
+  if(ui->tool_profile->menu()==0){
+    ui->tool_profile->setMenu( new QMenu(this) );
+    connect(ui->tool_profile->menu(), SIGNAL(triggered(QAction*)), this, SLOT(applyProfile(QAction*)) );
+  }
+  else{ ui->tool_profile->menu()->clear(); }
+  ui->tool_profile->menu()->addSection("Profiles");
   QAction *act = ui->tool_profile->menu()->addAction(tr("No Panels"));
     act->setWhatsThis("none");
   act = ui->tool_profile->menu()->addAction("Windows");
@@ -110,29 +116,39 @@ void page_interface_panels::setupProfiles(){
   act = ui->tool_profile->menu()->addAction("XFCE");
     act->setWhatsThis("xfce");
   act = ui->tool_profile->menu()->addAction("Mac OSX");
-    act->setWhatsThis("osx"); 
-  connect(ui->tool_profile->menu(), SIGNAL(triggered(QAction*)), this, SLOT(applyProfile(QAction*)) );
-}
+    act->setWhatsThis("osx");
 
-void page_interface_panels::setupImports(){
-  if(ui->tool_import->menu()==0){ ui->tool_import->setMenu( new QMenu(this) ); }
-  else{ ui->tool_import->menu()->clear(); }
-  //Read all the various disk settings currently saved
-  QStringList other = settings->childGroups().filter("panel_");
-  qDebug() << "Found Other Settings:" << other;
-  for(int i=0; i<other.length(); i++){
-    other[i] = other[i].section("_",1,-1).section(".",0,-2);
-  }
-  other.removeDuplicates();
+  //Add in any custom profiles
+  //qDebug() << " - read settings";
+  QStringList profilesAll = settings->childGroups().filter("panel_");
+  //qDebug() << " - get current screen";
   QString current = QApplication::screens().at(cscreen)->name();
-  for(int i=0; i<other.length(); i++){
-    if(other[i]==current){ continue; } //don't show the current settings
-    QAction *act = ui->tool_import->menu()->addAction(other[i]);
-      act->setWhatsThis(other[i]);
+  //qDebug() << " - filter list";
+  for(int i=0; i<profilesAll.length(); i++){
+    profilesAll[i] = profilesAll[i].section("_",1,-1).section(".",0,-2);
   }
-
-  connect(ui->tool_import->menu(), SIGNAL(triggered(QAction*)), this, SLOT(applyImport(QAction*)) );
-  ui->tool_import->setEnabled(!ui->tool_import->menu()->isEmpty());
+  //qDebug() << "Found Profiles:" << profilesAll;
+  profilesAll.removeDuplicates();
+  profilesAll.removeAll(current);
+  QStringList profiles = profilesAll.filter("profile_");
+  for(int p=0; p<2; p++){
+    if(p==1){ profiles = profilesAll; } //use whats left of the total list
+    ui->tool_profile->menu()->addSection( p==0 ? tr("Custom Profiles") : tr("Copy Screen") );
+   for(int i=0; i<profiles.length(); i++){
+    if(p==0){ profilesAll.removeAll(profiles[i]); } //handling it now
+    QString title = profiles[i];
+      if(title.startsWith("profile_")){ title = title.section("profile_",-1); }
+    QMenu *tmp = new QMenu(ui->tool_profile->menu());
+      tmp->setTitle(title);
+      tmp->addAction(LXDG::findIcon("dialog-ok-apply",""), tr("Apply"))->setWhatsThis("profile_apply::::"+profiles[i]);
+      tmp->addAction(LXDG::findIcon("list-remove",""), tr("Delete"))->setWhatsThis("profile_remove::::"+profiles[i]);
+    ui->tool_profile->menu()->addMenu(tmp);
+   }
+   if(p==0){
+     //Now add the option to create a new profile
+     ui->tool_profile->menu()->addAction(LXDG::findIcon("list-add",""), tr("Create Profile"))->setWhatsThis("profile_new");
+   }
+  }
 }
 
 //=================
@@ -161,7 +177,7 @@ void page_interface_panels::newPanel(){
     panelValChanged();
 }
 
-void page_interface_panels::removePanel(int pan){ 
+void page_interface_panels::removePanel(int pan){
   //connected to a signal from the panel widget
   bool changed = false;
   for(int i=0; i<PANELS.length(); i++){
@@ -180,6 +196,35 @@ void page_interface_panels::removePanel(int pan){
 }
 
 void page_interface_panels::applyProfile(QAction *act){
+  QString wt = act->whatsThis();
+  if(wt.startsWith("profile_")){
+    //qDebug() << "Got Profile Action:" << wt;
+    if(wt=="profile_new"){
+      bool ok = false;
+      QString pname = QInputDialog::getText(this, tr("Create Profile"), tr("Name:"), QLineEdit::Normal,  "", &ok,Qt::WindowFlags(), Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly );
+      if(!ok || pname.isEmpty()){ return; } //cancelled
+      pname = pname.replace(".","_").replace("/","_");
+      qDebug() << " - Make new profile:" << pname;
+      pname.prepend("profile_");
+      settings->setValue("desktop-"+pname+"/panels", PANELS.length());
+      for(int i=0; i<PANELS.length(); i++){
+        PANELS[i]->SaveSettings(settings, pname);
+      }
+      settings->sync(); //save to disk right now
+      setupProfiles();
+    }else if(wt.startsWith("profile_apply::::") ){
+     applyImport(wt.section("::::",-1) );
+    }else if(wt.startsWith("profile_remove::::") ){
+      QString pname = wt.section("::::",-1);
+      QStringList keys = settings->allKeys().filter(pname);
+      for(int i=0; i<keys.length(); i++){
+        if(keys[i].section("/",0,0).contains(pname)){ settings->remove(keys[i]); }
+      }
+      setupProfiles();
+    }
+    return;
+  }
+  //Manually saving settings based on built-in profile
   QString screenID = QApplication::screens().at(cscreen)->name();
   QString DPrefix = "desktop-"+screenID+"/";
   QString PPrefix = "panel_"+screenID+"."; //NEED TO APPEND PANEL NUMBER (0+)
@@ -261,14 +306,22 @@ void page_interface_panels::applyProfile(QAction *act){
 }
 
 void page_interface_panels::applyImport(QAction *act){
+  applyImport(act->whatsThis());
+}
+
+void page_interface_panels::applyImport(QString fromID){
   QString cID = QApplication::screens().at(cscreen)->name();
-  QString fromID = act->whatsThis();
   //QString DPrefix = "desktop-"+screenID+"/";
   qDebug() << "Import Panels from " << fromID << " to " << cID;
-  //First change the number of panels on the desktop settings
-  settings->setValue("desktop-"+cID+"/panels", settings->value("desktop-"+fromID+"/panels"));
- //Now move over all the panels associated with the fromID
-  QStringList pans = settings->allKeys().filter("panel_"+fromID);
+  //First find all the values associated with this ID
+    int pannum = settings->value("desktop-"+fromID+"/panels").toInt();
+    QStringList pans = settings->allKeys().filter("panel_"+fromID);
+    fromID.prepend("panel_");
+
+  //save the number of panels which is active
+  settings->setValue("desktop-"+cID+"/panels", pannum);
+ //Now move over all the panel settings associated with the fromID
+  cID.prepend("panel_");
   for(int i=0; i<pans.length(); i++){
     QString newvar = pans[i];
       newvar.replace(fromID, cID);

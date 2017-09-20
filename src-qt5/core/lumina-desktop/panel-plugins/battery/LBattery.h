@@ -25,12 +25,12 @@ class LBattery : public LPPlugin{
 public:
 	LBattery(QWidget *parent = 0, QString id = "battery", bool horizontal=true);
 	~LBattery();
-	
+
 private:
 	QTimer *timer;
 	QLabel *label;
 	int iconOld;
-	
+
 private slots:
 	void updateBattery(bool force = false);
 	QString getRemainingTime();
@@ -39,7 +39,7 @@ public slots:
 	void LocaleChange(){
 	  updateBattery(true);
 	}
-	
+
 	void OrientationChange(){
 	  if(this->layout()->direction()==QBoxLayout::LeftToRight){
 	    label->setFixedSize( QSize(this->height(), this->height()) );
@@ -48,6 +48,15 @@ public slots:
 	  }
 	  updateBattery(true); //force icon refresh
 	}
+protected:
+	void changeEvent(QEvent *ev){
+	  LPPlugin::changeEvent(ev);
+	  QEvent::Type tmp = ev->type();
+	  if(tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){
+	    updateBattery(true);
+	  }
+	}
+
 };
 
 #endif

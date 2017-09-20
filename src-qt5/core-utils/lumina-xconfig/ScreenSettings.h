@@ -42,9 +42,12 @@ public:
 
 	//Read the current screen config from xrandr
 	static QList<ScreenInfo> CurrentScreens(); //reads xrandr information
+	static QList<ScreenInfo> PreviousSettings(QString profile="");
+	static QStringList savedProfiles();
+	static void removeProfile(QString profile);
 
 	//Save the screen config for later
-	static bool SaveScreens(QList<ScreenInfo> screens);
+	static bool SaveScreens(QList<ScreenInfo> screens, QString profile = "");
 
 	//Apply screen configuration
 	static void Apply(QList<ScreenInfo> screens);

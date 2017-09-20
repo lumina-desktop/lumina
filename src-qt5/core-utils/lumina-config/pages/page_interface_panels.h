@@ -2,7 +2,7 @@
 //  Lumina Desktop Source Code
 //  Copyright (c) 2016, Ken Moore
 //  Available under the 3-clause BSD license
-//  See the LICENSE file for full details 
+//  See the LICENSE file for full details
 //===========================================
 #ifndef _LUMINA_CONFIG_PAGE_INTERFACE_PANELS_H
 #define _LUMINA_CONFIG_PAGE_INTERFACE_PANELS_H
@@ -37,7 +37,6 @@ private:
 	QList<PanelWidget*> PANELS;
 
 	void setupProfiles();
-	void setupImports();
 
 private slots:
 	void panelValChanged();
@@ -45,5 +44,6 @@ private slots:
 	void removePanel(int); //connected to a signal from the panel widget
 	void applyProfile(QAction*);
 	void applyImport(QAction*);
+	void applyImport(QString fromID);
 };
 #endif

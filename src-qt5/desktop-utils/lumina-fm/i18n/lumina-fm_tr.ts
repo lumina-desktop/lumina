@@ -120,262 +120,262 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="173"/>
+        <location filename="../widgets/DirWidget2.ui" line="179"/>
         <source>Decrease Icon Sizes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="191"/>
+        <location filename="../widgets/DirWidget2.ui" line="203"/>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="194"/>
-        <location filename="../widgets/DirWidget2.ui" line="197"/>
+        <location filename="../widgets/DirWidget2.ui" line="206"/>
+        <location filename="../widgets/DirWidget2.ui" line="209"/>
         <source>Go back to previous directory</source>
         <translation>Önceki dizine geri git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="205"/>
+        <location filename="../widgets/DirWidget2.ui" line="217"/>
         <source>Up</source>
         <translation>Yukarı</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="208"/>
-        <location filename="../widgets/DirWidget2.ui" line="211"/>
+        <location filename="../widgets/DirWidget2.ui" line="220"/>
+        <location filename="../widgets/DirWidget2.ui" line="223"/>
         <source>Go to parent directory</source>
         <translation>Üst dizine git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="219"/>
+        <location filename="../widgets/DirWidget2.ui" line="231"/>
         <source>Home</source>
         <translation>Ev</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="222"/>
-        <location filename="../widgets/DirWidget2.ui" line="225"/>
+        <location filename="../widgets/DirWidget2.ui" line="234"/>
+        <location filename="../widgets/DirWidget2.ui" line="237"/>
         <source>Go to home directory</source>
         <translation>Ev dizinine git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="230"/>
+        <location filename="../widgets/DirWidget2.ui" line="242"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="233"/>
+        <location filename="../widgets/DirWidget2.ui" line="245"/>
         <source>Select Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="241"/>
+        <location filename="../widgets/DirWidget2.ui" line="253"/>
         <source>Single Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="244"/>
+        <location filename="../widgets/DirWidget2.ui" line="256"/>
         <source>Single column view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="252"/>
+        <location filename="../widgets/DirWidget2.ui" line="264"/>
         <source>Dual Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="255"/>
+        <location filename="../widgets/DirWidget2.ui" line="267"/>
         <source>Dual Column View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="646"/>
+        <location filename="../widgets/DirWidget2.cpp" line="649"/>
         <source>(Limited Access) </source>
         <translation>(Sınırlı Erişim) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>New Document</source>
         <translation>Yeni Belge</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="668"/>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
-        <location filename="../widgets/DirWidget2.cpp" line="716"/>
+        <location filename="../widgets/DirWidget2.cpp" line="671"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
+        <location filename="../widgets/DirWidget2.cpp" line="719"/>
         <source>Name:</source>
         <translation>Ad:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>Error Creating Document</source>
         <translation>Belge Oluşturmada Hata</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="685"/>
+        <location filename="../widgets/DirWidget2.cpp" line="688"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Belge oluşturulamadı. Lütfen uygun izinlere sahip olduğunuza emin olun.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="693"/>
+        <location filename="../widgets/DirWidget2.cpp" line="696"/>
         <source>New Directory</source>
         <translation>Yeni Dizin</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>Invalid Name</source>
         <translation>Geçersiz Ad</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="546"/>
+        <location filename="../widgets/DirWidget2.cpp" line="547"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="554"/>
+        <location filename="../widgets/DirWidget2.cpp" line="555"/>
         <source>Auto-Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="568"/>
+        <location filename="../widgets/DirWidget2.cpp" line="571"/>
         <source>Directory Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="616"/>
+        <location filename="../widgets/DirWidget2.cpp" line="619"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="624"/>
+        <location filename="../widgets/DirWidget2.cpp" line="627"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="676"/>
-        <location filename="../widgets/DirWidget2.cpp" line="703"/>
-        <location filename="../widgets/DirWidget2.cpp" line="725"/>
+        <location filename="../widgets/DirWidget2.cpp" line="679"/>
+        <location filename="../widgets/DirWidget2.cpp" line="706"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Aynı adda bir dosya ya da dizin zaten mevcut! Lütfen farklı bir ad seçin.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>Error Creating Directory</source>
         <translation>Dizin Oluşturmada Hata</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="707"/>
+        <location filename="../widgets/DirWidget2.cpp" line="710"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Dizin oluşturulamadı. Lütfen geçerli dizinde değişiklik yapmak için uygun izinlere sahip olduğunuza emin olun.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="371"/>
+        <location filename="../widgets/DirWidget2.cpp" line="372"/>
         <source>Current</source>
         <translation>Geçerli</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="271"/>
+        <location filename="../widgets/DirWidget2.cpp" line="274"/>
         <source>Create...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="273"/>
+        <location filename="../widgets/DirWidget2.cpp" line="276"/>
         <source>File</source>
         <translation type="unfinished">Dosya</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="274"/>
+        <location filename="../widgets/DirWidget2.cpp" line="277"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="275"/>
+        <location filename="../widgets/DirWidget2.cpp" line="278"/>
         <source>Application Launcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="279"/>
+        <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>Launch...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="281"/>
+        <location filename="../widgets/DirWidget2.cpp" line="284"/>
         <source>Terminal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="282"/>
+        <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>SlideShow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="283"/>
+        <location filename="../widgets/DirWidget2.cpp" line="286"/>
         <source>Multimedia Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="304"/>
+        <location filename="../widgets/DirWidget2.cpp" line="307"/>
         <source>Open with...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="310"/>
+        <location filename="../widgets/DirWidget2.cpp" line="313"/>
         <source>View Files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="312"/>
+        <location filename="../widgets/DirWidget2.cpp" line="315"/>
         <source>Checksums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="314"/>
+        <location filename="../widgets/DirWidget2.cpp" line="317"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="504"/>
+        <location filename="../widgets/DirWidget2.cpp" line="505"/>
         <source>File Checksums:</source>
         <translation>Dosya Sağlama Toplamları:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>Missing Utility</source>
         <translation>Eksik Gereç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="516"/>
+        <location filename="../widgets/DirWidget2.cpp" line="517"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Sistemde &quot;lumina-fileinfo&quot; gereci bulunamadı. Lütfen önce gereci yükleyin.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="542"/>
+        <location filename="../widgets/DirWidget2.cpp" line="543"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="551"/>
+        <location filename="../widgets/DirWidget2.cpp" line="552"/>
         <source>Rename...</source>
         <translation>Yeniden adlandır...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="552"/>
+        <location filename="../widgets/DirWidget2.cpp" line="553"/>
         <source>Cut Selection</source>
         <translation>Seçimi Kes</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="553"/>
+        <location filename="../widgets/DirWidget2.cpp" line="554"/>
         <source>Copy Selection</source>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="557"/>
+        <location filename="../widgets/DirWidget2.cpp" line="560"/>
         <source>Paste</source>
         <translation>Yapıştır</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="561"/>
+        <location filename="../widgets/DirWidget2.cpp" line="564"/>
         <source>Delete Selection</source>
         <translation>Seçimi Sil</translation>
     </message>
@@ -1208,6 +1208,74 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimedya</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

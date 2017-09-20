@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTimer>
+#include <QScreen>
 
 #define WIN_BORDER 5
 
@@ -56,7 +57,7 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
 	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
 	return ResizeTopLeft;
       }else if(pt.x() > (this->width()*4.0/5.0)){
-	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
+	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()); } //difference from top-right corner
 	return ResizeTopRight;
       }else{
 	if(setoffset){ offset.setX(0); offset.setY(pt.y()); } //difference from top edge (X does not matter)
@@ -65,13 +66,13 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
     }else if(pt.y() > (this->height()-WIN_BORDER) ){
       //One of the bottom options
       if(pt.x() < this->width()/5){
-	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
+	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()-this->height()); } //difference from bottom-left corner
 	return ResizeBottomLeft;
       }else if(pt.x() > (this->width()*4.0/5.0)){
-	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
+	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()-this->height()); } //difference from bottom-right corner
 	return ResizeBottomRight;
       }else{
-	if(setoffset){ offset.setX(0); offset.setY(this->height() - pt.y()); } //difference from bottom edge (X does not matter)
+	if(setoffset){ offset.setX(0); offset.setY(pt.y()-this->height()); } //difference from bottom edge (X does not matter)
 	return ResizeBottom;
       }
     }else if(pt.x() < WIN_BORDER){
@@ -80,7 +81,7 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
 	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
 	return ResizeTopLeft;
       }else if(pt.y() > (this->height()*4.0/5.0)){
-	if(setoffset){ offset.setX(pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-left corner
+	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()-this->height()); } //difference from bottom-left corner
 	return ResizeBottomLeft;
       }else{
 	if(setoffset){ offset.setX(pt.x()); offset.setY(0); } //difference from left edge (Y does not matter)
@@ -89,13 +90,13 @@ RootSubWindow::ModState RootSubWindow::getStateAtPoint(QPoint pt, bool setoffset
     }else if(pt.x() > (this->width()-WIN_BORDER) ){
       //Right side options
       if(pt.y() < this->height()/5){
-	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(pt.y()); } //difference from top-right corner
+	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()); } //difference from top-right corner
 	return ResizeTopRight;
       }else if(pt.y() > (this->height()*4.0/5.0)){
-	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(this->height()-pt.y()); } //difference from bottom-right corner
+	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()-this->height()); } //difference from bottom-right corner
 	return ResizeBottomRight;
       }else{
-	if(setoffset){ offset.setX(this->width()-pt.x()); offset.setY(0); } //difference from right edge (Y does not matter)
+	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(0); } //difference from right edge (Y does not matter)
 	return ResizeRight;
       }
     }else{
@@ -186,12 +187,14 @@ void RootSubWindow::initWindowFrame(){
   titleBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   mainLayout->addWidget(titleBar);
   mainLayout->addWidget(WinWidget);
+  mainLayout->setAlignment(titleBar, Qt::AlignTop);
   //Setup the cursors for the buttons
   closeB->setCursor(Qt::ArrowCursor);
   minB->setCursor(Qt::ArrowCursor);
   maxB->setCursor(Qt::ArrowCursor);
-  otherM->setCursor(Qt::ArrowCursor);
+  otherB->setCursor(Qt::ArrowCursor);
   titleLabel->setCursor(Qt::ArrowCursor);
+  WinWidget->setCursor(Qt::ArrowCursor);
   //Now all the stylesheet options
   this->setObjectName("WindowFrame");
     closeB->setObjectName("Button_Close");
@@ -277,12 +280,44 @@ void RootSubWindow::LoadAllProperties(){
 
 //Button Actions - public so they can be tied to key shortcuts and stuff as well
 void RootSubWindow::toggleMinimize(){
-  WIN->setProperty(NativeWindow::Visible, false);
-  QTimer::singleShot(2000, this, SLOT(toggleMaximize()) );
+  WIN->toggleVisibility();
 }
 
 void RootSubWindow::toggleMaximize(){
-  WIN->setProperty(NativeWindow::Visible, true);
+  //Get the current screen that this window is on
+  QList<QScreen*> screens = QApplication::screens();
+  QRect rect;
+  int primaryscreen = 0; //fallback value
+  for(int i=0; i<screens.length(); i++){
+    QRect intersect = screens[i]->geometry().intersected(this->geometry());
+    if( (intersect.width()-rect.width() + intersect.height()-rect.height()) > 0){
+      rect = intersect;
+      primaryscreen = i;
+    }
+  }
+  //Now that we have the screen dimensions, lets check/change the window
+  rect = screens[primaryscreen]->availableGeometry();
+  QList< NativeWindow::State > states = WIN->property(NativeWindow::States).value< QList< NativeWindow::State> >();
+  if(rect == this->geometry() || states.contains(NativeWindow::S_MAX_VERT) || states.contains(NativeWindow::S_MAX_HORZ)){
+    //Already maximized - try to restore it to the previous size/location
+    if(!lastMaxGeom.isNull()){
+      rect = lastMaxGeom;
+    }else{
+      // no last geometry - started out maximized?
+      // make it half the screen size and centered on the screen
+      QPoint center = rect.center();
+      rect.setWidth( rect.width()/2 );
+      rect.setHeight( rect.height()/2 );
+      rect.moveTopLeft( center - QPoint(rect.width()/2, rect.height()/2) );
+    }
+    lastMaxGeom = QRect(); //clear this saved geom
+  }else{
+    //Not maximized yet - go ahead and make it so
+    lastMaxGeom = this->geometry(); //save this for later;
+  }
+  //qDebug() << "Toggle Maximize:" << this->geometry() << rect;
+  QString anim_type = DesktopSettings::instance()->value(DesktopSettings::Animation, "window/move", "random").toString();
+  loadAnimation(anim_type, NativeWindow::Size, rect);
 }
 
 void RootSubWindow::triggerClose(){
@@ -290,11 +325,18 @@ void RootSubWindow::triggerClose(){
 }
 
 void RootSubWindow::toggleSticky(){
-
+  QList< NativeWindow::State> states = WIN->property(NativeWindow::States).value< QList< NativeWindow::State > >();
+  if(states.contains(NativeWindow::S_STICKY)){
+    states.removeAll(NativeWindow::S_STICKY);
+  }else{
+    states << NativeWindow::S_STICKY;
+  }
+  WIN->requestProperty(NativeWindow::States, QVariant::fromValue<QList <NativeWindow::State> >(states) );
 }
 
 void RootSubWindow::activate(){
-  WIN->requestProperty(NativeWindow::Active, true);
+  //WinWidget->raiseWindow();
+  WIN->requestProperty(NativeWindow::Active, true, true);
 }
 
 //Mouse Interactivity
@@ -309,13 +351,15 @@ void RootSubWindow::startMoving(){
   activeState = Move;
   offset = this->mapFromGlobal(curpt);
   setMouseCursor(activeState, true); //this one is an override cursor
-  //WinWidget->pause();
-  //Also need to capture the mouse
+  WinWidget->pause();
   this->grabMouse();
 }
 
 void RootSubWindow::startResizing(){
-
+  activeState = getStateAtPoint( this->mapFromGlobal(QCursor::pos()), true); //also have it set the offset variable
+  setMouseCursor(activeState, true); //this one is an override cursor
+  WinWidget->pause();
+  this->grabMouse();
 }
 
 // === PRIVATE SLOTS ===
@@ -325,9 +369,11 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     //qDebug() << "RootSubWindow: Property Changed:" << props[i] << vals[i];
     switch(props[i]){
 	case NativeWindow::Visible:
-		//qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
-		if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
-		else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
+                if(!WinWidget->isPaused() && (this->isVisible()!=vals[i].toBool()) && activeState==Normal ){
+		  qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
+		  if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
+		  else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
+		}
 		break;
 	case NativeWindow::Title:
 		titleLabel->setText(vals[i].toString());
@@ -338,6 +384,10 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		else{ otherB->setIcon(vals[i].value<QIcon>()); }
 		break;
 	case NativeWindow::GlobalPos:
+		if(vals[i].toPoint()!=QPoint(0,0)){
+		  WinWidget->resyncWindow();
+		}
+		break;
 	case NativeWindow::Size:
 		//qDebug() << " - SIZE CHANGE";
 		if(WIN->property(NativeWindow::FrameExtents).isNull() && (i<props.indexOf(NativeWindow::FrameExtents)) ){
@@ -345,9 +395,11 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  props << props.takeAt(i);
 		  vals << vals.takeAt(i);
 		  i--;
-		}else if(anim->state() != QPropertyAnimation::Running ){
-		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size() && activeState==Normal ){
-		    this->setGeometry(WIN->geometry());
+		}else if(!WinWidget->isPaused() && activeState==Normal){
+		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size()){
+                    qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
+		    this->setGeometry( QRect(this->geometry().topLeft(), WIN->geometry().size()) );
+		    WinWidget->resyncWindow();
 		  }
 		}
 		break;
@@ -370,7 +422,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		WinWidget->setMaximumSize(vals[i].toSize());
 		break;
 	case NativeWindow::Active:
-		//if(vals[i].toBool()){ WinWidget->setFocus(); }
+		if(vals[i].toBool()){ activate(); } //WinWidget->raiseWindow(); }
 		break;
 	/*case NativeWindow::FrameExtents:
 		qDebug() << " - FRAME CHANGE";
@@ -382,6 +434,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		mainLayout->setContentsMargins( vals[i].value< QList<int> >().at(0),vals[i].value< QList<int> >().at(2) - titleLabel->height(),vals[i].value< QList<int> >().at(1),vals[i].value< QList<int> >().at(3));
 		break;*/
 	case NativeWindow::WinTypes:
+		qDebug() << "Got Window Types:" << vals[i].value< QList<NativeWindow::Type> >();
 		enableFrame(vals[i].value< QList<NativeWindow::Type> >().contains(NativeWindow::T_NORMAL) );
 		break;
 	default:
@@ -394,27 +447,24 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 void RootSubWindow::mousePressEvent(QMouseEvent *ev){
   activate();
   this->raise();
-  //qDebug() << "Frame Mouse Press Event";
-  offset.setX(0); offset.setY(0);
-  if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
-  //this->activate();
-  if(this->childAt(ev->pos())!=0){
-    //Check for any non-left-click event and skip it
-    if(ev->button()!=Qt::LeftButton){ return; }
-    activeState = Move;
-    offset.setX(ev->pos().x()); offset.setY(ev->pos().y());
-  }else{
-    //Clicked on the frame somewhere
-    activeState = getStateAtPoint(ev->pos(), true); //also have it set the offset variable
-  }
-  setMouseCursor(activeState, true); //this one is an override cursor
-  //if(activeState!=Normal){WinWidget->pause(); }
-  if(activeState!=Normal && activeState!=Move){WinWidget->pause(); }
   QFrame::mousePressEvent(ev);
+  //qDebug() << "Frame Mouse Press Event";
+  if(activeState != Normal){ return; } // do nothing - already in a state of grabbed mouse
+  offset.setX(0); offset.setY(0);
+  if(ev->button()==Qt::LeftButton){
+    if(this->childAt(ev->pos())!=0){
+      //Clicked on the titlebar
+      startMoving();
+    }else{
+      //Clicked on the frame somewhere
+      startResizing();
+    }
+  }
+
 }
 
 void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
-  activate(); //make sure this window is "Active"
+  QFrame::mouseMoveEvent(ev);
   if(activeState == Normal){
     setMouseCursor( getStateAtPoint(ev->pos()) ); //just update the mouse cursor
   }else{
@@ -489,10 +539,15 @@ void RootSubWindow::mouseMoveEvent(QMouseEvent *ev){
 	break;
     }
     //if( (geom.width()%2==0 && geom.height()%2==0) || activeState==Move){
-      this->setGeometry(geom);
+      //qDebug() << " Change Window:" << this->geometry() << geom;
+      if(activeState==Move){ this->setGeometry(geom); }
+      else{
+        //qDebug() << " Change Window Dimensions:" << this->geometry() << geom;
+	//qDebug() << " - Mouse Pos:" << ev->globalPos() << ev->pos() << "Offset" << offset;
+	this->setGeometry(geom);
+      }
     //}
   }
-  QFrame::mouseMoveEvent(ev);
 }
 
 void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
@@ -500,28 +555,37 @@ void RootSubWindow::mouseReleaseEvent(QMouseEvent *ev){
   //qDebug() << "Frame Mouse Release Event";
   QFrame::mouseReleaseEvent(ev);
   if( (activeState==Normal) && (titleBar->geometry().contains(ev->pos())) && (ev->button()==Qt::RightButton) ){
+    //WinWidget->raiseWindow();//need to ensure the native window is always on top of this frame but under the menu
     otherM->popup(ev->globalPos());
     return;
   }
-  if(activeState!=Normal){ WinWidget->resume(); }
-  if(activeState!=Normal && activeState!=Move){WinWidget->resume(); }
-  activeState = Normal;
-  QApplication::restoreOverrideCursor();
-  setMouseCursor( getStateAtPoint(ev->pos()) );
+  if(activeState!=Normal){
+    if(WinWidget->isPaused()){ WinWidget->resume(); }
+    activeState = Normal;
+    QApplication::restoreOverrideCursor();
+    setMouseCursor( getStateAtPoint(ev->pos()) );
+  }
   if(QFrame::mouseGrabber() == this){ this->releaseMouse(); }
+  activate();
+  //QTimer::singleShot(0, WinWidget, SLOT(raiseWindow()) );
 }
 
-void RootSubWindow::leaveEvent(QEvent *ev){
+/*void RootSubWindow::enterEvent(QEvent *ev){
+  QFrame::enterEvent(ev);
+  WinWidget->raiseWindow();
+}*/
+/*void RootSubWindow::leaveEvent(QEvent *ev){
   QFrame::leaveEvent(ev);
   if(activeState == Normal){
     setMouseCursor(Normal);
   }
-}
+  if(!QRect(QPoint(0,0),this->size()).contains( this->mapFromGlobal(QCursor::pos())) ){ WinWidget->lowerWindow(); }
+}*/
 
 void RootSubWindow::moveEvent(QMoveEvent *ev){
   //qDebug() << "Got Move Event:" << ev->pos() << WinWidget->geometry();
   QFrame::moveEvent(ev);
-  if(!closing && anim->state()!=QAbstractAnimation::Running){
+  if(!closing && !WinWidget->isPaused()){
     moveTimer->start();
   }
 }

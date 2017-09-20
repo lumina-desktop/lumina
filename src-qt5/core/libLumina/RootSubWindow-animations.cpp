@@ -11,16 +11,20 @@ QStringList RootSubWindow::validAnimations(NativeWindow::Property prop){
   QStringList valid;
   if(prop == NativeWindow::Visible){
     valid << "zoom" << "wipe-center-vertical" << "wipe-center-horizontal" << "shade-top" << "shade-right" << "shade-left" << "shade-bottom";
+  }else if(prop == NativeWindow::Size){
+    //Note: this is used for pretty much all geometry changes to the window where it is visible both before/after animation
+    valid << "direct";
   }
   return valid;
 }
 
 void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVariant nval){
+  if(anim->state()==QAbstractAnimation::Running){ return; } //already running
   animResetProp.clear();
   //Special case - random animation each time
   if(name=="random"){
     QStringList valid = validAnimations(prop);
-    name = valid.at(qrand()%valid.length());
+    if(!valid.isEmpty()){ name = valid.at(qrand()%valid.length()); }
   }
   //Now setup the animation
   if(prop == NativeWindow::Visible){
@@ -57,6 +61,7 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
     }
     if(nval.toBool()){
       this->setGeometry( anim->startValue().toRect() ); //ensure the window is the initial geom before it becomes visible
+      //QTimer::singleShot( anim->duration()+5, this, SLOT(activate()) );
     }else{
       QVariant tmp = anim->startValue();
         anim->setStartValue(anim->endValue());
@@ -68,6 +73,19 @@ void RootSubWindow::loadAnimation(QString name, NativeWindow::Property prop, QVa
     anim->start();
     this->show();
   } //end of Visibility animation
+  else if(prop == NativeWindow::Size){
+    //This is pretty much all geometry animations where the window is visible->visible
+    anim->setPropertyName("geometry");
+    anim->setStartValue(this->geometry());
+    anim->setEndValue(nval.toRect());
+    /*if(name==""){
+      // TO-DO modify the path from beginning->end somehow
+    }*/
+    // Now start the animation
+    WinWidget->pause();
+    anim->start();
+    this->show();
+  }
 }
 
 void RootSubWindow::animFinished(){
@@ -87,11 +105,12 @@ void RootSubWindow::animFinished(){
         //qDebug() << "Sub Window geometry:" << clientg;
         WIN->setProperties(QList< NativeWindow::Property>() << NativeWindow::Size << NativeWindow::GlobalPos,
 		QList<QVariant>() << clientg.size() << clientg.topLeft() );
-        WinWidget->resyncWindow(); //also let the window know about the current geometry
       }
     }
+    WinWidget->resyncWindow(); //also let the window know about the current geometry
   }
   animResetProp = QVariant(); //clear the variable
-   WinWidget->resume();
-
+  //QTimer::singleShot(10, WinWidget, SLOT(resume()) );
+  WinWidget->resume();
+  emit windowAnimFinished();
 }

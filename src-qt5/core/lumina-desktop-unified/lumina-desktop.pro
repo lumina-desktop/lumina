@@ -20,6 +20,7 @@ include(../libLumina/RootWindow.pri)
 include(../libLumina/ExternalProcess.pri)
 include(../libLumina/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
+include(../libLumina/LIconCache.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)
@@ -35,7 +36,8 @@ SOURCES += main.cpp \
 HEADERS  += global-includes.h \
 	global-objects.h \
 	LSession.h \
-	BootSplash.h
+	BootSplash.h \
+	JsonMenu.h
 
 FORMS    +=	BootSplash.ui 
 

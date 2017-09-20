@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=lumina-mediaplayer %f
-Icon=media-playlist-audio
+Icon=applications-multimedia
 Terminal=false
 Type=Application
 StartupNotify=true

@@ -16,21 +16,23 @@ class BaseAnimGroup : public QParallelAnimationGroup{
 	Q_OBJECT
 public:
 	QWidget *canvas;
-	QSettings *settings;
+	QString animPlugin;
 
 	virtual void LoadAnimations(){} //This is the main function which needs to be subclassed
 
-	BaseAnimGroup(QWidget *parent, QSettings *set){
+	BaseAnimGroup(QWidget *parent){
 	  canvas = parent;
-	  settings = set;
 	  canvas->setCursor( QCursor(Qt::BlankCursor) );
 	}
 	~BaseAnimGroup(){}
 
+	QVariant readSetting(QString variable, QVariant defaultvalue = QVariant());
+
+
 	//==============================
 	//     PLUGIN LOADING/LISTING (Change in the .cpp file)
 	//==============================
-	static BaseAnimGroup* NewAnimation(QString type, QWidget *parent, QSettings *set);
+	static BaseAnimGroup* NewAnimation(QString type, QWidget *parent);
 	static QStringList KnownAnimations();
 
 };
