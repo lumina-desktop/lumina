@@ -7,134 +7,134 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediasoitin</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyt soi</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Ei videota käynnissä)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Soittolista</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>ylemmäs</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>alemmas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Nykyinen kappale</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>NIMI</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>ARTISTI</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>ALBUMI</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>Tykkään tästä</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyllästynyt tähän (ei soiteta kuukauteen)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Estä tämä (ei soiteta enää)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>
         <source>View details about song (launches web browser)</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä kappaleen tiedot (käynnistää verkkoselaimen)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="448"/>
         <source>Current Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Nykyinen asema</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista nykyinen asema</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation>poista</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
         <source>Create new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo uusi asema</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="495"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>lisää</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjautuminen Pandora-tilille</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>Sähköposti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;Tarvitsetko tilin?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenlaatu</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Välityspalvelimen osoite</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
@@ -144,47 +144,47 @@
     <message>
         <location filename="../mainUI.ui" line="618"/>
         <source>Apply Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota asetukset käyttöön</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="656"/>
         <source>Audio Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Ääniajuri</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedosto</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Toista</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Tauko</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Pysäytä</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuraava</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Takaisin</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="748"/>
@@ -194,7 +194,7 @@
     <message>
         <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Nosta äänenvoimakkuutta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="756"/>
@@ -204,12 +204,12 @@
     <message>
         <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Laske äänenvoimakkuutta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulje sovellus</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="767"/>
@@ -219,27 +219,27 @@
     <message>
         <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulje aktiivisena ilmoitusalueelle</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Nykyiseltä artistilta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo nykyisestä artistista asema</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Nykyisestä kappaleesta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo nykyisestä kappaleesta asema</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="808"/>
@@ -249,43 +249,43 @@
     <message>
         <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi...</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi uutta asemaa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora-radio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtaus Pandora-radiosta</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Paikalliset tiedostot</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Toista paikallisia tiedostoja</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Toiminnon käyttäminen vaatii pianobar-ohjelman asentamista</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtauta musiikkia Pandora-verkkoradiopalvelusta</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
