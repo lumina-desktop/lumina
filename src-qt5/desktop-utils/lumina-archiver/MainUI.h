@@ -25,7 +25,7 @@ public:
 
 	void LoadArguments(QStringList);
     void loadIcons();
-
+    //QStringList aaFileList;
 
 private:
 	Ui::MainUI *ui;
@@ -47,6 +47,7 @@ private slots:
 	void remFiles();
     void extractFiles();
     void autoextractFiles();
+    //void autoArchiveFiles(QStringList aaFileList);
 	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();

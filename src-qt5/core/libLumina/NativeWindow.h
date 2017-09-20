@@ -78,6 +78,7 @@ public:
 	QRect geometry(); //this returns the "full" geometry of the window (window + frame)
 
 public slots:
+	void toggleVisibility();
 	void requestClose(); //ask the app to close the window (may/not depending on activity)
 	void requestKill();	//ask the WM to kill the app associated with this window (harsh - only use if not responding)
 	void requestPing();	//ask the app if it is still active (a WindowNotResponding signal will get sent out if there is no reply);

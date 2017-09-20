@@ -59,7 +59,7 @@ protected:
 
 	virtual void mouseMoveEvent(QMouseEvent *ev){
           //qDebug() << "Got Move Event:" << this->geometry() << ev->pos();
-	  if(selTab>=0 && !this->geometry().contains(ev->pos()) ){
+	  if(selTab>=0 && !this->parentWidget()->geometry().contains( this->mapToParent(ev->pos())) ){
 	    //qDebug() << "Starting Drag:" << this->geometry() << ev->pos();
 	    QString tab = selTab;
             this->mouseReleaseEvent(new QMouseEvent(QEvent::MouseButtonRelease, ev->pos(), ev->button(), ev->buttons(), ev->modifiers()) ); //will reset selTab

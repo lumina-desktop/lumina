@@ -833,6 +833,11 @@
 <context>
     <name>LDesktopSwitcher</name>
     <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
@@ -850,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="164"/>
+        <location filename="../LSession.cpp" line="347"/>
         <source>Desktop</source>
         <translation type="unfinished">डेस्कटॉप</translation>
     </message>
@@ -1474,24 +1479,24 @@
         <translation type="unfinished">रद्द</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
         <source>%1% (Plugged In)</source>
         <translation>%1%(प्लग इन)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 लगभग)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
         <source>%1% Remaining</source>
         <translation>%1% शेष</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
         <source>Workspace %1/%2</source>
         <translation>कार्यस्थल %1/%2</translation>
     </message>
@@ -1757,6 +1762,74 @@
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
         <translation>अवर्गीकृत</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">मल्टीमीडिया</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished">विकास</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished">पढाई</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished">खेल</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished">चित्र</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished">नेटवर्क</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished">कार्यालय</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished">विज्ञान</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished">सुविधाएँ</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished">शराब</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished">अवर्गीकृत</translation>
     </message>
 </context>
 </TS>

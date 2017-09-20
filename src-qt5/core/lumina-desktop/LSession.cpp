@@ -572,7 +572,7 @@ void LSession::SessionEnding(){
 //  SYSTEM ACCESS
 //===============
 void LSession::LaunchApplication(QString cmd){
-  LSession::setOverrideCursor(QCursor(Qt::BusyCursor));
+  //LSession::setOverrideCursor(QCursor(Qt::BusyCursor));
   ExternalProcess::launch(cmd);
   //QProcess::startDetached(cmd);
 }

@@ -11,6 +11,8 @@
 #include <LUtils.h>
 
 #include <QTimer>
+#include <QInputDialog>
+#include <QLineEdit>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -28,6 +30,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     singleTileMenu->addAction(tr("Align Horizontal then Vertical"))->setWhatsThis("XY");
     singleTileMenu->addAction(tr("Align Vertical then Horizontal"))->setWhatsThis("YX");
   ui->mdiArea->setContextMenuPolicy(Qt::CustomContextMenu);
+
+  profilesMenu = new QMenu(this);
+    ui->tool_save->setMenu(profilesMenu);
+
   connect(ui->mdiArea, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showMenu()) );
 
   connect(singleTileMenu, SIGNAL(triggered(QAction*)), this, SLOT(tileSingleScreen(QAction*)) );
@@ -43,6 +49,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->tool_tileY, SIGNAL(clicked()), this, SLOT(tileScreensY()) );
   connect(ui->tool_tile, SIGNAL(clicked()), this, SLOT(tileScreens()) );
   connect(ui->combo_availscreens, SIGNAL(currentIndexChanged(int)), this, SLOT(updateNewScreenResolutions()) );
+
+  connect(ui->tool_profile_load, SIGNAL(clicked()), this, SLOT(loadProfile()) );
+  connect(ui->tool_profile_remove, SIGNAL(clicked()), this, SLOT(removeProfile()) );
+  connect(profilesMenu, SIGNAL(triggered(QAction*)), this, SLOT(saveAsProfile(QAction*)) );
+
+  updateProfiles();
   QTimer::singleShot(0, this, SLOT(UpdateScreens()) );
 }
 
@@ -80,7 +92,7 @@ ScreenInfo MainUI::currentScreenInfo(){
 }
 
 void MainUI::AddScreenToWidget(ScreenInfo screen){
-  qDebug() << "Add Screen To Widget:" << screen.ID << screen.geom;
+  //qDebug() << "Add Screen To Widget:" << screen.ID << screen.geom;
   QLabel *lab = new QLabel(this);
   lab->setAlignment(Qt::AlignCenter);
   QMdiSubWindow *it = ui->mdiArea->addSubWindow(lab, Qt::Tool | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
@@ -90,7 +102,7 @@ void MainUI::AddScreenToWidget(ScreenInfo screen){
 
   it->setWhatsThis(screen.ID);
   QRect scaled( screen.geom.topLeft()*scaleFactor, screen.geom.size()*scaleFactor);
-  qDebug() << " - Scaled:" << scaled;
+  //qDebug() << " - Scaled:" << scaled;
   it->show();
   it->setGeometry(scaled); //scale it down for the display
   it->setFixedSize(scaled.size());
@@ -117,18 +129,20 @@ void MainUI::SyncBackend(){
     //Find the window associated with this screen
     for(int s=0; s<windows.length(); s++){
       if(windows[s]->whatsThis()==SCREENS[i].ID){
-        qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
+        //qDebug() << "Adjust geom of window:" << SCREENS[i].geom;
         SCREENS[i].geom.moveTopLeft( windows[s]->geometry().topLeft()/scaleFactor );
-        qDebug() << " - New Geom:" << SCREENS[i].geom;
+        //qDebug() << " - New Geom:" << SCREENS[i].geom;
         if(SCREENS[i].applyChange<1){ SCREENS[i].applyChange = (windows[s]->widget()->isEnabled() ? 0 : 1); } //disabled window is one that will be removed
       }
     }
   }
 }
 
-void MainUI::UpdateScreens(){
+void MainUI::UpdateScreens(QString profile){
   //First probe the server for current screens
-  SCREENS = RRSettings::CurrentScreens();
+  if(profile.isEmpty()){ SCREENS = RRSettings::CurrentScreens(); }
+  else{ SCREENS = RRSettings::PreviousSettings(profile); }
+
   //Determine the scale factor for putting these into the UI
   QRegion tot;
   for(int i=0; i<SCREENS.length(); i++){
@@ -244,14 +258,23 @@ void MainUI::tileScreensY(bool activeonly){
         while(overlap){
           QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect());
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
           //qDebug() << "Check Y Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
+	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
-            if(bound.isNull()){ newy+=cur->height(); }
-            else if(newy!=bound.top()){ newy = bound.top(); }
-            else if(newy!=bound.bottom()){ newy = bound.bottom() + 1; }
-            else{ newy++; } //make sure it always changes - no infinite loops!!
+            //qDebug() << " - got Y overlap:" << bound << rects;
+            if( bound.isNull() || rects.isEmpty() ){ newy+=cur->height(); }
+            else{
+             int orig = newy;
+              newy = bound.top();
+              for(int i=0; i<rects.length(); i++){
+                //qDebug() << " - Check Rect:" << newy << rects[i] << cur->height();
+                if(rects[i].height()==cur->height()){ continue; } //skip this one - just the same height
+                if(rects[i].top()>newy || newy==bound.bottom()){ newy=rects[i].top(); }
+              }
+              if(orig==newy){ newy = bound.bottom()+1; } //make sure it always changes - no infinite loops!!
+            }
           }
         }
         if(!activeonly || cur==active){ cur->move(cur->pos().x(), newy); }
@@ -292,16 +315,23 @@ void MainUI::tileScreensX(bool activeonly){
         while(overlap){
           QRegion tmp(newx, cur->pos().y(), cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect());
-          //qDebug() << "Check X Overlap:" << newx << overlap << tmp.boundingRect() << diff.boundingRect();
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
+          //qDebug() << "Check X Overlap:" << newx << overlap << total.rects() << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
+	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
-            if(bound.isNull()){ newx+=cur->width(); }
-            else if(newx!=bound.left()){ newx = bound.left(); }
-            else if(newx!=bound.right()){ newx = bound.right() + 1; }
-            else{ newx++; }//make sure it always changes - no infinite loops!!
-          }else{
-            qDebug() << "Found Area:" << tmp << diff << newx;
+            //qDebug() << " - got X overlap:" << bound << rects;
+            if( bound.isNull() || rects.isEmpty() ){ newx+=cur->width(); }
+            else{
+             int orig = newx;
+              newx = bound.left();
+              for(int i=0; i<rects.length(); i++){
+                //qDebug() << " - Check Rect:" << newx << rects[i] << cur->width();
+                if(rects[i].width()==cur->width()){ continue; } //skip this one - just the same width
+                if(rects[i].left()>newx || newx==bound.right()){ newx=rects[i].left(); }
+              }
+              if(orig==newx){ newx = bound.right()+1; } //make sure it always changes - no infinite loops!!
+            }
           }
         }
         if(!activeonly || cur==active){ cur->move(newx, cur->pos().y()); }
@@ -380,4 +410,48 @@ void MainUI::SaveSettings(){
 
 void MainUI::RestartFluxbox(){
   QProcess::startDetached("killall fluxbox");
+}
+
+void MainUI::removeProfile(){
+  QString cur = ui->combo_profiles->currentText();
+  RRSettings::removeProfile(cur);
+  updateProfiles();
+}
+
+void MainUI::updateProfiles(){
+  QStringList profiles = RRSettings::savedProfiles();
+  ui->combo_profiles->clear();
+  profiles.sort();
+  ui->combo_profiles->addItems(profiles);
+  //Update the profiles menu as needed
+  profilesMenu->clear();
+  for(int i=0; i<profiles.length(); i++){
+    profilesMenu->addAction(profiles[i])->setWhatsThis(profiles[i]);
+  }
+  if(!profiles.isEmpty()){ profilesMenu->addSeparator(); }
+  profilesMenu->addAction(tr("New Profile") );
+
+  //Now update the tab as needed
+  ui->tabWidget->setTabEnabled(2,!profiles.isEmpty());
+  if(ui->tabWidget->currentIndex()==2){ ui->tabWidget->setCurrentIndex(0); }
+}
+
+void MainUI::loadProfile(){
+  QString cur = ui->combo_profiles->currentText();
+  UpdateScreens(cur);
+}
+
+void MainUI::saveAsProfile(QAction *act){
+  QString profile = act->whatsThis();
+  if(profile.isEmpty()){
+    //Need to prompt for a profile name
+    QStringList known = RRSettings::savedProfiles();
+    while(known.contains(profile) || profile.isEmpty()){
+      bool ok = false;
+      profile = QInputDialog::getText(this, tr("Create Screen Profile"), profile.isEmpty() ? tr("Profile Name") : tr("Profile exists - different name:"), QLineEdit::Normal, profile, &ok);
+      if(!ok || profile.isEmpty()){ return; } //cancelled
+    }
+  }
+  RRSettings::SaveScreens(SCREENS, profile);
+  updateProfiles();
 }

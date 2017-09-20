@@ -16,7 +16,8 @@ SOURCES += \
     interfacepage.cpp \
     fontconfigdialog.cpp \
     qsspage.cpp \
-    qsseditordialog.cpp
+    qsseditordialog.cpp \
+    cursorthemepage.cpp
 
 FORMS += \
     mainwindow.ui \
@@ -28,7 +29,8 @@ FORMS += \
     fontconfigdialog.ui \
     previewform.ui \
     qsspage.ui \
-    qsseditordialog.ui
+    qsseditordialog.ui \
+    cursorthemepage.ui
 
 HEADERS += \
     mainwindow.h \
@@ -41,7 +43,8 @@ HEADERS += \
     interfacepage.h \
     fontconfigdialog.h \
     qsspage.h \
-    qsseditordialog.h
+    qsseditordialog.h \
+    cursorthemepage.h
 
    DEFINES += USE_WIDGETS
 

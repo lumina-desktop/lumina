@@ -833,6 +833,11 @@
 <context>
     <name>LDesktopSwitcher</name>
     <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
@@ -850,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="164"/>
+        <location filename="../LSession.cpp" line="347"/>
         <source>Desktop</source>
         <translation type="unfinished">바탕 화면</translation>
     </message>
@@ -1474,24 +1479,24 @@
         <translation type="unfinished">취소</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (연결됨)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 예상)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
         <source>%1% Remaining</source>
         <translation>%1% 남음</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
         <source>Workspace %1/%2</source>
         <translation>작업 공간 %1/%2</translation>
     </message>
@@ -1757,6 +1762,74 @@
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
         <translation>미분류</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">멀티미디어</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished">개발</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished">교육</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished">게임</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished">그래픽</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished">네트워크</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished">업무</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished">과학</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished">설정</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished">시스템</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished">유틸리티</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished">와인</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished">미분류</translation>
     </message>
 </context>
 </TS>

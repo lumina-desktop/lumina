@@ -209,4 +209,72 @@
         <translation>L&apos;aplicació següent ha tingut un error i s&apos;ha hagut de tancar:</translation>
     </message>
 </context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimèdia</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished">Desenvolupament</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished">Educació</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished">Gràfics</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished">Xarxa</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished">Oficina</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished">Ciència</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished">Configuració</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished">Sistema</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

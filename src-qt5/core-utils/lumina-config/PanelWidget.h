@@ -23,7 +23,7 @@ public:
 	~PanelWidget();
 
 	void LoadSettings(QSettings *settings, int Dnum, int Pnum);
-	void SaveSettings(QSettings *settings); //save the current settings
+	void SaveSettings(QSettings *settings, QString screenID = ""); //save the current settings
 	
 	int PanelNumber();
 	void ChangePanelNumber(int newnum);

@@ -72,7 +72,7 @@ void IconThemePage::loadTheme(const QString &path){
   config.endGroup();
   QIcon icon1 = findIcon(path, 24, "document-save");
   QIcon icon2 = findIcon(path, 24, "document-print");
-  QIcon icon3 = findIcon(path, 24, "media-playback-stop");
+  QIcon icon3 = findIcon(path, 24, "document-edit");
   QTreeWidgetItem *item = new QTreeWidgetItem();
   item->setIcon(0, icon1);
   item->setIcon(1, icon2);
@@ -97,7 +97,7 @@ QIcon IconThemePage::findIcon(const QString &themePath, int size, const QString 
   config.endGroup();
   foreach (QString dir, dirs){
     config.beginGroup(dir);
-    if(config.value("Size").toInt() == size){
+    if(config.value("Size").toInt() == size || config.value("Type").toString().toLower()=="scalable"){
       QDir iconDir = QFileInfo(themePath).path() + "/" + dir;
       iconDir.setFilter(QDir::Files);
       iconDir.setNameFilters(QStringList () << name + ".*");

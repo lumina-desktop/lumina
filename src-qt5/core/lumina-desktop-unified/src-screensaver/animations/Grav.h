@@ -36,7 +36,7 @@ private:
    	  double xrand = 0.4; //(qrand()%10+4)/10.0;
 	  double yrand = 0.4; //(qrand()%10+4)/10.0;
 
-	  double theta = 1.5707963; 
+	  double theta = 1.5707963;
 	  //double theta = aTan((start.x() - ref->x())/(start.y() - ref->y()));
 	  QMatrix rotation = QMatrix(qCos(theta), qSin(theta), -qSin(theta), qCos(theta), -ref->x(), -ref->y());
 	  qDebug() << rotation;
@@ -46,9 +46,9 @@ private:
 	  //qDebug() << "Center" << *ref;
 
 	  QPoint firstP = (QPoint(ref->x() + xrand*start.x()*(qCos(0/step) -qSin(0/step)), ref->y() + yrand*start.y()*(qCos(0/step) -qSin(0/step))));
-	  QPoint rotFP = rotation.map(firstP); 
+	  QPoint rotFP = rotation.map(firstP);
 	  qDebug() << "First Point" << firstP;
-      qDebug() << "Rotation by Matrix" << rotFP;
+	  qDebug() << "Rotation by Matrix" << rotFP;
 	  QPoint lastP = (QPoint(ref->x() + xrand*start.x()*(qCos(PI/step) -qSin(PI/step)), ref->y() + yrand*start.y()*(qCos(PI/step) -qSin(PI/step))));
 	  orbit->setKeyValueAt(0, firstP);
 	  orbit->setKeyValueAt(1, lastP);
@@ -77,13 +77,13 @@ private slots:
 	      orbit->setDuration(10);
 	    }
 	}*/
-	void stopped(){ qDebug() << "Planet stopped"; planet->hide();}
+	void stopped(){ planet->hide();}
 
 public:
 	Grav(QWidget *parent) : QParallelAnimationGroup(parent){
 	  planet = new QWidget(parent);
 	  range = parent->size();
-	  QPoint center = parent->geometry().center();
+	  QPoint center = QRect(QPoint(0,0), parent->size()).center();;
 
 	  //Creates a random planet size. Between 12 and 45 pixels
 	  int planet_radius = qRound(1.75* ((qrand()%20)+7) );
@@ -114,7 +114,7 @@ public:
 	  planet->show();
 
 	  //Ensures the screensaver will not stop until the user wishes to login or it times out
-	  this->setLoopCount(1); //number of orbits
+	  this->setLoopCount(3); //number of orbits
 	  orbit->setDuration( qrand() %1000 + 19000); //20 second orbits
 	  //orbit->setEndValue(path.at(0));
 	  //LoopChanged(0);  //load initial values
@@ -145,7 +145,7 @@ private slots:
 	}
 
 public:
-	GravAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	GravAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~GravAnimation(){
 	  sun->deleteLater();
 	  while(planets.length()>0){ planets.takeAt(0)->deleteLater(); }
@@ -154,7 +154,7 @@ public:
 	void LoadAnimations(){
 	  //Creates the sun, which is a thin shell with a gradient from green to yellow
 	  sun = new QWidget(canvas);
-	  QPoint center = canvas->geometry().center();
+	  QPoint center = QRect(QPoint(0,0), canvas->size()).center();
 	  QString sunstyle = QStringLiteral("background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, ") +
 						QStringLiteral("stop:0 rgba(0, 0, 0, 0), stop:0.38 rgba(0, 0, 0, 0), stop:0.4 rgba(82, 121, 76, 33), stop:0.5 rgba(159, 235, 148, 64), ") +
 						QStringLiteral("stop:0.6 rgba(255, 238, 150, 129), stop:0.7 rgba(0, 0, 0, 0));");
@@ -164,11 +164,11 @@ public:
 	  wobble = new QPropertyAnimation(sun);
 	  wobble->setPropertyName("geometry");
 	  wobble->setTargetObject(sun);
-	  QRect initgeom = QRect(center-QPoint(12,12), QSize(60, 60));
+	  QRect initgeom = QRect(center-QPoint(30,30), QSize(60, 60));
 	  wobble->setStartValue(initgeom);
 	  wobble->setKeyValueAt(0, initgeom ); //starting point
 	  wobble->setKeyValueAt(1, initgeom ); //starting point
-	  wobble->setKeyValueAt(0.5, QRect(center-QPoint(18,18), QSize(90, 90))); //starting point
+	  wobble->setKeyValueAt(0.5, QRect(center-QPoint(45,45), QSize(90, 90))); //starting point
 	  wobble->setDuration(2000);
 	  wobble->setLoopCount(-1);
 	  this->addAnimation(wobble);
@@ -176,13 +176,13 @@ public:
 	  sun->setGeometry(initgeom);
 
 	  //Gives the screensaver a black background
-	  canvas->setStyleSheet("background: black;");
+	  //canvas->setStyleSheet("background: black;");
 
 	  //Pulls number of planets from settings, with 10 as default
-	  int number = settings->value("planets/number",10).toInt();
+	  int number = readSetting("planets/number",qrand()%5+3).toInt();
 
 	  //Loops through all planets and sets up the animations, then adds them to the base group and vector, which
-	  qDebug() << "Starting planets";
+	  //qDebug() << "Starting planets";
 	  for(int i=0; i<number; i++){
 	    Grav *tmp = new Grav(canvas);
 	    this->addAnimation(tmp);

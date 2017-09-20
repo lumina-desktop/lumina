@@ -69,35 +69,35 @@ ui->combo_session_themefile->clear();
   // - local theme templates
   QStringList tmp = LTHEME::availableLocalThemes();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   // - system theme templates
   tmp = LTHEME::availableSystemThemes();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==current[0]){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   // - local color schemes
   tmp = LTHEME::availableLocalColors();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
   // - system color schemes
   tmp = LTHEME::availableSystemColors();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==current[1]){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
   // - icon themes
   tmp = LTHEME::availableSystemIcons();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_icontheme->addItem(tmp[i]);
     if(tmp[i]==current[2]){ ui->combo_session_icontheme->setCurrentIndex(i); }
   }
@@ -105,14 +105,14 @@ ui->combo_session_themefile->clear();
   ui->font_session_theme->setCurrentFont( QFont(current[3]) );
   // - Font Size
   ui->spin_session_fontsize->setValue( current[4].section("p",0,0).toInt() );
-  
+
   int cur = ui->combo_session_cursortheme->findText( LTHEME::currentCursor() );
   if(cur>=0){ ui->combo_session_cursortheme->setCurrentIndex(cur); }
 
    QSettings sessionsettings("lumina-desktop","sessionsettings");
-    QString qt5theme = sessionsettings.value("Qt5_theme_engine", "").toString();
+    QString qt5theme = sessionsettings.value("Qt5_theme_engine", "lthemeengine").toString();
   int index = ui->combo_qt5_theme->findData(qt5theme);
-  if(index <0){ 
+  if(index <0){
     ui->line_qt5_custom_theme->setText(qt5theme);
     index = ui->combo_qt5_theme->findData("internal_custom");
   }
@@ -130,7 +130,7 @@ void page_theme::updateIcons(){
 }
 
 //=================
-//       PRIVATE 
+//       PRIVATE
 //=================
 void page_theme::findQt5Themes(){
   ui->combo_qt5_theme->clear();
@@ -169,14 +169,14 @@ void page_theme::sessionEditColor(){
   ui->combo_session_colorfile->clear();
   QStringList tmp = LTHEME::availableLocalColors();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==dlg.colorpath){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
   // - system color schemes
   tmp = LTHEME::availableSystemColors();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_colorfile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==dlg.colorpath){ ui->combo_session_colorfile->setCurrentIndex(ui->combo_session_colorfile->count()-1); }
   }
@@ -195,14 +195,14 @@ void page_theme::sessionEditTheme(){
   // - local theme templates
   QStringList tmp = LTHEME::availableLocalThemes();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("Local")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }
   // - system theme templates
   tmp = LTHEME::availableSystemThemes();
   tmp.sort();
-  for(int i=0; i<tmp.length(); i++){ 
+  for(int i=0; i<tmp.length(); i++){
     ui->combo_session_themefile->addItem(tmp[i].section("::::",0,0)+" ("+tr("System")+")", tmp[i].section("::::",1,1));
     if(tmp[i].section("::::",1,1)==dlg.themepath){ ui->combo_session_themefile->setCurrentIndex(ui->combo_session_themefile->count()-1); }
   }

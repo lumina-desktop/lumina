@@ -833,6 +833,11 @@
 <context>
     <name>LDesktopSwitcher</name>
     <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
@@ -850,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="164"/>
+        <location filename="../LSession.cpp" line="347"/>
         <source>Desktop</source>
         <translation>Escriptori</translation>
     </message>
@@ -1461,37 +1466,37 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (connectat)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 estimat)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
         <source>%1% Remaining</source>
         <translation>Resta %1%</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
         <source>Workspace %1/%2</source>
         <translation>Espai de treball %1/%2</translation>
     </message>
@@ -1547,12 +1552,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="58"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="59"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
 </context>
 <context>
@@ -1757,6 +1762,74 @@
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
         <translation>Sense ordenar</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimèdia</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <source>Development</source>
+        <translation type="unfinished">Desenvolupament</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <source>Education</source>
+        <translation type="unfinished">Educació</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <source>Games</source>
+        <translation type="unfinished">Jocs</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <source>Graphics</source>
+        <translation type="unfinished">Gràfics</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Network</source>
+        <translation type="unfinished">Xarxa</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Office</source>
+        <translation type="unfinished">Oficina</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Science</source>
+        <translation type="unfinished">Ciència</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Settings</source>
+        <translation type="unfinished">Configuració</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>System</source>
+        <translation type="unfinished">Sistema</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Utility</source>
+        <translation type="unfinished">Utilitat</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Wine</source>
+        <translation type="unfinished">Wine</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

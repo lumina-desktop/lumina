@@ -107,17 +107,17 @@ void LSingleApplication::PerformLockChecks(){
     QLocalSocket socket(this);
 	socket.connectToServer(cfile);
 	socket.waitForConnected();
-	if(!socket.isValid() || socket.state()!=QLocalSocket::ConnectedState){ 
+	if(!socket.isValid() || socket.state()!=QLocalSocket::ConnectedState){
 	  //error - could not forward info for some reason
 	  qDebug() << " - Could not connect to locking process: exiting...";
-		exit(1); 
-	} 
-	
-    qDebug() << " - Forwarding inputs to locking process and closing down this instance...";	
+		exit(1);
+	}
+
+    qDebug() << " - Forwarding inputs to locking process and closing down this instance...";
 	socket.write( inputlist.join("::::").toLocal8Bit() );
 	socket.waitForDisconnected(500); //max out at 1/2 second (only hits this if no inputs)
   }
-  
+
 }
 
 //New messages detected

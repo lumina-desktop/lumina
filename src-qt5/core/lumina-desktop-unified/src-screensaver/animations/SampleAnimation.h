@@ -18,7 +18,7 @@ private:
 	QWidget *ball;
 
 public:
-	SampleAnimation(QWidget *parent, QSettings *set) : BaseAnimGroup(parent, set){}
+	SampleAnimation(QWidget *parent) : BaseAnimGroup(parent){}
 	~SampleAnimation(){ this->stop(); delete ball; }
 
 	void LoadAnimations(){

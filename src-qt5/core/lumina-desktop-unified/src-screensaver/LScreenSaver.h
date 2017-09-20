@@ -22,7 +22,6 @@ public:
 
 private:
 	QTimer *starttimer, *locktimer, *hidetimer;
-	QSettings *settings;
 	QList<SSBaseWidget*> BASES;
 	LLockScreen *LOCKER;
 	int cBright;

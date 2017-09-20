@@ -10,12 +10,14 @@
 #include <QScreen>
 #include <QDebug>
 
-#define DEBUG 1
+#define DEBUG 0
 
 // === PUBLIC ===
 RootWindow::RootWindow() : QWidget(0, Qt::Window | Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint){
   qRegisterMetaType<WId>("WId");
   autoResizeTimer = 0;
+  lastActiveMouse = 0;
+  mouseFocusTimer = 0;
   this->setMouseTracking(true);
 }
 
@@ -32,6 +34,12 @@ void RootWindow::start(){
     connect(autoResizeTimer, SIGNAL(timeout()), this, SLOT(ResizeRoot()) );
     connect(QApplication::desktop(), SIGNAL(resized(int)), autoResizeTimer, SLOT(start()) );
     connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), autoResizeTimer, SLOT(start()) );
+  }
+  if(mouseFocusTimer==0){
+    mouseFocusTimer = new QTimer(this);
+    mouseFocusTimer->setInterval(100);
+    connect(mouseFocusTimer, SIGNAL(timeout()), this, SLOT(checkMouseFocus()) );
+
   }
   this->show();
   ResizeRoot();
@@ -108,6 +116,16 @@ RootSubWindow* RootWindow::windowForId(WId id){
   return tmp;
 }
 
+QScreen* RootWindow::screenUnderMouse(){
+  QPoint mpos = QCursor::pos();
+  QList<QScreen*> scrns = QApplication::screens();
+  for(int i=0; i<scrns.length(); i++){
+    if(scrns[i]->geometry().contains(mpos)){ return scrns[i]; }
+  }
+  //Could not find an exact match - just return the first one
+  return scrns.first();
+}
+
 // === PUBLIC SLOTS ===
 void RootWindow::ResizeRoot(){
   if(DEBUG){ qDebug() << "Resize Root..."; }
@@ -182,6 +200,32 @@ void RootWindow::ChangeWallpaper(QString id, RootWindow::ScaleType scale, QStrin
 
 }
 
+void RootWindow::checkMouseFocus(){
+  QPoint cpos = QCursor::pos();
+  if(lastCursorPos != cpos){ emit MouseMoved(); }
+  lastCursorPos = cpos;
+  QWidget *child = this->childAt(QCursor::pos());
+  while(child!=0 && child->whatsThis()!="RootSubWindow"){
+    child = child->parentWidget();
+    if(child==this){ child = 0;} //end of the line
+  }
+
+  if(child==lastActiveMouse){ return; } //nothing new to do
+  //Make sure the child is actually a RootSubWindow
+  if(lastActiveMouse!=0){ lastActiveMouse->removeMouseFocus(); lastActiveMouse = 0; }
+  if(child!=0){
+    lastActiveMouse = static_cast<RootSubWindow*>(child);
+
+    if(DesktopSettings::instance()->value(DesktopSettings::WM, "focusFollowsMouse", true).toBool()){
+      lastActiveMouse->giveKeyboardFocus();
+      if(DesktopSettings::instance()->value(DesktopSettings::WM, "raiseOnFocus", false).toBool()){
+        lastActiveMouse->raise();
+      }
+    }
+    lastActiveMouse->giveMouseFocus(); //always give mouse focus on mouseover
+  }
+}
+
 void RootWindow::NewWindow(NativeWindow *win){
   RootSubWindow *subwin = 0;
   //qDebug() << "Got New Window:" << win->property(NativeWindow::Title);
@@ -190,19 +234,27 @@ void RootWindow::NewWindow(NativeWindow *win){
   }
   if(subwin==0){
     subwin = new RootSubWindow(this, win);
+    subwin->setWhatsThis("RootSubWindow");
     connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(CloseWindow(WId)) );
+    connect(subwin, SIGNAL(windowAnimFinished()), this, SLOT(checkMouseFocus()) );
     WINDOWS << subwin;
   }
   CheckWindowPosition(win->id(), true); //first-time run
-  //win->setProperty(NativeWindow::Visible, true);
+  win->setProperty(NativeWindow::Visible, true);
   //win->requestProperty( NativeWindow::Active, true);
-  win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true);
+  //win->requestProperties(QList<NativeWindow::Property>() << NativeWindow::Visible << NativeWindow::Active, QList<QVariant>() << true << true, true);
+  if(!mouseFocusTimer->isActive()){ mouseFocusTimer->start(); }
 }
 
 void RootWindow::CloseWindow(WId win){
   for(int i=0; i<WINDOWS.length(); i++){
-    if(WINDOWS[i]->id() == win){ WINDOWS.takeAt(i)->clientClosed(); break; }
+    if(WINDOWS[i]->id() == win){
+      if(lastActiveMouse==WINDOWS[i]){ lastActiveMouse = 0; } //no longer valid
+      WINDOWS.takeAt(i)->clientClosed();
+      break;
+    }
   }
+  if(WINDOWS.isEmpty()){ mouseFocusTimer->stop(); } //no windows to look for
 }
 
 // === PRIVATE SLOTS ===
@@ -210,11 +262,11 @@ void RootWindow::CloseWindow(WId win){
 // === PROTECTED ===
 void RootWindow::paintEvent(QPaintEvent *ev){
   //qDebug() << "RootWindow: PaintEvent:" << ev->rect();  //<< QDateTime::currentDateTime()->toString(QDateTime::ShortDate);
-  QWidget::paintEvent(ev);
+  //QWidget::paintEvent(ev);
   bool found = false;
   QPainter painter(this);
   QRect geom = ev->rect();
-    geom.adjust(-10,-10,10,10); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
+    geom.adjust(-100,-100,100,100); //give it a few more pixels in each direction to repaint (noticing some issues in Qt 5.7.1)
   for(int i=0; i<WALLPAPERS.length(); i++){
     if(WALLPAPERS[i].area.intersects(geom) ){
       found = true;

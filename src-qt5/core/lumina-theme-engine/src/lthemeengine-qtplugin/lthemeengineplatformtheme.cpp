@@ -16,6 +16,8 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 
+#include <stdlib.h>
+
 #include <lthemeengine/lthemeengine.h>
 #include "lthemeengineplatformtheme.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
@@ -130,20 +132,38 @@ void lthemeenginePlatformTheme::applySettings(){
         if(m_customPalette){ qApp->setPalette(*m_customPalette); }
         else{ qApp->setPalette(qApp->style()->standardPalette()); }
         }
-        //do not override application style
-      if(m_prevStyleSheet == qApp->styleSheet()){ qApp->setStyleSheet(m_userStyleSheet); }
-      else{ qCDebug(llthemeengine) << "custom style sheet is disabled";}
-      m_prevStyleSheet = m_userStyleSheet;
+        //do not override application style if one is already set by the app itself
+      QString orig = qApp->styleSheet();
+      if(orig.startsWith(m_oldStyleSheet)){ orig = orig.remove(m_oldStyleSheet); }
+      qApp->setStyleSheet(m_userStyleSheet+orig); //make sure the app style has higher priority than ours
+      m_oldStyleSheet = m_userStyleSheet;
+
     }
 #endif
   QGuiApplication::setFont(m_generalFont); //apply font
+  bool ithemechange = m_iconTheme != QIcon::themeName();
   QIcon::setThemeName(m_iconTheme); //apply icons
+  //See if we need to reload the application icon from the new theme
+  if(ithemechange){
+    QString appIcon = qApp->windowIcon().name();
+    if(!appIcon.isEmpty() && QIcon::hasThemeIcon(appIcon)){ qApp->setWindowIcon(QIcon::fromTheme(appIcon)); }
+    QWindowList wins = qApp->topLevelWindows();
+    for(int i=0; i<wins.length(); i++){
+     QString winIcon = wins[i]->icon().name();
+      if(!winIcon.isEmpty() && QIcon::hasThemeIcon(winIcon)){ wins[i]->setIcon(QIcon::fromTheme(winIcon)); }
+    }
+  }
+  bool cthemechange = m_cursorTheme != QString(getenv("X_CURSOR_THEME"));
+  setenv("X_CURSOR_THEME", m_cursorTheme.toLocal8Bit().data(), 1);
+  //qDebug() << "Icon Theme Change:" << m_iconTheme << QIcon::themeSearchPaths();
   if(m_customPalette && m_usePalette){ QGuiApplication::setPalette(*m_customPalette); } //apply palette
 #ifdef QT_WIDGETS_LIB
   if(hasWidgets()){
+    QEvent et(QEvent::ThemeChange);
+    QEvent ec(QEvent::CursorChange);
     foreach (QWidget *w, qApp->allWidgets()){
-      QEvent e(QEvent::ThemeChange);
-      QApplication::sendEvent(w, &e);
+      if(ithemechange){ QApplication::sendEvent(w, &et); }
+      if(cthemechange){ QApplication::sendEvent(w, &ec); }
       }
     }
 #endif
@@ -156,13 +176,13 @@ void lthemeenginePlatformTheme::createFSWatcher(){
   watcher->addPath(lthemeengine::configPath());
   QTimer *timer = new QTimer(this);
   timer->setSingleShot(true);
-  timer->setInterval(3000);
+  timer->setInterval(500);
   connect(watcher, SIGNAL(directoryChanged(QString)), timer, SLOT(start()));
   connect(timer, SIGNAL(timeout()), SLOT(updateSettings()));
 }
 
 void lthemeenginePlatformTheme::updateSettings(){
-  qCDebug(llthemeengine) << "updating settings..";
+  //qCDebug(llthemeengine) << "updating settings..";
   readSettings();
   applySettings();
 }
@@ -180,6 +200,7 @@ void lthemeenginePlatformTheme::readSettings(){
     QString schemePath = settings.value("color_scheme_path","airy").toString();
     m_customPalette = new QPalette(loadColorScheme(schemePath));
     }
+  m_cursorTheme = settings.value("cursor_theme","").toString();
   m_iconTheme = settings.value("icon_theme", "material-design-light").toString();
   settings.endGroup();
   settings.beginGroup("Fonts");
@@ -211,7 +232,10 @@ void lthemeenginePlatformTheme::readSettings(){
       }
     //load style sheets
 #ifdef QT_WIDGETS_LIB
-    QStringList qssPaths = settings.value("stylesheets").toStringList();
+    QStringList qssPaths;
+    if(qApp->applicationFilePath().section("/",-1).startsWith("lumina-desktop") ){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
+    qssPaths << settings.value("stylesheets").toStringList();
+    //qDebug() << "Loaded Stylesheets:" << qApp->applicationName() << qssPaths;
     m_userStyleSheet = loadStyleSheets(qssPaths);
 #endif
     settings.endGroup();
@@ -224,6 +248,7 @@ bool lthemeenginePlatformTheme::hasWidgets(){
 #endif
 
 QString lthemeenginePlatformTheme::loadStyleSheets(const QStringList &paths){
+  //qDebug() << "Loading Stylesheets:" << paths;
   QString content;
   foreach (QString path, paths){
     if(!QFile::exists(path)){ continue; }

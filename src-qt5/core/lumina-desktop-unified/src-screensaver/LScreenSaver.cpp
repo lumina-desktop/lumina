@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
-#define DEBUG 1
+#define DEBUG 0
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
   starttimer = new QTimer(this);
@@ -20,7 +20,6 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
 
   LOCKER = new LLockScreen(this);
 	LOCKER->hide();
-  settings = new QSettings("lumina-desktop","lumina-screensaver",this);
   SSRunning = SSLocked = updating = false;
   this->setObjectName("LSCREENSAVERBASE");
   this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: grey; }");
@@ -60,10 +59,9 @@ void LScreenSaver::start(){
 }
 
 void LScreenSaver::reloadSettings(){
-  settings->sync();
-  starttimer->setInterval( settings->value("timedelaymin",10).toInt() * 60000 );
-  locktimer->setInterval( settings->value("lockdelaymin",1).toInt() * 60000 );
-  hidetimer->setInterval( settings->value("hidesecs",15).toInt() * 1000 );
+  starttimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "timedelaymin",10).toInt() * 60000 );
+  locktimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "lockdelaymin",1).toInt() * 60000 );
+  hidetimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "hidesecs",15).toInt() * 1000 );
 }
 
 void LScreenSaver::newInputEvent(){
@@ -107,12 +105,14 @@ void LScreenSaver::ShowScreenSaver(){
   for(int i=0; i<SCREENS.length(); i++){
     bounds = bounds.united(SCREENS[i]->geometry());
     if(DEBUG){ qDebug() << " - New SS Base:" << i; }
-    BASES << new SSBaseWidget(this, settings);
+    BASES << new SSBaseWidget(this);
     connect(BASES[i], SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
-    
+
     //Setup the geometry of the base to match the screen
     BASES[i]->setGeometry(SCREENS[i]->geometry());  //match this screen geometry
-    BASES[i]->setPlugin(settings->value("screenplugin"+QString::number(i+1), settings->value("defaultscreenplugin","random").toString() ).toString() );
+    QString plug = DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "plugin_"+SCREENS[i]->name(), "").toString();
+    if(plug.isEmpty()){ plug = DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "default_plugin","random").toString();  }
+    BASES[i]->setPlugin(plug);
   }
   //Now set the overall parent widget geometry and show everything
   this->setGeometry(bounds); //overall background widget
@@ -151,7 +151,7 @@ void LScreenSaver::HideScreenSaver(){
     emit ClosingScreenSaver();
     emit LockStatusChanged(false);
   }
-  qDebug() << "Stop ScreenSavers";
+  if(DEBUG){ qDebug() << "Stop ScreenSavers"; }
   for(int i=0; i<BASES.length(); i++){
     BASES[i]->stopPainting();
     BASES[i]->hide();

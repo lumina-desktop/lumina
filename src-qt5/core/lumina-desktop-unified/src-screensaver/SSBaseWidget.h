@@ -15,7 +15,7 @@
 class SSBaseWidget : public QWidget{
 	Q_OBJECT
 public:
-	SSBaseWidget(QWidget *parent, QSettings *set);
+	SSBaseWidget(QWidget *parent);
 	~SSBaseWidget();
 
 	void setPlugin(QString);
@@ -27,7 +27,7 @@ public slots:
 private:
 	QString plugType, cplug; //type of custom painting to do
 	BaseAnimGroup *ANIM;
-	QSettings *settings;
+	QTimer *restartTimer;
 
 private slots:
 

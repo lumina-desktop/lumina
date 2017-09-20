@@ -16,7 +16,7 @@
 static QStringList fav;
 
 QString LDesktopUtils::LuminaDesktopVersion(){
-  QString ver = "1.3.2";
+  QString ver = "1.3.3";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif
@@ -143,6 +143,8 @@ void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
 void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
   qDebug() << "Loading System Defaults";
+  bool skipmime = QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimapps.list" );
+  qDebug() << " - Skipping mimetype default apps" << skipmime;
   QStringList sysDefaults;
   if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
@@ -193,18 +195,18 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){
+    else if(var=="session_default_terminal" && !skipmime){
       LXDG::setDefaultAppForMime("application/terminal", val);
       //sset = "default-terminal="+val;
-    }else if(var=="session_default_filemanager"){
+    }else if(var=="session_default_filemanager" && !skipmime){
       LXDG::setDefaultAppForMime("inode/directory", val);
       //sset = "default-filemanager="+val;
       //loset = "directory="+val;
-    }else if(var=="session_default_webbrowser"){
+    }else if(var=="session_default_webbrowser" && !skipmime){
       //loset = "webbrowser="+val;
       LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
       LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
-    }else if(var=="session_default_email"){
+    }else if(var=="session_default_email" && !skipmime){
       LXDG::setDefaultAppForMime("application/email",val);
       //loset = "email="+val;
     }
@@ -225,7 +227,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
  // -- MIMETYPE DEFAULTS --
   tmp = sysDefaults.filter("mime_default_");
-  for(int i=0; i<tmp.length(); i++){
+  for(int i=0; i<tmp.length()  && !skipmime; i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
@@ -337,6 +339,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LDesktopUtils::removeFavorite(val); }
   }
 
+  tmp = sysDefaults.filter("desktoplinks_");
+  QString desktopFolder = QDir::homePath()+"/Desktop/"; //need to make this translatable and dynamic later
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
+    if(var=="desktoplinks_add" && QFile::exists(val) && !QFile::exists(desktopFolder+val.section("/",-1)) ){ QFile::link(val, desktopFolder+val.section("/",-1)); }
+  }
+
   // -- QUICKLAUNCH --
   tmp = sysDefaults.filter("quicklaunch_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("quicklaunch."); }
@@ -409,6 +421,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 	 }
       }
     }
+
   }
   //qDebug() << " - Final Theme Color:" << themesettings[1];
 
@@ -419,7 +432,16 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     dir.mkpath(setdir);
   }
   //Now save the settings files
-  if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
+  if(setTheme){
+    LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
+    QSettings themeset("lthemeengine","lthemeengine");
+      themeset.setValue("Appearance/icon_theme",themesettings[2]);
+      //Quick hack for a "dark" theme/color to be uniform across the desktop/applications
+      if(themesettings[0].contains("DarkGlass") || themesettings[1].contains("Black")){
+        themeset.setValue("Appearance/custom_palette", true);
+        themeset.setValue("Appearance/color_scheme_path", LOS::LuminaShare().section("/",0,-3)+"/lthemeengine/colors/darker.conf");
+      }
+  }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
 

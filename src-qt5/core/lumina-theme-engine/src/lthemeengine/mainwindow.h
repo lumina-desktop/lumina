@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-
-class QAbstractButton;
+#include <QAbstractButton>
+#include <QButtonGroup>
+//class QAbstractButton;
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,7 @@ private:
     void closeEvent(QCloseEvent *);
 
     Ui::MainWindow *m_ui;
+    QButtonGroup *bgroup;
 };
 
 #endif // MAINWINDOW_H

@@ -72,9 +72,11 @@ MainUI::~MainUI(){
 void MainUI::LoadArguments(QStringList args){
   bool burnIMG = false;
   bool autoExtract = false;
+  //bool autoArchive = false;
   for(int i=0; i<args.length(); i++){
     if(args[i]=="--burn-img"){ burnIMG = true; continue; }
     if(args[i]=="--ax"){ autoExtract = true; continue; }
+    //if(args[i]=="--aa"){ autoArchive = true; continue; }
     if(QFile::exists(args[i])){
       ui->label_progress->setText(tr("Opening Archive..."));
       if(autoExtract){
@@ -86,6 +88,14 @@ void MainUI::LoadArguments(QStringList args){
       if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
       break;
     }
+    //if(autoArchive){
+    //get rest of arguments
+    //for(int i=1; i<args.length(); i++){
+    //  aaFileList << args[i];}
+    // now launch autoarchive method with arg list
+    //  autoArchiveFiles(aaFileList);
+    // connect(BACKEND, SIGNAL(ArchivalSuccessful()), this, SLOT(close()) );
+    //}
   }
 }
 
@@ -196,8 +206,8 @@ QString MainUI::OpenFileTypes(){
 void MainUI::NewArchive(){
   QString file = QFileDialog::getSaveFileName(this, tr("Create Archive"), QDir::homePath(), CreateFileTypes() );
   if(file.isEmpty()){ return; }
-  if(QFile::exists(file)){ 
-    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); } 
+  if(QFile::exists(file)){
+    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); }
   }
   ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
@@ -252,6 +262,10 @@ void MainUI::autoextractFiles(){
     BACKEND->startExtract(dir, true);
   }
 
+/*
+void MainUI::autoArchiveFiles(aaFileList){
+*/
+
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected
   QList<QTreeWidgetItem*> sel = ui->tree_contents->selectedItems();
@@ -267,6 +281,12 @@ void MainUI::extractSelection(){
 
 void MainUI::ViewFile(QTreeWidgetItem *it){
   if(it->childCount()>0){ return; } //directory - not viewable
+  /*QString newfile = QDir::tempPath()+"/"+it->whatsThis(0).section("/",-1);
+  if(QFile::exists(newfile)){
+    if(QMessageBox::Yes != QMessageBox::question(this, tr("File exists"), tr("A temporary file with the same name already exists, do you want to overwrite it?")+"\n\n"+newfile, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+      return; //cancelled
+    }
+  }*/
   ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startViewFile(it->whatsThis(0));
 }

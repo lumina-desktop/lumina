@@ -12,6 +12,7 @@
 
 SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   ui->setupUi(this); //load the designer file
+  this->setObjectName("LeaveDialog");
   //Setup the window flags
   this->setWindowFlags( Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   //Setup the icons based on the current theme
