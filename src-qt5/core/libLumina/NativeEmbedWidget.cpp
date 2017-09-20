@@ -331,11 +331,13 @@ void NativeEmbedWidget::hideEvent(QHideEvent *ev){
 }
 
 void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
+    QPainter P(this);
+      P.setClipping(true);
+      P.setClipRect(0,0,this->width(), this->height());
+      P.fillRect(ev->rect(), Qt::transparent);
   if(WIN==0){ return; }
   QRect geom = ev->rect(); //atomic updates
   //qDebug() << "Paint Rect:" << geom;
-  //geom.adjust(-10,-10,10,10); //add an additional few pixels in each direction to be painted
-  //geom = geom.intersected(QRect(0,0,this->width(), this->height())); //ensure intersection with actual window
   QImage img;
   if(!paused){ img = windowImage(geom); }
   else if(!winImage.isNull()){
@@ -343,23 +345,8 @@ void NativeEmbedWidget::paintEvent(QPaintEvent *ev){
     else{ img = winImage.scaled(geom.size()); } //this is a fast transformation - might be slightly distorted
   }
   //Need to paint the image from the window onto the widget as an overlay
+  P.drawImage( geom , img,  QRect(QPoint(0,0), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
 
-    QPainter P(this);
-      P.setClipping(true);
-      P.setClipRect(0,0,this->width(), this->height());
-      //if(DISABLE_COMPOSITING){ P.fillRect(geom, Qt::black); } //get weird effects when partial-compositing is enabled if you layer transparent window frames above other windows
-    //qDebug() << "Paint Embed Window:" << geom << winImage.size();
-    //if(winImage.size() == this->size()){
-      P.drawImage( geom , img,  QRect(QPoint(0,0), img.size()), Qt::NoOpaqueDetection); //1-to-1 mapping
-      //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
-      //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
-   // }else{
-      //P.drawImage( geom , winImage); //auto-scale it to fit (transforming a static image while paused?)
-   // }
-    //else{ QImage scaled = winImage.scaled(geom.size()); P.drawImage(geom, scaled); }
-    //P.drawImage( geom , winImage, geom, Qt::NoOpaqueDetection); //1-to-1 mapping
-  //Note: Qt::NoOpaqueDetection Speeds up the paint by bypassing the checks to see if there are [semi-]transparent pixels
-  //  Since this is an embedded image - we fully expect there to be transparency all/most of the time.
 
 }
 

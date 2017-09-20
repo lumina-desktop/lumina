@@ -59,6 +59,7 @@ private:
 
 	void initWindowFrame();
 	void enableFrame(bool);
+	void enableFrame(QList<NativeWindow::Type> types);
 
 	void LoadProperties( QList< NativeWindow::Property> list);
 
