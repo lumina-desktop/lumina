@@ -66,6 +66,7 @@ private:
 	static QStringList validAnimations(NativeWindow::Property);
 
 public slots:
+	void ensureVisible(){ WIN->setProperty(NativeWindow::Visible, true); }
 	void giveMouseFocus(){ WinWidget->raiseWindow(); }
 	void removeMouseFocus(){ WinWidget->lowerWindow(); }
 	void giveKeyboardFocus(){ WIN->requestProperty(NativeWindow::Active, true, true); }
