@@ -389,6 +389,9 @@ void LSession::checkUserFiles(){
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   QSettings sset("lumina-desktop", "sessionsettings");
   QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
+    char *tmp;
+    int tmpN = 0;
+    QApplication A(tmpN, &tmp);
   bool changed = LDesktopUtils::checkUserFiles(OVS, LDesktopUtils::LuminaDesktopVersion());
   if(changed){
     //Save the current version of the session to the settings file (for next time)

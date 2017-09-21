@@ -155,8 +155,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
   //Find the number of the left-most desktop screen
   QString screen = "0";
-  QDesktopWidget *desk =QApplication::desktop();
   QRect screenGeom;
+  QDesktopWidget *desk =QApplication::desktop();
   for(int i=0; i<desk->screenCount(); i++){
      if(desk->screenGeometry(i).x()==0){
 	screen = QString::number(i);
@@ -479,7 +479,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
     LDesktopUtils::upgradeFavorites(oldversion);
   }
   //Convert from the old desktop numbering system to the new one (change occured with 1.0.1)
-  if(oldversion<=1000001){
+  /*if(oldversion<=1000001){
     QStringList DS = LUtils::readFile(dset);
     char *tmp;
     int tmpN = 0;
@@ -505,7 +505,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
       }
     }
     LUtils::writeFile(dset, DS, true);
-  }
+  }*/
 
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
