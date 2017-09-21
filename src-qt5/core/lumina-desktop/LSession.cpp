@@ -387,11 +387,12 @@ void LSession::checkWindowGeoms(){
 void LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
+  QSettings sset("lumina-desktop", "sessionsettings");
+  QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
-    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+    sset.setValue("DesktopVersion", LDesktopUtils::LuminaDesktopVersion());
   }
 }
 
