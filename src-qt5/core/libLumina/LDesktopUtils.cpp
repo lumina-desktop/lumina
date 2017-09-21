@@ -401,7 +401,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
     //qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
-    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss.template")){
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss")){
       themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
 	 if(systhemes[i].startsWith(themesettings[0]+"::::",Qt::CaseInsensitive)){
@@ -411,9 +411,9 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
       }
     }
     //color file
-    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".qss.colors") ){
+    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".conf") ){
       //Remove any extra/invalid extension
-      themesettings[1] = themesettings[1].section(".qss",0,0).simplified();
+      themesettings[1] = themesettings[1].section(".conf",0,0).simplified();
       for(int i=0; i<syscolors.length(); i++){
 	 if(syscolors[i].startsWith(themesettings[1]+"::::",Qt::CaseInsensitive)){
 	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
@@ -434,13 +434,6 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Now save the settings files
   if(setTheme){
     LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
-    QSettings themeset("lthemeengine","lthemeengine");
-      themeset.setValue("Appearance/icon_theme",themesettings[2]);
-      //Quick hack for a "dark" theme/color to be uniform across the desktop/applications
-      if(themesettings[0].contains("DarkGlass") || themesettings[1].contains("Black")){
-        themeset.setValue("Appearance/custom_palette", true);
-        themeset.setValue("Appearance/color_scheme_path", LOS::LuminaShare().section("/",0,-3)+"/lthemeengine/colors/darker.conf");
-      }
   }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
