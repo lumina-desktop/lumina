@@ -456,12 +456,12 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
 }
 
-bool LDesktopUtils::checkUserFiles(QString lastversion){
+bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   //returns true if something changed
   int oldversion = LDesktopUtils::VersionStringToNumber(lastversion);
-  int nversion = LDesktopUtils::VersionStringToNumber(QApplication::applicationVersion());
+  int nversion = LDesktopUtils::VersionStringToNumber(currentversion);
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
 
