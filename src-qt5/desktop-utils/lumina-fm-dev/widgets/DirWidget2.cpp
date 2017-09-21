@@ -28,6 +28,8 @@
 
 #define DEBUG 0
 
+extern QElapsedTimer* timer;
+
 DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
   ID = objID;
@@ -90,6 +92,8 @@ DirWidget::DirWidget(QString objID, QWidget *parent) : QWidget(parent), ui(new U
   createShortcuts();
   createMenus();
   line_dir->setCompleter(new QCompleter(dirtreeModel, this));
+  qDebug() << " - Fini:" << timer->elapsed();
+
 }
 
 DirWidget::~DirWidget(){

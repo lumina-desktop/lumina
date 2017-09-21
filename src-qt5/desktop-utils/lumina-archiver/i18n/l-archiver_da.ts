@@ -350,67 +350,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedie</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Udvikling</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Uddannelse</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Spil</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Netværk</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Videnskab</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Indstillinger</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjælpeværktøj</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Usorteret</translation>
     </message>
 </context>
 <context>
