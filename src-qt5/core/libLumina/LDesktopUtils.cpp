@@ -457,6 +457,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 }
 
 bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
+  //WARNING: Make sure you create a QApplication instance before calling this function!!!
+
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   //returns true if something changed
@@ -479,7 +481,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
     LDesktopUtils::upgradeFavorites(oldversion);
   }
   //Convert from the old desktop numbering system to the new one (change occured with 1.0.1)
-  /*if(oldversion<=1000001){
+  if(oldversion<=1000001){
     QStringList DS = LUtils::readFile(dset);
     char *tmp;
     int tmpN = 0;
@@ -505,7 +507,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
       }
     }
     LUtils::writeFile(dset, DS, true);
-  }*/
+  }
 
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
